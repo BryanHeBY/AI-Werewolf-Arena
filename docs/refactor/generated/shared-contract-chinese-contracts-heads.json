@@ -1,0 +1,32 @@
+{
+  "source": [
+    {
+      "path": "packages/game-contract/src/requests.ts",
+      "sha256": "ac8339ba6d65574fff2c3a9b26aa64a1588d3f09158f9158766a9d43cd046052"
+    },
+    {
+      "path": "packages/game-contract/src/actions.ts",
+      "sha256": "024ec9acf760586daf3035d9f9ca036606e4ddb4c8edaa29772a3afca62b1a61"
+    },
+    {
+      "path": "packages/game-contract/src/events.ts",
+      "sha256": "0029d2e83e4caa8ca7bc2b0e53f7771cb44375ff4749949b7177acda8e85a771"
+    },
+    {
+      "path": "packages/game-contract/src/identity.ts",
+      "sha256": "ba82896135a69f52555682e972cd6901097abb9c76a2943819a3328bd09ebd80"
+    },
+    {
+      "path": "packages/game-contract/src/message-refs.ts",
+      "sha256": "2e5a993f0f5239d3166108ca091ca63a8345b788ad1036406d95b15bb663c5c3"
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "sha256": "9822070900891c370c9ad81ed5b0d8c95c234be91b404567a1d2df39ac6203e4"
+    }
+  ],
+  "documentationPaths": 668,
+  "documentationPathsSha256": "3ec19acc08c509b3c951f791ee63987564ba6a6291e5615cc402abc28759282a",
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

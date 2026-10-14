@@ -6,12 +6,14 @@
  */
 export type EntityId = number;
 
+/** 阵营机器值与 Role 身份分开表达；当前阵营、胜利成员关系和玩家看到的标签由各自 owner 决定。 */
 export enum Camp {
   Good = "good",
   Wolf = "wolf",
   ThirdParty = "third_party",
 }
 
+/** 角色名不固定推导当前阵营、胜负或狼队资格；现场身份与资源仍须原运行规则核对。 */
 export enum Role {
   FragrantPhantom = "fragrant_phantom",
   AwakenedSeer = "awakened_seer",
@@ -70,6 +72,7 @@ export enum Role {
   Idiot = "idiot",
 }
 
+/** 原阶段标识及顺序保持；持有该值不推进时钟或打开某个具体窗口。 */
 export enum Phase {
   Night = "night",
   Day = "day",
@@ -96,6 +99,7 @@ export enum StatusMark {
   PoisonMark = "PoisonMark",
 }
 
+/** 胜利政策标识只描述选择的规则，实际赢家／独立成员关系／观察标签不是从枚举自动计算。 */
 export enum WinCondition {
   ThreeFactionsElimination = "three_factions_elimination",
   SlaughterCity = "slaughter_city",

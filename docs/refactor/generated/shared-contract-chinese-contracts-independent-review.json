@@ -1,0 +1,230 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "baseCommit": "ce0353ce7bc9fa3ab9be9b34df3266848f5d6c05",
+  "source": [
+    {
+      "path": "packages/game-contract/src/requests.ts",
+      "sha256": "ac8339ba6d65574fff2c3a9b26aa64a1588d3f09158f9158766a9d43cd046052"
+    },
+    {
+      "path": "packages/game-contract/src/actions.ts",
+      "sha256": "024ec9acf760586daf3035d9f9ca036606e4ddb4c8edaa29772a3afca62b1a61"
+    },
+    {
+      "path": "packages/game-contract/src/events.ts",
+      "sha256": "0029d2e83e4caa8ca7bc2b0e53f7771cb44375ff4749949b7177acda8e85a771"
+    },
+    {
+      "path": "packages/game-contract/src/identity.ts",
+      "sha256": "ba82896135a69f52555682e972cd6901097abb9c76a2943819a3328bd09ebd80"
+    },
+    {
+      "path": "packages/game-contract/src/message-refs.ts",
+      "sha256": "2e5a993f0f5239d3166108ca091ca63a8345b788ad1036406d95b15bb663c5c3"
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "sha256": "9822070900891c370c9ad81ed5b0d8c95c234be91b404567a1d2df39ac6203e4"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/shared-contract-chinese-contracts-scope-final.json",
+    "sha256": "0723cb288f793ad192771f8b0a1a40848441402ce4414494296149e41695e000"
+  },
+  "documentation": {
+    "path": "docs/refactor/shared-contract-chinese-contracts.md",
+    "sha256": "cadf0ae628a817d3f900eb07cb2a42d219974a49a783f170838bc3aafaf6ec9a"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/shared-contract-chinese-contracts-evidence.json",
+    "sha256": "b23c4e31a4561148718e0c1a4ecdcd66ffb1e7b7ff940ed670c147d6a2f0f5ea"
+  },
+  "findings": [],
+  "sourceReview": {
+    "completeSourcesRead": 6,
+    "actualGitBeforeSources": 6,
+    "freshSourceMismatches": 0,
+    "wholePreciseCommentForwards": [
+      {
+        "path": "packages/game-contract/src/requests.ts",
+        "gitBeforeSHA256": "170fbd6acc30ffd37a5d1234f5e87648eb3cfa971b45acd2032bca1a42bd2644",
+        "currentSHA256": "ac8339ba6d65574fff2c3a9b26aa64a1588d3f09158f9158766a9d43cd046052",
+        "wholePreciseCommentForwardSame": true
+      },
+      {
+        "path": "packages/game-contract/src/actions.ts",
+        "gitBeforeSHA256": "33b5b4affe28cfe9513d8f178b94c78c4dd88fdd87153f9251b860ad038e6352",
+        "currentSHA256": "024ec9acf760586daf3035d9f9ca036606e4ddb4c8edaa29772a3afca62b1a61",
+        "wholePreciseCommentForwardSame": true
+      },
+      {
+        "path": "packages/game-contract/src/events.ts",
+        "gitBeforeSHA256": "f115c142477c7ff8ad502ec3af79768db5835fc0277ca7cf7df8801fde13565e",
+        "currentSHA256": "0029d2e83e4caa8ca7bc2b0e53f7771cb44375ff4749949b7177acda8e85a771",
+        "wholePreciseCommentForwardSame": true
+      },
+      {
+        "path": "packages/game-contract/src/identity.ts",
+        "gitBeforeSHA256": "1fc4d5582276330ef2fef8c71c1ac7e1c6ab7c4cb28f8700363db8fd4e23b916",
+        "currentSHA256": "ba82896135a69f52555682e972cd6901097abb9c76a2943819a3328bd09ebd80",
+        "wholePreciseCommentForwardSame": true
+      },
+      {
+        "path": "packages/game-contract/src/message-refs.ts",
+        "gitBeforeSHA256": "87495edb97cc37ebbd9c6d7f7c29515bd498a5b73eeed9699db8b929c6c7c4ba",
+        "currentSHA256": "2e5a993f0f5239d3166108ca091ca63a8345b788ad1036406d95b15bb663c5c3",
+        "wholePreciseCommentForwardSame": true
+      },
+      {
+        "path": "packages/game-contract/src/night-ability-views.ts",
+        "gitBeforeSHA256": "1601ee0ca1274acdc6693d8709e904253e8faef18cdf6fc5629a202567d33467",
+        "currentSHA256": "9822070900891c370c9ad81ed5b0d8c95c234be91b404567a1d2df39ac6203e4",
+        "wholePreciseCommentForwardSame": true
+      }
+    ],
+    "commentEditRecords": 36,
+    "controls": [
+      {
+        "path": "packages/game-contract/src/index.ts",
+        "sha256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce"
+      },
+      {
+        "path": "backend/src/core/domain/actions.ts",
+        "sha256": "a6d681a7163778ed6433dbb32a11e8c4ed742e8a6f638056cdda5f5e08a44ac9"
+      }
+    ],
+    "artifactMismatches": 0,
+    "artifacts": [
+      {
+        "path": "docs/refactor/generated/shared-contract-chinese-contracts-before.json",
+        "sha256": "10149b06f6cf6d47e0f1c5a5a46d3f2ca3ad7e006f2fbf0ef1adf8f2b2834a6e"
+      },
+      {
+        "path": "docs/refactor/generated/shared-contract-chinese-contracts-edits.json",
+        "sha256": "c75437a377ea38f9532ddd62d6dcea137c2145416bccd80a88dc2caa48a804be"
+      },
+      {
+        "path": "docs/refactor/generated/shared-contract-chinese-contracts-proof.cjs",
+        "sha256": "9db049e909c6a174ed7c1ccc1fc92fbf1046cb086353cdcc4547b56133eb59f2"
+      },
+      {
+        "path": "docs/refactor/generated/shared-contract-chinese-contracts-proof.json",
+        "sha256": "57bc86270203e0b7c15896d8ef55b20ba58b33f5adf73cd4847eadbb46fc54c4"
+      },
+      {
+        "path": "docs/refactor/generated/shared-contract-chinese-contracts-proof-output.txt",
+        "sha256": "ad83498407515b5f7619194b26f3bc47de8fe1eb88d377623bfe13dbd2e4e8c7"
+      },
+      {
+        "path": "docs/refactor/generated/shared-contract-chinese-contracts-heads.ts",
+        "sha256": "c43f8282c986011fc10bbc68b28c954ae2e6f48104ea2fc00132169e19aed1ab"
+      },
+      {
+        "path": "docs/refactor/generated/shared-contract-chinese-contracts-heads.json",
+        "sha256": "a1b6cb798d5941b4e2402c34ea59dd6c2d6d5e7919f1ea35e2ed38e217e2d3f6"
+      },
+      {
+        "path": "docs/refactor/generated/shared-contract-chinese-contracts-heads-output.txt",
+        "sha256": "62c8d389bff0825f0ec07ca98821fd73c533a0a9a66de591549466da2a9e8f64"
+      },
+      {
+        "path": "docs/refactor/generated/shared-contract-chinese-contracts-receipts.json",
+        "sha256": "a27da76b062a1797303756b3b15fff4c71b5a2bb945abfbbdce6fee5f1a7f717"
+      }
+    ],
+    "requests": "完整读必填ActionRequestContext四字段和可选Extras、nullable/mutable/readonly数组。实际factory按原序复制允许工具、克隆附加context、覆盖公共字段后绑定原对象；deadline字段/候选/历史不能代替envelope身份、lease或完成通知。运行门槛、最早预算和复验未被类型说明强化。",
+    "actions": "ToolArgMap与判别ToolCall、常量序列和两个枚举展开全保；null/abstain/activate各原语义不统一。ToolValidationResult并非ok/sanitizedCall判别联合或付款回执；constraint默认与失败政策由现行解析owner承担。",
+    "identity": "Role55及Camp/Phase/WinCondition原值和顺序保持。当前Role、camp字段/组件、Victory成员和inspection标签分别来自实际owner，纯枚举不解决Camp双权威或授狼人资格。",
+    "events": "完整payload联合及required audience分支读核；指定事实的历史受众readonly不构成freeze或现场许可，PlayerVisibleEvent开放payload/seq由投影处理。实际feed先取inert副本、按受众/资格裁剪并生成局部seq；声明不保证任意输入连续。",
+    "exileFeedback": "captureExileFeedback实际resolveInspection camp标签并浅复制，不核死亡。普通已接受目标在DR之前捕获；Animal只主summary.target有Exile来源且实际Alive=false、完成原死亡/关单位/事实后捕获。类型不证明target已经死亡，也不把披露camp当真实Camp。",
+    "messageRefs": "完整MessageRef形状只有key和可选readonly参数；实际text/renderMessage检查key/缺失/多余/有限数并渲染，不改调用方/模型原文。readonly不复制参数，不在声明处解析或freeze。",
+    "abilities": "metadata共同字段与七kind/state关联原形态保，maxUses=null只不判公共spent，药库存仍独立；expires day>边界、lastUsedDay与uses/原第二药、抑制与持久disabled分开。实际projection排sourceDisclosed/nightSuppression并按披露政策裁来源；active/OwnNightAction历史不授库存写权或证明付款/伤害。",
+    "chinese": "六职责头及关键结构注释有效且实际语义准确；不将声明、历史事实、消息文本或ID提升为运行能力/权限。",
+    "callerReads": [
+      "backend/src/game/engine/action_request_factory.ts",
+      "backend/src/game/engine/turn_constraints_context.ts",
+      "backend/src/game/gateway/turn-constraints.ts",
+      "backend/src/game/engine/agent_visible_event_feed.ts",
+      "backend/src/game/observation/night-ability-projection.ts",
+      "backend/src/game/mechanisms/roles/abilities.ts",
+      "backend/src/game/mechanisms/roles/inspection.ts",
+      "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "backend/src/rulesets/exile-death-preparation.ts",
+      "backend/src/game/engine/phase_manager.ts",
+      "packages/game-text/src/index.ts"
+    ]
+  },
+  "proofReview": {
+    "executedByReviewer": false,
+    "summary": {
+      "sources": 6,
+      "typedNodes": 4875,
+      "noncommentLeaves": 5694,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "wholeRawOutputs": 12
+    },
+    "reading": "实读作者完整执行脚本：精确36comment forward、全typed树和NodeArray、完整排JSDoc叶文本/保护指令、六全部程序ES/CJS输出；含真实值枚举/常量和纯type声明，不仅看空JS。",
+    "authorReceipts": {
+      "capture": {
+        "actualGitCommit": "ce0353ce7bc9fa3ab9be9b34df3266848f5d6c05",
+        "chunk_id": "139a66",
+        "exit_code": 0,
+        "wholeGitBeforeEqualsWorkingSources": 6,
+        "controls": 2
+      },
+      "proof": {
+        "command": "bun --no-env-file docs/refactor/generated/shared-contract-chinese-contracts-proof.cjs > docs/refactor/generated/shared-contract-chinese-contracts-proof-output.txt 2>&1",
+        "chunk_id": "c87e54",
+        "exit_code": 0,
+        "executions": 1,
+        "summary": {
+          "sources": 6,
+          "typedNodes": 4875,
+          "noncommentLeaves": 5694,
+          "jsdocTags": 0,
+          "protectedCommentRecords": 0,
+          "wholeRawOutputs": 12
+        },
+        "output": {
+          "path": "docs/refactor/generated/shared-contract-chinese-contracts-proof-output.txt",
+          "sha256": "ad83498407515b5f7619194b26f3bc47de8fe1eb88d377623bfe13dbd2e4e8c7"
+        }
+      },
+      "heads": {
+        "command": "bun --no-env-file docs/refactor/generated/shared-contract-chinese-contracts-heads.ts > docs/refactor/generated/shared-contract-chinese-contracts-heads-output.txt 2>&1",
+        "chunk_id": "c81e2b",
+        "exit_code": 0,
+        "executions": 1,
+        "sources": 6,
+        "trackedDocumentationPathsAtSampling": 668,
+        "documentationPathsSha256": "3ec19acc08c509b3c951f791ee63987564ba6a6291e5615cc402abc28759282a",
+        "diagnostics": 0,
+        "chineseHeadFailures": 0,
+        "output": {
+          "path": "docs/refactor/generated/shared-contract-chinese-contracts-heads-output.txt",
+          "sha256": "62c8d389bff0825f0ec07ca98821fd73c533a0a9a66de591549466da2a9e8f64"
+        }
+      },
+      "sourcePhase": "所有实际检查在最终36条comment编辑后采样；未有末源码增量。",
+      "notRun": [
+        "production loading",
+        "business tests",
+        "types",
+        "games",
+        "models",
+        "full gates",
+        "same-input green repeats"
+      ]
+    }
+  },
+  "limits": [
+    "独立审查只读源、实际Git、精确全文comment正演和SHA；没有执行proof、头检查、类型、测试、运行加载、门禁或模型。",
+    "首c87e54/头c81e2b为最终六源单阶段且无后继source delta；检查形状不代替实际语义阅读。",
+    "仅两个scope控制是完整immutable Git/current字节；caller语义旁读不宣称整个传递工作树固定。",
+    "本批不改F02/F03/Camp双权威、unknown input接受面或公开API；不据此标整个机制/档案/55角色目标完成。",
+    "源码SHA因comment改变，历史strict身份和政策仍原，不豁免或伪称任意反射/冷加载全验收。"
+  ]
+}

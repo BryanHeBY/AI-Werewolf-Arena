@@ -1,12 +1,12 @@
 /**
- * Responsibility: own serialized tool calls, validation results and turn data.
- * Input: contract identities and neutral message references; output: original
- * tool argument unions, ordered tool/stage IDs and optional constraint fields.
- * This data grants no action authorization and owns no Actor, World, resource
- * or transport lifecycle. Role selection and current-state checks remain domain.
+ * 负责工具调用、验证结果和回合约束的公共数据声明；输入为机器身份与中立消息引用，
+ * 输出为原工具参数联合、顺序化工具／阶段标识及可选约束字段。
+ * 名称与参数不授行动权；角色资格、目标政策和当前库存由领域 owner 复验。
+ * 本契约不持 Actor、World、资源或传输生命周期，不校验未知输入或执行回合。
  */
 import { ActionWindow, KnightDuelWindow, type EntityId, type PotionType } from "./identity";
 import type { MessageRef } from "./message-refs";
+/** 工具名关联其原参数形状；null／abstain／activate 各有原业务意义，不在类型层统一成同一种跳过。 */
 export interface ToolArgMap {
   fox_distract: { target_id: EntityId | null };
   puffer_retaliate: { activate: boolean };
@@ -84,6 +84,7 @@ export interface ToolArgMap {
 }
 
 export type ToolName = keyof ToolArgMap;
+/** 保留公共工具标识的原顺序；列入此表不表示任意角色或阶段都可使用。 */
 export const TOOL_NAMES = [
   "fox_distract",
   "puffer_retaliate",
@@ -151,26 +152,30 @@ export const TOOL_NAMES = [
   "run_for_sheriff",
   "vote_for_sheriff",
 ] as const satisfies readonly ToolName[];
+/** name 是判别字段，args 随工具一一关联；结构匹配不等于已通过 Gateway 或已付款。 */
 export type ToolCall = { [K in ToolName]: { name: K; args: ToolArgMap[K] } }[ToolName];
 export type TypedToolCall<T extends ToolName> = Extract<ToolCall, { name: T }>;
 
+/** 原验证回包不是提交回执；ok 未在类型中强制关联 sanitizedCall，调用方仍按实际校验流程处理。 */
 export interface ToolValidationResult<T extends ToolCall = ToolCall> {
   ok: boolean;
   sanitizedCall?: T;
-  /** Stable machine code, independent of locale. */
+  /** 稳定机器错误码，不随语言变化；可读 message 另由实际校验／文案调用方提供。 */
   error?: string;
   message?: string;
 }
 
+/** 可选回合约束保持缺省形状；默认最少／最多动作及异常策略由原运行解析 owner 决定。 */
 export interface TurnConstraints {
   min_valid_actions?: number;
   max_valid_actions?: number;
   required_any_tools?: ToolName[];
-  /** Legacy/custom caller text is retained verbatim. */
+  /** 旧调用方／自定义摘要保原文；summary_message 是独立消息引用，不在这里替换或渲染原文。 */
   summary?: string;
   summary_message?: MessageRef;
 }
 
+/** 保留阶段字面值及两个窗口枚举的原展开顺序；此清单不推进阶段或打开行动窗口。 */
 export const ACTION_STAGES = [
   "fox_distract",
   "puffer_reaction",

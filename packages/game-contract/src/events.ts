@@ -1,10 +1,8 @@
 /**
- * Responsibility: define serialized game facts and projected player event data.
- * Input: pure identity, result and feature-payload contracts; output: the original
- * discriminated event map, required historical audience and player-local sequence
- * shapes. No component references, scopes, callbacks or runtime authority enter
- * these data contracts. Inert readers and engine publication own their distinct
- * validation and authorization boundaries; an event DTO never commits a rule.
+ * 负责领域事实和玩家可见事件的纯数据契约；输入为身份、结果与各族 payload 声明，
+ * 输出为原判别事件映射、指定事实的历史 audience 以及玩家事件序号形状。
+ * 声明不定义组件句柄、scope、回调或运行许可；数据读器、事实发表与玩家投影各持原验证／裁剪职责。
+ * 历史事实不执行规则、不恢复库存或授权行动；类型声明不代替未知数据解析、复制或深冻结。
  */
 import type { NobleSecretBodyPayloadMap } from "./facts/noble-secret-body";
 import type { AnimalDreamPayloadMap } from "./facts/animal-dream";
@@ -22,6 +20,7 @@ import type { InspectionResult } from "./inspection";
 import type { RoleId } from "./role-ids";
 import type { GameResult } from "./results";
 
+/** type 与 payload 由下方映射关联；timestamp 是原事实时间数据，不是行动期限或顺序证明。 */
 export interface EventBase<T extends string, P> {
   timestamp: number;
   type: T;
@@ -42,6 +41,7 @@ export interface SheriffVoteRecord {
   abstain: boolean;
 }
 
+/** 上帝私有信息保原 string 字段宽度；其中 role／camp 是记录数据，不是现场组件或当前授权。 */
 export interface PrivatePlayerInfo {
   id: EntityId;
   seat: number;
@@ -50,13 +50,14 @@ export interface PrivatePlayerInfo {
   camp: string;
 }
 
-/** Internal snapshot of an actual exile, delivered only by the following night's role stage. */
+/** 放逐反馈的当时 camp 查验标签副本；实际有效目标、捕获时点与下一夜交付归原规则／阶段，类型不证明目标已死。 */
 export interface ExileFeedback {
   exileDay: number;
   targetId: EntityId;
   result: Extract<InspectionResult, { kind: "camp" }>;
 }
 
+/** 每种事实保原字段／可选性，并合入本族声明；记录名中的 committed 不单独证明完整业务或录制成功。 */
 export interface EventPayloadMap
   extends NobleSecretBodyPayloadMap, FragrantPairPayloadMap, AnimalDreamPayloadMap {
   eclipse_swallowed: {
@@ -489,7 +490,7 @@ export interface EventPayloadMap
   };
   hunter_silent_due_to_poison: { hunterId: EntityId };
   hunter_shot: { hunterId: EntityId; targetId: EntityId };
-  /** Public gun fact without disclosing whether the skill was native or copied. */
+  /** 公共开枪事实不披露技能原生或复制来源；不据该记录推断剩余枪权。 */
   player_shot: { actorId: EntityId; targetId: EntityId };
   wolf_king_shot: { actorId: EntityId; targetId: EntityId };
   idiot_revealed: { targetId: EntityId };
@@ -549,6 +550,7 @@ export type WeddingEventType =
   | "ghost_bride_knife_resolved"
   | "ghost_bride_partner_death";
 
+/** 指定私有事实必带发表时 audience；readonly 只约束类型写法，不冻结数组，历史受众不是现场权限表。 */
 export type GameEvent = {
   [K in keyof EventPayloadMap]: EventBase<K, EventPayloadMap[K]> &
     (K extends
@@ -605,7 +607,7 @@ export type GameEvent = {
       : {});
 }[keyof EventPayloadMap];
 
-/** Projected protocol; payload is intentionally open because projection/parsing is a wire boundary. */
+/** 玩家投影协议保 type／payload 的开放形状；seq 由实际 feed／读器处理，声明不保证连续，也不授行动许可。 */
 export interface PlayerVisibleEvent {
   seq: number;
   type: string;

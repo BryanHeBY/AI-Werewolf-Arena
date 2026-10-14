@@ -1,0 +1,180 @@
+{
+  "approved": true,
+  "baseCommit": "ce0353ce7bc9fa3ab9be9b34df3266848f5d6c05",
+  "commentEditRecords": 36,
+  "programs": [
+    {
+      "path": "packages/game-contract/src/requests.ts",
+      "beforeSha256": "170fbd6acc30ffd37a5d1234f5e87648eb3cfa971b45acd2032bca1a42bd2644",
+      "afterSha256": "ac8339ba6d65574fff2c3a9b26aa64a1588d3f09158f9158766a9d43cd046052",
+      "typedNodes": 393,
+      "noncommentLeaves": 447,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/actions.ts",
+      "beforeSha256": "33b5b4affe28cfe9513d8f178b94c78c4dd88fdd87153f9251b860ad038e6352",
+      "afterSha256": "024ec9acf760586daf3035d9f9ca036606e4ddb4c8edaa29772a3afca62b1a61",
+      "typedNodes": 1020,
+      "noncommentLeaves": 1254,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3310,
+          "sha256": "08617110873628a296de231c6831d26edc070275827133b18c2fc4e20089f583"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3456,
+          "sha256": "a4f75f1e789c3ef1f3bcb0eab895d2e5b8815f850e5096b161486097dfdc8b28"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/events.ts",
+      "beforeSha256": "f115c142477c7ff8ad502ec3af79768db5835fc0277ca7cf7df8801fde13565e",
+      "afterSha256": "0029d2e83e4caa8ca7bc2b0e53f7771cb44375ff4749949b7177acda8e85a771",
+      "typedNodes": 2912,
+      "noncommentLeaves": 3307,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 172,
+          "sha256": "df804815acea82fdffa6700354069e4e0cbc3a0b33a5314db11ca75863cec9c9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 284,
+          "sha256": "7e5ec9b22b3eea11521acc0ae5839a2e0635e2e54b2d2672809603c010d842bb"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/identity.ts",
+      "beforeSha256": "1fc4d5582276330ef2fef8c71c1ac7e1c6ab7c4cb28f8700363db8fd4e23b916",
+      "afterSha256": "ba82896135a69f52555682e972cd6901097abb9c76a2943819a3328bd09ebd80",
+      "typedNodes": 294,
+      "noncommentLeaves": 396,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4199,
+          "sha256": "2126873c9688dd1ba1e2257ac73f084a4d86c7e5b5a3b4e143b76cce52c744c5"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4599,
+          "sha256": "3da721881d028a187a2e3dbaaa0ff9044b3107ea87dc35588b401d92674fbe83"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/message-refs.ts",
+      "beforeSha256": "87495edb97cc37ebbd9c6d7f7c29515bd498a5b73eeed9699db8b929c6c7c4ba",
+      "afterSha256": "2e5a993f0f5239d3166108ca091ca63a8345b788ad1036406d95b15bb663c5c3",
+      "typedNodes": 26,
+      "noncommentLeaves": 33,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "beforeSha256": "1601ee0ca1274acdc6693d8709e904253e8faef18cdf6fc5629a202567d33467",
+      "afterSha256": "9822070900891c370c9ad81ed5b0d8c95c234be91b404567a1d2df39ac6203e4",
+      "typedNodes": 230,
+      "noncommentLeaves": 257,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "packages/game-contract/src/index.ts",
+      "sha256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce",
+      "gitBlob": "f6eb76ba9ee30c5dd0847be24e4bf040334c2fa9",
+      "mode": "100644",
+      "bytes": 5472
+    },
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "sha256": "a6d681a7163778ed6433dbb32a11e8c4ed742e8a6f638056cdda5f5e08a44ac9",
+      "gitBlob": "a78087be5e01b169c7b43a97271af3adcb7685c4",
+      "mode": "100644",
+      "bytes": 3156
+    }
+  ],
+  "summary": {
+    "sources": 6,
+    "typedNodes": 4875,
+    "noncommentLeaves": 5694,
+    "jsdocTags": 0,
+    "protectedCommentRecords": 0,
+    "wholeRawOutputs": 12
+  },
+  "limits": [
+    "六个完整 公共游戏数据契约模块的非注释程序、JSDoc tags 与移除注释的 ES2022 ESNext/CJS 输出比较；不执行请求、游戏、类型或全门禁。",
+    "职责头形状与输出相同不代替说明语义和生命周期的非作者人工审查。",
+    "源码 SHA 确实改变；不改历史 strict 身份或增豁免。"
+  ]
+}

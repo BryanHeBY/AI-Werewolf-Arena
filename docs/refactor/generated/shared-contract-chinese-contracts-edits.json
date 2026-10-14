@@ -1,0 +1,182 @@
+[
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "/**\n * Responsibility: describe serialized action requests and their common context.\n * Input: public machine IDs, player-visible events and neutral message references;\n * output: original required day/stage/feed/constraint fields and optional feature\n * additions. These DTOs never create request leases, expose component identities\n * or grant permission from deadlines and IDs. Execution providers remain outside\n * the pure contract; engine authorization binds the actual original envelope.\n * Domain owners alone grant, cancel, close and revoke request capabilities;\n * these data declarations never write or revive a terminated runtime lease.\n */",
+    "after": "/**\n * 负责行动请求及公共 context 的纯数据契约；输入为机器身份、玩家可见历史与中立消息引用，\n * 输出保留必填日次／阶段／事件／约束和可选机制附加字段，不包含 Provider 执行接口。\n * 字段、ID 和期限不创建租约或授予行动许可；实际请求原体由运行 owner 绑定、取消、关闭和撤权。\n * 本声明仅描述数据，不写库存或复活终态，不声明未知输入已解析，也不复制／冻结数组及嵌套数据。\n */"
+  },
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "/** Mechanism-owned additions; the request factory supplies common context fields. */",
+    "after": "/** 可选附加字段由具体机制形成；工厂另供必填公共 context，候选名单／实例 ID 不是运行许可。 */"
+  },
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "  /** Private unused living choices for the original magician only. */",
+    "after": "  /** 原魔术师自己的未使用存活选择，属于该次私有请求知识，不向其他玩家自动公开。 */"
+  },
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "  /** Explicit strict turns distinguish a clean optional wait from a failed submission/transport. */",
+    "after": "  /** 显式严格回合区分合法可选等待与提交／传输失败；本字段不自行执行失败处理。 */"
+  },
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "  /** Some mandatory choices must fail explicitly instead of accepting a fabricated fallback. */",
+    "after": "  /** 供调用方决定是否允许回退；有些必选动作要求明确失败，类型不生成替代行动。 */"
+  },
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "  /** Native Wolf King policy origin; legacy death_phase remains the original wave annotation. */",
+    "after": "  /** 原生狼王政策使用的来源阶段；death_phase 仍保原死亡波注记，两字段不合并。 */"
+  },
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "  /** Private legal targets for this death-action request; not a public death announcement. */",
+    "after": "  /** 本次死亡行动的私有合法目标信息；名单不是公开死亡公告，也不替代提交前生命复验。 */"
+  },
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "/** Canonical engine facts are always present on a request passed to an agent. */",
+    "after": "/** 正式请求的四项公共 context 必填；类型只声明存在，实际工厂填入并由各运行入口复验。 */"
+  },
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "export interface ActionRequest {",
+    "after": "/** 原字段形状保持：工具／可见历史数组可写，复制数据不复制原 envelope 的身份或完成通知。 */\nexport interface ActionRequest {"
+  },
+  {
+    "path": "packages/game-contract/src/requests.ts",
+    "before": "  deadlineAtMs?: number;",
+    "after": "  /** 可选绝对期限数据；接受数值、最早预算和观察到期后的撤权由实际请求 owner 决定。 */\n  deadlineAtMs?: number;"
+  },
+  {
+    "path": "packages/game-contract/src/actions.ts",
+    "before": "/**\n * Responsibility: own serialized tool calls, validation results and turn data.\n * Input: contract identities and neutral message references; output: original\n * tool argument unions, ordered tool/stage IDs and optional constraint fields.\n * This data grants no action authorization and owns no Actor, World, resource\n * or transport lifecycle. Role selection and current-state checks remain domain.\n */",
+    "after": "/**\n * 负责工具调用、验证结果和回合约束的公共数据声明；输入为机器身份与中立消息引用，\n * 输出为原工具参数联合、顺序化工具／阶段标识及可选约束字段。\n * 名称与参数不授行动权；角色资格、目标政策和当前库存由领域 owner 复验。\n * 本契约不持 Actor、World、资源或传输生命周期，不校验未知输入或执行回合。\n */"
+  },
+  {
+    "path": "packages/game-contract/src/actions.ts",
+    "before": "export interface ToolArgMap {",
+    "after": "/** 工具名关联其原参数形状；null／abstain／activate 各有原业务意义，不在类型层统一成同一种跳过。 */\nexport interface ToolArgMap {"
+  },
+  {
+    "path": "packages/game-contract/src/actions.ts",
+    "before": "export const TOOL_NAMES = [",
+    "after": "/** 保留公共工具标识的原顺序；列入此表不表示任意角色或阶段都可使用。 */\nexport const TOOL_NAMES = ["
+  },
+  {
+    "path": "packages/game-contract/src/actions.ts",
+    "before": "export type ToolCall = {",
+    "after": "/** name 是判别字段，args 随工具一一关联；结构匹配不等于已通过 Gateway 或已付款。 */\nexport type ToolCall = {"
+  },
+  {
+    "path": "packages/game-contract/src/actions.ts",
+    "before": "export interface ToolValidationResult<T extends ToolCall = ToolCall> {",
+    "after": "/** 原验证回包不是提交回执；ok 未在类型中强制关联 sanitizedCall，调用方仍按实际校验流程处理。 */\nexport interface ToolValidationResult<T extends ToolCall = ToolCall> {"
+  },
+  {
+    "path": "packages/game-contract/src/actions.ts",
+    "before": "  /** Stable machine code, independent of locale. */",
+    "after": "  /** 稳定机器错误码，不随语言变化；可读 message 另由实际校验／文案调用方提供。 */"
+  },
+  {
+    "path": "packages/game-contract/src/actions.ts",
+    "before": "export interface TurnConstraints {",
+    "after": "/** 可选回合约束保持缺省形状；默认最少／最多动作及异常策略由原运行解析 owner 决定。 */\nexport interface TurnConstraints {"
+  },
+  {
+    "path": "packages/game-contract/src/actions.ts",
+    "before": "  /** Legacy/custom caller text is retained verbatim. */",
+    "after": "  /** 旧调用方／自定义摘要保原文；summary_message 是独立消息引用，不在这里替换或渲染原文。 */"
+  },
+  {
+    "path": "packages/game-contract/src/actions.ts",
+    "before": "export const ACTION_STAGES = [",
+    "after": "/** 保留阶段字面值及两个窗口枚举的原展开顺序；此清单不推进阶段或打开行动窗口。 */\nexport const ACTION_STAGES = ["
+  },
+  {
+    "path": "packages/game-contract/src/events.ts",
+    "before": "/**\n * Responsibility: define serialized game facts and projected player event data.\n * Input: pure identity, result and feature-payload contracts; output: the original\n * discriminated event map, required historical audience and player-local sequence\n * shapes. No component references, scopes, callbacks or runtime authority enter\n * these data contracts. Inert readers and engine publication own their distinct\n * validation and authorization boundaries; an event DTO never commits a rule.\n */",
+    "after": "/**\n * 负责领域事实和玩家可见事件的纯数据契约；输入为身份、结果与各族 payload 声明，\n * 输出为原判别事件映射、指定事实的历史 audience 以及玩家事件序号形状。\n * 声明不定义组件句柄、scope、回调或运行许可；数据读器、事实发表与玩家投影各持原验证／裁剪职责。\n * 历史事实不执行规则、不恢复库存或授权行动；类型声明不代替未知数据解析、复制或深冻结。\n */"
+  },
+  {
+    "path": "packages/game-contract/src/events.ts",
+    "before": "export interface EventBase<T extends string, P> {",
+    "after": "/** type 与 payload 由下方映射关联；timestamp 是原事实时间数据，不是行动期限或顺序证明。 */\nexport interface EventBase<T extends string, P> {"
+  },
+  {
+    "path": "packages/game-contract/src/events.ts",
+    "before": "export interface PrivatePlayerInfo {",
+    "after": "/** 上帝私有信息保原 string 字段宽度；其中 role／camp 是记录数据，不是现场组件或当前授权。 */\nexport interface PrivatePlayerInfo {"
+  },
+  {
+    "path": "packages/game-contract/src/events.ts",
+    "before": "/** Internal snapshot of an actual exile, delivered only by the following night's role stage. */",
+    "after": "/** 放逐反馈的当时 camp 查验标签副本；实际有效目标、捕获时点与下一夜交付归原规则／阶段，类型不证明目标已死。 */"
+  },
+  {
+    "path": "packages/game-contract/src/events.ts",
+    "before": "export interface EventPayloadMap\n",
+    "after": "/** 每种事实保原字段／可选性，并合入本族声明；记录名中的 committed 不单独证明完整业务或录制成功。 */\nexport interface EventPayloadMap\n"
+  },
+  {
+    "path": "packages/game-contract/src/events.ts",
+    "before": "  /** Public gun fact without disclosing whether the skill was native or copied. */",
+    "after": "  /** 公共开枪事实不披露技能原生或复制来源；不据该记录推断剩余枪权。 */"
+  },
+  {
+    "path": "packages/game-contract/src/events.ts",
+    "before": "export type GameEvent = {",
+    "after": "/** 指定私有事实必带发表时 audience；readonly 只约束类型写法，不冻结数组，历史受众不是现场权限表。 */\nexport type GameEvent = {"
+  },
+  {
+    "path": "packages/game-contract/src/events.ts",
+    "before": "/** Projected protocol; payload is intentionally open because projection/parsing is a wire boundary. */",
+    "after": "/** 玩家投影协议保 type／payload 的开放形状；seq 由实际 feed／读器处理，声明不保证连续，也不授行动许可。 */"
+  },
+  {
+    "path": "packages/game-contract/src/identity.ts",
+    "before": "export enum Camp {",
+    "after": "/** 阵营机器值与 Role 身份分开表达；当前阵营、胜利成员关系和玩家看到的标签由各自 owner 决定。 */\nexport enum Camp {"
+  },
+  {
+    "path": "packages/game-contract/src/identity.ts",
+    "before": "export enum Role {",
+    "after": "/** 角色名不固定推导当前阵营、胜负或狼队资格；现场身份与资源仍须原运行规则核对。 */\nexport enum Role {"
+  },
+  {
+    "path": "packages/game-contract/src/identity.ts",
+    "before": "export enum Phase {",
+    "after": "/** 原阶段标识及顺序保持；持有该值不推进时钟或打开某个具体窗口。 */\nexport enum Phase {"
+  },
+  {
+    "path": "packages/game-contract/src/identity.ts",
+    "before": "export enum WinCondition {",
+    "after": "/** 胜利政策标识只描述选择的规则，实际赢家／独立成员关系／观察标签不是从枚举自动计算。 */\nexport enum WinCondition {"
+  },
+  {
+    "path": "packages/game-contract/src/message-refs.ts",
+    "before": "/**\n * Owns the language-neutral message-reference shape used by action requests and\n * archival machine fields. Inputs are a closed MessageKey and optional readonly\n * string/number parameters; output is a serializable reference, never rendered\n * prose. Text formatting owns missing/extra/nonfinite parameter validation and\n * preserves custom user text. This interface grants no runtime action authority.\n */",
+    "after": "/**\n * 负责请求与档案机器字段使用的中立消息引用结构；输入为封闭 MessageKey 和可选 string／number 参数，\n * 输出保留原引用形状，不在此渲染文案或替换调用方／用户／模型原文。\n * 缺失、多余及非有限参数由实际文案格式化器验证；类型不创建运行许可或强制执行提示。\n * readonly 只是声明约束，不复制参数、深冻结数据或验证未知输入。\n */"
+  },
+  {
+    "path": "packages/game-contract/src/message-refs.ts",
+    "before": "  parameters?: Readonly<Record<string, string | number>>;",
+    "after": "  /** 可选参数仍保 string／number 宽度；是否有限及与 key 匹配须在渲染点验证。 */\n  parameters?: Readonly<Record<string, string | number>>;"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "  source: AbilitySource;",
+    "after": "  /** 来源判别字段保原形状；玩家是否可知由投影裁剪，声明不确认来源目前有效或提供转移权。 */\n  source: AbilitySource;"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "  disabled: boolean;",
+    "after": "  /** 共同旗标仅是实例元数据；原生命、抑制、具体资源与窗口准入仍须独立复验。 */\n  disabled: boolean;"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "/** 只取可投影元数据，重建披露后的来源；不继承内部 payload、抑制或披露标记。 */",
+    "after": "/** 只取可投影元数据，重建披露后的来源；不继承内部 payload、抑制或披露标记。\n * 这些字段与 kind/state 关联是玩家知识形状，类型不提供库存本体身份、授权或深冻结保证。 */"
+  }
+]

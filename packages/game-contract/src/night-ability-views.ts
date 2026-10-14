@@ -24,6 +24,7 @@ import type {
 export interface NightAbilityMetadata {
   /** 同 kind 可有不同来源实例；ID 只是标签，提交仍核实际库存对象、原生命与来源。 */
   id: string;
+  /** 来源判别字段保原形状；玩家是否可知由投影裁剪，声明不确认来源目前有效或提供转移权。 */
   source: AbilitySource;
   /** 内部披露标记；玩家 DTO 不携带它，来源字段仍由运行投影按原政策裁剪。 */
   sourceDisclosed: boolean;
@@ -37,6 +38,7 @@ export interface NightAbilityMetadata {
   uses: number;
   /** 明确空过也可能记日次而不增加 uses；不能由次数反推此日或统一封堵原生第二药。 */
   lastUsedDay: number | null;
+  /** 共同旗标仅是实例元数据；原生命、抑制、具体资源与窗口准入仍须独立复验。 */
   disabled: boolean;
   /** 本夜有限租约独立持有此阻塞，不能与持久 disabled 旗标合并，也不进入玩家 DTO。 */
   nightSuppression?: EclipseSuppression;
@@ -61,7 +63,8 @@ export interface PlayerNightAbilityStates {
   dream: PlayerDreamerState;
 }
 
-/** 只取可投影元数据，重建披露后的来源；不继承内部 payload、抑制或披露标记。 */
+/** 只取可投影元数据，重建披露后的来源；不继承内部 payload、抑制或披露标记。
+ * 这些字段与 kind/state 关联是玩家知识形状，类型不提供库存本体身份、授权或深冻结保证。 */
 export type PlayerNightAbility = {
   [K in NightAbilityKind]: Omit<
     NightAbilityMetadata,
