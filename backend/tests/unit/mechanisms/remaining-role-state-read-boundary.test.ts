@@ -23,7 +23,7 @@ import { getNightmareShadowState } from "../../../src/game/mechanisms/roles/nigh
 import {
   getMagicianState,
   projectMagicianState,
-} from "../../../src/game/mechanisms/roles/magician/state";
+} from "../../../src/game/mechanisms/roles/magician/state-slot";
 import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/state";
 import { getWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state";
 import { getTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/state";

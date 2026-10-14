@@ -1,10 +1,7 @@
 /**
- * Unit tests for magician; Isolated magician state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证魔术师原状态校验与脱离知识边界；输入为原内存 fixture、数据 descriptor、
+ * 明确非法修改和 Proxy。原引用／历史／字面拒绝断言作为预期，不在迁移中重新生成。
+ * 只调用原 reader／projection，不运行整局、模型或物理传输；原样本、标题和政策保持。
  */
 import { expect, test } from "bun:test";
 import { Camp, type Role, type RoleComponent } from "../../../../src/core";
@@ -12,7 +9,7 @@ import {
   createMagicianState,
   getMagicianState,
   projectMagicianState,
-} from "../../../../src/game/mechanisms/roles/magician/state";
+} from "../../../../src/game/mechanisms/roles/magician/state-slot";
 function fixture(firstNight: 1 | 2 = 1) {
   const state = createMagicianState(firstNight);
   const role = {

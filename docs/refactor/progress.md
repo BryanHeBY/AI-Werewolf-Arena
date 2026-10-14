@@ -694,3 +694,5 @@
 - P7/C35 checkpoint格式归属：三份完整存档格式移 recording/checkpoint，四真实消费者11specifier随同迁移、三旧leaf删除；格式解析/refine与独立verifier、实际snapshot写入职责分明，七源重要数据/失败前缀补中文。实际e45七Git整体非注释43515nodes/14mapped输出同、1825源69bindings/11route零旧literal，首Node Git EPERM仅修取证、首Node ambient缺失仅修config后有限七根末196658真实0。正式名夜之贵族单头桥不重绿。Root及独立全格式/四consumer/实际Git/七SHA三删除和证据审批准，无类型/test/fullgate重复，最终跨构建归档/P9仍待，见 checkpoint-format-owners.md。
 
 - R01/C24 秘密之身放逐公开端口：两源新增同族窄 exile-ports，Voting仅一导入路径改公开facet，遵循原C04根级出口规则；原owner算法和重型ports未改。Root与独立实际4ddf/Voting全文逆向、两个真实TS出口/运行函数identity及末source/scope/doc/evidence审批准，原两整mapped输出/两根首次有限类型/新一职责头实际0，不重原行为测试或全门禁。新入口中文说明输入输出、加载范围与失败所有者，核心其它机制耦合仍续，见 secret-body-exile-port.md。
+
+- C17 魔术师唯一状态槽：15路径（14现行/1旧leaf删除），完整创建/live schema/get/project与原init/history写/身份JSON归同族，frame保原体生命、夜窗口、关系与expectedState；public ports同绑定只读/投影，12consumer完整切换。Root真实e45十三Git完整forward/四Gitcurrent controls与独立全writer/消费者/新三风险例/中文契约、14SHA/删除审批准；原四producer+12完整consumer14502typed/32raw、281→283bindings/94module图采样保真，外部actions后继type-only变动不冒全部图当下冻结。新3/25+原精准Frame1/16两次四不同41assert，14root3497200及14headf1140a0采529doc；末head/create排版双输出桥不伪纯comment或重绿。槽只收原写步骤而非新许可，已写历史不回滚；全部C17/P9继续，见 magician-state-slot.md。

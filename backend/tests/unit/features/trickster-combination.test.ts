@@ -22,7 +22,7 @@ import {
   closeMagicianNight,
 } from "../../../src/game/mechanisms/roles/magician/night_frame";
 import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/state";
-import { getMagicianState } from "../../../src/game/mechanisms/roles/magician/state";
+import { getMagicianState } from "../../../src/game/mechanisms/roles/magician/state-slot";
 function fixture() {
   const g = bootstrapGame(structuredClone(tricksterTwelveConfig));
   const role = (id: number) => g.world.getComponent(id, COMPONENT.Role)!;

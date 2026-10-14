@@ -10,7 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { MAGICIAN_POLICY, createMagicianState, getMagicianState } from "./state";
+import { MAGICIAN_POLICY, MAGICIAN_STATE_SLOT, getMagicianState } from "./state-slot";
 import { magicianChoicePending, magicianChoiceTargets } from "./night_frame";
 import { MAGICIAN_EXCHANGE_STAGE } from "./night_stages";
 const parameters = z.strictObject({
@@ -44,10 +44,8 @@ export const MAGICIAN_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     init: (role, ctx) => {
       const value = parameters.parse(ctx.boardConfig?.magician ?? {});
-      role.privateState.magician = createMagicianState(
-        value.firstNight,
-        value.deathShotTargetPolicy,
-      );
+      // 原左值容器先于 create 参数读取；仅移交这次赋值，不提前取状态或冻结初始化结果。
+      MAGICIAN_STATE_SLOT.install(() => role.privateState, value);
     },
     configuration: {
       schema: parameters,

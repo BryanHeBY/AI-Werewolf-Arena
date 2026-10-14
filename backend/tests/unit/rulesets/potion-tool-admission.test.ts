@@ -17,7 +17,7 @@ import { findNightAbility, type NightAbility } from "../../../src/game/mechanism
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
 import type { ToolRule, ValidationRuleContext } from "../../../src/game/mechanisms/validation/contracts";
-import { createMagicianState } from "../../../src/game/mechanisms/roles/magician/state";
+import { createMagicianState } from "../../../src/game/mechanisms/roles/magician/state-slot";
 import { installMagicianBoard, beginMagicianNight, commitMagicianExchange } from "../../../src/game/mechanisms/roles/magician/night_frame";
 
 function fixture(actorRole: Role = Role.Villager) {

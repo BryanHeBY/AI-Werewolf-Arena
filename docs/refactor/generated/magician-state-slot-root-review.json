@@ -1,0 +1,122 @@
+{
+  "reviewer": "/root",
+  "approved": true,
+  "baseCommit": "e45c972b2a271a09bce51c103399af66714fc527",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "change": "modified",
+      "beforeSHA256": "0f5efa3a65c5d59a60446d5e72eae1a77c31fd356082e24e45d2bbef6e0d2fb4",
+      "sha256": "af7134d30fcbe086a471fad6489d5ef0ddabef978fb99545de5c9f783796265f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "change": "modified",
+      "beforeSHA256": "5893304c47d830c6b36e942f7426ca4efd3124ad9ee1180b3022460263725b53",
+      "sha256": "ed57d13be59680398cfc96aa59e2aa46bc8d390131630d36dd93be6f48614f8d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "change": "modified",
+      "beforeSHA256": "30db7757d3fe45076036a62db6ec054af752c5dcc91c19c0ad73cba24ba5ace6",
+      "sha256": "0ad1e7fa7efeba6e12a155cf03287eaf5947529f5453ad9731328109eb5da3dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "change": "modified",
+      "beforeSHA256": "a9ae82143eefdb660e5888caa2397669519013388050a421c4102e6cf3769070",
+      "sha256": "c4d7cc002c3ee614dba1735d56cf3ef4ccc464f5a69c2b8aa7ffd48a1ca1a574"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "change": "modified",
+      "beforeSHA256": "8310a635b34a995bedf1935302b4f0594b26a192280bc09511391e1d1277cd68",
+      "sha256": "b3dbf876fee5fca9bd98b7f2f562aa61e1bc29950286678b0aa1db858c8ded46"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state.test.ts",
+      "change": "modified",
+      "beforeSHA256": "f6288d626af79c0abb5184ee3983f213d5d8ffebdc868dd08d9879c6f440952c",
+      "sha256": "14379d9cb95e98121e508f1eec1b62018afbf8befe4c3f12461f7bb2b9d58f9d"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/frame.test.ts",
+      "change": "modified",
+      "beforeSHA256": "72131caf8ff6b03cf3427dc6926971edb4d1e12d2c1410c1508913c3d8ff8d87",
+      "sha256": "d8b930a163b01f4343a5a5071dddb0976abb59c57e8d649bfbb4b9b63876e30e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "change": "modified",
+      "beforeSHA256": "0bdcdecdc7b56aa6609845ee3c72d086b9b7b3fafabff9118a3ce347b5de3891",
+      "sha256": "a63d2f507bd3ff61a7e6d060341d9c268b9121429ae2d9096943305e71268f36"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "change": "modified",
+      "beforeSHA256": "63a3999cc164c8602dec99b45b3d55bc4cb48b863aba25bce9da4b588dec7156",
+      "sha256": "9bbe0b450a1565c449ef45eedcef6e1f478c2eb0f5d9116dd97cfa452d62c0dd"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "change": "modified",
+      "beforeSHA256": "dc271d7cc9ed57a8b4a28b3439bffb2acb2e12027354e0c4352c6022d6aaa10b",
+      "sha256": "9d4637c0c1e2254c9f0d2a36903c3c6fc2979787494ae35101bbda01a7e6e799"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "change": "modified",
+      "beforeSHA256": "468d24e6f5a3bd2215785add5254773180a87c1d577e4e6d39316c0b1980efe1",
+      "sha256": "e6e5a0ea82fe50dbbd4cfda5f1df0471db3a18f5ccc1ebac9206e230747efd68"
+    },
+    {
+      "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+      "change": "modified",
+      "beforeSHA256": "f47e232285286df738f61b9e67a2675d8e994cb8e2e38b46b4c1c3e9ade6f5bd",
+      "sha256": "dd85ec7af0cdf20445882da37ed3d05aa7f65f31faa432a2e6bd4863c9e7ad66"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "change": "added",
+      "origin": "backend/src/game/mechanisms/roles/magician/state.ts",
+      "sha256": "2ef61558492f88de68ed1744a768d26f15118298f88c71ad2aa57b308a084009"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state-slot.test.ts",
+      "change": "added",
+      "sha256": "c835b28aaa7610f4c68cfb4fb88a9c667244bd0103b87904f45339f7b2754080"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+      "sha256": "734a7bfc900fd06efdb45668074bf4e7deed866f3c456e982b1b7069fb7fdb05",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/magician-state-slot-scope-final.json",
+    "sha256": "5950f5c24245ae51f9d0ab4e886fdb15a2dabe7eaf27f6dab25a8efcd2419c9d"
+  },
+  "documentation": {
+    "path": "docs/refactor/magician-state-slot.md",
+    "sha256": "3f2ffe10916324cd1980107d3287e485d05dc6434cce647f137618d581fb964d"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/magician-state-slot-evidence.json",
+    "sha256": "6ca5f7a44a6acd9824baa5ff4f41e9326b5a20a711d5d3aaa7732ea900d376b6"
+  },
+  "checks": [
+    "完整新slot/newunit、profile/frame/stages/ports与Observation和七旧消费者diff全文已读。216f20独立实际e45十三Git完整原文及精准forward到最终十三源同，四实际Git/current controls同。",
+    "原descriptor/Proxy/字段/history排序与号码校验接受面保持；get/schema同原引用，project嵌套history/pair脱离但可写。",
+    "init原左值容器→参数→setter；history defineProperty callee→两次state/history→原descriptor/pair引用；之后expectedState JSON→frame pair/committed。编码失败保已写history并保持旧检查点撤权。",
+    "slot方法表冻结不是状态冻结或许可屏障；原体、夜窗口、mapping及death政策仍frame唯一拥有。",
+    "原4producer与12完整consumer/14502typed/32mapped输出、281→283 binding、newslot94module有界静态图和末layout桥证据已读，不重执行。",
+    "新3/25和旧精准1/16为四不同41断言；14root有限type349720实际0、14headf1140a0采529doc；首与最终桥阶段说明真实。"
+  ],
+  "limits": [
+    "只批准一个完整状态职责边界；全C17/冷初始化/整局/全部请求许可/矩阵/P9验收仍待。",
+    "新表、调用层与原路径退休是明确API/layout变化；未改原档案/历史hash。",
+    "Root未重已绿proof/types/tests/head/fullgate/model；等待独立peer最终绑定。"
+  ]
+}

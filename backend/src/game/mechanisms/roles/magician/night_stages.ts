@@ -1,21 +1,21 @@
 /**
- * Runs the Magician exchange request before remapped night abilities. Inputs are the installed
- * night frame and validated pair selection; outputs are the original exchange event and
- * authority commit. The stage never applies target mapping eagerly through a prompt; the frame
- * supplies the later receipt.
+ * 负责在被映射的夜间行动之前请求魔术师交换；输入为已安装 frame、原请求和经预检的二人选择。
+ * 输出为原交换提交及本人私有事实；等待前后仍复核原体／阶段／日次，不把提示候选当成付款或许可。
+ * 数据校验归本族 state-slot，关系／窗口归 frame；本阶段保持先 commit 后发布的失败前缀，
+ * 不提前通过提示执行目标映射，后续行动仍取得原映射回执。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { getMagicianState } from "./state";
+import { getMagicianState } from "./state-slot";
 import {
   assertMagicianRosterCurrent,
   beginMagicianNight,
   commitMagicianExchange,
   magicianChoiceTargets,
 } from "./night_frame";
-/** Runs from the configured role set, including after the magician's death. */
+/** 按板子已配置角色集运行，包括魔术师已死亡时的原开夜路径；是否出请求仍由 frame 判断。 */
 export const MAGICIAN_EXCHANGE_STAGE: NightStageHandler = {
   id: "magician_exchange",
   priority: 80,

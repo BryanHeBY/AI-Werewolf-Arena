@@ -1,0 +1,282 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "baseCommit": "e45c972b2a271a09bce51c103399af66714fc527",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "sha256": "af7134d30fcbe086a471fad6489d5ef0ddabef978fb99545de5c9f783796265f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "ed57d13be59680398cfc96aa59e2aa46bc8d390131630d36dd93be6f48614f8d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "sha256": "0ad1e7fa7efeba6e12a155cf03287eaf5947529f5453ad9731328109eb5da3dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "sha256": "c4d7cc002c3ee614dba1735d56cf3ef4ccc464f5a69c2b8aa7ffd48a1ca1a574"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "b3dbf876fee5fca9bd98b7f2f562aa61e1bc29950286678b0aa1db858c8ded46"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state.test.ts",
+      "sha256": "14379d9cb95e98121e508f1eec1b62018afbf8befe4c3f12461f7bb2b9d58f9d"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/frame.test.ts",
+      "sha256": "d8b930a163b01f4343a5a5071dddb0976abb59c57e8d649bfbb4b9b63876e30e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "a63d2f507bd3ff61a7e6d060341d9c268b9121429ae2d9096943305e71268f36"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "sha256": "9bbe0b450a1565c449ef45eedcef6e1f478c2eb0f5d9116dd97cfa452d62c0dd"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "sha256": "9d4637c0c1e2254c9f0d2a36903c3c6fc2979787494ae35101bbda01a7e6e799"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "sha256": "e6e5a0ea82fe50dbbd4cfda5f1df0471db3a18f5ccc1ebac9206e230747efd68"
+    },
+    {
+      "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+      "sha256": "dd85ec7af0cdf20445882da37ed3d05aa7f65f31faa432a2e6bd4863c9e7ad66"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "sha256": "2ef61558492f88de68ed1744a768d26f15118298f88c71ad2aa57b308a084009"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state-slot.test.ts",
+      "sha256": "c835b28aaa7610f4c68cfb4fb88a9c667244bd0103b87904f45339f7b2754080"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+      "sha256": "734a7bfc900fd06efdb45668074bf4e7deed866f3c456e982b1b7069fb7fdb05",
+      "expectedAbsent": true,
+      "actualExpectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/magician-state-slot-scope-final.json",
+    "sha256": "5950f5c24245ae51f9d0ab4e886fdb15a2dabe7eaf27f6dab25a8efcd2419c9d"
+  },
+  "documentation": {
+    "path": "docs/refactor/magician-state-slot.md",
+    "sha256": "3f2ffe10916324cd1980107d3287e485d05dc6434cce647f137618d581fb964d"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/magician-state-slot-evidence.json",
+    "sha256": "6ca5f7a44a6acd9824baa5ff4f41e9326b5a20a711d5d3aaa7732ea900d376b6"
+  },
+  "handoff": {
+    "path": "docs/refactor/generated/magician-state-slot-handoff.md",
+    "sha256": "b05e1dac85b37f0b33ffc6c765e3b4ce254f2d42e5b79e0381bd15cd3e991dad"
+  },
+  "findings": [],
+  "independentSourceChecks": {
+    "present": 14,
+    "deleted": 1,
+    "freshSourceMismatches": 0,
+    "wholeActualGitBefore": 13,
+    "beforeMismatches": 0,
+    "wholeActualGitAndCurrentControls": [
+      {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "sha256": "d18e67cbd208938a911938057e260500419210f5252d1ae4defe56666eef7520"
+      },
+      {
+        "path": "backend/src/verification/reproduction/magician/validate.ts",
+        "sha256": "036a0aa60622b6697935b6f2643ccb7b92e35487ded1a75243ad76c022efd19e"
+      },
+      {
+        "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+        "sha256": "ab4f30d7acfe93fd38dc0f7ebe7460470397e66b62fa8fed8b46acd545b8dad3"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/night-lifecycle.ts",
+        "sha256": "30e73ab92a4644ce7a9adb832e45f75f8abbde5bfa82b8d9af42f00928162acc"
+      }
+    ],
+    "controlMismatches": 0,
+    "artifactCount": 18,
+    "artifacts": [
+      {
+        "path": "docs/refactor/generated/magician-state-slot-before.json",
+        "sha256": "614f863fde0d6367f2384c41ef587da26b1fd1fbb60cfae89af78e74a024f1cd"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-edits.json",
+        "sha256": "847b151cf8651bdcd26ed10634607ad34166748cf64c7f55f859cb515a6b1123"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-proof.cjs",
+        "sha256": "c289330b4fce5e88dde38dca90504d8168c0a9f6d8b465f5142a5f406605dd30"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-proof.json",
+        "sha256": "f4b65a8f616de6e31f7a761d26d82a153f5fe07377221004ed49e0847c1ccdbd"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-proof.log",
+        "sha256": "cd6da34c37a94539d1e7eb7ea8544fea0971d12e6330e33b3ba68640cf65fb65"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-bindings.cjs",
+        "sha256": "b58a1d4b693c95cb3bd568cd6827c6b4efee7dac4cc31bb6aba789fece48600c"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-bindings.json",
+        "sha256": "0a72cbfda8c0d603d8ea1f9370e4dc08513c1203c84a2bb08995d06dcb0dd679"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-bindings.log",
+        "sha256": "3a86c77bcfc573c6b27862886db50861f5f4ee1da94fc4c7a8449da070af2272"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-heads.ts",
+        "sha256": "900eb7bfb2f441bcc52482c2514c5e0dfb980c2fda48a586a5cfba6179875438"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-heads-first.json",
+        "sha256": "fd82964bd6ef0654d5b2a3d443d1475fc85fd88abc73a8ac552c3a014cc3c913"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-heads.log",
+        "sha256": "f7153aa6fdf4f23291f56e437e603d3c07ed4ed94f2e2c19c334248b1e79c4d0"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-types-config.json",
+        "sha256": "99fa4e727c0cb7a68dfda16bfe68cf01bcde46421470b968b4daa64c70e930d3"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-types.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-new-tests.log",
+        "sha256": "f60a7a0a5364fd959dab5cc972efd44bb1a91457cea2f143cd6d4ec3fa1484c8"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-original-test.log",
+        "sha256": "3e3c6939030887808936ffb17ff6a1b12c551236941682568787e8482f42fde8"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-slot-before-final-layout.json",
+        "sha256": "e56f74064c12bc6fba9c9936749a7cfbe6b0fbbd1e47237a4884ff407e969648"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-receipts.json",
+        "sha256": "55741173c64de1b72479d3bf7bdecec3714c8583c164847296559f1f68446f10"
+      },
+      {
+        "path": "docs/refactor/generated/magician-state-slot-scope-final.json",
+        "sha256": "5950f5c24245ae51f9d0ab4e886fdb15a2dabe7eaf27f6dab25a8efcd2419c9d"
+      }
+    ],
+    "artifactMismatches": 0
+  },
+  "review": {
+    "ownership": "状态槽收完整原create/live schema/read/project、初始化赋值、descriptor历史追加、原运行JSON身份编码；没有第二store或档案schema。frame独占原体/life/night、交换pair与expectedState检查点；表和子表冻结不冻结输入数据或给调用者授权。",
+    "acceptedInputs": "完整读旧Git state及新slot：Proxy先拒、own data descriptor、exact keys、firstNight/shotpolicy、日次严格递增、二人升序及全局号码不重用、null不消耗号码均原样；get返回原state，project复制history和pair且原DTO可写。schema与get同函数，不新添更严格validator。",
+    "installOrder": "实际旧profile左值role.privateState先于两value参数/原create调用与setter；新install捕获容器thunk后在原赋值位置执行，不缓存原私有state。新增表查找/调用层/分配是明确API布局变化，不声称任意namespace重绑定等价。",
+    "writeAndFailurePrefix": "actualappend先读Object.defineProperty callee，再第一state/history、String第二state/history.length，再原descriptor写chosen同ref；frame在原history写后刷新identity，之后才freeze pair与committed。JSON失败不回滚history，旧expectedState仍会撤销后续映射；callee throw尚不读state。",
+    "frameAndLifecycle": "完整night_frame读原体身份/生命descriptor/version及requireBoard当前性、night开启/关闭/abort/cancel、W(raw)→M、death_shot与original/exchanged条件均保；没有借状态槽改目标死亡条件、恢复已消耗号码或新授许可。",
+    "stageAndObservation": "stage只改state导入与中文说明，原前后复验/Provider await/commit→private event保持；Observation只改project import为同族ports，实际投影body和所有旧测试断言不变。ports直接同binding导出get/project，不复制校验或渲染。其公开aggregate加载面有意变化，仅slot-root94静态值图受检，不把它冒Observation完整冷初始化证明。",
+    "chinese": "新结构说明原live引用/脱离投影/expectedState运行身份/方法表不深冻与失败前缀准确；frame和stage关闭、await前后复验、一次普通死亡及复合映射注释符合原代码。旧state模块真实退休，所有字符串和机器字段保持。"
+  },
+  "authorEvidenceRead": {
+    "programs": "完整读proof.cjs的void完整walker、NodeArray/全token、实际新slot函数抽取和窄字段替换，完整core旧state、identity、append、install四程序及12whole消费者真实展开逆，不恢复整个旧body；14502 typed节点、32whole输出为作者78b421报告，本审未执行。newunit不属于这些旧程序对照，独立SHA及真实3风险测试另验证。",
+    "bindings": {
+      "consumerPrograms": 12,
+      "beforeBindings": 281,
+      "afterBindings": 283,
+      "unchangedBindings": 262,
+      "reroutedBindings": 19,
+      "retiredFactoryImport": 1,
+      "newTableAndProjectBindings": 3
+    },
+    "physicalEndpoints": 6,
+    "inventory": "作者1721source allliteral形式28canonical、0retired及backend/scripts补搜无匹配；不推断计算表达式/仓外消费者。",
+    "graph": {
+      "sampledModules": 94,
+      "sampledEdges": 286,
+      "root": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "forbiddenBackEdges": [],
+      "foreignCurrentChanges": [
+        {
+          "path": "backend/src/core/domain/actions.ts",
+          "capturedSHA256": "7d0dfd77956ae9c154855f776c2e699d7844e8fe73ae5bbaf14b6801548a44b2",
+          "currentSHA256": "523c8774f3cc5d3598871bf45698d9951a61f43aa1bcb0fc0a8ab7be77eeea49"
+        }
+      ],
+      "restriction": "原静态图采样保留。core/domain/actions后继属于Root另六源纯类型接口批，不属于Magician15；不将采样94全当前字节宣称冻结，不重图或编译。"
+    },
+    "runtime": {
+      "executions": 2,
+      "distinctCases": 4,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 41,
+      "wholeSuite": false
+    },
+    "types": {
+      "rootFiles": 14,
+      "configuration": "docs/refactor/generated/magician-state-slot-types-config.json",
+      "launchChunk": "25b560",
+      "sessionId": 8883,
+      "terminalChunk": "349720",
+      "actualExitCode": 0,
+      "log": "docs/refactor/generated/magician-state-slot-types.log",
+      "note": "真实 tool terminal 退出 0；空日志本身不是关闭或绿的证据。一次有限输入，不重全生产门禁。"
+    },
+    "heads": {
+      "toolChunk": "f1140a",
+      "actualExitCode": 0,
+      "sourceFiles": 14,
+      "actualGitDocumentationPaths": 529,
+      "diagnostics": [],
+      "report": "docs/refactor/generated/magician-state-slot-heads-first.json",
+      "log": "docs/refactor/generated/magician-state-slot-heads.log"
+    },
+    "finalLayout": {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "beforeSHA256": "a2b984a57e71f06eb27ac2ea31f866ce4ae8462b2356a1b1e92e2bbcd52aa1aa",
+      "sha256": "2ef61558492f88de68ed1744a768d26f15118298f88c71ad2aa57b308a084009",
+      "exactInverse": true,
+      "delta": "仅首头不另说明及原create调用换行／尾逗号恢复，不改变参数、类型、分支或时序；首收据不重跑。",
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "originalSHA256": "bafacaa9b1c2877b2c10e53e12d31e2e241a108896b53649b0fbd12e236eee6c",
+          "finalSHA256": "bafacaa9b1c2877b2c10e53e12d31e2e241a108896b53649b0fbd12e236eee6c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "originalSHA256": "021b6675bf127fdb7ad2a6a5dac768bb4433dda21dcdfc28df625a3f23924e9f",
+          "finalSHA256": "021b6675bf127fdb7ad2a6a5dac768bb4433dda21dcdfc28df625a3f23924e9f"
+        }
+      ]
+    }
+  },
+  "limits": [
+    "本独立审查只读真实源码/Git/哈希/证据和全部scope diff，未运行任何测试、type、proof或gate。",
+    "新3/25与旧精准1/16两执行4unique41；14root349720真实0沿作者终态归属，空log非依据。",
+    "首运行/type/head来自prefinal a2b984；最终2ef615只head/原create换行尾逗号桥，不称纯注释或重跑绿。",
+    "原物理state路径退出与方法表增加是明确API/init/call-stack变化；localidentity不等于archivecodec，当前sourceHash变化不放宽历史Tape。",
+    "本族C17部分职责收口，不宣称所有payload、许可、快照/归档或最终行为验收完成。"
+  ]
+}

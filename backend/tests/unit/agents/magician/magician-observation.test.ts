@@ -15,7 +15,7 @@ import {
   beginMagicianNight,
   commitMagicianExchange,
 } from "../../../../src/game/mechanisms/roles/magician/night_frame";
-import { getMagicianState } from "../../../../src/game/mechanisms/roles/magician/state";
+import { getMagicianState } from "../../../../src/game/mechanisms/roles/magician/state-slot";
 for (const locale of ["zh-CN", "en"] as const)
   test(
     "Magician observation owns detached frozen history and never exposes another actor's mapping/" +

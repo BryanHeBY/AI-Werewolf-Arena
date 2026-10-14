@@ -1,8 +1,8 @@
 /**
- * Owns Magician night exchange bindings and target-remapping receipts. Inputs are original
- * player bodies and the paired choice; outputs preserve current mappings, cancellation and
- * close/abort behavior. It never lets a stale source redirect a later native action using the
- * old exchange.
+ * 负责魔术师夜间交换原体绑定、当前窗口和目标映射回执；输入为原玩家生命／身份和二人选择。
+ * 输出为仍当前的映射及原关闭／取消结果；boards 唯一拥有夜关系和状态身份检查点，state-slot
+ * 只执行原数据读写／编码。当前性失败不修复原体或恢复已经使用的号码，不让旧交换续权。
+ * 先校验原体，再写历史、刷新 expectedState、安装本夜 pair 并提交窗口；后续失败不回滚已写前缀。
  */
 import type { MagicianReadState } from "@ai-werewolf-arena/game-contract";
 import { isWolfSorcererBoard, resolveWolfSorcererNightTarget } from "../wolf_sorcerer/night_frame";
@@ -15,7 +15,7 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import type { NightLifeScope } from "../../../../core/domain/night_effects";
-import { getMagicianState, projectMagicianState, MAGICIAN_ROLE } from "./state";
+import { getMagicianState, projectMagicianState, MAGICIAN_ROLE, MAGICIAN_STATE_SLOT } from "./state-slot";
 
 interface OriginalPlayer {
   id: number;
@@ -37,6 +37,7 @@ interface ExchangeNight {
   pair: readonly [number, number] | null;
   targets: ReadonlyMap<number, OriginalPlayer>;
 }
+/** state 是原 live 引用，expectedState 是原投影 JSON 身份；同内容替换 state 仍不能通过原体检查。 */
 interface Board {
   actorId: number;
   state: MagicianReadState;
@@ -45,11 +46,6 @@ interface Board {
   night: ExchangeNight | null;
 }
 const boards = new WeakMap<World, Board>();
-function stateIdentity(role: RoleComponent): string {
-  const view = projectMagicianState(role);
-  if (!view) throw new Error("magician_original_state_revoked");
-  return JSON.stringify(view);
-}
 function ownData(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -81,7 +77,7 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
   )
     return false;
   const version = aliveLifeVersion(p.life);
-  // A committed exchange survives one ordinary death, never revival or another life.
+  // 已提交交换可跨一次普通死亡保留；复活或换生命不能用同编号继续原关系。
   return p.life.alive ? version === p.version : version === p.version + 1;
 }
 function requireBoard(world: World): Board {
@@ -95,7 +91,7 @@ function requireBoard(world: World): Board {
   )
     throw new Error("magician_original_state_revoked");
   const actor = b.players.get(b.actorId)!;
-  if (getMagicianState(actor.role) !== b.state || stateIdentity(actor.role) !== b.expectedState)
+  if (getMagicianState(actor.role) !== b.state || MAGICIAN_STATE_SLOT.checkpoint.identity(actor.role) !== b.expectedState)
     throw new Error("magician_original_state_revoked");
   return b;
 }
@@ -168,7 +164,7 @@ export function installMagicianBoard(world: World): void {
   boards.set(world, {
     actorId,
     state,
-    expectedState: stateIdentity(players.get(actorId)!.role),
+    expectedState: MAGICIAN_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role),
     players,
     night: null,
   });
@@ -245,13 +241,9 @@ export function commitMagicianExchange(
       throw new Error("magician_choice_target_invalid");
     chosen = a < z ? [a, z] : [z, a];
   }
-  Object.defineProperty(b.state.history, String(b.state.history.length), {
-    value: { day, pair: chosen },
-    writable: true,
-    enumerable: true,
-    configurable: true,
-  });
-  b.expectedState = stateIdentity(b.players.get(actorId)!.role);
+  // 槽内仍先找 defineProperty callee，再两次晚读 state/history；成功写历史后才推进原 frame 检查点。
+  MAGICIAN_STATE_SLOT.allowedWrites.appendHistory(() => b.state, day, chosen);
+  b.expectedState = MAGICIAN_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role);
   n.pair = chosen && Object.freeze([chosen[0], chosen[1]] as [number, number]);
   n.committed = true;
 }
@@ -273,8 +265,8 @@ export function resolveMagicianNightTarget(
   const original = b.players.get(requestedId);
   if (!original || !original.life.alive) throw new Error("magician_target_invalid");
   const originalShot = kind === "death_shot" && b.state.deathShotTargetPolicy === "original";
-  // A second swap exchanges occupants of positions; resolve W(raw) before M.
-  // Intermediate occupants may already be dead in a night death-shot chain.
+  // 原复合映射先解狼术师 W(raw)，再解魔术师 M；交换的是位置中的占有者。
+  // 夜间死亡枪链的中间占有者可能已死，不能提前按普通夜行动的目标生命拒绝。
   const second = isWolfSorcererBoard(world)
     ? resolveWolfSorcererNightTarget(
         world,
@@ -348,13 +340,13 @@ export function magicianChoicePending(world: World, actorId: number, day: number
   );
 }
 
-/** Cleanup only: never validates or repairs a revoked roster, and never records a choice. */
+/** 仅封住已存在的夜窗口；不校验／修复撤权原体，也不制造选择或追回已消费号码。 */
 export function abortMagicianNight(world: World): void {
   const n = boards.get(world)?.night;
   if (n) n.closed = true;
 }
 
-/** Cancel only the current matching pair; committed number consumption stays in history. */
+/** 只取消当前匹配 pair 的映射，已经提交的号码消耗仍在历史中，不退款或改写状态槽。 */
 export function cancelMagicianExchangeIfMatching(
   world: World,
   day: number,

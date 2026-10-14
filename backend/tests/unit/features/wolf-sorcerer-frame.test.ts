@@ -7,7 +7,7 @@ import { WOLF_SORCERER_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/w
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type World, type RoleComponent } from "../../../src/core";
 
-import { createMagicianState } from "../../../src/game/mechanisms/roles/magician/state";
+import { createMagicianState } from "../../../src/game/mechanisms/roles/magician/state-slot";
 import { createWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state";
 import {
   installMagicianBoard,

@@ -1,0 +1,577 @@
+{
+  "baseCommit": "e45c972b2a271a09bce51c103399af66714fc527",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "sha256": "af7134d30fcbe086a471fad6489d5ef0ddabef978fb99545de5c9f783796265f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "ed57d13be59680398cfc96aa59e2aa46bc8d390131630d36dd93be6f48614f8d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "sha256": "0ad1e7fa7efeba6e12a155cf03287eaf5947529f5453ad9731328109eb5da3dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "sha256": "c4d7cc002c3ee614dba1735d56cf3ef4ccc464f5a69c2b8aa7ffd48a1ca1a574"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "b3dbf876fee5fca9bd98b7f2f562aa61e1bc29950286678b0aa1db858c8ded46"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state.test.ts",
+      "sha256": "14379d9cb95e98121e508f1eec1b62018afbf8befe4c3f12461f7bb2b9d58f9d"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/frame.test.ts",
+      "sha256": "d8b930a163b01f4343a5a5071dddb0976abb59c57e8d649bfbb4b9b63876e30e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "a63d2f507bd3ff61a7e6d060341d9c268b9121429ae2d9096943305e71268f36"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "sha256": "9bbe0b450a1565c449ef45eedcef6e1f478c2eb0f5d9116dd97cfa452d62c0dd"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "sha256": "9d4637c0c1e2254c9f0d2a36903c3c6fc2979787494ae35101bbda01a7e6e799"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "sha256": "e6e5a0ea82fe50dbbd4cfda5f1df0471db3a18f5ccc1ebac9206e230747efd68"
+    },
+    {
+      "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+      "sha256": "dd85ec7af0cdf20445882da37ed3d05aa7f65f31faa432a2e6bd4863c9e7ad66"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "sha256": "2ef61558492f88de68ed1744a768d26f15118298f88c71ad2aa57b308a084009"
+    }
+  ],
+  "deleted": {
+    "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+    "sha256": "734a7bfc900fd06efdb45668074bf4e7deed866f3c456e982b1b7069fb7fdb05",
+    "expectedAbsent": true
+  },
+  "actualProducerPrograms": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "typedNodes": 800,
+      "noncommentLeaves": 944,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "85e81d4019680011073bc2dab69446e657c048cd77ef0c3c899980e670df840d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "ac90c72a702c70fed229667549eebd96741d78ac78f699a00f57ebe4065f0eae"
+        }
+      ]
+    },
+    {
+      "path": "actual-state-identity.ts",
+      "typedNodes": 30,
+      "noncommentLeaves": 40,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "f8998db36cbb560acb795df3fc6d7fdd5d00f08e51caa6db3c0d7fb1953159dc"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "f8998db36cbb560acb795df3fc6d7fdd5d00f08e51caa6db3c0d7fb1953159dc"
+        }
+      ]
+    },
+    {
+      "path": "actual-history-write.ts",
+      "typedNodes": 39,
+      "noncommentLeaves": 48,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "ef16487178f912694927dbacdb95720bd3712e2023af0f83ad0d529dd2c5e3e5"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "ef16487178f912694927dbacdb95720bd3712e2023af0f83ad0d529dd2c5e3e5"
+        }
+      ]
+    },
+    {
+      "path": "actual-state-install.ts",
+      "typedNodes": 18,
+      "noncommentLeaves": 19,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "7aee6ea6580fd7774e87c275b1417bdf824c629402be7bb63bbb328621959f2a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "7aee6ea6580fd7774e87c275b1417bdf824c629402be7bb63bbb328621959f2a"
+        }
+      ]
+    }
+  ],
+  "wholeConsumerPrograms": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "typedNodes": 645,
+      "noncommentLeaves": 782,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "821d6764b374d338d0fcb55d92cf6cf9a6557244f107e143dfa0d1af76a2e80f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "589ad90276e4062883c1981f946932ae1759a668bffcfc1c6f322c628676af65"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "typedNodes": 2416,
+      "noncommentLeaves": 2712,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "33bd356d2edd69c681e1ce87dbcc5fbb26122d4766b42345c46560d83529e187"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "fc7b946158fa6cabdec20f916e8cab1508a053ad0a12f28c49567f63b3f62ab5"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "typedNodes": 366,
+      "noncommentLeaves": 463,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "4901fde72da0cf832d1b6087d9ebab4a437cca95a7f8a0787f5d8d0e0bb6243d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "6a395d33f7389ff7281ef3a2955ca46fddcd0f57d2856f112fc3f5431ba5701c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "typedNodes": 38,
+      "noncommentLeaves": 51,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "b864b9bfa76e0bae0ffc6304189399254713e55bb3fc454e1ae1f79caaffeeeb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "d9146cd1945da7704d77ffdb5e072e7b57610ca9a4e79884463e48974b7c1a32"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "typedNodes": 2494,
+      "noncommentLeaves": 2905,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "92ca12d885cb3a37da0e05e8829e51499ddd7c739335db7eab9e7f7ebf42f082"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "fdd27b81b116cce34b258527303f7a749dd4420c28192b1a6f8424ccf2fe0f5f"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state.test.ts",
+      "typedNodes": 864,
+      "noncommentLeaves": 1127,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "14dcf92aaef11fe9fd6df1f20dce6c6590f5a47da0563765573a9e7cd2175f09"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "7b661403ca521e6711ac7bbd9b94f46a0b3f3599b1f16edaad5b5b83b6ac0cf7"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/magician/frame.test.ts",
+      "typedNodes": 1664,
+      "noncommentLeaves": 2247,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "8361b83da00f3e0e70e48e3e63a0f4241384d8c48305aab5885dbaa82a42fe5a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "4761d7e1a97bb5ab2f4c89754acf046d9a572fccb54faf19e549197c4632aa65"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "typedNodes": 973,
+      "noncommentLeaves": 1194,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "a49e6114ac245b007d1758f83e7c855899eb29824da63e19177a6ea9d4dc5e56"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "819923691f83770f78202262c942fcbf19661180b2b50cf80413eccdc2bf98d6"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "typedNodes": 765,
+      "noncommentLeaves": 1008,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "c63a281e4028e83ac308b7f905dcabcfd6b9e7c995bec63f64ab9afe77ca5353"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "ee70227fd22e34ba5d7c3dd891d0e19573e38cc04d0d8012e84001c981a283e5"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "typedNodes": 1547,
+      "noncommentLeaves": 2040,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "95ececd22c1e6d6f62780513871931613c771bbb683050d692f5f6aaf15f7d87"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "d23dfa1ae4bd2b7606d3a9763ba46eba3355f75469e7ccc1ddc2c2b24d55d725"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "typedNodes": 1058,
+      "noncommentLeaves": 1353,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "285296f2a65bfb562865ee887786d1bd9f4935ef70f6af7339d71538876d1cde"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "bebffc401bf64e65d748b478d6a52a811e0f41d744013c42375339f3b7bed87e"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+      "typedNodes": 785,
+      "noncommentLeaves": 977,
+      "fullTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "225907820575099738fe1f2fa36dd6b4882768a1ec1de8301ab4c88126dcec93"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "94d2017b9730d80c715215a204e22652d5c0a96b280337f27f47dbea09bdb5a1"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "packages/game-contract/src/facts/magician.ts",
+      "sha256": "d18e67cbd208938a911938057e260500419210f5252d1ae4defe56666eef7520",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "sha256": "036a0aa60622b6697935b6f2643ccb7b92e35487ded1a75243ad76c022efd19e",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "sha256": "ab4f30d7acfe93fd38dc0f7ebe7460470397e66b62fa8fed8b46acd545b8dad3",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night-lifecycle.ts",
+      "sha256": "30e73ab92a4644ce7a9adb832e45f75f8abbde5bfa82b8d9af42f00928162acc",
+      "actualGitAndCurrentWholeSame": true
+    }
+  ],
+  "inventory": {
+    "scannedSourceFiles": 1721,
+    "actualCanonicalSites": [
+      {
+        "path": "backend/tests/unit/mechanisms/night-manager-receiver-ownership.test.ts",
+        "module": "../../../src/game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+        "module": "../../../src/game/mechanisms/roles/magician/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/magician/night-lifecycle.test.ts",
+        "module": "../../../../src/game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/trickster/night-lifecycle.test.ts",
+        "module": "../../../../src/game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/magician/state.test.ts",
+        "module": "../../../../src/game/mechanisms/roles/magician/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/magician/state-slot.test.ts",
+        "module": "../../../../src/game/mechanisms/roles/magician/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/magician/frame.test.ts",
+        "module": "../../../../src/game/mechanisms/roles/magician/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/wolf-sorcerer/night-lifecycle.test.ts",
+        "module": "../../../../src/game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "module": "../../../src/game/mechanisms/roles/magician/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/trickster-combination.test.ts",
+        "module": "../../../src/game/mechanisms/roles/magician/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+        "module": "../../../../src/game/mechanisms/roles/magician/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+        "module": "../../../src/game/mechanisms/roles/magician/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/src/rulesets/death-shot-selection.ts",
+        "module": "../game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/rulesets/native-night-target-policy.ts",
+        "module": "../game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "module": "../game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "module": "../game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/rulesets/native-night-failure-policy.ts",
+        "module": "../game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/rulesets/potion-tool-admission.ts",
+        "module": "../game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/rulesets/night-readability.ts",
+        "module": "../game/mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "module": "../../mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "module": "../mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "module": "../mechanisms/roles/magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+        "module": "../magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/trickster/night-lifecycle.ts",
+        "module": "../magician/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/ports.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+        "module": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+        "module": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+        "module": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+        "module": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/magician/state-slot.ts"
+      }
+    ],
+    "retiredSites": []
+  },
+  "finalLayoutBridge": {
+    "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+    "beforeSHA256": "a2b984a57e71f06eb27ac2ea31f866ce4ae8462b2356a1b1e92e2bbcd52aa1aa",
+    "sha256": "2ef61558492f88de68ed1744a768d26f15118298f88c71ad2aa57b308a084009",
+    "exactInverse": true,
+    "delta": "仅首头不另说明及原create调用换行／尾逗号恢复，不改变参数、类型、分支或时序；首收据不重跑。",
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "originalSHA256": "bafacaa9b1c2877b2c10e53e12d31e2e241a108896b53649b0fbd12e236eee6c",
+        "finalSHA256": "bafacaa9b1c2877b2c10e53e12d31e2e241a108896b53649b0fbd12e236eee6c"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "originalSHA256": "021b6675bf127fdb7ad2a6a5dac768bb4433dda21dcdfc28df625a3f23924e9f",
+        "finalSHA256": "021b6675bf127fdb7ad2a6a5dac768bb4433dda21dcdfc28df625a3f23924e9f"
+      }
+    ]
+  },
+  "limits": [
+    "schema 是原完整live reader，不新建档案schema/decoder；原GC/verifier与frame原体/窗口/expectedState归属保持。",
+    "实际新生产者展开而非恢复旧整个body；只物理路径、接口／方法表初始化与调用栈是明确API变化，不承诺旧private namespace任意重赋或全冷加载等价。",
+    "所有literal语法入口盘点，不推断 computed 仓外加载；此脚本不type/test/fullgate/model。"
+  ],
+  "approved": true
+}

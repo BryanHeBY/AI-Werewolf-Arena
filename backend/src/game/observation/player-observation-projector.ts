@@ -29,7 +29,7 @@ import { projectTimeConsortState } from "../mechanisms/roles/time_wolf_consort/s
 import { projectWolfSorcererState } from "../mechanisms/roles/wolf_sorcerer/state";
 import { projectTricksterState } from "../mechanisms/roles/trickster/state";
 import { projectOrderPrinceState } from "../mechanisms/roles/order_prince/state";
-import { projectMagicianState } from "../mechanisms/roles/magician/state";
+import { projectMagicianState } from "../mechanisms/roles/magician/ports";
 import { projectRedMoonState } from "../mechanisms/roles/red_moon_apostle/ports";
 import { projectNightmareShadowState } from "../mechanisms/roles/nightmare_shadow/state";
 import { projectEvilKnightState } from "../mechanisms/roles/evil_knight/state";

@@ -1,0 +1,220 @@
+{
+  "baseCommit": "e45c972b2a271a09bce51c103399af66714fc527",
+  "old": "backend/src/game/mechanisms/roles/magician/state.ts",
+  "owner": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "before": "/**\n * Owns Magician state construction, exact live reads and detached player projection.\n * Inputs are original role/history data; outputs retain existing descriptor, day and pair\n * validation. This boundary never exchanges an effect, commits history or closes a frame.\n */",
+      "after": "/**\n * 负责魔术师唯一状态槽的创建、完整 live 校验、同引用读取、初始化／历史写入与原身份编码。\n * 输入为原角色、参数及晚读容器，输出为原状态引用、脱离知识副本或原明确拒绝；原完整字段、\n * descriptor、日次、排序及一次性号码校验不变。写权仅收走原赋值与历史追加，失败保留已写前缀。\n * frame 仍拥有原体生命、夜窗口、交换关系及 expectedState 检查点；此槽不另建立 shadow、\n * 退款、标死、关闭、付新资源或授予请求许可。身份 JSON 仅为原运行比对，档案 schema／核验仍归原 owner。\n */",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "before": "/** Validate without invoking user-owned accessors, iterators or array methods. */",
+      "after": "/** 完整原 live 校验：仅读自身数据 descriptor，先拒绝 Proxy；不调用 caller getter、迭代器或数组方法。\n * 合法时返回原状态及历史引用，不克隆／冻结；readonly 是读方类型，不能替代 frame 原授权。 */",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "before": "  let previous = 0;",
+      "after": "  // 历史日期严格递增；非空二人组保持原升序／全局号码一次使用，null 不消耗号码。\n  let previous = 0;",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "before": "export function projectMagicianState(",
+      "after": "/** 按原 descriptor 逐行复制知识，嵌套二人组脱离；不使用 caller 数组 species 或解码为运行许可。 */\nexport function projectMagicianState(",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "before": "import { MAGICIAN_POLICY, createMagicianState, getMagicianState } from \"./state\";",
+      "after": "import { MAGICIAN_POLICY, MAGICIAN_STATE_SLOT, getMagicianState } from \"./state-slot\";",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "before": "      role.privateState.magician = createMagicianState(\n        value.firstNight,\n        value.deathShotTargetPolicy,\n      );",
+      "after": "      // 原左值容器先于 create 参数读取；仅移交这次赋值，不提前取状态或冻结初始化结果。\n      MAGICIAN_STATE_SLOT.install(() => role.privateState, value);",
+      "kind": "program",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "function stateIdentity(role: RoleComponent): string {\n  const view = projectMagicianState(role);\n  if (!view) throw new Error(\"magician_original_state_revoked\");\n  return JSON.stringify(view);\n}\n",
+      "after": "",
+      "kind": "moved-declaration",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "import { getMagicianState, projectMagicianState, MAGICIAN_ROLE } from \"./state\";",
+      "after": "import { getMagicianState, projectMagicianState, MAGICIAN_ROLE, MAGICIAN_STATE_SLOT } from \"./state-slot\";",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "stateIdentity(",
+      "after": "MAGICIAN_STATE_SLOT.checkpoint.identity(",
+      "kind": "call",
+      "occurrences": 3
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "  Object.defineProperty(b.state.history, String(b.state.history.length), {\n    value: { day, pair: chosen },\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });",
+      "after": "  // 槽内仍先找 defineProperty callee，再两次晚读 state/history；成功写历史后才推进原 frame 检查点。\n  MAGICIAN_STATE_SLOT.allowedWrites.appendHistory(() => b.state, day, chosen);",
+      "kind": "program",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "/**\n * Owns Magician night exchange bindings and target-remapping receipts. Inputs are original\n * player bodies and the paired choice; outputs preserve current mappings, cancellation and\n * close/abort behavior. It never lets a stale source redirect a later native action using the\n * old exchange.\n */",
+      "after": "/**\n * 负责魔术师夜间交换原体绑定、当前窗口和目标映射回执；输入为原玩家生命／身份和二人选择。\n * 输出为仍当前的映射及原关闭／取消结果；boards 唯一拥有夜关系和状态身份检查点，state-slot\n * 只执行原数据读写／编码。当前性失败不修复原体或恢复已经使用的号码，不让旧交换续权。\n * 先校验原体，再写历史、刷新 expectedState、安装本夜 pair 并提交窗口；后续失败不回滚已写前缀。\n */",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "interface Board {",
+      "after": "/** state 是原 live 引用，expectedState 是原投影 JSON 身份；同内容替换 state 仍不能通过原体检查。 */\ninterface Board {",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "  // A committed exchange survives one ordinary death, never revival or another life.",
+      "after": "  // 已提交交换可跨一次普通死亡保留；复活或换生命不能用同编号继续原关系。",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "  // A second swap exchanges occupants of positions; resolve W(raw) before M.\n  // Intermediate occupants may already be dead in a night death-shot chain.",
+      "after": "  // 原复合映射先解狼术师 W(raw)，再解魔术师 M；交换的是位置中的占有者。\n  // 夜间死亡枪链的中间占有者可能已死，不能提前按普通夜行动的目标生命拒绝。",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "/** Cleanup only: never validates or repairs a revoked roster, and never records a choice. */",
+      "after": "/** 仅封住已存在的夜窗口；不校验／修复撤权原体，也不制造选择或追回已消费号码。 */",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "before": "/** Cancel only the current matching pair; committed number consumption stays in history. */",
+      "after": "/** 只取消当前匹配 pair 的映射，已经提交的号码消耗仍在历史中，不退款或改写状态槽。 */",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "before": "from \"./state\"",
+      "after": "from \"./state-slot\"",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "before": "/**\n * Runs the Magician exchange request before remapped night abilities. Inputs are the installed\n * night frame and validated pair selection; outputs are the original exchange event and\n * authority commit. The stage never applies target mapping eagerly through a prompt; the frame\n * supplies the later receipt.\n */",
+      "after": "/**\n * 负责在被映射的夜间行动之前请求魔术师交换；输入为已安装 frame、原请求和经预检的二人选择。\n * 输出为原交换提交及本人私有事实；等待前后仍复核原体／阶段／日次，不把提示候选当成付款或许可。\n * 数据校验归本族 state-slot，关系／窗口归 frame；本阶段保持先 commit 后发布的失败前缀，\n * 不提前通过提示执行目标映射，后续行动仍取得原映射回执。\n */",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "before": "/** Runs from the configured role set, including after the magician's death. */",
+      "after": "/** 按板子已配置角色集运行，包括魔术师已死亡时的原开夜路径；是否出请求仍由 frame 判断。 */",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "before": "export { getMagicianState } from \"./state\";",
+      "after": "export { getMagicianState, projectMagicianState } from \"./state-slot\";",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "before": " * 原生目标查询保留原当前生命绑定，数据不授予库存或交换提交方法。",
+      "after": " * 原生目标查询保留原当前生命绑定；状态 live 读保原引用，投影为可写脱离知识，不授库存或交换提交权。",
+      "kind": "comment",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "before": "from \"../mechanisms/roles/magician/state\"",
+      "after": "from \"../mechanisms/roles/magician/ports\"",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state.test.ts",
+      "before": "/magician/state\"",
+      "after": "/magician/state-slot\"",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/features/magician/frame.test.ts",
+      "before": "/magician/state\"",
+      "after": "/magician/state-slot\"",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "before": "/magician/state\"",
+      "after": "/magician/state-slot\"",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "before": "/magician/state\"",
+      "after": "/magician/state-slot\"",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "before": "/magician/state\"",
+      "after": "/magician/state-slot\"",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "before": "/magician/state\"",
+      "after": "/magician/state-slot\"",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+      "before": "/magician/state\"",
+      "after": "/magician/state-slot\"",
+      "kind": "binding",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state.test.ts",
+      "before": "/**\n * Unit tests for magician; Isolated magician state contract; native in-memory owner/frame/readers, no assembled game cycle.\n * Inputs are existing in-memory fixtures, original callback controls and explicit\n * invalid mutations. Original literal expectations, identity snapshots and\n * rejection assertions supply the oracle; none are regenerated during relocation.\n * Test-owned mocks/components exercise this boundary without a model or physical\n * transport. Support files, fixture bytes, policy and state behavior are retained.\n */",
+      "after": "/**\n * 单元测试验证魔术师原状态校验与脱离知识边界；输入为原内存 fixture、数据 descriptor、\n * 明确非法修改和 Proxy。原引用／历史／字面拒绝断言作为预期，不在迁移中重新生成。\n * 只调用原 reader／projection，不运行整局、模型或物理传输；原样本、标题和政策保持。\n */",
+      "kind": "comment",
+      "occurrences": 1
+    }
+  ],
+  "movedIdentity": "function stateIdentity(role: RoleComponent): string {\n  const view = projectMagicianState(role);\n  if (!view) throw new Error(\"magician_original_state_revoked\");\n  return JSON.stringify(view);\n}",
+  "movedHistory": "  Object.defineProperty(b.state.history, String(b.state.history.length), {\n    value: { day, pair: chosen },\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });",
+  "addedOwnerProgram": "\n/** 初始化只有原左值赋值：容器先于 create 的参数读取，setter 或创建失败不补写或回滚。 */\nfunction installMagicianState(\n  privateState: () => Record<string, unknown>,\n  value: { firstNight: 1 | 2; deathShotTargetPolicy: \"original\" | \"exchanged\" },\n): void {\n  privateState().magician = createMagicianState(\n    value.firstNight,\n    value.deathShotTargetPolicy,\n  );\n}\n\n/** 原准入仍由 frame 完成；先取 defineProperty，再两次晚读原状态，保 index／descriptor 写入顺序。 */\nfunction appendMagicianHistory(\n  state: () => MagicianReadState,\n  day: number,\n  chosen: [number, number] | null,\n): void {\n  Object.defineProperty(state().history, String(state().history.length), {\n    value: { day, pair: chosen },\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });\n}\n\n/** 原 frame 的身份编码，不是严格档案 codec；先 project／拒绝，再找 JSON.stringify 并编码原副本。 */\nfunction encodeMagicianStateIdentity(role: RoleComponent): string {\n  const view = projectMagicianState(role);\n  if (!view) throw new Error(\"magician_original_state_revoked\");\n  return JSON.stringify(view);\n}\n\n/**\n * 本族唯一数据槽贡献：schema 与 get 是同一完整 live 校验，不另造更严格接受政策。\n * allowedWrites 保原初始化和历史 descriptor 写；frame 的 expectedState、pair、committed\n * 仍在原顺序更新。checkpoint 只提供原 JSON 身份编码，不存第二份状态或解析玩家许可。\n * 冻结的是贡献方法表，不冻结输入状态、历史或投影；录制仍完整克隆原 privateState。\n */\nexport const MAGICIAN_STATE_SLOT = Object.freeze({\n  create: createMagicianState,\n  schema: getMagicianState,\n  get: getMagicianState,\n  project: projectMagicianState,\n  install: installMagicianState,\n  allowedWrites: Object.freeze({ appendHistory: appendMagicianHistory }),\n  checkpoint: Object.freeze({ identity: encodeMagicianStateIdentity }),\n});\n"
+}

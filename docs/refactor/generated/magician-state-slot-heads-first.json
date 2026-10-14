@@ -1,0 +1,63 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "sha256": "af7134d30fcbe086a471fad6489d5ef0ddabef978fb99545de5c9f783796265f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "ed57d13be59680398cfc96aa59e2aa46bc8d390131630d36dd93be6f48614f8d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "sha256": "0ad1e7fa7efeba6e12a155cf03287eaf5947529f5453ad9731328109eb5da3dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "sha256": "c4d7cc002c3ee614dba1735d56cf3ef4ccc464f5a69c2b8aa7ffd48a1ca1a574"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "b3dbf876fee5fca9bd98b7f2f562aa61e1bc29950286678b0aa1db858c8ded46"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state.test.ts",
+      "sha256": "14379d9cb95e98121e508f1eec1b62018afbf8befe4c3f12461f7bb2b9d58f9d"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/frame.test.ts",
+      "sha256": "d8b930a163b01f4343a5a5071dddb0976abb59c57e8d649bfbb4b9b63876e30e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "a63d2f507bd3ff61a7e6d060341d9c268b9121429ae2d9096943305e71268f36"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "sha256": "9bbe0b450a1565c449ef45eedcef6e1f478c2eb0f5d9116dd97cfa452d62c0dd"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "sha256": "9d4637c0c1e2254c9f0d2a36903c3c6fc2979787494ae35101bbda01a7e6e799"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "sha256": "e6e5a0ea82fe50dbbd4cfda5f1df0471db3a18f5ccc1ebac9206e230747efd68"
+    },
+    {
+      "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+      "sha256": "dd85ec7af0cdf20445882da37ed3d05aa7f65f31faa432a2e6bd4863c9e7ad66"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "sha256": "2ef61558492f88de68ed1744a768d26f15118298f88c71ad2aa57b308a084009"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state-slot.test.ts",
+      "sha256": "c835b28aaa7610f4c68cfb4fb88a9c667244bd0103b87904f45339f7b2754080"
+    }
+  ],
+  "documentationPathCount": 529,
+  "diagnostics": [],
+  "run": "first-fourteen"
+}
