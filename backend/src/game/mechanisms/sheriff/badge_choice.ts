@@ -2,7 +2,7 @@
  * 负责死亡警长的警徽选择请求与回复复核。输入为原警徽、死者生命、阶段／日期、当前性回调及玩家／工具入口；
  * 输出为原转移或销毁结果，警徽写入仍由警徽所有者提交。请求选择和预检不提前改变警徽。
  * 死亡许可只覆盖本次选择；持有者与许可仍当前时，已选目标生命失效按原规则改为销毁。
- * 玩家异常不被伪装成一次有效选择。
+ * 玩家异常不被伪装成一次有效选择；显式构造依赖仅在原 new 点读取，失败不补交警徽且仍关闭本次许可。
  */
 import { aliveLifeVersion, type AliveComponent } from "../../../core/domain/components/alive";
 import type { BadgeComponent } from "../../../core/domain/components/badge";
@@ -11,7 +11,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import type { ActionProvider, EntityId, GameEvent, Phase } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
-import { GameActionRequestFactory } from "../../engine/action_request_factory";
+import type { ActionRequestFactoryConstructorPort } from "../../../core/domain/actions";
 import type { ToolGateway } from "../../gateway/tool_gateway";
 import {
   badgeSuccessorEligible,
@@ -30,6 +30,7 @@ export async function resolveSheriffBadge(
   phase: Phase,
   day: number,
   isCurrent: () => boolean,
+  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },
 ): Promise<void> {
   if (!isCurrent()) return;
   const badge = world.getComponent(fromId, COMPONENT.Badge);
@@ -69,7 +70,8 @@ export async function resolveSheriffBadge(
     current() && world.hasDeathAction(fromId, "choose_badge_successor", phase, day, permit.id);
   try {
     if (!authorized()) return;
-    const request = new GameActionRequestFactory(world, events, day).create({
+    // 许可已开启且原 authorized 通过后，才读取构造器并在原点 new；构造失败仍由 finally 关闭许可。
+    const request = new construction.requestFactory(world, events, day).create({
       phase,
       actorId: fromId,
       allowedTools: ["choose_badge_successor"],

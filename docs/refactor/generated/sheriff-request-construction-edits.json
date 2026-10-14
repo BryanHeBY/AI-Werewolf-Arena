@@ -1,0 +1,171 @@
+{
+  "edits": [
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "before": "Phase, MessageRef }",
+      "after": "Phase, MessageRef, GameEvent }",
+      "count": 1
+    },
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "before": "import type { EntityId } from \"./identity\";",
+      "after": "import type { EntityId } from \"./identity\";\nimport type { World } from \"./world\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "before": " * 构造端口只有 create，不暴露工厂 World、事件或日次的私有状态；类型不创建请求或实现深复制。",
+      "after": " * 请求实例端口只暴露 create，不公开工厂内部字段；构造器端口只保原三参数 new 签名，类型不创建请求或实现深复制。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "before": "export interface ActionRequestConstructionPort {\n  create(input: ActionRequestConstructionInput): ActionRequest;\n}\n",
+      "after": "export interface ActionRequestConstructionPort {\n  create(input: ActionRequestConstructionInput): ActionRequest;\n}\n\n/**\n * 在各机制原构造点使用的真实类签名。装配端晚提供构造器，机制仍 new 各自原 World／事件／日次实例；\n * 事件只读数组保原构造接受面，不复制／冻结数组，不共享日工厂或授予请求、资源和死亡权限。\n */\nexport interface ActionRequestFactoryConstructorPort {\n  new (world: World, events: readonly GameEvent[], day: number): ActionRequestConstructionPort;\n}\n",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/election.ts",
+      "before": "import { GameActionRequestFactory } from \"../../engine/action_request_factory\";",
+      "after": "import type { ActionRequestFactoryConstructorPort, ActionRequestConstructionPort } from \"../../../core/domain/actions\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+      "before": "import { GameActionRequestFactory } from \"../../engine/action_request_factory\";",
+      "after": "import type { ActionRequestFactoryConstructorPort } from \"../../../core/domain/actions\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "before": "import { GameActionRequestFactory } from \"../../engine/action_request_factory\";",
+      "after": "import type { ActionRequestFactoryConstructorPort } from \"../../../core/domain/actions\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/election.ts",
+      "before": "/**\n * Runs sheriff nomination, campaign, withdrawal and election voting rounds. Inputs are current\n * eligible seats, provider actions and election policy; outputs are ordered election evidence\n * and the elected sheriff. It does not apply exile ballot rules or wolf knife rules to this\n * election.\n */",
+      "after": "/**\n * 负责警长上警、竞选、退水和两轮选举的原有顺序；输入为当前座位、Provider、网关及惰性构造器，输出原选举证据与当选者。\n * 上警阶段先建立全部请求才并发调用，竞选按座位串行；退水／投票保原生命复验和事后写入前缀，PK不套用放逐或狼刀规则。\n * 请求在原存活名单确定之后才 new 一份本次选举工厂，全部竞选／退水／PK沿用它，不提前读取构造依赖。\n * 构造、玩家、校验或事件异常原样传播；已发事实不回滚，警徽赋权仍由警徽所有者提交，不以端口授予候选资格。\n */",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/election.ts",
+      "before": "  isCurrent?: () => boolean;",
+      "after": "  isCurrent?: () => boolean;\n  /** 装配端 getter 保原构造器读取点；字段仅声明依赖，未开启选举或预建请求。 */\n  readonly requestFactory: ActionRequestFactoryConstructorPort;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/election.ts",
+      "before": "const requests = new GameActionRequestFactory(world, events, day);",
+      "after": "// 本次选举只在原点 new 一次；不复用白天发言工厂，构造失败时尚未建立上警请求。\n  const requests = new input.requestFactory(world, events, day);",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/election.ts",
+      "before": "requests: GameActionRequestFactory,",
+      "after": "requests: ActionRequestConstructionPort,",
+      "count": 4
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/election.ts",
+      "before": "interface SheriffVote {",
+      "after": "/** 只存已接收的选票字段；生命与候选资格仍在各轮原检查点复验，不把票记录当授权。 */\ninterface SheriffVote {",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+      "before": "/**\n * Requests sheriff speaking direction and builds the resulting seat order. Inputs are current\n * seat identities, alive IDs and the validated direction; outputs preserve the default direction\n * and sheriff-last ordering. It does not assign the badge or change player life.\n */",
+      "after": "/**\n * 负责请求警长发言方向并形成原座位顺序。输入为 World、存活编号、请求构造依赖与原回复；输出默认顺时针或已校验方向、警长最后的原名单。\n * 未启警长或无警长保原早返回，不读取／创建工厂；有效持徽者之后才独立 new 本次方向工厂。\n * 请求、玩家或网关失败保原异常，方向事实在原回复处理之后发布；此模块不赋警徽、改生命或共享选举工厂。\n */",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+      "before": "  enableSheriff: boolean;",
+      "after": "  enableSheriff: boolean;\n  readonly requestFactory: ActionRequestFactoryConstructorPort;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+      "before": "const requests = new GameActionRequestFactory(world, events, day);",
+      "after": "// 构造器 getter 到原 new 点才读取，default／无持徽者路径不触及它。\n  const requests = new input.requestFactory(world, events, day);",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+      "before": "  const seatMap = new Map<EntityId, number>();",
+      "after": "  // 按原读取点固定座位，警长最后；这里只生成顺序副本，不写座位或警徽。\n  const seatMap = new Map<EntityId, number>();",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "before": "  isCurrent: () => boolean,\n): Promise<void> {",
+      "after": "  isCurrent: () => boolean,\n  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n): Promise<void> {",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "before": "const request = new GameActionRequestFactory(world, events, day).create({",
+      "after": "// 许可已开启且原 authorized 通过后，才读取构造器并在原点 new；构造失败仍由 finally 关闭许可。\n    const request = new construction.requestFactory(world, events, day).create({",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "before": " * 玩家异常不被伪装成一次有效选择。",
+      "after": " * 玩家异常不被伪装成一次有效选择；显式构造依赖仅在原 new 点读取，失败不补交警徽且仍关闭本次许可。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "before": "    await electSheriffIfNeeded({",
+      "after": "    await electSheriffIfNeeded({\n      // 这里只捕获读取闭包；选举在原名单准备后才读取该真实构造器并 new 自己的实例。\n      get requestFactory() { return GameActionRequestFactory; },",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "before": "    const speakerDirection = await chooseSpeakerDirection({",
+      "after": "    const speakerDirection = await chooseSpeakerDirection({\n      // 方向窗口拥有独立工厂寿命，未启用／无持徽者不会触发此 getter。\n      get requestFactory() { return GameActionRequestFactory; },",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "            isCurrent,\n          );\n          if (!isCurrent()) return;",
+      "after": "            isCurrent,\n            {\n              // 每次死亡警徽调用只分配依赖视图；实际构造器仍在许可开启后的原 new 点读取。\n              get requestFactory() { return GameActionRequestFactory; },\n            },\n          );\n          if (!isCurrent()) return;",
+      "count": 1
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+      "before": "import { electSheriffIfNeeded } from \"../../../src/game/mechanisms/sheriff/election\";",
+      "after": "import { electSheriffIfNeeded } from \"../../../src/game/mechanisms/sheriff/election\";\nimport { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+      "count": 1
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+      "before": "await electSheriffIfNeeded({",
+      "after": "await electSheriffIfNeeded({\n        get requestFactory() { return GameActionRequestFactory; },",
+      "count": 4
+    },
+    {
+      "path": "backend/tests/unit/engine/pk-policies.test.ts",
+      "before": "import { electSheriffIfNeeded } from \"../../../src/game/mechanisms/sheriff/election\";",
+      "after": "import { electSheriffIfNeeded } from \"../../../src/game/mechanisms/sheriff/election\";\nimport { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+      "count": 1
+    },
+    {
+      "path": "backend/tests/unit/engine/pk-policies.test.ts",
+      "before": "await electSheriffIfNeeded({",
+      "after": "await electSheriffIfNeeded({\n        get requestFactory() { return GameActionRequestFactory; },",
+      "count": 4
+    }
+  ],
+  "source": [
+    "backend/src/core/domain/actions.ts",
+    "backend/src/game/mechanisms/sheriff/election.ts",
+    "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+    "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+    "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+    "backend/src/game/engine/death_resolution.ts",
+    "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+    "backend/tests/unit/engine/pk-policies.test.ts"
+  ],
+  "scope": "三实际构造保持原点new，Day2＋DR1＋原两test8site显式lazy ctor，无默认；新增typed签名非lease权限。"
+}

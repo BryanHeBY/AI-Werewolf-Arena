@@ -373,6 +373,10 @@ export class DeathResolution {
             resolutionPhase,
             resolutionDay,
             isCurrent,
+            {
+              // 每次死亡警徽调用只分配依赖视图；实际构造器仍在许可开启后的原 new 点读取。
+              get requestFactory() { return GameActionRequestFactory; },
+            },
           );
           if (!isCurrent()) return;
         }

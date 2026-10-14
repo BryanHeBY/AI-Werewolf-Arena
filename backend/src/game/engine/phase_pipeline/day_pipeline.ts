@@ -117,6 +117,8 @@ export class DayPipeline {
       if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     }
     await electSheriffIfNeeded({
+      // 这里只捕获读取闭包；选举在原名单准备后才读取该真实构造器并 new 自己的实例。
+      get requestFactory() { return GameActionRequestFactory; },
       world: this.world,
       events: this.events,
       toolGateway: this.toolGateway,
@@ -172,6 +174,8 @@ export class DayPipeline {
       };
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     const speakerDirection = await chooseSpeakerDirection({
+      // 方向窗口拥有独立工厂寿命，未启用／无持徽者不会触发此 getter。
+      get requestFactory() { return GameActionRequestFactory; },
       world: this.world,
       events: this.events,
       toolGateway: this.toolGateway,

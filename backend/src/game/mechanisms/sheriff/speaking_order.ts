@@ -1,14 +1,14 @@
 /**
- * Requests sheriff speaking direction and builds the resulting seat order. Inputs are current
- * seat identities, alive IDs and the validated direction; outputs preserve the default direction
- * and sheriff-last ordering. It does not assign the badge or change player life.
+ * 负责请求警长发言方向并形成原座位顺序。输入为 World、存活编号、请求构造依赖与原回复；输出默认顺时针或已校验方向、警长最后的原名单。
+ * 未启警长或无警长保原早返回，不读取／创建工厂；有效持徽者之后才独立 new 本次方向工厂。
+ * 请求、玩家或网关失败保原异常，方向事实在原回复处理之后发布；此模块不赋警徽、改生命或共享选举工厂。
  */
 import { COMPONENT } from "../../../core/domain/components/names";
 import { IdentityComponent } from "../../../core/domain/entities/player";
 import { ActionProvider, EntityId, GameEvent, Phase } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../engine/action_request_factory";
+import type { ActionRequestFactoryConstructorPort } from "../../../core/domain/actions";
 import { findSheriffId } from "./badge";
 
 export type SpeakerDirection = "clockwise" | "counter_clockwise";
@@ -20,6 +20,7 @@ export async function chooseSpeakerDirection(input: {
   actionProvider: ActionProvider;
   day: number;
   enableSheriff: boolean;
+  readonly requestFactory: ActionRequestFactoryConstructorPort;
 }): Promise<SpeakerDirection> {
   const { world, events, toolGateway, actionProvider, day, enableSheriff } = input;
   const defaultDirection: SpeakerDirection = "clockwise";
@@ -33,7 +34,8 @@ export async function chooseSpeakerDirection(input: {
   }
 
   let finalDirection: SpeakerDirection = defaultDirection;
-  const requests = new GameActionRequestFactory(world, events, day);
+  // 构造器 getter 到原 new 点才读取，default／无持徽者路径不触及它。
+  const requests = new input.requestFactory(world, events, day);
   const req = requests.create({
     phase: Phase.Day,
     actorId: sheriffId,
@@ -75,6 +77,7 @@ export function buildSpeakerOrder(
     return [...aliveIds];
   }
 
+  // 按原读取点固定座位，警长最后；这里只生成顺序副本，不写座位或警徽。
   const seatMap = new Map<EntityId, number>();
   for (const id of aliveIds) {
     const identity = world.getComponent(id, COMPONENT.Identity);

@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/engine/pk-policies.test.ts:
+(pass) sheriff PK: majority, withdrawn nominees can vote only in PK [43.12ms]
+
+ 1 pass
+ 18 filtered out
+ 0 fail
+ 8 expect() calls
+Ran 1 test across 1 file. [169.00ms]

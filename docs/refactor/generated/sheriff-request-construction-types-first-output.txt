@@ -1,0 +1,2 @@
+backend/src/game/observation/player-observation-projector.ts(26,35): error TS2307: Cannot find module '../mechanisms/roles/scholar_mentor/state' or its corresponding type declarations.
+backend/src/game/observation/player-observation-projector.ts(27,10): error TS2305: Module '"../mechanisms/roles/scholar_mentor/night_frame"' has no exported member 'scholarMentorStateForRole'.

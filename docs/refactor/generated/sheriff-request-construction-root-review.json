@@ -1,0 +1,111 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "independentOfImplementation": true,
+  "scope": {
+    "path": "docs/refactor/generated/sheriff-request-construction-scope-final.json",
+    "sha256": "ac3c66153fcf7c71cd8ccfd9268474c47f213f2b57af49de10647442dd59cc3f"
+  },
+  "source": [
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "sha256": "a6d681a7163778ed6433dbb32a11e8c4ed742e8a6f638056cdda5f5e08a44ac9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/election.ts",
+      "sha256": "c52e654e30ad27c0307354503888ee486f440699713af41f4c34b7d990773742"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+      "sha256": "19e6f26c6857a8dc46e69d013b163ad5ac4bf8173d4e98f7eee6eb1826d3577e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "sha256": "53ba2fe8a48185ea0386d564570bc2d7d084661aa4b94c687cfc43f824a56ba7"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "sha256": "6364028a9ebaf77587dbff8ad61989684bca32a7db0fee4c59cd2d3f0df0771f"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "85c4675a2bc28c710531af5ebc064d7d1c866e06d44e42d7a8f7fb842cdf063e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+      "sha256": "b1bacc4ada5723299c3ea3b8815a54e42604dcc6cfba48d8b339a9b80ae15b35"
+    },
+    {
+      "path": "backend/tests/unit/engine/pk-policies.test.ts",
+      "sha256": "f6f4bd79c345c97b936bcf2d745d5f893b153cb0715170772569c59e2d33ffce"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/sheriff/request-construction.test.ts",
+      "sha256": "510bbb2cc6775975d8e33de1ae292cdf09a55325a995334a19da60d666a336d9"
+    }
+  ],
+  "deleted": [],
+  "evidence": {
+    "path": "docs/refactor/generated/sheriff-request-construction-evidence.json",
+    "sha256": "87186eaa41c66fe358535295ea653f398b87f8d5112b86f90efcdb07a3cf5659"
+  },
+  "document": {
+    "path": "docs/refactor/sheriff-request-construction.md",
+    "sha256": "cd19cd9525d2dedf881cd17b3ba8eec894fc55f613d013dd1dd15254b8eedab5"
+  },
+  "findings": [],
+  "verifiedCurrentDescriptors": [
+    "backend/src/core/domain/actions.ts",
+    "backend/src/game/mechanisms/sheriff/election.ts",
+    "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+    "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+    "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+    "backend/src/game/engine/death_resolution.ts",
+    "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+    "backend/tests/unit/engine/pk-policies.test.ts",
+    "backend/tests/unit/mechanisms/sheriff/request-construction.test.ts",
+    "backend/src/game/engine/action_request_factory.ts",
+    "backend/src/game/mechanisms/sheriff/badge.ts",
+    "backend/src/game/mechanisms/sheriff/validation_rules.ts",
+    "backend/src/core/domain/request_delivery.ts",
+    "docs/refactor/generated/sheriff-request-construction-before.json",
+    "docs/refactor/generated/sheriff-request-construction-edits.json",
+    "docs/refactor/generated/sheriff-request-construction-proof.cjs",
+    "docs/refactor/generated/sheriff-request-construction-proof.json",
+    "docs/refactor/generated/sheriff-request-construction-proof-output.txt",
+    "docs/refactor/generated/sheriff-request-construction-heads.ts",
+    "docs/refactor/generated/sheriff-request-construction-heads.json",
+    "docs/refactor/generated/sheriff-request-construction-heads-output.txt",
+    "docs/refactor/generated/sheriff-request-construction-new-test-fix-before.json",
+    "docs/refactor/generated/sheriff-request-construction-new-tests-first-output.txt",
+    "docs/refactor/generated/sheriff-request-construction-new-tests-failed-only-output.txt",
+    "docs/refactor/generated/sheriff-request-construction-original-test-output.txt",
+    "docs/refactor/generated/sheriff-request-construction-types-config.json",
+    "docs/refactor/generated/sheriff-request-construction-types-failed-config.json",
+    "docs/refactor/generated/sheriff-request-construction-types-first-output.txt",
+    "docs/refactor/generated/sheriff-request-construction-types-failed-only-output.txt",
+    "docs/refactor/generated/sheriff-request-construction-receipts.json",
+    "docs/refactor/generated/sheriff-request-construction-scope-final.json",
+    "docs/refactor/generated/sheriff-request-construction-scope-final.json",
+    "docs/refactor/sheriff-request-construction.md"
+  ],
+  "review": {
+    "rulesAndResources": "逐项检视真实新unit和生产差异。上警先create全部请求再并发；方向保早返回，选举一实例与方向独立寿命。警徽死亡permit在构造之前开启，构造抛错仍原finally关闭，既有事实和徽状态不伪回滚。",
+    "architectureAndRuntime": "constructor为纯type、只返回create端口；两个Day及一个DR getter到三机制原new点才读原类，不共享已存工厂，无默认桥。原factory及交付、徽写、校验控制源未改。",
+    "dataAndValidation": "八真实Git原程序与26精准编辑/16映射输出证据核对；新三风险例原两绿与失败单例补查、旧精准PK单例、九根首foreign红及Observer单失败根闭合均分别记录，不将首红称绿。九源职责头与有效中文语义已核。"
+  },
+  "limits": [
+    "不表示全C20/状态租约/完整对局或P9完成",
+    "不重复已有绿色类型、测试或门禁"
+  ],
+  "documentationPrecision": "仅将三族模块准确说明为三个同族警长模块；源码、scope与原验证未变。",
+  "rawOutputPreservation": {
+    "path": "docs/refactor/generated/sheriff-request-construction-new-tests-first-output.txt",
+    "sourceUnchanged": true,
+    "rawOutput": {
+      "path": "docs/refactor/generated/sheriff-request-construction-new-tests-first-output-raw.json",
+      "sha256": "b156ec259e709ea33a4cf92446bd34024bf287b43fab1aa529b3772a56596a86"
+    },
+    "reason": "cached diff --check 首次 ba3f7c actual2 指向真实Bun错误输出中的74 |空白行；仅清可读txt的行尾空白，实际失败与原完整输出可还原保留。"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "baseCommit": "c3dc932647f67499b430253f5c77d2fb9cb363f1",
+  "source": [
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "sha256": "a6d681a7163778ed6433dbb32a11e8c4ed742e8a6f638056cdda5f5e08a44ac9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/election.ts",
+      "sha256": "c52e654e30ad27c0307354503888ee486f440699713af41f4c34b7d990773742"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+      "sha256": "19e6f26c6857a8dc46e69d013b163ad5ac4bf8173d4e98f7eee6eb1826d3577e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "sha256": "53ba2fe8a48185ea0386d564570bc2d7d084661aa4b94c687cfc43f824a56ba7"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "sha256": "6364028a9ebaf77587dbff8ad61989684bca32a7db0fee4c59cd2d3f0df0771f"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "85c4675a2bc28c710531af5ebc064d7d1c866e06d44e42d7a8f7fb842cdf063e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+      "sha256": "b1bacc4ada5723299c3ea3b8815a54e42604dcc6cfba48d8b339a9b80ae15b35"
+    },
+    {
+      "path": "backend/tests/unit/engine/pk-policies.test.ts",
+      "sha256": "f6f4bd79c345c97b936bcf2d745d5f893b153cb0715170772569c59e2d33ffce"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/sheriff/request-construction.test.ts",
+      "sha256": "510bbb2cc6775975d8e33de1ae292cdf09a55325a995334a19da60d666a336d9"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/sheriff-request-construction-scope-final.json",
+    "sha256": "ac3c66153fcf7c71cd8ccfd9268474c47f213f2b57af49de10647442dd59cc3f"
+  },
+  "document": {
+    "path": "docs/refactor/sheriff-request-construction.md",
+    "sha256": "cd19cd9525d2dedf881cd17b3ba8eec894fc55f613d013dd1dd15254b8eedab5"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/sheriff-request-construction-evidence.json",
+    "sha256": "87186eaa41c66fe358535295ea653f398b87f8d5112b86f90efcdb07a3cf5659"
+  },
+  "documentStatus": "唯一“三族模块”措辞精度已改为“三个警长模块”；只 doc delta，不改源或重验证",
+  "verification": {
+    "independentActualGitFullSources": 8,
+    "independentFreshSources": 9,
+    "independentWholeForwardExactEdits": 26,
+    "controlsActualGitAndCurrent": 4,
+    "authorArtifactsFresh": 19,
+    "drifts": 0,
+    "metadataReceipt": "a6b44b 实际只读 Git／字节／probe delta 核；末仅 doc 和同九源 SHA 绑定"
+  },
+  "behaviorReview": [
+    "构造端口只声明原 World、readonly events、day 三参数 new→create；没有复制原八字段输入、运行实现、默认或资源／死亡许可。factory control 原字节不动。",
+    "选举早current／婚约／已有持徽者／enable／day与活人资格原序；构造 getter 到原名单完成后才读，同实例贯穿原并发上警、串行发言、退水、票及PK。所有 callback／request／候选／生命及事件原体保持。",
+    "方向 false或无警长早返回不读 getter；有效后原点独立 new，不共享 Day工厂或选举实例；默认／gateway／事件排序／speaker名单算法原体保持。",
+    "警徽候选无效／无人等早返回不构造；真实 openDeathAction及authorized先执行，get/new/create仍在原try/finally，构造／provider错误原样走permit.close；close异常仍遵守原finally优先级，不补提交、退款或清理。",
+    "Day 两个装配 getter和DR每次警徽依赖对象只捕获原 imported class，构造器值直到feature实际new点读取；原World/events/day getter／调用实参和await／死亡波／遗言／钩子／过期顺序未改。",
+    "三新unit为手写轨迹与引用／许可／错误；首badge probe真漏id，末捕获真实open方法并保receiver/args/原permit，hasDeathAction实际按permit.id核验。只失败例补查，原前两绿不重，原badge/events/failure预期保持。",
+    "两个原test only明确引入真实factory/getter；全部原fixture、case标题、seed、输入、assert和callback由actualGit完整forward保持。中文头准确区分装配依赖、实际许可、构造时点、关闭与已发布前缀。"
+  ],
+  "authorReceiptAttribution": {
+    "newTests": "首02997a 2pass/1fail/25（含失败探针），失败单例3c8ba9 1pass/10；最后三个新成功断言5+14+10，不冒单次3绿",
+    "originalTest": "073e8a 1pass/8/18 filtered；四不同成功case总成功断言37，跨执行",
+    "types": "九根a983b5/session47988→df48a0实际2仅外来Observer两个旧Scholar imports；修真实route后failed-only Observer一根4b9e4b/session21377→228f10实际0，Observer不入此source9，不称首9绿或全仓绿",
+    "program": "作者6ae120 8whole precise inverse/16完整mapped ES+CJS输出；独立审只实核Git/forward并读完整脚本，没有复跑emit或证明",
+    "heads": "作者906b92 九源/557Gitdoc真实0/CN0；不把形状检查当语义充分证明"
+  },
+  "findings": [
+    {
+      "scope": "MD",
+      "original": "三族模块",
+      "resolution": "Root actual437774 仅改三个警长模块及digest/末handoff摘要，源/scope不变",
+      "status": "closed"
+    }
+  ],
+  "remainingSourceFindings": [],
+  "limits": [
+    "新的必填构造依赖、getter／额外依赖对象、结构类型／类签名与调用布局为公开API调整；不保证旧外部无依赖调用、任意私有反射／namespace猴补或原所有cold装载图等价。",
+    "review不执行作者工具／types／tests／gate/model，不poll任何作者session、不编辑产品／Git/progress。",
+    "并行Order/Scholar传递源码仅当前联合类型采样，不纳此冻结source9；本次不是租约迁移、全玩法／全门禁／P9完成。"
+  ],
+  "rawOutputMetadataDelta": {
+    "previousEvidence": {
+      "path": "docs/refactor/generated/sheriff-request-construction-evidence.json",
+      "sha256": "09071bdfbc7067d8784e9da7f7f1cb6dc8aaaf0cca23fea809f383682053bca2"
+    },
+    "reason": "仅cached diffcheck查raw失败输出尾空白，非source错；原首red完整UTF8字节JSON封存，可读txt仅rstrip行尾",
+    "rawJSON": {
+      "path": "docs/refactor/generated/sheriff-request-construction-new-tests-first-output-raw.json",
+      "sha256": "b156ec259e709ea33a4cf92446bd34024bf287b43fab1aa529b3772a56596a86"
+    },
+    "originalOutputSha256": "6e05effafd6afda5dc9d8f72e7d399b1b682fcb22d9a6460e59e47f70d70db4d",
+    "readableDisplay": {
+      "path": "docs/refactor/generated/sheriff-request-construction-new-tests-first-output.txt",
+      "sha256": "f8dcf575401bb92eea6b303da8cbbeb75ac3c5dbbade547b73527a76b45ba19d"
+    },
+    "independentExactReconstructAndNormalization": true,
+    "sourceScopeDocumentUnchanged": true,
+    "checksNotRepeated": true
+  }
+}

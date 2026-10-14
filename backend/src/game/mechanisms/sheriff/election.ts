@@ -1,8 +1,8 @@
 /**
- * Runs sheriff nomination, campaign, withdrawal and election voting rounds. Inputs are current
- * eligible seats, provider actions and election policy; outputs are ordered election evidence
- * and the elected sheriff. It does not apply exile ballot rules or wolf knife rules to this
- * election.
+ * 负责警长上警、竞选、退水和两轮选举的原有顺序；输入为当前座位、Provider、网关及惰性构造器，输出原选举证据与当选者。
+ * 上警阶段先建立全部请求才并发调用，竞选按座位串行；退水／投票保原生命复验和事后写入前缀，PK不套用放逐或狼刀规则。
+ * 请求在原存活名单确定之后才 new 一份本次选举工厂，全部竞选／退水／PK沿用它，不提前读取构造依赖。
+ * 构造、玩家、校验或事件异常原样传播；已发事实不回滚，警徽赋权仍由警徽所有者提交，不以端口授予候选资格。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { weddingBadgeSwallowed } from "../roles/ghost_bride/authority";
@@ -18,7 +18,7 @@ import {
 } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../engine/action_request_factory";
+import type { ActionRequestFactoryConstructorPort, ActionRequestConstructionPort } from "../../../core/domain/actions";
 import { assignSheriff, findSheriffId } from "./badge";
 import { canBeSheriff, canVote } from "../common/participation";
 import type { RoleCatalog } from "../roles/catalog";
@@ -33,8 +33,11 @@ export interface SheriffElectionInput {
   config?: ReadonlyBoardConfig;
   roleCatalog?: RoleCatalog;
   isCurrent?: () => boolean;
+  /** 装配端 getter 保原构造器读取点；字段仅声明依赖，未开启选举或预建请求。 */
+  readonly requestFactory: ActionRequestFactoryConstructorPort;
 }
 
+/** 只存已接收的选票字段；生命与候选资格仍在各轮原检查点复验，不把票记录当授权。 */
 interface SheriffVote {
   actorId: EntityId;
   targetId: EntityId | null;
@@ -48,7 +51,8 @@ export async function electSheriffIfNeeded(input: SheriffElectionInput): Promise
   if (!enableSheriff || day !== 1 || currentSheriff !== null) return currentSheriff;
 
   const aliveIds = world.getAliveEntityIds().filter((id) => canVote(world, id, input.roleCatalog));
-  const requests = new GameActionRequestFactory(world, events, day);
+  // 本次选举只在原点 new 一次；不复用白天发言工厂，构造失败时尚未建立上警请求。
+  const requests = new input.requestFactory(world, events, day);
   const initialCandidates = await collectNominations(input, requests, aliveIds);
   if (!current(input)) return null;
   const candidateSet = new Set<EntityId>(initialCandidates);
@@ -123,7 +127,7 @@ export async function electSheriffIfNeeded(input: SheriffElectionInput): Promise
 
 async function collectNominations(
   input: SheriffElectionInput,
-  requests: GameActionRequestFactory,
+  requests: ActionRequestConstructionPort,
   aliveIds: EntityId[],
 ): Promise<EntityId[]> {
   const { world, events, toolGateway, actionProvider } = input;
@@ -200,7 +204,7 @@ async function collectNominations(
 
 async function collectCampaignSpeeches(
   input: SheriffElectionInput,
-  requests: GameActionRequestFactory,
+  requests: ActionRequestConstructionPort,
   candidateSet: Set<EntityId>,
   stage: "sheriff_campaign_speech" | "sheriff_pk_speech" = "sheriff_campaign_speech",
 ): Promise<void> {
@@ -253,7 +257,7 @@ async function collectCampaignSpeeches(
 
 async function collectWithdrawals(
   input: SheriffElectionInput,
-  requests: GameActionRequestFactory,
+  requests: ActionRequestConstructionPort,
   candidateSet: Set<EntityId>,
 ): Promise<EntityId[]> {
   const { world, events, toolGateway, actionProvider } = input;
@@ -335,7 +339,7 @@ async function collectWithdrawals(
 
 async function collectSheriffVotes(
   input: SheriffElectionInput,
-  requests: GameActionRequestFactory,
+  requests: ActionRequestConstructionPort,
   aliveIds: EntityId[],
   finalizedCandidates: EntityId[],
   candidateSet: Set<EntityId>,

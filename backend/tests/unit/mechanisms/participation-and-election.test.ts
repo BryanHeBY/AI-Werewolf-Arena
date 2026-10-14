@@ -34,6 +34,7 @@ import {
   findSheriffId,
 } from "../../../src/game/mechanisms/sheriff/badge";
 import { electSheriffIfNeeded } from "../../../src/game/mechanisms/sheriff/election";
+import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import {
   RoleCatalog,
   getDefaultRoleCatalog,
@@ -209,6 +210,7 @@ for (const locale of ["zh-CN", "en"] as const)
         events: GameEvent[] = [],
         requests: ActionRequest[] = [];
       const winner = await electSheriffIfNeeded({
+        get requestFactory() { return GameActionRequestFactory; },
         world,
         events,
         day: 1,
@@ -270,6 +272,7 @@ for (const locale of ["zh-CN", "en"] as const)
       world.getComponent(9, COMPONENT.Identity)!.seat = 10;
       world.getComponent(10, COMPONENT.Identity)!.seat = 9;
       const winner = await electSheriffIfNeeded({
+        get requestFactory() { return GameActionRequestFactory; },
         world,
         events,
         day: 1,
@@ -335,6 +338,7 @@ for (const locale of ["zh-CN", "en"] as const)
       requests: ActionRequest[] = [];
     new EventRegistry().onVotedOut(world, 8, events);
     const winner = await electSheriffIfNeeded({
+        get requestFactory() { return GameActionRequestFactory; },
       world,
       events,
       day: 1,
@@ -364,6 +368,7 @@ test("candidate snapshots cannot be changed by one provider; late loss of eligib
   const { world } = fixture("en"),
     events: GameEvent[] = [];
   const winner = await electSheriffIfNeeded({
+        get requestFactory() { return GameActionRequestFactory; },
     world,
     events,
     day: 1,

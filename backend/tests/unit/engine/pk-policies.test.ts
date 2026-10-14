@@ -19,6 +19,7 @@ import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
 import { electSheriffIfNeeded } from "../../../src/game/mechanisms/sheriff/election";
+import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
@@ -96,6 +97,7 @@ for (const [name, second, winner] of [
     const f = fixture();
     const p = provider((r) => electionHandler(r, second));
     const result = await electSheriffIfNeeded({
+        get requestFactory() { return GameActionRequestFactory; },
       world: f.world,
       events: f.events,
       toolGateway: f.gateway,
@@ -126,6 +128,7 @@ test("sheriff default retains withdrawn voter and direct configured tie break", 
   const p = provider((r) => electionHandler(r, () => null));
   expect(
     await electSheriffIfNeeded({
+        get requestFactory() { return GameActionRequestFactory; },
       world: f.world,
       events: f.events,
       toolGateway: f.gateway,
@@ -145,6 +148,7 @@ test("sheriff PK sole final candidate is elected without a ballot", async () => 
   const p = provider((r) => electionHandler(r, () => null, [1]));
   expect(
     await electSheriffIfNeeded({
+        get requestFactory() { return GameActionRequestFactory; },
       world: f.world,
       events: f.events,
       toolGateway: f.gateway,
@@ -242,6 +246,7 @@ for (const stage of ["sheriff_pk_speech", "sheriff_pk_vote"] as const)
     });
     expect(
       await electSheriffIfNeeded({
+        get requestFactory() { return GameActionRequestFactory; },
         world: f.world,
         events: f.events,
         toolGateway: f.gateway,

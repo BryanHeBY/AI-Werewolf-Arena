@@ -728,3 +728,5 @@
 - I04身份查验共享贡献公开边界：18源，两个具名facet分别提供原配置／工具／三个夜阶段与纯政策显示，四profile和九旧测试只更新真实路由，原六算法／状态owner字节不变。16原Git全程序精确forward、33779节点／32映射输出及38实际binding保留，三unused renderer确在原emit擦除；有限18root类型与中文职责检查、Catalog精准1/14首次绿，四profile前后冷导入各一次仅证明模块求值，不冒全固定树或玩法覆盖。Root完整源码／实际Git／当前SHA及独立Preflight三维终审批准；资源、租约、付款与阶段优先级仍原owner。未重复全门禁／模型，全I04／中文注释覆盖／P9继续；见 role-inspection-contribution-ports.md。
 
 - C17 定序王子与学者／导师状态所有权联合收口：24现行源／测试及两旧state删除，两组实际数据、原引用绑定与写入／JSON前缀归各自槽，学者完整有限板碰撞另归同族纯规则；Authority／frame继续持生命、pending与原阶段窗口。共享Observer三实际route整forward同，按文件去重原子提交，无临时桥。Root及非作者对规则资源、架构原体、失败证据和有效中文说明独立审批准，实核20不同Git before、7控制与64附件；七新风险加两旧精准例分批通过，原红和丢失终态句柄保真实，有限类型／职责头闭合，不重已有绿或全门禁。本批不冒完整C17／全中文／P9完成，见 order-scholar-state-slots.md。
+
+- C20 警长请求构造边界：九源把三原new点改为必填领域constructor端口，由两个Day与一个死亡结算caller晚提供真实工厂，选举一实例／方向独立／警徽许可后构造和原finally均保。Root及非作者完整三机制／新三反例／真实Git八全文forward和26编辑／四控制／18附件同SHA审批准，中文职责、票数据与构造失败前缀就地解释。三新定向例分首两绿及失败单例补查，原精准PK一绿；九根类型首仅并行Observer旧路由红，修复后的失败单根真实闭合，不称首轮绿且不重已有绿。MD仅校准三个同族警长模块；所有C20实体装配与P9继续，见 sheriff-request-construction.md。
