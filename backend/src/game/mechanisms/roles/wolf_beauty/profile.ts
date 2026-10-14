@@ -18,8 +18,8 @@ import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 import { WOLF_BEAUTY_CHARM_STAGE } from "./night_stages";
 import { wolfBeautyDeathHook } from "./death_hook";
-import { animalBeautyCharmAllowed, isAnimalDreamBoard } from "../animal_dream/authority";
-import { animalBeautyKnowledge } from "../animal_dream/facts";
+import { animalBeautyCharmAllowed, isAnimalDreamBoard } from "../animal_dream/beauty-query-ports";
+import { animalBeautyKnowledge } from "../animal_dream/beauty-fact-ports";
 import { COMPONENT } from "../../../../core/domain/components/names";
 
 const parameters = z.strictObject({
@@ -80,6 +80,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
           ? { code: RuleError.BeautySelfKnife }
           : null;
       },
+      // 原状态／角色检查后才查询动物魅惑准入；它不等于已发表知识，也不跳过后续 phase／目标／连续夜校验。
       charm: ({ world, actorId, role, phase, day, toolCall }) => {
         const state = getWolfBeautyState(role);
         if (

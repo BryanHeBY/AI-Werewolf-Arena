@@ -1,9 +1,9 @@
 /**
- * Runs Wolf Beauty charm selection against original actor and target bodies. Inputs are the
- * current night request and validated charm target; outputs are charm binding, history and event
- * effects. A rejected or stale choice never installs a new relation.
- * Ordinary payload history writes delegate to the local state owner at the original
- * commit position; all checks, use accounting and publication remain in this flow.
+ * 负责狼美人夜间魅惑的请求、等待后原体复验、选择历史、关系绑定及公开／动物私密通知。
+ * 输入为原夜上下文与经网关验证的可空目标；输出保留原历史、绑定与事件，拒绝或失效选择不安装新关系。
+ * 动物准入与板子识别通过查询端口按原位置调用，通知通过独立事实端口发表，不能将已知数据当作现场权限。
+ * 原状态先写历史，再绑定关系、发表 charm_applied，最后按板子追加通知；后续失败不撤销已完成前缀或补发事实。
+ * 目标和演员生命版本在原等待前后核对；本流程不提前领取死亡牵连，实际来源政策、保护与标死另归原 owner。
  */
 import { recordCharmSelection } from "./state";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
@@ -13,8 +13,8 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { getWolfBeautyState } from "./state";
 import { bindCharm } from "./relation";
-import { animalBeautyCharmAllowed, isAnimalDreamBoard } from "../animal_dream/authority";
-import { appendAnimalBeautyNotice } from "../animal_dream/facts";
+import { animalBeautyCharmAllowed, isAnimalDreamBoard } from "../animal_dream/beauty-query-ports";
+import { appendAnimalBeautyNotice } from "../animal_dream/beauty-fact-ports";
 
 export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
   id: "wolf_beauty_charm",

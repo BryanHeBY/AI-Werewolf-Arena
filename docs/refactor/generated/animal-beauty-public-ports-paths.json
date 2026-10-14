@@ -1,0 +1,30 @@
+{
+  "source": [
+    "backend/src/game/mechanisms/roles/animal_dream/beauty-query-ports.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/beauty-fact-ports.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/charm-ports.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts"
+  ],
+  "newSource": [
+    "backend/src/game/mechanisms/roles/animal_dream/beauty-query-ports.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/beauty-fact-ports.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/charm-ports.ts"
+  ],
+  "existingSource": [
+    "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts"
+  ],
+  "deleted": [],
+  "controls": [
+    "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/request_envelope.ts",
+    "backend/tests/unit/features/animal-dream/authority.test.ts",
+    "backend/tests/unit/features/wolf-beauty/trigger-receipts.test.ts"
+  ]
+}

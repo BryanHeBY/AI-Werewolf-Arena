@@ -1,0 +1,45 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/beauty-query-ports.ts",
+      "sha256": "f0b591823cdeb580e2531c8448f5c7b0aa09f465385ca1e597219ca623dd07fc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/beauty-fact-ports.ts",
+      "sha256": "7ddbb048473173e65d1094d6230f6e465c883c52130cd0f303afdcea5ae017aa"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/charm-ports.ts",
+      "sha256": "ad394514e73c2421875091914e88370c20aeb423e62e2e82c977fdc3ab47fc2b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+      "sha256": "c8f6751466a7b42141e6d2eeb34e9c603dcfdd01cacbc5275f6d98fc902f4d9e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+      "sha256": "3bf3f6032a0247d8f1afd9a6bf3457dfbbcf9531001dc8ab6f91a1da962e4bee"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "sha256": "05d1a6979eb7b856b9666be1e85fdbbd1ee1accae6abb1b78f1b84fe8f3011f0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "sha256": "007f4168b47ca7e5609650ad3ed80058d98b07881a396e323bc7ac8df91b72ff"
+    }
+  ],
+  "documentationPaths": 679,
+  "documentationPathsSha256": "41ec3fbfcec6dd6677ad5bda7b64c1d125eef4dd5da851bbb8d5c87399959b54",
+  "diagnostics": [
+    {
+      "id": "f4728a03e1732429604a5bc1cbeb73acf2809dc0661160e32ce980ec86273bad",
+      "rule": "comment.output",
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/charm-ports.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    }
+  ],
+  "chineseHeadFailures": []
+}

@@ -1,0 +1,30 @@
+{
+  "approved": true,
+  "scope": "仅首失败charm头的输出契约中文注释；保原主proof/type/risk采样，不重复绿",
+  "source": {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/charm-ports.ts",
+    "beforeSha256": "ad394514e73c2421875091914e88370c20aeb423e62e2e82c977fdc3ab47fc2b",
+    "afterSha256": "1f319b1377fae939859c702530924cdf391837835c76d83d21f4a5a6a9cb2f4f"
+  },
+  "commentEditRecords": 1,
+  "typedNodes": 7,
+  "nodeArrays": 2,
+  "noncommentLeaves": 8,
+  "jsdocTags": 0,
+  "protectedCommentRecords": 0,
+  "exactCommentForwardAndCompleteProgramSame": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "bytes": 40,
+      "sha256": "8435c97c354be7dd6538e7c719970ed031876770c614477e40e81a547637d70d"
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "bytes": 263,
+      "sha256": "09f176e5d03f631f5b93a7536b9e340c9249fb807655baf1996e962f8b0b485e"
+    }
+  ]
+}

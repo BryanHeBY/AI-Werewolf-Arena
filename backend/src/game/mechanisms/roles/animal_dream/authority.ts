@@ -10,7 +10,7 @@ import { Camp } from "../../../../core/domain/identity";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
-import { bindCharm } from "../wolf_beauty/relation";
+import { bindCharm } from "../wolf_beauty/charm-ports";
 import {
   animalRequestEnvelopeHeader,
   animalRequestEnvelopeCurrent,
@@ -347,6 +347,7 @@ export function openAnimalFoxChoice(world: World, day: number, requestToken?: ob
         night.fox.closed = true;
         throw Error("animal_fox_choice_unavailable");
       }
+      // 原狐狸复验之后先清目标与旧绑定，再提交狐狸库存；绑定或后续写入失败保留此前前缀，不补付款。
       if (beauty) {
         (night.fox.beauty as { targetId: number | null }).targetId = null;
         bindCharm(world, beauty.scope.id, null);

@@ -1,0 +1,52 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+    "before": "import { bindCharm } from \"../wolf_beauty/relation\";",
+    "after": "import { bindCharm } from \"../wolf_beauty/charm-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+    "before": "      if (beauty) {\n        (night.fox.beauty as { targetId: number | null }).targetId = null;",
+    "after": "      // 原狐狸复验之后先清目标与旧绑定，再提交狐狸库存；绑定或后续写入失败保留此前前缀，不补付款。\n      if (beauty) {\n        (night.fox.beauty as { targetId: number | null }).targetId = null;"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+    "before": "import { animalBeautyLinkBlocked } from \"../animal_dream/authority\";",
+    "after": "import { animalBeautyLinkBlocked } from \"../animal_dream/beauty-query-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+    "before": "  for (const actorId of ids) {\n    if (animalBeautyLinkBlocked(world, context?.day ?? 0)) continue;",
+    "after": "  for (const actorId of ids) {\n    // 动物原阻断查询先于 hook 当前性与来源政策；这里只准备未领取提案，不把公开查询变成死亡许可。\n    if (animalBeautyLinkBlocked(world, context?.day ?? 0)) continue;"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+    "before": "/**\n * Runs Wolf Beauty charm selection against original actor and target bodies. Inputs are the\n * current night request and validated charm target; outputs are charm binding, history and event\n * effects. A rejected or stale choice never installs a new relation.\n * Ordinary payload history writes delegate to the local state owner at the original\n * commit position; all checks, use accounting and publication remain in this flow.\n */",
+    "after": "/**\n * 负责狼美人夜间魅惑的请求、等待后原体复验、选择历史、关系绑定及公开／动物私密通知。\n * 输入为原夜上下文与经网关验证的可空目标；输出保留原历史、绑定与事件，拒绝或失效选择不安装新关系。\n * 动物准入与板子识别通过查询端口按原位置调用，通知通过独立事实端口发表，不能将已知数据当作现场权限。\n * 原状态先写历史，再绑定关系、发表 charm_applied，最后按板子追加通知；后续失败不撤销已完成前缀或补发事实。\n * 目标和演员生命版本在原等待前后核对；本流程不提前领取死亡牵连，实际来源政策、保护与标死另归原 owner。\n */"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+    "before": "import { animalBeautyCharmAllowed, isAnimalDreamBoard } from \"../animal_dream/authority\";",
+    "after": "import { animalBeautyCharmAllowed, isAnimalDreamBoard } from \"../animal_dream/beauty-query-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+    "before": "import { appendAnimalBeautyNotice } from \"../animal_dream/facts\";",
+    "after": "import { appendAnimalBeautyNotice } from \"../animal_dream/beauty-fact-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+    "before": "import { animalBeautyCharmAllowed, isAnimalDreamBoard } from \"../animal_dream/authority\";",
+    "after": "import { animalBeautyCharmAllowed, isAnimalDreamBoard } from \"../animal_dream/beauty-query-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+    "before": "import { animalBeautyKnowledge } from \"../animal_dream/facts\";",
+    "after": "import { animalBeautyKnowledge } from \"../animal_dream/beauty-fact-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+    "before": "      charm: ({ world, actorId, role, phase, day, toolCall }) => {",
+    "after": "      // 原状态／角色检查后才查询动物魅惑准入；它不等于已发表知识，也不跳过后续 phase／目标／连续夜校验。\n      charm: ({ world, actorId, role, phase, day, toolCall }) => {"
+  }
+]

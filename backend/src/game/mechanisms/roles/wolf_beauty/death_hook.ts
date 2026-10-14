@@ -11,7 +11,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { DeathHook } from "../../hooks/hook_registry";
 import { activeCharm, permitsCharm, attemptCharmTrigger, commitCharmDeath } from "./relation";
 import { createWolfBeautyDeathContribution } from "./death-wave-publication";
-import { animalBeautyLinkBlocked } from "../animal_dream/authority";
+import { animalBeautyLinkBlocked } from "../animal_dream/beauty-query-ports";
 
 export const wolfBeautyDeathHook: DeathHook = async (
   world,
@@ -24,6 +24,7 @@ export const wolfBeautyDeathHook: DeathHook = async (
   const result: Awaited<ReturnType<DeathHook>> = { extraDeaths: [], extraDeathSources: {} };
   let proposals: Parameters<typeof createWolfBeautyDeathContribution>[0][number][] | undefined;
   for (const actorId of ids) {
+    // 动物原阻断查询先于 hook 当前性与来源政策；这里只准备未领取提案，不把公开查询变成死亡许可。
     if (animalBeautyLinkBlocked(world, context?.day ?? 0)) continue;
     if (context?.isCurrent && !context.isCurrent()) break;
     if (

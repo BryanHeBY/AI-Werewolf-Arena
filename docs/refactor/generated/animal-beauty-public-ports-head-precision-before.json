@@ -1,0 +1,12 @@
+{
+  "source": {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/charm-ports.ts",
+    "sha256": "ad394514e73c2421875091914e88370c20aeb423e62e2e82c977fdc3ab47fc2b",
+    "text": "/**\n * 向动物梦境公开原 bindCharm 关系写命令，直接绑定狼美人唯一 relation owner。\n * 原狐狸准入复验后可按原点以 null 清除旧关系；新绑定的原角色／状态／生命版本捕获仍由 relation 执行。\n * 本入口不增加准入、付款、领取、标死或事实权限，也不加载死亡波贡献；调用失败保留原关系 owner 已写前缀。\n * 写命令不能从玩家知识、序列化编号或一个准入 Boolean 重建有效作用域，调用方仍保原资格与资源顺序。\n */\nexport { bindCharm } from \"./relation\";\n"
+  },
+  "edit": {
+    "before": " * 原狐狸准入复验后可按原点以 null 清除旧关系；新绑定的原角色／状态／生命版本捕获仍由 relation 执行。",
+    "after": " * 输入为原 World、演员与可空目标，输出为原关系绑定或 null 清除写入，不返回付款回执；原角色／状态／生命版本仍由 relation 捕获。"
+  },
+  "scope": "首7根type/主proof/两旧risk与头检查之后，仅失败charm职责头的输出契约精准补充；其它源码不改。"
+}
