@@ -1,0 +1,35 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "sha256": "9d99ef24ba9d888092f2b6e0fb2a250453058ac1a32c734b198fe26a25ebd7d1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/puffer_window.ts",
+      "sha256": "7089a54e51b44908968f150ae9e968fe65ce7f83bf9d82316875923eae54391a"
+    },
+    {
+      "path": "backend/src/rulesets/mist-delayed-night-settlement.ts",
+      "sha256": "db6bbcded996e6f976c22be3966e1c0065b96752e5dd3a8523cc3b5d228cc364"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "80f20d92f0c6ea12aadb02ac1c236196e68432f05026fbc9861ff9b6740b57ac"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/choice-ports.ts",
+      "sha256": "4c95efa47378146810dfda21070bc12783fa2dab694c0bcd0e2d0c2f30bb3854"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/choice-ports.ts",
+      "sha256": "31c6b0b1f267c1264b60e0a36806e48c1ec9d066b6d842a3b882868021bcdf72"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-choice/request-construction.test.ts",
+      "sha256": "4befd9625584232d07acf83ea0330ac6efff0e7a3e7f40f5714641b26e295944"
+    }
+  ],
+  "documentationPaths": 564,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

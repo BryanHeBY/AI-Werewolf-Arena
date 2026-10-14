@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/night-choice/request-construction.test.ts:
+(pass) 蛇尚未claim与河豚无候选均在原拒绝／返回点停止，不读构造器 [70.71ms]
+(pass) 蛇构造失败保原已开窗口，尚未付款或发表事实；关闭仍归外层 [4.37ms]
+(pass) 河豚构造失败先于scope；真实create后Provider拒绝才由原finally关闭 [26.27ms]
+
+ 3 pass
+ 0 fail
+ 34 expect() calls
+Ran 3 tests across 1 file. [281.00ms]

@@ -736,3 +736,5 @@
 - C24/C28 枪后追加死亡关系准备：五源把原43行七同步语句归具体ruleset，独立夜梦→婚约→恋人/梦→双生过滤预约和覆盖原序保，Cupid实际death命令通过具名public facet接线。同11别名/六晚查询和唯一originPhase参数点，linked仍DR原分配；标死、shot复验、commit/cancel/publish与全部finally仍原DR。Root与非作者全真实源/Git两全文/五稳定控制/17附件及中文审批准；new3/45+old精准1/3两次四不同48assert，五根type/head闭0，不重绿。MD只校准新sourceHash与算法/历史身份区别。完整关系、效果、narrow领域权限及P9继续，见 additional-death-relations.md。
 
 - C20 首夜选择窗口显式构造：十三源收三原new点、Thief/Shape两透传及三个开局getter，六旧caller只必要依赖接线，准备/复验/库存/动作/finally保原；必填API与实例新字段布局变化明确。Root和非作者完整原体／scope/Git十三全文／四控制／18附件与中文有效说明审批准，两个新真实Wild风险23＋旧取消精准5，共三不同28assert。首13根类型仅新unit3diag真红，纯type修后failed1根实际0；head只有原JSON[]、未留独立exit码诚实限定，无重绿。证明器四→五注释仅工具精度且保真实executed原版，不冒当前new API raw完全相同；所有C20/P9继续，见 first-night-request-construction.md。
+
+- C20 炼金蛇／河豚请求构造边界：七源的两个原new点从实际装配晚提供constructor，两choice facet具名同binding，公开读取与窗口命令职责分明。Snake已开窗构造失败且原函数无finally，Puffernew/create在scope/try外、进入try后才close，普通投票factory不复用；重要中文头与原失败时点同步准确。Root及非作者完整源/四真实Git before/六控制/18附件三面审批准，new3/34+旧Mist1/12+Puffer真实cycle1/7三执行五不同53assert，首次7根类型仅newunit3诊断红，未消费gateway合法化和saved!纯type修后failed1根0，保原阶段且无重绿。七head首0、完整四程序／8映射输出保；全C20和P9继续，见 snake-puffer-request-construction.md。

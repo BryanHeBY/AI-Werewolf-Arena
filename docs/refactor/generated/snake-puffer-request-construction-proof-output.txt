@@ -1,0 +1,1 @@
+{"originalWholePrograms":4,"wholeMappedOutputs":8,"actualFactoryNewPoints":2,"actualInjectedGetterSites":2,"newPublicFacets":2,"presentSourcePaths":7,"deletedSources":0}

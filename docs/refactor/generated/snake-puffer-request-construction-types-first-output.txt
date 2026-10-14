@@ -1,0 +1,9 @@
+backend/tests/unit/mechanisms/night-choice/request-construction.test.ts(58,63): error TS2339: Property 'toolGateway' does not exist on type '{ pending: MistPendingNight; events: GameEvent[]; world: World; boardConfig: { readonly animalDream?: { readonly policy: "awa_animal_dream_v1"; readonly eliminationPriority: "awa_wolf_priority_v1"; } | undefined; ... 53 more ...; readonly roleSetups: readonly { ...; }[]; }; ... 5 more ...; dealMode: "random" | "fixe...'.
+backend/tests/unit/mechanisms/night-choice/request-construction.test.ts(77,51): error TS2339: Property 'toolGateway' does not exist on type '{ pending: MistPendingNight; events: GameEvent[]; world: World; boardConfig: { readonly animalDream?: { readonly policy: "awa_animal_dream_v1"; readonly eliminationPriority: "awa_wolf_priority_v1"; } | undefined; ... 53 more ...; readonly roleSetups: readonly { ...; }[]; }; ... 5 more ...; dealMode: "random" | "fixe...'.
+backend/tests/unit/mechanisms/night-choice/request-construction.test.ts(117,50): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(expected: ActionRequest): void', gave the following error.
+    Argument of type 'ActionRequest | undefined' is not assignable to parameter of type 'ActionRequest'.
+      Type 'undefined' is not assignable to type 'ActionRequest'.
+  Overload 2 of 2, '(expected: NoInfer<ActionRequest>): void', gave the following error.
+    Argument of type 'ActionRequest | undefined' is not assignable to parameter of type 'ActionRequest'.
+      Type 'undefined' is not assignable to type 'ActionRequest'.

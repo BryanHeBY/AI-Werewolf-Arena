@@ -1,7 +1,13 @@
+/**
+ * 负责炼金魔女延迟夜蛇选择的原窗口、请求与回复复核。输入为原 World／事件／day pending、当前性与惰性构造依赖；
+ * 输出为原疗救目标并发表本职事实，实际库存和窗口写权仍归 frame；请求数据不是原体或行动许可。
+ * 不变量：先核 roster／候选并开放蛇窗口，才在原 new 点读构造器；本函数无 finally，失败保原已开窗口前缀，外层经理 abort。
+ * Provider 是原唯一 await，随后原名单／状态／gateway 复验成功才提交选择、写事实，不退款或替换异常。
+ */
 import { Phase, type ActionProvider, type GameEvent } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { MistPendingNight } from "./pending_night";
 import {
   assertMistRosterCurrent,
@@ -10,7 +16,7 @@ import {
   commitSnakeChoice,
 } from "./night_frame";
 
-/** PM already claimed its sole pending owner before any preceding blast/badge await. */
+/** 经理已在此前自爆／警徽 await 之前领取同一 pending；本选择窗口不重新 claim 或保存第二份待夜。 */
 export async function decideSnake(
   world: World,
   events: GameEvent[],
@@ -18,6 +24,7 @@ export async function decideSnake(
   provider: ActionProvider,
   pending: MistPendingNight,
   isCurrent: () => boolean,
+  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },
 ): Promise<number | null> {
   const actorId = mistCasterId(world, "alchemist"),
     day = pending.day;
@@ -26,7 +33,8 @@ export async function decideSnake(
   assertMistRosterCurrent(world);
   const candidates = pending.snakeTargets(actorId);
   openSnakeWindow(world, day, candidates, current);
-  const request = new GameActionRequestFactory(world, events, day).create({
+  // 原蛇窗口先开放，再在原点读取构造器并独立 new；构造失败不在此关闭，外层经理原 abort 保留该前缀。
+  const request = new construction.requestFactory(world, events, day).create({
     phase: Phase.Day,
     actorId,
     allowedTools: ["use_snake"],

@@ -1,0 +1,66 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "independentOfImplementation": true,
+  "scope": {
+    "path": "docs/refactor/generated/snake-puffer-request-construction-scope-final.json",
+    "sha256": "3c5c215aaacc9b32f888a39ca31a583553a99f210d2f51eb223766301db53900"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "sha256": "9d99ef24ba9d888092f2b6e0fb2a250453058ac1a32c734b198fe26a25ebd7d1",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/puffer_window.ts",
+      "sha256": "7089a54e51b44908968f150ae9e968fe65ce7f83bf9d82316875923eae54391a",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/mist-delayed-night-settlement.ts",
+      "sha256": "db6bbcded996e6f976c22be3966e1c0065b96752e5dd3a8523cc3b5d228cc364",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "80f20d92f0c6ea12aadb02ac1c236196e68432f05026fbc9861ff9b6740b57ac",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/choice-ports.ts",
+      "sha256": "4c95efa47378146810dfda21070bc12783fa2dab694c0bcd0e2d0c2f30bb3854",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/choice-ports.ts",
+      "sha256": "31c6b0b1f267c1264b60e0a36806e48c1ec9d066b6d842a3b882868021bcdf72",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-choice/request-construction.test.ts",
+      "sha256": "e5dd6d0395b4b0408bfb8f01fa8418b9f65eb644c7e103a828d433833dbcebcf",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/snake-puffer-request-construction.md",
+    "sha256": "a9e77363c2f2b64ed6f9b20f0536c4751f4cadc5d711dbc8a8251b8b933512fc"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/snake-puffer-request-construction-evidence.json",
+    "sha256": "6ac8a9985db41056c7ea565a540db4a806dfe917a9f5ea65c3cf62ce2ca56382"
+  },
+  "findings": [],
+  "review": {
+    "rulesAndResources": "完整读Snake/Puffer两窗口及两个caller原差异和newunit。Snake原已开窗后构造throw不新增finally、外manager仍abort；Puffer无actor不读，new/create在open scope/try前，进入try后provider错误走原close，不退款补交。",
+    "architectureAndRuntime": "两个末参必填constructor中立type，真实assembly晚getter不复用现有factory；各choice facet只同binding公开窗口，无状态/请求/资源mirror，原实现叶仍有consumer不误删除。",
+    "dataAndValidation": "七fresh SHA、四实际Git原文、六控制及十八附件核真；三个新3/34及两旧精准19断言分三次五distinct53。newunit未消费gateway实参修复与纯type saved!清楚记录、仅失败root实际0，首红不冒绿，不重复运行body/head或全gate。",
+    "chineseContracts": "中文头和关键try外/许可/库存/窗口失败边界有效，原Puffer请求始终finally的过宽注释改为已进入try条件；新constructor不是DTO或行动许可。"
+  },
+  "limits": [
+    "两个API/cold路线变化如实，不表示任意私有反射/全冷图等价",
+    "全部C20/lease/机制与P9仍继续"
+  ]
+}

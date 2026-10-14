@@ -1,0 +1,136 @@
+{
+  "newCases": {
+    "chunk_id": "611cb9",
+    "exit_code": 0,
+    "pass": 3,
+    "fail": 0,
+    "assertions": 34,
+    "output": "docs/refactor/generated/snake-puffer-request-construction-new-tests-output.txt",
+    "phase": "类型修复前 fixture 未提供 toolGateway；两 Snake case 均未到其使用点，原运行绿保阶段"
+  },
+  "originalMist": {
+    "receipt": {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "8ea657",
+        "wall_time_seconds": 0.093805603,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    "pass": 1,
+    "fail": 0,
+    "assertions": 12,
+    "filtered": 2,
+    "output": "docs/refactor/generated/snake-puffer-request-construction-old-mist-output.txt"
+  },
+  "originalPuffer": {
+    "receipt": {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "1860ca",
+        "wall_time_seconds": 0.180585025,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    "pass": 1,
+    "fail": 0,
+    "assertions": 7,
+    "filtered": 16,
+    "output": "docs/refactor/generated/snake-puffer-request-construction-old-puffer-output.txt"
+  },
+  "summary": {
+    "distinctSuccessfulCases": 5,
+    "successfulAssertions": 53,
+    "executions": 3,
+    "greenNotRepeated": true
+  },
+  "types": {
+    "first": {
+      "launch": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "f5cbd9",
+          "wall_time_seconds": 1.000969603,
+          "session_id": 55608,
+          "original_token_count": 0,
+          "output": ""
+        }
+      },
+      "terminal": {
+        "chunk_id": "0c4206",
+        "wall_time_seconds": 0.000009555,
+        "exit_code": 2,
+        "original_token_count": 0,
+        "output": ""
+      },
+      "roots": 7,
+      "exit_code": 2,
+      "diagnostics": "只 new unit 两缺失toolGateway字段与optional matcher共3诊断；六生产源无诊断，整体首次真红"
+    },
+    "failedOnly": {
+      "launch": {
+        "chunk_id": "74f7a5",
+        "session_id": 42206
+      },
+      "terminal": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "9046ef",
+          "wall_time_seconds": 0.000010539,
+          "exit_code": 0,
+          "original_token_count": 0,
+          "output": ""
+        }
+      },
+      "roots": 1,
+      "exit_code": 0
+    },
+    "repair": "fixture 增真实 ToolGateway 合法化两未实际消费参数；saved!只类型擦除，不改生产/标题/assert或复跑运行绿"
+  },
+  "heads": {
+    "receipt": {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "c68d81",
+        "wall_time_seconds": 0.238430743,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    "roots": 7,
+    "documentationPaths": 564,
+    "diagnostics": 0,
+    "chinesePresenceFailures": 0,
+    "phase": "new unit类型修复前 sourceSHA，末只 body fixture/type 注解，首头字节不变"
+  },
+  "proof": {
+    "launch": {
+      "chunk_id": "2eda65",
+      "session_id": 32526
+    },
+    "terminal": {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "bd1d0f",
+        "wall_time_seconds": 0.000008292,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    "originalWholePrograms": 4,
+    "wholeMappedOutputs": 8,
+    "actualNewPoints": 2,
+    "injectedGetterSites": 2
+  },
+  "limits": [
+    "有限类型收据由真实terminal状态归属，不从空日志猜exit。",
+    "五个不同成功case跨3执行，不冒单次5绿；末fixture有效性变化明列及非fixturebody保持证据，不改原实际输出采样SHA。",
+    "未运行全门禁/模型/网络/旧已绿整组。"
+  ]
+}

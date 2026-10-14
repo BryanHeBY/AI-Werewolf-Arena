@@ -1,0 +1,81 @@
+{
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "before": "import { GameActionRequestFactory } from \"../../../engine/action_request_factory\";",
+      "after": "import type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "before": "/** PM already claimed its sole pending owner before any preceding blast/badge await. */",
+      "after": "/** 经理已在此前自爆／警徽 await 之前领取同一 pending；本选择窗口不重新 claim 或保存第二份待夜。 */"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "before": "  isCurrent: () => boolean,\n): Promise<number | null>",
+      "after": "  isCurrent: () => boolean,\n  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n): Promise<number | null>"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "before": "  const request = new GameActionRequestFactory(world, events, day).create({",
+      "after": "  // 原蛇窗口先开放，再在原点读取构造器并独立 new；构造失败不在此关闭，外层经理原 abort 保留该前缀。\n  const request = new construction.requestFactory(world, events, day).create({"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "before": "import { Phase, type ActionProvider, type GameEvent } from \"../../../../core/domain/model\";\nimport type { World } from \"../../../../core/domain/world\";\nimport type { ToolGateway } from \"../../../gateway/tool_gateway\";\nimport type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";\nimport type { MistPendingNight } from \"./pending_night\";\nimport {\n  assertMistRosterCurrent,\n  mistCasterId,\n  openSnakeWindow,\n  commitSnakeChoice,\n} from \"./night_frame\";\n\n/** 经理已在此前自爆／警徽 await 之前领取同一 pending；本选择窗口不重新 claim 或保存第二份待夜。 */\nexport async function decideSnake(\n  world: World,\n  events: GameEvent[],\n  gateway: ToolGateway,\n  provider: ActionProvider,\n  pending: MistPendingNight,\n  isCurrent: () => boolean,\n  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n): Promise<number | null> {\n  const actorId = mistCasterId(world, \"alchemist\"),\n    day = pending.day;\n  const current = () => pending.status === \"committing\" && isCurrent();\n  if (!current()) throw new Error(\"snake_window_stale\");\n  assertMistRosterCurrent(world);\n  const candidates = pending.snakeTargets(actorId);\n  openSnakeWindow(world, day, candidates, current);\n  // 原蛇窗口先开放，再在原点读取构造器并独立 new；构造失败不在此关闭，外层经理原 abort 保留该前缀。\n  const request = new construction.requestFactory(world, events, day).create({\n    phase: Phase.Day,\n    actorId,\n    allowedTools: [\"use_snake\"],\n    stage: \"alchemist_snake\",\n    requiresAction: true,\n    summary: { key: \"request.summary.alchemist_snake\" },\n    context: {\n      snake_target: pending.wolfTarget,\n      snake_candidates: candidates,\n      action_failure_policy: \"error\",\n      allow_fallback: false,\n    },\n  });\n  const action = await provider.getAction(request);\n  assertMistRosterCurrent(world);\n  if (!current()) throw new Error(\"snake_window_stale\");\n  if (action?.name !== \"use_snake\") throw new Error(\"snake_action_missing\");\n  const result = gateway.validateAndSanitize(world, actorId, action, { phase: Phase.Day, day });\n  assertMistRosterCurrent(world);\n  if (!current() || !result.ok || result.sanitizedCall?.name !== \"use_snake\")\n    throw new Error(\"snake_action_invalid\");\n  const targetId = result.sanitizedCall.args.target_id;\n  commitSnakeChoice(world, day, actorId, targetId);\n  events.push({\n    timestamp: Date.now(),\n    type: \"alchemist_snake_chosen\",\n    payload: { actorId, day, targetId },\n    audience: Object.freeze([actorId]),\n  });\n  return targetId;\n}\n",
+      "after": "/**\n * 负责炼金魔女延迟夜蛇选择的原窗口、请求与回复复核。输入为原 World／事件／day pending、当前性与惰性构造依赖；\n * 输出为原疗救目标并发表本职事实，实际库存和窗口写权仍归 frame；请求数据不是原体或行动许可。\n * 不变量：先核 roster／候选并开放蛇窗口，才在原 new 点读构造器；本函数无 finally，失败保原已开窗口前缀，外层经理 abort。\n * Provider 是原唯一 await，随后原名单／状态／gateway 复验成功才提交选择、写事实，不退款或替换异常。\n */\nimport { Phase, type ActionProvider, type GameEvent } from \"../../../../core/domain/model\";\nimport type { World } from \"../../../../core/domain/world\";\nimport type { ToolGateway } from \"../../../gateway/tool_gateway\";\nimport type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";\nimport type { MistPendingNight } from \"./pending_night\";\nimport {\n  assertMistRosterCurrent,\n  mistCasterId,\n  openSnakeWindow,\n  commitSnakeChoice,\n} from \"./night_frame\";\n\n/** 经理已在此前自爆／警徽 await 之前领取同一 pending；本选择窗口不重新 claim 或保存第二份待夜。 */\nexport async function decideSnake(\n  world: World,\n  events: GameEvent[],\n  gateway: ToolGateway,\n  provider: ActionProvider,\n  pending: MistPendingNight,\n  isCurrent: () => boolean,\n  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n): Promise<number | null> {\n  const actorId = mistCasterId(world, \"alchemist\"),\n    day = pending.day;\n  const current = () => pending.status === \"committing\" && isCurrent();\n  if (!current()) throw new Error(\"snake_window_stale\");\n  assertMistRosterCurrent(world);\n  const candidates = pending.snakeTargets(actorId);\n  openSnakeWindow(world, day, candidates, current);\n  // 原蛇窗口先开放，再在原点读取构造器并独立 new；构造失败不在此关闭，外层经理原 abort 保留该前缀。\n  const request = new construction.requestFactory(world, events, day).create({\n    phase: Phase.Day,\n    actorId,\n    allowedTools: [\"use_snake\"],\n    stage: \"alchemist_snake\",\n    requiresAction: true,\n    summary: { key: \"request.summary.alchemist_snake\" },\n    context: {\n      snake_target: pending.wolfTarget,\n      snake_candidates: candidates,\n      action_failure_policy: \"error\",\n      allow_fallback: false,\n    },\n  });\n  const action = await provider.getAction(request);\n  assertMistRosterCurrent(world);\n  if (!current()) throw new Error(\"snake_window_stale\");\n  if (action?.name !== \"use_snake\") throw new Error(\"snake_action_missing\");\n  const result = gateway.validateAndSanitize(world, actorId, action, { phase: Phase.Day, day });\n  assertMistRosterCurrent(world);\n  if (!current() || !result.ok || result.sanitizedCall?.name !== \"use_snake\")\n    throw new Error(\"snake_action_invalid\");\n  const targetId = result.sanitizedCall.args.target_id;\n  commitSnakeChoice(world, day, actorId, targetId);\n  events.push({\n    timestamp: Date.now(),\n    type: \"alchemist_snake_chosen\",\n    payload: { actorId, day, targetId },\n    audience: Object.freeze([actorId]),\n  });\n  return targetId;\n}\n",
+      "kind": "head-prefix-only"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/puffer_window.ts",
+      "before": "import { GameActionRequestFactory } from \"../../../engine/action_request_factory\";",
+      "after": "import type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/puffer_window.ts",
+      "before": "  unit: object,\n): Promise<readonly number[]>",
+      "after": "  unit: object,\n  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n): Promise<readonly number[]>"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/puffer_window.ts",
+      "before": "  const request = new GameActionRequestFactory(world, events, day).create({",
+      "after": "  // 独立构造／create 先于 openAnimalRequest 和 try；这两步抛错时尚无此请求 scope，不能新增 finally 关闭。\n  const request = new construction.requestFactory(world, events, day).create({"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/puffer_window.ts",
+      "before": " * 输出为捕获的目标数组；请求始终在 finally 关闭，库存及原票源归 authority，此处不提交死亡波。",
+      "after": " * 输出为捕获的目标数组；成功建立 scope 并进入原 try 后才由 finally 关闭，库存及原票源归 authority，不提交死亡波。\n * 不变量：无待选 actor 不读取构造依赖；有效 actor 后在原点 new 原独立工厂，不复用 Voting 的普通投票工厂。"
+    },
+    {
+      "path": "backend/src/rulesets/mist-delayed-night-settlement.ts",
+      "before": "import { decideSnake } from \"../game/mechanisms/roles/mist_raven/snake_window\";",
+      "after": "import { decideSnake } from \"../game/mechanisms/roles/mist_raven/choice-ports\";\nimport { GameActionRequestFactory } from \"../game/engine/action_request_factory\";"
+    },
+    {
+      "path": "backend/src/rulesets/mist-delayed-night-settlement.ts",
+      "before": "    pending,\n    current,\n  );",
+      "after": "    pending,\n    current,\n    // 这里只捕获真实类的晚读取；窗口仍在原 roster／开窗之后 new，不提前创建请求或增加 await。\n    { get requestFactory() { return GameActionRequestFactory; } },\n  );"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "before": "import { runAnimalPufferChoice } from \"../../mechanisms/roles/animal_dream/puffer_window\";",
+      "after": "import { runAnimalPufferChoice } from \"../../mechanisms/roles/animal_dream/choice-ports\";"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "before": "        animalUnit,\n      );",
+      "after": "        animalUnit,\n        // 封存原票之后只提供惰性依赖；河豚在原有效 actor／scope 边界前独立构造，不能复用 requests。\n        { get requestFactory() { return GameActionRequestFactory; } },\n      );"
+    }
+  ],
+  "newFacets": [
+    "backend/src/game/mechanisms/roles/mist_raven/choice-ports.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/choice-ports.ts"
+  ],
+  "scopeSources": [
+    "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/puffer_window.ts",
+    "backend/src/rulesets/mist-delayed-night-settlement.ts",
+    "backend/src/game/engine/phase_pipeline/voting_pipeline.ts"
+  ],
+  "deleted": []
+}

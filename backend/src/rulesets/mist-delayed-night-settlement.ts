@@ -18,7 +18,8 @@ import type { ToolGateway } from "../game/gateway/tool_gateway";
 import type { NightManagerLifecycle } from "./night-lifecycle-plan";
 import { assertMistRosterCurrent } from "../game/mechanisms/roles/mist_raven/ports";
 import { MistPendingNight } from "../game/mechanisms/roles/mist_raven/pending_night";
-import { decideSnake } from "../game/mechanisms/roles/mist_raven/snake_window";
+import { decideSnake } from "../game/mechanisms/roles/mist_raven/choice-ports";
+import { GameActionRequestFactory } from "../game/engine/action_request_factory";
 import { safeRecordLogicOp } from "../recording/session_recorder";
 
 /** 只读取已交接的同一夜结果；原生命、梦句柄和伤害仍按各自所有者的既有规则处理。 */
@@ -91,6 +92,8 @@ export function* settleMistDelayedNight(
     actionProvider,
     pending,
     current,
+    // 这里只捕获真实类的晚读取；窗口仍在原 roster／开窗之后 new，不提前创建请求或增加 await。
+    { get requestFactory() { return GameActionRequestFactory; } },
   );
   const damage = pending.prepareFinalDamage(healed, current);
   safeRecordLogicOp({

@@ -13,7 +13,7 @@ import {
   recordAnimalBallotRound,
   sealAnimalBallots,
 } from "../../mechanisms/roles/animal_dream/authority";
-import { runAnimalPufferChoice } from "../../mechanisms/roles/animal_dream/puffer_window";
+import { runAnimalPufferChoice } from "../../mechanisms/roles/animal_dream/choice-ports";
 import { resolveTricksterExile } from "../../mechanisms/roles/trickster/night_frame";
 import { assertOrderPrinceOriginalCurrent } from "../../mechanisms/roles/order_prince/authority";
 import { runOrderPrinceChoice } from "../../mechanisms/roles/order_prince/voting_window";
@@ -355,6 +355,8 @@ export class VotingPipeline {
         this.toolGateway,
         options.day,
         animalUnit,
+        // 封存原票之后只提供惰性依赖；河豚在原有效 actor／scope 边界前独立构造，不能复用 requests。
+        { get requestFactory() { return GameActionRequestFactory; } },
       );
     }
     if (target === null) {

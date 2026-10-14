@@ -1,0 +1,17 @@
+{
+  "path": "backend/tests/unit/mechanisms/night-choice/request-construction.test.ts",
+  "edits": [
+    {
+      "before": "return { ...game, pending, events: [] as GameEvent[] };",
+      "after": "return { ...game, pending, events: [] as GameEvent[], toolGateway: new ToolGateway() };",
+      "kind": "fixture明确真实gateway，仅原两不消费路径"
+    },
+    {
+      "before": "expect(request).toBe(saved);",
+      "after": "expect(request).toBe(saved!);",
+      "kind": "纯类型非空断言，JS相同"
+    }
+  ],
+  "sourceAfterSha256": "e5dd6d0395b4b0408bfb8f01fa8418b9f65eb644c7e103a828d433833dbcebcf",
+  "greenNotRepeated": true
+}
