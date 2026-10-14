@@ -24,7 +24,7 @@ import { buildSpeakerOrder, chooseSpeakerDirection } from "../../mechanisms/sher
 import { findSheriffId } from "../../mechanisms/sheriff/badge";
 import { World } from "../../../core/domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
-import { isSelfDestructWindowEnabled } from "../self_destruct_window";
+import { isSelfDestructWindowEnabled } from "../../../rulesets/self-destruct-window";
 
 /**
  * 白天流水线执行结果。

@@ -8,7 +8,7 @@ import { World } from "../../../src/core/domain/world";
 import { RoleRegistry } from "../../../src/core/domain/registries/role_registry";
 import type { GameEvent } from "../../../src/core/domain/model";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { SelfDestructWindow } from "../../../src/game/engine/self_destruct_window";
+import { SelfDestructWindow } from "../../../src/rulesets/self-destruct-window";
 import { KnightDuelWindow } from "../../../src/game/engine/knight_duel_window";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { DebaterWindow } from "../../../src/game/mechanisms/roles/debater/window";

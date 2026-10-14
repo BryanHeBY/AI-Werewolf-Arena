@@ -38,7 +38,7 @@ import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { EventRegistry } from "../event_registry";
 import { World } from "../../../core/domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
-import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../self_destruct_window";
+import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../../../rulesets/self-destruct-window";
 import { canBeExiled, canVoteExile } from "../../mechanisms/common/participation";
 
 /**

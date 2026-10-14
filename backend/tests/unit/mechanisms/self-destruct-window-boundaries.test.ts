@@ -5,7 +5,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ActionWindow, COMPONENT, Phase, Role, type GameEvent } from "../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { SelfDestructWindow } from "../../../src/game/engine/self_destruct_window";
+import { SelfDestructWindow } from "../../../src/rulesets/self-destruct-window";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
@@ -89,7 +89,7 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(result).toEqual(
         revoke === "phase" ? null : { kind: "ordinary", actorId: 2, targetId: null },
       );
-      expect(events).toEqual([]); // A bare selector returns an intent; the manager commits the fact.
-      expect(world.getAliveEntityIds()).toContain(2); // The manager still owns death application.
+      expect(events).toEqual([]); // 无提交回调时只返回选择；事实仍由经理的提交路径发布。
+      expect(world.getAliveEntityIds()).toContain(2); // 选择窗口不标死；实际死亡仍归经理的结算路径。
     }
   });

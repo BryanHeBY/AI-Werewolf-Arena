@@ -1,30 +1,34 @@
 /**
- * 负责按配置开启白天自爆机会，并捕获原存活玩家。输入为窗口、Provider 与 Gateway；输出为接受的自爆选择或原窗口结果。只有仍有效的原玩家可以提交，不以替换身体恢复机会。
+ * 负责白天自爆的有限规则组合：婚礼禁用、红月资格、普通自爆与白狼王库存共同约束选择。
+ * 输入为原 World、角色工具表、请求构造端口、Provider、网关及窗口回调；输出为首个未被拒绝的选择或 null。
+ * 并发请求保原 Promise.all 顺序；等待后按原体／生命版本／库存与目标复验，再按玩家编号尝试提交。
+ * 捕获的存活组件和资源引用仅服务本次窗口；阶段 current、库存付款、死亡与最终判胜各归原 owner。
+ * commit 返回 false 只跳过该选择；读取、Provider 或提交失败沿原异常传播，不补提交或回滚已写前缀。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { RED_MOON_ROLE } from "../mechanisms/roles/red_moon_apostle/ports";
-import { demonRedMoonCanBlast } from "../mechanisms/roles/demon_hunter/authority";
-import { canRoleSelfDestruct } from "../mechanisms/roles/self_destruct_capability";
-import { getDefaultRoleCatalog } from "../mechanisms/roles/role-catalog-assembly";
+import { RED_MOON_ROLE } from "../game/mechanisms/roles/red_moon_apostle/ports";
+import { demonRedMoonCanBlast } from "../game/mechanisms/roles/demon_hunter/ports";
+import { canRoleSelfDestruct } from "../game/mechanisms/roles/self_destruct_capability";
+import { getDefaultRoleCatalog } from "../game/mechanisms/roles/role-catalog-assembly";
 import {
   weddingMember,
   weddingSetup,
   ghostBrideReady,
-} from "../mechanisms/roles/ghost_bride/authority";
-import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
-import { COMPONENT } from "../../core/domain/components/names";
-import { RoleComponent } from "../../core/domain/components/role";
+} from "../game/mechanisms/roles/ghost_bride/ports";
+import { AliveComponent, aliveLifeVersion } from "../core/domain/components/alive";
+import { COMPONENT } from "../core/domain/components/names";
+import { RoleComponent } from "../core/domain/components/role";
 import {
   ActionProvider,
   ActionWindow,
   Phase,
   type SelfDestructSelection,
-} from "../../core/domain/model";
-import { RoleRegistry } from "../../core/domain/registries/role_registry";
-import { World } from "../../core/domain/world";
-import { ToolGateway } from "../gateway/tool_gateway";
-import { GameActionRequestFactory } from "./action_request_factory";
-import { getWhiteWolfKingState } from "../mechanisms/roles/white_wolf_king/ports";
+} from "../core/domain/model";
+import { RoleRegistry } from "../core/domain/registries/role_registry";
+import { World } from "../core/domain/world";
+import { ToolGateway } from "../game/gateway/tool_gateway";
+import type { ActionRequestConstructionPort } from "../core/domain/actions";
+import { getWhiteWolfKingState } from "../game/mechanisms/roles/white_wolf_king/ports";
 
 /** 并发收集选项，按编号升序复验并尝试提交；回调明确返回 false 时跳过该选项，返回首个未被拒绝的选择。 */
 export class SelfDestructWindow {
@@ -35,7 +39,7 @@ export class SelfDestructWindow {
   ) {}
 
   async execute(
-    requests: GameActionRequestFactory,
+    requests: ActionRequestConstructionPort,
     provider: ActionProvider,
     window: ActionWindow,
     phase: Phase,
@@ -43,12 +47,14 @@ export class SelfDestructWindow {
     commit?: (choice: SelfDestructSelection) => Promise<void | boolean>,
   ): Promise<SelfDestructSelection | null> {
     if (!isCurrent()) return null;
+    // 先捕获所有原存活身体和生命版本；后续目标死后复活或换组件不能复用旧选择。
     const targets = new Map(
       this.world.getAliveEntityIds().map((id) => {
         const alive = this.world.getComponent(id, COMPONENT.Alive)!;
         return [id, { alive, version: aliveLifeVersion(alive) }] as const;
       }),
     );
+    // 各玩家请求并发，结果排列仍由原存活名单决定；不以最早响应决定谁自爆。
     const picks = await Promise.all(
       this.world.getAliveEntityIds().map(async (actorId) => {
         const role = this.world.getComponent(actorId, COMPONENT.Role);
@@ -72,6 +78,7 @@ export class SelfDestructWindow {
             : !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
         )
           return null;
+        // 白狼王复验同一库存对象；这里不消费，实际消耗仍归提交函数。
         const resource =
           tool === "self_destruct_with_target" ? getWhiteWolfKingState(role) : undefined;
         if (tool === "self_destruct_with_target" && resource?.canDetonate !== true) return null;
@@ -105,6 +112,7 @@ export class SelfDestructWindow {
       }),
     );
     if (!isCurrent()) return null;
+    // 提交前重复检查原玩家、目标、生命版本及特殊规则；字段恢复不抹去生命版本变化。
     const stillCurrent = (pick: NonNullable<(typeof picks)[number]>) => {
       const { actorId, targetId } = pick.choice;
       if (
@@ -138,6 +146,7 @@ export class SelfDestructWindow {
       }
       return true;
     };
+    // 网关预检前后均复验；预检成功只产生候选，不意味着库存付款或死亡已生效。
     const valid = picks.filter(
       (pick): pick is NonNullable<typeof pick> =>
         pick !== null &&
@@ -149,6 +158,7 @@ export class SelfDestructWindow {
         }).ok &&
         stillCurrent(pick),
     );
+    // 按玩家编号串行调用可选提交；false 跳过，异常停止并保留此前提交的前缀。
     for (const pick of valid.sort((a, b) => a.choice.actorId - b.choice.actorId)) {
       if (!isCurrent()) return null;
       if (!stillCurrent(pick)) continue;
@@ -159,6 +169,7 @@ export class SelfDestructWindow {
   }
 }
 
+/** 显式空窗口列表禁用全部机会；只有未配置列表才回退到原投票前默认窗口。 */
 export function isSelfDestructWindowEnabled(
   config: ReadonlyBoardConfig,
   window: ActionWindow,

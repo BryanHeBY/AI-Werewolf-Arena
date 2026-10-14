@@ -1,0 +1,115 @@
+{
+  "approved": true,
+  "baseCommit": "761f670ac9ea756254afdbc37845ec43e976031f",
+  "source": [
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "beforePath": "backend/src/game/engine/self_destruct_window.ts",
+      "wholeForwardEqual": true,
+      "wholeInverseEqual": true,
+      "mappedOutputSHA256": [
+        "f9f6551956ea3fc57db3f6a608cb271cc1059349e20c127fd72a744d49da75a5",
+        "d1b92db0b2c18496406b0381c9bad1f7e992af953d09515c33c0aaf0d1f90915"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "beforePath": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "wholeForwardEqual": true,
+      "wholeInverseEqual": true,
+      "mappedOutputSHA256": [
+        "dd8a38c0596ed234caa51c27772c9c56a675d4af2ddf462ab65d1137af8764e7",
+        "3419a2d42a12fb2e92f8f82c08cf3c10af949164050473dcef5caa1cc4c69186"
+      ]
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "beforePath": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "wholeForwardEqual": true,
+      "wholeInverseEqual": true,
+      "mappedOutputSHA256": [
+        "7b68779c02e6ca2beddd18d44c275307af137b9904a2d1f392d70373a52ba2a7",
+        "a12f61f282c292ade74b4f2efabccec477dd4f36237a150c98d652c789197476"
+      ]
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "beforePath": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "wholeForwardEqual": true,
+      "wholeInverseEqual": true,
+      "mappedOutputSHA256": [
+        "d6e80b283074b006aec1cb339c67ea0ffa8e2dccd2e8e36509f926ee4bb35d62",
+        "dc0b95db3ca613157d05375df0c2b9f9bd7b17fa71d0511b06ae087af16c5ffa"
+      ]
+    },
+    {
+      "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+      "beforePath": "backend/src/rulesets/daytime-interruption-composition.ts",
+      "wholeForwardEqual": true,
+      "wholeInverseEqual": true,
+      "mappedOutputSHA256": [
+        "3c47bef4c630eb50651ceb38183fd0378e977a5392fdc98b3039e0f9b9b2cf8d",
+        "58f748a403ad62be9123937157dee4552bdc9b008c73995a083c075e4646ec4f"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+      "beforePath": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+      "wholeForwardEqual": true,
+      "wholeInverseEqual": true,
+      "mappedOutputSHA256": [
+        "2f88d3524d688938f85c4b8f25cb66c4a19a60aac42cb104b16923ef6724f0b2",
+        "17a01442a3dc47ce3f7146348aa2fad4ac93cc0fc2040c3bd432d81894a79ca0"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/self-destruct-window-boundaries.test.ts",
+      "beforePath": "backend/tests/unit/mechanisms/self-destruct-window-boundaries.test.ts",
+      "wholeForwardEqual": true,
+      "wholeInverseEqual": true,
+      "mappedOutputSHA256": [
+        "8ce69975deed1e40d16c0a169303d7fd4b5d1553dda60f664147ed63954ba72a",
+        "2d0c8f29e7672a96e891c6dcefd3ba455bb9b03721a73564afb045e59cf13a36"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+      "beforePath": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+      "wholeForwardEqual": true,
+      "wholeInverseEqual": true,
+      "mappedOutputSHA256": [
+        "ddaa8f13378507db812736a1007abb5db730c660067ccb82b3fc82f49ccc2161",
+        "747bff4e87bdcf1b2076f85ce2a3a10b6f9b3bd52f376059b88e0fab83f9041a"
+      ]
+    }
+  ],
+  "literalReferences": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "specifier": "../../../rulesets/self-destruct-window"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "specifier": "../../../rulesets/self-destruct-window"
+    },
+    {
+      "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+      "specifier": "./self-destruct-window"
+    },
+    {
+      "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+      "specifier": "../../../src/rulesets/self-destruct-window"
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+      "specifier": "../../../../src/rulesets/self-destruct-window"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/self-destruct-window-boundaries.test.ts",
+      "specifier": "../../../src/rulesets/self-destruct-window"
+    }
+  ],
+  "scope": "六个当前源码根，非历史generated/私有配置/计算路径或仓外入口",
+  "explicitTypeChange": "GameActionRequestFactory 参数改为已有 ActionRequestConstructionPort；不暴露工厂私有状态，运行语句保持。",
+  "outputs": 16
+}

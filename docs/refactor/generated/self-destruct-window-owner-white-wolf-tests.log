@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts:
+(pass) zh-CN: target death/revival/replacement or resource/identity changes discard late choices without consumption [49.00ms]
+(pass) en: target death/revival/replacement or resource/identity changes discard late choices without consumption [4.23ms]
+
+ 2 pass
+ 4 filtered out
+ 0 fail
+ 40 expect() calls
+Ran 2 tests across 1 file. [242.00ms]

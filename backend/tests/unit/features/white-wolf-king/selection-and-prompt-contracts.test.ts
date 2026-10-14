@@ -20,7 +20,7 @@ import {
   getWhiteWolfKingState,
   setWhiteWolfKingState,
 } from "../../../../src/game/mechanisms/roles/white_wolf_king/state";
-import { SelfDestructWindow } from "../../../../src/game/engine/self_destruct_window";
+import { SelfDestructWindow } from "../../../../src/rulesets/self-destruct-window";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { createDefaultRoleRegistry, getDefaultRoleCatalog } from "../../../../src/game/mechanisms";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

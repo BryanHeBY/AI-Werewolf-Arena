@@ -1,0 +1,22 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "../../../backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+    "../../../backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+    "../../../backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+    "../../../backend/src/rulesets/daytime-interruption-composition.ts",
+    "../../../backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+    "../../../backend/tests/unit/mechanisms/self-destruct-window-boundaries.test.ts",
+    "../../../backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+    "../../../backend/src/rulesets/self-destruct-window.ts"
+  ]
+}

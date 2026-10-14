@@ -1,0 +1,162 @@
+[
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "/**\n * 负责按配置开启白天自爆机会，并捕获原存活玩家。输入为窗口、Provider 与 Gateway；输出为接受的自爆选择或原窗口结果。只有仍有效的原玩家可以提交，不以替换身体恢复机会。\n */\n",
+    "after": "/**\n * 负责白天自爆的有限规则组合：婚礼禁用、红月资格、普通自爆与白狼王库存共同约束选择。\n * 输入为原 World、角色工具表、请求构造端口、Provider、网关及窗口回调；输出为首个未被拒绝的选择或 null。\n * 并发请求保原 Promise.all 顺序；等待后按原体／生命版本／库存与目标复验，再按玩家编号尝试提交。\n * 捕获的存活组件和资源引用仅服务本次窗口；阶段 current、库存付款、死亡与最终判胜各归原 owner。\n * commit 返回 false 只跳过该选择；读取、Provider 或提交失败沿原异常传播，不补提交或回滚已写前缀。\n */\n"
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../mechanisms/roles/red_moon_apostle/ports\"",
+    "after": "\"../game/mechanisms/roles/red_moon_apostle/ports\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../mechanisms/roles/demon_hunter/authority\"",
+    "after": "\"../game/mechanisms/roles/demon_hunter/ports\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../mechanisms/roles/self_destruct_capability\"",
+    "after": "\"../game/mechanisms/roles/self_destruct_capability\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../mechanisms/roles/role-catalog-assembly\"",
+    "after": "\"../game/mechanisms/roles/role-catalog-assembly\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../mechanisms/roles/ghost_bride/authority\"",
+    "after": "\"../game/mechanisms/roles/ghost_bride/ports\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../../core/domain/components/alive\"",
+    "after": "\"../core/domain/components/alive\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../../core/domain/components/names\"",
+    "after": "\"../core/domain/components/names\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../../core/domain/components/role\"",
+    "after": "\"../core/domain/components/role\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../../core/domain/model\"",
+    "after": "\"../core/domain/model\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../../core/domain/registries/role_registry\"",
+    "after": "\"../core/domain/registries/role_registry\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../../core/domain/world\"",
+    "after": "\"../core/domain/world\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../gateway/tool_gateway\"",
+    "after": "\"../game/gateway/tool_gateway\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "\"../mechanisms/roles/white_wolf_king/ports\"",
+    "after": "\"../game/mechanisms/roles/white_wolf_king/ports\""
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "import { GameActionRequestFactory } from \"./action_request_factory\";",
+    "after": "import type { ActionRequestConstructionPort } from \"../core/domain/actions\";"
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "requests: GameActionRequestFactory,",
+    "after": "requests: ActionRequestConstructionPort,"
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "    const targets = new Map(",
+    "after": "    // 先捕获所有原存活身体和生命版本；后续目标死后复活或换组件不能复用旧选择。\n    const targets = new Map("
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "    const picks = await Promise.all(",
+    "after": "    // 各玩家请求并发，结果排列仍由原存活名单决定；不以最早响应决定谁自爆。\n    const picks = await Promise.all("
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "        const resource =\n",
+    "after": "        // 白狼王复验同一库存对象；这里不消费，实际消耗仍归提交函数。\n        const resource =\n"
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "    const stillCurrent = (pick:",
+    "after": "    // 提交前重复检查原玩家、目标、生命版本及特殊规则；字段恢复不抹去生命版本变化。\n    const stillCurrent = (pick:"
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "    const valid = picks.filter(",
+    "after": "    // 网关预检前后均复验；预检成功只产生候选，不意味着库存付款或死亡已生效。\n    const valid = picks.filter("
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "    for (const pick of valid.sort(",
+    "after": "    // 按玩家编号串行调用可选提交；false 跳过，异常停止并保留此前提交的前缀。\n    for (const pick of valid.sort("
+  },
+  {
+    "path": "backend/src/rulesets/self-destruct-window.ts",
+    "before": "export function isSelfDestructWindowEnabled(",
+    "after": "/** 显式空窗口列表禁用全部机会；只有未配置列表才回退到原投票前默认窗口。 */\nexport function isSelfDestructWindowEnabled("
+  },
+  {
+    "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+    "before": "\"../self_destruct_window\"",
+    "after": "\"../../../rulesets/self-destruct-window\""
+  },
+  {
+    "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+    "before": "\"../self_destruct_window\"",
+    "after": "\"../../../rulesets/self-destruct-window\""
+  },
+  {
+    "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+    "before": "\"../game/engine/self_destruct_window\"",
+    "after": "\"./self-destruct-window\""
+  },
+  {
+    "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+    "before": "\"../../../src/game/engine/self_destruct_window\"",
+    "after": "\"../../../src/rulesets/self-destruct-window\""
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/self-destruct-window-boundaries.test.ts",
+    "before": "\"../../../src/game/engine/self_destruct_window\"",
+    "after": "\"../../../src/rulesets/self-destruct-window\""
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/self-destruct-window-boundaries.test.ts",
+    "before": "// A bare selector returns an intent; the manager commits the fact.",
+    "after": "// 无提交回调时只返回选择；事实仍由经理的提交路径发布。"
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/self-destruct-window-boundaries.test.ts",
+    "before": "// The manager still owns death application.",
+    "after": "// 选择窗口不标死；实际死亡仍归经理的结算路径。"
+  },
+  {
+    "path": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+    "before": "\"../../../../src/game/engine/self_destruct_window\"",
+    "after": "\"../../../../src/rulesets/self-destruct-window\""
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+    "before": "  demonHunterActorId,",
+    "after": "  demonHunterActorId,\n  demonRedMoonCanBlast,"
+  }
+]
