@@ -1,0 +1,46 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "5a5c7542d649689f9b07d288a83e658bc2b58684",
+  "source": [
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "9b3606f38f40c759eea0dc2f60fe5afc5b9929f55f72ef2c61c172ddb9d1b836"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "979359337b1c644c175bb4f8be51aac6505edfc5d0cf566bd8053cd45828de18"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/setup-request-fixture-board-scope-final.json",
+    "sha256": "d072efc18041c8b4532562bf8915877771c3bbd13f6519dc9b4ab0a5a0fad3fa"
+  },
+  "document": {
+    "path": "docs/refactor/setup-request-fixture-board.md",
+    "sha256": "2e3cd373e11879ac854dd0eee378ad8275c277eb958f6a7446749fb1d0296244"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/setup-request-fixture-board-evidence.json",
+    "sha256": "b9b417adf7abc5528177a700170f1f977c85b0a11e7d83e55096aa5978a497cf"
+  },
+  "integrity": {
+    "freshSources": 2,
+    "actualGitBefore": 2,
+    "controls": 4,
+    "artifactHashes": 13,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "两旧失败标题的canonical板子同引用输入",
+    "原所有expect与动作和生产控制原样",
+    "完整源精确编辑及原JS输入差异",
+    "中文helper契约和单次定向实际收据"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

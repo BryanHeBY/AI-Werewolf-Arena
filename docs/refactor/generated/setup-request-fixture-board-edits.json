@@ -1,0 +1,31 @@
+{
+  "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts": [
+    {
+      "before": "import { expect, test } from \"bun:test\";",
+      "after": "import { expect, test } from \"bun:test\";\nimport type { ReadonlyBoardConfig } from \"@ai-werewolf-arena/game-contract\";",
+      "count": 1
+    },
+    {
+      "before": "type Fixture = ReturnType<typeof fixture>;",
+      "after": "type Fixture = ReturnType<typeof fixture>;\n\n/** 只消费准备窗口所需字段；正常输入可传已绑定板子，原 raw 配置撤权用例仍保留。 */\ntype SetupFixture = Pick<Fixture, \"world\" | \"events\"> & { readonly config: ReadonlyBoardConfig };",
+      "count": 1
+    },
+    {
+      "before": "const setup = (\n  g: Fixture,",
+      "after": "const setup = (\n  g: SetupFixture,",
+      "count": 1
+    },
+    {
+      "before": "test(\"opaque factory request is World-bound and only deadline copies inherit it\", async () => {\n  const g = fixture(),\n    other = fixture();\n  await setup(g, async (r) => {",
+      "after": "test(\"opaque factory request is World-bound and only deadline copies inherit it\", async () => {\n  const g = fixture(),\n    other = fixture();\n  // 请求传播场景传 bootstrap 已绑定的同一板子；raw 配置身份拒绝不属于本例的断言。\n  await setup({ ...g, config: g.boardConfig }, async (r) => {",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts": [
+    {
+      "before": "test(\"opaque request only trusted deadline clone and original context\", async () => {\n  const g = fixture();\n  await setup(g, async (r) => {",
+      "after": "test(\"opaque request only trusted deadline clone and original context\", async () => {\n  const g = fixture();\n  // 先满足原准备窗口的板子身份；后续每个请求／工具拒绝仍由原字面断言核对。\n  await setup({ ...g, config: g.boardConfig }, async (r) => {",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "baseCommit": "5a5c7542d649689f9b07d288a83e658bc2b58684",
+  "source": [
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "9b3606f38f40c759eea0dc2f60fe5afc5b9929f55f72ef2c61c172ddb9d1b836"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "979359337b1c644c175bb4f8be51aac6505edfc5d0cf566bd8053cd45828de18"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-before.json",
+      "sha256": "16956b75be8bee4aad04ac0740d1f2fe0dd58756c0dbb54ac399327f4e13e5e6"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-edits.json",
+      "sha256": "fe58f419297bfe2a0c40638c3f940bb46fe2fa1b43f278b5bdfafa71d7be81e7"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-heads-output.txt",
+      "sha256": "b3d1eb73c192a38cfc2c0f210c01b93653d5523d644a35ccfd83bd94d3ee6de0"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-heads.json",
+      "sha256": "45f9e75393f251a448dc8547bcb117e050cb3bff3d559887dc5d318ed2cf6fe7"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-heads.ts",
+      "sha256": "19f42c134a6ad3e2df86df65137a5a331c2a9a3156a0871bc69f0f6c1cd7e005"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-paths.json",
+      "sha256": "cb7f2c700355161f11897faf1148de275dbb666ec8e138b3cc12f8178dc8dc42"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-proof-output.txt",
+      "sha256": "28ed79a262cd6647fea25fdfadde0256ca718fd24eae0f61b2ed185ad191b0e4"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-proof.cjs",
+      "sha256": "a911895bde6bd83ba7311d7b0f4b983111bca4483e7c82202776eb7f049a0047"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-proof.json",
+      "sha256": "fcc5d7c7f9b5e9f7f7873dc10509b29004d07b7dfb7f4dd8f6aaf352c841de9b"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-receipts.json",
+      "sha256": "d881ca739cfd4642de4a49552088c050bfecd3f464b43f8b824097b46f11ac7b"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-tests-output.txt",
+      "sha256": "a2bbfd0c23180a6c9cbf746b312d52c1158cb719ce2065c06fda44162d3ed107"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-types-config.json",
+      "sha256": "f48041ec6feb26c10fdf6f6aacef110c029bca89b3ab1358f1f5c3e807896ef4"
+    },
+    {
+      "path": "docs/refactor/generated/setup-request-fixture-board-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "originalFailureEvidence": "docs/refactor/generated/request-lease-propagation-receipts.json",
+  "scope": "两原失败标题的输入修正，不改生产或oracle",
+  "testsAllSelectedGreen": true,
+  "fullGatesRun": false
+}

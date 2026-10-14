@@ -3,6 +3,7 @@
  */
 import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { inheritRequestAlias } from "../../../../src/core/domain/request_delivery";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Camp, COMPONENT, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest } from "../../../../src/core";
@@ -37,6 +38,9 @@ function fixture(roles = deck, extra: Partial<BoardConfig> = {}) {
 
 type Fixture = ReturnType<typeof fixture>;
 
+/** 只消费准备窗口所需字段；正常输入可传已绑定板子，原 raw 配置撤权用例仍保留。 */
+type SetupFixture = Pick<Fixture, "world" | "events"> & { readonly config: ReadonlyBoardConfig };
+
 const role = (g: Fixture, id = 1) => g.world.getComponent(id, COMPONENT.Role)!;
 
 const choose = (target_id: number): ToolCall => ({
@@ -45,7 +49,7 @@ const choose = (target_id: number): ToolCall => ({
 });
 
 const setup = (
-  g: Fixture,
+  g: SetupFixture,
   getAction: (r: ActionRequest) => Promise<ToolCall | null> = async () => choose(2),
   isCurrent = () => true,
 ) =>
@@ -203,7 +207,8 @@ for (const [name, mutate] of Object.entries(changes))
 test("opaque factory request is World-bound and only deadline copies inherit it", async () => {
   const g = fixture(),
     other = fixture();
-  await setup(g, async (r) => {
+  // 请求传播场景传 bootstrap 已绑定的同一板子；raw 配置身份拒绝不属于本例的断言。
+  await setup({ ...g, config: g.boardConfig }, async (r) => {
     const timed = { ...r, deadlineAtMs: 200 };
     inheritRequestAlias(r, timed);
     expect(wildChildRequestScope(g.world, timed)).toBeDefined();

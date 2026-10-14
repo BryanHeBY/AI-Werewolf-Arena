@@ -408,7 +408,8 @@ test("factory-side revocation is checked before provider", async () => {
 
 test("opaque request only trusted deadline clone and original context", async () => {
   const g = fixture();
-  await setup(g, async (r) => {
+  // 先满足原准备窗口的板子身份；后续每个请求／工具拒绝仍由原字面断言核对。
+  await setup({ ...g, config: g.boardConfig }, async (r) => {
     const receiver = new ActionReception(g.world),
       bounded = { ...r, deadlineAtMs: Date.now() + 1000 };
     expect(receiver.validate(r, "choose_admired_player", { target_id: 2 }).ok).toBe(true);
