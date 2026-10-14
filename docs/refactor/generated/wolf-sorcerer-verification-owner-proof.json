@@ -1,0 +1,318 @@
+{
+  "baseCommit": "198933bb2d06d2ef702c012be32bd6e851d67875",
+  "exactSpecifierEditCount": 4,
+  "exactCommentEditCount": 4,
+  "completePrograms": [
+    {
+      "from": "backend/src/recording/wolf_sorcerer_record.ts",
+      "to": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "actualCurrentSHA": "ad044e3884339425a1d25318c49d24cec423bfeb2d579f7492b37ad2096ed614",
+      "commentEditCount": 4,
+      "nodes": 2903,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "7780737297572ae727a30b9073de37e0e22b54e90801fec83e744ec2a1b428e3",
+          "inverseSHA": "7780737297572ae727a30b9073de37e0e22b54e90801fec83e744ec2a1b428e3"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "366ce0fef53ea52bc682c6180480764d0fec12005e280336ab9dabbccca76857",
+          "inverseSHA": "366ce0fef53ea52bc682c6180480764d0fec12005e280336ab9dabbccca76857"
+        }
+      ],
+      "commentOnly": {
+        "nodes": 2903,
+        "typedTreeSame": true,
+        "allNoncommentLeavesSame": true,
+        "exactFullSourceInverse": false,
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true,
+            "beforeSHA": "7780737297572ae727a30b9073de37e0e22b54e90801fec83e744ec2a1b428e3",
+            "inverseSHA": "7780737297572ae727a30b9073de37e0e22b54e90801fec83e744ec2a1b428e3"
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true,
+            "beforeSHA": "366ce0fef53ea52bc682c6180480764d0fec12005e280336ab9dabbccca76857",
+            "inverseSHA": "366ce0fef53ea52bc682c6180480764d0fec12005e280336ab9dabbccca76857"
+          }
+        ],
+        "limit": "comment-only delta intentionally has exactFullSourceInverse=false; all code leaves and outputs must stay same"
+      }
+    },
+    {
+      "from": "backend/src/verification/reproduction/assembly.ts",
+      "to": "backend/src/verification/reproduction/assembly.ts",
+      "actualCurrentSHA": "0225f846a43c8d92a8c9041a23d0696aa85610510b0c85dca8561fda6da2d297",
+      "commentEditCount": 0,
+      "nodes": 181,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "12c64f422c096a6ab6b92836586b11bdaa6189f2d80c25b126edabd2d913f68f",
+          "inverseSHA": "12c64f422c096a6ab6b92836586b11bdaa6189f2d80c25b126edabd2d913f68f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "7a7ad705a2e5584feeb526e40f35210203fddde9dc29d5621db3c3d6cb6dbb1c",
+          "inverseSHA": "7a7ad705a2e5584feeb526e40f35210203fddde9dc29d5621db3c3d6cb6dbb1c"
+        }
+      ],
+      "commentOnly": null
+    },
+    {
+      "from": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "actualCurrentSHA": "45ced2b1c933af3cb372a26aa60c643117fcc85c6a57d6a41e187aa56311936d",
+      "commentEditCount": 0,
+      "nodes": 1711,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "752f2f8478996299465909231edaeec8db6710a222a1f2085834b6340fa3ca65",
+          "inverseSHA": "752f2f8478996299465909231edaeec8db6710a222a1f2085834b6340fa3ca65"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "66376525192986d34639eb8207951f60228223f32e7530f04d9c0c9861647386",
+          "inverseSHA": "66376525192986d34639eb8207951f60228223f32e7530f04d9c0c9861647386"
+        }
+      ],
+      "commentOnly": null
+    }
+  ],
+  "allBindingCount": 48,
+  "movedBindings": [
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "name": "isWolfSorcererPreset",
+      "typeOnly": false,
+      "oldFrom": "../verification/board-support",
+      "newFrom": "../../board-support",
+      "originalEndpoint": {
+        "path": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+        "name": "isWolfSorcererPreset"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+        "name": "isWolfSorcererPreset"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "name": "readWolfSorcererExchangeFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "name": "readWolfSorcererExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "name": "readWolfSorcererExchangeFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "name": "readWolfSorcererSkipFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "name": "readWolfSorcererSkipFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "name": "readWolfSorcererSkipFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "name": "readMagicianExchangeFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/magician",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/magician",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianExchangeFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "name": "Camp",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "name": "Role",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "name": "Phase",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "name": "ReproductionRecord",
+      "typeOnly": true,
+      "oldFrom": "./reproduction",
+      "newFrom": "../../../recording/reproduction",
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "name": "validateWolfSorcererRecord",
+      "typeOnly": false,
+      "oldFrom": "../../recording/wolf_sorcerer_record",
+      "newFrom": "./wolf-sorcerer/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/wolf_sorcerer_record.ts",
+        "name": "validateWolfSorcererRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+        "name": "validateWolfSorcererRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "name": "validateWolfSorcererRecord",
+      "typeOnly": false,
+      "oldFrom": "../../../../src/recording/wolf_sorcerer_record",
+      "newFrom": "../../../../src/verification/reproduction/wolf-sorcerer/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/wolf_sorcerer_record.ts",
+        "name": "validateWolfSorcererRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+        "name": "validateWolfSorcererRecord"
+      },
+      "moved": true,
+      "valid": true
+    }
+  ],
+  "unchangedBindingCount": 38,
+  "unchangedOrderedBindingSHA": "0b449cd2ecb90bebfdd70b066fec600be5c9607283896becba656c1dd05a661a",
+  "allPhysicalBindingsVerified": true,
+  "deletedSources": [
+    {
+      "path": "backend/src/recording/wolf_sorcerer_record.ts",
+      "sha256": "6a3d40ec4bd45d9006efbedaf09887f45d976b80dcbde4f2b07b3f5aded2d2d0",
+      "deleted": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "d0033b8d423388999eed05aa7f627513be01854016f0db327ef8a114ec5e6c16",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "sha256": "450a6c1f111f3bcd9ae21b630bdbde9699df986fcc47c1c9455635759cee8a6e",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+      "sha256": "c482b4aa64ee91dab8266fd633057e651310a92d626c19f39331a9d8375c000e",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/verification/board-support/index.ts",
+      "sha256": "aeeac79dc3aeef4c6794105b0337a20be9b4298052e12f3d10c9aaba6bde02d1",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+      "sha256": "815bdfa83abb5d05bb1f9aa2ea4e4c6c09a160545bcc2e2f41d2f164d87d184d",
+      "currentWholeBytesSame": true
+    }
+  ],
+  "limits": [
+    "物理owner/四处specifier路径迁移和四项精确中文comment；逐项逆后全部完整源相同，包括所有原标题/输入/字面/error/policies，无算法或fixture修改。",
+    "旧一个recording private叶API路径明确删除无桥；新模块路径/load/sourceHash不同，不重写历史指纹或主张跨构建重放豁免。",
+    "全部原named/type/default/namespace形态逐binding核；记录type-only仍真实唯一recording/reproduction出口，实际typeowner无value加载。"
+  ],
+  "approved": true
+}

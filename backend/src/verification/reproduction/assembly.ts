@@ -18,7 +18,7 @@ import { validateScholarMentorRecord } from "../../recording/scholar_mentor_reco
 import { validateMistRavenRecord } from "../../recording/mist_raven_record";
 import { validateRadiantEclipseRecord } from "../../recording/radiant_eclipse_record";
 import { validateTimeConsortRecord } from "../../recording/time_consort_record";
-import { validateWolfSorcererRecord } from "../../recording/wolf_sorcerer_record";
+import { validateWolfSorcererRecord } from "./wolf-sorcerer/validate";
 import { validateTricksterRecord } from "./trickster/validate";
 import { validateMagicianRecord } from "./magician/validate";
 import { validateOrderPrinceRecord } from "../../recording/order_prince_record";

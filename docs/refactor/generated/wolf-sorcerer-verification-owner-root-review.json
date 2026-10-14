@@ -1,0 +1,166 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "reviewMode": "Root阅读完整原334行算法的行为区域、声明与消费者路由，3完整源精确inverse、真实Git/source/delete/controls/artifacts核，不重编译或测试。独立peer另审。",
+  "baseCommit": "198933bb2d06d2ef702c012be32bd6e851d67875",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "sha256": "ad044e3884339425a1d25318c49d24cec423bfeb2d579f7492b37ad2096ed614",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "0225f846a43c8d92a8c9041a23d0696aa85610510b0c85dca8561fda6da2d297",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "sha256": "45ced2b1c933af3cb372a26aa60c643117fcc85c6a57d6a41e187aa56311936d",
+      "change": "modified"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/wolf_sorcerer_record.ts",
+      "sha256": "6a3d40ec4bd45d9006efbedaf09887f45d976b80dcbde4f2b07b3f5aded2d2d0",
+      "expectedAbsent": true
+    }
+  ],
+  "scopeSha256": "abf03efafb42991a46cc5f2b96ed0ea81567ed97d36ea0ea4c172e3b70ef2d8d",
+  "beforeChecks": [
+    {
+      "path": "backend/src/recording/wolf_sorcerer_record.ts",
+      "sha256": "6a3d40ec4bd45d9006efbedaf09887f45d976b80dcbde4f2b07b3f5aded2d2d0",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "56d94d7ea983fdc8f9b85588fde2d4acd2b4e2280e8b64757f790fd3cc7c8d57",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "sha256": "e51f76f43fe83557125fd6d500e01d93fe7e83bb24db33c0c92288e3135a51d3",
+      "matches": true
+    }
+  ],
+  "completeSourceInverse": [
+    {
+      "from": "backend/src/recording/wolf_sorcerer_record.ts",
+      "to": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/src/verification/reproduction/assembly.ts",
+      "to": "backend/src/verification/reproduction/assembly.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "wholeSourceSame": true
+    }
+  ],
+  "controlChecks": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "d0033b8d423388999eed05aa7f627513be01854016f0db327ef8a114ec5e6c16",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "sha256": "450a6c1f111f3bcd9ae21b630bdbde9699df986fcc47c1c9455635759cee8a6e",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+      "sha256": "c482b4aa64ee91dab8266fd633057e651310a92d626c19f39331a9d8375c000e",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/board-support/index.ts",
+      "sha256": "aeeac79dc3aeef4c6794105b0337a20be9b4298052e12f3d10c9aaba6bde02d1",
+      "matches": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+      "sha256": "815bdfa83abb5d05bb1f9aa2ea4e4c6c09a160545bcc2e2f41d2f164d87d184d",
+      "matches": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-before.json",
+      "sha256": "7c3ed44378d3f0cf3f9574c08d74a2a206a3e770c945f3a352ef8f2ae8b5de20",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-edits.json",
+      "sha256": "4fa64bcfe4d04611d1206d0679b4e9626f56e9374cc5c9c693269772a8834607",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-scope-final.json",
+      "sha256": "abf03efafb42991a46cc5f2b96ed0ea81567ed97d36ea0ea4c172e3b70ef2d8d",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-proof.cjs",
+      "sha256": "0fd25811234eb777ee291e30d510b29671e3deff9d03d9a1233a9ade78218b65",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-proof.json",
+      "sha256": "839a3f2e26cdb3dabec76638fe947c42d8dda87a4f2c347206808047f3672ae2",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-receipts.json",
+      "sha256": "c8406cec83c0441d4fe46efeac684a722d44fa3b1f8486bb2bb87f6f58ccebe9",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-heads.ts",
+      "sha256": "c61b0714bff541f078ce48efa85653b9fc692306086cb9776389ccda9ffa205d",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-heads.json",
+      "sha256": "4e7d2231fd4b1ee2180ffbf2dee4d1b6fc2b3cc4a91900a44445439ad9ab8c40",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-types-config.json",
+      "sha256": "eeb316eb1623b61132da22fd480bfd2b9e5cf28f4fb80fc7741b68c534c2f9a8",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/wolf-sorcerer-verification-owner.md",
+      "sha256": "197c173549d016ded890337d61156a9e6b8e9fe9ffa25bf7ae488bafdaf0e325",
+      "matches": true
+    }
+  ],
+  "semanticReview": [
+    "完整纯数据独立验证与内部helpers保持，不导入World、生产目标映射或真实库存；record类型仍唯一type-only原声明。",
+    "真实表达式transpose(transpose(raw,W),M)对应中文M(W(raw))；inspectionHistory保留raw而result查effective原角色。",
+    "passed分支不append成功历史但仍inspectionsSeen/lastInspectionDay；uses=h.length与lastUsedDay是两条独立账本。",
+    "四组前缀每事件一起append，cp.eventCount选择正确时点，原所有场景titles/fixture/assert/errors保持。",
+    "原狼法师名校准真实狼术师；旧私有路径API删除、sourceHash改变已明列，历史不重写。"
+  ],
+  "findings": [],
+  "limits": [
+    "有限3roots78329→ae4f3a0为作者回执，无本批runtime测试，前族unit绿不借作本族执行。",
+    "仅完整物理迁移和精确routing/comment保真，非全P7/P8或所有玩法同源验收。"
+  ],
+  "independentReview": {
+    "path": "docs/refactor/generated/wolf-sorcerer-verification-owner-review.json",
+    "sha256": "e106b123078c65194f50cf6b7612deff918ffe89efdb35fa0fc1628d882476c6",
+    "approved": true
+  }
+}

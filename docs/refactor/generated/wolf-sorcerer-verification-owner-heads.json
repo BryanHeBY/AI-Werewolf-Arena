@@ -1,0 +1,20 @@
+{
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "sha256": "ad044e3884339425a1d25318c49d24cec423bfeb2d579f7492b37ad2096ed614"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "0225f846a43c8d92a8c9041a23d0696aa85610510b0c85dca8561fda6da2d297"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "sha256": "45ced2b1c933af3cb372a26aa60c643117fcc85c6a57d6a41e187aa56311936d"
+    }
+  ],
+  "documentationPathCount": 483,
+  "diagnostics": [],
+  "missingChineseHead": [],
+  "limit": "职责词项与中文首头检查只覆盖现行三个候选，旧删除叶不作为存在输入；注释没有修改，具体内容仍交独立审查。"
+}

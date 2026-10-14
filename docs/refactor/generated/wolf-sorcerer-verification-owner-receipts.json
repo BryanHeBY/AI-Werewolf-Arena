@@ -1,0 +1,60 @@
+{
+  "baseCommit": "198933bb2d06d2ef702c012be32bd6e851d67875",
+  "captureAndMutation": {
+    "chunk": "c86224",
+    "actualExitCode": 0,
+    "actualGitBefore": 3,
+    "controls": 5,
+    "written": 3,
+    "deleted": 1,
+    "specifierEdits": 4,
+    "commentEdits": 4
+  },
+  "wholeProofAndHeads": {
+    "chunk": "799621",
+    "actualExitCode": 0,
+    "proofStdoutApproved": true,
+    "wholePrograms": 3,
+    "typedNodes": 4795,
+    "wholeOutputs": 6,
+    "importBindings": 48,
+    "movedBindings": 10,
+    "unchangedBindings": 38,
+    "controls": 5,
+    "commentOnlyPrograms": 1,
+    "commentOnlyWholeOutputs": 2,
+    "headsInputs": 3,
+    "actualGitDocumentPaths": 483,
+    "headDiagnostics": 0,
+    "missingChineseHead": 0,
+    "limit": "同一次tool中依次完成proof与head，两个实际stdout分别报告approvedtrue与0diag；没有重跑已有tests。"
+  },
+  "finiteTypes": {
+    "launchChunk": "5d0816",
+    "session": 78329,
+    "terminalChunk": "ae4f3a",
+    "actualExitCode": 0,
+    "roots": 3,
+    "config": "docs/refactor/generated/wolf-sorcerer-verification-owner-types-config.json",
+    "log": "docs/refactor/generated/wolf-sorcerer-verification-owner-types.log",
+    "limit": "0来自实际terminal回执；零字节日志不是成功推断。有限类型可包含并行传递依赖，不声称全部工作树等于Gitbefore。"
+  },
+  "finalSourceInventory": {
+    "chunk": "3909ad",
+    "exitCode": 0,
+    "canonicalImportDeclarations": 2,
+    "retiredPathImports": 0,
+    "unitString": "原validateWolfSorcererRecord调用次序string不变。"
+  },
+  "testsRun": 0,
+  "notRun": [
+    "之前多次已绿getter装配unit",
+    "parser unit",
+    "WolfSorcerer Tape/整局/场景",
+    "全门禁",
+    "全类型",
+    "模型",
+    "浏览器"
+  ],
+  "sourceStatus": "frozen-pending-independent-review"
+}

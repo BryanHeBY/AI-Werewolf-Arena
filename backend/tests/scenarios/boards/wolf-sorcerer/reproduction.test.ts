@@ -4,7 +4,7 @@
  * 输出以手写因果／资源／终局结果及缺失或重映射查验证据的严格拒绝作为独立预期。
  * 不调用计费模型，不改写 fixture 或 Tape 的预期字节。
  */
-import { validateWolfSorcererRecord } from "../../../../src/recording/wolf_sorcerer_record";
+import { validateWolfSorcererRecord } from "../../../../src/verification/reproduction/wolf-sorcerer/validate";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

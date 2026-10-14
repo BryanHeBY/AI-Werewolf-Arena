@@ -1,0 +1,54 @@
+{
+  "specifiers": [
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "before": "from \"../verification/board-support\"",
+      "after": "from \"../../board-support\"",
+      "count": 1
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "before": "from \"./reproduction\"",
+      "after": "from \"../../../recording/reproduction\"",
+      "count": 1
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "before": "\"../../recording/wolf_sorcerer_record\"",
+      "after": "\"./wolf-sorcerer/validate\"",
+      "count": 1
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "before": "\"../../../../src/recording/wolf_sorcerer_record\"",
+      "after": "\"../../../../src/verification/reproduction/wolf-sorcerer/validate\"",
+      "count": 1
+    }
+  ],
+  "comments": [
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "before": " * 负责独立审核狼法师换位及相关查验历史。输入为归档配置、决定、事实与 checkpoint；",
+      "after": " * 负责独立审核狼术师换位及相关查验历史。输入为归档配置、决定、事实与 checkpoint；",
+      "count": 1
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "before": "        const effective = transpose(transpose(raw, facts.get(day)?.pair), magic.get(day));\n",
+      "after": "        // 归档请求号码先按狼术师配对 W，再按魔术师配对 M，得到 M(W(raw))。\n        // 查验历史仍保留请求号码 raw，结果独立取实际落点的原始角色，不能交换两层次序。\n        const effective = transpose(transpose(raw, facts.get(day)?.pair), magic.get(day));\n",
+      "count": 1
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "before": "      inspectionsSeen.add(day);\n",
+      "after": "      // 原主动空过也记录本夜尝试日，却不追加成功查验历史；两者分开重建，\n      // 后续 lastUsedDay 不能由历史条数 uses 代替，不在这里授权或付款。\n      inspectionsSeen.add(day);\n",
+      "count": 1
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "before": "    histories.push(structuredClone(history));\n",
+      "after": "    // 每事件后保存四组同位置前缀，零项为未处理事件：号码、存活、成功查验、尝试日。\n    // checkpoint 的 eventCount 选择对应前缀，不以整个归档尾段覆盖先前历史。\n    histories.push(structuredClone(history));\n",
+      "count": 1
+    }
+  ]
+}

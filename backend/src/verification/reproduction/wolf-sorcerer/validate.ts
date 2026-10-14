@@ -1,17 +1,17 @@
 /**
- * 负责独立审核狼法师换位及相关查验历史。输入为归档配置、决定、事实与 checkpoint；
+ * 负责独立审核狼术师换位及相关查验历史。输入为归档配置、决定、事实与 checkpoint；
  * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import { isWolfSorcererPreset } from "../verification/board-support";
+import { isWolfSorcererPreset } from "../../board-support";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
 } from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
 import { readMagicianExchangeFact } from "@ai-werewolf-arena/game-contract/facts/magician";
 import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord } from "./reproduction";
+import type { ReproductionRecord } from "../../../recording/reproduction";
 const exchange = "wolf_sorcerer_exchange_committed",
   skip = "wolf_sorcerer_exchange_skipped";
 function check(v: unknown): asserts v {
@@ -200,11 +200,15 @@ export function validateWolfSorcererRecord(record: ReproductionRecord): void {
             action?.name === "inspect_role" &&
             action.args.target_id === raw,
         );
+        // 归档请求号码先按狼术师配对 W，再按魔术师配对 M，得到 M(W(raw))。
+        // 查验历史仍保留请求号码 raw，结果独立取实际落点的原始角色，不能交换两层次序。
         const effective = transpose(transpose(raw, facts.get(day)?.pair), magic.get(day));
         const result = { kind: "role" as const, role: original.get(effective)!.role };
         check(equal(e.payload.result, result));
         inspectionHistory.push({ day, targetId: raw, result });
       } else check(e.payload.reason === "passed" && action === null);
+      // 原主动空过也记录本夜尝试日，却不追加成功查验历史；两者分开重建，
+      // 后续 lastUsedDay 不能由历史条数 uses 代替，不在这里授权或付款。
       inspectionsSeen.add(day);
       lastInspectionDay = day;
     }
@@ -237,6 +241,8 @@ export function validateWolfSorcererRecord(record: ReproductionRecord): void {
       );
       alive.delete(e.payload.wolfId);
     }
+    // 每事件后保存四组同位置前缀，零项为未处理事件：号码、存活、成功查验、尝试日。
+    // checkpoint 的 eventCount 选择对应前缀，不以整个归档尾段覆盖先前历史。
     histories.push(structuredClone(history));
     living.push([...alive]);
     inspectionPrefixes.push(structuredClone(inspectionHistory));
