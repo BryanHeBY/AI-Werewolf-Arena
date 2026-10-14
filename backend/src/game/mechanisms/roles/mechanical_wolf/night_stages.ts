@@ -61,11 +61,12 @@ const modeStage: NightStageHandler = {
     const day = ctx.currentDay();
     for (const owner of owners(ctx)) {
       if (!owner.isCurrent()) continue;
+      // 原已学习枪的武装／首刀到期是生命周期；退休只阻止后面的新模式，不跳过此前缀。
       advanceMechanicalNight(owner.state, day);
-      if (!canSelectMechanicalMode(owner.state, day)) continue;
+      if (!canSelectMechanicalMode(owner.state, day) || !owner.canAct()) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
-        if (!owner.isCurrent() || !canSelectMechanicalMode(owner.state, day)) break;
+        if (!owner.isCurrent() || !canSelectMechanicalMode(owner.state, day) || !owner.canAct()) break;
         const action = await ctx.actionProvider.getAction(
           ctx.makeRequest(owner.actorId, ["mechanical_mode"], {
             stage: "mechanical_mode",
@@ -73,7 +74,7 @@ const modeStage: NightStageHandler = {
             ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
           }),
         );
-        if (!owner.isCurrent() || !canSelectMechanicalMode(owner.state, day)) break;
+        if (!owner.isCurrent() || !canSelectMechanicalMode(owner.state, day) || !owner.canAct()) break;
         let chosenMode: "skill" | "kill" = "skill";
         if (action !== null) {
           if (action.name !== "mechanical_mode") continue;
@@ -81,11 +82,13 @@ const modeStage: NightStageHandler = {
             phase: Phase.Night,
             day,
           });
-          if (!owner.isCurrent() || !valid.ok || valid.sanitizedCall?.name !== "mechanical_mode")
+          if (!owner.isCurrent() || !valid.ok || valid.sanitizedCall?.name !== "mechanical_mode" || !owner.canAct())
             continue;
           chosenMode = valid.sanitizedCall.args.mode;
         }
-        if (!selectMechanicalMode(owner.state, day, chosenMode)) break;
+        // args.mode 等晚 getter 已读完；首个模式写入前只复验退休标记。
+        if (!owner.canAct()) break;
+        if (!selectMechanicalMode(owner.state, day, chosenMode, owner.canAct)) break;
         recordMechanicalModeScope(ctx.world, owner, day);
         recordMechanicalNightCommit(ctx.world, day);
         ctx.events.push({
@@ -96,7 +99,7 @@ const modeStage: NightStageHandler = {
         completed = true;
         break;
       }
-      if (!completed && owner.isCurrent() && canSelectMechanicalMode(owner.state, day))
+      if (!completed && owner.isCurrent() && canSelectMechanicalMode(owner.state, day) && owner.canAct())
         throw new Error("mechanical_mode_valid_action_missing");
     }
   },
@@ -111,7 +114,7 @@ const mimicStage: NightStageHandler = {
       if (!canMechanicalMimic(owner.state, day)) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
-        if (!owner.isCurrent() || !canMechanicalMimic(owner.state, day)) break;
+        if (!owner.isCurrent() || !canMechanicalMimic(owner.state, day) || !owner.canAct()) break;
         const candidates = targets(ctx, owner.actorId, true);
         const targetRoles = new Map(
           [...candidates.keys()].map((id) => {
@@ -119,6 +122,7 @@ const mimicStage: NightStageHandler = {
             return [id, { component: role, role: role.role }] as const;
           }),
         );
+        if (!owner.canAct()) break;
         const action = candidates.size
           ? await ctx.actionProvider.getAction(
               ctx.makeRequest(owner.actorId, ["mimic_role"], {
@@ -128,9 +132,9 @@ const mimicStage: NightStageHandler = {
               }),
             )
           : null;
-        if (!owner.isCurrent() || !canMechanicalMimic(owner.state, day)) break;
+        if (!owner.isCurrent() || !canMechanicalMimic(owner.state, day) || !owner.canAct()) break;
         if (action === null) {
-          closeMechanicalMimic(owner.state, day);
+          if (!closeMechanicalMimic(owner.state, day, owner.canAct)) break;
           recordMechanicalNightCommit(ctx.world, day);
           ctx.events.push({
             timestamp: Date.now(),
@@ -149,7 +153,8 @@ const mimicStage: NightStageHandler = {
           !owner.isCurrent() ||
           !valid.ok ||
           valid.sanitizedCall?.name !== "mimic_role" ||
-          !canMechanicalMimic(owner.state, day)
+          !canMechanicalMimic(owner.state, day) ||
+          !owner.canAct()
         )
           continue;
         const targetId = valid.sanitizedCall.args.target_id,
@@ -163,7 +168,9 @@ const mimicStage: NightStageHandler = {
           targetRole.component.role !== targetRole.role
         )
           continue;
-        if (!learnMechanicalRole(owner.state, targetId, targetRole.role, day)) continue;
+        // 候选原体／生命 getter 仍先按原序执行，退休后不写入新的学习数据。
+        if (!owner.canAct()) break;
+        if (!learnMechanicalRole(owner.state, targetId, targetRole.role, day, owner.canAct)) continue;
         recordMechanicalNightCommit(ctx.world, day);
         ctx.events.push({
           timestamp: Date.now(),
@@ -179,7 +186,7 @@ const mimicStage: NightStageHandler = {
         completed = true;
         break;
       }
-      if (!completed && owner.isCurrent() && canMechanicalMimic(owner.state, day))
+      if (!completed && owner.isCurrent() && canMechanicalMimic(owner.state, day) && owner.canAct())
         throw new Error("mechanical_mimic_valid_action_missing");
     }
   },
@@ -204,11 +211,13 @@ const skillStage: NightStageHandler = {
       const current = () =>
         bound.isCurrent() &&
         mechanicalSkillForNight(owner.state, day) === skill &&
-        (skill.kind !== "poison" || skill.remaining > 0);
+        (skill.kind !== "poison" || skill.remaining > 0) &&
+        owner.canAct();
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
         if (!current()) break;
         const candidates = targets(ctx, owner.actorId, skill.kind === "inspection");
+        if (!owner.canAct()) break;
         const action = await ctx.actionProvider.getAction(
           ctx.makeRequest(owner.actorId, [tool], {
             stage: "mechanical_skill",
@@ -218,7 +227,7 @@ const skillStage: NightStageHandler = {
         );
         if (!current()) break;
         if (action === null) {
-          closeMechanicalSkill(owner.state, day);
+          if (!closeMechanicalSkill(owner.state, day, owner.canAct)) break;
           recordMechanicalNightCommit(ctx.world, day);
           ctx.events.push({
             timestamp: Date.now(),
@@ -245,14 +254,16 @@ const skillStage: NightStageHandler = {
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
         if (call.name === "mechanical_inspect" && skill.kind === "inspection" && target) {
           const result = resolveInspection(ctx.world, target.id, "role", ctx.roleCatalog);
-          if (!result || !current() || !livingNightLife(ctx.world, target)) continue;
-          recordMechanicalInspection(skill, day, target, result);
+          if (!result || !current() || !livingNightLife(ctx.world, target) || !owner.canAct()) continue;
+          if (!recordMechanicalInspection(skill, day, target, result, owner.canAct)) break;
           ctx.events.push({
             timestamp: Date.now(),
             type: "role_inspected",
             payload: { actorId: owner.actorId, day, targetId: target.id, result: { ...result } },
           });
         } else if (call.name === "mechanical_poison" && skill.kind === "poison" && target) {
+          // 首个 claim 写入之前拒绝晚退休；一旦开始原提交序列，不借墓碑撤销已写前缀。
+          if (!owner.canAct()) break;
           (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({ source: owner.life, target }, {
             family: "mechanical", day, stage: "mechanical_skill", actorLife: owner.life,
             requestedTargetId: targetId, abilityId: "learned:mechanical",
@@ -265,7 +276,10 @@ const skillStage: NightStageHandler = {
             payload: { actorId: owner.actorId, day, targetId: target.id },
           });
         } else if (call.name === "mechanical_guard" && skill.kind === "guard") {
-          const { failed } = chooseMechanicalGuard(skill, targetId, day);
+          if (!owner.canAct()) break;
+          const chosen = chooseMechanicalGuard(skill, targetId, day, owner.canAct);
+          if (!chosen) break;
+          const { failed } = chosen;
           if (failed)
             effects(ctx).failures.push(mechanicalNightIntent("mechanical-failure", {
               actorId: owner.actorId,
@@ -315,12 +329,13 @@ const attackStage: NightStageHandler = {
         mode.day === day &&
         mode.kind === "kill" &&
         canMechanicalKnife(owner.role, ctx.world, () => ctx.world.getComponent(owner.actorId, COMPONENT.Camp));
-      const current = () => effectCurrent() && canMechanicalExtraKnife(owner.state, day);
+      const current = () => effectCurrent() && canMechanicalExtraKnife(owner.state, day) && owner.canAct();
       if (!current()) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
         if (!current()) break;
         const candidates = targets(ctx, owner.actorId, false);
+        if (!owner.canAct()) break;
         const action = await ctx.actionProvider.getAction(
           ctx.makeRequest(owner.actorId, ["mechanical_attack"], {
             stage: "mechanical_attack",
@@ -342,6 +357,8 @@ const attackStage: NightStageHandler = {
         }
         const target = targetId === null ? null : candidates.get(targetId);
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
+        // 额外刀的目标生命复验完成后才检查未付资格；effectCurrent 保持纯已付谓词。
+        if (!owner.canAct()) break;
         if (target)
           effects(ctx).attacks.push(mechanicalNightIntent("mechanical-attack", { actorId: owner.actorId, target, isCurrent: effectCurrent }, {
             family: "mechanical", day, stage: "mechanical_attack", actorLife: owner.life,

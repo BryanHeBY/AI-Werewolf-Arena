@@ -5,6 +5,7 @@
 import { AWAKENED_TOOL_NAMES } from "./tool_names";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../core/domain/components/names";
+import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
 import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { isAliveTarget, type ToolRule, type ToolRuleMap } from "../../validation/contracts";
 import { canAwakenedKnife } from "./inheritance";
@@ -23,9 +24,11 @@ const validateAwakened: ToolRule = ({ world, actorId, role, phase, day, toolCall
     world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf ||
     !state ||
     day === undefined ||
-    currentAwakenedNight(world, role) !== day
+    currentAwakenedNight(world, role) !== day ||
+    isRoleExecutionRetired(role)
   )
     return { code: RuleError.AwakenedUnavailable };
+  // 这是未付款工具预检；墓碑只拒绝新动作，已付效果和知识读器不用这张规则表。
   if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
   if (toolCall.name === "awakened_mimic") {
     if (!canAwakenedMimic(state, day)) return { code: RuleError.AwakenedUnavailable };

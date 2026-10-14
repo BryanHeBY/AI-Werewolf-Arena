@@ -1,0 +1,201 @@
+{
+  "approved": true,
+  "reviewer": "native_final_architecture_review",
+  "baseCommit": "7654533073e46150ee7181e6de6bf49d5e3e211d",
+  "scope": {
+    "path": "docs/refactor/generated/learned-wolf-execution-retirement-scope-final.json",
+    "sha256": "32924c5333a219e22801d9c8029c5b8c3c901afe281e3631e4038d21d6453800"
+  },
+  "scopeSHA256": "32924c5333a219e22801d9c8029c5b8c3c901afe281e3631e4038d21d6453800",
+  "document": {
+    "path": "docs/refactor/learned-wolf-execution-retirement.md",
+    "sha256": "25e015979cf5520bbfa1d8815eb3feb3d11167c12c7b5fbcb4a017d8ad6810e5"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/learned-wolf-execution-retirement-evidence.json",
+    "sha256": "207968fc3759d891bd32ab152c80553d38c3e23cf94685e5aa3082b9424e801a"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "sha256": "9ba0c8775ffcd30d72c555002e885919659236a90f3b8e77041bf084560515bd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "cf53c331caea5737bedb79179499d05bd70946ed349ae2a26e071b73bba7ade6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "sha256": "03b241e1ddbeafccd349a5fa86874176d0f5cafb70d11fde1fc420ee840d5d06"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "sha256": "1013a08be7741c08709bdb2635c26db4365a3196b9c91e00c3fd15bd27716295"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "c5b72dc255304365c23ac4fecacee205c56b712df8ec86154b0abb354c860815"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "sha256": "d89f599a5983c10c312c5b6e35a95bb1bdb2d6fc3481e25e50179e3fbdfb1a29"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+      "sha256": "478524e16bbe2708ba3a7dbecebf213f0904337005453a3b5303b467a81d5a77"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+      "sha256": "cbb9d4367c63bc0ad3bcc8314752b93d57762a51d36b92a4aecdb8149bf8655c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "sha256": "1ae10bb76d76f8b7a9bb38d14fc1618f147f9820430015b6a76aaae0fdf92516"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "50ec7c3574bd036af80e6f3d7feaee2bc3163589cdf7bb732003548a018a9505"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2ff60c5c9cf90e2d8d01cf4ba05f33b01d457972ceb1d448cc435435f966c996"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/learned-wolf-execution-retirement.test.ts",
+      "sha256": "3f1653acb0e7ed3cf495713e9458504cb99e18fc4f05032c6567d7a1d1f209d8"
+    }
+  ],
+  "deleted": [],
+  "independentVerification": {
+    "sourceReceipt": {
+      "path": "/tmp/awa-learned-wolf-peer-last-source.json",
+      "sha256": "87935dad006df2854d7bfa5dff5b9aa19a22584a9062ce7117eddcdd4e4dd05b"
+    },
+    "actualGitBefore": 11,
+    "newUnitActualGitAbsenceExit": 128,
+    "firstSourceWholeForwardInverse": 11,
+    "firstExactEdits": 95,
+    "defaultSuccessorWholePrograms": 2,
+    "defaultSuccessorExactEdits": 5,
+    "calleeSuccessorWholePrograms": 2,
+    "calleeSuccessorExactEdits": 3,
+    "totalExactEdits": 103,
+    "currentSourceSHA256": 12,
+    "unchangedWholeControls": 2,
+    "authorArtifactSHA256": 41,
+    "sourceMismatch": [],
+    "artifactMismatch": [],
+    "currentOldTenNoDrift": true
+  },
+  "manualReview": [
+    "完整旧／新两族 scope、stage、rules、state、既有枪 owner、原生 dispatcher／库存 owner及十二单元正文已读；实际 calldata/getter/receiver、短路和首写位置逐项对照，非仅摘要审批。",
+    "canAct 捕获 Role 永久退休，只提供未付拒绝，不作为完整 permission。纯 owner.isCurrent、绑定、currentNight、mirror scope、effectCurrent 与允许首死的 paid callback 原正文保持；库存与知识查询不附墓碑。",
+    "机械 pure isCurrent→advanceMechanicalNight 的既有学习武装／首刀到期前缀保持，再拒绝新模式。未付 mode/mimic/pass/inspection/guard/poison/attack 在原读取和实际首写前拒绝；开始提交后原关闭、消耗、记录、事实和同 Error 前缀继续。",
+    "觉醒各 pass 委托把 tail 传入实际 writer；arm 先原 kind→最后 skill引用，再首armed写前核，默认void保持；首写之后activationNight／activeFromNight完成。原 false/原体失配仍原错误，retired结果独立continue。",
+    "公共原生七payload准备不改；原字典??=／退休编号／existing kind-source／完整RHS（含role getter）先完成，再回调拒实际existing.state或stored[id]安装。未安装null不activate，已建字典保留；实际安装后mirror起效／激活／事实完整继续。默认三参仍原数据返回。",
+    "最后recordInspection无tail分支恢复actual765完整history.push({...})及void；controlled保history→pushcallee→target.id→resultspread→Reflect.apply→bind(Reflect)准备，再最终callback。guard后只invoke已准备函数，append实际history receiver保持，无新propertygetter读点在guard后；新全局渠道/栈/分配明确列限界。",
+    "十二个风险用例使用字面轨迹、实际对象引用/错误、库存/效果/空字典及局部getter seam；Reflect全局descriptor在finally恢复，默认和受控两后继各独立仅新例，未镜像生产预期。",
+    "中文头与重要数据／未付vs完成／原体及异常注释准确；default/受控API宽度、原getter错误优先、metadata历史采样和sourceHash变化限定均与实际吻合。"
+  ],
+  "closedStaticFindings": [
+    {
+      "finding": "机械canAct置advance前会截断已学习生命周期。",
+      "closedBy": "保原isCurrent→advance→canSelect，再拒新mode；机械arm/expire完整原体。"
+    },
+    {
+      "finding": "state内部getter及pass二次委托在外guard之后还可能退休。",
+      "closedBy": "仅未付调用传captured tail至各实际writer首写前；原paid关闭/消费无尾，成功首写后不二截。"
+    },
+    {
+      "finding": "觉醒枪武装实际首写在共享资源owner。",
+      "closedBy": "受控Aw arm把原callee/最后gun读取放检查前，无尾void与原armed赋值保。"
+    },
+    {
+      "finding": "mirror dispatcher调用后安装内部仍有getter读取。",
+      "closedBy": "已有库存owner在原准备/冲突/RHS之后、实际安装前核captured tail；非事务字典前缀保。"
+    },
+    {
+      "finding": "默认查验额外读取Reflect会改变原渠道。",
+      "closedBy": "默认分支原完整push；新增第十一default literal确认callee/receiver/getter/error轨迹。"
+    },
+    {
+      "finding": "controlled Reflect.apply propertygetter在最后guard之后。",
+      "closedBy": "apply/bind读取/分配在guard前，之后prepared invoke；第十二literal核晚退休不append。"
+    }
+  ],
+  "receiptsRead": {
+    "firstRuntime": {
+      "terminal": "834cbd",
+      "exitCode": 0,
+      "distinct": 10,
+      "assertions": 118
+    },
+    "standardType": {
+      "launch": "f3f445",
+      "session": 11110,
+      "terminal": "01e268",
+      "exitCode": 0
+    },
+    "heads": {
+      "terminal": "c06c88",
+      "exitCode": 0,
+      "sources": 12,
+      "documentationPaths": 711,
+      "diagnostics": 0
+    },
+    "firstProofToolRed": {
+      "terminal": "8e8ef8",
+      "exitCode": 1,
+      "scopeComparatorOnly": true
+    },
+    "firstProofSuccess": {
+      "terminal": "850d7d",
+      "exitCode": 0,
+      "wholePrograms": 11,
+      "inverseOutputs": 22,
+      "protectedPrograms": 54
+    },
+    "defaultSuccessor": {
+      "newOnly": "05586d/0",
+      "distinct": 1,
+      "assertions": 4,
+      "filtered": 10,
+      "types": "a2d462/27932→26153d/0",
+      "bridge": "dd64dc/0",
+      "wholePrograms": 2,
+      "exactEdits": 5,
+      "inverseOutputs": 4
+    },
+    "calleeSuccessor": {
+      "newOnly": "f950b2/0",
+      "distinct": 1,
+      "assertions": 6,
+      "filtered": 11,
+      "types": "17c41e/43085→94c94d/0",
+      "bridge": "e3a72b/0",
+      "wholePrograms": 2,
+      "exactEdits": 3,
+      "inverseOutputs": 4
+    },
+    "totalRuntime": {
+      "distinct": 12,
+      "successfulAssertions": 128,
+      "runs": 3,
+      "oldGreenRepeated": 0
+    },
+    "sourceEditToolAssertion": {
+      "terminal": "5992c0",
+      "exitCode": 1,
+      "notProductCheck": true
+    }
+  },
+  "findings": [],
+  "limits": [
+    "独立审查仅只读实际源码/Git/精确变换/全部脚本与报告/stdout/末SHA；没有执行作者proof/compiler/heads/runtime/checker/gate或生产加载。",
+    "首实际标准类型和十二头采样96daf，后两次只对应两个changed根；不伪称末十二完整绿色重跑。空type log由真实exit收据承接。",
+    "103差分/22+4+4逆输出证明原稿与明确变更来源。新增API/tail/局部绑定/调用栈/受控Reflect/bind和函数形状真实改变，不宣称actual JS旧行为全等。",
+    "纯体/paid谓词保留与未付执行拒绝分别核对；callback拒绝不授完整动作许可，也不以此强化原Proxy/getter/schema宽度。执行中的外部callee/setter强写不作事务回滚保证。",
+    "12不同128断言是三次独立新风险阶段，不冒所有原测试、全部角色执行退休、55机制/codec/C45/P9或最终strict完成。",
+    "原765每path来源与当前联合传递类型树区别准确；Root六Core纯注释/标准编译配置仅采样依赖边界，非本批产品源。"
+  ]
+}

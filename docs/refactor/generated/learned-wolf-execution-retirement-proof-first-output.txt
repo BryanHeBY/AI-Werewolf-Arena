@@ -1,0 +1,12 @@
+4 | const prefix = 'docs/refactor/generated/learned-wolf-execution-retirement-';
+5 | const before = JSON.parse(fs.readFileSync(prefix + 'before-final-expanded.json', 'utf8'));
+6 | const ready = JSON.parse(fs.readFileSync(prefix + 'source-ready.json', 'utf8'));
+7 | const edits = JSON.parse(fs.readFileSync(prefix + 'edits.json', 'utf8'));
+8 | const hash = (text) => crypto.createHash('sha256').update(text).digest('hex');
+9 | const assert = (condition, detail) => { if (!condition) throw new Error(detail); };
+                                                                      ^
+error: pure_owner_isCurrent:backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts
+      at assert (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/learned-wolf-execution-retirement-proof.cjs:9:67)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/learned-wolf-execution-retirement-proof.cjs:88:5)
+
+Bun v1.4.3 (Linux x64)

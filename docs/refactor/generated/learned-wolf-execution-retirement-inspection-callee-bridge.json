@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "rows": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+      "beforeSHA256": "a74ed110e25669546c276c3edbaa2a1463e82b3f89133a71a37a217125152606",
+      "afterSHA256": "478524e16bbe2708ba3a7dbecebf213f0904337005453a3b5303b467a81d5a77",
+      "edits": 2,
+      "wholeForward": true,
+      "wholeInverse": true,
+      "typedTreeNodes": 3230,
+      "allSyntaxLeaves": 2111,
+      "nodeArrays": 239,
+      "outputs": [
+        {
+          "module": "ES",
+          "firstSHA256": "637f6f2b481f6d45dae569424096bc7240e0021d1f31417d45f41222b5a90711",
+          "inverseSHA256": "637f6f2b481f6d45dae569424096bc7240e0021d1f31417d45f41222b5a90711",
+          "actualSHA256": "c074f9b3ed6195d6b00f4e5ee45e0e7b67613dc5bcd314e78c54c0f67c88389f",
+          "inverseSame": true,
+          "actualSame": false
+        },
+        {
+          "module": "CJS",
+          "firstSHA256": "f32f58afe60022ba7277a33b6397e241ba759291199908e36d51b74c052d31ad",
+          "inverseSHA256": "f32f58afe60022ba7277a33b6397e241ba759291199908e36d51b74c052d31ad",
+          "actualSHA256": "b469064df01753f2bf8e437c8035468af210ff02e0ea6d4b2bea4d05fdaa3e60",
+          "inverseSame": true,
+          "actualSame": false
+        }
+      ],
+      "headBytesSame": true,
+      "originalDefaultWholeExpressionSame": true,
+      "defaultWholeExpressionSHA256": "4367d29eec4835ab5ce385253e86fc94207af5c49d24ba4a0a95642f88e917de"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/learned-wolf-execution-retirement.test.ts",
+      "beforeSHA256": "ec9ef5259f3d60bbd529d4e35c82974323c6c78bacd46117299c85291195137d",
+      "afterSHA256": "3f1653acb0e7ed3cf495713e9458504cb99e18fc4f05032c6567d7a1d1f209d8",
+      "edits": 1,
+      "wholeForward": true,
+      "wholeInverse": true,
+      "typedTreeNodes": 6821,
+      "allSyntaxLeaves": 4475,
+      "nodeArrays": 684,
+      "outputs": [
+        {
+          "module": "ES",
+          "firstSHA256": "fb359abe82ded6630beb2e95c54381c32cf4da7df29e7efa694c7ab30d3103a5",
+          "inverseSHA256": "fb359abe82ded6630beb2e95c54381c32cf4da7df29e7efa694c7ab30d3103a5",
+          "actualSHA256": "69e30afc44d56ccaf5e009f90d75e5a5103217f1223ca3786cb7805c5561c5f8",
+          "inverseSame": true,
+          "actualSame": false
+        },
+        {
+          "module": "CJS",
+          "firstSHA256": "beffe0cf1db104ed590b4f16803fae284f056f07e84caf49f730697ad8c58187",
+          "inverseSHA256": "beffe0cf1db104ed590b4f16803fae284f056f07e84caf49f730697ad8c58187",
+          "actualSHA256": "8a9aab3b3447c380c228c081c2bc1c7aa410549c37dbae44e661442a4c3fc631",
+          "inverseSame": true,
+          "actualSame": false
+        }
+      ],
+      "headBytesSame": true
+    }
+  ],
+  "otherTenSourcesUnchanged": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "sha256": "9ba0c8775ffcd30d72c555002e885919659236a90f3b8e77041bf084560515bd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "cf53c331caea5737bedb79179499d05bd70946ed349ae2a26e071b73bba7ade6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "sha256": "03b241e1ddbeafccd349a5fa86874176d0f5cafb70d11fde1fc420ee840d5d06"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "sha256": "1013a08be7741c08709bdb2635c26db4365a3196b9c91e00c3fd15bd27716295"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "c5b72dc255304365c23ac4fecacee205c56b712df8ec86154b0abb354c860815"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "sha256": "d89f599a5983c10c312c5b6e35a95bb1bdb2d6fc3481e25e50179e3fbdfb1a29"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+      "sha256": "cbb9d4367c63bc0ad3bcc8314752b93d57762a51d36b92a4aecdb8149bf8655c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "sha256": "1ae10bb76d76f8b7a9bb38d14fc1618f147f9820430015b6a76aaae0fdf92516"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "50ec7c3574bd036af80e6f3d7feaee2bc3163589cdf7bb732003548a018a9505"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2ff60c5c9cf90e2d8d01cf4ba05f33b01d457972ceb1d448cc435435f966c996"
+    }
+  ],
+  "limits": [
+    "默认整 push 表达式比对实际765原函数；完整两源逆输出只绑定后继增量，不冒 actual JS 同。",
+    "首proof/type/head/new10及default-new1阶段原字节与SHA保持；这里只验证第二个两源后继，不重十一绿或十二头。",
+    "受控Reflect.apply及bind读取／分配先于最后拒绝，guard之后只调用已准备函数；默认无尾不访问这些新增渠道，allSyntaxLeaves含完整getChildren中的JSDoc。"
+  ]
+}

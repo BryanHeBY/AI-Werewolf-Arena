@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "reviewer": "author source/integrity review, not independent approval",
+  "approved": true,
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "sha256": "9ba0c8775ffcd30d72c555002e885919659236a90f3b8e77041bf084560515bd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "cf53c331caea5737bedb79179499d05bd70946ed349ae2a26e071b73bba7ade6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "sha256": "03b241e1ddbeafccd349a5fa86874176d0f5cafb70d11fde1fc420ee840d5d06"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "sha256": "1013a08be7741c08709bdb2635c26db4365a3196b9c91e00c3fd15bd27716295"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "c5b72dc255304365c23ac4fecacee205c56b712df8ec86154b0abb354c860815"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "sha256": "d89f599a5983c10c312c5b6e35a95bb1bdb2d6fc3481e25e50179e3fbdfb1a29"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+      "sha256": "478524e16bbe2708ba3a7dbecebf213f0904337005453a3b5303b467a81d5a77"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+      "sha256": "cbb9d4367c63bc0ad3bcc8314752b93d57762a51d36b92a4aecdb8149bf8655c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "sha256": "1ae10bb76d76f8b7a9bb38d14fc1618f147f9820430015b6a76aaae0fdf92516"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "50ec7c3574bd036af80e6f3d7feaee2bc3163589cdf7bb732003548a018a9505"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2ff60c5c9cf90e2d8d01cf4ba05f33b01d457972ceb1d448cc435435f966c996"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/learned-wolf-execution-retirement.test.ts",
+      "sha256": "3f1653acb0e7ed3cf495713e9458504cb99e18fc4f05032c6567d7a1d1f209d8"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/learned-wolf-execution-retirement-scope-final.json",
+    "sha256": "32924c5333a219e22801d9c8029c5b8c3c901afe281e3631e4038d21d6453800"
+  },
+  "document": {
+    "path": "docs/refactor/learned-wolf-execution-retirement.md",
+    "sha256": "25e015979cf5520bbfa1d8815eb3feb3d11167c12c7b5fbcb4a017d8ad6810e5"
+  },
+  "actualGitBefore": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "sha256": "1f947cb0d92edc15fe85fb1e1cf27677e633788a0ae3b1cbfd5edb3c0a8aebe9",
+      "gitBlob": "baa6fe4972d27895c29edb5b0775e950b2bb0716",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "baed0154edc7068011e52b76dd1b9a0e861d38dc49207362b1c44e26f25401b8",
+      "gitBlob": "3fa0d6b0af3aeb9588b0473693c03b5a7e52c6e6",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "sha256": "55c36a42dbfddb9c96d818f13480572588450d9fba7f2d4951a8ced99ddaec5c",
+      "gitBlob": "121c704c68acb9500a0848b92ad7335c31cc16df",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "sha256": "661a171bc61f0bda82c236c154e8427cd342309e1de841649603a8daade6ee31",
+      "gitBlob": "e511314a1d7a9f2b2c36898081617ecb3f169a21",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "0f517f7e9825c33a48f1d88a02ca74ea4cbc587a61ab129af455699793d54e23",
+      "gitBlob": "6f28237e4c9d11c2ee884ab323c2f04086e19f4e",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "sha256": "44bb5627508eee472d8cd3eec4477a8cc064f31096df26467beffef86b5258a5",
+      "gitBlob": "ff3785338e1f667abfe164fd8a719882a2bcae7f",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+      "sha256": "6e86bb1c91e43a893a9a2feb57eb32e97296de097190c1ba751373a3b72257eb",
+      "gitBlob": "c5c5ccc0772d9b69299860dea5756986d74aa732",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+      "sha256": "19c3bef24b27309a9e5beabcc21f05315865ef3b52613b33869f04d08e2ab75c",
+      "gitBlob": "0047d0b08eb0de0c2b31b1e9a67de2087a4b618e",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "sha256": "35cc5290ee62e2561c42c01aa9c9cfdeec4c65218adcf9ac4409498951a2bd8e",
+      "gitBlob": "b53aee67273e6f74c3c10161a7f08dfea5e5e7d2",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "7bfe3fd9dd4d1de31f6111ab7ce8777cd4c5dcd2ee4e13fb24b430b5654ede08",
+      "gitBlob": "0c6e72fc6260def901892db9bd4f2d2a7d9834e4",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "f826d3bfb55a67182f4193511c6ce36a2d7e8f3b6681094ab77a724d310aa4ad",
+      "gitBlob": "1e02d22dc32107cc6c6c8f17726c5d2cde37e533",
+      "mode": "100644"
+    }
+  ],
+  "expectedAbsent": [
+    "backend/tests/unit/mechanisms/learned-wolf-execution-retirement.test.ts"
+  ],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/role-execution-authority.ts",
+      "sha256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756",
+      "gitBlob": "da55b2b377611ace1c491f5e7c9eba83d534c6c4",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97",
+      "gitBlob": "1b32deb8d4cb4de733f51cc9664ef87685dd7c08",
+      "mode": "100644"
+    }
+  ],
+  "sourceIntegrity": "final12 sha true; actual765 old11 complete text/blob/mode baseline and new1 absence; exact95+5+3 and default whole original expression carried by staged proof/bridges",
+  "behaviorReview": [
+    "captured canAct is a denial only; complete pure predicates retain exact original declarations/expressions",
+    "controlled internal getter reads precede actual first resource writes; flags do not cancel completion after first commit",
+    "Mechanical advance/gun expiry remain original paid learning lifecycle",
+    "new mirror dictionaries may remain while installation/activation is rejected; old errors/callee/role query prefixes preserved",
+    "default inspection expression restored; controlled new Reflect/apply/bind preparation is entirely before final denial"
+  ],
+  "verification": {
+    "path": "docs/refactor/generated/learned-wolf-execution-retirement-receipts.json",
+    "sha256": "7aa85b78fc7eec8948985377d60b384485bffc72427500b8117dd4f13e7cac49"
+  },
+  "limits": [
+    "No independent acceptance is granted by this author report; peer reviews the actual source and evidence.",
+    "Only stated two families/owned unpaid calls are closed, not all55 actor execution or P9."
+  ]
+}

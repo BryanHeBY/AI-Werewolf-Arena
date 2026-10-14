@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/learned-wolf-execution-retirement.test.ts:
+(pass) 默认查验数据入口不读取 Reflect，原 push receiver 与参数 getter 错误保持 [0.31ms]
+
+ 1 pass
+ 10 filtered out
+ 0 fail
+ 4 expect() calls
+Ran 1 test across 1 file. [129.00ms]

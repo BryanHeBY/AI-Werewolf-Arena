@@ -76,7 +76,7 @@ const mimicStage: NightStageHandler = {
       if (!canAwakenedMimic(owner.state, day)) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
-        if (!owner.isCurrent() || !canAwakenedMimic(owner.state, day)) break;
+        if (!owner.isCurrent() || !canAwakenedMimic(owner.state, day) || !owner.canAct()) break;
         const candidates = targets(ctx, owner.actorId, true);
         const roles = new Map(
           [...candidates.keys()].map((id) => {
@@ -84,6 +84,7 @@ const mimicStage: NightStageHandler = {
             return [id, { component, role: component.role, camp: ctx.world.getComponent(id, COMPONENT.Camp)?.camp }] as const;
           }),
         );
+        if (!owner.canAct()) break;
         const action = candidates.size
           ? await ctx.actionProvider.getAction(
               ctx.makeRequest(owner.actorId, ["awakened_mimic"], {
@@ -95,9 +96,9 @@ const mimicStage: NightStageHandler = {
               }),
             )
           : null;
-        if (!owner.isCurrent() || !canAwakenedMimic(owner.state, day)) break;
+        if (!owner.isCurrent() || !canAwakenedMimic(owner.state, day) || !owner.canAct()) break;
         if (action === null) {
-          closeAwakenedMimic(owner.state, day);
+          if (!closeAwakenedMimic(owner.state, day, owner.canAct)) break;
           recordAwakenedNightCommit(ctx.world, day);
           ctx.events.push({
             timestamp: Date.now(),
@@ -116,7 +117,8 @@ const mimicStage: NightStageHandler = {
           !owner.isCurrent() ||
           !canAwakenedMimic(owner.state, day) ||
           !valid.ok ||
-          valid.sanitizedCall?.name !== "awakened_mimic"
+          valid.sanitizedCall?.name !== "awakened_mimic" ||
+          !owner.canAct()
         )
           continue;
         const targetId = valid.sanitizedCall.args.target_id,
@@ -131,7 +133,9 @@ const mimicStage: NightStageHandler = {
           ctx.world.getComponent(targetId, COMPONENT.Camp)?.camp !== origin.camp
         )
           continue;
-        if (!learnAwakenedRole(owner.state, targetId, origin.role, day)) continue;
+        // 原候选 Role／Camp／生命复验后才检查墓碑；不提前读取或重新捕获目标。
+        if (!owner.canAct()) break;
+        if (!learnAwakenedRole(owner.state, targetId, origin.role, day, owner.canAct)) continue;
         recordAwakenedNightCommit(ctx.world, day);
         ctx.events.push({
           timestamp: Date.now(),
@@ -141,10 +145,11 @@ const mimicStage: NightStageHandler = {
         completed = true;
         break;
       }
-      if (!completed && owner.isCurrent() && canAwakenedMimic(owner.state, day)) {
+      if (!completed && owner.isCurrent() && canAwakenedMimic(owner.state, day) && owner.canAct()) {
         if (targets(ctx, owner.actorId, true).size)
           throw new Error("awakened_mimic_valid_action_missing");
-        closeAwakenedMimic(owner.state, day);
+        if (!owner.canAct()) continue;
+        if (!closeAwakenedMimic(owner.state, day, owner.canAct)) continue;
         recordAwakenedNightCommit(ctx.world, day);
         ctx.events.push({
           timestamp: Date.now(),
@@ -166,11 +171,12 @@ const skillStage: NightStageHandler = {
         skill = bound?.skill;
       if (!bound || !skill || skill.kind === "wolf") continue;
       const tool: ToolName = skill.kind === "poison" ? "awakened_poison" : "awakened_guard";
-      const current = () => bound.isCurrent() && awakenedSkillForNight(owner.state, day) === skill;
+      const current = () => bound.isCurrent() && awakenedSkillForNight(owner.state, day) === skill && owner.canAct();
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
         if (!current()) break;
         const candidates = targets(ctx, owner.actorId, false);
+        if (!owner.canAct()) break;
         const action = await ctx.actionProvider.getAction(
           ctx.makeRequest(owner.actorId, [tool], {
             stage: "awakened_skill",
@@ -182,7 +188,7 @@ const skillStage: NightStageHandler = {
         );
         if (!current()) break;
         if (action === null) {
-          if (!skipAwakenedSkill(owner.state, day)) break;
+          if (!skipAwakenedSkill(owner.state, day, owner.canAct)) break;
           recordAwakenedNightCommit(ctx.world, day);
           ctx.events.push({
             timestamp: Date.now(),
@@ -204,7 +210,9 @@ const skillStage: NightStageHandler = {
           target = targetId === null ? null : candidates.get(targetId);
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
         if (call.name === "awakened_poison" && skill.kind === "poison" && target) {
-          if (!useAwakenedPoison(owner.state, day)) break;
+          // 首次扣库存前拒绝晚退休；后续 claim／印记／事实仍按原非事务次序完成。
+          if (!owner.canAct()) break;
+          if (!useAwakenedPoison(owner.state, day, owner.canAct)) break;
           (ctx.state.poisonClaims ??= []).push(
             originalPoisonIntent(
               {
@@ -229,7 +237,8 @@ const skillStage: NightStageHandler = {
             payload: { actorId: owner.actorId, day, targetId: target.id },
           });
         } else if (call.name === "awakened_guard" && skill.kind === "guard") {
-          if (!chooseAwakenedGuard(owner.state, targetId, day)) continue;
+          if (!owner.canAct()) break;
+          if (!chooseAwakenedGuard(owner.state, targetId, day, owner.canAct)) continue;
           if (target)
             effects(ctx).shields.push(
               awakenedNightIntent(
@@ -273,12 +282,13 @@ const attackStage: NightStageHandler = {
       const bound = bindAwakenedSkill(owner, day);
       if (bound?.skill.kind !== "wolf") continue;
       const effectCurrent = () => bound.isCurrent() && canAwakenedKnife(owner.role, ctx.world, () => ctx.world.getComponent(owner.actorId, COMPONENT.Camp));
-      const current = () => effectCurrent() && canAwakenedExtraKnife(owner.state, day);
+      const current = () => effectCurrent() && canAwakenedExtraKnife(owner.state, day) && owner.canAct();
       if (!current()) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
         if (!current()) break;
         const candidates = targets(ctx, owner.actorId, false);
+        if (!owner.canAct()) break;
         const action = await ctx.actionProvider.getAction(
           ctx.makeRequest(owner.actorId, ["awakened_attack"], {
             stage: "awakened_attack",
@@ -301,7 +311,9 @@ const attackStage: NightStageHandler = {
         }
         const target = targetId === null ? null : candidates.get(targetId);
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
-        if (!chooseAwakenedAttack(owner.state, targetId, day)) break;
+        // 目标读取可以触发受信任回调；真正扣刀之前只读原 Role 的退休标记。
+        if (!owner.canAct()) break;
+        if (!chooseAwakenedAttack(owner.state, targetId, day, owner.canAct)) break;
         if (target)
           effects(ctx).attacks.push(
             awakenedNightIntent(
@@ -338,8 +350,9 @@ const activationStage: NightStageHandler = {
     const day = ctx.currentDay();
     for (const owner of owners(ctx, day)) {
       const learned = owner.state.learned;
-      if (!learned || learned.activationNight !== null || !owner.isCurrent()) continue;
+      if (!learned || learned.activationNight !== null || !owner.isCurrent() || !owner.canAct()) continue;
       let abilityId: string | undefined;
+      let installedMirror = false;
       if (learned.skill.kind === "inspection") {
         if (
           allNightAbilities(owner.role).some(
@@ -348,22 +361,28 @@ const activationStage: NightStageHandler = {
           retiredNightAbilityIds(owner.role).some((id) => id.startsWith("native:role_check"))
         )
           throw new Error("awakened_mirror_native_binding_conflict");
-        installNativeAbility(owner.role, "role_check", {
+        // 原冲突查询先完成；安装新的主动实例前再拒绝退休，不取消已经安装的实例。
+        if (!owner.canAct()) continue;
+        const installed = installNativeAbility(owner.role, "role_check", {
           policy: "mirror",
           lastTarget: null,
           lastDay: null,
           history: [],
-        });
+        }, owner.canAct);
+        if (installed === null) continue;
+        installedMirror = true;
         const ability = findNightAbility(owner.role, "role_check")!;
         setNightAbilityStartDay(ability, day + 1);
         abilityId = ability.id;
       }
-      if (
-        !owner.isCurrent() ||
-        owner.state.learned !== learned ||
-        !activateAwakenedLearning(owner.state, day, abilityId)
-      )
+      if (!owner.isCurrent() || owner.state.learned !== learned)
         throw new Error("awakened_activation_commit_invalid");
+      // 未装实例的退休是正常拒绝；已安装镜像进入原完成前缀，不能取消该次激活。
+      if (!installedMirror && !owner.canAct()) continue;
+      const activated = activateAwakenedLearning(owner.state, day, abilityId,
+        installedMirror ? undefined : owner.canAct);
+      if (activated === "retired") continue;
+      if (!activated) throw new Error("awakened_activation_commit_invalid");
       recordAwakenedNightCommit(ctx.world, day);
       ctx.events.push({
         timestamp: Date.now(),

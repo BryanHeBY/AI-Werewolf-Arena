@@ -186,7 +186,19 @@ export function commitPreparedNativeAbility<K extends NightAbilityKind>(
   role: RoleComponent,
   kind: K,
   ownedState: NightAbilityStates[K],
-): NightAbilityReadState<K> {
+): NightAbilityReadState<K>;
+export function commitPreparedNativeAbility<K extends NightAbilityKind>(
+  role: RoleComponent,
+  kind: K,
+  ownedState: NightAbilityStates[K],
+  mayCommit: () => boolean,
+): NightAbilityReadState<K> | null;
+export function commitPreparedNativeAbility<K extends NightAbilityKind>(
+  role: RoleComponent,
+  kind: K,
+  ownedState: NightAbilityStates[K],
+  mayCommit?: () => boolean,
+): NightAbilityReadState<K> | null {
   const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
     {}) as Record<string, NightAbility>;
   const retired = ((role.privateState as { readonly retiredAbilityIds?: unknown })
@@ -203,9 +215,12 @@ export function commitPreparedNativeAbility<K extends NightAbilityKind>(
       existing.source.role !== role.role
     )
       throw new Error("ability_native_binding_conflict");
+    // 已建字典与原冲突读取不回滚；回调仅否决实际 state 安装，不是完整资源许可。
+    if (mayCommit && !mayCommit()) return null;
     existing.state = ownedState;
   } else {
-    stored[id] = {
+    // 原 RHS（尤其 role.role getter）先全部完成，再核未付拒绝；不强化外来字典的接受域。
+    const installed = {
       id,
       kind,
       state: ownedState,
@@ -217,6 +232,8 @@ export function commitPreparedNativeAbility<K extends NightAbilityKind>(
       lastUsedDay: null,
       disabled: false,
     } as NightAbility;
+    if (mayCommit && !mayCommit()) return null;
+    stored[id] = installed;
   }
   return ownedState as NightAbilityReadState<K>;
 }

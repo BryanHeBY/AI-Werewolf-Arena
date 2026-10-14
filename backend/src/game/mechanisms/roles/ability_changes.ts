@@ -28,7 +28,19 @@ export function installNativeAbility<K extends NightAbilityKind>(
   role: RoleComponent,
   kind: K,
   state: NightAbilityStates[K],
-): NightAbilityReadState<K> {
+): NightAbilityReadState<K>;
+export function installNativeAbility<K extends NightAbilityKind>(
+  role: RoleComponent,
+  kind: K,
+  state: NightAbilityStates[K],
+  mayCommit: () => boolean,
+): NightAbilityReadState<K> | null;
+export function installNativeAbility<K extends NightAbilityKind>(
+  role: RoleComponent,
+  kind: K,
+  state: NightAbilityStates[K],
+  mayCommit?: () => boolean,
+): NightAbilityReadState<K> | null {
   if (kind === "pair_check" && role.role !== Role.AwakenedSeer)
     throw Error("ability_pair_native_role_invalid");
   const ownedState = (
@@ -48,5 +60,8 @@ export function installNativeAbility<K extends NightAbilityKind>(
                   ? SHELTER_STATE_SLOT.prepare(state as NightAbilityStates["shelter"])
                   : copyAbilityData(state)
   ) as NightAbilityStates[K];
-  return commitPreparedNativeAbility(role, kind, ownedState);
+  // 只有本次未付镜像显式传捕获拒绝回调；原七种准备／三参返回与失败顺序保持。
+  return mayCommit
+    ? commitPreparedNativeAbility(role, kind, ownedState, mayCommit)
+    : commitPreparedNativeAbility(role, kind, ownedState);
 }

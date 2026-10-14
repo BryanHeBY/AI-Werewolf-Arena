@@ -83,8 +83,19 @@ export function armMechanicalNativeGun(learned: MechanicalLearning, day: number)
     armLearnedNativeGun(learned.skill);
 }
 /** 觉醒枪仅在原整次激活通过后武装；activationNight／activeFromNight 仍在其后原点更新。 */
-export function armAwakenedNativeGun(learned: AwakenedLearning): void {
-  if (learned.skill.kind === "hunter") armLearnedNativeGun(learned.skill);
+export function armAwakenedNativeGun(learned: AwakenedLearning): void;
+export function armAwakenedNativeGun(learned: AwakenedLearning, mayCommit: () => boolean): boolean;
+export function armAwakenedNativeGun(learned: AwakenedLearning, mayCommit?: () => boolean): boolean | void {
+  if (learned.skill.kind === "hunter") {
+    if (mayCommit) {
+      // 原 callee→skill 引用先读取，再在首次 armed 赋值之前拒绝；不额外读取 armed。
+      const arm = armLearnedNativeGun, gun = learned.skill;
+      if (!mayCommit()) return false;
+      arm(gun);
+    } else armLearnedNativeGun(learned.skill);
+  }
+  // 原无回调调用保 void；机械已学习开夜武装与 paid reader 不使用此新入口。
+  if (mayCommit) return true;
 }
 
 /** 生产每次 hook 独立持有原捕获表；这里不另验 World，换学习／原枪后返回 undefined。 */

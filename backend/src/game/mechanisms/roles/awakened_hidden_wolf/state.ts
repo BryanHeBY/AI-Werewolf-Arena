@@ -1,6 +1,7 @@
 /**
  * 负责觉醒隐狼的学习模板、所属槽安装、激活／技能资源提交和玩家投影。输入为原角色、状态与实际夜；
  * 输出保留激活、技能和原存储引用，公开 DTO 类型独立归公共契约。
+ * 未付提交可传捕获拒绝回调，在原 getter／参数读取后且首写前调用；无回调仍是原纯数据转换，不授予行动。
  * 只写 awakened_hidden_wolf 及其学习资源，不扩大角色容器写权、重抽模板、退款或授予请求许可。
  * 激活与主动技能生效夜分别保存；次数／关窗和字段提交保持原顺序，失败保留已写前缀。
  */
@@ -81,8 +82,9 @@ export function canAwakenedMimic(state: AwakenedReadState, day: number): boolean
     (state.mimicClosedDay === null || state.mimicClosedDay < day)
   );
 }
-export function closeAwakenedMimic(state: AwakenedReadState, day: number): boolean {
+export function closeAwakenedMimic(state: AwakenedReadState, day: number, mayCommit?: () => boolean): boolean {
   if (!canAwakenedMimic(state, day)) return false;
+  if (mayCommit && !mayCommit()) return false;
   (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
   return true;
 }
@@ -91,9 +93,11 @@ export function learnAwakenedRole(
   targetId: EntityId,
   role: RoleId,
   day: number,
+  mayCommit?: () => boolean,
 ): boolean {
   if (!canAwakenedMimic(state, day)) return false;
   const learned = awakenedLearning(targetId, role, day);
+  if (mayCommit && !mayCommit()) return false;
   (state as { learned: AwakenedReadState["learned"] }).learned = learned;
   (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
   return true;
@@ -104,7 +108,19 @@ export function activateAwakenedLearning(
   state: AwakenedReadState,
   night: number,
   mirrorAbilityId?: string,
-): boolean {
+): boolean;
+export function activateAwakenedLearning(
+  state: AwakenedReadState,
+  night: number,
+  mirrorAbilityId: string | undefined,
+  mayCommit: (() => boolean) | undefined,
+): boolean | "retired";
+export function activateAwakenedLearning(
+  state: AwakenedReadState,
+  night: number,
+  mirrorAbilityId?: string,
+  mayCommit?: () => boolean,
+): boolean | "retired" {
   const learned = state.learned;
   if (!learned || !validDay(night) || night < learned.day || learned.activationNight !== null)
     return false;
@@ -114,9 +130,23 @@ export function activateAwakenedLearning(
   )
     return false;
   if (learned.skill.kind !== "inspection" && mirrorAbilityId !== undefined) return false;
-  if (learned.skill.kind === "inspection")
-    (learned.skill as { abilityId: string | null }).abilityId = mirrorAbilityId!;
-  armAwakenedNativeGun(learned);
+  // 仅首写前调用捕获拒绝条件；一旦字段／武装提交，后续激活字段不再被墓碑取消。
+  let committed = false;
+  const firstWrite = () => {
+    if (committed) return true;
+    if (mayCommit && !mayCommit()) return false;
+    committed = true;
+    return true;
+  };
+  if (learned.skill.kind === "inspection") {
+    const skill = learned.skill as { abilityId: string | null };
+    if (!firstWrite()) return "retired";
+    skill.abilityId = mirrorAbilityId!;
+  }
+  if (mayCommit) {
+    if (!armAwakenedNativeGun(learned, firstWrite)) return "retired";
+  } else armAwakenedNativeGun(learned);
+  if (!firstWrite()) return "retired";
   (learned as { activationNight: number | null }).activationNight = night;
   (learned as { activeFromNight: number | null }).activeFromNight = night + 1;
   return true;
@@ -145,8 +175,9 @@ export function awakenedSkillForNight(
     ? learned.skill
     : undefined;
 }
-export function closeAwakenedSkill(state: AwakenedReadState, night: number): boolean {
+export function closeAwakenedSkill(state: AwakenedReadState, night: number, mayCommit?: () => boolean): boolean {
   if (!awakenedSkillForNight(state, night)) return false;
+  if (mayCommit && !mayCommit()) return false;
   (state as { skillClosedDay: number | null }).skillClosedDay = night;
   return true;
 }
@@ -178,11 +209,13 @@ export function chooseAwakenedAttack(
   state: AwakenedReadState,
   targetId: EntityId | null,
   night: number,
+  mayCommit?: () => boolean,
 ): boolean {
   if (!canAwakenedExtraKnife(state, night) || (targetId !== null && !validTarget(targetId)))
     return false;
   const skill = state.learned!.skill;
   if (skill.kind !== "wolf") return false;
+  if (mayCommit && !mayCommit()) return false;
   if (targetId !== null) (skill as { extraKnife: "available" | "spent" }).extraKnife = "spent";
   (state as { skillClosedDay: number | null }).skillClosedDay = night;
   return true;
@@ -192,6 +225,7 @@ export function chooseAwakenedGuard(
   state: AwakenedReadState,
   targetId: EntityId | null,
   night: number,
+  mayCommit?: () => boolean,
 ): boolean {
   const skill = awakenedSkillForNight(state, night);
   if (
@@ -200,22 +234,25 @@ export function chooseAwakenedGuard(
     (targetId !== null && skill.lastTarget === targetId && skill.lastGuardDay === night - 1)
   )
     return false;
+  if (mayCommit && !mayCommit()) return false;
   (skill as { lastTarget: EntityId | null }).lastTarget = targetId;
   (skill as { lastGuardDay: number | null }).lastGuardDay = night;
   (state as { skillClosedDay: number | null }).skillClosedDay = night;
   return true;
 }
 /** 合法的无工具等待也按空目标结束本夜守护，打断连续守同一编号的历史。 */
-export function skipAwakenedSkill(state: AwakenedReadState, night: number): boolean {
+export function skipAwakenedSkill(state: AwakenedReadState, night: number, mayCommit?: () => boolean): boolean {
   const skill = awakenedSkillForNight(state, night);
   if (!skill) return false;
-  if (skill.kind === "guard") return chooseAwakenedGuard(state, null, night);
-  if (skill.kind === "wolf") return chooseAwakenedAttack(state, null, night);
-  return closeAwakenedSkill(state, night);
+  if (skill.kind === "guard") return chooseAwakenedGuard(state, null, night, mayCommit);
+  if (skill.kind === "wolf") return chooseAwakenedAttack(state, null, night, mayCommit);
+  return closeAwakenedSkill(state, night, mayCommit);
 }
-export function useAwakenedPoison(state: AwakenedReadState, night: number): boolean {
+export function useAwakenedPoison(state: AwakenedReadState, night: number, mayCommit?: () => boolean): boolean {
   const skill = awakenedSkillForNight(state, night);
   if (skill?.kind !== "poison" || skill.remaining !== 1) return false;
+  // 库存 getter 先完成，未付拒绝在 remaining 首写前；付款后仍完成原关闭字段。
+  if (mayCommit && !mayCommit()) return false;
   (skill as { remaining: 0 | 1 }).remaining = 0;
   (state as { skillClosedDay: number | null }).skillClosedDay = night;
   return true;

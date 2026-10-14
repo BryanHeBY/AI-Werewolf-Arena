@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "baseCommit": "7654533073e46150ee7181e6de6bf49d5e3e211d",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "sha256": "9ba0c8775ffcd30d72c555002e885919659236a90f3b8e77041bf084560515bd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "cf53c331caea5737bedb79179499d05bd70946ed349ae2a26e071b73bba7ade6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "sha256": "03b241e1ddbeafccd349a5fa86874176d0f5cafb70d11fde1fc420ee840d5d06"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "sha256": "1013a08be7741c08709bdb2635c26db4365a3196b9c91e00c3fd15bd27716295"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "c5b72dc255304365c23ac4fecacee205c56b712df8ec86154b0abb354c860815"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "sha256": "d89f599a5983c10c312c5b6e35a95bb1bdb2d6fc3481e25e50179e3fbdfb1a29"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+      "sha256": "478524e16bbe2708ba3a7dbecebf213f0904337005453a3b5303b467a81d5a77"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+      "sha256": "cbb9d4367c63bc0ad3bcc8314752b93d57762a51d36b92a4aecdb8149bf8655c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "sha256": "1ae10bb76d76f8b7a9bb38d14fc1618f147f9820430015b6a76aaae0fdf92516"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "50ec7c3574bd036af80e6f3d7feaee2bc3163589cdf7bb732003548a018a9505"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2ff60c5c9cf90e2d8d01cf4ba05f33b01d457972ceb1d448cc435435f966c996"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/learned-wolf-execution-retirement.test.ts",
+      "sha256": "3f1653acb0e7ed3cf495713e9458504cb99e18fc4f05032c6567d7a1d1f209d8"
+    }
+  ],
+  "deleted": [],
+  "sourceReady": true,
+  "checksRun": true,
+  "controls": [
+    {
+      "path": "backend/src/core/domain/role-execution-authority.ts",
+      "sha256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756",
+      "expectedGitSHA256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756"
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97",
+      "expectedGitSHA256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97"
+    }
+  ],
+  "before": {
+    "path": "docs/refactor/generated/learned-wolf-execution-retirement-before-final-expanded.json",
+    "sha256": "fa8d80670a05a11c23725fea986239bac985d1a0951fafdcfddc00e675060e86"
+  },
+  "scopeExtensions": [
+    "original seven",
+    "two state owners",
+    "Awakened native arm owner",
+    "native install dispatcher and inventory owner"
+  ],
+  "newCases": {
+    "declarations": 12,
+    "execution": "first10/118, only default-new1/4, only callee-new1/6; 12 distinct declarations/128 successful assertions, not a final rerun of all12"
+  },
+  "limits": [
+    "Original source-ready.json records the first precheck capture. This final metadata follows actual first-stage verification and a two-source successor; no original green suite or head was repeated.",
+    "canAct only reads the captured Role retirement WeakSet; complete original qualification remains at each caller.",
+    "Mechanical learned gun advance/expiry and completed close/consume remain unfiltered. Pure isCurrent/bind/currentNight/effect/first-death queries have no added execution flag.",
+    "Default data calls keep original accepted inputs and return types. Controlled overloads can explicitly reject first writes, preserving dictionaries/metadata already created and completed payment prefixes.",
+    "New local RHS/callee bindings and Reflect.apply for inspection change stack/API/layout; no arbitrary monkeypatch or setter-internal rollback equivalence is claimed."
+  ],
+  "firstSourceReady": {
+    "path": "docs/refactor/generated/learned-wolf-execution-retirement-source-ready.json",
+    "sha256": "96daf48cc5cf33f58a4f101bab8a911753a92132fe5ecf61a4618e0fc4164003"
+  },
+  "verificationPhases": {
+    "first": "source-ready.json96daf: new10/118, standard tests full type0, twelve heads0, tool-firstred then proof850d7d0",
+    "successor": "only newdefault1/4, changed state/unit two roots0, two-sourcebridge0; other10 source unchanged",
+    "secondSuccessor": "only newcallee1/6, changed state/unit two roots0, second two-sourcebridge0; default expression and other10 source unchanged"
+  },
+  "executedSuccessorReady": {
+    "path": "docs/refactor/generated/learned-wolf-execution-retirement-inspection-default-executed-source-ready.json",
+    "sha256": "b5a7097218742fc3cd9f08269a670c8fbe46f7cd510e83f741aa2885ff507ba6"
+  },
+  "controlledCalleeReady": {
+    "path": "docs/refactor/generated/learned-wolf-execution-retirement-inspection-callee-source-ready.json",
+    "sha256": "36f5c7f855209b7c0f8ab97a30060f59570c2bc3f5ee6d4dc157b4b45fae4887"
+  }
+}

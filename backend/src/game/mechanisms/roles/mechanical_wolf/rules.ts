@@ -5,6 +5,7 @@
 import { MECHANICAL_TOOL_NAMES } from "./tool_names";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../core/domain/components/names";
+import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import type { ToolRule, ToolRuleMap } from "../../validation/contracts";
 import { isAliveTarget } from "../../validation/contracts";
@@ -20,8 +21,9 @@ import {
 
 const validateMechanical: ToolRule = ({ world, actorId, role, day, phase, toolCall }) => {
   const state = getMechanicalState(role);
-  if (role.role !== Role.MechanicalWolf || world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf || !state || day === undefined)
+  if (role.role !== Role.MechanicalWolf || world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf || !state || day === undefined || isRoleExecutionRetired(role))
     return { code: RuleError.MechanicalUnavailable };
+  // 这是未付款工具预检；墓碑只拒绝新动作，已付效果和知识读器不用这张规则表。
   if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
   if (toolCall.name === "mechanical_mode") {
     return canSelectMechanicalMode(state, day) && ["kill", "skill"].includes(toolCall.args.mode)

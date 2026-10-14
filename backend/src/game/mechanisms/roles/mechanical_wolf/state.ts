@@ -1,6 +1,7 @@
 /**
  * 负责机械狼的学习模板、所属槽安装、模式／刀资源提交和玩家投影。输入为原角色、状态与日次；
  * 输出保留原学习、模式、刀权字段以及存储引用，公开 DTO 类型独立归公共契约。
+ * 未付提交可传捕获拒绝回调，在原 getter／参数读取后且首写前调用；无回调仍是原纯数据转换，不授予行动。
  * 模板创建不克隆其他玩家库存；本模块只写 mechanical_wolf 及其资源，不替换角色容器或授予请求许可。
  * 实际开夜才武装枪和处理首刀过期；提交按原字段顺序，异常不回滚此前状态。
  */
@@ -94,8 +95,9 @@ export function canMechanicalMimic(state: MechanicalReadState, day: number): boo
 }
 
 /** 合法等待只关闭本夜学习机会，保留整局一次的学习库存。 */
-export function closeMechanicalMimic(state: MechanicalReadState, day: number): boolean {
+export function closeMechanicalMimic(state: MechanicalReadState, day: number, mayCommit?: () => boolean): boolean {
   if (!canMechanicalMimic(state, day)) return false;
+  if (mayCommit && !mayCommit()) return false;
   (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
   return true;
 }
@@ -105,6 +107,7 @@ export function learnMechanicalRole(
   targetId: EntityId,
   role: RoleId,
   day: number,
+  mayCommit?: () => boolean,
 ): boolean {
   if (!canMechanicalMimic(state, day)) return false;
   const learned = mechanicalLearning(targetId, role, day);
@@ -115,6 +118,8 @@ export function learnMechanicalRole(
   ) {
     (learned.skill as { extraKnife: "available" | "spent" | "expired" }).extraKnife = "expired";
   }
+  // 原资格和模板／首刀 getter 已读完；回调只否决首写，之后保持两字段完成前缀。
+  if (mayCommit && !mayCommit()) return false;
   (state as { learned: MechanicalReadState["learned"] }).learned = learned;
   (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
   return true;
@@ -144,8 +149,10 @@ export function selectMechanicalMode(
   state: MechanicalReadState,
   day: number,
   mode: MechanicalMode,
+  mayCommit?: () => boolean,
 ): boolean {
   if (!canSelectMechanicalMode(state, day)) return false;
+  if (mayCommit && !mayCommit()) return false;
   (state as { mode: MechanicalReadState["mode"] }).mode = { day, kind: mode };
   const learned = state.learned;
   if (
@@ -175,8 +182,9 @@ export function mechanicalSkillForNight(
   return state.learned.skill;
 }
 
-export function closeMechanicalSkill(state: MechanicalReadState, day: number): boolean {
+export function closeMechanicalSkill(state: MechanicalReadState, day: number, mayCommit?: () => boolean): boolean {
   if (!mechanicalSkillForNight(state, day)) return false;
+  if (mayCommit && !mayCommit()) return false;
   (state as { skillClosedDay: number | null }).skillClosedDay = day;
   return true;
 }
@@ -210,9 +218,23 @@ export function chooseMechanicalGuard(
   skill: Extract<MechanicalReadSkill, { kind: "guard" }>,
   targetId: EntityId | null,
   day: number,
-): { failed: boolean } {
+): { failed: boolean };
+export function chooseMechanicalGuard(
+  skill: Extract<MechanicalReadSkill, { kind: "guard" }>,
+  targetId: EntityId | null,
+  day: number,
+  mayCommit: () => boolean,
+): { failed: boolean } | null;
+export function chooseMechanicalGuard(
+  skill: Extract<MechanicalReadSkill, { kind: "guard" }>,
+  targetId: EntityId | null,
+  day: number,
+  mayCommit?: () => boolean,
+): { failed: boolean } | null {
   const failed =
     targetId !== null && skill.lastTarget === targetId && skill.lastGuardDay === day - 1;
+  // 守护历史 getter 可以执行代码；空返回仅是未付拒绝，不伪造守护成功或惩罚。
+  if (mayCommit && !mayCommit()) return null;
   (skill as { lastTarget: EntityId | null }).lastTarget = targetId;
   (skill as { lastGuardDay: number | null }).lastGuardDay = day;
   return { failed };
@@ -279,12 +301,43 @@ export function recordMechanicalInspection(
   day: number,
   target: { readonly id: EntityId },
   result: Extract<InspectionResult, { kind: "role" }>,
-): void {
-  (skill.history as Extract<MechanicalSkill, { kind: "inspection" }>["history"]).push({
+): void;
+export function recordMechanicalInspection(
+  skill: Extract<MechanicalReadSkill, { kind: "inspection" }>,
+  day: number,
+  target: { readonly id: EntityId },
+  result: Extract<InspectionResult, { kind: "role" }>,
+  mayCommit: () => boolean,
+): boolean;
+export function recordMechanicalInspection(
+  skill: Extract<MechanicalReadSkill, { kind: "inspection" }>,
+  day: number,
+  target: { readonly id: EntityId },
+  result: Extract<InspectionResult, { kind: "role" }>,
+  mayCommit?: () => boolean,
+): boolean | void {
+  // 默认纯数据入口保原完整调用，不查询新增 Reflect 或拒绝回调。
+  if (!mayCommit) {
+    (skill.history as Extract<MechanicalSkill, { kind: "inspection" }>["history"]).push({
+      day,
+      targetId: target.id,
+      result: { ...result },
+    });
+    return;
+  }
+  // 受控首写保 history→push callee→target.id→result spread，再复验；使用原 history receiver。
+  const history = skill.history as Extract<MechanicalSkill, { kind: "inspection" }>["history"];
+  const append = history.push;
+  const entry = {
     day,
     targetId: target.id,
     result: { ...result },
-  });
+  };
+  // 新增 Reflect callee／bind 读取和分配也可能执行代码，全部放在最后拒绝检查前。
+  const invoke = Reflect.apply.bind(Reflect);
+  if (!mayCommit()) return false;
+  invoke(append, history, [entry]);
+  return true;
 }
 /** 原毒提案与标记之后提交库存消耗，不增加复检、回滚或新的付款时点。 */
 export function consumeMechanicalPoison(

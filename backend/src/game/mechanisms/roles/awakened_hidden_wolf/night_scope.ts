@@ -18,6 +18,7 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
+import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
 import { awakenedSkillForNight, getAwakenedState } from "./state";
 import { findNightAbility, type NightAbilityReadView } from "../abilities";
 
@@ -28,6 +29,8 @@ export interface AwakenedOwnerScope {
   readonly state: AwakenedState;
   readonly life: NightLifeScope;
   isCurrent(allowFirstDeath?: boolean): boolean;
+  /** 仅未付执行的拒绝条件；调用方仍按原序检查当前性、阶段、资源和目标。 */
+  canAct(): boolean;
 }
 export function captureAwakenedOwner(
   world: World,
@@ -53,6 +56,8 @@ export function captureAwakenedOwner(
     role,
     state,
     life,
+    // 捕获原 Role，只读永久退休状态；不查 World／Camp，不污染已付 isCurrent。
+    canAct: () => !isRoleExecutionRetired(role),
     isCurrent: (allowFirstDeath = false) => {
       const original =
         world.getComponent(actorId, COMPONENT.Alive) === life.life &&
@@ -154,7 +159,8 @@ export function beginAwakenedNight(
   if (hasAwakenedNightCommit(world, day)) throw new Error("awakened_night_reentry_after_commit");
   if (nights.get(world)?.day === day) throw new Error("awakened_night_reentry_after_commit");
   if ((nights.get(world)?.day ?? day) > day) throw new Error("awakened_night_clock_regressed");
-  const currentOwners = owners.filter((owner) => owner.world === world && owner.isCurrent());
+  // 开夜建立新执行范围；原原体复验之后拒绝退休者，历史提交与已付查询仍不附加此条件。
+  const currentOwners = owners.filter((owner) => owner.world === world && owner.isCurrent() && owner.canAct());
   nights.set(world, { day, owners: new Map(currentOwners.map((owner) => [owner.role, owner])) });
   // 建立本夜原体 authority 本身就是已提交前缀；仅继承刀或没有复制主动技能的夜也保此记录。
   if (currentOwners.length) recordAwakenedNightCommit(world, day);

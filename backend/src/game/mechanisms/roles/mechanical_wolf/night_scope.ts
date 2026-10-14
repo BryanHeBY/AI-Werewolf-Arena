@@ -18,6 +18,7 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
+import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
 import { getMechanicalState } from "./state";
 
 export interface MechanicalOwnerScope {
@@ -27,6 +28,8 @@ export interface MechanicalOwnerScope {
   readonly state: MechanicalState;
   readonly life: NightLifeScope;
   isCurrent(): boolean;
+  /** 仅未付执行的拒绝条件；调用方仍按原序检查当前性、阶段、资源和目标。 */
+  canAct(): boolean;
 }
 
 /** 仅运行引用，不序列化进玩家 DTO 或 Tape，也不是状态副本的授权。 */
@@ -54,6 +57,8 @@ export function captureMechanicalOwner(
     role,
     state,
     life,
+    // 捕获原 Role，只读永久退休状态；不查 World／Camp，不污染已付 isCurrent。
+    canAct: () => !isRoleExecutionRetired(role),
     isCurrent: () =>
       phaseCurrent() &&
       world.getComponent(actorId, COMPONENT.Role) === role &&
