@@ -52,7 +52,7 @@ export { demonHunterRequestScope } from "./authority";
 
 export { canSubmitDemonHunt } from "./authority";
 
-export { readDemonHuntTool } from "./state";
+export { readDemonHuntTool } from "./state-slot";
 
 export {
   appendDemonNightDamageSources,

@@ -1,0 +1,1099 @@
+{
+  "approved": true,
+  "baseCommit": "a6468c7749b62c76848d7437568ef8749677b20f",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "sha256": "ebf93cce8aba6e0bac507b9897a01726b6ac1d00958e6586a4df99e69355a3b7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/owned-state-data.ts",
+      "sha256": "2aadeb3c0abdf1ae00918668170208226f89165a7cd759d21e0cdb7339e06baf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "sha256": "f61414a6b41c7b83c813bef582e2af9d2c24180bf6902d2134621bf74a8dc806"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+      "sha256": "5986fdd72a1c488f00cadef03d6edc084093b75f191cacd708cc3d208fddebeb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+      "sha256": "9bad00414d4513804f6a9513ea9b0b04eefdd8426694e236c8020ecb23a05a37"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "sha256": "061a792b1f5bb898cbf8a8162e9754012581b1007990af4a363179c20315eaf4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/profile.ts",
+      "sha256": "cbd025c483298005af685c2b422dc6712b8839b64a3c0f0626c26c30f4f28e3a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "b208e49ca730f83737342b45d20e66c2eef7f0a137909ffc57aa2507f536a1ba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+      "sha256": "3e3610bb75defe8f0fabf16c758977707e15242708ec65da4e321d77169f49c6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/preset.ts",
+      "sha256": "31114dfb654da4f730e0065d2179d58a6d809d114df3ef11d44e900de88267ca"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "sha256": "551a643d0c886f5e008f8391c4fef3465f6db922a5e3a2312a9ea33a5e16a83b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+      "sha256": "c2affe8a9c31be6460c66c4d0882d5b4b1b5b88a650d9a04ba7ac8fd2f06ca6a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "108e03016e95e44e9665ce7436dbe9c858e87985e23a385e1ef71c0af9712efe"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/state.test.ts",
+      "sha256": "89e77ae13f87aa5e7d917e859740572aa5c525b63fbc4c14c445eba2973a4798"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+      "sha256": "66995081db763623e693a14d188812ff50b9f56b14e345a0acdd575fbf005bb3"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "sha256": "69730487a8f3f6e94082b0ee1177f63a24e6946e0e8b12e58e253cbad1b53412"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/demon-hunter-state.test.ts",
+      "sha256": "238c54850a5fc0996e88aa9edb0b02e8ff76665cb7d46de2394eeaa9466736b4"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "sha256": "65775e45a8459054935f459fc9fb9848d39dcaf6fee635423a7874637a32f188"
+    },
+    {
+      "path": "backend/tests/unit/contracts/demon-hunter-data.types.ts",
+      "sha256": "e0973f92b9424382a41edb5bc4be0ceb971afc8c5c19a4b3f3ab496ddc35cc87"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-demon-state-slots.test.ts",
+      "sha256": "2568ee073d13ba4c8205c57306ab4c53b3a4bb314a718c5e12dd135ca28e4876"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "sha256": "68a06f9440216357d3b8508f1134c8d3f3b869a7a6884646086ed72125918a22",
+      "expectedAbsent": true
+    }
+  ],
+  "retained": [
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "sha256": "ebf93cce8aba6e0bac507b9897a01726b6ac1d00958e6586a4df99e69355a3b7",
+      "exactEdits": 3,
+      "label": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "typedNodes": 1998,
+      "noncommentTokens": 1079,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "85b86f70a380bc7d0a3f68450f3caa59c16784196932b8fbe2199dd0346561eb",
+        "e8c13b22adfe033668ea2f97a2e9005de5bb2ffe7f1d68382363977d708eb962"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/owned-state-data.ts",
+      "sha256": "2aadeb3c0abdf1ae00918668170208226f89165a7cd759d21e0cdb7339e06baf",
+      "exactEdits": 3,
+      "label": "backend/src/game/mechanisms/roles/fragrant_pair_seer/owned-state-data.ts",
+      "typedNodes": 185,
+      "noncommentTokens": 228,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "0984993a4e78e3ecb507b900f32c9e91b5332cd5ac08a8dfb8cbf5104bc32f9d",
+        "b9265588db414be3adb2a1860935d05456a3b202fbfe0f932569de326efd5c9a"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+      "sha256": "5986fdd72a1c488f00cadef03d6edc084093b75f191cacd708cc3d208fddebeb",
+      "exactEdits": 2,
+      "label": "backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+      "typedNodes": 823,
+      "noncommentTokens": 1027,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "14d523681b99f49418de81e2d4fd0b0f845d8ba89a4f553f9ffefe204eb4ef63",
+        "c308ae3b76623c10287149ef0b29fcc71fcf8106db1b4d93a37b448d729e0969"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+      "sha256": "9bad00414d4513804f6a9513ea9b0b04eefdd8426694e236c8020ecb23a05a37",
+      "exactEdits": 15,
+      "label": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+      "typedNodes": 5899,
+      "noncommentTokens": 6604,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "191ac9436e4b620c03a8eb5bdff498163fccb4218957c61ef21185f360b9c382",
+        "87aa8472ff7d970cca6e6ff4b4045ec29f58abf4b33e7417a209d9b649cb9645"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/profile.ts",
+      "sha256": "cbd025c483298005af685c2b422dc6712b8839b64a3c0f0626c26c30f4f28e3a",
+      "exactEdits": 3,
+      "label": "backend/src/game/mechanisms/roles/demon_hunter/profile.ts",
+      "typedNodes": 354,
+      "noncommentTokens": 450,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "f21fc6e56bd93928d172076f797eb014b0f9cf035622a36881775764737004ba",
+        "049410c933193fedaa5a729034cafe63ab20a7940c094324a2b2e66e482d9083"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "b208e49ca730f83737342b45d20e66c2eef7f0a137909ffc57aa2507f536a1ba",
+      "exactEdits": 8,
+      "label": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "typedNodes": 11899,
+      "noncommentTokens": 8218,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "eaa4826c3250a89d184cd61bcb0ab72854705cc375b1ec4bbf28eda56465df7f",
+        "e8ca9e2936e5fdbe4186d35e5d9ba63d84d89445ce2dc71894dcce706a59f802"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+      "sha256": "3e3610bb75defe8f0fabf16c758977707e15242708ec65da4e321d77169f49c6",
+      "exactEdits": 1,
+      "label": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+      "typedNodes": 414,
+      "noncommentTokens": 535,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "b6b821dc6fd3038ff6988bdbbe3a930eed3434e0b31927dca441eb9bb5f0de91",
+        "9d0e863e3dcdca52f9cd6e2f347e9df8d0e3e32e7b439f86b136e5d8071956f1"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/preset.ts",
+      "sha256": "31114dfb654da4f730e0065d2179d58a6d809d114df3ef11d44e900de88267ca",
+      "exactEdits": 2,
+      "label": "backend/src/game/mechanisms/roles/demon_hunter/preset.ts",
+      "typedNodes": 69,
+      "noncommentTokens": 91,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "d8545af1f2ef653b90032d3ccb1f17e18b7eca302d7adb7a12a4c1594a636513",
+        "db7d08d9c0322710dbe73c70cc347314a57d22ced10661cddce86e3ea392cd8b"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "sha256": "551a643d0c886f5e008f8391c4fef3465f6db922a5e3a2312a9ea33a5e16a83b",
+      "exactEdits": 1,
+      "label": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "typedNodes": 1347,
+      "noncommentTokens": 1581,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "7b2cddcd2a2907b6a8e500a017116e1fdafff6ad05bd89fcabfbe2a5c37d02c6",
+        "61ec48af6478337740eed14f58a594ce25188f2b9212e5fd3b3ff3376e68297e"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+      "sha256": "c2affe8a9c31be6460c66c4d0882d5b4b1b5b88a650d9a04ba7ac8fd2f06ca6a",
+      "exactEdits": 6,
+      "label": "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+      "typedNodes": 1224,
+      "noncommentTokens": 1379,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "5fc94c0369795be1205a7a2a59312bee9f04352f0a5b07486177faf1a79af9e5",
+        "e01358ae9ece1a4cdcf51fa8ee37967309fba9cecd6baf68af041f751a4c08a2"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "108e03016e95e44e9665ce7436dbe9c858e87985e23a385e1ef71c0af9712efe",
+      "exactEdits": 1,
+      "label": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "typedNodes": 114,
+      "noncommentTokens": 151,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "0018e39b73b2c680dd4b351748a0a34c78058d3e02e50f133f920dd196d4b8a9",
+        "54b041a5a2b0a3ad30440c194793ec5efbd0fd2a90ce9a68288752f7b3c0b8aa"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/state.test.ts",
+      "sha256": "89e77ae13f87aa5e7d917e859740572aa5c525b63fbc4c14c445eba2973a4798",
+      "exactEdits": 2,
+      "label": "backend/tests/unit/features/fragrant-pair-seer/state.test.ts",
+      "typedNodes": 902,
+      "noncommentTokens": 1273,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "b5eee46999c9a2f726f5e7f5cf083bcfc845cfc2fd0c882514880a89c3405ca9",
+        "dbbbb00b3e8967212690e1ca3ecc694aed8e01b8155436edcd09c9744b2b94ce"
+      ]
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+      "sha256": "66995081db763623e693a14d188812ff50b9f56b14e345a0acdd575fbf005bb3",
+      "exactEdits": 1,
+      "label": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+      "typedNodes": 523,
+      "noncommentTokens": 374,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "e00799414f4d1b24f0e6ab2daf849460c09f6fef2eb95d88a81033f0bbfdc06b",
+        "9d43012be0c3e58c4b4eec2b720466bb3835f2219dc394237a3f79b972bf553b"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "sha256": "69730487a8f3f6e94082b0ee1177f63a24e6946e0e8b12e58e253cbad1b53412",
+      "exactEdits": 1,
+      "label": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "typedNodes": 11695,
+      "noncommentTokens": 1175,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "1a6eb5173fa06c0b8f997ad667c7e0ee87ecfe2f448a2405308445235a7b8bb6",
+        "18adfff08c9860068ff8e6bac7e80bb2d37cd6f6a298b58ee18a61de323f8eb4"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/demon-hunter-state.test.ts",
+      "sha256": "238c54850a5fc0996e88aa9edb0b02e8ff76665cb7d46de2394eeaa9466736b4",
+      "exactEdits": 2,
+      "label": "backend/tests/unit/features/demon-hunter/demon-hunter-state.test.ts",
+      "typedNodes": 1161,
+      "noncommentTokens": 397,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "00fc3f8133c339262d0e3a5e7fdc357084baea7a83ee4249eede431dc6f53688",
+        "88e4552fa357c646df163e37c6141c3193c5d2eb8ba08917fb17a982f9a36b35"
+      ]
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "sha256": "65775e45a8459054935f459fc9fb9848d39dcaf6fee635423a7874637a32f188",
+      "exactEdits": 1,
+      "label": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "typedNodes": 891,
+      "noncommentTokens": 1118,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "73c334387203d48ea6980dbfb5e72094e7c27a0de62df020197a436ad732e3b6",
+        "36d3d547ccd9e72590a69acd59389fc8d1b7e1fa80e2b63022d05df3d36c5b34"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/demon-hunter-data.types.ts",
+      "sha256": "e0973f92b9424382a41edb5bc4be0ceb971afc8c5c19a4b3f3ab496ddc35cc87",
+      "exactEdits": 1,
+      "label": "backend/tests/unit/contracts/demon-hunter-data.types.ts",
+      "typedNodes": 340,
+      "noncommentTokens": 383,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "c0c6ab0b227478cdfc15ece159ffbe0618d42254da417d5ad89af20b8fcc315a",
+        "2436897c7ddd1ec8618ec2f2ca54f5da89593109c0b9a3fe220b60db3266da8c"
+      ]
+    }
+  ],
+  "moved": [
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "name": "freshFragrantState",
+      "label": "freshFragrantState",
+      "typedNodes": 28,
+      "noncommentTokens": 38,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "f8d6c9610d32adb5afd403e4454abce460706ef014094c066967dfef2912aa03",
+        "6ea5966c8aaf7c72faf73f3aecb2654fd448f978fee2d2aa1b5334599031c7e6"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "name": "readFragrantState",
+      "label": "readFragrantState",
+      "typedNodes": 810,
+      "noncommentTokens": 238,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "c22aa91cf669899563b4ef577a162964d86eb81b6663699a14d6f3ee6f4b56ea",
+        "991f308c0afa16b46671f08882f4d2a459616c1ee592e3f5354be03277f4fc75"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "name": "valid",
+      "label": "valid",
+      "typedNodes": 27,
+      "noncommentTokens": 33,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "50822ee4db4d0a06c36d7e62007892ff6f401189adccf73f4c1e2bde4db770cf",
+        "50822ee4db4d0a06c36d7e62007892ff6f401189adccf73f4c1e2bde4db770cf"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "name": "commitKnownWolf",
+      "label": "commitKnownWolf",
+      "typedNodes": 49,
+      "noncommentTokens": 58,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "be5a3adc86dbf71011d3401523b629ca1259f94c53f6e0cacc7bb4f201f80d9b",
+        "368aeffd1e3be35b8f2bc95ca1a4c1549601d7a3b328901f838ba09a11839a69"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "name": "expireFragrantAtNightOpen",
+      "label": "expireFragrantAtNightOpen",
+      "typedNodes": 100,
+      "noncommentTokens": 110,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "a816f5107cbbb3c664e4d99c91d3c22caabcb0724a6e882126135749dc97d150",
+        "e50b0f8d536691849a7f83740e3278a7264484a86358b5565651180778948fca"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "name": "chooseFragrantPair",
+      "label": "chooseFragrantPair",
+      "typedNodes": 151,
+      "noncommentTokens": 135,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "135ae0f11a833e41691b78b4e6578a807895630819bbe62d7b361896bc746bc4",
+        "1a049208d87aa2dae36cb2f077f97381e2fc09c8d5611775d685b3b2c47bfad1"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "name": "triggerFragrantPair",
+      "label": "triggerFragrantPair",
+      "typedNodes": 157,
+      "noncommentTokens": 169,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "085a001529ece48f3a870a27c37eb4a96aa3bf0307379fc2559e4a51d7111156",
+        "0c5220d98202eb7644270677c369371bc35620c02ebd81b1ba05e8f760f98c4c"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "name": "ownDemonData",
+      "label": "ownDemonData",
+      "typedNodes": 57,
+      "noncommentTokens": 61,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "0f22b386e60c92ae6302fae975f372f3f52200f577a8c3916042008a4828cd02",
+        "dedd3499d87da615093e5c4e7c9d714b68b37505d7cbc248aaa77d448a3e0cd0"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "name": "demonSnapshot",
+      "label": "demonSnapshot",
+      "typedNodes": 29,
+      "noncommentTokens": 45,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "46a3cef813fa205fc60114da7ed59da07c389f937984bc77993bf9335ec20cd2",
+        "351de4c0024ad79bb2af244fc9e522f7ca5f78ae73b5edd4550fd5839742efc0"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "name": "demonJson",
+      "label": "demonJson",
+      "typedNodes": 27,
+      "noncommentTokens": 34,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "3f8b805da6819ffe5ac5353bef6d1ea6c32e5f76e806b4039a2a836702fb527d",
+        "9aa19853c003399d0a5ed55cfda7d0eed6d64f0b8288e122d649701dfeb0fdbb"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "name": "exactDemonData",
+      "label": "exactDemonData",
+      "typedNodes": 70,
+      "noncommentTokens": 78,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "336d1428a689fb7aa29a20ea1939e680fc79a2c001004211c03b6959fcdafa00",
+        "267861c5c5c164fee94173002934bf2e5f01ccfaa91b04f951149a385e8fabb5"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "name": "freshDemonHunterState",
+      "label": "freshDemonHunterState",
+      "typedNodes": 16,
+      "noncommentTokens": 21,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "112fa1723ed78795e06d8a3dfaddf656d66e041e4a66518746bcf6fb92ec7069",
+        "5a9cfd55cd2da8360a7120978906a74a3caf6e4c1d08ed17da9a639ebbc2a815"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "name": "readDemonHunterState",
+      "label": "readDemonHunterState",
+      "typedNodes": 26,
+      "noncommentTokens": 32,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "dc1f3bbf6462753218f44440c9490ecc5aa7c972c6d5a1dc819f07a781fe438d",
+        "a39f00473499a939e700fc3a5c06e6223fbab7a43f9b860de2e9e5dfc3337249"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "name": "getDemonHunterState",
+      "label": "getDemonHunterState",
+      "typedNodes": 40,
+      "noncommentTokens": 45,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "c435996c1b3104ca51a07ded7b479ae50106cd14a7c3c56afdfc8b322c1c5dc5",
+        "51983c2bc89bd415f913ff2d3594e6b7579b6e19df40d18d4e9e03495ec66666"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "name": "readDemonHuntTool",
+      "label": "readDemonHuntTool",
+      "typedNodes": 26,
+      "noncommentTokens": 32,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "b69efcae342e30f17fc123cf084770ae6dbdbda3d944969d34c042cef2bf80e4",
+        "69ec20ed826aea18ebb3d2e84b812da800e1647f2f90db6417cf79a7b6139c6c"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/owned-state-data.ts",
+      "name": "positive",
+      "newInternalExport": true,
+      "label": "positive",
+      "typedNodes": 43,
+      "noncommentTokens": 37,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "437b7862720972eed18bc029e9b609120a419d964bedc65bf9ba935b10620e58",
+        "437b7862720972eed18bc029e9b609120a419d964bedc65bf9ba935b10620e58"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/owned-state-data.ts",
+      "name": "exact",
+      "newInternalExport": true,
+      "label": "exact",
+      "typedNodes": 69,
+      "noncommentTokens": 76,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "6a9f6bd26e5c618693dd7060bbc36f2c2efd0ad3506105bbb8ce66ee59704378",
+        "6a9f6bd26e5c618693dd7060bbc36f2c2efd0ad3506105bbb8ce66ee59704378"
+      ]
+    },
+    {
+      "oldPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "newPath": "backend/src/game/mechanisms/roles/fragrant_pair_seer/owned-state-data.ts",
+      "name": "pair",
+      "newInternalExport": true,
+      "label": "pair",
+      "typedNodes": 50,
+      "noncommentTokens": 53,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "aa548448f7692bd0bcd4270b0657ae2abbf3810dd3bf82f08d5a785fae755702",
+        "aa548448f7692bd0bcd4270b0657ae2abbf3810dd3bf82f08d5a785fae755702"
+      ]
+    }
+  ],
+  "dataKernels": [
+    {
+      "label": "Fragrant full write then JSON",
+      "typedNodes": 24,
+      "noncommentTokens": 28,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "d9fa920c2ab9843677aa83fecde47ecbcac6c0d3b5098ffc5c04475824b791c2",
+        "d9fa920c2ab9843677aa83fecde47ecbcac6c0d3b5098ffc5c04475824b791c2"
+      ]
+    },
+    {
+      "label": "Fragrant complete raw alias predicate",
+      "typedNodes": 20,
+      "noncommentTokens": 20,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "0410413ea6352c20d5d28b10449255160f874afcc059a2489e9752d54e8c1ec9",
+        "0410413ea6352c20d5d28b10449255160f874afcc059a2489e9752d54e8c1ec9"
+      ]
+    },
+    {
+      "label": "Fragrant complete schema/JSON predicate",
+      "typedNodes": 21,
+      "noncommentTokens": 21,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "b558d49deaf7fecc43c6d0e183deb8aa194ac1cf092e480b0cec96a50e29f19a",
+        "b558d49deaf7fecc43c6d0e183deb8aa194ac1cf092e480b0cec96a50e29f19a"
+      ]
+    },
+    {
+      "label": "Fragrant original initial JSON field",
+      "typedNodes": 12,
+      "noncommentTokens": 12,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "a25625aeb3ec135730808695bed95e20c59365d49aaf6028657701711a681192",
+        "a25625aeb3ec135730808695bed95e20c59365d49aaf6028657701711a681192"
+      ]
+    },
+    {
+      "label": "Fragrant full late JSON decoder",
+      "typedNodes": 17,
+      "noncommentTokens": 16,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "e143858ecca086ece4caa670134d03f4bdfff21b17b49beebebfdf924626a9d6",
+        "e143858ecca086ece4caa670134d03f4bdfff21b17b49beebebfdf924626a9d6"
+      ]
+    },
+    {
+      "label": "Demon complete descriptor/day/freeze/nextJSON/push/historyJSON prefix",
+      "typedNodes": 107,
+      "noncommentTokens": 118,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "19576edca722790fbbd942ab47379943c0e464f9be361645200d79d8dcee4b00",
+        "19576edca722790fbbd942ab47379943c0e464f9be361645200d79d8dcee4b00"
+      ]
+    },
+    {
+      "label": "Demon whole history alias/committed JSON predicate",
+      "typedNodes": 30,
+      "noncommentTokens": 29,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "7ed63a86aada552fc609bdbde7e557e7aad77bc25397fc26d79e04382a9436af",
+        "7ed63a86aada552fc609bdbde7e557e7aad77bc25397fc26d79e04382a9436af"
+      ]
+    },
+    {
+      "label": "Demon original three install fields",
+      "typedNodes": 18,
+      "noncommentTokens": 19,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "10c7f5e72a6886cd3317fb5f436c0d6461589fa450351f8f76e8d9db12647cdd",
+        "10c7f5e72a6886cd3317fb5f436c0d6461589fa450351f8f76e8d9db12647cdd"
+      ]
+    },
+    {
+      "label": "installFragrantStateSlot",
+      "completeAssignment": true,
+      "typeAssertionOnly": true,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "df177d1ea503ac1bfbb6b11531e3e71bfa62a5342727709ced03ce1b5a22433a",
+        "df177d1ea503ac1bfbb6b11531e3e71bfa62a5342727709ced03ce1b5a22433a"
+      ]
+    },
+    {
+      "label": "installDemonHunterStateSlot",
+      "completeAssignment": true,
+      "typeAssertionOnly": true,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "df9472c8c8be848518144602f6a09fa0062ac7a54548ca2931ee720caebf37bb",
+        "df9472c8c8be848518144602f6a09fa0062ac7a54548ca2931ee720caebf37bb"
+      ]
+    },
+    {
+      "label": "Binding original full type",
+      "typedNodes": 37,
+      "noncommentTokens": 41,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+      ]
+    },
+    {
+      "label": "FragrantState original full type",
+      "typedNodes": 65,
+      "noncommentTokens": 69,
+      "wholeOutputs": 2,
+      "wholeRawSame": true,
+      "outputSHA256": [
+        "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+      ]
+    }
+  ],
+  "physical": [
+    {
+      "name": "installFragrantStateSlot",
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "declarationSHA256": "0e8cd5ae5323f284d6ce5e495f56701734c0a62984c2cc631964443d872d6084"
+    },
+    {
+      "name": "commitFragrantStateSlot",
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "declarationSHA256": "8575abdf9d347a723bb065c501512adf7b68580e809be13c601ee9aea63404c9"
+    },
+    {
+      "name": "fragrantAliasesCurrent",
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "declarationSHA256": "62a78419e6d89df0df8e71c8cbad3ecdcb56c369e32673b7a8035851d2c06a95"
+    },
+    {
+      "name": "fragrantDataCurrent",
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "declarationSHA256": "abacb1a6004aad3c9a766860ad683db7ca659f0aaaf0dc714cf87e032b2b948f"
+    },
+    {
+      "name": "encodeFragrantState",
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "declarationSHA256": "0a0d46a45b3e277b9b36f28cfdad8e43db4a03dcbed52a151e00e766df5a15fa"
+    },
+    {
+      "name": "decodeFragrantState",
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "declarationSHA256": "2715a7f1a1bb368383241f7f906d003941702512b30e175d84b2969a52592e81"
+    },
+    {
+      "name": "installDemonHunterStateSlot",
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "declarationSHA256": "f19bee8ae89d626810de535d9032d12b0fde887da2a66c312cff49c93a82f295"
+    },
+    {
+      "name": "captureDemonHunterStateSlot",
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "declarationSHA256": "54aa41079b03d697831953188a5a608f557f045d5a148b749900839bd57b64f4"
+    },
+    {
+      "name": "appendDemonHunterChoiceData",
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "declarationSHA256": "841c35cc1b5bf2f9d158b73c4c7a8386b82b4cfca91671278549ea8909e41db4"
+    },
+    {
+      "name": "demonHunterHistoryCurrent",
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "declarationSHA256": "34d98b85b83e85b52580b4e6cb18d36fea97ed75340faf72d76420b4955f3de9"
+    },
+    {
+      "name": "readDemonHuntTool",
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "declarationSHA256": "c025289e5977f1d5cdfa6422ba7b2992c09c8711d63f47b1dedbad9cde8a84da"
+    }
+  ],
+  "inventory": {
+    "roots": [
+      "backend/src",
+      "backend/tests",
+      "backend/scripts",
+      "frontend/src",
+      "frontend/tests",
+      "packages",
+      "tooling"
+    ],
+    "extensions": "TS/TSX/MTS/CTS/JS/JSX/MJS/CJS",
+    "files": 1911,
+    "forms": [
+      "import",
+      "export",
+      "importType",
+      "importEquals",
+      "literal dynamic import",
+      "literal require"
+    ],
+    "sites": [
+      {
+        "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+        "kind": "import",
+        "route": "../../../../src/game/mechanisms/roles/demon_hunter/state-slot",
+        "names": [
+          "DEMON_HUNTER_ROLE",
+          "freshDemonHunterState"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/demon-hunter/demon-hunter-state.test.ts",
+        "kind": "import",
+        "route": "../../../../src/game/mechanisms/roles/demon_hunter/state-slot",
+        "names": [
+          "freshDemonHunterState",
+          "readDemonHunterState",
+          "readDemonHuntTool"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/contracts/demon-hunter-data.types.ts",
+        "kind": "import",
+        "route": "../../../src/game/mechanisms/roles/demon_hunter/state-slot",
+        "names": [
+          "DemonHunterChoice"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/contracts/demon-hunter-data.types.ts",
+        "kind": "import",
+        "route": "../../../src/game/mechanisms/roles/demon_hunter/state-slot",
+        "names": [
+          "DemonHunterState"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/contracts/demon-hunter-data.types.ts",
+        "kind": "import",
+        "route": "../../../src/game/mechanisms/roles/demon_hunter/state-slot",
+        "names": [
+          "DemonHuntTool"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/fragrant-demon-state-slots.test.ts",
+        "kind": "import",
+        "route": "../../../src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot",
+        "names": [
+          "freshFragrantState",
+          "installFragrantStateSlot",
+          "commitFragrantStateSlot",
+          "commitKnownWolf",
+          "FragrantState"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/fragrant-demon-state-slots.test.ts",
+        "kind": "import",
+        "route": "../../../src/game/mechanisms/roles/demon_hunter/state-slot",
+        "names": [
+          "freshDemonHunterState",
+          "installDemonHunterStateSlot",
+          "captureDemonHunterStateSlot",
+          "appendDemonHunterChoiceData"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/fragrant-pair-seer/state.test.ts",
+        "kind": "import",
+        "route": "../../../../src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot",
+        "names": [
+          "freshFragrantState",
+          "readFragrantState",
+          "commitKnownWolf",
+          "chooseFragrantPair",
+          "expireFragrantAtNightOpen",
+          "triggerFragrantPair"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+        "kind": "import",
+        "route": "./state-slot",
+        "names": [
+          "DEMON_HUNTER_POLICY",
+          "readDemonHuntTool"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/preset.ts",
+        "kind": "import",
+        "route": "./state-slot",
+        "names": [
+          "DEMON_HUNTER_POLICY"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+        "kind": "import",
+        "route": "./state-slot",
+        "names": [
+          "demonSnapshot",
+          "exactDemonData",
+          "ownDemonData"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "kind": "import",
+        "route": "./state-slot",
+        "names": [
+          "DEMON_HUNTER_POLICY",
+          "DEMON_HUNTER_ROLE",
+          "demonJson",
+          "demonSnapshot",
+          "ownDemonData",
+          "exactDemonData",
+          "getDemonHunterState",
+          "readDemonHunterState",
+          "readDemonHuntTool",
+          "captureDemonHunterStateSlot",
+          "appendDemonHunterChoiceData",
+          "demonHunterHistoryCurrent",
+          "DemonHunterStateSlot"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+        "kind": "import",
+        "route": "./state-slot",
+        "names": [
+          "DEMON_HUNTER_POLICY",
+          "demonJson",
+          "demonSnapshot",
+          "exactDemonData",
+          "ownDemonData"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+        "kind": "export",
+        "route": "./state-slot",
+        "names": [
+          "readDemonHuntTool"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/profile.ts",
+        "kind": "import",
+        "route": "./state-slot",
+        "names": [
+          "DEMON_HUNTER_POLICY",
+          "installDemonHunterStateSlot"
+        ]
+      },
+      {
+        "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+        "kind": "import",
+        "route": "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot",
+        "names": [
+          "freshFragrantState"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+        "kind": "import",
+        "route": "./owned-state-data",
+        "names": [
+          "assertWritable",
+          "plainJson",
+          "write"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+        "kind": "import",
+        "route": "./owned-state-data",
+        "names": [
+          "positive",
+          "exact",
+          "pair",
+          "write"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "kind": "import",
+        "route": "./owned-state-data",
+        "names": [
+          "plainJson"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "kind": "import",
+        "route": "./fragrant-state-slot",
+        "names": [
+          "readFragrantState",
+          "expireFragrantAtNightOpen",
+          "commitKnownWolf",
+          "chooseFragrantPair",
+          "triggerFragrantPair",
+          "commitFragrantStateSlot",
+          "fragrantAliasesCurrent",
+          "fragrantDataCurrent",
+          "encodeFragrantState",
+          "decodeFragrantState",
+          "FragrantState",
+          "FragrantStateSlot"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+        "kind": "import",
+        "route": "./owned-state-data",
+        "names": [
+          "positive",
+          "exact",
+          "pair"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+        "kind": "import",
+        "route": "./fragrant-state-slot",
+        "names": [
+          "installFragrantStateSlot"
+        ]
+      },
+      {
+        "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+        "kind": "import",
+        "route": "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot",
+        "names": [
+          "DEMON_HUNTER_ROLE"
+        ]
+      },
+      {
+        "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+        "kind": "import",
+        "route": "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot",
+        "names": [
+          "DEMON_HUNTER_POLICY"
+        ]
+      },
+      {
+        "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+        "kind": "import",
+        "route": "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot",
+        "names": [
+          "freshDemonHunterState"
+        ]
+      }
+    ],
+    "retiredModuleSites": 0,
+    "retiredFragrantBindingSites": 0,
+    "limitations": "字面模块路由；非字面运行字符串与历史generated不是本库存。DTO三negative引用仍指当前slot未导出的纯类型，不新出口。"
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "sha256": "400b80c4e57cfa43b310d78d781eef77260fa58c3a2654854c1e0b819acf9c8b",
+      "sameGitAndCurrent": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/night-lifecycle.ts",
+      "sha256": "c8ea7ab97baa2735e9e5c5b817338549b4d1673b352e0a92cb205963f0c1a30c",
+      "sameGitAndCurrent": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/night_stages.ts",
+      "sha256": "f0f06560342b016cf8ddecf1960a4c622339e0f8d46d88b6623cfbbffefeab65",
+      "sameGitAndCurrent": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/demon-hunter.ts",
+      "sha256": "37dd1bb053fd4df0af10a43c6153d13b8899099956ffd7169b5875b77260bc65",
+      "sameGitAndCurrent": true
+    }
+  ],
+  "summary": {
+    "retainedPrograms": 17,
+    "retainedMappedOutputs": 34,
+    "movedCompleteDataFunctions": 15,
+    "movedSharedPredicates": 3,
+    "dataKernels": 12,
+    "comparedTypedNodes": 41964,
+    "comparedNoncommentTokens": 27731,
+    "uniqueLiveStores": "original authority binding fields only",
+    "secondWeakMaps": 0
+  },
+  "limits": [
+    "两新槽和调用/API/初始化图/栈变化，不承诺反射或任意CJS export重赋语义。",
+    "每个实际新body/完整predicate独立对原kernel，完整保留程序另外精确逆；不以恢复旧整个authority body替代新owner证明。",
+    "Pair slot/GC公共数据和原生枪stock权限不迁；shared小谓词是原函数一次迁到本族原data leaf。",
+    "只能证明本数据槽职责边界，不称所有55/C17/codec/其它技能付款完成。"
+  ]
+}

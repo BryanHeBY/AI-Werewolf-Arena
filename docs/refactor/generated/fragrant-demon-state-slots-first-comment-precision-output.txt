@@ -1,0 +1,78 @@
+ 5 | let forward=b.source.text;const applied=[];for(const e of b.edits){assert.equal(forward.split(e.before).length-1,e.count);const at=forward.indexOf(e.before);applied.push({at,...e});forward=forward.slice(0,at)+e.after+forward.slice(at+e.before.length);}assert.equal(forward,current);
+ 6 | let inverse=current;for(const e of applied.reverse()){assert.equal(inverse.slice(e.at,e.at+e.after.length),e.after);inverse=inverse.slice(0,e.at)+e.before+inverse.slice(e.at+e.after.length);}assert.equal(inverse,b.source.text);
+ 7 | const parse=t=>ts.createSourceFile(b.source.path,t,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS);let nodes=0;
+ 8 | function shape(n,s){nodes++;const children=[];ts.forEachChild(n,x=>{children.push(shape(x,s));},a=>{children.push({array:Array.from(a,x=>shape(x,s))});});return {kind:n.kind,...(children.length?{children}:{text:n.getText(s)})};}
+ 9 | function tokens(t){const scanner=ts.createScanner(ts.ScriptTarget.Latest,true,ts.LanguageVariant.Standard,t),a=[];for(let k=scanner.scan();k!==ts.SyntaxKind.EndOfFileToken;k=scanner.scan())a.push([k,scanner.getTokenText()]);return a;}
+10 | const a=parse(b.source.text),c=parse(current);assert.deepEqual(shape(a,a),shape(c,c));assert.deepEqual(tokens(b.source.text),tokens(current));
+                                                                                                  ^
+AssertionError: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  [
+    [
+      102,
+      'import'
+    ],
+...
+        '      return null;\n' +
+-       '    // 回执必须对应唯一 triggered 绑定及原 pair 内的 root；追加目标可为 null，否则也须在 pair 内且不同于 root。\n' +
+        '    if (v.trigger === null) {\n' +
+        '      if (triggered) return null;\n' +
+        '    } else {\n' +
+        '      const r = v.trigger;\n' +
+        '      if (\n' +
+...
+        '\n' +
++       '/** 原 descriptor 写全部字段后才求 JSON callee／next；编码抛错不会撤销已经付款的 live 数据写入。 */\n' +
+-       '/** 原 descriptor 写全部字段后才求 JSON callee／next；编码抛错保留已经完成的 live 字段写入。 */\n' +
+        'export function commitFragrantStateSlot(o: FragrantStateSlot, next: FragrantState): void {\n' +
+        '  write(o.fragrant, next);\n' +
+        '  o.fragrantJson = JSON.stringify(next);\n' +
+        '}\n' +
+        '\n' +
+
+ generatedMessage: true,
+     actual: [
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...],
+  ... 340 more items
+],
+   expected: [
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...], [Array ...],
+  [Array ...], [Array ...],
+  ... 340 more items
+],
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/fragrant-demon-state-slots-comment-precision-bridge.cjs:10:94
+
+Bun v1.4.3 (Linux x64)

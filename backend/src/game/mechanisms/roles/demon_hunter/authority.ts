@@ -1,5 +1,5 @@
 /**
- * 负责恶魔猎手选择、原生能力封存快照与可核查资源提交，拥有该板子的原对象和提交账本。
+ * 负责猎魔人选择、原生能力封存快照与可核查资源提交，拥有该板子的原对象和提交账本。
  * 输入保留原 World／state／request，输出为有限封存回合及已接受期限别名的原有写入。
  * 不变量：必须匹配原封存资格；审计只读最近合法同步提交，不能采用任意 live 库存。
  * 失效或失败保持部分写入与结算顺序，别名不增加能力；受保护白痴替换只恢复 idiot 槽，
@@ -55,7 +55,11 @@ import {
   getDemonHunterState,
   readDemonHunterState,
   readDemonHuntTool,
-} from "./state";
+  captureDemonHunterStateSlot,
+  appendDemonHunterChoiceData,
+  demonHunterHistoryCurrent,
+  type DemonHunterStateSlot,
+} from "./state-slot";
 import type { DemonHunterChoice, DemonHunterState } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { statusMarkSnapshot } from "../../../../core/domain/components/status_marks";
 import { assertDemonHunterPreset } from "./preset";
@@ -88,15 +92,12 @@ interface Participant {
     voteJson: string;
   } | null;
 }
-interface Binding {
+interface Binding extends DemonHunterStateSlot {
   world: World;
   config: ReadonlyBoardConfig;
   configJson: string;
   actorId: number;
   players: Map<number, Participant>;
-  state: DemonHunterState;
-  history: DemonHunterChoice[];
-  historyJson: string;
   nights: Map<number, Night>;
   active: Night | null;
 }
@@ -369,8 +370,7 @@ function validBinding(b: Binding): boolean {
     demonJson(b.config) === b.configJson &&
     !!state &&
     ownDemonData(b.players.get(b.actorId)?.privateState, "demonHunter") === b.state &&
-    ownDemonData(b.state, "history") === b.history &&
-    demonJson(state.history) === b.historyJson &&
+    demonHunterHistoryCurrent(b, state) &&
     [...b.players.values()].every(
       (p) => originalIdentity(p, b.world) && demonJson(p.privateState) !== null,
     )
@@ -421,9 +421,7 @@ export function installDemonHunter(world: World, config: ReadonlyBoardConfig): v
     configJson,
     actorId: actor.id,
     players,
-    state,
-    history: state.history,
-    historyJson: "[]",
+    ...captureDemonHunterStateSlot(state),
     nights: new Map(),
     active: null,
   });
@@ -681,14 +679,8 @@ export function commitDemonHunt(
     b = n.binding,
     targetId = call.args.target_id;
   if (targetId !== null && (targetId === b.actorId || !targetCurrent(n, targetId))) return null;
-  const length = Object.getOwnPropertyDescriptor(b.history, "length");
-  if (!length?.writable || !Object.isExtensible(b.history) || (b.history.at(-1)?.day ?? 1) >= n.day)
-    return null;
-  const choice = Object.freeze({ day: n.day, targetId });
-  const nextHistoryJson = demonJson([...b.history, choice]);
-  if (nextHistoryJson === null) return null;
-  b.history.push(choice);
-  b.historyJson = nextHistoryJson;
+  const choice = appendDemonHunterChoiceData(b, n, targetId);
+  if (!choice) return null;
   const actor = b.players.get(b.actorId)!;
   actor.auditPrivateJson = demonJson(actor.privateState)!;
   n.choice = choice;

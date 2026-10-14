@@ -1,10 +1,7 @@
 /**
- * Unit tests for fragrant-pair-seer; Isolated fragrant-pair-seer state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证寻香魅影与原成对查验的独立纯状态规则，输入原内存状态与显式非法变体。
+ * 原字面历史、引用与错误／拒绝断言是预期；不从新槽 owner 生成答案或推进完整对局。
+ * 本次仅迁真实声明来源及中文说明，原 fixture、case 名称、数据接受政策和 assertions 保持。
  */
 import { expect, test } from "bun:test";
 import {
@@ -14,11 +11,8 @@ import {
   chooseFragrantPair,
   expireFragrantAtNightOpen,
   triggerFragrantPair,
-  freshPairSeerState,
-  readPairSeerState,
-  appendPairCheck,
-  normalizePair,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
+} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot";
+import { freshPairSeerState, readPairSeerState, appendPairCheck, normalizePair } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
 const ready = () => commitKnownWolf(freshFragrantState(), 10);
 test("pair history is one atomic normalized boolean with no single identity", () => {
   const before = freshPairSeerState(),

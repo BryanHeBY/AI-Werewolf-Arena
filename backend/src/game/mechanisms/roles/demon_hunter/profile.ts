@@ -9,7 +9,7 @@ import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, Camp, WinCondition } from "../../../../core/domain";
 import type { NativeRoleContributions } from "../contracts";
-import { DEMON_HUNTER_POLICY, freshDemonHunterState } from "./state";
+import { DEMON_HUNTER_POLICY, installDemonHunterStateSlot } from "./state-slot";
 import { projectDemonHunter } from "./authority";
 import { DEMON_HUNTER_TOOL_RULE } from "./validation_rules";
 import { DEMON_HUNTER_NIGHT_STAGE } from "./night_stages";
@@ -42,7 +42,7 @@ export const DEMON_HUNTER_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     canSelfDestruct: false,
     init: (role) => {
-      role.privateState.demonHunter = freshDemonHunterState();
+      installDemonHunterStateSlot(role);
     },
     configuration: {
       schema: parameters,

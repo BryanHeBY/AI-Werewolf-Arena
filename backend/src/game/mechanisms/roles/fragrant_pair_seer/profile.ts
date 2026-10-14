@@ -11,7 +11,8 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions, RoleRuntimeContribution } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { freshFragrantState, FRAGRANT_PAIR_POLICY } from "./state";
+import { FRAGRANT_PAIR_POLICY } from "./state";
+import { installFragrantStateSlot } from "./fragrant-state-slot";
 import { installPairStateSlot } from "./pair-state-slot";
 import { fragrantKnownWolfIds, fragrantRoleKnifeEligible } from "./authority";
 import { canSubmitFragrantPairChoice } from "./requests";
@@ -75,7 +76,7 @@ export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
     }),
     knownTeammates: (role, world) => fragrantKnownWolfIds(world, role),
     init: (role) => {
-      role.privateState.fragrant = freshFragrantState();
+      installFragrantStateSlot(role);
     },
     toolSpecs: [
       ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []).filter((s) => s.name === "kill_vote"),

@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/fragrant-demon-state-slots.test.ts:
+(pass) both data installers read the original left-hand container and keep exact creator fields [0.31ms]
+(pass) fragrant live write stays committed when its following JSON callee throws [0.69ms]
+(pass) hunt data rejects failed next-history encoding before push and retains late day reads [0.23ms]
+(pass) hunt data preserves pushed original history when the following JSON field setter throws [0.12ms]
+
+ 4 pass
+ 0 fail
+ 18 expect() calls
+Ran 4 tests across 1 file. [57.00ms]

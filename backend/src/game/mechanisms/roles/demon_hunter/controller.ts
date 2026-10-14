@@ -15,7 +15,7 @@ import {
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
-import { DEMON_HUNTER_POLICY, readDemonHuntTool } from "./state";
+import { DEMON_HUNTER_POLICY, readDemonHuntTool } from "./state-slot";
 import {
   demonHunterActorId,
   openDemonHunterTurn,

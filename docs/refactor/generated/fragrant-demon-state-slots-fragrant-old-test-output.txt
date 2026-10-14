@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/fragrant-pair-seer/authority.test.ts:
+(pass) real open pays singleton once; duplicate entry and aborted continuation do not redraw [6.13ms]
+
+ 1 pass
+ 34 filtered out
+ 0 fail
+ 8 expect() calls
+Ran 1 test across 1 file. [87.00ms]

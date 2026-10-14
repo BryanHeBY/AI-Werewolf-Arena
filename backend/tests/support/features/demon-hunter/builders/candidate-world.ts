@@ -10,12 +10,12 @@ import {
 } from "../../../../../src/game/observation/component-presentation";
 import "../../../../../src/app/bootstrap";
 import { Role } from "../../../../../src/core";
-import { DEMON_HUNTER_ROLE } from "../../../../../src/game/mechanisms/roles/demon_hunter/state";
+import { DEMON_HUNTER_ROLE } from "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
 import { WinCondition } from "../../../../../src/core";
 import { ActionWindow } from "../../../../../src/core";
 import { WitchSelfHealRule } from "../../../../../src/core";
 import type { BoardConfig } from "../../../../../src/core";
-import { DEMON_HUNTER_POLICY } from "../../../../../src/game/mechanisms/roles/demon_hunter/state";
+import { DEMON_HUNTER_POLICY } from "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
 import { World } from "../../../../../src/core";
 import { Camp } from "../../../../../src/core";
 import { COMPONENT } from "../../../../../src/core";
@@ -42,7 +42,7 @@ import { createDefaultRoleRegistry } from "../../../../../src/game/mechanisms/ro
 import { getDefaultWinConditionRegistry } from "../../../../../src/game/mechanisms";
 import { ToolValidationRuleRegistry } from "../../../../../src/game/mechanisms/validation/tool_validation_rule_registry";
 import { installDemonHunter } from "../../../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { freshDemonHunterState } from "../../../../../src/game/mechanisms/roles/demon_hunter/state";
+import { freshDemonHunterState } from "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
 import { DEMON_HUNTER_TOOL_RULE } from "../../../../../src/game/mechanisms/roles/demon_hunter/validation_rules";
 
 export function demonHunterDeck(size: 6 | 12): Role[] {

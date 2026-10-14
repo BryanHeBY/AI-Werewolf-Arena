@@ -1,3 +1,9 @@
+/**
+ * 负责猎魔板原生女巫毒药的实际消耗证明与首波免疫来源定格。输入为原 World、能力与不透明 token；
+ * 输出为当前消耗证明、毒免事实及猎杀结算，原先毒药后猎杀的冻结与拒绝顺序保持。
+ * 本模块写自己的 pending／proof／spent 记录，实际库存写与原体资格仍由原女巫／authority 持有；
+ * commit 只能复验已真实付款，不消费第二份库存。失效／失败保已消费前缀，不直接写 Alive 或授予新权限。
+ */
 import { types } from "node:util";
 import { Role, WitchSelfHealRule, type World } from "../../../../core";
 import {
@@ -13,7 +19,7 @@ import {
   demonSnapshot,
   exactDemonData,
   ownDemonData,
-} from "./state";
+} from "./state-slot";
 interface NativePoison {
   world: World;
   frame: Readonly<DemonNativePoisonFrame>;
@@ -49,7 +55,7 @@ const stateKeys = [
   "healUsedThisNight",
   "poisonUsedThisNight",
 ] as const;
-/** Native factory identity is supplied by the installed World; equal source metadata is insufficient. */
+/** 原生能力身份由已安装 World 提供；相等 source 元数据不能替代原对象许可。 */
 export function captureDemonNativePoison(
   world: World,
   witchId: number,
@@ -116,7 +122,7 @@ export function captureDemonNativePoison(
     return null;
   }
 }
-/** The caller invokes this only after the real legal native stock mutation; it does not spend stock itself. */
+/** 调用方先完成原合法库存写入；此处只复验并缓存实际消耗，不再次消费库存。 */
 export function commitDemonNativePoison(token: object): object | null {
   const p = pending.get(token);
   if (
@@ -143,7 +149,7 @@ export interface DemonPoisonImmuneFact {
   readonly day: number;
   readonly witchId: number;
 }
-/** Call for the entire initial wave before any Alive write. A fact is immutable after this qualification. */
+/** 必须在首波任何 Alive 写入前定格；frozen 先置位，后续拒绝仍保此前缀，成功事实才由原 Object.freeze 冻结。 */
 export function freezeDemonNativePoison(proof: object): Readonly<DemonPoisonImmuneFact> | null {
   const p = proofs.get(proof);
   if (!p || p.frozen) throw new Error("demon_hunter_native_poison_proof_unavailable");
@@ -169,7 +175,7 @@ export interface DemonNightSources {
   readonly hunt: Readonly<DemonHuntSettlement>;
   readonly poisonImmunities: readonly Readonly<DemonPoisonImmuneFact>[];
 }
-/** The only runtime freeze order: validate every input, qualify native sources, qualify hunt, then allow caller Alive writes. */
+/** 原顺序先校验全部输入与完整性，再定格原生毒药来源、猎杀来源，调用方随后才写 Alive。 */
 export function freezeDemonNightSources(
   world: World,
   sourceProofs: readonly object[],

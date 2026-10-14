@@ -19,7 +19,7 @@ import {
   StatusMarksComponent,
   statusMarkSnapshot,
 } from "../../../../core/domain/components/status_marks";
-import { demonSnapshot, exactDemonData, ownDemonData } from "./state";
+import { demonSnapshot, exactDemonData, ownDemonData } from "./state-slot";
 /** 同一原请求的运行绑定；别名共享可提前的期限，World／上下文和current闭包不是序列化凭证。 */
 interface Turn {
   world: World;

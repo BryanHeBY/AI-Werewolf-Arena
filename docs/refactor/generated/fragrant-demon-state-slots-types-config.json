@@ -1,0 +1,34 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/fragrant_pair_seer/owned-state-data.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/profile.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/preset.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/fragrant-pair-seer/state.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/demon-hunter/authority.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/demon-hunter/demon-hunter-state.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/contracts/demon-hunter-data.types.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/fragrant-demon-state-slots.test.ts"
+  ]
+}

@@ -16,7 +16,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import { Camp, Role, Phase } from "../../../../core/domain/identity";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 import { abilityStatus, type NightAbilityReadView } from "../abilities";
-import { plainJson, write } from "./owned-state-data";
+import { plainJson } from "./owned-state-data";
 import { PAIR_STATE_SLOT_CONTRACT, type PairStateSlot } from "./pair-state-slot";
 import {
   capturePairTarget,
@@ -25,16 +25,21 @@ import {
   capturedPairContainsWolf,
   type PairTargetScope,
 } from "./target_scope";
+import { appendPairCheck, normalizePair } from "./state";
 import {
   readFragrantState,
   expireFragrantAtNightOpen,
   commitKnownWolf,
   chooseFragrantPair,
-  appendPairCheck,
   triggerFragrantPair,
-  normalizePair,
+  commitFragrantStateSlot,
+  fragrantAliasesCurrent,
+  fragrantDataCurrent,
+  encodeFragrantState,
+  decodeFragrantState,
   type FragrantState,
-} from "./state";
+  type FragrantStateSlot,
+} from "./fragrant-state-slot";
 import {
   freshFragrantKnowledge,
   readFragrantKnowledge,
@@ -172,17 +177,15 @@ interface PaidBinding {
   readonly day: number;
   readonly targets: readonly [PairTargetScope, PairTargetScope];
 }
-interface Owner extends PairStateSlot {
+interface Owner extends PairStateSlot, FragrantStateSlot {
   readonly world: World;
   readonly events: GameEvent[];
   readonly players: ReadonlyMap<number, OriginalPlayer>;
   readonly phantom: OriginalPlayer;
   readonly seer: OriginalPlayer;
   readonly wolves: readonly OriginalPlayer[];
-  readonly fragrant: FragrantState;
   readonly pairSource: NightAbilityReadView<"pair_check">["source"];
   readonly abilities: unknown;
-  fragrantJson: string;
   knowledge: FragrantKnowledge;
   active: Night | null;
   readonly nights: Map<number, Night>;
@@ -198,9 +201,9 @@ function requireOwner(world: World): Owner {
     o.checking ||
     world.entityIds().length !== o.players.size ||
     [...o.players.values()].some((p) => !original(world, p)) ||
-    own(o.phantom.privateState, "fragrant") !== o.fragrant ||
+    !fragrantAliasesCurrent(o, own) ||
     !PAIR_STATE_SLOT_CONTRACT.invalidations.aliasesCurrent(o, own) ||
-    JSON.stringify(readFragrantState(o.fragrant)) !== o.fragrantJson ||
+    !fragrantDataCurrent(o) ||
     !PAIR_STATE_SLOT_CONTRACT.invalidations.dataCurrent(o)
   )
     throw Error("fragrant_owner_revoked");
@@ -232,10 +235,6 @@ function requireNight(world: World, day: number): { owner: Owner; night: Night }
     if (owner.active === night) owner.active = null;
     throw error;
   }
-}
-function commitState(o: Owner, next: FragrantState): void {
-  write(o.fragrant, next);
-  o.fragrantJson = JSON.stringify(next);
 }
 /** owner 要求完整原生阵容，不向替换对象授予资源。 */
 export function installFragrantPairAuthority(
@@ -335,7 +334,7 @@ export function installFragrantPairAuthority(
     pairSource: pairAbility.source,
     abilities: own(seer.privateState, "abilities"),
     pairAbilityJson,
-    fragrantJson: JSON.stringify(f),
+    fragrantJson: encodeFragrantState(f),
     pairJson: PAIR_STATE_SLOT_CONTRACT.checkpoint.encode(s),
     knowledge: freshFragrantKnowledge(),
     active: null,
@@ -391,7 +390,7 @@ export function beginFragrantNight(
   o.active = night;
   o.nights.set(day, night);
   try {
-    commitState(o, expireFragrantAtNightOpen(o.fragrant, day));
+    commitFragrantStateSlot(o, expireFragrantAtNightOpen(o.fragrant, day));
     o.knowledge = knowFragrantNightOpen(o.knowledge, day);
     o.paid = null;
     if (day === 1) {
@@ -408,7 +407,7 @@ export function beginFragrantNight(
       requireOwner(world);
       if (!unchangedLives()) throw Error("fragrant_knowledge_draw_invalid");
       const knownId = o.wolves[Math.floor(draw * 3)]!.target.id;
-      commitState(o, commitKnownWolf(o.fragrant, knownId));
+      commitFragrantStateSlot(o, commitKnownWolf(o.fragrant, knownId));
       o.knowledge = knowFragrantWolf(o.knowledge, knownId);
     }
     if (alive) o.knowledge = knowFragrantKnife(o.knowledge, day, knife);
@@ -518,7 +517,7 @@ export function openFragrantBindChoice(world: World, day: number, requestCurrent
         next = chooseFragrantPair(c.o.fragrant, day, pair),
         known = knowFragrantChoice(c.o.knowledge, day, pair);
       if (!c.isCurrent()) throw Error("fragrant_binding_revoked");
-      commitState(c.o, next);
+      commitFragrantStateSlot(c.o, next);
       c.o.knowledge = known;
       c.lease.committed = true;
       c.o.paid = targets === null ? null : { day, targets };
@@ -716,7 +715,7 @@ export function commitFragrantDeathWave(world: World, receipt: FragrantWaveRecei
     )
   )
     throw Error("fragrant_death_wave_revoked");
-  commitState(
+  commitFragrantStateSlot(
     o,
     triggerFragrantPair(o.fragrant, receipt.day, receipt.rootId, receipt.addedTargetId),
   );
@@ -832,7 +831,7 @@ export function fragrantAuthoritySnapshot(world: World, complete = true) {
   return {
     phantomId: o.phantom.target.id,
     seerId: o.seer.target.id,
-    fragrant: JSON.parse(o.fragrantJson) as FragrantState,
+    fragrant: decodeFragrantState(() => o.fragrantJson),
     pairSeer: PAIR_STATE_SLOT_CONTRACT.checkpoint.decode(() => o.pairJson),
     known: readFragrantKnowledge(o.knowledge)!,
     nights: [...o.nights.values()].map((n) => ({
@@ -851,7 +850,7 @@ export function fragrantCheckpointPrivateState(world: World, id: number, complet
   if (!o || (id !== o.phantom.target.id && id !== o.seer.target.id)) return undefined;
   if (complete) requireOwner(world);
   return id === o.phantom.target.id
-    ? { fragrant: JSON.parse(o.fragrantJson) as FragrantState }
+    ? { fragrant: decodeFragrantState(() => o.fragrantJson) }
     : {
         abilities: { "native:pair_check": JSON.parse(o.pairAbilityJson) },
         pairSeer: PAIR_STATE_SLOT_CONTRACT.checkpoint.decode(() => o.pairJson),

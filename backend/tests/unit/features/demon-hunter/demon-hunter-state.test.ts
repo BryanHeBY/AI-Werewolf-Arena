@@ -1,16 +1,14 @@
 /**
- * Unit tests: Demon Hunter state uses exact six/twelve-player configurations and malformed
- * variants; literal policy, inventory and preset expectations check normalized finite
- * rosters and initial state. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证猎魔人数据与原六／十二人板子精确配置。输入为原固定 fixture 和非法变体；
+ * 字面 policy、库存、初始历史与 preset 拒绝为独立预期，不从新 owner 重建 oracle。
+ * 只调用原有限模块断言，不运行模型或完整对局，原标题／fixture／预期全部保持。
  */
 import { expect, test } from "bun:test";
 import {
   freshDemonHunterState,
   readDemonHunterState,
   readDemonHuntTool,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/state";
+} from "../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
 import { isDemonHunterPreset } from "../../../../src/game/mechanisms/roles/demon_hunter/preset";
 function board(size: 6 | 12, goal: "slaughter_city" | "slaughter_side") {
   const deck =

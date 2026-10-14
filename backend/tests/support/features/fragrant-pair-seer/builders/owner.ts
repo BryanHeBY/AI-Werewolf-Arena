@@ -15,10 +15,8 @@ import { createRoleComponent } from "../../../../../src/game/observation/role-pr
 import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
 import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
 import type { GameEvent } from "../../../../../src/core/domain/events";
-import {
-  freshFragrantState,
-  freshPairSeerState,
-} from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
+import { freshFragrantState } from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot";
+import { freshPairSeerState } from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
 import { installNativeAbility } from "../../../../../src/game/mechanisms/roles/ability_changes";
 import {
   installFragrantPairAuthority,
