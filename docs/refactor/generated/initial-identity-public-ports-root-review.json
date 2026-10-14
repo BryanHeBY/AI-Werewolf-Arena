@@ -1,0 +1,63 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "15b680d9d55f4ead009a0fb363c6736523def03a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "838f59a08da623fbabecf9d0a0ad8a231be2d523ad4970ad3a31dba7dccb14e4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal-ports.ts",
+      "sha256": "822a4af1aa6145312ccd4ccad23d47e456c531393f849b30a184fa6508cf33f3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "sha256": "839567dc907168806be7dceef6368e9068f0492afa10d9092d32ede91c6520ad"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "396e69b73d9fe3b7503a44c28c818c5239c8649ec22062db66ca45b2a2eecc9d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "sha256": "33e18b78817ebfcf47749af6e9cc8f0eff6d22c4ce9af0c57691a16f7f4e8acb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "6083752da9d0512819ba3c420ef51fdc1b7567c2dcff2a8ff0bb2fe6c8b8572a"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/initial-identity-public-ports-scope-final.json",
+    "sha256": "67725819dbbdce82946d4fb85685e9209104950ea554cb8155f1052e8fc41f43"
+  },
+  "document": {
+    "path": "docs/refactor/initial-identity-public-ports.md",
+    "sha256": "40e002c89566677f7281d530138f85c13b260e73b9a8838e71fdbca24e995524"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/initial-identity-public-ports-evidence.json",
+    "sha256": "51e019ea701481233b7229d02a7c9279246d3382cf580d97c81b13aa84746348"
+  },
+  "integrity": {
+    "freshSources": 6,
+    "actualGitBefore": 5,
+    "controls": 4,
+    "artifactHashes": 17,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整四wrapper与light库存21direct出口/existingports原8保+3query1type，原kind/ctor/receiver/资源/失败body不动",
+    "56namespace成员沿alias回26真实old终点；lightdeal不加载setup/catalog，publication额外叶无顶层clockbind/注册",
+    "actual15b旧5/newabsent1/原controls4含sharedSetup后继participant唯一import增量，真实Git/精确全文delta/06949a核，不冒恒定Git",
+    "17附件/完整5正逆10emit/四actualwrapper8映射outputs、679doc头与finite6/原3不同case22断言全首绿；无重check",
+    "公开module namespace/exports面明确变化、无任意CJS反射兼容承诺；整个Camp与Initial规则/字段权限保"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

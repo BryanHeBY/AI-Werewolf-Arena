@@ -1,0 +1,1 @@
+{"sourcePaths":6,"oldWholePrograms":5,"wrapperWholePrograms":4,"typedNodes":1454,"noncommentLeaves":1746,"nodeArrays":271,"inverseWholeRawOutputs":10,"actualWrapperMappedWholeRawOutputs":8,"namespaceOccurrences":56,"uniqueOwnerKeys":26}

@@ -1,0 +1,32 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "838f59a08da623fbabecf9d0a0ad8a231be2d523ad4970ad3a31dba7dccb14e4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal-ports.ts",
+      "sha256": "822a4af1aa6145312ccd4ccad23d47e456c531393f849b30a184fa6508cf33f3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "sha256": "839567dc907168806be7dceef6368e9068f0492afa10d9092d32ede91c6520ad"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "396e69b73d9fe3b7503a44c28c818c5239c8649ec22062db66ca45b2a2eecc9d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "sha256": "33e18b78817ebfcf47749af6e9cc8f0eff6d22c4ce9af0c57691a16f7f4e8acb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "6083752da9d0512819ba3c420ef51fdc1b7567c2dcff2a8ff0bb2fe6c8b8572a"
+    }
+  ],
+  "documentationPaths": 679,
+  "documentationPathsSha256": "41ec3fbfcec6dd6677ad5bda7b64c1d125eef4dd5da851bbb8d5c87399959b54",
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

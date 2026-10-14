@@ -1,8 +1,9 @@
 /**
- * 提供盗贼／千面人原准备状态、活跃窗口与当夜提交证据的公开查询绑定。
- * 输入保留原 World／日期，输出为原准备结果、重入证据或关闭能力；不复制状态或授予行动。
- * 同步准入按调用点晚查询；实际开夜仍先检查准备状态，close 沿原 finally 顺序消费。
- * 查询不扩大读写权限；设置、资源和知识仍由 deal 生命周期拥有，本入口不重开已关闭的设置或行动窗口。
+ * 提供盗贼／千面人原准备、夜重入、首夜选择窗口及请求 scope 查询的公共绑定。
+ * 输入保留原 World、参与者、日次、阶段和请求；输出为原准备结果、同一 scope、选择视图或关闭能力。
+ * 具体所有者核 kind、当前参与者和库存写权；公开查询、构造依赖及数据类型不授予选择或重新发牌权限。
+ * 类仍在原装配时点读取，窗口保持原复验、付款、身份安装和 finally 关闭顺序；失败不撤回已提交前缀。
+ * 库存读取另用轻 deal-ports，避免从状态查询加载本入口的重型设置与事实发布组合。
  */
 export {
   hasActiveInitialIdentitySetup,
@@ -13,8 +14,14 @@ export {
   openInitialIdentityNight,
 } from "./deal";
 
-/** 开局组合使用同一准备类绑定；具体窗口仍拥有选择校验、提交与失败关闭。 */
-export { InitialIdentitySetupWindow } from "./setup";
+/** 同一窗口／三项选择查询在原调用点读取；scope 包含运行引用，不是玩家 DTO 或新的许可。 */
+export {
+  InitialIdentitySetupWindow,
+  authorizedInitialIdentityScope,
+  initialIdentityRequestScope,
+  initialIdentityRequestChoices,
+} from "./setup";
+export type { InitialIdentityScope } from "./setup";
 
 /** 开局整副牌组事实由具体owner完整构造；公共角色名单不含手牌映射或设置许可。 */
 export { publishInitialIdentityDeal } from "./initial-deal-publication";

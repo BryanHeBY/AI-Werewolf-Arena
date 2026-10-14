@@ -6,7 +6,8 @@
 import type { World, ActionRequest, Phase, GameEvent } from "../../../../core/domain";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
-import * as shared from "../initial_identity/setup";
+// 公共选择 API 保同一原绑定；不在模块顶层捕获窗口类，原构造器仍在 new 表达式处晚读。
+import * as shared from "../initial_identity/ports";
 export type ShapeshifterScope = shared.InitialIdentityScope;
 export const authorizedShapeshifterScope = (
   world: World,

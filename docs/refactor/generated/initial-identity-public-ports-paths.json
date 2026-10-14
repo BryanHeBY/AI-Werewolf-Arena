@@ -1,0 +1,8 @@
+[
+  "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+  "backend/src/game/mechanisms/roles/initial_identity/deal-ports.ts",
+  "backend/src/game/mechanisms/roles/thief/deal.ts",
+  "backend/src/game/mechanisms/roles/thief/setup.ts",
+  "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+  "backend/src/game/mechanisms/roles/shapeshifter/setup.ts"
+]

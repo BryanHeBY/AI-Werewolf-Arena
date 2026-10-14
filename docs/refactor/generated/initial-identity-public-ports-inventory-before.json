@@ -1,0 +1,948 @@
+{
+  "roots": [
+    "backend/src",
+    "backend/tests",
+    "backend/scripts",
+    "frontend/src",
+    "frontend/tests",
+    "packages",
+    "tooling"
+  ],
+  "typedAndJSSourceFiles": 1918,
+  "records": [
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "line": 38,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/shapeshifter/deal",
+      "text": "import { installShapeshifterDeal } from \"../game/mechanisms/roles/shapeshifter/deal\";"
+    },
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "line": 39,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/thief/deal",
+      "text": "import { installThiefDeal } from \"../game/mechanisms/roles/thief/deal\";"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "line": 46,
+      "form": "import",
+      "specifier": "../mechanisms/roles/initial_identity/ports",
+      "text": "import { publishInitialIdentityDeal } from \"../mechanisms/roles/initial_identity/ports\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "line": 8,
+      "form": "import",
+      "specifier": "../initial_identity/deal",
+      "text": "import * as shared from \"../initial_identity/deal\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "line": 9,
+      "form": "import",
+      "specifier": "../initial_identity/setup",
+      "text": "import * as shared from \"../initial_identity/setup\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "line": 8,
+      "form": "import",
+      "specifier": "../initial_identity/deal",
+      "text": "import * as shared from \"../initial_identity/deal\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "line": 9,
+      "form": "import",
+      "specifier": "../initial_identity/setup",
+      "text": "import * as shared from \"../initial_identity/setup\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "line": 8,
+      "form": "import",
+      "specifier": "./initial_identity/deal",
+      "text": "import { initialIdentitySetupReady } from \"./initial_identity/deal\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-initial-public-counts.ts",
+      "line": 10,
+      "form": "import",
+      "specifier": "../mechanisms/roles/initial_identity/deal",
+      "text": "import { initialIdentityCandidateCounts } from \"../mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 41,
+      "form": "import",
+      "specifier": "../mechanisms/roles/shapeshifter/setup",
+      "text": "import { projectShapeshifterChoices } from \"../mechanisms/roles/shapeshifter/setup\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 43,
+      "form": "import",
+      "specifier": "../mechanisms/roles/thief/setup",
+      "text": "import { projectThiefChoices } from \"../mechanisms/roles/thief/setup\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "line": 30,
+      "form": "import",
+      "specifier": "../mechanisms/roles/initial_identity/deal",
+      "text": "import { initialIdentityCandidateCounts } from \"../mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "line": 32,
+      "form": "import",
+      "specifier": "../mechanisms/roles/shapeshifter/setup",
+      "text": "import { projectShapeshifterChoices } from \"../mechanisms/roles/shapeshifter/setup\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "line": 33,
+      "form": "import",
+      "specifier": "../mechanisms/roles/initial_identity/deal",
+      "text": "import { initialIdentityKind } from \"../mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "line": 35,
+      "form": "import",
+      "specifier": "../mechanisms/roles/thief/setup",
+      "text": "import { projectThiefChoices } from \"../mechanisms/roles/thief/setup\";"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/identity-setups.ts",
+      "line": 9,
+      "form": "import",
+      "specifier": "../../game/mechanisms/roles/thief/deal",
+      "text": "import { projectThiefSetup } from \"../../game/mechanisms/roles/thief/deal\";"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/identity-setups.ts",
+      "line": 10,
+      "form": "import",
+      "specifier": "../../game/mechanisms/roles/shapeshifter/deal",
+      "text": "import { projectShapeshifterSetup } from \"../../game/mechanisms/roles/shapeshifter/deal\";"
+    },
+    {
+      "path": "backend/src/rulesets/action-request-bindings.ts",
+      "line": 13,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/initial_identity/setup",
+      "text": "import { bindInitialIdentityRequest } from \"../game/mechanisms/roles/initial_identity/setup\";"
+    },
+    {
+      "path": "backend/src/rulesets/cycle-admission.ts",
+      "line": 20,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/initial_identity/ports",
+      "text": "import {\n  hasActiveInitialIdentitySetup, hasActiveInitialIdentityNight,\n  hasInitialIdentityNightCommit, initialIdentityKind,\n} from \"../game/mechanisms/roles/initial_identity/ports\";"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "line": 17,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/initial_identity/ports",
+      "text": "import {\n  InitialIdentitySetupWindow,\n  initialIdentitySetupReady,\n  initialIdentityKind,\n} from \"../game/mechanisms/roles/initial_identity/ports\";"
+    },
+    {
+      "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+      "line": 66,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/initial_identity/ports",
+      "text": "import { openInitialIdentityNight } from \"../game/mechanisms/roles/initial_identity/ports\";"
+    },
+    {
+      "path": "backend/src/rulesets/night-readability.ts",
+      "line": 12,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/initial_identity/ports",
+      "text": "import { hasActiveInitialIdentitySetup, initialIdentitySetupReady, initialIdentityKind } from \"../game/mechanisms/roles/initial_identity/ports\";"
+    },
+    {
+      "path": "backend/src/runtime/game_runner.ts",
+      "line": 15,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/initial_identity/deal",
+      "text": "import { initialIdentityDeal } from \"../game/mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/src/runtime/simulation/replay_reproduction.ts",
+      "line": 9,
+      "form": "import",
+      "specifier": "../../game/mechanisms/roles/initial_identity/deal",
+      "text": "import { initialIdentityDeal } from \"../../game/mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/src/runtime/simulation/reproduction_context.ts",
+      "line": 21,
+      "form": "import",
+      "specifier": "../../game/mechanisms/roles/initial_identity/deal",
+      "text": "import { initialIdentityDeal } from \"../../game/mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/tests/integration/configuration/shapeshifter-public-examples.test.ts",
+      "line": 13,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/shapeshifter/deal",
+      "text": "import { initialShapeshifterDeal } from \"../../../src/game/mechanisms/roles/shapeshifter/deal\";"
+    },
+    {
+      "path": "backend/tests/integration/configuration/thief-public-examples.test.ts",
+      "line": 13,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/thief/deal",
+      "text": "import { initialThiefDeal } from \"../../../src/game/mechanisms/roles/thief/deal\";"
+    },
+    {
+      "path": "backend/tests/scenarios/features/initial-identity/cycle-reentry.test.ts",
+      "line": 10,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/initial_identity/deal",
+      "text": "import * as shared from \"../../../../src/game/mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/agents/player-initial-public-counts.test.ts",
+      "line": 12,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/initial_identity/deal",
+      "text": "import { installInitialIdentityDeal } from \"../../../src/game/mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease-terminal-boundaries.test.ts",
+      "line": 17,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/initial_identity/setup",
+      "text": "import { InitialIdentitySetupWindow, initialIdentityRequestScope } from \"../../../src/game/mechanisms/roles/initial_identity/setup\";"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts",
+      "line": 14,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/initial_identity/deal",
+      "text": "import { initialIdentityDeal, installInitialIdentityDeal } from \"../../../../src/game/mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "line": 8,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/initial_identity/deal",
+      "text": "import * as shared from \"../../../../src/game/mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "line": 9,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/thief/deal",
+      "text": "import * as thief from \"../../../../src/game/mechanisms/roles/thief/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "line": 23,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/shapeshifter/setup",
+      "text": "import {\n  ShapeshifterSetupWindow,\n  projectShapeshifterChoices,\n  shapeshifterRequestScope,\n} from \"../../../../src/game/mechanisms/roles/shapeshifter/setup\";"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "line": 28,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/shapeshifter/deal",
+      "text": "import {\n  shapeshifterDeal,\n  shapeshifterSetupStatus,\n  shapeshifterSetupReady,\n  hasActiveShapeshifterSetup,\n  projectShapeshifterSetup,\n  initialShapeshifterDeal,\n} from \"../../../../src/game/mechanisms/roles/shapeshifter/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "line": 23,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/thief/setup",
+      "text": "import {\n  ThiefSetupWindow,\n  projectThiefChoices,\n  thiefRequestScope,\n} from \"../../../../src/game/mechanisms/roles/thief/setup\";"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "line": 28,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/thief/deal",
+      "text": "import {\n  thiefDeal,\n  thiefSetupStatus,\n  thiefSetupReady,\n  hasActiveThiefSetup,\n  projectThiefSetup,\n  initialThiefDeal,\n} from \"../../../../src/game/mechanisms/roles/thief/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/action-request-bindings.test.ts",
+      "line": 15,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/initial_identity/setup",
+      "text": "import { initialIdentityRequestScope } from \"../../../src/game/mechanisms/roles/initial_identity/setup\";"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/cycle-admission.test.ts",
+      "line": 13,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/initial_identity/deal",
+      "text": "import {\n  installInitialIdentityDeal,\n  openInitialIdentitySetup,\n  hasActiveInitialIdentitySetup,\n} from \"../../../src/game/mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+      "line": 13,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/initial_identity/deal",
+      "text": "import {\n  installInitialIdentityDeal,\n  initialIdentitySetupReady,\n} from \"../../../src/game/mechanisms/roles/initial_identity/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-readability.test.ts",
+      "line": 10,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/initial_identity/deal",
+      "text": "import { installInitialIdentityDeal, openInitialIdentitySetup, hasActiveInitialIdentitySetup } from \"../../../src/game/mechanisms/roles/initial_identity/deal\";"
+    }
+  ],
+  "namespaces": [
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "name": "shared",
+      "specifier": "../initial_identity/deal",
+      "references": [
+        {
+          "name": "InitialIdentityCard",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentityCard"
+        },
+        {
+          "name": "InitialIdentitySlot",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentitySlot"
+        },
+        {
+          "name": "InitialIdentitySetupStatus",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentitySetupStatus"
+        },
+        {
+          "name": "InitialIdentityDeal",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentityDeal"
+        },
+        {
+          "name": "initialIdentityKind",
+          "form": "property",
+          "text": "shared.initialIdentityKind"
+        },
+        {
+          "name": "installInitialIdentityDeal",
+          "form": "property",
+          "text": "shared.installInitialIdentityDeal"
+        },
+        {
+          "name": "initialIdentityStock",
+          "form": "property",
+          "text": "shared.initialIdentityStock"
+        },
+        {
+          "name": "initialIdentityDeal",
+          "form": "property",
+          "text": "shared.initialIdentityDeal"
+        },
+        {
+          "name": "initialIdentityCandidateCounts",
+          "form": "property",
+          "text": "shared.initialIdentityCandidateCounts"
+        },
+        {
+          "name": "initialIdentitySetupStatus",
+          "form": "property",
+          "text": "shared.initialIdentitySetupStatus"
+        },
+        {
+          "name": "hasActiveInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.hasActiveInitialIdentitySetup"
+        },
+        {
+          "name": "initialIdentitySetupReady",
+          "form": "property",
+          "text": "shared.initialIdentitySetupReady"
+        },
+        {
+          "name": "pendingInitialIdentityDealValid",
+          "form": "property",
+          "text": "shared.pendingInitialIdentityDealValid"
+        },
+        {
+          "name": "openInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.openInitialIdentitySetup"
+        },
+        {
+          "name": "closeInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.closeInitialIdentitySetup"
+        },
+        {
+          "name": "selectInitialIdentityCard",
+          "form": "property",
+          "text": "shared.selectInitialIdentityCard"
+        },
+        {
+          "name": "projectInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.projectInitialIdentitySetup"
+        },
+        {
+          "name": "INITIAL_IDENTITY_POLICIES",
+          "form": "property",
+          "text": "shared.INITIAL_IDENTITY_POLICIES"
+        },
+        {
+          "name": "hasActiveInitialIdentityNight",
+          "form": "property",
+          "text": "shared.hasActiveInitialIdentityNight"
+        },
+        {
+          "name": "hasInitialIdentityNightCommit",
+          "form": "property",
+          "text": "shared.hasInitialIdentityNightCommit"
+        },
+        {
+          "name": "openInitialIdentityNight",
+          "form": "property",
+          "text": "shared.openInitialIdentityNight"
+        }
+      ],
+      "uniqueKeys": [
+        "InitialIdentityCard",
+        "InitialIdentitySlot",
+        "InitialIdentitySetupStatus",
+        "InitialIdentityDeal",
+        "initialIdentityKind",
+        "installInitialIdentityDeal",
+        "initialIdentityStock",
+        "initialIdentityDeal",
+        "initialIdentityCandidateCounts",
+        "initialIdentitySetupStatus",
+        "hasActiveInitialIdentitySetup",
+        "initialIdentitySetupReady",
+        "pendingInitialIdentityDealValid",
+        "openInitialIdentitySetup",
+        "closeInitialIdentitySetup",
+        "selectInitialIdentityCard",
+        "projectInitialIdentitySetup",
+        "INITIAL_IDENTITY_POLICIES",
+        "hasActiveInitialIdentityNight",
+        "hasInitialIdentityNightCommit",
+        "openInitialIdentityNight"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "name": "shared",
+      "specifier": "../initial_identity/setup",
+      "references": [
+        {
+          "name": "InitialIdentityScope",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentityScope"
+        },
+        {
+          "name": "authorizedInitialIdentityScope",
+          "form": "property",
+          "text": "shared.authorizedInitialIdentityScope"
+        },
+        {
+          "name": "initialIdentityRequestScope",
+          "form": "property",
+          "text": "shared.initialIdentityRequestScope"
+        },
+        {
+          "name": "initialIdentityRequestChoices",
+          "form": "property",
+          "text": "shared.initialIdentityRequestChoices"
+        },
+        {
+          "name": "InitialIdentitySetupWindow",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentitySetupWindow"
+        },
+        {
+          "name": "InitialIdentitySetupWindow",
+          "form": "property",
+          "text": "shared.InitialIdentitySetupWindow"
+        },
+        {
+          "name": "InitialIdentitySetupWindow",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentitySetupWindow"
+        }
+      ],
+      "uniqueKeys": [
+        "InitialIdentityScope",
+        "authorizedInitialIdentityScope",
+        "initialIdentityRequestScope",
+        "initialIdentityRequestChoices",
+        "InitialIdentitySetupWindow"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "name": "shared",
+      "specifier": "../initial_identity/deal",
+      "references": [
+        {
+          "name": "InitialIdentityCard",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentityCard"
+        },
+        {
+          "name": "InitialIdentitySlot",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentitySlot"
+        },
+        {
+          "name": "InitialIdentitySetupStatus",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentitySetupStatus"
+        },
+        {
+          "name": "InitialIdentityDeal",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentityDeal"
+        },
+        {
+          "name": "initialIdentityKind",
+          "form": "property",
+          "text": "shared.initialIdentityKind"
+        },
+        {
+          "name": "installInitialIdentityDeal",
+          "form": "property",
+          "text": "shared.installInitialIdentityDeal"
+        },
+        {
+          "name": "initialIdentityStock",
+          "form": "property",
+          "text": "shared.initialIdentityStock"
+        },
+        {
+          "name": "initialIdentityDeal",
+          "form": "property",
+          "text": "shared.initialIdentityDeal"
+        },
+        {
+          "name": "initialIdentityCandidateCounts",
+          "form": "property",
+          "text": "shared.initialIdentityCandidateCounts"
+        },
+        {
+          "name": "initialIdentitySetupStatus",
+          "form": "property",
+          "text": "shared.initialIdentitySetupStatus"
+        },
+        {
+          "name": "hasActiveInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.hasActiveInitialIdentitySetup"
+        },
+        {
+          "name": "initialIdentitySetupReady",
+          "form": "property",
+          "text": "shared.initialIdentitySetupReady"
+        },
+        {
+          "name": "pendingInitialIdentityDealValid",
+          "form": "property",
+          "text": "shared.pendingInitialIdentityDealValid"
+        },
+        {
+          "name": "openInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.openInitialIdentitySetup"
+        },
+        {
+          "name": "closeInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.closeInitialIdentitySetup"
+        },
+        {
+          "name": "selectInitialIdentityCard",
+          "form": "property",
+          "text": "shared.selectInitialIdentityCard"
+        },
+        {
+          "name": "projectInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.projectInitialIdentitySetup"
+        },
+        {
+          "name": "INITIAL_IDENTITY_POLICIES",
+          "form": "property",
+          "text": "shared.INITIAL_IDENTITY_POLICIES"
+        },
+        {
+          "name": "hasActiveInitialIdentityNight",
+          "form": "property",
+          "text": "shared.hasActiveInitialIdentityNight"
+        },
+        {
+          "name": "hasInitialIdentityNightCommit",
+          "form": "property",
+          "text": "shared.hasInitialIdentityNightCommit"
+        },
+        {
+          "name": "openInitialIdentityNight",
+          "form": "property",
+          "text": "shared.openInitialIdentityNight"
+        }
+      ],
+      "uniqueKeys": [
+        "InitialIdentityCard",
+        "InitialIdentitySlot",
+        "InitialIdentitySetupStatus",
+        "InitialIdentityDeal",
+        "initialIdentityKind",
+        "installInitialIdentityDeal",
+        "initialIdentityStock",
+        "initialIdentityDeal",
+        "initialIdentityCandidateCounts",
+        "initialIdentitySetupStatus",
+        "hasActiveInitialIdentitySetup",
+        "initialIdentitySetupReady",
+        "pendingInitialIdentityDealValid",
+        "openInitialIdentitySetup",
+        "closeInitialIdentitySetup",
+        "selectInitialIdentityCard",
+        "projectInitialIdentitySetup",
+        "INITIAL_IDENTITY_POLICIES",
+        "hasActiveInitialIdentityNight",
+        "hasInitialIdentityNightCommit",
+        "openInitialIdentityNight"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "name": "shared",
+      "specifier": "../initial_identity/setup",
+      "references": [
+        {
+          "name": "InitialIdentityScope",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentityScope"
+        },
+        {
+          "name": "authorizedInitialIdentityScope",
+          "form": "property",
+          "text": "shared.authorizedInitialIdentityScope"
+        },
+        {
+          "name": "initialIdentityRequestScope",
+          "form": "property",
+          "text": "shared.initialIdentityRequestScope"
+        },
+        {
+          "name": "initialIdentityRequestChoices",
+          "form": "property",
+          "text": "shared.initialIdentityRequestChoices"
+        },
+        {
+          "name": "InitialIdentitySetupWindow",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentitySetupWindow"
+        },
+        {
+          "name": "InitialIdentitySetupWindow",
+          "form": "property",
+          "text": "shared.InitialIdentitySetupWindow"
+        },
+        {
+          "name": "InitialIdentitySetupWindow",
+          "form": "qualified-type",
+          "text": "shared.InitialIdentitySetupWindow"
+        }
+      ],
+      "uniqueKeys": [
+        "InitialIdentityScope",
+        "authorizedInitialIdentityScope",
+        "initialIdentityRequestScope",
+        "initialIdentityRequestChoices",
+        "InitialIdentitySetupWindow"
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/initial-identity/cycle-reentry.test.ts",
+      "name": "shared",
+      "specifier": "../../../../src/game/mechanisms/roles/initial_identity/deal",
+      "references": [
+        {
+          "name": "installInitialIdentityDeal",
+          "form": "property",
+          "text": "shared.installInitialIdentityDeal"
+        },
+        {
+          "name": "initialIdentitySetupStatus",
+          "form": "property",
+          "text": "shared.initialIdentitySetupStatus"
+        },
+        {
+          "name": "openInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.openInitialIdentitySetup"
+        },
+        {
+          "name": "closeInitialIdentitySetup",
+          "form": "property",
+          "text": "shared.closeInitialIdentitySetup"
+        },
+        {
+          "name": "openInitialIdentityNight",
+          "form": "property",
+          "text": "shared.openInitialIdentityNight"
+        },
+        {
+          "name": "openInitialIdentityNight",
+          "form": "property",
+          "text": "shared.openInitialIdentityNight"
+        }
+      ],
+      "uniqueKeys": [
+        "installInitialIdentityDeal",
+        "initialIdentitySetupStatus",
+        "openInitialIdentitySetup",
+        "closeInitialIdentitySetup",
+        "openInitialIdentityNight"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "name": "shared",
+      "specifier": "../../../../src/game/mechanisms/roles/initial_identity/deal",
+      "references": [
+        {
+          "name": "installInitialIdentityDeal",
+          "form": "property",
+          "text": "shared.installInitialIdentityDeal"
+        },
+        {
+          "name": "initialIdentityStock",
+          "form": "property",
+          "text": "shared.initialIdentityStock"
+        },
+        {
+          "name": "installInitialIdentityDeal",
+          "form": "property",
+          "text": "shared.installInitialIdentityDeal"
+        },
+        {
+          "name": "initialIdentityStock",
+          "form": "property",
+          "text": "shared.initialIdentityStock"
+        },
+        {
+          "name": "installInitialIdentityDeal",
+          "form": "property",
+          "text": "shared.installInitialIdentityDeal"
+        },
+        {
+          "name": "initialIdentityKind",
+          "form": "property",
+          "text": "shared.initialIdentityKind"
+        },
+        {
+          "name": "initialIdentitySetupReady",
+          "form": "property",
+          "text": "shared.initialIdentitySetupReady"
+        },
+        {
+          "name": "initialIdentitySetupStatus",
+          "form": "property",
+          "text": "shared.initialIdentitySetupStatus"
+        },
+        {
+          "name": "hasInitialIdentityNightCommit",
+          "form": "property",
+          "text": "shared.hasInitialIdentityNightCommit"
+        }
+      ],
+      "uniqueKeys": [
+        "installInitialIdentityDeal",
+        "initialIdentityStock",
+        "initialIdentityKind",
+        "initialIdentitySetupReady",
+        "initialIdentitySetupStatus",
+        "hasInitialIdentityNightCommit"
+      ]
+    }
+  ],
+  "owners": {
+    "backend/src/game/mechanisms/roles/initial_identity/deal.ts": [
+      {
+        "kind": "InterfaceDeclaration",
+        "name": "InitialIdentityCard",
+        "statement": "export interface InitialIdentityCard {\n  cardId: string;\n  role: Role;\n}"
+      },
+      {
+        "kind": "TypeAliasDeclaration",
+        "name": "InitialIdentitySlot",
+        "statement": "export type InitialIdentitySlot = 0 | 1;"
+      },
+      {
+        "kind": "TypeAliasDeclaration",
+        "name": "InitialIdentitySetupStatus",
+        "statement": "export type InitialIdentitySetupStatus = \"pending\" | \"complete\" | \"cancelled\" | \"failed\";"
+      },
+      {
+        "kind": "InterfaceDeclaration",
+        "name": "InitialIdentityDeal",
+        "statement": "export interface InitialIdentityDeal {\n  readonly initialRoles: readonly Role[];\n  readonly candidateCounts: ReadonlyMap<Role, number>;\n  readonly hands: Map<number, InitialIdentityCard>;\n  readonly reserve: [InitialIdentityCard, InitialIdentityCard];\n  status: InitialIdentitySetupStatus;\n  selection: { actorId: number; slot: InitialIdentitySlot | null; role: Role } | null;\n}"
+      },
+      {
+        "kind": "TypeAliasDeclaration",
+        "name": "InitialIdentityKind",
+        "statement": "export type InitialIdentityKind = \"thief\" | \"shapeshifter\";"
+      },
+      {
+        "kind": "FirstStatement",
+        "statement": "export const INITIAL_IDENTITY_POLICIES = Object.freeze({\n  thief: \"lui_meme_thief_two_extra_villagers_v1\",\n  shapeshifter: \"awa_netease_shapeshifter_two_extra_villagers_v1\",\n} as const);"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "readInitialIdentityCard",
+        "statement": "export function readInitialIdentityCard(value: unknown): InitialIdentityCard | null {\n  if (!value || typeof value !== \"object\" || Array.isArray(value)) return null;\n  const keys = Reflect.ownKeys(value);\n  if (keys.length !== 2 || !keys.every((k) => k === \"cardId\" || k === \"role\")) return null;\n  const cardId = field(value, \"cardId\"),\n    role = field(value, \"role\");\n  return typeof cardId === \"string\" &&\n    /^deal:[0-9]+$/.test(cardId) &&\n    Object.values(Role).includes(role as Role)\n    ? { cardId, role: role as Role }\n    : null;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "installInitialIdentityDeal",
+        "statement": "export function installInitialIdentityDeal(\n  world: World,\n  roles: readonly Role[],\n  playerIds: readonly number[],\n  kind: InitialIdentityKind = \"thief\",\n): void {\n  if (kind !== \"thief\" && kind !== \"shapeshifter\") throw new Error(\"initial_identity_kind_invalid\");\n  if (owned.has(world) || roles.length !== playerIds.length + 2)\n    throw new Error(`${kind}_initial_deal_invalid`);\n  const cards = roles.map((role, i) => ({ cardId: `deal:${i}`, role }));\n  const initialCards = Object.freeze(cards.map((card) => Object.freeze({ ...card }))),\n    initialRoles = Object.freeze([...roles]);\n  const candidateCounts = new Map<Role, number>();\n  for (const role of roles) candidateCounts.set(role, (candidateCounts.get(role) ?? 0) + 1);\n  const hands = new Map(playerIds.map((id, i) => [id, cards[i]!])),\n    reserve: [InitialIdentityCard, InitialIdentityCard] = [\n      cards[playerIds.length]!,\n      cards[playerIds.length + 1]!,\n    ];\n  const deal: InitialIdentityDeal = {\n    initialRoles,\n    candidateCounts,\n    hands,\n    reserve,\n    status: \"pending\",\n    selection: null,\n  };\n  const players = playerIds.map((id) => {\n    const role = world.getComponent(id, COMPONENT.Role)!,\n      life = captureNightLife(world, id)!;\n    return {\n      id,\n      role,\n      roleId: role.role,\n      camp: role.camp,\n      state: role.privateState,\n      life,\n      campComponent: world.getComponent(id, COMPONENT.Camp),\n      victory: world.getComponent(id, COMPONENT.Victory),\n      victoryJson: JSON.stringify(copyEventData(world.getComponent(id, COMPONENT.Victory))),\n    };\n  });\n  owned.set(world, {\n    kind,\n    deal,\n    cards: Object.freeze([...cards]),\n    initialCards,\n    playerIds: Object.freeze([...playerIds]),\n    hands,\n    reserve,\n    status: \"pending\",\n    selection: null,\n    selectionSnapshot: null,\n    players,\n  });\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "initialIdentityKind",
+        "statement": "export function initialIdentityKind(world: World): InitialIdentityKind | undefined {\n  return owned.get(world)?.kind;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "initialIdentityStock",
+        "statement": "export function initialIdentityStock(world: World): InitialIdentityDeal | undefined {\n  return owned.get(world)?.deal;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "initialIdentityDeal",
+        "statement": "export function initialIdentityDeal(world: World): readonly Role[] | undefined {\n  return owned.get(world)?.initialCards.map((card) => card.role);\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "initialIdentityCandidateCounts",
+        "statement": "export function initialIdentityCandidateCounts(\n  world: World,\n): ReadonlyMap<Role, number> | undefined {\n  const owner = owned.get(world);\n  if (!owner) return;\n  const counts = new Map<Role, number>();\n  for (const card of owner.initialCards) counts.set(card.role, (counts.get(card.role) ?? 0) + 1);\n  return counts;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "initialIdentitySetupStatus",
+        "statement": "export function initialIdentitySetupStatus(world: World): InitialIdentitySetupStatus | undefined {\n  return owned.get(world)?.status;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "hasActiveInitialIdentitySetup",
+        "statement": "export function hasActiveInitialIdentitySetup(world: World): boolean {\n  return active.has(world);\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "initialIdentitySetupReady",
+        "statement": "export function initialIdentitySetupReady(world: World): boolean {\n  return !owned.has(world) || owned.get(world)!.status === \"complete\";\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "pendingInitialIdentityDealValid",
+        "statement": "export function pendingInitialIdentityDealValid(world: World): boolean {\n  const o = owned.get(world);\n  if (\n    !o ||\n    o.status !== \"pending\" ||\n    field(o.deal, \"hands\") !== o.hands ||\n    field(o.deal, \"reserve\") !== o.reserve\n  )\n    return false;\n  if (\n    world.entityIds().length !== o.playerIds.length ||\n    !o.players.every(\n      (p) =>\n        livingNightLife(world, p.life) &&\n        world.getComponent(p.id, COMPONENT.Role) === p.role &&\n        field(p.role, \"role\") === p.roleId &&\n        field(p.role, \"camp\") === p.camp &&\n        field(p.role, \"privateState\") === p.state &&\n        world.getComponent(p.id, COMPONENT.Camp) === p.campComponent &&\n        field(p.campComponent, \"camp\") === p.camp &&\n        world.getComponent(p.id, COMPONENT.Victory) === p.victory,\n    )\n  )\n    return false;\n  try {\n    if (o.players.some((p) => JSON.stringify(copyEventData(p.victory)) !== p.victoryJson))\n      return false;\n  } catch {\n    return false;\n  }\n  const size = Object.getOwnPropertyDescriptor(Map.prototype, \"size\")!.get!.call(o.hands);\n  if (size !== o.playerIds.length || o.reserve.length !== 2) return false;\n  for (let i = 0; i < o.cards.length; i++) {\n    const card = o.cards[i]!,\n      data = readInitialIdentityCard(card),\n      original = o.initialCards[i]!;\n    if (!data || data.cardId !== original.cardId || data.role !== original.role) return false;\n    const current =\n      i < o.playerIds.length\n        ? Map.prototype.get.call(o.hands, o.playerIds[i]!)\n        : readSlot(o.reserve, (i - o.playerIds.length) as InitialIdentitySlot);\n    if (current !== card) return false;\n  }\n  return true;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "openInitialIdentitySetup",
+        "statement": "export function openInitialIdentitySetup(world: World): InitialIdentityDeal {\n  const o = owned.get(world);\n  if (!o || o.status !== \"pending\" || opened.has(world) || active.has(world))\n    throw unavailable(world, \"setup_unavailable\");\n  opened.add(world);\n  active.add(world);\n  return o.deal;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "closeInitialIdentitySetup",
+        "statement": "export function closeInitialIdentitySetup(\n  world: World,\n  status: Exclude<InitialIdentitySetupStatus, \"pending\">,\n): void {\n  active.delete(world);\n  const o = owned.get(world);\n  if (!o) return;\n  o.status = status;\n  const d = Object.getOwnPropertyDescriptor(o.deal, \"status\");\n  if (d && Object.hasOwn(d, \"value\") && d.writable)\n    try {\n      Object.defineProperty(o.deal, \"status\", { ...d, value: status });\n    } catch {\n      /* Authority closes even with corrupted storage. */\n    }\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "selectInitialIdentityCard",
+        "statement": "export function selectInitialIdentityCard(\n  world: World,\n  actorId: number,\n  slot: InitialIdentitySlot | null,\n): Role {\n  const o = owned.get(world);\n  if (!o || !hasActiveInitialIdentitySetup(world) || !pendingInitialIdentityDealValid(world))\n    throw unavailable(world, \"selection_unavailable\");\n  const original = Map.prototype.get.call(o.hands, actorId) as InitialIdentityCard;\n  if (\n    o.kind === \"shapeshifter\" &&\n    (slot === null ||\n      (slot !== 0 && slot !== 1) ||\n      readInitialIdentityCard(original)?.role !== Role.Shapeshifter ||\n      (o.reserve.some((card) => readInitialIdentityCard(card)?.role === Role.Wolf) &&\n        readInitialIdentityCard(readSlot(o.reserve, slot))?.role !== Role.Wolf))\n  )\n    throw unavailable(world, \"selection_invalid\");\n  const chosen = slot === null ? original : (readSlot(o.reserve, slot) as InitialIdentityCard);\n  if (slot !== null) {\n    Map.prototype.set.call(o.hands, actorId, chosen);\n    o.reserve[slot] = original;\n  }\n  const selection = { actorId, slot, role: chosen.role };\n  o.selection = selection;\n  o.selectionSnapshot = Object.freeze({ ...selection });\n  o.deal.selection = selection;\n  return chosen.role;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "projectInitialIdentitySetup",
+        "statement": "export function projectInitialIdentitySetup(world: World) {\n  const o = owned.get(world);\n  if (!o) return;\n  if (\n    field(o.deal, \"hands\") !== o.hands ||\n    field(o.deal, \"reserve\") !== o.reserve ||\n    o.reserve.length !== 2\n  )\n    return;\n  const hands = o.playerIds.map((actorId) => ({\n      actorId,\n      card: Map.prototype.get.call(o.hands, actorId) as unknown,\n    })),\n    reserves = [readSlot(o.reserve, 0), readSlot(o.reserve, 1)];\n  const raw = [...hands.map((row) => row.card), ...reserves];\n  if (\n    raw.length !== o.cards.length ||\n    new Set(raw).size !== o.cards.length ||\n    raw.some((card) => !o.cards.includes(card as InitialIdentityCard))\n  )\n    return;\n  const data = raw.map(readInitialIdentityCard);\n  if (data.some((card) => !card)) return;\n  for (const card of data)\n    if (!o.initialCards.some((c) => c.cardId === card!.cardId && c.role === card!.role)) return;\n  const selection = field(o.deal, \"selection\");\n  if (selection !== o.selection) return;\n  if (\n    selection &&\n    (!o.selectionSnapshot ||\n      Reflect.ownKeys(selection as object).length !== 3 ||\n      [\"actorId\", \"slot\", \"role\"].some(\n        (key) => field(selection, key) !== field(o.selectionSnapshot, key),\n      ))\n  )\n    return;\n  const selected = o.selectionSnapshot;\n  const selectedIndex = selected ? o.playerIds.indexOf(selected.actorId) : -1;\n  for (let i = 0; i < o.playerIds.length; i++) {\n    const expected =\n      selectedIndex === i && selected?.slot !== null && selected?.slot !== undefined\n        ? o.cards[o.playerIds.length + selected.slot]\n        : o.cards[i];\n    if (raw[i] !== expected) return;\n  }\n  for (const slot of [0, 1] as const) {\n    const expected =\n      selected?.slot === slot ? o.cards[selectedIndex] : o.cards[o.playerIds.length + slot];\n    if (reserves[slot] !== expected) return;\n  }\n  return {\n    policy: INITIAL_IDENTITY_POLICIES[o.kind],\n    status: o.status,\n    hands: hands.map((row, i) => ({ actorId: row.actorId, ...data[i]! })),\n    reserve: data.slice(hands.length) as [InitialIdentityCard, InitialIdentityCard],\n    selection: o.selectionSnapshot ? { ...o.selectionSnapshot } : null,\n  };\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "hasActiveInitialIdentityNight",
+        "statement": "export function hasActiveInitialIdentityNight(world: World): boolean {\n  return activeNights.has(world);\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "hasInitialIdentityNightCommit",
+        "statement": "export function hasInitialIdentityNightCommit(world: World, day: number): boolean {\n  return committedNights.get(world)?.has(day) === true;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "openInitialIdentityNight",
+        "statement": "export function openInitialIdentityNight(world: World, day: number): () => void {\n  if (!owned.has(world)) return () => {};\n  if (\n    !initialIdentitySetupReady(world) ||\n    hasActiveInitialIdentitySetup(world) ||\n    activeNights.has(world) ||\n    committedNights.get(world)?.has(day)\n  )\n    throw unavailable(world, \"night_reentry_or_unready\");\n  let days = committedNights.get(world);\n  if (!days) {\n    days = new Set();\n    committedNights.set(world, days);\n  }\n  days.add(day);\n  activeNights.add(world);\n  return () => {\n    activeNights.delete(world);\n  };\n}"
+      }
+    ],
+    "backend/src/game/mechanisms/roles/initial_identity/ports.ts": [
+      {
+        "kind": "ExportDeclaration",
+        "statement": "export {\n  hasActiveInitialIdentitySetup,\n  hasActiveInitialIdentityNight,\n  hasInitialIdentityNightCommit,\n  initialIdentityKind,\n  initialIdentitySetupReady,\n  openInitialIdentityNight,\n} from \"./deal\";"
+      },
+      {
+        "kind": "ExportDeclaration",
+        "statement": "export { InitialIdentitySetupWindow } from \"./setup\";"
+      },
+      {
+        "kind": "ExportDeclaration",
+        "statement": "export { publishInitialIdentityDeal } from \"./initial-deal-publication\";"
+      }
+    ],
+    "backend/src/game/mechanisms/roles/initial_identity/setup.ts": [
+      {
+        "kind": "InterfaceDeclaration",
+        "name": "InitialIdentityScope",
+        "statement": "export interface InitialIdentityScope {\n  world: World;\n  kind: InitialIdentityKind;\n  actorId: number;\n  deal: InitialIdentityDeal;\n  reserve: InitialIdentityDeal[\"reserve\"];\n  hands: Map<number, InitialIdentityCard>;\n  cards: readonly [CardScope, CardScope];\n  originalHand: InitialIdentityCard;\n  participants: readonly DebateParticipant[];\n  actor: DebateParticipant;\n  state: InitialIdentityState;\n  camp: CampComponent;\n  victory: VictoryComponent;\n  victoryJson: string;\n  config: ReadonlyBoardConfig;\n  configJson: string;\n  isCurrent: () => boolean;\n  required: boolean;\n  allowedSlots: readonly InitialIdentitySlot[];\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "sameInitialIdentityScope",
+        "statement": "export function sameInitialIdentityScope(scope: InitialIdentityScope): boolean {\n  const { world, deal } = scope;\n  const remaining = Object.getOwnPropertyDescriptor(scope.state, \"remaining\"),\n    choice = Object.getOwnPropertyDescriptor(scope.state, \"choice\");\n  const reserve0 = Object.getOwnPropertyDescriptor(scope.reserve, \"0\"),\n    reserve1 = Object.getOwnPropertyDescriptor(scope.reserve, \"1\"),\n    selection = Object.getOwnPropertyDescriptor(deal, \"selection\");\n  return (\n    scopes.get(world) === scope &&\n    initialIdentityKind(world) === scope.kind &&\n    hasActiveInitialIdentitySetup(world) &&\n    initialIdentitySetupStatus(world) === \"pending\" &&\n    scope.isCurrent() &&\n    pendingInitialIdentityDealValid(world) &&\n    initialIdentityStock(world) === deal &&\n    dataField(deal, \"hands\") === scope.hands &&\n    dataField(deal, \"reserve\") === scope.reserve &&\n    scope.reserve.length === 2 &&\n    [reserve0, reserve1].every((d) => d && Object.hasOwn(d, \"value\") && d.writable) &&\n    reserve0!.value === scope.cards[0].card &&\n    reserve1!.value === scope.cards[1].card &&\n    scope.cards.every(validCard) &&\n    scope.required ===\n      initialIdentityChoiceRule(\n        scope.kind,\n        scope.cards.map((c) => c.role),\n      ).mustChoose &&\n    JSON.stringify(scope.allowedSlots) ===\n      JSON.stringify(\n        initialIdentityChoiceRule(\n          scope.kind,\n          scope.cards.map((c) => c.role),\n        ).allowedSlots,\n      ) &&\n    Map.prototype.get.call(scope.hands, scope.actorId) === scope.originalHand &&\n    scope.participants.length === world.entityIds().length &&\n    scope.participants.every((p) => sameDebateParticipant(world, p)) &&\n    getInitialIdentityState(scope.actor.role, scope.kind) === scope.state &&\n    scope.state.policy === initialIdentityPolicy(scope.kind) &&\n    remaining?.value === 1 &&\n    remaining.writable === true &&\n    choice?.value === null &&\n    choice.writable === true &&\n    world.getComponent(scope.actorId, COMPONENT.Camp) === scope.camp &&\n    dataField(scope.camp, \"camp\") === Camp.Good &&\n    world.getComponent(scope.actorId, COMPONENT.Victory) === scope.victory &&\n    frozenJson(scope.victory) === scope.victoryJson &&\n    frozenJson(scope.config) === scope.configJson &&\n    selection?.value === null &&\n    selection.writable === true\n  );\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "authorizedInitialIdentityScope",
+        "statement": "export function authorizedInitialIdentityScope(\n  world: World,\n  actorId: number,\n  day: number | undefined,\n  phase: Phase,\n  scope: object | undefined,\n  kind: InitialIdentityKind,\n): InitialIdentityScope | null {\n  const active = scopes.get(world);\n  return active &&\n    active === scope &&\n    active.kind === kind &&\n    actorId === active.actorId &&\n    day === 1 &&\n    phase === Phase.Night &&\n    sameInitialIdentityScope(active)\n    ? active\n    : null;\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "bindInitialIdentityRequest",
+        "statement": "export function bindInitialIdentityRequest(world: World, request: ActionRequest): void {\n  requestLease.bind(world, request);\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "initialIdentityRequestScope",
+        "statement": "export function initialIdentityRequestScope(\n  world: World,\n  request: ActionRequest,\n): InitialIdentityScope | undefined {\n  return requestLease.scope(world, request);\n}"
+      },
+      {
+        "kind": "FunctionDeclaration",
+        "name": "initialIdentityRequestChoices",
+        "statement": "export function initialIdentityRequestChoices(\n  world: World,\n  actorId: number,\n  kind: InitialIdentityKind,\n) {\n  const scope = scopes.get(world);\n  if (\n    !scope ||\n    scope.kind !== kind ||\n    scope.actorId !== actorId ||\n    !sameInitialIdentityScope(scope)\n  )\n    return undefined;\n  return {\n    mustChoose: scope.required,\n    allowedSlots: [...scope.allowedSlots],\n    cards: scope.cards.map((card, slot) => ({\n      slot: slot as InitialIdentitySlot,\n      role: card.role,\n    })),\n  };\n}"
+      },
+      {
+        "kind": "ClassDeclaration",
+        "name": "InitialIdentitySetupWindow",
+        "statement": "export class InitialIdentitySetupWindow {\n  constructor(\n    private readonly world: World,\n    private readonly gateway: ToolGateway,\n    private readonly events: GameEvent[],\n    private readonly kind: InitialIdentityKind,\n    /** 保存装配端对象；原创建点才读取构造器，不提前捕获类或共享已创建的工厂。 */\n    private readonly construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n  ) {}\n  async execute(\n    config: ReadonlyBoardConfig,\n    provider: ActionProvider,\n    day: number,\n    isCurrent: () => boolean,\n  ): Promise<boolean> {\n    if (initialIdentityKind(this.world) !== this.kind) return true;\n    if (hasActiveInitialIdentitySetup(this.world)) throw new Error(`${this.kind}_setup_reentry`);\n    if (initialIdentitySetupReady(this.world)) return true;\n    if (day !== 1 || initialIdentitySetupStatus(this.world) !== \"pending\" || !isCurrent())\n      throw new Error(`${this.kind}_setup_unavailable`);\n    const deal = openInitialIdentitySetup(this.world);\n    let status: \"complete\" | \"cancelled\" | \"failed\" = \"failed\";\n    let delivery: RequestLeaseTurn | undefined, failed = false;\n    try {\n      if (!pendingInitialIdentityDealValid(this.world)) {\n        status = \"cancelled\";\n        return false;\n      }\n      const actorIds = this.world\n        .getAliveEntityIds()\n        .filter(\n          (id) =>\n            this.world.getComponent(id, COMPONENT.Role)?.role === initialIdentityRole(this.kind),\n        );\n      if (actorIds.length === 0) {\n        status = \"complete\";\n        return true;\n      }\n      if (actorIds.length !== 1) throw new Error(`${this.kind}_actor_invalid`);\n      const actorId = actorIds[0]!,\n        actor = captureDebateParticipant(this.world, actorId),\n        state = getInitialIdentityState(actor?.role, this.kind),\n        camp = this.world.getComponent(actorId, COMPONENT.Camp),\n        victory = this.world.getComponent(actorId, COMPONENT.Victory);\n      const cards = deal.reserve.map((card) => {\n        const data = readInitialIdentityCard(card);\n        return data ? { card, ...data } : null;\n      });\n      const configJson = frozenJson(config),\n        victoryJson = frozenJson(victory);\n      if (\n        !actor ||\n        actor.camp !== Camp.Good ||\n        !state ||\n        !camp ||\n        !victory ||\n        cards.some((card) => !card) ||\n        configJson === null ||\n        victoryJson === null\n      ) {\n        status = \"cancelled\";\n        return false;\n      }\n      const participants = this.world\n        .entityIds()\n        .map((id) => captureDebateParticipant(this.world, id));\n      if (participants.some((p) => !p)) {\n        status = \"cancelled\";\n        return false;\n      }\n      const scope: InitialIdentityScope = {\n        world: this.world,\n        kind: this.kind,\n        actorId,\n        deal,\n        reserve: deal.reserve,\n        hands: deal.hands,\n        cards: cards as [CardScope, CardScope],\n        originalHand: deal.hands.get(actorId)!,\n        participants: participants as DebateParticipant[],\n        actor,\n        state,\n        camp,\n        victory,\n        victoryJson,\n        config,\n        configJson,\n        isCurrent,\n        required: initialIdentityChoiceRule(\n          this.kind,\n          cards.map((c) => c!.role),\n        ).mustChoose,\n        allowedSlots: initialIdentityChoiceRule(\n          this.kind,\n          cards.map((c) => c!.role),\n        ).allowedSlots,\n      };\n      scopes.set(this.world, scope);\n      if (!sameInitialIdentityScope(scope)) {\n        status = \"cancelled\";\n        return false;\n      }\n      // 原 scope 已安装并复验后才读取构造器；构造或 create 失败仍走下方原 finally 关闭。\n      const request = new this.construction.requestFactory(this.world, this.events, 1).create({\n        phase: Phase.Night,\n        actorId,\n        allowedTools: [initialIdentityTool(this.kind)],\n        stage: this.kind,\n        requiresAction: scope.required,\n        summary: {\n          key:\n            this.kind === \"shapeshifter\"\n              ? \"turn.shapeshifter.required\"\n              : scope.required\n                ? \"turn.thief.required\"\n                : \"turn.thief.optional\",\n        },\n        context: { allow_fallback: false, action_failure_policy: \"error\" },\n      });\n      // 绑定表不抢 guard；真实窗口在完整 create 返回后才打开自己的交付和完成身份。\n      delivery = requestLease.openDelivery(this.world, request);\n      if (!sameInitialIdentityScope(scope) || delivery?.current() !== true) {\n        status = \"cancelled\";\n        return false;\n      }\n      const call = await provider.getAction(request);\n      if (!sameInitialIdentityScope(scope) || delivery?.current() !== true) {\n        status = \"cancelled\";\n        return false;\n      }\n      let slot: InitialIdentitySlot | null = null;\n      if (call === null) {\n        if (scope.required) throw new Error(`${this.kind}_required_choice_missing`);\n      } else {\n        const choiceCall = readInitialIdentityTool(call, this.kind);\n        if (!choiceCall) throw new Error(`${this.kind}_choice_invalid`);\n        const valid = this.gateway.validateAndSanitize(this.world, actorId, choiceCall, {\n          phase: Phase.Night,\n          day: 1,\n          ...(this.kind === \"thief\" ? { thiefScope: scope } : { shapeshifterScope: scope }),\n        });\n        if (!sameInitialIdentityScope(scope) || delivery.current() !== true) {\n          status = \"cancelled\";\n          return false;\n        }\n        if (!valid.ok || !scope.allowedSlots.includes(choiceCall.args.slot))\n          throw new Error(`${this.kind}_choice_invalid`);\n        slot = choiceCall.args.slot;\n      }\n      const chosen = slot === null ? null : scope.cards[slot].card;\n      const catalog = getDefaultRoleCatalog();\n      const newRole = chosen\n        ? createRoleComponent(chosen.role, catalog.getCamp(chosen.role), this.world.locale)\n        : null;\n      if (newRole)\n        catalog.applyRuntime(newRole, {\n          boardConfig: config,\n          locale: this.world.locale,\n          world: this.world,\n        });\n      const newCamp = newRole ? createCampComponent(newRole.camp, this.world.locale) : null;\n      const newVictory = newRole\n        ? createVictoryComponent([{ kind: \"faction\", faction: newRole.camp }])\n        : null;\n      if (!sameInitialIdentityScope(scope) || delivery.current() !== true) {\n        status = \"cancelled\";\n        return false;\n      }\n      // 物理交换与身份安装之间没有 await、Provider 回调或事件发表。\n      if (chosen && slot !== null && newRole && newCamp && newVictory) {\n        if (this.kind === \"shapeshifter\") {\n          consumeShapeshifterState(state, slot);\n        }\n        selectInitialIdentityCard(this.world, actorId, slot);\n        this.world.addComponent(actorId, COMPONENT.Role, newRole);\n        this.world.addComponent(actorId, COMPONENT.Camp, newCamp);\n        this.world.addComponent(actorId, COMPONENT.Victory, newVictory);\n      } else {\n        consumeRetainedInitialIdentityState(state);\n        selectInitialIdentityCard(this.world, actorId, null);\n      }\n      status = \"complete\";\n      closeInitialIdentitySetup(this.world, status);\n      scopes.delete(this.world);\n      // 物理换牌、全部组件安装与原关闭成功后才落 true；事实／通知晚抛不能再结算 false。\n      delivery.complete();\n      const data = {\n        actorId,\n        day: 1 as const,\n        role: newRole?.role ?? initialIdentityRole(this.kind),\n        camp: newRole?.camp ?? Camp.Good,\n      };\n      this.events.push(\n        this.kind === \"shapeshifter\"\n          ? {\n              timestamp: Date.now(),\n              type: \"shapeshifter_identity_chosen\",\n              payload: {\n                ...data,\n                slot: slot!,\n                policy: \"awa_netease_shapeshifter_two_extra_villagers_v1\",\n              },\n            }\n          : {\n              timestamp: Date.now(),\n              type: \"thief_identity_chosen\",\n              payload: { ...data, slot, policy: \"lui_meme_thief_two_extra_villagers_v1\" },\n            },\n      );\n      return true;\n    } catch (error) {\n      failed = true;\n      throw error;\n    } finally {\n      try {\n      if (this.kind === \"shapeshifter\" && status !== \"complete\") {\n        const original =\n          scopes.get(this.world)?.state ??\n          this.world\n            .entityIds()\n            .map((id) =>\n              getInitialIdentityState(this.world.getComponent(id, COMPONENT.Role), this.kind),\n            )\n            .find(Boolean);\n        cancelShapeshifterState(original);\n      }\n      scopes.delete(this.world);\n      closeInitialIdentitySetup(this.world, status);\n      } catch (error) {\n        // 原 finally 的清理错误仍按旧 JS 优先于 body 错误；新 false 通知不得覆盖它。\n        failed = true;\n        throw error;\n      } finally {\n        if (failed) { try { delivery?.close(); } catch { /* 已有原错误时只完成关闭，保该错误。 */ } }\n        else delivery?.close();\n      }\n    }\n  }\n}"
+      }
+    ]
+  },
+  "limits": [
+    "Static source AST literals only; computed/dynamic runtime strings and historical generated docs excluded.",
+    "Property/qualified names are complete current syntax occurrences, not TypeChecker symbol-resolution or runtime getter equivalence."
+  ]
+}

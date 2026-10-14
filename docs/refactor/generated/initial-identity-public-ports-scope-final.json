@@ -1,0 +1,132 @@
+{
+  "baseCommit": "15b680d9d55f4ead009a0fb363c6736523def03a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "838f59a08da623fbabecf9d0a0ad8a231be2d523ad4970ad3a31dba7dccb14e4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal-ports.ts",
+      "sha256": "822a4af1aa6145312ccd4ccad23d47e456c531393f849b30a184fa6508cf33f3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "sha256": "839567dc907168806be7dceef6368e9068f0492afa10d9092d32ede91c6520ad"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "396e69b73d9fe3b7503a44c28c818c5239c8649ec22062db66ca45b2a2eecc9d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "sha256": "33e18b78817ebfcf47749af6e9cc8f0eff6d22c4ce9af0c57691a16f7f4e8acb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "6083752da9d0512819ba3c420ef51fdc1b7567c2dcff2a8ff0bb2fe6c8b8572a"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "originalGitSha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "currentWholeSameAsGit": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "06949a4306bd99d23add6fa99905f4c15303a771af0b8ac6f803741f52d327eb",
+      "originalGitSha256": "8cb90cb502f56bd7fc4af3cc5ee247fc5ed4bb5c922347e3430d7e9789dfdcd4",
+      "currentWholeSameAsGit": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "sha256": "dc0b3ced09dc93b8c18f5ce87f04ffbe8d4854e8e14de0c152081e3b4bc7a75e",
+      "originalGitSha256": "dc0b3ced09dc93b8c18f5ce87f04ffbe8d4854e8e14de0c152081e3b4bc7a75e",
+      "currentWholeSameAsGit": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/initial-deal-publication.ts",
+      "sha256": "b6716f16de0d270f6e8970216b6f01f39f705dfefddebae1f7edb12d9ffd6578",
+      "originalGitSha256": "b6716f16de0d270f6e8970216b6f01f39f705dfefddebae1f7edb12d9ffd6578",
+      "currentWholeSameAsGit": true
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/initial-identity-public-ports.md",
+    "sha256": "40e002c89566677f7281d530138f85c13b260e73b9a8838e71fdbca24e995524"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-before.json",
+      "sha256": "ea7d84681050bbe3e2613ae0bee728fb7e7f6445a314d1e27d2e546dfefd34e0"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-paths.json",
+      "sha256": "3c4633d8240047256b77affb76eda1c1df9c96ce68c821a9ea8b5f429b34c667"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-edits.json",
+      "sha256": "eaeb27b5d931835106785e7d99712a2bb889d40aa578761b0a1ea17582dec52e"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-inventory-before.json",
+      "sha256": "e09753cfe2b84e82613fb46e25c49d85d431d8e5c996d638db6cdfa825595849"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-shared-control-route.json",
+      "sha256": "149aa381f9e894cabe93cd3d31cb36a387d1638e5ef0e902c553c93d3e57f3e0"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-types-config.json",
+      "sha256": "386d72122ba8911f2a0c87c7c327003f6ec32ad688ed5161149ced044d4526f3"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-heads.ts",
+      "sha256": "7e1769977031ed41c6bd2d0d47f24a58642fdcfcd8374fed0487497e4495d3ed"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-heads.json",
+      "sha256": "4b341519a0af98e66c3735fccb486925d74fb101bc56d2df62163028c59e1bf9"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-heads-output.txt",
+      "sha256": "f7ccd0f62d780182f695dd02bc50a41dd278b7306d3641774172b725c64e78d5"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-proof.cjs",
+      "sha256": "781ffaf22a65d50faafb7d79a348449678d8f54f6568e711b0644d00d5237f24"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-proof.json",
+      "sha256": "cf5d6f0c4b55664b1e657a4603e75e1e13078d367571a1778476fe2d8130fdc5"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-proof-output.txt",
+      "sha256": "7509f8f8dcf2319dd1d69d787aff841e53c973f589f9873ae1d268c2177af383"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-legacy-kind-output.txt",
+      "sha256": "06c6ce7d1f7c5681428d828f37b8c2e534dcb69709c80535e21c29dd8531caab"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-shapeshifter-config-output.txt",
+      "sha256": "76347e6ce2d97bb0f60206a36f56f17718d623a5d90a200419962d17c15318b6"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-cold-entry-output.txt",
+      "sha256": "8b3fab8d03ebe4753b3429471d115f1a094dbbaf580a68db670f66054cf52e3c"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-public-ports-receipts.json",
+      "sha256": "f5625f05d4d78a74da47fe2b69bc1dfaa1f64788a55195fce96f92744de0f1cc"
+    }
+  ],
+  "frozen": true,
+  "scope": "initial_identity公开库存与首夜选择API真实samebinding；6指定源码，原族API/算法不退，不写共享setup。"
+}
