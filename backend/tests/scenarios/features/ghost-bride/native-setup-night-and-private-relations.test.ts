@@ -77,7 +77,7 @@ for (const [groom, witness] of [
       .map((id) => g.world.getComponent(id, COMPONENT.Role)!);
     const originalStocks = originalRoles.map((role) => role.privateState);
     await new GhostBrideSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
-      g.config,
+      g.boardConfig,
       {
         getAction: async (request) => {
           seen.push(request);

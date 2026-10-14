@@ -1,0 +1,60 @@
+{
+  "test": {
+    "chunk_id": "f868b1",
+    "wall_time_seconds": 0.092790942,
+    "exit_code": 0,
+    "original_token_count": 76,
+    "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts:\n(pass) actual bootstrap/factory/setup preserves native 2/3 and final independent goals [65.22ms]\n\n 1 pass\n 10 filtered out\n 0 fail\n 57 expect() calls\nRan 1 test across 1 file. [201.00ms]\n"
+  },
+  "types": {
+    "roots": 1,
+    "launch": {
+      "chunk_id": "f575f5",
+      "wall_time_seconds": 1.001197633,
+      "session_id": 94930,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "terminal": {
+      "chunk_id": "167793",
+      "wall_time_seconds": 0.000011088,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  "heads": {
+    "chunk_id": "6b7731",
+    "exit_code": 0,
+    "roots": 1,
+    "gitDocumentationPaths": 575,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0
+  },
+  "proof": {
+    "chunk_id": "7c86c7",
+    "exit_code": 0,
+    "completeTypedNodes": 2152,
+    "noncommentLeaves": 2788,
+    "changedIdentifierLeaves": 1,
+    "wholeMappedOutputs": 2
+  },
+  "historicalFailures": {
+    "currentAtPriorBatch": {
+      "chunk_id": "8be2ab",
+      "exit_code": 1,
+      "error": "ghost_bride_setup_unavailable"
+    },
+    "actualIsolated8940Baseline": {
+      "chunk_id": "6b70de",
+      "exit_code": 1,
+      "error": "ghost_bride_setup_unavailable"
+    },
+    "source": "docs/refactor/generated/night-and-wedding-request-construction-receipts.json",
+    "notReexecuted": true
+  },
+  "distinctSuccessfulCases": 1,
+  "successfulAssertions": 57,
+  "filtered": 10,
+  "noRepeatedGreen": true
+}

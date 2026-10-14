@@ -744,3 +744,5 @@
 - C20 夜间与婚礼请求构造：19源收四原new点和全部实际调用接线，构造类型必填、阶段ctx与窗口base只透传同依赖；开turn/frame、try内外、callee先于events及原动态导入/await不移。Root及非作者完整人工/真实8940十八原稿/46逐项全文forward/四控制/19附件与有效中文注释批准；Demon阶段头仅一条JSDoc精度修正。新3/17+旧Hunt1/11共四不同成功28assert；旧Ghost新getter前真红且隔离8940同红，保留待独立fixture修复，不称全绿。19根type与head首0，proof正常生成但无独立终态如实限定、无绿重复；四new依赖退出机制具体引擎值导入，完整C20/P9继续。见 night-and-wedding-request-construction.md。
 
 - C24/C28 终局候选规则：四源将PM完整配置选择及婚约封盘前校验归具名规则表，Fox经本族公开facet同原函数绑定；PM保两evaluateMany点/3-4实参数、赤月raw候选到期判断、夜报后改写、fault→婚约→成员→day→唯一封盘序。Root及非作者完整源/真实0cbe PM原稿/七控制/27附件和重要中文说明批准，新3/21+旧Fox1/2共四不同23assert。首四根type只新unit真红、纯type修后failed1根0，头首0；证明工具三红保原记录末32f1f9真实0，映射完整PM与当前204模块静态绑定不冒完整冷加载/任意重绑定等价。没有重绿或全门禁，完整终局/PM/P9继续，见 terminal-victory-policy.md。
+
+- 鬼魂新娘旧配置身份fixture修正：独立单测试源，实际40e411 before与原bootstrap/authority/setup三控制保持，只 execute(g.config→g.boardConfig)；前者raw输入，后者是已编译安装同一BoardParameters.board，生产identity拒绝不放宽。Root与非作者完整场景/所有原assert与10附件批准；此前两次同首错红保留，只原failed2/3精确一例实际1/0/57，单根type/head实际0。全文唯一identifier逆及两完整mapped输出证据区分真实输入变化；Root汇总工具首读singleton before shape失败后只修临时读器，没有重产品检查。其余三个循环case未重跑，不称整组全绿；完整P9继续，见 ghost-bride-config-identity-fixture.md。

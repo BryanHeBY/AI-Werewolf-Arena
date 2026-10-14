@@ -1,0 +1,21 @@
+{
+  "baseCommit": "40e411d04229b675a24d2a20f65eaf661c6e4976",
+  "sourceBeforeActualGitWholeSame": true,
+  "controls": [
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "sha256": "07d32cc09ca3d45952c6c9112dc21ed040ae29746a4a8b6ff0950866ee60b192",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "d117e9a106c17cf18fad6a4fbadec5181d04cb9e0bc6f6ccd78232d2b740c4bd",
+      "actualGitAndCurrentWholeSame": true
+    }
+  ]
+}

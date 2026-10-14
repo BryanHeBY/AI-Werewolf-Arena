@@ -1,0 +1,42 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "40e411d04229b675a24d2a20f65eaf661c6e4976",
+  "source": [
+    {
+      "path": "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+      "sha256": "3269d99e355bd001eb5d7f66e618325520bbe159a012e710df98c16fce357bf4"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-scope-final.json",
+    "sha256": "b388769b08d882435bf43242ef26946de911cd24c079b9686c00cc58c647951b"
+  },
+  "document": {
+    "path": "docs/refactor/ghost-bride-config-identity-fixture.md",
+    "sha256": "4050bb992e7148922cfff35e22677787deec0d3d90bd2ed0e742796046363621"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-evidence.json",
+    "sha256": "c8e3a115d38062843ede5e0ecc52480a2859d1879a0165df505be66c3760b7cc"
+  },
+  "integrity": {
+    "freshSources": 1,
+    "actualGitBefore": 1,
+    "controls": 3,
+    "artifactHashes": 10,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "完整输入": "完整实际场景源和唯一diff已读；bootstrap编译安装的BoardParameters.board同引用返回boardConfig，raw config保留其它用途。",
+    "唯一修复": "只将execute第一实参g.config改为g.boardConfig，原case/动作/引用/全部assert和构造依赖不变；生产同身份拒绝不放宽。",
+    "验证": "此前同错红历史保留，只复查原failed2/3一例57assert实际0；单源有限type/head实际0，10附件同，未重复既有绿或宣称四循环全绿。",
+    "中文说明": "该源已有有效中文职责头；独立MD说明原raw与已安装配置身份以及错误发生时点，无机械占位注释。"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

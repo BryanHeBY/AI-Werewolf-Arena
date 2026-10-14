@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "baseCommit": "40e411d04229b675a24d2a20f65eaf661c6e4976",
+    "source": [
+      {
+        "path": "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+        "sha256": "3269d99e355bd001eb5d7f66e618325520bbe159a012e710df98c16fce357bf4"
+      }
+    ],
+    "deleted": [],
+    "counts": {
+      "paths": 1,
+      "present": 1,
+      "deleted": 0,
+      "actualGitBefore": 1,
+      "productionChanges": 0
+    },
+    "onlyDelta": "已提交 GhostBrideSetupWindow 构造及原动作不动；仅 execute 的第一实参 g.config→g.boardConfig",
+    "controls": [
+      {
+        "path": "backend/src/app/bootstrap.ts",
+        "sha256": "07d32cc09ca3d45952c6c9112dc21ed040ae29746a4a8b6ff0950866ee60b192",
+        "actualGitAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+        "actualGitAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+        "sha256": "d117e9a106c17cf18fad6a4fbadec5181d04cb9e0bc6f6ccd78232d2b740c4bd",
+        "actualGitAndCurrentWholeSame": true
+      }
+    ]
+  },
+  "scopeSha256": "b388769b08d882435bf43242ef26946de911cd24c079b9686c00cc58c647951b",
+  "documentation": {
+    "path": "docs/refactor/ghost-bride-config-identity-fixture.md",
+    "sha256": "4050bb992e7148922cfff35e22677787deec0d3d90bd2ed0e742796046363621"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-before.json",
+      "sha256": "ab381a0e4c8ab30182211215601973d9d14500672fa322f7bbe30046e72b168e"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-controls.json",
+      "sha256": "581c17cba910e9bb18b35a13c2bb9da8f58d8783a8224c77284a1de5bfc043ed"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-edit.json",
+      "sha256": "13e68970af87e74e334b2134829605e4746069c9e1b54b676ee884f75d16b30d"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-heads.json",
+      "sha256": "d6face28204682334993804e3e2bb9230e308346937bee8a67b7676f662b757a"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-heads.ts",
+      "sha256": "c29c3b5560da81ae585d17866d8b74bd67b7fb18be28bc633427ac74932a0eaf"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-proof.cjs",
+      "sha256": "64eebfa503f841e465d87bf95564bc9224baa28bfefe1b8d8c2e88d8a28343aa"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-proof.json",
+      "sha256": "b103b07ff35f8d418b2f230c31688012f41b8b73d0ef206d7de36890647df6e1"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-receipts.json",
+      "sha256": "ffbf5f7571dc190a6414c62f3a66a1268bf732101637ae4db4d1d9edad43b598"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-scope-final.json",
+      "sha256": "b388769b08d882435bf43242ef26946de911cd24c079b9686c00cc58c647951b"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-config-identity-fixture-types-config.json",
+      "sha256": "3db8a59aab332ad70acc88fc6621d87c0ddad593638362e3dbadd152c7ebd3fc"
+    }
+  ],
+  "receipts": {
+    "test": {
+      "chunk_id": "f868b1",
+      "wall_time_seconds": 0.092790942,
+      "exit_code": 0,
+      "original_token_count": 76,
+      "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts:\n(pass) actual bootstrap/factory/setup preserves native 2/3 and final independent goals [65.22ms]\n\n 1 pass\n 10 filtered out\n 0 fail\n 57 expect() calls\nRan 1 test across 1 file. [201.00ms]\n"
+    },
+    "types": {
+      "roots": 1,
+      "launch": {
+        "chunk_id": "f575f5",
+        "wall_time_seconds": 1.001197633,
+        "session_id": 94930,
+        "original_token_count": 0,
+        "output": ""
+      },
+      "terminal": {
+        "chunk_id": "167793",
+        "wall_time_seconds": 1.1088e-05,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    "heads": {
+      "chunk_id": "6b7731",
+      "exit_code": 0,
+      "roots": 1,
+      "gitDocumentationPaths": 575,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0
+    },
+    "proof": {
+      "chunk_id": "7c86c7",
+      "exit_code": 0,
+      "completeTypedNodes": 2152,
+      "noncommentLeaves": 2788,
+      "changedIdentifierLeaves": 1,
+      "wholeMappedOutputs": 2
+    },
+    "historicalFailures": {
+      "currentAtPriorBatch": {
+        "chunk_id": "8be2ab",
+        "exit_code": 1,
+        "error": "ghost_bride_setup_unavailable"
+      },
+      "actualIsolated8940Baseline": {
+        "chunk_id": "6b70de",
+        "exit_code": 1,
+        "error": "ghost_bride_setup_unavailable"
+      },
+      "source": "docs/refactor/generated/night-and-wedding-request-construction-receipts.json",
+      "notReexecuted": true
+    },
+    "distinctSuccessfulCases": 1,
+    "successfulAssertions": 57,
+    "filtered": 10,
+    "noRepeatedGreen": true
+  },
+  "proofSummary": {
+    "wholeTypedNodes": 2152,
+    "noncommentLeaves": 2788,
+    "changedIdentifierLeaves": 1,
+    "wholeMappedOutputs": 2
+  },
+  "limits": [
+    "只有一源测试输入身份修正；实际运行输入变化，不冒全runtime字节不变。",
+    "共享语法点会供四循环调用；只复查此前失败2/3 case，不声明全部case本次绿。",
+    "生产bootstrap／authority／setup与许可规则不变，三个actualGit控制源保持字节。",
+    "没有全类型／门禁／组测试／模型／归档或golden运行。"
+  ],
+  "independentReview": "待非作者source／Git／证据终审；peer artifacts不加入以避免循环"
+}

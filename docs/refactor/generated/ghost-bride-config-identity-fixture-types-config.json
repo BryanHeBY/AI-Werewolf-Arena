@@ -1,0 +1,15 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  },
+  "files": [
+    "../../../backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}
