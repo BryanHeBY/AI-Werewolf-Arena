@@ -15,8 +15,6 @@ import {
   closeAnimalNight,
   openAnimalFoxChoice,
   beginAnimalExileUnit,
-  recordAnimalBallotRound,
-  sealAnimalBallots,
   animalPufferChoiceActor,
   openAnimalPufferChoice,
   createAnimalPufferRequest,
@@ -28,6 +26,7 @@ import {
   animalAuthoritySnapshot,
   filterAnimalLethalWave,
 } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots";
 const fixture = (first = false) =>
   animalRosterFixture(undefined, (world, config) =>
     installAnimalAuthority(world, {
@@ -74,7 +73,7 @@ function reaction(
   return token;
 }
 function finish(f: ReturnType<typeof fixture>, token: object) {
-  // Raw owner tests simulate the future sole DeathResolution consumer.
+  // 本单元样本手写首次生命提交以驱动原关闭边界；不能替代真实死亡流水线验收。
   for (const id of animalPufferReaction(f.world, token)) f.life(id).alive = false;
   prepareAnimalCatExpiry(f.world, token);
   closeAnimalExileUnit(f.world, token);

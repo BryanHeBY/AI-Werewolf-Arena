@@ -1,0 +1,47 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+      "sha256": "46d92c9ff0e756f67e48406e609b5f4f41cefcfeee2e168a4b06759fc5963c4f"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "a543110a0e64a5c1745c724c507d7c743366461fe3d378ce84e781b5ab8daa97"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/request-envelope.test.ts",
+      "sha256": "4f4d7772ea00e8c93c8c4628f09486f1cd55d52a8c9ff91373506bdea66b391b"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/cat-authority.test.ts",
+      "sha256": "921b5d8abe88305b38dfbc765f8310eb1027c88eb1eb72f61476e67a2b9bfbed"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/puffer-authority.test.ts",
+      "sha256": "d74d8986bbee2dbe077767f2b66efa574cb90377d8494cd31f7eefa78571f5c8"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-choice/request-construction.test.ts",
+      "sha256": "dd0c3d4be6d97a648cd92211b75eea7b14ffb8a80b7805180d4d4a0a8de79e68"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/ballot-ledger.ts",
+      "sha256": "a04cce6e7072f4e7c6cb2b33bf8879a944abad75f2aed2806e885dd374bd8036"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/accepted-ballots.ts",
+      "sha256": "918a900899a77a2515955ce7b65294d02eb0f3ea6b5524e8645dca632a4fe64a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/ballot-ports.ts",
+      "sha256": "90b59cc7c83e0e9c0385b95ecf1c492ef733dcac1c82d2aa921e20ccc61f8e61"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/accepted-ballots.test.ts",
+      "sha256": "ac25a7212123b4ff0837db50c8eb370a75b531210aa51e083129932eb8e41fed"
+    }
+  ],
+  "documentationPaths": 586,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

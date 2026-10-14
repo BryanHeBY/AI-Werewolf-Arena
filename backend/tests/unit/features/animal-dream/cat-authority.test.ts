@@ -1,10 +1,7 @@
 /**
- * Unit tests for animal-dream; Isolated animal-dream cat-authority contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试负责动物梦境白猫延期、实际放逐单元到期和生命提交边界。
+ * 输入为既有内存 fixture、原回调和明确非法修改；原字面预期、身份快照及拒绝断言保持独立预期。
+ * 仅调用真实 owner／frame／reader，原样保留请求和资源规则，不运行完整对局、模型或真实传输。
  */
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
@@ -19,9 +16,8 @@ import {
   closeAnimalExileUnit,
   filterAnimalLethalWave,
   animalAuthoritySnapshot,
-  recordAnimalBallotRound,
-  sealAnimalBallots,
 } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots";
 const fixture = (skip = false) => {
   const f = animalRosterFixture(undefined, (world, raw) =>
     installAnimalAuthority(world, {
@@ -105,7 +101,7 @@ test("prior-night deferral expires in the first real exile unit; owner never wri
     revealedCatId: null,
     blockedCatId: null,
   });
-  // Only the real DeathResolution consumer will make this commit.
+  // 此样本手写首次生命提交以验证原到期条件；真实对局仍由 DeathResolution 提交。
   f.life(9).alive = false;
   closeAnimalExileUnit(f.world, token);
   expect(animalAuthoritySnapshot(f.world)!.completedUnits).toBe(1);

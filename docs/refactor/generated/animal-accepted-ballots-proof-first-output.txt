@@ -1,0 +1,12 @@
+1 | /** 核对本批真实 before、完整消费者程序和具名迁移算法；不运行类型、玩法或全量门禁。 */
+2 | const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process'),ts=require('../../../backend/node_modules/typescript');
+3 | const prefix='docs/refactor/generated/animal-accepted-ballots-',before=JSON.parse(fs.readFileSync(prefix+'before.json','utf8')),edits=JSON.parse(fs.readFileSync(prefix+'edits.json','utf8')),read=p=>fs.readFileSync(p,'utf8'),sha=s=>crypto.createHash('sha256').update(s).digest('hex');
+4 | function check(v,m){if(!v)throw Error(m);}
+                                    ^
+error: inverse count backend/src/game/mechanisms/roles/animal_dream/authority.ts
+      at check (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/animal-accepted-ballots-proof.cjs:4:33)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/animal-accepted-ballots-proof.cjs:13:572)
+      at map (1:11)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/animal-accepted-ballots-proof.cjs:13:30)
+
+Bun v1.4.3 (Linux x64)

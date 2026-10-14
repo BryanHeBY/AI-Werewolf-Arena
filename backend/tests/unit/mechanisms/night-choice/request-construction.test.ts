@@ -21,7 +21,8 @@ import { readAlchemistState } from "../../../../src/game/mechanisms/roles/mist_r
 import { decideSnake } from "../../../../src/game/mechanisms/roles/mist_raven/choice-ports";
 import { runAnimalPufferChoice } from "../../../../src/game/mechanisms/roles/animal_dream/choice-ports";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
-import { installAnimalAuthority, beginAnimalNight, closeAnimalNight, beginAnimalExileUnit, recordAnimalBallotRound, sealAnimalBallots, animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+import { installAnimalAuthority, beginAnimalNight, closeAnimalNight, beginAnimalExileUnit, animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots";
 import { animalRequestScope } from "../../../../src/game/mechanisms/roles/animal_dream/requests";
 import { DeathCause } from "@ai-werewolf-arena/game-contract";
 

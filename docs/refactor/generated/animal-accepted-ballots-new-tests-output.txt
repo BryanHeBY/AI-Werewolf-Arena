@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/animal-dream/accepted-ballots.test.ts:
+(pass) 原票与 PK 候选均在首次 guard 前捕获，回调改输入不改已接受账本 [21.64ms]
+(pass) 末次 guard 更换同形票权对象也撤销原单元，停止发生在账本安装前 [5.70ms]
+(pass) 封票先写最终轮次，后续库存 JSON 解码失败保留封票且不建立付款租约 [9.69ms]
+
+ 3 pass
+ 0 fail
+ 20 expect() calls
+Ran 3 tests across 1 file. [123.00ms]

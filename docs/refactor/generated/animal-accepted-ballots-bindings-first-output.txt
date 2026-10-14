@@ -1,0 +1,9 @@
+1 | /** 盘点本批真实所有形态引用、公开同绑定及局部运行导入图；不运行模块或调用游戏。 */
+2 | const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process'),crypto=require('node:crypto'),ts=require('../../../backend/node_modules/typescript');
+3 | const root=process.cwd(),prefix='docs/refactor/generated/animal-accepted-ballots-',family='backend/src/game/mechanisms/roles/animal_dream/',e=JSON.parse(fs.readFileSync(prefix+'edits.json','utf8')),sha=t=>crypto.createHash('sha256').update(t).digest('hex'),read=p=>fs.readFileSync(p,'utf8'),sf=(text,p)=>ts.createSourceFile(p,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS),check=(v,m)=>{if(!v)throw Error(m)};
+                                                                                                                                                                                                                                                                                                                                                                                                                       ^
+error: actual two exports + ten consumer bindings
+      at check (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/animal-accepted-ballots-bindings.cjs:3:404)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/animal-accepted-ballots-bindings.cjs:12:1)
+
+Bun v1.4.3 (Linux x64)

@@ -1,7 +1,8 @@
 /**
  * 负责动物梦境原 roster、子狐租约和白猫／河豚死亡、放逐单元的实际授权与结算。
  * 输入为原玩家生命、票、受作用域约束的选择；仅在匹配单元仍有效时形成效果和权威快照。
- * 三族状态捕获／唯一替换／JSON 由 state-slot 拥有；此处仍拥有生命、当前性、付款及关闭顺序。
+ * 三族状态捕获／唯一替换／JSON 由 state-slot 拥有，已接受票与封票归唯一 ballot-ledger；
+ * 此处仍拥有生命、当前性、河豚租约建立、付款及关闭顺序。
  * 关闭、失败和中止永久撤销原窗口，不允许替换身体恢复，不退还已提交的效果或记录前缀。
  */
 import type { World } from "../../../../core/domain/world";
@@ -25,6 +26,7 @@ import {
   type AnimalOriginalPlayer,
 } from "./roster";
 import type { AnimalDeathUnit } from "./state";
+import { AnimalBallotLedger, type AcceptedBallot } from "./ballot-ledger";
 import {
   FOX_STATE_SLOT,
   PUFFER_STATE_SLOT,
@@ -72,13 +74,6 @@ interface Owner {
   unit: OwnedUnit | null;
   beautyLinkBlockedDay: number | null;
 }
-interface AcceptedBallot {
-  readonly voter: AnimalOriginalPlayer;
-  readonly target: AnimalOriginalPlayer | null;
-  readonly abstain: boolean;
-  readonly weight: number;
-  readonly voting: object;
-}
 interface PufferLease {
   readonly targets: readonly AnimalOriginalPlayer[];
   readonly requests: Set<object>;
@@ -93,8 +88,7 @@ interface OwnedUnit {
   status: "starting" | "open" | "closing" | "closed" | "aborted";
   expiryPrepared: boolean;
   expiryCatId: number | null;
-  readonly rounds: Map<1 | 2, readonly AcceptedBallot[]>;
-  finalRound: 1 | 2 | null;
+  readonly ballots: AnimalBallotLedger;
   puffer: PufferLease | null;
 }
 const owners = new WeakMap<World, Owner>();
@@ -490,8 +484,7 @@ export function beginAnimalExileUnit(
       status: "starting",
       expiryPrepared: false,
       expiryCatId: null,
-      rounds: new Map(),
-      finalRound: null,
+      ballots: new AnimalBallotLedger(),
       puffer: null,
     };
   const lives = world.entityIds().map((id) => {
@@ -611,7 +604,7 @@ export function prepareAnimalCatExpiry(world: World, token: object): number | nu
   const { owner, unit } = ownedUnit(world, token);
   if (
     unit.value.kind === "exile" &&
-    (unit.finalRound === null || (unit.puffer && !unit.puffer.paid))
+    (unit.ballots.finalRound === null || (unit.puffer && !unit.puffer.paid))
   )
     throw Error("animal_exile_unit_not_complete");
   if (unit.expiryPrepared) throw Error("animal_cat_expiry_already_prepared");
@@ -632,7 +625,7 @@ export function prepareAnimalCatExpiry(world: World, token: object): number | nu
 export function closeAnimalExileUnit(world: World, token: object): void {
   const { owner, unit } = ownedUnit(world, token);
   if (!unit.expiryPrepared) throw Error("animal_exile_unit_not_complete");
-  if (unit.value.kind === "exile" && unit.finalRound === null)
+  if (unit.value.kind === "exile" && unit.ballots.finalRound === null)
     throw Error("animal_exile_unit_not_complete");
   if (unit.puffer && !unit.puffer.paid) throw Error("animal_exile_unit_not_complete");
   if (unit.puffer?.activated) {
@@ -659,141 +652,14 @@ export function closeAnimalExileUnit(world: World, token: object): void {
   unit.status = "closed";
   if (unit.puffer) unit.puffer.closed = true;
 }
-function pkCandidates(unit: OwnedUnit): number[] {
-  const tally = new Map<number, number>();
-  for (const vote of unit.rounds.get(1) ?? []) {
-    if (!vote.abstain && vote.target)
-      tally.set(vote.target.scope.id, (tally.get(vote.target.scope.id) ?? 0) + vote.weight);
-  }
-  const max = Math.max(0, ...tally.values()),
-    tied = [...tally]
-      .filter(([, weight]) => weight === max)
-      .map(([id]) => id)
-      .sort((a, b) => a - b);
-  return tied.length > 1 ? tied : [];
-}
-function votingState(
+/** 封票后在原点建立河豚原目标租约；先读票再解库存，失败不撤销已写 finalRound。 */
+export function installAnimalPufferBallotChoice(
   world: World,
-  id: number,
-): { value: object; canVote: boolean; weight: number } | null {
-  const value = world.getComponent(id, COMPONENT.VotingRight),
-    canVote = descriptor(value, "canVote")?.value,
-    weight = descriptor(value, "weight")?.value;
-  return value && typeof canVote === "boolean" && (weight === 1 || weight === 1.5)
-    ? { value, canVote, weight }
-    : null;
-}
-function eligibleAnimalVoters(world: World, candidates: readonly number[]): number[] | null {
-  const ids: number[] = [];
-  for (const id of world.entityIds()) {
-    if (!animalOriginalPlayer(world, id)) continue;
-    const voting = votingState(world, id);
-    if (!voting) return null;
-    if (voting.canVote && !candidates.includes(id)) ids.push(id);
-  }
-  return ids;
-}
-/** 可信 VotingPipeline 在实际接收边界记录整轮已接受票，包括弃票；不接收模型给出的目标子集。 */
-export function recordAnimalBallotRound(
-  world: World,
-  token: object,
-  round: 1 | 2,
-  rawVotes: readonly {
-    actorId: number;
-    targetId: number | null;
-    abstain: boolean;
-    weight: number;
-  }[],
-  rawPkCandidates: readonly number[] = [],
+  owner: Owner,
+  unit: OwnedUnit,
+  selected: readonly AcceptedBallot[],
 ): void {
-  // 首次调用外部单元 guard 之前先捕获已接受输入，保留原样本而非回调修改后的值。
-  const votes = snapshotPlainData(rawVotes) as typeof rawVotes,
-    candidates = snapshotPlainData(rawPkCandidates) as number[];
-  const { owner, unit } = ownedUnit(world, token);
-  if (
-    unit.value.kind !== "exile" ||
-    unit.finalRound !== null ||
-    round !== unit.rounds.size + 1 ||
-    (round !== 1 && round !== 2)
-  )
-    throw Error("animal_ballot_round_unavailable");
-  if (
-    !Array.isArray(votes) ||
-    !Array.isArray(candidates) ||
-    new Set(candidates).size !== candidates.length ||
-    (round === 1 ? candidates.length !== 0 : candidates.length < 2) ||
-    candidates.some((id) => !animalOriginalPlayer(world, id))
-  )
-    throw Error("animal_ballot_round_invalid");
-  if (
-    round === 2 &&
-    JSON.stringify([...candidates].sort((a, b) => a - b)) !== JSON.stringify(pkCandidates(unit))
-  )
-    throw Error("animal_ballot_round_invalid");
-  const expected = eligibleAnimalVoters(world, candidates);
-  if (!expected) throw Error("animal_ballot_round_invalid");
-  if (
-    votes.length !== expected.length ||
-    new Set(votes.map((v) => v.actorId)).size !== votes.length
-  )
-    throw Error("animal_ballot_round_invalid");
-  const accepted: AcceptedBallot[] = votes.map((v) => {
-    if (
-      !v ||
-      typeof v !== "object" ||
-      Array.isArray(v) ||
-      Object.keys(v).length !== 4 ||
-      Object.keys(v).some((key) => !["actorId", "targetId", "abstain", "weight"].includes(key))
-    )
-      throw Error("animal_ballot_round_invalid");
-    const voter = animalOriginalPlayer(world, v.actorId),
-      voting = votingState(world, v.actorId),
-      target = v.targetId === null ? null : animalOriginalPlayer(world, v.targetId, !v.abstain);
-    if (
-      !voter ||
-      !voting?.canVote ||
-      !expected.includes(v.actorId) ||
-      typeof v.abstain !== "boolean" ||
-      (v.targetId !== null && (!Number.isSafeInteger(v.targetId) || v.targetId < 1)) ||
-      v.weight !== (v.abstain ? 0 : voting.weight) ||
-      (!v.abstain && (!target || (round === 2 && !candidates.includes(v.targetId!))))
-    )
-      throw Error("animal_ballot_round_invalid");
-    return Object.freeze({
-      voter,
-      target,
-      abstain: v.abstain,
-      weight: v.weight,
-      voting: voting.value,
-    });
-  });
-  // 最后 guard 之后只做数据检查，再安装回执；不插入新的外部回调使旧样本迟到失效。
-  checkDeathScope(world, owner, unit.current);
-  if (
-    JSON.stringify(eligibleAnimalVoters(world, candidates)) !== JSON.stringify(expected) ||
-    accepted.some(
-      (v) =>
-        animalOriginalPlayer(world, v.voter.scope.id) !== v.voter ||
-        (!v.abstain && animalOriginalPlayer(world, v.target!.scope.id) !== v.target) ||
-        votingState(world, v.voter.scope.id)?.value !== v.voting ||
-        votingState(world, v.voter.scope.id)?.canVote !== true ||
-        (!v.abstain && votingState(world, v.voter.scope.id)?.weight !== v.weight),
-    )
-  ) {
-    stop(owner);
-    throw Error("animal_ballot_round_revoked");
-  }
-  unit.rounds.set(round, Object.freeze(accepted));
-}
-export function sealAnimalBallots(world: World, token: object): void {
-  const { owner, unit } = ownedUnit(world, token);
-  if (unit.value.kind !== "exile" || unit.finalRound !== null || !unit.rounds.size)
-    throw Error("animal_ballot_round_unavailable");
-  if (unit.rounds.size === 1 && pkCandidates(unit).length) throw Error("animal_ballot_pk_required");
-  unit.finalRound = unit.rounds.size === 2 ? 2 : 1;
-  const policy = animalRosterPolicies(world)!.ballotPolicy,
-    selected = unit.rounds.get(policy === "awa_first_ballot_v1" ? 1 : unit.finalRound)!,
-    targets = selected
+  const targets = selected
       .filter((v) => !v.abstain && v.target?.scope.id === owner.puffer.actor.scope.id)
       .map((v) => v.voter)
       .sort((a, b) => a.scope.id - b.scope.id),
@@ -812,6 +678,12 @@ export function sealAnimalBallots(world: World, token: object): void {
       activated: false,
     };
 }
+// 同族接受票流程复用这三个实际权威函数；这些对象引用不代表额外授权，原 guard／停止仍生效。
+export {
+  ownedUnit as animalAcceptedBallotUnit,
+  checkDeathScope as assertAnimalAcceptedBallotScope,
+  stop as stopAnimalAcceptedBallotUnit,
+};
 export function animalPufferChoiceActor(world: World, token: object): number | null {
   const { owner, unit } = ownedUnit(world, token);
   return unit.puffer && !unit.puffer.paid && !unit.puffer.closed
@@ -1048,16 +920,8 @@ export function animalAuthoritySnapshot(world: World, complete = true) {
       status: owner.unit.status,
       expiryPrepared: owner.unit.expiryPrepared,
       expiryCatId: owner.unit.expiryCatId,
-      finalRound: owner.unit.finalRound,
-      ballots: [...owner.unit.rounds].map(([round, votes]) => ({
-        round,
-        votes: votes.map((v) => ({
-          actorId: v.voter.scope.id,
-          targetId: v.target?.scope.id ?? null,
-          abstain: v.abstain,
-          weight: v.weight,
-        })),
-      })),
+      finalRound: owner.unit.ballots.finalRound,
+      ballots: owner.unit.ballots.snapshotVotes(),
       puffer: owner.unit.puffer && {
         targetIds: owner.unit.puffer.targets.map((v) => v.scope.id),
         paid: owner.unit.puffer.paid,

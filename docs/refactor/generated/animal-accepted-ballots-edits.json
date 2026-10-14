@@ -1,0 +1,134 @@
+{
+  "sourceEdits": {
+    "backend/src/game/mechanisms/roles/animal_dream/authority.ts": [
+      {
+        "before": "interface AcceptedBallot {\n  readonly voter: AnimalOriginalPlayer;\n  readonly target: AnimalOriginalPlayer | null;\n  readonly abstain: boolean;\n  readonly weight: number;\n  readonly voting: object;\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "  readonly rounds: Map<1 | 2, readonly AcceptedBallot[]>;\n  finalRound: 1 | 2 | null;",
+        "after": "  readonly ballots: AnimalBallotLedger;",
+        "count": 1
+      },
+      {
+        "before": "      rounds: new Map(),\n      finalRound: null,",
+        "after": "      ballots: new AnimalBallotLedger(),",
+        "count": 1
+      },
+      {
+        "before": "function pkCandidates(unit: OwnedUnit): number[] {\n  const tally = new Map<number, number>();\n  for (const vote of unit.rounds.get(1) ?? []) {\n    if (!vote.abstain && vote.target)\n      tally.set(vote.target.scope.id, (tally.get(vote.target.scope.id) ?? 0) + vote.weight);\n  }\n  const max = Math.max(0, ...tally.values()),\n    tied = [...tally]\n      .filter(([, weight]) => weight === max)\n      .map(([id]) => id)\n      .sort((a, b) => a - b);\n  return tied.length > 1 ? tied : [];\n}\nfunction votingState(\n  world: World,\n  id: number,\n): { value: object; canVote: boolean; weight: number } | null {\n  const value = world.getComponent(id, COMPONENT.VotingRight),\n    canVote = descriptor(value, \"canVote\")?.value,\n    weight = descriptor(value, \"weight\")?.value;\n  return value && typeof canVote === \"boolean\" && (weight === 1 || weight === 1.5)\n    ? { value, canVote, weight }\n    : null;\n}\nfunction eligibleAnimalVoters(world: World, candidates: readonly number[]): number[] | null {\n  const ids: number[] = [];\n  for (const id of world.entityIds()) {\n    if (!animalOriginalPlayer(world, id)) continue;\n    const voting = votingState(world, id);\n    if (!voting) return null;\n    if (voting.canVote && !candidates.includes(id)) ids.push(id);\n  }\n  return ids;\n}\n/** 可信 VotingPipeline 在实际接收边界记录整轮已接受票，包括弃票；不接收模型给出的目标子集。 */\nexport function recordAnimalBallotRound(\n  world: World,\n  token: object,\n  round: 1 | 2,\n  rawVotes: readonly {\n    actorId: number;\n    targetId: number | null;\n    abstain: boolean;\n    weight: number;\n  }[],\n  rawPkCandidates: readonly number[] = [],\n): void {\n  // 首次调用外部单元 guard 之前先捕获已接受输入，保留原样本而非回调修改后的值。\n  const votes = snapshotPlainData(rawVotes) as typeof rawVotes,\n    candidates = snapshotPlainData(rawPkCandidates) as number[];\n  const { owner, unit } = ownedUnit(world, token);\n  if (\n    unit.value.kind !== \"exile\" ||\n    unit.finalRound !== null ||\n    round !== unit.rounds.size + 1 ||\n    (round !== 1 && round !== 2)\n  )\n    throw Error(\"animal_ballot_round_unavailable\");\n  if (\n    !Array.isArray(votes) ||\n    !Array.isArray(candidates) ||\n    new Set(candidates).size !== candidates.length ||\n    (round === 1 ? candidates.length !== 0 : candidates.length < 2) ||\n    candidates.some((id) => !animalOriginalPlayer(world, id))\n  )\n    throw Error(\"animal_ballot_round_invalid\");\n  if (\n    round === 2 &&\n    JSON.stringify([...candidates].sort((a, b) => a - b)) !== JSON.stringify(pkCandidates(unit))\n  )\n    throw Error(\"animal_ballot_round_invalid\");\n  const expected = eligibleAnimalVoters(world, candidates);\n  if (!expected) throw Error(\"animal_ballot_round_invalid\");\n  if (\n    votes.length !== expected.length ||\n    new Set(votes.map((v) => v.actorId)).size !== votes.length\n  )\n    throw Error(\"animal_ballot_round_invalid\");\n  const accepted: AcceptedBallot[] = votes.map((v) => {\n    if (\n      !v ||\n      typeof v !== \"object\" ||\n      Array.isArray(v) ||\n      Object.keys(v).length !== 4 ||\n      Object.keys(v).some((key) => ![\"actorId\", \"targetId\", \"abstain\", \"weight\"].includes(key))\n    )\n      throw Error(\"animal_ballot_round_invalid\");\n    const voter = animalOriginalPlayer(world, v.actorId),\n      voting = votingState(world, v.actorId),\n      target = v.targetId === null ? null : animalOriginalPlayer(world, v.targetId, !v.abstain);\n    if (\n      !voter ||\n      !voting?.canVote ||\n      !expected.includes(v.actorId) ||\n      typeof v.abstain !== \"boolean\" ||\n      (v.targetId !== null && (!Number.isSafeInteger(v.targetId) || v.targetId < 1)) ||\n      v.weight !== (v.abstain ? 0 : voting.weight) ||\n      (!v.abstain && (!target || (round === 2 && !candidates.includes(v.targetId!))))\n    )\n      throw Error(\"animal_ballot_round_invalid\");\n    return Object.freeze({\n      voter,\n      target,\n      abstain: v.abstain,\n      weight: v.weight,\n      voting: voting.value,\n    });\n  });\n  // 最后 guard 之后只做数据检查，再安装回执；不插入新的外部回调使旧样本迟到失效。\n  checkDeathScope(world, owner, unit.current);\n  if (\n    JSON.stringify(eligibleAnimalVoters(world, candidates)) !== JSON.stringify(expected) ||\n    accepted.some(\n      (v) =>\n        animalOriginalPlayer(world, v.voter.scope.id) !== v.voter ||\n        (!v.abstain && animalOriginalPlayer(world, v.target!.scope.id) !== v.target) ||\n        votingState(world, v.voter.scope.id)?.value !== v.voting ||\n        votingState(world, v.voter.scope.id)?.canVote !== true ||\n        (!v.abstain && votingState(world, v.voter.scope.id)?.weight !== v.weight),\n    )\n  ) {\n    stop(owner);\n    throw Error(\"animal_ballot_round_revoked\");\n  }\n  unit.rounds.set(round, Object.freeze(accepted));\n}\nexport function sealAnimalBallots(world: World, token: object): void {\n  const { owner, unit } = ownedUnit(world, token);\n  if (unit.value.kind !== \"exile\" || unit.finalRound !== null || !unit.rounds.size)\n    throw Error(\"animal_ballot_round_unavailable\");\n  if (unit.rounds.size === 1 && pkCandidates(unit).length) throw Error(\"animal_ballot_pk_required\");\n  unit.finalRound = unit.rounds.size === 2 ? 2 : 1;\n  const policy = animalRosterPolicies(world)!.ballotPolicy,\n    selected = unit.rounds.get(policy === \"awa_first_ballot_v1\" ? 1 : unit.finalRound)!,\n    targets = selected\n      .filter((v) => !v.abstain && v.target?.scope.id === owner.puffer.actor.scope.id)\n      .map((v) => v.voter)\n      .sort((a, b) => a.scope.id - b.scope.id),\n    stock = PUFFER_STATE_SLOT.schema(PUFFER_STATE_SLOT.checkpoint.decode(() => owner.puffer.json));\n  if (\n    targets.length &&\n    stock.usedDay === null &&\n    stock.knifeDeathDay === null &&\n    animalOriginalPlayer(world, owner.puffer.actor.scope.id)\n  )\n    unit.puffer = {\n      targets: Object.freeze(targets),\n      requests: new Set(),\n      paid: false,\n      closed: false,\n      activated: false,\n    };\n}\n",
+        "after": "/** 封票后在原点建立河豚原目标租约；先读票再解库存，失败不撤销已写 finalRound。 */\nexport function installAnimalPufferBallotChoice(\n  world: World,\n  owner: Owner,\n  unit: OwnedUnit,\n  selected: readonly AcceptedBallot[],\n): void {\n  const targets = selected\n      .filter((v) => !v.abstain && v.target?.scope.id === owner.puffer.actor.scope.id)\n      .map((v) => v.voter)\n      .sort((a, b) => a.scope.id - b.scope.id),\n    stock = PUFFER_STATE_SLOT.schema(PUFFER_STATE_SLOT.checkpoint.decode(() => owner.puffer.json));\n  if (\n    targets.length &&\n    stock.usedDay === null &&\n    stock.knifeDeathDay === null &&\n    animalOriginalPlayer(world, owner.puffer.actor.scope.id)\n  )\n    unit.puffer = {\n      targets: Object.freeze(targets),\n      requests: new Set(),\n      paid: false,\n      closed: false,\n      activated: false,\n    };\n}\n// 同族接受票流程复用这三个实际权威函数；这些对象引用不代表额外授权，原 guard／停止仍生效。\nexport {\n  ownedUnit as animalAcceptedBallotUnit,\n  checkDeathScope as assertAnimalAcceptedBallotScope,\n  stop as stopAnimalAcceptedBallotUnit,\n};\n",
+        "count": 1
+      },
+      {
+        "before": "unit.finalRound === null",
+        "after": "unit.ballots.finalRound === null",
+        "count": 2
+      },
+      {
+        "before": "      finalRound: owner.unit.finalRound,\n      ballots: [...owner.unit.rounds].map(([round, votes]) => ({\n        round,\n        votes: votes.map((v) => ({\n          actorId: v.voter.scope.id,\n          targetId: v.target?.scope.id ?? null,\n          abstain: v.abstain,\n          weight: v.weight,\n        })),\n      })),",
+        "after": "      finalRound: owner.unit.ballots.finalRound,\n      ballots: owner.unit.ballots.snapshotVotes(),",
+        "count": 1
+      },
+      {
+        "before": "import type { AnimalDeathUnit } from \"./state\";",
+        "after": "import type { AnimalDeathUnit } from \"./state\";\nimport { AnimalBallotLedger, type AcceptedBallot } from \"./ballot-ledger\";",
+        "count": 1
+      },
+      {
+        "before": " * 三族状态捕获／唯一替换／JSON 由 state-slot 拥有；此处仍拥有生命、当前性、付款及关闭顺序。",
+        "after": " * 三族状态捕获／唯一替换／JSON 由 state-slot 拥有，已接受票与封票归唯一 ballot-ledger；\n * 此处仍拥有生命、当前性、河豚租约建立、付款及关闭顺序。",
+        "count": 1
+      }
+    ],
+    "backend/src/game/engine/phase_pipeline/voting_pipeline.ts": [
+      {
+        "before": "from \"../../mechanisms/roles/animal_dream/authority\"",
+        "after": "from \"../../mechanisms/roles/animal_dream/ballot-ports\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/animal-dream/request-envelope.test.ts": [
+      {
+        "before": "  recordAnimalBallotRound,\n  sealAnimalBallots,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "from \"../../../../src/game/mechanisms/roles/animal_dream/authority\";",
+        "after": "from \"../../../../src/game/mechanisms/roles/animal_dream/authority\";\nimport { recordAnimalBallotRound, sealAnimalBallots } from \"../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots\";",
+        "count": 1
+      },
+      {
+        "before": "/**\n * Unit tests for animal-dream; Isolated animal-dream request-envelope contract; native in-memory owner/frame/readers, no assembled game cycle.\n * Inputs are existing in-memory fixtures, original callback controls and explicit\n * invalid mutations. Original literal expectations, identity snapshots and\n * rejection assertions supply the oracle; none are regenerated during relocation.\n * Test-owned mocks/components exercise this boundary without a model or physical\n * transport. Support files, fixture bytes, policy and state behavior are retained.\n */",
+        "after": "/**\n * 单元测试负责动物梦境请求元数据捕获、期限克隆和撤权。\n * 输入为既有内存 fixture、原回调和明确非法修改；原字面预期、身份快照及拒绝断言保持独立预期。\n * 仅调用真实 owner／frame／reader，原样保留请求和资源规则，不运行完整对局、模型或真实传输。\n */",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/animal-dream/cat-authority.test.ts": [
+      {
+        "before": "  recordAnimalBallotRound,\n  sealAnimalBallots,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "from \"../../../../src/game/mechanisms/roles/animal_dream/authority\";",
+        "after": "from \"../../../../src/game/mechanisms/roles/animal_dream/authority\";\nimport { recordAnimalBallotRound, sealAnimalBallots } from \"../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots\";",
+        "count": 1
+      },
+      {
+        "before": "/**\n * Unit tests for animal-dream; Isolated animal-dream cat-authority contract; native in-memory owner/frame/readers, no assembled game cycle.\n * Inputs are existing in-memory fixtures, original callback controls and explicit\n * invalid mutations. Original literal expectations, identity snapshots and\n * rejection assertions supply the oracle; none are regenerated during relocation.\n * Test-owned mocks/components exercise this boundary without a model or physical\n * transport. Support files, fixture bytes, policy and state behavior are retained.\n */",
+        "after": "/**\n * 单元测试负责动物梦境白猫延期、实际放逐单元到期和生命提交边界。\n * 输入为既有内存 fixture、原回调和明确非法修改；原字面预期、身份快照及拒绝断言保持独立预期。\n * 仅调用真实 owner／frame／reader，原样保留请求和资源规则，不运行完整对局、模型或真实传输。\n */",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/animal-dream/puffer-authority.test.ts": [
+      {
+        "before": "  recordAnimalBallotRound,\n  sealAnimalBallots,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "from \"../../../../src/game/mechanisms/roles/animal_dream/authority\";",
+        "after": "from \"../../../../src/game/mechanisms/roles/animal_dream/authority\";\nimport { recordAnimalBallotRound, sealAnimalBallots } from \"../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots\";",
+        "count": 1
+      },
+      {
+        "before": "// Raw owner tests simulate the future sole DeathResolution consumer.",
+        "after": "// 本单元样本手写首次生命提交以驱动原关闭边界；不能替代真实死亡流水线验收。",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/mechanisms/night-choice/request-construction.test.ts": [
+      {
+        "before": "import { installAnimalAuthority, beginAnimalNight, closeAnimalNight, beginAnimalExileUnit, recordAnimalBallotRound, sealAnimalBallots, animalAuthoritySnapshot } from \"../../../../src/game/mechanisms/roles/animal_dream/authority\";",
+        "after": "import { installAnimalAuthority, beginAnimalNight, closeAnimalNight, beginAnimalExileUnit, animalAuthoritySnapshot } from \"../../../../src/game/mechanisms/roles/animal_dream/authority\";\nimport { recordAnimalBallotRound, sealAnimalBallots } from \"../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots\";",
+        "count": 1
+      }
+    ]
+  },
+  "oldPrograms": {
+    "acceptedDeclaration": "interface AcceptedBallot {\n  readonly voter: AnimalOriginalPlayer;\n  readonly target: AnimalOriginalPlayer | null;\n  readonly abstain: boolean;\n  readonly weight: number;\n  readonly voting: object;\n}\n",
+    "pk": "function pkCandidates(unit: OwnedUnit): number[] {\n  const tally = new Map<number, number>();\n  for (const vote of unit.rounds.get(1) ?? []) {\n    if (!vote.abstain && vote.target)\n      tally.set(vote.target.scope.id, (tally.get(vote.target.scope.id) ?? 0) + vote.weight);\n  }\n  const max = Math.max(0, ...tally.values()),\n    tied = [...tally]\n      .filter(([, weight]) => weight === max)\n      .map(([id]) => id)\n      .sort((a, b) => a - b);\n  return tied.length > 1 ? tied : [];\n}\n",
+    "sealOriginal": "export function sealAnimalBallots(world: World, token: object): void {\n  const { owner, unit } = ownedUnit(world, token);\n  if (unit.value.kind !== \"exile\" || unit.finalRound !== null || !unit.rounds.size)\n    throw Error(\"animal_ballot_round_unavailable\");\n  if (unit.rounds.size === 1 && pkCandidates(unit).length) throw Error(\"animal_ballot_pk_required\");\n  unit.finalRound = unit.rounds.size === 2 ? 2 : 1;\n  const policy = animalRosterPolicies(world)!.ballotPolicy,\n    selected = unit.rounds.get(policy === \"awa_first_ballot_v1\" ? 1 : unit.finalRound)!,\n    targets = selected\n      .filter((v) => !v.abstain && v.target?.scope.id === owner.puffer.actor.scope.id)\n      .map((v) => v.voter)\n      .sort((a, b) => a.scope.id - b.scope.id),\n    stock = PUFFER_STATE_SLOT.schema(PUFFER_STATE_SLOT.checkpoint.decode(() => owner.puffer.json));\n  if (\n    targets.length &&\n    stock.usedDay === null &&\n    stock.knifeDeathDay === null &&\n    animalOriginalPlayer(world, owner.puffer.actor.scope.id)\n  )\n    unit.puffer = {\n      targets: Object.freeze(targets),\n      requests: new Set(),\n      paid: false,\n      closed: false,\n      activated: false,\n    };\n}\n"
+  },
+  "paths": [
+    "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+    "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+    "backend/tests/unit/features/animal-dream/request-envelope.test.ts",
+    "backend/tests/unit/features/animal-dream/cat-authority.test.ts",
+    "backend/tests/unit/features/animal-dream/puffer-authority.test.ts",
+    "backend/tests/unit/mechanisms/night-choice/request-construction.test.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/ballot-ledger.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/accepted-ballots.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/ballot-ports.ts",
+    "backend/tests/unit/features/animal-dream/accepted-ballots.test.ts"
+  ],
+  "newPaths": [
+    "backend/src/game/mechanisms/roles/animal_dream/ballot-ledger.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/accepted-ballots.ts",
+    "backend/src/game/mechanisms/roles/animal_dream/ballot-ports.ts",
+    "backend/tests/unit/features/animal-dream/accepted-ballots.test.ts"
+  ]
+}

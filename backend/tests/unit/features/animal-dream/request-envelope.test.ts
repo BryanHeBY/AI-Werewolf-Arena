@@ -1,10 +1,7 @@
 /**
- * Unit tests for animal-dream; Isolated animal-dream request-envelope contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试负责动物梦境请求元数据捕获、期限克隆和撤权。
+ * 输入为既有内存 fixture、原回调和明确非法修改；原字面预期、身份快照及拒绝断言保持独立预期。
+ * 仅调用真实 owner／frame／reader，原样保留请求和资源规则，不运行完整对局、模型或真实传输。
  */
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
@@ -24,12 +21,11 @@ import {
   createAnimalFoxRequest,
   openAnimalFoxChoice,
   beginAnimalExileUnit,
-  recordAnimalBallotRound,
-  sealAnimalBallots,
   createAnimalPufferRequest,
   openAnimalPufferChoice,
   animalAuthoritySnapshot,
 } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots";
 const fixture = () => animalRosterFixture(undefined, installAnimalAuthority);
 function request(kind: "fox" | "puffer" = "fox", day = 2) {
   const name = kind === "fox" ? "fox_distract" : "puffer_retaliate";

@@ -1,0 +1,11 @@
+27 | programs.pk=pair(wrap(member('pkCandidates').body.getText(ledgerSF).replaceAll('this.#rounds','unit.rounds')),wrap(oldFn('pkCandidates').body.getText(original)),'full PK');
+28 | programs.accept=pair(wrap(member('accept').body.getText(ledgerSF).replaceAll('this.#rounds','unit.rounds')),wrap('{ '+oldFn('recordAnimalBallotRound').body.statements.at(-1).getText(original)+' }'),'final accepted install');
+29 | const oldSeal=oldFn('sealAnimalBallots').body.statements.find(n=>n.getText(original).startsWith('unit.finalRound ='));
+30 | programs.finalRound=pair(wrap(member('seal').body.getText(ledgerSF).replaceAll('this.#finalRound','unit.finalRound').replaceAll('this.#rounds','unit.rounds')),wrap('{ '+oldSeal.getText(original)+' }'),'finalRound commit');
+31 | const oldSnapshot=edits.sourceEdits[auth.path].find(e=>e.before.startsWith('      finalRound: owner.unit.finalRound'));
+32 | const oldProjection=oldSnapshot.before.slice(oldSnapshot.before.index('ballots: ')+9).trim().replace(/,$/,'');
+                                                                     ^
+TypeError: oldSnapshot.before.index is not a function. (In 'oldSnapshot.before.index("ballots: ")', 'oldSnapshot.before.index' is undefined)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/animal-accepted-ballots-proof.cjs:32:65)
+
+Bun v1.4.3 (Linux x64)

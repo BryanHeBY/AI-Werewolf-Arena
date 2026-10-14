@@ -12,7 +12,7 @@ import {
   beginAnimalExileUnit,
   recordAnimalBallotRound,
   sealAnimalBallots,
-} from "../../mechanisms/roles/animal_dream/authority";
+} from "../../mechanisms/roles/animal_dream/ballot-ports";
 import { runAnimalPufferChoice } from "../../mechanisms/roles/animal_dream/choice-ports";
 import { resolveTricksterExile } from "../../mechanisms/roles/trickster/night_frame";
 import { assertOrderPrinceOriginalCurrent } from "../../mechanisms/roles/order_prince/authority";
