@@ -1,0 +1,212 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "/** 文件说明：LLM 工具修复的上下文与处理器契约。 */",
+    "after": "/**\n * 负责定义工具参数修复与目标提示的公共数据契约；输入为原参数、行动者和 World／候选引用，\n * 输出契约为修复候选或提示文字。实际处理函数与目标规则由各 registry 拥有。\n * 可写字段与 readonly 候选类型不复制、冻结或验证输入；提示及修复结果不授予请求权限或库存。\n */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "/** 参数纠正规则上下文。 */",
+    "after": "/** 修复只取得本次行动者编号；该字段本身不证明请求绑定、身份或当前行动资格。 */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "/** 参数纠正处理器签名。 */",
+    "after": "/**\n * 接收可写的原参数记录与上下文，返回修复候选；null 表示没有候选，不表示已经接受或完成弃权。\n * 类型不限制处理器读取 getter、修改输入或抛错；接收器仍对结果校验 schema 和领域规则。\n */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "/** 单个原生工具参数纠正包定义。 */",
+    "after": "/** 工具到处理器的可写稀疏表；缺项由 registry 保原参数副本，同名注册按原顺序取最后函数。 */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "/** 可行动目标提示上下文。 */",
+    "after": "/**\n * 目标提示按当前工具与候选来源选择编号，World 保原 live 引用；这里不持有提交回执或独立库存。\n * 可选字段由原调用方逐项求值，缺项处理与异常由具体目标规则决定，不统一补全或校验。\n */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "  modifierCandidates?: readonly EntityId[];",
+    "after": "  /** 学者修正／追加行动的提示候选；readonly 只限制类型写法，不是冻结后的许可名单。 */\n  modifierCandidates?: readonly EntityId[];",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "  actorId: EntityId;\n  day?: number;",
+    "after": "  /** 行动者及轮次用于原目标规则查询；缺省 day 的处理由具体规则选择。 */\n  actorId: EntityId;\n  day?: number;",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "  actorRole?: Role;",
+    "after": "  /** 提示层选择目标策略的角色标签，可来自能力实例；不能据此认定当前身份或真实阵营。 */\n  actorRole?: Role;",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "  abilityId?: string;",
+    "after": "  /** 能力实例标识只定位本次目标规则，不独立授予该实例的使用权。 */\n  abilityId?: string;",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "  allowedTools: ToolName[];",
+    "after": "  /** 原可写工具数组决定提示分支；是否可提交仍由真实请求、接收器和机制复验。 */\n  allowedTools: ToolName[];",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "  world: World;",
+    "after": "  /** 规则在原查询点读取组件、存活名单和 locale；此引用不是数据快照。 */\n  world: World;",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "  sheriffCandidates?: readonly EntityId[];",
+    "after": "  /** 警长、徽章与放逐候选用于对应提示过滤，仍须按原参与规则核资格。 */\n  sheriffCandidates?: readonly EntityId[];",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/contracts.ts",
+    "before": "/** 目标提示注册器契约。 */",
+    "after": "/** 返回提示文本或无提示；查询／本地化异常按实现传播，提示不等于动作准入结果。 */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/helpers.ts",
+    "before": "/** 文件说明：LLM 参数纠正流程共用工具函数。 */",
+    "after": "/**\n * 负责参数修复的有限数值转换；输入任意值，输出有限 number 或 null。\n * 仅 null／undefined 直接返回 null，其它值走原 Number 转换；不校验整数、玩家编号或目标资格。\n * 转换可能执行调用方的原始值转换逻辑并抛错，本函数不捕获或改写该异常。\n */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/helpers.ts",
+    "before": "/** 将任意输入安全转换为 number 或 null。 */",
+    "after": "/** 空串、布尔和可转换对象仍沿 Number 的原接受面；NaN／无穷转为 null，转换抛错保原错误。 */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+    "before": "/** 文件说明：定义通用原生工具参数纠正规则。 */",
+    "after": "/**\n * 负责通用发言与投票的参数修复表；输入原参数记录，输出新候选记录或 null。\n * 表与处理器引用保持可写，修复仅改变候选形状，不接受请求、付款或授予库存。\n * 字段 getter 及 String／Number 转换可能抛错，异常原样传播，不用空候选吞掉失败。\n */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+    "before": "export const COMMON_LLM_REPAIR_PACK: ToolRepairPack = {",
+    "after": "/** 通用表按原 speak、vote 顺序供 registry 登记；不把本表的存在当作行动者许可。 */\nexport const COMMON_LLM_REPAIR_PACK: ToolRepairPack = {",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+    "before": "    speak: (args) => ({ text: String(args.text ?? \"\") }),",
+    "after": "    // 先读 text，只有 nullish 才补空串；String 可调用对象转换逻辑，既有文案和错误不在此改写。\n    speak: (args) => ({ text: String(args.text ?? \"\") }),",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+    "before": "      const abstain = Boolean(args.abstain);",
+    "after": "      // 先读弃权字段并取原 truthiness；弃权命中即返回，不读取可能带 getter 的 target_id。\n      const abstain = Boolean(args.abstain);",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+    "before": "      const target = numberOrNull(args.target_id);",
+    "after": "      // 非弃权才转换目标；有限数值仍只是候选，目标存在、范围和投票资格由下游校验。\n      const target = numberOrNull(args.target_id);",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+    "before": "/** 文件说明：定义跨角色通用工具的 schema 与提示信息。 */",
+    "after": "/**\n * 负责跨角色通用工具的参数结构与提示资料；输入为固定工具定义，输出原有序规格数组。\n * 数组、规格及 parameters 保持可写，登记和首次 schema 解析由消费 registry／接收器负责。\n * 这里创建资料而不消费库存或提交动作；schema 与提示的存在不等于当前请求准入。\n */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+    "before": "/** 通用工具规格列表。 */",
+    "after": "/** write_note → debate_vote → report_bug → speak → vote 的原公开顺序；const 不冻结数组或内层规格。 */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+    "before": "    name: \"write_note\",",
+    "after": "    // 只声明 text 参数；墙、物品实例、作者和请求当前性仍由墙便条机制核验。\n    name: \"write_note\",",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+    "before": "    name: \"debate_vote\",",
+    "after": "    // support 的 null 是原可表达值，不能把结构接受等同于已获得辩论票权。\n    name: \"debate_vote\",",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+    "before": "    name: \"report_bug\",",
+    "after": "    // 类别／级别／文本描述报告形状；传输与接收入口另决定本次能否提交报告。\n    name: \"report_bug\",",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+    "before": "    name: \"vote\",",
+    "after": "    // target_id 与 abstain 都是必填结构；两者语义关系和当前目标合法性仍需后续规则。\n    name: \"vote\",",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/config/contracts.ts",
+    "before": "/** 文件说明：板子配置规范化器契约。 */",
+    "after": "/**\n * 负责板子配置规范化器的数据与调用契约；输入和输出都是原 BoardConfig 结构。\n * 具体机制拥有删改规则，registry 只按顺序串接结果；返回值可以保原引用，也可以是新对象。\n * 该接口不承诺纯函数、深复制、冻结或回滚，不能把规范化当作完整配置校验或运行权限。\n */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/config/contracts.ts",
+    "before": "/** 单个规范化器定义。 */",
+    "after": "/** 同一 normalizer 对象作为方法 receiver；输入是上一规范化器实际返回的配置。 */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/config/contracts.ts",
+    "before": "  id: string;",
+    "after": "  /** 机制提供的标识；当前 registry 不按 id 去重、排序或授予写权。 */\n  id: string;",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/config/contracts.ts",
+    "before": "  normalize(config: BoardConfig): BoardConfig;",
+    "after": "  /** 方法可读写原配置或抛错；失败传播且后续规范化器不再运行，此前副作用不回滚。 */\n  normalize(config: BoardConfig): BoardConfig;",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+    "before": "/** 文件说明：板子配置规范化注册表。 */",
+    "after": "/**\n * 负责有序串接板子配置规范化；输入原配置与规范化器数组，输出最后一个实际返回值。\n * 默认依次执行女巫、警长、自爆规则；每次调用保 normalizer 方法 receiver 和前一步配置引用。\n * 抛错即停止后续处理，已发生的读取／写入不回滚；此 registry 不替具体机制重写规则或校验权限。\n */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+    "before": "/** 默认配置规范化器顺序（从机制/角色模块聚合）。 */",
+    "after": "/** 顺序固定为 Witch → Sheriff → SelfDestruct；规则对象是原模块引用，不在此复制其字段。 */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+    "before": "/** 配置规范化注册表。 */",
+    "after": "/** 实例保传入数组同引用；readonly 仅限制字段重新赋值，不冻结数组或处理器。 */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+    "before": "  /** 按注册顺序依次执行规范化。 */",
+    "after": "  /**\n   * 原 config 作为 reduce 初值；空数组原样返回。每次读取 normalize 后以该对象为 receiver 调用，\n   * 参数是前一实际结果；getter／处理函数抛错原样传播，不运行后续项或做补偿。\n   */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+    "before": "/** 获取默认规范化注册表。 */",
+    "after": "/** 首次调用才创建并缓存默认 registry；获取实例不执行规范化，失败时不会预先写入默认缓存。 */",
+    "kind": "comment"
+  }
+]

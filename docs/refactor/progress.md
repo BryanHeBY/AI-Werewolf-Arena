@@ -918,3 +918,5 @@
   29 不同案例最终通过／437 成功断言：World 15／348、Bootstrap 4／24、Magician 1／11、缺 Role 继承名单 4／16、缺 Camp 查验 3／11、Nightmare 1／13、双语实际 Wolf 输入 1／14。World 16 次案例执行保一次 raw 配置早 guard 真实失败，限定原三 getter 循环使用已绑定板子后只重失败一例／新增两例，其余绿不复。同行发现并修 six／eight 继承名单及其它可空 Role 短路、漏 source／receiver／imports、自等式、五 Role matcher、误增 Camp 引用和假 Good source；原身份／Camp 预期与单一撤权原因保。作者完整来源与程序证明、后继小桥／全部首后收据、最终冻结清单实际匹配，未调用模型／私配置／种子矩阵／全门禁。完整目标、全角色闭包、严格复现及 P9 继续，见 camp-canonical-input-policy.md 与 camp-canonical-feature-manifest.json。
 
 - 后端标准测试编译入口：只在 tests tsconfig 明确绑定已经安装的 TypeScript 包，原严格选项与包含范围保持。Root 与非作者核实际 76545330 完整前态、唯一 JSON 差分、三稳定配置和真实 resolver；新增 baseUrl 对裸模块的静态查找影响明确说明，不宣称任意环境等价。修复后正常测试类型入口首次 83cee3／session87906→394068 实际退出 0，未重复 F05b 有限绿色根、角色案例或结构门禁；JSON 不植入非标准注释，由中文维护文档说明职责。普通源码构建、全角色闭包及 P9 继续，见 backend-test-compiler-binding.md。
+
+- C45 工具修复／配置中文契约：六源首 35 注释说明修复候选与准入、原参数／目标引用、Number/String 可执行转换、弃权先读与短路、工具数组可写性，以及女巫→警长→自爆的方法接收者、异常停止和懒缓存。Root 与非作者核实际 76545330 六完整原源／四稳定消费控制／18 附件；首完整 630 节点／114 NodeArray／818 非注释叶与十二输出同，六职责头无诊断。同行指出显式 undefined 也覆盖旧 handler，末一注释精度修正由完整单源两输出窄桥承接，原绿不重；首 formal 与写前准备器断言失败原文保存，未伪造产品红。源码和模型／机器字符串、类型、API 不变；无类型／业务／模型／全门禁，全仓中文及完整目标继续，见 repair-config-chinese-contracts.md。

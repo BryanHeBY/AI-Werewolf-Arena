@@ -1,0 +1,8 @@
+[
+  "backend/src/game/mechanisms/llm/contracts.ts",
+  "backend/src/game/mechanisms/llm/helpers.ts",
+  "backend/src/game/mechanisms/common/llm_repair.ts",
+  "backend/src/game/mechanisms/common/tool_specs.ts",
+  "backend/src/game/mechanisms/config/contracts.ts",
+  "backend/src/game/mechanisms/config/normalizer_registry.ts"
+]

@@ -1,0 +1,51 @@
+{
+  "baseCommit": "7654533073e46150ee7181e6de6bf49d5e3e211d",
+  "sourceReady": {
+    "path": "docs/refactor/generated/repair-config-chinese-contracts-source-ready.json",
+    "sha256": "855e0bf76f1e83ec5431dbad23e327fae45a558a40826f61750016a601a97881"
+  },
+  "runs": [
+    {
+      "key": "proof",
+      "command": "bun --no-env-file docs/refactor/generated/repair-config-chinese-contracts-proof.cjs > docs/refactor/generated/repair-config-chinese-contracts-proof-output.txt 2>&1",
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+      "terminalChunk": "a94417",
+      "actualExitCode": 0,
+      "firstExecution": true,
+      "script": {
+        "path": "docs/refactor/generated/repair-config-chinese-contracts-proof.cjs",
+        "sha256": "3756d6558fd4e7b387cd8329be8362984c0c161edfef4a2975014a76cd6a7a88"
+      },
+      "report": {
+        "path": "docs/refactor/generated/repair-config-chinese-contracts-proof.json",
+        "sha256": "5e27042ee59166b72a9a92b2fa0f47fe0e96f339c4f548dab55c28b3b9682e97"
+      },
+      "stdout": {
+        "path": "docs/refactor/generated/repair-config-chinese-contracts-proof-output.txt",
+        "sha256": "eb9f596bfe84bf34555a3dc2cba45c2339b3230aafe456a44bc6d8ead5258138"
+      }
+    },
+    {
+      "key": "heads",
+      "command": "bun --no-env-file docs/refactor/generated/repair-config-chinese-contracts-heads.ts > docs/refactor/generated/repair-config-chinese-contracts-heads-output.txt 2>&1",
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+      "terminalChunk": "efb02d",
+      "actualExitCode": 0,
+      "firstExecution": true,
+      "script": {
+        "path": "docs/refactor/generated/repair-config-chinese-contracts-heads.ts",
+        "sha256": "beef43d26d9fe817aca203566ccfe1c0a23a881d4594c1498e56e184a418d3cd"
+      },
+      "report": {
+        "path": "docs/refactor/generated/repair-config-chinese-contracts-heads.json",
+        "sha256": "5153de0513ce32563da75dd34b416c7a681bf17ee6603be487df039292360667"
+      },
+      "stdout": {
+        "path": "docs/refactor/generated/repair-config-chinese-contracts-heads-output.txt",
+        "sha256": "f2ffe118e0f3e7ae79fc9b687bb14b5edd35a7189fd79485fa917e7b38bdb940"
+      }
+    }
+  ],
+  "firstRunsOnly": true,
+  "typeRuntimeGateNotRun": true
+}
