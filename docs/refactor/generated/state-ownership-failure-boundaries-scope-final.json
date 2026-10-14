@@ -1,0 +1,84 @@
+{
+  "baseCommit": "849d26441e2d4ee84579d7cf2d6304425e675daf",
+  "source": [
+    {
+      "path": "docs/refactor/state-ownership-failure-boundaries.md",
+      "sha256": "9966b741de8bb93daae5028dc1199be1243d89d8df4c244f8ee7f0b6366e7af1",
+      "change": "added",
+      "kind": "documentation"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/world.ts",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1"
+    },
+    {
+      "path": "backend/src/core/domain/components/camp.ts",
+      "sha256": "e25dfb25783bed0f9756066282318b488bb8ffed8531c30b6f9289eba873b02e"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-copies.json",
+      "sha256": "58255fa543262f9c11dab498090d87a39011f22bfb7c0be79c08a11ea5a39fe1"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f03-evidence.json",
+      "sha256": "31d55567c5b5cb5a02aba0a70a82b9dd6debfb4b0bd9d5712774ee43e7dbe9cf"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f03-output.txt",
+      "sha256": "f07e309bdf1a3224d17eeac89ad2e28a440bd4cf48a7212c74de0e2051f82b5c"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f03-result.json",
+      "sha256": "34c6bb4e5d357978cc324556101a9c47feb143d9ac8e2654891cfd5ab43f4ed5"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f03-script.ts",
+      "sha256": "f27d242cd5ab6f08d45a19f76b49dacb630200fb8aebfa03eaaebccc22f87f88"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f03-source.json",
+      "sha256": "74ab6caf46014f441071f13d074b0d0725dcea49351af6b070125b058eb87825"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f04-before.json",
+      "sha256": "a55c07de9e40f046aa2a2106161236ae7d85d2a681aa73cbb7d66ae4a869be68"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f04-evidence.json",
+      "sha256": "3f809d2cefeb3ea6990b373dafe3f581acd7f0286a37afeaca97124d60da4a43"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f04-output.txt",
+      "sha256": "ff16d51a7881dd9aa8e30bdafb7a6dae35d804fb7c256c881f7d04d6f2ced6ee"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f04-result.json",
+      "sha256": "ff16d51a7881dd9aa8e30bdafb7a6dae35d804fb7c256c881f7d04d6f2ced6ee"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-f04-script.ts",
+      "sha256": "d41a6c58fc5152ac0da11db77121d412f4f0c1363e356dc817e6e3878fa5a74d"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-before.json",
+      "sha256": "08bfa7ce77f22ff8d6cb34004c6f0775e683ee13b6ecbd219d7370cb8f9a1ba3"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-root-first-review-snapshot.json",
+      "sha256": "95adfe69295bdfbe9501c0c632ceb394fa027330d3c9b26a850e45bb27ef4ada"
+    },
+    {
+      "path": "docs/refactor/generated/state-ownership-failure-boundaries-name-correction.json",
+      "sha256": "82a0700a267493e9513b5b1d901f348a37ffe5ba5fec1a9d9445b73f6cf3459e"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/state-ownership-failure-boundaries.md",
+    "sha256": "9966b741de8bb93daae5028dc1199be1243d89d8df4c244f8ee7f0b6366e7af1"
+  }
+}

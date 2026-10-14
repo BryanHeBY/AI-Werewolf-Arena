@@ -1,0 +1,44 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "849d26441e2d4ee84579d7cf2d6304425e675daf",
+  "source": [
+    {
+      "path": "docs/refactor/state-ownership-failure-boundaries.md",
+      "sha256": "8a63bfcc010c3583775aa7fdf9d368a2e1d58683b65c0370328de8272c66b53e",
+      "change": "added",
+      "kind": "documentation"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/state-ownership-failure-boundaries-scope-final.json",
+    "sha256": "14c5101e7c9642245dc9288a1da2f82082b0530211c65289e4ea1d4664d46083"
+  },
+  "document": {
+    "path": "docs/refactor/state-ownership-failure-boundaries.md",
+    "sha256": "8a63bfcc010c3583775aa7fdf9d368a2e1d58683b65c0370328de8272c66b53e"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/state-ownership-failure-boundaries-evidence.json",
+    "sha256": "a21ad081fcfacf860cf56fa134c728d7791c08aafa578e5e3db50d3293be2feb"
+  },
+  "integrity": {
+    "freshSources": 1,
+    "actualGitBefore": 0,
+    "controls": 2,
+    "artifactHashes": 12,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "两实际脚本与独立字面断言和原错误前缀",
+    "原始字节收据与固定源/传递当前输入界限",
+    "仅登记政策未决定与生产调用范围",
+    "中文登记和绝对路径历史记录"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}
