@@ -8,6 +8,7 @@
  * 雾鸦延迟夜的原体检查与反应准备归具名同步序列；本经理持唯一 pending、原两次 await，
  * 公开夜报、真实死亡提交、周期时钟、判胜及失败清理仍归本经理。
  * 终局候选规则只选择配置、改写狐狸候选并校验婚约／成员；原评估点、故障核对与唯一封盘写入仍归本经理。
+ * 放逐名单／来源和反馈门控归具体规则组合；动物板先标死后反馈，普通板先捕获后死亡，原 await 与提交仍在这里。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
@@ -88,7 +89,7 @@ import { RoleRegistry } from "../../core/domain/registries/role_registry";
 import { COMPONENT } from "../../core/domain/components/names";
 import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit";
 import { commitKnightDuel } from "../mechanisms/roles/knight/commit";
-import { captureExileFeedback } from "../mechanisms/roles/gravekeeper/feedback";
+import { prepareAnimalExileDeaths, captureAnimalExileFeedback, captureOrdinaryExileFeedback, prepareOrdinaryExileDeaths } from "../../rulesets/exile-death-preparation";
 import {
   captureBeautyExile,
   resolveBeautyExileVictory,
@@ -882,13 +883,7 @@ export class PhaseManager {
 
     let beautyCandidate: BeautyExileCandidate | null = null;
     if (votingResult.animalUnit) {
-      const sources: DeathSources = {};
-      for (const id of votingResult.removed) sources[id] = [DeathCause.Exile];
-      for (const id of votingResult.animalRetaliation ?? [])
-        sources[id] = [...new Set([...(sources[id] ?? []), DeathCause.PufferRetaliation])];
-      const ids = [
-        ...new Set([...votingResult.removed, ...(votingResult.animalRetaliation ?? [])]),
-      ];
+      const { sources, ids } = prepareAnimalExileDeaths(votingResult);
       await this.deathResolution.resolve(
         ids,
         sources,
@@ -907,13 +902,7 @@ export class PhaseManager {
         unit: u.number,
         kind: u.kind,
       });
-      const target = votingResult.summary.target;
-      this.previousExile =
-        target !== null &&
-        sources[target]?.includes(DeathCause.Exile) &&
-        this.world.getComponent(target, COMPONENT.Alive)?.alive === false
-          ? captureExileFeedback(this.world, target, cycleDay)
-          : null;
+      this.previousExile = captureAnimalExileFeedback(() => this.world, votingResult, sources, cycleDay);
     } else if (votingResult.removed.length > 0) {
       const target =
         votingResult.summary.effectiveTarget === undefined
@@ -921,14 +910,8 @@ export class PhaseManager {
           : votingResult.summary.effectiveTarget;
       if (target !== null && votingResult.removed.includes(target))
         beautyCandidate = captureBeautyExile(this.world, target);
-      this.previousExile =
-        target !== null && votingResult.removed.includes(target)
-          ? captureExileFeedback(this.world, target, cycleDay)
-          : null;
-      const sources: DeathSources = {};
-      for (const removedId of votingResult.removed) {
-        sources[removedId] = [DeathCause.Exile];
-      }
+      this.previousExile = captureOrdinaryExileFeedback(() => this.world, votingResult, target, cycleDay);
+      const sources = prepareOrdinaryExileDeaths(votingResult);
       await this.deathResolution.resolve(
         votingResult.removed,
         sources,

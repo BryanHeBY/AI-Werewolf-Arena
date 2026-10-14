@@ -1,0 +1,12 @@
+{
+  "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+  "beforeSHA256": "31986b6ae6053ceee4c3ec168676b234b28a76ff82618596afff16b1488d445c",
+  "afterSHA256": "5e44348862358bdabf0ce57125f353a6006aa207c9f6724791cb4d6884d9cb5d",
+  "oldComment": "/**\n * 提供守墓人原状态读取函数的公开入口。输入是调用方在原读取时点传入的角色对象；\n * 输出保留同一只读状态引用和原 getter 契约。读取之前的权限检查与失败、关闭窗口\n * 仍由原调用方负责。本入口仅具名导出本角色函数，不安装、校验、复制、冻结或存储状态。\n */",
+  "newComment": "/**\n * 提供守墓人状态读取与放逐时点反馈查询的具名公开入口。输入为原角色，或原 World、目标、日期和 catalog；\n * 输出为原状态引用，或按原查验政策生成的反馈／结果副本，不冻结 live 库存或授予行动许可。\n * 真正放逐的门控、死亡前后调用时点及下一夜历史交付仍分别由规则组合、经理与本族阶段负责；\n * 两种板子的反馈时点不同，此出口不额外要求目标已死、不打开窗口、不付款、不发布事实。\n * 仅导出原物理函数，保留原读取／默认 catalog，失败仍按原路径传播，不安装第二份状态或改变接受面。\n */",
+  "onlyExistingHeadJSDoc": true,
+  "wholeExactInverse": true,
+  "oldChecksNotRepeated": true,
+  "originalProofSHA256": "81474c1a2021e937d94c07edb3bd55e9930d1af3800665b7d182b26caab157a7",
+  "staticFollowup": "独审旁核原comment-check terminal词项，等义增加失败一词；未执行或重跑旧绿色检查。"
+}

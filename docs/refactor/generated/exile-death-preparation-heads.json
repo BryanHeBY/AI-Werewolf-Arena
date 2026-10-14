@@ -1,0 +1,23 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "53917771414a584dba24bd5c62282eceae3f2acef8408cbbbe2aadab4e2d7307"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+      "sha256": "31986b6ae6053ceee4c3ec168676b234b28a76ff82618596afff16b1488d445c"
+    },
+    {
+      "path": "backend/src/rulesets/exile-death-preparation.ts",
+      "sha256": "8c1bf56c0b3b623a9c7839ef036d40a4da9d7aebeca3e121aece1a032b9031ba"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/exile-death-preparation.test.ts",
+      "sha256": "e34281c03de196657dd457f863ef927dbaa2537db68db84cbd34d757050aefec"
+    }
+  ],
+  "documentationPaths": 581,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

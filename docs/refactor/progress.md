@@ -752,3 +752,5 @@
   - 本批末暂存检查8c738c仅targets多余EOF空行；只删除该LF，旧完整source/scope/evidence及两输出桥保持。Root与非作者末21附件/15源SHA重新绑定批准，未重复任何绿色行为/类型/头检查。
 
 - C45 行动请求/回合约束中文说明：两源13处纯comment维护，具体公共数据与opaque绑定、无deadline生成、工具/context复制→约束→actor feed→机制绑定、阶段多getter、必须/可选/max宽数值和摘要clone失败边界就地说明。Root与非作者完整源/真实b0b6两个before/9附件语义审批准；完整331typed/407leaf与四ES/CJS输出保持、head两源/579docs实0，没有业务测试/类型/全门禁或重复绿。注释参与真实新sourceHash，历史身份不改；全仓有效中文和P9继续，见 action-request-context-chinese-comments.md。
+
+- C24/C28 投票后死亡准备：四源收动物/普通两完整来源名单构造和放逐反馈门控，PM仍持previousExile/Beauty候选、原两await、动物current→close→append、生命提交/阶段/判胜；两政策分别保先标死后反馈与先反馈后死亡。Root作者及非作者完整59aea两before/四迁出正文/四控制/15附件中文职责审批准，ports首头新增反馈与终态词项仅JSDoc两精度闭；原绿阶段桥如实保。新首2绿1因并行Eclipse漏导入loader红，修后只failed1绿+原守墓人精准1绿，共四不同22assert；finite4/head首0，proof比较参数别名工具三红保末2af74d0。真实raw首日志未另存明确限界，无重绿或全门禁，完整C24/C28/PM/P9继续，见 exile-death-preparation.md。

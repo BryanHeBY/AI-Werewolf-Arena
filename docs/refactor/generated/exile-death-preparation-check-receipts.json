@@ -1,0 +1,66 @@
+{
+  "types": {
+    "launch": {
+      "chunk_id": "d3dfa9",
+      "session_id": 86632
+    },
+    "terminal": {
+      "chunk_id": "8b4302",
+      "wall_time_seconds": 0.000007088,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "roots": 4
+  },
+  "heads": {
+    "chunk_id": "2034b8",
+    "wall_time_seconds": 0.19642624,
+    "exit_code": 0,
+    "original_token_count": 158,
+    "output": "{\"source\":[{\"path\":\"backend/src/game/engine/phase_manager.ts\",\"sha256\":\"53917771414a584dba24bd5c62282eceae3f2acef8408cbbbe2aadab4e2d7307\"},{\"path\":\"backend/src/game/mechanisms/roles/gravekeeper/ports.ts\",\"sha256\":\"31986b6ae6053ceee4c3ec168676b234b28a76ff82618596afff16b1488d445c\"},{\"path\":\"backend/src/rulesets/exile-death-preparation.ts\",\"sha256\":\"8c1bf56c0b3b623a9c7839ef036d40a4da9d7aebeca3e121aece1a032b9031ba\"},{\"path\":\"backend/tests/unit/rulesets/exile-death-preparation.test.ts\",\"sha256\":\"e34281c03de196657dd457f863ef927dbaa2537db68db84cbd34d757050aefec\"}],\"documentationPaths\":581,\"diagnostics\":[],\"chineseHeadFailures\":[]}\n"
+  },
+  "proof": {
+    "firstFailures": [
+      {
+        "chunk_id": "3f238e",
+        "exit_code": 1,
+        "reason": "移回原PM时漏了exileDay→cycleDay实参别名，比较失败；原生产顺序未变。",
+        "script": "docs/refactor/generated/exile-death-preparation-proof-first.cjs"
+      },
+      {
+        "chunk_id": "515149",
+        "exit_code": 1,
+        "reason": "改用AST形状/叶仍因同一缺失别名失败，没有改生产。",
+        "script": "docs/refactor/generated/exile-death-preparation-proof-second.cjs"
+      },
+      {
+        "chunk_id": "cdb2a5",
+        "exit_code": 1,
+        "reason": "仅调试定位比较差异为exileDay/cycleDay；没有执行业务检查。",
+        "script": "docs/refactor/generated/exile-death-preparation-proof-debug.cjs"
+      }
+    ],
+    "final": {
+      "chunk_id": "2af74d",
+      "wall_time_seconds": 0.445766306,
+      "exit_code": 0,
+      "original_token_count": 22,
+      "output": "{\"wholePrograms\":2,\"typedNodes\":5343,\"wholeMappedOutputs\":4,\"completeMovedBodies\":4}\n"
+    }
+  },
+  "scopePreparation": {
+    "launch": {
+      "chunk_id": "c94aee",
+      "session_id": 80022
+    },
+    "terminal": {
+      "chunk_id": "0cdbb8",
+      "wall_time_seconds": 0.000010045,
+      "exit_code": 0,
+      "original_token_count": 15,
+      "output": "{'existing': 2, 'exactEditFragments': 41, 'finiteRoots': 4}\n"
+    },
+    "note": "逐字符生成完整41项接线片段曾后台运行；不计业务检查或新增用例。"
+  }
+}
