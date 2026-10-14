@@ -16,11 +16,11 @@ import { freshPairSeerState } from "../../../../src/game/mechanisms/roles/fragra
 import {
   findNightAbility,
   abilityStatus,
+  recordNightAbilityUse,
 } from "../../../../src/game/mechanisms/roles/abilities";
 import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
 import {
   installNativeAbility,
-  recordNightAbilityUse,
 } from "../../../../src/game/mechanisms/roles/ability_changes";
 import {
   grantNightAbility,

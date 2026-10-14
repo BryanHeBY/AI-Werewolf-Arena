@@ -20,7 +20,7 @@ import {
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { findNightAbility, allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
 import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
-import { setNightAbilityEnabled } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { setNightAbilityEnabled } from "../../../../src/game/mechanisms/roles/abilities";
 import { grantNightAbility, transferNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { freshMirrorInspectionState } from "../../../../src/game/mechanisms/roles/mirror_girl/profile";
 import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";

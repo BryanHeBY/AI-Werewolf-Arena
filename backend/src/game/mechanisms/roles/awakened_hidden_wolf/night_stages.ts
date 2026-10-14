@@ -15,7 +15,8 @@ import {
 } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { allNightAbilities, findNightAbility, retiredNightAbilityIds } from "../abilities";
-import { setNightAbilityStartDay, installNativeAbility } from "../ability_changes";
+import { installNativeAbility } from "../ability_changes";
+import { setNightAbilityStartDay } from "../abilities";
 import { canAwakenedKnife } from "./inheritance";
 import {
   beginAwakenedNight,

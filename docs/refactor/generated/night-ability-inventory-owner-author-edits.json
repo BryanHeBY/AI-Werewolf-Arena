@@ -1,0 +1,326 @@
+{
+  "backend/src/game/mechanisms/roles/abilities.ts": [
+    {
+      "before": "/**\n * 负责普通夜能力的实例映射、只读查询、状态判定与数据复制。\n * 输入为原实例引用、明确日期和数据字段；输出保留深只读 live 引用、原状态标签及共同数据规范化。\n * 原生安装、起效日与次数提交已归 ability_changes；本模块不写实际实例槽、库存或阶段。\n * Pair 纯数据规范化由同一实际函数供安装及投影使用，不从真实阵营推断玩家知识。\n * 共同元数据与玩家 DTO 类型归公共契约，完整 DTO 投影归 observation；status 标签不代替原许可或提交前复验。\n */\n\n",
+      "after": "/**\n * 负责普通夜能力唯一库存的数据复制、查询、原生安装和通用 metadata 提交。\n * 输入为原角色、捕获实例、已准备 payload 与明确日期；输出保留原字典／实例引用和能力变化事实。\n * 本 owner 写 abilities、retiredAbilityIds 及通用启停／次数／到期字段；原生 payload 准备仍归 ability_changes，\n * 授予／转移的来源与状态政策仍归 night-ability-grants，具体瓶数、梦历史、借用抑制及 Demon 审计另有原权威。\n * 字典创建、退休 ID 修订和逐字段提交保原求值顺序；发表或后续写入失败不回滚已完成前缀。\n * 数据复制不新增严格 live schema、JSON 档案接受或行动许可；readonly 视图仍是同一对象，不是冻结或第二库存。\n */\n\n",
+      "count": 1
+    },
+    {
+      "before": "  NightAbilityReadStates,",
+      "after": "  NightAbilityReadStates,\n  NightAbilityReadState,",
+      "count": 1
+    },
+    {
+      "before": "import type { RoleComponent } from \"../../../core/domain/components/role\";",
+      "after": "import type { RoleComponent } from \"../../../core/domain/components/role\";\nimport type { RoleInitializationComponent } from \"./contracts\";\nimport { COMPONENT } from \"../../../core/domain/components/names\";\nimport type { EntityId, GameEvent } from \"../../../core/domain/model\";\nimport type { World } from \"../../../core/domain/world\";\nimport { roleOf, emit } from \"./night-ability-change-runtime\";",
+      "count": 1
+    },
+    {
+      "before": "",
+      "after": "\n/** 已通过原生 payload 准备后提交：先创建字典，再查退休 ID，来源冲突不覆盖原实例。 */\nexport function commitPreparedNativeAbility<K extends NightAbilityKind>(\n  role: RoleComponent,\n  kind: K,\n  ownedState: NightAbilityStates[K],\n): NightAbilityReadState<K> {\n  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=\n    {}) as Record<string, NightAbility>;\n  const retired = ((role.privateState as { readonly retiredAbilityIds?: unknown })\n    .retiredAbilityIds ?? []) as string[];\n  const baseId = `native:${kind}`;\n  let id = baseId,\n    revision = 1;\n  while (retired.includes(id)) id = `${baseId}:${++revision}`;\n  const existing = stored[id];\n  if (existing) {\n    if (\n      existing.kind !== kind ||\n      existing.source.kind !== \"native\" ||\n      existing.source.role !== role.role\n    )\n      throw new Error(\"ability_native_binding_conflict\");\n    existing.state = ownedState;\n  } else {\n    stored[id] = {\n      id,\n      kind,\n      state: ownedState,\n      source: { kind: \"native\", role: role.role },\n      sourceDisclosed: true,\n      startsOnDay: 1,\n      maxUses: null,\n      uses: 0,\n      lastUsedDay: null,\n      disabled: false,\n    } as NightAbility;\n  }\n  return ownedState as NightAbilityReadState<K>;\n}\n\nexport function setNightAbilityEnabled(\n  world: World,\n  actorId: EntityId,\n  id: string,\n  enabled: boolean,\n  events: GameEvent[],\n): void {\n  const ability = allNightAbilities(roleOf(world, actorId)).find((ability) => ability.id === id);\n  if (!ability) throw new Error(\"ability_instance_missing\");\n  if (enabled && ability.deathExpired) throw new Error(\"ability_lucky_expired_on_death\");\n  if (ability.disabled === !enabled) return;\n  (ability as { disabled: boolean }).disabled = !enabled;\n  emit(events, actorId, ability, enabled ? \"enabled\" : \"disabled\");\n}\n\n/**\n * 退役角色已核对原体／捕获槽的借用实例，只重定义原 disabled 数据属性。\n * 目标 supplier 在 Object.defineProperty 方法查找之后执行，保原 late 字段读取位置。\n * 不按可变 id 重查、不读或执行替换的 disabled getter/setter、不删槽／退休 ID，不发布启停事实。\n * 借用租约、原主抑制和已付 payload 仍归具体 Frame；本写入不提供新行动权限或退款。\n */\nexport function retireBorrowedNightAbility(readBorrowed: () => NightAbilityReadView): void {\n  Object.defineProperty(readBorrowed(), \"disabled\", {\n    value: true,\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });\n}\n\n/** 实际死亡到期跟随同一实例经过转移／复活；已经付款的夜效果仍按原政策保留。 */\nexport function expireLuckyAbilitiesOnDeath(\n  world: World,\n  actorId: EntityId,\n  events: GameEvent[],\n): void {\n  for (const ability of allNightAbilities(world.getComponent(actorId, COMPONENT.Role))) {\n    if (\n      (ability.activation !== \"lucky\" && ability.activation !== \"black_market\") ||\n      ability.deathExpired\n    )\n      continue;\n    (ability as { deathExpired?: boolean }).deathExpired = true;\n    (ability as { disabled: boolean }).disabled = true;\n    emit(events, actorId, ability, \"disabled\");\n  }\n}\n\n\n/** 初始化／学习流程仍在原调用点决定起效日；这里只写原 startsOnDay，不推进业务时钟。 */\nexport function setNightAbilityStartDay(ability: NightAbilityReadView, day: number): void {\n  (ability as { startsOnDay: number }).startsOnDay = day;\n}\n\n/** 原 status 重检后先记 lastUsedDay，再可选增加 uses；payload 库存与已付效果继续归具体机制。 */\nexport function recordNightAbilityUse(\n  ability: NightAbilityReadView,\n  day: number,\n  consumed: boolean,\n): void {\n  if (abilityStatus(ability, day) !== \"active\") throw new Error(\"ability_not_active\");\n  (ability as { lastUsedDay: number | null }).lastUsedDay = day;\n  if (consumed) (ability as { uses: number }).uses++;\n}\n\n/** 本族初始化已经先完成；这里只在原清空点安装新空字典，不读取退休列表或补偿旧库存。 */\nexport function initializeNightAbilityInventory(role: RoleInitializationComponent): void {\n  role.privateState.abilities = {};\n}\n\n/** 来源与安装政策已由授予 owner 复验；安装先于发表，同一事件失败不撤回已安装实例。 */\nexport function commitGrantedNightAbility(\n  role: RoleComponent,\n  actorId: EntityId,\n  ability: NightAbility,\n  events: GameEvent[],\n): NightAbility {\n  // 原字典赋值已发生后才发布；push／时钟／来源克隆失败都保留已安装实例。\n  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=\n    {}) as Record<string, NightAbility>;\n  stored[ability.id] = ability;\n  emit(events, actorId, ability, \"granted\");\n  return ability;\n}\n\n/** 目标安装及发表已成功；原槽删除、退休 ID push、转出事实各保已完成前缀，不做事务退款。 */\nexport function retireTransferredNightAbility(\n  source: RoleComponent,\n  fromId: EntityId,\n  id: string,\n  ability: NightAbilityReadView,\n  events: GameEvent[],\n): void {\n  delete (\n    (source.privateState as { readonly abilities?: unknown }).abilities as Record<\n      string,\n      NightAbility\n    >\n  )[id];\n  (\n    ((source.privateState as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]\n  ).push(id);\n  emit(events, fromId, ability, \"transferred_out\");\n}\n",
+      "operation": "append",
+      "count": 1
+    },
+    {
+      "before": "/** 已通过原生 payload 准备后提交：先创建字典，再查退休 ID，来源冲突不覆盖原实例。 */",
+      "after": "/**\n * 原准备方已按各族规则复制并接受 payload；这里先创建字典，再读退休 ID 修订原生编号。\n * kind／来源失配时保留旧实例；匹配只替换 state，原 metadata、次数和起效日期保持。\n * 字典已创建后退休列表读取失败，不撤销这一前缀；本步不新增状态 schema 或行动许可。\n */",
+      "count": 1
+    },
+    {
+      "before": "export function setNightAbilityEnabled(",
+      "after": "/**\n * 按原库存 ID 寻找实例；死亡到期不能重开，启停值已一致时不发布事实。\n * 先写 disabled 再发表，事件写入失败仍保留已完成的启停值，不退还具体资源。\n */\nexport function setNightAbilityEnabled(",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/ability_changes.ts": [
+    {
+      "before": "/**\n * 负责普通夜能力原生安装、起效日、启停、次数、首次死亡到期及借用实例退役。\n * 输入为原角色／实例、状态与业务日期；输出保留同一库存引用和能力变化事实。授予、复制、转移完整流程归 night-ability-grants。\n * 本模块只写原生安装及公共 metadata；具体 payload 库存、临时抑制、原体／生命和提交许可仍归原负责人。\n * 共用角色查询／发布唯一消费 night-ability-change-runtime，保留原 clone、getter、字段和部分失败前缀，不退款。\n */\n",
+      "after": "/**\n * 负责普通原生夜能力完整 payload 准备与具体 kind 政策分派。\n * 输入为原角色、kind 与状态；输出保留原复制／族 reader 接受集合，并交唯一库存 owner 安装。\n * Pair 原角色限制先于数据复制；七种 payload 的准备分支、callee 和异常仍在原位置执行。\n * 本模块不直接写字典或通用 metadata；瓶数／历史和借用／原体／生命许可继续由各具体权威负责。\n * 准备失败不创建库存，实际安装失败保库存 owner 的既有前缀；不补退款或新的 schema。\n */\n",
+      "count": 1
+    },
+    {
+      "before": "import { COMPONENT } from \"../../../core/domain/components/names\";\n",
+      "after": "",
+      "count": 1
+    },
+    {
+      "before": "import { Role, type EntityId, type GameEvent } from \"../../../core/domain/model\";",
+      "after": "import { Role } from \"../../../core/domain/model\";",
+      "count": 1
+    },
+    {
+      "before": "import type { World } from \"../../../core/domain/world\";\n",
+      "after": "",
+      "count": 1
+    },
+    {
+      "before": "import { allNightAbilities, abilityStatus, projectPairState, copyAbilityData, type NightAbilityReadView } from \"./abilities\";\nimport { roleOf, emit } from \"./night-ability-change-runtime\";",
+      "after": "import { projectPairState, copyAbilityData, commitPreparedNativeAbility } from \"./abilities\";",
+      "count": 1
+    },
+    {
+      "before": "\nimport { commitPreparedNativeAbility } from \"./prepared-native-install\";\n",
+      "after": "\n",
+      "count": 1
+    },
+    {
+      "before": "export function setNightAbilityEnabled(\n  world: World,\n  actorId: EntityId,\n  id: string,\n  enabled: boolean,\n  events: GameEvent[],\n): void {\n  const ability = allNightAbilities(roleOf(world, actorId)).find((ability) => ability.id === id);\n  if (!ability) throw new Error(\"ability_instance_missing\");\n  if (enabled && ability.deathExpired) throw new Error(\"ability_lucky_expired_on_death\");\n  if (ability.disabled === !enabled) return;\n  (ability as { disabled: boolean }).disabled = !enabled;\n  emit(events, actorId, ability, enabled ? \"enabled\" : \"disabled\");\n}\n\n/**\n * 退役角色已核对原体／捕获槽的借用实例，只重定义原 disabled 数据属性。\n * 目标 supplier 在 Object.defineProperty 方法查找之后执行，保原 late 字段读取位置。\n * 不按可变 id 重查、不读或执行替换的 disabled getter/setter、不删槽／退休 ID，不发布启停事实。\n * 借用租约、原主抑制和已付 payload 仍归具体 Frame；本写入不提供新行动权限或退款。\n */\nexport function retireBorrowedNightAbility(readBorrowed: () => NightAbilityReadView): void {\n  Object.defineProperty(readBorrowed(), \"disabled\", {\n    value: true,\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });\n}\n\n/** 实际死亡到期跟随同一实例经过转移／复活；已经付款的夜效果仍按原政策保留。 */\nexport function expireLuckyAbilitiesOnDeath(\n  world: World,\n  actorId: EntityId,\n  events: GameEvent[],\n): void {\n  for (const ability of allNightAbilities(world.getComponent(actorId, COMPONENT.Role))) {\n    if (\n      (ability.activation !== \"lucky\" && ability.activation !== \"black_market\") ||\n      ability.deathExpired\n    )\n      continue;\n    (ability as { deathExpired?: boolean }).deathExpired = true;\n    (ability as { disabled: boolean }).disabled = true;\n    emit(events, actorId, ability, \"disabled\");\n  }\n}\n\n",
+      "after": "",
+      "count": 1
+    },
+    {
+      "before": "/** 初始化／学习流程仍在原调用点决定起效日；这里只写原 startsOnDay，不推进业务时钟。 */\nexport function setNightAbilityStartDay(ability: NightAbilityReadView, day: number): void {\n  (ability as { startsOnDay: number }).startsOnDay = day;\n}\n\n/** 原 status 重检后先记 lastUsedDay，再可选增加 uses；payload 库存与已付效果继续归具体机制。 */\nexport function recordNightAbilityUse(\n  ability: NightAbilityReadView,\n  day: number,\n  consumed: boolean,\n): void {\n  if (abilityStatus(ability, day) !== \"active\") throw new Error(\"ability_not_active\");\n  (ability as { lastUsedDay: number | null }).lastUsedDay = day;\n  if (consumed) (ability as { uses: number }).uses++;\n}\n",
+      "after": "",
+      "count": 1
+    },
+    {
+      "before": "  return commitPreparedNativeAbility(role, kind, ownedState);\n}\n\n",
+      "after": "  return commitPreparedNativeAbility(role, kind, ownedState);\n}\n",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/night-ability-grants.ts": [
+    {
+      "before": "  // 原字典赋值已发生后才发布；push／时钟／来源克隆失败都保留已安装实例。\n  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=\n    {}) as Record<string, NightAbility>;\n  stored[ability.id] = ability;\n  emit(events, actorId, ability, \"granted\");\n  return ability;\n}",
+      "after": "  return commitGrantedNightAbility(role, actorId, ability, events);\n}",
+      "count": 1
+    },
+    {
+      "before": "  delete (\n    (source.privateState as { readonly abilities?: unknown }).abilities as Record<\n      string,\n      NightAbility\n    >\n  )[id];\n  (\n    ((source.privateState as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]\n  ).push(id);\n  emit(events, fromId, ability, \"transferred_out\");",
+      "after": "  retireTransferredNightAbility(source, fromId, id, ability, events);",
+      "count": 1
+    },
+    {
+      "before": "import { allNightAbilities, copyAbilityData, type NightAbility, type NightAbilityReadView } from \"./abilities\";",
+      "after": "import { allNightAbilities, copyAbilityData, commitGrantedNightAbility, retireTransferredNightAbility, type NightAbility, type NightAbilityReadView } from \"./abilities\";",
+      "count": 1
+    },
+    {
+      "before": "import { roleOf, emit } from \"./night-ability-change-runtime\";",
+      "after": "import { roleOf } from \"./night-ability-change-runtime\";",
+      "count": 1
+    },
+    {
+      "before": " * 只写原 privateState.abilities／retiredAbilityIds，不另存字典；角色 payload、生命／租约和临时抑制仍有原负责人。",
+      "after": " * 字典安装／发布与删除／退休提交交唯一 abilities owner；本模块保完整来源政策，角色 payload、生命／租约和临时抑制仍有原负责人。",
+      "count": 1
+    }
+  ],
+  "backend/src/game/engine/death-committer.ts": [
+    {
+      "before": "import { expireLuckyAbilitiesOnDeath } from \"../mechanisms/roles/ability_changes\";",
+      "after": "import { expireLuckyAbilitiesOnDeath } from \"../mechanisms/roles/abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts": [
+    {
+      "before": "import { setNightAbilityStartDay, installNativeAbility } from \"../ability_changes\";",
+      "after": "import { installNativeAbility } from \"../ability_changes\";\nimport { setNightAbilityStartDay } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/dreamer/night_stages.ts": [
+    {
+      "before": "import { recordNightAbilityUse } from \"../ability_changes\";",
+      "after": "import { recordNightAbilityUse } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/dreamer/state-slot.ts": [
+    {
+      "before": "import { commitPreparedNativeAbility } from \"../prepared-native-install\";",
+      "after": "import { commitPreparedNativeAbility } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/guard/night_stages.ts": [
+    {
+      "before": "import { recordNightAbilityUse } from \"../ability_changes\";",
+      "after": "import { recordNightAbilityUse } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/guard/state-slot.ts": [
+    {
+      "before": "import { commitPreparedNativeAbility } from \"../prepared-native-install\";",
+      "after": "import { commitPreparedNativeAbility } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/pure_white/night_stages.ts": [
+    {
+      "before": "import { recordNightAbilityUse } from \"../ability_changes\";",
+      "after": "import { recordNightAbilityUse } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts": [
+    {
+      "before": "import { retireBorrowedNightAbility } from \"../ability_changes\";",
+      "after": "import { retireBorrowedNightAbility } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts": [
+    {
+      "before": "import { recordNightAbilityUse } from \"../ability_changes\";",
+      "after": "import { recordNightAbilityUse } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts": [
+    {
+      "before": "      role.privateState.abilities = {};",
+      "after": "      initializeNightAbilityInventory(role);",
+      "count": 1
+    },
+    {
+      "before": "import { setNightAbilityStartDay, installNativeAbility } from \"../ability_changes\";",
+      "after": "import { installNativeAbility } from \"../ability_changes\";\nimport { setNightAbilityStartDay } from \"../abilities\";",
+      "count": 1
+    },
+    {
+      "before": "import { activeNightAbility } from \"../abilities\";",
+      "after": "import { activeNightAbility, initializeNightAbilityInventory } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts": [
+    {
+      "before": "import { commitPreparedNativeAbility } from \"../prepared-native-install\";",
+      "after": "import { commitPreparedNativeAbility } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/recipient_ability_stage.ts": [
+    {
+      "before": "import { recordNightAbilityUse } from \"./ability_changes\";",
+      "after": "import { recordNightAbilityUse } from \"./abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts": [
+    {
+      "before": "import { recordNightAbilityUse } from \"../ability_changes\";",
+      "after": "import { recordNightAbilityUse } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts": [
+    {
+      "before": "import { commitPreparedNativeAbility } from \"../prepared-native-install\";",
+      "after": "import { commitPreparedNativeAbility } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/seer/night_stages.ts": [
+    {
+      "before": "import { recordNightAbilityUse } from \"../ability_changes\";",
+      "after": "import { recordNightAbilityUse } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/seer/state-slot.ts": [
+    {
+      "before": "import { commitPreparedNativeAbility } from \"../prepared-native-install\";",
+      "after": "import { commitPreparedNativeAbility } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/witch/night_stages.ts": [
+    {
+      "before": "import { recordNightAbilityUse } from \"../ability_changes\";",
+      "after": "import { recordNightAbilityUse } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/witch/state-slot.ts": [
+    {
+      "before": "import { commitPreparedNativeAbility } from \"../prepared-native-install\";",
+      "after": "import { commitPreparedNativeAbility } from \"../abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts": [
+    {
+      "before": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts": [
+    {
+      "before": "import { setNightAbilityEnabled } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { setNightAbilityEnabled } from \"../../../../src/game/mechanisms/roles/abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts": [
+    {
+      "before": "import { installNativeAbility, retireBorrowedNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { installNativeAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { retireBorrowedNightAbility } from \"../../../src/game/mechanisms/roles/abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts": [
+    {
+      "before": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts": [
+    {
+      "before": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/abilities\";",
+      "count": 1
+    },
+    {
+      "before": "import { recordNightAbilityUse } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { recordNightAbilityUse } from \"../../../src/game/mechanisms/roles/abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts": [
+    {
+      "before": "import {\n  installNativeAbility,\n  setNightAbilityStartDay,\n  recordNightAbilityUse,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { installNativeAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { setNightAbilityStartDay, recordNightAbilityUse } from \"../../../src/game/mechanisms/roles/abilities\";",
+      "count": 1
+    },
+    {
+      "before": " * 编译负例保证查询入口退出三个写命令，具体 payload 和业务时钟仍归原调用者。",
+      "after": " * 编译负例保证原生准备与通用库存写命令各归实际所有者，具体 payload 和业务时钟仍归原调用者。",
+      "count": 1
+    },
+    {
+      "before": "import * as queries from \"../../../src/game/mechanisms/roles/abilities\";",
+      "after": "import * as queries from \"../../../src/game/mechanisms/roles/abilities\";\nimport * as prepared from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "count": 1
+    },
+    {
+      "before": "// @ts-expect-error 起效日写权已经退出只读查询入口。\n  void queries.setNightAbilityStartDay;",
+      "after": "// @ts-expect-error 起效日实际写命令已退出 payload 准备叶。\n  void prepared.setNightAbilityStartDay;",
+      "count": 1
+    },
+    {
+      "before": "// @ts-expect-error 次数提交已经退出只读查询入口。\n  void queries.recordNightAbilityUse;",
+      "after": "// @ts-expect-error 次数实际提交已退出 payload 准备叶。\n  void prepared.recordNightAbilityUse;",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts": [
+    {
+      "before": "import {\n  installNativeAbility,\n  recordNightAbilityUse,\n  setNightAbilityStartDay,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { installNativeAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { recordNightAbilityUse, setNightAbilityStartDay } from \"../../../src/game/mechanisms/roles/abilities\";",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/index.ts": [
+    {
+      "before": "export * from \"./roles/abilities\";",
+      "after": "export {\n  ROLE_INSPECTION_POLICY_ROLES,\n  projectPairState,\n  copyAbilityData,\n  allNightAbilities,\n  nightAbilityDisabled,\n  abilityStatus,\n  findNightAbility,\n  activeNightAbility,\n  retiredNightAbilityIds,\n  projectRoleInspectionState,\n  projectSeerState,\n  projectWitchState,\n  setNightAbilityEnabled,\n  retireBorrowedNightAbility,\n  expireLuckyAbilitiesOnDeath,\n  setNightAbilityStartDay,\n  recordNightAbilityUse,\n  type NightAbility,\n  type NightAbilityReadView,\n} from \"./roles/abilities\";",
+      "count": 1
+    }
+  ]
+}

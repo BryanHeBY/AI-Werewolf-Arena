@@ -15,7 +15,7 @@ import type { EntityId } from "@ai-werewolf-arena/game-contract";
 import type { InspectionResult } from "@ai-werewolf-arena/game-contract";
 import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../abilities";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
-import { commitPreparedNativeAbility } from "../prepared-native-install";
+import { commitPreparedNativeAbility } from "../abilities";
 
 export function setRoleInspectionState(
   role: RoleComponent,

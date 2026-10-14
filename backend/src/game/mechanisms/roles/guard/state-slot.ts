@@ -11,7 +11,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
 
 import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../abilities";
-import { commitPreparedNativeAbility } from "../prepared-native-install";
+import { commitPreparedNativeAbility } from "../abilities";
 
 export function setGuardState(roleComp: RoleComponent, state: GuardState): GuardReadState {
   return commitPreparedNativeAbility(roleComp, "guard", GUARD_STATE_SLOT.create(state));

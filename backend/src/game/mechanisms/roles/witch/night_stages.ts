@@ -28,7 +28,7 @@ import {
   getWitchState,
 } from "./ports";
 import { activeNightAbility, allNightAbilities } from "../abilities";
-import { recordNightAbilityUse } from "../ability_changes";
+import { recordNightAbilityUse } from "../abilities";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
 import { captureNightAbilityScope } from "../ability_scope";
 

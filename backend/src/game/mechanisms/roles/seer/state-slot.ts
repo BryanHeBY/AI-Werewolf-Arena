@@ -10,7 +10,7 @@ import type { SeerState, SeerReadState } from "@ai-werewolf-arena/game-contract"
 import type { EntityId, InspectionResult } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../abilities";
-import { commitPreparedNativeAbility } from "../prepared-native-install";
+import { commitPreparedNativeAbility } from "../abilities";
 
 /** 安装保留原输入复制与返回 owned 引用；只在初始化入口写原生库存。 */
 export function setSeerState(roleComp: RoleComponent, state: SeerState): SeerReadState {

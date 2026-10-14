@@ -2,7 +2,7 @@
  * 负责普通夜能力授予、复制与明确转移的完整提交。输入为原 World、拥有者、安装数据与具体 statePolicy；
  * 输出为同一实际库存中的只读实例及原能力变化事实。校验、复制、来源复验和目标安装都由本模块负责。
  * 保留目标安装／发布在前、原槽删除／退役 ID／转出发布在后的顺序；异常只保留已经发生的前缀，不退款。
- * 只写原 privateState.abilities／retiredAbilityIds，不另存字典；角色 payload、生命／租约和临时抑制仍有原负责人。
+ * 字典安装／发布与删除／退休提交交唯一 abilities owner；本模块保完整来源政策，角色 payload、生命／租约和临时抑制仍有原负责人。
  * 数据复制仍消费唯一 copyAbilityData，原接受集合不加强；这不是全部角色状态 schema 或严格复盘 codec。
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
@@ -13,9 +13,9 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import { type EntityId, type GameEvent } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
-import { allNightAbilities, copyAbilityData, type NightAbility, type NightAbilityReadView } from "./abilities";
+import { allNightAbilities, copyAbilityData, commitGrantedNightAbility, retireTransferredNightAbility, type NightAbility, type NightAbilityReadView } from "./abilities";
 import { projectNightState } from "../../observation/night-ability-projection";
-import { roleOf, emit } from "./night-ability-change-runtime";
+import { roleOf } from "./night-ability-change-runtime";
 
 /** 安装数据只声明赠予／复制来源；日期和资源政策仍在原安装流程核对，不代表已有行动许可。 */
 export interface AbilityGrant<K extends NightAbilityKind> {
@@ -141,12 +141,7 @@ function installAbility(
     )
   )
     throw new Error("ability_source_mismatch");
-  // 原字典赋值已发生后才发布；push／时钟／来源克隆失败都保留已安装实例。
-  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
-    {}) as Record<string, NightAbility>;
-  stored[ability.id] = ability;
-  emit(events, actorId, ability, "granted");
-  return ability;
+  return commitGrantedNightAbility(role, actorId, ability, events);
 }
 
 /** 先验证／安装目标，再移除原 owner；保留计数、原夜时点与中途发布失败前缀。 */
@@ -296,14 +291,5 @@ export function transferNightAbility<K extends NightAbilityKind>(
   }) as NightAbility;
   // 目标安装与其发布成功后才移除源；delete、退休数组 push 和转出发布各有已写前缀，不回滚。
   installAbility(world, toId, received, events);
-  delete (
-    (source.privateState as { readonly abilities?: unknown }).abilities as Record<
-      string,
-      NightAbility
-    >
-  )[id];
-  (
-    ((source.privateState as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]
-  ).push(id);
-  emit(events, fromId, ability, "transferred_out");
+  retireTransferredNightAbility(source, fromId, id, ability, events);
 }

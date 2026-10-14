@@ -12,7 +12,7 @@ import { DeathCause } from "../../../../core/domain/deaths";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 
-import { recordNightAbilityUse } from "../ability_changes";
+import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { resolveInspection } from "../inspection";
 import { ROLE_INSPECTION_STATE_SLOT } from "../role_inspection/ports";

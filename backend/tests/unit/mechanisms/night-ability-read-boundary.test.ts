@@ -17,11 +17,8 @@ import {
   findNightAbility,
   type NightAbilityReadView,
 } from "../../../src/game/mechanisms/roles/abilities";
-import {
-  installNativeAbility,
-  recordNightAbilityUse,
-  setNightAbilityStartDay,
-} from "../../../src/game/mechanisms/roles/ability_changes";
+import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { recordNightAbilityUse, setNightAbilityStartDay } from "../../../src/game/mechanisms/roles/abilities";
 import {
   createNightAbilityActorQuery,
   type NightAbilityActorQuery,

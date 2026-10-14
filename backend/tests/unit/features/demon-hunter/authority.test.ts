@@ -26,10 +26,9 @@ import {
   DEMON_HUNTER_ROLE,
   freshDemonHunterState,
 } from "../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
-import { type NightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { recordNightAbilityUse, type NightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   installNativeAbility,
-  recordNightAbilityUse,
 } from "../../../../src/game/mechanisms/roles/ability_changes";
 import {
   captureDemonNativePoison,

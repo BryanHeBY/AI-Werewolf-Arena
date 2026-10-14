@@ -1,0 +1,22 @@
+[
+  {
+    "before": " * 编译负例保证查询入口退出三个写命令，具体 payload 和业务时钟仍归原调用者。",
+    "after": " * 编译负例保证原生准备与通用库存写命令各归实际所有者，具体 payload 和业务时钟仍归原调用者。",
+    "count": 1
+  },
+  {
+    "before": "import * as queries from \"../../../src/game/mechanisms/roles/abilities\";",
+    "after": "import * as queries from \"../../../src/game/mechanisms/roles/abilities\";\nimport * as prepared from \"../../../src/game/mechanisms/roles/ability_changes\";",
+    "count": 1
+  },
+  {
+    "before": "// @ts-expect-error 起效日写权已经退出只读查询入口。\n  void queries.setNightAbilityStartDay;",
+    "after": "// @ts-expect-error 起效日实际写命令已退出 payload 准备叶。\n  void prepared.setNightAbilityStartDay;",
+    "count": 1
+  },
+  {
+    "before": "// @ts-expect-error 次数提交已经退出只读查询入口。\n  void queries.recordNightAbilityUse;",
+    "after": "// @ts-expect-error 次数实际提交已退出 payload 准备叶。\n  void prepared.recordNightAbilityUse;",
+    "count": 1
+  }
+]

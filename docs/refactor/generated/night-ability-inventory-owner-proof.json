@@ -1,0 +1,1402 @@
+{
+  "baseCommit": "bd1066307343b1d5c10bc7704fefbc0b77e9a341",
+  "source": [
+    {
+      "path": "backend/src/game/engine/death-committer.ts",
+      "sha256": "31c1837e820a6f5599083b1bf5f5844399c787820a72d6db25aaa051c810df9e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "5e3d7858341bb149a9ad93422d432f81d2180f5ac41df0b1ce64fbc437e2713c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "b4d6782c6ca06f65ff1ad82eca28b8dfc018878e69e66c3b166a8009e30f2b9d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "2d91efc17dbd98b3f5b14cf5bf4007262bc209cf73f7f41b2f7c1d41b3c64ed9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "sha256": "575f5a9dfc6ee85fb0fe41fbe65597d97cd5d4ab233d695eacc0e38ee117a064"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+      "sha256": "e3212e7aa2575eb6b8414adc6b3a0ff279fdac185b006f91cbde490e36033cfe"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "sha256": "71dab4e86187fb3ebbc2684778e8775c74241e44b969fbf56c26381de1cfe8c5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+      "sha256": "0b15ed624356e9e3ab5e4d95470c6895e2dbaaf2653dd1ca7d75b8777388b451"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+      "sha256": "9ddf442efc11e57c1fc223cc75da0f45426f22104d1b3c8b5b33a20383e0af4d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "sha256": "c18f554fcf914d79efce3094a63dae49a397247fadb737fdd63d3feca0be5c8b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "4518e7e6c0e7d21e6ce3ae9f9e47e22ae6d69ff49a75b7f21bd9482ba52e2d06"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+      "sha256": "7fa17809e98ae208f7e4d39e287420876bfaa2a3fb957fc275a7e4f7be6a3868"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "sha256": "eed5f5ea742a1dd50c68b234169da0eb43a93407202a9d9b14450539914b2bb9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "sha256": "3d14980b2da8fab7f11d64ec21c73a6573e3d91cfa8bda375547c834a56fc0aa"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+      "sha256": "68029349192939304e8b7cdd8a5c5e1569bc4d799be0931e0db8f5c034538c88"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "sha256": "179a0d2e5706732b61484666ccc5ece742c9f66f012838a1ab7f896cac2ee89b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "sha256": "a2a81bb7f4a1520e0eb6f196a21ef72ce688e6720b0041e91a87cde65790f7d3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "sha256": "8c0b5d53ab3d03bea454c155237aad058d7b50d8f5a0d5950996f9b24723be06"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+      "sha256": "3488be977b9970bc69f8dec31f2e1cd809aa3405d2da94de7709e96c768905a9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "sha256": "e10becf419e2f41ebaeab08cbd8f3bef9825b7da8888a7c48cccb364ab9fd2d3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+      "sha256": "07a432460494c2d6a9f41d2038c0f32d1e4895bfe7da6e5534489c58f49a558e"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "sha256": "fa16ae07946df5a79b23a0cfe19535a326c7566d8c9fe5ecd336c7b16a31cc21"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "sha256": "63ea64bf15959358acada9ba01cf48cafd4a30b47712a3aad10c574e7cebac40"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "94aeb97c9bf29c489ca7279159594641c07d2b0f77b1f5630cfc3f5f613dcd2d"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "d68b1e87a1e25498876cfc276a834658279dacdbdb5c1bf54d1e3b662abd7386"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "f74a9cb3729b721d3b4ba7e011caa6462fc0f32a8a74edbb80d154d6c3624484"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "dc5089e0d7b4a89540773b7b4451298cb3a7fedeeb3a1c12ae207d5b50301e4b"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "958ecb9bee68793a5d3093dba537248b1bfaee04bef262dcc7477176d16e898b"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+      "sha256": "c8866c298750a3db81fa2aad74974fd0a4c54e0e238858da1cebd8e400f9942d"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+      "sha256": "36ec88475d9250a68cdee8f6805c9d5f876cbad7f7218a94bea67cedf21a6c57"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "33e7144db8d7389ac5823f70bec3110fb0866daec8e6e969e568285fd6730a22"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "0699bfa18845d52cedd4647a2b0899c89b3c5010b2ea6eb067b6c1a15148a5f5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "a18099d50c962f4c869eef7c753442d35148c0247fc48b8046e5fc82cce197b9"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-inventory-owner.test.ts",
+      "sha256": "9c713e2080805cea626221f0969620c5956a32fa246d33b29c81239b4df01d07"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+      "sha256": "7b1b2e611e030d2a5353faec14c54fe2b7c67eef84d15718ff604babf6db85af",
+      "expectedAbsent": true
+    }
+  ],
+  "originalPrograms": 33,
+  "whole": [
+    {
+      "path": "backend/src/game/engine/death-committer.ts",
+      "beforeSHA256": "9eaca31ed91647738a2640049ce61a0b8b4c52d43cc8308b6ed8df91db7fb26e",
+      "currentSHA256": "31c1837e820a6f5599083b1bf5f5844399c787820a72d6db25aaa051c810df9e",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 1758,
+      "nonCommentLeaves": 1171,
+      "nodeArrays": 125,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "beforeSHA256": "2f95007f76726c006f49f871173b47355ea7e7e08387254bfce4f8344829d886",
+      "currentSHA256": "5e3d7858341bb149a9ad93422d432f81d2180f5ac41df0b1ce64fbc437e2713c",
+      "edits": 8,
+      "exactInverse": true,
+      "typedNodes": 1053,
+      "nonCommentLeaves": 688,
+      "nodeArrays": 73,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "beforeSHA256": "38c9bbbb9ac976e9ae96723a3db38c60800a6b251a36af6720fb9ed21d8e5f10",
+      "currentSHA256": "b4d6782c6ca06f65ff1ad82eca28b8dfc018878e69e66c3b166a8009e30f2b9d",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 4000,
+      "nonCommentLeaves": 2675,
+      "nodeArrays": 297,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "beforeSHA256": "8eeebaa9b7352db3d469ee91cad6c59b3dbd51a8b96f73137306a4793fca93bf",
+      "currentSHA256": "2d91efc17dbd98b3f5b14cf5bf4007262bc209cf73f7f41b2f7c1d41b3c64ed9",
+      "edits": 2,
+      "exactInverse": true,
+      "typedNodes": 3594,
+      "nonCommentLeaves": 2388,
+      "nodeArrays": 308,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "beforeSHA256": "5f66645a70154d22680b6e473f526ab4292067aced0e120e34c9ee55a55e91c9",
+      "currentSHA256": "575f5a9dfc6ee85fb0fe41fbe65597d97cd5d4ab233d695eacc0e38ee117a064",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 1435,
+      "nonCommentLeaves": 946,
+      "nodeArrays": 111,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+      "beforeSHA256": "91cd3fffb1d087486f3eca78b49e9dc54bd700545fbaee0b8dffeb43800d34c7",
+      "currentSHA256": "e3212e7aa2575eb6b8414adc6b3a0ff279fdac185b006f91cbde490e36033cfe",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 418,
+      "nonCommentLeaves": 266,
+      "nodeArrays": 38,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "beforeSHA256": "400b80c4e57cfa43b310d78d781eef77260fa58c3a2654854c1e0b819acf9c8b",
+      "currentSHA256": "71dab4e86187fb3ebbc2684778e8775c74241e44b969fbf56c26381de1cfe8c5",
+      "edits": 2,
+      "exactInverse": true,
+      "typedNodes": 732,
+      "nonCommentLeaves": 478,
+      "nodeArrays": 64,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+      "beforeSHA256": "93f604bed9553705d5292082c0f60a001678ba1ccbf8cc0fb92fd8a2d6268d72",
+      "currentSHA256": "0b15ed624356e9e3ab5e4d95470c6895e2dbaaf2653dd1ca7d75b8777388b451",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 1651,
+      "nonCommentLeaves": 1104,
+      "nodeArrays": 124,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+      "beforeSHA256": "266ad1977e235c1cc265e0fed82179884e8f70b442fc1eb4a58de56afd19d125",
+      "currentSHA256": "9ddf442efc11e57c1fc223cc75da0f45426f22104d1b3c8b5b33a20383e0af4d",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 474,
+      "nonCommentLeaves": 298,
+      "nodeArrays": 48,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "beforeSHA256": "c60bfa43d908ed759149c1fd51cab322e1490c835e25e3871e3dacdb9247d10d",
+      "currentSHA256": "c18f554fcf914d79efce3094a63dae49a397247fadb737fdd63d3feca0be5c8b",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 1636,
+      "nonCommentLeaves": 1079,
+      "nodeArrays": 122,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "beforeSHA256": "8a926952c1823deb2a471c9800712f51246540fd5a9fdcaeca6e0bb9f70967dd",
+      "currentSHA256": "4518e7e6c0e7d21e6ce3ae9f9e47e22ae6d69ff49a75b7f21bd9482ba52e2d06",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 8043,
+      "nonCommentLeaves": 5323,
+      "nodeArrays": 602,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+      "beforeSHA256": "b4056750db96fde74330d2bf75d0acb402b77728dd79f15ffb94a0a8f05e7524",
+      "currentSHA256": "7fa17809e98ae208f7e4d39e287420876bfaa2a3fb957fc275a7e4f7be6a3868",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 1092,
+      "nonCommentLeaves": 730,
+      "nodeArrays": 85,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "beforeSHA256": "2799be487108b0e885c8668480695c213a38b8c6371a99350bee8371658a9ce9",
+      "currentSHA256": "eed5f5ea742a1dd50c68b234169da0eb43a93407202a9d9b14450539914b2bb9",
+      "edits": 3,
+      "exactInverse": true,
+      "typedNodes": 1725,
+      "nonCommentLeaves": 1145,
+      "nodeArrays": 129,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "beforeSHA256": "08a76bca3bf4f4aa42a599007c458c3780dd30d9b8b013b03c41227a79363751",
+      "currentSHA256": "3d14980b2da8fab7f11d64ec21c73a6573e3d91cfa8bda375547c834a56fc0aa",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 324,
+      "nonCommentLeaves": 208,
+      "nodeArrays": 30,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+      "beforeSHA256": "6d3634683f6bb890e501a40e277c916c4d6c292be947cd810b3939c6c3dc7276",
+      "currentSHA256": "68029349192939304e8b7cdd8a5c5e1569bc4d799be0931e0db8f5c034538c88",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 2831,
+      "nonCommentLeaves": 1897,
+      "nodeArrays": 205,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "beforeSHA256": "fb4661925dae77b7c1f8ede37bcdce763001a5cf05e95cc7a43e71d2656e9820",
+      "currentSHA256": "179a0d2e5706732b61484666ccc5ece742c9f66f012838a1ab7f896cac2ee89b",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 2219,
+      "nonCommentLeaves": 1494,
+      "nodeArrays": 161,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "beforeSHA256": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9",
+      "currentSHA256": "a2a81bb7f4a1520e0eb6f196a21ef72ce688e6720b0041e91a87cde65790f7d3",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 774,
+      "nonCommentLeaves": 497,
+      "nodeArrays": 63,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "beforeSHA256": "1244e57c0db6d1a25df22929dd02174c506172e38ff029c0ec134c486e5c1059",
+      "currentSHA256": "8c0b5d53ab3d03bea454c155237aad058d7b50d8f5a0d5950996f9b24723be06",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 2082,
+      "nonCommentLeaves": 1397,
+      "nodeArrays": 166,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+      "beforeSHA256": "4369f772e7c681a59b3cfcd4c297ab21a487df473a2bbf0b493270c9c454043f",
+      "currentSHA256": "3488be977b9970bc69f8dec31f2e1cd809aa3405d2da94de7709e96c768905a9",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 638,
+      "nonCommentLeaves": 406,
+      "nodeArrays": 50,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "beforeSHA256": "27d9a11e69d68bbb7b343b3b927ffc24b3482b5767abcf26c1ed5d85abfaa525",
+      "currentSHA256": "e10becf419e2f41ebaeab08cbd8f3bef9825b7da8888a7c48cccb364ab9fd2d3",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 2970,
+      "nonCommentLeaves": 2007,
+      "nodeArrays": 219,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+      "beforeSHA256": "bc46a87101d548ae302384aa04cccea80c7b9d886c83ca96874b4adfda841a91",
+      "currentSHA256": "07a432460494c2d6a9f41d2038c0f32d1e4895bfe7da6e5534489c58f49a558e",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 793,
+      "nonCommentLeaves": 514,
+      "nodeArrays": 57,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "beforeSHA256": "d059a7e03549e1373ac71861063fc14d7b48a0ca4cf3889f4f76abb007a7d675",
+      "currentSHA256": "fa16ae07946df5a79b23a0cfe19535a326c7566d8c9fe5ecd336c7b16a31cc21",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 4926,
+      "nonCommentLeaves": 3279,
+      "nodeArrays": 458,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "beforeSHA256": "69730487a8f3f6e94082b0ee1177f63a24e6946e0e8b12e58e253cbad1b53412",
+      "currentSHA256": "63ea64bf15959358acada9ba01cf48cafd4a30b47712a3aad10c574e7cebac40",
+      "edits": 2,
+      "exactInverse": true,
+      "typedNodes": 23065,
+      "nonCommentLeaves": 15340,
+      "nodeArrays": 2244,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "beforeSHA256": "d3e7c20108130f8cee0318b2487c29589a18e243dde79e6e54ff48480b686c5f",
+      "currentSHA256": "94aeb97c9bf29c489ca7279159594641c07d2b0f77b1f5630cfc3f5f613dcd2d",
+      "edits": 2,
+      "exactInverse": true,
+      "typedNodes": 2185,
+      "nonCommentLeaves": 1461,
+      "nodeArrays": 214,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "beforeSHA256": "e2ab26269d061069b9ec020d14fea000c7c6c1ef47c5aadc5c317bb722cc58af",
+      "currentSHA256": "d68b1e87a1e25498876cfc276a834658279dacdbdb5c1bf54d1e3b662abd7386",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 8390,
+      "nonCommentLeaves": 5563,
+      "nodeArrays": 817,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "beforeSHA256": "17336504ab3f5ab4ff6a7196459fcf27cb3a973df0da9066975a018f3a43d8d6",
+      "currentSHA256": "f74a9cb3729b721d3b4ba7e011caa6462fc0f32a8a74edbb80d154d6c3624484",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 1366,
+      "nonCommentLeaves": 917,
+      "nodeArrays": 122,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "beforeSHA256": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31",
+      "currentSHA256": "dc5089e0d7b4a89540773b7b4451298cb3a7fedeeb3a1c12ae207d5b50301e4b",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 5833,
+      "nonCommentLeaves": 3938,
+      "nodeArrays": 544,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "beforeSHA256": "eccceba961b165cd8d82a09644089a68545f4077ebf5ac9577aea994f4f04546",
+      "currentSHA256": "958ecb9bee68793a5d3093dba537248b1bfaee04bef262dcc7477176d16e898b",
+      "edits": 2,
+      "exactInverse": true,
+      "typedNodes": 4707,
+      "nonCommentLeaves": 3161,
+      "nodeArrays": 462,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+      "beforeSHA256": "850cfab324782108f83b296ac7671bc5737ca640f55d03671185e39f95ea7e64",
+      "currentSHA256": "c8866c298750a3db81fa2aad74974fd0a4c54e0e238858da1cebd8e400f9942d",
+      "edits": 5,
+      "exactInverse": true,
+      "typedNodes": 972,
+      "nonCommentLeaves": 635,
+      "nodeArrays": 101,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+      "beforeSHA256": "7dc4daabfff473b2e1b66c1bf2c852db47947cc1d874843322083ee4225ecfe2",
+      "currentSHA256": "36ec88475d9250a68cdee8f6805c9d5f876cbad7f7218a94bea67cedf21a6c57",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 2096,
+      "nonCommentLeaves": 1394,
+      "nodeArrays": 160,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "beforeSHA256": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38",
+      "currentSHA256": "33e7144db8d7389ac5823f70bec3110fb0866daec8e6e969e568285fd6730a22",
+      "edits": 6,
+      "exactInverse": true,
+      "typedNodes": 1672,
+      "nonCommentLeaves": 1088,
+      "nodeArrays": 135,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "beforeSHA256": "0e32f853939fdf10f9f53172bad7a5f618ed5ef727d54f324e302ef31efc5940",
+      "currentSHA256": "0699bfa18845d52cedd4647a2b0899c89b3c5010b2ea6eb067b6c1a15148a5f5",
+      "edits": 5,
+      "exactInverse": true,
+      "typedNodes": 3013,
+      "nonCommentLeaves": 2021,
+      "nodeArrays": 160,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "beforeSHA256": "308e5a1fe0bae2cc1f54ead1c53bad79dd7c510b193092dffcd33a13c8e4463e",
+      "currentSHA256": "a18099d50c962f4c869eef7c753442d35148c0247fc48b8046e5fc82cce197b9",
+      "edits": 1,
+      "exactInverse": true,
+      "typedNodes": 231,
+      "nonCommentLeaves": 187,
+      "nodeArrays": 2,
+      "completeTypedTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "same": true
+        }
+      ]
+    }
+  ],
+  "movedFunctions": [
+    {
+      "name": "commitPreparedNativeAbility",
+      "typedNodes": 389,
+      "nonCommentLeaves": 252,
+      "completeDeclarationAndBodySame": true
+    },
+    {
+      "name": "setNightAbilityEnabled",
+      "typedNodes": 187,
+      "nonCommentLeaves": 126,
+      "completeDeclarationAndBodySame": true
+    },
+    {
+      "name": "retireBorrowedNightAbility",
+      "typedNodes": 69,
+      "nonCommentLeaves": 48,
+      "completeDeclarationAndBodySame": true
+    },
+    {
+      "name": "expireLuckyAbilitiesOnDeath",
+      "typedNodes": 162,
+      "nonCommentLeaves": 107,
+      "completeDeclarationAndBodySame": true
+    },
+    {
+      "name": "setNightAbilityStartDay",
+      "typedNodes": 49,
+      "nonCommentLeaves": 31,
+      "completeDeclarationAndBodySame": true
+    },
+    {
+      "name": "recordNightAbilityUse",
+      "typedNodes": 111,
+      "nonCommentLeaves": 73,
+      "completeDeclarationAndBodySame": true
+    }
+  ],
+  "actualCommitBodies": [
+    {
+      "name": "commitGrantedNightAbility",
+      "completeActualStatementsSame": true,
+      "actualSHA256": "9fdeb400767866bf39e9da0af0b26f7f40760e14039760dadc7b6d77e70fa870"
+    },
+    {
+      "name": "retireTransferredNightAbility",
+      "completeActualStatementsSame": true,
+      "actualSHA256": "a32a71b843942fcdccdfb326585d85ac262970a4a5f296341ded7addcc4d5ded"
+    },
+    {
+      "name": "initializeNightAbilityInventory",
+      "completeActualStatementsSame": true,
+      "actualSHA256": "35cd0bbf3c889ea50388f48f5d5157fb1747c1cabaceb9e117d9b7b41440839d"
+    }
+  ],
+  "rootSharedWholeInputCount": 4,
+  "rootSharedExactEdits": 8,
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "sha256": "03cd4912cb8cc77b4b9943dc7f14b491fed6a74a5a46fb2a83354ecce0a88031"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "444167c069020e000e11789df31dc2f7620a2855d96ad12613d54fc381554a6c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "sha256": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/private-state-codec.ts",
+      "sha256": "74cd5180ec60e047517d48cce84f78232127e67b4ee2ec0cb19339c4155f3ca3"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "c7e676b790ed0ec7029df1d7c74b00ecd31f5e0fe4df1f9d00bc505500199462"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Git:backend/src/game/engine/death-committer.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/engine/death-committer.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/engine/death-committer.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/ability_changes.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/ability_changes.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/ability_changes.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/guard/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/guard/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/guard/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/guard/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/guard/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/guard/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/seer/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/seer/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/seer/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/witch/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/witch/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/witch/state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/abilities.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/abilities.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/abilities.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/index.ts",
+      "ok": true
+    },
+    {
+      "name": "forward:backend/src/game/mechanisms/index.ts",
+      "ok": true
+    },
+    {
+      "name": "whole:backend/src/game/mechanisms/index.ts",
+      "ok": true
+    },
+    {
+      "name": "Git:backend/src/game/mechanisms/roles/prepared-native-install.ts",
+      "ok": true
+    },
+    {
+      "name": "deleted:backend/src/game/mechanisms/roles/prepared-native-install.ts",
+      "ok": true
+    },
+    {
+      "name": "Rootbefore:backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "ok": true
+    },
+    {
+      "name": "Rootbefore:backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "ok": true
+    },
+    {
+      "name": "Rootbefore:backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "ok": true
+    },
+    {
+      "name": "Rootbefore:backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "ok": true
+    },
+    {
+      "name": "actual moved function:commitPreparedNativeAbility",
+      "ok": true
+    },
+    {
+      "name": "actual moved function:setNightAbilityEnabled",
+      "ok": true
+    },
+    {
+      "name": "actual moved function:retireBorrowedNightAbility",
+      "ok": true
+    },
+    {
+      "name": "actual moved function:expireLuckyAbilitiesOnDeath",
+      "ok": true
+    },
+    {
+      "name": "actual moved function:setNightAbilityStartDay",
+      "ok": true
+    },
+    {
+      "name": "actual moved function:recordNightAbilityUse",
+      "ok": true
+    },
+    {
+      "name": "actual commit body:commitGrantedNightAbility",
+      "ok": true
+    },
+    {
+      "name": "actual commit body:retireTransferredNightAbility",
+      "ok": true
+    },
+    {
+      "name": "actual commit body:initializeNightAbilityInventory",
+      "ok": true
+    },
+    {
+      "name": "control:backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "ok": true
+    },
+    {
+      "name": "control:backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "ok": true
+    },
+    {
+      "name": "control:backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "ok": true
+    },
+    {
+      "name": "control:backend/src/recording/checkpoint/private-state-codec.ts",
+      "ok": true
+    },
+    {
+      "name": "control:backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "ok": true
+    }
+  ],
+  "failures": []
+}

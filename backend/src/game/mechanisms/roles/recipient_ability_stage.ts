@@ -16,7 +16,7 @@ import {
 import type { World } from "../../../core/domain/world";
 import type { NightStageHandler } from "../stages/night/contracts";
 import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "./abilities";
-import { recordNightAbilityUse } from "./ability_changes";
+import { recordNightAbilityUse } from "./abilities";
 import { captureNightAbilityScope } from "./ability_scope";
 import { luckyTargetAllowed, recordOwnNightAction } from "./night_action_history";
 import { resolveInspection } from "./inspection";

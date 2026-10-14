@@ -10,7 +10,7 @@ import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/compon
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase } from "../../../../core/domain/model";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { recordNightAbilityUse } from "../ability_changes";
+import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { markDreamNightCommitted } from "./night_frame";
 import { dreamNightLinksForAppend } from "./night-links";

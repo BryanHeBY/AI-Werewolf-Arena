@@ -7,7 +7,7 @@
  */
 import type { ShelterState } from "@ai-werewolf-arena/game-contract";
 import { copyAbilityData, type NightAbilityReadView } from "../abilities";
-import { commitPreparedNativeAbility } from "../prepared-native-install";
+import { commitPreparedNativeAbility } from "../abilities";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { createShelterState, readShelterState, selectShelter, projectShelterState } from "./shelter-state";
 

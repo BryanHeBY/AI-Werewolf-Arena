@@ -1,0 +1,336 @@
+{
+  "provenance": "开发前只读盘点来源；不是bd106全部文本快照或当前验证报告。",
+  "inventory": {
+    "roots": [
+      "backend/src",
+      "backend/tests",
+      "backend/scripts",
+      "frontend/src",
+      "frontend/tests",
+      "packages",
+      "tooling"
+    ],
+    "files": 1911,
+    "movedNames": [
+      "setNightAbilityEnabled",
+      "retireBorrowedNightAbility",
+      "expireLuckyAbilitiesOnDeath",
+      "setNightAbilityStartDay",
+      "recordNightAbilityUse",
+      "commitPreparedNativeAbility"
+    ],
+    "references": [
+      {
+        "path": "backend/src/game/engine/death-committer.ts",
+        "line": 39,
+        "form": "named-import",
+        "specifier": "../mechanisms/roles/ability_changes",
+        "binding": "expireLuckyAbilitiesOnDeath",
+        "local": "expireLuckyAbilitiesOnDeath",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/index.ts",
+        "line": 34,
+        "form": "star-export",
+        "specifier": "./roles/ability_changes",
+        "binding": null
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "line": 21,
+        "form": "named-import",
+        "specifier": "./prepared-native-install",
+        "binding": "commitPreparedNativeAbility",
+        "local": "commitPreparedNativeAbility",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+        "line": 18,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "setNightAbilityStartDay",
+        "local": "setNightAbilityStartDay",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+        "line": 31,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+        "line": 13,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+        "line": 12,
+        "form": "named-import",
+        "specifier": "../prepared-native-install",
+        "binding": "commitPreparedNativeAbility",
+        "local": "commitPreparedNativeAbility",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+        "line": 14,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "line": 16,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+        "line": 14,
+        "form": "named-import",
+        "specifier": "../prepared-native-install",
+        "binding": "commitPreparedNativeAbility",
+        "local": "commitPreparedNativeAbility",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "line": 15,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "line": 26,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "retireBorrowedNightAbility",
+        "local": "retireBorrowedNightAbility",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+        "line": 11,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+        "line": 14,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "setNightAbilityStartDay",
+        "local": "setNightAbilityStartDay",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+        "line": 10,
+        "form": "named-import",
+        "specifier": "../prepared-native-install",
+        "binding": "commitPreparedNativeAbility",
+        "local": "commitPreparedNativeAbility",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "line": 19,
+        "form": "named-import",
+        "specifier": "./ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "line": 16,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+        "line": 18,
+        "form": "named-import",
+        "specifier": "../prepared-native-install",
+        "binding": "commitPreparedNativeAbility",
+        "local": "commitPreparedNativeAbility",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "line": 17,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+        "line": 13,
+        "form": "named-import",
+        "specifier": "../prepared-native-install",
+        "binding": "commitPreparedNativeAbility",
+        "local": "commitPreparedNativeAbility",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "line": 31,
+        "form": "named-import",
+        "specifier": "../ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+        "line": 14,
+        "form": "named-import",
+        "specifier": "../prepared-native-install",
+        "binding": "commitPreparedNativeAbility",
+        "local": "commitPreparedNativeAbility",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+        "line": 23,
+        "form": "named-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "setNightAbilityEnabled",
+        "local": "setNightAbilityEnabled",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+        "line": 32,
+        "form": "named-import",
+        "specifier": "../../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+        "line": 23,
+        "form": "named-import",
+        "specifier": "../../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+        "line": 23,
+        "form": "named-import",
+        "specifier": "../../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "setNightAbilityEnabled",
+        "local": "setNightAbilityEnabled",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+        "line": 13,
+        "form": "named-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "retireBorrowedNightAbility",
+        "local": "retireBorrowedNightAbility",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+        "line": 28,
+        "form": "named-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "setNightAbilityEnabled",
+        "local": "setNightAbilityEnabled",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+        "line": 15,
+        "form": "namespace-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "metadataCommands"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+        "line": 26,
+        "form": "named-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+        "line": 27,
+        "form": "named-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "setNightAbilityEnabled",
+        "local": "setNightAbilityEnabled",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+        "line": 13,
+        "form": "named-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "setNightAbilityStartDay",
+        "local": "setNightAbilityStartDay",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+        "line": 14,
+        "form": "named-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "line": 22,
+        "form": "named-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "recordNightAbilityUse",
+        "local": "recordNightAbilityUse",
+        "typeOnly": false
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "line": 23,
+        "form": "named-import",
+        "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+        "binding": "setNightAbilityStartDay",
+        "local": "setNightAbilityStartDay",
+        "typeOnly": false
+      }
+    ]
+  }
+}

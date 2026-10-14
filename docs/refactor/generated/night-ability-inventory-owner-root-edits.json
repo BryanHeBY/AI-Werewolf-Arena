@@ -1,0 +1,53 @@
+{
+  "baseCommit": "bd1066307343b1d5c10bc7704fefbc0b77e9a341",
+  "source": {
+    "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts": [
+      {
+        "before": "import { type NightAbilityReadView } from \"../abilities\";",
+        "after": "import { recordNightAbilityUse, type NightAbilityReadView } from \"../abilities\";",
+        "count": 1
+      },
+      {
+        "before": "import { installNativeAbility, recordNightAbilityUse } from \"../ability_changes\";",
+        "after": "import { installNativeAbility } from \"../ability_changes\";",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts": [
+      {
+        "before": "import { type NightAbility } from \"../abilities\";",
+        "after": "import { recordNightAbilityUse, type NightAbility } from \"../abilities\";",
+        "count": 1
+      },
+      {
+        "before": "import { recordNightAbilityUse } from \"../ability_changes\";\n",
+        "after": "",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts": [
+      {
+        "before": "  findNightAbility,\n  abilityStatus,",
+        "after": "  findNightAbility,\n  abilityStatus,\n  recordNightAbilityUse,",
+        "count": 1
+      },
+      {
+        "before": "  installNativeAbility,\n  recordNightAbilityUse,",
+        "after": "  installNativeAbility,",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/demon-hunter/authority.test.ts": [
+      {
+        "before": "import { type NightAbility } from \"../../../../src/game/mechanisms/roles/abilities\";",
+        "after": "import { recordNightAbilityUse, type NightAbility } from \"../../../../src/game/mechanisms/roles/abilities\";",
+        "count": 1
+      },
+      {
+        "before": "  installNativeAbility,\n  recordNightAbilityUse,",
+        "after": "  installNativeAbility,",
+        "count": 1
+      }
+    ]
+  }
+}

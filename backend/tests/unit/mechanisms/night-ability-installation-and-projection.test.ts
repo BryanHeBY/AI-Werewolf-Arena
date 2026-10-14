@@ -23,8 +23,8 @@ import {
   activeNightAbility,
   abilityStatus,
 } from "../../../src/game/mechanisms/roles/abilities";
-import { recordNightAbilityUse } from "../../../src/game/mechanisms/roles/ability_changes";
-import { setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/ability_changes";
+import { recordNightAbilityUse } from "../../../src/game/mechanisms/roles/abilities";
+import { setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/abilities";
 import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";

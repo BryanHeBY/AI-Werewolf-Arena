@@ -1,0 +1,3 @@
+backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts(95,3): error TS2741: Property 'requestFactory' is missing in type '{ world: World; readonly nightActors: NightAbilityActorQuery; readonly nativeNightFailure: NativeNightFailurePolicy; ... 14 more ...; state: { ...; }; }' but required in type 'NightStageContext'.
+backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts(17,3): error TS2578: Unused '@ts-expect-error' directive.
+backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts(19,3): error TS2578: Unused '@ts-expect-error' directive.

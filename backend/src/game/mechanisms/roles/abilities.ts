@@ -1,9 +1,10 @@
 /**
- * 负责普通夜能力的实例映射、只读查询、状态判定与数据复制。
- * 输入为原实例引用、明确日期和数据字段；输出保留深只读 live 引用、原状态标签及共同数据规范化。
- * 原生安装、起效日与次数提交已归 ability_changes；本模块不写实际实例槽、库存或阶段。
- * Pair 纯数据规范化由同一实际函数供安装及投影使用，不从真实阵营推断玩家知识。
- * 共同元数据与玩家 DTO 类型归公共契约，完整 DTO 投影归 observation；status 标签不代替原许可或提交前复验。
+ * 负责普通夜能力唯一库存的数据复制、查询、原生安装和通用 metadata 提交。
+ * 输入为原角色、捕获实例、已准备 payload 与明确日期；输出保留原字典／实例引用和能力变化事实。
+ * 本 owner 写 abilities、retiredAbilityIds 及通用启停／次数／到期字段；原生 payload 准备仍归 ability_changes，
+ * 授予／转移的来源与状态政策仍归 night-ability-grants，具体瓶数、梦历史、借用抑制及 Demon 审计另有原权威。
+ * 字典创建、退休 ID 修订和逐字段提交保原求值顺序；发表或后续写入失败不回滚已完成前缀。
+ * 数据复制不新增严格 live schema、JSON 档案接受或行动许可；readonly 视图仍是同一对象，不是冻结或第二库存。
  */
 
 import type {
@@ -13,11 +14,17 @@ import type {
   NightAbilityKind,
   AbilitySource,
   NightAbilityReadStates,
+  NightAbilityReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { readPairSeerState } from "./fragrant_pair_seer/state";
 import { nativePotionSecondTurn } from "./witch/policies";
 import { Role } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
+import type { RoleInitializationComponent } from "./contracts";
+import { COMPONENT } from "../../../core/domain/components/names";
+import type { EntityId, GameEvent } from "../../../core/domain/model";
+import type { World } from "../../../core/domain/world";
+import { roleOf, emit } from "./night-ability-change-runtime";
 import type {
   NightAbilityMetadata,
   AbilityStatus,
@@ -162,4 +169,157 @@ export function activeNightAbility<K extends NightAbilityKind>(
 export function retiredNightAbilityIds(role: RoleComponent): readonly string[] {
   return ((role.privateState as { readonly retiredAbilityIds?: unknown }).retiredAbilityIds ??
     []) as readonly string[];
+}
+
+/**
+ * 原准备方已按各族规则复制并接受 payload；这里先创建字典，再读退休 ID 修订原生编号。
+ * kind／来源失配时保留旧实例；匹配只替换 state，原 metadata、次数和起效日期保持。
+ * 字典已创建后退休列表读取失败，不撤销这一前缀；本步不新增状态 schema 或行动许可。
+ */
+export function commitPreparedNativeAbility<K extends NightAbilityKind>(
+  role: RoleComponent,
+  kind: K,
+  ownedState: NightAbilityStates[K],
+): NightAbilityReadState<K> {
+  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
+    {}) as Record<string, NightAbility>;
+  const retired = ((role.privateState as { readonly retiredAbilityIds?: unknown })
+    .retiredAbilityIds ?? []) as string[];
+  const baseId = `native:${kind}`;
+  let id = baseId,
+    revision = 1;
+  while (retired.includes(id)) id = `${baseId}:${++revision}`;
+  const existing = stored[id];
+  if (existing) {
+    if (
+      existing.kind !== kind ||
+      existing.source.kind !== "native" ||
+      existing.source.role !== role.role
+    )
+      throw new Error("ability_native_binding_conflict");
+    existing.state = ownedState;
+  } else {
+    stored[id] = {
+      id,
+      kind,
+      state: ownedState,
+      source: { kind: "native", role: role.role },
+      sourceDisclosed: true,
+      startsOnDay: 1,
+      maxUses: null,
+      uses: 0,
+      lastUsedDay: null,
+      disabled: false,
+    } as NightAbility;
+  }
+  return ownedState as NightAbilityReadState<K>;
+}
+
+/**
+ * 按原库存 ID 寻找实例；死亡到期不能重开，启停值已一致时不发布事实。
+ * 先写 disabled 再发表，事件写入失败仍保留已完成的启停值，不退还具体资源。
+ */
+export function setNightAbilityEnabled(
+  world: World,
+  actorId: EntityId,
+  id: string,
+  enabled: boolean,
+  events: GameEvent[],
+): void {
+  const ability = allNightAbilities(roleOf(world, actorId)).find((ability) => ability.id === id);
+  if (!ability) throw new Error("ability_instance_missing");
+  if (enabled && ability.deathExpired) throw new Error("ability_lucky_expired_on_death");
+  if (ability.disabled === !enabled) return;
+  (ability as { disabled: boolean }).disabled = !enabled;
+  emit(events, actorId, ability, enabled ? "enabled" : "disabled");
+}
+
+/**
+ * 退役角色已核对原体／捕获槽的借用实例，只重定义原 disabled 数据属性。
+ * 目标 supplier 在 Object.defineProperty 方法查找之后执行，保原 late 字段读取位置。
+ * 不按可变 id 重查、不读或执行替换的 disabled getter/setter、不删槽／退休 ID，不发布启停事实。
+ * 借用租约、原主抑制和已付 payload 仍归具体 Frame；本写入不提供新行动权限或退款。
+ */
+export function retireBorrowedNightAbility(readBorrowed: () => NightAbilityReadView): void {
+  Object.defineProperty(readBorrowed(), "disabled", {
+    value: true,
+    writable: true,
+    enumerable: true,
+    configurable: true,
+  });
+}
+
+/** 实际死亡到期跟随同一实例经过转移／复活；已经付款的夜效果仍按原政策保留。 */
+export function expireLuckyAbilitiesOnDeath(
+  world: World,
+  actorId: EntityId,
+  events: GameEvent[],
+): void {
+  for (const ability of allNightAbilities(world.getComponent(actorId, COMPONENT.Role))) {
+    if (
+      (ability.activation !== "lucky" && ability.activation !== "black_market") ||
+      ability.deathExpired
+    )
+      continue;
+    (ability as { deathExpired?: boolean }).deathExpired = true;
+    (ability as { disabled: boolean }).disabled = true;
+    emit(events, actorId, ability, "disabled");
+  }
+}
+
+
+/** 初始化／学习流程仍在原调用点决定起效日；这里只写原 startsOnDay，不推进业务时钟。 */
+export function setNightAbilityStartDay(ability: NightAbilityReadView, day: number): void {
+  (ability as { startsOnDay: number }).startsOnDay = day;
+}
+
+/** 原 status 重检后先记 lastUsedDay，再可选增加 uses；payload 库存与已付效果继续归具体机制。 */
+export function recordNightAbilityUse(
+  ability: NightAbilityReadView,
+  day: number,
+  consumed: boolean,
+): void {
+  if (abilityStatus(ability, day) !== "active") throw new Error("ability_not_active");
+  (ability as { lastUsedDay: number | null }).lastUsedDay = day;
+  if (consumed) (ability as { uses: number }).uses++;
+}
+
+/** 本族初始化已经先完成；这里只在原清空点安装新空字典，不读取退休列表或补偿旧库存。 */
+export function initializeNightAbilityInventory(role: RoleInitializationComponent): void {
+  role.privateState.abilities = {};
+}
+
+/** 来源与安装政策已由授予 owner 复验；安装先于发表，同一事件失败不撤回已安装实例。 */
+export function commitGrantedNightAbility(
+  role: RoleComponent,
+  actorId: EntityId,
+  ability: NightAbility,
+  events: GameEvent[],
+): NightAbility {
+  // 原字典赋值已发生后才发布；push／时钟／来源克隆失败都保留已安装实例。
+  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
+    {}) as Record<string, NightAbility>;
+  stored[ability.id] = ability;
+  emit(events, actorId, ability, "granted");
+  return ability;
+}
+
+/** 目标安装及发表已成功；原槽删除、退休 ID push、转出事实各保已完成前缀，不做事务退款。 */
+export function retireTransferredNightAbility(
+  source: RoleComponent,
+  fromId: EntityId,
+  id: string,
+  ability: NightAbilityReadView,
+  events: GameEvent[],
+): void {
+  delete (
+    (source.privateState as { readonly abilities?: unknown }).abilities as Record<
+      string,
+      NightAbility
+    >
+  )[id];
+  (
+    ((source.privateState as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]
+  ).push(id);
+  emit(events, fromId, ability, "transferred_out");
 }

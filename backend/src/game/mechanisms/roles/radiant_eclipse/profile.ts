@@ -10,8 +10,9 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions, RoleRuntimeContribution } from "../contracts";
-import { activeNightAbility } from "../abilities";
-import { setNightAbilityStartDay, installNativeAbility } from "../ability_changes";
+import { activeNightAbility, initializeNightAbilityInventory } from "../abilities";
+import { installNativeAbility } from "../ability_changes";
+import { setNightAbilityStartDay } from "../abilities";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { RADIANT_SHELTER_STAGE, ECLIPSE_SWALLOW_STAGE } from "./night_stages";
 import { initializeEclipseState, RADIANT_ECLIPSE_POLICY } from "./eclipse-state-slot";
@@ -134,7 +135,7 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
     ...common.runtime,
     init: (role) => {
       initializeEclipseState(role);
-      role.privateState.abilities = {};
+      initializeNightAbilityInventory(role);
     },
     wolfTeam: (_role, world) => ({
       recognizedByPack: false,

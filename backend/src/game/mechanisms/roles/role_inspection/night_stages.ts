@@ -13,7 +13,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase, Role } from "../../../../core/domain/model";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { type NightAbilityReadView } from "../abilities";
-import { recordNightAbilityUse } from "../ability_changes";
+import { recordNightAbilityUse } from "../abilities";
 import { getGargoyleState } from "../gargoyle/ports";
 import { resolveInspection } from "../inspection";
 import {

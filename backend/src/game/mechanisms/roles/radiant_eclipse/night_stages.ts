@@ -8,7 +8,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, Role } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { recordNightAbilityUse } from "../ability_changes";
+import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { readShelterState, selectShelter } from "./shelter-state";
 import { SHELTER_STATE_SLOT } from "./shelter-state-slot";

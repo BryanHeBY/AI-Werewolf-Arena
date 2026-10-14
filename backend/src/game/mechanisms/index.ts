@@ -22,7 +22,27 @@ export * from "./roles/catalog";
 export * from "./roles/role-catalog-assembly";
 export * from "./roles/wolf_team";
 export * from "./roles/inspection";
-export * from "./roles/abilities";
+export {
+  ROLE_INSPECTION_POLICY_ROLES,
+  projectPairState,
+  copyAbilityData,
+  allNightAbilities,
+  nightAbilityDisabled,
+  abilityStatus,
+  findNightAbility,
+  activeNightAbility,
+  retiredNightAbilityIds,
+  projectRoleInspectionState,
+  projectSeerState,
+  projectWitchState,
+  setNightAbilityEnabled,
+  retireBorrowedNightAbility,
+  expireLuckyAbilitiesOnDeath,
+  setNightAbilityStartDay,
+  recordNightAbilityUse,
+  type NightAbility,
+  type NightAbilityReadView,
+} from "./roles/abilities";
 export {
   bindNightAbilityActorQuery,
   createNightActorEligibilityQuery,

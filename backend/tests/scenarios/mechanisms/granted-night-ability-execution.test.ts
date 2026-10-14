@@ -20,7 +20,7 @@ import {
   activeNightAbility,
   abilityStatus,
 } from "../../../src/game/mechanisms/roles/abilities";
-import { setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/ability_changes";
+import { setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/abilities";
 import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";

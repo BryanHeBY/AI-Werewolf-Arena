@@ -1,0 +1,177 @@
+[
+  {
+    "path": "backend/src/game/engine/death-committer.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+    "change": "modify",
+    "owner": "Root shared exact route"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+    "change": "modify",
+    "owner": "Root shared exact route"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+    "change": "modify",
+    "owner": "Root shared exact route"
+  },
+  {
+    "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+    "change": "modify",
+    "owner": "Root shared exact route"
+  },
+  {
+    "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/index.ts",
+    "change": "modify",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+    "change": "delete",
+    "owner": "preflight"
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/night-ability-inventory-owner.test.ts",
+    "change": "new",
+    "owner": "preflight"
+  }
+]

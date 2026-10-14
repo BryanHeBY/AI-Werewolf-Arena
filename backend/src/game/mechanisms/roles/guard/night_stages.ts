@@ -13,7 +13,7 @@ import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getGuardState } from "./ports";
 import { activeNightAbility } from "../abilities";
-import { recordNightAbilityUse } from "../ability_changes";
+import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";

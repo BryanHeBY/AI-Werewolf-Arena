@@ -1,26 +1,24 @@
 /**
  * 单元测试：负责普通夜能力实际安装与 metadata owner 的共享引用和付款边界。
  * 输入为原角色、字面状态、带 trace 的实例和复制故障；输出使用原错误、引用、字段及顺序预期。
- * 编译负例保证查询入口退出三个写命令，具体 payload 和业务时钟仍归原调用者。
+ * 编译负例保证原生准备与通用库存写命令各归实际所有者，具体 payload 和业务时钟仍归原调用者。
  * 不执行阶段、模型、文件或完整对局，也不调用生产规则生成预期。
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, type PairSeerState } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import * as queries from "../../../src/game/mechanisms/roles/abilities";
-import {
-  installNativeAbility,
-  setNightAbilityStartDay,
-  recordNightAbilityUse,
-} from "../../../src/game/mechanisms/roles/ability_changes";
+import * as prepared from "../../../src/game/mechanisms/roles/ability_changes";
+import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { setNightAbilityStartDay, recordNightAbilityUse } from "../../../src/game/mechanisms/roles/abilities";
 
 function removedQueryWrites() {
   // @ts-expect-error 原生安装已经退出只读查询入口。
   void queries.installNativeAbility;
-  // @ts-expect-error 起效日写权已经退出只读查询入口。
-  void queries.setNightAbilityStartDay;
-  // @ts-expect-error 次数提交已经退出只读查询入口。
-  void queries.recordNightAbilityUse;
+  // @ts-expect-error 起效日实际写命令已退出 payload 准备叶。
+  void prepared.setNightAbilityStartDay;
+  // @ts-expect-error 次数实际提交已退出 payload 准备叶。
+  void prepared.recordNightAbilityUse;
 }
 void removedQueryWrites;
 

@@ -11,7 +11,7 @@ import type { WitchState, WitchReadState } from "@ai-werewolf-arena/game-contrac
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
 import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../abilities";
-import { commitPreparedNativeAbility } from "../prepared-native-install";
+import { commitPreparedNativeAbility } from "../abilities";
 
 export function setWitchState(roleComp: RoleComponent, state: WitchState): WitchReadState {
   return commitPreparedNativeAbility(roleComp, "potion", WITCH_STATE_SLOT.create(state));

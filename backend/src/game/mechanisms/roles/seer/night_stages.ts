@@ -14,7 +14,7 @@ import { NightStageHandler } from "../../stages/night/contracts";
 import { getSeerState } from "./ports";
 import { resolveInspection } from "../inspection";
 import { activeNightAbility } from "../abilities";
-import { recordNightAbilityUse } from "../ability_changes";
+import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
