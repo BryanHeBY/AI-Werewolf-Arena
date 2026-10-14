@@ -1,5 +1,11 @@
+/**
+ * 负责旧应用层级的纯路径判定。输入为源码根、导入方路径与字面模块名；输出为首个禁止层级说明或 null。
+ * 此处唯一声明旧层级表，按原 find 次序匹配同层／子目录；判断不读取文件、解析包出口或授予运行权限。
+ * 相对与绝对路径按原规则规范化，包名保持不匹配；新角色／包边界仍由独立架构门禁核对，不能借 null 宣称全部结构合法。
+ */
 const path = require("node:path");
 
+// 每项属于旧层级的禁止依赖集合；find 的先匹配顺序与原错误说明共同构成此工具的契约。
 const boundaries = [
   {
     layer: "core",
@@ -42,6 +48,7 @@ function importBoundaryViolation(rootDir, filePath, specifier) {
   const source = path.relative(rootDir, filePath).replace(/\\/g, "/");
   const boundary = boundaries.find(({ layer }) => within(source, layer));
   if (!boundary) return null;
+  // 仅按导入方位置规范化路径并去除原后缀，不访问目标文件或推导实际 package 声明。
   const target = path
     .relative(rootDir, path.resolve(path.dirname(filePath), specifier))
     .replace(/\\/g, "/")

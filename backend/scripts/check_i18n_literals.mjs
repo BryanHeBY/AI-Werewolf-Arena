@@ -1,11 +1,8 @@
 /**
- * Owns the AST scan of application and shared presentation source literals.
- * Inputs are public source files and exact reviewed file/text/count exceptions;
- * outputs are unapproved Han literals and stale-exception diagnostics. Filesystem
- * reads stay within the fixed source roots, without following symbolic links;
- * private configuration and authentication are never source inputs. Only direct
- * Chinese translation values in registered owner objects are exempt, not nearby
- * code or whole directories. The CLI reports failures without changing files.
+ * 负责应用与共享展示源码的 AST 中文字面扫描。输入为固定公开源码根及已审查的文件／文本／次数例外；
+ * 输出为未获准中文字面和过期例外诊断，CLI 只报告失败，不改源码、词典或例外清单。
+ * 仓库入口逐段拒绝符号链接根，遍历时跳过链接项；私有配置与认证不作为扫描输入。
+ * 唯一翻译所有者清单只豁免其 exported const zhCN 对象的直接中文值，不豁免相邻代码或整个目录。
  */
 import ts from "typescript";
 import path from "node:path";
@@ -30,7 +27,7 @@ const translationOwners = new Set([
 ]);
 /** @typedef {{ file: string, text: string, line: number }} ChineseLiteral */
 /** @typedef {{ file: string, text: string, count: number, reason: string }} LiteralException */
-/** Comments and fixtures are excluded; strings, template segments, and JSX are scanned. */
+/** 检查所给源码的字符串、模板片段和 JSX；注释不作为字面，仓库入口不扫描测试／fixture。 */
 /** @param {string} file @param {string} source */
 export function collectChineseLiterals(file, source) {
   const parsed = ts.createSourceFile(
@@ -72,6 +69,7 @@ export function collectChineseLiterals(file, source) {
       ts.isJsxText(node)
     ) {
       const property = node.parent;
+      // 只放行登记 owner 中 zhCN 对象的直接 property 值；键名和相邻表达式仍走普通扫描。
       const translationValue =
         (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) &&
         ts.isPropertyAssignment(property) &&
@@ -114,18 +112,22 @@ export function verifyLiteralExceptions(found, exceptions) {
     if (!exception || (actual.get(key) ?? 0) > exception.count)
       problems.push(`${entry.file}:${entry.line}: unapproved Chinese literal`);
   }
+  // 例外的实际出现数必须精确等于登记数；消失或少于原数同样过期，不能留下长期宽豁免。
   for (const [key, entry] of expected)
     if (actual.get(key) !== entry.count)
       problems.push(`${entry.file}: stale or changed i18n exception`);
   return problems;
 }
-/** @param {string} publicRoot Only fixed public source subdirectories are read. */
+/** 只读取配置在本入口的公开源码子目录。
+ * @param {string} publicRoot 仓库根或测试自有根路径。
+ */
 export async function scanRepository(publicRoot = repositoryRoot) {
   /** @type {ChineseLiteral[]} */
   const found = [];
   const absoluteRoot = path.resolve(publicRoot);
   /** @param {string} directory @param {boolean} [optionalRoot] @returns {Promise<boolean>} */
   const sourceRootIsPresent = async (directory, optionalRoot = false) => {
+    // 在读取前逐段核父路径，避免公开子目录或其祖先被链接替换后逃离原输入边界。
     const absolute = path.join(absoluteRoot, directory),
       filesystemRoot = path.parse(absolute).root;
     let current = filesystemRoot;

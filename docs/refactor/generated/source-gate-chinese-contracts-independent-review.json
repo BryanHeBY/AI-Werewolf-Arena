@@ -1,0 +1,112 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "baseCommit": "e601e69a0c0904785f5e95e33a1bb56153a43bfc",
+  "source": [
+    {
+      "path": "backend/scripts/check_import_boundaries.mjs",
+      "sha256": "635601de1f3752b1adb3bf9e92e02ad597e1d70e4714400fc1a4220818a22889"
+    },
+    {
+      "path": "backend/scripts/import_boundaries.cjs",
+      "sha256": "f239e3bac780eb128401b446c725f3bfa6bfc2c43ca8ad5ae8829e86651c5f76"
+    },
+    {
+      "path": "backend/scripts/check_i18n_literals.mjs",
+      "sha256": "3e6154c4e27e37f07bc0432b6cf090a096f6a8041c4dc214d7dd973d1d128e90"
+    }
+  ],
+  "actualBeforeAndExactCommentInverse": [
+    {
+      "path": "backend/scripts/check_import_boundaries.mjs",
+      "actualGitBeforeSHA256": "8d7631c0bab660b6007cc0d0af03de71820abec4a83b26314026b3ab17c1761a",
+      "beforeWholeBytesSame": true,
+      "exactCommentInverseWholeBytesSame": true,
+      "commentEdits": 3
+    },
+    {
+      "path": "backend/scripts/import_boundaries.cjs",
+      "actualGitBeforeSHA256": "f6ae4dce3f3d5a746881db6e3c685cb0a7ab37bffd7fb6f2fbefc1d378547a87",
+      "beforeWholeBytesSame": true,
+      "exactCommentInverseWholeBytesSame": true,
+      "commentEdits": 3
+    },
+    {
+      "path": "backend/scripts/check_i18n_literals.mjs",
+      "actualGitBeforeSHA256": "5ac43baeb500a0944e0ba3c6c58c99ebef35db028c33f4bcfa02897e9c39a384",
+      "beforeWholeBytesSame": true,
+      "exactCommentInverseWholeBytesSame": true,
+      "commentEdits": 6
+    }
+  ],
+  "semanticReview": [
+    "旧 CLI 的 cwd/argv→path.resolve 默认 src、只发现 .ts；字面 import/export/require/dynamic import/import type/import equals 的全部当前 AST 分支已完整实读，不执行被扫模块、不新增根 realpath。",
+    "纯判定器 boundaries/find/within 与原路径后缀规则保持；包名和无对应边界返回 null，不把未匹配夸成当前架构全面合法。",
+    "i18n 的五固定公开子目录、optionalRoot 与逐段 lstat 拒链接、遍历跳链接、直接 exported const zhCN property value 豁免准确；键和相邻模板仍检查，例外 file/text/count 精确匹配和 stale 分支保持。",
+    "三完整源码与十二实际注释差分全部实读；shebang、JSDoc 类型指令、机器字面和执行程序均由精确注释逆还原为实际 Git 全文，不新增运行 API 或门禁豁免。"
+  ],
+  "evidenceAttribution": {
+    "authorReceipt": {
+      "chunk": "5a50c3",
+      "exitCode": 0
+    },
+    "authorFullTypedNodes": 1664,
+    "authorFullNoncommentLeaves": 2041,
+    "authorWholeOutputs": 6,
+    "authorDocumentationPaths": 495,
+    "authorHeadDiagnostics": 0,
+    "authorMissingChineseHead": 0,
+    "independentToolsNotRerun": [
+      "compiler",
+      "source-proof harness",
+      "实际 comment gate",
+      "原三个门禁",
+      "tests",
+      "types",
+      "models"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/source-gate-chinese-contracts-before.json",
+      "sha256": "d0c585f55cd1e9b0bb20fdde5fb6e2cc794028871fe7eb98bedb0015585246b6"
+    },
+    {
+      "path": "docs/refactor/generated/source-gate-chinese-contracts-edits.json",
+      "sha256": "30b5cc07486b96660374a4cc9bee14af40a3eba986e544e74979c910d4076c86"
+    },
+    {
+      "path": "docs/refactor/generated/source-gate-chinese-contracts-check.ts",
+      "sha256": "8480439584afaef083de4aa436b80cb7beb88389f21eea50254084fccacd1fcd"
+    },
+    {
+      "path": "docs/refactor/generated/source-gate-chinese-contracts-proof.json",
+      "sha256": "a0e103eb0cd5d593ec9c894eecfa700385406749ceb61039885a61f5ae8e0e10"
+    },
+    {
+      "path": "docs/refactor/generated/source-gate-chinese-contracts-scope-final.json",
+      "sha256": "18b810abc4c84241bde6779a533a2f692da6837c6b8b339642b55b2c7061e301"
+    },
+    {
+      "path": "docs/refactor/generated/source-gate-chinese-contracts-receipts.json",
+      "sha256": "e92e7e23eeba4031667fb5e39165211eb7fe98084030aa85fa049e78112d8c93"
+    },
+    {
+      "path": "docs/refactor/source-gate-chinese-contracts.md",
+      "sha256": "6dafbb34c979dfa58b315e6bffcb12add24e8121d871c95a95c742cffa51653a"
+    },
+    {
+      "path": "docs/refactor/generated/source-gate-chinese-contracts-evidence.json",
+      "sha256": "aca687aa6308181a61f741c5e13eb1a5dae845cd8ac69a7ccf13b217c9a7b0d2"
+    },
+    {
+      "path": "docs/refactor/generated/source-gate-chinese-contracts-root-review.json",
+      "sha256": "688bb5078ca5b982f09187001da6eebb9d6b529283ee3a9ec00567719c8687e8"
+    }
+  ],
+  "findings": [],
+  "limits": [
+    "独立审查只验证三源真实来源、完整注释逆及说明语义；AST/六输出与职责检查收据归作者，未重跑。",
+    "不证明全仓门禁、业务行为、所有源中文化或 P9 完成；源码注释字节改变的构建指纹影响保持真实。"
+  ]
+}

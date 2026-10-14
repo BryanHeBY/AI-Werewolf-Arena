@@ -1,0 +1,89 @@
+{
+  "baseCommit": "e601e69a0c0904785f5e95e33a1bb56153a43bfc",
+  "source": [
+    {
+      "path": "backend/scripts/check_import_boundaries.mjs",
+      "sha256": "635601de1f3752b1adb3bf9e92e02ad597e1d70e4714400fc1a4220818a22889",
+      "beforeSHA": "8d7631c0bab660b6007cc0d0af03de71820abec4a83b26314026b3ab17c1761a",
+      "commentEdits": 3,
+      "exactCommentInverseWholeSourceSame": true,
+      "typedNodes": 355,
+      "typedTreeSame": true,
+      "noncommentLeafCount": 430,
+      "allNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "originalSHA": "37c9d6f48b2da1b7c10c5ffc16e0a093de3748b935015b171fec0520a448d07f",
+          "currentSHA": "37c9d6f48b2da1b7c10c5ffc16e0a093de3748b935015b171fec0520a448d07f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "originalSHA": "0981c78b49dc41572212ae9cb2e508adad2157209320a377a2396c8a50089ce4",
+          "currentSHA": "0981c78b49dc41572212ae9cb2e508adad2157209320a377a2396c8a50089ce4"
+        }
+      ]
+    },
+    {
+      "path": "backend/scripts/import_boundaries.cjs",
+      "sha256": "f239e3bac780eb128401b446c725f3bfa6bfc2c43ca8ad5ae8829e86651c5f76",
+      "beforeSHA": "f6ae4dce3f3d5a746881db6e3c685cb0a7ab37bffd7fb6f2fbefc1d378547a87",
+      "commentEdits": 3,
+      "exactCommentInverseWholeSourceSame": true,
+      "typedNodes": 259,
+      "typedTreeSame": true,
+      "noncommentLeafCount": 347,
+      "allNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "originalSHA": "d872b7b4375cf4916a21e02a6680a4a33255358f0f8725d5e1f6df313cc9728e",
+          "currentSHA": "d872b7b4375cf4916a21e02a6680a4a33255358f0f8725d5e1f6df313cc9728e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "originalSHA": "d872b7b4375cf4916a21e02a6680a4a33255358f0f8725d5e1f6df313cc9728e",
+          "currentSHA": "d872b7b4375cf4916a21e02a6680a4a33255358f0f8725d5e1f6df313cc9728e"
+        }
+      ]
+    },
+    {
+      "path": "backend/scripts/check_i18n_literals.mjs",
+      "sha256": "3e6154c4e27e37f07bc0432b6cf090a096f6a8041c4dc214d7dd973d1d128e90",
+      "beforeSHA": "5ac43baeb500a0944e0ba3c6c58c99ebef35db028c33f4bcfa02897e9c39a384",
+      "commentEdits": 6,
+      "exactCommentInverseWholeSourceSame": true,
+      "typedNodes": 1050,
+      "typedTreeSame": true,
+      "noncommentLeafCount": 1264,
+      "allNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "originalSHA": "33363247d3653a3b51eb69c8ca3d003595a8ca963ce9e60627ced3ea79219195",
+          "currentSHA": "33363247d3653a3b51eb69c8ca3d003595a8ca963ce9e60627ced3ea79219195"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "originalSHA": "dc5e089400af138f62a20f1b07419f176ee35623e594eba7d8ea2cebe9b003cb",
+          "currentSHA": "dc5e089400af138f62a20f1b07419f176ee35623e594eba7d8ea2cebe9b003cb"
+        }
+      ]
+    }
+  ],
+  "exactCommentEdits": 12,
+  "documentationPathCount": 495,
+  "diagnostics": [],
+  "missingChineseHead": [],
+  "limits": [
+    "Three complete JavaScript programs, original JSDoc directives and all raw literals remain.",
+    "Only explicit comments inverted; source/manifest fingerprints still change, historical archives/IDs untouched.",
+    "No type compilation/runtime tests/whole gates/models; source semantics and comments still need independent review."
+  ]
+}

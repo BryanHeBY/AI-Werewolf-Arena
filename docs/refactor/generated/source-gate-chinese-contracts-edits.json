@@ -1,0 +1,74 @@
+[
+  {
+    "path": "backend/scripts/check_import_boundaries.mjs",
+    "before": "#!/usr/bin/env node\n",
+    "after": "#!/usr/bin/env node\n/**\n * 负责旧层级导入规则的命令行扫描。输入为工作目录相对源码根，默认 src；输出为字面路径违规列表或成功，失败退出 1。\n * 按文件系统目录项递归读取 .ts，AST 识别导入、导出、require、动态 import、import type 和 import equals 的字面模块名。\n * 扫描只调用本地路径判定器，不执行被扫模块或写源码；非字面拼接路径不在检查范围，角色／共享包约束另由架构门禁负责。\n */\n",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/check_import_boundaries.mjs",
+    "before": "const rootDir = path.resolve",
+    "after": "// 维持原 cwd／argv 默认值；这里不对输入根额外 realpath，也不扩大 .ts 以外的发现范围。\nconst rootDir = path.resolve",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/check_import_boundaries.mjs",
+    "before": "    let specifier;",
+    "after": "    // 只读取原字面模块名；覆盖重导、运行调用和类型位置，不执行表达式来猜测动态路径。\n    let specifier;",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/import_boundaries.cjs",
+    "before": "const path = require(\"node:path\");",
+    "after": "/**\n * 负责旧应用层级的纯路径判定。输入为源码根、导入方路径与字面模块名；输出为首个禁止层级说明或 null。\n * 此处唯一声明旧层级表，按原 find 次序匹配同层／子目录；判断不读取文件、解析包出口或授予运行权限。\n * 相对与绝对路径按原规则规范化，包名保持不匹配；新角色／包边界仍由独立架构门禁核对，不能借 null 宣称全部结构合法。\n */\nconst path = require(\"node:path\");",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/import_boundaries.cjs",
+    "before": "const boundaries = [",
+    "after": "// 每项属于旧层级的禁止依赖集合；find 的先匹配顺序与原错误说明共同构成此工具的契约。\nconst boundaries = [",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/import_boundaries.cjs",
+    "before": "  const target = path",
+    "after": "  // 仅按导入方位置规范化路径并去除原后缀，不访问目标文件或推导实际 package 声明。\n  const target = path",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/check_i18n_literals.mjs",
+    "before": "/**\n * Owns the AST scan of application and shared presentation source literals.\n * Inputs are public source files and exact reviewed file/text/count exceptions;\n * outputs are unapproved Han literals and stale-exception diagnostics. Filesystem\n * reads stay within the fixed source roots, without following symbolic links;\n * private configuration and authentication are never source inputs. Only direct\n * Chinese translation values in registered owner objects are exempt, not nearby\n * code or whole directories. The CLI reports failures without changing files.\n */\n",
+    "after": "/**\n * 负责应用与共享展示源码的 AST 中文字面扫描。输入为固定公开源码根及已审查的文件／文本／次数例外；\n * 输出为未获准中文字面和过期例外诊断，CLI 只报告失败，不改源码、词典或例外清单。\n * 仓库入口逐段拒绝符号链接根，遍历时跳过链接项；私有配置与认证不作为扫描输入。\n * 唯一翻译所有者清单只豁免其 exported const zhCN 对象的直接中文值，不豁免相邻代码或整个目录。\n */\n",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/check_i18n_literals.mjs",
+    "before": "/** Comments and fixtures are excluded; strings, template segments, and JSX are scanned. */",
+    "after": "/** 检查所给源码的字符串、模板片段和 JSX；注释不作为字面，仓库入口不扫描测试／fixture。 */",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/check_i18n_literals.mjs",
+    "before": "/** @param {string} publicRoot Only fixed public source subdirectories are read. */",
+    "after": "/** 只读取配置在本入口的公开源码子目录。\n * @param {string} publicRoot 仓库根或测试自有根路径。\n */",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/check_i18n_literals.mjs",
+    "before": "      const translationValue =",
+    "after": "      // 只放行登记 owner 中 zhCN 对象的直接 property 值；键名和相邻表达式仍走普通扫描。\n      const translationValue =",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/check_i18n_literals.mjs",
+    "before": "  for (const [key, entry] of expected)",
+    "after": "  // 例外的实际出现数必须精确等于登记数；消失或少于原数同样过期，不能留下长期宽豁免。\n  for (const [key, entry] of expected)",
+    "count": 1
+  },
+  {
+    "path": "backend/scripts/check_i18n_literals.mjs",
+    "before": "    const absolute = path.join(absoluteRoot, directory),",
+    "after": "    // 在读取前逐段核父路径，避免公开子目录或其祖先被链接替换后逃离原输入边界。\n    const absolute = path.join(absoluteRoot, directory),",
+    "count": 1
+  }
+]
