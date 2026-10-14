@@ -1,0 +1,16 @@
+{
+  "kind": "纯文档来源指纹精度",
+  "beforeDocument": {
+    "path": "docs/refactor/additional-death-relations.md",
+    "historicalSha256": "625f215d6665cec1e88ee240716bc9cccef596a4a065a02c5fdca273ec6aa229"
+  },
+  "afterDocument": {
+    "path": "docs/refactor/additional-death-relations.md",
+    "sha256": "42cb49b1b898888596fd817755f32c4cc6c212ca7e100e62eda382636056ddd9"
+  },
+  "exactBefore": "未改旧 fixture、标题、动作、预期、模型文案、严格档案／sourceHash、golden 或门禁政策。",
+  "exactAfter": "未改旧 fixture、标题、动作、预期、模型文案、严格档案格式、来源指纹算法、校验政策或历史档案身份，golden 与门禁政策保持。新增源码和路由参与新构建，sourceHash 仍按当前源码真实生成。",
+  "sourceAndScopeChanged": false,
+  "receiptsAndProofChanged": false,
+  "checksRepeated": false
+}

@@ -9,7 +9,7 @@
 import { Phase, DeathCause, type DeathSources, type EntityId, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../core/domain/world";
 import type { DreamNightEffects } from "../core/domain/dream-night-effects";
-import { expandLoversWave } from "../game/mechanisms/roles/cupid/relation";
+import { expandLoversWave } from "../game/mechanisms/roles/cupid/death-ports";
 import { prepareFragrantDeathWave } from "../game/mechanisms/roles/fragrant_pair_seer/ports";
 
 /** 原具体婚约对象的窄方法视图；保留实例和 expand receiver，不创建第二个关系所有者。 */

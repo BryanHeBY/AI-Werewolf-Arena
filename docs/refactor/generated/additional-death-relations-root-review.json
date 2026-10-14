@@ -1,0 +1,51 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "independentOfImplementation": true,
+  "scope": {
+    "path": "docs/refactor/generated/additional-death-relations-scope-final.json",
+    "sha256": "1bb766209189dd2b45900031ea5b413d1068d4054b7917a1f412d0bfe9573b09"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "ffb66b3c11dd0a1ce7d951ca3a43db22b7b3e5e561ff89bd78f133baa0fdd8d7"
+    },
+    {
+      "path": "backend/src/rulesets/initial-death-relations.ts",
+      "sha256": "73488422954497442ec92888b1a14d9e548478b30b8515ad0e97d8aa24d6abd0"
+    },
+    {
+      "path": "backend/src/rulesets/additional-death-relations.ts",
+      "sha256": "f238468597eb0b8ddb62b2268f693773efe105a4349124f0d7ca8cdb5f2b28be"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/death-ports.ts",
+      "sha256": "2b8415a69ce8a2cd2ef44cb0300608d641d8460848fe179dc36f085ac0a4c7d3"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/additional-death-relations.test.ts",
+      "sha256": "9999c63e710b825d39678e8e3953b29e4f1c999c7338658a55dbf788a8d25f97"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/additional-death-relations.md",
+    "sha256": "42cb49b1b898888596fd817755f32c4cc6c212ca7e100e62eda382636056ddd9"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/additional-death-relations-evidence.json",
+    "sha256": "6a31b2ccf14b66b73ae0f6a821b6b4280ad842a7bf8a01354c1964df82a9c105"
+  },
+  "findings": [],
+  "review": {
+    "rulesAndResources": "完整读新owner/三个真实风险、两旧源实际diff及DR上下游。独立夜梦→婚约→恋人/派生梦→双生筛选/预约/覆盖顺序保，未提前写seen/next或付款。",
+    "architectureAndRuntime": "同十一容器别名、六晚查询，linked仍原DR分配，唯一originPhase晚在seen/allSources后set参数点；mark/shot复验、回执/commit/cancel/publish/permit/finally保DR。Cupid facet同一binding无关系镜像。",
+    "dataAndValidation": "五源SHA、五稳定控制、两真实Git before与十七附件核真；原43行七语句展开与whole映射明确，有限图不冒全冷图。三新3/45+旧精准1/3共四distinct48分两次执行，五根type闭0，未重绿；新unit容器模拟不冒真实死亡提交。",
+    "chineseContracts": "数据容器归属、来源阶段、独立根/派生根、预约/付款和失败前缀就地说明真实；MD最终区分指纹算法/历史身份不改与新构建sourceHash变化。"
+  },
+  "limits": [
+    "完整死亡、关系、narrow-domain capability迁移及P9仍待",
+    "不重任何已绿type/tests/proof/fullgate"
+  ]
+}

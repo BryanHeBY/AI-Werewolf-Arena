@@ -732,3 +732,5 @@
 - C20 警长请求构造边界：九源把三原new点改为必填领域constructor端口，由两个Day与一个死亡结算caller晚提供真实工厂，选举一实例／方向独立／警徽许可后构造和原finally均保。Root及非作者完整三机制／新三反例／真实Git八全文forward和26编辑／四控制／18附件同SHA审批准，中文职责、票数据与构造失败前缀就地解释。三新定向例分首两绿及失败单例补查，原精准PK一绿；九根类型首仅并行Observer旧路由红，修复后的失败单根真实闭合，不称首轮绿且不重已有绿。MD仅校准三个同族警长模块；所有C20实体装配与P9继续，见 sheriff-request-construction.md。
 
 - C45 运行与事件记录中文契约：两源25处说明补绝对最早期限与重试预算、stopping/closing/inFlight各自责任、关闭等待和核心终档／可选摘要政策、God→玩家局部序号→记录→主游标的失败前缀。Root与独立实际全文审查／两Git before／末SHA及附件批准；原3208非注释token和四完整无注释输出保持，工具首两红真实保；独审decide前置失败反例只细化一行“保留已写决策前缀”，完整exact注释桥校准，原绿证明不重写为新执行、不重types/tests/gates。注释不承诺游标事务或自动去重，新sourceHash随注释变动，历史档案身份保留。全仓中文与P9继续，见 runtime-recording-contract-comments.md。
+
+- C24/C28 枪后追加死亡关系准备：五源把原43行七同步语句归具体ruleset，独立夜梦→婚约→恋人/梦→双生过滤预约和覆盖原序保，Cupid实际death命令通过具名public facet接线。同11别名/六晚查询和唯一originPhase参数点，linked仍DR原分配；标死、shot复验、commit/cancel/publish与全部finally仍原DR。Root与非作者全真实源/Git两全文/五稳定控制/17附件及中文审批准；new3/45+old精准1/3两次四不同48assert，五根type/head闭0，不重绿。MD只校准新sourceHash与算法/历史身份区别。完整关系、效果、narrow领域权限及P9继续，见 additional-death-relations.md。

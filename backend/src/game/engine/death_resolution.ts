@@ -3,7 +3,7 @@
  * 原死因与原生命行动权限；输出是按原顺序提交的死亡、事件和内部关联凭证。实际生命修改和唯一已结算
  * 账本委托 DeathCommitter，双生、动物、婚约及狼美人关系事实归具体贡献；已提交整波在梦／遗言前交角色扩展，
  * 野孩子贡献自行核对榜样原生命。参数仍使用同一深只读规则视图，不建立第二份角色状态。
- * 初始关系扩张／阶段登记／双生准备归具名规则组合；本结算器仍在原标死之后提交／发布双生回执。
+ * 初始和枪后追加关系准备归各自具名规则组合；本结算器仍在原逐目标时点登记来源阶段、标死并提交／发布双生回执。
  * 未提交预约只在已进入的原 finally 处取消，已提交回执不因后续发布失败而回滚。
  * 枪的资格归共同所有者，请求、等待与目标复验归规则组合；本结算器持同一许可数组并在原时点关闭。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
@@ -29,7 +29,6 @@ import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fra
 import {
   FragrantDeathWavePublication,
   isFragrantPairBoard,
-  prepareFragrantDeathWave,
   commitFragrantDeathWave,
   publishFragrantDeathWave,
   cancelFragrantDeathWave,
@@ -38,7 +37,7 @@ import {
 import { collectDeathShot, type DeathWaveActions } from "../../rulesets/death-shot-selection";
 import { prepareInitialDeathRelations } from "../../rulesets/initial-death-relations";
 import { WeddingDeathWavePublication } from "../mechanisms/roles/ghost_bride/ports";
-import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
+import { prepareAdditionalDeathRelations } from "../../rulesets/additional-death-relations";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
 import { livingNightLife } from "../../core/domain/night_effects";
 import { COMPONENT } from "../../core/domain/components/names";
@@ -489,49 +488,19 @@ export class DeathResolution {
                     if (linkedDeath.publicAdditionalDeath)
                       publicContributionTargets.add(linkedDeath.targetId);
                   }
-                for (const id of nightTargets) nightOrigin.add(id);
-                if (nightEffects?.dreams && nightTargets.length)
-                  for (const id of nightEffects.dreams.linkedDeaths(
-                    this.world,
-                    nightTargets,
-                    new Set(Object.keys(allSources).map(Number)),
-                  )) {
-                    linked.add(id);
-                    if (!proposed.includes(id)) proposed.push(id);
-                    proposedSources[id] = [
-                      ...new Set([...(proposedSources[id] ?? []), DeathCause.Dream]),
-                    ];
-                    nightOrigin.add(id);
-                  }
-                this.weddingDeathWave.expand(proposed, proposedSources, seen, nightOrigin);
-                expandLoversWave(
-                  this.world,
-                  proposed,
-                  proposedSources,
-                  this.events,
-                  nightOrigin,
-                  seen,
-                  nightEffects?.dreams,
+                // 同一局部容器进入同步关系准备；查询只捕获本结算器，不提前读原体、梦或当前阶段。
+                const additionalRelations = prepareAdditionalDeathRelations(
+                  {
+                    world: () => this.world,
+                    events: () => this.events,
+                    wedding: () => this.weddingDeathWave,
+                    dreams: () => nightEffects?.dreams,
+                    isSettledLife: (id) => this.deathCommitter.isSettledLife(id),
+                    phase: () => this.state.phase,
+                  },
+                  { proposed, proposedSources, nightTargets, allSources, next, seen, nightOrigin, linked, ownsFragrant, resolutionDay, sourcePhase },
                 );
-                const fragrantRoots = ownsFragrant
-                  ? proposed.filter(
-                      (id) =>
-                        !next.has(id) &&
-                        !seen.has(id) &&
-                        !this.deathCommitter.isSettledLife(id) &&
-                        this.world.getComponent(id, COMPONENT.Alive)?.alive,
-                    )
-                  : [];
-                const fragrantGun = ownsFragrant
-                  ? prepareFragrantDeathWave(this.world, resolutionDay, fragrantRoots)
-                  : null;
-                if (
-                  fragrantGun?.addedTargetId !== null &&
-                  fragrantGun?.addedTargetId !== undefined
-                ) {
-                  proposed.push(fragrantGun.addedTargetId);
-                  proposedSources[fragrantGun.addedTargetId] = [DeathCause.FragrantLink];
-                }
+                const { fragrantGun } = additionalRelations;
                 let fragrantGunCommitted = false;
                 try {
                   // 枪造成的追加波逐目标提交：后一个失败时，前一个的死亡、事实和库存仍有效。
@@ -578,7 +547,8 @@ export class DeathResolution {
                     }
                     seen.add(id);
                     allSources[id] = [...new Set(proposedSources[id] ?? [])];
-                    originPhases.set(id, ownsFragrant ? this.state.phase : sourcePhase);
+                    // 先前 seen／allSources 已原序写入；阶段查询失败仍保该前缀，不提前到关系准备时读取。
+                    originPhases.set(id, additionalRelations.originPhase());
                     const commitIds = [id];
                     const receipt = this.deathCommitter.markPlayersDead(
                       commitIds,

@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/engine/death/target-life-scope.test.ts:
+(pass) a accepted shot invalidated between hook completion and actual owner commit preserves consumption but emits no false public hit [46.35ms]
+
+ 1 pass
+ 11 filtered out
+ 0 fail
+ 3 expect() calls
+Ran 1 test across 1 file. [165.00ms]

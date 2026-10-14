@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/additional-death-relations.test.ts:
+(pass) 夜梦方法在婚约前读取且保原receiver，婚约首失败保留已展开的夜梦前缀 [0.63ms]
+(pass) 独立夜梦、婚约和真实恋人按原顺序扩张同一容器而不标死或提前读阶段 [0.70ms]
+(pass) 双生只筛选可提交原生命并预约覆盖死因，来源阶段晚查询失败不撤销调用方已写前缀 [8.28ms]
+
+ 3 pass
+ 0 fail
+ 45 expect() calls
+Ran 3 tests across 1 file. [84.00ms]

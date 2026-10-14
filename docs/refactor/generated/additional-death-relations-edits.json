@@ -1,0 +1,42 @@
+{
+  "edits": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "import { expandLoversWave } from \"../mechanisms/roles/cupid/relation\";",
+      "after": "import { prepareAdditionalDeathRelations } from \"../../rulesets/additional-death-relations\";"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "  prepareFragrantDeathWave,\n",
+      "after": ""
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": " * 初始关系扩张／阶段登记／双生准备归具名规则组合；本结算器仍在原标死之后提交／发布双生回执。",
+      "after": " * 初始和枪后追加关系准备归各自具名规则组合；本结算器仍在原逐目标时点登记来源阶段、标死并提交／发布双生回执。"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "                for (const id of nightTargets) nightOrigin.add(id);\n                if (nightEffects?.dreams && nightTargets.length)\n                  for (const id of nightEffects.dreams.linkedDeaths(\n                    this.world,\n                    nightTargets,\n                    new Set(Object.keys(allSources).map(Number)),\n                  )) {\n                    linked.add(id);\n                    if (!proposed.includes(id)) proposed.push(id);\n                    proposedSources[id] = [\n                      ...new Set([...(proposedSources[id] ?? []), DeathCause.Dream]),\n                    ];\n                    nightOrigin.add(id);\n                  }\n                this.weddingDeathWave.expand(proposed, proposedSources, seen, nightOrigin);\n                expandLoversWave(\n                  this.world,\n                  proposed,\n                  proposedSources,\n                  this.events,\n                  nightOrigin,\n                  seen,\n                  nightEffects?.dreams,\n                );\n                const fragrantRoots = ownsFragrant\n                  ? proposed.filter(\n                      (id) =>\n                        !next.has(id) &&\n                        !seen.has(id) &&\n                        !this.deathCommitter.isSettledLife(id) &&\n                        this.world.getComponent(id, COMPONENT.Alive)?.alive,\n                    )\n                  : [];\n                const fragrantGun = ownsFragrant\n                  ? prepareFragrantDeathWave(this.world, resolutionDay, fragrantRoots)\n                  : null;\n                if (\n                  fragrantGun?.addedTargetId !== null &&\n                  fragrantGun?.addedTargetId !== undefined\n                ) {\n                  proposed.push(fragrantGun.addedTargetId);\n                  proposedSources[fragrantGun.addedTargetId] = [DeathCause.FragrantLink];\n                }\n",
+      "after": "                // 同一局部容器进入同步关系准备；查询只捕获本结算器，不提前读原体、梦或当前阶段。\n                const additionalRelations = prepareAdditionalDeathRelations(\n                  {\n                    world: () => this.world,\n                    events: () => this.events,\n                    wedding: () => this.weddingDeathWave,\n                    dreams: () => nightEffects?.dreams,\n                    isSettledLife: (id) => this.deathCommitter.isSettledLife(id),\n                    phase: () => this.state.phase,\n                  },\n                  { proposed, proposedSources, nightTargets, allSources, next, seen, nightOrigin, linked, ownsFragrant, resolutionDay, sourcePhase },\n                );\n                const { fragrantGun } = additionalRelations;\n"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "                    originPhases.set(id, ownsFragrant ? this.state.phase : sourcePhase);",
+      "after": "                    // 先前 seen／allSources 已原序写入；阶段查询失败仍保该前缀，不提前到关系准备时读取。\n                    originPhases.set(id, additionalRelations.originPhase());"
+    },
+    {
+      "path": "backend/src/rulesets/initial-death-relations.ts",
+      "before": "import { expandLoversWave } from \"../game/mechanisms/roles/cupid/relation\";",
+      "after": "import { expandLoversWave } from \"../game/mechanisms/roles/cupid/death-ports\";"
+    }
+  ],
+  "originalRegion": "                for (const id of nightTargets) nightOrigin.add(id);\n                if (nightEffects?.dreams && nightTargets.length)\n                  for (const id of nightEffects.dreams.linkedDeaths(\n                    this.world,\n                    nightTargets,\n                    new Set(Object.keys(allSources).map(Number)),\n                  )) {\n                    linked.add(id);\n                    if (!proposed.includes(id)) proposed.push(id);\n                    proposedSources[id] = [\n                      ...new Set([...(proposedSources[id] ?? []), DeathCause.Dream]),\n                    ];\n                    nightOrigin.add(id);\n                  }\n                this.weddingDeathWave.expand(proposed, proposedSources, seen, nightOrigin);\n                expandLoversWave(\n                  this.world,\n                  proposed,\n                  proposedSources,\n                  this.events,\n                  nightOrigin,\n                  seen,\n                  nightEffects?.dreams,\n                );\n                const fragrantRoots = ownsFragrant\n                  ? proposed.filter(\n                      (id) =>\n                        !next.has(id) &&\n                        !seen.has(id) &&\n                        !this.deathCommitter.isSettledLife(id) &&\n                        this.world.getComponent(id, COMPONENT.Alive)?.alive,\n                    )\n                  : [];\n                const fragrantGun = ownsFragrant\n                  ? prepareFragrantDeathWave(this.world, resolutionDay, fragrantRoots)\n                  : null;\n                if (\n                  fragrantGun?.addedTargetId !== null &&\n                  fragrantGun?.addedTargetId !== undefined\n                ) {\n                  proposed.push(fragrantGun.addedTargetId);\n                  proposedSources[fragrantGun.addedTargetId] = [DeathCause.FragrantLink];\n                }\n",
+  "currentCall": "                // 同一局部容器进入同步关系准备；查询只捕获本结算器，不提前读原体、梦或当前阶段。\n                const additionalRelations = prepareAdditionalDeathRelations(\n                  {\n                    world: () => this.world,\n                    events: () => this.events,\n                    wedding: () => this.weddingDeathWave,\n                    dreams: () => nightEffects?.dreams,\n                    isSettledLife: (id) => this.deathCommitter.isSettledLife(id),\n                    phase: () => this.state.phase,\n                  },\n                  { proposed, proposedSources, nightTargets, allSources, next, seen, nightOrigin, linked, ownsFragrant, resolutionDay, sourcePhase },\n                );\n                const { fragrantGun } = additionalRelations;\n",
+  "phaseQueryCaller": "originPhases.set(id, additionalRelations.originPhase());",
+  "new": [
+    "backend/src/rulesets/additional-death-relations.ts",
+    "backend/src/game/mechanisms/roles/cupid/death-ports.ts",
+    "backend/tests/unit/rulesets/additional-death-relations.test.ts"
+  ]
+}
