@@ -1,0 +1,38 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "source": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9551e66-scope-final.json",
+    "sha256": "7446952625a343c9e65b62085368e4bf96f4a98a09d14f5620a14d6dbf064f86"
+  },
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-c9551e66.md",
+    "sha256": "91d300ad51e1cfd0d6ced7629df1ee31acd98482ae30d422a4b72f8764574312"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9551e66-evidence.json",
+    "sha256": "7e40fc833f9df08850d1239c6e467236dff8f84a6d0b215a7e25793e020af1f3"
+  },
+  "integrity": {
+    "fixedCommit": "c9551e66f20ef292c84d3bf24f11ade61b52459e",
+    "sameGitPublicFiles": 3282,
+    "sameGitDocumentationPaths": 711,
+    "fixedTools": 6,
+    "inputVerificationExitCode": 0,
+    "originalDebtCount": 1779,
+    "relativeCleared": 28,
+    "returnedDebt": 0,
+    "artifactHashes": 12,
+    "newViolations": 0
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "input": "实际全部Git blob/mode/SHA/全文/原过滤/文档和80,814,510bytes输入按仅一次纯读验证，sourceDigest绑定报告；后继工作树明确排除。",
+    "structure": "原1779全集剩余/已清互斥分区，exact cb57清28/返0，六工具/原债/strict progressive与空mappings保持。",
+    "failureAndScope": "误SHA读取工具期首红原命令/日志保，真实唯一gate f26558→9647bc终0，未伪产品红/中文语义或P9验收。"
+  },
+  "limits": [
+    "只读固定Git结构检查，不声称当前工作树余额或完整阶段/玩法完成；未重绿色gate。"
+  ]
+}

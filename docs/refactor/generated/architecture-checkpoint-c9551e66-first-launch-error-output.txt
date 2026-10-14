@@ -1,0 +1,26 @@
+fatal: path 'tooling/refactor/inventory.ts' exists on disk, but not in 'c9551e66ac3889a0ead08eddb6638cc35c1ac48d'
+14 | const hash = (s: Uint8Array | string) => createHash("sha256").update(s).digest("hex");
+15 | const git = (args: string[]) => execFileSync("git", args, { cwd: repository, maxBuffer: 256 * 1024 * 1024 });
+16 | const toolPaths = ["tooling/refactor/inventory.ts", "tooling/refactor/architecture/run.ts", "tooling/refactor/architecture/contracts.ts", "tooling/refactor/architecture/dependency-check.ts", "tooling/refactor/architecture/comment-check.ts", "tooling/refactor/architecture/naming-check.ts"];
+17 | // 实际执行工具必须先与固定 Git 全字节相同；产品 WIP 不可通过当前工具读取器混入。
+18 | const gateModules = toolPaths.map(path => {
+19 |   const bytes = git(["show", commit + ":" + path]);
+                     ^
+error: Command failed: git show c9551e66ac3889a0ead08eddb6638cc35c1ac48d:tooling/refactor/inventory.ts
+fatal: path 'tooling/refactor/inventory.ts' exists on disk, but not in 'c9551e66ac3889a0ead08eddb6638cc35c1ac48d'
+
+ signal: null,
+ status: 128,
+ output: [ null, "", "fatal: path 'tooling/refactor/inventory.ts' exists on disk, but not in 'c9551e66ac3889a0ead08eddb6638cc35c1ac48d'\n" ],
+    pid: 6,
+ stdout: "",
+ stderr: "fatal: path 'tooling/refactor/inventory.ts' exists on disk, but not in 'c9551e66ac3889a0ead08eddb6638cc35c1ac48d'\n",
+
+      at genericNodeError (node:child_process:1089:13)
+      at checkExecSyncError (node:child_process:504:27)
+      at execFileSync (node:child_process:301:31)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/architecture-checkpoint-c9551e66-run.ts:19:17)
+      at map (1:11)
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/architecture-checkpoint-c9551e66-run.ts:18:31
+
+Bun v1.4.3 (Linux x64)

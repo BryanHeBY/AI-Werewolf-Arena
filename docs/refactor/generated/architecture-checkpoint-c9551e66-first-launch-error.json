@@ -1,0 +1,11 @@
+{
+  "chunk": "07283a",
+  "actualExitCode": 1,
+  "command": "bun --no-env-file docs/refactor/generated/architecture-checkpoint-c9551e66-run.ts c9551e66ac3889a0ead08eddb6638cc35c1ac48d",
+  "actualFixedCommit": "c9551e66f20ef292c84d3bf24f11ade61b52459e",
+  "reason": "Root首命令误填不存在的完整Git SHA；git show工具读取阶段失败，未采集输入或执行结构gate。",
+  "output": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9551e66-first-launch-error-output.txt",
+    "sha256": "f2c93368493b4e8285386b2de796c9af0d5a511102b0d85ff5c62002ef7eda52"
+  }
+}

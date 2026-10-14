@@ -1,0 +1,255 @@
+{
+  "fixedCommit": "c9551e66f20ef292c84d3bf24f11ade61b52459e",
+  "parentCheckpoint": "cb57dd5900f0e03b7f9c2758e190e6658b2800c1",
+  "originalDebtCount": 1779,
+  "originalDebtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+  "counts": {
+    "files": 3282,
+    "violations": 171,
+    "failures": 0,
+    "remainingDebt": 171,
+    "clearedDebt": 1608
+  },
+  "partitionDisjointAndExhaustive": true,
+  "relativeCleared": 28,
+  "returnedDebt": 0,
+  "clearedSinceParent": [
+    {
+      "id": "5ec20b41f528f3e35d8d003e9b183577c78cdf9c4b9016ef7d442367115f14e9",
+      "rule": "comment.boundary",
+      "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its boundary contract."
+    },
+    {
+      "id": "dd0a0e1dd7e3bf7b1291358161da898c54d814e89e3414d55650619cdcae655c",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "595ae6e2f55a81091bffe0d55aaf3e45546566e56bc12595cb20cc6fac892d24",
+      "rule": "comment.input",
+      "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "23f2393d635e5fe7a3d3aea68855e45682ce6590d268f64b79be3dccff5505f9",
+      "rule": "comment.output",
+      "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    },
+    {
+      "id": "534773fb5e288740658840b7d328d6263eb998fe63b80d25344fdd2b377568ce",
+      "rule": "comment.responsibility",
+      "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its responsibility contract."
+    },
+    {
+      "id": "a0b15c5dde45083d6bc73d4649938a9d104ab0e85b173d79963bb1969354f2bc",
+      "rule": "comment.boundary",
+      "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its boundary contract."
+    },
+    {
+      "id": "23a114e4958b2d46323352244868f8288aa32a9cb11a02a58979af4a08334910",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "1b24b93fd1acbadd62dcf941802654d2d07bf68cd6ab4ef85633daa17aaa18e1",
+      "rule": "comment.input",
+      "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "760b8eae216e689236aab1d6a9cda34ae98246cdbbb0f632a9a9728dce233d28",
+      "rule": "comment.output",
+      "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    },
+    {
+      "id": "2f9e7962c9430583bb9eeea2d8d33d3baff9d04c4dacbdb53cd0857cab251714",
+      "rule": "comment.responsibility",
+      "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its responsibility contract."
+    },
+    {
+      "id": "62f68c0c14f9071a2aa307361b672559a04f2fc40e845a2dbcd07d9092543f40",
+      "rule": "comment.boundary",
+      "path": "backend/src/game/mechanisms/config/contracts.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "data head lacks its boundary contract."
+    },
+    {
+      "id": "8af6d70097e4db35f0fd3a7ae3c58c92e31ba961790e72260c8747c39abbd6af",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/game/mechanisms/config/contracts.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "5c15d8e9d8a214e289b01e8571785a4c7741c476fa29d4f5e8e6793710a4c6af",
+      "rule": "comment.owner",
+      "path": "backend/src/game/mechanisms/config/contracts.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "data head lacks its owner contract."
+    },
+    {
+      "id": "c49379d295c4344911f2da24f4fc565ced865db942da2317ea2a199bc68cef17",
+      "rule": "comment.responsibility",
+      "path": "backend/src/game/mechanisms/config/contracts.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "data head lacks its responsibility contract."
+    },
+    {
+      "id": "4e9a1b28f87b93b816ff63cf1f964e42a4bac59a7c8a171225a71b283c751aa5",
+      "rule": "comment.boundary",
+      "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its boundary contract."
+    },
+    {
+      "id": "f1744f52a72d09ed7c58755d9a9d644a8dd3bfeeec4eb5f124e6406bda339aeb",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "526ea1997a235a3cb45414863840c6676013324a6b9025827dd50eb4b4afa823",
+      "rule": "comment.input",
+      "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "ddddaa886ed6733b828421d4a57a303290b0bcc4cd4c4c69e3695d07d709a0b6",
+      "rule": "comment.output",
+      "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    },
+    {
+      "id": "75e3a41522252571752b5f7e69e8672166caf9f9aec71cf2ce4165b4247f94da",
+      "rule": "comment.responsibility",
+      "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its responsibility contract."
+    },
+    {
+      "id": "24217409872e92690236d09e7975ba8ba9ffa92c1c332e8200c713c88fff8a50",
+      "rule": "comment.boundary",
+      "path": "backend/src/game/mechanisms/llm/contracts.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "data head lacks its boundary contract."
+    },
+    {
+      "id": "5762973730cec99e0a95d9214ebec5e1d0c3dc2b585bae8f712d037230b6f68a",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/game/mechanisms/llm/contracts.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "9a0b04e78babf54a996df4f5095baca45e6594b8048af3e8ef19da97bd3769ad",
+      "rule": "comment.owner",
+      "path": "backend/src/game/mechanisms/llm/contracts.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "data head lacks its owner contract."
+    },
+    {
+      "id": "d39f0f42ccb9cf70182203a7536ddd03b0f098e7d71d2576ecfa5538dc98fb59",
+      "rule": "comment.responsibility",
+      "path": "backend/src/game/mechanisms/llm/contracts.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "data head lacks its responsibility contract."
+    },
+    {
+      "id": "57d3c189fa11883f4243bd287a700d9b99fa37ac10a4c27098cb43cf6be5facf",
+      "rule": "comment.boundary",
+      "path": "backend/src/game/mechanisms/llm/helpers.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its boundary contract."
+    },
+    {
+      "id": "a9d4a365df1ebd663eb69a8aefd2d8b68733cd32689c66496026d651a14c5ae9",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/game/mechanisms/llm/helpers.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "105ff21075f2b6824eea51149e879772ef722594e6ea4ecadc8d57246b240e2e",
+      "rule": "comment.input",
+      "path": "backend/src/game/mechanisms/llm/helpers.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "839b41b3180058deece15eaedd51d5828231923001e4005f21462262c438663e",
+      "rule": "comment.output",
+      "path": "backend/src/game/mechanisms/llm/helpers.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    },
+    {
+      "id": "fad626bc03c8fc4b6a048a2cffa1f0d6943200fb8e5a9e1833ab193ddcce919b",
+      "rule": "comment.responsibility",
+      "path": "backend/src/game/mechanisms/llm/helpers.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its responsibility contract."
+    }
+  ],
+  "returnedSinceParent": [],
+  "remainingRules": {
+    "comment.boundary": 20,
+    "comment.consumer": 5,
+    "comment.first-paragraph": 13,
+    "comment.input": 17,
+    "comment.missing-head": 87,
+    "comment.output": 16,
+    "comment.responsibility": 13
+  },
+  "limits": [
+    "纯读取冻结报告与原债全集，不重复gate；当前工作树和未提交后继被排除。"
+  ]
+}

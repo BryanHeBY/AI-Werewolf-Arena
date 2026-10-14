@@ -1,0 +1,31 @@
+{
+  "fixedCommit": "c9551e66f20ef292c84d3bf24f11ade61b52459e",
+  "gate": {
+    "command": "bun --no-env-file docs/refactor/generated/architecture-checkpoint-c9551e66-run.ts c9551e66f20ef292c84d3bf24f11ade61b52459e > docs/refactor/generated/architecture-checkpoint-c9551e66-output.txt 2>&1",
+    "launchChunk": "f26558",
+    "sessionId": 97808,
+    "terminalChunk": "9647bc",
+    "actualExitCode": 0,
+    "firstGateExecution": true
+  },
+  "inputVerification": {
+    "command": "python docs/refactor/generated/architecture-checkpoint-c9551e66-input-verification.py > docs/refactor/generated/architecture-checkpoint-c9551e66-input-verification-output.txt 2>&1",
+    "terminalChunk": "e8d468",
+    "actualExitCode": 0,
+    "firstExecution": true
+  },
+  "partition": {
+    "command": "python inline read-only report partition body",
+    "terminalChunk": "6e06ad",
+    "actualExitCode": 0,
+    "firstExecution": true
+  },
+  "firstLaunchToolFailure": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9551e66-first-launch-error.json",
+    "sha256": "d3f581a6b80e5c023987b7cd9572e3ac321adb6ab8a4bf8a3f574787c0724839"
+  },
+  "limits": [
+    "首命令错误Git SHA在读取工具前态阶段退出，未执行gate；纠正后仅一gate。",
+    "输入验证与分区仅读取，不再次运行checkArchitecture或类型/业务/模型。"
+  ]
+}
