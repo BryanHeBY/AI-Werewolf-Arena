@@ -1,0 +1,15 @@
+{
+  "source": [
+    {
+      "path": "backend/src/ai/agents/reporting/bug_report_service.ts",
+      "sha256": "e5bb696f46d9b82284239f57e7afeca57b80f4356ee464a8cbb2ad729f705ff2"
+    },
+    {
+      "path": "backend/src/ai/agents/reporting/index.ts",
+      "sha256": "517b822fe144244a888731690c2e728cd8fe1707de71dd3a1d033731c2f1b238"
+    }
+  ],
+  "documentationPaths": 595,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

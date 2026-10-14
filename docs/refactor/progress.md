@@ -770,3 +770,5 @@
 - C24 学者／导师已付加成复验：七源收完整原validator至同族owner，stage/ports和NP两await前后及伤害组合三个配置门控绑定唯一复验，记录／frame未改。先名单World后state、target→effectCurrent→life/version→marks重复读取和首失败保，不commit/关窗/清记录。Root作者与非作者完整c9e7五原Git/十四全文片段/两control/十二附件及有效中文说明批准；new2/3+old1/8三不同11断言，首有限7根type仅newfixture错误policy红，修实际twelve后只changedcase/failed1类型根0，累计13不冒新增覆盖。head首7实0、5016typed/十mapped输出保；同行唯一unused type说明符由全文逆/两raw桥闭，无重green/全gate，完整已付效果/C24/P9继续，见 scholar-bonus-effect-validation.md。
 
 - C45 ACP会话／配置中文契约：两源十四精确comment将英文初始提示/结束回调中文化，补运行registry与DTO边界、私有轨迹、关联UUID/远端ID、同初始化预算、取消/关闭、逐响应替换配置列表和失败保已应用前缀。Root作者与非作者完整5549两真实Git/十四正逆/七附件及实际process/pool/lifecycle语义批准；完整392typed/482叶与四raw输出同，首两head/593Gitdocs实际0，无tests/types/gate重复。注释新sourceHash实际变化，历史身份保，全ACP/中文/P9继续，见 acp-session-contract-chinese-comments.md。
+
+- C45 Agent故障报告中文契约：两源十三comment将英文head按真实边界中文化，规范三字段而非调用方actor/day授权、三ledger各实例独占、总量→阶段→消息首命中、直接debug记录后消费名额及回调失败保前缀有效说明。Root作者与非作者完整8db19两Git/十三正逆/九附件及SDK/ACP/记录器实际语义批准，892typed/1070叶/四raw同，首两head/595docs实际0；末accepted=false一comment精度通过完整逆/两raw桥连接旧采样，不重green/types/tests/fullgate。注释只改变新sourceHash，历史身份保，全中文/P9继续，见 agent-bug-report-chinese-contracts.md。

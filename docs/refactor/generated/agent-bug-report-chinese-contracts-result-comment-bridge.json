@@ -1,0 +1,20 @@
+{
+  "path": "backend/src/ai/agents/reporting/bug_report_service.ts",
+  "beforeSHA256": "e5bb696f46d9b82284239f57e7afeca57b80f4356ee464a8cbb2ad729f705ff2",
+  "afterSHA256": "34ac0944f6e46f3c0d259be0747b6f13914ea9692b9442affb1f54494a9394b8",
+  "wholeExactInverse": true,
+  "onlyResultCommentChanged": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "sha256": "ce222a18cf1c4af745ae7bb0a30956e755a68a15a2c68f4dba1279add7c09208"
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "sha256": "3d76e08a2a9f6b7928f8031593ac9a3a3d320b5eb274cb924e51ccf62ff680be"
+    }
+  ],
+  "greenChecksRepeated": false
+}
