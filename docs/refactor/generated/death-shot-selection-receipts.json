@@ -1,0 +1,102 @@
+{
+  "baseline": "1428a210d931d4c043fb8d018f21e36c818fd05c",
+  "checks": [
+    {
+      "kind": "before-and-factory-static-graph",
+      "chunk": "95122f",
+      "exitCode": 0,
+      "filesActualGitAndWorkingSame": 10,
+      "staticModules": 393
+    },
+    {
+      "kind": "source-move-and-owner-static-graph",
+      "chunk": "16a99c",
+      "exitCode": 0,
+      "staticModules": 400
+    },
+    {
+      "kind": "new-tests",
+      "chunk": "67c43e",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 22,
+      "log": "death-shot-selection-tests-new.log"
+    },
+    {
+      "kind": "old-precise-test",
+      "chunk": "f71c02",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "filtered": 32,
+      "assertions": 5,
+      "log": "death-shot-selection-tests-old.log"
+    },
+    {
+      "kind": "limited-types-launch",
+      "chunk": "f39837",
+      "sessionId": 23751,
+      "yielded": true
+    },
+    {
+      "kind": "limited-types-terminal",
+      "chunk": "a2262a",
+      "sessionId": 23751,
+      "exitCode": 0,
+      "roots": 4,
+      "log": "death-shot-selection-types.log",
+      "note": "真正 write_stdin 终态作为闭合依据；空日志不作为独立绿证据。"
+    },
+    {
+      "kind": "proof-first",
+      "chunk": "425244",
+      "exitCode": 1,
+      "cause": "查询字面模板漏实际末逗号；完整 noncomment 对比拒绝，工具模板精确修复，源码未改。",
+      "harness": "death-shot-selection-proof-first.cjs"
+    },
+    {
+      "kind": "proof-second",
+      "chunk": "6f4adc",
+      "exitCode": 1,
+      "cause": "证明脚本对被删导入使用空字符串作唯一点，工具拒绝；改成原两具体具名位置的精确逆，不改源码。",
+      "harness": "death-shot-selection-proof-second.cjs",
+      "log": "death-shot-selection-proof-second.log"
+    },
+    {
+      "kind": "proof-third",
+      "chunk": "b09a49",
+      "exitCode": 1,
+      "cause": "完整方法及DR双raw已经相同，额外getter对象排版导致literal模板双raw不同；不隐藏首false，完整同tree/leaf先证明后仅统一完整查询token空白。",
+      "harness": "death-shot-selection-proof-third.cjs",
+      "proof": "death-shot-selection-proof-third.json",
+      "log": "death-shot-selection-proof-third.log"
+    },
+    {
+      "kind": "proof-final",
+      "chunk": "dfd95a",
+      "exitCode": 0,
+      "movedMethodNodes": 852,
+      "wholeDeathResolutionNodes": 4631,
+      "bindings": 21,
+      "retainedDRBindings": 48,
+      "controls": 8,
+      "log": "death-shot-selection-proof.log"
+    },
+    {
+      "kind": "actual-comment-contracts",
+      "chunk": "8c2dae",
+      "exitCode": 0,
+      "files": 4,
+      "documentationPaths": 511,
+      "failures": 0,
+      "chineseFailures": 0,
+      "log": "death-shot-selection-heads.log"
+    }
+  ],
+  "limits": [
+    "4根有限编译、3新及1旧定向case，不是全仓类型／完整对局／全量门禁。",
+    "所有运行测试各执行一次，无重绿；三次源证明工具失败均未要求产品改算法。",
+    "Factory／owner图分别在采样时真实共同源码捕获，后继Wolf公开装配提交4df94bfa不改本4源；不重图也不冒当前整个传递闭包全byte相同。"
+  ]
+}

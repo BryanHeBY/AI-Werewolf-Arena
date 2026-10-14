@@ -1,0 +1,372 @@
+{
+  "schema": "awa-death-shot-selection-independent-review-v1",
+  "approved": true,
+  "baseline": "1428a210d931d4c043fb8d018f21e36c818fd05c",
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "c08ce2e4c79cf186f611ff0a3608039586d3eacfd4f370884fd82312247a4aa8",
+      "currentSHA": "c08ce2e4c79cf186f611ff0a3608039586d3eacfd4f370884fd82312247a4aa8",
+      "freshSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "sha256": "20ced65a342efb7e098de7dbc5c3d52bedb3204da74c099327dce97ef762552f",
+      "currentSHA": "20ced65a342efb7e098de7dbc5c3d52bedb3204da74c099327dce97ef762552f",
+      "freshSame": true
+    },
+    {
+      "path": "backend/src/rulesets/death-shot-selection.ts",
+      "sha256": "bf861923920049261ba7d0ff7f945b93cb2ae3e5ea19fbaca1036dd3db65b047",
+      "currentSHA": "bf861923920049261ba7d0ff7f945b93cb2ae3e5ea19fbaca1036dd3db65b047",
+      "freshSame": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/death-shot-selection.test.ts",
+      "sha256": "647706adcca06529add877e690f9983a5e417f6f80d354ab5777943994064dac",
+      "currentSHA": "647706adcca06529add877e690f9983a5e417f6f80d354ab5777943994064dac",
+      "freshSame": true
+    }
+  ],
+  "scopeArtifact": {
+    "path": "docs/refactor/generated/death-shot-selection-scope-final.json",
+    "sha256": "59fc9157791ffbd4f10283862ffceba6afaaccf000c961c80c908ad3af422804"
+  },
+  "actualGitAndControls": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "control": false,
+      "actualGitSHA": "e5236f48284fe7e7cb960b1d77f0fdf30aa76525cb03c683a2ac6fa182a99e09",
+      "capturedBeforeSHA": "e5236f48284fe7e7cb960b1d77f0fdf30aa76525cb03c683a2ac6fa182a99e09",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "control": false,
+      "actualGitSHA": "84632c1c7116ec8fd04cad4164648d1c36f50b3de1ee138711a92923300044ce",
+      "capturedBeforeSHA": "84632c1c7116ec8fd04cad4164648d1c36f50b3de1ee138711a92923300044ce",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "control": true,
+      "actualGitSHA": "6131393d44f2d82e239effaa617e3a18252247100ad5b2afa492efcf79c70c25",
+      "capturedBeforeSHA": "6131393d44f2d82e239effaa617e3a18252247100ad5b2afa492efcf79c70c25",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+      "control": true,
+      "actualGitSHA": "26ac725c665bfdd2a1fad6907b97fb9b7ffa26c517bce8a8ff232d018eee2868",
+      "capturedBeforeSHA": "26ac725c665bfdd2a1fad6907b97fb9b7ffa26c517bce8a8ff232d018eee2868",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "control": true,
+      "actualGitSHA": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "capturedBeforeSHA": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    },
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "control": true,
+      "actualGitSHA": "26553562ccf2a6fdd40b20431ea1c70b8695917ce1930a3e0a51c04fbd4a87bd",
+      "capturedBeforeSHA": "26553562ccf2a6fdd40b20431ea1c70b8695917ce1930a3e0a51c04fbd4a87bd",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "control": true,
+      "actualGitSHA": "5893304c47d830c6b36e942f7426ca4efd3124ad9ee1180b3022460263725b53",
+      "capturedBeforeSHA": "5893304c47d830c6b36e942f7426ca4efd3124ad9ee1180b3022460263725b53",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "control": true,
+      "actualGitSHA": "5fa00e19e135da6223f39e9260e70f415cdd12d5dc710582c5a642d717e2c1f8",
+      "capturedBeforeSHA": "5fa00e19e135da6223f39e9260e70f415cdd12d5dc710582c5a642d717e2c1f8",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "control": true,
+      "actualGitSHA": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "capturedBeforeSHA": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/gifted-gun-resource-boundaries.test.ts",
+      "control": true,
+      "actualGitSHA": "9ab50711a983c241828ee8356a761e80d62ccc8928b345c9f3bf277da6ba79cd",
+      "capturedBeforeSHA": "9ab50711a983c241828ee8356a761e80d62ccc8928b345c9f3bf277da6ba79cd",
+      "gitBytesSame": true,
+      "currentControlBytesSame": true
+    }
+  ],
+  "artifactFreshness": [
+    {
+      "path": "docs/refactor/generated/death-shot-selection-before.json",
+      "sha256": "8fcfa2a6dcaa9e297446aef3de92403a9d1bf471d467bee8d95d0183c9755ca4",
+      "actualSHA": "8fcfa2a6dcaa9e297446aef3de92403a9d1bf471d467bee8d95d0183c9755ca4",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-edits.json",
+      "sha256": "f50da4dfda4e100ec30fd0e777f12c66d8ee6cb9472b81ae52af8cf674fe4053",
+      "actualSHA": "f50da4dfda4e100ec30fd0e777f12c66d8ee6cb9472b81ae52af8cf674fe4053",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-factory-graph-before.json",
+      "sha256": "1114e1cbba0efea4b45bbab80cead15f88c0c6fcd156279e8ae459012e275615",
+      "actualSHA": "1114e1cbba0efea4b45bbab80cead15f88c0c6fcd156279e8ae459012e275615",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-graph.cjs",
+      "sha256": "73df688d89893c23597d171d36c87c9646cf279fdd51b233d5071704eb3b91e7",
+      "actualSHA": "73df688d89893c23597d171d36c87c9646cf279fdd51b233d5071704eb3b91e7",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-heads.json",
+      "sha256": "f44bdac94a0cfb8fe861a8228ebce9d6e19f851dd2013c4dfdd2dd808c21ce19",
+      "actualSHA": "f44bdac94a0cfb8fe861a8228ebce9d6e19f851dd2013c4dfdd2dd808c21ce19",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-heads.log",
+      "sha256": "f44bdac94a0cfb8fe861a8228ebce9d6e19f851dd2013c4dfdd2dd808c21ce19",
+      "actualSHA": "f44bdac94a0cfb8fe861a8228ebce9d6e19f851dd2013c4dfdd2dd808c21ce19",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-heads.ts",
+      "sha256": "9c846e6a50f43528793e09075686c950feb9fa4a2adf6cc866fb844b1c57fd2f",
+      "actualSHA": "9c846e6a50f43528793e09075686c950feb9fa4a2adf6cc866fb844b1c57fd2f",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-inventory.cjs",
+      "sha256": "9c1580f23e39e59302f8f8af6437c23f9d4a2fcb5da8ed5212b877105ab43e11",
+      "actualSHA": "9c1580f23e39e59302f8f8af6437c23f9d4a2fcb5da8ed5212b877105ab43e11",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-inventory.json",
+      "sha256": "ee15f7172f6e787407cc2b50cbfec7f27981a67450acebee627bd1b534da1a1d",
+      "actualSHA": "ee15f7172f6e787407cc2b50cbfec7f27981a67450acebee627bd1b534da1a1d",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-module-graph.json",
+      "sha256": "b104fd0c3aeb666dcdd43d7330d4437ffe8613d7cad9542a4951ff0dc01984c6",
+      "actualSHA": "b104fd0c3aeb666dcdd43d7330d4437ffe8613d7cad9542a4951ff0dc01984c6",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-proof-first.cjs",
+      "sha256": "f2ccb3e4586711e3872488b1176348c94f6e78b9c3f768c9f8257a5eda06693d",
+      "actualSHA": "f2ccb3e4586711e3872488b1176348c94f6e78b9c3f768c9f8257a5eda06693d",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-proof-second.cjs",
+      "sha256": "f2d7fb650b4d130685438b41bf55a1464fef739cb5797bb59c7d83b851ecedf6",
+      "actualSHA": "f2d7fb650b4d130685438b41bf55a1464fef739cb5797bb59c7d83b851ecedf6",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-proof-second.log",
+      "sha256": "4156436428a1102493face6fc53d8448d3973998e1361ac240d1b99749db1ce4",
+      "actualSHA": "4156436428a1102493face6fc53d8448d3973998e1361ac240d1b99749db1ce4",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-proof-third.cjs",
+      "sha256": "f0f1149a43565c09a91c585349f7b1596588b631022fb2c5eb40f04a2780d1d2",
+      "actualSHA": "f0f1149a43565c09a91c585349f7b1596588b631022fb2c5eb40f04a2780d1d2",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-proof-third.json",
+      "sha256": "b4094365f1d094c0a4aeab9239fbe6860bf875d90d214aa32b782cfaf83e6728",
+      "actualSHA": "b4094365f1d094c0a4aeab9239fbe6860bf875d90d214aa32b782cfaf83e6728",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-proof-third.log",
+      "sha256": "1f8dd78b74eb637033bc8cd2dff0516f24ab1b4d635946b49a2eaa762da27f01",
+      "actualSHA": "1f8dd78b74eb637033bc8cd2dff0516f24ab1b4d635946b49a2eaa762da27f01",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-proof.cjs",
+      "sha256": "f77b0318f77d3dd1e0bd2fb8e97568e63300f94ffa84bbd2114e878af5d8d15b",
+      "actualSHA": "f77b0318f77d3dd1e0bd2fb8e97568e63300f94ffa84bbd2114e878af5d8d15b",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-proof.json",
+      "sha256": "afd06fb78bb3be9619ef3dd4c440c10e390637051d470a0b4c5ed38e014ad699",
+      "actualSHA": "afd06fb78bb3be9619ef3dd4c440c10e390637051d470a0b4c5ed38e014ad699",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-proof.log",
+      "sha256": "27a4eeb18cec2e08392f017dce9b0b6605beb274ba51241af01a7d2d130b0236",
+      "actualSHA": "27a4eeb18cec2e08392f017dce9b0b6605beb274ba51241af01a7d2d130b0236",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-receipts.json",
+      "sha256": "d81567ace0fb6c416e03333f501b189bfaba5f4a9d1cd5b94f5aa09fdc11547d",
+      "actualSHA": "d81567ace0fb6c416e03333f501b189bfaba5f4a9d1cd5b94f5aa09fdc11547d",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-scope-final.json",
+      "sha256": "59fc9157791ffbd4f10283862ffceba6afaaccf000c961c80c908ad3af422804",
+      "actualSHA": "59fc9157791ffbd4f10283862ffceba6afaaccf000c961c80c908ad3af422804",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-tests-new.log",
+      "sha256": "6064c5678138c66e38a9faff048cf1f3d53480c424eb068b33d46d2031267084",
+      "actualSHA": "6064c5678138c66e38a9faff048cf1f3d53480c424eb068b33d46d2031267084",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-tests-old.log",
+      "sha256": "4d1d76fae77957d4872e5a56ca25c2c1e6f7b61190ec9677cface8e9d06e8055",
+      "actualSHA": "4d1d76fae77957d4872e5a56ca25c2c1e6f7b61190ec9677cface8e9d06e8055",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-types-config.json",
+      "sha256": "c3706958f4c9b704268ea4f647f03a2f7d2537132127829800ab9902c587259b",
+      "actualSHA": "c3706958f4c9b704268ea4f647f03a2f7d2537132127829800ab9902c587259b",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/death-shot-selection-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actualSHA": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same": true
+    }
+  ],
+  "independentSourceProgram": {
+    "fullMethod": {
+      "basis": "独立actualGit原method与实际新函数完整读取；仅新runtime参数和原receiver精确逆，未执行作者proof或恢复旧body。",
+      "wholeShapeSame": true,
+      "wholeNonCommentLeavesSame": true,
+      "getChildrenNodeCount": 1572,
+      "nonCommentLeafCount": 1071
+    },
+    "typeShape": {
+      "wholeShapeSame": true,
+      "wholeNonCommentLeavesSame": true
+    },
+    "getters": [
+      {
+        "kind": "GetAccessor",
+        "name": "world",
+        "parameters": 0,
+        "body": "{ return resolution.world; }"
+      },
+      {
+        "kind": "GetAccessor",
+        "name": "events",
+        "parameters": 0,
+        "body": "{ return resolution.events; }"
+      },
+      {
+        "kind": "GetAccessor",
+        "name": "toolGateway",
+        "parameters": 0,
+        "body": "{ return resolution.toolGateway; }"
+      },
+      {
+        "kind": "GetAccessor",
+        "name": "state",
+        "parameters": 0,
+        "body": "{ return resolution.state; }"
+      },
+      {
+        "kind": "GetAccessor",
+        "name": "config",
+        "parameters": 0,
+        "body": "{ return resolution.config; }"
+      }
+    ],
+    "getterExact": true,
+    "directlyReturnedPromise": true,
+    "callArgumentCount": 9
+  },
+  "sourceReview": {
+    "ownership": "完整恐惧／资格／窗口／请求／等待／验证／重试／目标映射算法归规则组合；弹药／资格owner、逐钩子同步deathcommit、permitted.close及gunsExpire仍原owner。没有二store或新schema／租约。",
+    "ordering": "恐惧保Night短路＋四参数true；qualification／eligible→World.openDeathAction→同permits.push→Factory构造；每轮targets捕获→复验→request→复验→Mag pre→await→Mag post→资格和窗口→tool／validate→再资格与窗口→target／映射。三次重试和赠枪最后异常原样保。",
+    "receivers": "五getters只晚读原resolution字段；Factory／World方法／gateway／Provider及mapped.isCurrent调用原receiver。回调直接返回新唯一Promise，不增加async-await包装。真实callee binding沿公开ports追至原物理函数，未把native政策／库存缓存成新快照。",
+    "prefixAndCleanup": "actions.permits同数组；逐钩子结果的标死/发布后splice-close保持，actor外层finally关闭剩余；failure retains已标死、原弹药未消费或原已付前缀。Fragrant cancel错误阻后继gunsExpire仍原外层程序，未吞错。",
+    "chinese": "职责头、窗口运行句柄与JSON区分、重试目标原体、空枪选择≠付款、查询晚捕获均准确；正式中文角色／事件字符串没有翻译或改名。",
+    "api": "this.collectDeathShot私有反射入口退出；原内部四字段type移新唯一公开type，newmodule/runtime对象和调用栈为明确差异。Readonly运行view不是process隔离或authorization；不宣任意外部monkeypatch／module初始化等价。"
+  },
+  "evidenceAttribution": {
+    "proof": {
+      "wholeOriginalMethodNodes": 852,
+      "wholeOriginalDRNodes": 4631,
+      "ownerBindings": 21,
+      "retainedBindings": 48,
+      "controls": 8,
+      "firstThreeToolFailuresPreserved": true,
+      "queryRawLayoutFalseExplicit": true
+    },
+    "tests": {
+      "differentCases": 4,
+      "successfulAssertions": 27,
+      "executions": 2,
+      "new": "3/0/22",
+      "old": "1/0/5，32 filtered",
+      "attribution": "作者真实日志／工具terminal，只读核收据，不重复执行。"
+    },
+    "finiteTypes": {
+      "roots": 4,
+      "session": 23751,
+      "terminal": "a2262a",
+      "exitCode": 0,
+      "attribution": "作者实际terminal；未执行编译。"
+    },
+    "heads": {
+      "files": 4,
+      "documentationPaths": 511,
+      "diagnostics": 0,
+      "attribution": "作者实际checker/CN收据＋独立语义读取，未重运行。"
+    },
+    "staticGraphs": "393/400分别原真实采样阶段；Wolf后继4df94bfa会影响Factory传递依赖，未冒整个current图等价。"
+  },
+  "document": {
+    "path": "docs/refactor/death-shot-selection.md",
+    "sha256": "b18d72829fa0d6969576eca260f1556d9238d4af23bf6504aa3528840642498f"
+  },
+  "evidenceArtifact": {
+    "path": "docs/refactor/generated/death-shot-selection-evidence.json",
+    "sha256": "b93eba305c72e8fad01d431003c992ed66bdb5aefea5b8238665e75ff64c4733"
+  },
+  "findings": [],
+  "limits": [
+    "未运行任何测试、类型、作者证明脚本、门禁或模型请求；这是独立源码／证据审，不是全C24/C28结项。",
+    "独立完整method和interface非comment程序检查使用实际Git与实际新函数；作者852/4631计数来自其forEachChild定义，独立getChildren节点数定义不同不混称。",
+    "动态／仓外调用与任意非字面私有反射无穷输入不保证；原staticinventory1537限定backend/src与tests并声明限制。"
+  ]
+}

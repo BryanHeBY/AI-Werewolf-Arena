@@ -3,7 +3,7 @@
  * 原死因与原生命行动权限；输出是按原顺序提交的死亡、事件和内部关联凭证。实际生命修改和唯一已结算
  * 账本委托 DeathCommitter，双生、动物、婚约及狼美人关系事实归具体贡献；已提交整波在梦／遗言前交角色扩展，
  * 野孩子贡献自行核对榜样原生命。参数仍使用同一深只读规则视图，不建立第二份角色状态。
- * 枪的资格捕获与复验归共同 owner，请求、等待、目标原生命及许可开关仍在本结算器。
+ * 枪的资格归共同所有者，请求、等待与目标复验归规则组合；本结算器持同一许可数组并在原时点关闭。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
 import { refreshWolfKnifeInheritanceAtCheckpoint } from "../../rulesets/wolf-knife-inheritance-plan";
@@ -33,17 +33,11 @@ import {
   cancelFragrantDeathWave,
   fragrantAuthoritySnapshot,
 } from "../mechanisms/roles/fragrant_pair_seer/ports";
-import { assertMagicianRosterCurrent } from "../mechanisms/roles/magician/night_frame";
-import {
-  isMagicianBoard,
-  resolveMagicianNightTarget,
-} from "../mechanisms/roles/magician/night_frame";
-import { nightmareFearBlocks } from "../mechanisms/roles/nightmare_shadow/night_frame";
-import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/ports";
+import { collectDeathShot, type DeathWaveActions } from "../../rulesets/death-shot-selection";
 import { WeddingDeathWavePublication } from "../mechanisms/roles/ghost_bride/ports";
 import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
-import { captureNightLife, livingNightLife } from "../../core/domain/night_effects";
+import { livingNightLife } from "../../core/domain/night_effects";
 import { COMPONENT } from "../../core/domain/components/names";
 import {
   ActionProvider,
@@ -54,7 +48,6 @@ import {
   RuntimeSnapshot,
   DeathCause,
   type DeathSources,
-  type DeathShotSelection,
 } from "../../core/domain/model";
 import type { RoleComponent } from "../../core/domain/components/role";
 import { World } from "../../core/domain/world";
@@ -66,18 +59,9 @@ import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
 import type { DreamNightEffects } from "../../core/domain/dream-night-effects";
 import {
-  captureDeathShotEligibility,
   firstDeathGuns,
   finishDeathGuns,
 } from "../mechanisms/roles/death_abilities";
-
-/** 一次角色死亡动作的窗口；所有 permit 在退出该回调时关闭，不跨波复用。 */
-interface DeathWaveActions {
-  phase: Phase;
-  day: number;
-  permits: Array<ReturnType<World["openDeathAction"]>>;
-  isCurrent: () => boolean;
-}
 
 /** 连续结算死亡波，动作阶段仍由 PhaseManager 推进。 */
 export class DeathResolution {
@@ -441,7 +425,15 @@ export class DeathResolution {
               [deadId],
               allSources,
               (actorId, abilityId) =>
-                this.collectDeathShot(
+                collectDeathShot(
+                  {
+                    // 只创建闭包；每次成员读取仍在原选择表达式处，不提前取得 World／规则／状态。
+                    get world() { return resolution.world; },
+                    get events() { return resolution.events; },
+                    get toolGateway() { return resolution.toolGateway; },
+                    get state() { return resolution.state; },
+                    get config() { return resolution.config; },
+                  },
                   actorId,
                   firstBatch ? (initialPhases[actorId] ?? deathPhase) : deathPhase,
                   sourcePhase,
@@ -725,155 +717,6 @@ export class DeathResolution {
         cancelFragrantDeathWave(this.world, fragrantInitial);
       finishDeathGuns(gunsToExpire, this.events);
     }
-  }
-
-  /** 收集枪的选择而非消费弹药或杀死目标；窗口绑定原生命，回复和校验后仍须复核当前性。 */
-  private async collectDeathShot(
-    actorId: EntityId,
-    deathPhase: Phase,
-    deathOriginPhase: Phase,
-    sources: DeathSources,
-    actionProvider: ActionProvider,
-    actions: DeathWaveActions,
-    abilityId?: string,
-    nightExchange: boolean = false,
-  ): Promise<DeathShotSelection> {
-    if (deathPhase === Phase.Night && nightmareFearBlocks(this.world, actorId, actions.day, true))
-      return { kind: "invalid" };
-    const isCurrent = () =>
-      actions.isCurrent() &&
-      this.state.phase === actions.phase &&
-      this.state.day === actions.day &&
-      !this.state.gameOver;
-    // 只装配延迟查询，不提前读取 World／日期；资格 owner 在原 callee 和参数时点捕获。
-    const resolution = this;
-    const qualification = captureDeathShotEligibility(
-      {
-        get world() { return resolution.world; },
-        get day() { return actions.day; },
-        get demonHunterNativeGunCurrent() { return demonHunterNativeGunCurrent; },
-      },
-      actorId,
-      abilityId,
-      sources,
-      deathOriginPhase,
-      isCurrent,
-    );
-    if (!qualification) return { kind: "invalid" };
-    const { nativePolicy, permissionCurrent, eligible } = qualification;
-    if (!eligible()) return { kind: "invalid" };
-    const permit = this.world.openDeathAction(
-      actorId,
-      "shoot",
-      actions.phase,
-      actions.day,
-      permissionCurrent,
-      abilityId,
-    );
-    actions.permits.push(permit);
-    const requests = new GameActionRequestFactory(this.world, this.events, actions.day);
-    for (let attempt = 1; attempt <= 3; attempt++) {
-      // 每次重试重新捕获候选生命；同一编号复活或替换组件后，上一轮回复不能命中新生命。
-      const targets = new Map(
-        this.world.getAliveEntityIds().map((id) => [id, captureNightLife(this.world, id)]),
-      );
-      if (!eligible()) return { kind: "invalid" };
-      const request = requests.create({
-        phase: actions.phase,
-        actorId: actorId,
-        allowedTools: ["shoot"],
-        stage:
-          abilityId === undefined &&
-          this.world.getComponent(actorId, COMPONENT.Role)?.role === Role.Hunter
-            ? "hunter_shot"
-            : "death_shot",
-        requiresAction: true,
-        summary: { key: "request.summary.death_shot" },
-        context: {
-          ...(this.config?.magician ||
-          this.config?.evilKnight ||
-          abilityId !== undefined ||
-          this.world.getComponent(actorId, COMPONENT.Role)?.role === Role.AwakenedHiddenWolf
-            ? { action_failure_policy: "error" as const, allow_fallback: false }
-            : {}),
-          ...(abilityId === undefined ? {} : { ability_id: abilityId }),
-          trigger: "on_death",
-          death_phase: deathPhase,
-          ...(nativePolicy === "awa_day_deaths_v1" ? { death_origin_phase: deathOriginPhase } : {}),
-          death_sources: [...(sources[actorId] ?? [])],
-          death_action_id: permit.id,
-          shoot_candidates: [...targets.keys()].filter((id) => id !== actorId),
-          ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
-        },
-      });
-      if (!eligible()) return { kind: "invalid" };
-      if (this.config?.magician) assertMagicianRosterCurrent(this.world);
-      const action = await actionProvider.getAction(request);
-      if (this.config?.magician) assertMagicianRosterCurrent(this.world);
-      if (
-        !eligible() ||
-        !this.world.hasDeathAction(
-          actorId,
-          "shoot",
-          actions.phase,
-          actions.day,
-          permit.id,
-          abilityId,
-        )
-      )
-        return { kind: "invalid" };
-      if (action?.name !== "shoot") {
-        if (this.config?.magician) throw new Error("magician_shot_action_missing");
-        if (this.config?.evilKnight) throw new Error("evil_knight_hunter_action_missing");
-        continue;
-      }
-      const validated = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
-        phase: actions.phase,
-        day: actions.day,
-        deathActionId: permit.id,
-        abilityId,
-      });
-      if (
-        !eligible() ||
-        !this.world.hasDeathAction(
-          actorId,
-          "shoot",
-          actions.phase,
-          actions.day,
-          permit.id,
-          abilityId,
-        )
-      )
-        return { kind: "invalid" };
-      if (!validated.ok || !validated.sanitizedCall) {
-        if (this.config?.magician) throw new Error("magician_shot_action_invalid");
-        if (this.config?.evilKnight) throw new Error("evil_knight_hunter_action_invalid");
-        continue;
-      }
-      const targetId = validated.sanitizedCall.args.target_id;
-      // 空枪也只是已授权选择，真正消耗留给随后处理该选择的角色钩子。
-      if (targetId === null) return { kind: "pass", deathActionId: permit.id };
-      const targetScope = targets.get(targetId);
-      if (!targetScope || !livingNightLife(this.world, targetScope)) {
-        if (this.config?.magician) throw new Error("magician_shot_target_stale");
-        continue;
-      }
-      if (nightExchange && isMagicianBoard(this.world)) {
-        const mapped = resolveMagicianNightTarget(this.world, actions.day, targetId, "death_shot");
-        if (!mapped.isCurrent()) throw new Error("magician_shot_target_stale");
-        return {
-          kind: "shot",
-          targetId: mapped.effectiveId,
-          deathActionId: permit.id,
-          targetScope: mapped.scope,
-          mappingCurrent: mapped.isCurrent,
-          ...(!mapped.scope.life.alive ? { mappedMiss: true as const } : {}),
-        };
-      }
-      return { kind: "shot", targetId, deathActionId: permit.id, targetScope };
-    }
-    if (abilityId !== undefined && eligible()) throw new Error("gift_gun_valid_action_missing");
-    return { kind: "invalid" };
   }
 
   /** 授予事实不替代发言窗口；每位死者等待回复后复核阶段、日期、终局与原生命许可，再写发言。 */

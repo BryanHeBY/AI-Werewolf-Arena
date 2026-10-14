@@ -1,0 +1,66 @@
+{
+  "approved": false,
+  "method": {
+    "beforeNodes": 852,
+    "afterNodes": 852,
+    "completeTreeSame": true,
+    "completeNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSha": "c44339adae788b1868704d8f6d49fecb079c1ca1f95d2a5bcef0ecaa2607f77b",
+        "afterSha": "c44339adae788b1868704d8f6d49fecb079c1ca1f95d2a5bcef0ecaa2607f77b"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSha": "c44339adae788b1868704d8f6d49fecb079c1ca1f95d2a5bcef0ecaa2607f77b",
+        "afterSha": "c44339adae788b1868704d8f6d49fecb079c1ca1f95d2a5bcef0ecaa2607f77b"
+      }
+    ]
+  },
+  "interface": {
+    "beforeNodes": 26,
+    "afterNodes": 26,
+    "completeTreeSame": true,
+    "completeNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "afterSha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "afterSha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "DR": {
+    "beforeNodes": 4631,
+    "afterNodes": 4631,
+    "completeTreeSame": true,
+    "completeNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSha": "d41968b4654070e9423a4e52406f2e4508c01035dfc910b10b5626dbd0feedc4",
+        "afterSha": "d41968b4654070e9423a4e52406f2e4508c01035dfc910b10b5626dbd0feedc4"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSha": "8ffdabaaaacb7fe6b6cd619fe25f89bf8e6591d810c16ae447737bc625bc1e98",
+        "afterSha": "8ffdabaaaacb7fe6b6cd619fe25f89bf8e6591d810c16ae447737bc625bc1e98"
+      }
+    ]
+  },
+  "bindingCount": 21,
+  "retainedBindings": 48,
+  "controls": 8
+}

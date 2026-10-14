@@ -1,0 +1,23 @@
+{
+  "files": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "c08ce2e4c79cf186f611ff0a3608039586d3eacfd4f370884fd82312247a4aa8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "sha256": "20ced65a342efb7e098de7dbc5c3d52bedb3204da74c099327dce97ef762552f"
+    },
+    {
+      "path": "backend/src/rulesets/death-shot-selection.ts",
+      "sha256": "bf861923920049261ba7d0ff7f945b93cb2ae3e5ea19fbaca1036dd3db65b047"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/death-shot-selection.test.ts",
+      "sha256": "647706adcca06529add877e690f9983a5e417f6f80d354ab5777943994064dac"
+    }
+  ],
+  "documentationPathCount": 511,
+  "failures": [],
+  "chineseFailures": []
+}

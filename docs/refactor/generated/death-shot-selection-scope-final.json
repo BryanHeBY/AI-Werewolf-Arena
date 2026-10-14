@@ -1,0 +1,75 @@
+{
+  "baseline": "1428a210d931d4c043fb8d018f21e36c818fd05c",
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "c08ce2e4c79cf186f611ff0a3608039586d3eacfd4f370884fd82312247a4aa8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "sha256": "20ced65a342efb7e098de7dbc5c3d52bedb3204da74c099327dce97ef762552f"
+    },
+    {
+      "path": "backend/src/rulesets/death-shot-selection.ts",
+      "sha256": "bf861923920049261ba7d0ff7f945b93cb2ae3e5ea19fbaca1036dd3db65b047"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/death-shot-selection.test.ts",
+      "sha256": "647706adcca06529add877e690f9983a5e417f6f80d354ab5777943994064dac"
+    }
+  ],
+  "existing": 2,
+  "new": 2,
+  "deleted": 0,
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "originalSha": "6131393d44f2d82e239effaa617e3a18252247100ad5b2afa492efcf79c70c25",
+      "currentSha": "6131393d44f2d82e239effaa617e3a18252247100ad5b2afa492efcf79c70c25",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+      "originalSha": "26ac725c665bfdd2a1fad6907b97fb9b7ffa26c517bce8a8ff232d018eee2868",
+      "currentSha": "26ac725c665bfdd2a1fad6907b97fb9b7ffa26c517bce8a8ff232d018eee2868",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "originalSha": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "currentSha": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "originalSha": "26553562ccf2a6fdd40b20431ea1c70b8695917ce1930a3e0a51c04fbd4a87bd",
+      "currentSha": "26553562ccf2a6fdd40b20431ea1c70b8695917ce1930a3e0a51c04fbd4a87bd",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "originalSha": "5893304c47d830c6b36e942f7426ca4efd3124ad9ee1180b3022460263725b53",
+      "currentSha": "5893304c47d830c6b36e942f7426ca4efd3124ad9ee1180b3022460263725b53",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "originalSha": "5fa00e19e135da6223f39e9260e70f415cdd12d5dc710582c5a642d717e2c1f8",
+      "currentSha": "5fa00e19e135da6223f39e9260e70f415cdd12d5dc710582c5a642d717e2c1f8",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "originalSha": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "currentSha": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/gifted-gun-resource-boundaries.test.ts",
+      "originalSha": "9ab50711a983c241828ee8356a761e80d62ccc8928b345c9f3bf277da6ba79cd",
+      "currentSha": "9ab50711a983c241828ee8356a761e80d62ccc8928b345c9f3bf277da6ba79cd",
+      "wholeBytesSame": true
+    }
+  ],
+  "currentSourceFrozen": true
+}

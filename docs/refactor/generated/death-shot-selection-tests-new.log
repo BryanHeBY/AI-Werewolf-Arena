@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/death-shot-selection.test.ts:
+(pass) 提供者抛错保留已标死前缀，未消费原生枪并由外层关闭许可 [44.15ms]
+(pass) 等待后目标生命替换拒绝旧快照，下一请求重新捕获后才可命中新生命 [2.73ms]
+(pass) 等待后射手复活再死亡撤销原窗口，不消费弹药也不追击旧目标 [1.64ms]
+
+ 3 pass
+ 0 fail
+ 22 expect() calls
+Ran 3 tests across 1 file. [155.00ms]
