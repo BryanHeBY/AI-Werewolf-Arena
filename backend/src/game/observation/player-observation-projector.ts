@@ -23,12 +23,12 @@ import {
   fragrantPlayerKnowledge,
 } from "../mechanisms/roles/fragrant_pair_seer/authority";
 import { projectAlchemist, projectRaven } from "../mechanisms/roles/mist_raven/player_projection";
-import { readModifierState } from "../mechanisms/roles/scholar_mentor/state";
-import { scholarMentorStateForRole } from "../mechanisms/roles/scholar_mentor/night_frame";
+import { readModifierState } from "../mechanisms/roles/scholar_mentor/ports";
+import { scholarMentorStateForRole } from "../mechanisms/roles/scholar_mentor/ports";
 import { projectTimeConsortState } from "../mechanisms/roles/time_wolf_consort/ports";
 import { projectWolfSorcererState } from "../mechanisms/roles/wolf_sorcerer/ports";
 import { projectTricksterState } from "../mechanisms/roles/trickster/ports";
-import { projectOrderPrinceState } from "../mechanisms/roles/order_prince/state";
+import { projectOrderPrinceState } from "../mechanisms/roles/order_prince/ports";
 import { projectMagicianState } from "../mechanisms/roles/magician/ports";
 import { projectRedMoonState } from "../mechanisms/roles/red_moon_apostle/ports";
 import { projectNightmareShadowState } from "../mechanisms/roles/nightmare_shadow/state";

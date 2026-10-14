@@ -1,0 +1,25 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "../../../backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+    "../../../backend/src/game/mechanisms/roles/order_prince/profile.ts",
+    "../../../backend/src/game/mechanisms/roles/order_prince/authority.ts",
+    "../../../backend/src/game/observation/player-observation-projector.ts",
+    "../../../backend/tests/unit/features/order-prince/state.test.ts",
+    "../../../backend/tests/unit/features/order-prince/order-prince-voting.test.ts",
+    "../../../backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+    "../../../backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+    "../../../backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+    "../../../backend/src/game/mechanisms/roles/order_prince/ports.ts",
+    "../../../backend/tests/unit/features/order-prince/state-slot.test.ts"
+  ]
+}

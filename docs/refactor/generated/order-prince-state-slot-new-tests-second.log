@@ -1,0 +1,21 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/order-prince/state-slot.test.ts:
+130 |     )
+131 |       throw new Error("rule_parameters_invalid");
+132 |     // Read-only partial qualification preserves original family refusal priority;
+133 |     // only the subsequent strict schema result can create an owned instance.
+134 |     const violation = boardPresetViolation(copied as ReadonlyBoardConfig);
+135 |     if (violation) throw new Error(violation);
+                                                  ^
+error: order_prince_preset_invalid
+      at compile (/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/board-parameters.ts:135:45)
+      at createPlayers (/home/hby/dev/AI-Werewolf-Arena/backend/src/app/bootstrap.ts:149:47)
+      at bootstrapGame (/home/hby/dev/AI-Werewolf-Arena/backend/src/app/bootstrap.ts:99:23)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/order-prince/state-slot.test.ts:66:21)
+(fail) authority preserves the replaced state when expected encoding throws after the write [2.22ms]
+
+ 0 pass
+ 2 filtered out
+ 1 fail
+Ran 1 test across 1 file. [128.00ms]

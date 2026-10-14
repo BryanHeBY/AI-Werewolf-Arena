@@ -1,11 +1,11 @@
 /**
- * Owns Scholar/Mentor original abilities, target modifiers and resolved bonus grants. Inputs are
- * the paired modifier choices and native-target evidence; outputs are settled modifiers, legal
- * bonus actors and sourced conflict deaths. Close or abort removes that night's windows without
- * granting a new bonus to a replacement body.
+ * 负责白昼学者／寂夜导师的原 roster、生命／原生能力权威、夜选择许可和已结算加成。
+ * 输入为原 World／day、选择与原生目标证据；输出保原 pending／selection、加成回执及有来源冲突死亡。
+ * 状态 raw／库存／历史／JSON 绑定及实际数据写归本族 state-slot，有限板免疫与碰撞规则归 rules。
+ * 不变量：槽提交成功才删 pending／追加 selection；普通已提交交换可跨一次正常死亡，不可跨复活或换生命。
+ * 关闭仍要求原加成全处理，abort 只改原夜窗口；不为替换原体补授库存或复制运行回执。
  */
 import type {
-  ModifierState,
   ModifierMode,
   CommittedModifier,
   ModifierResolution,
@@ -19,7 +19,14 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import type { NightLifeScope } from "../../../../core/domain/night_effects";
-import { readModifierState, selectModifier, resolveModifiers } from "./state";
+import {
+  readModifierState,
+  selectModifier,
+  modifierOwnData as ownData,
+  ScholarMentorStateSlot,
+} from "./state-slot";
+import { resolveModifiers } from "./rules";
+// 原体／身份／生命与原生能力查询分开捕获；库存槽内容相同不能补回另一 Role 或生命的授权。
 interface OriginalPlayer {
   abilityAuthority: () => boolean;
   id: number;
@@ -34,19 +41,15 @@ interface OriginalPlayer {
   life: AliveComponent;
   version: number;
 }
-interface CasterAuthority {
-  state: ModifierReadState;
-  remaining: ModifierReadState["remaining"];
-  history: ModifierReadState["history"];
-  expected: string;
-}
 export type ModifierBonusKind = "check" | "guard" | "poison" | "kill";
+// 本夜额外机会不扣施法者槽的另一份库存；used／targetId 在原创建点或复验后的回执 commit 才写。
 interface Grant {
   actorId: number;
   kind: ModifierBonusKind;
   used: boolean;
   targetId: number | null;
 }
+// pending 保未提交选择，selections 仅在槽写与 JSON 更新成功后追加；两者与 bonus grant 生命周期仍归 frame。
 interface ModifierNight {
   day: number;
   closed: boolean;
@@ -60,15 +63,11 @@ interface ModifierNight {
 }
 interface Board {
   players: ReadonlyMap<number, OriginalPlayer>;
-  casters: ReadonlyMap<number, CasterAuthority>;
+  casters: ReadonlyMap<number, ScholarMentorStateSlot>;
   night: ModifierNight | null;
 }
 const boards = new WeakMap<World, Board>();
-function ownData(value: unknown, key: PropertyKey): unknown {
-  if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
-  const d = Object.getOwnPropertyDescriptor(value, key);
-  return d && "value" in d ? d.value : undefined;
-}
+
 
 const missingAbilityField = Symbol("missing_ability_field");
 function boundAbilityData(value: unknown, key: PropertyKey): unknown {
@@ -168,15 +167,10 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
   )
     return false;
   const version = aliveLifeVersion(p.life);
-  // A committed exchange survives one ordinary death, never revival or another life.
+  // 已提交交换可跨一次普通死亡；复活或换生命仍撤权。
   return p.life.alive ? version === p.version : version === p.version + 1;
 }
 
-function stateIdentity(raw: unknown): string {
-  const value = readModifierState(raw);
-  if (!value) throw new Error("scholar_mentor_original_state_revoked");
-  return JSON.stringify(value);
-}
 function requireBoard(world: World): Board {
   const b = boards.get(world);
   if (!b) throw new Error("scholar_mentor_board_missing");
@@ -189,10 +183,7 @@ function requireBoard(world: World): Board {
     throw new Error("scholar_mentor_original_state_revoked");
   for (const [id, c] of b.casters) {
     if (
-      ownData(b.players.get(id)!.privateState, "scholarMentor") !== c.state ||
-      ownData(c.state, "remaining") !== c.remaining ||
-      ownData(c.state, "history") !== c.history ||
-      stateIdentity(c.state) !== c.expected
+      !c.matches(ownData(b.players.get(id)!.privateState, "scholarMentor"))
     )
       throw new Error("scholar_mentor_original_state_revoked");
   }
@@ -202,7 +193,7 @@ export function installScholarMentorBoard(world: World): void {
   if (boards.has(world)) throw new Error("scholar_mentor_board_already_installed");
   const players = new Map<number, OriginalPlayer>(),
     seats = new Set<number>();
-  const casters = new Map<number, CasterAuthority>();
+  const casters = new Map<number, ScholarMentorStateSlot>();
   for (const id of world.entityIds()) {
     const role = world.getComponent(id, COMPONENT.Role);
     const life = world.getComponent(id, COMPONENT.Alive);
@@ -269,12 +260,7 @@ export function installScholarMentorBoard(world: World): void {
       if (!state || state.caster !== String(role.role) || state.history.length !== 0)
         throw new Error("scholar_mentor_original_roster_invalid");
       const original = raw as ModifierReadState;
-      casters.set(id, {
-        state: original,
-        remaining: original.remaining,
-        history: original.history,
-        expected: stateIdentity(original),
-      });
+      casters.set(id, new ScholarMentorStateSlot(original));
     }
   }
   resolveModifiers(
@@ -370,15 +356,7 @@ export function commitScholarMentorChoice(
     targetId,
     scholarMentorChoiceTargets(world, day, actorId),
   );
-  (c.remaining as Pick<ModifierState["remaining"], "enhance">).enhance = next.remaining.enhance;
-  (c.remaining as Pick<ModifierState["remaining"], "weaken">).weaken = next.remaining.weaken;
-  Object.defineProperty(c.history, String(c.history.length), {
-    value: next.history.at(-1)!,
-    writable: true,
-    enumerable: true,
-    configurable: true,
-  });
-  c.expected = stateIdentity(c.state);
+  c.commit(next);
   n.pending.delete(actorId);
   if (mode !== null)
     n.selections.push({ actorId, caster: c.state.caster, mode, targetId: targetId! });
@@ -600,18 +578,4 @@ export function scholarMentorPackBlocked(world: World): boolean {
   if (!boards.has(world)) return false;
   const n = requireBoard(world).night;
   return !!n && !n.aborted && n.resolution?.blockWolfKnife === true;
-}
-export function scholarMentorStateForRole(
-  role: RoleComponent | undefined,
-): ModifierReadState | undefined {
-  const name = ownData(role, "role"),
-    camp = ownData(role, "camp");
-  if (
-    (name !== "day_scholar" && name !== "night_mentor") ||
-    camp !== (name === "day_scholar" ? Camp.Good : Camp.Wolf)
-  )
-    return undefined;
-  const raw = ownData(ownData(role, "privateState"), "scholarMentor"),
-    value = readModifierState(raw);
-  return value?.caster === name ? (raw as ModifierReadState) : undefined;
 }

@@ -10,7 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { ORDER_PRINCE_POLICY, createOrderPrinceState, getOrderPrinceState } from "./state";
+import { ORDER_PRINCE_POLICY, ORDER_PRINCE_STATE_SLOT, getOrderPrinceState } from "./state-slot";
 import { orderPrinceChoicePending } from "./authority";
 const parameters = z.strictObject({
   policy: z.literal(ORDER_PRINCE_POLICY).default(ORDER_PRINCE_POLICY),
@@ -39,7 +39,8 @@ export const ORDER_PRINCE_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     init: (role) => {
-      role.privateState.orderPrince = createOrderPrinceState();
+      // 保原赋值左值先读，create仍无参数；初始化不安装authority或授予pending。
+      ORDER_PRINCE_STATE_SLOT.install(() => role.privateState);
     },
     configuration: {
       schema: parameters,

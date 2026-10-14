@@ -5,7 +5,7 @@ import { expect, test } from "bun:test";
 import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../../src/core";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { scholarMentorTwelveConfig } from "../../../../src/runtime/scenarios/scholar_mentor_twelve";
-import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
+import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { isScholarMentorPreset } from "../../../../src/rulesets";

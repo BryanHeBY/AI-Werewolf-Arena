@@ -1,0 +1,199 @@
+{
+  "approved": true,
+  "baseCommit": "c3dc932647f67499b430253f5c77d2fb9cb363f1",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+      "beforePath": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "sha256": "44ee34eeefddbd4378b41aa09d9948ed185468f4d70e875792892401ca2314ec",
+      "wholeExactForwardInverseSame": true,
+      "mappedOutputSHA256": [
+        "4c909c5f1252bba2207185246eb3199af934845901b352e7c1d0a641de0dd276",
+        "3b5518668c19013a42f09192132ca8104b90cec51ae3f699bac884402ad11706"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+      "beforePath": "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+      "sha256": "b4c88028b6c13c677cb2f27a819a30635c6f16d94ce08788a667419fd87c04b5",
+      "wholeExactForwardInverseSame": true,
+      "mappedOutputSHA256": [
+        "6b008fbdde9283049458018a84c125b308bf4095b31d72ae44e7f122c41a243a",
+        "53a2101614549517233792460322b981a5d37c3b7abf36ba8d7d8c2275de1ce2"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "beforePath": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "sha256": "99eb881f4b31c98215d0077fa63c8c506152aa749b2afeb71d4509ab5836d5b9",
+      "wholeExactForwardInverseSame": true,
+      "mappedOutputSHA256": [
+        "72c36976b24d37b7a0743220a25d4bd6ad80fddc4e5cee5630e926d88832a997",
+        "bcfa1e28ae0ed325b2f7620569c0a238cc9a59a2aef73279f941b73e2641c03e"
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "beforePath": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "91815679ed637014dd23e954eea62eddc826cd3aad37fb2327e1949ade1e77bd",
+      "wholeExactForwardInverseSame": true,
+      "mappedOutputSHA256": [
+        "2bef77226452206b44ab626b93921441432fb4e4e376b172e90005e18f8878f5",
+        "24e5e2c2504f0a22878e5a4351393e403293bc969e416f62ea08fa535414f89d"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/state.test.ts",
+      "beforePath": "backend/tests/unit/features/order-prince/state.test.ts",
+      "sha256": "624f9b48dcbaba9b96d48b2110499f54df0b5eb9a9cf8d24e288d3fab55eac4d",
+      "wholeExactForwardInverseSame": true,
+      "mappedOutputSHA256": [
+        "0cf76e396bfbca2cb1905b46c077509bd9d70d87ba1ee07cd81be4b6c36b900e",
+        "58d65285c3adccc4411f335a4c8e68fd2bdabc7ddf1adeacefde3a7ff4adfee2"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/order-prince-voting.test.ts",
+      "beforePath": "backend/tests/unit/features/order-prince/order-prince-voting.test.ts",
+      "sha256": "d1ec6999b76d4573ecc292432b7ae02a065e7af9ffbbb9a37bc73ea55b8906c7",
+      "wholeExactForwardInverseSame": true,
+      "mappedOutputSHA256": [
+        "972de5127fe33568e8126c552071900b000065c514077ef6dc6bd5587958fae2",
+        "b16190e5752b54203d3b816bfee36fec59e13a72926f3ab759d52671b176ec68"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+      "beforePath": "backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+      "sha256": "f7fa1f768bb097cc3b8e82ae161e7b9e7add0f8266a080d8eefd9530d231570b",
+      "wholeExactForwardInverseSame": true,
+      "mappedOutputSHA256": [
+        "08fd12b9cd844a216396f222e065f5fa188382f3a3296c3f6785a05c2aa4fcdf",
+        "4fd7eac0d986095a86929193a60c34ca8fafc005f8252a111f0252c947c4c593"
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+      "beforePath": "backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+      "sha256": "763dac6774e231a8d4d4f943d5b12e8c7a58c4ecd54b635a65e91d886b6c3be8",
+      "wholeExactForwardInverseSame": true,
+      "mappedOutputSHA256": [
+        "72f1ee7a33455dc36808292813fa9beb190d965722f4aae40c2b63a1b989840a",
+        "d6030978a4666b613176a98c1fe9ee4b0fd2aa3af77ee01a4c0473b63083ad80"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+      "beforePath": "backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+      "sha256": "df45697e35bff3c3add21f7ec12ee571d38bc0ba6a00164b355b473aa68f26ea",
+      "wholeExactForwardInverseSame": true,
+      "mappedOutputSHA256": [
+        "0891367d00c1bd5d68729fa6201288fb818661b37d9317c7e354a0a9734ccb05",
+        "7860626fed41b72cf88c26e40f42d381dad54bce03cf1b8470c1ef6c6649672f"
+      ]
+    }
+  ],
+  "dataPrograms": [
+    {
+      "name": "field",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "2037768f3cd92e09f79dcbfc3967a844bc6f3f4c4d5686270eeb413fb4a0fb48",
+      "originalSHA256": "2037768f3cd92e09f79dcbfc3967a844bc6f3f4c4d5686270eeb413fb4a0fb48"
+    },
+    {
+      "name": "exact",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "bf0d38be9598c43f728d23244fe77561656ac6e4e07b230f26aed80865f5ca98",
+      "originalSHA256": "bf0d38be9598c43f728d23244fe77561656ac6e4e07b230f26aed80865f5ca98"
+    },
+    {
+      "name": "dayNumber",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "4847138b916eb59c4fa9a0e838f4fff746e57a72fa26eec1d66ce4fc95fbde9d",
+      "originalSHA256": "4847138b916eb59c4fa9a0e838f4fff746e57a72fa26eec1d66ce4fc95fbde9d"
+    },
+    {
+      "name": "rows",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "a78cb1ce515be467ad75cc7c8b4b20c25a29e1cb3167b013eff5da93a07a28cb",
+      "originalSHA256": "a78cb1ce515be467ad75cc7c8b4b20c25a29e1cb3167b013eff5da93a07a28cb"
+    },
+    {
+      "name": "getOrderPrinceState",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "f06ba940a8a0bc4ba383054a035e9c497c70e6e3c8245155f67268f072850c05",
+      "originalSHA256": "f06ba940a8a0bc4ba383054a035e9c497c70e6e3c8245155f67268f072850c05"
+    },
+    {
+      "name": "createOrderPrinceState",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "e97d97cb16717d52baeac5d8664f2bf461b638a16c3d3004951b599ec68feeac",
+      "originalSHA256": "e97d97cb16717d52baeac5d8664f2bf461b638a16c3d3004951b599ec68feeac"
+    },
+    {
+      "name": "projectOrderPrinceState",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "bb5fddb191b962f3364a934928b6ecd4f156d14182dd51276a0fa9c926993052",
+      "originalSHA256": "bb5fddb191b962f3364a934928b6ecd4f156d14182dd51276a0fa9c926993052"
+    },
+    {
+      "name": "nextOrderPrinceChoice",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "6eae301047e24b959193e7f7cfd2986cb7836ecfdcc2dd669d67b55bf0b8bb8c",
+      "originalSHA256": "6eae301047e24b959193e7f7cfd2986cb7836ecfdcc2dd669d67b55bf0b8bb8c"
+    },
+    {
+      "name": "install",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "a9cf7929ce740e3cb5adcc83d04c9fe130e2f918a2aeaa3d001697cc8ef5e1d4",
+      "originalSHA256": "a9cf7929ce740e3cb5adcc83d04c9fe130e2f918a2aeaa3d001697cc8ef5e1d4"
+    },
+    {
+      "name": "replacement",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "af656b57eb9e9a056798392ae57d7a6c6cbe9b76e7a0d9671c95111680f4121a",
+      "originalSHA256": "af656b57eb9e9a056798392ae57d7a6c6cbe9b76e7a0d9671c95111680f4121a"
+    },
+    {
+      "name": "projected expected",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "5768cce859356f72ef627f87177d50570fe682c6e41f14a348d2e2cd717df7e8",
+      "originalSHA256": "5768cce859356f72ef627f87177d50570fe682c6e41f14a348d2e2cd717df7e8"
+    },
+    {
+      "name": "prepared expected",
+      "wholeNormalizedSame": true,
+      "sourceSHA256": "bfe781dfb5a68cf7ff07b3fb84dba3742331a5713b1d33bd7cf0ebd438167038",
+      "originalSHA256": "bfe781dfb5a68cf7ff07b3fb84dba3742331a5713b1d33bd7cf0ebd438167038"
+    }
+  ],
+  "controls": [
+    {
+      "path": "packages/game-contract/src/facts/order-prince.ts",
+      "sha256": "2bfad0b41218eca1c3747b4f176d11d6a18de33c4d573b820360cdf605b2f635"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/voting_window.ts",
+      "sha256": "7f1aac68e47eb2bcfb415c23c978ce6fc1361dc1af592f569baac90540ff7898"
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97"
+    }
+  ],
+  "retired": [],
+  "summary": {
+    "wholePrograms": 9,
+    "mappedOutputs": 18,
+    "preservedFunctions": 8,
+    "movedDataPrograms": 4,
+    "exactEdits": 21
+  },
+  "cohort": "Order＋Scholar/Mentor联合状态槽；Observer三路线Root实际整合，去重后原子提交",
+  "limits": [
+    "Observer含Root/Scholar两路线及Root/Order一路线；原全body不变，两族联合原子提交不伪称只Order改动。",
+    "新方法表/调用层/物理入口及公开reader是明确API变化；数据program映射、9全程序逆展开不能称未逆新所有代码raw同。",
+    "Authority仍持原体/生命/pending及绑定state/expected；写者不新增许可或库存镜像。",
+    "六源码根仅字面旧入口，非计算路径/历史generated/私有或仓外覆盖。"
+  ]
+}

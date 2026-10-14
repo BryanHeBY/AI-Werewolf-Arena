@@ -1,0 +1,21 @@
+17 | for(const row of before.source){
+18 |  assert.equal(cp.execFileSync("git",["show",before.baseCommit+":"+row.path],{encoding:"utf8"}),row.text);
+19 |  const target=row.path===mapping.oldPath?mapping.newPath:row.path,full=fs.readFileSync(target,"utf8"),current=target===mapping.newPath?full.slice(0,full.indexOf("\n/** 原初始化")):full,edits=mapping.edits.filter(e=>e.path===target);
+20 |  let forward=row.text,inverse=current;
+21 |  for(const e of edits){assert.equal(forward.split(e.before).length-1,1);forward=forward.replace(e.before,e.after);}assert.equal(current,forward);
+22 |  for(const e of [...edits].reverse()){assert.equal(inverse.split(e.after).length-1,1);inverse=inverse.replace(e.after,e.before);}assert.equal(inverse,row.text);
+                                                  ^
+AssertionError: Expected values to be strictly equal:
+
+2 !== 1
+
+ generatedMessage: true,
+     actual: 2,
+   expected: 1,
+   operator: "strictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/order-prince-state-slot-proof.cjs:22:46
+
+Bun v1.4.3 (Linux x64)

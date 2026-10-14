@@ -27,8 +27,8 @@ import {
 import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/ports";
 import { getWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";
 import { getTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/ports";
-import { scholarMentorStateForRole } from "../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
-import { readModifierState } from "../../../src/game/mechanisms/roles/scholar_mentor/state";
+import { scholarMentorStateForRole } from "../../../src/game/mechanisms/roles/scholar_mentor/ports";
+import { readModifierState } from "../../../src/game/mechanisms/roles/scholar_mentor/ports";
 import { getLonelyGirlState } from "../../../src/game/mechanisms/roles/lonely_girl/state";
 import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 

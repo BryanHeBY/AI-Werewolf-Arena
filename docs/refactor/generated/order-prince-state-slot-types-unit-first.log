@@ -1,0 +1,6 @@
+backend/tests/unit/features/order-prince/state-slot.test.ts(45,27): error TS2339: Property 'orderPrince' does not exist on type 'object'.
+backend/tests/unit/features/order-prince/state-slot.test.ts(85,31): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(expected: OrderPrinceState | undefined): void', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'OrderPrinceState | undefined'.
+  Overload 2 of 2, '(expected: NoInfer<OrderPrinceState | undefined>): void', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'OrderPrinceState | undefined'.

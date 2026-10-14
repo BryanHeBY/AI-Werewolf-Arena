@@ -1,10 +1,7 @@
 /**
- * Unit tests for scholar-mentor; Isolated scholar-mentor state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证白昼学者／寂夜导师原状态复制、一次库存／历史和有限板碰撞规则。
+ * 输入为原内存 fixture、明确非法修改和控制表；原字面预期／引用及拒绝断言不在迁移中生成。
+ * 仅调用本族 state-slot／rules，不装配完整对局、模型或真实传输；原支持表、title 与动作保持。
  */
 import type {
   ModifierCaster,
@@ -17,8 +14,8 @@ import {
   createModifierState,
   readModifierState,
   selectModifier,
-  resolveModifiers,
-} from "../../../../src/game/mechanisms/roles/scholar_mentor/state";
+} from "../../../../src/game/mechanisms/roles/scholar_mentor/state-slot";
+import { resolveModifiers } from "../../../../src/game/mechanisms/roles/scholar_mentor/rules";
 const roster: ModifierPlayer[] = [
   { id: 1, role: "day_scholar", camp: "good", alive: true },
   { id: 2, role: "night_mentor", camp: "wolf", alive: true },

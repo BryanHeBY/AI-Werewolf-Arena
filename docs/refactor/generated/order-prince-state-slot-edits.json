@@ -1,0 +1,115 @@
+{
+  "oldPath": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+  "newPath": "backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+      "before": "/**\n * 负责定序王子原状态读取、初始构造、脱离历史投影与下一选择数据准备。\n * 输入为原角色、观察／选择日和 activate；输出为原槽同引用或独立可写数据，不提交效果。\n * 公共字段结构归 GC facts/order-prince；本 owner 保持原精确描述符／Proxy 拒绝与历史顺序，\n * 真实 pending、原生命和写权仍由 authority 持有，准备副本不授予重投权限。\n */\n",
+      "after": "/**\n * 负责定序王子唯一数据槽的原构造、完整 live 校验、同引用读取、知识／下一状态准备与数据写入编码。\n * 输入为原角色、日次／activate和晚读容器，输出为原状态、独立可写副本或原明确拒绝。\n * Node Proxy、精确自身数据 descriptor、日期递增和首次激活后终止的政策保持；不新增严格接受条件。\n * 初始安装与同引用 replacement 由本槽执行，原体、身份、生命、pending与提交许可仍归 authority。\n * JSON仅为原 expected 比较；赋值／编码失败保留已写前缀，不回滚资源或建立第二份状态。\n */\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+      "before": "  let previous = 0;",
+      "after": "  // 原历史日次严格递增；明确放弃仍可继续，出现首次 activate=true 后不允许后续记录。\n  let previous = 0;"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+      "before": "import { ORDER_PRINCE_POLICY, createOrderPrinceState, getOrderPrinceState } from \"./state\";",
+      "after": "import { ORDER_PRINCE_POLICY, ORDER_PRINCE_STATE_SLOT, getOrderPrinceState } from \"./state-slot\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+      "before": "      role.privateState.orderPrince = createOrderPrinceState();",
+      "after": "      // 保原赋值左值先读，create仍无参数；初始化不安装authority或授予pending。\n      ORDER_PRINCE_STATE_SLOT.install(() => role.privateState);"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "before": "/**\n * 负责定序王子的原身份／生命绑定与待答选择，拥有唯一 orderPrince 槽和 pending 的写权。\n * 输入为 World、原参与者与日次／activate，输出为当前性查询或已提交选择证据。\n * 不变量：只有匹配 pending 且原体／生命未撤权的选择可提交；关闭仅清 pending。\n * 写入依原槽、绑定引用、JSON 证据、pending 的顺序，失败保留已发生前缀，不缓存新容器\n * 或把公共状态数据当成许可。初始安装和纯数据投影不替代提交前复验。\n */\n",
+      "after": "/**\n * 负责定序王子的原身份／生命绑定、pending和提交授权。输入为原World、参与者、日次／activate，\n * 输出为原当前性查询及已提交选择；只有匹配pending且原体／生命未撤权才可提交，关闭仅清pending。\n * 数据槽执行原初始化／replacement及编码，本权威仍拥有绑定引用、expected和pending更新。\n * 顺序保持原槽→b.state→JSON→expected→pending；写后失败不回滚前缀，不提前缓存容器或把知识当许可。\n */\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "before": "  projectOrderPrinceState,",
+      "after": "  ORDER_PRINCE_STATE_SLOT,"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "before": "} from \"./state\";",
+      "after": "} from \"./state-slot\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "before": "JSON.stringify(projectOrderPrinceState(b.role))",
+      "after": "ORDER_PRINCE_STATE_SLOT.checkpoint.projection(() => b.role)"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "before": "JSON.stringify(projectOrderPrinceState(role))",
+      "after": "ORDER_PRINCE_STATE_SLOT.checkpoint.projection(() => role)"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "before": "  (b.privateState as { orderPrince: OrderPrinceState }).orderPrince = next;",
+      "after": "  ORDER_PRINCE_STATE_SLOT.allowedWrites.replace(() => b.privateState, next);"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "before": "  b.expected = JSON.stringify(next);",
+      "after": "  b.expected = ORDER_PRINCE_STATE_SLOT.checkpoint.next(next);"
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/state.test.ts",
+      "before": "/order_prince/state\"",
+      "after": "/order_prince/state-slot\""
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/state.test.ts",
+      "before": "/**\n * Unit tests for order-prince; Isolated order-prince state contract; native in-memory owner/frame/readers, no assembled game cycle.\n * Inputs are existing in-memory fixtures, original callback controls and explicit\n * invalid mutations. Original literal expectations, identity snapshots and\n * rejection assertions supply the oracle; none are regenerated during relocation.\n * Test-owned mocks/components exercise this boundary without a model or physical\n * transport. Support files, fixture bytes, policy and state behavior are retained.\n */\n",
+      "after": "/**\n * 单元测试验证定序王子原状态接受、同引用读取、脱离知识和下一选择准备；输入为原内存fixture、\n * 明确非法修改、getter／Proxy与日次，原字面预期、拒绝和可写副本是预期。\n * 仅核数据边界，不运行完整对局、模型或真实重投，不在迁移中重写fixture、政策或golden。\n */\n"
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/order-prince-voting.test.ts",
+      "before": "/order_prince/state\"",
+      "after": "/order_prince/ports\""
+    },
+    {
+      "path": "backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+      "before": "/order_prince/state\"",
+      "after": "/order_prince/ports\""
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+      "before": "/order_prince/state\"",
+      "after": "/order_prince/ports\""
+    },
+    {
+      "path": "backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+      "before": "import type { projectOrderPrinceState } from \"../../../src/game/mechanisms/roles/order_prince/state\";",
+      "after": "import type { projectOrderPrinceState } from \"../../../src/game/mechanisms/roles/order_prince/ports\";"
+    },
+    {
+      "path": "backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+      "before": "} from \"../../../src/game/mechanisms/roles/order_prince/state\";",
+      "after": "} from \"../../../src/game/mechanisms/roles/order_prince/state-slot\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "before": "\"../mechanisms/roles/order_prince/state\"",
+      "after": "\"../mechanisms/roles/order_prince/ports\""
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "before": "import { readModifierState } from \"../mechanisms/roles/scholar_mentor/state\";",
+      "after": "import { readModifierState } from \"../mechanisms/roles/scholar_mentor/ports\";",
+      "contributor": "Root/Scholar atomic cohort route"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "before": "import { scholarMentorStateForRole } from \"../mechanisms/roles/scholar_mentor/night_frame\";",
+      "after": "import { scholarMentorStateForRole } from \"../mechanisms/roles/scholar_mentor/ports\";",
+      "contributor": "Root/Scholar atomic cohort route"
+    }
+  ],
+  "rootOwnedRoute": "backend/src/game/observation/player-observation-projector.ts",
+  "cohort": "Order＋Scholar/Mentor联合状态槽；Observer三路线Root实际整合，去重后原子提交"
+}

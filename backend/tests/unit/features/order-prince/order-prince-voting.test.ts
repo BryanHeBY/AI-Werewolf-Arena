@@ -19,7 +19,7 @@ import { VotingPipeline } from "../../../../src/game/engine/phase_pipeline/votin
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { createDefaultRoleRegistry } from "../../../../src/game/mechanisms";
-import { getOrderPrinceState } from "../../../../src/game/mechanisms/roles/order_prince/state";
+import { getOrderPrinceState } from "../../../../src/game/mechanisms/roles/order_prince/ports";
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
 const roles = [
   Role.Wolf,

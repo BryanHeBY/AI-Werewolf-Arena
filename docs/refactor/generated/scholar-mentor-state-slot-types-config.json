@@ -1,0 +1,28 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  },
+  "files": [
+    "../../../backend/src/game/mechanisms/roles/scholar_mentor/profile.ts",
+    "../../../backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+    "../../../backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+    "../../../backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+    "../../../backend/tests/unit/features/scholar-mentor/state.test.ts",
+    "../../../backend/tests/unit/features/scholar-mentor/frame.test.ts",
+    "../../../backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+    "../../../backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+    "../../../backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+    "../../../backend/src/game/mechanisms/roles/scholar_mentor/state-slot.ts",
+    "../../../backend/src/game/mechanisms/roles/scholar_mentor/rules.ts",
+    "../../../backend/tests/unit/features/scholar-mentor/state-slot.test.ts",
+    "../../../backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+    "../../../backend/src/game/observation/player-observation-projector.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

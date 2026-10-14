@@ -1,0 +1,1 @@
+{"originalFamilySources":10,"newOwners":2,"newUnit":1,"sharedConsumers":2,"sourcePaths":15,"presentSources":14,"deletedSources":1,"completeMovedFunctions":10,"wholeReconstructedConsumerPrograms":11,"wholeMappedConsumerOutputs":22,"wholeOriginalStateOutputs":2,"sharedOtherFamilyRoutes":1}

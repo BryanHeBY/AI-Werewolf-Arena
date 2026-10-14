@@ -8,7 +8,7 @@ import type { ModifierState } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../src/core";
 
-import { createModifierState } from "../../../../src/game/mechanisms/roles/scholar_mentor/state";
+import { createModifierState, scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/state-slot";
 import {
   installScholarMentorBoard,
   beginScholarMentorNight,
@@ -28,7 +28,6 @@ import {
   assertScholarMentorRosterCurrent,
   scholarMentorRoleCanKnife,
   scholarMentorPackBlocked,
-  scholarMentorStateForRole,
 } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
 function fixture() {
   const names = [

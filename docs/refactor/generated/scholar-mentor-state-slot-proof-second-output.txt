@@ -1,0 +1,26 @@
+2 | const fs=require('node:fs'),cp=require('node:child_process'),assert=require('node:assert/strict'),ts=require('../../../backend/node_modules/typescript'),{createHash}=require('node:crypto');
+3 | const prefix='docs/refactor/generated/scholar-mentor-state-slot-',read=p=>fs.readFileSync(p,'utf8'),sha=s=>createHash('sha256').update(s).digest('hex'),before=JSON.parse(read(prefix+'before.json')),edits=JSON.parse(read(prefix+'edits.json')),dir='backend/src/game/mechanisms/roles/scholar_mentor/';
+4 | const old=new Map(before.source.map(x=>[x.path,x.text]));const parse=(s,p='proof.ts')=>{const f=ts.createSourceFile(p,s,ts.ScriptTarget.Latest,true);assert.equal(f.parseDiagnostics.length,0,p);return f;};
+5 | const js=(s,module)=>ts.transpileModule(s,{fileName:'proof.ts',compilerOptions:{module,target:ts.ScriptTarget.ES2022,removeComments:true}}).outputText;
+6 | function shape(s){const f=parse(s);let typedNodes=0,leaves=0;function typed(n){typedNodes++;const out=[];ts.forEachChild(n,x=>{out.push(typed(x));},a=>{out.push(['array',a.length,!!a.hasTrailingComma,...a.map(typed)]);});return[n.kind,out];}function token(n){const children=n.getChildren(f).filter(x=>x.kind<ts.SyntaxKind.FirstJSDocNode||x.kind>ts.SyntaxKind.LastJSDocNode);if(!children.length){leaves++;return[n.kind,n.getText(f)];}return[n.kind,children.map(token)];}return{typed:typed(f),tokens:token(f),typedNodes,nonJSDocLeaves:leaves};}
+7 | function same(a,b,label){assert.deepEqual(shape(b),shape(a),label);const outputs=[];for(const module of [ts.ModuleKind.ESNext,ts.ModuleKind.CommonJS]){const A=js(a,module),B=js(b,module);assert.equal(B,A,label+' full emitted '+ts.ModuleKind[module]);outputs.push({module:ts.ModuleKind[module],wholeMappedRawSame:true,sha256:sha(B)});}return{label,...((({typedNodes,nonJSDocLeaves})=>({typedNodes,nonJSDocLeaves}))(shape(a))),outputs};}
+                                                                                                                                                                                                      ^
+AssertionError: entire initializer runtime full emitted ESNext
++ actual - expected
+
++ 'function initializeScholarMentorState(privateState, caster) {\n' +
++   '    privateState().scholarMentor = createModifierState(caster());\n' +
++   '}\n'
+- 'function initializeScholarMentorState(privateState, caster) { privateState().scholarMentor = createModifierState(caster()); }\n'
+
+ generatedMessage: false,
+     actual: "function initializeScholarMentorState(privateState, caster) {\n    privateState().scholarMentor = createModifierState(caster());\n}\n",
+   expected: "function initializeScholarMentorState(privateState, caster) { privateState().scholarMentor = createModifierState(caster()); }\n",
+   operator: "strictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at same (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/scholar-mentor-state-slot-proof.cjs:7:195)
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/scholar-mentor-state-slot-proof.cjs:31:120
+
+Bun v1.4.3 (Linux x64)

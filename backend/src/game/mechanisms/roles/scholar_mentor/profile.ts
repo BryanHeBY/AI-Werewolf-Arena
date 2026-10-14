@@ -11,9 +11,12 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { SCHOLAR_MENTOR_POLICY, createModifierState } from "./state";
 import {
+  SCHOLAR_MENTOR_POLICY,
+  initializeScholarMentorState,
   scholarMentorStateForRole,
+} from "./state-slot";
+import {
   scholarMentorChoicePending,
   scholarMentorChoiceTargets,
   scholarMentorRoleCanKnife,
@@ -62,8 +65,10 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
         : undefined,
       init: (role, ctx) => {
         parameters.parse(ctx.boardConfig?.scholarMentor ?? {});
-        role.privateState.scholarMentor = createModifierState(
-          mentor ? "night_mentor" : "day_scholar",
+        // 配置已原序 parse；privateState 左值仍先于 mentor 分支与状态工厂，不提前读取或复制。
+        initializeScholarMentorState(
+          () => role.privateState,
+          () => mentor ? "night_mentor" : "day_scholar",
         );
       },
       configuration: {

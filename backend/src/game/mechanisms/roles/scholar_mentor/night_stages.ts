@@ -10,6 +10,7 @@ import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { originalPoisonIntent, type NightLifeScope } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { resolveInspection } from "../inspection";
+import { scholarMentorStateForRole } from "./state-slot";
 import {
   readScholarMentorBonusEffectRecords,
   scholarMentorBonusEffectRecordsForAppend,
@@ -18,7 +19,6 @@ import {
   beginScholarMentorNight,
   commitScholarMentorChoice,
   settleScholarMentorChoices,
-  scholarMentorStateForRole,
   scholarMentorChoiceTargets,
   assertScholarMentorRosterCurrent,
   scholarMentorBonusActors,

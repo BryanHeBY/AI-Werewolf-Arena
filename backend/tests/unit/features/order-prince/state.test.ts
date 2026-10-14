@@ -1,10 +1,7 @@
 /**
- * Unit tests for order-prince; Isolated order-prince state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证定序王子原状态接受、同引用读取、脱离知识和下一选择准备；输入为原内存fixture、
+ * 明确非法修改、getter／Proxy与日次，原字面预期、拒绝和可写副本是预期。
+ * 仅核数据边界，不运行完整对局、模型或真实重投，不在迁移中重写fixture、政策或golden。
  */
 import { expect, test } from "bun:test";
 import { Camp, type RoleComponent } from "../../../../src/core";
@@ -14,7 +11,7 @@ import {
   getOrderPrinceState,
   nextOrderPrinceChoice,
   projectOrderPrinceState,
-} from "../../../../src/game/mechanisms/roles/order_prince/state";
+} from "../../../../src/game/mechanisms/roles/order_prince/state-slot";
 
 function role(state: unknown = createOrderPrinceState()): RoleComponent {
   return {

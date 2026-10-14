@@ -1,0 +1,209 @@
+{
+  "baseCommit": "c3dc932647f67499b430253f5c77d2fb9cb363f1",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+      "sha256": "44ee34eeefddbd4378b41aa09d9948ed185468f4d70e875792892401ca2314ec"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+      "sha256": "b4c88028b6c13c677cb2f27a819a30635c6f16d94ce08788a667419fd87c04b5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "sha256": "99eb881f4b31c98215d0077fa63c8c506152aa749b2afeb71d4509ab5836d5b9"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "91815679ed637014dd23e954eea62eddc826cd3aad37fb2327e1949ade1e77bd"
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/state.test.ts",
+      "sha256": "624f9b48dcbaba9b96d48b2110499f54df0b5eb9a9cf8d24e288d3fab55eac4d"
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/order-prince-voting.test.ts",
+      "sha256": "d1ec6999b76d4573ecc292432b7ae02a065e7af9ffbbb9a37bc73ea55b8906c7"
+    },
+    {
+      "path": "backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+      "sha256": "f7fa1f768bb097cc3b8e82ae161e7b9e7add0f8266a080d8eefd9530d231570b"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+      "sha256": "763dac6774e231a8d4d4f943d5b12e8c7a58c4ecd54b635a65e91d886b6c3be8"
+    },
+    {
+      "path": "backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+      "sha256": "df45697e35bff3c3add21f7ec12ee571d38bc0ba6a00164b355b473aa68f26ea"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/ports.ts",
+      "sha256": "2a784b5a3d22c031557fe2b52f54cc8e15885cdb8fb7e7e8a37c7d9ddfda225b"
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/state-slot.test.ts",
+      "sha256": "47b0061a13953d2c339089a490e1d6fcb59c5bf1d58ff0fcb362ad09d9bb05eb"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "sha256": "9d176c284d2da70422be8648a12db7ef4fefa064f535f855bed062e81ab6886e",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/order-prince-state-slot-scope-final.json",
+    "sha256": "6676ca90972f225208ba1799a150e4ca09535405f9f967c3321ee08f40d729e4"
+  },
+  "document": {
+    "path": "docs/refactor/order-prince-state-slot.md",
+    "sha256": "5f8492f8a20bba280686422718b9b9918be9a933814731630d10543d13cac4bc"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-before.json",
+      "sha256": "4ddd36ce421cec2d3492357a4a41285ae225a64d2ae92eeb3e64f5793e695e00"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-edits-first.json",
+      "sha256": "3a9137b0dff8bca5774e3d85389e261d677ab417e46b89a45e4c765d0b07607f"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-edits-second.json",
+      "sha256": "9568db9b83e3b3cad2e844839a179ff09eb857ab4914cd11f79465ba4a27553c"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-edits-third.json",
+      "sha256": "03f1ed51063c70ad1bd28fca834ff2db216048b368d6d0cc98f10adbd9b8189b"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-edits.json",
+      "sha256": "274646080a6e9f42160b552aff1acb38c9f4aff1aa835490b85f95f49d1d60a2"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-heads.json",
+      "sha256": "e5d47d05e5f0b77c6cc0bb4d94b398dcd2432990d04b64ef86bf3f2cda29416d"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-heads.log",
+      "sha256": "34e896590c18448068f6461a76785d1bd5b3f520acf9c5b538ff297c51cd385d"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-heads.ts",
+      "sha256": "cf2aca4ef823a27bab165104c8b906cd2d138ddabab65b85339723f66c19d4b1"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-new-test-before-final-fix.json",
+      "sha256": "113378ddc695221cc346256c82408464426f93dea50d4c7ac73f1a26ead06795"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-new-test-before-fixture-fix.json",
+      "sha256": "6d706616eb7a4ff4365704c5fb611e115414834566310ee180d78c6b8571d0b6"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-new-tests-final.log",
+      "sha256": "c814ba5b551bcfba0439d21fe1f1b02756e2d611c5c7f1c2024adb594f7325d2"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-new-tests-first.log",
+      "sha256": "32561db027e389ef083bc7bfaee3e85c1bb8536f5c01d90e9d4c10574d60dc41"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-new-tests-second.log",
+      "sha256": "b693297fe7c89aaa5dc4583153a5a004134fcecd33a825e2d7f8529f8f2755a5"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-original-test.log",
+      "sha256": "1863611f399219cb91a7865c53f9013d4d22dd56f9798665dce1d466698c435f"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-proof-first.cjs",
+      "sha256": "5575c4980d6f4e53301c0e7ac48f12586167ecd059b40d9fff531155940eb0fa"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-proof-first.log",
+      "sha256": "731fcdb36637fbf7c1b38d9a8557197ce58a6df3c75dd6039d6c8c33a2c170c3"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-proof-second.log",
+      "sha256": "1b1b983533c6d110562f4174d57ac63fb1df8b73e25d4fd7c8c3891db88c8de2"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-proof-third.log",
+      "sha256": "1b1b983533c6d110562f4174d57ac63fb1df8b73e25d4fd7c8c3891db88c8de2"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-proof.cjs",
+      "sha256": "5575c4980d6f4e53301c0e7ac48f12586167ecd059b40d9fff531155940eb0fa"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-proof.json",
+      "sha256": "8e9a11f6b6164117381cfa88b3e4274ced0656da7360bf79f2edaca258064f50"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-proof.log",
+      "sha256": "9d83923e5fa4e53cfafaf3d56b35ec07637d61c4190c86a5262271aa96982cef"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-receipts.json",
+      "sha256": "919d4a1cbdbb78580ce5aad4fd07c64990738eef6c0526d7e81a7d00c37ddea2"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-scope-final.json",
+      "sha256": "6676ca90972f225208ba1799a150e4ca09535405f9f967c3321ee08f40d729e4"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-types-config.json",
+      "sha256": "97976538f415272924674968ac473c948d680117b9c38b621efe6306584baf55"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-types-final-unconfirmed.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-types-final-unit-config.json",
+      "sha256": "904be628176877258910c4a4e103631c477aa3a3a10b3193cda3ee7af020872f"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-types-final-unit.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-types-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-types-unit-first.log",
+      "sha256": "d1901a3b3b9a24486141952731efc1825496345902dc482cbec3a5dfcf1a44c5"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-state-slot-types.log",
+      "sha256": "84df94509a59a7777a20c77f29db5a14c24068c2561145e137e4d39c78bb9d90"
+    }
+  ],
+  "cohort": "Order＋Scholar/Mentor状态槽原子功能提交；Observer三route由Root整合去重",
+  "summary": {
+    "present": 11,
+    "deleted": 1,
+    "actualGitBefore": 9,
+    "controls": 3,
+    "exactEdits": 21,
+    "originalFunctions": 8,
+    "movedDataPrograms": 4,
+    "wholePrograms": 9,
+    "mappedOutputs": 18,
+    "successfulDistinctCases": 4,
+    "successfulUniqueAssertions": 39,
+    "finiteFinalRoots": 11,
+    "headRoots": 11
+  },
+  "limits": [
+    "Observer含Root/Scholar两route及Root/Order一路；两族作为实际可编译共同原子提交，未半态bridge。",
+    "原库存/privateState仍唯一，Authority持原体/身份/生命/pending及绑定state/expected，数据表不授许可。",
+    "原schema/get/project/next接受、可写与同ref完整保持；新方法表/调用层/旧物理API退休不称任意反射兼容。",
+    "三工具首红、两newfixture首红/本人type两红及三个foreign并行诊断、未知handle均原样保存，不冒first全绿。",
+    "未全gate/model/整局；sourceHash新构建变化、历史指纹不改。"
+  ]
+}

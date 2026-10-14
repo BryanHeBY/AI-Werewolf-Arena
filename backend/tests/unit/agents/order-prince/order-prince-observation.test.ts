@@ -16,7 +16,7 @@ import {
   openOrderPrinceChoice,
   commitOrderPrinceChoice,
 } from "../../../../src/game/mechanisms/roles/order_prince/authority";
-import { getOrderPrinceState } from "../../../../src/game/mechanisms/roles/order_prince/state";
+import { getOrderPrinceState } from "../../../../src/game/mechanisms/roles/order_prince/ports";
 for (const locale of ["zh-CN", "en"] as const)
   test("Order Prince private observation is frozen and detached/" + locale, async () => {
     const config = structuredClone(orderPrinceTwelveConfig),

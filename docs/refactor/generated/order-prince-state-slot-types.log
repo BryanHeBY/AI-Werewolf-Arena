@@ -1,0 +1,9 @@
+backend/src/game/mechanisms/roles/scholar_mentor/state-slot.ts(162,18): error TS2339: Property 'scholarMentor' does not exist on type 'object'.
+backend/src/game/observation/player-observation-projector.ts(26,35): error TS2307: Cannot find module '../mechanisms/roles/scholar_mentor/state' or its corresponding type declarations.
+backend/src/game/observation/player-observation-projector.ts(27,10): error TS2305: Module '"../mechanisms/roles/scholar_mentor/night_frame"' has no exported member 'scholarMentorStateForRole'.
+backend/tests/unit/features/order-prince/state-slot.test.ts(45,27): error TS2339: Property 'orderPrince' does not exist on type 'object'.
+backend/tests/unit/features/order-prince/state-slot.test.ts(84,31): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(expected: OrderPrinceState | undefined): void', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'OrderPrinceState | undefined'.
+  Overload 2 of 2, '(expected: NoInfer<OrderPrinceState | undefined>): void', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'OrderPrinceState | undefined'.

@@ -726,3 +726,5 @@
 - R01/C45 猎魔原生药印记公开查询：五源现有ports直接公开同一Requests guard，经理/夜readability/原presentation单元三外部caller改public；原可信五方法表与24行guard仍同Requests原捕获位置。真实751604五Git/12精准全文forward/三控制源与Root/独立完整语义和有效中文审批准，13附件末绑；不新建module/init/重复capture/状态owner或退休真正实现出口，不把该收口冒C17状态槽迁移。原恶意mark精准1/5、五根有限types72ecc7/0与头0首过，Requests1581非commenttoken与十完整逆路由输出同，无重复绿/全gate/model。中文说明含请求结构、最早期限、捕获点与拒绝首序，原snapshot无需Poison存在、deadline相等接受面保持；全主线继续，见 demon-native-marks-port.md。
 
 - I04身份查验共享贡献公开边界：18源，两个具名facet分别提供原配置／工具／三个夜阶段与纯政策显示，四profile和九旧测试只更新真实路由，原六算法／状态owner字节不变。16原Git全程序精确forward、33779节点／32映射输出及38实际binding保留，三unused renderer确在原emit擦除；有限18root类型与中文职责检查、Catalog精准1/14首次绿，四profile前后冷导入各一次仅证明模块求值，不冒全固定树或玩法覆盖。Root完整源码／实际Git／当前SHA及独立Preflight三维终审批准；资源、租约、付款与阶段优先级仍原owner。未重复全门禁／模型，全I04／中文注释覆盖／P9继续；见 role-inspection-contribution-ports.md。
+
+- C17 定序王子与学者／导师状态所有权联合收口：24现行源／测试及两旧state删除，两组实际数据、原引用绑定与写入／JSON前缀归各自槽，学者完整有限板碰撞另归同族纯规则；Authority／frame继续持生命、pending与原阶段窗口。共享Observer三实际route整forward同，按文件去重原子提交，无临时桥。Root及非作者对规则资源、架构原体、失败证据和有效中文说明独立审批准，实核20不同Git before、7控制与64附件；七新风险加两旧精准例分批通过，原红和丢失终态句柄保真实，有限类型／职责头闭合，不重已有绿或全门禁。本批不冒完整C17／全中文／P9完成，见 order-scholar-state-slots.md。

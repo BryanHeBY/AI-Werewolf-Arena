@@ -1,19 +1,19 @@
 /**
- * Owns Scholar/Mentor state normalization, detached choice data and finite resolution.
- * Inputs are original data structures, roster and choices; outputs preserve writable copied
- * states and literal effect summaries. This boundary never stores a World or grants a lease;
- * the night-frame owner validates live references and commits actual resources.
+ * 负责白昼学者／寂夜导师原状态 schema、脱离复制／选择以及 live 槽的库存、历史和内容快照。
+ * 输入为原 caster／角色数据、初始化左值查询和通过 frame 原许可复验的 next；输出保原形状、引用与写入前缀。
+ * 不变量：raw、remaining、history 三层原引用和脱离 JSON 内容分别核验；同内容替换不能续权。
+ * 真实写入口只有初始化与已校验选择提交；副本、JSON 指纹和只读数据不是角色／生命／阶段或行动许可。
+ * frame 仍拥有 roster、原生命、夜 pending／selections、加成与提交／关闭；有限板碰撞另归同族 rules。
  */
 import type {
   ModifierCaster,
   ModifierMode,
   ModifierChoice,
   ModifierState,
-  ModifierPlayer,
-  CommittedModifier,
-  ModifierResolution,
   ModifierReadState,
 } from "@ai-werewolf-arena/game-contract";
+import { Camp } from "@ai-werewolf-arena/game-contract";
+import type { RoleComponent } from "../../../../core/domain/components/role";
 import { types } from "node:util";
 
 export const SCHOLAR_MENTOR_POLICY = "awa_scholar_mentor_twelve_v1" as const;
@@ -69,6 +69,7 @@ export function readModifierState(value: unknown): ModifierState | undefined {
     return undefined;
   const items = arrayItems(value.history);
   if (!items) return undefined;
+  // 由逐条历史重算两种一次库存；只接受原严格数据形状，返回可写脱离副本。
   let last = 1,
     enhance = 1,
     weaken = 1;
@@ -106,7 +107,7 @@ export function readModifierState(value: unknown): ModifierState | undefined {
     history,
   };
 }
-/** Pure selection: no effect or collision is revealed to the caster. */
+/** 脱离选择只校验与扣减返回副本；不向施法者披露实际效果／碰撞，也不提交 live 库存。 */
 export function selectModifier(
   state: ModifierReadState,
   day: number,
@@ -141,86 +142,78 @@ export function selectModifier(
   next.history.push({ day, mode, targetId });
   return next;
 }
-/** Finite-board resolution. Immune caster targets are filtered before collision. */
-export function resolveModifiers(
-  players: readonly ModifierPlayer[],
-  selections: readonly CommittedModifier[],
-): ModifierResolution {
-  const roster = new Map(players.map((player) => [player.id, player]));
+
+export function modifierOwnData(value: unknown, key: PropertyKey): unknown {
+  if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
+  const d = Object.getOwnPropertyDescriptor(value, key);
+  return d && "value" in d ? d.value : undefined;
+}
+
+export function modifierStateIdentity(raw: unknown): string {
+  const value = readModifierState(raw);
+  if (!value) throw new Error("scholar_mentor_original_state_revoked");
+  return JSON.stringify(value);
+}
+/** 原 LHS 在 caster 和工厂之前读取；parse 配置仍在调用方先完成，不提前缓存 privateState。 */
+export function initializeScholarMentorState(
+  privateState: () => RoleComponent["privateState"],
+  caster: () => ModifierCaster,
+): void {
+  (privateState() as { scholarMentor?: ModifierState }).scholarMentor = createModifierState(caster());
+}
+
+/** raw、资源与历史的原引用不是脱离副本；expected 仅保存原 JSON 内容证据，不代表授权或 JSON schema。 */
+export class ScholarMentorStateSlot {
+  state: ModifierReadState;
+  remaining: ModifierReadState["remaining"];
+  history: ModifierReadState["history"];
+  expected: string;
+
+  constructor(state: ModifierReadState) {
+    this.state = state;
+    this.remaining = state.remaining;
+    this.history = state.history;
+    this.expected = modifierStateIdentity(state);
+  }
+
+  /** frame 先在原时点取 raw；逐层引用失败就短路，之后才读取／复制原 schema 并比 JSON。 */
+  matches(raw: unknown): boolean {
+    return (
+      raw === this.state &&
+      modifierOwnData(this.state, "remaining") === this.remaining &&
+      modifierOwnData(this.state, "history") === this.history &&
+      modifierStateIdentity(this.state) === this.expected
+    );
+  }
+
+  /** next 已完成原选择验证；先两项库存赋值，再查 defineProperty、历史两读／length／最后条目，再更新 expected。
+   * 任一步抛错保已写前缀，不补回库存；frame 在此成功之后才删除 pending 并追加 selection。
+   */
+  commit(next: ModifierState): void {
+    (this.remaining as Pick<ModifierState["remaining"], "enhance">).enhance = next.remaining.enhance;
+    (this.remaining as Pick<ModifierState["remaining"], "weaken">).weaken = next.remaining.weaken;
+    Object.defineProperty(this.history, String(this.history.length), {
+      value: next.history.at(-1)!,
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    });
+    this.expected = modifierStateIdentity(this.state);
+  }
+}
+
+/** 只检查原角色／阵营和数据形状，返回原 raw 只读视图；不读取 board 或授予 modify_skill 权限。 */
+export function scholarMentorStateForRole(
+  role: RoleComponent | undefined,
+): ModifierReadState | undefined {
+  const name = modifierOwnData(role, "role"),
+    camp = modifierOwnData(role, "camp");
   if (
-    roster.size !== players.length ||
-    players.some((p) => !Number.isSafeInteger(p.id) || p.id < 1)
+    (name !== "day_scholar" && name !== "night_mentor") ||
+    camp !== (name === "day_scholar" ? Camp.Good : Camp.Wolf)
   )
-    throw new Error("modifier_roster_invalid");
-  const deck: Record<string, { count: number; camp: "good" | "wolf" }> = {
-    wolf: { count: 3, camp: "wolf" },
-    night_mentor: { count: 1, camp: "wolf" },
-    villager: { count: 4, camp: "good" },
-    day_scholar: { count: 1, camp: "good" },
-    seer: { count: 1, camp: "good" },
-    guard: { count: 1, camp: "good" },
-    witch: { count: 1, camp: "good" },
-  };
-  if (
-    players.length !== 12 ||
-    players.some((p) => !Object.hasOwn(deck, p.role) || deck[p.role]!.camp !== p.camp) ||
-    Object.entries(deck).some(
-      ([role, spec]) => players.filter((p) => p.role === role).length !== spec.count,
-    )
-  )
-    throw new Error("modifier_roster_invalid");
-  const actors = new Set<number>(),
-    casters = new Set<ModifierCaster>();
-  const effective: CommittedModifier[] = [];
-  for (const selection of selections) {
-    const actor = roster.get(selection.actorId),
-      target = roster.get(selection.targetId);
-    if (
-      !actor?.alive ||
-      !target?.alive ||
-      actor.role !== selection.caster ||
-      (selection.caster !== "day_scholar" && selection.caster !== "night_mentor") ||
-      actor.camp !== (selection.caster === "day_scholar" ? "good" : "wolf") ||
-      (selection.mode !== "enhance" && selection.mode !== "weaken") ||
-      actors.has(actor.id) ||
-      casters.has(selection.caster)
-    )
-      throw new Error("modifier_selection_invalid");
-    actors.add(actor.id);
-    casters.add(selection.caster);
-    if (target.role !== "day_scholar" && target.role !== "night_mentor")
-      effective.push({ ...selection });
-  }
-  const out: ModifierResolution = {
-    pendingDeaths: [],
-    conflict: null,
-    goodEffects: [],
-    bonusKnifeActorId: null,
-    blockWolfKnife: false,
-  };
-  if (effective.length === 2) {
-    const [a, b] = effective as [CommittedModifier, CommittedModifier];
-    const first = roster.get(a.targetId)!,
-      second = roster.get(b.targetId)!;
-    if (first.camp === "good" && first.id === second.id) {
-      out.pendingDeaths = [first.id];
-      out.conflict = "same_good";
-      return out;
-    }
-    if (first.camp === "wolf" && second.camp === "wolf") {
-      out.pendingDeaths = [effective.find((s) => s.caster === "night_mentor")!.actorId];
-      out.conflict = "both_wolves";
-      return out;
-    }
-  }
-  for (const selection of effective) {
-    const target = roster.get(selection.targetId)!;
-    if (target.camp === "wolf") {
-      if (selection.mode === "weaken") out.blockWolfKnife = true;
-      else out.bonusKnifeActorId = target.id;
-    } else if (target.role === "seer" || target.role === "guard" || target.role === "witch") {
-      out.goodEffects.push({ targetId: target.id, role: target.role, mode: selection.mode });
-    }
-  }
-  return out;
+    return undefined;
+  const raw = modifierOwnData(modifierOwnData(role, "privateState"), "scholarMentor"),
+    value = readModifierState(raw);
+  return value?.caster === name ? (raw as ModifierReadState) : undefined;
 }

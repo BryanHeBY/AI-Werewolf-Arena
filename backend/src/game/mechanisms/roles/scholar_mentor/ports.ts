@@ -1,17 +1,14 @@
 /**
- * Exposes Scholar/Mentor's eligibility query and concrete cleanup-transfer ports.
- * Query inputs are actor ID, night day and guard/check kind; output retains the
- * original settled modifier predicate, readable-board/roster assertions and
- * errors. Binding captures no state
- * snapshot and grants no World access, poison/knife commit or resource writer.
- * Lifecycle inputs are original World/day reads; its unit only transfers cleanup
- * at the original late point. Manager close and repeated abort keep their timing,
- * while frame authority owns grant completion, aborted fate and roster failures.
- * Named native-target recording keeps its original paid fact write; the eligibility query remains a distinct readonly interface with no commit method.
+ * 负责公开白昼学者／寂夜导师原只读资格、状态视图、原生目标记录与具体清理移交端口。
+ * 输入为原 Role 数据或 World／actor／day／种类；输出保原数据引用、已结算修饰断言及错误，不缓存快照。
+ * 不变量：状态读取／脱离复制不是库存、modify_skill 许可或来源证明；初始化／槽提交不经本公开读入口。
+ * 原生目标记录仍在原已付事实时点；资格查询没有 commit。生命周期仅在原晚点移交清理，manager 传当次参数。
+ * frame 拥有原体／生命、加成完成、abort 与 roster 失败；本入口不额外付款、开夜或写第二份记录。
  */
 import type { EntityId } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import { scholarMentorBlocks } from "./night_frame";
+export { readModifierState, scholarMentorStateForRole } from "./state-slot";
 export { ScholarMentorNightUnit, scholarMentorNightTerminal } from "./night-lifecycle";
 export type { ScholarMentorNightRuntime } from "./night-lifecycle";
 export { isScholarMentorBoard, assertScholarMentorRosterCurrent } from "./night_frame";

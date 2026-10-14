@@ -1,9 +1,8 @@
 /**
- * 负责定序王子的原身份／生命绑定与待答选择，拥有唯一 orderPrince 槽和 pending 的写权。
- * 输入为 World、原参与者与日次／activate，输出为当前性查询或已提交选择证据。
- * 不变量：只有匹配 pending 且原体／生命未撤权的选择可提交；关闭仅清 pending。
- * 写入依原槽、绑定引用、JSON 证据、pending 的顺序，失败保留已发生前缀，不缓存新容器
- * 或把公共状态数据当成许可。初始安装和纯数据投影不替代提交前复验。
+ * 负责定序王子的原身份／生命绑定、pending和提交授权。输入为原World、参与者、日次／activate，
+ * 输出为原当前性查询及已提交选择；只有匹配pending且原体／生命未撤权才可提交，关闭仅清pending。
+ * 数据槽执行原初始化／replacement及编码，本权威仍拥有绑定引用、expected和pending更新。
+ * 顺序保持原槽→b.state→JSON→expected→pending；写后失败不回滚前缀，不提前缓存容器或把知识当许可。
  */
 import type { OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { types } from "node:util";
@@ -18,10 +17,10 @@ import {
 } from "../../../../core/domain/night_effects";
 import {
   getOrderPrinceState,
-  projectOrderPrinceState,
+  ORDER_PRINCE_STATE_SLOT,
   nextOrderPrinceChoice,
   ORDER_PRINCE_ROLE,
-} from "./state";
+} from "./state-slot";
 
 interface Authority {
   actorId: number;
@@ -58,7 +57,7 @@ function requireAuthority(world: World): Authority {
     world.getComponent(b.actorId, COMPONENT.Role) !== b.role ||
     own(b.role, "privateState") !== b.privateState ||
     getOrderPrinceState(b.role) !== b.state ||
-    JSON.stringify(projectOrderPrinceState(b.role)) !== b.expected ||
+    ORDER_PRINCE_STATE_SLOT.checkpoint.projection(() => b.role) !== b.expected ||
     world.getComponent(b.actorId, COMPONENT.Identity) !== b.identity ||
     identityValue(b.identity) !== b.identityValue
   )
@@ -97,7 +96,7 @@ export function installOrderPrinceBoard(world: World): void {
     role,
     privateState: role.privateState,
     state,
-    expected: JSON.stringify(projectOrderPrinceState(role)),
+    expected: ORDER_PRINCE_STATE_SLOT.checkpoint.projection(() => role),
     identity,
     identityValue: identityValue(identity),
     life,
@@ -137,9 +136,9 @@ export function commitOrderPrinceChoice(
   const next = nextOrderPrinceChoice(b.role, day, activate);
   if (!next) throw new Error("order_prince_choice_invalid");
   // 顺序不能合成事务：原槽先替换，随后更新绑定／证据并关闭 pending；失败不回滚已写前缀。
-  (b.privateState as { orderPrince: OrderPrinceState }).orderPrince = next;
+  ORDER_PRINCE_STATE_SLOT.allowedWrites.replace(() => b.privateState, next);
   b.state = next;
-  b.expected = JSON.stringify(next);
+  b.expected = ORDER_PRINCE_STATE_SLOT.checkpoint.next(next);
   b.pendingDay = null;
 }
 export function closeOrderPrinceChoice(world: World): void {

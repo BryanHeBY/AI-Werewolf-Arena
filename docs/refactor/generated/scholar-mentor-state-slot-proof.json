@@ -1,0 +1,505 @@
+{
+  "approved": true,
+  "baseCommit": "c3dc932647f67499b430253f5c77d2fb9cb363f1",
+  "movedFunctions": [
+    {
+      "label": "original state function object",
+      "typedNodes": 41,
+      "nonJSDocLeaves": 45,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "24ded0055d7671e9a42716d1da0ef5fde741c6167271ddf777d85a7ecda0c6e7"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "24ded0055d7671e9a42716d1da0ef5fde741c6167271ddf777d85a7ecda0c6e7"
+        }
+      ]
+    },
+    {
+      "label": "original state function keys",
+      "typedNodes": 64,
+      "nonJSDocLeaves": 73,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "0f2adca90a21e7c2091df892dbeeffac2bdae9e989780515c251b1118759241e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "0f2adca90a21e7c2091df892dbeeffac2bdae9e989780515c251b1118759241e"
+        }
+      ]
+    },
+    {
+      "label": "original state function arrayItems",
+      "typedNodes": 139,
+      "nonJSDocLeaves": 162,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "1fb97b94b21a00e4ca6e70e947fe43e049bcd829c662a46c92b8c00893c73f8b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "1fb97b94b21a00e4ca6e70e947fe43e049bcd829c662a46c92b8c00893c73f8b"
+        }
+      ]
+    },
+    {
+      "label": "original state function createModifierState",
+      "typedNodes": 46,
+      "nonJSDocLeaves": 58,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "389509746e4a0acd19da86acee16714172841c4328313a312e0ed1d5bf68f36d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "28f0edf9610b01e72acdaa98f8e355b46f15df7322b7975706db6a1ab5aa8409"
+        }
+      ]
+    },
+    {
+      "label": "original state function readModifierState",
+      "typedNodes": 352,
+      "nonJSDocLeaves": 376,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "5bfc1c036776a95676d36b55bbaee4a9bbd712078a1bc1af6b44e369baadfa4d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "18efad74ac866d4bf458f0d64da44a2c18bfb5fe1725f1a609d63ee06fc0dca9"
+        }
+      ]
+    },
+    {
+      "label": "original state function selectModifier",
+      "typedNodes": 196,
+      "nonJSDocLeaves": 208,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "e2fc51d77d1924adb13e1b778e93464b2392349b389e47296cceee8dd29ddec6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "701ece50ec8c656f6ec21bf9a407df05b6be38b932c8d46f5832d152b316a510"
+        }
+      ]
+    },
+    {
+      "label": "original state function resolveModifiers",
+      "typedNodes": 679,
+      "nonJSDocLeaves": 760,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "c52b99c05bfda48ab25700c89ca66e67a8bac2efbed051183a28c0a5701378e6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "b6078eabadb7060fa1ba0759d7ddc10dc76c340739669bab85ff33616ddbd542"
+        }
+      ]
+    },
+    {
+      "label": "moved frame primitive ownData",
+      "typedNodes": 57,
+      "nonJSDocLeaves": 61,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "e316759fe1c15a67e9b86d391d385aa75b39999267d01165b2807356d46941aa"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "e316759fe1c15a67e9b86d391d385aa75b39999267d01165b2807356d46941aa"
+        }
+      ]
+    },
+    {
+      "label": "moved frame primitive stateIdentity",
+      "typedNodes": 29,
+      "nonJSDocLeaves": 40,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "ebb35db7559a9651c2477eb76965b42dc8a48f9fd675a717dc20eeae139d49d5"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "ebb35db7559a9651c2477eb76965b42dc8a48f9fd675a717dc20eeae139d49d5"
+        }
+      ]
+    },
+    {
+      "label": "moved frame primitive scholarMentorStateForRole",
+      "typedNodes": 96,
+      "nonJSDocLeaves": 105,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "3a90f99a0c3209fb848c8a98493fd91b8222951b82ab6022c79441abf096eb02"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "93df10f5a3808301c5d23b9cac55ab905f5a9bfc3c6622fd1b8f45d986c4e902"
+        }
+      ]
+    }
+  ],
+  "wholeOriginalState": {
+    "label": "entire old state nonimport program assembled from actual owners",
+    "typedNodes": 1514,
+    "nonJSDocLeaves": 1684,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeMappedRawSame": true,
+        "sha256": "36830947f0098c63d7266aea5e19019cbf999514948555bfe73326f699730f52"
+      },
+      {
+        "module": "CommonJS",
+        "wholeMappedRawSame": true,
+        "sha256": "1a10d0bc5727907a09c187d0278e58c11bdcfb8e6d48789d7cef5d20bb7413d9"
+      }
+    ]
+  },
+  "constructorFields": [
+    {
+      "field": "state",
+      "rhs": "original"
+    },
+    {
+      "field": "remaining",
+      "rhs": "original.remaining"
+    },
+    {
+      "field": "history",
+      "rhs": "original.history"
+    },
+    {
+      "field": "expected",
+      "rhs": "stateIdentity(original)"
+    }
+  ],
+  "actualPrimitiveProofs": {
+    "commit": {
+      "label": "commit writes",
+      "typedNodes": 98,
+      "nonJSDocLeaves": 108,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "6ba7246a897f94112959527a635ba4b092c1e29ab4046fb54ccd9a54a558d02b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "6ba7246a897f94112959527a635ba4b092c1e29ab4046fb54ccd9a54a558d02b"
+        }
+      ]
+    },
+    "matches": {
+      "label": "binding matches",
+      "typedNodes": 63,
+      "nonJSDocLeaves": 64,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "f5d4de1e9edd020b474dba00242c06d2addb2d2476ba19d9920837fe5cd45b3b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "f5d4de1e9edd020b474dba00242c06d2addb2d2476ba19d9920837fe5cd45b3b"
+        }
+      ]
+    }
+  },
+  "consumers": [
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/profile.ts",
+      "sha256": "8e2867894553a7c2c80f1a0a18e71944bd6d9ed32b76bd01bfc28be317f47ed6",
+      "label": "whole consumer backend/src/game/mechanisms/roles/scholar_mentor/profile.ts",
+      "typedNodes": 1101,
+      "nonJSDocLeaves": 1290,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "82a7f8d73ca14884bd125fc7d645804b3b81bcfcca57850cbd8780e0b351fb26"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "16637353906fea3a7495c2462f4014b7761710eb6adcbc94b7e6194a3ec49857"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "sha256": "752eb83b178128b83b1afea7e031a460a0ec9df666c371cf2b7c4ab36eee51ac",
+      "label": "whole consumer backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "typedNodes": 4212,
+      "nonJSDocLeaves": 4851,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "822480c411c40615087ceaf8996a640f87d6a82d374bafd193fda0fcccfb69bd"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "1c0e9283b4d391bb81edcc646b0d02577381de76c02328f4b333caa10a11932a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "09db39cde7376cab7e414d94060fb0524f866bf260c9e54b2ef76bdbf20e34be",
+      "label": "whole consumer backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "typedNodes": 1258,
+      "nonJSDocLeaves": 1539,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "bbdfe5b27c9d4be20ad5b4dd3c50bc4c65f6d75824fa19290b70f50cbcb1f1a7"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "fe483bf89b7575caafdafb57061b711e337bb2a0d4c4a1407861d03055ed1563"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+      "sha256": "82725e8174f1b37ef2a990208b91ef0b980f2084e8f0257cd9d6ab059c4a3840",
+      "label": "whole consumer backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+      "typedNodes": 114,
+      "nonJSDocLeaves": 145,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "a986b027a79a0f380d6c550c469087be12838f2da0ab67562b326cb8b4bc02ea"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "d4f88f554bdad7d6ac4885f203ab6ba51ffe38b846ac724b1c1acba4c36afbb3"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/state.test.ts",
+      "sha256": "1e4c43ff5f47664497ee869f8c89c19ddb820a6fe84751305c0cc7a54eae7712",
+      "label": "whole consumer backend/tests/unit/features/scholar-mentor/state.test.ts",
+      "typedNodes": 1468,
+      "nonJSDocLeaves": 2024,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "acfdacd5dac4540b054cba4535e327a0ce798a01b5897e3e93e9e940c2f05c9e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "dcc831527818be2b519b4a4dd233ad74dc9154ad6faaa06d6f0913c3cdec0fd3"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/frame.test.ts",
+      "sha256": "e76c76a0096137324eec09f702323825cb5d14946ab1b9850992c6c702cc94e1",
+      "label": "whole consumer backend/tests/unit/features/scholar-mentor/frame.test.ts",
+      "typedNodes": 2711,
+      "nonJSDocLeaves": 3611,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "26b86b23ba4ff146dc98e9da467f70021c8356ed8d2fd80babd9ae586563c491"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "2fa31ca137cd2dc03bb70d1d8f43d7bd89dad8ded8b44b49ecdfb33f987b7eb3"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+      "sha256": "0092ba990883e18249bd741a4a6abf9f6df006e6c3a009778e45549ea3ec8ee8",
+      "label": "whole consumer backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+      "typedNodes": 417,
+      "nonJSDocLeaves": 495,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "7cef283961742a08e72a2f25431df8e0c5eb7bdd468b4aacc92edc77e4dad58f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "22090eea3c251141cab1a224cb757ee83b01dc2834798c76911929a945f602b2"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+      "sha256": "4f2541a3760468f0682cecf0e83992b0cbdf7318c61f9f50f7545cc3c73904c1",
+      "label": "whole consumer backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+      "typedNodes": 1447,
+      "nonJSDocLeaves": 1674,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "3c0c0c2103c26ed31a3ed36bf4ccd359660c15d1b3f912bb18e926455470392b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "bee392b25a92b7adb74db4e27cdfc500497d9c5786775e7eab326482716c55bb"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+      "sha256": "3cdaf6fddc00263fc0e82f3dfebe19e4835a297134fd2f37314aa34727bde55a",
+      "label": "whole consumer backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+      "typedNodes": 835,
+      "nonJSDocLeaves": 1010,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "d120c1f626d7393b3409e639ae9026986730e0417fc8f3602f44f8084066f3b5"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "87fabdf9daa5e94d845e1ff9bc59cd3252755aae07ab885e9a9d1054c39798cf"
+        }
+      ]
+    }
+  ],
+  "shared": [
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "f32d8e005d4141f5ab8be5b2b760eb1350763ce9f806b520a84154163779e8a3",
+      "routes": 2,
+      "label": "shared precise route-only backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "typedNodes": 973,
+      "nonJSDocLeaves": 1194,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "34d0433b85159e544a9d23b1f599c0bb9f85dae74b5d8570afdaae49468d41ba"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "d0462a1434ba11c16d802f506dff07eacbf1965b706d1c709e268c628afa9493"
+        }
+      ],
+      "otherCohortRoutes": 0
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "91815679ed637014dd23e954eea62eddc826cd3aad37fb2327e1949ade1e77bd",
+      "routes": 3,
+      "label": "shared precise route-only backend/src/game/observation/player-observation-projector.ts",
+      "typedNodes": 2494,
+      "nonJSDocLeaves": 2905,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "sha256": "2bef77226452206b44ab626b93921441432fb4e4e376b172e90005e18f8878f5"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "sha256": "24e5e2c2504f0a22878e5a4351393e403293bc969e416f62ea08fa535414f89d"
+        }
+      ],
+      "otherCohortRoutes": 1
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-records.ts",
+      "sha256": "b8115cb12be31a85f246365bd92edab94c43a99815388c9c0c5b7ed230bbb503",
+      "wholeCurrentAndGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night-lifecycle.ts",
+      "sha256": "6f1f3f2155d2e8187e6d87c40ded13e16f38cc454a480400dd57edc61b753940",
+      "wholeCurrentAndGitSame": true
+    },
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+      "wholeCurrentAndGitSame": true
+    },
+    {
+      "path": "backend/src/core/domain/components/alive.ts",
+      "sha256": "c6b681bded926aec1568887887baaff9fff7903a1fd8eba94e0c30f4a246e0a4",
+      "wholeCurrentAndGitSame": true
+    }
+  ],
+  "summary": {
+    "originalFamilySources": 10,
+    "newOwners": 2,
+    "newUnit": 1,
+    "sharedConsumers": 2,
+    "sourcePaths": 15,
+    "presentSources": 14,
+    "deletedSources": 1,
+    "completeMovedFunctions": 10,
+    "wholeReconstructedConsumerPrograms": 11,
+    "wholeMappedConsumerOutputs": 22,
+    "wholeOriginalStateOutputs": 2,
+    "sharedOtherFamilyRoutes": 1
+  },
+  "limits": [
+    "原对象 binding 改新 class、field 初始化／prototype、方法／初始化调用栈和私有布局为明确差异；不证明任意 prototype monkeypatch／私有反射等价。",
+    "完整 inverse 用实际新方法／函数、字段与原表达式匹配再接回原调用；没有把原整个 frame/profile body 覆盖候选。",
+    "Observer 的第三 Order route 属同一次原子 cohort；同一冻结源码及当前传递闭包，不视为单族完整历史装载图。"
+  ]
+}
