@@ -1,0 +1,41 @@
+{
+  "base": "c41940ed1ef0401a6ad366b839252f20540f9b0a",
+  "files": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "bd96debccc2ba4d5c9fef674518094c6359d58e2c0bf681d11b4f2d6a45adb57"
+    },
+    {
+      "path": "backend/src/rulesets/rule-plan.ts",
+      "sha256": "5c72f81441a6bf2685922a5b62bc50eb5073447a131abccc22db1826971377f6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+      "sha256": "20a1ec4a3bb79358425d214d47b6dc7365899541fce4f4bbe9097b5b7dfab520"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "sha256": "237733f46a2b41b47236465380d4f215ced0869258d9ff6a61292c2e329c53fb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "sha256": "6aca872ccdd899bdb553b194e1994afeb72fc49de4d2ace3a22fd6a7f25fc7f3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "9f0f02502e19112a6861e249ef60e7e043688b693ff6fcfb06e3bb47af75c8f2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/ports.ts",
+      "sha256": "3fee0e7966433344b284fd843a7cf1520de502d82b14f9b83428208c9cd27d25"
+    },
+    {
+      "path": "backend/src/rulesets/cycle-admission.ts",
+      "sha256": "373addee0028c3b049664272c6055c44e151b2fb831fd75e6822882ef213138d"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/cycle-admission.test.ts",
+      "sha256": "8dbbbd724d367576583bd8bffd02009ce778cdbcd3b19852e9af4efce51c4289"
+    }
+  ]
+}

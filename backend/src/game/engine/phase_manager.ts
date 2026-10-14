@@ -3,7 +3,8 @@
  * 输入：World、只读配置、原 gateway/registry/RNG；输出：原阶段快照、事件和封盘结果。
  * 与流水线、开局上下文及记录入口共享同一 BoardParameters/RulePlan 引用；
  * 每夜仍创建独立生命周期 receiver，沿原 current 检查和重复 finally 消费同一已交接单位。
- * 计划中的具名 checkpoint 只提供原值，最终死亡链和判胜时点仍由本经理拥有。
+ * 计划中的具名 checkpoint 只提供原值；同步重入准入由同一计划组合，
+ * 周期登记、阶段时钟、最终死亡链、判胜及失败清理仍由本经理拥有。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
@@ -22,7 +23,6 @@ import {
   appendNobleContractClosure,
 } from "../mechanisms/roles/noble_secret_body/ports";
 import type { SecretBodySources } from "../mechanisms/roles/noble_secret_body/damage";
-import { hasRadiantNight } from "../mechanisms/roles/radiant_eclipse/night_frame";
 
 import { assertMistRosterCurrent } from "../mechanisms/roles/mist_raven/ports";
 import { MistPendingNight } from "../mechanisms/roles/mist_raven/pending_night";
@@ -39,7 +39,6 @@ import {
   committedDemonFaultBoundary,
   assertDemonOriginalRoster,
   assertDemonNightReadable,
-  hasDemonNightStarted,
 } from "../mechanisms/roles/demon_hunter/ports";
 import { demonWitchMarksSafe } from "../mechanisms/roles/demon_hunter/native_potion_requests";
 import { freezeDeliveredDemonNightSources } from "../mechanisms/roles/demon_hunter/native_potion_controller";
@@ -47,17 +46,13 @@ import { GhostBrideSetupWindow } from "../mechanisms/roles/ghost_bride/setup";
 import {
   weddingSetup,
   ghostBrideReady,
-  hasActiveGhostBride,
-  hasGhostBrideNightCommit,
   weddingAssignment,
   weddingKnifeCurrent,
 } from "../mechanisms/roles/ghost_bride/ports";
 import { LonelyGirlSetupWindow } from "../mechanisms/roles/lonely_girl/setup";
 import {
   lonelyGirlReady,
-  hasActiveLonelyGirl,
-  hasLonelyGirlNightCommit,
-} from "../mechanisms/roles/lonely_girl/lifecycle";
+} from "../mechanisms/roles/lonely_girl/ports";
 import {
   initialIdentityDeal,
   INITIAL_IDENTITY_POLICIES,
@@ -65,19 +60,13 @@ import {
 import { WildChildSetupWindow } from "../mechanisms/roles/wild_child/setup";
 import {
   wildChildReady,
-  hasActiveWildChild,
-  hasWildChildNightCommit,
-} from "../mechanisms/roles/wild_child/lifecycle";
+} from "../mechanisms/roles/wild_child/ports";
 import {
-  hasActiveInitialIdentitySetup,
-  hasActiveInitialIdentityNight,
-  hasInitialIdentityNightCommit,
   initialIdentitySetupReady,
   initialIdentityKind,
-} from "../mechanisms/roles/initial_identity/deal";
+} from "../mechanisms/roles/initial_identity/ports";
 import { InitialIdentitySetupWindow } from "../mechanisms/roles/initial_identity/setup";
 import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
-import { hasActiveWall } from "../mechanisms/events/wall_notes/authority";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
 import { validateVictoryDecision } from "../mechanisms/win_conditions/validated-victory";
@@ -324,20 +313,12 @@ export class PhaseManager {
       this.pureWhiteStartedDays.has(this.state.day)
     )
       throw new Error("mist_phase_reentry");
-    if (!this.state.gameOver && hasDemonNightStarted(this.world, this.state.day))
-      throw new Error("demon_hunter_phase_reentry");
-    if (
-      hasActiveGhostBride(this.world) ||
-      !ghostBrideReady(this.world) ||
-      (!this.state.gameOver && hasGhostBrideNightCommit(this.world, this.state.day))
-    )
-      throw new Error("ghost_bride_phase_reentry");
-    if (
-      hasActiveLonelyGirl(this.world) ||
-      !lonelyGirlReady(this.world) ||
-      (!this.state.gameOver && hasLonelyGirlNightCommit(this.world, this.state.day))
-    )
-      throw new Error("lonely_girl_phase_reentry");
+    // Mist 周期登记先行；其余机制通过后才推进原阶段时钟，拒绝不改变时钟。
+    const manager = this;
+    this.#rulePlan.phaseJumpAdmission({
+      get world() { return manager.world; },
+      get state() { return manager.state; },
+    });
     this.phaseRevision.advance();
     this.setPhase(phase);
   }
@@ -404,32 +385,12 @@ export class PhaseManager {
     maxDays: number = 20,
     lifecycle: NightManagerLifecycle,
   ): Promise<RuntimeSnapshot> {
-    if (!this.state.gameOver && hasRadiantNight(this.world, this.state.day))
-      throw new Error("radiant_night_reentry");
-    if (!this.state.gameOver && hasDemonNightStarted(this.world, this.state.day))
-      throw new Error("demon_hunter_cycle_reentry");
-    const wedding = weddingSetup(this.world);
-    if (
-      hasActiveGhostBride(this.world) ||
-      (wedding && wedding.status !== "pending" && !ghostBrideReady(this.world)) ||
-      (!this.state.gameOver && hasGhostBrideNightCommit(this.world, this.state.day))
-    )
-      throw new Error("ghost_bride_cycle_reentry");
-    if (
-      hasActiveLonelyGirl(this.world) ||
-      (!this.state.gameOver && hasLonelyGirlNightCommit(this.world, this.state.day))
-    )
-      throw new Error("lonely_girl_cycle_reentry");
-    if (
-      hasActiveWildChild(this.world) ||
-      (!this.state.gameOver && hasWildChildNightCommit(this.world, this.state.day))
-    )
-      throw new Error("wild_child_cycle_reentry");
-    if (hasActiveInitialIdentitySetup(this.world) || hasActiveInitialIdentityNight(this.world))
-      throw new Error(`${initialIdentityKind(this.world) ?? "thief"}_setup_reentry`);
-    if (!this.state.gameOver && hasInitialIdentityNightCommit(this.world, this.state.day))
-      throw new Error(`${initialIdentityKind(this.world) ?? "thief"}_cycle_reentry_after_night`);
-    if (hasActiveWall(this.world)) throw new Error("wall_window_reentry");
+    // 不收集状态快照：每个原谓词仍在原参数位置读取 World、gameOver 和日期。
+    const manager = this;
+    this.#rulePlan.cycleAdmission({
+      get world() { return manager.world; },
+      get state() { return manager.state; },
+    });
     if (this.state.gameOver) {
       return this.getSnapshot();
     }

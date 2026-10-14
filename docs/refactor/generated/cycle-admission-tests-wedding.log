@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts:
+(pass) setup failure blocks ordinary actions and cycle rescue [44.99ms]
+
+ 1 pass
+ 10 filtered out
+ 0 fail
+ 4 expect() calls
+Ran 1 test across 1 file. [165.00ms]

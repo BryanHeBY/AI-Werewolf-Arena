@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/scenarios/features/demon-hunter/native-pipeline-and-failure-handoffs.test.ts:
+(pass) actual recursive cycle and jump reject while the original hunt window is open [114.42ms]
+
+ 1 pass
+ 48 filtered out
+ 0 fail
+ 4 expect() calls
+Ran 1 test across 1 file. [232.00ms]

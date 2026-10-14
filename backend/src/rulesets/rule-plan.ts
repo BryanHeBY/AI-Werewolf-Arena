@@ -6,6 +6,7 @@
  * 注入或不透明来源保留原 collector 和惰性拉取；不缓存 execute 函数、角色资格、
  * 玩家、目标、库存或 World，不新增 World 全局表或归档字段。
  */
+import { assertCycleAdmission, assertPhaseJumpAdmission } from "./cycle-admission";
 import { refreshWolfKnifeInheritanceAtCheckpoint } from "./wolf-knife-inheritance-plan";
 import type { BoardParameters } from "./board-parameters";
 import type { NightStageRegistry } from "./night-stage-plan";
@@ -53,6 +54,9 @@ export class RulePlan {
   readonly nativeNightTargets = bindNativeNightTargetPolicy;
   readonly nativeNightEffects = bindNativeNightEffects;
   readonly checkpoints = checkpoints;
+  /** 固定同步政策函数；不固定现场状态，每次准入沿调用方 getter 读取原查询点。 */
+  readonly cycleAdmission = assertCycleAdmission;
+  readonly phaseJumpAdmission = assertPhaseJumpAdmission;
   /** 同步继承贡献不持执行态，经理只在原初始检查点调用。 */
   readonly wolfKnifeInheritance = refreshWolfKnifeInheritanceAtCheckpoint;
   // 只在首次默认晚收集后固定有限贡献；actor、实例和资源始终由现场查询决定。

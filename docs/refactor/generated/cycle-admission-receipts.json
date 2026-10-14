@@ -1,0 +1,172 @@
+{
+  "newTests": {
+    "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/rulesets/cycle-admission.test.ts",
+    "cwd": "backend",
+    "actualChunk": "f56b9c",
+    "exitCode": 0,
+    "pass": 3,
+    "fail": 0,
+    "assertions": 11,
+    "log": "docs/refactor/generated/cycle-admission-tests-new.log",
+    "sourcePhase": "getter return annotation and later type/comment-only changes before final; runtime emits preserved by exact type/head delta",
+    "logSHA256": "b1fb12877207873713cddc892e24be4bc10cccdde3ae86dd67bcbe623f1fcf4e"
+  },
+  "oldDemonCase": {
+    "actualChunk": "75bd50",
+    "exitCode": 0,
+    "pattern": "actual recursive cycle and jump reject while the original hunt window is open",
+    "pass": 1,
+    "fail": 0,
+    "filtered": 48,
+    "assertions": 4,
+    "log": "docs/refactor/generated/cycle-admission-tests-demon.log",
+    "logSHA256": "da29b05d9a6052fef6605ccf3ed94375c8850f59c4108080a8230ce383ff3920"
+  },
+  "oldGhostBrideCase": {
+    "actualChunk": "9f7526",
+    "exitCode": 0,
+    "pattern": "setup failure blocks ordinary actions and cycle rescue",
+    "pass": 1,
+    "fail": 0,
+    "filtered": 10,
+    "assertions": 4,
+    "log": "docs/refactor/generated/cycle-admission-tests-wedding.log",
+    "logSHA256": "f03f7012a7f9ac48efec39d74ff9b40eba233a56c7f461e65855545ef16bdbed"
+  },
+  "finiteTypes": {
+    "first": {
+      "roots": 9,
+      "launchChunk": "ad74f7",
+      "session": 16778,
+      "closeChunk": "b62d7b",
+      "exitCode": 2,
+      "log": "docs/refactor/generated/cycle-admission-types-first.log",
+      "diagnostics": [
+        "new unit61 always-throw World getter inferred void; TS2322"
+      ],
+      "logSHA256": "856a5d61c5bf02fcef0889ad485728fc7762df5421b2b33147b289c07b282342",
+      "logBytes": 120
+    },
+    "firstFailedRootFix": {
+      "roots": 1,
+      "launchChunk": "5d86cd",
+      "session": 30481,
+      "closeChunk": "7a446d",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/cycle-admission-types-test-before-readonly.log",
+      "scope": "new explicit : World type; before Root nested Readonly request",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logBytes": 0
+    },
+    "pendingReadonlyAttempt": {
+      "roots": 1,
+      "launchChunk": "f9b98b",
+      "session": 80777,
+      "terminalUnavailable": "write_stdin returned Unknown process id; empty log is not an exit receipt",
+      "log": "docs/refactor/generated/cycle-admission-types-final-test.log",
+      "claimedSuccess": false,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logBytes": 0
+    },
+    "finalConfirmed": {
+      "roots": 1,
+      "actualChunk": "e0a24f",
+      "exitCode": 0,
+      "elapsedSeconds": 6.666631279,
+      "log": "docs/refactor/generated/cycle-admission-types-final-test-confirmed.log",
+      "scope": "same failing unit root plus transitive changed new owner; after explicit getter return and Readonly<Pick> final source",
+      "config": {
+        "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+        "compilerOptions": {
+          "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+          "typeRoots": [
+            "/home/hby/dev/AI-Werewolf-Arena/node_modules/@types",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+            "/home/hby/dev/AI-Werewolf-Arena/node_modules",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+          ]
+        },
+        "include": [],
+        "files": [
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/cycle-admission.test.ts"
+        ],
+        "exclude": []
+      },
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logBytes": 0
+    },
+    "firstConfig": {
+      "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+      "compilerOptions": {
+        "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+        "typeRoots": [
+          "/home/hby/dev/AI-Werewolf-Arena/node_modules/@types",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+          "/home/hby/dev/AI-Werewolf-Arena/node_modules",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+        ]
+      },
+      "include": [],
+      "files": [
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_manager.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/rule-plan.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/events/wall_notes/ports.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/cycle-admission.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/cycle-admission.test.ts"
+      ],
+      "exclude": []
+    },
+    "limits": "one actual9root compiler run then necessary only failed testroot fix/final Readonly checks; no repeat other8 production roots or global types"
+  },
+  "harnessHistory": [
+    {
+      "actualChunk": "9c849d",
+      "exitCode": 1,
+      "reason": "used repository-relative backend paths while cwd backend: newtest creation and Radiant head script failed before edits; Bun no matching file, zero cases",
+      "log": "docs/refactor/generated/cycle-admission-harness-wrong-cwd.log"
+    },
+    {
+      "actualChunk": "083f07",
+      "exitCode": 127,
+      "reason": "wrong root node_modules/.bin/tsc does not exist; no compiler; corrected actual backend executable; no missing log invented"
+    },
+    {
+      "actualChunk": "599b24",
+      "exitCode": 1,
+      "reason": "proof helper assumed all queries FunctionDeclaration; actual Radiant is exported const arrow; generalized matching declaration without source change"
+    },
+    {
+      "actualChunk": "aea4fd",
+      "exitCode": 1,
+      "reason": "naive scanner lacked template-tail rescanning, falsely marked raw token mismatch while whole tree and both emit outputs already same; switched complete parser leaves, preserved first false report",
+      "report": "docs/refactor/generated/cycle-admission-program-proof-scanner-first.json"
+    },
+    {
+      "actualChunk": "811c14",
+      "exitCode": 0,
+      "reason": "corrected complete AST/token and whole program proof; runtime/source not changed"
+    },
+    {
+      "actualChunk": "0451ac",
+      "exitCode": 1,
+      "reason": "bounded graph no reverse paths; initial9head only InitialIdentity permission clause absent; actual source head precision fixed"
+    },
+    {
+      "actualChunk": "78a49a",
+      "exitCode": 0,
+      "reason": "only failed1head rechecked with exact one-comment inverse and2whole emit outputs; original8 head scope kept"
+    }
+  ],
+  "testTotals": {
+    "distinct": 5,
+    "pass": 5,
+    "fail": 0,
+    "assertions": 19,
+    "fullGame": false,
+    "modelNetwork": false
+  }
+}

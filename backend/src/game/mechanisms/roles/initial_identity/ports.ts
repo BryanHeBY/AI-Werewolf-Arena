@@ -1,10 +1,14 @@
 /**
- * Exposes original initial identity readiness and actual-night lifecycle bindings.
- * Inputs retain original World/day and outputs retain the same readiness or
- * closing capability. This boundary adds no state, copy, validation or rule;
- * setup, resource changes and knowledge remain in their concrete lifecycle owner.
- * At actual night entry, readiness is checked before opening. The returned close
- * follows the original finally order; terminal/currentness checks stay in the
- * lifecycle and this port never reopens a closed setup or action window.
+ * 提供盗贼／千面人原准备状态、活跃窗口与当夜提交证据的公开查询绑定。
+ * 输入保留原 World／日期，输出为原准备结果、重入证据或关闭能力；不复制状态或授予行动。
+ * 同步准入按调用点晚查询；实际开夜仍先检查准备状态，close 沿原 finally 顺序消费。
+ * 查询不扩大读写权限；设置、资源和知识仍由 deal 生命周期拥有，本入口不重开已关闭的设置或行动窗口。
  */
-export { hasActiveInitialIdentitySetup, initialIdentityKind, initialIdentitySetupReady, openInitialIdentityNight } from "./deal";
+export {
+  hasActiveInitialIdentitySetup,
+  hasActiveInitialIdentityNight,
+  hasInitialIdentityNightCommit,
+  initialIdentityKind,
+  initialIdentitySetupReady,
+  openInitialIdentityNight,
+} from "./deal";

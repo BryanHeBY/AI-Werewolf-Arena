@@ -590,3 +590,5 @@
 - 玩家知识与婚约死亡波台账补六part：仅登记064589/528d/c419/d589四实际功能来源，91rows910cells和所有原parts／remaining前缀保持、frozen60f1原byte不改；199partial711pending→203partial707pending，0complete/N/A。Root真实owner/commit/doc与独立904完整不变格＋6追加格/四ancestor/全部SHA批准，App／纯注释／检查格外不硬塞机制；不重tests/types/gate，不据登记关闭阶段。见 observation-wedding-delivery-ledger.md。
 
 - 固定d589dfbd结构检查收口：真实3122公开Git blob／446同Git文档，Root后台session45923实际终止chunk38f7a4 exit0；0新增、407余债、1372已清，原1779债务SHA297b逐字保持。独立全部原始SHA／公共路径顺序／sourceDigest1aa569ff／五门禁工具及inventory reader固定Git-current字节／407+1372精确不重复原债分区核准，不重复门禁。固定提交已含Time DTO、婚约死亡波、应用观察和O3；提交后的Cycle／Order-Wedding DTO／Mist／C48 WIP排除，不借固定绿称当前全树或P9完成。脚本与stdout真实保存，类型、行为和最终同源验收继续；见 architecture-checkpoint-d589dfbd.md。
+
+- C22–24周期／跳转同步准入组合：9source，完整8cycle＋3jump判断归实际RulePlan两readonly函数绑定，五publicports六原query同binding；PM保Mist先行、外层登记／清理、终局／maxDays／phaseRevision。真实c419十七before、345新owner＋PM7295＋Plan813强程序和四whole精确逆输出同，16query端点/567静态图有界核，5unique19断言，getter类型首红只失败根e0a24f actual0，Unknown后台handle不伪绿。Readonly嵌套state／终局短路说明Root精度finding修闭，Initial权限头失败仅重1桥，9CN最终0；Root源审与独立9finalSHA/doc批准。Root范围脚本source/files键工具错误导致台账延后，已核实际九committedSHA同freeze并补记录，不影响源/原收据、不冒全C22–24完成；见 cycle-admission.md。

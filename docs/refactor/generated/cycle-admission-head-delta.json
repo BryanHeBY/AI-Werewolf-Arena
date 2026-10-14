@@ -1,0 +1,21 @@
+{
+  "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+  "beforeSHA": "b8028b9d0c14f3fe0304b2dbee2969d2d1a11c91248d036c6fba24b145ad023c",
+  "finalSHA": "9f0f02502e19112a6861e249ef60e7e043688b693ff6fcfb06e3bb47af75c8f2",
+  "onlyExactHeadReplacement": true,
+  "wholeOutputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true
+    }
+  ],
+  "commentCheck": {
+    "files": 1,
+    "documentationPaths": 445,
+    "failures": []
+  }
+}

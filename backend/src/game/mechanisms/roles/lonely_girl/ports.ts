@@ -5,7 +5,7 @@
  * 该出口不重开已关闭的准备／行动窗口，不新增状态、复制、校验或规则；资源与知识仍归原所有者。
  * 只读绑定不扩大查询权限；返回关闭函数仍只移除本 World 的原活跃标记，不补做当前性校验。
  */
-export { hasActiveLonelyGirl, lonelyGirlReady, openLonelyGirlNight } from "./lifecycle";
+export { hasActiveLonelyGirl, lonelyGirlReady, hasLonelyGirlNightCommit, openLonelyGirlNight } from "./lifecycle";
 
 export { projectLonelyGirl } from "./lifecycle";
 
