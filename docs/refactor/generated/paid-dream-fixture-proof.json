@@ -1,0 +1,73 @@
+{
+  "baseCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "source": {
+    "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+    "sha256": "b6e81ae15754058db10ea0ab0d4a56a1ff2834029514bf34c67dae2a9c6668b8"
+  },
+  "exactDeclaredEdits": 4,
+  "inverseWholeSourceBytesSame": true,
+  "wholeProgram": {
+    "nodes": 1340,
+    "typedASTSame": true,
+    "allNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "1d15cf4390a3751b00aee4e39b10c656d15fe20b9372e4d27e3a892e63d87125",
+        "inverseSHA": "1d15cf4390a3751b00aee4e39b10c656d15fe20b9372e4d27e3a892e63d87125"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "54bc09db990277452e07445c3a177f78f93ada23ba88337a65e014e77e0c205d",
+        "inverseSHA": "54bc09db990277452e07445c3a177f78f93ada23ba88337a65e014e77e0c205d"
+      }
+    ]
+  },
+  "allOriginalOracleChainsSame": true,
+  "staticOracleChainCount": 20,
+  "testTitleDeclarationsSame": true,
+  "testTitleDeclarations": 2,
+  "allOriginalFixtureAndStageMethodsSame": true,
+  "fixtureAndMethodCount": 6,
+  "actualConfigurationInitializerFullyMatchesPublicParser": true,
+  "controls": [
+    {
+      "path": "configs.example/boards/awa_radiant_eclipse_12_v1.json",
+      "sha256": "6927f1015d58d194b6bfa36cdc839e835f3bd917c522a0fd10baee4d4865384b",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "sha256": "03287c1215eadecc223f8fd6dd245197d83957e0bc80807ae207dec6a5430fbf",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "798dd22730bf8143736208965862e67549ba2269935884538f47fce9c7049670",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "1763e8846537bcd9cdc5a9b2065a51ea306f3919fe005a881e3e2377c8789d94",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night-links.ts",
+      "sha256": "16488d838b9299803a7936d5474dd73273eecaed9f309caca595c40cef17ed28",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "currentWholeBytesSame": true
+    }
+  ],
+  "limits": [
+    "原3cases中2为参数化同title声明；静态oracle链数不是运行assert计数，实际3/30按独立收据。",
+    "这是配置输入合法化与新增公开文件读取/解析I/O；完整逆与不变oracle不宣称旧无效输入和新合法输入行为等价。",
+    "只改这个测试文件，生产六控制源／公开JSON原字节不改；不放宽谓词、绕过stock/owned配置。"
+  ],
+  "approved": true
+}

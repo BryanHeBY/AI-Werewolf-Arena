@@ -1,0 +1,284 @@
+{
+  "reviewer": "/root/native_presentation_finish",
+  "approved": true,
+  "reviewMode": "独立通读唯一候选、真实公开配置／解析器／有限支持谓词与四编辑完整字节逆；不执行作者证明、测试、编译或门禁。",
+  "baseCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "source": [
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "b6e81ae15754058db10ea0ab0d4a56a1ff2834029514bf34c67dae2a9c6668b8"
+    }
+  ],
+  "sourceFreshSHA": "b6e81ae15754058db10ea0ab0d4a56a1ff2834029514bf34c67dae2a9c6668b8",
+  "scope": {
+    "path": "docs/refactor/generated/paid-dream-fixture-scope-final.json",
+    "sha256": "fec5c8c4ba2108991cf96f1dbb2e42fb62fc0ecbcb3af1d2758e20e4974fd4be"
+  },
+  "actualBefore": {
+    "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+    "sha256": "da3d2f1ce77f4729d45a2c1d263e5fd65ac4ddda88614859a64c61b8895a525d",
+    "savedBeforeSHA": "da3d2f1ce77f4729d45a2c1d263e5fd65ac4ddda88614859a64c61b8895a525d",
+    "actualGitEntireSourceSame": true
+  },
+  "exactDeclaredEdits": [
+    {
+      "label": "chinese_canonical_input_head",
+      "exactCurrentFragment": true
+    },
+    {
+      "label": "public_board_loader_imports",
+      "exactCurrentFragment": true
+    },
+    {
+      "label": "retire_unused_cast_type",
+      "exactCurrentFragment": true
+    },
+    {
+      "label": "canonical_public_board_normalized_config",
+      "exactCurrentFragment": true
+    }
+  ],
+  "exactWholeSourceInverseSame": true,
+  "controls": [
+    {
+      "path": "configs.example/boards/awa_radiant_eclipse_12_v1.json",
+      "sha256": "6927f1015d58d194b6bfa36cdc839e835f3bd917c522a0fd10baee4d4865384b",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "sha256": "03287c1215eadecc223f8fd6dd245197d83957e0bc80807ae207dec6a5430fbf",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "798dd22730bf8143736208965862e67549ba2269935884538f47fce9c7049670",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "1763e8846537bcd9cdc5a9b2065a51ea306f3919fe005a881e3e2377c8789d94",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night-links.ts",
+      "sha256": "16488d838b9299803a7936d5474dd73273eecaed9f309caca595c40cef17ed28",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "actualGitSame": true,
+      "currentSame": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-before.json",
+      "sha256": "79ddeb8108c0544b9913b9bfd16f8176c4c13f42cac5d1d1af75ae915ab836fe",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-doc-paths.json",
+      "sha256": "ab75134e9c6b3a5bc3e31e67a28bcb15ad7db4357709c0f4b9365b11cd6d732c",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-edits.json",
+      "sha256": "0b02799c99cfdae55a306c1351489f977febf64ce026b9fa11faad1d3f1baa51",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-git-before-proof.json",
+      "sha256": "639d25ba756b11152c0b1b1fccd8ab71114cce1fadf0b3296b425669293ae9ed",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-heads.json",
+      "sha256": "a29e5f91347d360f7b07fdca7f780387325c7b7be519244803181f9a54d4f2da",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-heads.log",
+      "sha256": "ebdb132cd5be73fcdf6208af3f7aaf30a18e26c8002c602ada2c1768e8aca4b9",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-heads.ts",
+      "sha256": "0a3fc80d6902772996ed58b44f0b20a2a9db7f4d13a5f3650470e7ed401934a6",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-proof-first.log",
+      "sha256": "084493fb608fc5b96655b4034e28b79c0ddd79f6da12d4cdf75b7449824727f7",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-proof.cjs",
+      "sha256": "0830a71b5a1c6f6ccd81381490df06fea19a767488a11ac5a84a846078a58d4f",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-proof.json",
+      "sha256": "8589ed5c0dab44ef26fc3bc438185c88ab26958286f9ef4b6015c47e050ebaec",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-proof.log",
+      "sha256": "4987e7ec2f6b8a9191033cf7092d388e1841c5ba1f489dadf24f5127f5a2fd6d",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-receipts.json",
+      "sha256": "8436deea478e1af4937a1315b34657b672806165c9b412a3b6294535d2d8125c",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-scope-final.json",
+      "sha256": "fec5c8c4ba2108991cf96f1dbb2e42fb62fc0ecbcb3af1d2758e20e4974fd4be",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-tests-first.log",
+      "sha256": "049f49229560d25e6986f819c953b091158d778e23a48180ef0d19b296f74ce1",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-types-config.json",
+      "sha256": "ebe6766913eec4f2717bae8171669ac781ec455634cd5626e753cea44938f280",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    }
+  ],
+  "documentation": {
+    "path": "docs/refactor/paid-dream-fixture.md",
+    "sha256": "c2f46f074494df8382042f298f87549a997d3936159b03d90aa8b5e4351ae251",
+    "currentSHA": "c2f46f074494df8382042f298f87549a997d3936159b03d90aa8b5e4351ae251",
+    "matches": true
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/paid-dream-fixture-evidence.json",
+    "sha256": "380bc2c11d5734d599e2c42d81a1fae959e2a4f58ffee43775a7c18b4b518983"
+  },
+  "canonicalInputBoundary": {
+    "parserNamedBinding": {
+      "name": "parseBoardDefinition",
+      "module": "../../../../src/runtime/config/board_definition",
+      "typeOnly": false
+    },
+    "parserPhysicalEndpoint": "backend/src/runtime/config/board_definition.ts",
+    "parserExportExists": true,
+    "readFileBinding": {
+      "name": "readFileSync",
+      "module": "node:fs",
+      "typeOnly": false
+    },
+    "resolvedFixtureURL": "configs.example/boards/awa_radiant_eclipse_12_v1.json",
+    "publicBoardActualGitSame": true,
+    "configuredRoleCounts": {
+      "wolf": 3,
+      "eclipse_maid": 1,
+      "villager": 4,
+      "seer": 1,
+      "radiant_count": 1,
+      "dreamer": 1,
+      "witch": 1
+    },
+    "fixtureMatchesFiniteDeck": true,
+    "predicate": "backend/src/rulesets/support/radiant-eclipse.ts",
+    "notes": [
+      "JSON经既有schema、catalog配置贡献和boardPresetViolation校验，不强转BoardConfig或绕过有限支持谓词。",
+      "当前配置补齐真实12人阵容、开启警长及固定机制／角色政策；predicate本身、原库存安装与行动租约没有修改。",
+      "new URL相对实际fixture模块定位到既有公开板子，不读取认证或玩家档案。读取／解析会在测试模块初始化发生，因此是明确新增I/O和合法化输入，不称新旧运行完全等价。"
+    ]
+  },
+  "independentSemanticReview": [
+    "四个声明编辑以外整文件原字节恢复到实际Git；原12人角色顺序、生命／身份组件、native库存、前夜day1 dream历史和手写药瓶余量均保持。",
+    "Stages仍只吞噬／摄梦；provider仍吞噬5、dream7、其它请求原unexpected_request；三case的execute day2、attack死1或5以及晚阶段synthetic_after_payment原样。",
+    "成功两例分别验证实际施法者1死亡牵连7／原施法者5死亡不牵连、borrowed禁用与native原history、lease committed及restore5。",
+    "晚阶段失败原借用uses1/historyday2和dream_applied付款事实保留，手递关系失效／lease aborted／不发布native restore/night resolved/game over；没有更换oracle为当前生产结果。",
+    "有效中文头和两关键说明明确配置来源、固定资源历史与字面独立预期；不把配置支持裁决或记录已付事实当作运行授权。"
+  ],
+  "authorProofReadNotRerun": {
+    "wholeProgramNodes": 1340,
+    "mappedWholeOutputs": 2,
+    "staticExpectChains": 20,
+    "titleDeclarations": 2,
+    "actualCases": 3,
+    "fixtureAndStageMethods": 6,
+    "notes": [
+      "实际proof脚本完整forEachChild回调为void，NodeArray和全部非注释字面均遍历；仅四声明逆，不替换业务body。",
+      "首次孤立method解析无合法容器红保留，最终只是class wrapper工具修正；provider箭头虽不计六methods仍由完整文件精确逆保留。"
+    ]
+  },
+  "authorReceiptsReadNotRerun": {
+    "runtime": {
+      "chunk": "2d2dae",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 30,
+      "executionCount": 1,
+      "log": "docs/refactor/generated/paid-dream-fixture-tests-first.log",
+      "limits": "原3case各一次；无需更正其它库存/阶段，未重复旧405ac8失败探针或已绿。"
+    },
+    "finiteTypes": {
+      "launchChunk": "3cce2c",
+      "session": 47887,
+      "terminalChunk": "fef5e9",
+      "exitCode": 0,
+      "roots": 1,
+      "log": "docs/refactor/generated/paid-dream-fixture-types.log",
+      "limits": "真实terminal0而非空日志推断；只此fixture root，最终仅中文说明调整无type改变。"
+    },
+    "headers": {
+      "chunk": "c5a1fc",
+      "exitCode": 0,
+      "sources": 1,
+      "documentationPaths": 488,
+      "diagnostics": 0,
+      "missingCN": false,
+      "log": "docs/refactor/generated/paid-dream-fixture-heads.log"
+    },
+    "proof": {
+      "firstHarness": {
+        "chunk": "a330d9",
+        "exitCode": 1,
+        "log": "docs/refactor/generated/paid-dream-fixture-proof-first.log",
+        "failure": "单独parse MethodDeclaration片段无class容器，工具报invalid_program；未改产品。"
+      },
+      "final": {
+        "chunk": "d65139",
+        "exitCode": 0,
+        "log": "docs/refactor/generated/paid-dream-fixture-proof.log",
+        "wholeProgramNodes": 1340,
+        "mappedWholeOutputs": 2,
+        "staticOracleChains": 20,
+        "testTitleDeclarations": 2,
+        "actualCases": 3,
+        "fixtureAndMethods": 6,
+        "controls": 6,
+        "limits": "合法class wrapper核真实method，并完整向上读取expect断言链；不mask原body或oracle，属于工具修正。"
+      }
+    },
+    "notes": [
+      "日志真实三case3/0/30，与作者终态2d2dae一致；原精准案例各一次，不重复旧405ac8或既有绿。",
+      "47887/fef5e9实际terminal0按作者工具回执归属，空type日志仅作artifactSHA，不能独立推断通过。"
+    ]
+  },
+  "findings": [],
+  "limits": [
+    "仅这个测试配置输入修复，不声明全部当前工作区门禁、整局或复盘矩阵绿。",
+    "未编辑产品／fixture源码，未重proof/type/runtime/gate；只read/git/hash/声明逆与语义审查。",
+    "固定配置支持面不扩大；原公开板子与六controls由实际基线Git和当前SHA共同证明。"
+  ]
+}

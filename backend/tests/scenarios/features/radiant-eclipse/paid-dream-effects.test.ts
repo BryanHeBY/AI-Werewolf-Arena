@@ -1,11 +1,13 @@
 /**
  * 场景测试：验证明辉吞噬梦的已付效果与后续死亡／失败阶段。
- * 输入为原捕获 DreamFrame、实际 NightPipeline 和受控 provider；输出用字面状态与错误 trace 验收。
+ * 输入为公开板子经真实解析的配置、原捕获 DreamFrame、实际 NightPipeline 和受控 provider；输出用字面状态与错误 trace 验收。
  * 施法者生命、库存付款和晚阶段失败保持因果顺序，场景不是独立纯 reader。
  * 不调用模型／网络，不生成或重写原预期数据。
  */
 import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
+import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 import { World } from "../../../../src/core/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
@@ -26,7 +28,7 @@ import { ECLIPSE_SWALLOW_STAGE } from "../../../../src/game/mechanisms/roles/rad
 import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
-import type { ActionProvider, BoardConfig } from "../../../../src/core/domain/model";
+import type { ActionProvider } from "../../../../src/core/domain/model";
 import { DreamNightFrame, type DreamNightLink } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
 import { readDreamNightLinks } from "../../../../src/game/mechanisms/roles/dreamer/night-ports";
 import { StatusMark, DeathCause } from "../../../../src/core/domain/model";
@@ -105,13 +107,16 @@ class Stages extends NightStageRegistry {
   }
 }
 
-const config = {
-  boardSize: 12,
-  enableSheriff: false,
-  hooks: { onDaybreak: false, onPreElection: false, onPreVote: false, onPerSpeechGap: false },
-  roleSetups: [],
-  radiantEclipse: { policy: "awa_radiant_eclipse_v1" },
-} as BoardConfig;
+// 配置经真实公开板子解析，带齐阵容、警长与固定政策，满足现有有限准入。
+// 场景仍固定原玩家与已付库存历史，不从通用模拟器重新生成动作或断言。
+const config = parseBoardDefinition(
+  JSON.parse(
+    readFileSync(
+      new URL("../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json", import.meta.url),
+      "utf8",
+    ),
+  ),
+).config;
 
 const provider: ActionProvider = {
   getAction: async (request) => {

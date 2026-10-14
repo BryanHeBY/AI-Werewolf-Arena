@@ -1,0 +1,17 @@
+/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/paid-dream-fixture-proof.cjs:13
+  if (f.parseDiagnostics.length) throw Error('invalid_program');
+                                 ^
+
+Error: invalid_program
+    at parse (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/paid-dream-fixture-proof.cjs:13:40)
+    at leaves (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/paid-dream-fixture-proof.cjs:27:13)
+    at visit (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/paid-dream-fixture-proof.cjs:63:69)
+    at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/paid-dream-fixture-proof.cjs:64:31
+    at visitNodes (/home/hby/dev/AI-Werewolf-Arena/node_modules/.bun/typescript@5.9.3/node_modules/typescript/lib/typescript.js:32457:22)
+    at forEachChildInClassDeclarationOrExpression (/home/hby/dev/AI-Werewolf-Arena/node_modules/.bun/typescript@5.9.3/node_modules/typescript/lib/typescript.js:32933:195)
+    at Object.forEachChild (/home/hby/dev/AI-Werewolf-Arena/node_modules/.bun/typescript@5.9.3/node_modules/typescript/lib/typescript.js:32970:35)
+    at visit (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/paid-dream-fixture-proof.cjs:64:8)
+    at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/paid-dream-fixture-proof.cjs:64:31
+    at visitNodes (/home/hby/dev/AI-Werewolf-Arena/node_modules/.bun/typescript@5.9.3/node_modules/typescript/lib/typescript.js:32457:22)
+
+Node.js v26.11.1

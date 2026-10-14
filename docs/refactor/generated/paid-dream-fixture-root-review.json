@@ -1,0 +1,151 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "reviewMode": "Root读取完整真实config输入修复diff及原fixture/三cases，与actualGit/4精确delta逆/control/artifact核；独立peer另审，无重types/tests。",
+  "baseCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "source": [
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "b6e81ae15754058db10ea0ab0d4a56a1ff2834029514bf34c67dae2a9c6668b8"
+    }
+  ],
+  "scopeSha256": "fec5c8c4ba2108991cf96f1dbb2e42fb62fc0ecbcb3af1d2758e20e4974fd4be",
+  "actualBeforeSha256": "da3d2f1ce77f4729d45a2c1d263e5fd65ac4ddda88614859a64c61b8895a525d",
+  "wholeSourceInverseEqual": true,
+  "controlChecks": [
+    {
+      "path": "configs.example/boards/awa_radiant_eclipse_12_v1.json",
+      "sha256": "6927f1015d58d194b6bfa36cdc839e835f3bd917c522a0fd10baee4d4865384b",
+      "matches": true
+    },
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "sha256": "03287c1215eadecc223f8fd6dd245197d83957e0bc80807ae207dec6a5430fbf",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "798dd22730bf8143736208965862e67549ba2269935884538f47fce9c7049670",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "1763e8846537bcd9cdc5a9b2065a51ea306f3919fe005a881e3e2377c8789d94",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night-links.ts",
+      "sha256": "16488d838b9299803a7936d5474dd73273eecaed9f309caca595c40cef17ed28",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "matches": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-before.json",
+      "sha256": "79ddeb8108c0544b9913b9bfd16f8176c4c13f42cac5d1d1af75ae915ab836fe",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-doc-paths.json",
+      "sha256": "ab75134e9c6b3a5bc3e31e67a28bcb15ad7db4357709c0f4b9365b11cd6d732c",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-edits.json",
+      "sha256": "0b02799c99cfdae55a306c1351489f977febf64ce026b9fa11faad1d3f1baa51",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-git-before-proof.json",
+      "sha256": "639d25ba756b11152c0b1b1fccd8ab71114cce1fadf0b3296b425669293ae9ed",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-heads.json",
+      "sha256": "a29e5f91347d360f7b07fdca7f780387325c7b7be519244803181f9a54d4f2da",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-heads.log",
+      "sha256": "ebdb132cd5be73fcdf6208af3f7aaf30a18e26c8002c602ada2c1768e8aca4b9",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-heads.ts",
+      "sha256": "0a3fc80d6902772996ed58b44f0b20a2a9db7f4d13a5f3650470e7ed401934a6",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-proof-first.log",
+      "sha256": "084493fb608fc5b96655b4034e28b79c0ddd79f6da12d4cdf75b7449824727f7",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-proof.cjs",
+      "sha256": "0830a71b5a1c6f6ccd81381490df06fea19a767488a11ac5a84a846078a58d4f",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-proof.json",
+      "sha256": "8589ed5c0dab44ef26fc3bc438185c88ab26958286f9ef4b6015c47e050ebaec",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-proof.log",
+      "sha256": "4987e7ec2f6b8a9191033cf7092d388e1841c5ba1f489dadf24f5127f5a2fd6d",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-receipts.json",
+      "sha256": "8436deea478e1af4937a1315b34657b672806165c9b412a3b6294535d2d8125c",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-scope-final.json",
+      "sha256": "fec5c8c4ba2108991cf96f1dbb2e42fb62fc0ecbcb3af1d2758e20e4974fd4be",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-tests-first.log",
+      "sha256": "049f49229560d25e6986f819c953b091158d778e23a48180ef0d19b296f74ce1",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-types-config.json",
+      "sha256": "ebe6766913eec4f2717bae8171669ac781ec455634cd5626e753cea44938f280",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/paid-dream-fixture-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/paid-dream-fixture.md",
+      "sha256": "c2f46f074494df8382042f298f87549a997d3936159b03d90aa8b5e4351ae251",
+      "matches": true
+    }
+  ],
+  "semantics": [
+    "原空roleSetups/禁警长/缺policy强转不满足现行有限准入；旧405ac8隔离原Git早红已留证，当前更正为真实公开JSON解析配置，不绕过生产授权。",
+    "只新增公开文件读取/实际parser、移除闲置BoardConfig cast类型并校准中文输入头；原12role/手写库存和前夜历史/Stage/provider/全部3case title/action/error/20expect链保。",
+    "启用本族原有限板子的真实配置是测试输入政策改变，不主张原无效输入与新有效输入行为等价。",
+    "6实际Git/current控制源保持，生产/公开板子文件无修改；sourceHash历史保持，测试不重生成seed/golden/预期。"
+  ],
+  "findings": [],
+  "limits": [
+    "原3cases首次2d2dae3/0/30及one root fef5e9/0为作者actual回执，没有重复旧baseline红或其他绿。",
+    "局部1340AST/两mappedoutputs仅证明四声明编辑之外原源码保，不称配置读取I/O或输入完全等价。",
+    "非全当前树或P9最终同源门禁。"
+  ],
+  "independentReview": {
+    "path": "docs/refactor/generated/paid-dream-fixture-independent-review.json",
+    "sha256": "3deee3a9989a83e52f0d367aa32b0bf685da91130a01e6e2b5fa6c91fa571f52",
+    "approved": true
+  }
+}
