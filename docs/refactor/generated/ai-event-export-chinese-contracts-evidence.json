@@ -1,0 +1,69 @@
+{
+  "baseCommit": "83822442e7d7883b65323491d8defc14937ac6b1",
+  "source": [
+    {
+      "path": "backend/src/ai/agents/visible_event_protocol.ts",
+      "sha256": "94657cad0206ab0764f45b26aea0e477fd8cc6bfaaff15ff99b779cb9706761d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/ai/index.ts",
+      "sha256": "cf35fd190b72f66c2cde8ff4a2014fb476ce35c50316d261e7cdf9642c3603e4",
+      "change": "modified"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/ai/agents/llm/player_prompt_session.ts",
+      "sha256": "9be455627b265a9e299d84df15a37b9cd474052d28eed04fb64341d8cce95081"
+    },
+    {
+      "path": "backend/src/ai/agents/acp/acp_action_provider.ts",
+      "sha256": "64309d1b146cd73f55f482fdcb1dad4d284178e524ca3c5a4de83597c994ecc2"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/ai-event-export-chinese-contracts-before.json",
+      "sha256": "6f99eaf6d4ce8b01a5f616a0eeeafc3fc0d4d87a8ffe3b8406a18468695be2e6"
+    },
+    {
+      "path": "docs/refactor/generated/ai-event-export-chinese-contracts-edits.json",
+      "sha256": "94d47920fd49a38a89e4c4eb99fb1e5c51fe81e9fa9d89cb3714848af4a5450d"
+    },
+    {
+      "path": "docs/refactor/generated/ai-event-export-chinese-contracts-heads.json",
+      "sha256": "ab3771ac2fe029c63ff4fdc3493dc6c80870a6674fdd7815dbb18cfb8b4847f9"
+    },
+    {
+      "path": "docs/refactor/generated/ai-event-export-chinese-contracts-heads.ts",
+      "sha256": "27ce891a853ac069d062bc63199522b09a414b690d5b276a51000d03fddf57f0"
+    },
+    {
+      "path": "docs/refactor/generated/ai-event-export-chinese-contracts-proof.cjs",
+      "sha256": "a7bc2f4a9741c41611177c431278e38b98293872cfb7e9619c8641873e5f3792"
+    },
+    {
+      "path": "docs/refactor/generated/ai-event-export-chinese-contracts-proof.json",
+      "sha256": "476ee9fde3af8db7c4c7478ca54a823fc688dad2e7a3958178e51f0dc5f38421"
+    },
+    {
+      "path": "docs/refactor/generated/ai-event-export-chinese-contracts-receipts.json",
+      "sha256": "538792d8c65c14e79ddec8f380395c8b22a959f29bd72dabbbcbda50700e3aac"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/ai-event-export-chinese-contracts.md",
+    "sha256": "e95a956119f9b258059bd1e7363a813de2dd51a5a1a77e1f05b802d1247608ea"
+  },
+  "frozen": true,
+  "scope": {
+    "path": "docs/refactor/generated/ai-event-export-chinese-contracts-scope-final.json",
+    "sha256": "e68acc04966da7075a21a8c68e9e8ed120efd47cff0d666b0eccd2cfe099481d"
+  },
+  "limits": [
+    "原完整两module265typed/333叶/4raw保持；源/注释仍改变新sourceHash。",
+    "只读两个完整消费者控制，不称transitive全部字节或P9终验完成。"
+  ]
+}

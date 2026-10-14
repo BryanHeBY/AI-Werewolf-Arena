@@ -1,0 +1,37 @@
+[
+  {
+    "path": "backend/src/ai/agents/visible_event_protocol.ts",
+    "before": "import { PlayerVisibleEvent } from \"../../core/domain\";",
+    "after": "/**\n * 负责 SDK／ACP 提示中的玩家可见事件形状整理和固定元组编码；输入来自请求上下文，输出为排序事件或 JSON 文本。\n * 可见性与受众投影归上游，增量游标和发送失败归各提示会话；本模块不读取全局事件、补发秘密或授予动作权限。\n * 解析只核基本字段，未知 type 仍保留，payload 持同引用；不是 Proxy／getter 安全边界，访问或序列化异常直接传播。\n */\nimport { PlayerVisibleEvent } from \"../../core/domain\";"
+  },
+  {
+    "path": "backend/src/ai/agents/visible_event_protocol.ts",
+    "before": "/** 解析、去重并按玩家本地连续 seq 排序可见事件。 */",
+    "after": "/** 非数组返回空；有效的正整数 seq 后写覆盖前写，再升序返回，既不验证连续性也不补缺号。 */"
+  },
+  {
+    "path": "backend/src/ai/agents/visible_event_protocol.ts",
+    "before": "    bySeq.set(event.seq, {",
+    "after": "    // 保留原payload引用；无效条目被跳过，只有后续有效同序号事件才覆盖已接受值。\n    bySeq.set(event.seq, {"
+  },
+  {
+    "path": "backend/src/ai/agents/visible_event_protocol.ts",
+    "before": "type PlayerVisibleEventTuple =",
+    "after": "/** 固定顺序为玩家局部序号、机器事件名和原payload；tuple中不附全局序号或展示文案。 */\ntype PlayerVisibleEventTuple ="
+  },
+  {
+    "path": "backend/src/ai/agents/visible_event_protocol.ts",
+    "before": "/** 单事件使用固定 JSON 元组编码，减少重复键并保持消息前缀稳定。 */",
+    "after": "/** 单事件沿原 event 外壳编码；字段与payload原文不随locale改变，也不再次过滤受众。 */"
+  },
+  {
+    "path": "backend/src/ai/agents/visible_event_protocol.ts",
+    "before": "/** ACP 是持久会话，每轮只发送新增事件批次，减少协议固定字段重复。 */",
+    "after": "/** 原 events 外壳按调用方顺序编码；ACP调用方负责选取增量，本函数不排序、去重或推进游标。 */"
+  },
+  {
+    "path": "backend/src/ai/index.ts",
+    "before": "/**\n * ai 门面导出：智能体与记忆能力。\n */",
+    "after": "/**\n * 向后端运行装配调用方公开 Agent、模型集成、AI审计和回合运行四组实际出口。\n * 直接重导出原绑定，不保留已退休的记忆实现，不创建会话、维护玩家历史或提供独立状态副本。\n * 具体模块仍按原导出顺序求值；本门面不计算期限、关闭资源或授予游戏权限，不承诺叶模块无初始化副作用。\n */"
+  }
+]

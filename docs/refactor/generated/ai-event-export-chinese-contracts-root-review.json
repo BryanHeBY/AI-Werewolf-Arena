@@ -1,0 +1,48 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "83822442e7d7883b65323491d8defc14937ac6b1",
+  "source": [
+    {
+      "path": "backend/src/ai/agents/visible_event_protocol.ts",
+      "sha256": "94657cad0206ab0764f45b26aea0e477fd8cc6bfaaff15ff99b779cb9706761d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/ai/index.ts",
+      "sha256": "cf35fd190b72f66c2cde8ff4a2014fb476ce35c50316d261e7cdf9642c3603e4",
+      "change": "modified"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/ai-event-export-chinese-contracts-scope-final.json",
+    "sha256": "e68acc04966da7075a21a8c68e9e8ed120efd47cff0d666b0eccd2cfe099481d"
+  },
+  "document": {
+    "path": "docs/refactor/ai-event-export-chinese-contracts.md",
+    "sha256": "e95a956119f9b258059bd1e7363a813de2dd51a5a1a77e1f05b802d1247608ea"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ai-event-export-chinese-contracts-evidence.json",
+    "sha256": "38e1a50b8af664e1360cb6435bd9feb4dd1a57aaacfef8d3a65a663f74d0d326"
+  },
+  "integrity": {
+    "freshSources": 2,
+    "actualGitBefore": 2,
+    "controls": 2,
+    "artifactHashes": 7,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "作者完整parse基本接受面/同seq后有效覆盖/不补洞/同payload原引用",
+    "固定单/批JSON tuple与两个caller各自过滤/cursor所有权实际实读",
+    "AI四组真实直接出口与叶模块初始化，退役memory误说明纠正",
+    "实际838两Git/七comment全文正演/两control/七附件及四raw证据，不重绿"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

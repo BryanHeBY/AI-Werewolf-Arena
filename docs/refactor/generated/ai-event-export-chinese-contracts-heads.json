@@ -1,0 +1,15 @@
+{
+  "source": [
+    {
+      "path": "backend/src/ai/agents/visible_event_protocol.ts",
+      "sha256": "94657cad0206ab0764f45b26aea0e477fd8cc6bfaaff15ff99b779cb9706761d"
+    },
+    {
+      "path": "backend/src/ai/index.ts",
+      "sha256": "cf35fd190b72f66c2cde8ff4a2014fb476ce35c50316d261e7cdf9642c3603e4"
+    }
+  ],
+  "documentationPaths": 600,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}
