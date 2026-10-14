@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "baseCommit": "b0b6fbd95b13787870216282ca2dff9237c40114",
+    "source": [
+      {
+        "path": "backend/src/game/engine/action_request_factory.ts",
+        "sha256": "47ca276d4271630035d3aae3bcde79fbff3c2cbf1ecbedcdaae334f42df8f6d6"
+      },
+      {
+        "path": "backend/src/game/engine/turn_constraints_context.ts",
+        "sha256": "e175114440f80ffcec3f777cfdd74e41dc334ddb73f507e298262bedeba57e33"
+      }
+    ],
+    "deleted": [],
+    "counts": {
+      "paths": 2,
+      "actualGitBefore": 2,
+      "commentEditRecords": 13
+    },
+    "onlyChange": "有效中文职责／数据／顺序说明；所有非注释程序、字段、类型、字符串、imports与运行输出不变",
+    "exclusions": [
+      "模型／网络／私有配置",
+      "业务测试／类型检查／全门禁",
+      "并行 Nightmare／Ghost fixture源",
+      "Git／progress／矩阵／历史档案身份"
+    ]
+  },
+  "scopeSha256": "8f971b3f16a7c477be8856d339d4a420d0041fdddb85ed621b7890d685d2c20e",
+  "documentation": {
+    "path": "docs/refactor/action-request-context-chinese-comments.md",
+    "sha256": "705c54f090d548ff549e82e18de50f6a734d1cd25161d8bb49dd594f6c2cd5a6"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/action-request-context-chinese-comments-before-verification.json",
+      "sha256": "ab4cfe49a5e4f0457358fb08b00b28dd59eeb917c5e8081db7a320fd58b18f65"
+    },
+    {
+      "path": "docs/refactor/generated/action-request-context-chinese-comments-before.json",
+      "sha256": "2426ce0e5060ce985809cbc71f210b3f3848588d4c21bcc8e1cfffb5ded345ed"
+    },
+    {
+      "path": "docs/refactor/generated/action-request-context-chinese-comments-edits.json",
+      "sha256": "12575e1a78026b9280d09eeb4a5c8a9c7125c21366425764470595c51e4a8aeb"
+    },
+    {
+      "path": "docs/refactor/generated/action-request-context-chinese-comments-heads.json",
+      "sha256": "718917550738316711e4b980054762549e002b49a9663e0b80bde3aca1624b30"
+    },
+    {
+      "path": "docs/refactor/generated/action-request-context-chinese-comments-heads.ts",
+      "sha256": "02e0e9761a4ed21063f379e5b555e089f435b81be3c388ba676badccfa6c36f7"
+    },
+    {
+      "path": "docs/refactor/generated/action-request-context-chinese-comments-proof.cjs",
+      "sha256": "2251881374562cc2a9d04e897c8d0e8779b444c82ec4dfe46bf5625024230dca"
+    },
+    {
+      "path": "docs/refactor/generated/action-request-context-chinese-comments-proof.json",
+      "sha256": "d49d67786410dddbad4140331e067092e3bdf61a349720566c7eeac372af0c13"
+    },
+    {
+      "path": "docs/refactor/generated/action-request-context-chinese-comments-receipts.json",
+      "sha256": "b38065873eb5b701fbe6d66a6906301b0efd6cfdb150054cb2effd157b10abfd"
+    },
+    {
+      "path": "docs/refactor/generated/action-request-context-chinese-comments-scope-final.json",
+      "sha256": "8f971b3f16a7c477be8856d339d4a420d0041fdddb85ed621b7890d685d2c20e"
+    }
+  ],
+  "receipts": {
+    "proof": {
+      "chunk": "625309",
+      "exitCode": 0,
+      "sources": 2,
+      "typedNodes": 331,
+      "noncommentLeaves": 407,
+      "wholeRawOutputs": 4
+    },
+    "headsAndGitBefore": {
+      "chunk": "708d01",
+      "exitCode": 0,
+      "sources": 2,
+      "gitDocumentationPaths": 579,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "actualGitBeforeFullSame": 2
+    },
+    "sourceDiffCheck": {
+      "chunk": "708d01",
+      "exitCode": 0,
+      "paths": 2
+    },
+    "notRun": [
+      "business tests",
+      "types",
+      "full gates",
+      "models",
+      "network",
+      "archival engine identity recomputation"
+    ],
+    "noRepeatedGreen": true
+  },
+  "limits": [
+    "纯注释组织；两个原完整运行程序与4wholeoutputs保持，不作行为/type/fullgate承诺。",
+    "readonly仅类型限制，公共约束／事实／ID不授运行权限或期限续期。",
+    "数值默认与摘要分支说明不新增校验、fallback或文案。",
+    "独审report不加入artifact以避免循环；历史档案身份不回填。"
+  ],
+  "independentReview": "待非作者实际源码语义与最终SHA审"
+}

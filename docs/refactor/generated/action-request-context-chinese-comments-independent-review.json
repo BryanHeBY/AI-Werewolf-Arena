@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "approved": true,
+  "reviewer": "native_final_architecture_review",
+  "baseCommit": "b0b6fbd95b13787870216282ca2dff9237c40114",
+  "scope": {
+    "path": "docs/refactor/generated/action-request-context-chinese-comments-scope-final.json",
+    "sha256": "8f971b3f16a7c477be8856d339d4a420d0041fdddb85ed621b7890d685d2c20e"
+  },
+  "scopeSHA256": "8f971b3f16a7c477be8856d339d4a420d0041fdddb85ed621b7890d685d2c20e",
+  "source": [
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "sha256": "47ca276d4271630035d3aae3bcde79fbff3c2cbf1ecbedcdaae334f42df8f6d6"
+    },
+    {
+      "path": "backend/src/game/engine/turn_constraints_context.ts",
+      "sha256": "e175114440f80ffcec3f777cfdd74e41dc334ddb73f507e298262bedeba57e33"
+    }
+  ],
+  "deleted": [],
+  "documentation": {
+    "path": "docs/refactor/action-request-context-chinese-comments.md",
+    "sha256": "705c54f090d548ff549e82e18de50f6a734d1cd25161d8bb49dd594f6c2cd5a6"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/action-request-context-chinese-comments-evidence.json",
+    "sha256": "a9d64f9f5bcc864e2cb8d2ff6b797d6fb3d93cdb27f3dde184cf0a2d79a43490"
+  },
+  "independentVerification": {
+    "actualGitBeforeSources": 2,
+    "freshSources": 2,
+    "exactCompleteCommentForwardSources": 2,
+    "exactCommentEdits": 13,
+    "artifactDigests": 9,
+    "mismatches": 0,
+    "checksRerun": 0
+  },
+  "sourceReview": [
+    "工厂原 World／events 保存引用和 day 参数，创建先读原 phase/actor/tools/window，context 克隆之后才原公共字段覆盖；约束先于事件数组快照／actor投影，最后原请求对象绑定。每次input getter与绑定分支的晚stage读取保留。",
+    "clone／约束／可见feed失败尚未进入bindRulesetActionRequest；命中绑定分支才读World，后续异常不回滚已绑定前缀。公共ID/context/期限不授许可，本工厂没有deadlineAtMs写入。",
+    "回合约束min读取requiresAction一次，max保持Math.max/min/Math.floor/nullish宽接受，再分别读取必须工具／摘要；空字符串不生成summary，真值MessageRef克隆。不将要求/readonly/结构当资源、授权或完成。",
+    "实际规则绑定、request_delivery别名以及Fragrant请求资格与期限检查旁核：原对象关联和机制守卫仍独立，文案不暗示工厂建立资源付款或deadline。",
+    "完整两源全部中文新增说明与实际分支、callee/receiver/ref/失败顺序一致；无字段／类型／产品文本／import修改。"
+  ],
+  "authorProof": {
+    "sources": 2,
+    "typedNodes": 331,
+    "noncommentLeaves": 407,
+    "wholeRawOutputs": 4
+  },
+  "receiptAttribution": {
+    "proof": {
+      "chunk": "625309",
+      "exitCode": 0,
+      "sources": 2,
+      "typedNodes": 331,
+      "noncommentLeaves": 407,
+      "wholeRawOutputs": 4
+    },
+    "headsAndGitBefore": {
+      "chunk": "708d01",
+      "exitCode": 0,
+      "sources": 2,
+      "gitDocumentationPaths": 579,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "actualGitBeforeFullSame": 2
+    },
+    "sourceDiffCheck": {
+      "chunk": "708d01",
+      "exitCode": 0,
+      "paths": 2
+    },
+    "notRun": [
+      "business tests",
+      "types",
+      "full gates",
+      "models",
+      "network",
+      "archival engine identity recomputation"
+    ],
+    "noRepeatedGreen": true
+  },
+  "findings": [],
+  "limits": [
+    "本审没有执行作者证明器、头、类型、测试或门禁；331 typed节点/407叶/4输出是作者625309真实采样。",
+    "708d01只两源原checkComments/Gitbefore/diff-check，当时579文档，未宣称全架构或授权门禁完成。",
+    "注释进入当前sourceSHA，历史档案身份保持原文；不提供跨构建复现豁免。"
+  ],
+  "sourceUnchangedByReviewer": true
+}

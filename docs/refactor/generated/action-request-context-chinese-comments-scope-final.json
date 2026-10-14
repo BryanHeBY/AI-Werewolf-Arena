@@ -1,0 +1,26 @@
+{
+  "baseCommit": "b0b6fbd95b13787870216282ca2dff9237c40114",
+  "source": [
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "sha256": "47ca276d4271630035d3aae3bcde79fbff3c2cbf1ecbedcdaae334f42df8f6d6"
+    },
+    {
+      "path": "backend/src/game/engine/turn_constraints_context.ts",
+      "sha256": "e175114440f80ffcec3f777cfdd74e41dc334ddb73f507e298262bedeba57e33"
+    }
+  ],
+  "deleted": [],
+  "counts": {
+    "paths": 2,
+    "actualGitBefore": 2,
+    "commentEditRecords": 13
+  },
+  "onlyChange": "有效中文职责／数据／顺序说明；所有非注释程序、字段、类型、字符串、imports与运行输出不变",
+  "exclusions": [
+    "模型／网络／私有配置",
+    "业务测试／类型检查／全门禁",
+    "并行 Nightmare／Ghost fixture源",
+    "Git／progress／矩阵／历史档案身份"
+  ]
+}

@@ -750,3 +750,5 @@
 - C17 噩梦之影完整数据槽：16路径(15现行+1退休)收原七数据/目标函数、frame身份编码与三字段/历史写序及profile真实install；frame保名单/生命/夜窗口/expectedState与committed→target→wolfBlocked。Root及非作者完整真实0cbe十三before/12消费者/四控制/16附件、原宽schema和有效中文说明批准；Root唯一Observer import纳同源原子提交，漏盘Hintregistry在写前完整核原Git后纳入。新3/16+旧首恐惧1/13共四不同29assert，15根type/head首0；whole proof工具前三红保真实末3354a4实际0、原273binding/16程序32输出有限映射保，不重绿。旧私有state删除，无许可镜像，原push/JSON失败前缀不回滚；完整C17/P9继续，见 nightmare-shadow-state-slot.md。
 
   - 本批末暂存检查8c738c仅targets多余EOF空行；只删除该LF，旧完整source/scope/evidence及两输出桥保持。Root与非作者末21附件/15源SHA重新绑定批准，未重复任何绿色行为/类型/头检查。
+
+- C45 行动请求/回合约束中文说明：两源13处纯comment维护，具体公共数据与opaque绑定、无deadline生成、工具/context复制→约束→actor feed→机制绑定、阶段多getter、必须/可选/max宽数值和摘要clone失败边界就地说明。Root与非作者完整源/真实b0b6两个before/9附件语义审批准；完整331typed/407leaf与四ES/CJS输出保持、head两源/579docs实0，没有业务测试/类型/全门禁或重复绿。注释参与真实新sourceHash，历史身份不改；全仓有效中文和P9继续，见 action-request-context-chinese-comments.md。
