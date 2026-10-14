@@ -1,0 +1,19 @@
+{
+  "source": [
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "6447cf1a7b0560442cafded632495471b1d124dbf81e482bb78bed8638023d6d"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/private-state-codec.ts",
+      "sha256": "867874bb2ae97fbb887bfe123e8ada6e1f5eac17d07a87d6adf82764a23ae3e3"
+    },
+    {
+      "path": "backend/tests/unit/recording/private-state-codec.test.ts",
+      "sha256": "6879cf75bee0429b0634312a6c395c742df751bb9eb698d324bf67d47b9adc2d"
+    }
+  ],
+  "documentationPaths": 648,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

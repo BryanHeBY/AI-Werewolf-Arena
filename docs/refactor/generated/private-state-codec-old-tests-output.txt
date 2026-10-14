@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/recording/checkpoint-contributions.test.ts:
+(pass) the complete assembly preserves exact schema2 keys, snapshot reference and detached custom private state [1.72ms]
+(pass) ordinary player contributions retain original repeated component lookups and failure fields precede players [0.33ms]
+(pass) plain custom-state clone exceptions stop before later player fields and retain the original exception [0.20ms]
+
+ 3 pass
+ 1 filtered out
+ 0 fail
+ 13 expect() calls
+Ran 3 tests across 1 file. [157.00ms]

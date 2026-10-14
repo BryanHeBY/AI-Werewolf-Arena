@@ -1,0 +1,51 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "195e17e022805f0b85f63f5508d385a5a29b768c",
+  "source": [
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "6447cf1a7b0560442cafded632495471b1d124dbf81e482bb78bed8638023d6d"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/private-state-codec.ts",
+      "sha256": "74cd5180ec60e047517d48cce84f78232127e67b4ee2ec0cb19339c4155f3ca3"
+    },
+    {
+      "path": "backend/tests/unit/recording/private-state-codec.test.ts",
+      "sha256": "6879cf75bee0429b0634312a6c395c742df751bb9eb698d324bf67d47b9adc2d"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/private-state-codec-scope-final.json",
+    "sha256": "9a94528cca29e473084597cbe52b0f541ac97e3f267f90a504e6a836610c11d8"
+  },
+  "document": {
+    "path": "docs/refactor/private-state-codec.md",
+    "sha256": "bc99a0291ba8325181f3fdbca79e9885215fe1b45379721cb17dcf922a000de1"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/private-state-codec-evidence.json",
+    "sha256": "3f3550d8ebf2c2f305e1234fd8f4c396047caf61f474931d5d73631a56fd196b"
+  },
+  "integrity": {
+    "freshSources": 3,
+    "actualGitBefore": 1,
+    "controls": 3,
+    "artifactHashes": 18,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "实际新return整个来源选择链与原player字段位置的refs调用",
+    "ordinary整clone的alias/getter/callee顺序和后续JSON校验时点",
+    "Demon外层及Lonely原两查询／原字段失败前缀不变",
+    "actual195原稿／三个控制与十八附件、真实5case24assert/finite3",
+    "两条中文精度桥与首阶段sourceSHA不重绿"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

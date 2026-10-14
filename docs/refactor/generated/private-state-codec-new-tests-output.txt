@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/recording/private-state-codec.test.ts:
+(pass) ordinary codec keeps full-container aliases, cycles, undefined and legal getter values [0.70ms]
+(pass) ordinary codec finds clone callee before private-state getter and preserves its failure [0.27ms]
+
+ 2 pass
+ 0 fail
+ 11 expect() calls
+Ran 2 tests across 1 file. [73.00ms]

@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen-awaiting-independent-review",
+  "baseCommit": "195e17e022805f0b85f63f5508d385a5a29b768c",
+  "source": [
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "6447cf1a7b0560442cafded632495471b1d124dbf81e482bb78bed8638023d6d"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/private-state-codec.ts",
+      "sha256": "74cd5180ec60e047517d48cce84f78232127e67b4ee2ec0cb19339c4155f3ca3"
+    },
+    {
+      "path": "backend/tests/unit/recording/private-state-codec.test.ts",
+      "sha256": "6879cf75bee0429b0634312a6c395c742df751bb9eb698d324bf67d47b9adc2d"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/private-state-codec-scope-final.json",
+    "sha256": "9a94528cca29e473084597cbe52b0f541ac97e3f267f90a504e6a836610c11d8"
+  },
+  "document": {
+    "path": "docs/refactor/private-state-codec.md",
+    "sha256": "bc99a0291ba8325181f3fdbca79e9885215fe1b45379721cb17dcf922a000de1"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/private-state-codec-before.json",
+      "sha256": "acdba79779461978c090c85e0a3d08f903bc66c04bba28e9205e804d9961c1fa"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-paths.json",
+      "sha256": "87bc4c49d76a2b9f606c066519a6fec487af130598e4c9880e1f3d1b43169d7b"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-edits.json",
+      "sha256": "17bfb7f459c00b4836d34ba19fc16a69b37b85041722334cdfa36aed4a2ae780"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-first-edits.json",
+      "sha256": "2c134795e5cd1e97ba65ad85a395cf59c0f6654a2eaaa07b1a2f428c74a63049"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-proof.cjs",
+      "sha256": "3ab22ffe6fcac22871de4acdccd820700f2730f6125f908cf825cf8a011a666b"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-first-proof.cjs",
+      "sha256": "d5466c27ec6d51d240733cbdfa6cf57fbc6491fa9f6d466a384aa95dd8a52cb8"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-proof-output.txt",
+      "sha256": "41f1ed03f0d7246c59d6759419fd6c6154ac68e8fff75aaa875a9779f0382112"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-first-proof-output.txt",
+      "sha256": "dca22cfb235d20659e92692d4b944cb3de64485c005515b63fff1f520df9a0d6"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-proof.json",
+      "sha256": "5118be4470156cd8c5c81fa2aa5f1c9c5f1d61f6adc707c14c0b0a43ed812538"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-comment-precision-before.json",
+      "sha256": "09078e8999b14140f8e486edd054453ec59fcd59a544fbb779f22913ea933217"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-new-tests-output.txt",
+      "sha256": "2ef8e7eb4eafaf7257e44a29cece910cdbf899bf4b2e2d82013df5a38ebe8a57"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-old-tests-output.txt",
+      "sha256": "822d91171aa2b7c60a909420d5b664628f815041eae62eba12731d7ef7bb9706"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-types-config.json",
+      "sha256": "98bed31d1b9da08c6d0c4ed0d2070128e6c4bdf4cd2d3b15961919242c0d9084"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-heads.ts",
+      "sha256": "5617886502dbfbfef22ffc1f3ebb43e9d181b0599a13f6048f1644250baa1992"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-heads-output.txt",
+      "sha256": "bb15aeb8a952f3ed4baeb0e2a8bf3c82fbec6561449a9cbe7f4c104d53c25357"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-heads.json",
+      "sha256": "31cc496c7d7e9455ac8e274bb82a267d2efeeec9b3166c8bd3a6ba3ecc346e4f"
+    },
+    {
+      "path": "docs/refactor/generated/private-state-codec-receipts.json",
+      "sha256": "2ccca1b55955a37534265ea4c0ec3d764fd8547813b6c90593efdfee16b795b0"
+    }
+  ],
+  "receipts": {
+    "newTests": {
+      "terminalChunk": "5ab8f4",
+      "exitCode": 0,
+      "executions": 1,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 11,
+      "output": "docs/refactor/generated/private-state-codec-new-tests-output.txt"
+    },
+    "oldTests": {
+      "terminalChunk": "9e81f9",
+      "exitCode": 0,
+      "executions": 1,
+      "pass": 3,
+      "fail": 0,
+      "filtered": 1,
+      "assertions": 13,
+      "selection": "checkpoint-contributions 前三真实案例",
+      "output": "docs/refactor/generated/private-state-codec-old-tests-output.txt"
+    },
+    "types": {
+      "launchChunk": "ee32fd",
+      "session": 96628,
+      "terminalChunk": "634114",
+      "exitCode": 0,
+      "executions": 1,
+      "roots": 3,
+      "config": "docs/refactor/generated/private-state-codec-types-config.json",
+      "output": "docs/refactor/generated/private-state-codec-types-output.txt"
+    },
+    "heads": {
+      "terminalChunk": "4146a1",
+      "exitCode": 0,
+      "executions": 1,
+      "roots": 3,
+      "documentationPaths": 648,
+      "output": "docs/refactor/generated/private-state-codec-heads-output.txt",
+      "sourceStage": "两处末中文精度修正之前；原report/sourceSHA保留，由完整注释桥承接"
+    },
+    "proof": {
+      "first": {
+        "terminalChunk": "674bcc",
+        "exitCode": 1,
+        "reason": "删除import的空after误作逆匹配计数；工具问题",
+        "script": "docs/refactor/generated/private-state-codec-first-proof.cjs",
+        "edits": "docs/refactor/generated/private-state-codec-first-edits.json",
+        "output": "docs/refactor/generated/private-state-codec-first-proof-output.txt"
+      },
+      "final": {
+        "terminalChunk": "a1c069",
+        "exitCode": 0,
+        "executions": 1,
+        "script": "docs/refactor/generated/private-state-codec-proof.cjs",
+        "output": "docs/refactor/generated/private-state-codec-proof-output.txt"
+      },
+      "successfulScope": {
+        "retainedProgramTypedNodes": 732,
+        "retainedProgramNoncommentTokens": 843,
+        "retainedWholeInverseOutputs": 2,
+        "actualExpressionTypedNodes": 106,
+        "actualExpressionTokens": 114,
+        "actualExpressionOutputs": 2,
+        "commentOnlyOwnerOutputs": 2
+      }
+    },
+    "totals": {
+      "distinctExecutedTests": 5,
+      "assertions": 24,
+      "testExecutions": 2
+    },
+    "notRun": [
+      "其余checkpoint/Tape/整局case",
+      "已绿测试或类型根重复",
+      "full gates",
+      "模型"
+    ]
+  },
+  "responsibility": "完整checkpoint privateState来源选择与宽克隆，Demon整players/其余字段仍原装配",
+  "limitations": [
+    "仅codec步骤1，不是全55/C17/归档schema验收",
+    "未新增任何schema/逐Role过滤/失效/资源写权",
+    "新运行module/call/publicAPI/sourceHash变化；迁移inverse与actualexpression分别证明",
+    "首工具红与末comment桥按真实阶段保留，不重复已绿检查",
+    "type有限3root依赖当前公开树，不当完整固定Git闭包证明"
+  ]
+}

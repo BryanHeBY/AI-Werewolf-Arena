@@ -1,0 +1,78 @@
+{
+  "newTests": {
+    "terminalChunk": "5ab8f4",
+    "exitCode": 0,
+    "executions": 1,
+    "pass": 2,
+    "fail": 0,
+    "assertions": 11,
+    "output": "docs/refactor/generated/private-state-codec-new-tests-output.txt"
+  },
+  "oldTests": {
+    "terminalChunk": "9e81f9",
+    "exitCode": 0,
+    "executions": 1,
+    "pass": 3,
+    "fail": 0,
+    "filtered": 1,
+    "assertions": 13,
+    "selection": "checkpoint-contributions 前三真实案例",
+    "output": "docs/refactor/generated/private-state-codec-old-tests-output.txt"
+  },
+  "types": {
+    "launchChunk": "ee32fd",
+    "session": 96628,
+    "terminalChunk": "634114",
+    "exitCode": 0,
+    "executions": 1,
+    "roots": 3,
+    "config": "docs/refactor/generated/private-state-codec-types-config.json",
+    "output": "docs/refactor/generated/private-state-codec-types-output.txt"
+  },
+  "heads": {
+    "terminalChunk": "4146a1",
+    "exitCode": 0,
+    "executions": 1,
+    "roots": 3,
+    "documentationPaths": 648,
+    "output": "docs/refactor/generated/private-state-codec-heads-output.txt",
+    "sourceStage": "两处末中文精度修正之前；原report/sourceSHA保留，由完整注释桥承接"
+  },
+  "proof": {
+    "first": {
+      "terminalChunk": "674bcc",
+      "exitCode": 1,
+      "reason": "删除import的空after误作逆匹配计数；工具问题",
+      "script": "docs/refactor/generated/private-state-codec-first-proof.cjs",
+      "edits": "docs/refactor/generated/private-state-codec-first-edits.json",
+      "output": "docs/refactor/generated/private-state-codec-first-proof-output.txt"
+    },
+    "final": {
+      "terminalChunk": "a1c069",
+      "exitCode": 0,
+      "executions": 1,
+      "script": "docs/refactor/generated/private-state-codec-proof.cjs",
+      "output": "docs/refactor/generated/private-state-codec-proof-output.txt"
+    },
+    "successfulScope": {
+      "retainedProgramTypedNodes": 732,
+      "retainedProgramNoncommentTokens": 843,
+      "retainedWholeInverseOutputs": 2,
+      "actualExpressionTypedNodes": 106,
+      "actualExpressionTokens": 114,
+      "actualExpressionOutputs": 2,
+      "commentOnlyOwnerOutputs": 2
+    }
+  },
+  "totals": {
+    "distinctExecutedTests": 5,
+    "assertions": 24,
+    "testExecutions": 2
+  },
+  "notRun": [
+    "其余checkpoint/Tape/整局case",
+    "已绿测试或类型根重复",
+    "full gates",
+    "模型"
+  ]
+}

@@ -1,6 +1,6 @@
 /**
  * 负责 checkpoint 玩家记录的有序编码。输入为同一 World、完整／失败模式和最初动物审计快照；
- * 输出保留恶魔原体优先、动物原审计、婚约／孤女覆盖与普通 structuredClone 的原完整字段和顺序。
+ * 输出保留恶魔原体优先；私有状态由数据 owner 在原字段位置编码，其余完整字段和顺序仍归本装配。
  * 原体 descriptor、JSON、重复组件读取和 fallback 克隆各在原表达式处执行；不修改 live 状态。
  * 壁上便签、恋人、处罚、胜利、投票、警徽和印记贡献只编码，不推导新规则或授予行动权限。
  */
@@ -17,17 +17,15 @@ import {
 import type { RecordedCheckpoint } from "../reproduction";
 import type { prepareAnimalCheckpoint } from "./authority-snapshots";
 import { auditData } from "./animal-audit";
-import { snapshotPlainData } from "../../core/domain/plain_data";
+import { encodeCheckpointPrivateState } from "./private-state-codec";
 import { aliveLifeDescriptor } from "../../core/domain/components/alive";
 import {
   animalOriginalAuditPlayer,
   animalOriginalAuditIds,
 } from "../../game/mechanisms/roles/animal_dream/roster";
-import { fragrantCheckpointPrivateState } from "../../game/mechanisms/roles/fragrant_pair_seer/authority";
 import { demonHunterCheckpointPlayers } from "../../game/mechanisms/roles/demon_hunter/authority";
 import { weddingAuditPlayer } from "../../game/mechanisms/roles/ghost_bride/authority";
 import {
-  projectLonelyGirl,
   projectLonelyGirlVictory,
   projectLonelyGirlAuditPlayer,
 } from "../../game/mechanisms/roles/lonely_girl/lifecycle";
@@ -81,23 +79,8 @@ export function capturePlayerContributions(
         alive: original
           ? aliveLifeDescriptor(original.scope.life)!.get!.call(original.scope.life)
           : (audit?.alive ?? world.getComponent(id, COMPONENT.Alive)!.alive),
-        // 保原动物→寻香→审计→孤女→普通容器的短路顺序；普通分支克隆整个容器，包括原可接受扩展字段。
-        privateState:
-          (animal && original
-            ? id === animal.foxId
-              ? { foxCub: animal.fox }
-              : id === animal.catId
-                ? { whiteCat: animal.cat }
-                : id === animal.pufferId
-                  ? { pufferfish: animal.puffer }
-                  : (snapshotPlainData(original.privateState) as Record<string, unknown>)
-            : null) ??
-          fragrantCheckpointPrivateState(world, id, complete) ??
-          audit?.privateState ??
-          // 孤女专属输出保留存在判断和值处的两次查询；不缓存为一次，也不以玩家观察字段替换普通分支的完整私有容器。
-          (projectLonelyGirl(world, role)
-            ? { lonelyGirl: projectLonelyGirl(world, role) }
-            : (structuredClone(role.privateState) as Record<string, unknown>)),
+        // 原特殊审计优先级与整容器克隆归数据 owner；这里只在原字段位置传入已求出的引用。
+        privateState: encodeCheckpointPrivateState(world, id, complete, animal, original, role, audit),
         ...(wallNote ? { wallNote } : {}),
         // 可选组件先判断、再现场读取并克隆；getter／克隆失败仍从原表达式传播，不补空记录。
         ...(world.getComponent(id, COMPONENT.DebatePenalty)

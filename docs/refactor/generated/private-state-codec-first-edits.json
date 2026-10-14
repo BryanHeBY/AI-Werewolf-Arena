@@ -1,0 +1,29 @@
+{
+  "backend/src/recording/checkpoint/player-snapshots.ts": [
+    {
+      "before": "        // 保原动物→寻香→审计→孤女→普通容器的短路顺序；普通分支克隆整个容器，包括原可接受扩展字段。\n        privateState:\n          (animal && original\n            ? id === animal.foxId\n              ? { foxCub: animal.fox }\n              : id === animal.catId\n                ? { whiteCat: animal.cat }\n                : id === animal.pufferId\n                  ? { pufferfish: animal.puffer }\n                  : (snapshotPlainData(original.privateState) as Record<string, unknown>)\n            : null) ??\n          fragrantCheckpointPrivateState(world, id, complete) ??\n          audit?.privateState ??\n          // 孤女专属输出保留存在判断和值处的两次查询；不缓存为一次，也不以玩家观察字段替换普通分支的完整私有容器。\n          (projectLonelyGirl(world, role)\n            ? { lonelyGirl: projectLonelyGirl(world, role) }\n            : (structuredClone(role.privateState) as Record<string, unknown>)),\n",
+      "after": "        // 原特殊审计优先级与整容器克隆归数据 owner；这里只在原字段位置传入已求出的引用。\n        privateState: encodeCheckpointPrivateState(world, id, complete, animal, original, role, audit),\n",
+      "count": 1
+    },
+    {
+      "before": "import { snapshotPlainData } from \"../../core/domain/plain_data\";\n",
+      "after": "import { encodeCheckpointPrivateState } from \"./private-state-codec\";\n",
+      "count": 1
+    },
+    {
+      "before": "import { fragrantCheckpointPrivateState } from \"../../game/mechanisms/roles/fragrant_pair_seer/authority\";\n",
+      "after": "",
+      "count": 1
+    },
+    {
+      "before": "  projectLonelyGirl,\n",
+      "after": "",
+      "count": 1
+    },
+    {
+      "before": " * 输出保留恶魔原体优先、动物原审计、婚约／孤女覆盖与普通 structuredClone 的原完整字段和顺序。\n",
+      "after": " * 输出保留恶魔原体优先；私有状态由数据 owner 在原字段位置编码，其余完整字段和顺序仍归本装配。\n",
+      "count": 1
+    }
+  ]
+}
