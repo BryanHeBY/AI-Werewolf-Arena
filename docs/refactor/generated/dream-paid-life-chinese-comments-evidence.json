@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen",
+  "baseCommit": "a78df2261c00478bd105660529d8a30537a32f2d",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "6e2dd4fa429e5f33865e87bf4f3c15e62ac419e15f6d2c6efd342260d05e79ce",
+      "change": "comments-only"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/dream-paid-life-chinese-comments-scope-final.json",
+    "sha256": "955212577176d4ffa214e8dd1507f4d93ae21198be3371b4a5107f46272c9e3b"
+  },
+  "document": {
+    "path": "docs/refactor/dream-paid-life-chinese-comments.md",
+    "sha256": "4380004e02811212f3fe03e92fd6989be1416089283c57696939d4bca6df51cc"
+  },
+  "controls": [
+    {
+      "path": "backend/src/core/domain/components/alive.ts",
+      "sha256": "c6b681bded926aec1568887887baaff9fff7903a1fd8eba94e0c30f4a246e0a4",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "5847a300daa922a4146e38b9d0b711697dcf5272590830811bb94b7349437473",
+      "wholeGitCurrentSame": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-before.json",
+      "sha256": "5babe481479951b077159cc451501dfa0a8946b2fbce130e8791aab1724dbf5f"
+    },
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-edits.json",
+      "sha256": "9cf1055a3c4413e3da9e2d4512df755e694f7715693eee7cb5bfb107a8e57f92"
+    },
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-proof.cjs",
+      "sha256": "18746f383534f62796f135046bc0e0ce8d9ccd9c931fc573ff61a2fec7731652"
+    },
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-proof.json",
+      "sha256": "44cfb654cb8fb482ed8dd212a0b7b4a9cc81bf0410973feac7a6cb4b19ff5427"
+    },
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-proof.log",
+      "sha256": "e78435a17c969377b99e3095a153a59b73e01136e5e834ee437b949b3d54c76c"
+    },
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-heads.ts",
+      "sha256": "2033b2d8dd637cb32b8821e074d3f18c181c4f2367992cfa7e963832db0f922b"
+    },
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-heads.json",
+      "sha256": "ebadff234502acd23adea03144e5ed896e37f1483c0332760f97334fb84fbf3d"
+    },
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-heads-output.txt",
+      "sha256": "084a9b1171a7e40f836130c887afafdadef1813cea1da8616ce4deb18f3caa4c"
+    },
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-receipts.json",
+      "sha256": "dcdffc6df3838c2e26ce2a5dfdc4743be40a4d4347cbf363f68ea083dd4d7b44"
+    },
+    {
+      "path": "docs/refactor/generated/dream-paid-life-chinese-comments-handoff.md",
+      "sha256": "32ae82df5422d53c98560619055d2a2de0f692f3b1632efb6fb70d9b29b3bc2c"
+    }
+  ],
+  "receipts": {
+    "proof": {
+      "command": "bun docs/refactor/generated/dream-paid-life-chinese-comments-proof.cjs",
+      "chunkId": "bce3b8",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/dream-paid-life-chinese-comments-proof.log",
+      "once": true
+    },
+    "heads": {
+      "command": "bun docs/refactor/generated/dream-paid-life-chinese-comments-heads.ts",
+      "chunkId": "3ceac7",
+      "exitCode": 0,
+      "roots": 1,
+      "documentationPaths": 624,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "log": "docs/refactor/generated/dream-paid-life-chinese-comments-heads-output.txt",
+      "once": true
+    },
+    "notRun": [
+      "types",
+      "behavior tests",
+      "full gates",
+      "network/model"
+    ]
+  },
+  "limits": [
+    "只补三项说明，无执行token/type/字段/既有head/产品文本/机器协议改变；运行栈行号自然变化不宣称全外部字节环境等价。",
+    "回调、组件同引用、首次死亡与eligible规则仍原代码，注释不新增授权、freeze、JSON或退款。",
+    "没有运行类型、行为或全门禁；控制场景只核实际Git字节，不把读旧oracle算重新通过。"
+  ]
+}

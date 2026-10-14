@@ -1,0 +1,1 @@
+{"source":[{"path":"backend/src/game/mechanisms/roles/dreamer/night_frame.ts","sha256":"6e2dd4fa429e5f33865e87bf4f3c15e62ac419e15f6d2c6efd342260d05e79ce"}],"documentationPaths":624,"diagnostics":[],"chineseHeadFailures":[]}

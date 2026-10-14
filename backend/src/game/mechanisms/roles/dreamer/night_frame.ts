@@ -12,6 +12,10 @@ import type { World } from "../../../../core/domain/world";
 import type { DamageResolutionResult } from "../../../../core/domain/systems/damage_resolution_system";
 import type { NightImmunityClaim } from "../../../../core/domain/night_effects";
 
+/**
+ * 本夜关系持原行动者／目标组件引用与当时捕获版本；可选回调仍归已付效果所有者。
+ * 字段和嵌套对象未深冻结，Frame 沿同数组读取；这些运行引用不是可序列化数据或行动许可。
+ */
 export interface DreamNightLink {
   actorId: EntityId;
   targetId: EntityId;
@@ -76,6 +80,7 @@ export class DreamNightFrame implements DreamNightEffects {
       aliveLifeVersion(link.targetLife) === link.targetVersion
     );
   }
+  // 只接本波 eligible 集合中的同原目标首次死亡（版本仅 +1）；替换或复活后的生命不复用。
   private targetDeathCurrent(
     world: World,
     link: DreamNightLink,
@@ -89,6 +94,7 @@ export class DreamNightFrame implements DreamNightEffects {
       aliveLifeVersion(link.targetLife) === link.targetVersion + 1
     );
   }
+  // 已付梦允许同原行动者首死亡后的连锁，但仍检查回调、原组件和捕获版本，不无条件保留效果。
   private actorCurrent(world: World, link: DreamNightLink): boolean {
     return (
       (link.isCurrent?.() ?? true) &&

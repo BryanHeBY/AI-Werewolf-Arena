@@ -1,0 +1,26 @@
+{
+  "proof": {
+    "command": "bun docs/refactor/generated/dream-paid-life-chinese-comments-proof.cjs",
+    "chunkId": "bce3b8",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/dream-paid-life-chinese-comments-proof.log",
+    "once": true
+  },
+  "heads": {
+    "command": "bun docs/refactor/generated/dream-paid-life-chinese-comments-heads.ts",
+    "chunkId": "3ceac7",
+    "exitCode": 0,
+    "roots": 1,
+    "documentationPaths": 624,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "log": "docs/refactor/generated/dream-paid-life-chinese-comments-heads-output.txt",
+    "once": true
+  },
+  "notRun": [
+    "types",
+    "behavior tests",
+    "full gates",
+    "network/model"
+  ]
+}
