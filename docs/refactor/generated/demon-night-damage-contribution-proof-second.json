@@ -1,0 +1,221 @@
+{
+  "base": "d9be88a2b9fe3834348bf310956099581e81a439",
+  "provenance": "Initial d964 capture records independent Evil WIP; shared PM/Night after Evil d9be commit are actual Git. No new owner body is replaced wholesale: only two declared query expansions and events receiver route are inverted. PM whole caller inverse expands the separately proven original checkpoints.",
+  "routes": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sourceSha256": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8",
+      "actualGitSha256": "df20fe51211ad8e1758c703a2807106ae13c9f869d055326b8dff763a8e3f39c",
+      "recordedGitSame": true,
+      "workingBeforeSameGit": true,
+      "completeProgram": {
+        "originalNodes": 8005,
+        "candidateNodes": 8005,
+        "same": true
+      },
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "originalSha256": "ba8c37a0699ea3700f045ab38d27a5c17df73b2601db0450cf30f079bffbdd30",
+          "candidateSha256": "ba8c37a0699ea3700f045ab38d27a5c17df73b2601db0450cf30f079bffbdd30",
+          "rawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "originalSha256": "a9cb855e9e59497bd3445a6d334b2b87ef6d44e4835f2788fcb9abc30c854faa",
+          "candidateSha256": "a9cb855e9e59497bd3445a6d334b2b87ef6d44e4835f2788fcb9abc30c854faa",
+          "rawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sourceSha256": "57962062fc903d7caf6f40998048fec0a4252863a9a7a0b5b369d2717c7f977a",
+      "actualGitSha256": "275c161a380c810a32a755b27ec0a469358931dccbe310f233ff88357a68ac16",
+      "recordedGitSame": true,
+      "workingBeforeSameGit": true,
+      "completeProgram": {
+        "originalNodes": 3445,
+        "candidateNodes": 3445,
+        "same": true
+      },
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "originalSha256": "d2618d73377423d544f6b0036d3dd1d685755196fecff6bf19c078085837118a",
+          "candidateSha256": "d2618d73377423d544f6b0036d3dd1d685755196fecff6bf19c078085837118a",
+          "rawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "originalSha256": "b634c842f4edd493bfca0bd2440d19a12f279bddc05c7d3c44543e3779edd799",
+          "candidateSha256": "b634c842f4edd493bfca0bd2440d19a12f279bddc05c7d3c44543e3779edd799",
+          "rawSame": true
+        }
+      ]
+    }
+  ],
+  "moved": [
+    {
+      "owner": "appendDemonNightDamageSources",
+      "completeBody": {
+        "originalNodes": 300,
+        "candidateNodes": 299,
+        "same": false
+      },
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "originalSha256": "2602c25f7f65ba584a8e670d30897f234a331c64599acd89a0456c001bdbde88",
+          "candidateSha256": "e7c64efdb61332af96c1e591fa0d2f25883f4f4efc09dc553060a5cc83ef6a85",
+          "rawSame": false
+        },
+        {
+          "module": "CommonJS",
+          "originalSha256": "2602c25f7f65ba584a8e670d30897f234a331c64599acd89a0456c001bdbde88",
+          "candidateSha256": "e7c64efdb61332af96c1e591fa0d2f25883f4f4efc09dc553060a5cc83ef6a85",
+          "rawSame": false
+        }
+      ]
+    },
+    {
+      "owner": "publishDemonNightDamageSources",
+      "completeBody": {
+        "originalNodes": 181,
+        "candidateNodes": 181,
+        "same": true
+      },
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "originalSha256": "3437432649a9573a0f9317fe681c53b386b97d0e387faf5bc4b632eed0e94f51",
+          "candidateSha256": "3437432649a9573a0f9317fe681c53b386b97d0e387faf5bc4b632eed0e94f51",
+          "rawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "originalSha256": "3437432649a9573a0f9317fe681c53b386b97d0e387faf5bc4b632eed0e94f51",
+          "candidateSha256": "3437432649a9573a0f9317fe681c53b386b97d0e387faf5bc4b632eed0e94f51",
+          "rawSame": true
+        }
+      ]
+    }
+  ],
+  "knifeType": {
+    "originalNodes": 30,
+    "candidateNodes": 30,
+    "same": true
+  },
+  "ports": {
+    "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+    "sourceSha256": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+    "completeOtherProgram": {
+      "originalNodes": 125,
+      "candidateNodes": 125,
+      "same": true
+    },
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "originalSha256": "38766c1c7a9030d29f9fb34a38e3a6e3f1627618efa68d08c3a9e9f1a843fa67",
+        "candidateSha256": "38766c1c7a9030d29f9fb34a38e3a6e3f1627618efa68d08c3a9e9f1a843fa67",
+        "rawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "originalSha256": "3203b455a2b000889650cd8603b6d8adb6c8613ff474ce20a09878523be754ae",
+        "candidateSha256": "3203b455a2b000889650cd8603b6d8adb6c8613ff474ce20a09878523be754ae",
+        "rawSame": true
+      }
+    ],
+    "newExports": [
+      {
+        "name": "appendDemonNightDamageSources",
+        "typeOnly": false
+      },
+      {
+        "name": "publishDemonNightDamageSources",
+        "typeOnly": false
+      },
+      {
+        "name": "DemonKnifeProtection",
+        "typeOnly": true
+      },
+      {
+        "name": "DemonNightDamageQueries",
+        "typeOnly": true
+      },
+      {
+        "name": "DemonNightDamagePublicationRuntime",
+        "typeOnly": true
+      }
+    ]
+  },
+  "testTypeDelta": {
+    "path": "backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts",
+    "originalSha256": "98118e904cb51e38938d9889c86b33bba1cd67da55ecfb1f3f34367089c16614",
+    "sourceSha256": "2f067699a95a343d85f8de7595f9767c23d0cec5e9b569656d213c8e1d0be608",
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "originalSha256": "e129e1d84f9430bcbb606af9ce85d2298fae674b0aa38791c85913fe7b03abbc",
+        "candidateSha256": "e129e1d84f9430bcbb606af9ce85d2298fae674b0aa38791c85913fe7b03abbc",
+        "rawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "originalSha256": "f2ef0062986a362ce19317e115992bfcf6017201be7245b4117fbb5d5d0cba33",
+        "candidateSha256": "f2ef0062986a362ce19317e115992bfcf6017201be7245b4117fbb5d5d0cba33",
+        "rawSame": true
+      }
+    ],
+    "limits": "Only explicit getter return type and two GameEvent assertion types; new3 runtime receipt belongs to before-typefix source."
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "868d6489ca83dd2cf13ae7dbd2fd43d9f774a018e47308f45f1c4e220aa1e50e",
+      "sameGit": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "sameGit": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "sha256": "cb43b97eb1df5ccaa54b36faf023ae2f90de787aa292a10a2ab065093837469e",
+      "sameGit": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+      "sha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d",
+      "sameGit": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/poison_contribution.ts",
+      "sha256": "0846902ed221487ec489face6b4d0277b2216e73ce4471c23287712070de5601",
+      "sameGit": true,
+      "currentSame": true
+    }
+  ],
+  "negativeHarnessChecks": [
+    {
+      "name": "append non-first child cause changes rejected",
+      "rejected": true
+    },
+    {
+      "name": "publish non-first object field changes rejected",
+      "rejected": true
+    }
+  ],
+  "limits": [
+    "Formal inputs add query object and synchronous public function calls; no arbitrary CJS export reassignment equivalence claim.",
+    "Source getters retain late this.world/events and optional source receiver; new helper invocation frames are observable via stack/reflection.",
+    "No schema/authorization/payment/clock/victory changes or full gate/type/runtime matrix claim."
+  ]
+}

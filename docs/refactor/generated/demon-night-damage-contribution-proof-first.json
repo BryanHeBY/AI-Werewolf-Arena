@@ -1,0 +1,6 @@
+{
+  "phase": "first harness only",
+  "terminalExit": 1,
+  "reason": "Inverse of removed policy import used empty replacement as uniqueness anchor. Empty text matches every position; no production source changes were made to fix proof.",
+  "fix": "Restore exact original import before preserved NightFaultPlan import; compare entire program and both outputs."
+}

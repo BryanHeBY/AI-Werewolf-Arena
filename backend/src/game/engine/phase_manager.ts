@@ -32,6 +32,8 @@ import { decideSnake } from "../mechanisms/roles/mist_raven/snake_window";
 import {
   demonRedMoonExpiry,
   commitDemonRedMoonTransition,
+  appendDemonNightDamageSources,
+  publishDemonNightDamageSources,
 } from "../mechanisms/roles/demon_hunter/ports";
 import { StatusMark } from "../../core";
 import { statusMarkSnapshot } from "../../core/domain/components/status_marks";
@@ -61,7 +63,6 @@ import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
 import { validateVictoryDecision } from "../mechanisms/win_conditions/validated-victory";
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-contract";
 import { text } from "@ai-werewolf-arena/game-text";
-import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { NightFaultPlan, type FaultPlan } from "./fault_plan";
 import { getSessionRecorder } from "../../recording/recording_context";
 import { safeRecordLogicOp } from "../../recording/session_recorder";
@@ -483,38 +484,17 @@ export class PhaseManager {
         );
         const guardOverrides: Array<{ targetId: number; guard: boolean }> = [];
         if (demon) {
-          for (const override of demon.poisonOverrides) {
-            const causes: DeathCause[] = (proposedSources[override.targetId] ?? []).filter(
-              (cause) => cause !== DeathCause.Poison,
-            );
-            if (override.poison) causes.push(DeathCause.Poison);
-            proposedSources[override.targetId] = causes;
-          }
-          if (night.demonKnifeProtection) {
-            const knife = night.demonKnifeProtection;
-            const guard = knife.guardCurrent?.() ?? knife.guard;
-            guardOverrides.push({ targetId: knife.targetId, guard });
-            const heal =
-              demon.healOverrides.find((effect) => effect.targetId === knife.targetId)?.heal ??
-              (knife.heal ||
-                statusMarkSnapshot(
-                  this.world.getComponent(knife.targetId, COMPONENT.StatusMarks),
-                  StatusMark.HealMark,
-                )?.present === true);
-            const causes = (proposedSources[knife.targetId] ?? []).filter(
-              (cause) => cause !== DeathCause.WolfKill,
-            ) as DeathCause[];
-            if (knife.wolf && guard === heal && night.demonWolfSourceCurrent?.(knife.targetId))
-              causes.push(DeathCause.WolfKill);
-            proposedSources[knife.targetId] = causes;
-          }
-          if (demon.hunt.damage) {
-            const { targetId, cause } = demon.hunt.damage;
-            const causes = (proposedSources[targetId] ??= []);
-            causes.push(
-              cause === "demon_hunt" ? DeathCause.DemonHunt : DeathCause.DemonHuntBacklash,
-            );
-          }
+          const manager = this;
+          appendDemonNightDamageSources({
+            get knifeProtection() { return night.demonKnifeProtection; },
+            healMarkPresent(target) {
+              return statusMarkSnapshot(
+                manager.world.getComponent(target(), COMPONENT.StatusMarks),
+                StatusMark.HealMark,
+              )?.present === true;
+            },
+            wolfSourceCurrent(target) { return night.demonWolfSourceCurrent?.(target()); },
+          }, demon, proposedSources, guardOverrides);
         }
         if (this.config.nobleSecretBody) {
           if (demon?.hunt.servantCleared)
@@ -576,37 +556,10 @@ export class PhaseManager {
           }, nightDay, sources, deaths);
         }
         if (demon) {
-          if (demon.hunt.cancelled)
-            this.events.push({
-              timestamp: Date.now(),
-              type: "demon_hunter_cancelled",
-              payload: { ...demon.hunt.cancelled },
-              audience: Object.freeze([]),
-            });
-          for (const fact of demon.poisonImmunities)
-            this.events.push({
-              timestamp: Date.now(),
-              type: "demon_hunter_poison_immune",
-              payload: { ...fact },
-              audience: Object.freeze([]),
-            });
-          safeRecordLogicOp({
-            scope: "resolution",
-            op: "demon_hunter_sources_frozen",
-            phase: Phase.Night,
-            status: "ok",
-            output: {
-              policy: DEMON_HUNTER_POLICY,
-              day: nightDay,
-              hunt: demon.hunt,
-              poison_immunities: demon.poisonImmunities,
-              poison_overrides: demon.poisonOverrides,
-              heal_overrides: demon.healOverrides,
-              guard_overrides: guardOverrides,
-              deaths: [...deaths],
-              death_sources: sources,
-            },
-          });
+          const manager = this;
+          publishDemonNightDamageSources({
+            get events() { return manager.events; },
+          }, demon, nightDay, guardOverrides, deaths, sources);
         }
         const livingBeforeChain = new Map(
           this.world.getAliveEntityIds().map((id) => {

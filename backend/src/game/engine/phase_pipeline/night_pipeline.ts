@@ -42,6 +42,7 @@ import {
   lateUnknownGuardContribution,
 } from "../../mechanisms/roles/demon_hunter/guard_contribution";
 import { demonHunterActorId, originalDemonNightLives, demonOriginalWolfSourceCurrent, demonOriginalWolfTargetCurrent } from "../../mechanisms/roles/demon_hunter/ports";
+import type { DemonKnifeProtection } from "../../mechanisms/roles/demon_hunter/ports";
 import { sealDeliveredDemonWitchSources } from "../../mechanisms/roles/demon_hunter/native_potion_controller";
 import { weddingSetup } from "../../mechanisms/roles/ghost_bride/ports";
 import { discardStaleWeddingKnife } from "../../mechanisms/roles/ghost_bride/night_stages";
@@ -118,13 +119,7 @@ export type NightPipelineResult =
       blocksPassiveNightShot?: (targetId: EntityId) => boolean;
       inspectionAttacks?: readonly import("../../../core/domain/night_effects").NightInspectionAttack[];
       demonWolfSourceCurrent?: (targetId: number) => boolean;
-      demonKnifeProtection?: Readonly<{
-        targetId: number;
-        wolf: boolean;
-        guard: boolean;
-        guardCurrent?: () => boolean;
-        heal: boolean;
-      }>;
+      demonKnifeProtection?: DemonKnifeProtection;
       foxInspections?: readonly import("../../../core/domain/night_effects").NightFoxInspectionClaim[];
       deathLives: ReadonlyMap<EntityId, { life: AliveComponent; version: number | undefined }>;
     }

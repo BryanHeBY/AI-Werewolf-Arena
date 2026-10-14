@@ -1,0 +1,597 @@
+{
+  "version": 1,
+  "scope": {
+    "base": "d9be88a2b9fe3834348bf310956099581e81a439",
+    "initialConcurrentBase": "d964fa2b6354b19564b57553f6631270070e14ee",
+    "sources": [
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8",
+        "origin": "Actual d9be Git after Evil source froze and committed"
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sha256": "57962062fc903d7caf6f40998048fec0a4252863a9a7a0b5b369d2717c7f977a",
+        "origin": "Actual d9be Git after Evil source froze and committed"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+        "sha256": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+        "origin": "Actual initial Git, followed by author export/comment delta before Evil commit"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+        "sha256": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+        "origin": "new source"
+      },
+      {
+        "path": "backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts",
+        "sha256": "2f067699a95a343d85f8de7595f9767c23d0cec5e9b569656d213c8e1d0be608",
+        "origin": "new source"
+      }
+    ],
+    "deleted": [],
+    "sourceOwnership": "Five paths only; Evil nine-source commit delta and controller/authority/payment/clock implementations remain controls."
+  },
+  "programProof": {
+    "base": "d9be88a2b9fe3834348bf310956099581e81a439",
+    "provenance": "Initial d964 capture records independent Evil WIP; shared PM/Night after Evil d9be commit are actual Git. No new owner body is replaced wholesale: only two declared query expansions and events receiver route are inverted. PM whole caller inverse expands the separately proven original checkpoints.",
+    "routes": [
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sourceSha256": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8",
+        "actualGitSha256": "df20fe51211ad8e1758c703a2807106ae13c9f869d055326b8dff763a8e3f39c",
+        "recordedGitSame": true,
+        "workingBeforeSameGit": true,
+        "completeProgram": {
+          "originalNodes": 8005,
+          "candidateNodes": 8005,
+          "same": true
+        },
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "originalSha256": "ba8c37a0699ea3700f045ab38d27a5c17df73b2601db0450cf30f079bffbdd30",
+            "candidateSha256": "ba8c37a0699ea3700f045ab38d27a5c17df73b2601db0450cf30f079bffbdd30",
+            "rawSame": true,
+            "emittedProgram": {
+              "originalNodes": 7533,
+              "candidateNodes": 7533,
+              "same": true
+            }
+          },
+          {
+            "module": "CommonJS",
+            "originalSha256": "a9cb855e9e59497bd3445a6d334b2b87ef6d44e4835f2788fcb9abc30c854faa",
+            "candidateSha256": "a9cb855e9e59497bd3445a6d334b2b87ef6d44e4835f2788fcb9abc30c854faa",
+            "rawSame": true,
+            "emittedProgram": {
+              "originalNodes": 8208,
+              "candidateNodes": 8208,
+              "same": true
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sourceSha256": "57962062fc903d7caf6f40998048fec0a4252863a9a7a0b5b369d2717c7f977a",
+        "actualGitSha256": "275c161a380c810a32a755b27ec0a469358931dccbe310f233ff88357a68ac16",
+        "recordedGitSame": true,
+        "workingBeforeSameGit": true,
+        "completeProgram": {
+          "originalNodes": 3445,
+          "candidateNodes": 3445,
+          "same": true
+        },
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "originalSha256": "d2618d73377423d544f6b0036d3dd1d685755196fecff6bf19c078085837118a",
+            "candidateSha256": "d2618d73377423d544f6b0036d3dd1d685755196fecff6bf19c078085837118a",
+            "rawSame": true,
+            "emittedProgram": {
+              "originalNodes": 2940,
+              "candidateNodes": 2940,
+              "same": true
+            }
+          },
+          {
+            "module": "CommonJS",
+            "originalSha256": "b634c842f4edd493bfca0bd2440d19a12f279bddc05c7d3c44543e3779edd799",
+            "candidateSha256": "b634c842f4edd493bfca0bd2440d19a12f279bddc05c7d3c44543e3779edd799",
+            "rawSame": true,
+            "emittedProgram": {
+              "originalNodes": 3366,
+              "candidateNodes": 3366,
+              "same": true
+            }
+          }
+        ]
+      }
+    ],
+    "moved": [
+      {
+        "owner": "appendDemonNightDamageSources",
+        "completeBody": {
+          "originalNodes": 300,
+          "candidateNodes": 300,
+          "same": true
+        },
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "originalSha256": "2602c25f7f65ba584a8e670d30897f234a331c64599acd89a0456c001bdbde88",
+            "candidateSha256": "e7c64efdb61332af96c1e591fa0d2f25883f4f4efc09dc553060a5cc83ef6a85",
+            "rawSame": false,
+            "emittedProgram": {
+              "originalNodes": 293,
+              "candidateNodes": 293,
+              "same": true
+            }
+          },
+          {
+            "module": "CommonJS",
+            "originalSha256": "2602c25f7f65ba584a8e670d30897f234a331c64599acd89a0456c001bdbde88",
+            "candidateSha256": "e7c64efdb61332af96c1e591fa0d2f25883f4f4efc09dc553060a5cc83ef6a85",
+            "rawSame": false,
+            "emittedProgram": {
+              "originalNodes": 293,
+              "candidateNodes": 293,
+              "same": true
+            }
+          }
+        ]
+      },
+      {
+        "owner": "publishDemonNightDamageSources",
+        "completeBody": {
+          "originalNodes": 181,
+          "candidateNodes": 181,
+          "same": true
+        },
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "originalSha256": "3437432649a9573a0f9317fe681c53b386b97d0e387faf5bc4b632eed0e94f51",
+            "candidateSha256": "3437432649a9573a0f9317fe681c53b386b97d0e387faf5bc4b632eed0e94f51",
+            "rawSame": true,
+            "emittedProgram": {
+              "originalNodes": 186,
+              "candidateNodes": 186,
+              "same": true
+            }
+          },
+          {
+            "module": "CommonJS",
+            "originalSha256": "3437432649a9573a0f9317fe681c53b386b97d0e387faf5bc4b632eed0e94f51",
+            "candidateSha256": "3437432649a9573a0f9317fe681c53b386b97d0e387faf5bc4b632eed0e94f51",
+            "rawSame": true,
+            "emittedProgram": {
+              "originalNodes": 186,
+              "candidateNodes": 186,
+              "same": true
+            }
+          }
+        ]
+      }
+    ],
+    "knifeType": {
+      "originalNodes": 30,
+      "candidateNodes": 30,
+      "same": true
+    },
+    "ports": {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sourceSha256": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "completeOtherProgram": {
+        "originalNodes": 125,
+        "candidateNodes": 125,
+        "same": true
+      },
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "originalSha256": "38766c1c7a9030d29f9fb34a38e3a6e3f1627618efa68d08c3a9e9f1a843fa67",
+          "candidateSha256": "38766c1c7a9030d29f9fb34a38e3a6e3f1627618efa68d08c3a9e9f1a843fa67",
+          "rawSame": true,
+          "emittedProgram": {
+            "originalNodes": 125,
+            "candidateNodes": 125,
+            "same": true
+          }
+        },
+        {
+          "module": "CommonJS",
+          "originalSha256": "3203b455a2b000889650cd8603b6d8adb6c8613ff474ce20a09878523be754ae",
+          "candidateSha256": "3203b455a2b000889650cd8603b6d8adb6c8613ff474ce20a09878523be754ae",
+          "rawSame": true,
+          "emittedProgram": {
+            "originalNodes": 925,
+            "candidateNodes": 925,
+            "same": true
+          }
+        }
+      ],
+      "newExports": [
+        {
+          "name": "appendDemonNightDamageSources",
+          "typeOnly": false
+        },
+        {
+          "name": "publishDemonNightDamageSources",
+          "typeOnly": false
+        },
+        {
+          "name": "DemonKnifeProtection",
+          "typeOnly": true
+        },
+        {
+          "name": "DemonNightDamageQueries",
+          "typeOnly": true
+        },
+        {
+          "name": "DemonNightDamagePublicationRuntime",
+          "typeOnly": true
+        }
+      ]
+    },
+    "testTypeDelta": {
+      "path": "backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts",
+      "originalSha256": "98118e904cb51e38938d9889c86b33bba1cd67da55ecfb1f3f34367089c16614",
+      "sourceSha256": "2f067699a95a343d85f8de7595f9767c23d0cec5e9b569656d213c8e1d0be608",
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "originalSha256": "e129e1d84f9430bcbb606af9ce85d2298fae674b0aa38791c85913fe7b03abbc",
+          "candidateSha256": "e129e1d84f9430bcbb606af9ce85d2298fae674b0aa38791c85913fe7b03abbc",
+          "rawSame": true,
+          "emittedProgram": {
+            "originalNodes": 1132,
+            "candidateNodes": 1132,
+            "same": true
+          }
+        },
+        {
+          "module": "CommonJS",
+          "originalSha256": "f2ef0062986a362ce19317e115992bfcf6017201be7245b4117fbb5d5d0cba33",
+          "candidateSha256": "f2ef0062986a362ce19317e115992bfcf6017201be7245b4117fbb5d5d0cba33",
+          "rawSame": true,
+          "emittedProgram": {
+            "originalNodes": 1346,
+            "candidateNodes": 1346,
+            "same": true
+          }
+        }
+      ],
+      "limits": "Only explicit getter return type and two GameEvent assertion types; new3 runtime receipt belongs to before-typefix source."
+    },
+    "controls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+        "sha256": "868d6489ca83dd2cf13ae7dbd2fd43d9f774a018e47308f45f1c4e220aa1e50e",
+        "sameGit": true,
+        "currentSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+        "sameGit": true,
+        "currentSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+        "sha256": "cb43b97eb1df5ccaa54b36faf023ae2f90de787aa292a10a2ab065093837469e",
+        "sameGit": true,
+        "currentSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+        "sha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d",
+        "sameGit": true,
+        "currentSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/poison_contribution.ts",
+        "sha256": "0846902ed221487ec489face6b4d0277b2216e73ce4471c23287712070de5601",
+        "sameGit": true,
+        "currentSame": true
+      }
+    ],
+    "negativeHarnessChecks": [
+      {
+        "name": "append non-first child cause changes rejected",
+        "rejected": true
+      },
+      {
+        "name": "publish non-first object field changes rejected",
+        "rejected": true
+      }
+    ],
+    "limits": [
+      "Formal inputs add query object and synchronous public function calls; no arbitrary CJS export reassignment equivalence claim.",
+      "Source getters retain late this.world/events and optional source receiver; new helper invocation frames are observable via stack/reflection.",
+      "Append body inverse has equal complete emitted program but two raw outputs differ only in layout; raw byte equality is not claimed for them.",
+      "No schema/authorization/payment/clock/victory changes or full gate/type/runtime matrix claim."
+    ]
+  },
+  "bindingSummary": {
+    "bindings": [
+      {
+        "name": "DeathCause",
+        "original": {
+          "path": "packages/game-contract/src/death-facts.ts",
+          "name": "DeathCause",
+          "kind": "EnumDeclaration"
+        },
+        "current": {
+          "path": "packages/game-contract/src/death-facts.ts",
+          "name": "DeathCause",
+          "kind": "EnumDeclaration"
+        },
+        "same": true
+      },
+      {
+        "name": "Phase",
+        "original": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase",
+          "kind": "EnumDeclaration"
+        },
+        "current": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase",
+          "kind": "EnumDeclaration"
+        },
+        "same": true
+      },
+      {
+        "name": "DEMON_HUNTER_POLICY",
+        "original": {
+          "path": "packages/game-contract/src/facts/demon-hunter.ts",
+          "name": "DEMON_HUNTER_POLICY",
+          "kind": "VariableDeclaration"
+        },
+        "current": {
+          "path": "packages/game-contract/src/facts/demon-hunter.ts",
+          "name": "DEMON_HUNTER_POLICY",
+          "kind": "VariableDeclaration"
+        },
+        "same": true
+      },
+      {
+        "name": "safeRecordLogicOp",
+        "original": {
+          "path": "backend/src/recording/session_recorder.ts",
+          "name": "safeRecordLogicOp",
+          "kind": "FunctionDeclaration"
+        },
+        "current": {
+          "path": "backend/src/recording/session_recorder.ts",
+          "name": "safeRecordLogicOp",
+          "kind": "FunctionDeclaration"
+        },
+        "same": true
+      }
+    ],
+    "graph": {
+      "basis": "Current literal static value imports/reexports from transpiled ES modules; dynamic loaders and external packages excluded. This is bounded current graph, not full historical initialization equivalence.",
+      "nodes": 207,
+      "ownerDirectEdges": [
+        "packages/game-contract/src/index.ts",
+        "packages/game-contract/src/facts/demon-hunter.ts",
+        "backend/src/recording/session_recorder.ts"
+      ],
+      "returnToOwner": false,
+      "returnToPublicPort": false,
+      "returnToPhaseManager": false,
+      "nativeControllerValueEdge": false
+    }
+  },
+  "receipts": {
+    "runtime": {
+      "distinctCases": 5,
+      "totalAssertions": 37,
+      "executionCount": 2,
+      "new": {
+        "command": "bun test backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts",
+        "pass": 3,
+        "fail": 0,
+        "assertions": 32,
+        "terminal": {
+          "chunk": "aa8dc5",
+          "exitCode": 0
+        },
+        "log": "docs/refactor/generated/demon-night-damage-contribution-new-tests.log",
+        "sourceStage": "Owner/ports/new unit before engine integration and final pure-type unit annotations; whole typefix ES/CJS outputs same. No green rerun."
+      },
+      "original": {
+        "command": "bun test backend/tests/scenarios/features/demon-hunter/native-pipeline-and-failure-handoffs.test.ts -t 'ordinary Guard plus Heal collision remains lethal|native immunity retains independent generic poison after_ordinary_damage'",
+        "pass": 2,
+        "fail": 0,
+        "filtered": 47,
+        "assertions": 5,
+        "terminal": {
+          "chunk": "dd09c6",
+          "exitCode": 0
+        },
+        "log": "docs/refactor/generated/demon-night-damage-contribution-original-tests.log",
+        "sourceStage": "After exact PM/Night integration against actual Evil commit; final production bytes unchanged thereafter."
+      }
+    },
+    "types": {
+      "first": {
+        "roots": 5,
+        "config": "docs/refactor/generated/demon-night-damage-contribution-types-config.json",
+        "terminal": {
+          "session": 63194,
+          "chunk": "2a9aef",
+          "exitCode": 2
+        },
+        "log": "docs/refactor/generated/demon-night-damage-contribution-types-first.log",
+        "diagnostics": 3,
+        "diagnosticScope": "Only new unit: throwing getter return inferred void and two accesses to union audience field; four production roots have no diagnostic."
+      },
+      "failedOnly": {
+        "roots": 1,
+        "config": "docs/refactor/generated/demon-night-damage-contribution-types-failed-config.json",
+        "terminal": {
+          "session": 47721,
+          "chunk": "f1bbda",
+          "exitCode": 0
+        },
+        "log": "docs/refactor/generated/demon-night-damage-contribution-types-failed.log",
+        "fix": "Only explicit getter return type and erased Extract<GameEvent> assertions; two whole JS outputs same. No runtime repeated."
+      }
+    },
+    "proof": {
+      "first": "Empty-string inverse import anchor harness failed before any complete proof output; production not changed.",
+      "second": "Missing original trailing comma in expanded mark call plus layout differences; production not changed.",
+      "third": "Complete typed bodies same, append emitted raw bytes differ in layout; final proof now records emitted full program equality and raw mismatch honestly, without changing product.",
+      "finalTerminal": {
+        "chunk": "6dd9b4",
+        "exitCode": 0
+      }
+    },
+    "heads": {
+      "actualInputs": 5,
+      "documentationPaths": 476,
+      "diagnostics": 0,
+      "missingCN": 0,
+      "terminal": {
+        "chunk": "de567e",
+        "exitCode": 0
+      }
+    },
+    "limits": [
+      "No full suite/global architecture gate/full-game/model/browser/reproduction run.",
+      "No opaque proofs, payment, source schema, life filtering, Noble closure, DeathResolution or final victory policy moved.",
+      "Runtime receipts are two executions, not one run of five cases."
+    ]
+  },
+  "heads": {
+    "inputs": [
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8"
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sha256": "57962062fc903d7caf6f40998048fec0a4252863a9a7a0b5b369d2717c7f977a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+        "sha256": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+        "sha256": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da"
+      },
+      {
+        "path": "backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts",
+        "sha256": "2f067699a95a343d85f8de7595f9767c23d0cec5e9b569656d213c8e1d0be608"
+      }
+    ],
+    "documentationPaths": 476,
+    "diagnostics": [],
+    "missingCN": [],
+    "limits": "actual responsibility contract shape and separate Chinese presence; no runtime/type/gate claim"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-before-initial.json",
+      "sha256": "155ad2495649688b6f444752f758a4fcfa1a3c34cf6f3cb4ef3b2fbdc5a07f50"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-before.json",
+      "sha256": "d4e0643ce373d255ab68f52ffd74db267f3b37821929a04f58824d2261d93d72"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-edits.json",
+      "sha256": "e2a6e61139a1e2ce76e26ee8d3fa03dc72a2f93f51c63b2f1faaedd8d9b657b3"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-proof.cjs",
+      "sha256": "d907a1a0b68f2fde8ee0ccfbfbee07b0d77991fc31e49a015c9d4ba4d00c0c70"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-proof-first.json",
+      "sha256": "7b63c7ceac9b2c3c88208d9a033d0031c59c2e69db38d08f4cdb43479d0fd4fe"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-proof-second.json",
+      "sha256": "45085428aaf9e94c91a8986f9a3e7a188d84e60919dda1982ca39524fe97e1aa"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-proof-third.json",
+      "sha256": "db554c3f6006ae32bec15a1182ed683f99be853f46ce7ca80f0aec5c0f892996"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-proof.json",
+      "sha256": "57299d6b99ee9e401d7ed08a8a7c0079e8e9bebc771ff11b82ba3377cf0c0f0b"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-bindings.cjs",
+      "sha256": "98dda136480291ae1d3e5b9ba4e4b5a44a6e3bac6aac9d5ccf0385671225af07"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-bindings.json",
+      "sha256": "68a0f786a95ab910b9a1254a2082e619bbc9eee00987c108869f507d532d032a"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-test-typefix-before.json",
+      "sha256": "635e483d8e69b043a7dd5af400abb9c9569bc2e4df8ba443cacfad11c1afc2fd"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-heads.ts",
+      "sha256": "3fd3cf22e57c3ce3cced152d648e14d3958ae5c5fc874fddcc53e3b7dc7435bb"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-heads-initial.json",
+      "sha256": "b1cf76b2c7a99e099e20bac1b1090adcf655f61aafa73cdc7c24499e02f2b163"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-heads.json",
+      "sha256": "30d3c25d1c01eae83fdf1c06fd77b83ca61acfb10516aa71fe27e27d4c7c6eaa"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-types-config.json",
+      "sha256": "e966e3d686d5d229e117c4b83cd4c60a9e4875729b46637296c0dcfc9b72866c"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-types-first.log",
+      "sha256": "ca696a66347f4668a78b4251fc19b96f4e51f1f94a2026a00b8277daee04010c"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-types-failed-config.json",
+      "sha256": "bfe62924bbc4b07e8c3f79d89baa236144781e5ecbe1ee8781fd2c80183eb689"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-types-failed.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-new-tests.log",
+      "sha256": "54375fe377907e13a5e2f001a7dd600f0cd3aaebe608f5b3b856d32f4af434af"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-original-tests.log",
+      "sha256": "2575fba57d67820e238851df2ced949b9a3307a5e03692f5a33db56be241fea5"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-receipts.json",
+      "sha256": "6f718a4352a0615cb18013c7270aac597ccaf0be1d1a349f54ae81f96855a777"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-scope-final.json",
+      "sha256": "16e5f19f0ea5f7fb0d958e6086da219b8dfc45f54c34eaff6fda48e6c7c43842"
+    }
+  ],
+  "postCaptureSharedCommentDelta": {
+    "path": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+    "capturedGraphSourceSha256": "a21fe89e98389dac1a3f68384bf0b7a56bc87cf8427d8c630cfa10a5be34d0b6",
+    "currentSourceSha256": "e7ad330b041816d796d3b457d0ff60c553bd6ff323be6850b9f4401bf4174adf",
+    "attribution": "Root independent Noble data comments slice; graph keeps captured source hashes, not a final worktree-wide hash claim.",
+    "receipt": "docs/refactor/generated/noble-damage-contract-comments-evidence.json"
+  }
+}

@@ -1,0 +1,5 @@
+backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts(98,9): error TS2322: Type 'void' is not assignable to type 'readonly Readonly<{ targetId: number; poison: boolean; }>[]'.
+backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts(107,21): error TS2339: Property 'audience' does not exist on type 'GameEvent'.
+  Property 'audience' does not exist on type 'EventBase<"game_over", GameResult>'.
+backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts(108,37): error TS2339: Property 'audience' does not exist on type 'GameEvent'.
+  Property 'audience' does not exist on type 'EventBase<"game_over", GameResult>'.

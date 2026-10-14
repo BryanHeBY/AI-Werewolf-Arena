@@ -1,0 +1,41 @@
+{
+  "base": "d9be88a2b9fe3834348bf310956099581e81a439",
+  "edits": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "label": "source_append_checkpoint",
+      "old": "if (demon) {\n          for (const override of demon.poisonOverrides) {\n            const causes: DeathCause[] = (proposedSources[override.targetId] ?? []).filter(\n              (cause) => cause !== DeathCause.Poison,\n            );\n            if (override.poison) causes.push(DeathCause.Poison);\n            proposedSources[override.targetId] = causes;\n          }\n          if (night.demonKnifeProtection) {\n            const knife = night.demonKnifeProtection;\n            const guard = knife.guardCurrent?.() ?? knife.guard;\n            guardOverrides.push({ targetId: knife.targetId, guard });\n            const heal =\n              demon.healOverrides.find((effect) => effect.targetId === knife.targetId)?.heal ??\n              (knife.heal ||\n                statusMarkSnapshot(\n                  this.world.getComponent(knife.targetId, COMPONENT.StatusMarks),\n                  StatusMark.HealMark,\n                )?.present === true);\n            const causes = (proposedSources[knife.targetId] ?? []).filter(\n              (cause) => cause !== DeathCause.WolfKill,\n            ) as DeathCause[];\n            if (knife.wolf && guard === heal && night.demonWolfSourceCurrent?.(knife.targetId))\n              causes.push(DeathCause.WolfKill);\n            proposedSources[knife.targetId] = causes;\n          }\n          if (demon.hunt.damage) {\n            const { targetId, cause } = demon.hunt.damage;\n            const causes = (proposedSources[targetId] ??= []);\n            causes.push(\n              cause === \"demon_hunt\" ? DeathCause.DemonHunt : DeathCause.DemonHuntBacklash,\n            );\n          }\n        }",
+      "replacement": "if (demon) {\n          const manager = this;\n          appendDemonNightDamageSources({\n            get knifeProtection() { return night.demonKnifeProtection; },\n            healMarkPresent(target) {\n              return statusMarkSnapshot(\n                manager.world.getComponent(target(), COMPONENT.StatusMarks),\n                StatusMark.HealMark,\n              )?.present === true;\n            },\n            wolfSourceCurrent(target) { return night.demonWolfSourceCurrent?.(target()); },\n          }, demon, proposedSources, guardOverrides);\n        }"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "label": "publication_checkpoint",
+      "old": "if (demon) {\n          if (demon.hunt.cancelled)\n            this.events.push({\n              timestamp: Date.now(),\n              type: \"demon_hunter_cancelled\",\n              payload: { ...demon.hunt.cancelled },\n              audience: Object.freeze([]),\n            });\n          for (const fact of demon.poisonImmunities)\n            this.events.push({\n              timestamp: Date.now(),\n              type: \"demon_hunter_poison_immune\",\n              payload: { ...fact },\n              audience: Object.freeze([]),\n            });\n          safeRecordLogicOp({\n            scope: \"resolution\",\n            op: \"demon_hunter_sources_frozen\",\n            phase: Phase.Night,\n            status: \"ok\",\n            output: {\n              policy: DEMON_HUNTER_POLICY,\n              day: nightDay,\n              hunt: demon.hunt,\n              poison_immunities: demon.poisonImmunities,\n              poison_overrides: demon.poisonOverrides,\n              heal_overrides: demon.healOverrides,\n              guard_overrides: guardOverrides,\n              deaths: [...deaths],\n              death_sources: sources,\n            },\n          });\n        }",
+      "replacement": "if (demon) {\n          const manager = this;\n          publishDemonNightDamageSources({\n            get events() { return manager.events; },\n          }, demon, nightDay, guardOverrides, deaths, sources);\n        }"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "label": "owner_value_import",
+      "old": "  demonRedMoonExpiry,\n  commitDemonRedMoonTransition,",
+      "replacement": "  demonRedMoonExpiry,\n  commitDemonRedMoonTransition,\n  appendDemonNightDamageSources,\n  publishDemonNightDamageSources,"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "label": "moved_policy_binding",
+      "old": "import { DEMON_HUNTER_POLICY } from \"@ai-werewolf-arena/game-contract/facts/demon-hunter\";\n",
+      "replacement": ""
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "label": "canonical_fivefield_type",
+      "old": "Readonly<{\n        targetId: number;\n        wolf: boolean;\n        guard: boolean;\n        guardCurrent?: () => boolean;\n        heal: boolean;\n      }>",
+      "replacement": "DemonKnifeProtection"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "label": "canonical_type_import",
+      "old": "import { demonHunterActorId, originalDemonNightLives, demonOriginalWolfSourceCurrent, demonOriginalWolfTargetCurrent } from \"../../mechanisms/roles/demon_hunter/ports\";",
+      "replacement": "import { demonHunterActorId, originalDemonNightLives, demonOriginalWolfSourceCurrent, demonOriginalWolfTargetCurrent } from \"../../mechanisms/roles/demon_hunter/ports\";\nimport type { DemonKnifeProtection } from \"../../mechanisms/roles/demon_hunter/ports\";"
+    }
+  ]
+}

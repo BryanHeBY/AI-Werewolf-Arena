@@ -1,0 +1,33 @@
+{
+  "base": "d9be88a2b9fe3834348bf310956099581e81a439",
+  "initialConcurrentBase": "d964fa2b6354b19564b57553f6631270070e14ee",
+  "sources": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8",
+      "origin": "Actual d9be Git after Evil source froze and committed"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "57962062fc903d7caf6f40998048fec0a4252863a9a7a0b5b369d2717c7f977a",
+      "origin": "Actual d9be Git after Evil source froze and committed"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "origin": "Actual initial Git, followed by author export/comment delta before Evil commit"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+      "sha256": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "origin": "new source"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts",
+      "sha256": "2f067699a95a343d85f8de7595f9767c23d0cec5e9b569656d213c8e1d0be608",
+      "origin": "new source"
+    }
+  ],
+  "deleted": [],
+  "sourceOwnership": "Five paths only; Evil nine-source commit delta and controller/authority/payment/clock implementations remain controls."
+}

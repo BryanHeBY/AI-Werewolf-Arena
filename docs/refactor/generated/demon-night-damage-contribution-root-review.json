@@ -1,0 +1,69 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8",
+      "origin": "Actual d9be Git after Evil source froze and committed"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "57962062fc903d7caf6f40998048fec0a4252863a9a7a0b5b369d2717c7f977a",
+      "origin": "Actual d9be Git after Evil source froze and committed"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "origin": "Actual initial Git, followed by author export/comment delta before Evil commit"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+      "sha256": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "origin": "new source"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts",
+      "sha256": "2f067699a95a343d85f8de7595f9767c23d0cec5e9b569656d213c8e1d0be608",
+      "origin": "new source"
+    }
+  ],
+  "scopeSHA256": "16e5f19f0ea5f7fb0d958e6086da219b8dfc45f54c34eaff6fda48e6c7c43842",
+  "readScope": [
+    "Complete two original PM blocks and final two feature bodies",
+    "Complete5source diffs and3new risk unit cases",
+    "Two-layer actualGit captures,final5digests/5controls/all artifact hashes",
+    "Final MD and peer documentation/hash review"
+  ],
+  "semanticChecks": [
+    "Original poison override iteration/writes precede two knife reads and guard callback/guardOverrides push.",
+    "Heal override/mark and wolfSource optional method retain callee-before-lazy-target and receivers; missing original wolf callback skips its target.",
+    "Hunt source update occurs after all prior writes; no new resource/current/schema check.",
+    "Two PM call sites preserve expiry/normal close/life and source filtering/Noble final fold between them.",
+    "Cancel→each poison immunity God fact→optional diagnostic keeps original event/clock/key order,dict refs and death-list copy.",
+    "New canonical readonly5field type is sole declaration; controller remains type-only dependency.",
+    "Authority,opaque proof/native resource payment/DR/clock/victory remain original owners."
+  ],
+  "findingsClosed": [
+    "Proof body count is full syntax leaves; captured207-module graph later Noble-only comment delta is separately bound without rebuilding graph."
+  ],
+  "documents": [
+    {
+      "path": "docs/refactor/demon-night-damage-contribution.md",
+      "sha256": "ddacb5d44f7b168812bbd91d596ab0b88ff1093c111344d5d5679140d590f518"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-evidence.json",
+      "sha256": "5f2ee7576411acb4ba831670245303340a42af5d165741618fcb1a8161134893"
+    },
+    {
+      "path": "docs/refactor/generated/demon-night-damage-contribution-review.json",
+      "sha256": "dfdcce1a3ce5f220bf275924b5a437f8b606ce447d9a4247b30a8839d3b0f373"
+    }
+  ],
+  "limits": [
+    "Five distinct tests37assertions from2 executions, not whole matrix.",
+    "12mappedoutputs with2append raw layout differences explicit; no whole current byte identity claim.",
+    "No repeated test/type/graph/full gate."
+  ]
+}
