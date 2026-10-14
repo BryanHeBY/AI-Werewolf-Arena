@@ -7,6 +7,7 @@
  * 首夜四个准备窗口由具名规则组合串行推进，日期／当前性回调及中断快照仍归本经理；
  * 雾鸦延迟夜的原体检查与反应准备归具名同步序列；本经理持唯一 pending、原两次 await，
  * 公开夜报、真实死亡提交、周期时钟、判胜及失败清理仍归本经理。
+ * 终局候选规则只选择配置、改写狐狸候选并校验婚约／成员；原评估点、故障核对与唯一封盘写入仍归本经理。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
@@ -39,7 +40,6 @@ import {
 import { demonWitchMarksSafe } from "../mechanisms/roles/demon_hunter/ports";
 import {
   weddingSetup,
-  weddingAssignment,
 } from "../mechanisms/roles/ghost_bride/ports";
 import {
   initialIdentityDeal,
@@ -50,8 +50,7 @@ import {
 } from "../mechanisms/roles/initial_identity/ports";
 import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
 import { GameActionRequestFactory } from "./action_request_factory";
-import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
-import { validateVictoryDecision } from "../mechanisms/win_conditions/validated-victory";
+import { TERMINAL_VICTORY_POLICY } from "../../rulesets/terminal-victory-policy";
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-contract";
 import { text } from "@ai-werewolf-arena/game-text";
 import { NightFaultPlan, type FaultPlan } from "./fault_plan";
@@ -482,7 +481,7 @@ export class PhaseManager {
             ? null
             : this.conditionRegistry.evaluateMany(
                 this.world,
-                this.resolveWinConditions(),
+                TERMINAL_VICTORY_POLICY.conditions({ world: () => this.world, config: () => this.config }),
                 this.#rulePlan.checkpoints.nightSettled,
               );
         if (expiryActor !== null && !beforeExpiryResult) {
@@ -530,7 +529,7 @@ export class PhaseManager {
         this.emitNightResolved(completeDeaths);
         if (beforeExpiryResult) {
           this.sealResult(
-            replaceWithFoxVictory(this.world, beforeExpiryResult),
+            TERMINAL_VICTORY_POLICY.replaceFactionResult(this.world, beforeExpiryResult),
             this.#rulePlan.checkpoints.nightSettled,
             this.state.phase,
           );
@@ -989,21 +988,20 @@ export class PhaseManager {
     if (this.state.gameOver) return true;
     const result = this.conditionRegistry.evaluateMany(
       this.world,
-      this.resolveWinConditions(),
+      TERMINAL_VICTORY_POLICY.conditions({ world: () => this.world, config: () => this.config }),
       checkpoint,
       overrides,
     );
     if (!result) return false;
-    this.sealResult(replaceWithFoxVictory(this.world, result), checkpoint, this.state.phase);
+    this.sealResult(TERMINAL_VICTORY_POLICY.replaceFactionResult(this.world, result), checkpoint, this.state.phase);
     return true;
   }
 
   private sealResult(decision: WinDecision, checkpoint: VictoryCheckpoint, phase: Phase): void {
     if (this.state.gameOver) return;
     this.assertFaultPlanConsumed();
-    if (weddingSetup(this.world)) weddingAssignment(this.world);
-    // 候选先完成结构／成员／时点验证；本经理随后才写唯一终态并执行原阶段关闭与发布。
-    const { winner, outcome, decidedAt } = validateVictoryDecision(
+    // 先核故障计划，再由规则组合核婚约分配与原成员／时点；任何拒绝都先于本经理的终态写入。
+    const { winner, outcome, decidedAt } = TERMINAL_VICTORY_POLICY.validateCandidate(
       decision,
       checkpoint,
       phase,
@@ -1018,27 +1016,6 @@ export class PhaseManager {
       type: "game_over",
       payload: structuredClone(this.state.result),
     });
-  }
-
-  /**
-   * 解析板子胜利条件配置，兼容旧字段 winCondition。
-   */
-  private resolveWinConditions(): readonly WinCondition[] {
-    if (weddingSetup(this.world)) {
-      const conditions =
-        this.config.winConditions ?? (this.config.winCondition ? [this.config.winCondition] : []);
-      if (conditions.length !== 1 || conditions[0] !== WinCondition.ThreeFactionsElimination)
-        throw new Error("ghost_bride_win_condition_invalid");
-      return [WinCondition.ThreeFactionsElimination];
-    }
-    if (Array.isArray(this.config.winConditions) && this.config.winConditions.length > 0) {
-      return this.config.winConditions;
-    }
-    if (this.config.winCondition) {
-      return [this.config.winCondition];
-    }
-    // 兜底：未配置时退回屠城，避免对局无法结束。
-    return [WinCondition.SlaughterCity];
   }
 
   /** 只检验猎魔原体／夜状态和全体药印记可读性；失败原样拒绝，不发布夜报或恢复资源。 */

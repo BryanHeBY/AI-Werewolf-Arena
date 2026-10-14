@@ -1,0 +1,190 @@
+{
+  "baseline": "0cbe610f5e5293d6b3f4d64628fb750759a4a0e4",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "1029f729d6fb31dc92345a2954cd84b97b6448d6b73d4dbef931e1b067f037d8"
+    },
+    {
+      "path": "backend/src/rulesets/terminal-victory-policy.ts",
+      "sha256": "757dccbc1bdd3f67144bcfb6335cffb5d436e3c093a073f8fded859f34d601f7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/victory-ports.ts",
+      "sha256": "1399fa6ef11c23b799fd70b12a4c6d58f8a37718a73b41915e1427661410b301"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/terminal-victory-policy.test.ts",
+      "sha256": "607273a861e34d457b8ef8f0a5f0254ea5ed3c4769f16fe974d36b0cf5967e30"
+    }
+  ],
+  "wholePM": {
+    "rawExactInverse": true,
+    "nodes": 10128,
+    "nonJSDocLeaves": 6768,
+    "typedTree": true,
+    "printerText": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "same": true
+      },
+      {
+        "module": "CommonJS",
+        "same": true
+      }
+    ]
+  },
+  "conditions": {
+    "fullBody": true,
+    "newNonNullTypeOnlyCount": 4,
+    "nodes": 213,
+    "nonJSDocLeaves": 140,
+    "typedTree": true,
+    "printerText": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "same": true
+      },
+      {
+        "module": "CommonJS",
+        "same": true
+      }
+    ]
+  },
+  "candidate": {
+    "fullOriginalTwoStatements": true,
+    "nodes": 95,
+    "nonJSDocLeaves": 64,
+    "typedTree": true,
+    "printerText": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "same": true
+      },
+      {
+        "module": "CommonJS",
+        "same": true
+      }
+    ]
+  },
+  "table": [
+    [
+      "conditions",
+      "resolveConfiguredVictoryConditions"
+    ],
+    [
+      "replaceFactionResult",
+      "replaceWithFoxVictory"
+    ],
+    [
+      "validateCandidate",
+      "validateTerminalCandidate"
+    ]
+  ],
+  "facet": {
+    "path": "backend/src/game/mechanisms/roles/cursed_fox/victory-ports.ts",
+    "physicalOwner": "backend/src/game/mechanisms/roles/cursed_fox/victory.ts",
+    "directBinding": true
+  },
+  "registryCalls": {
+    "before": [
+      {
+        "argumentCount": 3,
+        "arguments": [
+          "this.world",
+          "this.resolveWinConditions()",
+          "this.#rulePlan.checkpoints.nightSettled"
+        ]
+      },
+      {
+        "argumentCount": 4,
+        "arguments": [
+          "this.world",
+          "this.resolveWinConditions()",
+          "checkpoint",
+          "overrides"
+        ]
+      }
+    ],
+    "after": [
+      {
+        "argumentCount": 3,
+        "arguments": [
+          "this.world",
+          "TERMINAL_VICTORY_POLICY.conditions({ world: () => this.world, config: () => this.config })",
+          "this.#rulePlan.checkpoints.nightSettled"
+        ]
+      },
+      {
+        "argumentCount": 4,
+        "arguments": [
+          "this.world",
+          "TERMINAL_VICTORY_POLICY.conditions({ world: () => this.world, config: () => this.config })",
+          "checkpoint",
+          "overrides"
+        ]
+      }
+    ],
+    "aritiesSame": true
+  },
+  "typeFix": {
+    "path": "backend/tests/unit/rulesets/terminal-victory-policy.test.ts",
+    "beforeSha256": "e5d69710ab6b39134442cff53f703df783a872e7b11494f6068a161c0584b5aa",
+    "afterSha256": "607273a861e34d457b8ef8f0a5f0254ea5ed3c4769f16fe974d36b0cf5967e30",
+    "outputs": [
+      {
+        "module": "ESNext",
+        "same": true
+      },
+      {
+        "module": "CommonJS",
+        "same": true
+      }
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/victory.ts",
+      "sha256": "dc727ebe8cd97b5522430f73fb83e92846c164d64e77e1d0629049e5e7e609d6",
+      "wholeBytes": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/profile.ts",
+      "sha256": "5f4b6b7fee9a12e00cf9ffbd5af99c3b1d09165f3be716d6e7d87cd09b1ede84",
+      "wholeBytes": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+      "wholeBytes": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/validated-victory.ts",
+      "sha256": "bf097eaedd568e21b2d14fbb9c15ef580dd740fccbab1fb5ce021426f6e44545",
+      "wholeBytes": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/results.ts",
+      "sha256": "bbec8db30a9ba80a5cff5e72b0c0b1556c3e6f7768557d90aaf25b983f1c8972",
+      "wholeBytes": true
+    },
+    {
+      "path": "backend/src/core/domain/registries/condition_registry.ts",
+      "sha256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772",
+      "wholeBytes": true
+    },
+    {
+      "path": "backend/src/rulesets/rule-plan.ts",
+      "sha256": "5c72f81441a6bf2685922a5b62bc50eb5073447a131abccc22db1826971377f6",
+      "wholeBytes": true
+    }
+  ],
+  "limits": [
+    "完整PM等价证据是明确规则表达式和import的逆，并非新模块初始化图或任意私有反射调用等价。",
+    "新表／查询闭包的分配及读取属于显式内部API变化；不改变World／配置的实际晚读位置。",
+    "本批不改变胜利条件算法、Fox算法、结果成员校验或严格档案政策；新源码参与当前构建指纹。"
+  ]
+}

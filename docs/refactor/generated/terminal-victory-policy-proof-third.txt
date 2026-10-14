@@ -1,0 +1,13 @@
+4 | const p='docs/refactor/generated/terminal-victory-policy-';
+5 | const before=JSON.parse(fs.readFileSync(p+'before.json','utf8'));
+6 | const edits=JSON.parse(fs.readFileSync(p+'edits.json','utf8')).edits;
+7 | const read=x=>fs.readFileSync(x,'utf8'),sha=x=>crypto.createHash('sha256').update(x).digest('hex');
+8 | const pmPath=before.source[0].path,old=before.source[0].text,current=read(pmPath);
+9 | function assert(x,label){if(!x)throw new Error(label);}
+                                             ^
+error: whole typed tree
+      at assert (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/terminal-victory-policy-proof.cjs:9:42)
+      at completePair (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/terminal-victory-policy-proof.cjs:15:80)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/terminal-victory-policy-proof.cjs:38:17)
+
+Bun v1.4.3 (Linux x64)
