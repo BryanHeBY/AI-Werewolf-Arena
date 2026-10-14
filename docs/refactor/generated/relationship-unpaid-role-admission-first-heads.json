@@ -1,0 +1,57 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "c7fa37197b1f9d405eadcb48c910aca323365ac74996a8055d334c9303b6e486",
+      "bytes": 9037
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "0e3fca6538c285c814675da74b2573baff696239072ef1df232a512d5c84d83c",
+      "bytes": 4896
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "bbfd6c2fceaaad7e9b43ba5932a2365c9303fea24dbd2d9c3331ceba6b488125",
+      "bytes": 7146
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "sha256": "05fec91ee33fd2707fc3de36941c561b102f1c0e74609de4eab96e7ad78189da",
+      "bytes": 3950
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "sha256": "ca4ba54b7be3854239fd67a4ebc0867c82214f98354e6db86b44988e53288e7c",
+      "bytes": 6012
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "sha256": "1f8c8a9daccef5f63d019b3d3ff9b2079b7231a5dd3f1a7af87af7ff42bb9cbb",
+      "bytes": 6376
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+      "sha256": "6330076e26b463d5399c0be1222185d128c640224ca1dd795182e15d36a3b06e",
+      "bytes": 7290
+    },
+    {
+      "path": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+      "sha256": "6d28bdbdd258fe0bffa96228a3deb0b3df0455fe1b146da861ec19833331714e",
+      "bytes": 16046
+    }
+  ],
+  "sourceReadySHA256": "4c646b50b2fe2bc72944de8e7832df6a09fc9f50501f1b046c8dc837ab1eb577",
+  "documentationPaths": 717,
+  "diagnostics": [
+    {
+      "id": "0a397e925b1c7609ace3380c26cc4b32677a20b50984a6319a3d4f7dad29875f",
+      "rule": "comment.layer",
+      "path": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "test head lacks its layer contract."
+    }
+  ],
+  "chineseHeadFailures": []
+}

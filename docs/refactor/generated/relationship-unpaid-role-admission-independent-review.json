@@ -1,0 +1,527 @@
+{
+  "schema": 1,
+  "reviewer": "native_presentation_finish independent non-author",
+  "approved": true,
+  "findings": [],
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "c7fa37197b1f9d405eadcb48c910aca323365ac74996a8055d334c9303b6e486",
+      "bytes": 9037
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "0e3fca6538c285c814675da74b2573baff696239072ef1df232a512d5c84d83c",
+      "bytes": 4896
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "bbfd6c2fceaaad7e9b43ba5932a2365c9303fea24dbd2d9c3331ceba6b488125",
+      "bytes": 7146
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "sha256": "05fec91ee33fd2707fc3de36941c561b102f1c0e74609de4eab96e7ad78189da",
+      "bytes": 3950
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "sha256": "ca4ba54b7be3854239fd67a4ebc0867c82214f98354e6db86b44988e53288e7c",
+      "bytes": 6012
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "sha256": "1f8c8a9daccef5f63d019b3d3ff9b2079b7231a5dd3f1a7af87af7ff42bb9cbb",
+      "bytes": 6376
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+      "sha256": "6330076e26b463d5399c0be1222185d128c640224ca1dd795182e15d36a3b06e",
+      "bytes": 7290
+    },
+    {
+      "path": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+      "sha256": "1d091f3687cce1caa97a7586a343548cb187f29bb5c3f63b1f045b6b4952d455",
+      "bytes": 16095
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/relationship-unpaid-role-admission-scope-final.json",
+    "sha256": "b49812fac677ed0b805ee69f2d274a2c0f54c59a37523ba9e22e147ab7a31bd0",
+    "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+    "orderedSourceCount": 8,
+    "policy": "F05d bounded unpaid relationship admission"
+  },
+  "document": {
+    "path": "docs/refactor/relationship-unpaid-role-admission.md",
+    "sha256": "fc81ce810b8d364358fecfa5aab009de2f9e68cd1b359eb46e18a959beb6412e"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/relationship-unpaid-role-admission-evidence.json",
+    "sha256": "6285333900fd75e2ee1880f830d46efc76fe33db4f7f338a0cbd9877573ca1df"
+  },
+  "actualGitBefore": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "83d3d08c5daa8782c5864484b7f78e60053b20138536f34afc8ea703a6f3caa3",
+      "mode": "100644",
+      "blob": "5141cc56fcff36dfec473532f72f2e6dc89ae98f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "cf7ec272d7a468f1ef8d96df2580c464ad47451b9ca68cdd11a18b98d388f2e4",
+      "mode": "100644",
+      "blob": "64e76ace0cc374b674068bd7ec7b8433377daa10"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "60f09f95bbc6e839949b9b0254d6e89be866ef8ea59cb5fcf081b956788a6702",
+      "mode": "100644",
+      "blob": "a32bc73704bfd4f532384bb11fb445068709b5cb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "sha256": "3b8012ae79371772e9bd9dac89e1d11b5a9f17e77a1533ca74462694719f4c01",
+      "mode": "100644",
+      "blob": "3f1eab529ae0bcbf163553032c408ed21cc9a4cd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "sha256": "7e4549cf2550883d9da7b56bd621ca69f2faf82f18bbae9b4783a3c8fdfb45dd",
+      "mode": "100644",
+      "blob": "7db82344846bf2cd0bc95ecff23c1d42c146a4e2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "sha256": "a2d122681f672e95282b1c90c6ac97f318d9e0ad7fd757a88e189a2cd04b8b89",
+      "mode": "100644",
+      "blob": "0976e2e739b31d351df6d730ec32e0bae98a53d0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+      "sha256": "5882db5bde09fbcd2d2cb4af0470db176831d0fd4f1b23405972f38178f525f9",
+      "mode": "100644",
+      "blob": "38bd15ec3d0d2571b27fd9becc9727aa88eaaed8"
+    }
+  ],
+  "newGitAbsent": [
+    {
+      "path": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+      "expectedAbsent": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/role-execution-authority.ts",
+      "sha256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756",
+      "mode": "100644",
+      "blob": "da55b2b377611ace1c491f5e7c9eba83d534c6c4"
+    },
+    {
+      "path": "backend/src/core/domain/world.ts",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1",
+      "mode": "100644",
+      "blob": "35ead18d1d431599d1ddab53e16925e73faf853a"
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97",
+      "mode": "100644",
+      "blob": "1b32deb8d4cb4de733f51cc9664ef87685dd7c08"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "sha256": "ae278c531a16f94f5a3a892a3ffcd450791770617af00cbf9f6cfa1facd84353",
+      "mode": "100644",
+      "blob": "c09261abccf11f05f2210fd85a5f1ad2236d1cd6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/state-slot.ts",
+      "sha256": "a0fac5d164c1f9182e8a43469e64e1006ab4f3518a58340ffde31ae0d5e6671b",
+      "mode": "100644",
+      "blob": "63d91f1342c6734ed5f83d80a40690cfb82194b7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "sha256": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "mode": "100644",
+      "blob": "df92fa297c96ed13f1c8ff4c8e5270e1eccd93f5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sha256": "a5a30bc7434a86b0661b9937b1850353e5b2d2d38e2f2f2efdbe5b242269a2d9",
+      "mode": "100644",
+      "blob": "a4b4577583ec32a976bee8390d18f0067bb63f06"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-before.json",
+      "sha256": "7e905186db4e1b531e663e3f83f61ea02a6c044c10160734cb189b6cc8aca573"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-edits.json",
+      "sha256": "626219c047ae985da3b8343b9e6829273dbf4f83a9b7af732c302255aa7772f7"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-first-heads-output.txt",
+      "sha256": "84bf00a2f104e5c266e426488fdfa0bf39e49718403d774ed89ef31503690f6d"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-first-heads.json",
+      "sha256": "d46b257ee951b948d34bb9a4aae1679f5190bfff6313cc2b452abf939f3d2e44"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-first-proof-output.txt",
+      "sha256": "df8a24bb2bdddceae76bc42a034ee4029bdd00492a6f2c8f59fd9e9eedb9c0f9"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-first-proof.json",
+      "sha256": "75688825b40b81167bfc732d62ed8ac69aacd5ea9622ea9d30746d641a91e943"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-first-types-repaired-output.txt",
+      "sha256": "8ba8ca4ca839f87a11cdd7c0219092e367639745ac5cca2321adacbbc1afce54"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-heads-failed-unit-output.txt",
+      "sha256": "1ca9ca820dd4d78236a45a1d8146644f0bfc92089086c1e45971be2d8ee43e2f"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-heads-failed-unit.json",
+      "sha256": "12eafab752dc30e26fc6075f5f03c86c09903fe7e35ee6686c9c1ac435a2ebd6"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-heads-failed-unit.ts",
+      "sha256": "409c622a624ab459ad74bb3835446ae57b07f4421afce3353b353da883d4dd82"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-heads-output.txt",
+      "sha256": "84bf00a2f104e5c266e426488fdfa0bf39e49718403d774ed89ef31503690f6d"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-heads.json",
+      "sha256": "d46b257ee951b948d34bb9a4aae1679f5190bfff6313cc2b452abf939f3d2e44"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-heads.ts",
+      "sha256": "3f5e4761680835e7e2cc1a872805c9bf244d8cc2f799a7a392b698c8d27a358b"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-new-absence.json",
+      "sha256": "5c960fee16441bbd4b26964ec60fdbadb890f01023203b130c9f239532fc4f76"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-paths.json",
+      "sha256": "30e3010d22d281969d9ac4fe31f6c15c6a6af28a437cd25cc792186e287b6b91"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-pre-request-tail-source.json",
+      "sha256": "f9a22584ee309ef78fa2318c0e45b7a77ad1189d890bbafe35f8870aa704fed0"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-proof-output.txt",
+      "sha256": "df8a24bb2bdddceae76bc42a034ee4029bdd00492a6f2c8f59fd9e9eedb9c0f9"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-proof.cjs",
+      "sha256": "4e021ee17c87abc281554359b0ab5dce0e8a6d385a1646afc508dabd5d5a01cb"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-proof.json",
+      "sha256": "75688825b40b81167bfc732d62ed8ac69aacd5ea9622ea9d30746d641a91e943"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-receipts.json",
+      "sha256": "9de6c445049991d070024fc20a957df66c2c348d72110dc70b688a51f664ea80"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-reflect-before.json",
+      "sha256": "e93030fb894e7ef3c1b2b11a1f3b47b55e7658607d97bc83447917946db069ee"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-reflect-edits.json",
+      "sha256": "705adf907dcc0bec426a829e21e5711b692c85e2bc27ffb2baf97ecafaa61782"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-reflect-unit-edits.json",
+      "sha256": "f0d201917a7cb47c1f8fd00a1e0962a711716b6805ddeb24e4006bec0603d783"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-source-ready-reflect.json",
+      "sha256": "4c646b50b2fe2bc72944de8e7832df6a09fc9f50501f1b046c8dc837ab1eb577"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-source-ready-unit-repair.json",
+      "sha256": "817aab1a66544a19261aa757000bb644d1cbdd0990c4dce84a49390b72cfd1d9"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-source-ready.json",
+      "sha256": "2d3c70113eb1bc6bf2244113587c457b742bc0037dda5cb9439318a2d1611ea6"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-type-configuration-repair.json",
+      "sha256": "d26bee053b04a82863d1b9cc72b3812e027c20503baa73a672c7f4ac0cc64745"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-config-first.json",
+      "sha256": "c0ace9b33ad3e2020c22aa66e4288dbde69fee36917fdfc36d55f15d6e27d82e"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-config.json",
+      "sha256": "c821c041dc9bbfdc5a482da22196c822679a3f3ec1540080c44b6a8680db256c"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-failed-unit-config.json",
+      "sha256": "59a64b46f6bd36730441be3e5784190f398a32ea53f9d1e3f4b7fef703e79c06"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-failed-unit-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-output-first.txt",
+      "sha256": "9db2e041a08a573c083455af0bea8bbd9c97b0e96dc6d87846568134e9bff83b"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-output.txt",
+      "sha256": "9db2e041a08a573c083455af0bea8bbd9c97b0e96dc6d87846568134e9bff83b"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-repaired-output.txt",
+      "sha256": "8ba8ca4ca839f87a11cdd7c0219092e367639745ac5cca2321adacbbc1afce54"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-unit-output.txt",
+      "sha256": "d597fdabb7be165b4d3bf07c1794dee837fda202248b9d31b00c5eefa873ea50"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-unit-repair-before.json",
+      "sha256": "7d8b4b5ebc585ad1a768f30c1eedc836745f5b8ec7b65bfa29485e625cc5f401"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-unit-repair-edits.json",
+      "sha256": "fec9529dbeea30e54272b2f9c433680bf9d69efde29079943609f79cdec63e94"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-unit-repair-proof-output.txt",
+      "sha256": "63050ae77cb2fcea22c55871d9c1585205fbffdc8256aed4d603722d0a8568cd"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-unit-repair-proof.cjs",
+      "sha256": "613e7a87c99ae330af3e86122e8f875383a99b41e350ee01c05c4c54f2f70803"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-unit-repair-proof.json",
+      "sha256": "ca2e5ed6c8f875dd47474bd92f8758a14aaaf5a58b9734233ba6c917c4e7c6c0"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-unpaid-role-admission-audit.json",
+      "sha256": "99aa5ca3e8151f92bc74f52d57717cfbc62e7286c1b249d684533bd94a93053d"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-unpaid-role-admission-audit-inventory.json",
+      "sha256": "b4e8f78adef3e73bdea98a18aa5f2cc191ba1ccae7a5c81006828ff27de9682f"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-metadata-first-snapshot.json",
+      "sha256": "e9f32f42540b95cdcf661058fff00bc4003668c6d6ad18be68fe3a02856b9999"
+    },
+    {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-scope-precision.json",
+      "sha256": "58b8dbc2d67d6d33c916e8a7f4e7b15a5a5cc87b9b23b67a10d1ed8099d3ab3e"
+    }
+  ],
+  "boundArtifactReferences": 44,
+  "wholeSourcePhases": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "initialEdits": 10,
+      "reflectEdits": 6,
+      "wholeForwardInverse": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "initialEdits": 3,
+      "reflectEdits": 0,
+      "wholeForwardInverse": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "initialEdits": 10,
+      "reflectEdits": 4,
+      "wholeForwardInverse": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "initialEdits": 3,
+      "reflectEdits": 0,
+      "wholeForwardInverse": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "initialEdits": 10,
+      "reflectEdits": 4,
+      "wholeForwardInverse": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "initialEdits": 4,
+      "reflectEdits": 0,
+      "wholeForwardInverse": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+      "initialEdits": 2,
+      "reflectEdits": 3,
+      "wholeForwardInverse": true
+    }
+  ],
+  "unitSourcePhases": {
+    "initialReady": "2d3c7011",
+    "firstActuallyChecked": "4c646b50",
+    "executedUnitSHA256": "6d28bdbdd258fe0bffa96228a3deb0b3df0455fe1b146da861ec19833331714e",
+    "finalUnitSHA256": "1d091f3687cce1caa97a7586a343548cb187f29bb5c3f63b1f045b6b4952d455",
+    "finalReady": "817aab1a",
+    "lastExactEdits": 2,
+    "wholeESNextCJSSame": true,
+    "otherSevenUnchanged": true
+  },
+  "semanticReview": [
+    "Complete old/current seven production modules, all three actual state helpers and seven stable controls plus the complete new unit read. Pure current expressions, paid/data Cupid relation bodies, WolfBeauty Charm control and baseline/init/target/knowledge are unchanged.",
+    "Captured Role canAct reads only permanent retirement as denial, never supplies original eligibility. Profiles keep original qualification/phase/tool/target/error order and append denial only at successful action tails, including nullable Charm.",
+    "Cupid reads builder/args and prepared Reflect before refusal, builds request before original current and late provider/getAction reads. Hybrid/WolfBeauty retain provider/getAction before builder/args. Reflect/bind and args prepare before last flag, followed only by prepared invocation with original receiver.",
+    "Non-callable original provider is not bound/validated early: builder completes or throws first, and TypeError occurs at actual invoke. Added Reflect TypeError text, global observation, allocation and call stack are explicit input/API changes, not arbitrary CJS/global equivalence.",
+    "After gateway and original target/body/Victory reads, Hybrid and Charm capture original commit callee before last flag; unchanged data helpers begin with remaining or targetId assignment. Original getter errors still propagate before denial.",
+    "Controlled bindLovers keeps has-binding error first, addComponent callee/record.actorId/args next, then Reflect preparation and last refusal before Lovers first component install. Default three-argument expression/void has no new Reflect/flag channel.",
+    "After first Lovers install, Hybrid remaining write or Charm targetId write, original fields/bindings/Victory/facts complete without further tombstone. Late retirement and publication failure retain original paid prefix, no refund or recreated permit.",
+    "Nine independent declarations have literal requests/stocks/Victory/Charm/Lovers/fact/Error oracles and real bootstrap/factory/gateway. Provider-retirement occurs in synchronous async-provider body then await-return revalidation, not an external deferred suspension."
+  ],
+  "evidenceReview": {
+    "executor": "Root, not author or reviewer",
+    "runs": [
+      {
+        "name": "unit",
+        "reportedLaunch": "bb4f7a",
+        "session": null,
+        "reportedTerminal": null,
+        "actualExitCode": 0
+      },
+      {
+        "name": "typeFirst",
+        "reportedLaunch": "35d6c0",
+        "session": null,
+        "reportedTerminal": null,
+        "actualExitCode": 2
+      },
+      {
+        "name": "typeAfterAmbient",
+        "reportedLaunch": "7aa635",
+        "session": 44833,
+        "reportedTerminal": "fb8f70",
+        "actualExitCode": 2
+      },
+      {
+        "name": "typeFailedUnit",
+        "reportedLaunch": "91a34e",
+        "session": 23678,
+        "reportedTerminal": "3cfabe",
+        "actualExitCode": 0
+      },
+      {
+        "name": "heads",
+        "reportedLaunch": "d472dd",
+        "session": null,
+        "reportedTerminal": null,
+        "actualExitCode": 1
+      },
+      {
+        "name": "proof",
+        "reportedLaunch": "963da9",
+        "session": null,
+        "reportedTerminal": null,
+        "actualExitCode": 0
+      },
+      {
+        "name": "headFailedUnit",
+        "reportedLaunch": "fd1f17",
+        "session": null,
+        "reportedTerminal": null,
+        "actualExitCode": 0
+      },
+      {
+        "name": "unitBridge",
+        "reportedLaunch": "a66ecd",
+        "session": null,
+        "reportedTerminal": null,
+        "actualExitCode": 0
+      }
+    ],
+    "runtimeDeclarations": 9,
+    "runtimeExpectCalls": 369,
+    "mainProof": {
+      "oldPrograms": 7,
+      "aggregate": {
+        "typedNodes": 5381,
+        "nodeArrays": 700,
+        "leaves": 2717
+      },
+      "wholeInverseOutputs": 14,
+      "actualOutputsDifferent": 14,
+      "protectedPrograms": 10,
+      "controls": 7
+    },
+    "typeAndHeadHistory": "Ambient-only TS2688 configuration red preserved; corrected8 roots only new unit2 matcher diagnostics. One erased factTypes annotation and Chinese level label then failed-unit-only type/head0, two whole outputs same; no9 business/wholeproof/seven-head rerun.",
+    "sourceStages": {
+      "firstUnexecuted": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-source-ready.json",
+        "sha256": "2d3c70113eb1bc6bf2244113587c457b742bc0037dda5cb9439318a2d1611ea6"
+      },
+      "firstChecked": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-source-ready-reflect.json",
+        "sha256": "4c646b50b2fe2bc72944de8e7832df6a09fc9f50501f1b046c8dc837ab1eb577"
+      },
+      "failedUnitSuccessor": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-source-ready-unit-repair.json",
+        "sha256": "817aab1a66544a19261aa757000bb644d1cbdd0990c4dce84a49390b72cfd1d9"
+      }
+    },
+    "staticAudit": {
+      "references": [
+        {
+          "path": "docs/refactor/generated/remaining-unpaid-role-admission-audit.json",
+          "sha256": "99aa5ca3e8151f92bc74f52d57717cfbc62e7286c1b249d684533bd94a93053d"
+        },
+        {
+          "path": "docs/refactor/generated/remaining-unpaid-role-admission-audit-inventory.json",
+          "sha256": "b4e8f78adef3e73bdea98a18aa5f2cc191ba1ccae7a5c81006828ff27de9682f"
+        }
+      ],
+      "limit": "Actual644 predecessor static audit is not actual620 before or executable authority; independently bound source hashes."
+    }
+  },
+  "resolvedFindings": [
+    {
+      "description": "Target/request/provider late getter gap",
+      "closed": "Linked unexecuted Reflect successor preserving original lookup/receiver/call order before first checks"
+    },
+    {
+      "description": "WolfBeauty header describes targetId then lastActedDay then history",
+      "closed": "Production text corrected before first sampling"
+    },
+    {
+      "description": "Unopened metadata excludes already-open unpaid execution",
+      "closed": "Exact unpaid new phrase; original metadata snapshot retained; source/MD/checks unchanged"
+    }
+  ],
+  "readerHistory": [
+    "c22ec8 expected a mode field absent from saved rows; pure reader instead bound actual Git tree mode alongside saved gitBlob/bytes/text. No review/source/check executed or modified."
+  ],
+  "limitations": [
+    "Only Git/text/hash/JSON reads and this independent report; no runtime/type/head/proof/gate/product import by reviewer.",
+    "Main tree/mapped proof is complete inverse of explicit behavior edits, not intended policy equivalence. forEachChild metrics exclude JSDoc, not lexical token totals.",
+    "Original getters/builders/facts preserve Error identity; arbitrary global builtin rewriting/foreign setter transactions and all-role/C17/P9 closure are outside approval.",
+    "No author source/metadata/Git/progress/shared scope changed. SourceHash changes stay real."
+  ]
+}

@@ -1,0 +1,1 @@
+{"source":8,"oldPrograms":7,"inverseMappedOutputs":14,"protectedPrograms":10,"controls":7,"aggregate":{"typedNodes":5381,"nodeArrays":700,"leaves":2717}}

@@ -1,11 +1,13 @@
 /**
  * 负责丘比特首夜恋人选择的请求、await 复验、关系绑定、成员归属与事实发布。
  * 输入为原夜上下文和经网关验证的配对；输出是同一关系记录及原事件，数据库存／选择写入由本族槽负责。
- * 原角色、容器、生命与双方 Victory 在等待前后复验；最终同步段依次绑定关系、消费选择、安装归属再发布。
+ * 原角色、容器、生命与双方 Victory 在等待前后复验；未付选择另拒绝捕获角色的执行退休，纯 current 不附旗。
+ * 首关系提交后依次消费选择、安装归属再发布；晚退休不撤销已付关系或截断原完成前缀。
  * 目标阵营按原点捕获并复验当前值，pairCamps仍是提交历史；不将关系／Victory当真实阵营。
  * 同步段不是事务：字段、组件或事件失败保留先完成的前缀，不退款或重新使用旧请求，殉情与判胜另有 owner。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
+import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
 
 import {
   createVictoryComponent,
@@ -51,10 +53,12 @@ export const CUPID_STAGE: NightStageHandler = {
         victory.affiliations === affiliations &&
         JSON.stringify(affiliations) === membership &&
         !hasCupidNightCommit(ctx.world, day);
-      if (!current()) continue;
+      // 纯原体当前性保原表达式；新未付准入只消费捕获 Role 的永久拒绝信号。
+      const canAct = () => !isRoleExecutionRetired(role);
+      if (!current() || !canAct()) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
-        if (!current()) break;
+        if (!current() || !canAct()) break;
         const targets = new Map(
           ctx.world.getAliveEntityIds().map((id) => {
             const targetRole = ctx.world.getComponent(id, COMPONENT.Role)!,
@@ -75,22 +79,36 @@ export const CUPID_STAGE: NightStageHandler = {
           }),
         );
         if (targets.size < 2) throw new Error("cupid_valid_action_missing");
-        const request = ctx.makeRequest(actorId, ["choose_lovers"], {
+        // 丘比特原先先构造请求；原 callee／参数和保持 ctx receiver 的 Reflect 调用准备后才拒未付退休。
+        const makeRequest = ctx.makeRequest;
+        const requestActor = actorId;
+        const requestTools: Parameters<typeof makeRequest>[1] = ["choose_lovers"];
+        const requestExtras: Parameters<typeof makeRequest>[2] = {
           stage: "cupid",
           requiresAction: true,
           allow_fallback: false,
           action_failure_policy: "error",
           ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
-        });
-        if (!current()) break;
-        const action = await ctx.actionProvider.getAction(request);
-        if (!current()) break;
+        };
+        const requestArgs = [requestActor, requestTools, requestExtras];
+        const invokeRequest = Reflect.apply.bind(Reflect);
+        if (!canAct()) break;
+        const request: ReturnType<typeof makeRequest> = invokeRequest(makeRequest, ctx, requestArgs);
+        if (!current() || !canAct()) break;
+        // provider receiver／callee 保原晚读取；新增 Reflect／bind 的读取也在末旗前，非可调用 callee 留在实际 invoke 点失败。
+        const provider = ctx.actionProvider,
+          getAction = provider.getAction;
+        const actionArgs = [request];
+        const invokeAction = Reflect.apply.bind(Reflect);
+        if (!canAct()) break;
+        const action: Awaited<ReturnType<typeof getAction>> = await invokeAction(getAction, provider, actionArgs);
+        if (!current() || !canAct()) break;
         if (action?.name !== "choose_lovers") continue;
         const valid = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, action, {
           phase: Phase.Night,
           day,
         });
-        if (!current() || !valid.ok || valid.sanitizedCall?.name !== "choose_lovers") continue;
+        if (!current() || !valid.ok || valid.sanitizedCall?.name !== "choose_lovers" || !canAct()) continue;
         const pairIds: [number, number] = [
           valid.sanitizedCall.args.first_id,
           valid.sanitizedCall.args.second_id,
@@ -126,8 +144,9 @@ export const CUPID_STAGE: NightStageHandler = {
         });
         const memberIds = new Set(pairIds);
         if (policy === "netease_2017_cupid_follows_lovers_v1") memberIds.add(actorId);
-        // 最后授权后不再 await；关系先绑定，选择随后付款，再逐成员安装归属。失败不撤回已完成的前缀。
-        bindLovers(ctx.world, record, [first.life, second.life]);
+        // 目标／记录 getter 仍先读取；关系 owner 在原 callee／参数求值后、首组件写前检查拒绝尾。
+        // 首关系已写后不再消费墓碑：选择付款、归属和事实照原顺序继续，失败保已完成前缀。
+        if (!bindLovers(ctx.world, record, [first.life, second.life], canAct)) continue;
         commitCupidChoice(state, pairIds);
         for (const id of memberIds)
           ctx.world.addComponent(
@@ -158,7 +177,7 @@ export const CUPID_STAGE: NightStageHandler = {
         completed = true;
         break;
       }
-      if (!completed && current()) throw new Error("cupid_valid_action_missing");
+      if (!completed && current() && canAct()) throw new Error("cupid_valid_action_missing");
     }
   },
 };

@@ -1,0 +1,8 @@
+{
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "path": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+  "expectedAbsent": true,
+  "actualGitExitCode": 128,
+  "actualStderr": "fatal: path 'backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts' exists on disk, but not in '620673877a23d2e0a748b08c17ec0ca57a3cd4b9'\n",
+  "meaning": "read-only fixed Git absence, not compiler/runtime/gate execution"
+}

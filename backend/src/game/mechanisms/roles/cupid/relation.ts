@@ -2,6 +2,7 @@
  * 负责恋人原生命绑定、已授权关系查询及殉情死亡闭包。输入为原 World、关系记录、死因与梦效果句柄；
  * 输出为仍当前的关系、追加死因和逐关联去重的事件，bindings 唯一持有关系及 emitted 前缀。
  * 殉情保原独立根／来源规则，梦关系通过运行接口在原时点参与闭包；不复制效果、不标死或判胜。
+ * 未付阶段可给绑定命令传拒绝尾；它不授新许可，不过滤目标，已付关系查询／死亡闭包不读取执行退休。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
@@ -26,10 +27,38 @@ export function bindLovers(
   world: World,
   record: LoversComponent,
   lives: readonly [NightLifeScope, NightLifeScope],
-): void {
+): void;
+export function bindLovers(
+  world: World,
+  record: LoversComponent,
+  lives: readonly [NightLifeScope, NightLifeScope],
+  canAct: () => boolean,
+): boolean;
+export function bindLovers(
+  world: World,
+  record: LoversComponent,
+  lives: readonly [NightLifeScope, NightLifeScope],
+  canAct?: () => boolean,
+): void | boolean {
   if (bindings.has(world)) throw new Error("cupid_relation_already_committed");
-  world.addComponent(record.actorId, COMPONENT.Lovers, record);
+  if (canAct) {
+    // 原 callee、actorId 和参数先求值；Reflect／bind 读取与参数数组准备后才查拒绝尾，保 World receiver。
+    // getter／准备调用抛错先传播；false 不安装组件或 bindings，也不是完整许可的反面证明。
+    const addComponent = world.addComponent,
+      actorId = record.actorId,
+      component = COMPONENT.Lovers,
+      value = record;
+    const args = [actorId, component, value];
+    const invoke = Reflect.apply.bind(Reflect);
+    if (!canAct()) return false;
+    invoke(addComponent, world, args);
+  } else {
+    // 默认数据入口保原三参数表达式和 void，不访问新增 Reflect／bind 渠道或自行检查墓碑。
+    world.addComponent(record.actorId, COMPONENT.Lovers, record);
+  }
+  // 首组件已写后按原顺序建立唯一绑定；后续失败保该前缀，不再拒绝、补偿或付款。
   bindings.set(world, { record, lives, emitted: new Set() });
+  if (canAct) return true;
 }
 export function hasCupidNightCommit(world: World, day: number): boolean {
   return day === 1 && bindings.has(world);

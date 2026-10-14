@@ -1,0 +1,173 @@
+{
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "runs": [
+    {
+      "name": "unit",
+      "executor": "Root",
+      "reportedLaunch": "bb4f7a",
+      "session": null,
+      "reportedTerminal": null,
+      "actualExitCode": 0,
+      "command": "bun --no-env-file test backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+      "output": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-unit-output.txt",
+        "sha256": "d597fdabb7be165b4d3bf07c1794dee837fda202248b9d31b00c5eefa873ea50"
+      },
+      "facts": {
+        "differentDeclarations": 9,
+        "successfulExpectCalls": 369
+      }
+    },
+    {
+      "name": "typeFirst",
+      "executor": "Root",
+      "reportedLaunch": "35d6c0",
+      "session": null,
+      "reportedTerminal": null,
+      "actualExitCode": 2,
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --noEmit --pretty false -p docs/refactor/generated/relationship-unpaid-role-admission-types-config.json",
+      "output": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-output-first.txt",
+        "sha256": "9db2e041a08a573c083455af0bea8bbd9c97b0e96dc6d87846568134e9bff83b"
+      },
+      "facts": {
+        "configurationDiagnostics": 2,
+        "code": "TS2688"
+      },
+      "executedConfiguration": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-config-first.json",
+        "sha256": "c0ace9b33ad3e2020c22aa66e4288dbde69fee36917fdfc36d55f15d6e27d82e"
+      }
+    },
+    {
+      "name": "typeAfterAmbient",
+      "executor": "Root",
+      "reportedLaunch": "7aa635",
+      "session": 44833,
+      "reportedTerminal": "fb8f70",
+      "actualExitCode": 2,
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --noEmit --pretty false -p docs/refactor/generated/relationship-unpaid-role-admission-types-config.json",
+      "output": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-repaired-output.txt",
+        "sha256": "8ba8ca4ca839f87a11cdd7c0219092e367639745ac5cca2321adacbbc1afce54"
+      },
+      "facts": {
+        "onlyFailedSource": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+        "diagnostics": 2,
+        "code": "TS2769",
+        "productionDiagnostics": 0
+      }
+    },
+    {
+      "name": "typeFailedUnit",
+      "executor": "Root",
+      "reportedLaunch": "91a34e",
+      "session": 23678,
+      "reportedTerminal": "3cfabe",
+      "actualExitCode": 0,
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --noEmit --pretty false -p docs/refactor/generated/relationship-unpaid-role-admission-types-failed-unit-config.json",
+      "output": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-types-failed-unit-output.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "facts": {
+        "roots": 1
+      }
+    },
+    {
+      "name": "heads",
+      "executor": "Root",
+      "reportedLaunch": "d472dd",
+      "session": null,
+      "reportedTerminal": null,
+      "actualExitCode": 1,
+      "command": "bun --no-env-file docs/refactor/generated/relationship-unpaid-role-admission-heads.ts",
+      "output": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-heads-output.txt",
+        "sha256": "84bf00a2f104e5c266e426488fdfa0bf39e49718403d774ed89ef31503690f6d"
+      },
+      "facts": {
+        "roots": 8,
+        "diagnostics": 1,
+        "failedSource": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+        "documentationPaths": 717
+      }
+    },
+    {
+      "name": "proof",
+      "executor": "Root",
+      "reportedLaunch": "963da9",
+      "session": null,
+      "reportedTerminal": null,
+      "actualExitCode": 0,
+      "command": "bun --no-env-file docs/refactor/generated/relationship-unpaid-role-admission-proof.cjs",
+      "output": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-proof-output.txt",
+        "sha256": "df8a24bb2bdddceae76bc42a034ee4029bdd00492a6f2c8f59fd9e9eedb9c0f9"
+      },
+      "facts": {
+        "oldPrograms": 7,
+        "mappedInverseOutputs": 14,
+        "protectedPrograms": 10,
+        "stableControls": 7
+      }
+    },
+    {
+      "name": "headFailedUnit",
+      "executor": "Root",
+      "reportedLaunch": "fd1f17",
+      "session": null,
+      "reportedTerminal": null,
+      "actualExitCode": 0,
+      "command": "bun --no-env-file docs/refactor/generated/relationship-unpaid-role-admission-heads-failed-unit.ts",
+      "output": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-heads-failed-unit-output.txt",
+        "sha256": "1ca9ca820dd4d78236a45a1d8146644f0bfc92089086c1e45971be2d8ee43e2f"
+      },
+      "facts": {
+        "roots": 1,
+        "diagnostics": 0,
+        "documentationPaths": 717
+      }
+    },
+    {
+      "name": "unitBridge",
+      "executor": "Root",
+      "reportedLaunch": "a66ecd",
+      "session": null,
+      "reportedTerminal": null,
+      "actualExitCode": 0,
+      "command": "bun --no-env-file docs/refactor/generated/relationship-unpaid-role-admission-unit-repair-proof.cjs",
+      "output": {
+        "path": "docs/refactor/generated/relationship-unpaid-role-admission-unit-repair-proof-output.txt",
+        "sha256": "63050ae77cb2fcea22c55871d9c1585205fbffdc8256aed4d603722d0a8568cd"
+      },
+      "facts": {
+        "exactDelta": 2,
+        "wholeOutputsSame": 2,
+        "otherSevenSame": true
+      }
+    }
+  ],
+  "receiptAuthority": "Actual Root tool terminal/launch messages and retained complete raw outputs; the author did not execute these checks.",
+  "sourceStages": {
+    "firstUnexecuted": {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-source-ready.json",
+      "sha256": "2d3c70113eb1bc6bf2244113587c457b742bc0037dda5cb9439318a2d1611ea6"
+    },
+    "firstChecked": {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-source-ready-reflect.json",
+      "sha256": "4c646b50b2fe2bc72944de8e7832df6a09fc9f50501f1b046c8dc837ab1eb577"
+    },
+    "failedUnitSuccessor": {
+      "path": "docs/refactor/generated/relationship-unpaid-role-admission-source-ready-unit-repair.json",
+      "sha256": "817aab1a66544a19261aa757000bb644d1cbdd0990c4dce84a49390b72cfd1d9"
+    }
+  },
+  "limits": [
+    "Do not infer exit zero merely from empty output; terminal statuses are Root actual reported results.",
+    "The first execution read types-config.json at c0ace9; the saved types-config-first.json preserves those exact bytes and was not a second compiler run.",
+    "No business/whole-proof/seven green heads rerun; only failed configuration/unit roots repaired."
+  ],
+  "commandProvenance": "CLI invocations were provided by the author to Root; actual Root launches/terminals and original outputs are recorded. Shell wrapping/raw exec JSON is not reproduced here."
+}

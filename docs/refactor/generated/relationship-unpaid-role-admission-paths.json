@@ -1,0 +1,23 @@
+{
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "source": [
+    "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+    "backend/src/game/mechanisms/roles/cupid/profile.ts",
+    "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+    "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+    "backend/src/game/mechanisms/roles/cupid/relation.ts",
+    "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts"
+  ],
+  "deleted": [],
+  "controls": [
+    "backend/src/core/domain/role-execution-authority.ts",
+    "backend/src/core/domain/world.ts",
+    "backend/src/core/domain/night_effects.ts",
+    "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+    "backend/src/game/mechanisms/roles/hybrid/state-slot.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+    "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts"
+  ]
+}

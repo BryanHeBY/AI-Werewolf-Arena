@@ -1,0 +1,84 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "c7fa37197b1f9d405eadcb48c910aca323365ac74996a8055d334c9303b6e486",
+      "bytes": 9037
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "0e3fca6538c285c814675da74b2573baff696239072ef1df232a512d5c84d83c",
+      "bytes": 4896
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "bbfd6c2fceaaad7e9b43ba5932a2365c9303fea24dbd2d9c3331ceba6b488125",
+      "bytes": 7146
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "sha256": "05fec91ee33fd2707fc3de36941c561b102f1c0e74609de4eab96e7ad78189da",
+      "bytes": 3950
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "sha256": "ca4ba54b7be3854239fd67a4ebc0867c82214f98354e6db86b44988e53288e7c",
+      "bytes": 6012
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "sha256": "1f8c8a9daccef5f63d019b3d3ff9b2079b7231a5dd3f1a7af87af7ff42bb9cbb",
+      "bytes": 6376
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+      "sha256": "6330076e26b463d5399c0be1222185d128c640224ca1dd795182e15d36a3b06e",
+      "bytes": 7290
+    },
+    {
+      "path": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+      "sha256": "1d091f3687cce1caa97a7586a343548cb187f29bb5c3f63b1f045b6b4952d455",
+      "bytes": 16095
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/relationship-unpaid-role-admission-scope-final.json",
+    "sha256": "b49812fac677ed0b805ee69f2d274a2c0f54c59a37523ba9e22e147ab7a31bd0"
+  },
+  "document": {
+    "path": "docs/refactor/relationship-unpaid-role-admission.md",
+    "sha256": "fc81ce810b8d364358fecfa5aab009de2f9e68cd1b359eb46e18a959beb6412e"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/relationship-unpaid-role-admission-evidence.json",
+    "sha256": "6285333900fd75e2ee1880f830d46efc76fe33db4f7f338a0cbd9877573ca1df"
+  },
+  "integrity": {
+    "freshSources": 8,
+    "actualGitBefore": 7,
+    "controls": 7,
+    "artifactHashes": 44,
+    "fullExactForward": 0,
+    "mismatches": [],
+    "actualGitNewUnitAbsence": {
+      "checked": true,
+      "terminalChunk": "bd4cad",
+      "source": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+      "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9"
+    }
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "actual620七完整Git及bd4cad独立核新unit原Git不存在；七稳定Core/World/生命/数据槽/已付Charm控制、44附件及末scope/MD/ev绑定。",
+    "原三纯current、目标/玩家知识/已付关系死亡函数保持；Cupid builder先/provider晚、Hybrid/WB provider先且callee/args/Reflect都在捕获Role末拒绝之前，原错误优先与method receiver；controlledLovers首写后完成，默认3参数void原表达式。",
+    "Root首9different369成功断言；原ambient配置和unit matcher/head真实失败全部保持，仅失败unit类型/中文层级的两emit桥，七生产源和已绿业务/头/主proof不重。",
+    "完整42首edit和Reflect21增量/新unit阶段范围，7whole逆/14raw并不冒实际行为等价；API/Reflect/TypeError观察面、同步provider retirement区别于外部deferred及元数据unpaid用词限界准确中文。"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

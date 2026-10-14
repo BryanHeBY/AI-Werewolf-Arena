@@ -1,0 +1,317 @@
+{
+  "kind": "bounded-read-only-admission-audit",
+  "status": "proposal; implementation is not authorized by this artifact",
+  "snapshotHead": "64479b4c39da619ce0e7b3817e78e0e8b792c6a0",
+  "auditStartHead": "a0202b1578002a93f62dad9ce534556a36f15727",
+  "inventory": {
+    "path": "docs/refactor/generated/remaining-unpaid-role-admission-audit-inventory.json",
+    "sha256": "b4e8f78adef3e73bdea98a18aa5f2cc191ba1ccae7a5c81006828ff27de9682f"
+  },
+  "conclusion": "The five concrete unpaid stage/rule paths have no retirement read. Their original data/currentness conditions can still accept a permanently retired captured Role when those original conditions hold. This is static inference, not an executed failure or a demonstrated automatic whole-game continuation.",
+  "policyBoundary": "F05a/F05c explicitly separate rejection of new unpaid execution from pure state, target, knowledge, lifecycle and paid-effect currentness. Earlier committed packages did not claim all 55-role execution closure.",
+  "fiveConcretePaths": [
+    {
+      "family": "Cupid",
+      "stage": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "unpaidCurrentLines": [
+        38,
+        53
+      ],
+      "providerLine": 86,
+      "lastGatewayCurrentLine": 93,
+      "laterReads": "sanitized first_id/second_id; selected life/Role/Camp/privateState/Victory/JSON; record construction and member Set",
+      "firstWrite": {
+        "line": 130,
+        "command": "bindLovers",
+        "owner": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+        "ownerLine": 31,
+        "effect": "World Lovers component before the unique bindings entry"
+      },
+      "followingPrefix": "choice remaining/array copy -> member Victory -> facts",
+      "rule": {
+        "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+        "line": 71,
+        "existingUnavailable": "RuleError.CupidUnavailable"
+      }
+    },
+    {
+      "family": "Hybrid",
+      "stage": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "unpaidCurrentLines": [
+        39,
+        51
+      ],
+      "providerLines": [
+        75,
+        82
+      ],
+      "lastGatewayCurrentLine": 89,
+      "laterReads": "sanitized target_id; target life/Role/Camp/privateState; createVictoryComponent",
+      "firstWrite": {
+        "line": 104,
+        "command": "commitHybridChoice",
+        "owner": "backend/src/game/mechanisms/roles/hybrid/state-slot.ts",
+        "ownerLine": 33,
+        "effect": "remaining=0 before choice"
+      },
+      "followingPrefix": "actor Victory -> committed day Map -> facts",
+      "rule": {
+        "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+        "line": 65,
+        "existingUnavailable": "RuleError.HybridUnavailable"
+      }
+    },
+    {
+      "family": "WolfBeauty charm",
+      "stage": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "unpaidCurrentLines": [
+        45,
+        57
+      ],
+      "providerLines": [
+        42,
+        44
+      ],
+      "lastGatewayCurrentLine": 66,
+      "laterReads": "nullable raw/sanitized target_id and captured target life/version; null skips gateway",
+      "firstWrite": {
+        "line": 80,
+        "command": "recordCharmSelection",
+        "owner": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+        "ownerLine": 35,
+        "effect": "targetId -> lastActedDay -> history push"
+      },
+      "followingPrefix": "bindCharm -> charm event -> optional Animal notice",
+      "rule": {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+        "line": 84,
+        "existingUnavailable": "RuleError.CharmUnavailable"
+      },
+      "openingDifference": "current closure is created after await; an opening rejection must occur before target snapshot and request without moving the original board/data preflight"
+    },
+    {
+      "family": "MiracleMerchant",
+      "stage": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "unpaidCurrentLines": [
+        48,
+        48
+      ],
+      "purePaidCurrentLines": [
+        40,
+        47
+      ],
+      "providerLines": [
+        71,
+        79
+      ],
+      "lastGatewayCurrentLine": 97,
+      "laterReads": "sanitized target_id/skill and target life/Role/Camp/privateState; Good gift preparation/install",
+      "firstWrites": [
+        {
+          "line": 82,
+          "command": "closeMerchantTrade",
+          "effect": "null/no-target closes the day without inventory consumption"
+        },
+        {
+          "line": 156,
+          "command": "recordMerchantTrade",
+          "effect": "Wolf branch first consumes remaining; Good branch follows target gift installation"
+        }
+      ],
+      "followingPrefix": "recordCommit -> optional backlash with pure ownerCurrent -> facts",
+      "rule": {
+        "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+        "line": 77,
+        "existingUnavailable": "RuleError.MerchantUnavailable"
+      }
+    },
+    {
+      "family": "BlackMarketMerchant",
+      "stage": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "unpaidCurrentLines": [
+        53,
+        53
+      ],
+      "purePaidCurrentLines": [
+        40,
+        52
+      ],
+      "providerLines": [
+        85,
+        95
+      ],
+      "lastGatewayCurrentLine": 107,
+      "laterReads": "sanitized target_id/skill and target life/Role/Camp/privateState; unsupported-Camp throw; Good gift/gun preparation/install",
+      "firstWrites": [
+        {
+          "line": 56,
+          "command": "closeBlackMarketTrade",
+          "effect": "skip/null/no-target closes only the day"
+        },
+        {
+          "line": 165,
+          "command": "recordBlackMarketTrade",
+          "effect": "Wolf branch first consumes remaining; Good branch follows target gift/gun installation"
+        }
+      ],
+      "followingPrefix": "recordCommit -> captured choice -> backlash current(ownerCurrent(true), same choice fields) -> facts",
+      "rule": {
+        "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+        "line": 75,
+        "existingUnavailable": "RuleError.MerchantUnavailable"
+      },
+      "paidLifeBoundary": "ownerCurrent(true) permits the captured original life at its first death version; this pure paid rule must remain independent of retirement"
+    }
+  ],
+  "alreadyGuardedResources": [
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "lines": [
+        59,
+        150
+      ],
+      "meaning": "complete old source/clone/state/ID policy finishes before captured source/target retirement rejection"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "lines": [
+        316,
+        324,
+        330
+      ],
+      "meaning": "gift inventory installation rejects captured endpoints before and after dictionary evaluation; publication failure preserves the accepted resource"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "lines": [
+        142,
+        163,
+        188,
+        194
+      ],
+      "meaning": "Good Black gift gun is already protected at original binding/container/installation points"
+    }
+  ],
+  "notASelectorFix": {
+    "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+    "lines": [
+      453,
+      458
+    ],
+    "meaning": "Alive + Role label is a data selector, not complete action permission. Native provider only adds existing readability checks, not a universal retirement check.",
+    "excludedConsumers": [
+      {
+        "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+        "line": 39,
+        "meaning": "received previous-exile knowledge/history remains its existing data policy"
+      },
+      {
+        "path": "backend/src/rulesets/night-damage-composition.ts",
+        "line": 78,
+        "meaning": "CursedFox wolf-immune targets are target data, not actors requesting an unpaid action"
+      }
+    ]
+  },
+  "lateReadRisk": "All five validated paths read sanitized args/target components after their last current check and before first semantic write. Adding retirement only before/after await or inside a globally filtered selector does not cover this interval. Original throwing getters must retain their error/prefix before the proposed rejection tail.",
+  "actualFailureProducerBoundary": {
+    "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+    "lines": [
+      364,
+      391
+    ],
+    "meaning": "candidate runtime/state is prepared before Role -> Camp -> Victory installation; candidate Role is permanently retired on installation error. Which later concrete stage has valid other data depends on its original rules. Existing setup/pipeline abort guards may stop normal continuation; this audit has not run a bypass or an automatic continuation scenario."
+  },
+  "candidates": [
+    {
+      "priority": 1,
+      "responsibility": "three unpaid relationship selections",
+      "proposedPaths": [
+        "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+        "backend/src/game/mechanisms/roles/cupid/profile.ts",
+        "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+        "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+        "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+        "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+        "backend/src/game/mechanisms/roles/cupid/relation.ts",
+        "backend/tests/unit/domain/remaining-unpaid-relationship-admission.test.ts"
+      ],
+      "existingProduction": 7,
+      "newTest": 1,
+      "sourceOwnership": "family stages retain captures/requests/await/validation; original data slots and paid relation/death owners retain their data and settled effects",
+      "implementationBoundary": "Add captured-Role rejection only to unpaid admission and original-success rule tails. At the actual first-write boundary, preserve original callee/receiver/argument and getter evaluation. Cupid bindLovers needs a narrowly controlled optional rejection tail after its original has-binding/prepared addComponent/actorId inputs; old default data call and paid Lovers queries/closure remain unchanged. Hybrid and WolfBeauty first data-writer calls have already evaluated local arguments, so their stage tails can guard before the original first write without flagging the following paid completion.",
+      "risks": [
+        {
+          "input": "legal original captured actor is permanently retired before opening; include a fresh different Role with original legal data and a retired target",
+          "literalExpected": "retired actor: no request/provider/state/relation/Victory/fact write; fresh actor follows original rules; targets are not globally removed"
+        },
+        {
+          "input": "provider retires the captured actor before returning a valid response; cover nullable WolfBeauty reply",
+          "literalExpected": "no remaining/choice/history/binding/Victory/fact writes; old reply cannot assign a replacement actor"
+        },
+        {
+          "input": "sanitized target getter or Cupid actual commit input getter retires captured actor after gateway current; independent throwing getter input",
+          "literalExpected": "late retirement prevents first write; throwing getter propagates the same Error and original prewrite trace. No post-accepted cancellation/refund"
+        }
+      ],
+      "oneOldPreciseReference": {
+        "path": "backend/tests/unit/features/wolf-beauty/charm-scope-and-permission-contracts.test.ts",
+        "line": 61,
+        "title": "${mutation}: asynchronous charm replacement/revocation forms no late relationship or private fact",
+        "meaning": "select one actual mutation when the new policy input is implemented; do not rerun the old whole suite"
+      }
+    },
+    {
+      "priority": 2,
+      "responsibility": "unpaid merchant trade/skip choices",
+      "proposedPaths": [
+        "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+        "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+        "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+        "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+        "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts"
+      ],
+      "existingProduction": 4,
+      "newTest": 1,
+      "sourceOwnership": "merchant state slots and target gift/gun owners remain unique; stage owns the trade choice and day closure",
+      "implementationBoundary": "Keep ownerCurrent and ownerCurrent(true) pure for already accepted backlash. Put retirement rejection after original unpaid canTrade/current and successful rule preflight, then after original args/target/callee preparation before the null/no-target close or Wolf debit, and before first target gift commit on Good paths. Good grant first-write acceptance continues original merchant completion/facts even if a later sink retires the actor. State writers first-write arguments are locals, so no new global data-owner authority is required.",
+      "risks": [
+        {
+          "input": "same original actor is retired before opening or during a null provider reply/no-target path",
+          "literalExpected": "no closedDay/committed-day/skip fact; remaining stays one"
+        },
+        {
+          "input": "valid true-Wolf choice has a sanitized/target getter retiring actor before the first merchant debit",
+          "literalExpected": "no remaining/choice/backlash/facts; pure target reads keep original policy"
+        },
+        {
+          "input": "a legitimate trade already commits, then the actor is retired; query its paid backlash and try a new unpaid choice",
+          "literalExpected": "paid ownerCurrent retains original life/state policy including Black first-death allowance; new unpaid execution is denied; no resource refund"
+        }
+      ],
+      "oneOldPreciseReference": {
+        "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+        "line": 246,
+        "title": "paid Black backlash ignores consumption/closure but revokes on changed state owner and never kills a revived body",
+        "meaning": "one selected changed-policy counterpart can preserve the paid boundary; no unchanged green rerun"
+      }
+    }
+  ],
+  "importantCommentPrecision": [
+    {
+      "paths": [
+        "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+        "backend/src/game/mechanisms/roles/black_market_merchant/state.ts"
+      ],
+      "finding": "record*Trade says 已付交易, but the true-Wolf branch first pays the merchant inventory here; Good target resource acceptance and merchant inventory payment are distinct.",
+      "suggestedMeaning": "已获准交易先消费商人库存，再写关窗日和选择；失败保已写前缀。",
+      "status": "existing explanatory precision; source unchanged and sent to Root"
+    }
+  ],
+  "limits": [
+    "No tests/types/heads/proofs/gates/models or production modules were executed. No source was edited.",
+    "The proposed new cases/oracles are not runtime evidence. Whole-game propagation after setup failure is not established.",
+    "No global selector filter, generic permission bus, new scope/caches, shadow state or rollback is proposed.",
+    "No claim of arbitrary JavaScript transaction defense: external forced writes, setter internals, mutable builtins or arbitrary namespace replacement are not covered by a bounded owned first-write guard.",
+    "These two proposed source groups are disjoint; shared Core/NP/World/resource owners are read controls, not proposed edits. New optional Cupid commit tail is an explicit API/observation change requiring Root design approval."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "oldScopeSHA256": "ddff5e61e073f262f6a237c22d2de720801ae9fc49926802d49ca932a4bf931a",
+  "finalScope": {
+    "path": "docs/refactor/generated/relationship-unpaid-role-admission-scope-final.json",
+    "sha256": "b49812fac677ed0b805ee69f2d274a2c0f54c59a37523ba9e22e147ab7a31bd0"
+  },
+  "exactReplacement": {
+    "before": "Only actor-specific unopened execution is newly rejected; not all Role/C17/P9 closure.",
+    "after": "Only actor-specific unpaid new execution is newly rejected; not all Role/C17/P9 closure.",
+    "count": 1
+  },
+  "unchanged": [
+    "all eight source",
+    "MD",
+    "all source-ready and executed program proofs",
+    "all Root runtime/type/head outputs and receipts"
+  ],
+  "checksRun": false
+}

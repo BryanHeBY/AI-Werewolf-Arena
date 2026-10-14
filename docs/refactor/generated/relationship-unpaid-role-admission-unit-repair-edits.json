@@ -1,0 +1,19 @@
+{
+  "path": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+  "edits": [
+    {
+      "before": " * 验证丘比特、混血儿、狼美人的未付执行退休与已付关系边界。",
+      "after": " * 单元测试验证丘比特、混血儿、狼美人的未付执行退休与已付关系边界。",
+      "count": 1
+    },
+    {
+      "before": "const factTypes = {",
+      "after": "const factTypes: Record<Family, GameEvent[\"type\"][]> = {",
+      "count": 1
+    }
+  ],
+  "limits": [
+    "Only one responsibility-head word and one erased type annotation; original literals/expect/body/flow unchanged.",
+    "Runtime nine declarations and original proof/seven green heads are not repeated."
+  ]
+}

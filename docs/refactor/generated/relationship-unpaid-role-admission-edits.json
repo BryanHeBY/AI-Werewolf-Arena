@@ -1,0 +1,257 @@
+{
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": "import { COMPONENT } from \"../../../../core/domain/components/names\";",
+      "after": "import { COMPONENT } from \"../../../../core/domain/components/names\";\nimport { isRoleExecutionRetired } from \"../../../../core/domain/role-execution-authority\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "before": "import { COMPONENT } from \"../../../../core/domain/components/names\";",
+      "after": "import { COMPONENT } from \"../../../../core/domain/components/names\";\nimport { isRoleExecutionRetired } from \"../../../../core/domain/role-execution-authority\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": "import { COMPONENT } from \"../../../../core/domain/components/names\";",
+      "after": "import { COMPONENT } from \"../../../../core/domain/components/names\";\nimport { isRoleExecutionRetired } from \"../../../../core/domain/role-execution-authority\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "before": "import { COMPONENT } from \"../../../../core/domain/components/names\";",
+      "after": "import { COMPONENT } from \"../../../../core/domain/components/names\";\nimport { isRoleExecutionRetired } from \"../../../../core/domain/role-execution-authority\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": "import { COMPONENT } from \"../../../../core/domain/components/names\";",
+      "after": "import { COMPONENT } from \"../../../../core/domain/components/names\";\nimport { isRoleExecutionRetired } from \"../../../../core/domain/role-execution-authority\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "before": "import { COMPONENT } from \"../../../../core/domain/components/names\";",
+      "after": "import { COMPONENT } from \"../../../../core/domain/components/names\";\nimport { isRoleExecutionRetired } from \"../../../../core/domain/role-execution-authority\";",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": "      if (!current()) continue;",
+      "after": "      // 纯原体当前性保原表达式；新未付准入只消费捕获 Role 的永久拒绝信号。\n      const canAct = () => !isRoleExecutionRetired(role);\n      if (!current() || !canAct()) continue;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": "        if (!current()) break;",
+      "after": "        if (!current() || !canAct()) break;",
+      "count": 3
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": "        if (!current() || !valid.ok || valid.sanitizedCall?.name !== \"choose_lovers\") continue;",
+      "after": "        if (!current() || !valid.ok || valid.sanitizedCall?.name !== \"choose_lovers\" || !canAct()) continue;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": "      if (!completed && current()) throw new Error(\"cupid_valid_action_missing\");",
+      "after": "      if (!completed && current() && canAct()) throw new Error(\"cupid_valid_action_missing\");",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": " * 原角色、容器、生命与双方 Victory 在等待前后复验；最终同步段依次绑定关系、消费选择、安装归属再发布。",
+      "after": " * 原角色、容器、生命与双方 Victory 在等待前后复验；未付选择另拒绝捕获角色的执行退休，纯 current 不附旗。\n * 首关系提交后依次消费选择、安装归属再发布；晚退休不撤销已付关系或截断原完成前缀。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": "        // 最后授权后不再 await；关系先绑定，选择随后付款，再逐成员安装归属。失败不撤回已完成的前缀。\n        bindLovers(ctx.world, record, [first.life, second.life]);",
+      "after": "        // 目标／记录 getter 仍先读取；关系 owner 在原 callee／参数求值后、首组件写前检查拒绝尾。\n        // 首关系已写后不再消费墓碑：选择付款、归属和事实照原顺序继续，失败保已完成前缀。\n        if (!bindLovers(ctx.world, record, [first.life, second.life], canAct)) continue;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": "      if (!current()) continue;",
+      "after": "      // 纯原体当前性保原表达式；新未付准入只消费捕获 Role 的永久拒绝信号。\n      const canAct = () => !isRoleExecutionRetired(role);\n      if (!current() || !canAct()) continue;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": "        if (!current()) break;",
+      "after": "        if (!current() || !canAct()) break;",
+      "count": 2
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": "        if (!current() || !valid.ok || valid.sanitizedCall?.name !== \"choose_exemplar\") continue;",
+      "after": "        if (!current() || !valid.ok || valid.sanitizedCall?.name !== \"choose_exemplar\" || !canAct()) continue;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": "      if (!completed && current()) throw new Error(\"hybrid_valid_action_missing\");",
+      "after": "      if (!completed && current() && canAct()) throw new Error(\"hybrid_valid_action_missing\");",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": " * 等待前后仍核原容器、状态、生命和空 Victory；先构造归属，再由本族槽消费次数／写选择，随后安装组件。",
+      "after": " * 等待前后仍核原容器、状态、生命和空 Victory；未付准入另拒绝捕获角色的执行退休，纯 current 不附旗。\n * 先构造归属，再在首次数写前拒退休；已消费后按原顺序安装组件和事实，晚退休不退款。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": "        // 最后复验到两字段写入之间没有 await；同一原体的第二个回复不能复用已消费的选择。\n        commitHybridChoice(state, day, targetId);",
+      "after": "        // 原目标 getter 和归属构造先完成，再准备原提交 callee；参数均是已求值局部。\n        // 拒绝尾只在首次库存写前生效；次数已写后的组件／事实失败保原前缀，不退款。\n        const commitChoice = commitHybridChoice;\n        if (!canAct()) continue;\n        commitChoice(state, day, targetId);",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": " * 目标和演员生命版本在原等待前后核对；本流程不提前领取死亡牵连，实际来源政策、保护与标死另归原 owner。",
+      "after": " * 目标和演员生命版本在原等待前后核对；未付魅惑另拒绝捕获角色的执行退休，不过滤目标或已付关系。\n * 首选择字段写后继续原绑定／事实前缀；本流程不提前领取死亡牵连，实际来源政策、保护与标死另归原 owner。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": "      if (ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf || !state || state.lastActedDay === day) continue;",
+      "after": "      const canAct = () => !isRoleExecutionRetired(role);\n      // 原阵营／槽／本夜库存资格先读取，再拒绝新的未付魅惑；名单本身仍是纯角色数据。\n      if (ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf || !state || state.lastActedDay === day || !canAct()) continue;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": "      if (!current()) continue;",
+      "after": "      if (!current() || !canAct()) continue;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": "        if (!current() || !result.ok || result.sanitizedCall?.name !== \"charm\") continue;",
+      "after": "        if (!current() || !result.ok || result.sanitizedCall?.name !== \"charm\" || !canAct()) continue;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": "      recordCharmSelection(state, targetId, day);",
+      "after": "      // 原 nullable 目标／生命 getter 与提交 callee 先准备；只在首选择写前拒绝。\n      // 选择已写即进入原完成段，后续 history／绑定／事实失败或晚退休不退款。\n      const recordSelection = recordCharmSelection;\n      if (!canAct()) continue;\n      recordSelection(state, targetId, day);",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "before": " * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。",
+      "after": " * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。\n * 行动规则在原资格／目标读取后的成功尾拒执行退休；初始化、baseline 与玩家知识不按该标记过滤。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "before": "        return null;\n      },\n    },\n    baselineAction:",
+      "after": "        return isRoleExecutionRetired(role) ? { code: RuleError.CupidUnavailable } : null;\n      },\n    },\n    baselineAction:",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "before": " * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。",
+      "after": " * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。\n * 行动规则在原资格／目标读取后的成功尾拒执行退休；初始化、baseline 与玩家知识不按该标记过滤。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "before": "        return null;\n      },\n    },\n    llmRepair:",
+      "after": "        return isRoleExecutionRetired(role) ? { code: RuleError.HybridUnavailable } : null;\n      },\n    },\n    llmRepair:",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "before": " * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。",
+      "after": " * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。\n * 行动规则在原资格／目标读取后的成功尾拒执行退休；初始化、baseline 与玩家知识不按该标记过滤。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "before": "        if (toolCall.args.target_id === null) return null;",
+      "after": "        if (toolCall.args.target_id === null)\n          return isRoleExecutionRetired(role) ? { code: RuleError.CharmUnavailable } : null;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "before": "          ? { code: RuleError.CharmRepeat }\n          : null;",
+      "after": "          ? { code: RuleError.CharmRepeat }\n          : isRoleExecutionRetired(role)\n            ? { code: RuleError.CharmUnavailable }\n            : null;",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+      "before": " * 殉情保原独立根／来源规则，梦关系通过运行接口在原时点参与闭包；不复制效果、不标死或判胜。",
+      "after": " * 殉情保原独立根／来源规则，梦关系通过运行接口在原时点参与闭包；不复制效果、不标死或判胜。\n * 未付阶段可给绑定命令传拒绝尾；它不授新许可，不过滤目标，已付关系查询／死亡闭包不读取执行退休。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+      "before": "export function bindLovers(\n  world: World,\n  record: LoversComponent,\n  lives: readonly [NightLifeScope, NightLifeScope],\n): void {\n  if (bindings.has(world)) throw new Error(\"cupid_relation_already_committed\");\n  world.addComponent(record.actorId, COMPONENT.Lovers, record);\n  bindings.set(world, { record, lives, emitted: new Set() });\n}",
+      "after": "export function bindLovers(\n  world: World,\n  record: LoversComponent,\n  lives: readonly [NightLifeScope, NightLifeScope],\n): void;\nexport function bindLovers(\n  world: World,\n  record: LoversComponent,\n  lives: readonly [NightLifeScope, NightLifeScope],\n  canAct: () => boolean,\n): boolean;\nexport function bindLovers(\n  world: World,\n  record: LoversComponent,\n  lives: readonly [NightLifeScope, NightLifeScope],\n  canAct?: () => boolean,\n): void | boolean {\n  if (bindings.has(world)) throw new Error(\"cupid_relation_already_committed\");\n  if (canAct) {\n    // 原 callee、actorId 和参数先求值；准备保持 World receiver 的调用后才查未付拒绝尾。\n    // getter／准备调用抛错先传播；false 不安装组件或 bindings，也不是完整许可的反面证明。\n    const addComponent = world.addComponent,\n      actorId = record.actorId,\n      component = COMPONENT.Lovers,\n      value = record;\n    const install = addComponent.bind(world);\n    if (!canAct()) return false;\n    install(actorId, component, value);\n  } else {\n    // 默认数据入口保原三参数表达式和 void，不访问新增 bind 渠道或自行检查墓碑。\n    world.addComponent(record.actorId, COMPONENT.Lovers, record);\n  }\n  // 首组件已写后按原顺序建立唯一绑定；后续失败保该前缀，不再拒绝、补偿或付款。\n  bindings.set(world, { record, lives, emitted: new Set() });\n  if (canAct) return true;\n}",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": "        const request = ctx.makeRequest(actorId, [\"choose_lovers\"], {\n          stage: \"cupid\",\n          requiresAction: true,\n          allow_fallback: false,\n          action_failure_policy: \"error\",\n          ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),\n        });\n        if (!current() || !canAct()) break;\n        const action = await ctx.actionProvider.getAction(request);",
+      "after": "        // 丘比特原先先构造请求；callee／参数和保持 ctx receiver 的调用准备完成后才拒未付退休。\n        const makeRequest = ctx.makeRequest;\n        const requestArgs: Parameters<typeof makeRequest> = [actorId, [\"choose_lovers\"], {\n          stage: \"cupid\",\n          requiresAction: true,\n          allow_fallback: false,\n          action_failure_policy: \"error\",\n          ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),\n        }];\n        const buildRequest = makeRequest.bind(ctx);\n        if (!canAct()) break;\n        const request = buildRequest(requestArgs[0], requestArgs[1], requestArgs[2]);\n        if (!current() || !canAct()) break;\n        // provider receiver／callee 保原晚读取；其 getter 或 bind 退休演员时不进入真实 Provider。\n        const provider = ctx.actionProvider,\n          getAction = provider.getAction;\n        const receiveAction = getAction.bind(provider);\n        if (!canAct()) break;\n        const action = await receiveAction(request);",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": "        const action = await ctx.actionProvider.getAction(\n          ctx.makeRequest(actorId, [\"choose_exemplar\"], {\n            stage: \"hybrid\",\n            requiresAction: true,\n            allow_fallback: false,\n            ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),\n          }),\n        );",
+      "after": "        // 原表达式先读 Provider receiver／callee，再读 builder／参数；不把工厂或 Provider 提前缓存到循环外。\n        const provider = ctx.actionProvider,\n          getAction = provider.getAction,\n          makeRequest = ctx.makeRequest;\n        const requestArgs: Parameters<typeof makeRequest> = [actorId, [\"choose_exemplar\"], {\n          stage: \"hybrid\",\n          requiresAction: true,\n          allow_fallback: false,\n          ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),\n        }];\n        const buildRequest = makeRequest.bind(ctx);\n        if (!canAct()) break;\n        const request = buildRequest(requestArgs[0], requestArgs[1], requestArgs[2]);\n        const receiveAction = getAction.bind(provider);\n        if (!canAct()) break;\n        const action = await receiveAction(request);",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": "      const action = await ctx.actionProvider.getAction(\n        ctx.makeRequest(actorId, [\"charm\"], { stage: \"wolf_beauty\", requiresAction: false }),\n      );",
+      "after": "      // 原 Provider receiver／callee 先于 builder；目标捕获、callee 或参数准备导致退休时不建新请求。\n      const provider = ctx.actionProvider,\n        getAction = provider.getAction,\n        makeRequest = ctx.makeRequest;\n      const requestArgs: Parameters<typeof makeRequest> = [actorId, [\"charm\"], {\n        stage: \"wolf_beauty\", requiresAction: false,\n      }];\n      const buildRequest = makeRequest.bind(ctx);\n      if (!canAct()) continue;\n      const request = buildRequest(requestArgs[0], requestArgs[1], requestArgs[2]);\n      const receiveAction = getAction.bind(provider);\n      if (!canAct()) continue;\n      const action = await receiveAction(request);",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": " * 原状态先写历史，再绑定关系、发表 charm_applied，最后按板子追加通知；后续失败不撤销已完成前缀或补发事实。",
+      "after": " * 原状态依次写 targetId、lastActedDay、追加 history，再绑定关系、发表 charm_applied，最后追加动物通知；失败保已写前缀。",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": "        const requestArgs: Parameters<typeof makeRequest> = [actorId, [\"choose_lovers\"], {\n          stage: \"cupid\",\n          requiresAction: true,\n          allow_fallback: false,\n          action_failure_policy: \"error\",\n          ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),\n        }];",
+      "after": "        const requestActor = actorId;\n        const requestTools: Parameters<typeof makeRequest>[1] = [\"choose_lovers\"];\n        const requestExtras: Parameters<typeof makeRequest>[2] = {\n          stage: \"cupid\",\n          requiresAction: true,\n          allow_fallback: false,\n          action_failure_policy: \"error\",\n          ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),\n        };",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "before": "buildRequest(requestArgs[0], requestArgs[1], requestArgs[2])",
+      "after": "buildRequest(requestActor, requestTools, requestExtras)",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": "        const requestArgs: Parameters<typeof makeRequest> = [actorId, [\"choose_exemplar\"], {\n          stage: \"hybrid\",\n          requiresAction: true,\n          allow_fallback: false,\n          ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),\n        }];",
+      "after": "        const requestActor = actorId;\n        const requestTools: Parameters<typeof makeRequest>[1] = [\"choose_exemplar\"];\n        const requestExtras: Parameters<typeof makeRequest>[2] = {\n          stage: \"hybrid\",\n          requiresAction: true,\n          allow_fallback: false,\n          ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),\n        };",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "before": "buildRequest(requestArgs[0], requestArgs[1], requestArgs[2])",
+      "after": "buildRequest(requestActor, requestTools, requestExtras)",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": "      const requestArgs: Parameters<typeof makeRequest> = [actorId, [\"charm\"], {\n        stage: \"wolf_beauty\", requiresAction: false,\n      }];",
+      "after": "      const requestActor = actorId;\n      const requestTools: Parameters<typeof makeRequest>[1] = [\"charm\"];\n      const requestExtras: Parameters<typeof makeRequest>[2] = {\n        stage: \"wolf_beauty\", requiresAction: false,\n      };",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "before": "buildRequest(requestArgs[0], requestArgs[1], requestArgs[2])",
+      "after": "buildRequest(requestActor, requestTools, requestExtras)",
+      "count": 1
+    }
+  ]
+}
