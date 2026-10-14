@@ -1,0 +1,63 @@
+{
+  "baseCommit": "e694b827d11ee56c5fccdcd8684d42aa0b9b74fa",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "134d05e3f14b3735a1b5cb56ea5834b5fd46f286d8a62744286bd773723e1724"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+      "sha256": "5a4b12d53aac4b49547189bbd589a0910c67cb30bcc81cd5ecee0b0b0cb4246a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+      "sha256": "8deadb41e593f561a4d229af3ad65f5cb2f7442fedbf649055ef5496852096ea"
+    }
+  ],
+  "fullBodyTokenNodes": 565,
+  "completeRetainedPMTokenNodes": 11990,
+  "completeRetainedPortsTokenNodes": 323,
+  "regionsEqual": true,
+  "outputs": [
+    {
+      "region": "full migrated body",
+      "module": "ESNext",
+      "wholeRawEqual": true
+    },
+    {
+      "region": "complete retained PM",
+      "module": "ESNext",
+      "wholeRawEqual": true
+    },
+    {
+      "region": "complete retained ports",
+      "module": "ESNext",
+      "wholeRawEqual": true
+    },
+    {
+      "region": "full migrated body",
+      "module": "CommonJS",
+      "wholeRawEqual": true
+    },
+    {
+      "region": "complete retained PM",
+      "module": "CommonJS",
+      "wholeRawEqual": true
+    },
+    {
+      "region": "complete retained ports",
+      "module": "CommonJS",
+      "wholeRawEqual": true
+    }
+  ],
+  "headDiagnostics": [],
+  "graph": {
+    "relativeAndWorkspaceValueModules": 146,
+    "containsPM": false,
+    "containsAI": false
+  },
+  "limits": [
+    "新增公开函数、getter载体及模块加载路线改变；不承诺模块反射与调用栈相同。",
+    "静态声明值依赖不执行动态或npm加载；完整付款、authority、死亡和判胜算法未搬入该模块。"
+  ]
+}

@@ -20,11 +20,10 @@ import { prepareGameSetup } from "../../rulesets/game-setup";
 import { bindBoardParameters } from "../../rulesets/board-parameters";
 import { RulePlan } from "../../rulesets/rule-plan";
 import {
-  resolveSecretBodyDamage,
+  publishNobleNightDamage,
   checkpointNobleBodyAuthority,
   appendNobleContractClosure,
 } from "../mechanisms/roles/noble_secret_body/ports";
-import type { SecretBodySources } from "../mechanisms/roles/noble_secret_body/damage";
 
 import { assertMistRosterCurrent } from "../mechanisms/roles/mist_raven/ports";
 import { MistPendingNight } from "../mechanisms/roles/mist_raven/pending_night";
@@ -570,62 +569,11 @@ export class PhaseManager {
         for (let i = deaths.length - 1; i >= 0; i--)
           if (!sources[deaths[i]!]!.length) deaths.splice(i, 1);
         if (this.config.nobleSecretBody) {
-          const final = resolveSecretBodyDamage(this.world, nightDay, sources as SecretBodySources);
-          for (const id of Object.keys(sources)) delete sources[Number(id)];
-          for (const [id, causes] of Object.entries(final.sources))
-            sources[Number(id)] = causes.map((c) => c as DeathCause);
-          deaths.splice(0, deaths.length, ...Object.keys(sources).map(Number));
-          if (final.blocked) {
-            const actorId = checkpointNobleBodyAuthority(this.world, true).bodyId,
-              payload = {
-                policy: "awa_noble_secret_body_v1" as const,
-                actorId,
-                day: nightDay,
-                ...final.blocked,
-              };
-            this.events.push({
-              timestamp: Date.now(),
-              type: "secret_body_blocked",
-              payload,
-              audience: Object.freeze([]),
-            });
-            getSessionRecorder()?.recordRequiredLogicOp({
-              scope: "resolution",
-              op: "secret_body_blocked",
-              actorId,
-              phase: Phase.Night,
-              status: "ok",
-              output: payload,
-            });
-          }
-          const committed = {
-            policy: "awa_noble_secret_body_v1" as const,
-            actorId: checkpointNobleBodyAuthority(this.world, true).bodyId,
-            day: nightDay,
-            blocked: final.blocked,
-            deaths: [...deaths],
-            deathSources: sources,
-          };
-          this.events.push({
-            timestamp: Date.now(),
-            type: "noble_body_sources_committed",
-            payload: committed,
-            audience: Object.freeze([]),
-          });
-          getSessionRecorder()?.recordRequiredLogicOp({
-            scope: "resolution",
-            op: "noble_body_sources_committed",
-            phase: Phase.Night,
-            status: "ok",
-            output: committed,
-          });
-          safeRecordLogicOp({
-            scope: "resolution",
-            op: "night_damage_resolved",
-            phase: Phase.Night,
-            status: "ok",
-            output: { deaths: [...deaths], death_sources: sources },
-          });
+          const manager = this;
+          publishNobleNightDamage({
+            get world() { return manager.world; },
+            get events() { return manager.events; },
+          }, nightDay, sources, deaths);
         }
         if (demon) {
           if (demon.hunt.cancelled)

@@ -53,3 +53,5 @@ export { closeServantForDeath } from "./authority";
 export { expireNobleNight } from "./night-lifecycle";
 
 export { nobleBodyRequestScope } from "./requests";
+
+export { publishNobleNightDamage } from "./night-damage-publication";

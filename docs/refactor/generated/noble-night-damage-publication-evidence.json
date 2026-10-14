@@ -1,0 +1,84 @@
+{
+  "schema": "awa-refactor-evidence-v1",
+  "batch": "noble-night-damage-publication",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "134d05e3f14b3735a1b5cb56ea5834b5fd46f286d8a62744286bd773723e1724"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+      "sha256": "5a4b12d53aac4b49547189bbd589a0910c67cb30bcc81cd5ecee0b0b0cb4246a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+      "sha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d"
+    }
+  ],
+  "baseCommit": "e694b827d11ee56c5fccdcd8684d42aa0b9b74fa",
+  "checks": [
+    {
+      "proofChunk": "ecfd84",
+      "exitCode": 0,
+      "fullBodyTokenNodes": 565,
+      "retainedPMTokenNodes": 11990,
+      "portsTokenNodes": 323,
+      "mappedOutputs": 6,
+      "heads": 0,
+      "valueGraphModules": 146
+    },
+    {
+      "typeLaunch": "f9b45f",
+      "session": 17063,
+      "terminalChunk": "3d1d2a",
+      "exitCode": 0,
+      "rootCount": 3
+    },
+    {
+      "testChunk": "808a97",
+      "exitCode": 0,
+      "existingCases": 2,
+      "assertions": 35,
+      "newTests": 0,
+      "repeat": false
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/noble-night-damage-publication-proof.json",
+      "sha256": "46df74c402781719e64e249df14313af4751c0c3fa24c84c51c98df89f8600e8"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-damage-publication-before.json",
+      "sha256": "05a8e764714b977efaa254a5bab9e1243f01603eec1bd33bda1801e43e204b20"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-damage-publication-check.ts",
+      "sha256": "8f967c864a80436f1580670eaac6bae312037f52840c5e6c28ebf096cfdfe12a"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-damage-publication-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-damage-publication-existing-tests.log",
+      "sha256": "b8b54e306fa08e36fb7ffb42d35e23010d02b9d7cdd83ff79eb90091cd499ebe"
+    },
+    {
+      "path": "docs/refactor/noble-night-damage-publication.md",
+      "sha256": "c50450592086808e5c7aa92fe993f56de9e5a0fc96f5d3cf1642958d97a82d66"
+    }
+  ],
+  "limits": [
+    "All downstream dependencies use captured current source; no whole historical-tree check.",
+    "No new damage policy, authorization, payment, death or victory behavior.",
+    "No full suite/gate/model run."
+  ],
+  "postCheckCommentDelta": {
+    "oldVerifiedSourceSHA256": "8deadb41e593f561a4d229af3ad65f5cb2f7442fedbf649055ef5496852096ea",
+    "finalSourceSHA256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d",
+    "exactSingleCommentReplacement": true,
+    "reason": "阻断事实有条件，录制作用域也可关闭；就地说明不能声称每次必有两份录制。",
+    "behaviorTypeGateRerun": false
+  }
+}

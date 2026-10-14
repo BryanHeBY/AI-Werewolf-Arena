@@ -1,0 +1,51 @@
+{
+  "approved": true,
+  "reviewer": "root-author",
+  "independent": false,
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "134d05e3f14b3735a1b5cb56ea5834b5fd46f286d8a62744286bd773723e1724"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+      "sha256": "5a4b12d53aac4b49547189bbd589a0910c67cb30bcc81cd5ecee0b0b0cb4246a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+      "sha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d"
+    }
+  ],
+  "scopeSHA256": "be614e018ec53ea2c4903116b9da2e9e53705c7b1510f5d4df084e094e0d4356",
+  "readScope": [
+    "Complete original58line publication block and actual new owner/caller/ports",
+    "Original authority ownership and payment boundary",
+    "Original optional/required recording call policy"
+  ],
+  "findingsClosed": [
+    "独立peer纠正有条件阻断分支及可关闭录制作用域；仅末注释实际替换，算法和原验证保持。"
+  ],
+  "checks": [
+    "Source dictionary and death array mutate in place before any fact write; original final block order retained.",
+    "Two authority actor queries remain at original payload points; runtime getters defer actual fields.",
+    "God events precede each required recording operation; failure stops suffix without rollback.",
+    "Optional night_damage_resolved follows all conditional required recording operations; no downgrade of mandatory failures.",
+    "PM retains condition, source/life checks, deathResolution.resolve, cleanup, win checkpoints.",
+    "Complete moved body actually checked independently from retained PM to avoid hiding new implementation."
+  ],
+  "documents": [
+    {
+      "path": "docs/refactor/noble-night-damage-publication.md",
+      "sha256": "c50450592086808e5c7aa92fe993f56de9e5a0fc96f5d3cf1642958d97a82d66"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-damage-publication-evidence.json",
+      "sha256": "a89e5238286704b8a01caa29ab9272e7567098a40267bf92960a4ba89e2ad87e"
+    }
+  ],
+  "limits": [
+    "Author self review; independent review will be separate.",
+    "New public function/module/call stack/getter carrier differ.",
+    "No runtime/type/full gate repeat."
+  ]
+}
