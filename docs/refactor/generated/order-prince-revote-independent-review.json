@@ -1,0 +1,124 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "mode": "独立只读实际源码/Git/完整文本接线与SHA/作者证据审查；没有执行作者proof/type/head/test/gate/model。",
+  "baseCommit": "033218f2c166a369e795745a431421f17ef58b79",
+  "scope": {
+    "path": "docs/refactor/generated/order-prince-revote-scope-final.json",
+    "sha256": "850c431464823dcc81dc525c8b939ec481f8dedaaa38c83d70bcce796321a119"
+  },
+  "scopeSHA256": "850c431464823dcc81dc525c8b939ec481f8dedaaa38c83d70bcce796321a119",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "c26b1161ce3e23d090e44c24f0f29c1a35869b0b80efea4a9e01e4cd753034f5"
+    },
+    {
+      "path": "backend/src/rulesets/order-prince-revote.ts",
+      "sha256": "2bbfbf5e6b706c83d986fb4f41029e79cf5e7062c96183da8e083f63c5546472"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+      "sha256": "1ffca8efd7b2e66061092dea9eb327330394a03bec9bcc2e1fa4de13fce23b45"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/order-prince-revote.test.ts",
+      "sha256": "b0184df2de3174dd832cf399ff7a1382e4fcb6d4060d4fd49817b9d6d5dacf8a"
+    }
+  ],
+  "deleted": [],
+  "documentation": {
+    "path": "docs/refactor/order-prince-revote.md",
+    "sha256": "1c71f1169f53c77d8f5a90b5b4a0de71798b37232eef37ee84dfa94a8cec7528"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/order-prince-revote-evidence.json",
+    "sha256": "6cbe69e67847af78e34592d0eeb537f9146a140d1162040dd6f31536d2e4af15"
+  },
+  "findings": [],
+  "verification": {
+    "freshSource": 4,
+    "actualGitBeforeFullTextAndSHA256": 1,
+    "stableWholeGitAndCurrentControls": 5,
+    "completePipelineExactForwardEdits": 4,
+    "authorArtifacts": 30,
+    "mismatches": 0,
+    "handoff": {
+      "path": "docs/refactor/generated/order-prince-revote-handoff.md",
+      "sha256": "2b0e22d466589e7a14720f1a5287e8976a6b062b5807808f67a46f138ce17c3f"
+    },
+    "finalUnitExactWholeCommentBridge": true,
+    "actualPublicEndpoints": [
+      "backend/src/game/mechanisms/roles/order_prince/voting_window.ts:runOrderPrinceChoice",
+      "backend/src/game/mechanisms/roles/order_prince/authority.ts:assertOrderPrinceOriginalCurrent"
+    ],
+    "directSameNamedBindings": true
+  },
+  "sourceReview": [
+    "完整新owner实际if逐句对应原VP约29业务行（捕获30物理行）；config.roleSetups/some/Role/count门控、runChoice callee及World/requests/Provider/gateway/events/day求值原序，未配置不yield，false只原choice等待，true再交原collectPromise，不新增尾await。",
+    "VP适配options get/set指同一可变local。先捕获previousCurrent，再原spread/strictRequired/orderPrinceRevote/isCurrent替换；闭包先原identity/life复验，再previousCurrent裸调用。原options.isCurrent方法receiver保持，choice闭包和后续PK晚读同一replacement。",
+    "原world.getAliveEntityIds receiver与filter每个world/day读取保持；collect/record窄回调在原点先查真实流水线方法，再原参数读取并以原receiver调用。透传同Votes/开票对象引用，返回后原解构，不新建票据/生命/授权。",
+    "Roster/collect/current/record失败保已经支付的选择、公开事实和严格replacement前缀，不重置state或退款。yield Promise拒绝直接在VP原await点抛出；原窗口内部两Provider await/finally完整control，组合没有新增清理或关闭政策。",
+    "VP其余完整程序精确forward保首票/席位计票/PK/Voter与target原生命/重试/Animal票round/付款/Noble await/finally/诡术师映射/attachExileUnit；未宣称Order全部职责退出。",
+    "新voting-ports仅两个原函数具名重导，reader ports保持轻量且不接入窗口。Role由domain/model→identity原canonicalGC同enum引用；owner对VPOptions仅typeimport，无新增运行反向导入。公开窄运行接口不是行动/资源权限。",
+    "实际新3手写边界测试覆盖无配置无读取、paid名单失败精确trace及原历史/事实、复收票拒绝不进入开票；只读所有输入/断言和真实authority窗口。中文head/options/同引用/付款前缀/原等待与知识不等许可说明准确，末unit只改oracle表达。"
+  ],
+  "receiptsRead": {
+    "new": {
+      "cases": 3,
+      "assertions": 17,
+      "exitCode": 0,
+      "chunk": "5096ca"
+    },
+    "oldPrecisePK": {
+      "cases": 1,
+      "assertions": 2,
+      "filtered": 15,
+      "exitCode": 0,
+      "chunk": "1b6d1a"
+    },
+    "distinctCases": 4,
+    "assertions": 19,
+    "runtimeExecutions": 2,
+    "types": {
+      "roots": 4,
+      "session": 25566,
+      "terminalChunk": "50d428",
+      "exitCode": 0,
+      "basis": "实际收据，不以空log推终态"
+    },
+    "heads": {
+      "first4ExitCode": 1,
+      "onlyUnitOracleDiagnostic": true,
+      "firstDocumentationPaths": 2806,
+      "failedUnitOnlyExitCode": 0,
+      "failedDocumentationMDPaths": 612,
+      "unmodifiedThreeRootsNotRerun": true
+    },
+    "proof": {
+      "firstInverseToolExitCode": 1,
+      "secondLayoutToolExitCode": 1,
+      "finalChunk": "00e242",
+      "finalExitCode": 0,
+      "wholeVPInverseNodes": 6278,
+      "wholeMovedIfInverseNodes": 343,
+      "movedPolicyActualRawSame": false,
+      "movedPolicyPrinterMappedSame": false,
+      "completeTypedTreeAndTokenWhitespaceMappedOutputsSame": true
+    },
+    "inventory": {
+      "files": 1888,
+      "literalSites": 10,
+      "functionSites": 5,
+      "firstNamePrefilterSites": 8,
+      "missedTwoSameFamilyAuthorityRoutesCorrected": true
+    }
+  },
+  "limitations": [
+    "本批four-source实际新增generator/runtime适配/publicfacet/API及加载路线，不承诺整个新旧VP二进制、namespace重绑定、任意模块反射或所有历史cold入口全同。",
+    "作者full VP证明靠精确四编辑正逆，actual新owner完整if独立逆回原块，移出段全typed/leaf保持；两raw与printer布局确实不同，只有所有nonJSDoc token空白统一后完整两emit同，不夸rawsame。",
+    "首head实际2806路径含非MD；失败一unit改头后612实际MD检查，其余三已绿不复跑。原runtime/types/proof unitSHA16f49b由完整commentbridge连接finalb018，不伪final全检查。",
+    "七源码根当前字面TS/JS库存覆盖记录所列语法，未包括计算specifier、仓外消费者或历史加载全图；未执行第二库存/证明器。",
+    "本批未改玩法、policy/schema/库存/原窗口/档案；新源码参与新sourceHash，历史不重写。本审查不代表C24/C28全部/P9、全玩法或全中文覆盖验收。"
+  ]
+}

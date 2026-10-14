@@ -1,0 +1,57 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "033218f2c166a369e795745a431421f17ef58b79",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "c26b1161ce3e23d090e44c24f0f29c1a35869b0b80efea4a9e01e4cd753034f5"
+    },
+    {
+      "path": "backend/src/rulesets/order-prince-revote.ts",
+      "sha256": "2bbfbf5e6b706c83d986fb4f41029e79cf5e7062c96183da8e083f63c5546472"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+      "sha256": "1ffca8efd7b2e66061092dea9eb327330394a03bec9bcc2e1fa4de13fce23b45"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/order-prince-revote.test.ts",
+      "sha256": "b0184df2de3174dd832cf399ff7a1382e4fcb6d4060d4fd49817b9d6d5dacf8a"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/order-prince-revote-scope-final.json",
+    "sha256": "850c431464823dcc81dc525c8b939ec481f8dedaaa38c83d70bcce796321a119"
+  },
+  "document": {
+    "path": "docs/refactor/order-prince-revote.md",
+    "sha256": "1c71f1169f53c77d8f5a90b5b4a0de71798b37232eef37ee84dfa94a8cec7528"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/order-prince-revote-evidence.json",
+    "sha256": "6cbe69e67847af78e34592d0eeb537f9146a140d1162040dd6f31536d2e4af15"
+  },
+  "integrity": {
+    "freshSources": 4,
+    "actualGitBefore": 1,
+    "controls": 5,
+    "artifactHashes": 30,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "真实033整份VotingPipeline与五窗口/权威/状态/ports/精准用例控制",
+    "完整原29行业务同步生成器逆与两原choice/collect等待驱动，无尾await",
+    "caller同options局部get/set、原spread/previousCurrent及后续PK共享",
+    "World/day/roster与原collect/record receiver、callee和实参顺序",
+    "两原函数publicfacet同绑定、其余34import保持和erased type无运行返回边",
+    "四新源中文职责、重要结构/等待/付款失败前缀与首head红单注释桥",
+    "30附件真实首绿/失败工具收据及未完成完整投票/P9边界"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

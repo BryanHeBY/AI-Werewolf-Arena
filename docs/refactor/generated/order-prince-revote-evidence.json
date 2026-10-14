@@ -1,0 +1,335 @@
+{
+  "schema": "awa-refactor-evidence-v1",
+  "scope": {
+    "schema": "awa-refactor-source-scope-v1",
+    "baseCommit": "033218f2c166a369e795745a431421f17ef58b79",
+    "source": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+        "sha256": "c26b1161ce3e23d090e44c24f0f29c1a35869b0b80efea4a9e01e4cd753034f5"
+      },
+      {
+        "path": "backend/src/rulesets/order-prince-revote.ts",
+        "sha256": "2bbfbf5e6b706c83d986fb4f41029e79cf5e7062c96183da8e083f63c5546472"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+        "sha256": "1ffca8efd7b2e66061092dea9eb327330394a03bec9bcc2e1fa4de13fce23b45"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/order-prince-revote.test.ts",
+        "sha256": "b0184df2de3174dd832cf399ff7a1382e4fcb6d4060d4fd49817b9d6d5dacf8a"
+      }
+    ],
+    "deleted": [],
+    "controls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/order_prince/voting_window.ts",
+        "sha256": "7f1aac68e47eb2bcfb415c23c978ce6fc1361dc1af592f569baac90540ff7898"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+        "sha256": "99eb881f4b31c98215d0077fa63c8c506152aa749b2afeb71d4509ab5836d5b9"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+        "sha256": "44ee34eeefddbd4378b41aa09d9948ed185468f4d70e875792892401ca2314ec"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/order_prince/ports.ts",
+        "sha256": "2a784b5a3d22c031557fe2b52f54cc8e15885cdb8fb7e7e8a37c7d9ddfda225b"
+      },
+      {
+        "path": "backend/tests/unit/features/order-prince/order-prince-voting.test.ts",
+        "sha256": "d1ec6999b76d4573ecc292432b7ae02a065e7af9ffbbb9a37bc73ea55b8906c7"
+      }
+    ],
+    "document": {
+      "path": "docs/refactor/order-prince-revote.md",
+      "sha256": "1c71f1169f53c77d8f5a90b5b4a0de71798b37232eef37ee84dfa94a8cec7528"
+    },
+    "limits": "只本批四源；并行Root RedMoon/固定Git检查/审计注释不纳入源恒等。"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/order-prince-revote-before.json",
+      "sha256": "e88f2bd707c4b5ac20a6dd78fb72410153313f6d2d9bcc76d5ed4e451bf23b4b"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-documentation-paths-first.json",
+      "sha256": "5689f678cc165a079b9274b02a12a1f5157b379fdf46e8c7727942811937b171"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-documentation-paths.json",
+      "sha256": "ef24634d325012c6218482cd0629c59801c5321b704449d0c78966e0e12200db"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-edits.json",
+      "sha256": "af47bc4fc5e193324977d36290da4571a1672778facb489de58f76384cef4de7"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-head-before.json",
+      "sha256": "d7d3ccf6a20038333de3f0285cd62d73c88eaf4548fec37fc9eb28d0d3f84c37"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-head-bridge-output.txt",
+      "sha256": "b6706efe631b5eda5c040ae7262c5cf10b3166eb36bcc772f1045b3e3cc24c0d"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-head-bridge.cjs",
+      "sha256": "1a726342b0882cdb2fcc80eda8631ecadcb176f9f0f3fb0a98e785ba4fafe682"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-head-bridge.json",
+      "sha256": "bf3489bcecda0ee789656831f50a760111c174e4d72cff1c5cb3ceca7ed1b697"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-heads-first.json",
+      "sha256": "75cfe72a4e8a9db19472194b7a7bf75722f2cf8018de1e68cf0c726a782f7d5a"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-heads-output-first.txt",
+      "sha256": "8e4896c2af202d8f60545f1cdbd37c3e6da98f8a62374aedfbe96fdebd3c6709"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-heads-output.txt",
+      "sha256": "8e4896c2af202d8f60545f1cdbd37c3e6da98f8a62374aedfbe96fdebd3c6709"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-heads.cjs",
+      "sha256": "31541c37692ee16986071f0d62820a94e34fe3f1a739fa9914162c276856ae1b"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-heads.json",
+      "sha256": "d638c8c45b838cc4f3fdc32e7448a8256f000964d39273e1b6024dc4e393f448"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-inventory-output.txt",
+      "sha256": "d313813e814d57ee523f4fa3d0b7e33d4b516ef3f0f199d63abc786e00091b98"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-inventory.cjs",
+      "sha256": "0c199a70c6cb3004a9e336d6b9c24b6b97bce1df4504f6efefe36b4adab580a8"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-inventory.json",
+      "sha256": "0edd186c801443c9c5f939767660e7933b2a00458b5421113c553f2da5041810"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-new-tests-output.txt",
+      "sha256": "bf2655ba38c596a2fadbef0d1842530aab0aaadb313b6b49184377d19b8e50cd"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-original-pk-output.txt",
+      "sha256": "0319ab7ab22c969de666ffc432e6811a9b433dcaf31a1c18369cae0b99128728"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-paths.json",
+      "sha256": "ac8c34ccac569e805a7af965e1947a52af25d67748113f1b6392229d3f671c00"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-proof-first-output.txt",
+      "sha256": "d5185fc097bd317f307ffbf63c927bbccb642a66aaf91d66518dfad43dff1cea"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-proof-first.cjs",
+      "sha256": "6ff8f4c547181f1c0f9e0095b5d37b4a7385b91814e15efc48b46473ea4b294f"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-proof-output.txt",
+      "sha256": "71f340fa36f9b06b355d2704c0ef91ef574cbc6df78447c9f005d246fc8c6815"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-proof-second-output.txt",
+      "sha256": "7d3fe595d6b635b08109644a64b677c84751c9117beae5c41153a8b75a33f779"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-proof-second.cjs",
+      "sha256": "b217e04c27436e0ef8429ad99276f728f05671ea260537b772bb288df047060b"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-proof.cjs",
+      "sha256": "52bed5380568e4c6deaff807e4b05842237ecfc89338af0b15bf4705723a1b47"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-proof.json",
+      "sha256": "fa9755af377e5063d69225fbb785ba2395a55090e2436512b3f47cea66d36c0b"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-receipts.json",
+      "sha256": "3fe7478559be7e3d5e3211f2ef6a602ad41e32fbcb3912fb5d3d41ea837a27ce"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-scope-final.json",
+      "sha256": "850c431464823dcc81dc525c8b939ec481f8dedaaa38c83d70bcce796321a119"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-types-config.json",
+      "sha256": "b1ff498f1345f377c2b229c703e5b7fd2f882c0093920b71c59b6010c88621f2"
+    },
+    {
+      "path": "docs/refactor/generated/order-prince-revote-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "receipts": {
+    "sourceAtRuntimeAndTypes": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+        "sha256": "c26b1161ce3e23d090e44c24f0f29c1a35869b0b80efea4a9e01e4cd753034f5"
+      },
+      {
+        "path": "backend/src/rulesets/order-prince-revote.ts",
+        "sha256": "2bbfbf5e6b706c83d986fb4f41029e79cf5e7062c96183da8e083f63c5546472"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+        "sha256": "1ffca8efd7b2e66061092dea9eb327330394a03bec9bcc2e1fa4de13fce23b45"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/order-prince-revote.test.ts",
+        "sha256": "16f49b64bd1af943edd34c00ead0982924fe3fcc74be58f32be1c8b5de5c35f4"
+      }
+    ],
+    "runtime": [
+      {
+        "kind": "new3",
+        "command": "bun test backend/tests/unit/rulesets/order-prince-revote.test.ts",
+        "terminalChunk": "5096ca",
+        "exitCode": 0,
+        "passCount": 3,
+        "failCount": 0,
+        "assertions": 17,
+        "output": "docs/refactor/generated/order-prince-revote-new-tests-output.txt"
+      },
+      {
+        "kind": "originalPK1",
+        "command": "bun test backend/tests/unit/features/order-prince/order-prince-voting.test.ts -t 'order prince: stale phase in PK fails rather than recording a successful empty result'",
+        "terminalChunk": "1b6d1a",
+        "exitCode": 0,
+        "passCount": 1,
+        "filteredCount": 15,
+        "failCount": 0,
+        "assertions": 2,
+        "output": "docs/refactor/generated/order-prince-revote-original-pk-output.txt"
+      }
+    ],
+    "types": {
+      "config": "docs/refactor/generated/order-prince-revote-types-config.json",
+      "rootCount": 4,
+      "launchChunk": "a77ad7",
+      "session": 25566,
+      "terminalChunk": "50d428",
+      "exitCode": 0,
+      "output": "docs/refactor/generated/order-prince-revote-types-output.txt"
+    },
+    "proof": {
+      "first": {
+        "chunk": "d368ee",
+        "exitCode": 1,
+        "script": "docs/refactor/generated/order-prince-revote-proof-first.cjs",
+        "output": "docs/refactor/generated/order-prince-revote-proof-first-output.txt",
+        "reason": "逆向工具未处理删Role specifier的空after"
+      },
+      "second": {
+        "chunk": "234301",
+        "exitCode": 1,
+        "script": "docs/refactor/generated/order-prince-revote-proof-second.cjs",
+        "output": "docs/refactor/generated/order-prince-revote-proof-second-output.txt",
+        "reason": "完整树同但printer保原换行，两个整体emit布局不同"
+      },
+      "final": {
+        "chunk": "00e242",
+        "exitCode": 0,
+        "script": "docs/refactor/generated/order-prince-revote-proof.cjs",
+        "output": "docs/refactor/generated/order-prince-revote-proof-output.txt",
+        "comparison": "全typed tree与逐词空白统一后的两完整输出；迁出段actualRaw/printerMapped均false保留"
+      }
+    },
+    "heads": {
+      "firstChunk": "ba7aa7",
+      "exitCode": 1,
+      "report": "docs/refactor/generated/order-prince-revote-heads-first.json",
+      "failedOnlyChunk": "147823",
+      "failedOnlyExitCode": 0,
+      "bridge": "docs/refactor/generated/order-prince-revote-head-bridge.json"
+    },
+    "inventory": {
+      "initial": {
+        "chunk": "92af3f",
+        "exitCode": 0,
+        "files": 1888,
+        "sites": 8,
+        "limits": "首预筛漏两同族./authority物理路由，未当最终全库存"
+      },
+      "final": {
+        "launchChunk": "d0fda1",
+        "session": 20378,
+        "terminalChunk": "49a7cb",
+        "exitCode": 0,
+        "files": 1888,
+        "sites": 10,
+        "functionSites": 5,
+        "report": "docs/refactor/generated/order-prince-revote-inventory.json"
+      }
+    },
+    "distinctRuntimeCases": 4,
+    "successfulAssertions": 19,
+    "limits": [
+      "原windows Provider两个await/finally未迁。",
+      "运行/类型/whole proof采样在最后unit纯comment之前；head-bridge完整1004typed节点与两raw输出把原收据连接到最终unit，不伪重跑。",
+      "不执行全门禁、整组旧测试、整局、模型、golden或私有配置。"
+    ]
+  },
+  "proof": {
+    "path": "docs/refactor/generated/order-prince-revote-proof.json",
+    "sha256": "fa9755af377e5063d69225fbb785ba2395a55090e2436512b3f47cea66d36c0b"
+  },
+  "heads": {
+    "source": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+        "sha256": "c26b1161ce3e23d090e44c24f0f29c1a35869b0b80efea4a9e01e4cd753034f5"
+      },
+      {
+        "path": "backend/src/rulesets/order-prince-revote.ts",
+        "sha256": "2bbfbf5e6b706c83d986fb4f41029e79cf5e7062c96183da8e083f63c5546472"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+        "sha256": "1ffca8efd7b2e66061092dea9eb327330394a03bec9bcc2e1fa4de13fce23b45"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/order-prince-revote.test.ts",
+        "sha256": "b0184df2de3174dd832cf399ff7a1382e4fcb6d4060d4fd49817b9d6d5dacf8a"
+      }
+    ],
+    "diagnostics": [],
+    "chineseHeadFailures": [],
+    "checks": {
+      "first4": {
+        "report": "docs/refactor/generated/order-prince-revote-heads-first.json",
+        "exitCode": 1,
+        "documentationPaths": 2806,
+        "passedSourceCount": 3,
+        "failedSourceCount": 1
+      },
+      "failedOnly1": {
+        "report": "docs/refactor/generated/order-prince-revote-head-bridge.json",
+        "exitCode": 0,
+        "documentationPaths": 612
+      }
+    },
+    "limits": "最终结果由原三已绿职责头与仅失败unit一头补齐；不宣称最终4源重跑或2806均为MD。初CN存在4/0，末unit仅追加中文精度，内容真实性另由同行审查。"
+  },
+  "finalHeadBridge": {
+    "path": "docs/refactor/generated/order-prince-revote-head-bridge.json",
+    "sha256": "bf3489bcecda0ee789656831f50a760111c174e4d72cff1c5cb3ceca7ed1b697"
+  },
+  "reviewStatus": "等待Root与非作者源码审查；不自审。",
+  "limits": [
+    "原windows Provider两个await/finally未迁。",
+    "运行/类型/whole proof采样在最后unit纯comment之前；head-bridge完整1004typed节点与两raw输出把原收据连接到最终unit，不伪重跑。",
+    "不执行全门禁、整组旧测试、整局、模型、golden或私有配置。"
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "roots": [
+    "backend/src",
+    "backend/tests",
+    "backend/scripts",
+    "frontend/src",
+    "frontend/tests",
+    "packages",
+    "tooling"
+  ],
+  "typedAndJsFiles": 1888,
+  "forms": [
+    "named/namespace/default import",
+    "named/star export",
+    "ImportTypeNode",
+    "ImportEquals",
+    "dynamic import",
+    "require"
+  ],
+  "sites": [
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "line": 27,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/order_prince/authority",
+      "bindings": [
+        "installOrderPrinceBoard"
+      ],
+      "text": "import { installOrderPrinceBoard } from \"../game/mechanisms/roles/order_prince/authority\";",
+      "sha256": "07d32cc09ca3d45952c6c9112dc21ed040ae29746a4a8b6ff0950866ee60b192"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "line": 20,
+      "form": "import",
+      "specifier": "../../../rulesets/order-prince-revote",
+      "bindings": [
+        "recollectOrderPrinceVotes"
+      ],
+      "text": "import { recollectOrderPrinceVotes } from \"../../../rulesets/order-prince-revote\";",
+      "sha256": "c26b1161ce3e23d090e44c24f0f29c1a35869b0b80efea4a9e01e4cd753034f5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+      "line": 14,
+      "form": "import",
+      "specifier": "./authority",
+      "bindings": [
+        "orderPrinceChoicePending"
+      ],
+      "text": "import { orderPrinceChoicePending } from \"./authority\";",
+      "sha256": "b4c88028b6c13c677cb2f27a819a30635c6f16d94ce08788a667419fd87c04b5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/voting_window.ts",
+      "line": 12,
+      "form": "import",
+      "specifier": "./authority",
+      "bindings": [
+        "openOrderPrinceChoice",
+        "assertOrderPrinceCurrent",
+        "commitOrderPrinceChoice",
+        "closeOrderPrinceChoice"
+      ],
+      "text": "import {\n  openOrderPrinceChoice,\n  assertOrderPrinceCurrent,\n  commitOrderPrinceChoice,\n  closeOrderPrinceChoice,\n} from \"./authority\";",
+      "sha256": "7f1aac68e47eb2bcfb415c23c978ce6fc1361dc1af592f569baac90540ff7898"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+      "line": 7,
+      "form": "export",
+      "specifier": "./voting_window",
+      "bindings": [
+        "runOrderPrinceChoice"
+      ],
+      "text": "export { runOrderPrinceChoice } from \"./voting_window\";",
+      "sha256": "1ffca8efd7b2e66061092dea9eb327330394a03bec9bcc2e1fa4de13fce23b45"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+      "line": 8,
+      "form": "export",
+      "specifier": "./authority",
+      "bindings": [
+        "assertOrderPrinceOriginalCurrent"
+      ],
+      "text": "export { assertOrderPrinceOriginalCurrent } from \"./authority\";",
+      "sha256": "1ffca8efd7b2e66061092dea9eb327330394a03bec9bcc2e1fa4de13fce23b45"
+    },
+    {
+      "path": "backend/src/rulesets/order-prince-revote.ts",
+      "line": 15,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/order_prince/voting-ports",
+      "bindings": [
+        "assertOrderPrinceOriginalCurrent",
+        "runOrderPrinceChoice"
+      ],
+      "text": "import {\n  assertOrderPrinceOriginalCurrent,\n  runOrderPrinceChoice,\n} from \"../game/mechanisms/roles/order_prince/voting-ports\";",
+      "sha256": "2bbfbf5e6b706c83d986fb4f41029e79cf5e7062c96183da8e083f63c5546472"
+    },
+    {
+      "path": "backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+      "line": 15,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/order_prince/authority",
+      "bindings": [
+        "openOrderPrinceChoice",
+        "commitOrderPrinceChoice"
+      ],
+      "text": "import {\n  openOrderPrinceChoice,\n  commitOrderPrinceChoice,\n} from \"../../../../src/game/mechanisms/roles/order_prince/authority\";",
+      "sha256": "f7fa1f768bb097cc3b8e82ae161e7b9e7add0f8266a080d8eefd9530d231570b"
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/state-slot.test.ts",
+      "line": 14,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/order_prince/authority",
+      "bindings": [
+        "openOrderPrinceChoice",
+        "commitOrderPrinceChoice",
+        "orderPrinceChoicePending"
+      ],
+      "text": "import { openOrderPrinceChoice, commitOrderPrinceChoice, orderPrinceChoicePending } from \"../../../../src/game/mechanisms/roles/order_prince/authority\";",
+      "sha256": "47b0061a13953d2c339089a490e1d6fcb59c5bf1d58ff0fcb362ad09d9bb05eb"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/order-prince-revote.test.ts",
+      "line": 11,
+      "form": "import",
+      "specifier": "../../../src/rulesets/order-prince-revote",
+      "bindings": [
+        "recollectOrderPrinceVotes",
+        "OrderPrinceRevoteRuntime"
+      ],
+      "text": "import { recollectOrderPrinceVotes, type OrderPrinceRevoteRuntime } from \"../../../src/rulesets/order-prince-revote\";",
+      "sha256": "b0184df2de3174dd832cf399ff7a1382e4fcb6d4060d4fd49817b9d6d5dacf8a"
+    }
+  ],
+  "functionSites": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "line": 20,
+      "form": "import",
+      "specifier": "../../../rulesets/order-prince-revote",
+      "bindings": [
+        "recollectOrderPrinceVotes"
+      ],
+      "text": "import { recollectOrderPrinceVotes } from \"../../../rulesets/order-prince-revote\";",
+      "sha256": "c26b1161ce3e23d090e44c24f0f29c1a35869b0b80efea4a9e01e4cd753034f5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+      "line": 7,
+      "form": "export",
+      "specifier": "./voting_window",
+      "bindings": [
+        "runOrderPrinceChoice"
+      ],
+      "text": "export { runOrderPrinceChoice } from \"./voting_window\";",
+      "sha256": "1ffca8efd7b2e66061092dea9eb327330394a03bec9bcc2e1fa4de13fce23b45"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+      "line": 8,
+      "form": "export",
+      "specifier": "./authority",
+      "bindings": [
+        "assertOrderPrinceOriginalCurrent"
+      ],
+      "text": "export { assertOrderPrinceOriginalCurrent } from \"./authority\";",
+      "sha256": "1ffca8efd7b2e66061092dea9eb327330394a03bec9bcc2e1fa4de13fce23b45"
+    },
+    {
+      "path": "backend/src/rulesets/order-prince-revote.ts",
+      "line": 15,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/order_prince/voting-ports",
+      "bindings": [
+        "assertOrderPrinceOriginalCurrent",
+        "runOrderPrinceChoice"
+      ],
+      "text": "import {\n  assertOrderPrinceOriginalCurrent,\n  runOrderPrinceChoice,\n} from \"../game/mechanisms/roles/order_prince/voting-ports\";",
+      "sha256": "2bbfbf5e6b706c83d986fb4f41029e79cf5e7062c96183da8e083f63c5546472"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/order-prince-revote.test.ts",
+      "line": 11,
+      "form": "import",
+      "specifier": "../../../src/rulesets/order-prince-revote",
+      "bindings": [
+        "recollectOrderPrinceVotes",
+        "OrderPrinceRevoteRuntime"
+      ],
+      "text": "import { recollectOrderPrinceVotes, type OrderPrinceRevoteRuntime } from \"../../../src/rulesets/order-prince-revote\";",
+      "sha256": "b0184df2de3174dd832cf399ff7a1382e4fcb6d4060d4fd49817b9d6d5dacf8a"
+    }
+  ],
+  "limits": "仅这些七个当前源码根（packages排node_modules/dist/generated）；字面静态路由，不声称计算specifier或任意动态外部消费者。"
+}

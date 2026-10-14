@@ -5,6 +5,7 @@
  * 秘密之身的付款、必需发言与关闭归本族同步序列；本流水线只在原请求点 await，不额外等待未触发路径。
  * Animal复用原token且独占计数／到期政策。警长选举和狼刀维持各自流程，不合并为通用投票器。
  * 诡术师最终映射／事实／出局提案归具名同步组合；本流水线保两块之间的 Noble 等待及原关闭、票与PK。
+ * 定序王子的重收票政策归具名同步组合；同一 options 局部在原点替换，后续 PK 共享严格复验闭包。
  */
 import { revealSecretBodyExile } from "../../mechanisms/roles/noble_secret_body/exile-ports";
 import { openExileUnit, attachExileUnit } from "../../../core/domain/exile-unit";
@@ -16,8 +17,7 @@ import {
 } from "../../mechanisms/roles/animal_dream/ballot-ports";
 import { runAnimalPufferChoice } from "../../mechanisms/roles/animal_dream/choice-ports";
 import { prepareMappedExile, resolveMappedExile, mappedExileSummary } from "../../../rulesets/mapped-exile-resolution";
-import { assertOrderPrinceOriginalCurrent } from "../../mechanisms/roles/order_prince/authority";
-import { runOrderPrinceChoice } from "../../mechanisms/roles/order_prince/voting_window";
+import { recollectOrderPrinceVotes } from "../../../rulesets/order-prince-revote";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { IdentityComponent } from "../../../core/domain/entities/player";
@@ -28,7 +28,6 @@ import {
   EntityId,
   GameEvent,
   Phase,
-  Role,
   TieBreakerStrategy,
   VoteRecord,
   VotingSummary,
@@ -180,36 +179,31 @@ export class VotingPipeline {
       return attachExileUnit({ summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] }, exileUnit);
     let { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults, options.day);
     if (animalUnit) recordAnimalBallotRound(this.world, animalUnit, 1, publicVotes);
-    if (config.roleSetups.some((setup) => setup.role === Role.OrderPrince && setup.count > 0)) {
-      const restarted = await runOrderPrinceChoice(
-        this.world,
-        requests,
-        actionProvider,
-        this.toolGateway,
-        this.events,
-        options.day,
-        () => options.isCurrent?.() !== false,
-      );
-      if (restarted) {
-        const previousCurrent = options.isCurrent;
-        options = {
-          ...options,
-          strictRequired: true,
-          orderPrinceRevote: true,
-          isCurrent: () => {
-            assertOrderPrinceOriginalCurrent(this.world);
-            if (previousCurrent?.() === false) throw new Error("order_prince_revote_stale");
-            return true;
-          },
-        };
-        const freshVoters = this.world
-          .getAliveEntityIds()
-          .filter((id) => canVoteExile(this.world, id, options.day));
-        const fresh = await this.collectVotes(freshVoters, requests, actionProvider, options);
-        if (options.isCurrent?.() === false) throw new Error("order_prince_revote_stale");
-        ({ tally, publicVotes } = this.recordVotesInSeatOrder(fresh, options.day, true));
-      }
+    const revotePipeline = this;
+    const revote = recollectOrderPrinceVotes({
+      get config() { return config; },
+      get world() { return revotePipeline.world; },
+      get requests() { return requests; },
+      get actionProvider() { return actionProvider; },
+      get toolGateway() { return revotePipeline.toolGateway; },
+      get events() { return revotePipeline.events; },
+      // 同一局部在原激活点替换，初始选择和后续 PK 继续晚读它；不是第二份 options 快照。
+      get options() { return options; },
+      set options(next) { options = next; },
+      collectVotes(voters: EntityId[]) {
+        return revotePipeline.collectVotes(voters, requests, actionProvider, options);
+      },
+      recordVotes(votes: Array<CollectedVote | null>) {
+        return revotePipeline.recordVotesInSeatOrder(votes, options.day, true);
+      },
+    });
+    let revoteStep = revote.next();
+    while (!revoteStep.done) {
+      // 仅在组合交回原 choice／collect Promise 时等待；未配置或未重启没有新的尾 await。
+      revoteStep = revote.next(await revoteStep.value);
     }
+    if (revoteStep.value !== undefined)
+      ({ tally, publicVotes } = revoteStep.value);
     const pk = config.voting?.exilePolicy === "awa_one_pk_v1";
     const maximum = Math.max(
       0,

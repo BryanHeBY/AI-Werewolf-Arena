@@ -1,0 +1,17 @@
+/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/order-prince-revote-proof.cjs:7
+const check = (v,m) => { if(!v) throw new Error(m); };
+                                ^
+
+Error: actual complete moved policy entire emitted program
+    at check (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/order-prince-revote-proof.cjs:7:39)
+    at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/order-prince-revote-proof.cjs:25:5
+    at Array.map (<anonymous>)
+    at compare (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/order-prince-revote-proof.cjs:23:63)
+    at Object.<anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/order-prince-revote-proof.cjs:73:23)
+    at Module._compile (node:internal/modules/cjs/loader:1968:14)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+
+Node.js v26.11.1
