@@ -1,0 +1,62 @@
+[
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "old": "  closeAnimalExileUnit,\n",
+    "new": "  completeAndPublishAnimalExileUnit,\n",
+    "count": 1
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "old": "  animalAuthoritySnapshot,\n",
+    "new": "",
+    "count": 1
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "old": "import {\n  appendAnimalFact,\n} from \"../mechanisms/roles/animal_dream/facts\";\n",
+    "new": "",
+    "count": 1
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "old": "        closeAnimalExileUnit(this.world, animalSkip);\n        const u = animalAuthoritySnapshot(this.world)!.unit!;\n        appendAnimalFact(this.world, this.events, \"animal_unit_completed\", {\n          policy: \"awa_animal_dream_v1\",\n          day: cycleDay,\n          unit: u.number,\n          kind: u.kind,\n        });",
+    "new": "        completeAndPublishAnimalExileUnit({\n          world: () => this.world,\n          events: () => this.events,\n          day: () => cycleDay,\n        }, () => animalSkip!);",
+    "count": 1
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "old": "            closeAnimalExileUnit(this.world, animalSkip);\n            const u = animalAuthoritySnapshot(this.world)!.unit!;\n            appendAnimalFact(this.world, this.events, \"animal_unit_completed\", {\n              policy: \"awa_animal_dream_v1\",\n              day: cycleDay,\n              unit: u.number,\n              kind: u.kind,\n            });",
+    "new": "            completeAndPublishAnimalExileUnit({\n              world: () => this.world,\n              events: () => this.events,\n              day: () => cycleDay,\n            }, () => animalSkip!);",
+    "count": 1
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "old": "          closeAnimalExileUnit(this.world, animalSkip);\n          const u = animalAuthoritySnapshot(this.world)!.unit!;\n          appendAnimalFact(this.world, this.events, \"animal_unit_completed\", {\n            policy: \"awa_animal_dream_v1\",\n            day: cycleDay,\n            unit: u.number,\n            kind: u.kind,\n          });",
+    "new": "          completeAndPublishAnimalExileUnit({\n            world: () => this.world,\n            events: () => this.events,\n            day: () => cycleDay,\n          }, () => animalSkip!);",
+    "count": 1
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "old": "      closeAnimalExileUnit(this.world, votingResult.animalUnit);\n      const u = animalAuthoritySnapshot(this.world)!.unit!;\n      appendAnimalFact(this.world, this.events, \"animal_unit_completed\", {\n        policy: \"awa_animal_dream_v1\",\n        day: cycleDay,\n        unit: u.number,\n        kind: u.kind,\n      });",
+    "new": "      completeAndPublishAnimalExileUnit({\n        world: () => this.world,\n        events: () => this.events,\n        day: () => cycleDay,\n      }, () => votingResult.animalUnit!);",
+    "count": 1
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "old": " * 熊夜前采样与黎明知识发布归具名同步组合；本经理保原阶段、await／当前性和发布之后的判胜。",
+    "new": " * 熊夜前采样与黎明知识发布归具名同步组合；本经理保原阶段、await／当前性和发布之后的判胜。\n * 动物单元关闭→快照→完成事实归本族发布owner；四原调用点的守卫、死亡await、反馈和判胜仍在这里。",
+    "count": 1
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+    "old": " * 黎明组合在熊事件发表之后按原起点推进知识，再发表狼美人通知；本入口不增加调用或恢复失败前项。",
+    "new": " * 黎明组合在熊事件发表之后按原起点推进知识，再发表狼美人通知；本入口不增加调用或恢复失败前项。\n * 放逐／跳过单元在原关闭点才发布完成事实；后续快照或发表失败保已关闭状态，不重新开启单位。",
+    "count": 1
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+    "old": "export { animalRequestScope } from \"./requests\";",
+    "new": "export { animalRequestScope } from \"./requests\";\n\nexport { completeAndPublishAnimalExileUnit } from \"./unit-completion-publication\";\nexport type { AnimalUnitCompletionRuntime } from \"./unit-completion-publication\";",
+    "count": 1
+  }
+]

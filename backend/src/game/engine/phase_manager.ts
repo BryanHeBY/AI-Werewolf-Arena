@@ -11,6 +11,7 @@
  * 放逐名单／来源和反馈门控归具体规则组合；动物板先标死后反馈，普通板先捕获后死亡，原 await 与提交仍在这里。
  * 狼美人候选和屠边覆盖归具名组合，原两处捕获／评估点、配置首命中顺序和唯一封盘仍由本经理推进。
  * 熊夜前采样与黎明知识发布归具名同步组合；本经理保原阶段、await／当前性和发布之后的判胜。
+ * 动物单元关闭→快照→完成事实归本族发布owner；四原调用点的守卫、死亡await、反馈和判胜仍在这里。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
@@ -97,13 +98,9 @@ import type { AliveComponent } from "../../core/domain/components/alive";
 import {
   beginAnimalExileUnit,
   prepareAnimalCatExpiry,
-  closeAnimalExileUnit,
+  completeAndPublishAnimalExileUnit,
   animalPufferReaction,
-  animalAuthoritySnapshot,
 } from "../mechanisms/roles/animal_dream/ports";
-import {
-  appendAnimalFact,
-} from "../mechanisms/roles/animal_dream/facts";
 import { aliveLifeVersion } from "../../core/domain/components/alive";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
@@ -680,14 +677,11 @@ export class PhaseManager {
       }
       if (!dayIsCurrent()) return this.state.gameOver;
       if (animalSkip) {
-        closeAnimalExileUnit(this.world, animalSkip);
-        const u = animalAuthoritySnapshot(this.world)!.unit!;
-        appendAnimalFact(this.world, this.events, "animal_unit_completed", {
-          policy: "awa_animal_dream_v1",
-          day: cycleDay,
-          unit: u.number,
-          kind: u.kind,
-        });
+        completeAndPublishAnimalExileUnit({
+          world: () => this.world,
+          events: () => this.events,
+          day: () => cycleDay,
+        }, () => animalSkip!);
       }
       // 原死亡波／清理和当前性之后，串行发表熊→Animal 知识→Beauty 通知，再进入原判胜。
       publishDawnKnowledge(bearFrame, {
@@ -752,14 +746,11 @@ export class PhaseManager {
             { isCurrent: dayIsCurrent, execution: { exile: skippedUnit, phaseRevision: dayRevision }, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
           );
           if (animalSkip) {
-            closeAnimalExileUnit(this.world, animalSkip);
-            const u = animalAuthoritySnapshot(this.world)!.unit!;
-            appendAnimalFact(this.world, this.events, "animal_unit_completed", {
-              policy: "awa_animal_dream_v1",
-              day: cycleDay,
-              unit: u.number,
-              kind: u.kind,
-            });
+            completeAndPublishAnimalExileUnit({
+              world: () => this.world,
+              events: () => this.events,
+              day: () => cycleDay,
+            }, () => animalSkip!);
           }
         }
         return true;
@@ -839,14 +830,11 @@ export class PhaseManager {
           { isCurrent: votingIsCurrent, execution: { exile: skippedUnit, phaseRevision: votingRevision }, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
         );
         if (animalSkip) {
-          closeAnimalExileUnit(this.world, animalSkip);
-          const u = animalAuthoritySnapshot(this.world)!.unit!;
-          appendAnimalFact(this.world, this.events, "animal_unit_completed", {
-            policy: "awa_animal_dream_v1",
-            day: cycleDay,
-            unit: u.number,
-            kind: u.kind,
-          });
+          completeAndPublishAnimalExileUnit({
+            world: () => this.world,
+            events: () => this.events,
+            day: () => cycleDay,
+          }, () => animalSkip!);
         }
         return true;
       },
@@ -876,14 +864,11 @@ export class PhaseManager {
         { isCurrent: votingIsCurrent, animalUnit: votingResult.animalUnit, execution: { exile: exileUnitOf(votingResult), phaseRevision: votingRevision } },
       );
       if (!votingIsCurrent()) return this.getSnapshot();
-      closeAnimalExileUnit(this.world, votingResult.animalUnit);
-      const u = animalAuthoritySnapshot(this.world)!.unit!;
-      appendAnimalFact(this.world, this.events, "animal_unit_completed", {
-        policy: "awa_animal_dream_v1",
-        day: cycleDay,
-        unit: u.number,
-        kind: u.kind,
-      });
+      completeAndPublishAnimalExileUnit({
+        world: () => this.world,
+        events: () => this.events,
+        day: () => cycleDay,
+      }, () => votingResult.animalUnit!);
       this.previousExile = captureAnimalExileFeedback(() => this.world, votingResult, sources, cycleDay);
     } else if (votingResult.removed.length > 0) {
       // 普通放逐在死亡波前捕获末狼／目标侧；动物分支不借此特殊胜利候选。
