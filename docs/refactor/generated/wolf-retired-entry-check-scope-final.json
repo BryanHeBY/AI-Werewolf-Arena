@@ -1,0 +1,11 @@
+{
+  "baseCommit": "4df94bfafcf0f249b900a46a568ad427d069ad83",
+  "source": [
+    {
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "sha256": "b063cf52220c85efdb595515cd186e4a47892bd91134c681d96b440587aa95a9"
+    }
+  ],
+  "sourceCount": 1,
+  "frozen": true
+}

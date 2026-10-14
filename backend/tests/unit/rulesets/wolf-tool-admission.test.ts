@@ -5,6 +5,7 @@
  * 候选名单、成员知识与角色标签不制造回合许可，预期不由生产校验函数生成。
  */
 import { expect, test } from "bun:test";
+import { fileURLToPath } from "node:url";
 import { ActionWindow, Camp, Phase, Role, RuleError, type ToolCall } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
@@ -19,9 +20,15 @@ import type { ValidationRuleContext } from "../../../src/game/mechanisms/validat
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ghostBrideBoard, ghostBrideDeck } from "../../support/features/ghost-bride/builders/scenario";
 
-// 旧角色私有叶已退休；此被引用类型负例验证原路径不能继续当作公开校验入口。
-// @ts-expect-error 旧角色私有校验模块已退休
-export type RetiredWolfRuleOwner = [typeof import("../../../src/game/mechanisms/roles/wolf/validation_rules")];
+test("retired wolf rule module cannot resolve while the canonical owner remains available", () => {
+  // 路径作为解析器输入验证退休，源码本身不保留未解析的 import；先核新入口以确认解析基点有效。
+  expect(Bun.resolveSync("../../../src/rulesets/wolf-tool-admission", import.meta.dir)).toBe(
+    fileURLToPath(new URL("../../../src/rulesets/wolf-tool-admission.ts", import.meta.url)),
+  );
+  expect(() =>
+    Bun.resolveSync("../../../src/game/mechanisms/roles/wolf/validation_rules", import.meta.dir),
+  ).toThrow();
+});
 
 const permissions = { recognizedByPack: true, recognizes: "pack" as const, canChat: true, canVoteForKill: true };
 function fixture(trace: string[] = []) {

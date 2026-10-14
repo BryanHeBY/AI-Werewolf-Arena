@@ -1,0 +1,101 @@
+{
+  "reviewer": "/root/native_final_architecture_review",
+  "approved": true,
+  "findings": [],
+  "baseCommit": "4df94bfafcf0f249b900a46a568ad427d069ad83",
+  "source": [
+    {
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "sha256": "b063cf52220c85efdb595515cd186e4a47892bd91134c681d96b440587aa95a9"
+    }
+  ],
+  "scopePath": "docs/refactor/generated/wolf-retired-entry-check-scope-final.json",
+  "scopeSHA256": "c5f333a896f378239aeda1989cdd75ee3bcc836a50d7a1a004b78a2d607855ce",
+  "documentation": {
+    "path": "docs/refactor/wolf-retired-entry-check.md",
+    "sha256": "e7790fd65bff22b75f46af5e43d1eb4ba1557ca753468db4681277f800204822"
+  },
+  "evidenceSHA256": "cc51131848e73440b123b3791b264c31b08593a9f232d615334090d75652d626",
+  "independentRead": {
+    "oneSourceFreshSHA": true,
+    "completeActual4dfBefore": true,
+    "oldThreeCaseBodyAndFixtureLiteralBytesFromPermissionsUnchanged": true,
+    "artifactDigests": 9,
+    "fixedOriginalRedReportSHAUnchanged": true,
+    "rootAndIndependentReportsExcludedFromEvidenceArtifacts": true
+  },
+  "retirementCoverageReview": [
+    "原未解析top-level typeof-import编译负例已明确退休，改为实际Bun模块解析用例，不声称两种证据代码完全等价。",
+    "正例先验证同一import.meta.dir的canonical owner确实解析到fileURLToPath(new URL(...))完整物理路径，旧路径同基点resolveSync必须throw；新case不只测试任意坏路径或靠改变文件名隐藏旧路径。",
+    "导入旧path只作为resolveSync实参字符串；既有生产imports、规则Map、型契约、门禁接受／豁免和三原用例均不变，没有改成unused negative。",
+    "fileURLToPath仅把file URL转换为预期文件路径；resolveSync不执行模型、完整游戏、原规则或旧模块内容，也不把生产返回结果当retirement预期。",
+    "新解释中文准确说明解析器输入和前置基点，不把字符串/域接口当新角色授权。原unit头层级与原坏confirm类型夹具不改。"
+  ],
+  "boundedOverlayReview": {
+    "actualOriginalRawInputSHA": "c18841cf05d2bbe1e2ca85526a334bcff0e3d92267d7a6e786f5896a0b044cd6",
+    "fixedCommit": "4df94bfafcf0f249b900a46a568ad427d069ad83",
+    "files": 3160,
+    "unchangedFiles": 3159,
+    "onlyReplacementPath": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+    "rawTargetWholeGitBeforeMatches": true,
+    "same508OriginalGitDocPaths": true,
+    "sameSixToolHashes": true,
+    "same1779DebtSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "beforeSourceDigest": "789b87bb5c4b62505f3bf6307ce3512cf8e622e9a30c0f4c9bfe31de5fc347e3",
+    "afterSourceDigest": "1a1de91a4828af9de5d62d1a2cd41de6529435c25aca53aad066de57e4b3e409",
+    "newReportHashEqualsOneReplacementDigest": true,
+    "oldRemainingWholeArraySame": true,
+    "oldClearedWholeArraySame": true,
+    "originalCounts": {
+      "files": 3160,
+      "violations": 354,
+      "failures": 1,
+      "remainingDebt": 353,
+      "clearedDebt": 1426
+    },
+    "overlayCounts": {
+      "files": 3160,
+      "violations": 353,
+      "failures": 0,
+      "remainingDebt": 353,
+      "clearedDebt": 1426
+    },
+    "overlayIsNotCurrentWIPOrFixed4dfNewGreen": true
+  },
+  "actualReceiptAttribution": {
+    "test": {
+      "chunk": "b850d8",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 2,
+      "filtered": 3
+    },
+    "types": {
+      "launchChunk": "55e9e8",
+      "session": 18940,
+      "terminalChunk": "6a9eed",
+      "exitCode": 0,
+      "roots": 1
+    },
+    "architecture": {
+      "launchChunk": "47587f",
+      "session": 99238,
+      "terminalChunk": "9e8bce",
+      "exitCode": 0,
+      "inputBasis": "固定4df3160，仅1unit文本替换",
+      "failures": 0,
+      "remainingDebt": 353,
+      "clearedDebt": 1426,
+      "oldPartitionWholeSame": true
+    },
+    "emptyTypeLogNotExitProof": true,
+    "didNotRunChecks": true
+  },
+  "limits": [
+    "独立review仅静态读取source/rawGit/固定前输入和既有报告并核SHA/完整单源metadata差分；未run任何test/types/gate/harness。",
+    "后继原gate虽然0new，353remaining/1426cleared不变；这是仅1unit覆盖原固定输入，不是全当前工作树、Goal全C45/行为/P9已通过。",
+    "原4df真exit1历史report/hash不改；不可把overlay真实exit0覆盖它。",
+    "本review不修改产品/source/MD/Git/Goal/Matrix/progress；只写批准报告。"
+  ]
+}

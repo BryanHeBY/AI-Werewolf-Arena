@@ -1,0 +1,90 @@
+{
+  "baseCommit": "4df94bfafcf0f249b900a46a568ad427d069ad83",
+  "source": [
+    {
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "sha256": "b063cf52220c85efdb595515cd186e4a47892bd91134c681d96b440587aa95a9"
+    }
+  ],
+  "documentation": {
+    "path": "docs/refactor/wolf-retired-entry-check.md",
+    "sha256": "e7790fd65bff22b75f46af5e43d1eb4ba1557ca753468db4681277f800204822"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/wolf-retired-entry-check-architecture-input.json",
+      "sha256": "f3d2e2a12087289d8183ea18e299b7059fc70beecd798cf485f1e388db681874"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-retired-entry-check-architecture-report.json",
+      "sha256": "1cdc9051469ddd193a923d2c22efd3573f5fd789abf1bbfd0ab9d37fc7eedb13"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-retired-entry-check-architecture.log",
+      "sha256": "c1aca7feab02ce444b2bb10bfc16e49adcff4bf75a9e4aaa343e78ef0e09f011"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-retired-entry-check-architecture.ts",
+      "sha256": "3d3ffa1723dd7841ac5b7715099957f40ec9e44cfcc6627af705464bb8752a7f"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-retired-entry-check-before.json",
+      "sha256": "ec33fc624384b819d7eec0a24d819d1664b2636daa5306338016bd20a396acf8"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-retired-entry-check-receipts.json",
+      "sha256": "85836bd67030be41d998835f935166636827c40fbc550c3bdeedc3e2a2f34b10"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-retired-entry-check-test.log",
+      "sha256": "9eecb0883d23fb527fea3b7791c6268c86873a6de171b6e710405707b0b814c0"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-retired-entry-check-types-config.json",
+      "sha256": "ea73a92f5de0ae09beefdc8f1750080526ea716d8d03fde9c498562d957c39ca"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-retired-entry-check-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "receipts": {
+    "test": {
+      "chunk": "b850d8",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 2,
+      "filtered": 3
+    },
+    "types": {
+      "launchChunk": "55e9e8",
+      "session": 18940,
+      "terminalChunk": "6a9eed",
+      "exitCode": 0,
+      "roots": 1
+    },
+    "architecture": {
+      "launchChunk": "47587f",
+      "session": 99238,
+      "terminalChunk": "9e8bce",
+      "exitCode": 0,
+      "inputBasis": "固定4df3160，仅1unit文本替换",
+      "failures": 0,
+      "remainingDebt": 353,
+      "clearedDebt": 1426,
+      "oldPartitionWholeSame": true
+    },
+    "noProductionEdits": true,
+    "oldThreeCasesEntireBytesSame": true
+  },
+  "originalRedReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-report.json",
+    "sha256": "1a44a31c509441f75001fbcb6345140d835a7cbb8015e8419e2a88047b7c520a"
+  },
+  "limits": [
+    "源码仅测试组织和新解析负例；无生产/旧规则/工具/债务变化",
+    "原3case正文全字节保但未重跑；不冒任意工作区或最终P9已验收",
+    "原失败输入真实4df；后继覆盖仅同输入替一源，原red保存"
+  ]
+}
