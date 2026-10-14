@@ -1,0 +1,33 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "../../../backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+    "../../../backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+    "../../../backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+    "../../../backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts",
+    "../../../backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+    "../../../backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+    "../../../backend/src/game/mechanisms/roles/witch/night_stages.ts",
+    "../../../backend/src/game/mechanisms/stages/night/contracts.ts",
+    "../../../backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+    "../../../backend/src/rulesets/game-setup.ts",
+    "../../../backend/tests/support/builders/night-stage-context.ts",
+    "../../../backend/tests/unit/features/demon-hunter/authority.test.ts",
+    "../../../backend/tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+    "../../../backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+    "../../../backend/tests/unit/features/evil-knight-stage.test.ts",
+    "../../../backend/tests/unit/features/red-moon-seal.test.ts",
+    "../../../backend/tests/unit/features/pure-white/pure-white-stage.test.ts",
+    "../../../backend/tests/unit/rulesets/night-stage-plan.test.ts",
+    "../../../backend/tests/unit/mechanisms/night-request-construction.test.ts"
+  ]
+}

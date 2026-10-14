@@ -10,6 +10,7 @@ import { StatusMarksComponent } from "../../../src/core/domain/components/status
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import type { NightPipelineResult } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 
 const unused = (): never => {
@@ -40,6 +41,7 @@ export function nightStageContext(
     toolGateway: new ToolGateway(),
     isCurrent: () => true,
     currentDay: () => 1,
+    get requestFactory() { return GameActionRequestFactory; },
     actionProvider: { getAction: unused },
     makeRequest: unused,
     getAliveByRole: unused,

@@ -39,6 +39,7 @@ export const WEDDING_CHAT_STAGE: NightStageHandler = {
         tool: "speak_to_partner",
         stage: "ghost_bride_chat",
         isCurrent: ctx.isCurrent,
+        construction: ctx,
       });
   },
 };
@@ -62,6 +63,7 @@ export const WEDDING_KNIFE_STAGE: NightStageHandler = {
         tool,
         stage: capture.owner === "ordinary_pack" ? "wolf_vote" : "ghost_bride_knife",
         isCurrent: ctx.isCurrent,
+        construction: ctx,
       });
       // 原投票仍由婚约权威保存，本阶段不从事实或目标重建票表。
     }

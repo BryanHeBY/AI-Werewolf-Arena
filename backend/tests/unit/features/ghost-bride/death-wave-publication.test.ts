@@ -11,12 +11,13 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { GhostBrideSetupWindow } from "../../../../src/game/mechanisms/roles/ghost_bride/setup";
 import { WeddingDeathWavePublication } from "../../../../src/game/mechanisms/roles/ghost_bride/ports";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ghostBrideBoard, ghostBrideDeck } from "../../../support/features/ghost-bride/builders/scenario";
 
 async function marriedWorld() {
   const config = ghostBrideBoard();
   const { world, boardConfig } = bootstrapGame(config, { fixedRoles: ghostBrideDeck });
-  await new GhostBrideSetupWindow(world, new ToolGateway(), []).execute(boardConfig, {
+  await new GhostBrideSetupWindow(world, new ToolGateway(), [], { get requestFactory() { return GameActionRequestFactory; } }).execute(boardConfig, {
     getAction: async (request) => {
       if (request.allowedTools.includes("choose_bridegroom"))
         return { name: "choose_bridegroom", args: { target_id: 2 } };

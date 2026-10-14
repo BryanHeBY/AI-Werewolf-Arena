@@ -1,8 +1,7 @@
 /**
- * Executes sealed Demon native Guard or Seer requests using the original native frame. Inputs
- * are bound request scopes and validated target tools; outputs are audited state writes and
- * domain settlement before later effect events. Failed commitment settles false without
- * replacing the frame or its captured intrinsic operations.
+ * 负责有限猎魔人板原生守卫／预言家的严格交付；输入原夜上下文、frame及惰性构造依赖，输出原库存提交与事实。
+ * 原体、目标与付款仍由 frame／请求 owner 校验；成功先交付再发事实，提交失败沿原 finally 结算 false。
+ * 工厂构造和绑定原在 try 之前，构造抛错不会进入该 finally；不新增清理或替换捕获的原库存／操作。
  */
 import {
   Camp,
@@ -15,7 +14,7 @@ import {
 import { StatusMarksComponent as Marks } from "../../../../core/domain/components/status_marks";
 import { captureNightLife } from "../../../../core/domain/night_effects";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
-import { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { NightStageContext } from "../../stages/night/contracts";
 import { resolveInspection } from "../inspection";
 import { recordOwnNightAction } from "../night_action_history";
@@ -28,7 +27,7 @@ import {
 } from "./native_potion_requests";
 import { openNativeGuardContribution, commitNativeGuardContribution } from "./guard_contribution";
 const nativeAdd = Marks.prototype.add;
-/** Only the finite Demon board's original native Seer and Guard take this strict delivery path. */
+/** 仅此有限板的原生预言家／守卫进入该路径；赠予、复制及其他板仍沿各自原机制。 */
 export async function executeDemonNativeNight(
   ctx: NightStageContext,
   kind: "seer_check" | "guard",
@@ -44,7 +43,8 @@ export async function executeDemonNativeNight(
     scope = Object.freeze({});
   let closed = false,
     committed = false;
-  const request = new GameActionRequestFactory(world, ctx.events, day).create({
+  // callee 先于 ctx.events 读取；原构造／绑定处于 try 外，保留失败边界而不补清理。
+  const request = new ctx.requestFactory(world, ctx.events, day).create({
     phase: Phase.Night,
     actorId: actor.actorId,
     allowedTools: [name],

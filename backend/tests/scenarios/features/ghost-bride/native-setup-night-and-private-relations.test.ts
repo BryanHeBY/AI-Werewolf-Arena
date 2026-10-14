@@ -15,6 +15,7 @@ import {
   weddingSetup,
 } from "../../../../src/game/mechanisms/roles/ghost_bride/authority";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { knownWolfTeammates, wolfKnifeHolders } from "../../../../src/game/mechanisms/roles/wolf_team";
 import { getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry, getDefaultToolSpecRegistry } from "../../../../src/game/mechanisms";
@@ -75,7 +76,7 @@ for (const [groom, witness] of [
       .entityIds()
       .map((id) => g.world.getComponent(id, COMPONENT.Role)!);
     const originalStocks = originalRoles.map((role) => role.privateState);
-    await new GhostBrideSetupWindow(g.world, new ToolGateway(), g.events).execute(
+    await new GhostBrideSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
       g.config,
       {
         getAction: async (request) => {

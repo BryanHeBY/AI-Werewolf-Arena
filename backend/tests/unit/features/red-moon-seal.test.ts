@@ -26,6 +26,7 @@ import { DEMON_HUNTER_NIGHT_STAGE } from "../../../src/game/mechanisms/roles/dem
 import { SEER_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/seer/night_stages";
 import { WITCH_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/witch/night_stages";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
 function sealedWorld() {
   const fixture = redMoonCandidateWorld();
@@ -66,6 +67,7 @@ test("Red Moon sealed night runs all good native stages without requests or inve
     isCurrent: () => true,
     previousExile: null,
     currentDay: () => 2,
+    get requestFactory() { return GameActionRequestFactory; },
     actionProvider: {
       async getAction() {
         requests++;

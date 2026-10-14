@@ -13,6 +13,7 @@ import { Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import type { RoleProfile } from "../../../src/game/mechanisms/roles/contracts";
 import type {
   NightStageContext,
@@ -44,6 +45,7 @@ function context(world = new World("en")): NightStageContext {
     isCurrent: () => true,
     previousExile: null,
     currentDay: () => 1,
+    get requestFactory() { return GameActionRequestFactory; },
     makeRequest: () => {
       throw new Error("unexpected_request");
     },

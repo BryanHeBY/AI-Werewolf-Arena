@@ -22,6 +22,7 @@ import {
 import { World } from "../../../../core/domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import type { RoleCatalog } from "../../roles/catalog";
+import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { NightAbilityActorQuery } from "../../roles/night-ability-actors";
 import type { AliveComponent } from "../../../../core/domain/components/alive";
 import type { NativeNightFailurePolicy } from "../../../../rulesets/native-night-failure-policy";
@@ -106,6 +107,8 @@ export interface NightStageContext {
   events: GameEvent[];
   actionProvider: ActionProvider;
   currentDay(): number;
+  /** 装配端惰性构造器；各机制原点新建实例，不复用 makeRequest，也不进入请求 context／录制 DTO。 */
+  readonly requestFactory: ActionRequestFactoryConstructorPort;
   makeRequest(
     actorId: EntityId,
     allowedTools: ActionRequest["allowedTools"],

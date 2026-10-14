@@ -1,0 +1,266 @@
+{
+  "backend/src/game/mechanisms/roles/demon_hunter/controller.ts": [
+    {
+      "old": "import { GameActionRequestFactory } from \"../../../engine/action_request_factory\";",
+      "new": "import type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";",
+      "count": 1
+    },
+    {
+      "old": "  day: number;\n}): Promise<Readonly<DemonHunterChoiceFact>>",
+      "new": "  day: number;\n  /** 原 new 点晚读构造器；不会复用阶段工厂或据依赖授予猎杀许可。 */\n  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort };\n}): Promise<Readonly<DemonHunterChoiceFact>>",
+      "count": 1
+    },
+    {
+      "old": "    const request = new GameActionRequestFactory(world, events, day).create({",
+      "new": "    // 原 turn 已开且位于 try 内；构造读取或 create 失败仍由原 finally 关闭许可。\n    const request = new input.construction.requestFactory(world, events, day).create({",
+      "count": 1
+    },
+    {
+      "old": "/** Candidate native controller. Default catalog registration waits for the complete runtime/replay chain. */",
+      "new": "/** 原有限猎魔人行动；具体原体／夜许可仍由 authority 复验，构造依赖不是选择或付款许可。 */",
+      "count": 1
+    },
+    {
+      "operation": "prepend",
+      "new": "/**\n * 负责有限猎魔人原猎杀回合的请求、回复复验和选择交付。输入为原 World、事件、夜号与惰性构造依赖；\n * 输出原选择事实，生命／库存／付款归 authority；请求绑定先于等待，回复后按原次序复验并提交。\n * 原 turn 开启后才在 try 内读取工厂类，失败保已发生前缀并关闭原许可，不重试或补交选择。\n */\n"
+    }
+  ],
+  "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts": [
+    {
+      "old": "import { GameActionRequestFactory } from \"../../../engine/action_request_factory\";",
+      "new": "import type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";",
+      "count": 1
+    },
+    {
+      "old": "/**\n * Executes sealed Demon native Guard or Seer requests using the original native frame. Inputs\n * are bound request scopes and validated target tools; outputs are audited state writes and\n * domain settlement before later effect events. Failed commitment settles false without\n * replacing the frame or its captured intrinsic operations.\n */",
+      "new": "/**\n * 负责有限猎魔人板原生守卫／预言家的严格交付；输入原夜上下文、frame及惰性构造依赖，输出原库存提交与事实。\n * 原体、目标与付款仍由 frame／请求 owner 校验；成功先交付再发事实，提交失败沿原 finally 结算 false。\n * 工厂构造和绑定原在 try 之前，构造抛错不会进入该 finally；不新增清理或替换捕获的原库存／操作。\n */",
+      "count": 1
+    },
+    {
+      "old": "/** Only the finite Demon board's original native Seer and Guard take this strict delivery path. */",
+      "new": "/** 仅此有限板的原生预言家／守卫进入该路径；赠予、复制及其他板仍沿各自原机制。 */",
+      "count": 1
+    },
+    {
+      "old": "  const request = new GameActionRequestFactory(world, ctx.events, day).create({",
+      "new": "  // callee 先于 ctx.events 读取；原构造／绑定处于 try 外，保留失败边界而不补清理。\n  const request = new ctx.requestFactory(world, ctx.events, day).create({",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts": [
+    {
+      "old": "import { GameActionRequestFactory } from \"../../../engine/action_request_factory\";",
+      "new": "import type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";",
+      "count": 1
+    },
+    {
+      "old": "  wolfTarget: number | null;\n}): Promise<Readonly<DemonWitchTurnResult>>",
+      "new": "  wolfTarget: number | null;\n  /** 只在原 new 点读取；原 frame 开启／夜复位已发生，依赖不授予用药资格。 */\n  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort };\n}): Promise<Readonly<DemonWitchTurnResult>>",
+      "count": 1
+    },
+    {
+      "old": "  const request = new GameActionRequestFactory(world, events, day).create({",
+      "new": "  // frame 开启和 marks 检查先完成；原 new／bind 在 try 外，失败保留复位前缀，不加新的 finally。\n  const request = new input.construction.requestFactory(world, events, day).create({",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts": [
+    {
+      "old": "      day,\n    });",
+      "new": "      day,\n      construction: ctx,\n    });",
+      "count": 1
+    },
+    {
+      "old": "/** Explicit installed candidate Worlds only; no public role profile is registered here. */",
+      "new": "/** 只处理已安装且本夜需要选择的猎魔人；原动态导入／await点保持，不在这里注册角色或授予许可。 */",
+      "count": 1
+    },
+    {
+      "operation": "prepend",
+      "new": "/**\n * 负责猎魔人阶段原夜号／需求查询、控制器调用及私密选择事实发布。输入同一阶段上下文，输出原行动事实。\n * 仅透传构造依赖引用，不提前取类或捕获 World；实际开启／复验／付款／关闭仍归本族 controller 和 authority。\n * 需求未命中不导入控制器，执行失败不伪造完成事实或回滚先前提交。\n */\n"
+    }
+  ],
+  "backend/src/game/mechanisms/roles/ghost_bride/setup.ts": [
+    {
+      "old": "import { GameActionRequestFactory } from \"../../../engine/action_request_factory\";",
+      "new": "import type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";",
+      "count": 1
+    },
+    {
+      "old": "  isCurrent: () => boolean;\n}): Promise<void>",
+      "new": "  isCurrent: () => boolean;\n  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort };\n}): Promise<void>",
+      "count": 1
+    },
+    {
+      "old": "    const request = new GameActionRequestFactory(world, events, day).create({",
+      "new": "    // opaque turn 已开、原 view 已读后才查类；失败仍在原 try 内关闭此 turn。\n    const request = new input.construction.requestFactory(world, events, day).create({",
+      "count": 1
+    },
+    {
+      "old": "/** 每次调用使用真实引擎工厂及 opaque 原回合，不启用 fallback。 */",
+      "new": "/** 装配依赖晚提供类，每次仍 new 原参数的工厂；opaque 原回合仍由 authority 校验，不启用 fallback。 */",
+      "count": 1
+    },
+    {
+      "old": "    private readonly events: GameEvent[],\n  ) {}",
+      "new": "    private readonly events: GameEvent[],\n    /** 保存引用；下方 base 的展开不会读取真正构造器。 */\n    private readonly construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n  ) {}",
+      "count": 1
+    },
+    {
+      "old": "        isCurrent,\n      };",
+      "new": "        isCurrent,\n        // 普通数据字段仅传依赖对象；...base 不触发其 requestFactory getter。\n        construction: this.construction,\n      };",
+      "count": 1
+    },
+    {
+      "old": " * 此协调器不改规则或绕过身份、失败及期限校验，每次请求保留原 factory 和 opaque turn。",
+      "new": " * 此协调器不改规则或绕过身份、失败及期限校验，每次请求保留原 new 点与 opaque turn。\n * 构造依赖只晚读实际类，base只传对象引用；内层turn与外层setup仍各按原 finally 关闭，不补交失败选择。",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts": [
+    {
+      "old": "        isCurrent: ctx.isCurrent,\n      });",
+      "new": "        isCurrent: ctx.isCurrent,\n        construction: ctx,\n      });",
+      "count": 2
+    }
+  ],
+  "backend/src/game/mechanisms/roles/witch/night_stages.ts": [
+    {
+      "old": "        wolfTarget: ctx.state.wolfTarget,\n      });",
+      "new": "        wolfTarget: ctx.state.wolfTarget,\n        construction: ctx,\n      });",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/stages/night/contracts.ts": [
+    {
+      "old": "import type { RoleCatalog } from \"../../roles/catalog\";",
+      "new": "import type { RoleCatalog } from \"../../roles/catalog\";\nimport type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";",
+      "count": 1
+    },
+    {
+      "old": "  currentDay(): number;\n  makeRequest(",
+      "new": "  currentDay(): number;\n  /** 装配端惰性构造器；各机制原点新建实例，不复用 makeRequest，也不进入请求 context／录制 DTO。 */\n  readonly requestFactory: ActionRequestFactoryConstructorPort;\n  makeRequest(",
+      "count": 1
+    }
+  ],
+  "backend/src/game/engine/phase_pipeline/night_pipeline.ts": [
+    {
+      "old": "        currentDay: () => day,\n        makeRequest:",
+      "new": "        currentDay: () => day,\n        // 只提供晚类读取；机制仍在各自原 new 点使用原 World／events／day 参数。\n        get requestFactory() { return GameActionRequestFactory; },\n        makeRequest:",
+      "count": 1
+    }
+  ],
+  "backend/src/rulesets/game-setup.ts": [
+    {
+      "old": "    const ready = yield new GhostBrideSetupWindow(\n      runtime.world(),\n      runtime.toolGateway(),\n      runtime.events(),\n    ).execute",
+      "new": "    const ready = yield new GhostBrideSetupWindow(\n      runtime.world(),\n      runtime.toolGateway(),\n      runtime.events(),\n      { get requestFactory() { return GameActionRequestFactory; } },\n    ).execute",
+      "count": 1
+    },
+    {
+      "old": " * 组合装配原窗口及前三个窗口的惰性请求构造依赖，串行交还原执行 Promise；",
+      "new": " * 组合装配原窗口及其惰性请求构造依赖，串行交还原执行 Promise；",
+      "count": 1
+    }
+  ],
+  "backend/tests/support/builders/night-stage-context.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+      "count": 1
+    },
+    {
+      "old": "    currentDay: () => 1,\n    actionProvider:",
+      "new": "    currentDay: () => 1,\n    get requestFactory() { return GameActionRequestFactory; },\n    actionProvider:",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/features/demon-hunter/authority.test.ts": [
+    {
+      "old": "async function controllerDependencies() {",
+      "new": "/** 测试在原 new 点才解析实际类；不改变已有 controllerDependencies 的动态导入或 await 次序。 */\nconst requestConstruction = {\n  get requestFactory(): import(\"../../../../src/core/domain/actions\").ActionRequestFactoryConstructorPort {\n    return (require(\"../../../../src/game/engine/action_request_factory\") as typeof import(\"../../../../src/game/engine/action_request_factory\")).GameActionRequestFactory;\n  },\n};\n\nasync function controllerDependencies() {",
+      "count": 1
+    },
+    {
+      "old": "executeDemonHunterTurn({",
+      "new": "executeDemonHunterTurn({\n        construction: requestConstruction,",
+      "count": 2
+    },
+    {
+      "old": "executeDemonWitchTurn({",
+      "new": "executeDemonWitchTurn({\n        construction: requestConstruction,",
+      "count": 13
+    }
+  ],
+  "backend/tests/unit/features/ghost-bride/death-wave-publication.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";",
+      "count": 1
+    },
+    {
+      "old": "new GhostBrideSetupWindow(world, new ToolGateway(), []).execute(",
+      "new": "new GhostBrideSetupWindow(world, new ToolGateway(), [], { get requestFactory() { return GameActionRequestFactory; } }).execute(",
+      "count": 1
+    }
+  ],
+  "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";",
+      "count": 1
+    },
+    {
+      "old": "new GhostBrideSetupWindow(g.world, new ToolGateway(), g.events).execute(",
+      "new": "new GhostBrideSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/features/evil-knight-stage.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+      "count": 1
+    },
+    {
+      "old": "    currentDay: () => 1,\n",
+      "new": "    currentDay: () => 1,\n    get requestFactory() { return GameActionRequestFactory; },\n",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/features/red-moon-seal.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+      "count": 1
+    },
+    {
+      "old": "    currentDay: () => 2,\n",
+      "new": "    currentDay: () => 2,\n    get requestFactory() { return GameActionRequestFactory; },\n",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/features/pure-white/pure-white-stage.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";",
+      "count": 1
+    },
+    {
+      "old": "    currentDay: () => day,\n",
+      "new": "    currentDay: () => day,\n    get requestFactory() { return GameActionRequestFactory; },\n",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/rulesets/night-stage-plan.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+      "count": 1
+    },
+    {
+      "old": "    currentDay: () => 1,\n",
+      "new": "    currentDay: () => 1,\n    get requestFactory() { return GameActionRequestFactory; },\n",
+      "count": 1
+    }
+  ]
+}

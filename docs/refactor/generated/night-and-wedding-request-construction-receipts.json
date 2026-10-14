@@ -1,0 +1,110 @@
+{
+  "newRisk": {
+    "chunk": "3c9c61",
+    "exitCode": 0,
+    "pass": 3,
+    "fail": 0,
+    "assertions": 17,
+    "log": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-new-tests.log",
+      "sha256": "a91bac43a75ecff0cbed7ef86423c4a9179328ba774ef0ac41e0c59e3c9a8560"
+    }
+  },
+  "originalDemon": {
+    "chunk": "4ed862",
+    "exitCode": 0,
+    "pass": 1,
+    "fail": 0,
+    "assertions": 11,
+    "filtered": 141,
+    "log": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-original-demon.log",
+      "sha256": "b8dbbf6331c05187ea7d5be55686ae7475eed29207cfe9d1a14f41e5090b0492"
+    }
+  },
+  "originalWedding": {
+    "chunk": "8be2ab",
+    "exitCode": 1,
+    "pass": 0,
+    "fail": 1,
+    "filtered": 10,
+    "error": "ghost_bride_setup_unavailable",
+    "beforeNewConstructorRead": true,
+    "log": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-original-wedding.log",
+      "sha256": "570830fd1a63ab7b1de2e6b4ec5775f3239682a3fbb85572f881b1f30d9dc18d"
+    }
+  },
+  "baselineWedding": {
+    "chunk": "6b70de",
+    "exitCode": 1,
+    "pass": 0,
+    "fail": 1,
+    "filtered": 10,
+    "sameError": "ghost_bride_setup_unavailable",
+    "capture": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-original-wedding-baseline.json",
+      "sha256": "bd7ded6399265bce5d34a9430dd72ad0c874a9f4d5487c7825f7143d95b115c5"
+    },
+    "log": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-original-wedding-baseline.log",
+      "sha256": "f8ce5ff34213d372f98a0fa224331ebd8d65f1dd9decb8d662a7766156956b1e"
+    }
+  },
+  "harnessFirst": {
+    "chunk": "2ffe44",
+    "exitCode": 1,
+    "scope": "wrong working directory; failed file write and no matching tests",
+    "log": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-new-tests-harness-first.log",
+      "sha256": "ff5e0f85bd73bdf491b9d519073b332aba64bbff341f74eeb03ee719867eeaab"
+    },
+    "notProductCase": true
+  },
+  "types": {
+    "launchChunk": "8b1c37",
+    "session": 80280,
+    "terminalChunk": "ff9d17",
+    "exitCode": 0,
+    "roots": 19,
+    "log": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-types-first.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "heads": {
+    "chunk": "a49d13",
+    "exitCode": 0,
+    "sourceRoots": 19,
+    "gitDocPathsAtCapture": 570,
+    "diagnostics": [],
+    "log": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-heads.log",
+      "sha256": "dc64c1065ad78ff19ada75fe9c0bcc05c2ac83d1ce71145084175c833632710e"
+    }
+  },
+  "proof": {
+    "report": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-proof.json",
+      "sha256": "68b96032eff297e76b2d326fdea6eac5bc77ed8cb19cf10511c658569cfc1c67"
+    },
+    "log": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-proof.log",
+      "sha256": "5156c7553143ffbce1753966b66ac85e2251892d6be68cc84f94b911d77160ee"
+    },
+    "independentTerminalCaptured": false,
+    "noLiveProofProcessAtPostRead": true,
+    "limitation": "脚本正常写JSON/log；编排仅打印output未保handle/terminal，不重跑或猜exit0。"
+  },
+  "distinctSuccessfulCases": 4,
+  "successfulAssertions": 28,
+  "existingFixtureFailureRetained": true,
+  "noRepeatedGreen": true,
+  "notRun": [
+    "fullgates",
+    "completeGames",
+    "Tapes",
+    "models",
+    "coldMatrix"
+  ]
+}

@@ -17,6 +17,7 @@ import type { StatusMarksComponent } from "../../../src/core/domain/components/s
 import { DeathCause } from "../../../src/core/domain/deaths";
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
@@ -55,6 +56,7 @@ function fixture(locale: "zh-CN" | "en") {
     previousExile: null,
     isCurrent: () => true,
     currentDay: () => 1,
+    get requestFactory() { return GameActionRequestFactory; },
     actionProvider: {
       getAction: async (request) =>
         request.actorId === witch

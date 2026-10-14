@@ -24,7 +24,7 @@ import {
   originalPoisonIntent,
   type NightPoisonClaim,
 } from "../../../../core/domain/night_effects";
-import { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { type NightAbility } from "../abilities";
@@ -109,6 +109,8 @@ export async function executeDemonWitchTurn(input: {
   provider: ActionProvider;
   day: number;
   wolfTarget: number | null;
+  /** 只在原 new 点读取；原 frame 开启／夜复位已发生，依赖不授予用药资格。 */
+  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort };
 }): Promise<Readonly<DemonWitchTurnResult>> {
   const { world, gateway, events, provider, day, wolfTarget } = input,
     frame = openDemonWitchTurnFrame(world);
@@ -118,7 +120,8 @@ export async function executeDemonWitchTurn(input: {
   let closed = false;
   if (!world.entityIds().every((id) => demonWitchMarksSafe(world, id)))
     throw new Error("demon_hunter_native_marks_invalid");
-  const request = new GameActionRequestFactory(world, events, day).create({
+  // frame 开启和 marks 检查先完成；原 new／bind 在 try 外，失败保留复位前缀，不加新的 finally。
+  const request = new input.construction.requestFactory(world, events, day).create({
     phase: Phase.Night,
     actorId: frame.witchId,
     allowedTools: ["use_potion"],

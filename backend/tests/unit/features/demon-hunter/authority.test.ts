@@ -902,6 +902,13 @@ test("a real long canonical visible history remains authorized without relaxing 
   expect(commitDemonHunt(f.world, scope, hunt(1))).toEqual({ day: 2, targetId: 1 });
 });
 
+/** 测试在原 new 点才解析实际类；不改变已有 controllerDependencies 的动态导入或 await 次序。 */
+const requestConstruction = {
+  get requestFactory(): import("../../../../src/core/domain/actions").ActionRequestFactoryConstructorPort {
+    return (require("../../../../src/game/engine/action_request_factory") as typeof import("../../../../src/game/engine/action_request_factory")).GameActionRequestFactory;
+  },
+};
+
 async function controllerDependencies() {
   await import("../../../../src/app/bootstrap");
   const [
@@ -938,6 +945,7 @@ for (const target of [1, 3, null] as const)
     const receipts: boolean[] = [];
     try {
       const fact = await executeDemonHunterTurn({
+        construction: requestConstruction,
         world: f.world,
         gateway,
         events: [],
@@ -1001,6 +1009,7 @@ for (const kind of ["missing", "self", "extra", "getter", "revoked", "throw"] as
     try {
       await expect(
         executeDemonHunterTurn({
+        construction: requestConstruction,
           world: f.world,
           gateway,
           events: [],
@@ -1153,6 +1162,7 @@ for (const [potion, targetId] of [
     beginDemonHunterNight(f.world, 1, () => true);
     try {
       const result = await executeDemonWitchTurn({
+        construction: requestConstruction,
         world: f.world,
         gateway,
         events,
@@ -1209,6 +1219,7 @@ for (const [potion, targetId] of [
       }
       await expect(
         executeDemonWitchTurn({
+        construction: requestConstruction,
           world: f.world,
           gateway,
           events,
@@ -1247,6 +1258,7 @@ for (const kind of [
     try {
       await expect(
         executeDemonWitchTurn({
+        construction: requestConstruction,
           world: f.world,
           gateway,
           events,
@@ -1332,6 +1344,7 @@ test("actual original Witch pass → heal → poison: exact cross-night cache an
       f.world.addComponent(3, COMPONENT.StatusMarks, marks);
     }
     const result = await executeDemonWitchTurn({
+        construction: requestConstruction,
       world: f.world,
       gateway,
       events: [],
@@ -1393,6 +1406,7 @@ test("actual original Witch pass → heal → poison: exact cross-night cache an
   beginDemonHunterNight(f.world, 4, () => true);
   await expect(
     executeDemonWitchTurn({
+        construction: requestConstruction,
       world: f.world,
       gateway,
       events: [],
@@ -1429,6 +1443,7 @@ for (const kind of [
     if (kind === "unknown_before") marks.add(StatusMark.PoisonMark);
     beginDemonHunterNight(f.world, 1, () => true);
     await executeDemonWitchTurn({
+        construction: requestConstruction,
       world: f.world,
       gateway,
       events: [],
@@ -1501,6 +1516,7 @@ test("delivered source seal cannot invent, copy, omit or cross Worlds", async ()
     "demon_hunter_native_sources_missing",
   );
   await executeDemonWitchTurn({
+        construction: requestConstruction,
     world: f.world,
     gateway,
     events: [],
@@ -1548,6 +1564,7 @@ for (const kind of [
     try {
       await expect(
         executeDemonWitchTurn({
+        construction: requestConstruction,
           world: f.world,
           gateway,
           events: [],
@@ -1641,6 +1658,7 @@ for (const field of ["phase", "actorId", "allowedTools", "context", "deadlineAtM
     beginDemonHunterNight(f.world, 1, () => true);
     await expect(
       executeDemonWitchTurn({
+        construction: requestConstruction,
         world: f.world,
         gateway,
         events: [],
@@ -1687,6 +1705,7 @@ test("actual Witch gateway-time body replacement cannot be captured as a new aut
   try {
     await expect(
       executeDemonWitchTurn({
+        construction: requestConstruction,
         world: f.world,
         gateway,
         events: [],
@@ -1714,6 +1733,7 @@ test("delivered source life wrappers are immutable while actual factory Alive re
       await import("../../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
   beginDemonHunterNight(f.world, 1, () => true);
   const result = await executeDemonWitchTurn({
+        construction: requestConstruction,
     world: f.world,
     gateway,
     events: [],
@@ -1827,6 +1847,7 @@ for (const transport of ["sdk", "acp"] as const)
         beginDemonHunterNight(f.world, 1, () => true);
         try {
           const result = executeDemonWitchTurn({
+        construction: requestConstruction,
             world: f.world,
             gateway,
             events: [],
@@ -1854,6 +1875,7 @@ test("delivered immunity keeps a new toxin written after ordinary marks consumpt
       await import("../../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
   beginDemonHunterNight(f.world, 1, () => true);
   await executeDemonWitchTurn({
+        construction: requestConstruction,
     world: f.world,
     gateway,
     events: [],

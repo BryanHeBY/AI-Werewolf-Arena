@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/demon-hunter/authority.test.ts:
+(pass) actual controller target null: canonical factory/gateway commit and receipt settle only once [86.50ms]
+
+ 1 pass
+ 141 filtered out
+ 0 fail
+ 11 expect() calls
+Ran 1 test across 1 file. [162.00ms]

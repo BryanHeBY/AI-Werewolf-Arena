@@ -1,7 +1,8 @@
 /**
  * 负责通过原婚礼 authority 顺序收集鬼魂新娘的新郎／见证人选择。
  * 输入为只读板子政策、当前阵容和引擎请求；输出为设置事实或中断结果，回合由原 owner 关闭。
- * 此协调器不改规则或绕过身份、失败及期限校验，每次请求保留原 factory 和 opaque turn。
+ * 此协调器不改规则或绕过身份、失败及期限校验，每次请求保留原 new 点与 opaque turn。
+ * 构造依赖只晚读实际类，base只传对象引用；内层turn与外层setup仍各按原 finally 关闭，不补交失败选择。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
@@ -14,7 +15,7 @@ import {
   type ActionStage,
   type ToolName,
 } from "../../../../core/domain";
-import { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import {
   beginWeddingSetup,
@@ -31,7 +32,7 @@ import {
   commitWeddingTool,
   takeWeddingChat,
 } from "./authority";
-/** 每次调用使用真实引擎工厂及 opaque 原回合，不启用 fallback。 */
+/** 装配依赖晚提供类，每次仍 new 原参数的工厂；opaque 原回合仍由 authority 校验，不启用 fallback。 */
 export async function executeWeddingTurn(input: {
   world: World;
   gateway: ToolGateway;
@@ -43,12 +44,14 @@ export async function executeWeddingTurn(input: {
   tool: ToolName;
   stage: ActionStage;
   isCurrent: () => boolean;
+  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort };
 }): Promise<void> {
   const { world, gateway, events, provider, day, actorId, kind, tool, stage, isCurrent } = input;
   const scope = openWeddingTurn(world, kind, actorId, day, isCurrent);
   try {
     const view = weddingActorView(world, actorId);
-    const request = new GameActionRequestFactory(world, events, day).create({
+    // opaque turn 已开、原 view 已读后才查类；失败仍在原 try 内关闭此 turn。
+    const request = new input.construction.requestFactory(world, events, day).create({
       phase: Phase.Night,
       actorId,
       allowedTools: [tool],
@@ -178,6 +181,8 @@ export class GhostBrideSetupWindow {
     private readonly world: World,
     private readonly gateway: ToolGateway,
     private readonly events: GameEvent[],
+    /** 保存引用；下方 base 的展开不会读取真正构造器。 */
+    private readonly construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },
   ) {}
   async execute(
     config: ReadonlyBoardConfig,
@@ -198,6 +203,8 @@ export class GhostBrideSetupWindow {
         provider,
         day,
         isCurrent,
+        // 普通数据字段仅传依赖对象；...base 不触发其 requestFactory getter。
+        construction: this.construction,
       };
       await executeWeddingTurn({
         ...base,

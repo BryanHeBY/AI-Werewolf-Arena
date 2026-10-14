@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/mechanisms/night-request-construction.test.ts:
+(pass) 猎魔和婚礼构造getter失败仍关闭try内原许可而不补交选择 [54.66ms]
+(pass) 原生药try外构造故障保夜复位前缀且不重新开启原frame [2.95ms]
+(pass) 原生夜构造callee先于events参数读取且try外故障不写库存 [3.36ms]
+
+ 3 pass
+ 0 fail
+ 17 expect() calls
+Ran 3 tests across 1 file. [212.00ms]

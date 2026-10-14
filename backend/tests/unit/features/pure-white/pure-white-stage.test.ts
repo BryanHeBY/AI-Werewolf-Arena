@@ -16,6 +16,7 @@ import type { StatusMarksComponent } from "../../../../src/core/domain/component
 import { DeathCause } from "../../../../src/core/domain/deaths";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
@@ -54,6 +55,7 @@ function fixture(day: number, locale: "zh-CN" | "en") {
     previousExile: null,
     isCurrent: () => true,
     currentDay: () => day,
+    get requestFactory() { return GameActionRequestFactory; },
     actionProvider: {
       getAction: async (r) => {
         calls++;

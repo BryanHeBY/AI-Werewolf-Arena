@@ -1,0 +1,9 @@
+bun test v1.4.3 (c6da4a4d3)
+The following filters did not match any test files:
+ tests/unit/mechanisms/night-request-construction.test.ts
+4820 files were searched [43.00ms]
+
+note: Tests need ".test", "_test_", ".spec" or "_spec_" in the filename (ex: "MyApp.test.ts")
+note: To treat the "tests/unit/mechanisms/night-request-construction.test.ts" filter as a path, run "bun test ./tests/unit/mechanisms/night-request-construction.test.ts"
+
+Learn more about bun test: https://bun.com/docs/cli/test

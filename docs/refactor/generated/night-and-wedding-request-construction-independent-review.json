@@ -1,0 +1,486 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "baseCommit": "8940e3cf9e6f8789c001911c4d59ea5ff0a45c55",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+      "sha256": "2b5a47582c6d2afdeaa6291d7d21a2acdac193ed0a2bf368c44c2b4717077466",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+      "sha256": "1f2936b5d3da10748e445c231c8ea4154c1668ed3032d766a43cc6d3aa21620d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "8eeebaa9b7352db3d469ee91cad6c59b3dbd51a8b96f73137306a4793fca93bf",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts",
+      "sha256": "1acafb374b72f0933a3e83a1ee7c3cc1caa5f999efc7950cfa598c0c8666b51c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "d117e9a106c17cf18fad6a4fbadec5181d04cb9e0bc6f6ccd78232d2b740c4bd",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "sha256": "0162fba26bd7f1eb597abb5990c47d0cd5c2f884290f158d4b6ea78c836dbac3",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "sha256": "27d9a11e69d68bbb7b343b3b927ffc24b3482b5767abcf26c1ed5d85abfaa525",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "e0e5b0f73f3bd383132dad34e5dd48b3849ef0dc7a10047387afcadfbb4d7635",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "f0a1a8e77e76e16d55a31680bd33faba3009b4c030daf870fdf9871914afa425",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "ec830c5c9097164518b8eca8663c8ca09821e63b1da2815a721f0c7fad490bea",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/support/builders/night-stage-context.ts",
+      "sha256": "d4d6d457218939df94f480ac1ea36d0932e1043ac0118209077654ebcf5b07d4",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "sha256": "24bd031aee7f5c5d58f70896985643a3a45c57e4707b825d2db460eaca7e5ae8",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+      "sha256": "8fe40e3eea12c84fcef881ab562c0f38455bba0378a8036a1bf9477b1caf294a",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+      "sha256": "8f12d589365a3139364f255953d4f4dc8fb92e3f1dfe7d071bbee092c9489d6f",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+      "sha256": "edb342b9a086a990568316277b1de500080d3f17d629b57113afe21de1482e9d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-seal.test.ts",
+      "sha256": "9367d386b096d05cd5da5529812765b621a89cfaa0b7ba9316a789f67aa5038e",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/pure-white/pure-white-stage.test.ts",
+      "sha256": "5e10c77fe58a459daae2720201c537e322b993221d53650e470ffbf3c4c3d7bf",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-plan.test.ts",
+      "sha256": "e22d6e3086f381c1e3d8f51822fa6b44078d6f069b118fc620d770b0447b4b37",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-request-construction.test.ts",
+      "sha256": "671c52e8c215572bd0093d3af9edcf87ad21a4dd464022c08714d7351be0697a",
+      "change": "new"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/night-and-wedding-request-construction-scope-final.json",
+    "sha256": "85ced472dbb16cf6c6a7f17b20daf8e5c0c6c1457edb6682d0ccc344b8be7eec"
+  },
+  "document": {
+    "path": "docs/refactor/night-and-wedding-request-construction.md",
+    "sha256": "8f5d0d0d7f9767333ee799ad66b8fe6ab830d4fac396ea4e17e09a5e3cf01521"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/night-and-wedding-request-construction-evidence.json",
+    "sha256": "f42e5fa2dd351e248064844603acd63503d8e69bd3d49837925e229aed4385ec"
+  },
+  "integrity": {
+    "freshSources": 19,
+    "actualGitBefore": 18,
+    "completeExactForward": 18,
+    "exactEdits": 46,
+    "actualGitCurrentControls": 4,
+    "artifactHashes": 19,
+    "mismatches": [],
+    "finalFreshSources": 19,
+    "commentOnlyBridges": 1,
+    "other18SourceHashesSame": true
+  },
+  "checks": {
+    "initialFreeze": {
+      "sources": [
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+          "beforeSha256": "f57c4f7cf745fb01aa0c91766474644e2603946b589ed70a8df0461a8d415a58",
+          "sha256": "2b5a47582c6d2afdeaa6291d7d21a2acdac193ed0a2bf368c44c2b4717077466",
+          "fullForwardEqual": true,
+          "edits": 5
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+          "beforeSha256": "59adf30c74407404d9c5eb613c9dc9833b173755cff1a5869d59488f3f60794d",
+          "sha256": "1f2936b5d3da10748e445c231c8ea4154c1668ed3032d766a43cc6d3aa21620d",
+          "fullForwardEqual": true,
+          "edits": 4
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+          "beforeSha256": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+          "sha256": "8eeebaa9b7352db3d469ee91cad6c59b3dbd51a8b96f73137306a4793fca93bf",
+          "fullForwardEqual": true,
+          "edits": 3
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts",
+          "beforeSha256": "e3f77e55164daecfa38b8044e2e95a3c8feb18ca22b27cdf90e4743ecbb6f1ee",
+          "sha256": "c782df56e4ccebc1cff067fa8302344f21f511b7f9138409f3004b71f68e3d81",
+          "fullForwardEqual": true,
+          "edits": 3
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+          "beforeSha256": "602cef695d6127b1d3f3dff866f14219a2cc84719b91605774af1d3b8f9c147f",
+          "sha256": "d117e9a106c17cf18fad6a4fbadec5181d04cb9e0bc6f6ccd78232d2b740c4bd",
+          "fullForwardEqual": true,
+          "edits": 7
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+          "beforeSha256": "32455beff9a5beee4148f3ea89aeeab9aa562355902f462d8fcf1d5034c37a00",
+          "sha256": "0162fba26bd7f1eb597abb5990c47d0cd5c2f884290f158d4b6ea78c836dbac3",
+          "fullForwardEqual": true,
+          "edits": 1
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+          "beforeSha256": "d7f25f0b591f05d3469d4b912ed0068000dd265e0b8b92dfd499bb25698ee447",
+          "sha256": "27d9a11e69d68bbb7b343b3b927ffc24b3482b5767abcf26c1ed5d85abfaa525",
+          "fullForwardEqual": true,
+          "edits": 1
+        },
+        {
+          "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "beforeSha256": "956bfdae5ad0056c3ecbeb73d46500e51c79e904c0769c9e12064fad1e59b4d4",
+          "sha256": "e0e5b0f73f3bd383132dad34e5dd48b3849ef0dc7a10047387afcadfbb4d7635",
+          "fullForwardEqual": true,
+          "edits": 2
+        },
+        {
+          "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "beforeSha256": "e147187ba7c5760fb01a9fd084e3f36fd92b3f2f579f25e85c0c51d64525bc8f",
+          "sha256": "f0a1a8e77e76e16d55a31680bd33faba3009b4c030daf870fdf9871914afa425",
+          "fullForwardEqual": true,
+          "edits": 1
+        },
+        {
+          "path": "backend/src/rulesets/game-setup.ts",
+          "beforeSha256": "6df9765180dfb3448ef8d4d7e259d12ae979cc51720033c5d5550310c6b74921",
+          "sha256": "ec830c5c9097164518b8eca8663c8ca09821e63b1da2815a721f0c7fad490bea",
+          "fullForwardEqual": true,
+          "edits": 2
+        },
+        {
+          "path": "backend/tests/support/builders/night-stage-context.ts",
+          "beforeSha256": "e1bc32986dad993192241b4e949db3025878886149197c6f0c5f1cf473ba84ee",
+          "sha256": "d4d6d457218939df94f480ac1ea36d0932e1043ac0118209077654ebcf5b07d4",
+          "fullForwardEqual": true,
+          "edits": 2
+        },
+        {
+          "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+          "beforeSha256": "01427b5b0abe4d39debc6f9d5b49beb33ef58273be6c0d7249575a061610408f",
+          "sha256": "24bd031aee7f5c5d58f70896985643a3a45c57e4707b825d2db460eaca7e5ae8",
+          "fullForwardEqual": true,
+          "edits": 3
+        },
+        {
+          "path": "backend/tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+          "beforeSha256": "c9fe91adf33edfa62bbdfffe487343ae02cad3f09b0955a90b7fe6c86a9d7ce4",
+          "sha256": "8fe40e3eea12c84fcef881ab562c0f38455bba0378a8036a1bf9477b1caf294a",
+          "fullForwardEqual": true,
+          "edits": 2
+        },
+        {
+          "path": "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+          "beforeSha256": "086b92e51299e3f8a9aa39acbe1e918636106c6077af766ac7dfb33e56394f8c",
+          "sha256": "8f12d589365a3139364f255953d4f4dc8fb92e3f1dfe7d071bbee092c9489d6f",
+          "fullForwardEqual": true,
+          "edits": 2
+        },
+        {
+          "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+          "beforeSha256": "d45aad1699a1b9fa64a1bfff6175f419db6269dab250cc87c88869747eb48831",
+          "sha256": "edb342b9a086a990568316277b1de500080d3f17d629b57113afe21de1482e9d",
+          "fullForwardEqual": true,
+          "edits": 2
+        },
+        {
+          "path": "backend/tests/unit/features/red-moon-seal.test.ts",
+          "beforeSha256": "64162e218111774a7c2833cec1bbd44e91a30f9eeaf2a528b2081b57e30c3b03",
+          "sha256": "9367d386b096d05cd5da5529812765b621a89cfaa0b7ba9316a789f67aa5038e",
+          "fullForwardEqual": true,
+          "edits": 2
+        },
+        {
+          "path": "backend/tests/unit/features/pure-white/pure-white-stage.test.ts",
+          "beforeSha256": "2ac7dff7630cfd2702ac964b69b6f79149335bde11c03439c5911eb18db23bbc",
+          "sha256": "5e10c77fe58a459daae2720201c537e322b993221d53650e470ffbf3c4c3d7bf",
+          "fullForwardEqual": true,
+          "edits": 2
+        },
+        {
+          "path": "backend/tests/unit/rulesets/night-stage-plan.test.ts",
+          "beforeSha256": "c55d308bad50bdef1c798b81454595e7d7ae6521386d3a8a39d3f7d4a0e64177",
+          "sha256": "e22d6e3086f381c1e3d8f51822fa6b44078d6f069b118fc620d770b0447b4b37",
+          "fullForwardEqual": true,
+          "edits": 2
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/night-request-construction.test.ts",
+          "new": true,
+          "sha256": "671c52e8c215572bd0093d3af9edcf87ad21a4dd464022c08714d7351be0697a"
+        }
+      ],
+      "controls": [
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+          "actualGitAndCurrentSame": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+          "sha256": "a995483692a43a30d8b2ee02533ec2b3b6ba4f26cefd40996c16db86859f6ecb",
+          "actualGitAndCurrentSame": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+          "actualGitAndCurrentSame": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/night-lifecycle.ts",
+          "sha256": "f7f474a1379bd3f5f0c9b92bb07cd5706d81cc353af8720c91054baf7c54d8d9",
+          "actualGitAndCurrentSame": true
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-before.json",
+          "sha256": "42ca94436c15d6a3560da1d253ee3c73d8b8923a1664bc11884318ed0ea96d18"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-edits.json",
+          "sha256": "75ad6c625627f12dd3e170f95808d3614192f132ba78d6b8570f9c6901893d99"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-types-config.json",
+          "sha256": "ec250052db2b9f6ff2c845b3f22a231313ca2fc19d8cb4bdf222a9a9268c3079"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-types-first.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-new-tests-harness-first.log",
+          "sha256": "ff5e0f85bd73bdf491b9d519073b332aba64bbff341f74eeb03ee719867eeaab"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-new-tests.log",
+          "sha256": "a91bac43a75ecff0cbed7ef86423c4a9179328ba774ef0ac41e0c59e3c9a8560"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-original-demon.log",
+          "sha256": "b8dbbf6331c05187ea7d5be55686ae7475eed29207cfe9d1a14f41e5090b0492"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-original-wedding.log",
+          "sha256": "570830fd1a63ab7b1de2e6b4ec5775f3239682a3fbb85572f881b1f30d9dc18d"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-original-wedding-baseline.json",
+          "sha256": "bd7ded6399265bce5d34a9430dd72ad0c874a9f4d5487c7825f7143d95b115c5"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-original-wedding-baseline.log",
+          "sha256": "f8ce5ff34213d372f98a0fa224331ebd8d65f1dd9decb8d662a7766156956b1e"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-heads.ts",
+          "sha256": "cf15fc75b954c6f73a456f804539e24a670ea6c3171e3044b5adad1aa209107a"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-heads.json",
+          "sha256": "88f0f02b877b154f5be0c35bc1e6c8dd724d7fa3c84e255eec80d7f6bb582971"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-heads.log",
+          "sha256": "dc64c1065ad78ff19ada75fe9c0bcc05c2ac83d1ce71145084175c833632710e"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-proof.ts",
+          "sha256": "d111798e5341bb18b13d67badd96545f965310e1ff03f81c265226ba53ea210c"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-proof.json",
+          "sha256": "68b96032eff297e76b2d326fdea6eac5bc77ed8cb19cf10511c658569cfc1c67"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-proof.log",
+          "sha256": "5156c7553143ffbce1753966b66ac85e2251892d6be68cc84f94b911d77160ee"
+        },
+        {
+          "path": "docs/refactor/generated/night-and-wedding-request-construction-receipts.json",
+          "sha256": "846d86f4f99a353906fa7c3d37b4e3563706b180daa9966fdc2341a78c4aa985"
+        }
+      ]
+    },
+    "finalArtifacts": [
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-before.json",
+        "sha256": "42ca94436c15d6a3560da1d253ee3c73d8b8923a1664bc11884318ed0ea96d18"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-edits.json",
+        "sha256": "75ad6c625627f12dd3e170f95808d3614192f132ba78d6b8570f9c6901893d99"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-types-config.json",
+        "sha256": "ec250052db2b9f6ff2c845b3f22a231313ca2fc19d8cb4bdf222a9a9268c3079"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-types-first.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-new-tests-harness-first.log",
+        "sha256": "ff5e0f85bd73bdf491b9d519073b332aba64bbff341f74eeb03ee719867eeaab"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-new-tests.log",
+        "sha256": "a91bac43a75ecff0cbed7ef86423c4a9179328ba774ef0ac41e0c59e3c9a8560"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-original-demon.log",
+        "sha256": "b8dbbf6331c05187ea7d5be55686ae7475eed29207cfe9d1a14f41e5090b0492"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-original-wedding.log",
+        "sha256": "570830fd1a63ab7b1de2e6b4ec5775f3239682a3fbb85572f881b1f30d9dc18d"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-original-wedding-baseline.json",
+        "sha256": "bd7ded6399265bce5d34a9430dd72ad0c874a9f4d5487c7825f7143d95b115c5"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-original-wedding-baseline.log",
+        "sha256": "f8ce5ff34213d372f98a0fa224331ebd8d65f1dd9decb8d662a7766156956b1e"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-heads.ts",
+        "sha256": "cf15fc75b954c6f73a456f804539e24a670ea6c3171e3044b5adad1aa209107a"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-heads.json",
+        "sha256": "88f0f02b877b154f5be0c35bc1e6c8dd724d7fa3c84e255eec80d7f6bb582971"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-heads.log",
+        "sha256": "dc64c1065ad78ff19ada75fe9c0bcc05c2ac83d1ce71145084175c833632710e"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-proof.ts",
+        "sha256": "d111798e5341bb18b13d67badd96545f965310e1ff03f81c265226ba53ea210c"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-proof.json",
+        "sha256": "68b96032eff297e76b2d326fdea6eac5bc77ed8cb19cf10511c658569cfc1c67"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-proof.log",
+        "sha256": "5156c7553143ffbce1753966b66ac85e2251892d6be68cc84f94b911d77160ee"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-receipts.json",
+        "sha256": "846d86f4f99a353906fa7c3d37b4e3563706b180daa9966fdc2341a78c4aa985"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-peer-head-before.json",
+        "sha256": "8197bc1e91e1f4e73a30ada217566a594c7dff9c2262bc7b2f824f0077a4a2c8"
+      },
+      {
+        "path": "docs/refactor/generated/night-and-wedding-request-construction-peer-head-bridge.json",
+        "sha256": "42fcb552a8958b4048ad485ee61bc4a19f5cab84f58b537609735c80b2ce6464"
+      }
+    ],
+    "commentBridge": {
+      "path": "docs/refactor/generated/night-and-wedding-request-construction-peer-head-bridge.json",
+      "sha256": "42fcb552a8958b4048ad485ee61bc4a19f5cab84f58b537609735c80b2ce6464",
+      "sourceBefore": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts",
+        "sha256": "c782df56e4ccebc1cff067fa8302344f21f511b7f9138409f3004b71f68e3d81"
+      },
+      "sourceAfter": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts",
+        "sha256": "1acafb374b72f0933a3e83a1ee7c3cc1caa5f999efc7950cfa598c0c8666b51c"
+      },
+      "exactWholeInverse": true,
+      "onlyExistingJSDoc": true,
+      "oldProofHeadsReceiptsUnchanged": true
+    }
+  },
+  "reviewDimensions": {
+    "职责与接口": [
+      "四个原new点不迁业务算法；实际NP/game-setup负责class接线，同一ctx/construction引用传给controller。",
+      "Ctx必填readonly字段／输入对象construction／Ghost窗口第四参数属于明确运行API差异；无fallback、默认兼容、日工厂复用、DTO或录制注入。",
+      "特定族三个controller与婚礼共享执行退出engine具体值导入；原publicactions构造类型只提供create形状，不授予实际付款／租约权限。"
+    ],
+    "权限与失败顺序": [
+      "Hunt和Wedding原turn开后、view原点后在try内取constructor，原finally关原scope，异常不补交。",
+      "原生药原frame开启／marks可读性先发生，new／bind在try外；frame开启前缀不退款或强行关闭。",
+      "原生夜callee先于ctx.events，原frame捕获、授权、await后复验、guard/seer提交和实际settle/event/历史顺序全部保持。",
+      "Ghost base只增加construction普通引用；spread不读取依赖对象requestFactory getter，仍原5个选择／聊天／证婚串行await与双finally。",
+      "原Demon handler只在needsTurn命中后动态import／await，Witch/Seer/Guard路径原动态读取不移；15直接输入只传惰性对象引用。"
+    ],
+    "证据与测试": [
+      "完整18真实Gitbefore、全部登记编辑逐条正演到18当前全文，各输入／标题／断言的保留不是局部忽略；新unit3 risk真实首失败／库存ref轨迹已全文人工读。",
+      "作者报告36个明确映射全输出和四execute完整正文callee逆，报告已写但编排没有独立exit/handle；本审不制造proof exit0或重跑。",
+      "作者真实new3/17＋oldHunt1/11各一次4不同成功case/28assert；当前Ghost8be2ab真红、隔离8940基线6b70de同首错误，不称全部测试通过。",
+      "Ghost原完整fixture仍把未绑定config交beginWeddingSetup，在新constructorgetter前拒绝；original日志／基线日志已实际阅读。1727/96隔离数据量按作者持久capture字段引用，本审未重建全隔离快照。",
+      "19根finite类型8b1c37/80280→ff9d17 actual0、19头a49d13 actual0按作者真实持久收据归属；空类型log不作为本审独立终态依据。"
+    ]
+  },
+  "findings": [
+    {
+      "severity": "low",
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts",
+      "kind": "中文职责说明精度",
+      "status": "closed",
+      "detail": "原执行body有world:ctx.world，在对象构造点读取World；新头“不提前取类或捕获World”否认了原捕获，建议只否认提前读取class，并明示其它参数仍原点读取。",
+      "resolution": "作者只将一条职责头校准为构造依赖不提前取类，World／其它参数仍在原对象点读取；当前全文仅此精确JSDoc差量，原采样及程序证据未改，不重检查。"
+    }
+  ],
+  "limits": [
+    "本审未运行proof/checker/types/tests/gates，所有运行结果归作者实际收据。",
+    "不承诺当前新mandatoryAPI与旧缺字段调用／反射形状、全部静态或动态加载／初始化序相同。",
+    "本批只核十九源和四控制；其它并行PM/DR/Terminal/family源码不作为完整未变闭包。",
+    "最终单头精度源hash经独立完整字节逆接到首19源采样；首proof/heads/types不冒最终头已另跑。"
+  ]
+}

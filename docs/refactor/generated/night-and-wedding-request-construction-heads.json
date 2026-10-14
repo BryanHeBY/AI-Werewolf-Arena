@@ -1,0 +1,82 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+      "sha256": "2b5a47582c6d2afdeaa6291d7d21a2acdac193ed0a2bf368c44c2b4717077466"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+      "sha256": "1f2936b5d3da10748e445c231c8ea4154c1668ed3032d766a43cc6d3aa21620d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "8eeebaa9b7352db3d469ee91cad6c59b3dbd51a8b96f73137306a4793fca93bf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts",
+      "sha256": "c782df56e4ccebc1cff067fa8302344f21f511b7f9138409f3004b71f68e3d81"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "d117e9a106c17cf18fad6a4fbadec5181d04cb9e0bc6f6ccd78232d2b740c4bd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "sha256": "0162fba26bd7f1eb597abb5990c47d0cd5c2f884290f158d4b6ea78c836dbac3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "sha256": "27d9a11e69d68bbb7b343b3b927ffc24b3482b5767abcf26c1ed5d85abfaa525"
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "e0e5b0f73f3bd383132dad34e5dd48b3849ef0dc7a10047387afcadfbb4d7635"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "f0a1a8e77e76e16d55a31680bd33faba3009b4c030daf870fdf9871914afa425"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "ec830c5c9097164518b8eca8663c8ca09821e63b1da2815a721f0c7fad490bea"
+    },
+    {
+      "path": "backend/tests/support/builders/night-stage-context.ts",
+      "sha256": "d4d6d457218939df94f480ac1ea36d0932e1043ac0118209077654ebcf5b07d4"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "sha256": "24bd031aee7f5c5d58f70896985643a3a45c57e4707b825d2db460eaca7e5ae8"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+      "sha256": "8fe40e3eea12c84fcef881ab562c0f38455bba0378a8036a1bf9477b1caf294a"
+    },
+    {
+      "path": "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+      "sha256": "8f12d589365a3139364f255953d4f4dc8fb92e3f1dfe7d071bbee092c9489d6f"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+      "sha256": "edb342b9a086a990568316277b1de500080d3f17d629b57113afe21de1482e9d"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-seal.test.ts",
+      "sha256": "9367d386b096d05cd5da5529812765b621a89cfaa0b7ba9316a789f67aa5038e"
+    },
+    {
+      "path": "backend/tests/unit/features/pure-white/pure-white-stage.test.ts",
+      "sha256": "5e10c77fe58a459daae2720201c537e322b993221d53650e470ffbf3c4c3d7bf"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-plan.test.ts",
+      "sha256": "e22d6e3086f381c1e3d8f51822fa6b44078d6f069b118fc620d770b0447b4b37"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-request-construction.test.ts",
+      "sha256": "671c52e8c215572bd0093d3af9edcf87ad21a4dd464022c08714d7351be0697a"
+    }
+  ],
+  "documentationPathCount": 570,
+  "diagnostics": []
+}

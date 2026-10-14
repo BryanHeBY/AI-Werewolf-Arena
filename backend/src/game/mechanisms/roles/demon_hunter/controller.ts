@@ -1,3 +1,8 @@
+/**
+ * 负责有限猎魔人原猎杀回合的请求、回复复验和选择交付。输入为原 World、事件、夜号与惰性构造依赖；
+ * 输出原选择事实，生命／库存／付款归 authority；请求绑定先于等待，回复后按原次序复验并提交。
+ * 原 turn 开启后才在 try 内读取工厂类，失败保已发生前缀并关闭原许可，不重试或补交选择。
+ */
 import {
   Phase,
   type World,
@@ -8,7 +13,7 @@ import {
   type ToolCall,
 } from "../../../../core";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
-import { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { DEMON_HUNTER_POLICY, readDemonHuntTool } from "./state";
 import {
@@ -26,20 +31,23 @@ export interface DemonHunterChoiceFact {
   readonly day: number;
   readonly targetId: number | null;
 }
-/** Candidate native controller. Default catalog registration waits for the complete runtime/replay chain. */
+/** 原有限猎魔人行动；具体原体／夜许可仍由 authority 复验，构造依赖不是选择或付款许可。 */
 export async function executeDemonHunterTurn(input: {
   world: World;
   gateway: ToolGateway;
   events: GameEvent[];
   provider: ActionProvider;
   day: number;
+  /** 原 new 点晚读构造器；不会复用阶段工厂或据依赖授予猎杀许可。 */
+  construction: { readonly requestFactory: ActionRequestFactoryConstructorPort };
 }): Promise<Readonly<DemonHunterChoiceFact>> {
   const { world, gateway, events, provider, day } = input,
     actorId = demonHunterActorId(world);
   if (actorId === null) throw new Error("demon_hunter_actor_unavailable");
   const scope = openDemonHunterTurn(world);
   try {
-    const request = new GameActionRequestFactory(world, events, day).create({
+    // 原 turn 已开且位于 try 内；构造读取或 create 失败仍由原 finally 关闭许可。
+    const request = new input.construction.requestFactory(world, events, day).create({
       phase: Phase.Night,
       actorId,
       allowedTools: ["demon_hunt" as ToolName],

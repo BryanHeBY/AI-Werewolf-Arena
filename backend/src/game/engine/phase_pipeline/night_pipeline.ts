@@ -261,6 +261,8 @@ export class NightPipeline {
         events: this.events,
         actionProvider: nativeProvider,
         currentDay: () => day,
+        // 只提供晚类读取；机制仍在各自原 new 点使用原 World／events／day 参数。
+        get requestFactory() { return GameActionRequestFactory; },
         makeRequest: (
           actorId: EntityId,
           allowedTools: ActionRequest["allowedTools"],

@@ -62,6 +62,7 @@ const witchActionStage: NightStageHandler = {
         provider: ctx.actionProvider,
         day: ctx.currentDay(),
         wolfTarget: ctx.state.wolfTarget,
+        construction: ctx,
       });
       if (result.poison) (ctx.state.poisonClaims ??= []).push(result.poison.claim);
       return;
