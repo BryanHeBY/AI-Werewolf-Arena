@@ -1,0 +1,16 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  },
+  "files": [
+    "../../../backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+    "../../../backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

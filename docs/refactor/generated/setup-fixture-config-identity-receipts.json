@@ -1,0 +1,81 @@
+{
+  "capture": {
+    "terminalChunk": "ace1f0",
+    "exitCode": 0,
+    "baseCommit": "2da71936599900756983d4d7afb677417c66e4d2",
+    "source": 2,
+    "controls": 6
+  },
+  "wild": {
+    "terminalChunk": "271cd9",
+    "exitCode": 0,
+    "executions": 1,
+    "tests": 1,
+    "assertions": 19,
+    "filtered": 21,
+    "title": "poison: actual model death synchronously changes faction and waits for the following actual night",
+    "output": "docs/refactor/generated/setup-fixture-config-identity-wild-output.txt"
+  },
+  "lonely": {
+    "terminalChunk": "79188c",
+    "exitCode": 0,
+    "executions": 1,
+    "tests": 1,
+    "assertions": 5,
+    "filtered": 56,
+    "title": "provider exception and late phase cancellation close original resources",
+    "output": "docs/refactor/generated/setup-fixture-config-identity-lonely-output.txt"
+  },
+  "types": {
+    "launchChunk": "aa70cb",
+    "session": 71702,
+    "terminalChunk": "44b163",
+    "exitCode": 0,
+    "roots": 2,
+    "executions": 1,
+    "output": "docs/refactor/generated/setup-fixture-config-identity-types-output.txt"
+  },
+  "proof": {
+    "terminalChunk": "61bee3",
+    "exitCode": 0,
+    "executions": 1,
+    "source": 2,
+    "outputs": 4,
+    "output": "docs/refactor/generated/setup-fixture-config-identity-proof-output.txt"
+  },
+  "heads": {
+    "terminalChunk": "d13138",
+    "exitCode": 0,
+    "executions": 1,
+    "roots": 2,
+    "documentationPaths": 641,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "output": "docs/refactor/generated/setup-fixture-config-identity-heads-output.txt"
+  },
+  "successfulCoverage": {
+    "differentTests": 2,
+    "assertions": 24,
+    "executions": 2
+  },
+  "historicalFailures": {
+    "owner": "first-night-choice-state-slots",
+    "receipts": {
+      "path": "docs/refactor/generated/first-night-choice-state-slots-receipts.json",
+      "sha256": "d5e0d2637ec02785c805dc9312095e75920f1b9d9f8142b8b267c1de0571aa34"
+    },
+    "baseCommit": "34239c73a92b2e59ed8c3499cf708fd51869a5e7",
+    "wildCurrentChunk": "8f426f",
+    "lonelyCurrentChunk": "ffce26",
+    "wildIsolatedChunk": "f35a4a",
+    "lonelyIsolatedChunk": "da0f90",
+    "policy": "原B当前及原Git隔离红保历史；本批只修两指定输入，不重新执行旧基线。"
+  },
+  "phasePolicy": "两指定运行、类型、完整程序及head均采同一最终两源；没有后继source修补或重复green。",
+  "notRun": [
+    "other old cases",
+    "full gates",
+    "models",
+    "private configuration"
+  ]
+}

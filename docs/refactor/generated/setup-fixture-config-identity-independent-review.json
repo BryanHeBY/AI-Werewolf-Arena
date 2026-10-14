@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "native_final_architecture_review",
+  "approved": true,
+  "baseCommit": "2da71936599900756983d4d7afb677417c66e4d2",
+  "source": [
+    {
+      "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "sha256": "f6043d2e8ceb46a3b28811bfde217af369b9d0d9c45e131a7e54a3bd55f3b37f",
+      "change": "指定测试输入身份适配及helper只读类型"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "aac720f1e21dd49e1ed2cec21f5c0fa22cd301892cbf786af3618127914b1e40",
+      "change": "指定测试输入身份适配及helper只读类型"
+    }
+  ],
+  "deleted": [],
+  "scopeSHA256": "de9a9aefdf4bdb4bc1b1fa73d301ecfd882ca9d34b0f26bd16da3d8bc9d13f20",
+  "scope": {
+    "path": "docs/refactor/generated/setup-fixture-config-identity-scope-final.json",
+    "sha256": "de9a9aefdf4bdb4bc1b1fa73d301ecfd882ca9d34b0f26bd16da3d8bc9d13f20"
+  },
+  "document": {
+    "path": "docs/refactor/setup-fixture-config-identity.md",
+    "sha256": "102b6e70ab11029e4098f0a63d71a38ae2db4b039b53963493a81a90db6f8edb"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/setup-fixture-config-identity-evidence.json",
+    "sha256": "1e9467cc825968bd8bc96c00747d5e47df441e30b1edfe716a67c2d74cbd36df"
+  },
+  "findings": [],
+  "remainingBlockingFindings": [],
+  "independentVerification": {
+    "actualGitBeforeSources": 2,
+    "exactEdits": 9,
+    "completeSourceForwardVerified": 2,
+    "runtimeInputSites": 3,
+    "freshSourceMismatches": 0,
+    "controls": [
+      {
+        "path": "backend/src/app/bootstrap.ts",
+        "sha256": "07d32cc09ca3d45952c6c9112dc21ed040ae29746a4a8b6ff0950866ee60b192",
+        "gitBeforeAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/src/rulesets/board-parameters.ts",
+        "sha256": "afe648c67ed78ddbdb1a48330c34b8336fca7311010e0ddd2e004500c96e3c07",
+        "gitBeforeAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "sha256": "1abd878a107988af5fc61d001731115304af3252e78e2ca6d79c0ff4e4c33622",
+        "gitBeforeAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+        "sha256": "a2274eca1a94e5e22d8bc7ee2f75204b6ffb5f4b32dc281dc422b3f34b4f06a9",
+        "gitBeforeAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "sha256": "287b392d2ac7a21fe00d05db5dbb1ea4daf5e3409f2cc6b814c295e4f6dcc050",
+        "gitBeforeAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+        "sha256": "d3b83f449a42a903152ffcb9b6bca96f85516ee91137c7506077c176c243eecc",
+        "gitBeforeAndCurrentWholeSame": true
+      }
+    ],
+    "artifactCount": 13,
+    "artifactMismatches": 0,
+    "sourceAndMetadataBound": true,
+    "performed": "只读真实 Git/source、精确编辑全文正演、原 fixture/oracle/上下游 owner、全部实际证明器与报告/日志/配置及最终附件 SHA；未执行作者证明器或检查。"
+  },
+  "behaviorReview": {
+    "configurationIdentity": "bootstrap.createPlayers 使用绑定后的 parameters.board 安装两族；bootstrap 返回 boardConfig 同一引用。setup 原 config!==binding.config guard 不改。",
+    "wild": "仅原五死因共用站点的 setup 参数变为保同 world/events 的测试视图并使用 g.boardConfig；后续 deaths(g)、原因矩阵、事实/阵营/库存/生命断言完整保留，只有 poison 实际执行。",
+    "lonely": "仅指定 provider exception/late phase cancellation 原案例的 a/b 两次 setup 输入变更；same Error 引用、failed/cancelled 状态、false 返回及空事件五项原 oracle 不变。",
+    "helper": "两个 SetupFixture 仅 Pick world/events 加 ReadonlyBoardConfig；helper 的 new/execute/receiver/provider/day/current body 保原，不增加任何运行校验。",
+    "rawFixtureAndOtherCases": "fixture raw config、原 roles/extra/工厂以及所有其它 setup 调用/可变 config 反例全字节保留。不把 canonical 深冻结配置全局替换。",
+    "chineseContract": "两条 helper 说明准确表明指定测试输入与原 raw 配置分离；无产品文本/标识符改动。"
+  },
+  "proofReadReview": {
+    "authorTerminal": "61bee3",
+    "inverseTypedNodes": 7267,
+    "inverseNoncommentLeaves": 9471,
+    "staticTitles": 31,
+    "matcherCalls": 175,
+    "unchangedSetupProviderCallbacks": 20,
+    "fullSetupBodySame": true,
+    "actualWholeRawSame": false,
+    "preciseThreeInputInverseWholeOutputsSame": 4,
+    "scopeLimit": "原当前 JavaScript 确实有三个合法输入身份差异；完整原程序相等仅在精确逆三输入后成立，不以整旧 body 覆盖证明。未独立重 emit/typed walker。"
+  },
+  "receiptReadReview": {
+    "wild": {
+      "terminalChunk": "271cd9",
+      "exitCode": 0,
+      "executions": 1,
+      "tests": 1,
+      "assertions": 19,
+      "filtered": 21,
+      "title": "poison: actual model death synchronously changes faction and waits for the following actual night",
+      "output": "docs/refactor/generated/setup-fixture-config-identity-wild-output.txt"
+    },
+    "lonely": {
+      "terminalChunk": "79188c",
+      "exitCode": 0,
+      "executions": 1,
+      "tests": 1,
+      "assertions": 5,
+      "filtered": 56,
+      "title": "provider exception and late phase cancellation close original resources",
+      "output": "docs/refactor/generated/setup-fixture-config-identity-lonely-output.txt"
+    },
+    "types": {
+      "launchChunk": "aa70cb",
+      "session": 71702,
+      "terminalChunk": "44b163",
+      "exitCode": 0,
+      "roots": 2,
+      "executions": 1,
+      "output": "docs/refactor/generated/setup-fixture-config-identity-types-output.txt"
+    },
+    "heads": {
+      "terminalChunk": "d13138",
+      "exitCode": 0,
+      "executions": 1,
+      "roots": 2,
+      "documentationPaths": 641,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "output": "docs/refactor/generated/setup-fixture-config-identity-heads-output.txt"
+    },
+    "successfulCoverage": {
+      "differentTests": 2,
+      "assertions": 24,
+      "executions": 2
+    },
+    "historicalFailures": {
+      "owner": "first-night-choice-state-slots",
+      "receipts": {
+        "path": "docs/refactor/generated/first-night-choice-state-slots-receipts.json",
+        "sha256": "d5e0d2637ec02785c805dc9312095e75920f1b9d9f8142b8b267c1de0571aa34"
+      },
+      "baseCommit": "34239c73a92b2e59ed8c3499cf708fd51869a5e7",
+      "wildCurrentChunk": "8f426f",
+      "lonelyCurrentChunk": "ffce26",
+      "wildIsolatedChunk": "f35a4a",
+      "lonelyIsolatedChunk": "da0f90",
+      "policy": "原B当前及原Git隔离红保历史；本批只修两指定输入，不重新执行旧基线。"
+    },
+    "emptyTypeLogDoesNotEstablishExit": "类型终态按作者明确 launch aa70cb/session 71702→44b163/0 工具收据归属；空日志仅保存其真实内容。"
+  },
+  "limits": [
+    "仅两测试源与明确六控制；并行 Fragrant PM/game-setup 不计控制或固定传递图。",
+    "两不同案例/24断言/两次首次执行；其他21/56过滤案例及另四死因不称已通过。",
+    "B 原当前红与真实34239隔离旧红保持历史，未重写为本批通过。",
+    "未执行任何 tests/types/heads/proof/gates/models 或修改生产/作者附件/Git/progress/matrix；本报告仅允许指定 fixture 身份修复，不验收整个 C17/C23/P9。"
+  ]
+}

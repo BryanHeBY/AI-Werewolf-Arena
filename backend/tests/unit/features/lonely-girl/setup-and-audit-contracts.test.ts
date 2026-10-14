@@ -3,6 +3,7 @@
  */
 import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Camp, Phase, COMPONENT, WinCondition, createVictoryComponent, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent, type VictoryComponent } from "../../../../src/core";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
@@ -54,6 +55,9 @@ function fixture(roles = deck, extra: Partial<BoardConfig> = {}) {
 
 type Fixture = ReturnType<typeof fixture>;
 
+/** setup 只消费原 World／事件和配置；指定场景传 bootstrap 已绑定的只读板子，其它 raw 配置输入保留。 */
+type SetupFixture = Pick<Fixture, "world" | "events"> & { readonly config: ReadonlyBoardConfig };
+
 const role = (g: Fixture, id = 1) => g.world.getComponent(id, COMPONENT.Role)!;
 
 const victory = (g: Fixture) => g.world.getComponent(1, COMPONENT.Victory)!;
@@ -64,7 +68,7 @@ const choose = (target_id = 2): ToolCall => ({
 });
 
 const setup = (
-  g: Fixture,
+  g: SetupFixture,
   body: (r: ActionRequest) => Promise<ToolCall | null> = async () => choose(),
   current = () => true,
   gateway = new ToolGateway(),
@@ -530,7 +534,7 @@ test("provider exception and late phase cancellation close original resources", 
   const a = fixture();
   const error = new Error("strict_failure");
   await expect(
-    setup(a, async () => {
+    setup({ ...a, config: a.boardConfig }, async () => {
       throw error;
     }),
   ).rejects.toBe(error);
@@ -539,7 +543,7 @@ test("provider exception and late phase cancellation close original resources", 
   let active = true;
   expect(
     await setup(
-      b,
+      { ...b, config: b.boardConfig },
       async () => {
         active = false;
         return choose();

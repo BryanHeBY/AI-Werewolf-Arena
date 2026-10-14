@@ -5,6 +5,7 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Role,
@@ -55,6 +56,9 @@ function fixture(roles = deck, extra: Partial<BoardConfig> = {}) {
 
 type Fixture = ReturnType<typeof fixture>;
 
+/** setup 只消费原 World／事件和配置；指定场景传 bootstrap 已绑定的只读板子，其它 raw 配置输入保留。 */
+type SetupFixture = Pick<Fixture, "world" | "events"> & { readonly config: ReadonlyBoardConfig };
+
 const role = (g: Fixture, id = 1) => g.world.getComponent(id, COMPONENT.Role)!;
 
 const choose = (target_id: number): ToolCall => ({
@@ -63,7 +67,7 @@ const choose = (target_id: number): ToolCall => ({
 });
 
 const setup = (
-  g: Fixture,
+  g: SetupFixture,
   getAction: (r: ActionRequest) => Promise<ToolCall | null> = async () => choose(2),
   isCurrent = () => true,
 ) =>
@@ -113,7 +117,7 @@ for (const source of [
   test(`${source}: actual model death synchronously changes faction and waits for the following actual night`, async () => {
     const g = fixture(),
       original = role(g);
-    await setup(g);
+    await setup({ ...g, config: g.boardConfig });
     await deaths(g, [2], source);
     expect(role(g)).toBe(original);
     expect(role(g).role).toBe(Role.WildChild);

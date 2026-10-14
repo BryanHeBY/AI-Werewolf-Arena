@@ -1,0 +1,15 @@
+{
+  "source": [
+    {
+      "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "sha256": "f6043d2e8ceb46a3b28811bfde217af369b9d0d9c45e131a7e54a3bd55f3b37f"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "aac720f1e21dd49e1ed2cec21f5c0fa22cd301892cbf786af3618127914b1e40"
+    }
+  ],
+  "documentationPaths": 641,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}
