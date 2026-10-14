@@ -1,12 +1,12 @@
 /**
  * 单元测试：验证赤月归档中自爆、封印及原生决定的因果事实。输入为原字面记录；事件相邻性与后续夜拒绝断言为预期，不执行模型或完整对局驱动。
  */
-import { validateDemonHunterRecord } from "../../../src/recording/demon_hunter_record";
+import { validateDemonHunterRecord } from "../../../src/verification/reproduction/demon-hunter/validate";
 import { expect, test } from "bun:test";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import { COMPONENT, type RoleComponent } from "../../../src/core";
 import type { ReproductionRecord } from "../../../src/recording/reproduction";
-import { validateRedMoonRecord } from "../../../src/recording/red_moon_record";
+import { validateRedMoonRecord } from "../../../src/verification/reproduction/red-moon/validate";
 function fixture(policy: "ends_game" | "forbidden" = "ends_game"): any {
   const { world, config } = redMoonCandidateWorld(policy);
   return {

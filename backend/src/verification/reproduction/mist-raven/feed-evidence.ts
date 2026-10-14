@@ -9,7 +9,7 @@ import {
   readMistRavenFact,
 } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import { Camp, Phase, Role } from "@ai-werewolf-arena/game-contract";
-import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "./reproduction";
+import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "../../../recording/reproduction";
 import {
   check,
   equal,
@@ -18,9 +18,9 @@ import {
   mistDraw,
   selectedMistBlast,
   type MistNightRequestEvidence,
-} from "./mist_raven_requests";
-import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
-import { sanitizeSpeechText } from "../utils/speech_text";
+} from "./requests";
+import { createMistSheriffEvidence } from "./sheriff-evidence";
+import { sanitizeSpeechText } from "../../../utils/speech_text";
 
 // 归档校验预期与实际可见性 registry、玩家投影实现相互独立。
 const publicTypes = new Set([

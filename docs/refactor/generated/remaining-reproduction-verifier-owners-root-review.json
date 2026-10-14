@@ -1,0 +1,219 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/validate.ts",
+      "sha256": "be443d67dfa75d9ff8dc28e978f7799fc8302704cc9e9bb39421fcc1a26365b5",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/feed-evidence.ts",
+      "sha256": "c34af8b7ac29a580023cdf8cd361541e5fed1abf24dc9ee208907951da00de93",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+      "sha256": "0f1259fa6f4b68e2236ce9cfe5b1f34c8a8f6ed43554730e16ae5b0fb9a97ebc",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/feed-evidence.ts",
+      "sha256": "0b950f751f8c9c4dd6a3cbb5111eb0b7ff22330dd51ab7971dd83f2e052c4363",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/validate.ts",
+      "sha256": "b0136c8e9943eb90759637d9da58660ae82a5298c58f3efe42a0de7933e0118c",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/requests.ts",
+      "sha256": "5454c13554243eace8813e5bcf969062951362338cf6eaf51eec84739b3e7020",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/feed-evidence.ts",
+      "sha256": "cd7a05ea722468c4e5685c3ad0d39fe1549923c8f5739c229e759eef82f3c6a0",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+      "sha256": "f527ecb32b50b05954382f89e44dc82d75960929ee3a72a1be1dbd693eba4d4f",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/ghost-bride/validate.ts",
+      "sha256": "7835f9fe745288551bfe1c8ecf01c0ab766c6c8711f07c78fa2c5505aedc74b7",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "sha256": "98c4a274df22d6d5ec32462bc9257c8110f3af588fc0a9a9f08c7668e946464d",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/validate.ts",
+      "sha256": "36d104e3879c4351d38a81dec571af718412d4da5eca8707585380b04045cf0a",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/native-stocks.ts",
+      "sha256": "b44df797f639f7e5f675627fbf0db7d549f9ba75a4ac74a0cf11ac4c3675c971",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/red-moon/validate.ts",
+      "sha256": "41e46117e6e447af1335ffbeaa7e80d7fb42e54ca051f0af4835e9d09e3e9260",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/validate.ts",
+      "sha256": "ebf7056d3825abbc69a00c89f9f552e95b2ba60adf595dd3a41e86090baa8076",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "sha256": "f97dd13d3cd665aeaf825a4b6c542a226dd11a25754f5c33cb02d66c1a9b5c3b",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/night-request-prefix.ts",
+      "sha256": "275d535690a7c5d5e904bd72207f8adf57933fe221a07f32c60b7be7061a8924",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mist-raven/reproduction.test.ts",
+      "sha256": "8c50916711b54c71161493b39b497a608780ab200c36d277d71ab76cd53c60e7",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/incremental-settlement-forgery.test.ts",
+      "sha256": "fa04b58c45605d4000481ec11a568999aa2c1b1938f0b21927fdae67a7028647",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/recording/red-moon-record.test.ts",
+      "sha256": "ae1af93080a2c842902b9c5a782fd2bc6d7e1645a458080c25517eb3105045f1",
+      "change": "modified"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/animal_dream_record.ts",
+      "sha256": "ad30b3231ea707a14196f7880e67c98e3db83e56cc3ba9a4fe78cc775d54ece9",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/animal_dream_feed_record.ts",
+      "sha256": "3d63acc8242da1b2c5dca32302c19d88e71f4944bec5432b630d76f7ed79f88e",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_record.ts",
+      "sha256": "900aac87cf1bea26fd6ab0f77936adc7822ba57b7d9c7c9b3754bd37f362d5d7",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_feed_record.ts",
+      "sha256": "c7acd95c03eca3f5d66af01c28f82ae7e8860ef51a7d5d5790a43b6f0753ba00",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/mist_raven_record.ts",
+      "sha256": "757824b73f99b0209799e4023d02932cf102d8b5d4a1e82a2a248c629a39fa68",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/mist_raven_requests.ts",
+      "sha256": "91ba2c637da8bb3b8d1922350fb13bec3990791ebfbdb87958311e6fbfaecb52",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/mist_raven_feed_record.ts",
+      "sha256": "0b0f5e75ee2970180358d9fc61049c5bfeccb5682134084573a713269cab972d",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/mist_raven_sheriff_record.ts",
+      "sha256": "a619f9834017e99dae703c7b6ac97ff7500cf48db8b40e0d878d6c37cedda8af",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/ghost_bride_record.ts",
+      "sha256": "1b01936055744cdca215172ae475b8654bff9d95b22f9680a77fde1828be3653",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_record.ts",
+      "sha256": "723443961c55dc88a87d6d580810e62fb1cbb5993b74432adb9f496d7ff7e586",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/demon_hunter_record.ts",
+      "sha256": "2ed823cad2e56b70c4e3baa3aea903e4bbd9e93f35b02d055f92b9d18ea61289",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/demon_hunter_stocks.ts",
+      "sha256": "7929baa0a4bff0b82e605f5e8b09e7821dc4332569f1362379a6ee4e13e6cd6f",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/red_moon_record.ts",
+      "sha256": "03ab03d24e593bc319f3637b3be233c2502f2fbccb27ab762be73723365000be",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/radiant_eclipse_record.ts",
+      "sha256": "caab7cf501af33913a3904ac029da5376d3690a27bbe2a26b0626e6334dabfd9",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/radiant_eclipse_requests.ts",
+      "sha256": "371851d53c79e55906261118672a1ecf827690cdae4329493267fadaaf98b71c",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/radiant_eclipse_night_requests.ts",
+      "sha256": "de1be7b37abcdcd9d991b3737469e9132331f33e97114fa624ad1ac49568263a",
+      "expectedAbsent": true
+    }
+  ],
+  "baseCommit": "eed72f1f7c44303ed3bc3033b2398da57bd28710",
+  "scopeSHA256": "5fba8a41b55b966f35e6b6740786ee2a7d15e0a27e3144bebb8fb10b79da7a1e",
+  "checks": [
+    "20实际Git before与final当前完整程序按26comments先逆/65route后逆全文同；全部9838原算法、输入/字面/错误/断言/标题保持",
+    "16真实旧叶删除无桥，9actualGit和当前control同；3checkpoint格式仍供真实parser和录制写方",
+    "Noble.at用原checkpoint identity独立历史clone，nights原Map原装配时点交Demon；RedMoon和nativeStocks核验调用点/首拒绝优先级保持",
+    "Radiant三叶旧值依赖环及validate末尾import保，不主张消除已有cycle；独立夜request串行前缀按settleOrder/stopped原逻辑",
+    "共享警长证据单owner被四族消费；独立两feed按原逐类audience/actor/clone/tally裁剪及可见seq累计，中文说明已收窄真实范围",
+    "Demon void只一致性/拒绝，不混同返回Noble/RedMoon审计DTO；Animal死亡准备中文准确，独立账本不授运行许可",
+    "23末artifacts及正式MD实际哈希绑定；221binding分212内部声明端点和9外部module/name/解析入口身份，未冒外部内部物理证明"
+  ],
+  "testsRunByRoot": 0,
+  "limits": [
+    "这是完整物理归属与说明迁移，不代表全部P7/P8格式兼容或P9同源验收",
+    "完整程序/类型/heads原采样与后继四comment精度桥分层，正式作者证据冻后绑定"
+  ],
+  "documentation": {
+    "path": "docs/refactor/remaining-reproduction-verifier-owners.md",
+    "sha256": "6e97e0428dc428b35ed16b9edb6489a816c264b0f3523cb95251265568f93ce7"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-evidence.json",
+    "sha256": "08ba9950f7ef40324d70dd0d6686d94c5247026e3189941f17e627c04cad1bb9"
+  },
+  "receipts": {
+    "finiteTypes": "20root53100→f5b887实际0；末纯comment精度不伪重类型",
+    "wholePrograms": "20全源79246nodes/40原outputs先前阶段保持；末4comment源8raw输出桥至final",
+    "heads": "20首头实际1diagnostic，保19通过只补failed1root实际210c4f/0；500实际Gitdocs",
+    "tests": 0,
+    "rootChecksRerun": false
+  }
+}

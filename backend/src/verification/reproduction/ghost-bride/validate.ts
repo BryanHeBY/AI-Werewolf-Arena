@@ -21,9 +21,9 @@ import {
   type WeddingKnifeCapture,
   type WeddingVote,
 } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { isGhostBridePreset } from "../verification/board-support";
+import { isGhostBridePreset } from "../../board-support";
 import { Role, Camp, Phase } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord, RecordedCheckpoint, RecordedDecision } from "./reproduction";
+import type { ReproductionRecord, RecordedCheckpoint, RecordedDecision } from "../../../recording/reproduction";
 const setupStages = [
   "ghost_bride_groom",
   "ghost_bride_chat",
@@ -52,6 +52,7 @@ function audience(actual: readonly number[] | undefined, expected: readonly numb
     ),
   );
 }
+/** 婚约归档的局部因果账本：关系、聊天、刀口捕获和票来自原证据，不是运行时婚约回执。 */
 interface Prefix {
   pair: WeddingPair | null;
   group: WeddingGroup | null;

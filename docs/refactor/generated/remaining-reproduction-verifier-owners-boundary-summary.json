@@ -1,0 +1,18 @@
+{
+  "originalCycle": [
+    "recording/radiant_eclipse_record.ts→recording/radiant_eclipse_requests.ts",
+    "recording/radiant_eclipse_requests.ts→recording/radiant_eclipse_night_requests.ts",
+    "recording/radiant_eclipse_requests.ts→recording/radiant_eclipse_record.ts",
+    "recording/radiant_eclipse_night_requests.ts→recording/radiant_eclipse_record.ts"
+  ],
+  "currentSameCycle": [
+    "radiant-eclipse/validate.ts→radiant-eclipse/requests.ts",
+    "radiant-eclipse/requests.ts→radiant-eclipse/night-request-prefix.ts",
+    "radiant-eclipse/requests.ts→radiant-eclipse/validate.ts",
+    "radiant-eclipse/night-request-prefix.ts→radiant-eclipse/validate.ts"
+  ],
+  "rootBottomImportRetained": true,
+  "nobleAuditSameRefAssemblyOriginal": true,
+  "recordTypeOnlyAndThreeSharedSchemasRemainRecording": true,
+  "limit": "原本三叶value循环按实际source/全部import binding保，不声称修复旧环或证明动态/所有global cold paths。无需第二全图JSON。"
+}

@@ -4,16 +4,16 @@
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import { isRadiantEclipsePreset } from "../verification/board-support";
+import { isRadiantEclipsePreset } from "../../board-support";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,
   radiantEclipseAudience,
 } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
 import { Camp, Phase, Role } from "@ai-werewolf-arena/game-contract";
-import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "./reproduction";
-import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
-import { sanitizeSpeechText } from "../utils/speech_text";
+import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "../../../recording/reproduction";
+import { createMistSheriffEvidence } from "../mist-raven/sheriff-evidence";
+import { sanitizeSpeechText } from "../../../utils/speech_text";
 
 /** 独立审核有限板子的证据，不导入生产能力、夜间 frame、目标或伤害实现。 */
 export function radiantCheck(value: unknown): asserts value {
@@ -123,6 +123,7 @@ function native(role: Role): RadiantAbility | undefined {
     disabled: false,
   };
 }
+/** 独立重建当夜副本：逐技能保留原选择字段／重置历史，不调用生产复制或安装命令。 */
 export function radiantBorrow(
   source: RadiantAbility,
   actorId: number,
@@ -1162,4 +1163,4 @@ export function validateRadiantEclipseRecord(record: ReproductionRecord): void {
   // 请求资格及观察者证据，与事件／状态重建分别核验。
   validateRadiantRequests(record, { roster, alive, nights, maid, count, seer, witch, dreamer });
 }
-import { validateRadiantRequests } from "./radiant_eclipse_requests";
+import { validateRadiantRequests } from "./requests";

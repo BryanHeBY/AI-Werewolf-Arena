@@ -12,16 +12,16 @@ import {
   mistDraw,
   validateMistRavenRequests,
   selectedMistBlast,
-} from "./mist_raven_requests";
-import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
-import { validateMistRavenFeeds } from "./mist_raven_feed_record";
-import { isMistRavenPreset } from "../verification/board-support";
+} from "./requests";
+import { createMistSheriffEvidence } from "./sheriff-evidence";
+import { validateMistRavenFeeds } from "./feed-evidence";
+import { isMistRavenPreset } from "../../board-support";
 import {
   MIST_RAVEN_EVENT_TYPES,
   readMistRavenFact,
 } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import { Camp, Phase, Role } from "@ai-werewolf-arena/game-contract";
-import type { RecordedCheckpoint, ReproductionRecord } from "./reproduction";
+import type { RecordedCheckpoint, ReproductionRecord } from "../../../recording/reproduction";
 
 type AlchemistLedger = {
   policy: "awa_mist_raven_v1";
@@ -1071,6 +1071,8 @@ export function validateMistRavenRecord(record: ReproductionRecord): void {
     ravenState: r,
     actors: { alchemist, raven, dreamer, seer },
   });
+  // 请求／玩家可见前缀与状态账本分别验收；完整伤害操作最后再对原 settled 夜比，
+  // 不把 operation.output 直接当作独立预期或重跑生产伤害折叠。
   validateMistRavenFeeds(record, nights);
   const resolved = [...nights.values()].filter((n) => n.settled),
     ops = record.operations.filter(

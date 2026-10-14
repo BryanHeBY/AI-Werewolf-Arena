@@ -1,12 +1,12 @@
 /**
- * 负责独立审核恶魔选择、原生结果及贵族／红月联动证据。输入为归档配置、决定、事实与 checkpoint；
- * 输出为独立重建的审计结果或原拒绝，原纯数据推导、迭代与第一失败顺序保持。
+ * 负责独立审核猎魔人选择、原生结果及贵族／赤月联动证据。输入为归档配置、决定、事实与 checkpoint；
+ * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import type { NobleRecordAudit } from "./noble_secret_body_record";
-import { validateRedMoonRecord } from "./red_moon_record";
-import { validateDemonNativeStocks } from "./demon_hunter_stocks";
+import type { NobleRecordAudit } from "../noble-secret-body/validate";
+import { validateRedMoonRecord } from "../red-moon/validate";
+import { validateDemonNativeStocks } from "./native-stocks";
 import { z } from "zod";
 import {
   DEMON_HUNTER_POLICY,
@@ -16,10 +16,10 @@ import {
   readDemonHunterState,
   readDemonHuntTool,
 } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
-import { isDemonHunterPreset } from "../verification/board-support";
+import { isDemonHunterPreset } from "../../board-support";
 import { Role, Camp, Phase, DeathCause } from "@ai-werewolf-arena/game-contract";
-import { readFaultPlan } from "../core/domain/fault_plan";
-import type { ReproductionRecord } from "./reproduction";
+import { readFaultPlan } from "../../../core/domain/fault_plan";
+import type { ReproductionRecord } from "../../../recording/reproduction";
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 const choice = z.strictObject({ day: positive.min(2), targetId: positive.nullable() });
 const cancel = z.strictObject({
@@ -73,6 +73,8 @@ export function validateDemonHunterRecord(
   record: ReproductionRecord,
   noble: NobleRecordAudit | null = null,
 ): void {
+  // 先核赤月再读猎魔人板子；贵族 audit 是装配先前原点传入的同一对象，
+  // 不从 checkpoint 的自报字段重新制造预期，原拒绝优先级保持。
   const redMoon = validateRedMoonRecord(record);
   const board = record.metadata.normalizedBoard,
     owns = board.roleSetups.some((r) => r.role === Role.DemonHunter && r.count > 0),

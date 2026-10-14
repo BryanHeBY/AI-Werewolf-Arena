@@ -1,0 +1,139 @@
+{
+  "baseCommit": "eed72f1f7c44303ed3bc3033b2398da57bd28710",
+  "scope": {
+    "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-scope-final.json",
+    "sha256": "5fba8a41b55b966f35e6b6740786ee2a7d15e0a27e3144bebb8fb10b79da7a1e",
+    "allPaths": 36,
+    "existing": 20,
+    "deleted": 16
+  },
+  "documentation": {
+    "path": "docs/refactor/remaining-reproduction-verifier-owners.md",
+    "sha256": "6e97e0428dc428b35ed16b9edb6489a816c264b0f3523cb95251265568f93ce7"
+  },
+  "summary": {
+    "completeVerifiers": 8,
+    "helpers": 8,
+    "oldLines": 9838,
+    "specifierSites": 65,
+    "capturedCommentEdits": 25,
+    "finalCommentEdits": 26,
+    "wholePrograms": 20,
+    "typedNodes": 79246,
+    "mappedWholeOutputs": 40,
+    "internalPhysicalDeclarationBindings": 212,
+    "externalModuleIdentityBindings": 9,
+    "allModeNameRouteBindings": 221,
+    "relocatedOrReroutedBindings": 184,
+    "unchangedConsumerBindings": 37,
+    "actualGitBefore": 20,
+    "controls": 9,
+    "finalCommentOnlyBridgePrograms": 4,
+    "finalCommentOnlyBridgeOutputs": 8,
+    "wholeProofSourceSHAIsPrePeerComment": true
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-before.json",
+      "sha256": "6e7ff07c0c8a482cdd8fae36f6d53fd07ad08ed5dabbd75aeacc27632603c5a7"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-edits.json",
+      "sha256": "922b097958c5eb7b3525b0459261ebd7e515dcee13f383585e145d155d6a61e0"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-edits-before-peer-comments.json",
+      "sha256": "f78ca1d95c5a3872ea87ce96d134b78c818ff7fc49d059d68f9372ca0a3ddcdd"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-proof.cjs",
+      "sha256": "920a7abffad9b5cb85bd2f4cebf32a680faf4c9fa9d58080f3bddb4b7d195397"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-proof.json",
+      "sha256": "6218e3027fb99e5ccab315f8c286ac830e21c9c3e72e4be3a04762ea728c0e42"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-heads.ts",
+      "sha256": "203734f42d65f760c754c3bad64e96af77a83268bfebc050553cd833e97d5e9b"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-heads-first.json",
+      "sha256": "3260b3b29ca90184511457911e4ab6d6fda36d73a2bf902903f9ce2b4d147921"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-heads-delta.ts",
+      "sha256": "b91540c29ea45aa3f1b7e6ed8dd5e61723a8587b962c4122b03e92b4305806ba"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-heads-delta-first.json",
+      "sha256": "337b7bbb8ef219facff250a9ec7977746e7435384932a1d58114d6fe275fc848"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-heads-delta.json",
+      "sha256": "081e5f2c21fb9bc9fc1c1a59ae784315d36d5df2f598e7ca9bba757d9c2c9310"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-heads-final.json",
+      "sha256": "130ebb04fb279ab0ea8109bbc207599b889305b0ae6c2a2c25d4e65e1a9db8bc"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-types-config.json",
+      "sha256": "8c9aebbe8d65a05e4a76d62f7ed52cd26f65488ca61028cdffa551adfb9b485e"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-first-receipts.json",
+      "sha256": "024d6530e862766fd8fbd612d04490d0bbc35bb47eb12e5dad90306ea5f07b68"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-peer-comments-before.json",
+      "sha256": "540de1b2b93bd2a83dee451bb59e33e721358c339c8ddb93913b5ee511fd5b54"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-peer-comments-proof.json",
+      "sha256": "2e54974c5d019fad8b62180ffda8f8e7eeec423a2f1cb1c31a9f5b30514f9a31"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-peer-feed-comments-before.json",
+      "sha256": "1e66643acc6320671a0313aa71bb75a80019ae6073258172d0a9927f0dd8e0f6"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-peer-feed-comments-proof.json",
+      "sha256": "541f8ec27fbf42da4d72e2d39edb75b7e1d14b7a54ef326c81365e403a7702e4"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-inventory.cjs",
+      "sha256": "702b2038d9186f8d094066d476635351bd6addf114888bf9cabf080b2a59c238"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-inventory.json",
+      "sha256": "a95981a1b9c5740097510d019c43e0cc9e25acf5cb74e4b46f0982644caff257"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-receipts.json",
+      "sha256": "6fae72736507462fc64f01133c53442ad48ccee0705e1dcb7ef5bd1dac7e003f"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-boundary-summary.json",
+      "sha256": "b2168f80bfcf900172485b8e983893e8e606d81d6f6d027ac8d82e7c85c6585d"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-reproduction-verifier-owners-scope-final.json",
+      "sha256": "5fba8a41b55b966f35e6b6740786ee2a7d15e0a27e3144bebb8fb10b79da7a1e"
+    }
+  ],
+  "receiptsPath": "docs/refactor/generated/remaining-reproduction-verifier-owners-receipts.json",
+  "status": "frozen-awaiting-independent-review",
+  "limits": [
+    "只全身迁移和精确comment/body保，准入/原oracle/类型/输入政策不变。",
+    "外部9不冒内部实际物理声明；原whole proof25comments/prefinalSHA由真实4source8emit桥接final26。",
+    "原Radiant值环保持，不声称完整历史/global/dynamic冷加载图同。",
+    "测试0，不重已绿run/types/fullgates；真实first工具/词项红保。",
+    "Source paths/load/module namespace/stack/fingerprint变化明确，历史原文/指纹不改，无跨构建重放豁免。",
+    "Root功能提交；并行WIP不纳wholeGit控制；不更新progress/matrix。"
+  ]
+}

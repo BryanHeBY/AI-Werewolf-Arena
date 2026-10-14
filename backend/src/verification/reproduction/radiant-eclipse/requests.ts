@@ -1,19 +1,19 @@
 /**
- * Responsibility: read and validate radiant-eclipse request evidence in an archive.
- * Input: recorded envelopes and original seat data.
- * Output: checked serialized request details.
- * Boundary: never creates a runtime lease, selects live actions or owns their deadlines.
+ * 负责独立核对光蚀归档的请求资格和观察者证据。输入为原席位、归档决定与夜账本；
+ * 输出为原一致性结果或明确拒绝，事件／状态重建与请求证据分开验收。
+ * 增量记录只从上一 checkpoint 推导尚未归档的夜前缀，不读取 live World 或重开资源。
+ * 不创建运行租约、选择实际行动或改变截止时间；失败仅拒绝归档，不改变已付资源或关闭／重开真实窗口。
  */
-import { radiantNightRequestPrefix } from "./radiant_eclipse_night_requests";
-import { Camp, Phase, Role } from "../core/domain/identity";
-import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "./reproduction";
+import { radiantNightRequestPrefix } from "./night-request-prefix";
+import { Camp, Phase, Role } from "../../../core/domain/identity";
+import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "../../../recording/reproduction";
 import {
   radiantCheck as check,
   radiantEqual as equal,
   radiantBorrow,
   type RadiantAbility,
   type RadiantNightEvidence,
-} from "./radiant_eclipse_record";
+} from "./validate";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,
@@ -133,7 +133,8 @@ export function validateRadiantRequests(
     if (n) return n;
     let value = inferred.get(day);
     if (value) return value;
-    // Live Trace snapshots retain the prior checkpoint while an uncheckpointed request is pending.
+    // Trace 的增量快照仍保留上一 checkpoint；尚未形成新 checkpoint 的请求只能
+    // 从该历史前缀推导，不拿未发表的最终库存回填，也不声称请求已经完成。
     check(!record.finalized && day === last.snapshot.day);
     const before = new Map(
       last.players.map((p) => [

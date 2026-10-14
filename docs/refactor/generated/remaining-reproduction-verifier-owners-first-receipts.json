@@ -1,0 +1,42 @@
+{
+  "proof": {
+    "launchChunk": "fc63d3",
+    "sessionId": 73137,
+    "terminalChunk": "69c503",
+    "exitCode": 1,
+    "error": "comment_count",
+    "cause": "证明工具先逆specifier，改变了包含该import的新增首头匹配；工具修正为精确comment逆先于route，未修改业务。"
+  },
+  "comments": {
+    "terminalChunk": "c43c57",
+    "exitCode": 1,
+    "files": 20,
+    "documentationPaths": 500,
+    "diagnostics": 1,
+    "missingChineseHead": 0,
+    "reason": "新Radiant requests head缺实际失败／已付资源边界说明；仅补中文head，原程序／类型不改。"
+  },
+  "finiteTypes": {
+    "launchChunk": "06b743",
+    "sessionId": 53100,
+    "terminalChunk": "f5b887",
+    "exitCode": 0,
+    "roots": 20,
+    "limit": "actual终态；不依据空log。其后仅一项head comment修，完整程序证明绑定终态不重types。"
+  },
+  "proofAfterRouteOrderFix": {
+    "launchChunk": "bc23c7",
+    "sessionId": 58958,
+    "terminalChunk": "bb06e0",
+    "exitCode": 1,
+    "error": "endpoint:backend/tests/scenarios/boards/mist-raven/reproduction.test.ts:expect",
+    "cause": "实际bun:test内建未改原binding，外部endpoint工具未覆盖；仅补内建名字空间同字面绑定，不修改生产或测试。"
+  },
+  "commentsFirstDelta": {
+    "terminalChunk": "f3c2a2",
+    "exitCode": 1,
+    "files": 1,
+    "diagnostics": 1,
+    "cause": "真实失败head用了中文只而非匹配器接受的仅；精确替换为同义仅，不改字段或程序。"
+  }
+}

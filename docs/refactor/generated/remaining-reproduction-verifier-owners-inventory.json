@@ -1,0 +1,348 @@
+{
+  "sourceFileCount": 1691,
+  "retiredLiteralReferences": [],
+  "canonicalReferences": [
+    {
+      "path": "backend/tests/unit/recording/red-moon-record.test.ts",
+      "sourceSHA": "ae1af93080a2c842902b9c5a782fd2bc6d7e1645a458080c25517eb3105045f1",
+      "form": "named-or-namespace-import",
+      "specifier": "../../../src/verification/reproduction/demon-hunter/validate",
+      "target": "backend/src/verification/reproduction/demon-hunter/validate",
+      "line": 4
+    },
+    {
+      "path": "backend/tests/unit/recording/red-moon-record.test.ts",
+      "sourceSHA": "ae1af93080a2c842902b9c5a782fd2bc6d7e1645a458080c25517eb3105045f1",
+      "form": "named-or-namespace-import",
+      "specifier": "../../../src/verification/reproduction/red-moon/validate",
+      "target": "backend/src/verification/reproduction/red-moon/validate",
+      "line": 9
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/validate.ts",
+      "sourceSHA": "ebf7056d3825abbc69a00c89f9f552e95b2ba60adf595dd3a41e86090baa8076",
+      "form": "named-or-namespace-import",
+      "specifier": "../mist-raven/sheriff-evidence",
+      "target": "backend/src/verification/reproduction/mist-raven/sheriff-evidence",
+      "line": 15
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/validate.ts",
+      "sourceSHA": "ebf7056d3825abbc69a00c89f9f552e95b2ba60adf595dd3a41e86090baa8076",
+      "form": "named-or-namespace-import",
+      "specifier": "./requests",
+      "target": "backend/src/verification/reproduction/radiant-eclipse/requests",
+      "line": 1166
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "sourceSHA": "f97dd13d3cd665aeaf825a4b6c542a226dd11a25754f5c33cb02d66c1a9b5c3b",
+      "form": "named-or-namespace-import",
+      "specifier": "./night-request-prefix",
+      "target": "backend/src/verification/reproduction/radiant-eclipse/night-request-prefix",
+      "line": 7
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "sourceSHA": "f97dd13d3cd665aeaf825a4b6c542a226dd11a25754f5c33cb02d66c1a9b5c3b",
+      "form": "named-or-namespace-import",
+      "specifier": "./validate",
+      "target": "backend/src/verification/reproduction/radiant-eclipse/validate",
+      "line": 10
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/night-request-prefix.ts",
+      "sourceSHA": "275d535690a7c5d5e904bd72207f8adf57933fe221a07f32c60b7be7061a8924",
+      "form": "named-or-namespace-import",
+      "specifier": "./validate",
+      "target": "backend/src/verification/reproduction/radiant-eclipse/validate",
+      "line": 9
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mist-raven/reproduction.test.ts",
+      "sourceSHA": "8c50916711b54c71161493b39b497a608780ab200c36d277d71ab76cd53c60e7",
+      "form": "named-or-namespace-import",
+      "specifier": "../../../../src/verification/reproduction/mist-raven/validate",
+      "target": "backend/src/verification/reproduction/mist-raven/validate",
+      "line": 10
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/validate.ts",
+      "sourceSHA": "b0136c8e9943eb90759637d9da58660ae82a5298c58f3efe42a0de7933e0118c",
+      "form": "named-or-namespace-import",
+      "specifier": "./requests",
+      "target": "backend/src/verification/reproduction/mist-raven/requests",
+      "line": 7
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/validate.ts",
+      "sourceSHA": "b0136c8e9943eb90759637d9da58660ae82a5298c58f3efe42a0de7933e0118c",
+      "form": "named-or-namespace-import",
+      "specifier": "./sheriff-evidence",
+      "target": "backend/src/verification/reproduction/mist-raven/sheriff-evidence",
+      "line": 16
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/validate.ts",
+      "sourceSHA": "b0136c8e9943eb90759637d9da58660ae82a5298c58f3efe42a0de7933e0118c",
+      "form": "named-or-namespace-import",
+      "specifier": "./feed-evidence",
+      "target": "backend/src/verification/reproduction/mist-raven/feed-evidence",
+      "line": 17
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+      "sourceSHA": "f527ecb32b50b05954382f89e44dc82d75960929ee3a72a1be1dbd693eba4d4f",
+      "form": "named-or-namespace-import",
+      "specifier": "./requests",
+      "target": "backend/src/verification/reproduction/mist-raven/requests",
+      "line": 9
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/feed-evidence.ts",
+      "sourceSHA": "cd7a05ea722468c4e5685c3ad0d39fe1549923c8f5739c229e759eef82f3c6a0",
+      "form": "named-or-namespace-import",
+      "specifier": "./requests",
+      "target": "backend/src/verification/reproduction/mist-raven/requests",
+      "line": 13
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/feed-evidence.ts",
+      "sourceSHA": "cd7a05ea722468c4e5685c3ad0d39fe1549923c8f5739c229e759eef82f3c6a0",
+      "form": "named-or-namespace-import",
+      "specifier": "./sheriff-evidence",
+      "target": "backend/src/verification/reproduction/mist-raven/sheriff-evidence",
+      "line": 22
+    },
+    {
+      "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "sourceSHA": "98c4a274df22d6d5ec32462bc9257c8110f3af588fc0a9a9f08c7668e946464d",
+      "form": "named-or-namespace-import",
+      "specifier": "../mist-raven/sheriff-evidence",
+      "target": "backend/src/verification/reproduction/mist-raven/sheriff-evidence",
+      "line": 7
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+      "sourceSHA": "0f1259fa6f4b68e2236ce9cfe5b1f34c8a8f6ed43554730e16ae5b0fb9a97ebc",
+      "form": "named-or-namespace-import",
+      "specifier": "./feed-evidence",
+      "target": "backend/src/verification/reproduction/fragrant-pair-seer/feed-evidence",
+      "line": 7
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+      "sourceSHA": "0f1259fa6f4b68e2236ce9cfe5b1f34c8a8f6ed43554730e16ae5b0fb9a97ebc",
+      "form": "named-or-namespace-import",
+      "specifier": "../mist-raven/sheriff-evidence",
+      "target": "backend/src/verification/reproduction/mist-raven/sheriff-evidence",
+      "line": 8
+    },
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/validate.ts",
+      "sourceSHA": "be443d67dfa75d9ff8dc28e978f7799fc8302704cc9e9bb39421fcc1a26365b5",
+      "form": "named-or-namespace-import",
+      "specifier": "./feed-evidence",
+      "target": "backend/src/verification/reproduction/animal-dream/feed-evidence",
+      "line": 7
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/validate.ts",
+      "sourceSHA": "36d104e3879c4351d38a81dec571af718412d4da5eca8707585380b04045cf0a",
+      "form": "named-or-namespace-import",
+      "specifier": "../noble-secret-body/validate",
+      "target": "backend/src/verification/reproduction/noble-secret-body/validate",
+      "line": 7
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/validate.ts",
+      "sourceSHA": "36d104e3879c4351d38a81dec571af718412d4da5eca8707585380b04045cf0a",
+      "form": "named-or-namespace-import",
+      "specifier": "../red-moon/validate",
+      "target": "backend/src/verification/reproduction/red-moon/validate",
+      "line": 8
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/validate.ts",
+      "sourceSHA": "36d104e3879c4351d38a81dec571af718412d4da5eca8707585380b04045cf0a",
+      "form": "named-or-namespace-import",
+      "specifier": "./native-stocks",
+      "target": "backend/src/verification/reproduction/demon-hunter/native-stocks",
+      "line": 9
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/native-stocks.ts",
+      "sourceSHA": "b44df797f639f7e5f675627fbf0db7d549f9ba75a4ac74a0cf11ac4c3675c971",
+      "form": "named-or-namespace-import",
+      "specifier": "../noble-secret-body/validate",
+      "target": "backend/src/verification/reproduction/noble-secret-body/validate",
+      "line": 7
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/native-stocks.ts",
+      "sourceSHA": "b44df797f639f7e5f675627fbf0db7d549f9ba75a4ac74a0cf11ac4c3675c971",
+      "form": "named-or-namespace-import",
+      "specifier": "../red-moon/validate",
+      "target": "backend/src/verification/reproduction/red-moon/validate",
+      "line": 8
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./ghost-bride/validate",
+      "target": "backend/src/verification/reproduction/ghost-bride/validate",
+      "line": 12
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./animal-dream/validate",
+      "target": "backend/src/verification/reproduction/animal-dream/validate",
+      "line": 13
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./fragrant-pair-seer/validate",
+      "target": "backend/src/verification/reproduction/fragrant-pair-seer/validate",
+      "line": 14
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./noble-secret-body/validate",
+      "target": "backend/src/verification/reproduction/noble-secret-body/validate",
+      "line": 15
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./demon-hunter/validate",
+      "target": "backend/src/verification/reproduction/demon-hunter/validate",
+      "line": 16
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./mist-raven/validate",
+      "target": "backend/src/verification/reproduction/mist-raven/validate",
+      "line": 18
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./radiant-eclipse/validate",
+      "target": "backend/src/verification/reproduction/radiant-eclipse/validate",
+      "line": 19
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/incremental-settlement-forgery.test.ts",
+      "sourceSHA": "fa04b58c45605d4000481ec11a568999aa2c1b1938f0b21927fdae67a7028647",
+      "form": "named-or-namespace-import",
+      "specifier": "../../../../src/verification/reproduction/mist-raven/validate",
+      "target": "backend/src/verification/reproduction/mist-raven/validate",
+      "line": 11
+    }
+  ],
+  "externalConsumerReferences": [
+    {
+      "path": "backend/tests/unit/recording/red-moon-record.test.ts",
+      "sourceSHA": "ae1af93080a2c842902b9c5a782fd2bc6d7e1645a458080c25517eb3105045f1",
+      "form": "named-or-namespace-import",
+      "specifier": "../../../src/verification/reproduction/demon-hunter/validate",
+      "target": "backend/src/verification/reproduction/demon-hunter/validate",
+      "line": 4
+    },
+    {
+      "path": "backend/tests/unit/recording/red-moon-record.test.ts",
+      "sourceSHA": "ae1af93080a2c842902b9c5a782fd2bc6d7e1645a458080c25517eb3105045f1",
+      "form": "named-or-namespace-import",
+      "specifier": "../../../src/verification/reproduction/red-moon/validate",
+      "target": "backend/src/verification/reproduction/red-moon/validate",
+      "line": 9
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mist-raven/reproduction.test.ts",
+      "sourceSHA": "8c50916711b54c71161493b39b497a608780ab200c36d277d71ab76cd53c60e7",
+      "form": "named-or-namespace-import",
+      "specifier": "../../../../src/verification/reproduction/mist-raven/validate",
+      "target": "backend/src/verification/reproduction/mist-raven/validate",
+      "line": 10
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./ghost-bride/validate",
+      "target": "backend/src/verification/reproduction/ghost-bride/validate",
+      "line": 12
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./animal-dream/validate",
+      "target": "backend/src/verification/reproduction/animal-dream/validate",
+      "line": 13
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./fragrant-pair-seer/validate",
+      "target": "backend/src/verification/reproduction/fragrant-pair-seer/validate",
+      "line": 14
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./noble-secret-body/validate",
+      "target": "backend/src/verification/reproduction/noble-secret-body/validate",
+      "line": 15
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./demon-hunter/validate",
+      "target": "backend/src/verification/reproduction/demon-hunter/validate",
+      "line": 16
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./mist-raven/validate",
+      "target": "backend/src/verification/reproduction/mist-raven/validate",
+      "line": 18
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sourceSHA": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "form": "named-or-namespace-import",
+      "specifier": "./radiant-eclipse/validate",
+      "target": "backend/src/verification/reproduction/radiant-eclipse/validate",
+      "line": 19
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/incremental-settlement-forgery.test.ts",
+      "sourceSHA": "fa04b58c45605d4000481ec11a568999aa2c1b1938f0b21927fdae67a7028647",
+      "form": "named-or-namespace-import",
+      "specifier": "../../../../src/verification/reproduction/mist-raven/validate",
+      "target": "backend/src/verification/reproduction/mist-raven/validate",
+      "line": 11
+    }
+  ],
+  "limits": [
+    "当前四代码目录TS全部字面named/namespace/reexport/importType/dynamic import/require；任意computed路径不作穷尽声明。",
+    "本批完整16叶唯一迁移；四实际外部consumer，格式/writer不迁。"
+  ]
+}

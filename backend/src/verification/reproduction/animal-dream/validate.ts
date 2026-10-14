@@ -1,12 +1,15 @@
 /**
- * 独立验证动物梦境的行动、票型和死亡证据。输入为规范板子与已记录因果前缀；输出为一致性检查，档案证据无效时抛错，不调用 live 效果／投票／死亡结算或取得其资源。
+ * 负责独立验证动物梦境的行动、票型、死亡与玩家知情前缀。
+ * 输入为规范板子、已记录决定／事件与 checkpoint；输出为原一致性结果或明确拒绝。
+ * 原动物状态、死亡准备 和投票账本在本地重建，不调用 live World／效果／投票／死亡结算。
+ * 归档事实不授予真实资源或公开许可，完整事件次序、未完成前缀和首失败政策保持。
  */
-import { animalFeedAt } from "./animal_dream_feed_record";
+import { animalFeedAt } from "./feed-evidence";
 import { isDeepStrictEqual as equal } from "node:util";
 import { ANIMAL_DREAM_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
-import { isAnimalDreamPreset } from "../verification/board-support";
+import { isAnimalDreamPreset } from "../../board-support";
 import { ANIMAL_DREAM_POLICY as policy } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord } from "./reproduction";
+import type { ReproductionRecord } from "../../../recording/reproduction";
 function check(value: unknown): asserts value {
   if (!value) throw Error("reproduction_animal_dream_invalid");
 }

@@ -1,0 +1,97 @@
+{
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/validate.ts",
+      "sha256": "31cf0b7ac4fc31bee3b7d045eae7fa25fb24d739be85487b55278a5303ab1da1"
+    },
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/feed-evidence.ts",
+      "sha256": "d451d6a51bce9a867963b08ba5d1e38861f0d2180ed53c2de0ec2d039595c489"
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+      "sha256": "0f1259fa6f4b68e2236ce9cfe5b1f34c8a8f6ed43554730e16ae5b0fb9a97ebc"
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/feed-evidence.ts",
+      "sha256": "2415481f95f9e28fbbcda6409f4d63c2c18e7556b7c154e2e4b8fba3eb271d3b"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/validate.ts",
+      "sha256": "b0136c8e9943eb90759637d9da58660ae82a5298c58f3efe42a0de7933e0118c"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/requests.ts",
+      "sha256": "5454c13554243eace8813e5bcf969062951362338cf6eaf51eec84739b3e7020"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/feed-evidence.ts",
+      "sha256": "cd7a05ea722468c4e5685c3ad0d39fe1549923c8f5739c229e759eef82f3c6a0"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+      "sha256": "f527ecb32b50b05954382f89e44dc82d75960929ee3a72a1be1dbd693eba4d4f"
+    },
+    {
+      "path": "backend/src/verification/reproduction/ghost-bride/validate.ts",
+      "sha256": "7835f9fe745288551bfe1c8ecf01c0ab766c6c8711f07c78fa2c5505aedc74b7"
+    },
+    {
+      "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "sha256": "98c4a274df22d6d5ec32462bc9257c8110f3af588fc0a9a9f08c7668e946464d"
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/validate.ts",
+      "sha256": "0590d5ceadad49ab5fcd663300218a6a9da14e0b4925d848b1329ef88688d999"
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/native-stocks.ts",
+      "sha256": "b44df797f639f7e5f675627fbf0db7d549f9ba75a4ac74a0cf11ac4c3675c971"
+    },
+    {
+      "path": "backend/src/verification/reproduction/red-moon/validate.ts",
+      "sha256": "41e46117e6e447af1335ffbeaa7e80d7fb42e54ca051f0af4835e9d09e3e9260"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/validate.ts",
+      "sha256": "ebf7056d3825abbc69a00c89f9f552e95b2ba60adf595dd3a41e86090baa8076"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "sha256": "10e22117d3a7a88622bc2f9e8a311545a1f35a7372ccf47a1aa0bdbcf23b1140"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/night-request-prefix.ts",
+      "sha256": "275d535690a7c5d5e904bd72207f8adf57933fe221a07f32c60b7be7061a8924"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mist-raven/reproduction.test.ts",
+      "sha256": "8c50916711b54c71161493b39b497a608780ab200c36d277d71ab76cd53c60e7"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/incremental-settlement-forgery.test.ts",
+      "sha256": "fa04b58c45605d4000481ec11a568999aa2c1b1938f0b21927fdae67a7028647"
+    },
+    {
+      "path": "backend/tests/unit/recording/red-moon-record.test.ts",
+      "sha256": "ae1af93080a2c842902b9c5a782fd2bc6d7e1645a458080c25517eb3105045f1"
+    }
+  ],
+  "documentationPathCount": 500,
+  "diagnostics": [
+    {
+      "id": "4ee19c5f0bfd5e22ded54e3f5f793ab3056083a16f60ac899ca8020082f97026",
+      "rule": "comment.invariant",
+      "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "lifecycle head lacks its invariant contract."
+    }
+  ],
+  "missingChineseHead": [],
+  "limit": "职责词项与中文首头检查只覆盖现行二十个候选，旧删除叶不作为存在输入；检查不修改注释，具体内容仍交独立审查。"
+}

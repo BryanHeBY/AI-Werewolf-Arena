@@ -5,7 +5,7 @@
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
 import { Role, Camp, Phase } from "@ai-werewolf-arena/game-contract";
-import type { RecordedDecision, ReproductionRecord } from "./reproduction";
+import type { RecordedDecision, ReproductionRecord } from "../../../recording/reproduction";
 const strictStages = {
   alchemist_mist: "cast_mist",
   dreamer: "dream",

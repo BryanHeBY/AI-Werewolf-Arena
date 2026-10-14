@@ -1,13 +1,13 @@
 /**
- * Scenario tests consume complete Mist/Raven recordings and deliberate copied Tape/checkpoint mutations.
- * Inputs are the original four variants and both locales; handwritten deaths, snake/raven choices, unsealing knowledge and rejection assertions are the independent oracle.
- * The recording driver owns execution and filesystem resources. Mutations affect only detached records, never archived fixture bytes or the original running authority.
+ * 场景测试消费雾鸦完整录制与仅在副本中的 Tape／checkpoint 篡改。
+ * 输入为原四变体和两语言；手写死亡、蛇／鸦爪选择、解封知识与拒绝断言构成独立预期。
+ * 录制驱动拥有执行和文件资源，变体只改脱离副本，不覆盖原归档或真实运行权威。
  */
 import { expect, test } from "bun:test";
 import { Camp } from "../../../../src/core";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
-import { validateMistRavenRecord } from "../../../../src/recording/mist_raven_record";
+import { validateMistRavenRecord } from "../../../../src/verification/reproduction/mist-raven/validate";
 for (const variant of ["linked", "saved-dreamer", "protected-heal", "draw"] as const)
   for (const locale of ["en", "zh-CN"] as const)
     test(`Mist/Raven complete independent native ledger and exact Tape replay ${variant}/${locale}`, async () => {

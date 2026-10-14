@@ -4,18 +4,18 @@
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import { fragrantFeedAt } from "./fragrant_pair_seer_feed_record";
-import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
-import { sanitizeSpeechText } from "../utils/speech_text";
+import { fragrantFeedAt } from "./feed-evidence";
+import { createMistSheriffEvidence } from "../mist-raven/sheriff-evidence";
+import { sanitizeSpeechText } from "../../../utils/speech_text";
 import {
   FRAGRANT_PAIR_POLICY,
   FRAGRANT_PAIR_EVENT_TYPES,
   readFragrantPairFact,
 } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
-import { isFragrantPairSeerPreset } from "../verification/board-support";
+import { isFragrantPairSeerPreset } from "../../board-support";
 import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from "./reproduction";
-import type { RecordedFragrantState } from "./fragrant_pair_seer_checkpoint";
+import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from "../../../recording/reproduction";
+import type { RecordedFragrantState } from "../../../recording/fragrant_pair_seer_checkpoint";
 
 function check(v: unknown): asserts v {
   if (!v) throw Error("reproduction_fragrant_pair_invalid");
@@ -334,6 +334,8 @@ export function validateFragrantPairRecord(r: ReproductionRecord): void {
       state.known.used = true;
     }
   };
+  // eventCount、decisionCount、settlementCount 分别限定同一已发表位置；
+  // pending 请求不能被完整归档尾段的成功状态补齐。
   const checkpoint = (cp: RecordedCheckpoint) => {
     check(
       cp.fragrantPair &&

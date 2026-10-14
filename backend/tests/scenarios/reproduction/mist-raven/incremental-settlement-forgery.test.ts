@@ -8,7 +8,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
-import { validateMistRavenRecord } from "../../../../src/recording/mist_raven_record";
+import { validateMistRavenRecord } from "../../../../src/verification/reproduction/mist-raven/validate";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import { mistBoard, MIST_ROLES } from "../../../support/features/mist-raven/builders/board";

@@ -1,12 +1,12 @@
 /**
- * 负责独立审核雾鸦警长选举、退水和逐轮票型。输入为归档配置、决定、事实与 checkpoint；
+ * 负责雾鸦、寻香、贵族和光蚀有限板子共享的独立警长选举证据；输入为归档决定和事件时点。
  * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
 import { Phase } from "@ai-werewolf-arena/game-contract";
-import type { RecordedGameEvent, ReproductionRecord } from "./reproduction";
-import { check, equal } from "./mist_raven_requests";
+import type { RecordedGameEvent, ReproductionRecord } from "../../../recording/reproduction";
+import { check, equal } from "./requests";
 
 /** 此有限板子的警长选举证据，不复用放逐票或狼刀票的计票过程。 */
 export function createMistSheriffEvidence(record: ReproductionRecord) {
@@ -17,6 +17,8 @@ export function createMistSheriffEvidence(record: ReproductionRecord) {
     round = 1,
     winner: number | null = null,
     leaders: number[] = [];
+  // 提名／退水与每轮票分别累计；仅原 PK 事件清空旧 ballots 并切至第二轮，
+  // 不借放逐票或狼刀票账本推导警长当选，也不改变原回复读取次数。
   const declarations: number[] = [],
     withdrawals: number[] = [],
     ballots: Array<{ actorId: number; targetId: number | null; abstain: boolean }> = [];

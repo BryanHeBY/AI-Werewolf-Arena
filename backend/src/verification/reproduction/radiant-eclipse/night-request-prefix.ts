@@ -1,18 +1,24 @@
-import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "./reproduction";
-import { Role, Camp } from "../core/domain/identity";
+/**
+ * 负责独立重建光蚀夜请求的串行发表前缀。输入为原归档、日次、起始库存与席位；
+ * 输出为带 release 次序的历史事实，沿原决定逐步核验而不执行实际夜阶段。
+ * 失败／未完成前置只能结束当前前缀，不能开放后继；此账本不授予 live 许可或付款。
+ * 原角色查询、能力副本字段及错误顺序保持，类型和值依赖仍由本族具体叶拥有。
+ */
+import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "../../../recording/reproduction";
+import { Role, Camp } from "../../../core/domain/identity";
 import {
   radiantCheck as check,
   radiantEqual as equal,
   radiantBorrow,
   type RadiantAbility,
   type RadiantNightEvidence,
-} from "./radiant_eclipse_record";
-import { sanitizeSpeechText } from "../utils/speech_text";
+} from "./validate";
+import { sanitizeSpeechText } from "../../../utils/speech_text";
 export interface RadiantReleasedFact {
   event: Omit<RecordedGameEvent, "timestamp">;
   release: number;
 }
-/** A serial, independently calculated request prefix. Invalid/unfinished predecessors cannot open successors. */
+/** 独立按序计算请求发表前缀；无效或未完成的前置不产生后继资格。 */
 export function radiantNightRequestPrefix(
   record: ReproductionRecord,
   day: number,
@@ -44,6 +50,8 @@ export function radiantNightRequestPrefix(
       release,
     });
   emit("phase_changed", { phase: "night", day }, lastRelease);
+  // 原决定按 cursor 消费；合法结束更新 release，pending／error／非法原回复
+  // 必须是归档尾项并停止。只验证记录次序，不替阶段发起请求或标记付款。
   const step = (
     stage: string,
     id: number,

@@ -1,0 +1,34 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/animal-dream/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/animal-dream/feed-evidence.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/fragrant-pair-seer/feed-evidence.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/mist-raven/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/mist-raven/requests.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/mist-raven/feed-evidence.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/ghost-bride/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/noble-secret-body/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/demon-hunter/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/demon-hunter/native-stocks.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/red-moon/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/radiant-eclipse/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/radiant-eclipse/night-request-prefix.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/assembly.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/mist-raven/reproduction.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/reproduction/mist-raven/incremental-settlement-forgery.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/recording/red-moon-record.test.ts"
+  ],
+  "exclude": []
+}

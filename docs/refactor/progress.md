@@ -658,3 +658,5 @@
 - I10/P7 选择与后续效果归档核验归属：定序王子、蚀时狼妃、学者／导师三份完整独立算法共1,862行迁入verification/reproduction，三个recording旧叶删除，装配及三个真实场景只改导入。十路径经Root与独立全文/中文语义审；十四路线、十二准确注释完整逆回实际e601七原源，22,366节点/14原输出/102绑定与九control保持，七根有限类型实际终态0。所有样本、标题和断言不变，未重复运行测试；共享checkpoint格式、实际录制与其它核验族保原owner。全P7/P8继续，见 choice-effect-verifier-owners.md。
 
 - C17 夜能力授予／复制／转移：完整四声明归night-ability-grants，原roleOf/emit两实现由授予和metadata共同消费，旧叶退休三个grant API，机制公共出口保原符号。40源码经Root与独立全源/中文语义审，原36实际0ed来源与后继Seer874单consumer分层；35真实consumer44bindings、metadata六命令、12原state/schema/stock/lifecycle控制源保持。新4例22断言与原transfer1例6断言一次各过，原Lucky漏COMPONENT真失败后恢复原导入仅重failed例5断言，六不同成功case共33；有限40根真实d3897b终0。两商人已跳过事实中文精度通过2整程序/4输出末桥修闭，保原Green采样时点不伪重。完整角色schema/codec与阶段验收继续，见 night-ability-grants-owner.md。
+
+- I10/P7 剩余独立归档核验完整归属：16叶（8完整verifier＋8helper，原9,838行）迁verification/reproduction，36路径含20现行及16删除。Root与独立审核真实eed20before、65路线/26有效中文说明完整逆全文同、九control保；Noble audit同ref→Demon→RedMoon/stocks原时点、Radiant原三叶值环/底import和共享sheriff四消费者保。原20程序79,246节点/40原输出、221绑定（212内部/9外部身份）核真；20根类型首f5b887/0，头19通过只重失败单根，四comment精度末桥八输出至final不伪重绿。本批tests0；三checkpoint格式和真实录制留recording，无旧路径桥，物理归属收口不代表全P7/P8兼容与P9验收，见 remaining-reproduction-verifier-owners.md。

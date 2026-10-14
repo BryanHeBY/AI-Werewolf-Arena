@@ -1,16 +1,16 @@
 /**
- * 负责独立审核红月延迟、转换与胜利前缀。输入为归档配置、决定、事实与 checkpoint；
+ * 负责独立审核赤月使徒延迟、转换与胜利前缀。输入为归档配置、决定、事实与 checkpoint；
  * 输出为独立重建的审计结果或原拒绝，原纯数据推导、迭代与第一失败顺序保持。
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import { isRedMoonPreset } from "../verification/board-support";
+import { isRedMoonPreset } from "../../board-support";
 import {
   readRedMoonNextNightFact,
   readRedMoonExpiryFact,
 } from "@ai-werewolf-arena/game-contract/facts/red-moon";
 import { Camp, Role, Phase, DeathCause } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord } from "./reproduction";
+import type { ReproductionRecord } from "../../../recording/reproduction";
 const roleId = "red_moon_apostle";
 const factTypes = new Set([
   "red_moon_night_sealed",
@@ -24,6 +24,7 @@ interface State {
   exileDay: number | null;
   expirySettled: boolean;
 }
+/** 事件位置的独立迁移证据供原生库存核验消费；readonly 类型不等于冻结 Set／Map。 */
 export interface RedMoonRecordAudit {
   sealedNights: ReadonlySet<number>;
   expiredNights: ReadonlyMap<number, number>;

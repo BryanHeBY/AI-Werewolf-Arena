@@ -1,12 +1,13 @@
 /**
- * Responsibility: read animal-dream facts from recorded publication prefixes.
- * Input: a reproduction record and evidence position.
- * Output: detached historical feed data.
- * Boundary: archive reads never authorize a live audience or mutate domain state.
+ * 负责独立重建动物梦境的历史可见事件。输入为归档、发表游标和观察者序号；
+ * 输出为脱离原 payload 的历史 feed，序号只按该玩家可见项目累计。
+ * 本族私有事实核本人和原 audience；vote_summary 去掉 tally，其它可见性保原逐类判断。
+ * 不调用引擎 feed 或授予 live 披露，也不将归档受众当真实运行权限。
+ * 本族读器只计算有限板子预期，不能修改关系、库存或历史来源。
  */
 import { ANIMAL_DREAM_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
-import type { ReproductionRecord } from "./reproduction";
-/** Literal finite-board authorization/projection oracle, independent of the engine feed. */
+import type { ReproductionRecord } from "../../../recording/reproduction";
+/** 独立的有限板子可见性预期：只读归档前缀，不复用生产授权／投影器。 */
 export function animalFeedAt(r: ReproductionRecord, cursor: number, actor: number): unknown[] {
   const publicTypes = new Set([
       "animal_cat_revealed",
@@ -39,6 +40,7 @@ export function animalFeedAt(r: ReproductionRecord, cursor: number, actor: numbe
       "wolf_kill_vote_cast",
     ]);
   const out: unknown[] = [];
+  // 只处理已发表前缀；不可见事实不占该玩家的 seq，保原 clone／字段裁剪顺序。
   for (const e of r.events.slice(0, cursor)) {
     const p = e.payload;
     let payload: Record<string, unknown> | null = null,

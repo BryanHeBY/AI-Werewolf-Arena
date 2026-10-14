@@ -1,0 +1,50 @@
+{
+  "approved": true,
+  "results": [
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/validate.ts",
+      "beforeSHA": "31cf0b7ac4fc31bee3b7d045eae7fa25fb24d739be85487b55278a5303ab1da1",
+      "afterSHA": "be443d67dfa75d9ff8dc28e978f7799fc8302704cc9e9bb39421fcc1a26365b5",
+      "exactOnlyDeclaredCommentDelta": true,
+      "noncommentLeaves": 7805,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "9227ac0a0ee08df452baf83621df4ca0918f756496e5c57649ef683d806d599d",
+          "afterSHA": "9227ac0a0ee08df452baf83621df4ca0918f756496e5c57649ef683d806d599d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "34e541456c34cdadf6964ae4a4177fcd097bf983a5a9dc9f2b2c5cf7533f7458",
+          "afterSHA": "34e541456c34cdadf6964ae4a4177fcd097bf983a5a9dc9f2b2c5cf7533f7458"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/validate.ts",
+      "beforeSHA": "0590d5ceadad49ab5fcd663300218a6a9da14e0b4925d848b1329ef88688d999",
+      "afterSHA": "36d104e3879c4351d38a81dec571af718412d4da5eca8707585380b04045cf0a",
+      "exactOnlyDeclaredCommentDelta": true,
+      "noncommentLeaves": 4045,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "8a5ad82049f7abbe750045a6384ef118f699283be8aac16dc8f52791676665b1",
+          "afterSHA": "8a5ad82049f7abbe750045a6384ef118f699283be8aac16dc8f52791676665b1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "21cabf0125cd668bec7d60c60804b1530234196cbedbc20c1de599b43e109609",
+          "afterSHA": "21cabf0125cd668bec7d60c60804b1530234196cbedbc20c1de599b43e109609"
+        }
+      ]
+    }
+  ],
+  "limit": "仅两中文说明精度；4整程序输出与全部字面叶，无types/head/tests重复。原20全程序证明保prefinal sourceSHA，由此桥接末两comment。"
+}

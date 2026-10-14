@@ -4,16 +4,16 @@
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
-import { isNobleSecretBodyPreset } from "../verification/board-support";
+import { createMistSheriffEvidence } from "../mist-raven/sheriff-evidence";
+import { isNobleSecretBodyPreset } from "../../board-support";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
 } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { Role, Camp, Phase } from "@ai-werewolf-arena/game-contract";
-import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "./reproduction";
-import type { RecordedNobleBodyState } from "./noble_secret_body_checkpoint";
-import { sanitizeSpeechText } from "../utils/speech_text";
+import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "../../../recording/reproduction";
+import type { RecordedNobleBodyState } from "../../../recording/noble_secret_body_checkpoint";
+import { sanitizeSpeechText } from "../../../utils/speech_text";
 export function nobleRecordCheck(v: unknown): asserts v {
   if (!v) throw Error("reproduction_noble_secret_body_invalid");
 }
@@ -50,6 +50,7 @@ export interface NobleNightAudit {
   blocked: { targetId: number; cause: string } | null;
   final: Sources;
 }
+/** 交给猎魔人核验的独立审计数据；at 按原 checkpoint identity 取历史副本，nights 保原 Map 写性。 */
 export interface NobleRecordAudit {
   at: (cp: RecordedCheckpoint) => RecordedNobleBodyState;
   nights: Map<number, NobleNightAudit>;
