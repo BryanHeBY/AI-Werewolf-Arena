@@ -1,0 +1,289 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "baseCommit": "065d1d6a315bdedd6c4c58e80e682084974de6b6",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+      "sha256": "2168ecd66f1071039957d3651b259ef536b0c287daabeec7bd7d8cf23b424fbc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+      "sha256": "8cc4f6293d42fdee2dc32f8b645f68e3977a2798f7d25451492d767dbc0d4ed0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+      "sha256": "99d34436d3495787707c462766d4796da6cff83d0bd0ba083b44a58c2af17831"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "f3af4cafaf78b2a526d2f4b864e5499e1c4b60118047c1731ebe3025ea0ef4ad"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "sha256": "1e9cc158f67ba9d32b1f56f8e86d43552aae7c4a06fd5bfb04a7cecd2df5647e"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/exchange-interaction-public-ports-scope-final.json",
+    "sha256": "2eed97f0145bb5ade98c47ac35aa4c1992d6abb43ee6f38b9380fa4342760864"
+  },
+  "document": {
+    "path": "docs/refactor/exchange-interaction-public-ports.md",
+    "sha256": "a4499c4a6d36e9464a5561e6df3606dfb519b93969bb9e3e89c820ebc9ada00e"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/exchange-interaction-public-ports-evidence.json",
+    "sha256": "6ea9ca75a0668ae56c6b7d5017524a781013d58d11ac82bb77b06562ea94e41f"
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "sha256": "ff5403c7c21d76416403561d0379b25dcaa239dbfb40cef01d6800e63194515c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts",
+      "sha256": "c2ba07a5a689a47f0f7316e62d97cb0f944c8ad0d3323540b7b76b29e6337dbe"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "sha256": "c4d7cc002c3ee614dba1735d56cf3ef4ccc464f5a69c2b8aa7ffd48a1ca1a574"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+      "sha256": "40bc6486a0fa337dfa6fc7bf239c359c95e6b58d7ab77148b3040dabdb5ebe15"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+      "sha256": "89a96ec1eca62bac39d8a8b051154a03b9108557cb1659d11f2b96094a44c816"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "sha256": "6ab2376f5ab03eeaa31b9fc15ed984001f3577db0383fe8c108751a39f4dc07a"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster/state.test.ts",
+      "sha256": "f29caa20cace01e569549039dbe6299f0a25d2b428eb187133b58fb577917791"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "sha256": "48519be644d70709f05afb1f997184f8c59ebc9a35244741e7ff1e17e9f3d6d7"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-before.json",
+      "sha256": "8a7d8bf4885c5e2f4b12cd83a7e46b5b647842a50d25c43c8060f530450d698d"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-cancel-output.txt",
+      "sha256": "fa3f361e56537aaaecf3c31fd325c4fd681a15e5db432ad5ffa566264a7db547"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-diff-document-precision.json",
+      "sha256": "3632077ff4fa347f26b41093708d0b8dc141ee85019b79431fd303e22b575791"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-edits.json",
+      "sha256": "7f0d7cb2586a9d7bf9e7115b10cb8e4b0f167d31aae063ecb697659c6fab43d9"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-first-source.json",
+      "sha256": "f10933cbbabb109737011386b33c3c5c97a75230a3caab2d4895f57c03673b15"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-heads-output.txt",
+      "sha256": "ebd3a7f2a56a3ebca6964de58719a0e7bfab8780430436daa5e881b53e666801"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-heads.json",
+      "sha256": "0253711c710e405afae72b6b5d6859c427043188762bc4b993a60c4fda072654"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-heads.ts",
+      "sha256": "dd93248738c7ddd831cef1d22ffb7b0c84038fe470e14e6f76135d5c33bc0dd7"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-intermediate-output.txt",
+      "sha256": "9abbbb96e30de25efd2e13814d4220193eddeb77d2e3e7dabc52285f56d13a34"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-matching-output.txt",
+      "sha256": "9b433c39a9e3824f57dd8d45e614c2e5886d00cdf8a59e4134dedecfb775753d"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-paths.json",
+      "sha256": "dbdb1d2e6919c0e66c0a88c635429731913b28485f4ba96a368927232a386356"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-proof-output.txt",
+      "sha256": "2b101c35be513b148886d20d744afcad8448d7148a5ffeee4f621b37e340dbe5"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-proof.cjs",
+      "sha256": "783ef7579ac37db2caf0624dc5c82187f2c430653eb75aefde463e24e274b132"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-proof.json",
+      "sha256": "ee1b35e4e0d9b4475da2983f2cc954803f4351a3857f523a7bddc42a2a96f45a"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-receipts.json",
+      "sha256": "30b8e42cbec085a5a85b1f86601ad5162b0dc1bc9ddbd1b5096b01ec0b8ceef7"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-source-ready.json",
+      "sha256": "e13c1311de806184e4c5136946f03a7fb96d111c06826e65413bd02b9126cb18"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-types-config.json",
+      "sha256": "d19b825e2631b2e15b8369b018f69c3952c96ff5574a78c24d49925bd70ca75c"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-interaction-public-ports-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "findings": [],
+  "independentRead": {
+    "source": "完整三facet、Magician frame、Trickster stage、两个真实before全文与六精确编辑、原WolfSorcerer frame/Trickster exile_mapping及三风险正文、执行脚本/报告/日志/收据。",
+    "semantics": [
+      "目标原life/identity/角色/camp/容器与JSON当前性仍由各原frame校验；公共端口不重建stock、night、scope或current。",
+      "Magician在原点先isWolfSorcererBoard再W(raw)并用original/intermediate原policy，随后M；death_shot中间占有者可死的原接受面保留。",
+      "matchingExchangePairs先normalized(a)再normalized(b)；Proxy/数组descriptor/号码校验与首错误原样。",
+      "Trickster先provider await、原体与gateway复验、commit历史、发表私密事实，再调用Magician取消；true才取消本方映射，不退原号码/历史。",
+      "Magician取消仍requireBoard→night/day/closed/committed→pair/匹配→pair=null，无新lease/guard/退款。",
+      "三个直接reexport叶均无顶层业务调用/时钟捕获/终结表；原静态值依赖循环拓扑保留，经纯facets折叠有序边与DFS证据范围准确。"
+    ],
+    "chinese": "五头和三新增重要逻辑注释均符合实际读序、写权、失败前缀，无CNfinding；初稿Trickster头负责用语在首checks前修正，不伪造后继green。"
+  },
+  "integrity": {
+    "actualGitBefore": 2,
+    "actualGitNewAbsent": 3,
+    "fresh": 5,
+    "controls": 8,
+    "artifacts": 18,
+    "wholeEdits": [
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+        "exactEdits": 4,
+        "wholeForwardInverse": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+        "exactEdits": 2,
+        "wholeForwardInverse": true
+      }
+    ],
+    "initialHeadPrecision": {
+      "sourceReadySnapshot": "docs/refactor/generated/exchange-interaction-public-ports-source-ready.json",
+      "firstChecksSnapshot": "docs/refactor/generated/exchange-interaction-public-ports-first-source.json",
+      "onlyOneCommentBeforeAnyCheck": true,
+      "noPostCheckSourceChange": true
+    },
+    "mismatches": 0,
+    "orderedScopeSourceSame": true
+  },
+  "authorEvidenceRead": {
+    "proof": "a3d98a / session32271 →36ab3a / actual exit0",
+    "proofSummary": {
+      "sourcePaths": 5,
+      "wholePrograms": 2,
+      "exactEdits": 6,
+      "routes": 3,
+      "facetExports": 4,
+      "consumerImports": 4,
+      "actualFunctionBindings": 8,
+      "cumulativeTypedComparisons": 5668,
+      "cumulativeASTLeaves": 2976,
+      "inverseRawOutputs": 4,
+      "actualMappedRawOutputs": 4
+    },
+    "mappedOutputPrecision": "4完整逆输出同；另4实际输出仅原route及真实CJS编译器namespace identifiers精确映射后同，实际4raw本身不同，不冒未经映射的字节同。",
+    "cumulativeCountPrecision": "5668typed/2976AST叶是两边遍历累计比较，作者MD明确非unique source计数。",
+    "graph": {
+      "baseCommit": "065d1d6a315bdedd6c4c58e80e682084974de6b6",
+      "oldModules": 43,
+      "newModules": 46,
+      "oldEdges": 87,
+      "newEdges": 90,
+      "foldedOrderedEdgesSame": true,
+      "oldFirstVisitOrderSame": true,
+      "additionalModules": [
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+          "target": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+          "target": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+          "target": "backend/src/game/mechanisms/roles/magician/night_frame.ts"
+        }
+      ],
+      "originalSourceIdentityDigest": "e8115f5ea44c6c0fb63a6732cdcd59fb0701b4d24e5d0058055cda62b11b6c62",
+      "scope": "Fixed public backend Git plus this five-source overlay only; package external endpoints unchanged, function dynamic/require not initialization edges; no production execution."
+    },
+    "types": "7a2951 / session57557 →9dcdc8 / actual exit0, finite5",
+    "heads": "52a7f9 / actual exit0, five sources/684tracked docs",
+    "risks": [
+      {
+        "receipt": "efcdf5",
+        "exitCode": 0,
+        "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+        "title": "A dead intermediate seat occupant does not prevent reaching the living final occupant",
+        "pass": 1,
+        "fail": 0,
+        "assertions": 3,
+        "filtered": 8,
+        "log": "docs/refactor/generated/exchange-interaction-public-ports-intermediate-output.txt"
+      },
+      {
+        "receipt": "26de9b",
+        "exitCode": 0,
+        "path": "backend/tests/unit/features/trickster/state.test.ts",
+        "title": "identical unordered pairs cancel effects without mutating spent history",
+        "pass": 1,
+        "fail": 0,
+        "assertions": 5,
+        "filtered": 14,
+        "log": "docs/refactor/generated/exchange-interaction-public-ports-matching-output.txt"
+      },
+      {
+        "receipt": "e33096",
+        "exitCode": 0,
+        "path": "backend/tests/unit/features/trickster-combination.test.ts",
+        "title": "identical unordered pair cancels both outputs and preserves both histories",
+        "pass": 1,
+        "fail": 0,
+        "assertions": 7,
+        "filtered": 3,
+        "log": "docs/refactor/generated/exchange-interaction-public-ports-cancel-output.txt"
+      }
+    ],
+    "coverage": {
+      "distinctCases": 3,
+      "assertions": 15,
+      "executions": 3,
+      "greenRepeat": false
+    },
+    "toolRed": "97fbd1是附带只读数组元数据误按对象取，ef1b17按原wire更正；无产品/check红、无源改或绿重跑。"
+  },
+  "limitations": [
+    "本审查只读actual source/Git/原函体/证据并写此review，没有运行任何作者proof/graph/head/type/test、生产冷加载、模型或全gate。",
+    "新增公共module路径与namespace/property descriptor/API形状真实不同，不承诺任意CJS重绑定/反射/全局built-in monkeypatch。",
+    "图为固定065d＋五源overlay的相对静态value依赖，包外部终点/函数内dynamic/require限制准确，不冒全历史实际初始化跟踪。",
+    "类型/风险收据是source-ready联合工作树必要范围，不据此宣称全机制、所有生命周期或P9完成。",
+    "没有代码/政策/原测试输入与oracle更改；其它作者Inspection/HuntDream/runtime-config不纳此source scope。"
+  ],
+  "docOnlyPrecision": {
+    "path": "docs/refactor/generated/exchange-interaction-public-ports-diff-document-precision.json",
+    "sha256": "3632077ff4fa347f26b41093708d0b8dc141ee85019b79431fd303e22b575791",
+    "description": "作者主动限定Git diff五路径过滤仅实际检查两tracked consumer；新三叶另由完整parse/直接导出/端点/程序证明覆盖。仅MD单句与receipts diffCheck metadata变，源码及其它16原artifact不变，不重复任何check。",
+    "beforeScopeSha256": "f65ea5d042d1258e7da44a406dbd136e3438d34eeca6be7dbd8c53ed850c078e",
+    "sourceBytesUnchanged": true
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "approved": true,
+  "baseCommit": "065d1d6a315bdedd6c4c58e80e682084974de6b6",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+      "sha256": "2168ecd66f1071039957d3651b259ef536b0c287daabeec7bd7d8cf23b424fbc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+      "sha256": "8cc4f6293d42fdee2dc32f8b645f68e3977a2798f7d25451492d767dbc0d4ed0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+      "sha256": "99d34436d3495787707c462766d4796da6cff83d0bd0ba083b44a58c2af17831"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "f3af4cafaf78b2a526d2f4b864e5499e1c4b60118047c1731ebe3025ea0ef4ad"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "sha256": "1e9cc158f67ba9d32b1f56f8e86d43552aae7c4a06fd5bfb04a7cecd2df5647e"
+    }
+  ],
+  "deleted": [],
+  "programs": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "beforeSha256": "ed57d13be59680398cfc96aa59e2aa46bc8d390131630d36dd93be6f48614f8d",
+      "afterSha256": "f3af4cafaf78b2a526d2f4b864e5499e1c4b60118047c1731ebe3025ea0ef4ad",
+      "wholeExactForwardInverse": true,
+      "completeActualProgramOnlyRoutesAndComments": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeInverseRawSame": true,
+          "actualRoutesAndEmittedNamespaceMappedWholeSame": true,
+          "emittedNamespaceRenames": [],
+          "actualWholeSame": false,
+          "actualSha256": "250f072256e360f81f5de11ef454b8631036f9e30f8083f3fba5d11c0ba18102"
+        },
+        {
+          "module": "CommonJS",
+          "completeInverseRawSame": true,
+          "actualRoutesAndEmittedNamespaceMappedWholeSame": true,
+          "emittedNamespaceRenames": [
+            {
+              "actual": "exchange_ports_1",
+              "original": "night_frame_1"
+            },
+            {
+              "actual": "exchange_ports_2",
+              "original": "exile_mapping_1"
+            }
+          ],
+          "actualWholeSame": false,
+          "actualSha256": "853cde9424938543d66794556e5d510e1d1de866e5514a6fa5a16744b7fa66d3"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "beforeSha256": "9291daf1eeca8fd7ebb9a57ab5be659edb4f92a1aefb7928bba0510c95b5e141",
+      "afterSha256": "1e9cc158f67ba9d32b1f56f8e86d43552aae7c4a06fd5bfb04a7cecd2df5647e",
+      "wholeExactForwardInverse": true,
+      "completeActualProgramOnlyRoutesAndComments": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeInverseRawSame": true,
+          "actualRoutesAndEmittedNamespaceMappedWholeSame": true,
+          "emittedNamespaceRenames": [],
+          "actualWholeSame": false,
+          "actualSha256": "751a25d45c23da2e64cf9166a3b7224e667c9b9b1f07466f02c9e90ae5b44667"
+        },
+        {
+          "module": "CommonJS",
+          "completeInverseRawSame": true,
+          "actualRoutesAndEmittedNamespaceMappedWholeSame": true,
+          "emittedNamespaceRenames": [
+            {
+              "actual": "exchange_ports_1",
+              "original": "night_frame_2"
+            }
+          ],
+          "actualWholeSame": false,
+          "actualSha256": "d7f38bdbce7245771ac8ac27c1abf7e1d08d2ec70f07ef4d72fc3f38961ff57c"
+        }
+      ]
+    }
+  ],
+  "facets": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+      "sha256": "2168ecd66f1071039957d3651b259ef536b0c287daabeec7bd7d8cf23b424fbc",
+      "target": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "names": [
+        "isWolfSorcererBoard",
+        "resolveWolfSorcererNightTarget"
+      ],
+      "onlyNamedExport": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+      "sha256": "8cc4f6293d42fdee2dc32f8b645f68e3977a2798f7d25451492d767dbc0d4ed0",
+      "target": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts",
+      "names": [
+        "matchingExchangePairs"
+      ],
+      "onlyNamedExport": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+      "sha256": "99d34436d3495787707c462766d4796da6cff83d0bd0ba083b44a58c2af17831",
+      "target": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "names": [
+        "cancelMagicianExchangeIfMatching"
+      ],
+      "onlyNamedExport": true
+    }
+  ],
+  "bindings": [
+    {
+      "consumer": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+      "name": "isWolfSorcererBoard",
+      "endpoint": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "kind": "actualOriginalFunctionDeclaration"
+    },
+    {
+      "consumer": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+      "name": "resolveWolfSorcererNightTarget",
+      "endpoint": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "kind": "actualOriginalFunctionDeclaration"
+    },
+    {
+      "consumer": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+      "name": "matchingExchangePairs",
+      "endpoint": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts",
+      "kind": "actualOriginalFunctionDeclaration"
+    },
+    {
+      "consumer": "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+      "name": "cancelMagicianExchangeIfMatching",
+      "endpoint": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "kind": "actualOriginalFunctionDeclaration"
+    },
+    {
+      "consumer": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "name": "isWolfSorcererBoard",
+      "endpoint": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "kind": "actualOriginalFunctionDeclaration"
+    },
+    {
+      "consumer": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "name": "resolveWolfSorcererNightTarget",
+      "endpoint": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "kind": "actualOriginalFunctionDeclaration"
+    },
+    {
+      "consumer": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "name": "matchingExchangePairs",
+      "endpoint": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts",
+      "kind": "actualOriginalFunctionDeclaration"
+    },
+    {
+      "consumer": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "name": "cancelMagicianExchangeIfMatching",
+      "endpoint": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "kind": "actualOriginalFunctionDeclaration"
+    }
+  ],
+  "graph": {
+    "baseCommit": "065d1d6a315bdedd6c4c58e80e682084974de6b6",
+    "oldModules": 43,
+    "newModules": 46,
+    "oldEdges": 87,
+    "newEdges": 90,
+    "foldedOrderedEdgesSame": true,
+    "oldFirstVisitOrderSame": true,
+    "additionalModules": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+        "target": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+        "target": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+        "target": "backend/src/game/mechanisms/roles/magician/night_frame.ts"
+      }
+    ],
+    "originalSourceIdentityDigest": "e8115f5ea44c6c0fb63a6732cdcd59fb0701b4d24e5d0058055cda62b11b6c62",
+    "scope": "Fixed public backend Git plus this five-source overlay only; package external endpoints unchanged, function dynamic/require not initialization edges; no production execution."
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "sha256": "ff5403c7c21d76416403561d0379b25dcaa239dbfb40cef01d6800e63194515c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts",
+      "sha256": "c2ba07a5a689a47f0f7316e62d97cb0f944c8ad0d3323540b7b76b29e6337dbe"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "sha256": "c4d7cc002c3ee614dba1735d56cf3ef4ccc464f5a69c2b8aa7ffd48a1ca1a574"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+      "sha256": "40bc6486a0fa337dfa6fc7bf239c359c95e6b58d7ab77148b3040dabdb5ebe15"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+      "sha256": "89a96ec1eca62bac39d8a8b051154a03b9108557cb1659d11f2b96094a44c816"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "sha256": "6ab2376f5ab03eeaa31b9fc15ed984001f3577db0383fe8c108751a39f4dc07a"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster/state.test.ts",
+      "sha256": "f29caa20cace01e569549039dbe6299f0a25d2b428eb187133b58fb577917791"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "sha256": "48519be644d70709f05afb1f997184f8c59ebc9a35244741e7ff1e17e9f3d6d7"
+    }
+  ],
+  "summary": {
+    "sourcePaths": 5,
+    "wholePrograms": 2,
+    "exactEdits": 6,
+    "routes": 3,
+    "facetExports": 4,
+    "consumerImports": 4,
+    "actualFunctionBindings": 8,
+    "cumulativeTypedComparisons": 5668,
+    "cumulativeASTLeaves": 2976,
+    "inverseRawOutputs": 4,
+    "actualMappedRawOutputs": 4
+  },
+  "limits": [
+    "New direct public module paths/API and module namespace descriptors differ; actual whole JS is not byte-equal.",
+    "Old implementations remain, no new lifecycle/store/permission/wrapper.",
+    "Fixed static graph preserves original ordered edges/cycles after folding three facets; not arbitrary CJS monkeypatch or actual cold execution."
+  ]
+}

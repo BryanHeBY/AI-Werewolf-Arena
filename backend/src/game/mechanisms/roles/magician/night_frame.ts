@@ -5,8 +5,8 @@
  * 先校验原体，再写历史、刷新 expectedState、安装本夜 pair 并提交窗口；后续失败不回滚已写前缀。
  */
 import type { MagicianReadState } from "@ai-werewolf-arena/game-contract";
-import { isWolfSorcererBoard, resolveWolfSorcererNightTarget } from "../wolf_sorcerer/night_frame";
-import { matchingExchangePairs } from "../trickster/exile_mapping";
+import { isWolfSorcererBoard, resolveWolfSorcererNightTarget } from "../wolf_sorcerer/exchange-ports";
+import { matchingExchangePairs } from "../trickster/exchange-ports";
 import { types } from "node:util";
 import { COMPONENT, type RoleComponent, type World } from "../../../../core";
 import {
@@ -266,6 +266,7 @@ export function resolveMagicianNightTarget(
   if (!original || !original.life.alive) throw new Error("magician_target_invalid");
   const originalShot = kind === "death_shot" && b.state.deathShotTargetPolicy === "original";
   // 原复合映射先解狼术师 W(raw)，再解魔术师 M；交换的是位置中的占有者。
+  // 公共绑定在此先识别板子再读映射；不提前缓存 World、政策或狼术师回执。
   // 夜间死亡枪链的中间占有者可能已死，不能提前按普通夜行动的目标生命拒绝。
   const second = isWolfSorcererBoard(world)
     ? resolveWolfSorcererNightTarget(
@@ -356,6 +357,7 @@ export function cancelMagicianExchangeIfMatching(
     n = b.night;
   if (!n || n.day !== day || n.closed || !n.committed) throw new Error("magician_night_unsettled");
   if (!n.pair || !matchingExchangePairs(n.pair, pair)) return false;
+  // 原当前夜与同配对校验通过后只清 pair；双方历史／已用号码仍保留，不把取消视为退款。
   n.pair = null;
   return true;
 }

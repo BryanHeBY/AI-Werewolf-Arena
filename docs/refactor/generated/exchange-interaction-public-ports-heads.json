@@ -1,0 +1,27 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+      "sha256": "2168ecd66f1071039957d3651b259ef536b0c287daabeec7bd7d8cf23b424fbc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+      "sha256": "8cc4f6293d42fdee2dc32f8b645f68e3977a2798f7d25451492d767dbc0d4ed0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+      "sha256": "99d34436d3495787707c462766d4796da6cff83d0bd0ba083b44a58c2af17831"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "f3af4cafaf78b2a526d2f4b864e5499e1c4b60118047c1731ebe3025ea0ef4ad"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "sha256": "1e9cc158f67ba9d32b1f56f8e86d43552aae7c4a06fd5bfb04a7cecd2df5647e"
+    }
+  ],
+  "documentationPaths": 684,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

@@ -1,0 +1,7 @@
+[
+  "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+  "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+  "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+  "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+  "backend/src/game/mechanisms/roles/trickster/night_stages.ts"
+]

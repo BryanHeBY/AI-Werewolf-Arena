@@ -16,7 +16,7 @@ import {
   tricksterActorId,
   cancelTricksterExchange,
 } from "./night_frame";
-import { cancelMagicianExchangeIfMatching } from "../magician/night_frame";
+import { cancelMagicianExchangeIfMatching } from "../magician/exchange-ports";
 export const TRICKSTER_EXCHANGE_STAGE: NightStageHandler = {
   id: "trickster_exchange",
   priority: 100,
@@ -69,6 +69,7 @@ export const TRICKSTER_EXCHANGE_STAGE: NightStageHandler = {
       payload: { actorId, day, pair: pair && [Math.min(...pair), Math.max(...pair)] },
       audience: Object.freeze([actorId]),
     });
+    // 原历史与事实已提交后才查询并取消对方；晚读取／取消抛错保此前前缀，本方取消仍在 true 后。
     if (pair && cancelMagicianExchangeIfMatching(ctx.world, day, pair))
       cancelTricksterExchange(ctx.world, day);
   },

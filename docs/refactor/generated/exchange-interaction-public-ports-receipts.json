@@ -1,0 +1,135 @@
+{
+  "baseCommit": "065d1d6a315bdedd6c4c58e80e682084974de6b6",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+      "sha256": "2168ecd66f1071039957d3651b259ef536b0c287daabeec7bd7d8cf23b424fbc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+      "sha256": "8cc4f6293d42fdee2dc32f8b645f68e3977a2798f7d25451492d767dbc0d4ed0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+      "sha256": "99d34436d3495787707c462766d4796da6cff83d0bd0ba083b44a58c2af17831"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "f3af4cafaf78b2a526d2f4b864e5499e1c4b60118047c1731ebe3025ea0ef4ad"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "sha256": "1e9cc158f67ba9d32b1f56f8e86d43552aae7c4a06fd5bfb04a7cecd2df5647e"
+    }
+  ],
+  "firstChecksSource": {
+    "path": "docs/refactor/generated/exchange-interaction-public-ports-first-source.json",
+    "sha256": "f10933cbbabb109737011386b33c3c5c97a75230a3caab2d4895f57c03673b15"
+  },
+  "capture": {
+    "receipt": "e5ea18",
+    "exitCode": 0,
+    "actualGitExisting": 2,
+    "newAbsent": 3,
+    "controls": 8
+  },
+  "preFirstCheckCommentPrecision": {
+    "receipt": "b6dbbe",
+    "exitCode": 0,
+    "path": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+    "before": "向魔术师公开原无序交换对",
+    "after": "负责向魔术师公开原无序交换对",
+    "sourceReadySnapshot": "docs/refactor/generated/exchange-interaction-public-ports-source-ready.json",
+    "firstChecksSnapshot": "docs/refactor/generated/exchange-interaction-public-ports-first-source.json",
+    "checksAlreadyRun": false
+  },
+  "runtime": [
+    {
+      "receipt": "efcdf5",
+      "exitCode": 0,
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "title": "A dead intermediate seat occupant does not prevent reaching the living final occupant",
+      "pass": 1,
+      "fail": 0,
+      "assertions": 3,
+      "filtered": 8,
+      "log": "docs/refactor/generated/exchange-interaction-public-ports-intermediate-output.txt"
+    },
+    {
+      "receipt": "26de9b",
+      "exitCode": 0,
+      "path": "backend/tests/unit/features/trickster/state.test.ts",
+      "title": "identical unordered pairs cancel effects without mutating spent history",
+      "pass": 1,
+      "fail": 0,
+      "assertions": 5,
+      "filtered": 14,
+      "log": "docs/refactor/generated/exchange-interaction-public-ports-matching-output.txt"
+    },
+    {
+      "receipt": "e33096",
+      "exitCode": 0,
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "title": "identical unordered pair cancels both outputs and preserves both histories",
+      "pass": 1,
+      "fail": 0,
+      "assertions": 7,
+      "filtered": 3,
+      "log": "docs/refactor/generated/exchange-interaction-public-ports-cancel-output.txt"
+    }
+  ],
+  "runtimeTotals": {
+    "distinctCases": 3,
+    "assertions": 15,
+    "executions": 3,
+    "greenRepeat": false
+  },
+  "types": {
+    "launch": "7a2951",
+    "sessionId": 57557,
+    "terminal": "9dcdc8",
+    "exitCode": 0,
+    "roots": 5,
+    "executions": 1,
+    "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc -p docs/refactor/generated/exchange-interaction-public-ports-types-config.json --noEmit",
+    "log": "docs/refactor/generated/exchange-interaction-public-ports-types-output.txt"
+  },
+  "heads": {
+    "receipt": "52a7f9",
+    "exitCode": 0,
+    "roots": 5,
+    "documents": 684,
+    "executions": 1,
+    "log": "docs/refactor/generated/exchange-interaction-public-ports-heads-output.txt"
+  },
+  "proof": {
+    "launch": "a3d98a",
+    "sessionId": 32271,
+    "terminal": "36ab3a",
+    "exitCode": 0,
+    "executions": 1,
+    "script": "docs/refactor/generated/exchange-interaction-public-ports-proof.cjs",
+    "log": "docs/refactor/generated/exchange-interaction-public-ports-proof-output.txt"
+  },
+  "diffCheck": {
+    "receipt": "445495",
+    "exitCode": 0,
+    "sourcePaths": 5,
+    "pathFilter": 5,
+    "actualTrackedSources": 2,
+    "untrackedNewSources": 3,
+    "limitation": "Git diff did not inspect three untracked new facets; original full export/physical/emit proof binds them."
+  },
+  "metadataRead": {
+    "firstReceipt": "97fbd1",
+    "exitCode": 1,
+    "reason": "Ad hoc metadata reader assumed edits JSON was an object; actual wire is an array. No check or product run failed. Corrected read ef1b17 exit0; no source/tool/proof changes."
+  },
+  "notRun": [
+    "Whole architecture gate",
+    "Whole gameplay suites",
+    "Paid models",
+    "Repeated green checks",
+    "Production cold-load experiment"
+  ]
+}
