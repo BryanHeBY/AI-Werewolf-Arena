@@ -91,7 +91,7 @@ function fixture() {
   return { world, components, borrowed, native };
 }
 
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { shelterTargets } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
 test("only captured native Count or exact current borrowed Maid instance can receive a shelter turn", () => {
   const f = fixture(),

@@ -5,7 +5,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Role, type GameEvent, type RoleComponent } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];

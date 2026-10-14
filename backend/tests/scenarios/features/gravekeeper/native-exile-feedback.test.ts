@@ -44,7 +44,7 @@ import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms/script/event_render_registry";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 
 const deck = [Role.Wolf, Role.Wolf, Role.Gravekeeper, Role.Seer, Role.Villager, Role.Villager];
 

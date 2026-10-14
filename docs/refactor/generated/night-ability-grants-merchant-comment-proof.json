@@ -1,0 +1,53 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "beforeSHA256": "4ace55cd44ba34912e1d15199b8b649c3df46dd18fffc485ddb8ea7dedc2d579",
+      "sha256": "e6ff1da8ed75cce6993c9242afd7dd5d2988ac8abdc508ec3f1e1ae481011ec5",
+      "exactReplacementOnly": true,
+      "fullTypedNodes": 1119,
+      "allTypedNodesSame": true,
+      "allNoncommentLeaves": 1344,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "9984f4905455d62aa51eb807c9c2b8516e56bf392b2df862121b74b757a6317d",
+          "afterSHA256": "9984f4905455d62aa51eb807c9c2b8516e56bf392b2df862121b74b757a6317d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "7a317bbea624837240c8f5bc759176a7c9a7ac97316d6dc4c3cce30c29636713",
+          "afterSHA256": "7a317bbea624837240c8f5bc759176a7c9a7ac97316d6dc4c3cce30c29636713"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "beforeSHA256": "205ac83d4b7bb6af63c2b91ee7f613923044a223b1fa0bf9a93bee600edeb7d6",
+      "sha256": "1c9923cca5e56ba38043ce3311c024fd1874e3fcf81e59cc84b10a0d1112afa8",
+      "exactReplacementOnly": true,
+      "fullTypedNodes": 950,
+      "allTypedNodesSame": true,
+      "allNoncommentLeaves": 1165,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "4505764c97be2a31355743512ef2addbdef0fb55fdea51ea72590a0b3ad6bb6d",
+          "afterSHA256": "4505764c97be2a31355743512ef2addbdef0fb55fdea51ea72590a0b3ad6bb6d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "3ac9cf93f30861d17676fd03b83440efcff546951b7d2ccc2746f27ecc8999da",
+          "afterSHA256": "3ac9cf93f30861d17676fd03b83440efcff546951b7d2ccc2746f27ecc8999da"
+        }
+      ]
+    }
+  ],
+  "limit": "纯注释末桥；原四十types/head/测试收据与全程序证明维持真实采样阶段，没有重跑。"
+}

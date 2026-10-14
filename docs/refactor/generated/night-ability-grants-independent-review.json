@@ -1,0 +1,1786 @@
+{
+  "reviewer": "/root/native_presentation_finish",
+  "approved": true,
+  "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2f95007f76726c006f49f871173b47355ea7e7e08387254bfce4f8344829d886"
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "308e5a1fe0bae2cc1f54ead1c53bad79dd7c510b193092dffcd33a13c8e4463e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "e6ff1da8ed75cce6993c9242afd7dd5d2988ac8abdc508ec3f1e1ae481011ec5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "1c9923cca5e56ba38043ce3311c024fd1874e3fcf81e59cc84b10a0d1112afa8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "16c1fed2e4d72c4004e6ec4e9848be98353c4997820a52196e5150ce1b1add45"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "sha256": "361037933da615b3a08dff0bf76e4afd13b8d499d739945ed0f4f6e24a5c9973"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "sha256": "2361feab095cdd12af125bc64c41182e1e803cea7dbbe593a871a694f53c2048"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "sha256": "89cefaf5344b6bcbdc8f86e9a82429d2bd1f76f94213d38cef14eba70a160d73"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "sha256": "bd1fd81eebfee096d3fbd487499f9bef879f4afb0ea5fce0765c0927048b0fea"
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "sha256": "4d843c926f7f03efdad8721fa3cc1e7da5a41a4afaff6e8e3640a5153242f4a8"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "039ea52eee8536d468ae715e8100efc352a730079b9efe1fd707abf54c24b027"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sha256": "2f356ce9416bdc971c5ed9b7c005bb516640c88887e3aacd40c081fdc932ddbe"
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf"
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "279d7620debd9907bbdbea62d41a18a54639938d5dc971a4f7b26a8d54ac7906"
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "sha256": "b4492456e7bd7ef8da3df8cd379e9c4413ec4dedbf8d931e52983a4d4b7e1ddf"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "sha256": "d059a7e03549e1373ac71861063fc14d7b48a0ca4cf3889f4f76abb007a7d675"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "59672b94d6d6c9da146b4d01472718bb81404ef568b086bb76c48910c35a257b"
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "8ada39b42fd918a8406f76dc129ce32cdaaa0c67775809765b06b6a1a150bbc0"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "sha256": "db354443f72137fc2bbf6cdc2c84919e324ee1af9c3205c0611267fe53a72b73"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "d3e7c20108130f8cee0318b2487c29589a18e243dde79e6e54ff48480b686c5f"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "fdac57fa933c38e94c1f6f5d68f671fdc9697269ad82a86ad549712483cbf28b"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "d8922f725e182cbf0b66a4f6fc77fc42e7886da86f917f0b2ec3969146b9ddb4"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "10be62d0bb75efba88c543df624830746e8cd1724d08dd20c54c9dc5f26d4c94"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "c4d8db121493c44bd5d46709d1d42f4689d038866ab1f5c41ac2f0c3db0225d9"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "1612a906544d07c5d07c3643e8f1cd2a59c85acd380e599caaf9891f2192c05f"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6d7617d58ee4332d3efe263ce69ef76096b3ec307fc1da1e153843bd3bc032ef"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "17336504ab3f5ab4ff6a7196459fcf27cb3a973df0da9066975a018f3a43d8d6"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "ad436e97df2f96f4f27e6859f3a575f25096690a70b7715c666bee79c9b6bb96"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "60edf6f26b1ad0348aea50fa1eba60dfb8f621e8686953a972476e49057f62bc"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "3f8270cb5d98ba56c533cf0f2642ff3a023246c226f6678689d04c78850207fe"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "eccceba961b165cd8d82a09644089a68545f4077ebf5ac9577aea994f4f04546"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "sha256": "efddf36ad903e5b7793d1c88352f0c4f9e1b01186af5a40c646dc6b72b28868e"
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "sha256": "e2d9b0e6306e48bbb7be5b2d9eca6616a9d282544f5b4335aad1bb02cb3a660e"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "sha256": "b1685d142505e6da7798e398f339ca7bcd465a13ae06f51aca9defab8ba8580b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "0e32f853939fdf10f9f53172bad7a5f618ed5ef727d54f324e302ef31efc5940"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "sha256": "03cd4912cb8cc77b4b9943dc7f14b491fed6a74a5a46fb2a83354ecce0a88031"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "c7e676b790ed0ec7029df1d7c74b00ecd31f5e0fe4df1f9d00bc505500199462"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "sha256": "f49b1eb8ff3cc298cce1f62b76fbfd5455dee581b26f3f768298c04dcbdc4cbb"
+    }
+  ],
+  "lateConsumerCommit": "874030190c7b26980c1f82fe9a638caad3be99c6",
+  "freshSourceChecks": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2f95007f76726c006f49f871173b47355ea7e7e08387254bfce4f8344829d886",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "308e5a1fe0bae2cc1f54ead1c53bad79dd7c510b193092dffcd33a13c8e4463e",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "e6ff1da8ed75cce6993c9242afd7dd5d2988ac8abdc508ec3f1e1ae481011ec5",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "1c9923cca5e56ba38043ce3311c024fd1874e3fcf81e59cc84b10a0d1112afa8",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "16c1fed2e4d72c4004e6ec4e9848be98353c4997820a52196e5150ce1b1add45",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "sha256": "361037933da615b3a08dff0bf76e4afd13b8d499d739945ed0f4f6e24a5c9973",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "sha256": "2361feab095cdd12af125bc64c41182e1e803cea7dbbe593a871a694f53c2048",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "sha256": "89cefaf5344b6bcbdc8f86e9a82429d2bd1f76f94213d38cef14eba70a160d73",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "sha256": "bd1fd81eebfee096d3fbd487499f9bef879f4afb0ea5fce0765c0927048b0fea",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "sha256": "4d843c926f7f03efdad8721fa3cc1e7da5a41a4afaff6e8e3640a5153242f4a8",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "039ea52eee8536d468ae715e8100efc352a730079b9efe1fd707abf54c24b027",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sha256": "2f356ce9416bdc971c5ed9b7c005bb516640c88887e3aacd40c081fdc932ddbe",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "279d7620debd9907bbdbea62d41a18a54639938d5dc971a4f7b26a8d54ac7906",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "sha256": "b4492456e7bd7ef8da3df8cd379e9c4413ec4dedbf8d931e52983a4d4b7e1ddf",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "sha256": "d059a7e03549e1373ac71861063fc14d7b48a0ca4cf3889f4f76abb007a7d675",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "59672b94d6d6c9da146b4d01472718bb81404ef568b086bb76c48910c35a257b",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "8ada39b42fd918a8406f76dc129ce32cdaaa0c67775809765b06b6a1a150bbc0",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "sha256": "db354443f72137fc2bbf6cdc2c84919e324ee1af9c3205c0611267fe53a72b73",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "d3e7c20108130f8cee0318b2487c29589a18e243dde79e6e54ff48480b686c5f",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "fdac57fa933c38e94c1f6f5d68f671fdc9697269ad82a86ad549712483cbf28b",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "d8922f725e182cbf0b66a4f6fc77fc42e7886da86f917f0b2ec3969146b9ddb4",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "10be62d0bb75efba88c543df624830746e8cd1724d08dd20c54c9dc5f26d4c94",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "c4d8db121493c44bd5d46709d1d42f4689d038866ab1f5c41ac2f0c3db0225d9",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "1612a906544d07c5d07c3643e8f1cd2a59c85acd380e599caaf9891f2192c05f",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6d7617d58ee4332d3efe263ce69ef76096b3ec307fc1da1e153843bd3bc032ef",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "17336504ab3f5ab4ff6a7196459fcf27cb3a973df0da9066975a018f3a43d8d6",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "ad436e97df2f96f4f27e6859f3a575f25096690a70b7715c666bee79c9b6bb96",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "60edf6f26b1ad0348aea50fa1eba60dfb8f621e8686953a972476e49057f62bc",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "3f8270cb5d98ba56c533cf0f2642ff3a023246c226f6678689d04c78850207fe",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "eccceba961b165cd8d82a09644089a68545f4077ebf5ac9577aea994f4f04546",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "sha256": "efddf36ad903e5b7793d1c88352f0c4f9e1b01186af5a40c646dc6b72b28868e",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "sha256": "e2d9b0e6306e48bbb7be5b2d9eca6616a9d282544f5b4335aad1bb02cb3a660e",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "sha256": "b1685d142505e6da7798e398f339ca7bcd465a13ae06f51aca9defab8ba8580b",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "0e32f853939fdf10f9f53172bad7a5f618ed5ef727d54f324e302ef31efc5940",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "sha256": "03cd4912cb8cc77b4b9943dc7f14b491fed6a74a5a46fb2a83354ecce0a88031",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "c7e676b790ed0ec7029df1d7c74b00ecd31f5e0fe4df1f9d00bc505500199462",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "sha256": "f49b1eb8ff3cc298cce1f62b76fbfd5455dee581b26f3f768298c04dcbdc4cbb",
+      "matches": true
+    }
+  ],
+  "actualBeforeGitChecks": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "e1e1271cb6a6e3ac8c4c37ec96be64f1dfd33852fac37346245a2e88ff465e1d",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "e5065f68f0a37c6daa5f737ac62846da44e339ad201477beb1cf22a4cca79405",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "738db0d1202f47cefae69ffce47e7a6b451e1781c889853206b8c0f85428165a",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "d666d7a7715b258c29ff8c8679aaf49b6c111a851af54e7de39b33f268a04a4d",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "1763e8846537bcd9cdc5a9b2065a51ea306f3919fe005a881e3e2377c8789d94",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "cb49716a594773a8a13cd4608181038884e66cbd6e5e990a9c48a9a6d05eed61",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "18965bcaad80836ae2ef1119787127e59269f843dee2d7de84c5d637373a7d10",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "4cfec754e21e2470bd98af73bee19203b1a7adb6259939473a632da7c0236e29",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "90d8dd45f84ed89799de76d7b9b3934043a68402370c51ff1eb28f1b4c16f9af",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "218a93330828e87541f9d12ee3a958c35a567ef1226c0cf27f82b9f862c85a60",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "297590bd9b738140dfb6508dfae24a73a155be7181cc593e3879cc5aee88ec7d",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "124ce751a59e3065bc4160af18fefb6ebb2faf0be553266206fb48dd73230f5c",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "d36d3908cb8c2c231f9ca1f97664344578653c8b9d54420343867d2da30c8a0f",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "72398efe8d4e8f966d5707e206d93ae2c68b92925d2f11d5c137c6f4b9bb7a08",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "327ef1ac0a7e3af179f031f76d2c5421fd5b77df377854bf156ddb5924e7a26f",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "168c56560ef2c87c2fd68b317bb73488ecf0ab4164087525bd31ae123df1560e",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "1814247db0a55fd51f512d24a8e960b65af6bc0b0aac172095fe1b45123a9048",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "7c5388adbcc5c68aa51e0fe03316631316bb2299ecd77ae726d4b3093f1ca506",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "70cea97d7f4fbd546063de15f4d792f11c17d480617719102f27a1d97f1b0809",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "a95505e4ba367a65115803fedfcabd9891245ab9c0b483e87020bd82666dd5b3",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "c39d45293a577ab2f035fbb381d0962efa61c1062fae4dcb66a1c2fd6d7caee8",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "e639d29cdb386f2b1656fb6d17f4ddcacb545f8ce08dab37d3c436ab5ca06f73",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "c8b04ecad90d082b9d4eb67ef8ec394c1be6dcccacbdcd170073debc74399241",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "0715658f194f49206c0548f61016debf79611cd60b2e4d2d16826cc59d44670b",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "5967e32a4e54784f192649835018d6021a27fe640b24116c31f8d7a4acd87b70",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "8eabe7021bc22fbcf26dcfd3e3070a4204788ef294accf7d1edbda5eb1f2ce7e",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "7cc67ac35cb2ff17455f3809e2cfd66d049da67bf59113d4deac3f91fae987da",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "7a1f94720479eff99d6fea1db75b0ce497173a1625280e2f837ec915c4794a88",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "7475fc164c212477405e8d3cd0d6a75b591e8791018540a8c22119b664b05db1",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "b7d4021d81f28ec0074f033eb1afb6315885df6732cff2df1085d18a48ece07c",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "082c0072841922987b995dde77f6c111f8eb2a65f9f3a6f048faad6666abb7f3",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "00b43fed1cec30a93af24cedda7352b29ba07ada53699093b9224459cdaa3cdb",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "d349aa87ecb7ebba202697b792eddef943874c99ce88a847ef775c2de3047360",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "08c734a11fae112161389c75b664a279f70029f7ae2ef3ba84c30b8c423c8a6a",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "8ec7b18a9b20e97a83a1ac598cae5c18241770cfa4a355b78490ecc7059d0530",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "sha256": "3308ed6f5589e0c86f8782d48b692bc6a0ddf680c90918daf6c2051084ac9449",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "baseCommit": "874030190c7b26980c1f82fe9a638caad3be99c6",
+      "sha256": "ebdf4e55fd681ff8c3ebd1c0001082072ebce3a9c1fbf15044de4b19947a975b",
+      "actualGitWholeSourceSame": true
+    }
+  ],
+  "completeMovedAndSharedDeclarations": [
+    {
+      "name": "AbilityGrant",
+      "sourceOwner": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "grantNightAbility",
+      "sourceOwner": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "installAbility",
+      "sourceOwner": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "transferNightAbility",
+      "sourceOwner": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "roleOf",
+      "sourceOwner": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "emit",
+      "sourceOwner": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "entireActualDeclarationSame": true
+    }
+  ],
+  "retainedMetadataWholeProgramExact": true,
+  "retainedMetadataCommands": [
+    {
+      "name": "setNightAbilityEnabled",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "retireBorrowedNightAbility",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "expireLuckyAbilitiesOnDeath",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "installNativeAbility",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "setNightAbilityStartDay",
+      "entireActualDeclarationSame": true
+    },
+    {
+      "name": "recordNightAbilityUse",
+      "entireActualDeclarationSame": true
+    }
+  ],
+  "completeConsumers": [
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "currentSHA": "e6ff1da8ed75cce6993c9242afd7dd5d2988ac8abdc508ec3f1e1ae481011ec5",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "currentSHA": "1c9923cca5e56ba38043ce3311c024fd1874e3fcf81e59cc84b10a0d1112afa8",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "currentSHA": "16c1fed2e4d72c4004e6ec4e9848be98353c4997820a52196e5150ce1b1add45",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "currentSHA": "361037933da615b3a08dff0bf76e4afd13b8d499d739945ed0f4f6e24a5c9973",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "currentSHA": "2361feab095cdd12af125bc64c41182e1e803cea7dbbe593a871a694f53c2048",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "currentSHA": "89cefaf5344b6bcbdc8f86e9a82429d2bd1f76f94213d38cef14eba70a160d73",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "currentSHA": "bd1fd81eebfee096d3fbd487499f9bef879f4afb0ea5fce0765c0927048b0fea",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "currentSHA": "4d843c926f7f03efdad8721fa3cc1e7da5a41a4afaff6e8e3640a5153242f4a8",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "currentSHA": "039ea52eee8536d468ae715e8100efc352a730079b9efe1fd707abf54c24b027",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 2
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "currentSHA": "2f356ce9416bdc971c5ed9b7c005bb516640c88887e3aacd40c081fdc932ddbe",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "currentSHA": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "currentSHA": "279d7620debd9907bbdbea62d41a18a54639938d5dc971a4f7b26a8d54ac7906",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "currentSHA": "b4492456e7bd7ef8da3df8cd379e9c4413ec4dedbf8d931e52983a4d4b7e1ddf",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "currentSHA": "d059a7e03549e1373ac71861063fc14d7b48a0ca4cf3889f4f76abb007a7d675",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "currentSHA": "59672b94d6d6c9da146b4d01472718bb81404ef568b086bb76c48910c35a257b",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "currentSHA": "8ada39b42fd918a8406f76dc129ce32cdaaa0c67775809765b06b6a1a150bbc0",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "currentSHA": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "currentSHA": "db354443f72137fc2bbf6cdc2c84919e324ee1af9c3205c0611267fe53a72b73",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "currentSHA": "d3e7c20108130f8cee0318b2487c29589a18e243dde79e6e54ff48480b686c5f",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 2
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "currentSHA": "fdac57fa933c38e94c1f6f5d68f671fdc9697269ad82a86ad549712483cbf28b",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 2
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "currentSHA": "d8922f725e182cbf0b66a4f6fc77fc42e7886da86f917f0b2ec3969146b9ddb4",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 2
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "currentSHA": "10be62d0bb75efba88c543df624830746e8cd1724d08dd20c54c9dc5f26d4c94",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 2
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "currentSHA": "c4d8db121493c44bd5d46709d1d42f4689d038866ab1f5c41ac2f0c3db0225d9",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "currentSHA": "1612a906544d07c5d07c3643e8f1cd2a59c85acd380e599caaf9891f2192c05f",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "currentSHA": "6d7617d58ee4332d3efe263ce69ef76096b3ec307fc1da1e153843bd3bc032ef",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "currentSHA": "17336504ab3f5ab4ff6a7196459fcf27cb3a973df0da9066975a018f3a43d8d6",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "currentSHA": "ad436e97df2f96f4f27e6859f3a575f25096690a70b7715c666bee79c9b6bb96",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 2
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "currentSHA": "60edf6f26b1ad0348aea50fa1eba60dfb8f621e8686953a972476e49057f62bc",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "currentSHA": "3f8270cb5d98ba56c533cf0f2642ff3a023246c226f6678689d04c78850207fe",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 2
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "currentSHA": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 2
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "currentSHA": "eccceba961b165cd8d82a09644089a68545f4077ebf5ac9577aea994f4f04546",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 2
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "currentSHA": "efddf36ad903e5b7793d1c88352f0c4f9e1b01186af5a40c646dc6b72b28868e",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "currentSHA": "e2d9b0e6306e48bbb7be5b2d9eca6616a9d282544f5b4335aad1bb02cb3a660e",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "currentSHA": "b1685d142505e6da7798e398f339ca7bcd465a13ae06f51aca9defab8ba8580b",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "currentSHA": "f49b1eb8ff3cc298cce1f62b76fbfd5455dee581b26f3f768298c04dcbdc4cbb",
+      "baseCommit": "874030190c7b26980c1f82fe9a638caad3be99c6",
+      "entireDeclaredInverseSame": true,
+      "bindingCount": 1
+    }
+  ],
+  "aggregate": {
+    "path": "backend/src/game/mechanisms/index.ts",
+    "exactCanonicalExportOnly": true,
+    "newOwner": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "privateSharedLeafNotReexported": true
+  },
+  "controlChecks": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+      "sha256": "7b1b2e611e030d2a5353faec14c54fe2b7c67eef84d15718ff604babf6db85af",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+      "sha256": "4369f772e7c681a59b3cfcd4c297ab21a487df473a2bbf0b493270c9c454043f",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+      "sha256": "266ad1977e235c1cc265e0fed82179884e8f70b442fc1eb4a58de56afd19d125",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+      "sha256": "bc46a87101d548ae302384aa04cccea80c7b9d886c83ca96874b4adfda841a91",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+      "sha256": "91cd3fffb1d087486f3eca78b49e9dc54bd700545fbaee0b8dffeb43800d34c7",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "sha256": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "sha256": "08a76bca3bf4f4aa42a599007c458c3780dd30d9b8b013b03c41227a79363751",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "0ee74cdb94177045b4496b45462e208e0ec16ce62bb477845a851c3f68767c9a",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "94855dec2f132f0c0021f2297526b1bb1061c9181fb79db6b60703663621e1d3",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/observation/night-ability-projection.ts",
+      "sha256": "5b98de29024534fec0b3bb3b7207d3bad3b1c54cfa4bd6e121d2fc554bfa7ed0",
+      "currentSame": true,
+      "actualGitSame": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/night-ability-grants-before.json",
+      "sha256": "c38a0d37f987995e21899a76fad5646da7088b662aff7fc6c383267c81b43038",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-bindings-before-seer-consumer.json",
+      "sha256": "633a47703a0fbe549b0e4d41c765223a4f01924db0e76e576024c7915f33afc8",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-bindings.cjs",
+      "sha256": "91e032af146faf820997c2225843ff78536071e46f92125f2de2088dfc7e59fa",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-bindings.json",
+      "sha256": "51d533d39fb134316208e3e924850a272d46a3129445855853e7ca2a80a8b532",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-bindings.log",
+      "sha256": "9ba712078dbb78f89bda21fac844a9fa4164db3b2e0a8a7e922005fe97615d57",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-comments-before-merchant-precision.json",
+      "sha256": "443ce9b98fc08184846eaf63957c08d68336606112ae74e0a182b419d159d849",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-comments.json",
+      "sha256": "e52936f11ec400c03c842a68806da88acceebdef0c6a98b81e0932b776f47898",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-edits-before-component-fix.json",
+      "sha256": "dc562573deec6325152f11c23fb48fa22a629eda821bbdf57c9466f100978dad",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-edits.json",
+      "sha256": "9a4099812a1d8e711747f8e3fc0ae4fc2bf91ec0d72c8447ac1bf36155188fe8",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-evidence-before-merchant-comments.json",
+      "sha256": "e2d5ff0be5bda58d2851d4eb99cce2040f15b4d51c1ae5fb162582c3d60d32cd",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-finalize-proof.cjs",
+      "sha256": "50e4562905b4596e7319c6931d04396137e6f8fd340eca21b0f698fb308fa5f0",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-git-before-proof.json",
+      "sha256": "565a41dc6cdd0d22d9ac6ca1f2a0e67124adae5ab9696feffb88840762d1e9b8",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-git-sources.json",
+      "sha256": "b0e072a9f14fc0a518f00975c299356c2ab67835905b602f402dd90dfc63d020",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-heads.json",
+      "sha256": "3152583407e4e5c7ba6d5fd65044217b81f04d4e83f89f9e412ae637ebffda4c",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-heads.log",
+      "sha256": "ad346565d19d478d2ec81661da311c6b832ecb565c8b9386c4369f377434eeab",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-heads.ts",
+      "sha256": "a2408cc9581ccd29bffd7e108abdea2da96abbd9ca6f9094a2f8bde975e7fd02",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-merchant-comment-delta.json",
+      "sha256": "e6a5ac62e2af943629332d9883d140be8a4c7e3d914eaeaa7fd47cc7c51823e8",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-merchant-comment-proof.cjs",
+      "sha256": "249ce168aeb0099e5e34be378b489e53a6cd448a376ce7ff9f8b9eceb6e5776b",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-merchant-comment-proof.json",
+      "sha256": "886e866654b7b1dc7250691d79dc874836fe1f82b64d0475860936ac7ec21a97",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-merchant-comment-proof.log",
+      "sha256": "d5783ee3e1d27593753197ed1782b6300ca57fc874ae96a11282e66d22628793",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-metadata-component-before-fix.json",
+      "sha256": "f310c328cd2c516e1618e29499d85609448fb0fee171b747ca52efc9983b41ff",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-migrate.cjs",
+      "sha256": "50f53a2940dcc6f63c44e0c67263c64bd37da400b09b489a8340cf6140376220",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-new-tests.log",
+      "sha256": "cafe1bd9f09089846bebc908fba676118eb227915ff41c07afa4144987e31593",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-old-lucky-fixed.log",
+      "sha256": "3ac81e1dab0f68fb093587c0466cac85137034120ee45252e27b4685a8354834",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-old-lucky.log",
+      "sha256": "60cb7d2644e7de3c206c17a6a0054ac0f6fd3701e65aae6b70d2d833fd8e6f7b",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-old-transfer.log",
+      "sha256": "ed38fc8615dd382f1e325d1cf045cbad34bfbe0d56c699b3ab78f0b3a2ba2ef9",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof-before-merchant-comments.json",
+      "sha256": "e03bd680be8036b8c59483d80a7178b6cd4f87d63f08e1cdf4648570efaf3c0c",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof-before-seer-consumer.json",
+      "sha256": "6becdcedc6ce4a6703b103bd03b673f7b499ce8543b1208e13e8d6a2bbbcf030",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof.cjs",
+      "sha256": "89d9d41765e66c5b3d66fce1efdd91fd57f83cbffae9a03a0f173fc6581adf12",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof.json",
+      "sha256": "e51fd72708fb68adc68e5b5bae05d2b7bfbfd7102c2d124643be4d359d69e706",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof.log",
+      "sha256": "b14ffe20643e190c27da05d3a14d01c9b9263cf1b1299ad96ab245d6e86ac06f",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-receipts.json",
+      "sha256": "57126dc92712fc2c5a464a324a08371986d268844027c6386722db85bb34d6a4",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-routes.json",
+      "sha256": "baf7f181b11fee9b68aef675bb310a5a8f2cdc3f72b67669974c34fed3e542f1",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-scope-before-merchant-comments.json",
+      "sha256": "d324fe52f152315ceed6ec7fe454504b84a7079e2468000ae8c67aa02bb71760",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-scope-final.json",
+      "sha256": "b68b7a8badde9ebe25d0a80d19cc363ba63d6eb0e3647024f40eb128fcb53151",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-seer-consumer-before.json",
+      "sha256": "538c721a00db27be6cbee91c6befc42b884d39d67998ac4f16c25af9fc52dc92",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-types-config.json",
+      "sha256": "4b0545a9f8338b6a7b4359f67c6f21952273532c34c80b500be3839102ac9fe0",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    }
+  ],
+  "documentation": {
+    "path": "docs/refactor/night-ability-grants-owner.md",
+    "sha256": "d355afe21a483cbb259131888732d23d5aa01b8c1be79bd96635a0e49f8ec4e1",
+    "currentSHA": "d355afe21a483cbb259131888732d23d5aa01b8c1be79bd96635a0e49f8ec4e1"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/night-ability-grants-evidence.json",
+    "sha256": "67308aa483611463b986d8ddfb6bf97c40fa5321ee17dca1e8e29999140f9800"
+  },
+  "scope": {
+    "path": "docs/refactor/generated/night-ability-grants-scope-final.json",
+    "sha256": "b68b7a8badde9ebe25d0a80d19cc363ba63d6eb0e3647024f40eb128fcb53151"
+  },
+  "allLiteralModuleForms": {
+    "scannedFiles": 1709,
+    "directCanonicalSites": [
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+        "form": "import",
+        "line": 94
+      },
+      {
+        "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+        "form": "import",
+        "line": 23
+      },
+      {
+        "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+        "form": "import",
+        "line": 24
+      },
+      {
+        "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+        "form": "import",
+        "line": 17
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+        "form": "import",
+        "line": 14
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+        "form": "import",
+        "line": 31
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+        "form": "import",
+        "line": 29
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+        "form": "import",
+        "line": 14
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+        "form": "import",
+        "line": 16
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+        "form": "import",
+        "line": 39
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+        "form": "import",
+        "line": 28
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+        "form": "import",
+        "line": 14
+      },
+      {
+        "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+        "form": "import",
+        "line": 41
+      },
+      {
+        "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+        "form": "import",
+        "line": 32
+      },
+      {
+        "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+        "form": "import",
+        "line": 36
+      },
+      {
+        "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+        "form": "import",
+        "line": 25
+      },
+      {
+        "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+        "form": "import",
+        "line": 43
+      },
+      {
+        "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+        "form": "import",
+        "line": 8
+      },
+      {
+        "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+        "form": "import",
+        "line": 24
+      },
+      {
+        "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+        "form": "import",
+        "line": 21
+      },
+      {
+        "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+        "form": "import",
+        "line": 27
+      },
+      {
+        "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+        "form": "import",
+        "line": 35
+      },
+      {
+        "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+        "form": "import",
+        "line": 12
+      },
+      {
+        "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+        "form": "import",
+        "line": 13
+      },
+      {
+        "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+        "form": "import",
+        "line": 13
+      },
+      {
+        "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+        "form": "import",
+        "line": 13
+      },
+      {
+        "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+        "form": "import",
+        "line": 11
+      },
+      {
+        "path": "backend/src/game/mechanisms/index.ts",
+        "form": "reexport",
+        "line": 35
+      },
+      {
+        "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+        "form": "import",
+        "line": 24
+      },
+      {
+        "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+        "form": "import",
+        "line": 47
+      },
+      {
+        "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+        "form": "import",
+        "line": 42
+      },
+      {
+        "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+        "form": "import",
+        "line": 37
+      },
+      {
+        "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+        "form": "import",
+        "line": 41
+      },
+      {
+        "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+        "form": "import",
+        "line": 25
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+        "form": "import",
+        "line": 14
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "form": "import",
+        "line": 27
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+        "form": "import",
+        "line": 15
+      }
+    ],
+    "retiredNamedOrInlineTypeReferences": [],
+    "limit": "字面模块／具名／inline type公开路径核；newunit metadataCommands namespace仅编译负例，函数被引用但未执行，不冒任意computed模块解析。"
+  },
+  "bindingsAuthorRead": {
+    "ownerImports": 25,
+    "consumerFiles": 35,
+    "movedBindings": 44,
+    "modules": 80,
+    "edges": 153,
+    "newOwnerReturnCycles": 0,
+    "basis": "两新 owner 实际已擦除值导入／重导的有限静态依赖闭包，不执行 require/dynamic 路径，不称全仓图或历史初始化时序不变",
+    "limit": "只读原有限静态图／端点；不执行作者工具，不宣称整个加载或第三方namespace任意重赋等价。"
+  },
+  "finalFreshSourceChecks": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2f95007f76726c006f49f871173b47355ea7e7e08387254bfce4f8344829d886",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "308e5a1fe0bae2cc1f54ead1c53bad79dd7c510b193092dffcd33a13c8e4463e",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "e6ff1da8ed75cce6993c9242afd7dd5d2988ac8abdc508ec3f1e1ae481011ec5",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "1c9923cca5e56ba38043ce3311c024fd1874e3fcf81e59cc84b10a0d1112afa8",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "16c1fed2e4d72c4004e6ec4e9848be98353c4997820a52196e5150ce1b1add45",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "sha256": "361037933da615b3a08dff0bf76e4afd13b8d499d739945ed0f4f6e24a5c9973",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "sha256": "2361feab095cdd12af125bc64c41182e1e803cea7dbbe593a871a694f53c2048",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "sha256": "89cefaf5344b6bcbdc8f86e9a82429d2bd1f76f94213d38cef14eba70a160d73",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "sha256": "bd1fd81eebfee096d3fbd487499f9bef879f4afb0ea5fce0765c0927048b0fea",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "sha256": "4d843c926f7f03efdad8721fa3cc1e7da5a41a4afaff6e8e3640a5153242f4a8",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "039ea52eee8536d468ae715e8100efc352a730079b9efe1fd707abf54c24b027",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sha256": "2f356ce9416bdc971c5ed9b7c005bb516640c88887e3aacd40c081fdc932ddbe",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "279d7620debd9907bbdbea62d41a18a54639938d5dc971a4f7b26a8d54ac7906",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "sha256": "b4492456e7bd7ef8da3df8cd379e9c4413ec4dedbf8d931e52983a4d4b7e1ddf",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "sha256": "d059a7e03549e1373ac71861063fc14d7b48a0ca4cf3889f4f76abb007a7d675",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "59672b94d6d6c9da146b4d01472718bb81404ef568b086bb76c48910c35a257b",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "8ada39b42fd918a8406f76dc129ce32cdaaa0c67775809765b06b6a1a150bbc0",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "sha256": "db354443f72137fc2bbf6cdc2c84919e324ee1af9c3205c0611267fe53a72b73",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "d3e7c20108130f8cee0318b2487c29589a18e243dde79e6e54ff48480b686c5f",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "fdac57fa933c38e94c1f6f5d68f671fdc9697269ad82a86ad549712483cbf28b",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "d8922f725e182cbf0b66a4f6fc77fc42e7886da86f917f0b2ec3969146b9ddb4",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "10be62d0bb75efba88c543df624830746e8cd1724d08dd20c54c9dc5f26d4c94",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "c4d8db121493c44bd5d46709d1d42f4689d038866ab1f5c41ac2f0c3db0225d9",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "1612a906544d07c5d07c3643e8f1cd2a59c85acd380e599caaf9891f2192c05f",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6d7617d58ee4332d3efe263ce69ef76096b3ec307fc1da1e153843bd3bc032ef",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "17336504ab3f5ab4ff6a7196459fcf27cb3a973df0da9066975a018f3a43d8d6",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "ad436e97df2f96f4f27e6859f3a575f25096690a70b7715c666bee79c9b6bb96",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "60edf6f26b1ad0348aea50fa1eba60dfb8f621e8686953a972476e49057f62bc",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "3f8270cb5d98ba56c533cf0f2642ff3a023246c226f6678689d04c78850207fe",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "eccceba961b165cd8d82a09644089a68545f4077ebf5ac9577aea994f4f04546",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "sha256": "efddf36ad903e5b7793d1c88352f0c4f9e1b01186af5a40c646dc6b72b28868e",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "sha256": "e2d9b0e6306e48bbb7be5b2d9eca6616a9d282544f5b4335aad1bb02cb3a660e",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "sha256": "b1685d142505e6da7798e398f339ca7bcd465a13ae06f51aca9defab8ba8580b",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "0e32f853939fdf10f9f53172bad7a5f618ed5ef727d54f324e302ef31efc5940",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "sha256": "03cd4912cb8cc77b4b9943dc7f14b491fed6a74a5a46fb2a83354ecce0a88031",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "c7e676b790ed0ec7029df1d7c74b00ecd31f5e0fe4df1f9d00bc505500199462",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "sha256": "f49b1eb8ff3cc298cce1f62b76fbfd5455dee581b26f3f768298c04dcbdc4cbb",
+      "matches": true
+    }
+  ],
+  "finalCommentDeltaChecks": [
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "actualBeforeSHASame": true,
+      "actualAfterSHASame": true,
+      "exactOnlyCommentInverseSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "actualBeforeSHASame": true,
+      "actualAfterSHASame": true,
+      "exactOnlyCommentInverseSame": true
+    }
+  ],
+  "independentSemanticReview": [
+    "完整AbilityGrant/interface/grant/install/transfer与原实际0ed程序逐声明全文比较；完整安装检查、复制和库存/retired写入迁新owner，没有第二WeakMap或库存镜像。",
+    "grant仍kind/source先检查、copy输入/默认metadata后install；install原role inspection／dream policy、mirror初态、ID/day/maxUses、来源／activation／duplicate各短路及roleOf次数不变，copy与policy接受集合未加强。",
+    "黑市transfer依次捕获source/target组件和生命/原state/source/private/role，再独立clone→options.statePolicy原receiver→clone；回调后复验原组件/life/slot/ref/规范化metadata/payload，same bytes的新source仍撤销，副作用错误原样传播。",
+    "普通 transfer保原seer知识政策自由度；guard/dream/potion资源字段与role_check完整历史原检查、lucky/black共享状态约束均保。没有把独立复制数据或ReadView当成live许可。",
+    "收到目标先copy/install字典并发布granted，成功后才delete源、取得/创建retired数组和push，最后transferred_out；目标发布／退休读取／源发布异常保已写前缀，不rollback，不发明事务。",
+    "shared roleOf是原World.getComponent方法调用/ActorMissing返回原Role引用，emit仍先events.push方法lookup、Date.now、id/kind、structuredClone source、后续metadata以及原expires两读；同receiver/克隆/throw顺序保，内部leaf只两个实际owners消费，无聚合reexport。",
+    "metadata保留全部六完整命令；COMPONENT仍为真实expireLuckyAbilitiesOnDeath依赖，首误删已准确修复。native prepared安装及6payloadslots、scope/suppression/Demon付款封存/审计全部控制源原字节未改。",
+    "三个生产grant消费者为两个商人六分支及蚀日借用路径，导入外全body逆同；copy→grant→商人trade支付与事实的夹层/反噬life依据不改，蚀日原openSuppression/失败close/借用允许表及选择写入仍原caller。没有新增生产transfer场景。",
+    "新四case用实际World/库存与字面错误及输出顺序；publishing源getter失败保installed、target publication失败保both/undeletedsource、retired getter失败保targetfact及deleteprefix、blacksource同内容换引用撤销均明确。原case输入与全部assert没有被本笔改写。",
+    "旧direct ability_changes三个API退休，无旧forwardbridge；mechanisms index新的star直接canonicalgrant模块而其它exports原样，全部35具名consumer模式/alias/type维持。newSeer仅真实874提交后一个importSpecifier，没改此前3case或伪造0ed来源。"
+  ],
+  "closedPrecisionFindings": [
+    {
+      "kind": "中文职责头",
+      "paths": [
+        "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+        "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts"
+      ],
+      "before": "等待／提交事实",
+      "after": "跳过／提交事实",
+      "actualReason": "trade_skipped／black_market_trade_skipped已跳过本夜，不是pending等待。",
+      "resolution": "仅两头准确词语，完整prefinal字节与末4outputs/2069nodes/2509noncommentleaf桥保存；原types/tests/heads/proof保真实采样阶段。"
+    }
+  ],
+  "chineseReview": [
+    "三owned负责人头及AbilityGrant结构／已安装后发布／statePolicy独立数据／late复验／delete退役发布前缀说明均对应实际代码。",
+    "两商人和三transport测试英文head译中文，角色正式名与本地传输／独立预期边界准确；不把stock或counter/临时抑制/原生命解释成新统一授权。"
+  ],
+  "authorReceiptsReadNotReexecuted": {
+    "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+    "scope": 40,
+    "sourceSHAStage": "最终全部40摘要与程序／头检查绑定；有限类型在此冻结源码运行且无后续正文修改。",
+    "tests": [
+      {
+        "stage": "newfour",
+        "chunk": "819d5b",
+        "exitCode": 0,
+        "cases": 4,
+        "assertions": 22,
+        "log": "docs/refactor/generated/night-ability-grants-new-tests.log"
+      },
+      {
+        "stage": "oldexacttransfer",
+        "chunk": "ac459a",
+        "exitCode": 0,
+        "cases": 1,
+        "assertions": 6,
+        "filtered": 11,
+        "log": "docs/refactor/generated/night-ability-grants-old-transfer.log"
+      },
+      {
+        "stage": "oldexactlucky-first",
+        "chunk": "343577",
+        "shellToolExitCode": 0,
+        "testResult": "1 failed; actual log retains ReferenceError COMPONENT is not defined. Shell cat afterward returned 0; this receipt is not a successful test.",
+        "cause": "迁移漏掉仍被expireLuckyAbilitiesOnDeath使用的原值import；真实本批source错误，不是工具诊断。",
+        "log": "docs/refactor/generated/night-ability-grants-old-lucky.log"
+      },
+      {
+        "stage": "oldexactlucky-failed-only",
+        "chunk": "e5e9e9",
+        "exitCode": 0,
+        "cases": 1,
+        "assertions": 5,
+        "filtered": 19,
+        "fix": "仅恢复原COMPONENT import，不改函数body或旧assert；只重失败用例。",
+        "log": "docs/refactor/generated/night-ability-grants-old-lucky-fixed.log"
+      }
+    ],
+    "uniqueFinalCases": 6,
+    "uniqueSuccessfulAssertions": 33,
+    "testsExecutedSeparateRuns": 4,
+    "types": {
+      "roots": 40,
+      "launchChunk": "616b3a",
+      "sessionId": 49075,
+      "terminalChunk": "d3897b",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/night-ability-grants-types.log",
+      "config": "docs/refactor/generated/night-ability-grants-types-config.json",
+      "scope": "实际backend tsconfig.tests继承，只列本批40changed roots；包括新unit编译负例，非全仓check。"
+    },
+    "programProof": [
+      {
+        "stage": "first39",
+        "launchChunk": "3019e2",
+        "sessionId": 86215,
+        "terminalChunk": "b3aace",
+        "exitCode": 0,
+        "source": 39,
+        "consumers": 34,
+        "wholeOriginalNodes": 2480,
+        "consumerNodes": 70382,
+        "movedAndSharedDeclarations": 6,
+        "retainedCommands": 6,
+        "controls": 12
+      },
+      {
+        "stage": "lateSeer",
+        "chunk": "616b3a",
+        "sourceProofSubcommandExitCode": 0,
+        "consumer": 1,
+        "wholeNodes": 1367,
+        "outputs": 2,
+        "prior39SourceHashesFresh": true,
+        "baseCommit": "874030190c7b26980c1f82fe9a638caad3be99c6"
+      }
+    ],
+    "bindings": {
+      "chunk": "7ea0ab",
+      "exitCode": 0,
+      "ownerImportBindings": 25,
+      "firstConsumerFiles": 34,
+      "firstMovedBindings": 43,
+      "finalConsumerFiles": 35,
+      "finalMovedBindings": 44,
+      "modules": 80,
+      "valueEdges": 153,
+      "newOwnerReturnCycles": 0,
+      "limit": "只实际擦除后的静态值import/export图，非全require/dynamic图或初始化时序等价。"
+    },
+    "heads": {
+      "chunk": "5446cb",
+      "exitCode": 0,
+      "sources": 40,
+      "documentationPaths": 506,
+      "diagnostics": 0,
+      "missingChineseHead": 0,
+      "log": "docs/refactor/generated/night-ability-grants-heads.log"
+    },
+    "toolsBeforeSourceWrite": [
+      {
+        "chunk": "ca6b8d",
+        "exitCode": 1,
+        "finding": "Node execFileSync Git EPERM，没有产品写入；真实Git stdout不能据此冒成功。"
+      },
+      {
+        "chunk": "64c342",
+        "exitCode": 1,
+        "finding": "Python盘点读foreign已删除旧verifier路径失败；后续Node仍旧Git EPERM，同样未改产品；修只捕获器跳不存在路径并用Python实际Git输入。"
+      },
+      {
+        "chunk": "3ffcc8",
+        "exitCode": 0,
+        "action": "实际Python Git48捕获／Node全部声明迁移与34routes写入完成。"
+      }
+    ],
+    "notRun": [
+      "Seer已绿测试",
+      "全量suite",
+      "整局",
+      "全量结构门禁",
+      "计费模型",
+      "golden重输",
+      "私有配置"
+    ],
+    "limits": [
+      "公开旧leaf API退休、聚合canonical保持；非全部55角色库存或归档schema完成。"
+    ],
+    "finalCommentDelta": {
+      "chunk": "3f75fc",
+      "exitCode": 0,
+      "sources": 2,
+      "fullTypedNodes": 2069,
+      "fullNoncommentLeaves": 2509,
+      "wholeOutputs": 4,
+      "beforeScope": "docs/refactor/generated/night-ability-grants-scope-before-merchant-comments.json",
+      "sampling": "类型／heads／tests及此前完整程序仍原SHA采样；末评论只准确跳过事实，程序同，不伪重绿。"
+    }
+  },
+  "programProofLimits": [
+    "原39scope完整程序证据：六迁出/shared声明、六metadata命令、旧整个2480nodes及34整consumer70382nodes；末Seer另1367nodes/2raw并核前39SHA，不能说40全程序重跑。",
+    "末两comment更新不是新的runtime/types/head通过；final40 source以两评论纯程序／4raw桥连接旧证据。",
+    "节点遍历child/array回调void，所有实际new声明体单独全文核；不会以恢复whole旧body替代迁出程序。"
+  ],
+  "findings": [],
+  "limits": [
+    "只本40paths/35consumer夜能力授予与转移职责交付，不等于全部库存shape schema/全部55roles/复盘codec或C17完成。",
+    "新增物理owner与内部sharedexports改变cold路径、stack和原private lexical可替换布局；原算法／mappedoutputs不承诺任意模块monkeypatch、CJSnamespace或全历史加载等价。",
+    "本审只read/Git/hash/AST/完整字节逆和文档收据，不执行authorproof/测试/编译/门禁，不写产品或Git/progress。",
+    "Seer原行为已由其独立同行审过；本审只审Grant作者在真实已提交Seer文件的一处route增量，不作为对旧自有源码的新自审批准。"
+  ]
+}

@@ -1,8 +1,6 @@
 /**
- * Runs Miracle Merchant gift selection from the actual merchant stock. Inputs are current bodies
- * and the validated skill/recipient choice; outputs are owned grants, backlash claims and
- * skip/commit evidence. Paid claims keep their original-life validity and never transfer to a
- * replacement giver.
+ * 负责奇迹商人从实际库存选择赠予。输入为当前原体和已验证的技能／收货选择；
+ * 输出为实际拥有的赠予、反噬提案和跳过／提交事实。已付提案保留原生命资格，不转给替换赠予者。
  */
 import { closeMerchantTrade, recordMerchantTrade } from "./state";
 
@@ -14,7 +12,7 @@ import { Camp, Role, Phase, WitchSelfHealRule } from "../../../../core/domain/mo
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { grantNightAbility } from "../ability_changes";
+import { grantNightAbility } from "../night-ability-grants";
 import { canMerchantTrade, getMerchantState } from "./state";
 
 const committed = new WeakMap<World, Set<number>>();

@@ -32,6 +32,7 @@ export {
   type NightAbilityRosterPort,
 } from "./roles/night-ability-actors";
 export * from "./roles/ability_changes";
+export * from "./roles/night-ability-grants";
 export * from "./sheriff/config_normalizer";
 export * from "./sheriff/election";
 export * from "./sheriff/speaking_order";

@@ -24,7 +24,7 @@ import {
   getDefaultConfigRenderRegistry,
 } from "../../../../src/game/mechanisms";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { sixPlayerMvpConfig as plainBoard } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";

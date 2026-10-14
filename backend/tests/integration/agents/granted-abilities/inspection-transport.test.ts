@@ -9,7 +9,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

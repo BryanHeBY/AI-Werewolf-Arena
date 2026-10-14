@@ -10,7 +10,8 @@ import { SHELTER_STATE_SLOT as shelter } from "../../../src/game/mechanisms/role
 import { createShelterState, readShelterState, selectShelter } from "../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
 import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
 import { projectNightState } from "../../../src/game/observation/night-ability-projection";
-import { grantNightAbility, installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";

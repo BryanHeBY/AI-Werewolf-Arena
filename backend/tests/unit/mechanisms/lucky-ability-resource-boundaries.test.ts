@@ -25,11 +25,8 @@ import {
   type BoardConfig,
 } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import {
-  grantNightAbility,
-  transferNightAbility,
-  setNightAbilityEnabled,
-} from "../../../src/game/mechanisms/roles/ability_changes";
+import { setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import {
   allNightAbilities,
   abilityStatus,

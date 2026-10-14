@@ -1,0 +1,47 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+    "before": "/**\n * Runs Black Market trade before the late recipient ability stage. Inputs are current merchant\n * stock and validated trade choices; outputs are copied abilities or death guns, backlash claims\n * and skip/commit facts. Paid-effect lifetime remains tied to the original life, not a\n * replacement merchant.\n */",
+    "after": "/**\n * 负责黑市商人在后置受赠行动之前的交易阶段。输入为当前商人库存与已验证的技能／收货选择；\n * 输出为独立受赠能力或赠枪、反噬提案和等待／提交事实。已付效果仍绑定原生命，不转给替换商人。\n */"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+    "before": "/**\n * Runs Miracle Merchant gift selection from the actual merchant stock. Inputs are current bodies\n * and the validated skill/recipient choice; outputs are owned grants, backlash claims and\n * skip/commit evidence. Paid claims keep their original-life validity and never transfer to a\n * replacement giver.\n */",
+    "after": "/**\n * 负责奇迹商人从实际库存选择赠予。输入为当前原体和已验证的技能／收货选择；\n * 输出为实际拥有的赠予、反噬提案和等待／提交事实。已付提案保留原生命资格，不转给替换赠予者。\n */"
+  },
+  {
+    "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+    "before": "/**\n * Integration tests: Exercises actual SDK/ACP factory transports for a granted dream on an\n * original Villager. Literal prompts, receipts and unchanged native identity check the\n * bound copied ability; temporary files supply adapter/process inputs. Existing literal\n * expectations and independently supplied fixture plans remain the oracle;\n * transport/recording setup is local and no billed model session is started.\n */",
+    "after": "/**\n * 集成测试：负责原平民受赠摄梦能力通过真实 SDK／ACP 工厂传输的接线验证。\n * 输入为独立字面提示、回执、原生身份及临时文件中的适配进程数据；输出沿用原断言核对绑定实例。\n * 录制／传输只做本地装配，不调用计费模型，不由生产输出生成期望结果。\n */"
+  },
+  {
+    "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+    "before": "/**\n * Integration tests: Exercises actual SDK/ACP factory transports for granted Psychic\n * inspection policies. Literal per-instance prompts and receipts check original Villager\n * identity and independent copied policy without prompt contamination. Existing literal\n * expectations and independently supplied fixture plans remain the oracle;\n * transport/recording setup is local and no billed model session is started.\n */",
+    "after": "/**\n * 集成测试：负责受赠通灵查验政策通过真实 SDK／ACP 工厂传输的接线验证。\n * 输入为独立实例提示、回执和原平民身份；输出沿用字面预期核对独立复制政策与无提示串扰。\n * 录制／传输只做本地装配，不调用计费模型，不由生产输出生成期望结果。\n */"
+  },
+  {
+    "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+    "before": "/**\n * Integration tests: Exercises actual SDK/ACP factory transports for a granted role\n * inspection on an original Villager. Literal policy prompts, read-only receipts and\n * native-identity assertions check the copied instance without changing the actor role.\n * Existing literal expectations and independently supplied fixture plans remain the\n * oracle; transport/recording setup is local and no billed model session is started.\n */",
+    "after": "/**\n * 集成测试：负责原平民受赠角色查验通过真实 SDK／ACP 工厂传输的接线验证。\n * 输入为字面政策提示、只读回执及原生身份；输出沿用独立预期核对复制实例，不改变演员角色。\n * 录制／传输只做本地装配，不调用计费模型，不由生产输出生成期望结果。\n */"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "export interface AbilityGrant<K extends NightAbilityKind> {",
+    "after": "/** 安装数据只声明赠予／复制来源；日期和资源政策仍在原安装流程核对，不代表已有行动许可。 */\nexport interface AbilityGrant<K extends NightAbilityKind> {"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=",
+    "after": "  // 原字典赋值已发生后才发布；push／时钟／来源克隆失败都保留已安装实例。\n  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??="
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "  const targetState = copyAbilityData(",
+    "after": "  // 政策回调消费独立数据；黑市随后复验原组件／生命／槽及规范化内容，不用复制结果恢复许可。\n  const targetState = copyAbilityData("
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "  installAbility(world, toId, received, events);\n  delete (",
+    "after": "  // 目标安装与其发布成功后才移除源；delete、退休数组 push 和转出发布各有已写前缀，不回滚。\n  installAbility(world, toId, received, events);\n  delete ("
+  }
+]

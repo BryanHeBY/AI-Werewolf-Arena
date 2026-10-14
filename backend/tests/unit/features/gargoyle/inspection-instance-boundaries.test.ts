@@ -41,7 +41,7 @@ import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_vi
 import {
   grantNightAbility,
   transferNightAbility,
-} from "../../../../src/game/mechanisms/roles/ability_changes";
+} from "../../../../src/game/mechanisms/roles/night-ability-grants";
 
 
 const deck = [Role.Gargoyle, Role.Wolf, Role.Seer, Role.Gravekeeper, Role.Villager, Role.Villager],

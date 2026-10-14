@@ -23,7 +23,8 @@ import {
   type NightRadiantBacklash,
 } from "../../../../core/domain/night_effects";
 import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "../abilities";
-import { grantNightAbility, retireBorrowedNightAbility } from "../ability_changes";
+import { retireBorrowedNightAbility } from "../ability_changes";
+import { grantNightAbility } from "../night-ability-grants";
 import { openEclipseSuppression } from "./suppression";
 import { snapshotBorrowedState, type BorrowedKind } from "./borrowed_state";
 import type { EclipseState } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";

@@ -39,7 +39,7 @@ import { allNightAbilities } from "../../../src/game/mechanisms/roles/abilities"
 import {
   grantNightAbility,
   transferNightAbility,
-} from "../../../src/game/mechanisms/roles/ability_changes";
+} from "../../../src/game/mechanisms/roles/night-ability-grants";
 
 function config(roles: Role[]): BoardConfig {
   return {

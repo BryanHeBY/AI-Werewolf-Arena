@@ -33,7 +33,7 @@ import {
 } from "../../../../src/game/mechanisms/roles/black_market_merchant/night_stage";
 import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
 import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
-import { transferNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { transferNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";

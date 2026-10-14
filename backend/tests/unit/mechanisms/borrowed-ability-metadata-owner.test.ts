@@ -10,11 +10,8 @@ import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import type { GameEvent } from "../../../src/core/domain/events";
-import {
-  grantNightAbility,
-  installNativeAbility,
-  retireBorrowedNightAbility,
-} from "../../../src/game/mechanisms/roles/ability_changes";
+import { installNativeAbility, retireBorrowedNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 
 function instance() {
   const world = new World(),

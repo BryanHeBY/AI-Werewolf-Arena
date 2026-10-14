@@ -40,7 +40,7 @@ import { permitsDeathShot } from "../../../../src/core/domain/deaths";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/night_stages";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { LUCKY_ABILITY_STAGE } from "../../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage";
 import type { GameEvent, AliveComponent } from "../../../../src/core";
 

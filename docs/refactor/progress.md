@@ -656,3 +656,5 @@
 - I04 普通查验准入组合：完整规则表移入具名 ruleset，Seer profile 保留声明装配与同一可写表，stage 仍拥有必选行动与实际提交。三源码经 Root 与独立审查；7个上下文字段、3次目标读取、Scholar/Lucky政策、当前角色晚读取与构造fallback均保持。新3例30断言、原精准1例10断言分两次通过，有限4根类型实际终态0；重要中文说明已补齐。原验证采样后第9旧测试仅被后继Inventory改导入，完整逆保真并单列时点，不称当前并行WIP已重验。全I04和阶段验收继续，见 seer-tool-admission.md。
 
 - I10/P7 选择与后续效果归档核验归属：定序王子、蚀时狼妃、学者／导师三份完整独立算法共1,862行迁入verification/reproduction，三个recording旧叶删除，装配及三个真实场景只改导入。十路径经Root与独立全文/中文语义审；十四路线、十二准确注释完整逆回实际e601七原源，22,366节点/14原输出/102绑定与九control保持，七根有限类型实际终态0。所有样本、标题和断言不变，未重复运行测试；共享checkpoint格式、实际录制与其它核验族保原owner。全P7/P8继续，见 choice-effect-verifier-owners.md。
+
+- C17 夜能力授予／复制／转移：完整四声明归night-ability-grants，原roleOf/emit两实现由授予和metadata共同消费，旧叶退休三个grant API，机制公共出口保原符号。40源码经Root与独立全源/中文语义审，原36实际0ed来源与后继Seer874单consumer分层；35真实consumer44bindings、metadata六命令、12原state/schema/stock/lifecycle控制源保持。新4例22断言与原transfer1例6断言一次各过，原Lucky漏COMPONENT真失败后恢复原导入仅重failed例5断言，六不同成功case共33；有限40根真实d3897b终0。两商人已跳过事实中文精度通过2整程序/4输出末桥修闭，保原Green采样时点不伪重。完整角色schema/codec与阶段验收继续，见 night-ability-grants-owner.md。

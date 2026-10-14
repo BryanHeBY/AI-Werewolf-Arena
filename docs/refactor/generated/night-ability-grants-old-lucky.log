@@ -1,0 +1,21 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts:
+59 | export function expireLuckyAbilitiesOnDeath(
+60 |   world: World,
+61 |   actorId: EntityId,
+62 |   events: GameEvent[],
+63 | ): void {
+64 |   for (const ability of allNightAbilities(world.getComponent(actorId, COMPONENT.Role))) {
+                                                                           ^
+ReferenceError: COMPONENT is not defined
+      at expireLuckyAbilitiesOnDeath (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/ability_changes.ts:64:71)
+      at markPlayersDead (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/death-committer.ts:170:7)
+      at resolve (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/death_resolution.ts:299:45)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts:334:5)
+(fail) Lucky actual death permanently expires an unused gift, and neither revival, enable, transfer nor copying restores it [36.84ms]
+
+ 0 pass
+ 19 filtered out
+ 1 fail
+Ran 1 test across 1 file. [155.00ms]

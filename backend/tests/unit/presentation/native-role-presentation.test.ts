@@ -29,7 +29,7 @@ import type {
 } from "../../../src/game/mechanisms/roles/contracts";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import type { RoleComponent } from "../../../src/core/domain/components/role";
 

@@ -39,7 +39,7 @@ import type { NightStageContext } from "../../../../src/game/mechanisms/stages/n
 
 import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
 import { DeathCause } from "../../../../src/core/domain/deaths";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 
 const deck = [Role.MechanicalWolf, Role.Wolf, Role.Psychic, Role.Witch, Role.Guard, Role.Villager];
 

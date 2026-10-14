@@ -1,0 +1,1570 @@
+{
+  "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2f95007f76726c006f49f871173b47355ea7e7e08387254bfce4f8344829d886"
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "308e5a1fe0bae2cc1f54ead1c53bad79dd7c510b193092dffcd33a13c8e4463e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "e6ff1da8ed75cce6993c9242afd7dd5d2988ac8abdc508ec3f1e1ae481011ec5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "1c9923cca5e56ba38043ce3311c024fd1874e3fcf81e59cc84b10a0d1112afa8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "16c1fed2e4d72c4004e6ec4e9848be98353c4997820a52196e5150ce1b1add45"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "sha256": "361037933da615b3a08dff0bf76e4afd13b8d499d739945ed0f4f6e24a5c9973"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "sha256": "2361feab095cdd12af125bc64c41182e1e803cea7dbbe593a871a694f53c2048"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "sha256": "89cefaf5344b6bcbdc8f86e9a82429d2bd1f76f94213d38cef14eba70a160d73"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "sha256": "bd1fd81eebfee096d3fbd487499f9bef879f4afb0ea5fce0765c0927048b0fea"
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "sha256": "4d843c926f7f03efdad8721fa3cc1e7da5a41a4afaff6e8e3640a5153242f4a8"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "039ea52eee8536d468ae715e8100efc352a730079b9efe1fd707abf54c24b027"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sha256": "2f356ce9416bdc971c5ed9b7c005bb516640c88887e3aacd40c081fdc932ddbe"
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf"
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "279d7620debd9907bbdbea62d41a18a54639938d5dc971a4f7b26a8d54ac7906"
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "sha256": "b4492456e7bd7ef8da3df8cd379e9c4413ec4dedbf8d931e52983a4d4b7e1ddf"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "sha256": "d059a7e03549e1373ac71861063fc14d7b48a0ca4cf3889f4f76abb007a7d675"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "59672b94d6d6c9da146b4d01472718bb81404ef568b086bb76c48910c35a257b"
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "8ada39b42fd918a8406f76dc129ce32cdaaa0c67775809765b06b6a1a150bbc0"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "sha256": "db354443f72137fc2bbf6cdc2c84919e324ee1af9c3205c0611267fe53a72b73"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "d3e7c20108130f8cee0318b2487c29589a18e243dde79e6e54ff48480b686c5f"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "fdac57fa933c38e94c1f6f5d68f671fdc9697269ad82a86ad549712483cbf28b"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "d8922f725e182cbf0b66a4f6fc77fc42e7886da86f917f0b2ec3969146b9ddb4"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "10be62d0bb75efba88c543df624830746e8cd1724d08dd20c54c9dc5f26d4c94"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "c4d8db121493c44bd5d46709d1d42f4689d038866ab1f5c41ac2f0c3db0225d9"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "1612a906544d07c5d07c3643e8f1cd2a59c85acd380e599caaf9891f2192c05f"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6d7617d58ee4332d3efe263ce69ef76096b3ec307fc1da1e153843bd3bc032ef"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "17336504ab3f5ab4ff6a7196459fcf27cb3a973df0da9066975a018f3a43d8d6"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "ad436e97df2f96f4f27e6859f3a575f25096690a70b7715c666bee79c9b6bb96"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "60edf6f26b1ad0348aea50fa1eba60dfb8f621e8686953a972476e49057f62bc"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "3f8270cb5d98ba56c533cf0f2642ff3a023246c226f6678689d04c78850207fe"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "eccceba961b165cd8d82a09644089a68545f4077ebf5ac9577aea994f4f04546"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "sha256": "efddf36ad903e5b7793d1c88352f0c4f9e1b01186af5a40c646dc6b72b28868e"
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "sha256": "e2d9b0e6306e48bbb7be5b2d9eca6616a9d282544f5b4335aad1bb02cb3a660e"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "sha256": "b1685d142505e6da7798e398f339ca7bcd465a13ae06f51aca9defab8ba8580b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "0e32f853939fdf10f9f53172bad7a5f618ed5ef727d54f324e302ef31efc5940"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "sha256": "03cd4912cb8cc77b4b9943dc7f14b491fed6a74a5a46fb2a83354ecce0a88031"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "c7e676b790ed0ec7029df1d7c74b00ecd31f5e0fe4df1f9d00bc505500199462"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "sha256": "f49b1eb8ff3cc298cce1f62b76fbfd5455dee581b26f3f768298c04dcbdc4cbb"
+    }
+  ],
+  "deferred": [],
+  "declarationProof": [
+    {
+      "name": "AbilityGrant",
+      "completeTextSame": true,
+      "typedNodes": 62,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 68,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "currentSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+          "currentSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "name": "grantNightAbility",
+      "completeTextSame": true,
+      "typedNodes": 112,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 134,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "cecabf875465cf63d78a97bc0ae6ca570d3d54779c4a60d03ef5bcc4cf0b1009",
+          "currentSHA": "cecabf875465cf63d78a97bc0ae6ca570d3d54779c4a60d03ef5bcc4cf0b1009"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "15a9ade4078495960e23c2544beaf66d792b9c8e324407674d89acd2ee684317",
+          "currentSHA": "15a9ade4078495960e23c2544beaf66d792b9c8e324407674d89acd2ee684317"
+        }
+      ]
+    },
+    {
+      "name": "installAbility",
+      "completeTextSame": true,
+      "typedNodes": 672,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 717,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "fcd81898ac77c705f268e4edcac0f05ba1ef4b086de132c504a43e700c4ba863",
+          "currentSHA": "fcd81898ac77c705f268e4edcac0f05ba1ef4b086de132c504a43e700c4ba863"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "fcd81898ac77c705f268e4edcac0f05ba1ef4b086de132c504a43e700c4ba863",
+          "currentSHA": "fcd81898ac77c705f268e4edcac0f05ba1ef4b086de132c504a43e700c4ba863"
+        }
+      ]
+    },
+    {
+      "name": "transferNightAbility",
+      "completeTextSame": true,
+      "typedNodes": 885,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1006,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "508550831ee489c6c6806f4bfce350ee08dea33a026f3729c30fbb68b738d7a1",
+          "currentSHA": "508550831ee489c6c6806f4bfce350ee08dea33a026f3729c30fbb68b738d7a1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "21816a3d1a15ef9c00c372b48abf27b3ec7cf5fc405af8634c1261ae89b73df0",
+          "currentSHA": "21816a3d1a15ef9c00c372b48abf27b3ec7cf5fc405af8634c1261ae89b73df0"
+        }
+      ]
+    },
+    {
+      "name": "roleOf",
+      "completeTextSame": true,
+      "typedNodes": 40,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 48,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "74f2987e74742ee05082eb4859f55eab20f29d725b58a0cc2d02c8884eee156e",
+          "currentSHA": "74f2987e74742ee05082eb4859f55eab20f29d725b58a0cc2d02c8884eee156e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "74f2987e74742ee05082eb4859f55eab20f29d725b58a0cc2d02c8884eee156e",
+          "currentSHA": "74f2987e74742ee05082eb4859f55eab20f29d725b58a0cc2d02c8884eee156e"
+        }
+      ]
+    },
+    {
+      "name": "emit",
+      "completeTextSame": true,
+      "typedNodes": 103,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 121,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "4b60225aea2763c1d2b00d4b430f864db614011b3534b077e00585fbd85c6079",
+          "currentSHA": "4b60225aea2763c1d2b00d4b430f864db614011b3534b077e00585fbd85c6079"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "4b60225aea2763c1d2b00d4b430f864db614011b3534b077e00585fbd85c6079",
+          "currentSHA": "4b60225aea2763c1d2b00d4b430f864db614011b3534b077e00585fbd85c6079"
+        }
+      ]
+    }
+  ],
+  "retainedFullSourceExactSame": true,
+  "retainedProof": {
+    "typedNodes": 590,
+    "allTypedNodesSame": true,
+    "noncommentLeaves": 688,
+    "allNoncommentLeavesSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "oldSHA": "2487dfccafd320f2fde2ed206ac227ab52533069a25dd73442fd22ee691b51f8",
+        "currentSHA": "2487dfccafd320f2fde2ed206ac227ab52533069a25dd73442fd22ee691b51f8"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "oldSHA": "cbf4c4a7ea3967c032bfc49f590e6cb05a37dbce205bf01c238592246e3c5b1f",
+        "currentSHA": "cbf4c4a7ea3967c032bfc49f590e6cb05a37dbce205bf01c238592246e3c5b1f"
+      }
+    ]
+  },
+  "retainedDeclarations": [
+    {
+      "name": "setNightAbilityEnabled",
+      "completeTextSame": true,
+      "typedNodes": 102,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 126,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "5a3f3cb158793a9ebb5de4b7ae9bd9d4bfeb968a1af19a26da2a8f25b9ed4866",
+          "currentSHA": "5a3f3cb158793a9ebb5de4b7ae9bd9d4bfeb968a1af19a26da2a8f25b9ed4866"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "32771d56b27ce826e4ecc9228c6df2d82364fcb4c608ba9b76a5ab8570777936",
+          "currentSHA": "32771d56b27ce826e4ecc9228c6df2d82364fcb4c608ba9b76a5ab8570777936"
+        }
+      ]
+    },
+    {
+      "name": "retireBorrowedNightAbility",
+      "completeTextSame": true,
+      "typedNodes": 33,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 48,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "804a619728c2ead5af62bf0b23190221b5b8902580ea5da953e7d6d8737692e8",
+          "currentSHA": "804a619728c2ead5af62bf0b23190221b5b8902580ea5da953e7d6d8737692e8"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "b4f0e0cd28eeb9bb29d277a9d174fca4ef02f357a6e9eaa6caff0b6f02ab0815",
+          "currentSHA": "b4f0e0cd28eeb9bb29d277a9d174fca4ef02f357a6e9eaa6caff0b6f02ab0815"
+        }
+      ]
+    },
+    {
+      "name": "expireLuckyAbilitiesOnDeath",
+      "completeTextSame": true,
+      "typedNodes": 91,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 107,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "abb3ba82033903b11e6a3480d33d69e1ef5708fdfa4dc1e46404227d2d8d9195",
+          "currentSHA": "abb3ba82033903b11e6a3480d33d69e1ef5708fdfa4dc1e46404227d2d8d9195"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "0fba95ad708d772defae659ca61850329ddb805f58170b9f76bf18ade0194db6",
+          "currentSHA": "0fba95ad708d772defae659ca61850329ddb805f58170b9f76bf18ade0194db6"
+        }
+      ]
+    },
+    {
+      "name": "installNativeAbility",
+      "completeTextSame": true,
+      "typedNodes": 185,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 183,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "dfbc01eba69c3f0b4f44b7a1a74fd81a7301de144a025f6e74bf5c1c6e76a748",
+          "currentSHA": "dfbc01eba69c3f0b4f44b7a1a74fd81a7301de144a025f6e74bf5c1c6e76a748"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "0a7414b55a3073ef199219fe501c29dc6280bae2e8552a04803d66eb4ba6e06d",
+          "currentSHA": "0a7414b55a3073ef199219fe501c29dc6280bae2e8552a04803d66eb4ba6e06d"
+        }
+      ]
+    },
+    {
+      "name": "setNightAbilityStartDay",
+      "completeTextSame": true,
+      "typedNodes": 27,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 31,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "2f69c560c79f0852b8fc72a122ed06931270b1d16e2eb24d892ca2e1be7e3c0f",
+          "currentSHA": "2f69c560c79f0852b8fc72a122ed06931270b1d16e2eb24d892ca2e1be7e3c0f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "f362a442d4bbd6f649655a33e0305c81e019a0e73835a32d11e3a4d458e915f2",
+          "currentSHA": "f362a442d4bbd6f649655a33e0305c81e019a0e73835a32d11e3a4d458e915f2"
+        }
+      ]
+    },
+    {
+      "name": "recordNightAbilityUse",
+      "completeTextSame": true,
+      "typedNodes": 58,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 73,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "b0bea91e552112672afa76fc42107ee1878dea59d91167700ac4e0ec0ee47cc9",
+          "currentSHA": "b0bea91e552112672afa76fc42107ee1878dea59d91167700ac4e0ec0ee47cc9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "4ccf29cc603005188f6f56db61a1b39ddef4095edb673c7ad92864fa40d1b493",
+          "currentSHA": "4ccf29cc603005188f6f56db61a1b39ddef4095edb673c7ad92864fa40d1b493"
+        }
+      ]
+    }
+  ],
+  "wholeOriginalProof": {
+    "typedNodes": 2480,
+    "allTypedNodesSame": true,
+    "noncommentLeaves": 2809,
+    "allNoncommentLeavesSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "oldSHA": "be95b5d09dc32c45a233f2d18b1f7c1ba570af85e79a55b1fe10e22abbbbf3c6",
+        "currentSHA": "be95b5d09dc32c45a233f2d18b1f7c1ba570af85e79a55b1fe10e22abbbbf3c6"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "oldSHA": "978bfc401ed04d246dd4d1246c69bb1eecd3eb333216d430adfcb1b6bacba334",
+        "currentSHA": "978bfc401ed04d246dd4d1246c69bb1eecd3eb333216d430adfcb1b6bacba334"
+      }
+    ]
+  },
+  "consumers": [
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "4ace55cd44ba34912e1d15199b8b649c3df46dd18fffc485ddb8ea7dedc2d579",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1119,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1344,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "01f221516f793f6bbbe2f2992eb4ccac0d83da25138a9689e41efa444e568726",
+          "currentSHA": "01f221516f793f6bbbe2f2992eb4ccac0d83da25138a9689e41efa444e568726"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "b338a1846b908f5f8bf3ed3c6f02bbe55532fd400013ad0265d271d4eab74d38",
+          "currentSHA": "b338a1846b908f5f8bf3ed3c6f02bbe55532fd400013ad0265d271d4eab74d38"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "205ac83d4b7bb6af63c2b91ee7f613923044a223b1fa0bf9a93bee600edeb7d6",
+      "completeSourceInverseSame": true,
+      "typedNodes": 950,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1165,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "dcd9b1bf8dc6014d3f9ae82a10b58fc5c9fe1af601289f40a4bb8cea7446dca4",
+          "currentSHA": "dcd9b1bf8dc6014d3f9ae82a10b58fc5c9fe1af601289f40a4bb8cea7446dca4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "e6b32e7417e9553382466b99cfefa6dc9ad3c93b1029d763fcce8f6107919d85",
+          "currentSHA": "e6b32e7417e9553382466b99cfefa6dc9ad3c93b1029d763fcce8f6107919d85"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "16c1fed2e4d72c4004e6ec4e9848be98353c4997820a52196e5150ce1b1add45",
+      "completeSourceInverseSame": true,
+      "typedNodes": 4601,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 5359,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "3d006a878dc8b4503de4293e4a3ca52428a1946018697486d498efa74b76290a",
+          "currentSHA": "3d006a878dc8b4503de4293e4a3ca52428a1946018697486d498efa74b76290a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "a6c5000ee3afdb4acb900e97e219d0ea655b39f21f8c94c0e7173cf3d4f3a584",
+          "currentSHA": "a6c5000ee3afdb4acb900e97e219d0ea655b39f21f8c94c0e7173cf3d4f3a584"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "sha256": "361037933da615b3a08dff0bf76e4afd13b8d499d739945ed0f4f6e24a5c9973",
+      "completeSourceInverseSame": true,
+      "typedNodes": 860,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1100,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "db04b45555e4a66ae2563d2cdc29df099714e694289b15e4dca6246b002b0a6f",
+          "currentSHA": "db04b45555e4a66ae2563d2cdc29df099714e694289b15e4dca6246b002b0a6f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "b4fefd34711c858d316699392c598398bd2f96b1687bd80c12e432ccb4366303",
+          "currentSHA": "b4fefd34711c858d316699392c598398bd2f96b1687bd80c12e432ccb4366303"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "sha256": "2361feab095cdd12af125bc64c41182e1e803cea7dbbe593a871a694f53c2048",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1844,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 2358,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "c72438f3d7494600deca1c0ee159f4cf9bcbdaccd079f9ee8e3ae9612a809a37",
+          "currentSHA": "c72438f3d7494600deca1c0ee159f4cf9bcbdaccd079f9ee8e3ae9612a809a37"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "1cce6459cd0ccc57591c02a875978a1fc54841df88d2ecc410dbe5bb6972fa73",
+          "currentSHA": "1cce6459cd0ccc57591c02a875978a1fc54841df88d2ecc410dbe5bb6972fa73"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "sha256": "89cefaf5344b6bcbdc8f86e9a82429d2bd1f76f94213d38cef14eba70a160d73",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1090,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1364,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "3650e2c130800631b2f7229115048fcc6cb4c2598f8950f93cd6237436cefbf1",
+          "currentSHA": "3650e2c130800631b2f7229115048fcc6cb4c2598f8950f93cd6237436cefbf1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "516d5b1c2c79ce24cbf4dbe3c3af076be2f3870886badd5ab8acf3c79c23ef9b",
+          "currentSHA": "516d5b1c2c79ce24cbf4dbe3c3af076be2f3870886badd5ab8acf3c79c23ef9b"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "sha256": "bd1fd81eebfee096d3fbd487499f9bef879f4afb0ea5fce0765c0927048b0fea",
+      "completeSourceInverseSame": true,
+      "typedNodes": 905,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1157,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "8ed3b844b11b554e11e82549dc0dfdba2c1591b379877065e03de516c82dd19b",
+          "currentSHA": "8ed3b844b11b554e11e82549dc0dfdba2c1591b379877065e03de516c82dd19b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "680a15b54d78b3f0f513e54892d770d5c568e60831f91a32e46e1379dfea5a71",
+          "currentSHA": "680a15b54d78b3f0f513e54892d770d5c568e60831f91a32e46e1379dfea5a71"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "sha256": "4d843c926f7f03efdad8721fa3cc1e7da5a41a4afaff6e8e3640a5153242f4a8",
+      "completeSourceInverseSame": true,
+      "typedNodes": 422,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 547,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "71d0ffd0135eebb5d90fb386248e52d773472ef3b4b13af03b41c1a7412985f7",
+          "currentSHA": "71d0ffd0135eebb5d90fb386248e52d773472ef3b4b13af03b41c1a7412985f7"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "e6510badb20417bf0258d63a6f105710abeb057c3154775d5e32fd2246e118e3",
+          "currentSHA": "e6510badb20417bf0258d63a6f105710abeb057c3154775d5e32fd2246e118e3"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "039ea52eee8536d468ae715e8100efc352a730079b9efe1fd707abf54c24b027",
+      "completeSourceInverseSame": true,
+      "typedNodes": 3843,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 4956,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "cb10546d726238387ef4d239614819f88e9d1400e8d84a8ac6e08dc177b0c64d",
+          "currentSHA": "cb10546d726238387ef4d239614819f88e9d1400e8d84a8ac6e08dc177b0c64d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "c3ca8a18eed666bfc04c6519984562651e9998817759e6fe459442b4d51b0f8c",
+          "currentSHA": "c3ca8a18eed666bfc04c6519984562651e9998817759e6fe459442b4d51b0f8c"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sha256": "2f356ce9416bdc971c5ed9b7c005bb516640c88887e3aacd40c081fdc932ddbe",
+      "completeSourceInverseSame": true,
+      "typedNodes": 3580,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 4469,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "ab3df07139f967f001a58322291fd065ed6b4291b212cbeec022889983418c9f",
+          "currentSHA": "ab3df07139f967f001a58322291fd065ed6b4291b212cbeec022889983418c9f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "9a6de81ad20d7feee89fe24f007cdafad60ae66fe8b97712ef3cb42f775c99bc",
+          "currentSHA": "9a6de81ad20d7feee89fe24f007cdafad60ae66fe8b97712ef3cb42f775c99bc"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf",
+      "completeSourceInverseSame": true,
+      "typedNodes": 3925,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 5063,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "87c20fe15315323f5fbcbe23589db93f30a937d2b25a1ac4a7918d40fd4de1c9",
+          "currentSHA": "87c20fe15315323f5fbcbe23589db93f30a937d2b25a1ac4a7918d40fd4de1c9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "3c8b60ce11c18a8825df7709c98eef2da5075b36fd42fb8b0ce9f215c9f15111",
+          "currentSHA": "3c8b60ce11c18a8825df7709c98eef2da5075b36fd42fb8b0ce9f215c9f15111"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "279d7620debd9907bbdbea62d41a18a54639938d5dc971a4f7b26a8d54ac7906",
+      "completeSourceInverseSame": true,
+      "typedNodes": 4763,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 5944,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "65175ba1fe96c235a2eecfa2fb135044dc4b3145be3aeb3deff434e14808168f",
+          "currentSHA": "65175ba1fe96c235a2eecfa2fb135044dc4b3145be3aeb3deff434e14808168f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "53c161c8a6ea07405a2cccd4b8162ab6f18f66aa4f0fae853f82cff6503c9e5a",
+          "currentSHA": "53c161c8a6ea07405a2cccd4b8162ab6f18f66aa4f0fae853f82cff6503c9e5a"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "sha256": "b4492456e7bd7ef8da3df8cd379e9c4413ec4dedbf8d931e52983a4d4b7e1ddf",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1091,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1397,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "66163880c0cf501e0485ed468878c8f582c10190f94b8838a46e7db4dd97c321",
+          "currentSHA": "66163880c0cf501e0485ed468878c8f582c10190f94b8838a46e7db4dd97c321"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "cd2c8269aa9fd77d383645c36322161cd3277fe0dc2957afaa082cc9b8b91946",
+          "currentSHA": "cd2c8269aa9fd77d383645c36322161cd3277fe0dc2957afaa082cc9b8b91946"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "sha256": "d059a7e03549e1373ac71861063fc14d7b48a0ca4cf3889f4f76abb007a7d675",
+      "completeSourceInverseSame": true,
+      "typedNodes": 2494,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 3275,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "fff13668519bd5ff7506c5a1f26ea8cfd0cd97a350a5b57f5d23aae51a2839bf",
+          "currentSHA": "fff13668519bd5ff7506c5a1f26ea8cfd0cd97a350a5b57f5d23aae51a2839bf"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "3da2e5eff611bca454591a0158f9391bd3f36728d8650298b2452704d2d8ac2d",
+          "currentSHA": "3da2e5eff611bca454591a0158f9391bd3f36728d8650298b2452704d2d8ac2d"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "59672b94d6d6c9da146b4d01472718bb81404ef568b086bb76c48910c35a257b",
+      "completeSourceInverseSame": true,
+      "typedNodes": 2230,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 2932,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "0df32326158e92f7d706a58341d1e694e32912a8b24aa302c6b754b11e0d58da",
+          "currentSHA": "0df32326158e92f7d706a58341d1e694e32912a8b24aa302c6b754b11e0d58da"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "2daec18cba7dc705ccdfdcab1e206fc58bd3b97fd877da552958cea74a84fa28",
+          "currentSHA": "2daec18cba7dc705ccdfdcab1e206fc58bd3b97fd877da552958cea74a84fa28"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "8ada39b42fd918a8406f76dc129ce32cdaaa0c67775809765b06b6a1a150bbc0",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1689,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 2168,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "4c7fee3ebd762395e26f768e5266101caddd945aa4b718df639211805a6d366d",
+          "currentSHA": "4c7fee3ebd762395e26f768e5266101caddd945aa4b718df639211805a6d366d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "62dfeda4f137e762ae798a6a9909eb7be597006d0a6cdc98739491873fb6b47d",
+          "currentSHA": "62dfeda4f137e762ae798a6a9909eb7be597006d0a6cdc98739491873fb6b47d"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007",
+      "completeSourceInverseSame": true,
+      "typedNodes": 2036,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 2626,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "dd4e929f2701bfd2618152951d3b97d5f0dad57578112cf18645e22e2e118c21",
+          "currentSHA": "dd4e929f2701bfd2618152951d3b97d5f0dad57578112cf18645e22e2e118c21"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "4f79ccd01828ff85b39f86803295460ba494a4a828977f78b42dee9af24f27f8",
+          "currentSHA": "4f79ccd01828ff85b39f86803295460ba494a4a828977f78b42dee9af24f27f8"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "sha256": "db354443f72137fc2bbf6cdc2c84919e324ee1af9c3205c0611267fe53a72b73",
+      "completeSourceInverseSame": true,
+      "typedNodes": 947,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1265,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "d1c200cee95781d11c2d296bdfe37624c94f3a196735ee1a559cd56fd4f8b421",
+          "currentSHA": "d1c200cee95781d11c2d296bdfe37624c94f3a196735ee1a559cd56fd4f8b421"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "4f019fa88a3247208f98925343565076257c2231ef5ae834b0378d51bfe13b4b",
+          "currentSHA": "4f019fa88a3247208f98925343565076257c2231ef5ae834b0378d51bfe13b4b"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "d3e7c20108130f8cee0318b2487c29589a18e243dde79e6e54ff48480b686c5f",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1086,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1461,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "21bd5b3570ea9d7cf66a95fc4bb0a8f22d4a40aac7a46a213c992a906eb4586e",
+          "currentSHA": "21bd5b3570ea9d7cf66a95fc4bb0a8f22d4a40aac7a46a213c992a906eb4586e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "69288722e7172afed0c75a4976a6c714ee37414cda0ab68eb4e26e659396ede5",
+          "currentSHA": "69288722e7172afed0c75a4976a6c714ee37414cda0ab68eb4e26e659396ede5"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "fdac57fa933c38e94c1f6f5d68f671fdc9697269ad82a86ad549712483cbf28b",
+      "completeSourceInverseSame": true,
+      "typedNodes": 2501,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 3296,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "15df7f434f781e9a177834d38af5dbc0d6a062ec21a3259566775584cef8ff8d",
+          "currentSHA": "15df7f434f781e9a177834d38af5dbc0d6a062ec21a3259566775584cef8ff8d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "271e301b5c814015af931a20de5422c3955b2f2e12bb33a6f9bba6d1924442a5",
+          "currentSHA": "271e301b5c814015af931a20de5422c3955b2f2e12bb33a6f9bba6d1924442a5"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "d8922f725e182cbf0b66a4f6fc77fc42e7886da86f917f0b2ec3969146b9ddb4",
+      "completeSourceInverseSame": true,
+      "typedNodes": 4191,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 5559,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "5b5d05af8bd528422ec707a2ceedec7661b8b6428cadf74d37d2fda76f825561",
+          "currentSHA": "5b5d05af8bd528422ec707a2ceedec7661b8b6428cadf74d37d2fda76f825561"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "319c4e3d35bd3c18943907bbf4f199ee89bbb30c5240b74aa780df262d591073",
+          "currentSHA": "319c4e3d35bd3c18943907bbf4f199ee89bbb30c5240b74aa780df262d591073"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "10be62d0bb75efba88c543df624830746e8cd1724d08dd20c54c9dc5f26d4c94",
+      "completeSourceInverseSame": true,
+      "typedNodes": 3267,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 4315,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "3643fd23cea30287f38c1f208cfc99bf4a8023ebd39f07c3b06830ffbb45f909",
+          "currentSHA": "3643fd23cea30287f38c1f208cfc99bf4a8023ebd39f07c3b06830ffbb45f909"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "d6d061140ffb024b76e2076dd753ce2818a92a2ec1e0d01ba7357fb077d77345",
+          "currentSHA": "d6d061140ffb024b76e2076dd753ce2818a92a2ec1e0d01ba7357fb077d77345"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "c4d8db121493c44bd5d46709d1d42f4689d038866ab1f5c41ac2f0c3db0225d9",
+      "completeSourceInverseSame": true,
+      "typedNodes": 578,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 759,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "4a29eef36d10062a1b801b9f6012e2e8e5acb07fef4d539fc5e79ef1d11e8078",
+          "currentSHA": "4a29eef36d10062a1b801b9f6012e2e8e5acb07fef4d539fc5e79ef1d11e8078"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "9666c4a31aca076b94c6d569bd7dd9af01afac71d57bf305364fd7da0121dcd9",
+          "currentSHA": "9666c4a31aca076b94c6d569bd7dd9af01afac71d57bf305364fd7da0121dcd9"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "1612a906544d07c5d07c3643e8f1cd2a59c85acd380e599caaf9891f2192c05f",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1657,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 2227,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "ef98bb2762cf81cd9b91f1d1d27ecd4693582d04825203b3def99d1dd8d63d72",
+          "currentSHA": "ef98bb2762cf81cd9b91f1d1d27ecd4693582d04825203b3def99d1dd8d63d72"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "be98060b18db9c384586e4951cd9eaf4073292d2fad98e0ccbfb531035fea785",
+          "currentSHA": "be98060b18db9c384586e4951cd9eaf4073292d2fad98e0ccbfb531035fea785"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6d7617d58ee4332d3efe263ce69ef76096b3ec307fc1da1e153843bd3bc032ef",
+      "completeSourceInverseSame": true,
+      "typedNodes": 2187,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 2723,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "b411246cb3cc43720f87b9136e7568037ab50bcc0dd597d0c3ecd3017b44ea09",
+          "currentSHA": "b411246cb3cc43720f87b9136e7568037ab50bcc0dd597d0c3ecd3017b44ea09"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "76ab52ccf5fe71b110d124dce850c03dc2ab7cb41110524f4d541274947451ef",
+          "currentSHA": "76ab52ccf5fe71b110d124dce850c03dc2ab7cb41110524f4d541274947451ef"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "17336504ab3f5ab4ff6a7196459fcf27cb3a973df0da9066975a018f3a43d8d6",
+      "completeSourceInverseSame": true,
+      "typedNodes": 683,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 913,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "0522d9b20592482cf3364bc8f9965df06c4b21e96f287ea80bad492a3dfd0cbf",
+          "currentSHA": "0522d9b20592482cf3364bc8f9965df06c4b21e96f287ea80bad492a3dfd0cbf"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "68b60cce27f1ecd44a2c0bcf2e3b66cf0e994b1420b33eef68202585ace54b0e",
+          "currentSHA": "68b60cce27f1ecd44a2c0bcf2e3b66cf0e994b1420b33eef68202585ace54b0e"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "ad436e97df2f96f4f27e6859f3a575f25096690a70b7715c666bee79c9b6bb96",
+      "completeSourceInverseSame": true,
+      "typedNodes": 3386,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 4222,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "21b04482548b36dc235510b79dddf19e601e9b46f224760ff1680cf9f645dad0",
+          "currentSHA": "21b04482548b36dc235510b79dddf19e601e9b46f224760ff1680cf9f645dad0"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "9bf834ec02a8ee9385d49759c92ad23dbe49d37d7c7b606888cd955770fbf78f",
+          "currentSHA": "9bf834ec02a8ee9385d49759c92ad23dbe49d37d7c7b606888cd955770fbf78f"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "60edf6f26b1ad0348aea50fa1eba60dfb8f621e8686953a972476e49057f62bc",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1278,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1712,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "9f024e7e6fc712b2a9b06cf565601852547c09d19ff7c1ee7e778b40e1fee8ff",
+          "currentSHA": "9f024e7e6fc712b2a9b06cf565601852547c09d19ff7c1ee7e778b40e1fee8ff"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "63b3e9d8b14519f197ca52c6bf6a67edf7498e13450ddd3048b60b5f6cb4b42b",
+          "currentSHA": "63b3e9d8b14519f197ca52c6bf6a67edf7498e13450ddd3048b60b5f6cb4b42b"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "3f8270cb5d98ba56c533cf0f2642ff3a023246c226f6678689d04c78850207fe",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1504,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1908,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "d0e8fcbe2102d3511c4f67857b08c10fb3eea8f14abaf13850d18f00c451b84f",
+          "currentSHA": "d0e8fcbe2102d3511c4f67857b08c10fb3eea8f14abaf13850d18f00c451b84f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "22d425c160d92ca28e2f14a2d18614b588344c05445ee8cdd046e0368556cd63",
+          "currentSHA": "22d425c160d92ca28e2f14a2d18614b588344c05445ee8cdd046e0368556cd63"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31",
+      "completeSourceInverseSame": true,
+      "typedNodes": 2929,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 3934,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "34a1b7e8047823a0fe8f480f011d2aa76bc738862f4704a3b8fc97cd82ee09a0",
+          "currentSHA": "34a1b7e8047823a0fe8f480f011d2aa76bc738862f4704a3b8fc97cd82ee09a0"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "1e89011a0764b551e664dda0fc4ceebe2856ba4d8bbc87e0a20fb8f9c232fb84",
+          "currentSHA": "1e89011a0764b551e664dda0fc4ceebe2856ba4d8bbc87e0a20fb8f9c232fb84"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "eccceba961b165cd8d82a09644089a68545f4077ebf5ac9577aea994f4f04546",
+      "completeSourceInverseSame": true,
+      "typedNodes": 2330,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 3157,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "a9370a0e176a909d49d6ba725de0ae9da044b4fce841e5b4097984ee4ccf46cf",
+          "currentSHA": "a9370a0e176a909d49d6ba725de0ae9da044b4fce841e5b4097984ee4ccf46cf"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "22f917691f980ed7d6d6600ee1fed7ae7086bd9202711d3370c35e90270ee414",
+          "currentSHA": "22f917691f980ed7d6d6600ee1fed7ae7086bd9202711d3370c35e90270ee414"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "sha256": "efddf36ad903e5b7793d1c88352f0c4f9e1b01186af5a40c646dc6b72b28868e",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1361,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1840,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "e4e7acfa5c3603ce69650bae84c5db90a4f4e325c70c28017f76a516f9298366",
+          "currentSHA": "e4e7acfa5c3603ce69650bae84c5db90a4f4e325c70c28017f76a516f9298366"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "d7f4a276172778ef9ea516c6cabd0b390aef52542296ac93e3edd749d88e2529",
+          "currentSHA": "d7f4a276172778ef9ea516c6cabd0b390aef52542296ac93e3edd749d88e2529"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "sha256": "e2d9b0e6306e48bbb7be5b2d9eca6616a9d282544f5b4335aad1bb02cb3a660e",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1371,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 1845,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "647537affda3aef32739afb3c62db29d8a8694b3b204779b8be710b3c5cf55c0",
+          "currentSHA": "647537affda3aef32739afb3c62db29d8a8694b3b204779b8be710b3c5cf55c0"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "1043c058437e9dedc390a9ecb32f3c50ebd4c7d1337aab3015863dae14404646",
+          "currentSHA": "1043c058437e9dedc390a9ecb32f3c50ebd4c7d1337aab3015863dae14404646"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "sha256": "b1685d142505e6da7798e398f339ca7bcd465a13ae06f51aca9defab8ba8580b",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1684,
+      "allTypedNodesSame": true,
+      "noncommentLeaves": 2249,
+      "allNoncommentLeavesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "0694f64f78a59610a33bd1102eefda50355b7d97f6df9ea16b498a09a2b2d104",
+          "currentSHA": "0694f64f78a59610a33bd1102eefda50355b7d97f6df9ea16b498a09a2b2d104"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "4c784600c62ae577801a1d3207a35f26bd2a1ca3f175bdb4bb99ecd2d4ab853a",
+          "currentSHA": "4c784600c62ae577801a1d3207a35f26bd2a1ca3f175bdb4bb99ecd2d4ab853a"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "sha256": "f49b1eb8ff3cc298cce1f62b76fbfd5455dee581b26f3f768298c04dcbdc4cbb",
+      "provenance": "actual Git 874030190c7b26980c1f82fe9a638caad3be99c6",
+      "completeSourceInverseSame": true,
+      "typedNodes": 1367,
+      "allTypedNodesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "oldSHA": "67e08c91d5923e971fb544c389f35e7425f4a9a639b642e3698b256a801ecbb5",
+          "currentSHA": "67e08c91d5923e971fb544c389f35e7425f4a9a639b642e3698b256a801ecbb5"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "oldSHA": "c3e7520c956b6712d406a1d37aec78cddbc9bd30927da5a67416059393b79813",
+          "currentSHA": "c3e7520c956b6712d406a1d37aec78cddbc9bd30927da5a67416059393b79813"
+        }
+      ]
+    }
+  ],
+  "index": {
+    "path": "backend/src/game/mechanisms/index.ts",
+    "canonicalExportsOnly": true,
+    "typedNodes": 81,
+    "allTypedNodesSame": true,
+    "noncommentLeaves": 182,
+    "allNoncommentLeavesSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "oldSHA": "3619835fed07dfc9d1fc978f401809da474ddad3676c7b053af448cb43f3a3b3",
+        "currentSHA": "3619835fed07dfc9d1fc978f401809da474ddad3676c7b053af448cb43f3a3b3"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "oldSHA": "6228741e10793c339bb6c532c3f9c9425e79f953c0f748ff85140fffd6256fca",
+        "currentSHA": "6228741e10793c339bb6c532c3f9c9425e79f953c0f748ff85140fffd6256fca"
+      }
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38",
+      "currentSHA": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+      "sha256": "7b1b2e611e030d2a5353faec14c54fe2b7c67eef84d15718ff604babf6db85af",
+      "currentSHA": "7b1b2e611e030d2a5353faec14c54fe2b7c67eef84d15718ff604babf6db85af",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+      "sha256": "4369f772e7c681a59b3cfcd4c297ab21a487df473a2bbf0b493270c9c454043f",
+      "currentSHA": "4369f772e7c681a59b3cfcd4c297ab21a487df473a2bbf0b493270c9c454043f",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+      "sha256": "266ad1977e235c1cc265e0fed82179884e8f70b442fc1eb4a58de56afd19d125",
+      "currentSHA": "266ad1977e235c1cc265e0fed82179884e8f70b442fc1eb4a58de56afd19d125",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+      "sha256": "bc46a87101d548ae302384aa04cccea80c7b9d886c83ca96874b4adfda841a91",
+      "currentSHA": "bc46a87101d548ae302384aa04cccea80c7b9d886c83ca96874b4adfda841a91",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+      "sha256": "91cd3fffb1d087486f3eca78b49e9dc54bd700545fbaee0b8dffeb43800d34c7",
+      "currentSHA": "91cd3fffb1d087486f3eca78b49e9dc54bd700545fbaee0b8dffeb43800d34c7",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "sha256": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9",
+      "currentSHA": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "sha256": "08a76bca3bf4f4aa42a599007c458c3780dd30d9b8b013b03c41227a79363751",
+      "currentSHA": "08a76bca3bf4f4aa42a599007c458c3780dd30d9b8b013b03c41227a79363751",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "0ee74cdb94177045b4496b45462e208e0ec16ce62bb477845a851c3f68767c9a",
+      "currentSHA": "0ee74cdb94177045b4496b45462e208e0ec16ce62bb477845a851c3f68767c9a",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "94855dec2f132f0c0021f2297526b1bb1061c9181fb79db6b60703663621e1d3",
+      "currentSHA": "94855dec2f132f0c0021f2297526b1bb1061c9181fb79db6b60703663621e1d3",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "currentSHA": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/observation/night-ability-projection.ts",
+      "sha256": "5b98de29024534fec0b3bb3b7207d3bad3b1c54cfa4bd6e121d2fc554bfa7ed0",
+      "currentSHA": "5b98de29024534fec0b3bb3b7207d3bad3b1c54cfa4bd6e121d2fc554bfa7ed0",
+      "wholeBytesSame": true
+    }
+  ],
+  "limits": [
+    "原直接grant/transfer叶API退休；机制聚合仍公开同名实际新owner binding，不是旧叶转发。",
+    "完整函数／保留程序／消费者逆保持，但新模块初始化与私有物理owner路径改变；不声称加载图或任意module monkeypatch环境等价。",
+    "copyAbilityData/schema接受集合与role payload/Frame/权限/付款仍原owner；非全部库存或归档codec验收。"
+  ],
+  "stageAttribution": {
+    "first": {
+      "consumers": 34,
+      "source": 39,
+      "launchChunk": "3019e2",
+      "sessionId": 86215,
+      "terminalChunk": "b3aace",
+      "exitCode": 0
+    },
+    "final": {
+      "scope": 40,
+      "addedConsumer": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "baseCommit": "874030190c7b26980c1f82fe9a638caad3be99c6"
+    },
+    "limitation": "末尾只证明新增真实Git消费路径并重新核原39source字节；没有伪称重复运行原34完整程序。"
+  },
+  "sourceBeforeFinalCommentDelta": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2f95007f76726c006f49f871173b47355ea7e7e08387254bfce4f8344829d886"
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "308e5a1fe0bae2cc1f54ead1c53bad79dd7c510b193092dffcd33a13c8e4463e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "4ace55cd44ba34912e1d15199b8b649c3df46dd18fffc485ddb8ea7dedc2d579"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "205ac83d4b7bb6af63c2b91ee7f613923044a223b1fa0bf9a93bee600edeb7d6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "16c1fed2e4d72c4004e6ec4e9848be98353c4997820a52196e5150ce1b1add45"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "sha256": "361037933da615b3a08dff0bf76e4afd13b8d499d739945ed0f4f6e24a5c9973"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "sha256": "2361feab095cdd12af125bc64c41182e1e803cea7dbbe593a871a694f53c2048"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "sha256": "89cefaf5344b6bcbdc8f86e9a82429d2bd1f76f94213d38cef14eba70a160d73"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "sha256": "bd1fd81eebfee096d3fbd487499f9bef879f4afb0ea5fce0765c0927048b0fea"
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "sha256": "4d843c926f7f03efdad8721fa3cc1e7da5a41a4afaff6e8e3640a5153242f4a8"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "039ea52eee8536d468ae715e8100efc352a730079b9efe1fd707abf54c24b027"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sha256": "2f356ce9416bdc971c5ed9b7c005bb516640c88887e3aacd40c081fdc932ddbe"
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf"
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "279d7620debd9907bbdbea62d41a18a54639938d5dc971a4f7b26a8d54ac7906"
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "sha256": "b4492456e7bd7ef8da3df8cd379e9c4413ec4dedbf8d931e52983a4d4b7e1ddf"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "sha256": "d059a7e03549e1373ac71861063fc14d7b48a0ca4cf3889f4f76abb007a7d675"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "59672b94d6d6c9da146b4d01472718bb81404ef568b086bb76c48910c35a257b"
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "8ada39b42fd918a8406f76dc129ce32cdaaa0c67775809765b06b6a1a150bbc0"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "sha256": "db354443f72137fc2bbf6cdc2c84919e324ee1af9c3205c0611267fe53a72b73"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "d3e7c20108130f8cee0318b2487c29589a18e243dde79e6e54ff48480b686c5f"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "fdac57fa933c38e94c1f6f5d68f671fdc9697269ad82a86ad549712483cbf28b"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "d8922f725e182cbf0b66a4f6fc77fc42e7886da86f917f0b2ec3969146b9ddb4"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "10be62d0bb75efba88c543df624830746e8cd1724d08dd20c54c9dc5f26d4c94"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "c4d8db121493c44bd5d46709d1d42f4689d038866ab1f5c41ac2f0c3db0225d9"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "1612a906544d07c5d07c3643e8f1cd2a59c85acd380e599caaf9891f2192c05f"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6d7617d58ee4332d3efe263ce69ef76096b3ec307fc1da1e153843bd3bc032ef"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "17336504ab3f5ab4ff6a7196459fcf27cb3a973df0da9066975a018f3a43d8d6"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "ad436e97df2f96f4f27e6859f3a575f25096690a70b7715c666bee79c9b6bb96"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "60edf6f26b1ad0348aea50fa1eba60dfb8f621e8686953a972476e49057f62bc"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "3f8270cb5d98ba56c533cf0f2642ff3a023246c226f6678689d04c78850207fe"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "eccceba961b165cd8d82a09644089a68545f4077ebf5ac9577aea994f4f04546"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "sha256": "efddf36ad903e5b7793d1c88352f0c4f9e1b01186af5a40c646dc6b72b28868e"
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "sha256": "e2d9b0e6306e48bbb7be5b2d9eca6616a9d282544f5b4335aad1bb02cb3a660e"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "sha256": "b1685d142505e6da7798e398f339ca7bcd465a13ae06f51aca9defab8ba8580b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "0e32f853939fdf10f9f53172bad7a5f618ed5ef727d54f324e302ef31efc5940"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "sha256": "03cd4912cb8cc77b4b9943dc7f14b491fed6a74a5a46fb2a83354ecce0a88031"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "c7e676b790ed0ec7029df1d7c74b00ecd31f5e0fe4df1f9d00bc505500199462"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "sha256": "f49b1eb8ff3cc298cce1f62b76fbfd5455dee581b26f3f768298c04dcbdc4cbb"
+    }
+  ],
+  "finalCommentDelta": {
+    "sourceCount": 2,
+    "proof": "docs/refactor/generated/night-ability-grants-merchant-comment-proof.json",
+    "fullTypedNodes": 2069,
+    "fullNoncommentLeaves": 2509,
+    "outputs": 4,
+    "chunk": "3f75fc",
+    "exitCode": 0,
+    "sourceProgramChecksSampling": "上述完整原体／消费者节点与outputs仍是原阶段；末两中文头以独立完整非注释/双输出桥接当前SHA，不重原检查。"
+  }
+}

@@ -14,7 +14,7 @@ import { SEER_VALIDATION_RULES } from "../../../src/rulesets/seer-tool-admission
 import { SEER_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/seer/profile";
 import { setSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { recordOwnNightAction } from "../../../src/game/mechanisms/roles/night_action_history";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";

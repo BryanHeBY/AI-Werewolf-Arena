@@ -18,7 +18,7 @@ import {
 import { AliveComponent, aliveLifeVersion } from "../../../../src/core/domain/components/alive";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { transferNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { transferNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
 import { hasDreamNightCommit, DreamNightFrame, type DreamNightLink } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";

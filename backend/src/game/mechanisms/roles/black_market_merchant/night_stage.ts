@@ -1,8 +1,6 @@
 /**
- * Runs Black Market trade before the late recipient ability stage. Inputs are current merchant
- * stock and validated trade choices; outputs are copied abilities or death guns, backlash claims
- * and skip/commit facts. Paid-effect lifetime remains tied to the original life, not a
- * replacement merchant.
+ * 负责黑市商人在后置受赠行动之前的交易阶段。输入为当前商人库存与已验证的技能／收货选择；
+ * 输出为独立受赠能力或赠枪、反噬提案和跳过／提交事实。已付效果仍绑定原生命，不转给替换商人。
  */
 import { closeBlackMarketTrade, recordBlackMarketTrade } from "./state";
 
@@ -13,7 +11,7 @@ import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { grantNightAbility } from "../ability_changes";
+import { grantNightAbility } from "../night-ability-grants";
 import { grantDeathGun } from "../death_abilities";
 import { recipientAbilityStage } from "../recipient_ability_stage";
 import { canBlackMarketTrade, getBlackMarketState } from "./state";

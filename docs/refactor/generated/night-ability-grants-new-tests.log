@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts:
+(pass) grant publication reads push before source and retains the installed instance on source failure [0.71ms]
+(pass) target publication failure retains both installed target and undeleted original source [0.46ms]
+(pass) retired-id getter failure follows source deletion and retains the target grant fact [0.18ms]
+(pass) a late black-market policy replacement revokes transfer before installing another owner [0.39ms]
+
+ 4 pass
+ 0 fail
+ 22 expect() calls
+Ran 4 tests across 1 file. [44.00ms]

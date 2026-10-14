@@ -1,9 +1,7 @@
 /**
- * Integration tests: Exercises actual SDK/ACP factory transports for a granted dream on an
- * original Villager. Literal prompts, receipts and unchanged native identity check the
- * bound copied ability; temporary files supply adapter/process inputs. Existing literal
- * expectations and independently supplied fixture plans remain the oracle;
- * transport/recording setup is local and no billed model session is started.
+ * 集成测试：负责原平民受赠摄梦能力通过真实 SDK／ACP 工厂传输的接线验证。
+ * 输入为独立字面提示、回执、原生身份及临时文件中的适配进程数据；输出沿用原断言核对绑定实例。
+ * 录制／传输只做本地装配，不调用计费模型，不由生产输出生成期望结果。
  */
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
@@ -12,7 +10,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Phase, type ActionRequest } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
 import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";

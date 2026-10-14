@@ -41,7 +41,7 @@ import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_vi
 import {
   grantNightAbility,
   transferNightAbility,
-} from "../../../../src/game/mechanisms/roles/ability_changes";
+} from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 

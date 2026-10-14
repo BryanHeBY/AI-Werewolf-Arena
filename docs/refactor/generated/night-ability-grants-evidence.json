@@ -1,0 +1,487 @@
+{
+  "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+  "lateConsumerCommit": "874030190c7b26980c1f82fe9a638caad3be99c6",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "2f95007f76726c006f49f871173b47355ea7e7e08387254bfce4f8344829d886"
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "308e5a1fe0bae2cc1f54ead1c53bad79dd7c510b193092dffcd33a13c8e4463e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "e6ff1da8ed75cce6993c9242afd7dd5d2988ac8abdc508ec3f1e1ae481011ec5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "1c9923cca5e56ba38043ce3311c024fd1874e3fcf81e59cc84b10a0d1112afa8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "16c1fed2e4d72c4004e6ec4e9848be98353c4997820a52196e5150ce1b1add45"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "sha256": "361037933da615b3a08dff0bf76e4afd13b8d499d739945ed0f4f6e24a5c9973"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "sha256": "2361feab095cdd12af125bc64c41182e1e803cea7dbbe593a871a694f53c2048"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "sha256": "89cefaf5344b6bcbdc8f86e9a82429d2bd1f76f94213d38cef14eba70a160d73"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "sha256": "bd1fd81eebfee096d3fbd487499f9bef879f4afb0ea5fce0765c0927048b0fea"
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "sha256": "4d843c926f7f03efdad8721fa3cc1e7da5a41a4afaff6e8e3640a5153242f4a8"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "039ea52eee8536d468ae715e8100efc352a730079b9efe1fd707abf54c24b027"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sha256": "2f356ce9416bdc971c5ed9b7c005bb516640c88887e3aacd40c081fdc932ddbe"
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf"
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "279d7620debd9907bbdbea62d41a18a54639938d5dc971a4f7b26a8d54ac7906"
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "sha256": "b4492456e7bd7ef8da3df8cd379e9c4413ec4dedbf8d931e52983a4d4b7e1ddf"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "sha256": "d059a7e03549e1373ac71861063fc14d7b48a0ca4cf3889f4f76abb007a7d675"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "59672b94d6d6c9da146b4d01472718bb81404ef568b086bb76c48910c35a257b"
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "8ada39b42fd918a8406f76dc129ce32cdaaa0c67775809765b06b6a1a150bbc0"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "sha256": "db354443f72137fc2bbf6cdc2c84919e324ee1af9c3205c0611267fe53a72b73"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "d3e7c20108130f8cee0318b2487c29589a18e243dde79e6e54ff48480b686c5f"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "fdac57fa933c38e94c1f6f5d68f671fdc9697269ad82a86ad549712483cbf28b"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "d8922f725e182cbf0b66a4f6fc77fc42e7886da86f917f0b2ec3969146b9ddb4"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "10be62d0bb75efba88c543df624830746e8cd1724d08dd20c54c9dc5f26d4c94"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "c4d8db121493c44bd5d46709d1d42f4689d038866ab1f5c41ac2f0c3db0225d9"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "1612a906544d07c5d07c3643e8f1cd2a59c85acd380e599caaf9891f2192c05f"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6d7617d58ee4332d3efe263ce69ef76096b3ec307fc1da1e153843bd3bc032ef"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "17336504ab3f5ab4ff6a7196459fcf27cb3a973df0da9066975a018f3a43d8d6"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "ad436e97df2f96f4f27e6859f3a575f25096690a70b7715c666bee79c9b6bb96"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "60edf6f26b1ad0348aea50fa1eba60dfb8f621e8686953a972476e49057f62bc"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "3f8270cb5d98ba56c533cf0f2642ff3a023246c226f6678689d04c78850207fe"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "eccceba961b165cd8d82a09644089a68545f4077ebf5ac9577aea994f4f04546"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "sha256": "efddf36ad903e5b7793d1c88352f0c4f9e1b01186af5a40c646dc6b72b28868e"
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "sha256": "e2d9b0e6306e48bbb7be5b2d9eca6616a9d282544f5b4335aad1bb02cb3a660e"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "sha256": "b1685d142505e6da7798e398f339ca7bcd465a13ae06f51aca9defab8ba8580b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "0e32f853939fdf10f9f53172bad7a5f618ed5ef727d54f324e302ef31efc5940"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "sha256": "03cd4912cb8cc77b4b9943dc7f14b491fed6a74a5a46fb2a83354ecce0a88031"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "c7e676b790ed0ec7029df1d7c74b00ecd31f5e0fe4df1f9d00bc505500199462"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "sha256": "f49b1eb8ff3cc298cce1f62b76fbfd5455dee581b26f3f768298c04dcbdc4cbb"
+    }
+  ],
+  "documentation": {
+    "path": "docs/refactor/night-ability-grants-owner.md",
+    "sha256": "d355afe21a483cbb259131888732d23d5aa01b8c1be79bd96635a0e49f8ec4e1"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/night-ability-grants-before.json",
+      "sha256": "c38a0d37f987995e21899a76fad5646da7088b662aff7fc6c383267c81b43038"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-bindings-before-seer-consumer.json",
+      "sha256": "633a47703a0fbe549b0e4d41c765223a4f01924db0e76e576024c7915f33afc8"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-bindings.cjs",
+      "sha256": "91e032af146faf820997c2225843ff78536071e46f92125f2de2088dfc7e59fa"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-bindings.json",
+      "sha256": "51d533d39fb134316208e3e924850a272d46a3129445855853e7ca2a80a8b532"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-bindings.log",
+      "sha256": "9ba712078dbb78f89bda21fac844a9fa4164db3b2e0a8a7e922005fe97615d57"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-comments-before-merchant-precision.json",
+      "sha256": "443ce9b98fc08184846eaf63957c08d68336606112ae74e0a182b419d159d849"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-comments.json",
+      "sha256": "e52936f11ec400c03c842a68806da88acceebdef0c6a98b81e0932b776f47898"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-edits-before-component-fix.json",
+      "sha256": "dc562573deec6325152f11c23fb48fa22a629eda821bbdf57c9466f100978dad"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-edits.json",
+      "sha256": "9a4099812a1d8e711747f8e3fc0ae4fc2bf91ec0d72c8447ac1bf36155188fe8"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-evidence-before-merchant-comments.json",
+      "sha256": "e2d5ff0be5bda58d2851d4eb99cce2040f15b4d51c1ae5fb162582c3d60d32cd"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-finalize-proof.cjs",
+      "sha256": "50e4562905b4596e7319c6931d04396137e6f8fd340eca21b0f698fb308fa5f0"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-git-before-proof.json",
+      "sha256": "565a41dc6cdd0d22d9ac6ca1f2a0e67124adae5ab9696feffb88840762d1e9b8"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-git-sources.json",
+      "sha256": "b0e072a9f14fc0a518f00975c299356c2ab67835905b602f402dd90dfc63d020"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-heads.json",
+      "sha256": "3152583407e4e5c7ba6d5fd65044217b81f04d4e83f89f9e412ae637ebffda4c"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-heads.log",
+      "sha256": "ad346565d19d478d2ec81661da311c6b832ecb565c8b9386c4369f377434eeab"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-heads.ts",
+      "sha256": "a2408cc9581ccd29bffd7e108abdea2da96abbd9ca6f9094a2f8bde975e7fd02"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-merchant-comment-delta.json",
+      "sha256": "e6a5ac62e2af943629332d9883d140be8a4c7e3d914eaeaa7fd47cc7c51823e8"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-merchant-comment-proof.cjs",
+      "sha256": "249ce168aeb0099e5e34be378b489e53a6cd448a376ce7ff9f8b9eceb6e5776b"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-merchant-comment-proof.json",
+      "sha256": "886e866654b7b1dc7250691d79dc874836fe1f82b64d0475860936ac7ec21a97"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-merchant-comment-proof.log",
+      "sha256": "d5783ee3e1d27593753197ed1782b6300ca57fc874ae96a11282e66d22628793"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-metadata-component-before-fix.json",
+      "sha256": "f310c328cd2c516e1618e29499d85609448fb0fee171b747ca52efc9983b41ff"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-migrate.cjs",
+      "sha256": "50f53a2940dcc6f63c44e0c67263c64bd37da400b09b489a8340cf6140376220"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-new-tests.log",
+      "sha256": "cafe1bd9f09089846bebc908fba676118eb227915ff41c07afa4144987e31593"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-old-lucky-fixed.log",
+      "sha256": "3ac81e1dab0f68fb093587c0466cac85137034120ee45252e27b4685a8354834"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-old-lucky.log",
+      "sha256": "60cb7d2644e7de3c206c17a6a0054ac0f6fd3701e65aae6b70d2d833fd8e6f7b"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-old-transfer.log",
+      "sha256": "ed38fc8615dd382f1e325d1cf045cbad34bfbe0d56c699b3ab78f0b3a2ba2ef9"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof-before-merchant-comments.json",
+      "sha256": "e03bd680be8036b8c59483d80a7178b6cd4f87d63f08e1cdf4648570efaf3c0c"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof-before-seer-consumer.json",
+      "sha256": "6becdcedc6ce4a6703b103bd03b673f7b499ce8543b1208e13e8d6a2bbbcf030"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof.cjs",
+      "sha256": "89d9d41765e66c5b3d66fce1efdd91fd57f83cbffae9a03a0f173fc6581adf12"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof.json",
+      "sha256": "e51fd72708fb68adc68e5b5bae05d2b7bfbfd7102c2d124643be4d359d69e706"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-proof.log",
+      "sha256": "b14ffe20643e190c27da05d3a14d01c9b9263cf1b1299ad96ab245d6e86ac06f"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-receipts.json",
+      "sha256": "57126dc92712fc2c5a464a324a08371986d268844027c6386722db85bb34d6a4"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-routes.json",
+      "sha256": "baf7f181b11fee9b68aef675bb310a5a8f2cdc3f72b67669974c34fed3e542f1"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-scope-before-merchant-comments.json",
+      "sha256": "d324fe52f152315ceed6ec7fe454504b84a7079e2468000ae8c67aa02bb71760"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-scope-final.json",
+      "sha256": "b68b7a8badde9ebe25d0a80d19cc363ba63d6eb0e3647024f40eb128fcb53151"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-seer-consumer-before.json",
+      "sha256": "538c721a00db27be6cbee91c6befc42b884d39d67998ac4f16c25af9fc52dc92"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-types-config.json",
+      "sha256": "4b0545a9f8338b6a7b4359f67c6f21952273532c34c80b500be3839102ac9fe0"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-grants-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "actualReceipts": {
+    "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+    "scope": 40,
+    "sourceSHAStage": "最终全部40摘要与程序／头检查绑定；有限类型在此冻结源码运行且无后续正文修改。",
+    "tests": [
+      {
+        "stage": "newfour",
+        "chunk": "819d5b",
+        "exitCode": 0,
+        "cases": 4,
+        "assertions": 22,
+        "log": "docs/refactor/generated/night-ability-grants-new-tests.log"
+      },
+      {
+        "stage": "oldexacttransfer",
+        "chunk": "ac459a",
+        "exitCode": 0,
+        "cases": 1,
+        "assertions": 6,
+        "filtered": 11,
+        "log": "docs/refactor/generated/night-ability-grants-old-transfer.log"
+      },
+      {
+        "stage": "oldexactlucky-first",
+        "chunk": "343577",
+        "shellToolExitCode": 0,
+        "testResult": "1 failed; actual log retains ReferenceError COMPONENT is not defined. Shell cat afterward returned 0; this receipt is not a successful test.",
+        "cause": "迁移漏掉仍被expireLuckyAbilitiesOnDeath使用的原值import；真实本批source错误，不是工具诊断。",
+        "log": "docs/refactor/generated/night-ability-grants-old-lucky.log"
+      },
+      {
+        "stage": "oldexactlucky-failed-only",
+        "chunk": "e5e9e9",
+        "exitCode": 0,
+        "cases": 1,
+        "assertions": 5,
+        "filtered": 19,
+        "fix": "仅恢复原COMPONENT import，不改函数body或旧assert；只重失败用例。",
+        "log": "docs/refactor/generated/night-ability-grants-old-lucky-fixed.log"
+      }
+    ],
+    "uniqueFinalCases": 6,
+    "uniqueSuccessfulAssertions": 33,
+    "testsExecutedSeparateRuns": 4,
+    "types": {
+      "roots": 40,
+      "launchChunk": "616b3a",
+      "sessionId": 49075,
+      "terminalChunk": "d3897b",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/night-ability-grants-types.log",
+      "config": "docs/refactor/generated/night-ability-grants-types-config.json",
+      "scope": "实际backend tsconfig.tests继承，只列本批40changed roots；包括新unit编译负例，非全仓check。"
+    },
+    "programProof": [
+      {
+        "stage": "first39",
+        "launchChunk": "3019e2",
+        "sessionId": 86215,
+        "terminalChunk": "b3aace",
+        "exitCode": 0,
+        "source": 39,
+        "consumers": 34,
+        "wholeOriginalNodes": 2480,
+        "consumerNodes": 70382,
+        "movedAndSharedDeclarations": 6,
+        "retainedCommands": 6,
+        "controls": 12
+      },
+      {
+        "stage": "lateSeer",
+        "chunk": "616b3a",
+        "sourceProofSubcommandExitCode": 0,
+        "consumer": 1,
+        "wholeNodes": 1367,
+        "outputs": 2,
+        "prior39SourceHashesFresh": true,
+        "baseCommit": "874030190c7b26980c1f82fe9a638caad3be99c6"
+      }
+    ],
+    "bindings": {
+      "chunk": "7ea0ab",
+      "exitCode": 0,
+      "ownerImportBindings": 25,
+      "firstConsumerFiles": 34,
+      "firstMovedBindings": 43,
+      "finalConsumerFiles": 35,
+      "finalMovedBindings": 44,
+      "modules": 80,
+      "valueEdges": 153,
+      "newOwnerReturnCycles": 0,
+      "limit": "只实际擦除后的静态值import/export图，非全require/dynamic图或初始化时序等价。"
+    },
+    "heads": {
+      "chunk": "5446cb",
+      "exitCode": 0,
+      "sources": 40,
+      "documentationPaths": 506,
+      "diagnostics": 0,
+      "missingChineseHead": 0,
+      "log": "docs/refactor/generated/night-ability-grants-heads.log"
+    },
+    "toolsBeforeSourceWrite": [
+      {
+        "chunk": "ca6b8d",
+        "exitCode": 1,
+        "finding": "Node execFileSync Git EPERM，没有产品写入；真实Git stdout不能据此冒成功。"
+      },
+      {
+        "chunk": "64c342",
+        "exitCode": 1,
+        "finding": "Python盘点读foreign已删除旧verifier路径失败；后续Node仍旧Git EPERM，同样未改产品；修只捕获器跳不存在路径并用Python实际Git输入。"
+      },
+      {
+        "chunk": "3ffcc8",
+        "exitCode": 0,
+        "action": "实际Python Git48捕获／Node全部声明迁移与34routes写入完成。"
+      }
+    ],
+    "notRun": [
+      "Seer已绿测试",
+      "全量suite",
+      "整局",
+      "全量结构门禁",
+      "计费模型",
+      "golden重输",
+      "私有配置"
+    ],
+    "limits": [
+      "公开旧leaf API退休、聚合canonical保持；非全部55角色库存或归档schema完成。"
+    ],
+    "finalCommentDelta": {
+      "chunk": "3f75fc",
+      "exitCode": 0,
+      "sources": 2,
+      "fullTypedNodes": 2069,
+      "fullNoncommentLeaves": 2509,
+      "wholeOutputs": 4,
+      "beforeScope": "docs/refactor/generated/night-ability-grants-scope-before-merchant-comments.json",
+      "sampling": "类型／heads／tests及此前完整程序仍原SHA采样；末评论只准确跳过事实，程序同，不伪重绿。"
+    }
+  },
+  "ownership": [
+    "唯一原private字典与retired数组；完整grant/install/transfer迁具名新owner，shared原roleOf/emit无复制。",
+    "原native六slot／query-copy-status／scope／suppression／Demon审计权限均原owner；旧metadata保留六完整算法。"
+  ],
+  "scopeLimits": [
+    "不是全部库存slot/schema/归档codec验收，旧payload接受集合不强化。",
+    "未保留旧ability_changes grant/type/transfer桥，mechanisms/index直接canonical新owner保同publicsymbol。",
+    "原COMPONENT误删真实runtime失败与仅恢复import收据保留；不以shellcat退出0冒测试成功。",
+    "基线分层真实，未重复Seer绿测试或34全程序证明；有限80module图非完整初始化承诺。",
+    "作者artifact不捕获正在独立审查更新的Root／peer review；review由对应审查者单独最终SHA绑定，避免相互刷新失效。"
+  ],
+  "finalCommentDelta": {
+    "chunk": "3f75fc",
+    "exitCode": 0,
+    "sources": 2,
+    "fullTypedNodes": 2069,
+    "fullNoncommentLeaves": 2509,
+    "wholeOutputs": 4,
+    "beforeScope": "docs/refactor/generated/night-ability-grants-scope-before-merchant-comments.json",
+    "sampling": "类型／heads／tests及此前完整程序仍原SHA采样；末评论只准确跳过事实，程序同，不伪重绿。"
+  }
+}

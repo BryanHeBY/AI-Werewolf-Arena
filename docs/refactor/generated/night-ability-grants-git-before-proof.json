@@ -1,0 +1,228 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "e1e1271cb6a6e3ac8c4c37ec96be64f1dfd33852fac37346245a2e88ff465e1d",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "e5065f68f0a37c6daa5f737ac62846da44e339ad201477beb1cf22a4cca79405",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "738db0d1202f47cefae69ffce47e7a6b451e1781c889853206b8c0f85428165a",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "d666d7a7715b258c29ff8c8679aaf49b6c111a851af54e7de39b33f268a04a4d",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "1763e8846537bcd9cdc5a9b2065a51ea306f3919fe005a881e3e2377c8789d94",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "cb49716a594773a8a13cd4608181038884e66cbd6e5e990a9c48a9a6d05eed61",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "18965bcaad80836ae2ef1119787127e59269f843dee2d7de84c5d637373a7d10",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "4cfec754e21e2470bd98af73bee19203b1a7adb6259939473a632da7c0236e29",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "90d8dd45f84ed89799de76d7b9b3934043a68402370c51ff1eb28f1b4c16f9af",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "218a93330828e87541f9d12ee3a958c35a567ef1226c0cf27f82b9f862c85a60",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "297590bd9b738140dfb6508dfae24a73a155be7181cc593e3879cc5aee88ec7d",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "124ce751a59e3065bc4160af18fefb6ebb2faf0be553266206fb48dd73230f5c",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "d36d3908cb8c2c231f9ca1f97664344578653c8b9d54420343867d2da30c8a0f",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "72398efe8d4e8f966d5707e206d93ae2c68b92925d2f11d5c137c6f4b9bb7a08",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "327ef1ac0a7e3af179f031f76d2c5421fd5b77df377854bf156ddb5924e7a26f",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "168c56560ef2c87c2fd68b317bb73488ecf0ab4164087525bd31ae123df1560e",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "1814247db0a55fd51f512d24a8e960b65af6bc0b0aac172095fe1b45123a9048",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "7c5388adbcc5c68aa51e0fe03316631316bb2299ecd77ae726d4b3093f1ca506",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "70cea97d7f4fbd546063de15f4d792f11c17d480617719102f27a1d97f1b0809",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "a95505e4ba367a65115803fedfcabd9891245ab9c0b483e87020bd82666dd5b3",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "c39d45293a577ab2f035fbb381d0962efa61c1062fae4dcb66a1c2fd6d7caee8",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "e639d29cdb386f2b1656fb6d17f4ddcacb545f8ce08dab37d3c436ab5ca06f73",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "c8b04ecad90d082b9d4eb67ef8ec394c1be6dcccacbdcd170073debc74399241",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "0715658f194f49206c0548f61016debf79611cd60b2e4d2d16826cc59d44670b",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "5967e32a4e54784f192649835018d6021a27fe640b24116c31f8d7a4acd87b70",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "8eabe7021bc22fbcf26dcfd3e3070a4204788ef294accf7d1edbda5eb1f2ce7e",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "7cc67ac35cb2ff17455f3809e2cfd66d049da67bf59113d4deac3f91fae987da",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "7a1f94720479eff99d6fea1db75b0ce497173a1625280e2f837ec915c4794a88",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "7475fc164c212477405e8d3cd0d6a75b591e8791018540a8c22119b664b05db1",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "b7d4021d81f28ec0074f033eb1afb6315885df6732cff2df1085d18a48ece07c",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "082c0072841922987b995dde77f6c111f8eb2a65f9f3a6f048faad6666abb7f3",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "00b43fed1cec30a93af24cedda7352b29ba07ada53699093b9224459cdaa3cdb",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "d349aa87ecb7ebba202697b792eddef943874c99ce88a847ef775c2de3047360",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "08c734a11fae112161389c75b664a279f70029f7ae2ef3ba84c30b8c423c8a6a",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "8ec7b18a9b20e97a83a1ac598cae5c18241770cfa4a355b78490ecc7059d0530",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+      "actualGitSHA256": "3308ed6f5589e0c86f8782d48b692bc6a0ddf680c90918daf6c2051084ac9449",
+      "wholeCapturedBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "baseCommit": "874030190c7b26980c1f82fe9a638caad3be99c6",
+      "actualGitSHA256": "ebdf4e55fd681ff8c3ebd1c0001082072ebce3a9c1fbf15044de4b19947a975b",
+      "wholeCapturedBytesSame": true
+    }
+  ],
+  "sourceCount": 37,
+  "limits": "原36源0ed5b325，末Seer独立提交87403019单路径；不回写此前来源。"
+}

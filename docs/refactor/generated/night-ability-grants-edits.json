@@ -1,0 +1,640 @@
+{
+  "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+  "oldPath": "backend/src/game/mechanisms/roles/ability_changes.ts",
+  "ownerPath": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+  "runtimePath": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+  "movedDeclarations": [
+    {
+      "name": "AbilityGrant",
+      "text": "export interface AbilityGrant<K extends NightAbilityKind> {\n  id: string;\n  kind: K;\n  state: NightAbilityStates[K];\n  source: Extract<AbilitySource, { kind: \"gift\" | \"copy\" }>;\n  startsOnDay: number;\n  expiresAfterDay?: number;\n  maxUses: number | null;\n  sourceDisclosed?: boolean;\n  activation?: \"lucky\" | \"black_market\";\n}"
+    },
+    {
+      "name": "grantNightAbility",
+      "text": "/** 规则调用者明确提供状态／资源政策，不隐式复制目标历史或重置已付库存。 */\nexport function grantNightAbility<K extends NightAbilityKind>(\n  world: World,\n  actorId: EntityId,\n  input: AbilityGrant<K>,\n  events: GameEvent[],\n): NightAbilityReadView<K> {\n  if (input.kind === \"pair_check\") throw Error(\"ability_pair_native_only\");\n  if (input.source.kind !== \"gift\" && input.source.kind !== \"copy\")\n    throw new Error(\"ability_grant_source_invalid\");\n  const ability = copyAbilityData({\n    ...input,\n    sourceDisclosed: input.sourceDisclosed ?? false,\n    uses: 0,\n    lastUsedDay: null,\n    disabled: false,\n  }) as unknown as NightAbility<K>;\n  return installAbility(world, actorId, ability, events) as NightAbilityReadView<K>;\n}"
+    },
+    {
+      "name": "installAbility",
+      "text": "function installAbility(\n  world: World,\n  actorId: EntityId,\n  ability: NightAbility,\n  events: GameEvent[],\n): NightAbility {\n  const input = ability;\n  if (input.kind === \"pair_check\") throw Error(\"ability_pair_native_only\");\n  if (input.kind === \"role_check\") roleInspectionPolicy(input.state);\n  if (\n    input.kind === \"dream\" &&\n    input.state.protectionPolicy !== undefined &&\n    !DREAM_PROTECTION_POLICIES.includes(input.state.protectionPolicy)\n  )\n    throw new Error(\"ability_dream_policy_invalid\");\n  const source = input.source;\n  if (\n    input.kind === \"role_check\" &&\n    roleInspectionPolicy(input.state) === \"mirror\" &&\n    source.kind !== \"transfer\" &&\n    (Object.keys(input.state)\n      .filter((key) => key !== \"inspectionPolicy\")\n      .sort()\n      .join() !== \"history,lastDay,lastTarget,policy\" ||\n      input.state.lastTarget !== null ||\n      input.state.lastDay !== null ||\n      !Array.isArray(input.state.history) ||\n      input.state.history.length !== 0 ||\n      Object.keys(input.state.history).length !== 0 ||\n      input.uses !== 0 ||\n      input.lastUsedDay !== null ||\n      input.disabled)\n  )\n    throw new Error(\"ability_mirror_initial_state_invalid\");\n  if (source.kind === \"native\") throw new Error(\"ability_grant_source_invalid\");\n  const role = roleOf(world, actorId);\n  if (\n    !/^[a-z][a-z0-9:_-]{0,127}$/.test(input.id) ||\n    input.id.startsWith(\"native:\") ||\n    !Number.isSafeInteger(input.startsOnDay) ||\n    input.startsOnDay < 1 ||\n    (input.expiresAfterDay !== undefined &&\n      (!Number.isSafeInteger(input.expiresAfterDay) ||\n        input.expiresAfterDay < input.startsOnDay)) ||\n    (input.maxUses !== null && (!Number.isSafeInteger(input.maxUses) || input.maxUses < 0))\n  )\n    throw new Error(\"ability_grant_invalid\");\n  roleOf(world, source.actorId);\n  if (\n    input.activation === \"black_market\" &&\n    (source.kind === \"copy\" ||\n      input.sourceDisclosed !== false ||\n      input.id !== \"gift:black-market\" ||\n      role.camp !== \"good\" ||\n      input.startsOnDay < 2)\n  )\n    throw new Error(\"ability_black_market_policy_invalid\");\n  const origin =\n    source.kind === \"copy\"\n      ? allNightAbilities(roleOf(world, source.actorId)).find(\n          (ability) => ability.id === source.abilityId,\n        )\n      : undefined;\n  if (origin?.activation === \"lucky\" || origin?.activation === \"black_market\")\n    throw new Error(\"ability_copy_lucky_not_supported\");\n  if (\n    input.activation !== undefined &&\n    (![\"lucky\", \"black_market\"].includes(input.activation) ||\n      !(\n        input.activation === \"black_market\"\n          ? [\"seer_check\", \"potion\"]\n          : [\"seer_check\", \"potion\", \"guard\"]\n      ).includes(input.kind) ||\n      input.maxUses !== 1)\n  )\n    throw new Error(\"ability_lucky_policy_invalid\");\n  if (\n    allNightAbilities(role).some((ability) => ability.id === input.id) ||\n    (\n      ((role.privateState as { readonly retiredAbilityIds?: unknown }).retiredAbilityIds ??\n        []) as string[]\n    ).includes(input.id)\n  )\n    throw new Error(\"ability_id_duplicate\");\n  if (\n    source.kind !== \"gift\" &&\n    !allNightAbilities(roleOf(world, source.actorId)).some(\n      (ability) => ability.id === source.abilityId && ability.kind === input.kind,\n    )\n  )\n    throw new Error(\"ability_source_mismatch\");\n  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=\n    {}) as Record<string, NightAbility>;\n  stored[ability.id] = ability;\n  emit(events, actorId, ability, \"granted\");\n  return ability;\n}"
+    },
+    {
+      "name": "transferNightAbility",
+      "text": "/** 先验证／安装目标，再移除原 owner；保留计数、原夜时点与中途发布失败前缀。 */\nexport function transferNightAbility<K extends NightAbilityKind>(\n  world: World,\n  fromId: EntityId,\n  toId: EntityId,\n  id: string,\n  targetId: string,\n  events: GameEvent[],\n  options: {\n    kind: K;\n    statePolicy: (state: Readonly<NightAbilityStates[K]>) => NightAbilityStates[K];\n    sourceDisclosed?: boolean;\n  },\n): void {\n  if (fromId === toId) throw new Error(\"ability_transfer_same_owner\");\n  const source = roleOf(world, fromId),\n    ability = allNightAbilities(source).find((ability) => ability.id === id);\n  if (!ability) throw new Error(\"ability_instance_missing\");\n  if (ability.kind === \"pair_check\") throw Error(\"ability_pair_native_only\");\n  if (!options || options.kind !== ability.kind || typeof options.statePolicy !== \"function\")\n    throw new Error(\"ability_transfer_policy_required\");\n  const black = ability.activation === \"black_market\",\n    target = roleOf(world, toId),\n    fromLife = captureNightLife(world, fromId),\n    toLife = captureNightLife(world, toId),\n    originalState = ability.state,\n    originalSource = ability.source,\n    sourcePrivate = source.privateState,\n    targetPrivate = target.privateState,\n    originalRole = source.role,\n    targetRole = target.role;\n  if (\n    black &&\n    (!fromLife ||\n      !toLife ||\n      source.camp !== \"good\" ||\n      target.camp !== \"good\" ||\n      targetId !== id ||\n      options.sourceDisclosed === true)\n  )\n    throw new Error(\"ability_black_market_transfer_invalid\");\n  const before = black\n    ? copyAbilityData({\n        id: ability.id,\n        kind: ability.kind,\n        source: ability.source,\n        startsOnDay: ability.startsOnDay,\n        expiresAfterDay: ability.expiresAfterDay,\n        maxUses: ability.maxUses,\n        uses: ability.uses,\n        lastUsedDay: ability.lastUsedDay,\n        disabled: ability.disabled,\n        deathExpired: ability.deathExpired,\n        activation: ability.activation,\n        sourceDisclosed: ability.sourceDisclosed,\n        state: projectNightState(ability),\n      })\n    : undefined;\n  const targetState = copyAbilityData(\n    options.statePolicy(\n      copyAbilityData(black ? projectNightState(ability) : ability.state) as NightAbilityStates[K],\n    ),\n  );\n  if (\n    black &&\n    (options.kind !== ability.kind ||\n      options.sourceDisclosed === true ||\n      world.getComponent(fromId, COMPONENT.Role) !== source ||\n      source.role !== originalRole ||\n      source.camp !== \"good\" ||\n      source.privateState !== sourcePrivate ||\n      world.getComponent(toId, COMPONENT.Role) !== target ||\n      target.role !== targetRole ||\n      target.camp !== \"good\" ||\n      target.privateState !== targetPrivate ||\n      !livingNightLife(world, fromLife!) ||\n      !livingNightLife(world, toLife!) ||\n      allNightAbilities(source).find((candidate) => candidate.id === id) !== ability ||\n      ability.state !== originalState ||\n      ability.source !== originalSource ||\n      !isDeepStrictEqual(\n        before,\n        copyAbilityData({\n          id: ability.id,\n          kind: ability.kind,\n          source: ability.source,\n          startsOnDay: ability.startsOnDay,\n          expiresAfterDay: ability.expiresAfterDay,\n          maxUses: ability.maxUses,\n          uses: ability.uses,\n          lastUsedDay: ability.lastUsedDay,\n          disabled: ability.disabled,\n          deathExpired: ability.deathExpired,\n          activation: ability.activation,\n          sourceDisclosed: ability.sourceDisclosed,\n          state: projectNightState(ability),\n        }),\n      ))\n  )\n    throw new Error(\"ability_black_market_transfer_revoked\");\n  if (\n    (ability.activation === \"lucky\" || ability.activation === \"black_market\") &&\n    !isDeepStrictEqual(targetState, black ? projectNightState(ability) : ability.state)\n  )\n    throw new Error(\"ability_transfer_lucky_state_changed\");\n  // 转移保持资源；seer_check 明确政策可重置知识，role_check 保留完整历史，其他政策不能补库存。\n  if (\n    ability.kind === \"guard\" &&\n    (targetState as NightAbilityStates[\"guard\"]).lastTarget !== ability.state.lastTarget\n  )\n    throw new Error(\"ability_transfer_resources_changed\");\n  if (\n    ability.kind === \"dream\" &&\n    ((targetState as NightAbilityStates[\"dream\"]).lastTarget !== ability.state.lastTarget ||\n      (targetState as NightAbilityStates[\"dream\"]).lastDay !== ability.state.lastDay ||\n      (targetState as NightAbilityStates[\"dream\"]).protectionPolicy !==\n        ability.state.protectionPolicy)\n  )\n    throw new Error(\"ability_transfer_resources_changed\");\n  if (\n    ability.kind === \"potion\" &&\n    [\n      \"heal\",\n      \"poison\",\n      \"selfHealRule\",\n      \"canSelfHeal\",\n      \"healUsedThisNight\",\n      \"poisonUsedThisNight\",\n    ].some(\n      (key) =>\n        (targetState as unknown as Record<string, unknown>)[key] !==\n        (ability.state as unknown as Record<string, unknown>)[key],\n    )\n  )\n    throw new Error(\"ability_transfer_resources_changed\");\n  if (ability.kind === \"role_check\" && !isDeepStrictEqual(targetState, ability.state))\n    throw new Error(\"ability_transfer_role_inspection_history_changed\");\n  const received = copyAbilityData({\n    ...ability,\n    state: targetState,\n    id: targetId,\n    sourceDisclosed: options.sourceDisclosed ?? false,\n    source: { kind: \"transfer\", actorId: fromId, abilityId: id },\n  }) as NightAbility;\n  installAbility(world, toId, received, events);\n  delete (\n    (source.privateState as { readonly abilities?: unknown }).abilities as Record<\n      string,\n      NightAbility\n    >\n  )[id];\n  (\n    ((source.privateState as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]\n  ).push(id);\n  emit(events, fromId, ability, \"transferred_out\");\n}"
+    }
+  ],
+  "sharedDeclarations": [
+    {
+      "name": "roleOf",
+      "text": "const roleOf = (world: World, actorId: EntityId): RoleComponent => {\n  const role = world.getComponent(actorId, COMPONENT.Role);\n  if (!role) throw new Error(\"ability_actor_missing\");\n  return role;\n};"
+    },
+    {
+      "name": "emit",
+      "text": "const emit = (\n  events: GameEvent[],\n  actorId: EntityId,\n  ability: NightAbilityReadView,\n  operation: \"granted\" | \"disabled\" | \"enabled\" | \"transferred_out\",\n) =>\n  events.push({\n    timestamp: Date.now(),\n    type: \"ability_changed\",\n    payload: {\n      actorId,\n      abilityId: ability.id,\n      kind: ability.kind,\n      operation,\n      source: structuredClone(ability.source),\n      sourceDisclosed: ability.sourceDisclosed,\n      startsOnDay: ability.startsOnDay,\n      ...(ability.expiresAfterDay === undefined\n        ? {}\n        : { expiresAfterDay: ability.expiresAfterDay }),\n      maxUses: ability.maxUses,\n    },\n  });"
+    }
+  ],
+  "retainedSourceReplacements": [
+    {
+      "before": "/**\n * 负责普通夜能力原生安装、授予、起效日、启停、次数、首次死亡到期、借用退役和明确转移。\n * 输入为原角色／实例、安装数据、业务日期及具体转移 statePolicy；输出为原只读存储引用和事实。\n * 仅拥有 abilities、retiredAbilityIds 与公共 metadata 写权，角色 payload 库存仍归具体机制。\n * 保留原 clone、回调、World／getter 重检、安装／delete／push／发布顺序；不更换私有容器、\n * 恢复已付资源或用新 Store／通用事务遮蔽部分失败。\n */",
+      "after": "/**\n * 负责普通夜能力原生安装、起效日、启停、次数、首次死亡到期及借用实例退役。\n * 输入为原角色／实例、状态与业务日期；输出保留同一库存引用和能力变化事实。授予、复制、转移完整流程归 night-ability-grants。\n * 本模块只写原生安装及公共 metadata；具体 payload 库存、临时抑制、原体／生命和提交许可仍归原负责人。\n * 共用角色查询／发布唯一消费 night-ability-change-runtime，保留原 clone、getter、字段和部分失败前缀，不退款。\n */",
+      "kind": "responsibility-comment"
+    },
+    {
+      "before": "import { roleInspectionPolicy } from \"@ai-werewolf-arena/game-contract/role-inspection-policy\";\n",
+      "after": "",
+      "kind": "import"
+    },
+    {
+      "before": "  AbilitySource,\n",
+      "after": "",
+      "kind": "import"
+    },
+    {
+      "before": "import { isDeepStrictEqual } from \"node:util\";\n",
+      "after": "",
+      "kind": "import"
+    },
+    {
+      "before": "import { DREAM_PROTECTION_POLICIES } from \"../../../core/domain/board\";\n",
+      "after": "",
+      "kind": "import"
+    },
+    {
+      "before": "import { allNightAbilities, abilityStatus, projectPairState, copyAbilityData, type NightAbility, type NightAbilityReadView } from \"./abilities\";",
+      "after": "import { allNightAbilities, abilityStatus, projectPairState, copyAbilityData, type NightAbilityReadView } from \"./abilities\";",
+      "kind": "import"
+    },
+    {
+      "before": "import { projectNightState } from \"../../observation/night-ability-projection\";\n",
+      "after": "",
+      "kind": "import"
+    },
+    {
+      "before": "import { captureNightLife, livingNightLife } from \"../../../core/domain/night_effects\";",
+      "after": "import { roleOf, emit } from \"./night-ability-change-runtime\";",
+      "kind": "import"
+    }
+  ],
+  "index": {
+    "path": "backend/src/game/mechanisms/index.ts",
+    "before": "export * from \"./roles/ability_changes\";",
+    "after": "export * from \"./roles/ability_changes\";\nexport * from \"./roles/night-ability-grants\";"
+  },
+  "routesApplied": [
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "before": "import { grantNightAbility } from \"../ability_changes\";",
+      "after": "import { grantNightAbility } from \"../night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "before": "import { grantNightAbility } from \"../ability_changes\";",
+      "after": "import { grantNightAbility } from \"../night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "before": "import { grantNightAbility, retireBorrowedNightAbility } from \"../ability_changes\";",
+      "after": "import { retireBorrowedNightAbility } from \"../ability_changes\";\nimport { grantNightAbility } from \"../night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [
+        "retireBorrowedNightAbility"
+      ],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "before": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "before": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "before": "import {\n  grantNightAbility,\n  setNightAbilityEnabled,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [
+        "setNightAbilityEnabled"
+      ],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "before": "import { transferNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { transferNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "before": "import { transferNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { transferNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "before": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "before": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "before": "import {\n  grantNightAbility,\n  transferNightAbility,\n  setNightAbilityEnabled,\n} from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { setNightAbilityEnabled } from \"../../../../src/game/mechanisms/roles/ability_changes\";\nimport { grantNightAbility, transferNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [
+        "setNightAbilityEnabled"
+      ],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "before": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "before": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "before": "import { installNativeAbility, grantNightAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { installNativeAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";\nimport { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [
+        "installNativeAbility"
+      ],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "before": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "before": "import {\n  grantNightAbility,\n  installNativeAbility,\n  retireBorrowedNightAbility,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { installNativeAbility, retireBorrowedNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [
+        "installNativeAbility",
+        "retireBorrowedNightAbility"
+      ],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "before": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "before": "import { grantNightAbility, installNativeAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { installNativeAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [
+        "installNativeAbility"
+      ],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "before": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "before": "import {\n  grantNightAbility,\n  transferNightAbility,\n  setNightAbilityEnabled,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { grantNightAbility, transferNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [
+        "setNightAbilityEnabled"
+      ],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "before": "import {\n  grantNightAbility,\n  setNightAbilityEnabled,\n  transferNightAbility,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { grantNightAbility, transferNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "name": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [
+        "setNightAbilityEnabled"
+      ],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "before": "import { grantNightAbility, installNativeAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { installNativeAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [
+        "installNativeAbility"
+      ],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "before": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "before": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": false
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "before": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+      "moved": [
+        {
+          "name": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "remaining": [],
+      "deferred": true,
+      "provenance": "actual Git 874030190c7b26980c1f82fe9a638caad3be99c6"
+    }
+  ],
+  "deferred": [],
+  "sourceCorrection": "保留原死亡到期真实COMPONENT依赖，首旧Lucky精准case发现后修复；未改函数body或旧断言。"
+}

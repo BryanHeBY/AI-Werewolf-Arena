@@ -32,7 +32,7 @@ import {
   canGargoyleKnife,
   refreshGargoyleInheritance,
 } from "../../../src/game/mechanisms/roles/gargoyle/inheritance";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 
 function fixture(kind: Role.Gargoyle | Role.Psychic | Role.MirrorGirl) {
   const roles = [kind, Role.Wolf, Role.Seer, Role.Witch, Role.Villager, Role.Villager],

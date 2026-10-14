@@ -34,7 +34,7 @@ import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 
 import { captureExileFeedback } from "../../../../src/game/mechanisms/roles/gravekeeper/feedback";
 import { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 
 const deck = [Role.HiddenWolf, Role.Wolf, Role.Seer, Role.Bear, Role.Villager, Role.Villager];
 

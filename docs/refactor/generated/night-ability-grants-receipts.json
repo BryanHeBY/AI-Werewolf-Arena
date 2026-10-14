@@ -1,0 +1,142 @@
+{
+  "baseCommit": "0ed5b3257c93c8ab820036bc47fb406d6e7568cc",
+  "scope": 40,
+  "sourceSHAStage": "最终全部40摘要与程序／头检查绑定；有限类型在此冻结源码运行且无后续正文修改。",
+  "tests": [
+    {
+      "stage": "newfour",
+      "chunk": "819d5b",
+      "exitCode": 0,
+      "cases": 4,
+      "assertions": 22,
+      "log": "docs/refactor/generated/night-ability-grants-new-tests.log"
+    },
+    {
+      "stage": "oldexacttransfer",
+      "chunk": "ac459a",
+      "exitCode": 0,
+      "cases": 1,
+      "assertions": 6,
+      "filtered": 11,
+      "log": "docs/refactor/generated/night-ability-grants-old-transfer.log"
+    },
+    {
+      "stage": "oldexactlucky-first",
+      "chunk": "343577",
+      "shellToolExitCode": 0,
+      "testResult": "1 failed; actual log retains ReferenceError COMPONENT is not defined. Shell cat afterward returned 0; this receipt is not a successful test.",
+      "cause": "迁移漏掉仍被expireLuckyAbilitiesOnDeath使用的原值import；真实本批source错误，不是工具诊断。",
+      "log": "docs/refactor/generated/night-ability-grants-old-lucky.log"
+    },
+    {
+      "stage": "oldexactlucky-failed-only",
+      "chunk": "e5e9e9",
+      "exitCode": 0,
+      "cases": 1,
+      "assertions": 5,
+      "filtered": 19,
+      "fix": "仅恢复原COMPONENT import，不改函数body或旧assert；只重失败用例。",
+      "log": "docs/refactor/generated/night-ability-grants-old-lucky-fixed.log"
+    }
+  ],
+  "uniqueFinalCases": 6,
+  "uniqueSuccessfulAssertions": 33,
+  "testsExecutedSeparateRuns": 4,
+  "types": {
+    "roots": 40,
+    "launchChunk": "616b3a",
+    "sessionId": 49075,
+    "terminalChunk": "d3897b",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/night-ability-grants-types.log",
+    "config": "docs/refactor/generated/night-ability-grants-types-config.json",
+    "scope": "实际backend tsconfig.tests继承，只列本批40changed roots；包括新unit编译负例，非全仓check。"
+  },
+  "programProof": [
+    {
+      "stage": "first39",
+      "launchChunk": "3019e2",
+      "sessionId": 86215,
+      "terminalChunk": "b3aace",
+      "exitCode": 0,
+      "source": 39,
+      "consumers": 34,
+      "wholeOriginalNodes": 2480,
+      "consumerNodes": 70382,
+      "movedAndSharedDeclarations": 6,
+      "retainedCommands": 6,
+      "controls": 12
+    },
+    {
+      "stage": "lateSeer",
+      "chunk": "616b3a",
+      "sourceProofSubcommandExitCode": 0,
+      "consumer": 1,
+      "wholeNodes": 1367,
+      "outputs": 2,
+      "prior39SourceHashesFresh": true,
+      "baseCommit": "874030190c7b26980c1f82fe9a638caad3be99c6"
+    }
+  ],
+  "bindings": {
+    "chunk": "7ea0ab",
+    "exitCode": 0,
+    "ownerImportBindings": 25,
+    "firstConsumerFiles": 34,
+    "firstMovedBindings": 43,
+    "finalConsumerFiles": 35,
+    "finalMovedBindings": 44,
+    "modules": 80,
+    "valueEdges": 153,
+    "newOwnerReturnCycles": 0,
+    "limit": "只实际擦除后的静态值import/export图，非全require/dynamic图或初始化时序等价。"
+  },
+  "heads": {
+    "chunk": "5446cb",
+    "exitCode": 0,
+    "sources": 40,
+    "documentationPaths": 506,
+    "diagnostics": 0,
+    "missingChineseHead": 0,
+    "log": "docs/refactor/generated/night-ability-grants-heads.log"
+  },
+  "toolsBeforeSourceWrite": [
+    {
+      "chunk": "ca6b8d",
+      "exitCode": 1,
+      "finding": "Node execFileSync Git EPERM，没有产品写入；真实Git stdout不能据此冒成功。"
+    },
+    {
+      "chunk": "64c342",
+      "exitCode": 1,
+      "finding": "Python盘点读foreign已删除旧verifier路径失败；后续Node仍旧Git EPERM，同样未改产品；修只捕获器跳不存在路径并用Python实际Git输入。"
+    },
+    {
+      "chunk": "3ffcc8",
+      "exitCode": 0,
+      "action": "实际Python Git48捕获／Node全部声明迁移与34routes写入完成。"
+    }
+  ],
+  "notRun": [
+    "Seer已绿测试",
+    "全量suite",
+    "整局",
+    "全量结构门禁",
+    "计费模型",
+    "golden重输",
+    "私有配置"
+  ],
+  "limits": [
+    "公开旧leaf API退休、聚合canonical保持；非全部55角色库存或归档schema完成。"
+  ],
+  "finalCommentDelta": {
+    "chunk": "3f75fc",
+    "exitCode": 0,
+    "sources": 2,
+    "fullTypedNodes": 2069,
+    "fullNoncommentLeaves": 2509,
+    "wholeOutputs": 4,
+    "beforeScope": "docs/refactor/generated/night-ability-grants-scope-before-merchant-comments.json",
+    "sampling": "类型／heads／tests及此前完整程序仍原SHA采样；末评论只准确跳过事实，程序同，不伪重绿。"
+  }
+}

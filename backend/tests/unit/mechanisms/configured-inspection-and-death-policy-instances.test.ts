@@ -31,7 +31,7 @@ import { projectNightAbility } from "../../../src/game/observation/night-ability
 import {
   grantNightAbility,
   transferNightAbility,
-} from "../../../src/game/mechanisms/roles/ability_changes";
+} from "../../../src/game/mechanisms/roles/night-ability-grants";
 import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,

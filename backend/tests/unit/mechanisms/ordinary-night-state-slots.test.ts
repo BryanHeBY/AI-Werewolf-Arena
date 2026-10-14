@@ -12,7 +12,8 @@ import { SEER_STATE_SLOT as seer } from "../../../src/game/mechanisms/roles/seer
 import { GUARD_STATE_SLOT as guard } from "../../../src/game/mechanisms/roles/guard/ports";
 import { WITCH_STATE_SLOT as witch } from "../../../src/game/mechanisms/roles/witch/ports";
 import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility, installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
