@@ -1,0 +1,75 @@
+{
+  "fixedCommit": "5d42b6f866bb91a3fcb0deac88efd618397ba051",
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-scope-final.json",
+    "sha256": "60cad44d65d1d26f37985a52aa696c4f640961bcb0d5278c9c8861f209746195"
+  },
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-5d42b6f8.md",
+    "sha256": "68f3c481cc499575d69f2399925e1133cc6411e15c562c75a62a8ef01f506b86"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-run.ts",
+      "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-run.log",
+      "sha256": "cadd1faa73c4855b173086b656b9b80632d30f3be762567239fff6d73bcf99cc"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-capture.json",
+      "sha256": "6be642eaf0d7c09f464b970e9ffc3ce9f88341d28e030a9beac9f73d472400ca"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-report.json",
+      "sha256": "45d8627fa20e9d2322fc606b1cd6b3547f8f9c625f3bc5cbe22a4beb01c2e357"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-partition.json",
+      "sha256": "0c1f2b4b9c69ab845b9bdf2c8fd08d160e6a3e008ec6d32d9651bfa90837ea0f"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-debt-delta.json",
+      "sha256": "66352f27f1293285841f487ae323ba7be655624025f7dcd5859b56bd326eb3f7"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-harness-history.json",
+      "sha256": "82e23d0b72b80c09495ffc1178b6db4420227ad789077044d0d9f4ae7059f401"
+    }
+  ],
+  "summary": {
+    "files": 3172,
+    "documentationPaths": 536,
+    "originalDebtCount": 1779,
+    "sourceDigest": "479dc7b459875c7e1731e7b5b26c4c5d164bbff8ca10c0c1420b7b9e0a4bf107",
+    "debtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "violations": 321,
+    "failures": 0,
+    "remainingDebt": 321,
+    "clearedDebt": 1458,
+    "newlyClearedComparedTo4df": 32,
+    "returnedComparedTo4df": 0
+  },
+  "terminal": {
+    "launch": "40b43e",
+    "session": 15828,
+    "terminal": "364069",
+    "exitCode": 0,
+    "executions": 1
+  },
+  "authorChecks": {
+    "sameCaptureAndReportSourceDigest": true,
+    "rawInputBytesAndSHA256Same": true,
+    "sixFixedGitAndExecutedToolBytesSame": true,
+    "originalDebtBytesSame": true,
+    "originalIdsFullDisjointPartition": true,
+    "original4dfReportUnmodified": true,
+    "oldFailureStillHistoricalRed": true
+  },
+  "limits": [
+    "不运行额外中文gate、type/tests/models或最终全量行为门禁。",
+    "形状检查不等于职责注释真义/游戏规则/玩法交付全完成。",
+    "完整原blob复核由独立Root/同行按固定Git进行；本报告不伪称重新执行历史或改旧debt。"
+  ]
+}

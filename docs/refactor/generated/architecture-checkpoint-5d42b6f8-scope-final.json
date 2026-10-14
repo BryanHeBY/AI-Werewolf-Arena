@@ -1,0 +1,42 @@
+{
+  "fixedCommit": "5d42b6f866bb91a3fcb0deac88efd618397ba051",
+  "deleted": [],
+  "publicInputFiles": 3172,
+  "sameGitDocumentationPaths": 536,
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-run.ts",
+      "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-run.log",
+      "sha256": "cadd1faa73c4855b173086b656b9b80632d30f3be762567239fff6d73bcf99cc"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-capture.json",
+      "sha256": "6be642eaf0d7c09f464b970e9ffc3ce9f88341d28e030a9beac9f73d472400ca"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-report.json",
+      "sha256": "45d8627fa20e9d2322fc606b1cd6b3547f8f9c625f3bc5cbe22a4beb01c2e357"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-partition.json",
+      "sha256": "0c1f2b4b9c69ab845b9bdf2c8fd08d160e6a3e008ec6d32d9651bfa90837ea0f"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-debt-delta.json",
+      "sha256": "66352f27f1293285841f487ae323ba7be655624025f7dcd5859b56bd326eb3f7"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-harness-history.json",
+      "sha256": "82e23d0b72b80c09495ffc1178b6db4420227ad789077044d0d9f4ae7059f401"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-5d42b6f8.md",
+    "sha256": "68f3c481cc499575d69f2399925e1133cc6411e15c562c75a62a8ef01f506b86"
+  },
+  "scope": "固定Git结构progressive一次；仅新增本checkpoint独立归档文档，不改产品/历史capture/report/gate/debt。",
+  "source": []
+}

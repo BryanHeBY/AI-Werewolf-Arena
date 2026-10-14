@@ -1,0 +1,34 @@
+{
+  "reviewer": "/root",
+  "approved": true,
+  "fixedCommit": "5d42b6f866bb91a3fcb0deac88efd618397ba051",
+  "source": [],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-scope-final.json",
+    "sha256": "60cad44d65d1d26f37985a52aa696c4f640961bcb0d5278c9c8861f209746195"
+  },
+  "documentation": {
+    "path": "docs/refactor/architecture-checkpoint-5d42b6f8.md",
+    "sha256": "68f3c481cc499575d69f2399925e1133cc6411e15c562c75a62a8ef01f506b86"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-evidence.json",
+    "sha256": "09e6780c457e22f7b177f8265118ec068a04c8d8d64587e79a69ba3fce5baa34"
+  },
+  "checks": [
+    "dd1d1e独立bulk Git 3172原blob/mode/完整SHA与rawInput逐text同；536同Git docs、六tool actualGit/current全byte、1779原债原byte同。",
+    "本核独立重算完整metadata sourceDigest，和capture/report479dc7同；未重checkArchitecture。",
+    "原321 remaining与1458cleared完整互斥全集，较4df原353/1426精确32新清/0返回，旧1new原红保留。",
+    "完整实际执行脚本/command receipt/history/两阶段日志读取；唯一40b43e→15828→364069实际0，原工具/debt/mappings/policy不改。",
+    "scope原7artifact和MD完整SHA同，Root实际取证另存并绑定；源空为纯检查归档，不虚构生产迁移。"
+  ],
+  "rootVerification": {
+    "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-root-input-verification.json",
+    "sha256": "853672c0e67011ae85bd14cd766ef0cd5a5e45b73d43baed25177ca1ec0a4fa3"
+  },
+  "limits": [
+    "只批准固定5d42结构检查一次结果，不冒当前后继WIP/全部行为/中文真义/矩阵/P9完成。",
+    "Root未运行结构门禁/测试/类型/模型；原1458清除是形状减少，原321债仍待。"
+  ]
+}

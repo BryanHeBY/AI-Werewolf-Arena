@@ -1,0 +1,53 @@
+{
+  "fixedCommit": "5d42b6f866bb91a3fcb0deac88efd618397ba051",
+  "actualExecution": {
+    "command": "bun /tmp/awa-architecture-checkpoint-next-run.ts 5d42b6f866bb91a3fcb0deac88efd618397ba051 > docs/refactor/generated/architecture-checkpoint-5d42b6f8-run.log 2>&1",
+    "launchChunk": "40b43e",
+    "session": 15828,
+    "terminalChunk": "364069",
+    "exitCode": 0,
+    "executions": 1,
+    "proofOfTerminal": "真实write_stdin返回session15828的exit_code0；空log或后台启动不是关闭依据。"
+  },
+  "script": {
+    "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-run.ts",
+    "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775",
+    "executedPath": "/tmp/awa-architecture-checkpoint-next-run.ts",
+    "byteIdenticalToExecuted": true
+  },
+  "log": {
+    "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-run.log",
+    "sha256": "cadd1faa73c4855b173086b656b9b80632d30f3be762567239fff6d73bcf99cc",
+    "bytes": 459
+  },
+  "inputCaptureBeforeGate": {
+    "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-capture.json",
+    "sha256": "6be642eaf0d7c09f464b970e9ffc3ce9f88341d28e030a9beac9f73d472400ca",
+    "rawInput": {
+      "path": "/tmp/awa-architecture-checkpoint-5d42b6f8-input.json",
+      "sha256": "996a6f8134bd8c37f03b07e798bbf0e0d58a7ed2198610c34cce5459f8035f17",
+      "bytes": 80120612
+    },
+    "files": 3172,
+    "documentationPaths": 536,
+    "gateSources": 6,
+    "sourceDigest": "479dc7b459875c7e1731e7b5b26c4c5d164bbff8ca10c0c1420b7b9e0a4bf107",
+    "debtSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d"
+  },
+  "report": {
+    "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-report.json",
+    "sha256": "45d8627fa20e9d2322fc606b1cd6b3547f8f9c625f3bc5cbe22a4beb01c2e357",
+    "counts": {
+      "files": 3172,
+      "violations": 321,
+      "failures": 0,
+      "remainingDebt": 321,
+      "clearedDebt": 1458
+    }
+  },
+  "limits": [
+    "直接一次progressive checkArchitecture，无strict/mappings/额外豁免。",
+    "不执行类型、行为测试、模型、Tape或全量行为门禁；产品源及原debt不写。",
+    "临时全文以后可以缺席，持久Git commit/blob/mode/rawSHA清单可恢复输入，不补造历史运行。"
+  ]
+}

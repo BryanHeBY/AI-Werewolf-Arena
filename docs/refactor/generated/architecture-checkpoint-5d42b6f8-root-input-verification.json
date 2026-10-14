@@ -1,0 +1,25 @@
+{
+  "fixedCommit": "5d42b6f866bb91a3fcb0deac88efd618397ba051",
+  "actualGitRawBlobsVerified": 3172,
+  "actualFixedGitDocumentationPaths": 536,
+  "actualGateModules": 6,
+  "rawInputSHA": "996a6f8134bd8c37f03b07e798bbf0e0d58a7ed2198610c34cce5459f8035f17",
+  "sourceDigest": "479dc7b459875c7e1731e7b5b26c4c5d164bbff8ca10c0c1420b7b9e0a4bf107",
+  "originalDebtSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+  "original1779PartitionExact": true,
+  "counts": {
+    "files": 3172,
+    "violations": 321,
+    "failures": 0,
+    "remainingDebt": 321,
+    "clearedDebt": 1458
+  },
+  "differenceFrom4df": {
+    "newlyCleared": 32,
+    "returnedDebt": 0,
+    "original4dfFailureCount": 1,
+    "historical4dfFailureUnchanged": true
+  },
+  "checkExecuted": false,
+  "scope": "独立实际Git/data/集合取证；未重结构门禁、类型、行为测试或原证明。"
+}
