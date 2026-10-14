@@ -16,6 +16,9 @@ export { recordScholarMentorNativeTarget } from "./night_frame";
 export { scholarMentorBlocks } from "./night_frame";
 export { scholarMentorKnifeEligible } from "./night_frame";
 
+/** 完整已付加成效果复验的同绑定入口；不开放记录数组或库存写入，不替代付款／关闭。 */
+export { assertScholarMentorBonusEffects } from "./bonus-effect-validation";
+
 export interface ScholarMentorNightEligibility {
   blocks(actorId: EntityId, day: number, kind: "guard" | "check"): boolean;
 }

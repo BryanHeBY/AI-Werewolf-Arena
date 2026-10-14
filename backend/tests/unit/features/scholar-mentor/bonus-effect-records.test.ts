@@ -10,7 +10,7 @@ import { createAliveComponent, aliveLifeVersion } from "../../../../src/core/dom
 import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
 import type { NightStageState, NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import type { ModifierBonusKind, ModifierBonusReceipt } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
-import { assertScholarMentorBonusEffects } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_stages";
+import { assertScholarMentorBonusEffects } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";
 import {
   readScholarMentorBonusEffectRecords,
   scholarMentorBonusEffectRecordsForAppend,

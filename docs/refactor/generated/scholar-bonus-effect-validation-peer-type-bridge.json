@@ -1,0 +1,19 @@
+{
+  "beforeSHA256": "d07c715ce428ccb53389a6b7ed5afeb8c4b260eec9afb5925502eee9712cde1d",
+  "afterSHA256": "4e20a3f86a5126545940fb4dac8c1e58e041f4bb51c321793de312c27a8ed3a9",
+  "wholeExactInverse": true,
+  "onlyUnconsumedTypeSpecifier": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "sha256": "c10a6a2a700a698ed2b6c38f3ead50016a96a919f078e94e6b49c827d7055eae"
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "sha256": "abc9fede927e16ef4572ed5421d7ccb495ee36015f152c8eb142037d3e19ba7c"
+    }
+  ],
+  "originalGreensNotRepeated": true
+}

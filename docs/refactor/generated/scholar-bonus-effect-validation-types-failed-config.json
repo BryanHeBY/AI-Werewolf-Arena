@@ -1,0 +1,15 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/scholar-bonus-effect-validation.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

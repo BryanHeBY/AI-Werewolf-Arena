@@ -1,0 +1,92 @@
+{
+  "newRiskFirst": {
+    "chunk_id": "a84116",
+    "wall_time_seconds": 0.000012128,
+    "exit_code": 0,
+    "original_token_count": 93,
+    "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/rulesets/scholar-bonus-effect-validation.test.ts:\n(pass) 未命中增益配置不读取阶段上下文，也不提前拍摄效果状态 [0.37ms]\n(pass) 配置命中后才读取原上下文，名单World首失败不读取效果数组且不替换错误 [0.32ms]\n\n 2 pass\n 0 fail\n 3 expect() calls\nRan 2 tests across 1 file. [50.00ms]\n"
+  },
+  "originalPrecise": {
+    "chunk_id": "503d35",
+    "wall_time_seconds": 0.00001437,
+    "exit_code": 0,
+    "original_token_count": 74,
+    "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/features/scholar-mentor/bonus-effect-records.test.ts:\n(pass) effect recheck keeps target then callback then life and marks reads and never commits a receipt [0.65ms]\n\n 1 pass\n 2 filtered out\n 0 fail\n 8 expect() calls\nRan 1 test across 1 file. [46.00ms]\n"
+  },
+  "typesFirst": {
+    "launch": {
+      "chunk_id": "90e4ab",
+      "wall_time_seconds": 1.001722636,
+      "session_id": 96831,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "terminal": {
+      "chunk_id": "1630ec",
+      "wall_time_seconds": 0.000009241,
+      "exit_code": 2,
+      "original_token_count": 125,
+      "output": "backend/tests/unit/rulesets/scholar-bonus-effect-validation.test.ts(23,71): error TS2352: Conversion of type '{ policy: \"awa_scholar_mentor_v1\"; }' to type '{ readonly policy: \"awa_scholar_mentor_twelve_v1\"; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  Types of property 'policy' are incompatible.\n    Type '\"awa_scholar_mentor_v1\"' is not comparable to type '\"awa_scholar_mentor_twelve_v1\"'.\n"
+    },
+    "roots": 7
+  },
+  "fixtureRepair": {
+    "capture": "generated/scholar-bonus-effect-validation-fixture-repair-before.json",
+    "note": "新unit错误policy标识改真实twelve，实际输入有一字段变化；不称纯type。只该fixture用例复查，不重未改变绿。",
+    "changedCase": {
+      "chunk_id": "2230b8",
+      "wall_time_seconds": 0.000015109,
+      "exit_code": 0,
+      "original_token_count": 73,
+      "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/rulesets/scholar-bonus-effect-validation.test.ts:\n(pass) 配置命中后才读取原上下文，名单World首失败不读取效果数组且不替换错误 [0.34ms]\n\n 1 pass\n 1 filtered out\n 0 fail\n 2 expect() calls\nRan 1 test across 1 file. [47.00ms]\n"
+    },
+    "failedTypes": {
+      "launch": {
+        "chunk_id": "ae3e6e",
+        "wall_time_seconds": 1.002162557,
+        "session_id": 74236,
+        "original_token_count": 0,
+        "output": ""
+      },
+      "terminal": {
+        "chunk_id": "3ba78d",
+        "wall_time_seconds": 0.000009129,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      },
+      "roots": 1
+    }
+  },
+  "heads": {
+    "chunk_id": "e4053c",
+    "wall_time_seconds": 0.233929645,
+    "exit_code": 0,
+    "original_token_count": 284,
+    "output": "{\"source\":[{\"path\":\"backend/src/game/engine/phase_pipeline/night_pipeline.ts\",\"sha256\":\"116f0313a369e5296ab8612035e51fa1d06b52744647885fbf77535d6a14792c\"},{\"path\":\"backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts\",\"sha256\":\"d07c715ce428ccb53389a6b7ed5afeb8c4b260eec9afb5925502eee9712cde1d\"},{\"path\":\"backend/src/game/mechanisms/roles/scholar_mentor/ports.ts\",\"sha256\":\"2f13dcd94675e783d2db58e2f1c117db031e98976efe99719b68936a3be52392\"},{\"path\":\"backend/src/rulesets/night-damage-composition.ts\",\"sha256\":\"3aedd109910ac87e15790df3fe7a9232c844e76bc5ab22efd6fb2969b675e361\"},{\"path\":\"backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts\",\"sha256\":\"004b2fba820d0b93f189ae273dec3d089105962114eb8c661d2adee9cec1b107\"},{\"path\":\"backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-validation.ts\",\"sha256\":\"d2e7c94940e6084b6f6baa978b5df22c4caa032cddb334739c6529fb2ff923d4\"},{\"path\":\"backend/tests/unit/rulesets/scholar-bonus-effect-validation.test.ts\",\"sha256\":\"24b1fa2c6f080a49df7b1a43a8a8ae21e079050cc7d565591ebb6b87f48e50ed\"}],\"documentationPaths\":589,\"diagnostics\":[],\"chineseHeadFailures\":[]}\n"
+  },
+  "proof": {
+    "chunk_id": "412f72",
+    "exit_code": 0,
+    "summary": {
+      "wholePrograms": 5,
+      "typedNodes": 5016,
+      "wholeMappedOutputs": 10,
+      "validationFunctions": 1,
+      "ruleGateBodies": 1,
+      "actualGuardCallSites": 3
+    }
+  },
+  "whitespace": {
+    "chunk_id": "0d84ef",
+    "exit_code": 0
+  },
+  "distinctSuccessfulCases": 3,
+  "distinctSuccessfulAssertions": 11,
+  "totalExecutedAssertions": 13,
+  "limits": [
+    "未执行全gates/type/suite/模型或重复未改变green。",
+    "新用例错误fixture首执行green但types真红，后来只changed fixture case重查；不将重复两assert计为新不同用例。",
+    "头/proof原阶段后只有newunit fixture单字面标识及satisfies变化，生产六源没有变化。"
+  ]
+}

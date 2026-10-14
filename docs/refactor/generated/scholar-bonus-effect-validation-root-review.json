@@ -1,0 +1,73 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "c9e7a3c876a532c880308edb9b8cb71a9773c88b",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "116f0313a369e5296ab8612035e51fa1d06b52744647885fbf77535d6a14792c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "4e20a3f86a5126545940fb4dac8c1e58e041f4bb51c321793de312c27a8ed3a9",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+      "sha256": "2f13dcd94675e783d2db58e2f1c117db031e98976efe99719b68936a3be52392",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "sha256": "3aedd109910ac87e15790df3fe7a9232c844e76bc5ab22efd6fb2969b675e361",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "sha256": "004b2fba820d0b93f189ae273dec3d089105962114eb8c661d2adee9cec1b107",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-validation.ts",
+      "sha256": "d2e7c94940e6084b6f6baa978b5df22c4caa032cddb334739c6529fb2ff923d4",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/scholar-bonus-effect-validation.test.ts",
+      "sha256": "7f3c3783f4bcc15b3799c1adcca232cf0bc815f91a180d234f62f891073e424f",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/scholar-bonus-effect-validation-scope-final.json",
+    "sha256": "9f8e40b3bda92035c2e7e79d8dfc4800c9c473da76aa76e8fac8dd30101551cd"
+  },
+  "document": {
+    "path": "docs/refactor/scholar-bonus-effect-validation.md",
+    "sha256": "9037fd8dd8ab9956f6a8b9cd1c78fc88a635e99536c37ff1add54604c0479b89"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/scholar-bonus-effect-validation-evidence.json",
+    "sha256": "42582c131e0681229b4e5bf67e23927e33bfd6bfe21720827da4cfdc8bad2741"
+  },
+  "integrity": {
+    "freshSources": 7,
+    "actualGitBefore": 5,
+    "controls": 2,
+    "artifactHashes": 12,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "作者完整validator/三检查点与原getter失败前缀自审",
+    "实际c9e7五原Git及两原控制、十四接线完整程序/10mapped输出人工实读",
+    "真实有限类型首fixture红与精确失败根/changedcase修复，不把重复断言计新覆盖",
+    "中文职责与已付记录结构、peer唯一未消费type说明符raw桥、末附件绑定"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

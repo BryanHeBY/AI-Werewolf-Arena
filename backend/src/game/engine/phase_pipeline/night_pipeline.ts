@@ -26,7 +26,7 @@ import { animalAuthoritySnapshot } from "../../mechanisms/roles/animal_dream/por
 import { isRadiantEclipseBoard } from "../../mechanisms/roles/radiant_eclipse/ports";
 import { isScholarMentorBoard } from "../../mechanisms/roles/scholar_mentor/ports";
 import { mistKnifeTargets, isMistRavenBoard } from "../../mechanisms/roles/mist_raven/ports";
-import { assertScholarMentorBonusEffects } from "../../mechanisms/roles/scholar_mentor/night_stages";
+import { assertNightModifierBonusEffects } from "../../../rulesets/night-damage-composition";
 import { isTimeConsortBoard } from "../../mechanisms/roles/time_wolf_consort/ports";
 import { isMagicianBoard } from "../../mechanisms/roles/magician/ports";
 import { isRedMoonBoard } from "../../mechanisms/roles/demon_hunter/ports";
@@ -296,9 +296,9 @@ export class NightPipeline {
           return attachNightUnit(attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver), lifecycle.nightUnit);
         assertReadable();
         discardStaleNightKnives(knifeAdmission);
-        if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
+        assertNightModifierBonusEffects({ config: () => config, stageContext: () => stageCtx });
         await stage.execute(stageCtx);
-        if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
+        assertNightModifierBonusEffects({ config: () => config, stageContext: () => stageCtx });
         assertEvilKnightRosterCurrent(this.world);
         assertReadable();
         if (!isCurrent())

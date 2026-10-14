@@ -1,0 +1,109 @@
+{
+  "baseCommit": "c9e7a3c876a532c880308edb9b8cb71a9773c88b",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "116f0313a369e5296ab8612035e51fa1d06b52744647885fbf77535d6a14792c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "4e20a3f86a5126545940fb4dac8c1e58e041f4bb51c321793de312c27a8ed3a9",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+      "sha256": "2f13dcd94675e783d2db58e2f1c117db031e98976efe99719b68936a3be52392",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "sha256": "3aedd109910ac87e15790df3fe7a9232c844e76bc5ab22efd6fb2969b675e361",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "sha256": "004b2fba820d0b93f189ae273dec3d089105962114eb8c661d2adee9cec1b107",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-validation.ts",
+      "sha256": "d2e7c94940e6084b6f6baa978b5df22c4caa032cddb334739c6529fb2ff923d4",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/scholar-bonus-effect-validation.test.ts",
+      "sha256": "7f3c3783f4bcc15b3799c1adcca232cf0bc815f91a180d234f62f891073e424f",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-records.ts",
+      "sha256": "b8115cb12be31a85f246365bd92edab94c43a99815388c9c0c5b7ed230bbb503"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "sha256": "752eb83b178128b83b1afea7e031a460a0ec9df666c371cf2b7c4ab36eee51ac"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-before.json",
+      "sha256": "96fd767ab3ec57da9a951ecf8004a8dae91e5339440facf7ad300340b37ee380"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-edits.json",
+      "sha256": "c6706cfb06a52f92c1ca48245e0e10908edb4b0d10d518b7877ff88c60930064"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-fixture-repair-before.json",
+      "sha256": "279359bdf69be4ef559cb7b8d96ce3ce2d5f95eb30c6637dc91266c705445ac1"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-heads.json",
+      "sha256": "e49dd807a694add0a9aea2f8f728ec03772a56657d392b5044b812c4d388b92a"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-heads.ts",
+      "sha256": "885b2b7d07c86f209be5f9781213d1a3d040b056fd834c2890b85aa22dc2b260"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-proof.cjs",
+      "sha256": "5381e858ebca70fd937f4fca41403a7f42ae20289c8d4438581d78c3791e262c"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-proof.json",
+      "sha256": "36beeca15756d4c998e5641534a18d40551d1fa986cd8ceecb08b4fa111fa82c"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-receipts.json",
+      "sha256": "3ca6d7e4658add607a760ea286c19789f80311a8fea19c0055e4f8185c2bba75"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-types-config.json",
+      "sha256": "26f72f38278abdf3ca77cdde9d0aea12a0fe386372cfb9998e8814a605aecf33"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-types-failed-config.json",
+      "sha256": "c3f24f6e2cb9f726e2dfa8bae1ab9793e4946c5938b011e71bb8d7eec38540d7"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-peer-type-before.json",
+      "sha256": "2e8c34dfb9a3b3cb3de4c6191c4a094b8a0e4e618de24693ef4eee8bd8405a63"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-effect-validation-peer-type-bridge.json",
+      "sha256": "30c9eaecc9fda8792fd4a708cfb32446a04c59a79ddef41cefb5253acb016a09"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/scholar-bonus-effect-validation.md",
+    "sha256": "9037fd8dd8ab9956f6a8b9cd1c78fc88a635e99536c37ff1add54604c0479b89"
+  },
+  "frozen": true,
+  "samplingLimits": [
+    "原程序证明与头检查先于新unit一政策输入修复和独审后一未消费类型说明符清理；分别由fixture-repair-before及peer-type-before/bridge承接，没有重绿色检查。"
+  ]
+}

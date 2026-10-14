@@ -1,0 +1,35 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "116f0313a369e5296ab8612035e51fa1d06b52744647885fbf77535d6a14792c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "d07c715ce428ccb53389a6b7ed5afeb8c4b260eec9afb5925502eee9712cde1d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+      "sha256": "2f13dcd94675e783d2db58e2f1c117db031e98976efe99719b68936a3be52392"
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "sha256": "3aedd109910ac87e15790df3fe7a9232c844e76bc5ab22efd6fb2969b675e361"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "sha256": "004b2fba820d0b93f189ae273dec3d089105962114eb8c661d2adee9cec1b107"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-validation.ts",
+      "sha256": "d2e7c94940e6084b6f6baa978b5df22c4caa032cddb334739c6529fb2ff923d4"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/scholar-bonus-effect-validation.test.ts",
+      "sha256": "24b1fa2c6f080a49df7b1a43a8a8ae21e079050cc7d565591ebb6b87f48e50ed"
+    }
+  ],
+  "documentationPaths": 589,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}
