@@ -1,0 +1,26 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "fixedCommit": "b4bce44302d9f79611ab2d36c5c7938c6528f990",
+  "proposal": {
+    "path": "docs/refactor/generated/selected-mechanism-cell-reconciliation-proposal.json",
+    "sha256": "18b85ccc9a072637518df406dfb134de2990315ff673a3d5a8ba6674cceca75f"
+  },
+  "sourceInventory": {
+    "path": "docs/refactor/generated/selected-mechanism-cell-reconciliation-inventory.json",
+    "sha256": "f1d89d31dc72bbc7551f6d279a7dc533efadda42f7ed71246928ea6f517b48e6"
+  },
+  "checkedGitSources": 43,
+  "checkedEvidenceReferences": 120,
+  "conclusions": 50,
+  "reviewDimensions": [
+    "原Noble安装、普通黎明准备、完整遗言窗口已实际提交，不重复拆已owned流程。",
+    "真实lease/completion和独立关系verifier缺口已直接读实际原程序核实；接下来的实现授权属于后继阶段，此提案notAuthorized是其捕获时事实。",
+    "当前宽状态读取/clone接受政策不能因schema计划暗加强；generic archived JSON不冒独立因果审计。",
+    "零complete/N/A官方更新，历史910cells统计不是剩余功能计数；最终同源验收和真实当前consumer闭包另有责任。"
+  ],
+  "checksRun": false,
+  "readerPreparationHistory": [
+    "首次读提案把数值cellConclusions误用len，TypeError发生于写report前；首次git add因此未暂存任何文件，首次commit无stage退出1，非产品或验证失败。"
+  ]
+}
