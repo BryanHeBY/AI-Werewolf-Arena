@@ -1,0 +1,22 @@
+{
+  "fixedCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "files": 3219,
+  "sameGitDocumentationPaths": 607,
+  "rawInput": {
+    "path": "/tmp/awa-architecture-checkpoint-623e8c8e-input.json",
+    "sha256": "2d7777c273431f4d72b7da1a057607002e8c65e0c1ef0cd7642411d68db46f79",
+    "bytes": 80365018
+  },
+  "sourceDigest": "6f85badf2865732777db161d7eb28f0b01f40c9f23241c18be29e0ed75397fe3",
+  "allPublicPathsExactOriginalPolicy": true,
+  "wholeGitTreeBlobModeManifestSame": true,
+  "everyRawGitBlobSHAAndDecodedTextSame": true,
+  "wholeInputOrderSame": true,
+  "sixFixedGitAndCurrentToolBytesSame": true,
+  "originalDebtCount": 1779,
+  "originalDebtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+  "originalDebtWholeGitAndCurrentSame": true,
+  "sourceAndReportDigestSame": true,
+  "mismatches": 0,
+  "scope": "纯读取输入/原工具/固定Git，不再次执行checkArchitecture或任何type/test/gate。"
+}

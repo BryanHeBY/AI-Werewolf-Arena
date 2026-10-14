@@ -1,0 +1,128 @@
+{
+  "fixedCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "baseCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "source": [],
+  "deleted": [],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-capture.json",
+      "sha256": "21843077c925fed80b0fb82a7839752aabed2c1809af371ab697e84d2789c31c"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-debt-delta.json",
+      "sha256": "6efdea0e317fa4844722dd49c26727d39c3600fb9531e167a0e0fdb099549cb5"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-harness-history.json",
+      "sha256": "0b0906e83d8f2ee92a3c835a6b1930b585fb6e2d9829004d5e1bc26d4b702848"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-input-verification.json",
+      "sha256": "97e0571e55fa79b96d33d965cf1124d40efd274c1c4b77ce16597c0e1acfbe62"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-input-verification.py",
+      "sha256": "6ec316126589ccfdd2c9d8597fb1440979af6ee21104ea50ad3621c1be197e3a"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-partition.json",
+      "sha256": "27e13ed6c3ba607afd2eaa048c0e795751b860675d10f94c9ff1bcdf4afedeae"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-partition.py",
+      "sha256": "9039525cef325d2a48a23241824e09fdc5f364c629a569fe5dc8724f3ae2eaad"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-report.json",
+      "sha256": "e435277c6622fb02b0f9f545da4f942d90cc2b9fd2494d759f777d4675c6d611"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-run.log",
+      "sha256": "af77c52d55bb4187e72f3fd1041980e00533c72927ae32a2e8a9c96f5d1cd7fe"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-run.ts",
+      "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-623e8c8e.md",
+    "sha256": "5e2d5189917c94a4d9d9f14343dcc673f86903a688950677db63deb15b0cbcbd"
+  },
+  "gatePassed": false,
+  "actualGateExitCode": 1,
+  "actualFailureCount": 1,
+  "frozen": true,
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-scope-final.json",
+    "sha256": "5a8fae94e022abbefb2d8d6b547c024d481329685b5973eba79369e832af9049"
+  },
+  "input": {
+    "files": 3219,
+    "docs": 607,
+    "rawInput": {
+      "path": "/tmp/awa-architecture-checkpoint-623e8c8e-input.json",
+      "sha256": "2d7777c273431f4d72b7da1a057607002e8c65e0c1ef0cd7642411d68db46f79",
+      "bytes": 80365018
+    },
+    "sourceDigest": "6f85badf2865732777db161d7eb28f0b01f40c9f23241c18be29e0ed75397fe3",
+    "sixTools": [
+      {
+        "path": "tooling/refactor/inventory.ts",
+        "sha256": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce"
+      },
+      {
+        "path": "tooling/refactor/architecture/run.ts",
+        "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394"
+      },
+      {
+        "path": "tooling/refactor/architecture/contracts.ts",
+        "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d"
+      },
+      {
+        "path": "tooling/refactor/architecture/dependency-check.ts",
+        "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb"
+      },
+      {
+        "path": "tooling/refactor/architecture/comment-check.ts",
+        "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db"
+      },
+      {
+        "path": "tooling/refactor/architecture/naming-check.ts",
+        "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3"
+      }
+    ],
+    "originalDebtSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d"
+  },
+  "counts": {
+    "files": 3219,
+    "violations": 265,
+    "failures": 1,
+    "remainingDebt": 264,
+    "clearedDebt": 1515
+  },
+  "failure": [
+    {
+      "id": "1b07c079d3308ec931bdb76c0757060fc5d8b48ff4ccef7639075923b7098bd5",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "line": 104,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../mechanisms/roles/animal_dream/facts",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:appendAnimalFact\"]}",
+      "target": "backend/src/game/mechanisms/roles/animal_dream/facts.ts"
+    }
+  ],
+  "partition": {
+    "remaining": 264,
+    "cleared": 1515,
+    "newlyCleared": 16,
+    "returned": 0
+  },
+  "limits": [
+    "批准仅为诚实失败记录的完整来源／终态，gatePassed=false不变。",
+    "固定树不含后继Mapped/Idiot/Animal单元完成发布修复，修复要独立真实提交。",
+    "不执行同树第二checker/type/test/model，不重设原1779债务。"
+  ]
+}

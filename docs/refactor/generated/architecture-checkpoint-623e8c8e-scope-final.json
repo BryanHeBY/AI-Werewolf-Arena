@@ -1,0 +1,56 @@
+{
+  "fixedCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "baseCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "source": [],
+  "deleted": [],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-capture.json",
+      "sha256": "21843077c925fed80b0fb82a7839752aabed2c1809af371ab697e84d2789c31c"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-debt-delta.json",
+      "sha256": "6efdea0e317fa4844722dd49c26727d39c3600fb9531e167a0e0fdb099549cb5"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-harness-history.json",
+      "sha256": "0b0906e83d8f2ee92a3c835a6b1930b585fb6e2d9829004d5e1bc26d4b702848"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-input-verification.json",
+      "sha256": "97e0571e55fa79b96d33d965cf1124d40efd274c1c4b77ce16597c0e1acfbe62"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-input-verification.py",
+      "sha256": "6ec316126589ccfdd2c9d8597fb1440979af6ee21104ea50ad3621c1be197e3a"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-partition.json",
+      "sha256": "27e13ed6c3ba607afd2eaa048c0e795751b860675d10f94c9ff1bcdf4afedeae"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-partition.py",
+      "sha256": "9039525cef325d2a48a23241824e09fdc5f364c629a569fe5dc8724f3ae2eaad"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-report.json",
+      "sha256": "e435277c6622fb02b0f9f545da4f942d90cc2b9fd2494d759f777d4675c6d611"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-run.log",
+      "sha256": "af77c52d55bb4187e72f3fd1041980e00533c72927ae32a2e8a9c96f5d1cd7fe"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-623e8c8e-run.ts",
+      "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-623e8c8e.md",
+    "sha256": "5e2d5189917c94a4d9d9f14343dcc673f86903a688950677db63deb15b0cbcbd"
+  },
+  "gatePassed": false,
+  "actualGateExitCode": 1,
+  "actualFailureCount": 1,
+  "frozen": true
+}
