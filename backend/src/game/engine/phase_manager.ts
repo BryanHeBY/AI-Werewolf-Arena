@@ -23,7 +23,7 @@ import type { DeathCommitReceipt, DeathOriginalLife } from "./death-wave";
 import type { DamageResolutionResult } from "../../core/domain/systems/damage_resolution_system";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { NightManagerLifecycle } from "../../rulesets/night-lifecycle-plan";
-import { prepareGameSetup } from "../../rulesets/game-setup";
+import { prepareGameSetup, installFragrantGameSetup } from "../../rulesets/game-setup";
 import { prepareSpecialNightDamage } from "../../rulesets/special-night-damage-preparation";
 
 import { bindBoardParameters } from "../../rulesets/board-parameters";
@@ -79,8 +79,6 @@ import { DeathResolution } from "./death_resolution";
 import { EventRegistry } from "./event_registry";
 import { DayPipeline } from "./phase_pipeline/day_pipeline";
 import { NightPipeline } from "./phase_pipeline/night_pipeline";
-import { installFragrantPairAuthority } from "../mechanisms/roles/fragrant_pair_seer/authority";
-import { Role } from "../../core/domain/identity";
 import { VotingPipeline } from "./phase_pipeline/voting_pipeline";
 import { RoleRegistry } from "../../core/domain/registries/role_registry";
 import { COMPONENT } from "../../core/domain/components/names";
@@ -148,13 +146,7 @@ export class PhaseManager {
     config = parameters.board;
     this.#rulePlan = RulePlan.compile(parameters);
     this.config = config;
-    if (config.fragrantPairSeer)
-      installFragrantPairAuthority(
-        world,
-        this.events,
-        world.getEntityIdsByRole(Role.FragrantPhantom)[0]!,
-        world.getEntityIdsByRole(Role.AwakenedSeer)[0]!,
-      );
+    installFragrantGameSetup(config, { world: () => world, events: () => this.events });
     if (options.faultPlan !== undefined) {
       if (demonHunterActorId(world) === null) throw new Error("fault_plan_demon_board_required");
       this.nightFaultPlan = new NightFaultPlan(world, options.faultPlan);

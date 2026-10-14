@@ -1,0 +1,61 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "cef1dff641e1adbff2ded5e633fbcb5891b8ad2c",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "4363c4eef2f8b42b9805630d754775ef349004e6294a65eea29ce91fc2031396",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "d980c19a108bdbad0bc0ae5bd3b2f44954255d39db4fc5949aea622a3954ceb3",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/setup-ports.ts",
+      "sha256": "61ced822cfc0114bebdf3c49bdac043948363c605db4919a4b7bfea8c5b32c94",
+      "status": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/fragrant-game-setup.test.ts",
+      "sha256": "9eec1163dc73e29f4160ca80c746e03897aa97c16fb11c203fe576124759d6dd",
+      "status": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/fragrant-game-setup-scope-final.json",
+    "sha256": "0e7baf574bde0489842b61a50b6034c7685c84d30e8dd8c4a7e303e07fb6607e"
+  },
+  "document": {
+    "path": "docs/refactor/fragrant-game-setup.md",
+    "sha256": "83c8656e802fd9ab951e56f4786134a03a685abfd68aa0d9de7bf22a5398324f"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/fragrant-game-setup-evidence.json",
+    "sha256": "68868f04c8fb34bc9fa3da9eed5526d0a111ec61f425ff258d79c3fe6dffea23"
+  },
+  "integrity": {
+    "freshSources": 4,
+    "actualGitBefore": 2,
+    "controls": 4,
+    "artifactHashes": 18,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "actual cef PM ctor整初始化顺序：bind→compile→assignconfig→原馥郁安装点→faultplan/系统/所有初始facts保",
+    "新helper实际完整7line configgate→callee→原world/events/两role现场lookup与index读序；thunk读原world参数而非this.world",
+    "authority唯一状态与原完整接受/事件原型/roster校验control，轻facet samebinding无heavyports新初始化",
+    "完整两旧程序十二exact edit/新实际body40typed52leaf/fourthunks mapped/100旧module端点与3相关binding界限",
+    "new3literal读取/原错误11及old默认hunter1/3四不同14断言，4finite types90d05b/heads/proof首0，不重绿",
+    "96module200保守边原prefacetauthority子图current采样末SHA无漂移+唯一lightedge无返PM/setup，仅有界notcold",
+    "完整2Git/fresh4/controls4/artifacts18/末scope，中文void vsboolean/权限/失败说明真实、全部已发现精度已闭"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

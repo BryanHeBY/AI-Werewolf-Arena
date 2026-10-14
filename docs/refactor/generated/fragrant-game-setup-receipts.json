@@ -1,0 +1,89 @@
+{
+  "baseCommit": "cef1dff641e1adbff2ded5e633fbcb5891b8ad2c",
+  "sourceAtChecks": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "4363c4eef2f8b42b9805630d754775ef349004e6294a65eea29ce91fc2031396"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "d980c19a108bdbad0bc0ae5bd3b2f44954255d39db4fc5949aea622a3954ceb3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/setup-ports.ts",
+      "sha256": "61ced822cfc0114bebdf3c49bdac043948363c605db4919a4b7bfea8c5b32c94"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/fragrant-game-setup.test.ts",
+      "sha256": "9eec1163dc73e29f4160ca80c746e03897aa97c16fb11c203fe576124759d6dd"
+    }
+  ],
+  "capture": {
+    "terminalChunk": "f23a6d",
+    "exitCode": 0,
+    "sourceCount": 2,
+    "controls": 4
+  },
+  "graph": {
+    "terminalChunk": "358e25",
+    "exitCode": 0,
+    "output": "docs/refactor/generated/fragrant-game-setup-graph-output.txt",
+    "nodes": 96,
+    "edges": 200,
+    "phase": "新公开facet前的authority子图采样；final proof核96源SHA及最终唯一facet边。"
+  },
+  "newTests": {
+    "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/rulesets/fragrant-game-setup.test.ts",
+    "cwd": "backend",
+    "terminalChunk": "fc0fb3",
+    "exitCode": 0,
+    "passed": 3,
+    "failed": 0,
+    "assertions": 11,
+    "output": "docs/refactor/generated/fragrant-game-setup-new-tests-output.txt"
+  },
+  "oldTest": {
+    "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/configuration/fragrant-default-hunter.test.ts -t '^omitted hunter roundtrip receives only default policy$'",
+    "cwd": "backend",
+    "terminalChunk": "4a56f5",
+    "exitCode": 0,
+    "passed": 1,
+    "failed": 0,
+    "assertions": 3,
+    "output": "docs/refactor/generated/fragrant-game-setup-old-test-output.txt"
+  },
+  "types": {
+    "command": "backend/node_modules/.bin/tsc -p docs/refactor/generated/fragrant-game-setup-types-config.json --pretty false",
+    "rootCount": 4,
+    "launchChunk": "b72f25",
+    "sessionId": 76657,
+    "terminalChunk": "90d05b",
+    "exitCode": 0,
+    "output": "docs/refactor/generated/fragrant-game-setup-types-output.txt"
+  },
+  "proof": {
+    "terminalChunk": "51305b",
+    "exitCode": 0,
+    "output": "docs/refactor/generated/fragrant-game-setup-proof-output.txt"
+  },
+  "heads": {
+    "terminalChunk": "1b25f6",
+    "exitCode": 0,
+    "sourceCount": 4,
+    "documentationPaths": 642,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "output": "docs/refactor/generated/fragrant-game-setup-heads-output.txt"
+  },
+  "coverage": {
+    "differentSuccessfulTests": 4,
+    "successfulAssertions": 14,
+    "executions": 2,
+    "allFirstRuns": true
+  },
+  "limits": [
+    "未重跑已绿用例或类型根。",
+    "没有全量结构／严格零债／浏览器／模型或完整cold加载验收。",
+    "类型检查采用实际backend配置的四根及当时传递依赖，并非整个固定cef树。"
+  ]
+}

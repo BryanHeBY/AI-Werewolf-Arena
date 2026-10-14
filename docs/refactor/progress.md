@@ -837,3 +837,6 @@
 
 
 - 首夜配置身份夹具独立修复：仅Wild／Lonely两个测试源，actual2da before；setup输入type收为实际World/events/ReadonlyBoardConfig，在原Wild五死因共用站点1处与Lonely指定异常/取消case两处显式传bootstrap同一boardConfig。原rawfixture/其他输入/角色/行动/World生命与事件引用/RNG/helperbody/31静态标题175matcher20callback保持，不改生产或原oracle，实际JS三input差异明确。Root及非作者两Git/九exact edits/六stablecontrols/十三附件批准；逆全7267typed9471叶与四mapped整输出保持，actualraw不同不冒等价。此前原红poison和Lone两不同case首各绿，24assert，两finite type71702→44b163、heads/641docs d13138和proof61bee3唯一实际0，无绿重跑/全gates/models。B/current及actual342隔离旧红历史不改，其他raw fixtures/旧mutable配置输入不称已验，见 setup-fixture-config-identity.md。
+
+
+- C23 馥郁双生开局完整贡献：四源把原PM ctor完整7行config门控／两角色现场查询／原authority安装归既有game-setup同步贡献，PM仍bind→compile→assignconfig→此原点→faultplan／系统／初始facts；原world构造参数与events晚读thunk、callee/三World/一events/两index先后保，首失败阻后构造不新发事实/退款。轻setup-ports exact原binding承接必要跨层路线，authority唯一WeakMap／原全部校验和四stablecontrols字节保持，首夜原四窗口generator不动。Root及非作者actualcef两原Git／十二exact edits／末四源／十八附件双审批准；整PM4926typed6235叶／setup344typed528叶四inverse raw、新实际body40typed52叶两mapped raw同、100retained项只module endpoint不冒递归声明解析，相关3binding明确。new3/11+old默认hunter1/3共四不同14assert；finite4 type76657→90d05b/proof51305b/heads1b25f6(642docs)首次0，不重绿。prefacet authority current96/200保守图无返PM/setup、末全源SHA同加唯一lightedge承接，非fixedcef/cold全图保证；void/boolean及依赖标签精度中文准确，无其它schema/规则/付款或完整55/P9声称，见 fragrant-game-setup.md。

@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "native_final_architecture_review",
+  "approved": true,
+  "baseCommit": "cef1dff641e1adbff2ded5e633fbcb5891b8ad2c",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "4363c4eef2f8b42b9805630d754775ef349004e6294a65eea29ce91fc2031396",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "d980c19a108bdbad0bc0ae5bd3b2f44954255d39db4fc5949aea622a3954ceb3",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/setup-ports.ts",
+      "sha256": "61ced822cfc0114bebdf3c49bdac043948363c605db4919a4b7bfea8c5b32c94",
+      "status": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/fragrant-game-setup.test.ts",
+      "sha256": "9eec1163dc73e29f4160ca80c746e03897aa97c16fb11c203fe576124759d6dd",
+      "status": "added"
+    }
+  ],
+  "deleted": [],
+  "scopeSHA256": "0e7baf574bde0489842b61a50b6034c7685c84d30e8dd8c4a7e303e07fb6607e",
+  "scope": {
+    "path": "docs/refactor/generated/fragrant-game-setup-scope-final.json",
+    "sha256": "0e7baf574bde0489842b61a50b6034c7685c84d30e8dd8c4a7e303e07fb6607e"
+  },
+  "document": {
+    "path": "docs/refactor/fragrant-game-setup.md",
+    "sha256": "83c8656e802fd9ab951e56f4786134a03a685abfd68aa0d9de7bf22a5398324f"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/fragrant-game-setup-evidence.json",
+    "sha256": "68868f04c8fb34bc9fa3da9eed5526d0a111ec61f425ff258d79c3fe6dffea23"
+  },
+  "handoff": {
+    "path": "docs/refactor/generated/fragrant-game-setup-handoff.md",
+    "sha256": "45f3576b666e82553acb463a834957b7688d12e2fa32deecc6c6856d7233dd4b"
+  },
+  "findings": [
+    {
+      "id": "public-installation-route",
+      "status": "closed",
+      "finding": "首候选把 PM 原私有 authority 依赖直接挪至 rulesets/game-setup，产生新 feature-internal 边。",
+      "resolution": "最终 game-setup 直导轻 setup-ports，唯一 direct named export 指向原 authority/installFragrantPairAuthority，原权威字节控制不变；没有 wrapper、新 store 或聚合夜/死亡/request 路由。"
+    },
+    {
+      "id": "separate-installation-and-preparation-output",
+      "status": "closed",
+      "finding": "初始头只有首夜 boolean 输出，未覆盖新增 void 安装贡献。",
+      "resolution": "最终中文头明确开局安装完成/原异常与首夜准备 boolean 输出，实际函数签名及 guard 相符。"
+    },
+    {
+      "id": "binding-proof-endpoint-precision",
+      "status": "closed",
+      "finding": "retainedBindings 的 physicalOwner 旧标签实际上仅 resolveModuleName 模块端点，未逐项追 ultimate declaration。",
+      "resolution": "MD/evidence 明确100模式/名称/模块端点范围；3实际相关绑定及 installer 轻facet→原authority 别列，不扩历史证明。"
+    }
+  ],
+  "remainingBlockingFindings": [],
+  "independentVerification": {
+    "actualGitBeforeSources": 2,
+    "completeExactSourceForwardVerified": 2,
+    "completeNewBodyMappedToOriginal": true,
+    "originalPhysicalLines": 7,
+    "freshSources": 4,
+    "sourceMismatches": 0,
+    "controls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "sha256": "4d31e59054f432647c24e6302e37fc06726e25ceffd755d58c8fa958c5f63c0d",
+        "actualGitAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+        "sha256": "77ef23abb2d451d0206baaeea12ece48de2906ab262f9816cfac386dd39f819f",
+        "actualGitAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/tests/unit/configuration/fragrant-default-hunter.test.ts",
+        "sha256": "1285fe7eec472bf11478e8a85e1aba44e69d315f7510a4d92217dae13d6f947f",
+        "actualGitAndCurrentWholeSame": true
+      },
+      {
+        "path": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+        "sha256": "aef1f6265f463008f656ce412f2826dac4ed5cee1c09cde130fda9946dee9e95",
+        "actualGitAndCurrentWholeSame": true
+      }
+    ],
+    "artifacts": 18,
+    "artifactMismatches": 0,
+    "sourceScopeDocumentationEvidenceEmbeddedSame": true,
+    "performed": "只读实际 Git/source、精确编辑全文正演、新实际安装 body 映回原7行、完整原调用点及3新单元/原精准case、作者脚本/报告/日志/配置与最终SHA；没有执行作者脚本或检查。"
+  },
+  "behaviorReview": {
+    "constructorPlacement": "PM 原 bindBoardParameters→config=parameters.board→RulePlan.compile→this.config 赋值后，原点调用贡献；faultPlan、事件/死亡系统与各流水线、god/private→公共牌组→phase_changed→inheritance/Sheriff 原后续全文保持。",
+    "admissionAndArguments": "config.fragrantPairSeer 仅一原 truthy gate；禁用不调用 World/events。启用保持 install callee 先查、原world参数/this.events、第一 getEntityIdsByRole receiver→Role.FragrantPhantom→[0]，再第二对应 AwakenedSeer→[0]，首异常保持原已读前缀。",
+    "runtimeMapping": "PM world() 词法箭头返回原构造参数 world，非 this.world；events() 到原参数点才读 this.events。组合3次 World thunk/1次events，同一生产引用；不声称任意外来runtime方法this/返回不同World的反射等价。",
+    "authorityAndResources": "authority完整Git/current控制相同，原 owners WeakMap 唯一；参数形成完成后先事件Proxy/数组/原型拒绝，再玩家/完整初状态检查及末owners.set。不发布事实、不新付款或原体许可；安装失败不推进后续PM构造。",
+    "retainedPreparation": "原首夜generator四个窗口、lazy requestFactory、Promise交接/false与current guards 全文保持，没有新等待、缓存或RNG位置变化。",
+    "testOracles": "新3字面风险仅门控读取、第二角色/index异常及原事件原型拒绝，受控查询不冒有效阵容/许可；原默认Hunter bootstrap精准case及其3assert完整字节控制。",
+    "chineseContract": "最终4头和新增结构/失败说明区分具体权威与组合/公开绑定，配置/上下文不授权，安装与准备输出和 late reads 描述准确。"
+  },
+  "proofReadReview": {
+    "terminalChunk": "51305b",
+    "completePrograms": 2,
+    "typedNodesByProgram": [
+      4926,
+      344
+    ],
+    "noncommentLeavesByProgram": [
+      6235,
+      528
+    ],
+    "preciseWholeInverseOutputs": 4,
+    "actualCompleteBodyTypedNodes": 40,
+    "actualCompleteBodyNoncommentLeaves": 52,
+    "actualCompleteBodyMappedOutputs": 2,
+    "retainedNamedBindings": 100,
+    "retainedBindingScope": "模式/名称/模块端点，仅实际3相关绑定沿源码核实；不称100 ultimate声明。",
+    "wholeOutputLimit": "6份相同输出属于精准逆完整程序或新真实body映回原表达式；当前模块JS实际布局变化，不称当前全部raw字节恒同。",
+    "nonfirstCounterexampleRead": true,
+    "proofNotReexecuted": true
+  },
+  "graphReadReview": {
+    "capture": "原轻facet前 authority 当前子图",
+    "nodes": 96,
+    "edges": 200,
+    "sourceHashMismatches": 0,
+    "returnedToGameSetup": false,
+    "returnedToPhaseManager": false,
+    "finalRoutes": [
+      {
+        "from": "backend/src/rulesets/game-setup.ts",
+        "to": "backend/src/game/mechanisms/roles/fragrant_pair_seer/setup-ports.ts"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/setup-ports.ts",
+        "to": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts"
+      }
+    ],
+    "limit": "仅核已采96源SHA/已保存邻接无返路与最终facet实际唯一导出边；没有重新解析/编译整图、冷加载、计算导入/eval/allSCC或固定cef全图声称。"
+  },
+  "receiptReadReview": {
+    "newTests": {
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/rulesets/fragrant-game-setup.test.ts",
+      "cwd": "backend",
+      "terminalChunk": "fc0fb3",
+      "exitCode": 0,
+      "passed": 3,
+      "failed": 0,
+      "assertions": 11,
+      "output": "docs/refactor/generated/fragrant-game-setup-new-tests-output.txt"
+    },
+    "oldTest": {
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/configuration/fragrant-default-hunter.test.ts -t '^omitted hunter roundtrip receives only default policy$'",
+      "cwd": "backend",
+      "terminalChunk": "4a56f5",
+      "exitCode": 0,
+      "passed": 1,
+      "failed": 0,
+      "assertions": 3,
+      "output": "docs/refactor/generated/fragrant-game-setup-old-test-output.txt"
+    },
+    "coverage": {
+      "differentSuccessfulTests": 4,
+      "successfulAssertions": 14,
+      "executions": 2,
+      "allFirstRuns": true
+    },
+    "types": {
+      "command": "backend/node_modules/.bin/tsc -p docs/refactor/generated/fragrant-game-setup-types-config.json --pretty false",
+      "rootCount": 4,
+      "launchChunk": "b72f25",
+      "sessionId": 76657,
+      "terminalChunk": "90d05b",
+      "exitCode": 0,
+      "output": "docs/refactor/generated/fragrant-game-setup-types-output.txt"
+    },
+    "heads": {
+      "terminalChunk": "1b25f6",
+      "exitCode": 0,
+      "sourceCount": 4,
+      "documentationPaths": 642,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "output": "docs/refactor/generated/fragrant-game-setup-heads-output.txt"
+    },
+    "emptyTypeLogDoesNotProveExit": "类型成功归作者 b72f25/session76657→90d05b 真终态收据，未因空输出推断/查询或重复会话。"
+  },
+  "limits": [
+    "真实base是cef1dff，后继B及fixture已提交但本批2before/4controls字节保持；graph/type传递依赖是当时当前源码，不称固定cef全闭包。",
+    "新增贡献函数、轻facet、新调用栈/闭包分配及模块初始化组织是实际API/sourceHash变化，不承诺任意可重绑定CJS/private namespace反射或跨构建复现豁免。",
+    "scope仅同步完整开局贡献与公开实际安装binding；没有迁移authority资源/lifecycle/档案算法，也不完成整个C17/C23/P9。",
+    "没有执行 tests/types/heads/proof/gates/models 或修改生产/作者附件/Git/progress/matrix。"
+  ]
+}

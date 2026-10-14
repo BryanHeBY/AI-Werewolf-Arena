@@ -1,0 +1,23 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "4363c4eef2f8b42b9805630d754775ef349004e6294a65eea29ce91fc2031396"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "d980c19a108bdbad0bc0ae5bd3b2f44954255d39db4fc5949aea622a3954ceb3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/setup-ports.ts",
+      "sha256": "61ced822cfc0114bebdf3c49bdac043948363c605db4919a4b7bfea8c5b32c94"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/fragrant-game-setup.test.ts",
+      "sha256": "9eec1163dc73e29f4160ca80c746e03897aa97c16fb11c203fe576124759d6dd"
+    }
+  ],
+  "documentationPaths": 642,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

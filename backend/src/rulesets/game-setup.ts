@@ -1,16 +1,19 @@
 /**
- * 负责首夜开局设置的确定序列：盗贼／千面人、野孩子、孤独少女、鬼魂新娘。
- * 输入为现场读取 World、网关、事件和板子的查询，以及原 provider、日期和唯一当前性回调；
- * 输出为全部准备通过，或在首个未准备完成／失效步骤之后立即返回 false。异常原样向上抛出。
+ * 负责开局馥郁双生权威安装及首夜设置的确定序列：盗贼／千面人、野孩子、孤独少女、鬼魂新娘。
+ * 输入为原配置与现场读取 World、事件、网关的查询；首夜序列另接原 provider、日期和唯一当前性回调；
+ * 开局输出为安装完成或原异常；首夜输出为全部准备通过，或在首个未完成／失效步骤之后返回 false。
  * 组合装配原窗口及其惰性请求构造依赖，串行交还原执行 Promise；
  * 选择、库存、接受权限和 finally 关闭仍由各机制拥有，不把构造器或阶段标签当许可。
- * 不缓存 World 或提前读取构造参数；成功末尾没有额外当前性查询，也不推进阶段或生成快照。
+ * 开局安装只在原配置为真时按原World／事件／两角色查询顺序执行，首异常阻止后续构造，不发布事实或退款。
+ * 不缓存 World 或提前读取构造参数；首夜序列成功末尾没有额外当前性查询，也不推进阶段或生成快照。
  */
 import type { GameEvent, ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { ActionProvider } from "../core/domain/actions";
 import type { World } from "../core/domain/world";
 import type { ToolGateway } from "../game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../game/engine/action_request_factory";
+import { Role } from "../core/domain/identity";
+import { installFragrantPairAuthority } from "../game/mechanisms/roles/fragrant_pair_seer/setup-ports";
 import {
   InitialIdentitySetupWindow,
   initialIdentitySetupReady,
@@ -79,4 +82,18 @@ export function* prepareGameSetup(
     if (!ready || !nightIsCurrent()) return false;
   }
   return true;
+}
+
+/** 开局安装在原config门控后才读World／事件与两角色；本贡献不建立第二权威或新的许可。 */
+export function installFragrantGameSetup(
+  config: Pick<ReadonlyBoardConfig, "fragrantPairSeer">,
+  runtime: Pick<GameSetupRuntime, "world" | "events">,
+): void {
+  if (config.fragrantPairSeer)
+    installFragrantPairAuthority(
+      runtime.world(),
+      runtime.events(),
+      runtime.world().getEntityIdsByRole(Role.FragrantPhantom)[0]!,
+      runtime.world().getEntityIdsByRole(Role.AwakenedSeer)[0]!,
+    );
 }

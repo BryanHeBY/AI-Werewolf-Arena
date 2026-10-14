@@ -1,0 +1,9 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/configuration/fragrant-default-hunter.test.ts:
+(pass) omitted hunter roundtrip receives only default policy [57.52ms]
+
+ 1 pass
+ 0 fail
+ 3 expect() calls
+Ran 1 test across 1 file. [220.00ms]
