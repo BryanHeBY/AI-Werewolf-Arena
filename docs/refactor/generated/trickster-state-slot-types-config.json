@@ -1,0 +1,26 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "../../../backend/src/game/mechanisms/roles/trickster/profile.ts",
+    "../../../backend/src/game/mechanisms/roles/trickster/night_frame.ts",
+    "../../../backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+    "../../../backend/src/game/mechanisms/roles/trickster/ports.ts",
+    "../../../backend/src/game/observation/player-observation-projector.ts",
+    "../../../backend/tests/unit/features/trickster/state.test.ts",
+    "../../../backend/tests/unit/features/trickster/frame.test.ts",
+    "../../../backend/tests/unit/features/trickster-combination.test.ts",
+    "../../../backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+    "../../../backend/tests/scenarios/simulation/trickster/seeded-world.test.ts",
+    "../../../backend/src/game/mechanisms/roles/trickster/state-slot.ts",
+    "../../../backend/tests/unit/features/trickster/state-slot.test.ts"
+  ]
+}

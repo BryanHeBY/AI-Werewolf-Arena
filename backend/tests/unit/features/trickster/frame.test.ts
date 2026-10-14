@@ -1,5 +1,5 @@
 /**
- * 单元测试：验证捣蛋鬼独立 frame 契约。输入为原内存 owner、frame、reader 与受控非法修改；原字面断言、对象身份及拒绝结果为预期，不组装完整对局或模型传输。
+ * 单元测试：验证诡术师独立 frame 契约。输入为原内存 owner、frame、reader 与受控非法修改；原字面断言、对象身份及拒绝结果为预期，不组装完整对局或模型传输。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -14,7 +14,7 @@ import {
 import {
   createTricksterState,
   getTricksterState,
-} from "../../../../src/game/mechanisms/roles/trickster/state";
+} from "../../../../src/game/mechanisms/roles/trickster/state-slot";
 import {
   installTricksterBoard,
   beginTricksterNight,

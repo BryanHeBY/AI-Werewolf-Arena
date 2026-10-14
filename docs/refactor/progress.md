@@ -706,3 +706,5 @@
 - C45 魔术师/诡术师夜cleanup中文契约：两源14精确注释，共享布尔移交/view而非配置ref/行动许可、ctor原runtime引用与World晚读、经理当次终结参数/重复原native失败、诡术师finished保day放逐映射就地说明。Root实际d92全文forward/十四记录/真实plan与Manager/两个frame、同行全文caller/两fresh SHA/附件/中文批准，稳定Wolf夜life原byte未改；原333token与一次两head采537Gitdoc0，不重复AST/emit/type/tests/fullgate/model。主线继续，完整C45和生命周期终验仍待，见 exchange-night-lifecycle-chinese-contracts.md。
 
 - C45 AI集成/提示接口中文契约：三源25comment，身份人设/配比数据、原persona双trim和Role序/Map回调/短路/重试1-2-其余文案、提示不授许可与MCP配置/控制/factory声明职责中文说明；index真实直接导出不冒无副作用。Root actuald92三Git完整forward、实际Policy/defaultBridge/Loopback与独立全caller/三freshSHA/14附件审批准，1085noncommenttoken同；首template tail扫描工具红→仅工具修、原3head首index2诊断→failed1补期限取消责任0，历史收据保，不重AST/emit/types/tests/fullgate/model。产品字段/字符串/i18n和历史fingerprint不动，完整C45/P9继续，见 ai-interface-prompt-chinese-contracts.md。
+
+- C17 诡术师唯一状态槽：13 路径（12 现行／旧 state 删除），完整创建、live schema、同引用读取、副本选择及实际安装／历史写／身份编码归本族；frame 保原体生命、夜窗口、finished／exileResolved 与最终映射。Root 实际 fa4 十一 Git 全文精确 forward、四控制源和独立全算法／消费者／中文语义审批准，末 source／scope／MD／21附件无漂移。新三例日志25成功断言＋旧正常 finally 精准一例1断言，四不同用例；十二根有限类型实际 d447ed 0，头只修失败根，不重已绿。公开两个实际 reader，旧入口无桥；中文说明就地覆盖状态、写序及失败保留，不冒全部 C17／整局／P9完成。见 trickster-state-slot.md。

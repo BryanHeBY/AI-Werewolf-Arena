@@ -27,7 +27,7 @@ import { readModifierState } from "../mechanisms/roles/scholar_mentor/state";
 import { scholarMentorStateForRole } from "../mechanisms/roles/scholar_mentor/night_frame";
 import { projectTimeConsortState } from "../mechanisms/roles/time_wolf_consort/state";
 import { projectWolfSorcererState } from "../mechanisms/roles/wolf_sorcerer/ports";
-import { projectTricksterState } from "../mechanisms/roles/trickster/state";
+import { projectTricksterState } from "../mechanisms/roles/trickster/ports";
 import { projectOrderPrinceState } from "../mechanisms/roles/order_prince/state";
 import { projectMagicianState } from "../mechanisms/roles/magician/ports";
 import { projectRedMoonState } from "../mechanisms/roles/red_moon_apostle/ports";

@@ -1,10 +1,6 @@
 /**
- * Unit tests for trickster; Isolated trickster state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证诡术师状态／选择与放逐映射纯契约。输入为原内存角色、显式非法变更及号码；
+ * 原字面预期、身份和拒绝断言保持，不组装整局或模型，不把测试自有对象变更当生产授权。
  */
 import { expect, test } from "bun:test";
 import { Camp, type RoleComponent } from "../../../../src/core";
@@ -14,7 +10,7 @@ import {
   projectTricksterState,
   nextTricksterChoice,
   TRICKSTER_POLICY,
-} from "../../../../src/game/mechanisms/roles/trickster/state";
+} from "../../../../src/game/mechanisms/roles/trickster/state-slot";
 import {
   matchingExchangePairs,
   mapTricksterExileTarget,

@@ -11,7 +11,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { TRICKSTER_POLICY, createTricksterState, getTricksterState } from "./state";
+import { TRICKSTER_POLICY, getTricksterState, TRICKSTER_STATE_SLOT } from "./state-slot";
 import {
   tricksterChoicePending,
   tricksterChoiceTargets,
@@ -54,7 +54,7 @@ export const TRICKSTER_ROLE_PROFILE: NativeRoleContributions = {
       };
     },
     init: (role) => {
-      role.privateState.trickster = createTricksterState();
+      TRICKSTER_STATE_SLOT.install(() => role.privateState);
     },
     configuration: {
       schema: parameters,

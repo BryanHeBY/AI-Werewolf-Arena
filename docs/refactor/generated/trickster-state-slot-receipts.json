@@ -1,0 +1,122 @@
+{
+  "newTests": {
+    "command": "bun --no-env-file test backend/tests/unit/features/trickster/state-slot.test.ts > docs/refactor/generated/trickster-state-slot-new-tests.log 2>&1; cat docs/refactor/generated/trickster-state-slot-new-tests.log",
+    "log": "docs/refactor/generated/trickster-state-slot-new-tests.log",
+    "pass": 3,
+    "fail": 0,
+    "assertionCalls": 25,
+    "receiptLimitation": "首执行只输出末cat内容；保留真实Bun成功summary，不冒其独立process退出码或另编terminalchunk，不为此重复绿。"
+  },
+  "originalTest": {
+    "chunk_id": "e1640a",
+    "wall_time_seconds": 0.034109593,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": "",
+    "command": "bun --no-env-file test backend/tests/unit/features/trickster/frame.test.ts --test-name-pattern '^trickster normal finally cleanup preserves finished day mapping$'",
+    "log": "docs/refactor/generated/trickster-state-slot-original-test.log",
+    "pass": 1,
+    "fail": 0,
+    "assertionCalls": 1,
+    "filtered": 9
+  },
+  "types": {
+    "roots": 12,
+    "launch": {
+      "chunk_id": "26c307",
+      "wall_time_seconds": 1.001588914,
+      "session_id": 89137,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "terminal": {
+      "chunk_id": "d447ed",
+      "wall_time_seconds": 0.000009405,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "configuration": "docs/refactor/generated/trickster-state-slot-types-config.json",
+    "log": "docs/refactor/generated/trickster-state-slot-types.log",
+    "commentStage": "首次compiler启动后仅ports职责头两diagnostic修复；comment不改类型/执行token，不重类型或绿用例。"
+  },
+  "proof": {
+    "launch": {
+      "chunk_id": "9feca8",
+      "wall_time_seconds": 1.000595928,
+      "session_id": 65474,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "terminal": {
+      "chunk_id": "128f7c",
+      "wall_time_seconds": 0.000009501,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "log": "docs/refactor/generated/trickster-state-slot-proof.log",
+    "producerPrograms": 4,
+    "consumerPrograms": 10,
+    "typedNodes": 10850,
+    "wholeMappedOutputs": 28
+  },
+  "bindings": {
+    "chunk_id": "881039",
+    "wall_time_seconds": 0.32327846,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": "",
+    "log": "docs/refactor/generated/trickster-state-slot-bindings.log",
+    "beforeBindings": 237,
+    "afterBindings": 240,
+    "unchangedBindings": 218,
+    "reroutedBindings": 19,
+    "removedFactoryImport": 1,
+    "addedTableAndPublicReadBindings": 4
+  },
+  "heads": {
+    "first": {
+      "chunk_id": "09773f",
+      "wall_time_seconds": 0.253528144,
+      "exit_code": 1,
+      "original_token_count": 0,
+      "output": "",
+      "roots": 12,
+      "documentationPaths": 542,
+      "diagnostics": 2,
+      "report": "docs/refactor/generated/trickster-state-slot-heads-first.json"
+    },
+    "failedOnly": {
+      "roots": 1,
+      "documentationPaths": 542,
+      "diagnostics": 0,
+      "report": "docs/refactor/generated/trickster-state-slot-heads-final.json",
+      "log": "docs/refactor/generated/trickster-state-slot-heads-final.log",
+      "receiptLimitation": "实际failed-only报告零诊断；此tool响应未打印child terminal metadata，不发明chunk或为其复跑。"
+    },
+    "resolution": "只ports中文首头显式补原开夜/终结时点与原异常传播；其余11green不重。"
+  },
+  "diffCheck": {
+    "chunk_id": "20605a",
+    "wall_time_seconds": 0.000019901,
+    "exit_code": 0,
+    "original_token_count": 71,
+    "output": "{\"producerPrograms\":4,\"consumerPrograms\":10,\"typedNodes\":10850,\"wholeMappedOutputs\":28}\n{\"beforeBindings\":237,\"afterBindings\":240,\"unchangedBindings\":218,\"reroutedBindings\":19,\"removedFactoryImport\":1,\"addedTableAndPublicReadBindings\":4,\"valueModules\":94,\"edges\":286,\"endpoints\":7}\n"
+  },
+  "notRun": [
+    "全门禁",
+    "完整旧测试组",
+    "整局",
+    "模型",
+    "coldload",
+    "private configs"
+  ],
+  "runtimeSummary": {
+    "executions": 2,
+    "distinctCases": 4,
+    "pass": 4,
+    "fail": 0,
+    "assertionCalls": 26
+  }
+}

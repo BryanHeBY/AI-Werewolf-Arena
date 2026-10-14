@@ -1,8 +1,8 @@
 /**
- * Owns Trickster exchange choices and exile substitution for the captured night. Inputs are
- * original bodies and the paired choice; outputs are exchange/cancel facts and the resolved
- * exile mapping. Finish or abort ends the exchange window without granting an old mapping to a
- * new life.
+ * 负责诡术师原体绑定、夜换位选择和最终放逐替换。输入为原参与者、日期和配对，输出为原映射及终结结果。
+ * 状态校验、初始化、历史追加和身份编码归本族槽；本 frame 保原 state 引用、expectedState 与唯一夜窗口。
+ * history 先追加、expectedState 后刷新、pair／committed 最后更新；失败不退款或改写已消费号码。
+ * finished 保留当日放逐映射，exileResolved 限一次输出；关闭／中止不把旧映射授给新生命或新原体。
  */
 import type { TricksterReadState } from "@ai-werewolf-arena/game-contract";
 import { mapTricksterExileTarget } from "./exile_mapping";
@@ -18,7 +18,8 @@ import {
   projectTricksterState,
   TRICKSTER_ROLE,
   nextTricksterChoice,
-} from "./state";
+  TRICKSTER_STATE_SLOT,
+} from "./state-slot";
 
 interface OriginalPlayer {
   id: number;
@@ -45,16 +46,12 @@ interface ExchangeNight {
 interface Board {
   actorId: number;
   state: TricksterReadState;
+  /** 同引用状态的运行 JSON 检查点，不是第二份库存、档案验证或行动许可。 */
   expectedState: string;
   players: ReadonlyMap<number, OriginalPlayer>;
   night: ExchangeNight | null;
 }
 const boards = new WeakMap<World, Board>();
-function stateIdentity(role: RoleComponent): string {
-  const view = projectTricksterState(role);
-  if (!view) throw new Error("trickster_original_state_revoked");
-  return JSON.stringify(view);
-}
 function ownData(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -86,7 +83,7 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
   )
     return false;
   const version = aliveLifeVersion(p.life);
-  // A committed exchange survives one ordinary death, never revival or another life.
+  // 已付换位保留原一次普通死亡效果；复活、换生命或原数据字段变访问器仍按原校验撤权。
   return p.life.alive ? version === p.version : version === p.version + 1;
 }
 function requireBoard(world: World): Board {
@@ -100,7 +97,7 @@ function requireBoard(world: World): Board {
   )
     throw new Error("trickster_original_state_revoked");
   const actor = b.players.get(b.actorId)!;
-  if (getTricksterState(actor.role) !== b.state || stateIdentity(actor.role) !== b.expectedState)
+  if (getTricksterState(actor.role) !== b.state || TRICKSTER_STATE_SLOT.checkpoint.identity(actor.role) !== b.expectedState)
     throw new Error("trickster_original_state_revoked");
   return b;
 }
@@ -173,7 +170,7 @@ export function installTricksterBoard(world: World): void {
   boards.set(world, {
     actorId,
     state,
-    expectedState: stateIdentity(players.get(actorId)!.role),
+    expectedState: TRICKSTER_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role),
     players,
     night: null,
   });
@@ -251,13 +248,8 @@ export function commitTricksterExchange(
     tricksterChoiceTargets(world, day),
   );
   const choice = next.history.at(-1)!;
-  Object.defineProperty(b.state.history, String(b.state.history.length), {
-    value: choice,
-    writable: true,
-    enumerable: true,
-    configurable: true,
-  });
-  b.expectedState = stateIdentity(b.players.get(actorId)!.role);
+  TRICKSTER_STATE_SLOT.allowedWrites.appendHistory(() => b.state, choice);
+  b.expectedState = TRICKSTER_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role);
   n.pair = choice.pair && Object.freeze([choice.pair[0], choice.pair[1]] as [number, number]);
   n.committed = true;
 }

@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/trickster/frame.test.ts:
+(pass) trickster normal finally cleanup preserves finished day mapping [40.69ms]
+
+ 1 pass
+ 9 filtered out
+ 0 fail
+ 1 expect() calls
+Ran 1 test across 1 file. [154.00ms]

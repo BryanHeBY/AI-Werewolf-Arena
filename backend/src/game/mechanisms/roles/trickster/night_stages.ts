@@ -1,13 +1,12 @@
 /**
- * Runs the Trickster paired-exchange request before subsequent night actions. Inputs are the
- * bound frame, policy pass allowance and validated choice; outputs preserve its exchange or
- * cancellation evidence. Exile substitution remains frame-owned and is not performed by the
- * provider.
+ * 负责诡术师夜间配对请求、原 current／名单复验及交换／抵消事实。输入为真实 frame、跳过政策和已校验选择；
+ * 输出保原 provider await 后的提交与事实顺序，阶段仍为 priority=100。当前请求只提供候选，许可归 frame／gateway。
+ * 先提交历史再发布事实，再与魔术师同配对抵消；抵消不退已用号码，放逐替换仍归 frame 而非 provider。
  */
 import { COMPONENT, type RoleComponent, type AliveComponent } from "../../../../core";
 import { Phase } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { getTricksterState } from "./state";
+import { getTricksterState } from "./state-slot";
 import {
   assertTricksterRosterCurrent,
   beginTricksterNight,

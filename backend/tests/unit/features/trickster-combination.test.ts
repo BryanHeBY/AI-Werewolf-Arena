@@ -21,7 +21,7 @@ import {
   resolveMagicianNightTarget,
   closeMagicianNight,
 } from "../../../src/game/mechanisms/roles/magician/night_frame";
-import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/state";
+import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/ports";
 import { getMagicianState } from "../../../src/game/mechanisms/roles/magician/state-slot";
 function fixture() {
   const g = bootstrapGame(structuredClone(tricksterTwelveConfig));
