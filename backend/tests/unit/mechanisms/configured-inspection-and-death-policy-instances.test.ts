@@ -216,6 +216,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
           () => 2,
           locale,
           game.world,
+          () => game.world.getComponent(1, COMPONENT.Camp),
         );
         expect(baseline?.name).toBe("inspect_role");
         if (baseline?.name === "inspect_role")
@@ -513,7 +514,7 @@ test("optional Gargoyle pass completes only its native current-policy knife gate
     events: GameEvent[] = [];
   game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   refreshGargoyleInheritance(game.world, events, 1);
-  expect(canGargoyleKnife(role, game.world)).toBe(false);
+  expect(canGargoyleKnife(role, game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   const factory = new GameActionRequestFactory(game.world, events, 1);
   await ROLE_INSPECTION_STAGE.execute(
     nightStageContext({
@@ -536,7 +537,7 @@ test("optional Gargoyle pass completes only its native current-policy knife gate
       },
     }),
   );
-  expect(canGargoyleKnife(role, game.world)).toBe(true);
+  expect(canGargoyleKnife(role, game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
   expect(ability.uses).toBe(0);
   (
     ability.state as {
@@ -544,7 +545,7 @@ test("optional Gargoyle pass completes only its native current-policy knife gate
         "awa_unique_required_v1" | "awa_repeat_optional_v1" | "awa_unique_optional_v1" | undefined;
     }
   ).inspectionPolicy = "awa_unique_required_v1";
-  expect(canGargoyleKnife(role, game.world)).toBe(false);
+  expect(canGargoyleKnife(role, game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
 });
 
 test("a native death proposal is revoked by a policy edit before central commit", async () => {

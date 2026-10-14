@@ -160,7 +160,7 @@ for (const policy of ["netease_2017_cupid_follows_lovers_v1", "lui_meme_lovers_o
       mixed: true,
       policy,
     });
-    expect(role(game, 1).camp).toBe(Camp.Good);
+    expect(game.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     expect(wolfKnifeHolders(game.world, getDefaultRoleCatalog())).toEqual([3, 5]);
     expect(knownWolfTeammates(game.world, 1, getDefaultRoleCatalog())).toEqual([]);
     expect(knownWolfTeammates(game.world, 3, getDefaultRoleCatalog())).toEqual([5]);
@@ -236,7 +236,7 @@ for (const mutation of [
           if (calls++) return null;
           const victory = game.world.getComponent(2, COMPONENT.Victory)!;
           if (mutation === "target_role") role(game, 2).role = Role.Villager;
-          if (mutation === "target_camp") role(game, 2).camp = Camp.Wolf;
+          if (mutation === "target_camp") game.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Wolf;
           if (mutation === "target_state")
             (role(game, 2) as { privateState: Readonly<Record<string, unknown>> }).privateState =
               {};

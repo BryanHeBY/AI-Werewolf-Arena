@@ -109,8 +109,10 @@ test("Wild Camp failure permanently retires old and fresh action captures across
   }
   expect(caught).toBe(error);
   expect(g.world.getComponent(1, COMPONENT.Camp)).toBe(camp);
-  expect(role.camp).toBe(Camp.Wolf);
-  role.camp = Camp.Good;
+  // F05b已退休Role镜像；本注入在Camp真正安装前抛，actual仍为旧Good。
+  expect(camp.camp).toBe(Camp.Good);
+  camp.camp = Camp.Wolf;
+  camp.camp = Camp.Good;
   expect(isRoleExecutionRetired(role)).toBe(true);
   expect(validWildChildOwner(g.binding)).toBe(false);
   expect(g.scope.isOwnerCurrent()).toBe(true);
@@ -134,12 +136,12 @@ test("Wild core preparation failure keeps paid Fox currentness but refuses new a
   const g = await prepared(), role = g.binding.actor.role;
   const camp = g.binding.camp, victory = g.binding.victory, error = new Error("literal_f05a_prepare_failure");
   const descriptor = Object.getOwnPropertyDescriptor(g.world, "locale")!;
-  // 此原 getter 在准备 Camp 实参处首次抛，尚未改 Role.camp；区别于已提交的 Camp 安装故障旧例。
+  // 此原 getter 在准备Camp实参处首次抛，尚未安装任何新组件；区别于已提交的Camp安装故障旧例。
   Object.defineProperty(g.world, "locale", { configurable: true, get() { throw error; } });
   let caught: unknown;
   try { contribute(g); } catch (e) { caught = e; } finally { Object.defineProperty(g.world, "locale", descriptor); }
   expect(caught).toBe(error);
-  expect(role.camp).toBe(Camp.Good);
+  expect(camp.camp).toBe(Camp.Good);
   expect(g.world.getComponent(1, COMPONENT.Camp)).toBe(camp);
   expect(g.world.getComponent(1, COMPONENT.Victory)).toBe(victory);
   expect(g.binding.state.status).toBe("chosen");
@@ -173,11 +175,13 @@ test("Wild transformed fact failure preserves committed execution and permits fr
 
 function hunter(trace: string[], stock: { isCurrent(): boolean; consume(): void } | null = null) {
   const world = new World(), actor = world.createEntity(), target = world.createEntity();
-  const role = createRoleComponent(Role.Hunter, Camp.Good), state = { canShoot: true };
+  const role = createRoleComponent(Role.Hunter), state = { canShoot: true };
   setHunterState(role, state);
   world.addComponent(actor, COMPONENT.Role, role);
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(actor, COMPONENT.Alive, createAliveComponent(false));
-  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(target, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(target, COMPONENT.Alive, createAliveComponent(true));
   const rules: NativeDeathShotRules = {
     role: Role.Hunter,

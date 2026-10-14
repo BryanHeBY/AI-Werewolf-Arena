@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/engine/visibility/camp-canonical-inspection-input.test.ts:
+(pass) Camp and combined inspection do not fall back to metadata when the actual Camp is missing [147.99ms]
+(pass) role-only inspection keeps label Camp then World Camp then role label reads and the same source error [0.17ms]
+(pass) an explicit runtime Camp label still short circuits the actual World Camp lookup [0.11ms]
+
+ 3 pass
+ 0 fail
+ 11 expect() calls
+Ran 3 tests across 1 file. [203.00ms]

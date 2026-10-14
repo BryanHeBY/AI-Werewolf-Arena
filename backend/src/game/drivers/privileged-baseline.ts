@@ -180,10 +180,11 @@ export class BaselineBotActionProvider implements ActionProvider {
         (camp) => this.pickAliveByCamp(request.actorId, this.parseCamp(camp)),
         this.world.locale,
         this.world,
+        () => this.world.getComponent(request.actorId, COMPONENT.Camp),
       );
       if (action?.name === "speak_to_wolves" || action?.name === "kill_vote") {
         // 钩子选择之后再按当前身份、生命和夜间权限检查；选择工具并不授予狼聊或刀权。
-        const access = wolfTeamPermissions(role, this.roleCatalog, this.world);
+        const access = wolfTeamPermissions(role, this.roleCatalog, () => this.world.getComponent(request.actorId, COMPONENT.Camp), this.world);
         const permitted =
           action.name === "speak_to_wolves" ? access.canChat : access.canVoteForKill;
         if (
@@ -213,7 +214,7 @@ export class BaselineBotActionProvider implements ActionProvider {
   private pickAliveByCamp(actorId: EntityId, camp: Camp): EntityId | null {
     const target = this.world.getAliveEntityIds().find((id) => {
       const role = this.world.getComponent(id, COMPONENT.Role);
-      return id !== actorId && role?.camp === camp;
+      return id !== actorId && !!role && this.world.getComponent(id, COMPONENT.Camp)?.camp === camp;
     });
     // 若指定阵营无可选目标，兜底选任意存活非自己玩家。
     return target ?? this.pickAliveNotSelf(actorId);

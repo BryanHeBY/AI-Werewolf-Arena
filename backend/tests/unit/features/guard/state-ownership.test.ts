@@ -19,7 +19,7 @@ function readerPermission(state: GuardState) {
 }
 void readerPermission;
 function fixture() {
-  const role = createRoleComponent(Role.Guard, Camp.Good, "en"),
+  const role = createRoleComponent(Role.Guard, "en"),
     state = setGuardState(role, { lastTarget: null }),
     ability = findNightAbility(role, "guard")!;
   return { role, state, ability };

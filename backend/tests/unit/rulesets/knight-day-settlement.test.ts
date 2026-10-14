@@ -14,11 +14,13 @@ import { settleKnightDay, type KnightDaySettlementRuntime } from "../../../src/r
 
 function fixture() {
   const world = new World(), actorId = world.createEntity(), targetId = world.createEntity();
-  const actor = createRoleComponent(Role.Knight, Camp.Good), target = createRoleComponent(Role.Wolf, Camp.Wolf);
+  const actor = createRoleComponent(Role.Knight), target = createRoleComponent(Role.Wolf);
   const stock = setKnightState(actor, { canDuel: true });
   const actorLife = createAliveComponent(), targetLife = createAliveComponent();
   world.addComponent(actorId, COMPONENT.Role, actor);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(targetId, COMPONENT.Role, target);
+  world.addComponent(targetId, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(actorId, COMPONENT.Alive, actorLife);
   world.addComponent(targetId, COMPONENT.Alive, targetLife);
   return { world, stock, actorLife, targetLife, choice: { actorId, targetId } };

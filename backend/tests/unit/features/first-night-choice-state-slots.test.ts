@@ -15,7 +15,7 @@ import type { NightLifeScope } from "../../../src/core/domain/night_effects";
 
 test("thief initialization obtains assignment container before deferred policy failure", () => {
   const trace: string[] = [], container: Record<string, unknown> = {}, failure = new Error("policy_failure");
-  const role = { role: Role.Thief, camp: Camp.Good, get privateState() { trace.push("container"); return container; } };
+  const role = { role: Role.Thief, get privateState() { trace.push("container"); return container; } };
   let thrown: unknown;
   try { initializeThiefState(role, (): typeof THIEF_POLICY => { trace.push("policy"); throw failure; }); }
   catch (error) { thrown = error; }

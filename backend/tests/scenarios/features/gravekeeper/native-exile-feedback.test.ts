@@ -248,7 +248,7 @@ for (const locale of ["zh-CN", "en"] as const)
     });
     const fact = captureExileFeedback(world, 1, 1, catalog)!;
     expect(fact).toEqual({ exileDay: 1, targetId: 1, result: { kind: "camp", camp: "good" } });
-    role(world, 1).camp = Camp.ThirdParty;
+    world.getComponent(1, COMPONENT.Camp)!.camp = Camp.ThirdParty;
     world.getComponent(1, COMPONENT.Alive)!.alive = false;
     expect(state(world)).toEqual({ history: [] });
     expect(policy(world).buildObservation(request(3, 1, [])).ownState.gravekeeper).toEqual({

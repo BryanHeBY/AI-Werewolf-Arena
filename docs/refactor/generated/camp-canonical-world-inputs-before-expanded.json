@@ -1,0 +1,724 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "originalBefore": {
+    "path": "docs/refactor/generated/camp-canonical-world-inputs-before.json",
+    "sha256": "85a2af35f45272ba209181c4a63e8d6692da51a2c4b5b5dff4248e38cd73a3b9",
+    "candidates": 165
+  },
+  "additionalSource": [
+    {
+      "path": "backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+      "sha256": "12ece62e2635c51babad44158792b3976ab35140076c6ebf2368d1db38d55dc1",
+      "text": "/**\n * 觉醒原生运行场景验证学习模板、激活、作用域及已付效果矩阵。输入和预期保留原回执、引用／getter／错误、事实及状态。真实阶段连接 DamageResolution 或完整 Pipeline／经理，重入清理、跨来源伤害及枪／判胜顺序通过引擎因果链验证；决策来自受控 Provider，不新生成 golden。\n */\nimport { bindNativeNightFailurePolicy } from \"../../../../src/rulesets/native-night-failure-policy\";\nimport { bindNativeNightTargetPolicy } from \"../../../../src/rulesets/native-night-target-policy\";\nimport { bindNativeNightEffects } from \"../../../../src/rulesets/native-night-effects\";\nimport type { AwakenedTemplateRole } from \"@ai-werewolf-arena/game-contract\";\nimport { bindNightAbilityActorQuery } from \"../../../../src/game/mechanisms/roles/night-ability-actors\";\nimport { PotionType } from \"../../../../src/core\";\nimport { expect, test } from \"bun:test\";\nimport { bootstrapGame } from \"../../../../src/app/bootstrap\";\nimport {\n  COMPONENT,\n  Camp,\n  DeathCause,\n  Phase,\n  Role,\n  StatusMark,\n  type ActionProvider,\n  type BoardConfig,\n  type GameEvent,\n  type RoleComponent,\n} from \"../../../../src/core\";\nimport { type AliveComponent } from \"../../../../src/core/domain/components/alive\";\nimport { captureNightLife } from \"../../../../src/core/domain/night_effects\";\nimport { DamageResolutionSystem } from \"../../../../src/core/domain/systems/damage_resolution_system\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";\nimport { NightPipeline } from \"../../../../src/game/engine/phase_pipeline/night_pipeline\";\nimport { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport type { NightStageContext } from \"../../../../src/game/mechanisms/stages/night/contracts\";\nimport { getDefaultRoleCatalog } from \"../../../../src/game/mechanisms/roles/role-catalog-assembly\";\nimport {\n  canAwakenedKnife,\n  refreshAwakenedInheritance,\n} from \"../../../../src/game/mechanisms/roles/awakened_hidden_wolf/inheritance\";\nimport { AWAKENED_NIGHT_STAGES } from \"../../../../src/game/mechanisms/roles/awakened_hidden_wolf/night_stages\";\nimport { captureAwakenedOwner } from \"../../../../src/game/mechanisms/roles/awakened_hidden_wolf/night_scope\";\nimport {\n  activateAwakenedLearning,\n  getAwakenedState,\n  learnAwakenedRole,\n} from \"../../../../src/game/mechanisms/roles/awakened_hidden_wolf/state\";\nimport { sixPlayerMvpConfig } from \"../../../../src/runtime/scenarios/six_player_mvp\";\n\nconst fixture = (targetRole = Role.Hunter) => {\n  const roles = [\n    Role.AwakenedHiddenWolf,\n    Role.Wolf,\n    targetRole,\n    Role.Witch,\n    Role.Guard,\n    Role.Villager,\n  ];\n  const config: BoardConfig = {\n    ...sixPlayerMvpConfig,\n    roleSetups: [...new Set(roles)].map((role) => ({\n      role,\n      count: roles.filter((r) => r === role).length,\n    })),\n  };\n  return { ...bootstrapGame(config, { fixedRoles: roles }), config };\n};\n\ntype Game = ReturnType<typeof fixture>;\n\nconst role = (game: Game, id = 1) => game.world.getComponent(id, COMPONENT.Role)!;\n\nconst state = (game: Game) => getAwakenedState(role(game))!;\n\nconst stage = (id: string) => AWAKENED_NIGHT_STAGES.find((stage) => stage.id === id)!;\n\nfunction context(\n  game: Game,\n  day: number,\n  getAction: ActionProvider[\"getAction\"],\n  clock = { day, open: true },\n): NightStageContext {\n  const events: GameEvent[] = [],\n    requests = new GameActionRequestFactory(game.world, events, day);\n  return {\n    world: game.world,\n    get nightActors() {\n      return bindNightAbilityActorQuery(this.world);\n    },\n    get nativeNightFailure() {\n      return bindNativeNightFailurePolicy(() => this.world);\n    },\n    get nativeNightTargets() {\n      return bindNativeNightTargetPolicy(() => this);\n    },\n    get nativeNightEffects() {\n      return bindNativeNightEffects(() => this);\n    },\n    events,\n    roleCatalog: getDefaultRoleCatalog(),\n    toolGateway: new ToolGateway(),\n    isCurrent: () => clock.open,\n    currentDay: () => clock.day,\n    previousExile: null,\n    actionProvider: { getAction },\n    makeRequest: (actorId, allowedTools, extra) =>\n      requests.create({\n        actorId,\n        allowedTools,\n        phase: Phase.Night,\n        stage: extra.stage,\n        requiresAction: extra.requiresAction ?? true,\n        summary: { key: \"request.summary.night_action\" },\n        context: extra,\n      }),\n    getAliveByRole: (r) => game.world.getAliveEntityIds().filter((id) => role(game, id).role === r),\n    ensureMarks: (id) => game.world.getComponent(id, COMPONENT.StatusMarks)!,\n    pickMajorityTarget: () => null,\n    shuffleWolves: (ids) => ids,\n    state: {\n      wolfChatOrder: [],\n      endedWolves: new Set(),\n      wolfVotes: {},\n      wolfTarget: null,\n      seerChecks: [],\n      poisonClaims: [],\n      guardClaims: [],\n      merchantBacklashes: [],\n      awakenedEffects: { shields: [], attacks: [] },\n      mechanicalEffects: { shields: [], attacks: [], failures: [] },\n    },\n  };\n}\n\nconst ready = (game: Game, template: AwakenedTemplateRole) => {\n  learnAwakenedRole(state(game), 3, template, 1);\n  activateAwakenedLearning(state(game), 1);\n};\n\nfunction nightGunProvider(\n  knife: number | null,\n  poison: number | null,\n  gun: number | null,\n): ActionProvider {\n  return {\n    async getAction(request) {\n      if (request.allowedTools.includes(\"speak_to_wolves\"))\n        return { name: \"speak_to_wolves\", args: { text: \"done\", end_chat: true } };\n      if (request.allowedTools.includes(\"kill_vote\"))\n        return { name: \"kill_vote\", args: { target_id: knife, abstain: knife === null } };\n      if (request.allowedTools.includes(\"guard\"))\n        return { name: \"guard\", args: { target_id: null, abstain: true } };\n      if (request.allowedTools.includes(\"use_potion\"))\n        return {\n          name: \"use_potion\",\n          args: {\n            target_id: poison ?? 4,\n            potion_type: poison === null ? PotionType.None : PotionType.Poison,\n          },\n        };\n      if (request.allowedTools.includes(\"awakened_mimic\"))\n        return { name: \"awakened_mimic\", args: { target_id: 3 } };\n      if (request.allowedTools.includes(\"shoot\"))\n        return { name: \"shoot\", args: { target_id: gun } };\n      if (request.allowedTools.includes(\"speak\")) return { name: \"speak\", args: { text: \"words\" } };\n      if (request.allowedTools.includes(\"vote\"))\n        return { name: \"vote\", args: { target_id: 2, abstain: false } };\n      throw new Error(\"unexpected_action_request\");\n    },\n  };\n}\n\ntest(\"revoked paid copied poison does not fall through its old PoisonMark or erase another valid poison source\", async () => {\n  for (const other of [false, true]) {\n    const game = fixture();\n    ready(game, \"witch\");\n    const ctx = context(game, 2, async () => ({ name: \"awakened_poison\", args: { target_id: 6 } }));\n    await stage(\"awakened_opening\").execute(ctx);\n    await stage(\"awakened_skill\").execute(ctx);\n    (role(game).privateState as Record<string, unknown>).awakened_hidden_wolf = structuredClone(\n      state(game),\n    );\n    if (other)\n      ctx.state.poisonClaims!.push({\n        source: captureNightLife(game.world, 4)!,\n        target: captureNightLife(game.world, 6)!,\n      });\n    expect(\n      new DamageResolutionSystem().resolve(game.world, { poisonClaims: ctx.state.poisonClaims }),\n    ).toEqual(\n      other\n        ? { deaths: [6], deathSources: { 6: [DeathCause.Poison] } }\n        : { deaths: [], deathSources: {} },\n    );\n  }\n});\n\ntest(\"an extra knife remains current after its stock is spent and the slot closes, and the base knife remains independent\", async () => {\n  const game = fixture();\n  ready(game, \"wolf\");\n  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;\n  refreshAwakenedInheritance(game.world, 1, []);\n  const ctx = context(game, 2, async () => ({ name: \"awakened_attack\", args: { target_id: 6 } }));\n  await stage(\"awakened_opening\").execute(ctx);\n  expect(canAwakenedKnife(role(game), game.world)).toBe(true);\n  await stage(\"awakened_attack\").execute(ctx);\n  expect(state(game).learned!.skill).toEqual({ kind: \"wolf\", extraKnife: \"spent\" });\n  expect(ctx.state.awakenedEffects!.attacks[0].isCurrent()).toBe(true);\n  ctx.ensureMarks(5).add(StatusMark.WolfKillMark);\n  expect(\n    new DamageResolutionSystem().resolve(game.world, {\n      awakenedEffects: ctx.state.awakenedEffects,\n    }),\n  ).toEqual({\n    deaths: [5, 6],\n    deathSources: { 5: [DeathCause.WolfKill], 6: [DeathCause.AwakenedHiddenKnife] },\n  });\n});\n\ntest(\"whole night reentry after a paid mimic is explicit and preserves the learned prefix\", async () => {\n  const game = fixture(),\n    ctx = context(game, 1, async () => ({ name: \"awakened_mimic\", args: { target_id: 3 } }));\n  await stage(\"awakened_opening\").execute(ctx);\n  await stage(\"awakened_mimic\").execute(ctx);\n  const prefix = structuredClone(state(game));\n  const pipeline = new NightPipeline({\n    world: game.world,\n    toolGateway: new ToolGateway(),\n    damageResolutionSystem: new DamageResolutionSystem(),\n    events: [],\n  });\n  await expect(\n    pipeline.execute(\n      game.config,\n      {\n        async getAction() {\n          throw new Error(\"must_not_request\");\n        },\n      },\n      1,\n    ),\n  ).rejects.toThrow(\"awakened_night_reentry_after_commit\");\n  expect(state(game)).toEqual(prefix);\n});\n\ntest(\"a completed night with only a Villager template and inherited base knife cannot be replayed in the same World/day\", async () => {\n  const game = fixture();\n  ready(game, \"villager\");\n  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;\n  refreshAwakenedInheritance(game.world, 1, []);\n  const pipeline = new NightPipeline({\n    world: game.world,\n    toolGateway: new ToolGateway(),\n    damageResolutionSystem: new DamageResolutionSystem(),\n    events: [],\n  });\n  let knives = 0;\n  const provider: ActionProvider = {\n    async getAction(request) {\n      if (request.allowedTools.includes(\"kill_vote\")) {\n        knives++;\n        return { name: \"kill_vote\", args: { target_id: 6, abstain: false } };\n      }\n      if (request.allowedTools.includes(\"guard\"))\n        return { name: \"guard\", args: { target_id: null, abstain: true } };\n      if (request.allowedTools.includes(\"use_potion\"))\n        return { name: \"use_potion\", args: { target_id: 4, potion_type: PotionType.None } };\n      throw new Error(\"unexpected_action_request\");\n    },\n  };\n  const first = await pipeline.execute(game.config, provider, 2);\n  expect(first.interrupted).toBe(false);\n  if (first.interrupted) throw new Error(\"unexpected_interruption\");\n  expect(first.damage).toEqual({ deaths: [6], deathSources: { 6: [DeathCause.WolfKill] } });\n  expect(knives).toBe(1);\n  await expect(pipeline.execute(game.config, provider, 2)).rejects.toThrow(\n    \"awakened_night_reentry_after_commit\",\n  );\n  expect(knives).toBe(1);\n  expect(state(game).learned!.skill).toEqual({ kind: \"villager\" });\n});\n\ntest(\"actual first-night knife death arms the copied gun at 900 and resolves its neutral shot before final victory\", async () => {\n  const game = fixture();\n  await game.phaseManager.runSingleCycle({\n    async getAction(request) {\n      if (request.allowedTools.includes(\"speak_to_wolves\"))\n        return { name: \"speak_to_wolves\", args: { text: \"done\", end_chat: true } };\n      if (request.allowedTools.includes(\"kill_vote\"))\n        return { name: \"kill_vote\", args: { target_id: 1, abstain: false } };\n      if (request.allowedTools.includes(\"guard\"))\n        return { name: \"guard\", args: { target_id: null, abstain: true } };\n      if (request.allowedTools.includes(\"use_potion\"))\n        return { name: \"use_potion\", args: { target_id: 4, potion_type: PotionType.None } };\n      if (request.allowedTools.includes(\"awakened_mimic\"))\n        return { name: \"awakened_mimic\", args: { target_id: 3 } };\n      if (request.allowedTools.includes(\"shoot\")) {\n        expect(request.context.stage).toBe(\"death_shot\");\n        return { name: \"shoot\", args: { target_id: 2 } };\n      }\n      if (request.allowedTools.includes(\"speak\"))\n        return { name: \"speak\", args: { text: \"last words\" } };\n      throw new Error(\"unexpected_action_request\");\n    },\n  });\n  const events = game.phaseManager.getEvents();\n  expect(events.filter((e) => e.type === \"awakened_ready\").map((e) => e.payload)).toEqual([\n    { actorId: 1, activationNight: 1, activeFromNight: 2, role: \"hunter\" },\n  ]);\n  expect(events.filter((e) => e.type === \"player_shot\").map((e) => e.payload)).toEqual([\n    { actorId: 1, targetId: 2 },\n  ]);\n  expect(events.findIndex((e) => e.type === \"awakened_ready\")).toBeLessThan(\n    events.findIndex((e) => e.type === \"night_resolved\"),\n  );\n  expect(events.findIndex((e) => e.type === \"player_shot\")).toBeLessThan(\n    events.findIndex((e) => e.type === \"game_over\"),\n  );\n  expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]);\n  expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);\n  expect(captureAwakenedOwner(game.world, 1, () => true)).toBeNull();\n});\n\ntest(\"Aw and the last ordinary Wolf dying in the same real initial batch never create inheritance\", async () => {\n  const game = fixture();\n  await game.phaseManager.runSingleCycle(nightGunProvider(1, 2, null));\n  const events = game.phaseManager.getEvents();\n  expect(events.find((e) => e.type === \"night_resolved\")!.payload.deaths).toEqual([1, 2]);\n  expect(events.some((e) => e.type === \"awakened_inherited\")).toBe(false);\n  expect(state(game).hasInheritedKnife).toBe(false);\n  expect(state(game).firstKnifeNight).toBeNull();\n  expect(state(game).learned!.skill).toEqual({ kind: \"hunter\", armed: true, canShoot: false });\n  expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);\n});\n\ntest(\"inheritance before a later actual Hunter shot death keeps the paid fact and never grants a dead knife\", async () => {\n  const game = fixture();\n  await game.phaseManager.runSingleCycle(nightGunProvider(3, 2, 1));\n  const events = game.phaseManager.getEvents();\n  expect(events.filter((e) => e.type === \"awakened_inherited\").map((e) => e.payload)).toEqual([\n    { actorId: 1, day: 1, firstKnifeNight: 2 },\n  ]);\n  expect(events.filter((e) => e.type === \"hunter_shot\").map((e) => e.payload)).toEqual([\n    { hunterId: 3, targetId: 1 },\n  ]);\n  expect(events.findIndex((e) => e.type === \"awakened_inherited\")).toBeLessThan(\n    events.findIndex((e) => e.type === \"hunter_shot\"),\n  );\n  expect(state(game).hasInheritedKnife).toBe(true);\n  expect(canAwakenedKnife(role(game), game.world)).toBe(false);\n  expect(game.world.getAliveEntityIds()).toEqual([4, 5, 6]);\n  expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);\n});\n\nfor (const knife of [null, 1])\n  test(`${knife}: actual first-night poison or knife+poison compound suppresses the armed copied gun`, async () => {\n    const nightGame = fixture(),\n      night = await new NightPipeline({\n        world: nightGame.world,\n        toolGateway: new ToolGateway(),\n        damageResolutionSystem: new DamageResolutionSystem(),\n        events: [],\n      }).execute(nightGame.config, nightGunProvider(knife, 1, 2), 1);\n    expect(night.interrupted).toBe(false);\n    if (night.interrupted) throw new Error(\"unexpected_interruption\");\n    expect([...night.damage.deathSources[1]].sort()).toEqual(\n      (knife === null ? [DeathCause.Poison] : [DeathCause.WolfKill, DeathCause.Poison]).sort(),\n    );\n    const game = fixture();\n    let requests = 0;\n    const source = nightGunProvider(knife, 1, 2);\n    await game.phaseManager.runSingleCycle({\n      async getAction(request) {\n        if (request.actorId === 1 && request.allowedTools.includes(\"shoot\")) requests++;\n        return source.getAction(request);\n      },\n    });\n    const events = game.phaseManager.getEvents();\n    expect(state(game).learned!.skill).toEqual({ kind: \"hunter\", armed: true, canShoot: false });\n    expect(requests).toBe(0);\n    expect(events.some((e) => e.type === \"player_shot\")).toBe(false);\n    expect(events.some((e) => e.type === \"awakened_inherited\")).toBe(false);\n    expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);\n  });\n",
+      "actualCurrentBeforeSameGit": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf",
+      "text": "/**\n * 隐狼继承场景以原定向知识、生命／许可变化和有序死亡建议为输入。原字面回执、引用／getter／\n * 错误轨迹、事实与状态是预期；真实中央死亡结算或完整 PhaseManager 周期提交继承及后续枪、\n * 梦境、熊、魅惑、胜利效果。四个原启发式单元已用真实中央波；模型受控，不从生产输出新建 golden。\n */\nimport { createAliveComponent } from \"../../../../src/game/observation/component-presentation\";\nimport { PotionType } from \"../../../../src/core\";\nimport { expect, test } from \"bun:test\";\nimport { bootstrapGame } from \"../../../../src/app/bootstrap\";\nimport {\n  Role,\n  Camp,\n  Phase,\n  WinCondition,\n  DeathCause,\n  ActionWindow,\n  COMPONENT,\n  type BoardConfig,\n  type RoleComponent,\n  type ActionRequest,\n  type GameEvent,\n} from \"../../../../src/core\";\nimport { sixPlayerMvpConfig } from \"../../../../src/runtime/scenarios/six_player_mvp\";\nimport { getHiddenWolfState } from \"../../../../src/game/mechanisms/roles/hidden_wolf/ports\";\nimport { getBearState } from \"../../../../src/game/mechanisms/roles/bear/ports\";\nimport { getSeerState } from \"../../../../src/game/mechanisms/roles/seer/ports\";\nimport { canHiddenWolfKnife } from \"../../../../src/game/mechanisms/roles/hidden_wolf/inheritance\";\nimport { getDefaultRoleCatalog } from \"../../../../src/game/mechanisms/roles/role-catalog-assembly\";\nimport { resolveInspection } from \"../../../../src/game/mechanisms/roles/inspection\";\nimport { buildAgentVisibleEventFeed } from \"../../../../src/game/engine/agent_visible_event_feed\";\nimport { DeathResolution } from \"../../../../src/game/engine/death_resolution\";\nimport { EventRegistry } from \"../../../../src/game/engine/event_registry\";\nimport { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\n\nimport { captureExileFeedback } from \"../../../../src/game/mechanisms/roles/gravekeeper/feedback\";\nimport { HookRegistry } from \"../../../../src/game/mechanisms/hooks/hook_registry\";\nimport { grantNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";\n\nconst deck = [Role.HiddenWolf, Role.Wolf, Role.Seer, Role.Bear, Role.Villager, Role.Villager];\n\nconst config = (roles = deck): BoardConfig => ({\n  ...sixPlayerMvpConfig,\n  boardSize: roles.length,\n  winConditions: [WinCondition.SlaughterSide],\n  roleSetups: [...new Set(roles)].map((role) => ({\n    role,\n    count: roles.filter((r) => r === role).length,\n  })),\n  selfDestruct: { enabledWindows: [] },\n});\n\nconst role = (game: ReturnType<typeof bootstrapGame>, id: number) =>\n  game.world.getComponent(id, COMPONENT.Role)!;\n\nconst catalog = getDefaultRoleCatalog();\n\nfor (const order of [\n  [2, 1],\n  [1, 2],\n])\n  test(`one additional death proposal ${order}: simultaneous last pack+Hidden deaths never inherit according to array order`, async () => {\n    const game = bootstrapGame(config(), { fixedRoles: deck }),\n      events: GameEvent[] = [],\n      hooks = new HookRegistry(\n        [],\n        [\n          async (_world, ids) => ({\n            extraDeaths: ids.includes(5) ? order : [],\n            extraDeathSources: { 1: [DeathCause.Shot], 2: [DeathCause.Shot] },\n          }),\n        ],\n      );\n    await new DeathResolution(game.world, events, new ToolGateway(), new EventRegistry(hooks), {\n      day: 1,\n      phase: Phase.Day,\n      gameOver: false,\n      result: null,\n    }).resolve(\n      [5],\n      { 5: [DeathCause.WolfKill] },\n      {\n        async getAction() {\n          return { name: \"speak\", args: { text: \"Raw\" } };\n        },\n      },\n      Phase.Night,\n      Phase.Day,\n    );\n    expect(game.world.getAliveEntityIds()).toEqual([3, 4, 6]);\n    expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(false);\n    expect(events.some((e) => e.type === \"hidden_wolf_awakened\")).toBe(false);\n  });\n\ntest(\"separate committed additional proposals retain real intermediate inheritance before a later proposal kills the Hidden Wolf\", async () => {\n  const game = bootstrapGame(config(), { fixedRoles: deck }),\n    events: GameEvent[] = [],\n    hooks = new HookRegistry(\n      [],\n      [\n        async (_world, ids) => ({\n          extraDeaths: ids.includes(5) ? [2] : [],\n          extraDeathSources: { 2: [DeathCause.Shot] },\n        }),\n        async (_world, ids) => ({\n          extraDeaths: ids.includes(5) ? [1] : [],\n          extraDeathSources: { 1: [DeathCause.Shot] },\n        }),\n      ],\n    );\n  await new DeathResolution(game.world, events, new ToolGateway(), new EventRegistry(hooks), {\n    day: 1,\n    phase: Phase.Day,\n    gameOver: false,\n    result: null,\n  }).resolve(\n    [5],\n    { 5: [DeathCause.WolfKill] },\n    {\n      async getAction() {\n        return { name: \"speak\", args: { text: \"Raw\" } };\n      },\n    },\n    Phase.Night,\n    Phase.Day,\n  );\n  expect(game.world.getAliveEntityIds()).toEqual([3, 4, 6]);\n  expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(true);\n  expect(events.filter((e) => e.type === \"hidden_wolf_awakened\").map((e) => e.payload)).toEqual([\n    { actorId: 1, day: 1 },\n  ]);\n});\n\ntest(\"real granted Dream plus Hunter shot commits the caster and linked Hidden Wolf as one extra proposal, without a transient inheritance\", async () => {\n  const fixed = [Role.HiddenWolf, Role.Wolf, Role.Hunter, Role.Bear, Role.Villager, Role.Villager],\n    game = bootstrapGame(config(fixed), { fixedRoles: fixed });\n  grantNightAbility(\n    game.world,\n    2,\n    {\n      id: \"gift:hidden-chain-dream\",\n      kind: \"dream\",\n      state: { lastDay: null, lastTarget: null, history: [] },\n      source: { kind: \"gift\", actorId: 4 },\n      startsOnDay: 1,\n      maxUses: 1,\n    },\n    [],\n  );\n  await game.phaseManager.runSingleCycle({\n    async getAction(request) {\n      if (request.allowedTools.includes(\"dream\")) return { name: \"dream\", args: { target_id: 1 } };\n      if (request.allowedTools.includes(\"speak_to_wolves\"))\n        return { name: \"speak_to_wolves\", args: { text: \"End\", end_chat: true } };\n      if (request.allowedTools.includes(\"kill_vote\"))\n        return { name: \"kill_vote\", args: { target_id: 3, abstain: false } };\n      if (request.allowedTools.includes(\"speak\")) return { name: \"speak\", args: { text: \"Raw\" } };\n      if (request.allowedTools.includes(\"shoot\")) return { name: \"shoot\", args: { target_id: 2 } };\n      throw new Error(`unexpected:${request.context.stage}`);\n    },\n  });\n  expect(game.world.getAliveEntityIds()).toEqual([4, 5, 6]);\n  expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(false);\n  expect(game.phaseManager.getEvents().some((e) => e.type === \"hidden_wolf_awakened\")).toBe(false);\n  expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);\n});\n\ntest(\"masked Hidden Wolf exile produces Good grave feedback yet still counts as a true wolf; Knight resolves its real faction\", async () => {\n  for (const duel of [false, true]) {\n    const fixed = [\n        Role.HiddenWolf,\n        Role.Wolf,\n        Role.Knight,\n        Role.Gravekeeper,\n        Role.Villager,\n        Role.Villager,\n      ],\n      game = bootstrapGame(config(fixed), { fixedRoles: fixed });\n    let day = 1;\n    const provider = {\n      async getAction(request: ActionRequest) {\n        if (request.allowedTools.includes(\"speak_to_wolves\"))\n          return { name: \"speak_to_wolves\" as const, args: { text: \"End\", end_chat: true } };\n        if (request.allowedTools.includes(\"kill_vote\"))\n          return {\n            name: \"kill_vote\" as const,\n            args: { target_id: day === 1 ? null : 2, abstain: day === 1 },\n          };\n        if (request.allowedTools.includes(\"speak\"))\n          return { name: \"speak\" as const, args: { text: \"Raw\" } };\n        if (request.allowedTools.includes(\"duel\"))\n          return duel && day === 1\n            ? { name: \"duel\" as const, args: { target_id: 1, confirm: true } }\n            : null;\n        if (request.allowedTools.includes(\"vote\"))\n          return { name: \"vote\" as const, args: { target_id: 1, abstain: false } };\n        throw new Error(`unexpected:${request.context.stage}`);\n      },\n    };\n    await game.phaseManager.runSingleCycle(provider);\n    expect(game.phaseManager.getSnapshot().gameOver).toBe(false);\n    expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(false);\n    expect(captureExileFeedback(game.world, 1, 1)?.result).toEqual({\n      kind: \"camp\",\n      camp: Camp.Good,\n    });\n    day = 2;\n    await game.phaseManager.runSingleCycle(provider);\n    expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);\n    expect(\n      game.phaseManager\n        .getEvents()\n        .filter((e) => e.type === \"gravekeeper_reported\")\n        .map((e) => e.payload.result),\n    ).toEqual(duel ? [] : [{ kind: \"camp\", camp: Camp.Good }]);\n    expect(\n      game.phaseManager\n        .getEvents()\n        .filter((e) => e.type === \"knight_duel\")\n        .map((e) => e.payload),\n    ).toEqual(duel ? [{ actorId: 3, targetId: 1, result: \"wolf\" }] : []);\n  }\n});\n\ntest(\"Bear samples a masked neighbor before pack death, then senses the inherited Hidden Wolf on the next night without retroactive update\", async () => {\n  const fixed = [Role.Bear, Role.HiddenWolf, Role.Wolf, Role.Seer, Role.Villager, Role.Villager],\n    game = bootstrapGame(config(fixed), { fixedRoles: fixed });\n  let day = 1;\n  const provider = {\n    async getAction(request: ActionRequest) {\n      if (request.allowedTools.includes(\"speak_to_wolves\"))\n        return { name: \"speak_to_wolves\" as const, args: { text: \"End\", end_chat: true } };\n      if (request.allowedTools.includes(\"kill_vote\"))\n        return {\n          name: \"kill_vote\" as const,\n          args: { target_id: day === 1 ? 3 : null, abstain: day !== 1 },\n        };\n      if (request.allowedTools.includes(\"check_identity\"))\n        return { name: \"check_identity\" as const, args: { target_id: 2 } };\n      if (request.allowedTools.includes(\"speak\"))\n        return { name: \"speak\" as const, args: { text: \"Raw\" } };\n      if (request.allowedTools.includes(\"vote\"))\n        return {\n          name: \"vote\" as const,\n          args: { target_id: day === 1 ? null : 2, abstain: day === 1 },\n        };\n      throw new Error(`unexpected:${request.context.stage}`);\n    },\n  };\n  await game.phaseManager.runSingleCycle(provider);\n  expect(getBearState(role(game, 1))!.history).toEqual([{ day: 1, roared: false }]);\n  day = 2;\n  await game.phaseManager.runSingleCycle(provider);\n  expect(getBearState(role(game, 1))!.history).toEqual([\n    { day: 1, roared: false },\n    { day: 2, roared: true },\n  ]);\n  expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);\n  expect(resolveInspection(game.world, 2, \"camp\", catalog)).toEqual({\n    kind: \"camp\",\n    camp: Camp.Wolf,\n  });\n  expect(captureExileFeedback(game.world, 2, 2)?.result).toEqual({ kind: \"camp\", camp: Camp.Wolf });\n});\n\nfor (const takeHidden of [false, true])\n  test(`White Wolf King takes ${takeHidden ? \"Hidden\" : \"last villager\"}: actual same-batch death or living inheritance precedes ordinary judgment`, async () => {\n    const fixed = [\n        Role.HiddenWolf,\n        Role.WhiteWolfKing,\n        Role.Seer,\n        Role.Bear,\n        Role.Villager,\n        Role.Villager,\n      ],\n      board = {\n        ...config(fixed),\n        hooks: { onDaybreak: false, onPreElection: false, onPreVote: true, onPerSpeechGap: false },\n        selfDestruct: { enabledWindows: [ActionWindow.OnPreVote] },\n      },\n      game = bootstrapGame(board, { fixedRoles: fixed });\n    await game.phaseManager.runSingleCycle({\n      async getAction(request) {\n        if (request.allowedTools.includes(\"speak_to_wolves\"))\n          return { name: \"speak_to_wolves\", args: { text: \"End\", end_chat: true } };\n        if (request.allowedTools.includes(\"kill_vote\"))\n          return { name: \"kill_vote\", args: { target_id: 5, abstain: false } };\n        if (request.allowedTools.includes(\"check_identity\"))\n          return { name: \"check_identity\", args: { target_id: 1 } };\n        if (request.allowedTools.includes(\"speak\")) return { name: \"speak\", args: { text: \"Raw\" } };\n        if (request.allowedTools.includes(\"self_destruct_with_target\"))\n          return {\n            name: \"self_destruct_with_target\",\n            args: { target_id: takeHidden ? 1 : 6, confirm: true, reason: \"Public\" },\n          };\n        throw new Error(`unexpected:${request.context.stage}`);\n      },\n    });\n    expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(!takeHidden);\n    expect(\n      game.phaseManager\n        .getEvents()\n        .filter((e) => e.type === \"hidden_wolf_awakened\")\n        .map((e) => e.payload),\n    ).toEqual(takeHidden ? [] : [{ actorId: 1, day: 1 }]);\n    expect(game.phaseManager.getSnapshot().result).toMatchObject({\n      winner: takeHidden ? Camp.Good : Camp.Wolf,\n      reason: takeHidden ? \"all_wolves_eliminated\" : \"slaughter_side_completed\",\n      decidedAt: { checkpoint: \"day_interrupted\" },\n    });\n    expect(game.world.getAliveEntityIds()).toEqual(takeHidden ? [3, 4, 6] : [1, 3, 4]);\n  });\n\nfor (const target of [\"hidden\", \"last_god\"] as const)\n  test(`Wolf Beauty charms ${target}: remaining Hidden counts as a true wolf and prevents the special last-Beauty exception`, async () => {\n    const fixed = [\n        Role.HiddenWolf,\n        Role.WolfBeauty,\n        Role.Witch,\n        Role.Knight,\n        Role.Villager,\n        Role.Villager,\n      ],\n      game = bootstrapGame(config(fixed), { fixedRoles: fixed });\n    await game.phaseManager.runSingleCycle({\n      async getAction(request) {\n        if (request.allowedTools.includes(\"speak_to_wolves\"))\n          return { name: \"speak_to_wolves\", args: { text: \"End\", end_chat: true } };\n        if (request.allowedTools.includes(\"kill_vote\"))\n          return {\n            name: \"kill_vote\",\n            args: { target_id: target === \"last_god\" ? 4 : 6, abstain: false },\n          };\n        if (request.allowedTools.includes(\"charm\"))\n          return { name: \"charm\", args: { target_id: target === \"hidden\" ? 1 : 3 } };\n        if (request.allowedTools.includes(\"use_potion\"))\n          return { name: \"use_potion\", args: { target_id: 3, potion_type: PotionType.None } };\n        if (request.allowedTools.includes(\"speak\")) return { name: \"speak\", args: { text: \"Raw\" } };\n        if (request.allowedTools.includes(\"duel\")) return null;\n        if (request.allowedTools.includes(\"vote\"))\n          return { name: \"vote\", args: { target_id: 2, abstain: false } };\n        throw new Error(`unexpected:${request.context.stage}`);\n      },\n    });\n    const events = game.phaseManager.getEvents();\n    expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(true);\n    expect(events.filter((e) => e.type === \"hidden_wolf_awakened\").map((e) => e.payload)).toEqual([\n      { actorId: 1, day: 1 },\n    ]);\n    expect(game.phaseManager.getSnapshot().result).toMatchObject({\n      winner: target === \"hidden\" ? Camp.Good : Camp.Wolf,\n      reason: target === \"hidden\" ? \"all_wolves_eliminated\" : \"slaughter_side_completed\",\n    });\n    expect(events.findIndex((e) => e.type === \"hidden_wolf_awakened\")).toBeLessThan(\n      events.findIndex((e) => e.type === \"charm_death\"),\n    );\n    expect(game.world.getAliveEntityIds()).toEqual(target === \"hidden\" ? [3, 4, 5] : [1, 5, 6]);\n  });\n\ntest(\"raw expected deaths and permission queries do not inherit; the actual death owner commits once and reviving another wolf only disables current action\", async () => {\n  const game = bootstrapGame(config(), { fixedRoles: deck }),\n    events: GameEvent[] = [],\n    life = game.world.getComponent(2, COMPONENT.Alive)!;\n  life.alive = false;\n  expect(canHiddenWolfKnife(role(game, 1), game.world)).toBe(false);\n  expect(resolveInspection(game.world, 1, \"camp\", catalog)).toEqual({\n    kind: \"camp\",\n    camp: Camp.Good,\n  });\n  expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(false);\n  await new DeathResolution(game.world, events, new ToolGateway(), new EventRegistry(), {\n    day: 1,\n    phase: Phase.Voting,\n    gameOver: false,\n    result: null,\n  }).resolve(\n    [2],\n    { 2: [DeathCause.Exile] },\n    {\n      async getAction() {\n        return { name: \"speak\", args: { text: \"Raw\" } };\n      },\n    },\n    Phase.Voting,\n    Phase.Voting,\n  );\n  expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(true);\n  expect(canHiddenWolfKnife(role(game, 1), game.world)).toBe(true);\n  expect(events.filter((e) => e.type === \"hidden_wolf_awakened\")).toHaveLength(1);\n  life.alive = true;\n  expect(canHiddenWolfKnife(role(game, 1), game.world)).toBe(false);\n  expect(resolveInspection(game.world, 1, \"camp\", catalog)).toEqual({\n    kind: \"camp\",\n    camp: Camp.Wolf,\n  });\n  expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(true);\n});\n\ntest(\"all wolves in one initial death batch never fake inheritance, while an extra King shot after last pack death preserves the acquired fact on the now-dead Hidden Wolf\", async () => {\n  for (const additional of [false, true]) {\n    const fixed = [\n        Role.HiddenWolf,\n        additional ? Role.WolfKing : Role.Wolf,\n        Role.Seer,\n        Role.Bear,\n        Role.Villager,\n        Role.Villager,\n      ],\n      game = bootstrapGame(config(fixed), { fixedRoles: fixed }),\n      events: GameEvent[] = [];\n    await new DeathResolution(game.world, events, new ToolGateway(), new EventRegistry(), {\n      day: 1,\n      phase: Phase.Day,\n      gameOver: false,\n      result: null,\n    }).resolve(\n      additional ? [2] : [1, 2],\n      { 1: [DeathCause.Poison], 2: [DeathCause.WolfKill] },\n      {\n        async getAction(request) {\n          return request.allowedTools.includes(\"shoot\")\n            ? { name: \"shoot\", args: { target_id: 1 } }\n            : { name: \"speak\", args: { text: \"Raw\" } };\n        },\n      },\n      Phase.Night,\n      Phase.Day,\n    );\n    expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]);\n    expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(additional);\n    expect(events.filter((e) => e.type === \"hidden_wolf_awakened\")).toHaveLength(\n      additional ? 1 : 0,\n    );\n    expect(resolveInspection(game.world, 1, \"camp\", catalog)).toEqual({\n      kind: \"camp\",\n      camp: additional ? Camp.Wolf : Camp.Good,\n    });\n    expect(canHiddenWolfKnife(role(game, 1), game.world)).toBe(false);\n  }\n});\n\ntest(\"last pack wolf night self-knife does not pre-unmask the same-night Seer check; next night receives real knife, Seer/Bear update, but never retroactive pack chat\", async () => {\n  const game = bootstrapGame(config(), { fixedRoles: deck });\n  let day = 1;\n  const calls: Array<[number, string, number]> = [];\n  const provider = {\n    async getAction(request: ActionRequest) {\n      calls.push([request.actorId, request.context.stage, request.context.day]);\n      if (request.allowedTools.includes(\"speak_to_wolves\"))\n        return {\n          name: \"speak_to_wolves\" as const,\n          args: { text: \"Secret pack chat\", end_chat: true },\n        };\n      if (request.allowedTools.includes(\"kill_vote\"))\n        return {\n          name: \"kill_vote\" as const,\n          args: { target_id: day === 1 ? 2 : 5, abstain: false },\n        };\n      if (request.allowedTools.includes(\"check_identity\"))\n        return { name: \"check_identity\" as const, args: { target_id: 1 } };\n      if (request.allowedTools.includes(\"speak\"))\n        return { name: \"speak\" as const, args: { text: \"Raw\" } };\n      if (request.allowedTools.includes(\"vote\"))\n        return {\n          name: \"vote\" as const,\n          args: { target_id: day === 1 ? null : 1, abstain: day === 1 },\n        };\n      throw new Error(`unexpected:${request.context.stage}`);\n    },\n  };\n  await game.phaseManager.runSingleCycle(provider);\n  expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(true);\n  expect(getSeerState(role(game, 3))!.history.map((e) => e.isWerewolf)).toEqual([false]);\n  expect(calls.filter((row) => row[0] === 1 && row[1] === \"wolf_vote\")).toEqual([]);\n  day = 2;\n  await game.phaseManager.runSingleCycle(provider);\n  expect(calls.filter((row) => row[0] === 1 && row[1] === \"wolf_vote\")).toEqual([\n    [1, \"wolf_vote\", 2],\n  ]);\n  expect(calls.filter((row) => row[0] === 1 && row[1] === \"wolf_discussion\")).toEqual([]);\n  expect(getSeerState(role(game, 3))!.history.map((e) => e.isWerewolf)).toEqual([false, true]);\n  expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);\n  const feed = buildAgentVisibleEventFeed(game.world, game.phaseManager.getEvents(), 1);\n  expect(\n    feed.some((e) =>\n      [\"wolf_tactical_order\", \"wolf_discussion\", \"wolf_discussion_ended\"].includes(e.type),\n    ),\n  ).toBe(false);\n  expect(\n    feed.filter((e) => e.type === \"wolf_kill_vote_cast\").map((e) => e.payload.actorId),\n  ).toEqual([1]);\n  expect(getBearState(role(game, 4))!.history.map((e) => e.roared)).toEqual([false, false]);\n});\n\nfor (const mutation of [\"revive\", \"replace_life\", \"replace_state\", \"replace_role\"] as const)\n  test(`${mutation}: a late inherited knife request cannot cast a vote or kill through a new actor scope`, async () => {\n    const fixed = [\n        Role.HiddenWolf,\n        Role.Seer,\n        Role.Bear,\n        Role.Hunter,\n        Role.Villager,\n        Role.Villager,\n      ],\n      game = bootstrapGame(config(fixed), { fixedRoles: fixed });\n    let calls = 0;\n    await game.phaseManager.runSingleCycle({\n      async getAction(request) {\n        if (request.allowedTools.includes(\"kill_vote\")) {\n          calls++;\n          const life = game.world.getComponent(1, COMPONENT.Alive)!;\n          if (mutation === \"revive\") {\n            life.alive = false;\n            life.alive = true;\n          }\n          if (mutation === \"replace_life\")\n            game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());\n          if (mutation === \"replace_state\")\n            (role(game, 1).privateState as Record<string, unknown>).hidden_wolf = {\n              hasInheritedKnife: true,\n            };\n          if (mutation === \"replace_role\") {\n            const old = role(game, 1);\n            game.world.addComponent(1, COMPONENT.Role, {\n              ...old,\n              privateState: { ...old.privateState },\n            });\n          }\n          return { name: \"kill_vote\", args: { target_id: 5, abstain: false } };\n        }\n        if (request.allowedTools.includes(\"check_identity\"))\n          return { name: \"check_identity\", args: { target_id: 1 } };\n        if (request.allowedTools.includes(\"speak\")) return { name: \"speak\", args: { text: \"Raw\" } };\n        if (request.allowedTools.includes(\"vote\"))\n          return { name: \"vote\", args: { target_id: null, abstain: true } };\n        throw new Error(`unexpected:${request.context.stage}`);\n      },\n    });\n    expect(calls).toBe(1);\n    expect(game.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);\n    expect(game.phaseManager.getEvents().some((e) => e.type === \"wolf_kill_vote_cast\")).toBe(false);\n  });\n",
+      "actualCurrentBeforeSameGit": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007",
+      "text": "/**\n * 单元测试验证摄梦人持有回复期间替换玩家／目标后的 scope。原已提交前缀及拒绝是预期，检查旧许可不能再请求、付款或提交；输入和样本保留原值，不调用模型或完整对局。受控上下文在原 World 读取点绑定查询。\n */\nimport { bindNativeNightFailurePolicy } from \"../../../../src/rulesets/native-night-failure-policy\";\nimport { bindNativeNightTargetPolicy } from \"../../../../src/rulesets/native-night-target-policy\";\nimport { bindNativeNightEffects } from \"../../../../src/rulesets/native-night-effects\";\nimport { bindNightAbilityActorQuery } from \"../../../../src/game/mechanisms/roles/night-ability-actors\";\nimport { expect, test } from \"bun:test\";\nimport { bootstrapGame } from \"../../../../src/app/bootstrap\";\nimport {\n  COMPONENT,\n  Phase,\n  Role,\n  WinCondition,\n  type GameEvent,\n  type RoleComponent,\n} from \"../../../../src/core\";\nimport { AliveComponent, aliveLifeVersion } from \"../../../../src/core/domain/components/alive\";\nimport { sixPlayerMvpConfig } from \"../../../../src/runtime/scenarios/six_player_mvp\";\nimport { findNightAbility } from \"../../../../src/game/mechanisms/roles/abilities\";\nimport { transferNightAbility } from \"../../../../src/game/mechanisms/roles/night-ability-grants\";\nimport { getDefaultRoleCatalog } from \"../../../../src/game/mechanisms/roles/role-catalog-assembly\";\nimport { DREAMER_NIGHT_STAGE } from \"../../../../src/game/mechanisms/roles/dreamer/night_stages\";\nimport { hasDreamNightCommit, DreamNightFrame, type DreamNightLink } from \"../../../../src/game/mechanisms/roles/dreamer/night_frame\";\nimport { readDreamNightLinks, installDreamNightLinks, dreamNightLinksForAppend } from \"../../../../src/game/mechanisms/roles/dreamer/night-links\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";\nimport { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport type { NightStageContext } from \"../../../../src/game/mechanisms/stages/night/contracts\";\n\nfunction fixture() {\n  const roles = [Role.Dreamer, Role.Dreamer, Role.Wolf, Role.Hunter, Role.Villager, Role.Villager];\n  const config = {\n    ...sixPlayerMvpConfig,\n    winConditions: [WinCondition.SlaughterCity],\n    roleSetups: [...new Set(roles)].map((role) => ({\n      role,\n      count: roles.filter((candidate) => candidate === role).length,\n    })),\n  };\n  const game = bootstrapGame(config, { fixedRoles: roles });\n  const role = (actorId: number) =>\n    game.world.getComponent(actorId, COMPONENT.Role)!;\n  return { ...game, role, ability: (actorId: number) => findNightAbility(role(actorId), \"dream\")! };\n}\n\nfunction context(\n  game: ReturnType<typeof fixture>,\n  events: GameEvent[],\n  getAction: NightStageContext[\"actionProvider\"][\"getAction\"],\n): NightStageContext {\n  const requests = new GameActionRequestFactory(game.world, events, 1);\n  const unused = (): never => {\n    throw new Error(\"unused_dream_stage_dependency\");\n  };\n  return {\n    world: game.world,\n    get nightActors() {\n      return bindNightAbilityActorQuery(this.world);\n    },\n    get nativeNightFailure() {\n      return bindNativeNightFailurePolicy(() => this.world);\n    },\n    get nativeNightTargets() {\n      return bindNativeNightTargetPolicy(() => this);\n    },\n    get nativeNightEffects() {\n      return bindNativeNightEffects(() => this);\n    },\n    events,\n    roleCatalog: getDefaultRoleCatalog(),\n    toolGateway: new ToolGateway(),\n    isCurrent: () => true,\n    currentDay: () => 1,\n    previousExile: null,\n    actionProvider: { getAction },\n    makeRequest: (actorId, allowedTools, extra) =>\n      requests.create({\n        actorId,\n        phase: Phase.Night,\n        allowedTools,\n        stage: extra.stage,\n        requiresAction: extra.requiresAction ?? true,\n        summary: \"Dream scope regression\",\n        context: extra,\n      }),\n    getAliveByRole: unused,\n    ensureMarks: unused,\n    pickMajorityTarget: unused,\n    shuffleWolves: unused,\n    state: {\n      wolfChatOrder: [],\n      endedWolves: new Set(),\n      wolfVotes: {},\n      wolfTarget: null,\n      seerChecks: [],\n    },\n  };\n}\n\nfor (const change of [\"disabled\", \"spent\", \"transferred\"] as const)\n  test(`${change}: a revoked later dream actor gets no request while the earlier committed prefix remains`, async () => {\n    const game = fixture(),\n      events: GameEvent[] = [],\n      later = game.ability(2),\n      laterState = later.state,\n      calls: number[] = [];\n    const ctx = context(game, events, async (request) => {\n      calls.push(request.actorId);\n      if (request.actorId === 1) {\n        if (change === \"disabled\") (later as { disabled: boolean }).disabled = true;\n        if (change === \"spent\") {\n          (later as { maxUses: number | null }).maxUses = 1;\n          (later as { uses: number }).uses = 1;\n        }\n        if (change === \"transferred\")\n          transferNightAbility(game.world, 2, 6, later.id, \"transfer:dream\", [], {\n            kind: \"dream\",\n            statePolicy: (state) => ({ ...state, history: [...state.history] }),\n          });\n      }\n      return { name: \"dream\", args: { target_id: 5 } };\n    });\n    await DREAMER_NIGHT_STAGE.execute(ctx);\n    expect(calls).toEqual([1]);\n    expect(game.ability(1).state.history).toEqual([{ day: 1, targetId: 5 }]);\n    expect(game.ability(1).uses).toBe(1);\n    expect(laterState.history).toEqual([]);\n    expect(later.lastUsedDay).toBeNull();\n    expect(later.uses).toBe(change === \"spent\" ? 1 : 0);\n    expect(readDreamNightLinks(ctx.state).map((link) => link.actorId)).toEqual([1]);\n    expect(\n      events\n        .filter((event) => event.type === \"dream_applied\")\n        .map((event) => event.payload.actorId),\n    ).toEqual([1]);\n    expect(hasDreamNightCommit(game.world, 1)).toBe(true);\n    if (change === \"transferred\") expect(game.ability(6).uses).toBe(0);\n  });\n\nfor (const point of [\"await\", \"gateway\"] as const)\n  for (const change of [\n    \"source\",\n    \"source_owner\",\n    \"id\",\n    \"activation\",\n    \"private_owner\",\n    \"life\",\n    \"day\",\n    \"starts\",\n    \"max_uses\",\n  ] as const)\n    test(`${point}/${change}: a changed dream scope cannot commit or consume a pending reply`, async () => {\n      const game = fixture(),\n        events: GameEvent[] = [],\n        ability = game.ability(1),\n        originalState = ability.state;\n      (game.ability(2) as { disabled: boolean }).disabled = true;\n      let calls = 0,\n        day = 1;\n      const revoke = () => {\n        if (change === \"source\")\n          (\n            ability as {\n              source: import(\"@ai-werewolf-arena/game-contract\").AbilitySource;\n            }\n          ).source = { kind: \"gift\", actorId: 3 };\n        if (change === \"source_owner\" && ability.source.kind === \"native\")\n          (ability.source as { role: Role }).role = Role.Wolf;\n        if (change === \"id\") (ability as { id: string }).id = \"native:renamed\";\n        if (change === \"activation\")\n          (ability as { activation: \"lucky\" | \"black_market\" | undefined }).activation = \"lucky\";\n        if (change === \"private_owner\")\n          (game.role(1) as { privateState: Readonly<Record<string, unknown>> }).privateState = {\n            ...game.role(1).privateState,\n          };\n        if (change === \"life\") {\n          const life = game.world.getComponent(1, COMPONENT.Alive)!;\n          life.alive = false;\n          life.alive = true;\n        }\n        if (change === \"day\") day = 2;\n        if (change === \"starts\") (ability as { startsOnDay: number }).startsOnDay = 0;\n        if (change === \"max_uses\") (ability as { maxUses: number | null }).maxUses = 2;\n      };\n      const ctx = context(game, events, async () => {\n        calls++;\n        if (point === \"await\") revoke();\n        return { name: \"dream\", args: { target_id: 5 } };\n      });\n      ctx.currentDay = () => day;\n      if (point === \"gateway\") {\n        const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);\n        ctx.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => {\n          const result = validate(world, actorId, call, validationContext);\n          revoke();\n          return result;\n        };\n      }\n      await DREAMER_NIGHT_STAGE.execute(ctx);\n      expect(calls).toBe(1);\n      expect(originalState).toEqual({ lastTarget: null, lastDay: null, history: [] });\n      expect(ability.uses).toBe(0);\n      expect(ability.lastUsedDay).toBeNull();\n      expect(readDreamNightLinks(ctx.state)).toEqual([]);\n      expect(events).toEqual([]);\n      expect(hasDreamNightCommit(game.world, 1)).toBe(false);\n    });\n\n// 以下三个新 ID 验证本族关系 owner；上面的原 scope 用例仅迁观察渠道，原预期没有改写。\ntest(\"owned dream links: same array survives frame capture and does not follow cloned state or old getters\", () => {\n  const game = fixture(), ctx = context(game, [], async () => null);\n  const actorLife = game.world.getComponent(1, COMPONENT.Alive)!,\n    targetLife = game.world.getComponent(5, COMPONENT.Alive)!,\n    nextLife = game.world.getComponent(6, COMPONENT.Alive)!;\n  Object.defineProperty(ctx.state, \"dreamLinks\", { get() { throw new Error(\"retired_links_must_not_read\"); } });\n  const empty = readDreamNightLinks(ctx.state);\n  expect(readDreamNightLinks(ctx.state)).toBe(empty);\n  expect(dreamNightLinksForAppend(ctx.state) as readonly DreamNightLink[]).toBe(empty);\n  const links: DreamNightLink[] = [{\n    actorId: 1, targetId: 5, day: 1, consecutive: false,\n    actorLife, actorVersion: aliveLifeVersion(actorLife),\n    targetLife, targetVersion: aliveLifeVersion(targetLife),\n  }];\n  installDreamNightLinks(ctx.state, links);\n  expect(readDreamNightLinks(ctx.state)).toBe(links);\n  const frame = new DreamNightFrame(readDreamNightLinks(ctx.state));\n  dreamNightLinksForAppend(ctx.state).push({\n    actorId: 1, targetId: 6, day: 1, consecutive: false,\n    actorLife, actorVersion: aliveLifeVersion(actorLife),\n    targetLife: nextLife, targetVersion: aliveLifeVersion(nextLife),\n  });\n  expect(frame.protectedTargets(game.world)).toEqual([5, 6]);\n  expect(readDreamNightLinks({ ...ctx.state })).toEqual([]);\n  expect(readDreamNightLinks(ctx.state)).toBe(links);\n  // 旧字段退出通用结构，运行数组仍有自己的生命／付款复核，并非权限品牌。\n  // @ts-expect-error 通用状态不再携带摄梦人的私有关系数组。\n  const retiredKey: keyof NightStageContext[\"state\"] = \"dreamLinks\";\n  expect(retiredKey as string).toBe(\"dreamLinks\");\n});\n\ntest(\"owned dream links: push lookup failure keeps paid history and night commit without publishing the dream\", async () => {\n  const game = fixture(), events: GameEvent[] = [], failure = new Error(\"dream_push_lookup_rejected\");\n  (game.ability(2) as { disabled: boolean }).disabled = true;\n  const ability = game.ability(1), ctx = context(game, events, async () => ({ name: \"dream\", args: { target_id: 5 } }));\n  const links = dreamNightLinksForAppend(ctx.state);\n  Object.defineProperty(links, \"push\", { get() { throw failure; } });\n  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);\n  expect(ability.state.history).toEqual([{ day: 1, targetId: 5 }]);\n  expect(ability.uses).toBe(1);\n  expect(ability.lastUsedDay).toBe(1);\n  expect(hasDreamNightCommit(game.world, 1)).toBe(true);\n  expect(readDreamNightLinks(ctx.state)).toBe(links);\n  expect(links).toEqual([]);\n  expect(events).toEqual([]);\n});\n\ntest(\"owned dream links: link field failure follows push lookup and preserves the already paid prefix\", async () => {\n  const game = fixture(), events: GameEvent[] = [], trace: string[] = [], failure = new Error(\"dream_link_field_rejected\");\n  (game.ability(2) as { disabled: boolean }).disabled = true;\n  const ability = game.ability(1), ctx = context(game, events, async () => ({ name: \"dream\", args: { target_id: 5 } }));\n  const links = dreamNightLinksForAppend(ctx.state), push = links.push;\n  Object.defineProperty(links, \"push\", {\n    get() {\n      trace.push(\"push:get\");\n      // 到原追加 callee 点才装故障，避免 scope 的早政策读取先抛错，冒成已付条目构造失败。\n      Object.defineProperty(ability.state, \"protectionPolicy\", { get() { trace.push(\"policy:get\"); throw failure; } });\n      return function(this: DreamNightLink[], ...items: DreamNightLink[]) {\n        trace.push(\"push:call\");\n        return push.apply(this, items);\n      };\n    },\n  });\n  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);\n  expect(trace).toEqual([\"push:get\", \"policy:get\"]);\n  expect(ability.state.history).toEqual([{ day: 1, targetId: 5 }]);\n  expect(ability.uses).toBe(1);\n  expect(ability.lastUsedDay).toBe(1);\n  expect(hasDreamNightCommit(game.world, 1)).toBe(true);\n  expect(links).toEqual([]);\n  expect(events).toEqual([]);\n});\n",
+      "actualCurrentBeforeSameGit": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6ecf2956933718be9792019ea1e595c9016cf0f954b6090d2ca3e85bad91ed0f",
+      "text": "/**\n * 单元测试验证查验 scope 的能力 ID 变更、持有回复与注入历史。原所有者、结果唯一性和期限断言是最终授权重检预期；保留原字面输入及样本，不调用模型或完整对局 driver。\n */\nimport { nightStageContext } from \"../../support/builders/night-stage-context\";\nimport { expect, test } from \"bun:test\";\nimport { bootstrapGame } from \"../../../src/app/bootstrap\";\nimport {\n  COMPONENT,\n  Phase,\n  Role,\n  WinCondition,\n  type GameEvent,\n  type RoleComponent,\n} from \"../../../src/core\";\nimport { sixPlayerMvpConfig } from \"../../../src/runtime/scenarios/six_player_mvp\";\nimport { findNightAbility } from \"../../../src/game/mechanisms/roles/abilities\";\nimport {\n  getDefaultRoleCatalog,\n  getDefaultRoleContributions,\n  createRoleCatalog,\n} from \"../../../src/game/mechanisms/roles/role-catalog-assembly\";\nimport {\n  ROLE_INSPECTION_STAGE,\n  PSYCHIC_INSPECTION_STAGE,\n  MIRROR_INSPECTION_STAGE,\n} from \"../../../src/game/mechanisms/roles/role_inspection/contribution-ports\";\nimport { hasRoleInspectionNightCommit } from \"../../../src/game/mechanisms/roles/role_inspection/night_scope\";\nimport { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";\nimport { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";\nimport type { NightStageContext } from \"../../../src/game/mechanisms/stages/night/contracts\";\nimport {\n  canGargoyleKnife,\n  refreshGargoyleInheritance,\n} from \"../../../src/game/mechanisms/roles/gargoyle/inheritance\";\nimport { grantNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";\n\nfunction fixture(kind: Role.Gargoyle | Role.Psychic | Role.MirrorGirl) {\n  const roles = [kind, Role.Wolf, Role.Seer, Role.Witch, Role.Villager, Role.Villager],\n    config = {\n      ...sixPlayerMvpConfig,\n      winConditions: [WinCondition.SlaughterCity],\n      roleSetups: [...new Set(roles)].map((role) => ({\n        role,\n        count: roles.filter((r) => r === role).length,\n      })),\n      selfDestruct: { enabledWindows: [] },\n    };\n  const game = bootstrapGame(config, { fixedRoles: roles });\n  return {\n    ...game,\n    ability: findNightAbility(\n      game.world.getComponent(1, COMPONENT.Role)!,\n      \"role_check\",\n    )!,\n    stage:\n      kind === Role.Gargoyle\n        ? ROLE_INSPECTION_STAGE\n        : kind === Role.MirrorGirl\n          ? MIRROR_INSPECTION_STAGE\n          : PSYCHIC_INSPECTION_STAGE,\n  };\n}\nfunction context(\n  game: ReturnType<typeof fixture>,\n  events: GameEvent[],\n  getAction: NightStageContext[\"actionProvider\"][\"getAction\"],\n): NightStageContext {\n  const requests = new GameActionRequestFactory(game.world, events, 1);\n  return nightStageContext({\n    world: game.world,\n    events,\n    roleCatalog: getDefaultRoleCatalog(),\n    toolGateway: new ToolGateway(),\n    isCurrent: () => true,\n    currentDay: () => 1,\n    actionProvider: { getAction },\n    makeRequest: (actorId, allowedTools, extra) =>\n      requests.create({\n        summary: \"Offline stage fixture\",\n        actorId,\n        phase: Phase.Night,\n        allowedTools,\n        stage: extra.stage,\n        requiresAction: extra.requiresAction ?? true,\n        context: extra,\n      }),\n    getAliveByRole: () => [],\n    state: {\n      wolfChatOrder: [],\n      endedWolves: new Set(),\n      wolfVotes: {},\n      wolfTarget: null,\n      seerChecks: [],\n    },\n  });\n}\n\nfor (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)\n  for (const point of [\"await\", \"gateway\"] as const)\n    test(`${kind}/${point}: an in-place ability ID change cannot redirect a pending role inspection`, async () => {\n      const game = fixture(kind),\n        events: GameEvent[] = [];\n      let calls = 0;\n      const ctx = context(game, events, async (request) => {\n        calls++;\n        expect(request.context.ability_id).toBe(\"native:role_check\");\n        if (point === \"await\") (game.ability as { id: string }).id = \"native:renamed\";\n        return { name: \"inspect_role\", args: { target_id: 2 } };\n      });\n      if (point === \"gateway\") {\n        const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);\n        ctx.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => {\n          const result = validate(world, actorId, call, validationContext);\n          (game.ability as { id: string }).id = \"native:renamed\";\n          return result;\n        };\n      }\n      await game.stage.execute(ctx);\n      expect(calls).toBe(1);\n      expect(game.ability.state.history).toEqual([]);\n      expect(game.ability.uses).toBe(0);\n      expect(game.ability.lastUsedDay).toBeNull();\n      expect(events).toEqual([]);\n      expect(hasRoleInspectionNightCommit(game.world, 1)).toBe(false);\n    });\n\ntest(\"Gargoyle final application rechecks unique history after gateway, preserves the injected prefix and lets a fresh target retry\", async () => {\n  const game = fixture(Role.Gargoyle),\n    events: GameEvent[] = [];\n  let calls = 0,\n    injected = false;\n  const prefix = { day: 1, targetId: 2, result: { kind: \"role\" as const, role: Role.Wolf } };\n  const ctx = context(game, events, async () => {\n    calls++;\n    return { name: \"inspect_role\", args: { target_id: calls === 1 ? 2 : 3 } };\n  });\n  const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);\n  ctx.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => {\n    const result = validate(world, actorId, call, validationContext);\n    if (!injected) {\n      injected = true;\n      (\n        game.ability.state.history as {\n          day: number;\n          targetId: import(\"@ai-werewolf-arena/game-contract\").EntityId;\n          result: Extract<\n            import(\"@ai-werewolf-arena/game-contract\").InspectionResult,\n            { kind: \"role\" }\n          >;\n        }[]\n      ).push(structuredClone(prefix));\n    }\n    return result;\n  };\n  await game.stage.execute(ctx);\n  expect(calls).toBe(2);\n  expect(game.ability.state.history).toEqual([\n    prefix,\n    { day: 1, targetId: 3, result: { kind: \"role\", role: Role.Seer } },\n  ]);\n  expect(game.ability.uses).toBe(1);\n  expect(events.filter((e) => e.type === \"role_inspected\").map((e) => e.payload.targetId)).toEqual([\n    3,\n  ]);\n});\n\ntest(\"Gargoyle final report rechecks unique history after an inspection-label callback changes it\", async () => {\n  const game = fixture(Role.Gargoyle),\n    events: GameEvent[] = [];\n  let calls = 0;\n  const ctx = context(game, events, async () => {\n    calls++;\n    return { name: \"inspect_role\", args: { target_id: calls === 1 ? 2 : 3 } };\n  });\n  const profiles = getDefaultRoleContributions().map((profile) =>\n    profile.metadata.role === Role.Wolf\n      ? {\n          ...profile,\n          runtime: {\n            ...profile.runtime,\n            inspectionLabels: () => {\n              (\n                game.ability.state.history as {\n                  day: number;\n                  targetId: import(\"@ai-werewolf-arena/game-contract\").EntityId;\n                  result: Extract<\n                    import(\"@ai-werewolf-arena/game-contract\").InspectionResult,\n                    { kind: \"role\" }\n                  >;\n                }[]\n              ).push({\n                day: 1,\n                targetId: 2,\n                result: { kind: \"role\" as const, role: Role.Wolf },\n              });\n              return { role: Role.Wolf };\n            },\n          },\n        }\n      : profile,\n  );\n  const { RoleCatalog } = await import(\"../../../src/game/mechanisms/roles/catalog\");\n  ctx.roleCatalog = createRoleCatalog({ contributions: profiles });\n  await game.stage.execute(ctx);\n  expect(calls).toBe(2);\n  expect(game.ability.state.history.map((row) => row.targetId)).toEqual([2, 3]);\n  expect(game.ability.uses).toBe(1);\n  expect(events.filter((e) => e.type === \"role_inspected\").map((e) => e.payload.targetId)).toEqual([\n    3,\n  ]);\n});\n\nfor (const change of [\"id\", \"source\", \"private_owner\", \"activation\", \"actor_transfer\"] as const)\n  test(`${change}: paid native Gargoyle completion cannot authorize a different ability owner but keeps its report`, async () => {\n    const game = fixture(Role.Gargoyle),\n      events: GameEvent[] = [],\n      role = game.world.getComponent(1, COMPONENT.Role)!;\n    game.world.getComponent(2, COMPONENT.Alive)!.alive = false;\n    refreshGargoyleInheritance(game.world, events, 1);\n    await game.stage.execute(\n      context(game, events, async () => ({ name: \"inspect_role\", args: { target_id: 3 } })),\n    );\n    expect(canGargoyleKnife(role, game.world)).toBe(true);\n    expect(game.ability.lastUsedDay).toBe(1);\n    const prefix = structuredClone(game.ability.state.history);\n    if (change === \"id\") (game.ability as { id: string }).id = \"native:renamed\";\n    if (change === \"source\")\n      (\n        game.ability as {\n          source: import(\"@ai-werewolf-arena/game-contract\").AbilitySource;\n        }\n      ).source = { kind: \"gift\", actorId: 3 };\n    if (change === \"private_owner\")\n      (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {\n        ...role.privateState,\n      };\n    if (change === \"activation\")\n      (game.ability as { activation: \"lucky\" | \"black_market\" | undefined }).activation = \"lucky\";\n    if (change === \"actor_transfer\") {\n      const otherRole = game.world.getComponent(5, COMPONENT.Role)!,\n        ownLife = game.world.getComponent(1, COMPONENT.Alive)!,\n        otherLife = game.world.getComponent(5, COMPONENT.Alive)!;\n      game.world.addComponent(1, COMPONENT.Role, otherRole);\n      game.world.addComponent(1, COMPONENT.Alive, otherLife);\n      game.world.addComponent(5, COMPONENT.Role, role);\n      game.world.addComponent(5, COMPONENT.Alive, ownLife);\n    }\n    expect(canGargoyleKnife(role, game.world)).toBe(false);\n    expect(game.ability.uses).toBe(1);\n    expect(game.ability.state.history).toEqual(prefix);\n    expect(events.filter((e) => e.type === \"role_inspected\")).toHaveLength(1);\n  });\n\nfor (const point of [\"await\", \"gateway\", \"label\"] as const)\n  test(`${point}: a gifted inspection cannot become native while pending and fabricate Gargoyle knife authority`, async () => {\n    const game = fixture(Role.Gargoyle),\n      events: GameEvent[] = [],\n      role = game.world.getComponent(1, COMPONENT.Role)!;\n    (game.ability as { disabled: boolean }).disabled = true;\n    game.world.getComponent(2, COMPONENT.Alive)!.alive = false;\n    refreshGargoyleInheritance(game.world, events, 1);\n    events.length = 0;\n    const gift = grantNightAbility(\n      game.world,\n      1,\n      {\n        id: \"gift:inspection\",\n        kind: \"role_check\",\n        source: { kind: \"gift\", actorId: 3 },\n        startsOnDay: 1,\n        maxUses: 2,\n        state: { lastTarget: null, lastDay: null, history: [] },\n      },\n      [],\n    );\n    const promote = () => {\n      (gift as { source: import(\"@ai-werewolf-arena/game-contract\").AbilitySource }).source = {\n        kind: \"native\",\n        role: Role.Gargoyle,\n      };\n    };\n    let calls = 0;\n    const ctx = context(game, events, async () => {\n      calls++;\n      if (point === \"await\") promote();\n      return { name: \"inspect_role\", args: { target_id: 3 } };\n    });\n    if (point === \"gateway\") {\n      const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);\n      ctx.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => {\n        const result = validate(world, actorId, call, validationContext);\n        promote();\n        return result;\n      };\n    }\n    if (point === \"label\") {\n      const { RoleCatalog } = await import(\"../../../src/game/mechanisms/roles/catalog\");\n      ctx.roleCatalog = createRoleCatalog({\n        contributions: getDefaultRoleContributions().map((profile) =>\n          profile.metadata.role === Role.Seer\n            ? {\n                ...profile,\n                runtime: {\n                  ...profile.runtime,\n                  inspectionLabels: () => {\n                    promote();\n                    return { role: Role.Seer };\n                  },\n                },\n              }\n            : profile,\n        ),\n      });\n    }\n    await game.stage.execute(ctx);\n    expect(calls).toBe(1);\n    expect(gift.uses).toBe(0);\n    expect(gift.lastUsedDay).toBeNull();\n    expect(gift.state.history).toEqual([]);\n    expect(events).toEqual([]);\n    expect(canGargoyleKnife(role, game.world)).toBe(false);\n    expect(hasRoleInspectionNightCommit(game.world, 1)).toBe(false);\n  });\n\nfor (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)\n  test(`${kind}: a source owner changed in place revokes the old native request`, async () => {\n    const game = fixture(kind),\n      events: GameEvent[] = [];\n    let calls = 0;\n    await game.stage.execute(\n      context(game, events, async () => {\n        calls++;\n        if (game.ability.source.kind === \"native\")\n          (game.ability.source as { role: Role }).role = Role.Wolf;\n        return { name: \"inspect_role\", args: { target_id: 3 } };\n      }),\n    );\n    expect(calls).toBe(1);\n    expect(game.ability.uses).toBe(0);\n    expect(game.ability.state.history).toEqual([]);\n    expect(events).toEqual([]);\n  });\n",
+      "actualCurrentBeforeSameGit": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "f1cd448ee9313867e449ba89230daa6216d33e9a32b0f94b8e73b62bb3570bc2",
+      "text": "/**\n * 单元测试：验证配置的查验／死亡政策在有界阶段、hook、校验、提示与投影中的实际使用。输入为角色／政策／语言矩阵和原 live 槽修改；手写许可、库存／历史计数和错误为预期。死亡链在场景中，此处不运行完整阶段或模型。\n */\nimport { rolePresentationRenderer } from \"../../../src/game/observation/role-presentation\";\nimport { expect, test } from \"bun:test\";\nimport { bootstrapGame } from \"../../../src/app/bootstrap\";\nimport {\n  COMPONENT,\n  DeathCause,\n  Phase,\n  Role,\n  permitsDeathShot,\n  type BoardConfig,\n  type ActionRequest,\n  type GameEvent,\n  type RoleComponent,\n  type DeathActionPolicy,\n  type InspectionPolicy,\n} from \"../../../src/core\";\nimport { sixPlayerMvpConfig } from \"../../../src/runtime/scenarios/six_player_mvp\";\nimport {\n  boardDefinitionFromConfig,\n  parseBoardDefinition,\n} from \"../../../src/runtime/config/board_definition\";\nimport { boardConfigSchema } from \"../../../src/core/domain/board_schema\";\nimport { getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/role-catalog-assembly\";\nimport {\n  findNightAbility,\n} from \"../../../src/game/mechanisms/roles/abilities\";\nimport { projectNightAbility } from \"../../../src/game/observation/night-ability-projection\";\nimport {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../src/game/mechanisms/roles/night-ability-grants\";\nimport {\n  ROLE_INSPECTION_STAGE,\n  PSYCHIC_INSPECTION_STAGE,\n  MIRROR_INSPECTION_STAGE,\n} from \"../../../src/game/mechanisms/roles/role_inspection/contribution-ports\";\nimport { roleInspectionTargets } from \"../../../src/game/mechanisms/roles/role_inspection/contribution-ports\";\nimport { getHunterState } from \"../../../src/game/mechanisms/roles/hunter/ports\";\nimport { getWolfKingState } from \"../../../src/game/mechanisms/roles/wolf_king/ports\";\nimport { hunterDeathHook } from \"../../../src/game/mechanisms/roles/hunter/death_hook\";\nimport { WOLF_KING_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/wolf_king/profile\";\nimport { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";\nimport { getDefaultTargetHintRegistry } from \"../../../src/game/mechanisms/llm/target_hint_registry\";\nimport { getDefaultConfigRenderRegistry } from \"../../../src/game/mechanisms/prompt/config_render_registry\";\nimport { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";\nimport { ObservedBot } from \"../../../src/ai/agents/providers/observed_bot\";\nimport { ObservedPlayersActionProvider } from \"../../../src/app/observed-players-action-provider\";\nimport { nightStageContext } from \"../../support/builders/night-stage-context\";\n\nconst inspectionPolicies = [\n  \"awa_unique_required_v1\",\n  \"awa_repeat_optional_v1\",\n  \"awa_unique_optional_v1\",\n] as const;\n\nconst deathPolicies = [\"awa_qualified_sources_v1\", \"awa_knife_or_exile_v1\"] as const;\n\nconst keys = {\n  [Role.Gargoyle]: \"gargoyle\",\n  [Role.Psychic]: \"psychic\",\n  [Role.MirrorGirl]: \"mirrorGirl\",\n  [Role.Hunter]: \"hunter\",\n  [Role.WolfKing]: \"wolfKing\",\n} as const;\n\nfunction fixture(\n  kind: keyof typeof keys,\n  parameters?: { inspectionPolicy: InspectionPolicy } | { deathActionPolicy: DeathActionPolicy },\n  locale: \"zh-CN\" | \"en\" = \"en\",\n) {\n  const roles = [kind, Role.Wolf, Role.Seer, Role.Witch, Role.Villager, Role.Villager];\n  const raw: BoardConfig = {\n    ...sixPlayerMvpConfig,\n    roleSetups: [...new Set(roles)].map((role) => ({\n      role,\n      count: roles.filter((x) => x === role).length,\n    })),\n    ...(parameters ? { [keys[kind]]: parameters } : {}),\n  };\n  const config = parseBoardDefinition(boardDefinitionFromConfig(\"role_policy\", raw)).config;\n  return { ...bootstrapGame(config, { fixedRoles: roles, locale }), config };\n}\n\nfor (const kind of [\n  Role.Gargoyle,\n  Role.Psychic,\n  Role.MirrorGirl,\n  Role.Hunter,\n  Role.WolfKing,\n] as const)\n  test(`${kind}: omitted, empty, explicit defaults and legacy reverse config normalize identically; unknown variants fail closed`, () => {\n    const game = fixture(kind),\n      contribution = getDefaultRoleCatalog().requireRuntime(kind).configuration!;\n    const publicBoard = boardDefinitionFromConfig(\"role_policy\", game.config);\n    const omitted = structuredClone(publicBoard);\n    delete omitted.roles[kind];\n    const empty = structuredClone(publicBoard);\n    empty.roles[kind] = {};\n    expect(contribution.schema.parse({})).toEqual(contribution.defaults);\n    expect(parseBoardDefinition(omitted).config).toEqual(game.config);\n    expect(parseBoardDefinition(empty).config).toEqual(game.config);\n    expect(boardConfigSchema.parse(JSON.parse(JSON.stringify(game.config)))).toEqual(game.config);\n    expect(() =>\n      parseBoardDefinition({\n        ...publicBoard,\n        roles: { ...publicBoard.roles, [kind]: { unknown: true } },\n      }),\n    ).toThrow();\n    const field =\n      kind === Role.Hunter || kind === Role.WolfKing ? \"deathActionPolicy\" : \"inspectionPolicy\";\n    expect(() =>\n      parseBoardDefinition({\n        ...publicBoard,\n        roles: { ...publicBoard.roles, [kind]: { [field]: \"universal\" } },\n      }),\n    ).toThrow();\n  });\n\nfor (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)\n  for (const policy of inspectionPolicies)\n    for (const locale of [\"zh-CN\", \"en\"] as const)\n      test(`${kind}/${policy}/${locale}: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity`, async () => {\n        const game = fixture(kind, { inspectionPolicy: policy }, locale),\n          role = game.world.getComponent(1, COMPONENT.Role)!;\n        const ability = findNightAbility(role, \"role_check\")!;\n        const stage =\n          kind === Role.Gargoyle\n            ? ROLE_INSPECTION_STAGE\n            : kind === Role.Psychic\n              ? PSYCHIC_INSPECTION_STAGE\n              : MIRROR_INSPECTION_STAGE;\n        const requests: ActionRequest[] = [],\n          events: GameEvent[] = [];\n        const act = async (day: number, target: number | null) => {\n          const factory = new GameActionRequestFactory(game.world, events, day);\n          await stage.execute(\n            nightStageContext({\n              world: game.world,\n              events,\n              currentDay: () => day,\n              makeRequest: (actorId, allowedTools, extra) =>\n                factory.create({\n                  actorId,\n                  allowedTools,\n                  phase: Phase.Night,\n                  stage: extra.stage,\n                  context: extra,\n                  requiresAction: extra.requiresAction ?? true,\n                  summary: \"Offline\",\n                }),\n              actionProvider: {\n                async getAction(request) {\n                  requests.push(request);\n                  return target === null\n                    ? null\n                    : { name: \"inspect_role\", args: { target_id: target } };\n                },\n              },\n            }),\n          );\n        };\n        await act(1, 2);\n        expect(requests[0].context.stage).toBe(\n          kind === Role.Gargoyle\n            ? \"role_inspection\"\n            : kind === Role.Psychic\n              ? \"psychic\"\n              : \"mirror_girl\",\n        );\n        expect(requests[0].context.turn_constraints.min_valid_actions).toBe(\n          policy === \"awa_unique_required_v1\" ? 1 : 0,\n        );\n        expect(ability.state.history).toHaveLength(1);\n        const repeated = roleInspectionTargets(game.world, 1, ability.state).includes(2);\n        expect(repeated).toBe(policy === \"awa_repeat_optional_v1\");\n        const gateway = new ToolGateway();\n        expect(\n          gateway.validateAndSanitize(\n            game.world,\n            1,\n            { name: \"inspect_role\", args: { target_id: 2 } },\n            { phase: Phase.Night, day: 2, abilityId: ability.id },\n          ).ok,\n        ).toBe(repeated);\n        const hint = getDefaultTargetHintRegistry().buildActionableIdsHint({\n          world: game.world,\n          actorId: 1,\n          actorRole: kind,\n          day: 2,\n          abilityId: ability.id,\n          allowedTools: [\"inspect_role\"],\n        })!;\n        expect(\n          hint\n            .match(/\\b\\d+\\b/g)\n            ?.map(Number)\n            .includes(2),\n        ).toBe(repeated);\n        const factory = new GameActionRequestFactory(game.world, events, 2);\n        const request = factory.create({\n          actorId: 1,\n          allowedTools: [\"inspect_role\"],\n          phase: Phase.Night,\n          stage: requests[0].context.stage,\n          context: { ability_id: ability.id },\n          requiresAction: policy === \"awa_unique_required_v1\",\n          summary: \"Offline\",\n        });\n        const baseline = getDefaultRoleCatalog().requireRuntime(kind).baselineAction!(\n          role,\n          request,\n          () => 2,\n          () => 2,\n          locale,\n          game.world,\n        );\n        expect(baseline?.name).toBe(\"inspect_role\");\n        if (baseline?.name === \"inspect_role\")\n          expect(roleInspectionTargets(game.world, 1, ability.state)).toContain(\n            baseline.args.target_id,\n          );\n        const observed = new ObservedPlayersActionProvider(\n          game.world,\n          new Map([[1, new ObservedBot({ next: () => 0 }, \"conservative\")]]),\n        );\n        const bot = await observed.getAction(request);\n        expect(bot === null).toBe(policy !== \"awa_unique_required_v1\");\n        if (policy !== \"awa_unique_required_v1\") {\n          await act(2, null);\n          expect(ability.lastUsedDay).toBe(2);\n          expect(ability.uses).toBe(1);\n        }\n        const dto = projectNightAbility(ability, 3);\n        expect(dto.kind).toBe(\"role_check\");\n        if (dto.kind === \"role_check\")\n          expect<unknown>(dto.state.history).toEqual(ability.state.history);\n        expect(\n          getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),\n        ).toContain(locale === \"en\" ? \"Configured AWA inspection\" : \"配置的AWA查验\");\n        expect(rolePresentationRenderer(role)?.(locale)).toContain(\n          locale === \"en\" ? \"Configured AWA inspection\" : \"配置的AWA查验\",\n        );\n        expect(role.role).toBe(kind);\n      });\n\nfor (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)\n  for (const point of [\"construct\", \"await\", \"gateway\"] as const)\n    test(`${kind}/${point}: policy mutation revokes pending inspection rather than reinterpreting it`, async () => {\n      const game = fixture(kind, { inspectionPolicy: \"awa_unique_required_v1\" }),\n        role = game.world.getComponent(1, COMPONENT.Role)!,\n        ability = findNightAbility(role, \"role_check\")!,\n        events: GameEvent[] = [];\n      const stage =\n        kind === Role.Gargoyle\n          ? ROLE_INSPECTION_STAGE\n          : kind === Role.Psychic\n            ? PSYCHIC_INSPECTION_STAGE\n            : MIRROR_INSPECTION_STAGE;\n      const factory = new GameActionRequestFactory(game.world, events, 1),\n        gateway = new ToolGateway();\n      let asks = 0;\n      const mutate = () => {\n        (\n          ability.state as {\n            inspectionPolicy:\n              | \"awa_unique_required_v1\"\n              | \"awa_repeat_optional_v1\"\n              | \"awa_unique_optional_v1\"\n              | undefined;\n          }\n        ).inspectionPolicy = \"awa_repeat_optional_v1\";\n      };\n      if (point === \"gateway\") {\n        const original = gateway.validateAndSanitize.bind(gateway);\n        gateway.validateAndSanitize = (...args) => {\n          const result = original(...args);\n          mutate();\n          return result;\n        };\n      }\n      await stage.execute(\n        nightStageContext({\n          world: game.world,\n          events,\n          toolGateway: gateway,\n          makeRequest: (actorId, allowedTools, extra) => {\n            const request = factory.create({\n              actorId,\n              allowedTools,\n              phase: Phase.Night,\n              stage: extra.stage,\n              context: extra,\n              requiresAction: extra.requiresAction ?? true,\n              summary: \"Offline\",\n            });\n            if (point === \"construct\") mutate();\n            return request;\n          },\n          actionProvider: {\n            async getAction() {\n              asks++;\n              if (point === \"await\") mutate();\n              return { name: \"inspect_role\", args: { target_id: 2 } };\n            },\n          },\n        }),\n      );\n      expect(asks).toBe(point === \"construct\" ? 0 : 1);\n      expect(ability.state.history).toEqual([]);\n      expect(ability.uses).toBe(0);\n      expect(ability.lastUsedDay).toBeNull();\n      expect(events.filter((e) => e.type === \"role_inspected\")).toEqual([]);\n    });\n\nfor (const kind of [Role.Hunter, Role.WolfKing] as const)\n  for (const policy of deathPolicies)\n    test(`${kind}/${policy}: every single and compound death cause follows native policy; poison, empty and unknown remain blocked`, async () => {\n      const eligible = [\n        DeathCause.WolfKill,\n        DeathCause.MechanicalKnife,\n        DeathCause.AwakenedHiddenKnife,\n        DeathCause.Exile,\n        ...(policy === \"awa_qualified_sources_v1\"\n          ? [DeathCause.Shot, DeathCause.WhiteWolfBlast]\n          : []),\n      ];\n      const cases = [\n        ...Object.values(DeathCause).map((c) => [c]),\n        [],\n        [DeathCause.WolfKill, DeathCause.Exile],\n        [DeathCause.WolfKill, DeathCause.Shot],\n        [DeathCause.WolfKill, DeathCause.Poison],\n        [DeathCause.Shot, DeathCause.Charm],\n        [\"unknown\" as DeathCause],\n      ];\n      for (const sources of cases) {\n        const game = fixture(kind, { deathActionPolicy: policy }),\n          role = game.world.getComponent(1, COMPONENT.Role)!;\n        game.world.getComponent(1, COMPONENT.Alive)!.alive = false;\n        let asks = 0;\n        const events: GameEvent[] = [];\n        const hook =\n          kind === Role.Hunter ? hunterDeathHook : WOLF_KING_ROLE_PROFILE.runtime.deathHook!;\n        let permit: ReturnType<typeof game.world.openDeathAction> | undefined;\n        const result = await hook(\n          game.world,\n          [1],\n          { 1: sources },\n          async () => {\n            asks++;\n            permit = game.world.openDeathAction(1, \"shoot\", Phase.Day, 1);\n            return { kind: \"shot\", targetId: 2, deathActionId: permit.id };\n          },\n          events,\n        );\n        permit?.close();\n        const can = sources.length > 0 && sources.every((c) => eligible.includes(c));\n        expect(permitsDeathShot(sources, policy)).toBe(can);\n        expect(asks).toBe(can ? 1 : 0);\n        expect(result.extraDeaths).toEqual(can ? [2] : []);\n        expect(\n          kind === Role.Hunter ? getHunterState(role)?.canShoot : getWolfKingState(role)?.canShoot,\n        ).toBe(false);\n      }\n    });\n\ntest(\"gift/copy explicit inspection state is independent of holder board; transfer retains configured history\", () => {\n  const game = fixture(Role.Psychic, { inspectionPolicy: \"awa_unique_required_v1\" }),\n    events: GameEvent[] = [];\n  const gift = grantNightAbility(\n    game.world,\n    5,\n    {\n      id: \"gift:policy\",\n      kind: \"role_check\",\n      state: {\n        policy: \"psychic\",\n        inspectionPolicy: \"awa_repeat_optional_v1\",\n        lastTarget: null,\n        lastDay: null,\n        history: [],\n      },\n      source: { kind: \"gift\", actorId: 1 },\n      startsOnDay: 1,\n      maxUses: null,\n    },\n    events,\n  );\n  (\n    gift.state.history as {\n      day: number;\n      targetId: import(\"@ai-werewolf-arena/game-contract\").EntityId;\n      result: Extract<\n        import(\"@ai-werewolf-arena/game-contract\").InspectionResult,\n        { kind: \"role\" }\n      >;\n    }[]\n  ).push({ day: 1, targetId: 2, result: { kind: \"role\", role: Role.Wolf } });\n  expect(roleInspectionTargets(game.world, 5, gift.state)).toContain(2);\n  transferNightAbility(game.world, 5, 6, gift.id, \"transfer:policy\", events, {\n    kind: \"role_check\",\n    statePolicy: (state) => structuredClone(state),\n  });\n  const transferred = findNightAbility(\n    game.world.getComponent(6, COMPONENT.Role),\n    \"role_check\",\n    \"transfer:policy\",\n  )!;\n  expect(transferred.state).toEqual(gift.state);\n  expect(\n    findNightAbility(game.world.getComponent(1, COMPONENT.Role), \"role_check\")?.state\n      .inspectionPolicy,\n  ).toBe(\"awa_unique_required_v1\");\n});\n\nfor (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)\n  for (const policy of inspectionPolicies)\n    test(`${kind}/${policy}: missing/invalid actions are bounded and exhausted targets do not force an impossible request`, async () => {\n      const game = fixture(kind, { inspectionPolicy: policy }),\n        role = game.world.getComponent(1, COMPONENT.Role)!,\n        ability = findNightAbility(role, \"role_check\")!;\n      const stage =\n        kind === Role.Gargoyle\n          ? ROLE_INSPECTION_STAGE\n          : kind === Role.Psychic\n            ? PSYCHIC_INSPECTION_STAGE\n            : MIRROR_INSPECTION_STAGE;\n      const events: GameEvent[] = [],\n        factory = new GameActionRequestFactory(game.world, events, 1);\n      let asks = 0;\n      const context = nightStageContext({\n        world: game.world,\n        events,\n        makeRequest: (actorId, allowedTools, extra) =>\n          factory.create({\n            actorId,\n            allowedTools,\n            phase: Phase.Night,\n            stage: extra.stage,\n            context: extra,\n            requiresAction: extra.requiresAction ?? true,\n            summary: \"Offline\",\n          }),\n        actionProvider: {\n          async getAction() {\n            asks++;\n            return null;\n          },\n        },\n      });\n      if (policy === \"awa_unique_required_v1\") {\n        await expect(stage.execute(context)).rejects.toThrow(\n          kind === Role.Gargoyle\n            ? \"role_inspection_required_action_missing\"\n            : \"role_inspection_valid_action_missing\",\n        );\n        expect(asks).toBe(3);\n        expect(ability.lastUsedDay).toBeNull();\n      } else {\n        await stage.execute(context);\n        expect(asks).toBe(1);\n        expect(ability.lastUsedDay).toBe(1);\n      }\n      expect(ability.uses).toBe(0);\n      // A fresh World avoids authorizing reentry through an already committed optional pass.\n      const exhausted = fixture(kind, { inspectionPolicy: policy }),\n        exhaustedRole = exhausted.world.getComponent(1, COMPONENT.Role)!,\n        exhaustedAbility = findNightAbility(exhaustedRole, \"role_check\")!;\n      for (const id of exhausted.world.getAliveEntityIds().filter((id) => id !== 1)) {\n        if (policy === \"awa_repeat_optional_v1\")\n          exhausted.world.getComponent(id, COMPONENT.Alive)!.alive = false;\n        else\n          (\n            exhaustedAbility.state.history as {\n              day: number;\n              targetId: import(\"@ai-werewolf-arena/game-contract\").EntityId;\n              result: Extract<\n                import(\"@ai-werewolf-arena/game-contract\").InspectionResult,\n                { kind: \"role\" }\n              >;\n            }[]\n          ).push({\n            day: 1,\n            targetId: id,\n            result: { kind: \"role\", role: Role.Villager },\n          });\n      }\n      await stage.execute(\n        nightStageContext({\n          world: exhausted.world,\n          actionProvider: {\n            async getAction() {\n              throw new Error(\"must_not_request_exhausted\");\n            },\n          },\n          makeRequest() {\n            throw new Error(\"must_not_construct_exhausted\");\n          },\n        }),\n      );\n      expect(exhaustedAbility.uses).toBe(0);\n    });\n\ntest(\"optional Gargoyle pass completes only its native current-policy knife gate\", async () => {\n  const { canGargoyleKnife, refreshGargoyleInheritance } =\n    await import(\"../../../src/game/mechanisms/roles/gargoyle/inheritance\");\n  const game = fixture(Role.Gargoyle, { inspectionPolicy: \"awa_unique_optional_v1\" }),\n    role = game.world.getComponent(1, COMPONENT.Role)!,\n    ability = findNightAbility(role, \"role_check\")!,\n    events: GameEvent[] = [];\n  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;\n  refreshGargoyleInheritance(game.world, events, 1);\n  expect(canGargoyleKnife(role, game.world)).toBe(false);\n  const factory = new GameActionRequestFactory(game.world, events, 1);\n  await ROLE_INSPECTION_STAGE.execute(\n    nightStageContext({\n      world: game.world,\n      events,\n      makeRequest: (actorId, allowedTools, extra) =>\n        factory.create({\n          actorId,\n          allowedTools,\n          phase: Phase.Night,\n          stage: extra.stage,\n          context: extra,\n          requiresAction: extra.requiresAction ?? true,\n          summary: \"Offline\",\n        }),\n      actionProvider: {\n        async getAction() {\n          return null;\n        },\n      },\n    }),\n  );\n  expect(canGargoyleKnife(role, game.world)).toBe(true);\n  expect(ability.uses).toBe(0);\n  (\n    ability.state as {\n      inspectionPolicy:\n        \"awa_unique_required_v1\" | \"awa_repeat_optional_v1\" | \"awa_unique_optional_v1\" | undefined;\n    }\n  ).inspectionPolicy = \"awa_unique_required_v1\";\n  expect(canGargoyleKnife(role, game.world)).toBe(false);\n});\n\ntest(\"a native death proposal is revoked by a policy edit before central commit\", async () => {\n  const game = fixture(Role.Hunter),\n    role = game.world.getComponent(1, COMPONENT.Role)!,\n    state = getHunterState(role)!,\n    events: GameEvent[] = [];\n  game.world.getComponent(1, COMPONENT.Alive)!.alive = false;\n  const permit = game.world.openDeathAction(1, \"shoot\", Phase.Day, 1);\n  try {\n    const result = await hunterDeathHook(\n      game.world,\n      [1],\n      { 1: [DeathCause.Shot] },\n      async () => ({ kind: \"shot\", targetId: 2, deathActionId: permit.id }),\n      events,\n      { day: 1, deferShotCommit: true, nightEffect: false, blocksNightShot: () => false },\n    );\n    expect(result.pendingShots).toHaveLength(1);\n    expect(result.pendingShots![0].isCurrent?.()).toBe(true);\n    (\n      state as {\n        deathActionPolicy: \"awa_qualified_sources_v1\" | \"awa_knife_or_exile_v1\" | undefined;\n      }\n    ).deathActionPolicy = \"awa_knife_or_exile_v1\";\n    expect(result.pendingShots![0].isCurrent?.()).toBe(false);\n  } finally {\n    permit.close();\n  }\n});\n\nfor (const locale of [\"zh-CN\", \"en\"] as const)\n  test(`${locale}: mixed board policy descriptions identify the role they govern`, () => {\n    const roles = [\n      Role.WolfKing,\n      Role.Hunter,\n      Role.Gargoyle,\n      Role.Psychic,\n      Role.MirrorGirl,\n      Role.Villager,\n    ];\n    const config: BoardConfig = {\n      ...sixPlayerMvpConfig,\n      roleSetups: roles.map((role) => ({ role, count: 1 })),\n      hunter: { deathActionPolicy: \"awa_knife_or_exile_v1\" },\n      wolfKing: { deathActionPolicy: \"awa_qualified_sources_v1\" },\n      gargoyle: { inspectionPolicy: \"awa_repeat_optional_v1\" },\n      psychic: { inspectionPolicy: \"awa_unique_required_v1\" },\n      mirrorGirl: { inspectionPolicy: \"awa_unique_optional_v1\" },\n    };\n    const prompt = getDefaultConfigRenderRegistry().renderBoardConfigPrompt(config, locale);\n    expect(prompt).toContain(\n      locale === \"en\" ? \"Hunter: Configured AWA native gun\" : \"猎人: 配置的AWA原生枪\",\n    );\n    expect(prompt).toContain(\n      locale === \"en\" ? \"Wolf King: Configured native gun\" : \"狼王: 配置的原生枪\",\n    );\n    expect(prompt).toContain(\n      locale === \"en\" ? \"Gargoyle: Configured AWA inspection\" : \"石像鬼: 配置的AWA查验\",\n    );\n    expect(prompt).toContain(\n      locale === \"en\" ? \"Spirit Seer: Configured AWA inspection\" : \"通灵师: 配置的AWA查验\",\n    );\n    expect(prompt).toContain(\n      locale === \"en\" ? \"Mirror Girl: Configured AWA inspection\" : \"魔镜少女: 配置的AWA查验\",\n    );\n  });\n",
+      "actualCurrentBeforeSameGit": true
+    }
+  ],
+  "sourceIndex": [
+    {
+      "path": "backend/src/ai/agents/reporting/bug_report_service.ts",
+      "sha256": "34ac0944f6e46f3c0d259be0747b6f13914ea9692b9442affb1f54494a9394b8"
+    },
+    {
+      "path": "backend/src/app/player-round-recorder.ts",
+      "sha256": "b9886bcdc4962d6b09185d7f60fad07bdd630398f63686d4218723b6bce4fd36"
+    },
+    {
+      "path": "backend/src/core/domain/initial_roster.ts",
+      "sha256": "ee2e0ee420b9b62ed43791c4e43dbf9781470429713b4710edb23ee52d5ec058"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "4363c4eef2f8b42b9805630d754775ef349004e6294a65eea29ce91fc2031396"
+    },
+    {
+      "path": "backend/src/game/mechanisms/broadcast/visibility_registry.ts",
+      "sha256": "2dc7dac4f08852ab3a613f0532aec94139e6807cc8f09b5f369ee04c47b96e53"
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "sha256": "380b9cd53a5b0ba506366be9def706318ea14a12b2efeb8db8e1245287b95baf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/default_specs.ts",
+      "sha256": "6241291506cd377c4466b72074e874cce69c1a7a1e14fabb18db0acbfaea59d2"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "88388634c655d699d3943bb3a74bcef322adc988be77e7764eec13b65188184f"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "6447cf1a7b0560442cafded632495471b1d124dbf81e482bb78bed8638023d6d"
+    },
+    {
+      "path": "backend/src/rulesets/beauty-exile-victory.ts",
+      "sha256": "d850fc2f12afa02970aa954abbb4bd81350aed6dc6a54a7cd70d13e41c013b34"
+    },
+    {
+      "path": "backend/src/runtime/game_event_recorder.ts",
+      "sha256": "65a472a78a865ef7efb0d1bd35fc4dec87c9a4abee1baa0d381e05644477c8b2"
+    },
+    {
+      "path": "backend/src/runtime/game_runner.ts",
+      "sha256": "cab42be52a574b2f1e53281662a36c88360b4d6b02a9a23e42912788a4a4db71"
+    },
+    {
+      "path": "backend/src/runtime/simulation/simulate_games.ts",
+      "sha256": "cc78a408ec4e5eb57e2a5a549dd8f31992891d910fd9e1b67931e32506a83696"
+    },
+    {
+      "path": "backend/tests/architecture/refactor-characterization.test.ts",
+      "sha256": "619c9f33d492b70ef5fa581ee77176a29a6775cb71a08250b9baaece815d439a"
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/bug-report-recording.test.ts",
+      "sha256": "c595e6a8d2235a113fb036468c3513ae86ec15ba42869e582ae49959442210f6"
+    },
+    {
+      "path": "backend/tests/integration/agents/protocol/action-reception-sdk-mcp-parity.test.ts",
+      "sha256": "d0da8624c3d673ad11e54d4cc875e54067c6decd5a971b3e11c93a72b959f0f7"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/fragrant-policy-files.test.ts",
+      "sha256": "64126b7a11afeacd95abe0dca7c042688bc58c8618fc665d79f4adcfdf1ca0f2"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/session-persistence.test.ts",
+      "sha256": "ad804a10b92f6e86d1ca33e351e61dc95de938af71f5bafe2fa52b36c21521be"
+    },
+    {
+      "path": "backend/tests/integration/recording/wolf-team-event-audience-provenance.test.ts",
+      "sha256": "42c4c1637df2083e873020ad9c5013336174b37f658145ed64c2237431d819f3"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/cupid/simulation.test.ts",
+      "sha256": "8d1d5a46aedd0b7877f3e0ddfb55aff99b71706780e936ae5fd5850e39f35842"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/cursed-fox/simulation.test.ts",
+      "sha256": "01fbe11dd04b9bf1d0f115287b6ef75026aa779d4628bfa84402361be9d7927d"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "sha256": "dc76d1bdafcda20cefb7f78efa6212b07227b6447a63014287e201c097f1978c"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/standard/scripted-six-and-twelve-seat-games.test.ts",
+      "sha256": "2da1dbf7fd35511c70b3690766e1d98e9f41942d95ea6e036c984e24e356e431"
+    },
+    {
+      "path": "backend/tests/scenarios/engine/phase-pipelines.test.ts",
+      "sha256": "35f1fb009de2c4ecba9a5ceb9156f384d5bcfe5e02ed70d19ffe84139ea40426"
+    },
+    {
+      "path": "backend/tests/scenarios/engine/wolf-night-tactical-loop.test.ts",
+      "sha256": "301a1d15def662858d8708cbe910b07405aa4e943faa6af74a4998a9e499fd6e"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/recording/scripted-game-finalization.test.ts",
+      "sha256": "1ae8fc8ef0e31a13f6cb2b72dc97decf90fd5c592c051905bd7bc6203798d1c3"
+    },
+    {
+      "path": "backend/tests/scenarios/features/cursed-fox/reentry-and-final-victory.test.ts",
+      "sha256": "a2074ef42d98ec1e451a7bb76098b2a568c52e17edcc79682c4e2aa9d563ee9c"
+    },
+    {
+      "path": "backend/tests/scenarios/features/demon-hunter/native-fact-recording.test.ts",
+      "sha256": "228cc1b39d070c70705368865da0382b4802399f834f8024f18df04ee58b628f"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "09139f92cbc5a60ef744bfb4b94c3d5403c8e489947b3447e235e43e95502b71"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sha256": "2f356ce9416bdc971c5ed9b7c005bb516640c88887e3aacd40c081fdc932ddbe"
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/camp-policy-inheritance-and-duel.test.ts",
+      "sha256": "c30893f46d5a31c4e3b49fa82e7ce4c88a16caebd52e2e99b70f25519be61de1"
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "279d7620debd9907bbdbea62d41a18a54639938d5dc971a4f7b26a8d54ac7906"
+    },
+    {
+      "path": "backend/tests/scenarios/features/noble-secret-body/legal-day-prompt-history.test.ts",
+      "sha256": "cef47631d9d9e48214c094fe3e4e5d2b06ada57a18db75b5ee74ef2d722da731"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "5847a300daa922a4146e38b9d0b711697dcf5272590830811bb94b7349437473"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+      "sha256": "36eee088efb247c61ea0fe9eef0eed781cd7fe7466d186cea47e75e4545e5e63"
+    },
+    {
+      "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "sha256": "f6043d2e8ceb46a3b28811bfde217af369b9d0d9c45e131a7e54a3bd55f3b37f"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/first-night/day-one-settlement-order.test.ts",
+      "sha256": "d1ff4495afb60ca13c5ae6772233ca33d89fd7117d48818691cbb9bd637aa5f3"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/inspection/seer-private-history.test.ts",
+      "sha256": "cb2cca94eef784607507a325a0260b49ebc84b7a2a7d7ad2c7381acee237ba7e"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts",
+      "sha256": "af07af554f297d7d7649cf07b3b76a92e1ac019115f78d1c78b9b8cb69df6cfc"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/wolf-team-dynamic-night-scheduling.test.ts",
+      "sha256": "19bcb46bb230620f45dd861673fc4456d3c8551ca52e2f9da19d7b92623e76af"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/historical-beauty-and-dream-policy-chains.test.ts",
+      "sha256": "2e136f7bf36b81d5342b5676954ffbe8e81bdfb201e6a6f59868e6016c98cae9"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+      "sha256": "cea44b5a35126b6ab10f9e2ce92bfbe75548691fd3f6bed0f492db1fbfa93610"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+      "sha256": "28f5f6b9eb6913b219d95cae6b980134a49c41b9c18ee379ad6f276cd5bc61ab"
+    },
+    {
+      "path": "backend/tests/unit/agents/observation-fallback.test.ts",
+      "sha256": "05a9f82df11537ca06ab392b36f7957d7543ad514b26964b8660d893a714772b"
+    },
+    {
+      "path": "backend/tests/unit/agents/player-initial-public-counts.test.ts",
+      "sha256": "d41dac87b3e933854bd14904e4f144c3f6b13acc10f2d1bab4fb00b83616f3cb"
+    },
+    {
+      "path": "backend/tests/unit/agents/player-prompt-directives.test.ts",
+      "sha256": "47314f21c497ca34a4bb09d8b1d4a1f68706f4a6873b6b47a4f7bdb483d407cb"
+    },
+    {
+      "path": "backend/tests/unit/engine/death/death-committer.test.ts",
+      "sha256": "0a6e5877a23dee4633b1bb8e90a2201a03e9e4bc7694349db163df0d3eb6e25b"
+    },
+    {
+      "path": "backend/tests/unit/engine/death/typed-wave-receipts.test.ts",
+      "sha256": "367b2f184e8317d76ea634b501acb19c8cb193794ca6007774e1bfbaeb1863cb"
+    },
+    {
+      "path": "backend/tests/unit/engine/elimination-priority.test.ts",
+      "sha256": "48d9c8d0cd43b38767e10e45c020ec7a8625c0d67d7c5f52353bf9cede8e7f74"
+    },
+    {
+      "path": "backend/tests/unit/engine/visibility/inspection-result-contract.test.ts",
+      "sha256": "3f871da76bdd9a37d55f0b8120ea5879ec84ab3635efdf5c908ed93291ff852a"
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "0addc0b254789dbfdc213e33f2b7b55e8b0103ac95cc41eaed83fb2ab2743100"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/roster.test.ts",
+      "sha256": "b0ee7e90d4795ac42d7d9f0b90cbf51ecc71c332f1d56c0f9138f052474f8824"
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "sha256": "31947d3eea15dc6e340ffba61f52aef7e7d376f47c262b6989a8c2b6071a2e68"
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/state.test.ts",
+      "sha256": "1d9e1c047b2cf63b6780cd5a1e8d37202fe219a402efacb6f08e917d4cdf8563"
+    },
+    {
+      "path": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+      "sha256": "d0c5bd0e692bef35413d27d593b2b46f3a1ba840f045f8e89e7ae4b98ef731f5"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "59672b94d6d6c9da146b4d01472718bb81404ef568b086bb76c48910c35a257b"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid-hybrid-state-slots.test.ts",
+      "sha256": "0924326aba646a364be33f289e6816ffb347b30adfd3bf8bdc31d61317104b37"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+      "sha256": "ee938bfce073349eae0aa533f7322ff8d7eb2d610cecda1aa84bff039d4f1c6a"
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "8ada39b42fd918a8406f76dc129ce32cdaaa0c67775809765b06b6a1a150bbc0"
+    },
+    {
+      "path": "backend/tests/unit/features/death-abilities/lifecycle-owner.test.ts",
+      "sha256": "22356024b7ddb600754faed8d5034fddf453b8cd0de5f860b4ab58e47ac5e08f"
+    },
+    {
+      "path": "backend/tests/unit/features/death-gun/eligibility-capture.test.ts",
+      "sha256": "c553245c996eb6c59374ac20762bd226beb8b7ea5323cf3c01a152895c5f2a11"
+    },
+    {
+      "path": "backend/tests/unit/features/debater-state-owner.test.ts",
+      "sha256": "fcb30e4d4c1eca8be36b9c0d57228e94bf7938a2520b22ee0e791052490ef3c5"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "sha256": "63ea64bf15959358acada9ba01cf48cafd4a30b47712a3aad10c574e7cebac40"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+      "sha256": "3408db9c186c831949b8987459258b8a86c143880b2229964cadad5ff0c777da"
+    },
+    {
+      "path": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+      "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-demon-state-slots.test.ts",
+      "sha256": "2568ee073d13ba4c8205c57306ab4c53b3a4bb314a718c5e12dd135ca28e4876"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "94aeb97c9bf29c489ca7279159594641c07d2b0f77b1f5630cfc3f5f613dcd2d"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/authority.test.ts",
+      "sha256": "37e041b550b23a58ca0539ca676eeecd82f1b75b962bdf06d541742940589063"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/pair-slot-contract.test.ts",
+      "sha256": "d319a156020e1969a79c8a9d4ec913b6ed0e23b379162cee9bc536b91bd9e815"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/pair-state-slot.test.ts",
+      "sha256": "ab42fa942f5617cd35f5acfdab46d1f227bf8b3df429c44429bc4c7d3cf5dd8b"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/target-scope.test.ts",
+      "sha256": "2ff6d79ed9c4233cfd314e722e1a461fb865ed6ddc4af5635af99e91ff31fbf2"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "93f6e873dd99637b1fe582164c097f34f5e4572c4c98dc134289530a87dcf88b"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/ghost-bride-authority.test.ts",
+      "sha256": "29c7f12caf98353a2018439e7e3bb5720ade3a1f13b82a13528de3eb8e2c0894"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/state-ownership.test.ts",
+      "sha256": "a1d5b402919d7b353edf694cd9c037217873539a7a666ab1853bb5d72db25864"
+    },
+    {
+      "path": "backend/tests/unit/features/gravekeeper/private-feedback-boundaries.test.ts",
+      "sha256": "c8b98b0ea4fd277141fdac421fe6018456226d0d61fa20531454b0b3644856b0"
+    },
+    {
+      "path": "backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+      "sha256": "1569d15dcadef4a2f1126734623a3050274c818cdc228ad59134e11676b4e3a9"
+    },
+    {
+      "path": "backend/tests/unit/features/guard/state-ownership.test.ts",
+      "sha256": "f0c47add14819bf6f8fe12192b7c4f18ed17ed8b11991c9cc7ff50817f2b7824"
+    },
+    {
+      "path": "backend/tests/unit/features/hidden-wolf/camp-policy-configuration-and-projection.test.ts",
+      "sha256": "cbf3dce9207c1df8e9d760b08241c74ad8106bd32e02214c405e0fd93161be38"
+    },
+    {
+      "path": "backend/tests/unit/features/hidden-wolf/pack-permission-contracts.test.ts",
+      "sha256": "e8a1897224c64049a666beaa8a954201fb537f0123ec2426d82d332c24be4db5"
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "sha256": "8e36fec03fbf867bb2928753150c066775295b64a9737b6a6720dc77639ec083"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts",
+      "sha256": "eab39761392471d08f8d4f65fe9b4a8cbf6c2e3f367ca01f75bd400c30f2429a"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "sha256": "19095edf4e70de68a76649a95f7efddcfaa93bf52aec627e23a5c261acea3400"
+    },
+    {
+      "path": "backend/tests/unit/features/knife-inheritance-ownership.test.ts",
+      "sha256": "b89c676b4d5faec4a766cb87e47a76fc62953a8bf203f885a6cbfe7e5456c3ca"
+    },
+    {
+      "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+      "sha256": "cc664355fa7b126ff1d323a15f19a0b787d0914aacea05e610123acf0ad237dd"
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "sha256": "1ff313a781520edeba7290bf1abdcaedde14a52ded52526f7790837c0197861a"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "979359337b1c644c175bb4f8be51aac6505edfc5d0cf566bd8053cd45828de18"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/frame.test.ts",
+      "sha256": "d8b930a163b01f4343a5a5071dddb0976abb59c57e8d649bfbb4b9b63876e30e"
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/captured-gun-ownership.test.ts",
+      "sha256": "715e0c053bd94add94d5cb5510390fe3272ff9a3dc2cac64e35c709de07c6ee7"
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/inheritance.test.ts",
+      "sha256": "547a3cabd125215afac087748006f920f681bd74fbecc3b48fe58a04535283c1"
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/scope.test.ts",
+      "sha256": "f66a853496e7f5c6b0f94a509b4dfbe00c9d4b73e0c9d7c8e21d838a803ad6d3"
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/state.test.ts",
+      "sha256": "fa42c8fe1f42cb62f36c58b958724e892742f0dc681580876009fa4dd1868a0b"
+    },
+    {
+      "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "sha256": "381b4671ea2351bf768663658953b37cd5935b45b7624ec096314e3a0d015b8a"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "d68b1e87a1e25498876cfc276a834658279dacdbdb5c1bf54d1e3b662abd7386"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+      "sha256": "84d7ba20b3ceafe83ce8b32ff53ec68e2c3918069b2d457b6f592f247c0bf7cf"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "sha256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/mist-raven-profile.test.ts",
+      "sha256": "3f2171daacfc33ed720a92979103257f40b06744568b94fd827dddddd8749515"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/night-frame.test.ts",
+      "sha256": "a1ee800328d007bf98b49910fbf4250883471aa598d58b69c52845108d06f3d0"
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+      "sha256": "075a6e189ebb5d77e7ea55908438c8a63cafad3f5852ab736f54fa4af33eecc0"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/authority-reentry.test.ts",
+      "sha256": "0804e0238c9688bd673b4c31a0d966c4e134eff01840ad206d008c03cc1957d1"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/authority.test.ts",
+      "sha256": "b8562eac202d2a10f922377db36bc905860c7aaeb5549759c1d796853d1c9cdb"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "75e4e6afec2c8f02ae579fab8cafa7af79671cdab096eabc580790d232719224"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+      "sha256": "8acbb9cf6c473a5ba5586cf9609f578c5b62d0abd135f1f21446f9af644c1d27"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+      "sha256": "3815faf13312b7fb45574561aebcc854b2d4aa42bfb10d445e095138ec9cef38"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+      "sha256": "cd4ec49cddcf888715d3dfa9f99e9952a85de18abf3b5aa2aa2cf2ee88b8d5de"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "12a493a30180f0390a33ab86a516a47e0b6c398dbf56ab98d8fad7224c1c537b"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+      "sha256": "2ad04c320dabc4ddf89b3b581ee3d7ed250b0633672accc82a6f413084a26c7d"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+      "sha256": "0690f514d640935d69f7f54981c127842f4c0087c52aa922199ef07783d84742"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+      "sha256": "5ba4681e1a901d7207ff89d16f92d2b0eb01b4778afbfb7349ee57f22680e055"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+      "sha256": "068518f3ec63a4ad03994b3c3b9157c447de00c3c3ac08207652c985b457f62e"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/suppression-serialization.test.ts",
+      "sha256": "fba1f023fc5b8d7d3da31da6d36440d98f306d9c2d73dfbc51a135d436161ec8"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/suppression.test.ts",
+      "sha256": "f1c5cc56cffbfa206d3b45e8e98cdf8312eb4a569276e386247aa40753ce2485"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "1612a906544d07c5d07c3643e8f1cd2a59c85acd380e599caaf9891f2192c05f"
+    },
+    {
+      "path": "backend/tests/unit/features/seer/readonly-state.test.ts",
+      "sha256": "4796f2925d49405239e6597807d5c57710ef10c8a8d170d90b21d0858259e090"
+    },
+    {
+      "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+      "sha256": "a8e6f80380d39054dbeeda1a5d61353819748e7de39c6552681042b057d96bbf"
+    },
+    {
+      "path": "backend/tests/unit/features/seer/state.test.ts",
+      "sha256": "764ff244bc35b5a1769b047089f015a12fef724e031eba2ce3e915ee7252193b"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "04991585721c167431fd9d5e8882d85f6ba8b8fd2f86b51968d6693b73bcc1e7"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "42d5bfa551b5cba23b99e02e15c50fa972c1c0fedbf2f94af8f2873bd9d2d172"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+      "sha256": "30d1ed4339a548e556527fae2c6a1a80a5dae99ace85a1656dce04bb908f97ff"
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+      "sha256": "75dc1cbde38ee9a477010c82f3ad546ddef381f962c33fc81f94351dbeb86bb0"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "01e87ff45c30ab41f0ef79830deae970531c52488fc9b6a81ff3ccf2028d9ac5"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/role-execution-retirement.test.ts",
+      "sha256": "d5c09db08faa3e53a80bd4d7637945bd6e765ef030b99745f419845f644787de"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/transform-failure-owner.test.ts",
+      "sha256": "53b6ed682f3763920bb6886b874e26a16e7ba08a0c6dce008889d48d46cb6e47"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "sha256": "30a128e9b8e23d0c951b2811efe74ae7950597fda375226c00bb97d3909335fd"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/state-ownership.test.ts",
+      "sha256": "c46a6902ab7d0b2249707d75de9abeb18b2ca6c8516beed2a73b8f01b4f43491"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+      "sha256": "8d47109b6336081ec74e6fe98a26c3293b7b130349eba5eb93aeb39907170e4e"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/trigger-receipts.test.ts",
+      "sha256": "a328229a688ca3e5e4cb2182f47a232e9578d93b742ec93f9756c94377d54036"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+      "sha256": "e7e684e777c96970d9b14b889d0c7aa605b903878296e4a4ffd39ef59c3dff89"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "sha256": "6ab2376f5ab03eeaa31b9fc15ed984001f3577db0383fe8c108751a39f4dc07a"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf/ability-assembly.test.ts",
+      "sha256": "c79fc629c660209d6e456f62662108314be3790ad4be8be462d641bd687bfa5f"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "f74a9cb3729b721d3b4ba7e011caa6462fc0f32a8a74edbb80d154d6c3624484"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/death-wave-contributions.test.ts",
+      "sha256": "12800a98a5806e6a0e27b41dafd4409f115cd99d101997a6bf157f2cf2889e69"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/deathgun-read-boundary.test.ts",
+      "sha256": "6c9ea4320f9e3cd66f48f6a824be1b92c6633c9b6ca90776039f9a83a634150a"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "60edf6f26b1ad0348aea50fa1eba60dfb8f621e8686953a972476e49057f62bc"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/gifted-gun-resource-boundaries.test.ts",
+      "sha256": "9ab50711a983c241828ee8356a761e80d62ccc8928b345c9f3bf277da6ba79cd"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/native-learned-death-guns.test.ts",
+      "sha256": "7221fc0dcd9f90591a592fb474773486199cac1be816e432c186d2735f00e9d9"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-actors.test.ts",
+      "sha256": "9c1a771a1c09d4d1ac270bae6f609e44933d5073d6bb8be445e441965859f4f2"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "0dc21ebd321640d9e14d301475d188176b34498008b83720a99802ea518d9f5f"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "958ecb9bee68793a5d3093dba537248b1bfaee04bef262dcc7477176d16e898b"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-inventory-owner.test.ts",
+      "sha256": "9c713e2080805cea626221f0969620c5956a32fa246d33b29c81239b4df01d07"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+      "sha256": "c8866c298750a3db81fa2aad74974fd0a4c54e0e238858da1cebd8e400f9942d"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+      "sha256": "36ec88475d9250a68cdee8f6805c9d5f876cbad7f7218a94bea67cedf21a6c57"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-transfer-failure-policy.test.ts",
+      "sha256": "47632ecfc3d83ffa3d2d8c723012b413d3d050cc5a43b902c9da3ad2f41238ed"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "sha256": "efddf36ad903e5b7793d1c88352f0c4f9e1b01186af5a40c646dc6b72b28868e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/role-execution-resource-retirement.test.ts",
+      "sha256": "3737d2e3b8dd8c1391779761df0ac31f1d8216f4bd819860406be7ce0dad5459"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/sheriff/request-construction.test.ts",
+      "sha256": "510bbb2cc6775975d8e33de1ae292cdf09a55325a995334a19da60d666a336d9"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/validated-victory.test.ts",
+      "sha256": "c8424272ff4dbaba4aa0bc46377f8c6bf5a59825e1f396babb355a7a3e500955"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+      "sha256": "9a37f84cd225c09f8e61348479b297b41c6a17e4a9f72ed1dd7cf1dad1e6f314"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+      "sha256": "c6d4921f91896f5d95fab1a8bb05674c9970bed62ac1291f05e4edfd45175143"
+    },
+    {
+      "path": "backend/tests/unit/recording/board-config-recording.test.ts",
+      "sha256": "1750c9d6558d513c5f30ff43351a85a48c4a90fc6857d973fc3bb6ad2b40c0af"
+    },
+    {
+      "path": "backend/tests/unit/recording/checkpoint-contributions.test.ts",
+      "sha256": "228580bfbd47f8fb17dbc96d3f13d97c27446669078bc31cd35616870098ad58"
+    },
+    {
+      "path": "backend/tests/unit/recording/private-state-codec.test.ts",
+      "sha256": "6879cf75bee0429b0634312a6c395c742df751bb9eb698d324bf67d47b9adc2d"
+    },
+    {
+      "path": "backend/tests/unit/recording/red-moon-record.test.ts",
+      "sha256": "ae1af93080a2c842902b9c5a782fd2bc6d7e1645a458080c25517eb3105045f1"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/action-request-bindings.test.ts",
+      "sha256": "f66cc34dd3965fadab7dca9c5548c316ba139247f44fdd31b937100d939eec41"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+      "sha256": "71a4e64d94e35b908bb1b0bfb843b77192ad3a52ca9b75eaa30f5552166e15c4"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/exile-death-preparation.test.ts",
+      "sha256": "e34281c03de196657dd457f863ef927dbaa2537db68db84cbd34d757050aefec"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/guard-tool-admission.test.ts",
+      "sha256": "f5d9ee9ed97874988ec1b1fe0839c4110da652988e74e53c54fa5864cf8abf19"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "sha256": "eeb31f748504ae7193cbef68f668eb9434c78cfe97f747ce85e37b4d7352f287"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/knight-day-settlement.test.ts",
+      "sha256": "5f1341f9bb2732c5cc7d686c77805e3a1990b1194fb3f4dd83b84b52a7d2998d"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/mapped-exile-resolution.test.ts",
+      "sha256": "9742c31e0cc92e25c7aed91c8dda3696bbe0d396a05fe9730947bdf892948565"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+      "sha256": "7510280035733e30399931352009f864a769b4161b2284a3948698f6b0ff2d12"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "sha256": "e6e5a0ea82fe50dbbd4cfda5f1df0471db3a18f5ccc1ebac9206e230747efd68"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "sha256": "f49b1eb8ff3cc298cce1f62b76fbfd5455dee581b26f3f768298c04dcbdc4cbb"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/terminal-victory-policy.test.ts",
+      "sha256": "607273a861e34d457b8ef8f0a5f0254ea5ed3c4769f16fe974d36b0cf5967e30"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/wolf-knife-inheritance-plan.test.ts",
+      "sha256": "58467547ba86e8329f44ccff17afdbfe5d60922a652909a577acb142e4507418"
+    },
+    {
+      "path": "frontend/tests/support/fixtures/manifest.ts",
+      "sha256": "3ffcd2aa409a47faa9e8374e618bda7a2d5a53cdda008032576e041b598978b2"
+    },
+    {
+      "path": "backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+      "sha256": "12ece62e2635c51babad44158792b3976ab35140076c6ebf2368d1db38d55dc1"
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "db4e933caa02f61e8bc623dde868d3cdd25d4984a6640b9a35429e1397207abf"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "7fc8b972d28c214232c59e395a49a9290c91052eb2f9047bd29f7023f6cd8007"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6ecf2956933718be9792019ea1e595c9016cf0f954b6090d2ca3e85bad91ed0f"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "f1cd448ee9313867e449ba89230daa6216d33e9a32b0f94b8e73b62bb3570bc2"
+    }
+  ],
+  "totalCandidateScope": 170,
+  "reason": "首次联合types真实诊断补盘五consumer；原165 before及首绿proof不改。"
+}

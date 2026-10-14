@@ -92,7 +92,7 @@ function fixture(groom = 2, witness = 3, install = true) {
           : kind === Role.Wolf
             ? Camp.Wolf
             : Camp.Good,
-      role = createRoleComponent(kind, camp);
+      role = createRoleComponent(kind);
     (role as { privateState: Readonly<Record<string, unknown>> }).privateState =
       kind === (GHOST_BRIDE_ROLE as Role)
         ? { ghostBride: freshGhostBrideState() }
@@ -274,7 +274,7 @@ test("native Wolf groom and witness retain originals, immutable pair is never mu
     expect(role(g, i + 1)).toBe(originals[i]!.role);
     expect(life(g, i + 1)).toBe(originals[i]!.life);
     expect(role(g, i + 1).privateState).toBe(originals[i]!.state);
-    expect(role(g, i + 1).camp).toBe(i === 0 ? Camp.ThirdParty : i < 4 ? Camp.Wolf : Camp.Good);
+    expect(g.world.getComponent(i + 1, COMPONENT.Camp)!.camp).toBe(i === 0 ? Camp.ThirdParty : i < 4 ? Camp.Wolf : Camp.Good);
     expect(goal(g, i + 1).affiliations).toEqual([
       { kind: "faction", faction: i < 3 ? Camp.ThirdParty : i < 4 ? Camp.Wolf : Camp.Good },
     ]);
@@ -341,9 +341,9 @@ const mutations: Record<string, (g: Fixture) => void> = {
   },
   newLife: (g) => g.world.addComponent(3, COMPONENT.Alive, createAliveComponent()),
   newRole: (g) =>
-    g.world.addComponent(3, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf)),
+    g.world.addComponent(3, COMPONENT.Role, createRoleComponent(Role.Wolf)),
   roleTruth: (g) => (role(g, 3).role = Role.Villager),
-  roleCamp: (g) => (role(g, 3).camp = Camp.Good),
+  roleCamp: (g) => (g.world.getComponent(3, COMPONENT.Camp)!.camp = Camp.Good),
   state: (g) =>
     ((role(g, 3) as { privateState: Readonly<Record<string, unknown>> }).privateState = {}),
   stock: (g) =>
@@ -793,7 +793,7 @@ for (const mutate of [
     life(g, 2).alive = true;
   },
   (g: Fixture) =>
-    g.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf)),
+    g.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf)),
 ])
   test("chat delivery independently revokes original receiver after committed choice", () => {
     const g = fixture();

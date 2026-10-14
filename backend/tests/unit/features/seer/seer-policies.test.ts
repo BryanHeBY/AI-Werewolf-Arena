@@ -168,6 +168,7 @@ test("fresh target policy rechecks history after await and exhausts without an i
       () => 1,
       "en",
       game.world,
+      () => game.world.getComponent(2, COMPONENT.Camp),
     ),
   ).toBeNull();
   const provider = new ObservedPlayersActionProvider(
@@ -187,6 +188,7 @@ for (const locale of ["zh-CN", "en"] as const)
       SEER_ROLE_PROFILE.presentation!.id,
       game.world.getComponent(2, COMPONENT.Role)!,
       locale,
+      undefined, () => game.world.getComponent(2, COMPONENT.Camp),
     );
     const board = getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale);
     expect(prompt).toContain(locale === "en" ? "history never resets" : "不重置历史");

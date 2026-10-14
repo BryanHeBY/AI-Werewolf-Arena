@@ -96,7 +96,7 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
     name: "actor body",
     apply: (g) =>
-      g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.LonelyGirl, Camp.Good)),
+      g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.LonelyGirl)),
   },
   {
     name: "actor role value",
@@ -107,7 +107,7 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
     name: "actor role camp",
     apply: (g) => {
-      role(g).camp = Camp.Wolf;
+      g.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Wolf;
     },
   },
   {
@@ -171,12 +171,12 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
     name: "target Role",
     apply: (g) =>
-      g.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf)),
+      g.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf)),
   },
   {
     name: "target camp value",
     apply: (g) => {
-      role(g, 2).camp = Camp.Good;
+      g.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Good;
     },
   },
   {
@@ -213,7 +213,7 @@ for (const target of [2, 4, 6])
     });
     expect(role(g)).toBe(original);
     expect(role(g).role).toBe(Role.LonelyGirl);
-    expect(role(g).camp).toBe(Camp.Good);
+    expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     expect(g.world.getComponent(1, COMPONENT.Alive)).toBe(originalLife);
     expect(Object.keys(role(g).privateState)).toEqual(["lonelyGirl"]);
     expect(getLonelyGirlState(role(g))).toEqual({
@@ -231,7 +231,7 @@ for (const target of [2, 4, 6])
     });
     expect(lonelyGirlReady(g.world)).toBe(true);
     expect(knownWolfTeammates(g.world, 1, getDefaultRoleCatalog())).toEqual([]);
-    expect(wolfTeamPermissions(role(g), getDefaultRoleCatalog(), g.world).canVoteForKill).toBe(
+    expect(wolfTeamPermissions(role(g), getDefaultRoleCatalog(), () => g.world.getComponent(1, COMPONENT.Camp), g.world).canVoteForKill).toBe(
       false,
     );
   });
@@ -290,7 +290,7 @@ for (const [id, field] of [
     let reads = 0;
     expect(
       await setup(g, async () => {
-        Object.defineProperty(role(g, id), field, {
+        Object.defineProperty(field === "camp" ? g.world.getComponent(id, COMPONENT.Camp)! : role(g, id), field, {
           get() {
             reads++;
             throw new Error("getter_read");
@@ -476,7 +476,7 @@ test("Girl state/fact never reveals target camp to actor or other seats", async 
 test("Girl membership survives both deaths and target future change; City still counts real Good Girl", async () => {
   const g = fixture();
   await setup(g);
-  role(g, 2).camp = Camp.Good;
+  g.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Good;
   g.world.addComponent(2, COMPONENT.Camp, createCampComponent(Camp.Good));
   g.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   expect(victory(g).affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);
@@ -641,7 +641,7 @@ for (const change of ["role_getter", "replaced_state_getter", "target_getter"] a
     const g = fixture();
     let reads = 0;
     expect(
-      await setup(g, async () => {
+      await setup({ ...g, config: g.boardConfig }, async () => {
         if (change === "role_getter")
           Object.defineProperty(role(g), "role", {
             get() {
@@ -651,7 +651,7 @@ for (const change of ["role_getter", "replaced_state_getter", "target_getter"] a
             configurable: true,
           });
         else if (change === "target_getter")
-          Object.defineProperty(role(g, 2), "camp", {
+          Object.defineProperty(g.world.getComponent(2, COMPONENT.Camp)!, "camp", {
             get() {
               reads++;
               throw new Error("foreign_target");
@@ -659,7 +659,7 @@ for (const change of ["role_getter", "replaced_state_getter", "target_getter"] a
             configurable: true,
           });
         else {
-          const next = createRoleComponent(Role.LonelyGirl, Camp.Good);
+          const next = createRoleComponent(Role.LonelyGirl);
           Object.defineProperty(next, "privateState", {
             get() {
               reads++;

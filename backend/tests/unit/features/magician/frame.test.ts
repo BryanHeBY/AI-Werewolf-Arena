@@ -28,15 +28,16 @@ function fixture(
       1,
       {
         role: "magician",
-        camp: Camp.Good,
         privateState: { magician: state },
       } as unknown as RoleComponent,
     ],
     ...[2, 3, 4].map(
       (id) =>
-        [id, { role: "villager", camp: Camp.Good, privateState: {} } as RoleComponent] as const,
+        [id, { role: "villager", privateState: {} } as RoleComponent] as const,
     ),
   ]);
+  // 独立实际Camp组件输入；Role只保角色和原privateState，名单历史仍按原时点捕获。
+  const camps = new Map([...roles.keys()].map((id) => [id, { camp: Camp.Good }]));
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const identities = new Map(
     [...roles.keys()].map((id) => [
@@ -47,8 +48,10 @@ function fixture(
   const world = {
     entityIds: () => [...roles.keys()],
     getComponent: (id: number, kind: unknown) =>
-      kind === COMPONENT.Role
-        ? roles.get(id)
+      kind === COMPONENT.Camp
+        ? camps.get(id)
+        : kind === COMPONENT.Role
+          ? roles.get(id)
         : kind === COMPONENT.Alive
           ? lives.get(id)
           : kind === COMPONENT.Identity

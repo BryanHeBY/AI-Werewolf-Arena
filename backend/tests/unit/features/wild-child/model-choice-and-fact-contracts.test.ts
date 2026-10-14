@@ -74,7 +74,7 @@ const changes: Record<string, (g: Fixture) => void> = {
     role(g).role = Role.Villager;
   },
   actorRoleRef: (g) =>
-    g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.WildChild, Camp.Good)),
+    g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.WildChild)),
   actorState: (g) => {
     (role(g) as { privateState: Readonly<Record<string, unknown>> }).privateState = {
       ...role(g).privateState,
@@ -95,7 +95,7 @@ const changes: Record<string, (g: Fixture) => void> = {
   },
   modelBody: (g) => g.world.addComponent(2, COMPONENT.Alive, createAliveComponent()),
   modelRole: (g) => {
-    role(g, 2).camp = Camp.Good;
+    g.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Good;
   },
   config: (g) => {
     g.config.hooks.onDaybreak = !g.config.hooks.onDaybreak;
@@ -154,7 +154,7 @@ for (const target of [2, 4])
       eligibleNight: null,
       activeFromNight: null,
     });
-    expect(role(g).camp).toBe(Camp.Good);
+    expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     expect(await setup(g)).toBe(true);
     expect(g.events).toHaveLength(1);
     expect(buildAgentVisibleEventFeed(g.world, g.events, 1)).toHaveLength(1);
@@ -256,8 +256,8 @@ for (const field of ["role", "camp", "privateState"] as const)
     let reads = 0;
     expect(
       await setup(g, async () => {
-        const value = role(g, 2)[field];
-        Object.defineProperty(role(g, 2), field, {
+        const value = field === "camp" ? g.world.getComponent(2, COMPONENT.Camp)!.camp : role(g, 2)[field];
+        Object.defineProperty(field === "camp" ? g.world.getComponent(2, COMPONENT.Camp)! : role(g, 2), field, {
           get() {
             reads++;
             return value;
@@ -268,6 +268,6 @@ for (const field of ["role", "camp", "privateState"] as const)
       }),
     ).toBe(false);
     expect(reads).toBe(0);
-    expect(role(g).camp).toBe(Camp.Good);
+    expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     expect(g.events).toEqual([]);
   });

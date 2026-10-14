@@ -1,0 +1,133 @@
+{
+  "firstCheckedFence": {
+    "path": "docs/refactor/generated/camp-canonical-cohort-checked-first-fence.json",
+    "sha256": "2ea0cd3be0109af49043e49d4011c11ec30c3e3c661a475df0ec7970538e97bf"
+  },
+  "repairFence": {
+    "path": "docs/refactor/generated/camp-canonical-cohort-fence.json",
+    "sha256": "5ffe15bafc7b286b18ef18095468a9f475020c3a28fcc4f1094e2882a1a998f6"
+  },
+  "receipts": [
+    {
+      "kind": "full-backend-source-tests-type-first",
+      "launch": "795278",
+      "sessionId": 36689,
+      "terminal": "7bf53c",
+      "exitCode": 2,
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --project backend/tsconfig.tests.json --noEmit",
+      "output": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-first-output.txt",
+        "sha256": "dd616123513ae741955a58863a3790134a44964a54dcf080c6ab0d1e970f0834"
+      },
+      "note": "Real first source/input errors plus preexisting required requestFactory fixtures and installed compiler module resolution failures; not pass."
+    },
+    {
+      "kind": "Chinese-head-first",
+      "tool": "82cdc8",
+      "exitCode": 1,
+      "selected": 331,
+      "diagnostics": 5,
+      "failedRoots": 4,
+      "output": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-first-output.txt",
+        "sha256": "8cca0ae58a9fd5e3da0bd1e65ad3f068815eb1b7f3c5fef017707bd6496c2f18"
+      },
+      "report": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-first.json",
+        "sha256": "c9001a79bd544e358e3add649184475756677d84da36d6bf9bcc03ea286b2be4"
+      }
+    },
+    {
+      "kind": "shared-api-and-support-whole-inverse-first",
+      "tool": "675125",
+      "exitCode": 0,
+      "programs": 23,
+      "output": {
+        "path": "docs/refactor/generated/camp-canonical-shared-proof-first-output.txt",
+        "sha256": "7c13133e5e09bf750b09e6884b93472a45a6f5376530f99c6a9bc11e9c9b1cc0"
+      },
+      "reports": [
+        {
+          "path": "docs/refactor/generated/camp-canonical-shared-api-proof.json",
+          "sha256": "695440a231d35aac4c777689fd695f51102f865c4bcb702968bce7a7c6cbb594"
+        },
+        {
+          "path": "docs/refactor/generated/camp-canonical-shared-support-proof.json",
+          "sha256": "bf4e53652760b1d923b6fc00b0c0616f6d6d122ee30990bfa2f54b04c6eaf8d6"
+        }
+      ]
+    },
+    {
+      "kind": "failed-root-type-configuration-first",
+      "tool": "ba41e2",
+      "exitCode": 2,
+      "config": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-config-first.json",
+        "sha256": "b65d18ed6bbd957d4925c907694debf28b601ad6cc4fe242d99d720adc1ac08c"
+      },
+      "output": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-config-first-output.txt",
+        "sha256": "760269d0a2a26a300dce82b5786ddf07b4ad07c6fa612d16a74f6007fa21d51d"
+      },
+      "note": "Relocated finite config lacked installed typeRoots, TS2688; configuration error retained, no app diagnostics sampled."
+    },
+    {
+      "kind": "failed-and-post-first-changed-type-roots",
+      "launch": "e7cf46",
+      "sessionId": 70474,
+      "terminal": "a96ffc",
+      "exitCode": 0,
+      "selectedRoots": 40,
+      "config": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-config.json",
+        "sha256": "8cb75a60b3585f48f3aef433f9cd687a3ec1c8a4b1683ab4b16a4867d2159d01"
+      },
+      "input": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-input.json",
+        "sha256": "365ba770ddb8b53b82518021a2839fcc54000367c7b9ddb170366134fee4cacf"
+      },
+      "output": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-output.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "note": "Strict inherited options retained. Explicit aliases/typeRoots bind the same installed backend TypeScript/node/Bun modules; not a repeat of green full backend program."
+    },
+    {
+      "kind": "Chinese-head-failures-and-new-inputs",
+      "tool": "656b95",
+      "exitCode": 0,
+      "selected": 14,
+      "output": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-repair-output.txt",
+        "sha256": "c81015edbbe30a412431a30b666bbe0c19a306e3ec5c13e7e803344f733e67dd"
+      },
+      "report": {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-repair.json",
+        "sha256": "1e3ce62a0a1785327c6fb2179881322f58e8e09fa3295df5f8dab7a617c59f62"
+      }
+    },
+    {
+      "kind": "missing-role-wolf-roster-risk-first",
+      "tool": "aac55a",
+      "exitCode": 0,
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/mechanisms/camp-canonical-missing-role-roster.test.ts",
+      "cwd": "backend",
+      "pass": 4,
+      "fail": 0,
+      "expect": 16,
+      "output": {
+        "path": "docs/refactor/generated/camp-canonical-missing-role-roster-runtime-first-output.txt",
+        "sha256": "55a1d2d047a7ac26d820448bccf915031719c167c68524c05369d5bc3687c35d"
+      },
+      "sourceReady": {
+        "path": "docs/refactor/generated/camp-canonical-missing-role-roster-source-ready.json",
+        "sha256": "d8368ca26bf5c6d5fd3c710c2c9f4b10d88e119bdedd75aa6e08aeaa9ce9ba86"
+      }
+    }
+  ],
+  "limits": [
+    "First full type result remains a real failure; only failed/new/changed roots were subsequently sampled successfully.",
+    "Existing successful comment contracts, type roots, behavior cases and proof scopes are not routinely rerun.",
+    "This is finite F05b validation, not final all-role/release/P9 acceptance. Later comment-only and newly added unit stages bind separate evidence."
+  ]
+}

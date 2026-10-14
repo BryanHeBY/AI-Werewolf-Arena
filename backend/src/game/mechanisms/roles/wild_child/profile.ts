@@ -95,7 +95,7 @@ export const WILD_CHILD_ROLE_PROFILE: NativeRoleContributions = {
             : { code: RuleError.WildChildChoice },
     },
     llmRepair: WOLF_LLM_REPAIR_PACK,
-    baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale, world) =>
+    baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale, world, currentCamp) =>
       request.allowedTools.includes("choose_wild_model")
         ? { name: "choose_wild_model", args: { target_id: pickAliveNotSelf()! } }
         : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
@@ -105,6 +105,7 @@ export const WILD_CHILD_ROLE_PROFILE: NativeRoleContributions = {
             pickAliveByCamp,
             locale,
             world,
+            currentCamp,
           ) ?? null),
   },
   presentation: nativeRolePresentation("wild_child"),

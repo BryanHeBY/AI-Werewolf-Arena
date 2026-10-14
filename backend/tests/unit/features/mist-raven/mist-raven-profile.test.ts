@@ -74,8 +74,10 @@ function fixture() {
   ];
   for (const kind of roles) {
     const id = world.createEntity(),
-      role = createRoleComponent(kind, catalog.getCamp(kind));
+      initialCamp = createCampComponent(catalog.getCamp(kind)),
+      role = createRoleComponent(kind);
     catalog.applyRuntime(role, {
+      initialCamp, currentCamp: () => world.getComponent(id, COMPONENT.Camp),
       boardConfig: {
         boardSize: 12,
         roleSetups: [...new Set(roles)].map((kind) => ({
@@ -91,7 +93,7 @@ function fixture() {
       },
     });
     world.addComponent(id, COMPONENT.Role, role);
-    world.addComponent(id, COMPONENT.Camp, createCampComponent(role.camp));
+    world.addComponent(id, COMPONENT.Camp, initialCamp);
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, id, `Player ${id}`));
   }
@@ -130,16 +132,16 @@ test("original profiles contribute exact defaults and bilingual mechanism meanin
     alchemist = world.getComponent(1, COMPONENT.Role)!,
     raven = world.getComponent(9, COMPONENT.Role)!;
   expect(
-    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.presentation!.id, alchemist, "zh-CN"),
+    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.presentation!.id, alchemist, "zh-CN", undefined, () => world.getComponent(1, COMPONENT.Camp)),
   ).toContain("发言结束");
   expect(
-    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.presentation!.id, alchemist, "en"),
+    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.presentation!.id, alchemist, "en", undefined, () => world.getComponent(1, COMPONENT.Camp)),
   ).toContain("after daytime speeches");
   expect(
-    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.presentation!.id, raven, "zh-CN"),
+    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.presentation!.id, raven, "zh-CN", undefined, () => world.getComponent(9, COMPONENT.Camp)),
   ).toContain("不补发");
   expect(
-    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.presentation!.id, raven, "en"),
+    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.presentation!.id, raven, "en", undefined, () => world.getComponent(9, COMPONENT.Camp)),
   ).toContain("fewer than three");
 });
 test("pack recognition, sealed exclusion, permanent snapshot and historical audience are separate", () => {

@@ -56,7 +56,7 @@ function fixture() {
     eventRegistry: new EventRegistry(),
     roleRegistry: createDefaultRoleRegistry(),
   });
-  const state = () => getOrderPrinceState(world.getComponent(12, COMPONENT.Role));
+  const state = () => getOrderPrinceState(world.getComponent(12, COMPONENT.Role), () => world.getComponent(12, COMPONENT.Camp));
   return { world, events, voting, config, state };
 }
 function vote(id: number | null): ToolCall {

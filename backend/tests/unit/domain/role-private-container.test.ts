@@ -24,11 +24,11 @@ function ordinaryReaderCannotWrite(role: RoleComponent) {
 void ordinaryReaderCannotWrite;
 
 test("component factory keeps the original record, keys and writable runtime descriptor", () => {
-  const role = createRoleComponent(Role.Villager, Camp.Good),
+  const role = createRoleComponent(Role.Villager),
     stored = role.privateState,
     descriptor = Object.getOwnPropertyDescriptor(role, "privateState")!;
-  // C36 的明确 API 退出：展示闭包离开领域组件，其余字段与容器 descriptor 保持原样。
-  expect(Object.keys(role)).toEqual(["role", "camp", "privateState"]);
+  // C36 的明确 API 退出：展示闭包离开领域组件，当前Camp转独立显式来源；容器descriptor保持原样。
+  expect(Object.keys(role)).toEqual(["role", "privateState"]);
   expect(Object.getPrototypeOf(role)).toBe(Object.prototype);
   expect(Object.getPrototypeOf(stored)).toBe(Object.prototype);
   expect(descriptor).toEqual({
@@ -42,13 +42,16 @@ test("component factory keeps the original record, keys and writable runtime des
 });
 
 test("custom initializer keeps extension/replacement rights and original role/context receiver timing", () => {
-  const role = createRoleComponent(Role.Villager, Camp.Good),
+  const role = createRoleComponent(Role.Villager),
     firstRecord = role.privateState,
     extension = { custom: "raw extension" },
     replacement = { replacement: extension },
     world = new World(),
     trace: string[] = [];
+  const initialCamp = { camp: Camp.Good };
   const ctx: RoleInitContext = {
+    initialCamp,
+    currentCamp: () => initialCamp,
     get locale(): "en" {
       trace.push("locale");
       return "en";
@@ -95,7 +98,6 @@ test("plain Hunter owner evaluates its original privateState LHS once and return
     trace: string[] = [],
     role: RoleComponent & { renderPrompt: () => string } = {
       role: Role.Hunter,
-      camp: Camp.Good,
       get privateState() {
         trace.push("privateState");
         return stored;

@@ -69,12 +69,12 @@ function fixture() {
   roles.forEach((name, index) => {
     const id = world.createEntity(),
       camp = ["raven_claw_wolf", "wolf"].includes(name) ? Camp.Wolf : Camp.Good,
-      role = createRoleComponent(name as Role, camp);
+      role = createRoleComponent(name as Role);
     if (name === "alchemist")
       (role.privateState as Record<string, unknown>).alchemist = createAlchemistState();
     else if (name === "raven_claw_wolf")
       (role.privateState as Record<string, unknown>).ravenClaw = createRavenState();
-    else getDefaultRoleCatalog().applyRuntime(role, { boardConfig });
+    else getDefaultRoleCatalog().applyRuntime(role, { boardConfig, initialCamp: { camp }, currentCamp: () => world.getComponent(id, COMPONENT.Camp) });
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, createCampComponent(camp));
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());

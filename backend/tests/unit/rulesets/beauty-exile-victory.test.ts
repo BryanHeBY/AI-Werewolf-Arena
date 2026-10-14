@@ -18,12 +18,15 @@ import { prepareBeautyExileVictory, resolveBeautyExileVictory, beautyExileVictor
 
 function fixture() {
   const world = new World(), actor = world.createEntity(), target = world.createEntity(), other = world.createEntity();
-  const actorRole = createRoleComponent(Role.WolfBeauty, Camp.Wolf),
-    targetRole = createRoleComponent(Role.Villager, Camp.Good);
+  const actorRole = createRoleComponent(Role.WolfBeauty),
+    targetRole = createRoleComponent(Role.Villager);
   setWolfBeautyState(actorRole, { targetId: target, lastActedDay: 1, history: [], deathLinkPolicy: "awa_exile_poison_v1" });
   world.addComponent(actor, COMPONENT.Role, actorRole);
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(target, COMPONENT.Role, targetRole);
-  world.addComponent(other, COMPONENT.Role, createRoleComponent(Role.Seer, Camp.Good));
+  world.addComponent(target, COMPONENT.Camp, { camp: Camp.Good });
+  world.addComponent(other, COMPONENT.Role, createRoleComponent(Role.Seer));
+  world.addComponent(other, COMPONENT.Camp, { camp: Camp.Good });
   const actorLife = createAliveComponent(), targetLife = createAliveComponent();
   world.addComponent(actor, COMPONENT.Alive, actorLife);
   world.addComponent(target, COMPONENT.Alive, targetLife);

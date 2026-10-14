@@ -96,7 +96,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale) =>
+    baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale, _world, currentCamp) =>
       request.allowedTools.includes("self_destruct_with_target")
         ? null
         : ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
@@ -105,6 +105,8 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
             pickAliveNotSelf,
             pickAliveByCamp,
             locale,
+            undefined,
+            currentCamp,
           ),
   },
   presentation: nativeRolePresentation("white_wolf_king"),

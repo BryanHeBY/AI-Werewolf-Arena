@@ -67,6 +67,7 @@ function context(game: Game, getAction: ActionProvider["getAction"], day = 1): N
     factory = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
+    get requestFactory() { return GameActionRequestFactory; },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -128,7 +129,8 @@ for (const skill of ["check", "poison", "gun"] as const)
       closedDay: 1,
       choice: { day: 1, targetId: 6, skill },
     });
-    expect(role(game, 6)).toMatchObject({ role: Role.Villager, camp: Camp.Good });
+    expect(role(game, 6)).toMatchObject({ role: Role.Villager });
+    expect(game.world.getComponent(6, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     if (skill !== "gun")
       expect(allNightAbilities(role(game, 6))).toMatchObject([
         {
@@ -195,7 +197,7 @@ for (const change of [
         life(game, 6).alive = true;
       }
       if (change === "target_role") role(game, 6).role = Role.Seer;
-      if (change === "target_camp") role(game, 6).camp = Camp.Wolf;
+      if (change === "target_camp") game.world.getComponent(6, COMPONENT.Camp)!.camp = Camp.Wolf;
       return { name: "black_market_trade", args: { target_id: 6, skill: "check" } };
     });
     if (change.startsWith("actor_")) await BLACK_MARKET_TRADE_STAGE.execute(ctx);
@@ -318,7 +320,7 @@ for (const change of [
             (ability as { uses: number }).uses = 0;
             (ability as { lastUsedDay: number | null }).lastUsedDay = null;
           }
-          if (change === "source_camp") role(game, 6).camp = Camp.Wolf;
+          if (change === "source_camp") game.world.getComponent(6, COMPONENT.Camp)!.camp = Camp.Wolf;
           if (change === "source_life") {
             life(game, 6).alive = false;
             life(game, 6).alive = true;

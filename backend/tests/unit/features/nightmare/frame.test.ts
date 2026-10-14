@@ -30,21 +30,24 @@ function fixture(required = false, constructorLocation?: "own" | "inherited") {
       1,
       {
         role: "nightmare",
-        camp: Camp.Wolf,
         privateState: { nightmareShadow: state },
       } as unknown as RoleComponent,
     ],
-    [2, { role: "wolf", camp: Camp.Wolf, privateState: {} } as RoleComponent],
-    [3, { role: "seer", camp: Camp.Good, privateState: {} } as RoleComponent],
-    [4, { role: "hunter", camp: Camp.Good, privateState: {} } as RoleComponent],
+    [2, { role: "wolf", privateState: {} } as RoleComponent],
+    [3, { role: "seer", privateState: {} } as RoleComponent],
+    [4, { role: "hunter", privateState: {} } as RoleComponent],
   ]);
+  // 独立实际Camp组件输入；Role只保角色和原privateState，名单历史仍按原时点捕获。
+  const camps = new Map([...roles.keys()].map((id) => [id, { camp: id === 1 || id === 2 ? Camp.Wolf : Camp.Good }]));
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const world = {
     entityIds: () => [...roles.keys()],
     getAliveEntityIds: () => [...lives].filter(([, life]) => life.alive).map(([id]) => id),
     getComponent: (id: number, kind: unknown) =>
-      kind === COMPONENT.Role
-        ? roles.get(id)
+      kind === COMPONENT.Camp
+        ? camps.get(id)
+        : kind === COMPONENT.Role
+          ? roles.get(id)
         : kind === COMPONENT.Alive
           ? lives.get(id)
           : undefined,

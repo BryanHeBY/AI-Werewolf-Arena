@@ -19,10 +19,11 @@ import { prepareMappedExile, resolveMappedExile, mappedExileSummary } from "../.
 function fixture() {
   const world = new World();
   for (const [index, roleId] of [Role.Trickster, Role.Villager, Role.Wolf].entries()) {
-    const id = world.createEntity(), role = createRoleComponent(roleId, roleId === Role.Wolf || roleId === Role.Trickster ? Camp.Wolf : Camp.Good);
+    const id = world.createEntity(), role = createRoleComponent(roleId);
     // 仅测试自有演员的初始容器安装；声明收窄不改变对象／写入或放宽生产读写口。
     if (roleId === Role.Trickster) (role as { privateState: object }).privateState = { trickster: createTricksterState() };
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: roleId === Role.Wolf || roleId === Role.Trickster ? Camp.Wolf : Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, index + 1, `p${id}`));
   }

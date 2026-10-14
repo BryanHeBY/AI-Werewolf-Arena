@@ -69,7 +69,7 @@ for (const wins of [false, true])
           ),
         ).toBe(true);
         expect(
-          getRedMoonState(g.world.getComponent(4, COMPONENT.Role))!.expirySettled,
+          getRedMoonState(g.world.getComponent(4, COMPONENT.Role), () => g.world.getComponent(4, COMPONENT.Camp))!.expirySettled,
         ).toBe(!wins);
       },
     );

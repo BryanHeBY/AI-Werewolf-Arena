@@ -81,7 +81,7 @@ function fixture(locale: "zh-CN" | "en") {
     return profile;
   });
   const catalog = createRoleCatalog({ contributions });
-  for (const id of [3, 4, 5]) role(game.world, id).camp = Camp.Wolf;
+  for (const id of [3, 4, 5]) game.world.getComponent(id, COMPONENT.Camp)!.camp = Camp.Wolf;
   return { ...game, catalog, contributions };
 }
 
@@ -191,7 +191,7 @@ test("a knife revoked during an in-flight decision is not applied, retried or re
         if (input.context.stage === "wolf_discussion")
           return { name: "speak_to_wolves", args: { text: "end", end_chat: true } };
         asks.push(input.actorId);
-        role(world, input.actorId).camp = Camp.Good;
+        world.getComponent(input.actorId, COMPONENT.Camp)!.camp = Camp.Good;
         return { name: "kill_vote", args: { target_id: 6, abstain: false } };
       },
     },

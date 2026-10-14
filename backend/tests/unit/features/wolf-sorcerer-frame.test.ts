@@ -33,7 +33,6 @@ function fixture(firstNight: 1 | 2 = 1, shot: "original" | "exchanged" = "exchan
       1,
       {
         role: "magician",
-        camp: Camp.Good,
         privateState: { magician: mage },
       } as unknown as RoleComponent,
     ],
@@ -41,15 +40,16 @@ function fixture(firstNight: 1 | 2 = 1, shot: "original" | "exchanged" = "exchan
       2,
       {
         role: "wolf_sorcerer",
-        camp: Camp.Wolf,
         privateState: { wolfSorcerer: wolf },
       } as unknown as RoleComponent,
     ],
     ...[3, 4, 5, 6].map(
       (id) =>
-        [id, { role: "villager", camp: Camp.Good, privateState: {} } as RoleComponent] as const,
+        [id, { role: "villager", privateState: {} } as RoleComponent] as const,
     ),
   ]);
+  // 独立实际Camp组件输入；Role只保角色和原privateState，名单历史仍按原时点捕获。
+  const camps = new Map([...roles.keys()].map((id) => [id, { camp: id === 2 ? Camp.Wolf : Camp.Good }]));
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const identities = new Map(
     [...roles.keys()].map((id) => [
@@ -60,8 +60,10 @@ function fixture(firstNight: 1 | 2 = 1, shot: "original" | "exchanged" = "exchan
   const world = {
     entityIds: () => [...roles.keys()],
     getComponent: (id: number, kind: unknown) =>
-      kind === COMPONENT.Role
-        ? roles.get(id)
+      kind === COMPONENT.Camp
+        ? camps.get(id)
+        : kind === COMPONENT.Role
+          ? roles.get(id)
         : kind === COMPONENT.Alive
           ? lives.get(id)
           : kind === COMPONENT.Identity
@@ -190,7 +192,7 @@ test("Wolf Sorcerer retains learned pack identities before later exchanges", () 
   const capability = WOLF_SORCERER_ROLE_PROFILE.runtime.wolfTeam;
   if (typeof capability !== "function") throw new Error("expected_dynamic_pack_capability");
   f.begin(1);
-  expect(capability(role, f.world)).toEqual({
+  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp))).toEqual({
     recognizedByPack: false,
     recognizes: "none",
     canChat: false,
@@ -198,10 +200,10 @@ test("Wolf Sorcerer retains learned pack identities before later exchanges", () 
   });
   f.close(1);
   f.begin(2);
-  expect(capability(role, f.world).recognizes).toBe("none");
+  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp)).recognizes).toBe("none");
   commitMagicianExchange(f.world, 1, 2, null);
   commitWolfSorcererExchange(f.world, 2, 2, null);
-  expect(capability(role, f.world)).toEqual({
+  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp))).toEqual({
     recognizedByPack: true,
     recognizes: "pack",
     canChat: true,
@@ -209,7 +211,7 @@ test("Wolf Sorcerer retains learned pack identities before later exchanges", () 
   });
   f.close(2);
   f.begin(3);
-  expect(capability(role, f.world)).toEqual({
+  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp))).toEqual({
     recognizedByPack: true,
     recognizes: "pack",
     canChat: false,
@@ -217,7 +219,7 @@ test("Wolf Sorcerer retains learned pack identities before later exchanges", () 
   });
   commitMagicianExchange(f.world, 1, 3, null);
   commitWolfSorcererExchange(f.world, 2, 3, null);
-  expect(capability(role, f.world)).toEqual({
+  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp))).toEqual({
     recognizedByPack: true,
     recognizes: "pack",
     canChat: true,

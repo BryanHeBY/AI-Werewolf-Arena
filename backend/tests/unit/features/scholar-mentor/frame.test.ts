@@ -53,7 +53,6 @@ function fixture() {
       i + 1,
       {
         role,
-        camp: role === "wolf" || role === "night_mentor" ? Camp.Wolf : Camp.Good,
         privateState: states.has(i + 1) ? { scholarMentor: states.get(i + 1) } : {},
       } as unknown as RoleComponent,
     ]),
@@ -79,6 +78,7 @@ function fixture() {
       },
     };
   }
+  const camps = new Map(names.map((role, i) => [i + 1, { camp: role === "wolf" || role === "night_mentor" ? Camp.Wolf : Camp.Good }]));
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const identities = new Map(
     [...roles.keys()].map((id) => [
@@ -91,7 +91,9 @@ function fixture() {
     getComponent: (id: number, kind: unknown) =>
       kind === COMPONENT.Role
         ? roles.get(id)
-        : kind === COMPONENT.Alive
+        : kind === COMPONENT.Camp
+          ? camps.get(id)
+          : kind === COMPONENT.Alive
           ? lives.get(id)
           : kind === COMPONENT.Identity
             ? identities.get(id)
@@ -308,8 +310,8 @@ test("Modifier completed close tolerates finally cleanup; interrupted night cann
 test("Modifier role permissions remain private and use the captured night roster", () => {
   const f = fixture();
   expect(scholarMentorRoleCanKnife(f.world, f.roles.get(2)!)).toBe(false);
-  expect(scholarMentorStateForRole(f.roles.get(1))).toBe(f.states.get(1));
-  expect(scholarMentorStateForRole(f.roles.get(6))).toBeUndefined();
+  expect(scholarMentorStateForRole(f.roles.get(1), () => f.world.getComponent(1, COMPONENT.Camp))).toBe(f.states.get(1));
+  expect(scholarMentorStateForRole(f.roles.get(6), () => f.world.getComponent(6, COMPONENT.Camp))).toBeUndefined();
   second(f);
   commitScholarMentorChoice(f.world, 2, 1, "weaken", 6);
   commitScholarMentorChoice(f.world, 2, 2, null, null);

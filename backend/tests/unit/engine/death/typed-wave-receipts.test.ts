@@ -50,7 +50,8 @@ function fixture() {
     const id = world.createEntity(),
       life = createAliveComponent();
     world.addComponent(id, COMPONENT.Alive, life);
-    world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+    world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager));
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     return life;
   });
   const committer = new DeathCommitter({ world, events, state });

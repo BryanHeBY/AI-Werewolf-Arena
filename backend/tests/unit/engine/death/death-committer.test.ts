@@ -26,7 +26,8 @@ function fixture() {
     events: GameEvent[] = [],
     state: RuntimeSnapshot = { day: 1, phase: Phase.Day, gameOver: false, result: null };
   world.addComponent(id, COMPONENT.Alive, life);
-  world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
   const reads: string[] = [],
     committer = new DeathCommitter({
       get world() {

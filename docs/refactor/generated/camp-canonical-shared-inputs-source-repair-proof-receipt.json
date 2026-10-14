@@ -1,0 +1,12 @@
+{
+  "command": "bun --no-env-file docs/refactor/generated/camp-canonical-shared-inputs-source-repair-proof.cjs",
+  "outputPath": "docs/refactor/generated/camp-canonical-shared-inputs-source-repair-proof-output.txt",
+  "result": {
+    "chunk_id": "c01e12",
+    "wall_time_seconds": 0.341018356,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "scope": "Only the actual World Camp fixture correction; first 20-program proof is not repeated."
+}

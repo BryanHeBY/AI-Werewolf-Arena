@@ -18,12 +18,12 @@ import { foxBoard } from "../../support/features/cursed-fox/builders/scenario";
 
 test("Debater init evaluates its assignment container before a late policy failure", () => {
   const trace: string[] = [], failure = new Error("test_debater_policy_failed");
-  const role = createRoleComponent(Role.Debater, Camp.Good) as RoleInitializationComponent;
+  const role = createRoleComponent(Role.Debater) as RoleInitializationComponent;
   const container = { set debater(_value: unknown) { trace.push("write"); } };
   Object.defineProperty(role, "privateState", {
     configurable: true, get() { trace.push("container"); return container; },
   });
-  const context: RoleInitContext = {
+  const context: Pick<RoleInitContext, "boardConfig"> = {
     get boardConfig() {
       trace.push("board");
       return { get debater() {

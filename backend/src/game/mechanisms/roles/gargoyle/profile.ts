@@ -46,11 +46,11 @@ export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
           : {}),
       });
     },
-    wolfTeam: (role, world) => ({
+    wolfTeam: (role, world, currentCamp) => ({
       recognizedByPack: false,
       recognizes: "none",
       canChat: false,
-      canVoteForKill: canGargoyleKnife(role, world),
+      canVoteForKill: canGargoyleKnife(role, world, currentCamp),
     }),
     // 此处仍按原时点创建政策配置；共享工具／规则／阶段保同一绑定，不授查验库存或跳过租约复验。
     configuration: inspectionConfiguration("gargoyle", "awa_unique_required_v1"),
@@ -73,7 +73,7 @@ export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (role, request, pick, byCamp, locale, world) => {
+    baselineAction: (role, request, pick, byCamp, locale, world, currentCamp) => {
       if (request.allowedTools.includes("inspect_role")) {
         const state = getRoleInspectionState(role, request.context.ability_id),
           target = world && state ? roleInspectionTargets(world, request.actorId, state)[0] : null;
@@ -81,7 +81,7 @@ export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
           ? null
           : { name: "inspect_role", args: { target_id: target } };
       }
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world, currentCamp);
     },
   },
   presentation: nativeRolePresentation("gargoyle"),

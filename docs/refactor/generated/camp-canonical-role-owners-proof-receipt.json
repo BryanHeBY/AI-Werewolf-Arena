@@ -1,0 +1,36 @@
+{
+  "command": "bun --no-env-file docs/refactor/generated/camp-canonical-role-owners-proof.cjs > docs/refactor/generated/camp-canonical-role-owners-proof-output.txt 2>&1",
+  "launch": {
+    "chunk_id": "7f3b46",
+    "wall_time_seconds": 1.001690069,
+    "session_id": 44066,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "terminal": {
+    "chunk_id": "e28939",
+    "wall_time_seconds": 9.527e-06,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "script": {
+    "path": "docs/refactor/generated/camp-canonical-role-owners-proof.cjs",
+    "sha256": "b2bb217af9c43824d422c719192070ce0a14a926823f2ec9d5370b8b40f802f6"
+  },
+  "report": {
+    "path": "docs/refactor/generated/camp-canonical-role-owners-proof.json",
+    "sha256": "415d9059ea5e8724494bd26b59e0719285ede5ae281f9359ae471ccb5022ba85"
+  },
+  "rawOutput": {
+    "path": "docs/refactor/generated/camp-canonical-role-owners-proof-output.txt",
+    "sha256": "8a8a0a40ea33cf4c48042854ca1fb410d47384a2e604b1e23676dbf05f9d53f2"
+  },
+  "sourceReady": {
+    "path": "docs/refactor/generated/camp-canonical-role-owners-source-ready.json",
+    "sha256": "fa6b0d016cbf91a7d0e2320856ec11887c378b8bfcba95bcdf1c7ad8f36307e1"
+  },
+  "runCount": 1,
+  "businessModulesLoaded": false,
+  "typeOrHeadExecutedByAuthor": false
+}

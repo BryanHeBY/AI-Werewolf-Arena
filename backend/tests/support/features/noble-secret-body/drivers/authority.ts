@@ -23,15 +23,14 @@ import {
   resolveSecretBodyDamage,
   closeNobleBodyNight,
 } from "../../../../../src/game/mechanisms/roles/noble_secret_body/authority";
-/** Explicit subsystem fixture. Surrogate existing cards prove original-object ownership;
- * this does not register the two planned roles or pretend to run their game rules. */
+/** 显式子系统夹具：既有替身身份验证原对象所有权与实际 Camp 槽；不注册额外角色或冒整局规则验收。 */
 export function nobleBodyAuthorityFixture() {
   const world = new World(),
     roles = [];
   for (let id = 1; id <= 6; id++) {
     const actual = world.createEntity(),
       camp = id === 1 ? Camp.Wolf : Camp.Good,
-      role = createRoleComponent(id === 1 ? Role.Wolf : Role.Villager, camp);
+      role = createRoleComponent(id === 1 ? Role.Wolf : Role.Villager);
     if (id === 1) (role.privateState as Record<string, unknown>).noble = createNobleState();
     if (id === 2)
       (role.privateState as Record<string, unknown>).secretBody = createSecretBodyState();

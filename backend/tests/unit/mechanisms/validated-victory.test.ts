@@ -15,7 +15,8 @@ function members() {
   const world = new World(),
     first = world.createEntity(),
     second = world.createEntity();
-  world.addComponent(first, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf));
+  world.addComponent(first, COMPONENT.Role, createRoleComponent(Role.Wolf));
+  world.addComponent(first, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(
     first,
     COMPONENT.Victory,

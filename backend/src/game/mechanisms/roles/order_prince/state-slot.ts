@@ -4,7 +4,9 @@
  * Node Proxy、精确自身数据 descriptor、日期递增和首次激活后终止的政策保持；不新增严格接受条件。
  * 初始安装与同引用 replacement 由本槽执行，原体、身份、生命、pending与提交许可仍归 authority。
  * JSON仅为原 expected 比较；赋值／编码失败保留已写前缀，不回滚资源或建立第二份状态。
+ * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import type { OrderPrinceChoice, OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { types } from "node:util";
 import { Camp, type RoleComponent } from "../../../../core";
@@ -48,8 +50,12 @@ function rows(value: unknown): unknown[] | undefined {
   return result;
 }
 /** 按原 own data descriptor 检查原槽；Node Proxy 先拒绝，成功返回同一原状态引用。 */
-export function getOrderPrinceState(role: RoleComponent | undefined): OrderPrinceState | undefined {
-  if (field(role, "role") !== ORDER_PRINCE_ROLE || field(role, "camp") !== Camp.Good)
+// 当前阵营只在原 camp 数据读取点取得；保本族自身 descriptor／Proxy 策略，不回退角色或目录。
+export function getOrderPrinceState(
+  role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
+): OrderPrinceState | undefined {
+  if (field(role, "role") !== ORDER_PRINCE_ROLE || field(currentCamp(), "camp") !== Camp.Good)
     return undefined;
   const state = field(field(role, "privateState"), "orderPrince");
   if (!exact(state, ["policy", "history"]) || field(state, "policy") !== ORDER_PRINCE_POLICY)
@@ -75,8 +81,9 @@ export function createOrderPrinceState(): OrderPrinceState {
 }
 export function projectOrderPrinceState(
   role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
 ): OrderPrinceState | undefined {
-  const state = getOrderPrinceState(role);
+  const state = getOrderPrinceState(role, currentCamp);
   if (!state) return undefined;
   // 每行重新构造，保持原可写历史数组；调用者修改该知识不会改写原槽。
   const history: OrderPrinceChoice[] = [];
@@ -93,8 +100,9 @@ export function nextOrderPrinceChoice(
   role: RoleComponent | undefined,
   day: number,
   activate: boolean,
+  currentCamp: CurrentCampSource,
 ): OrderPrinceState | undefined {
-  const state = projectOrderPrinceState(role);
+  const state = projectOrderPrinceState(role, currentCamp);
   if (!state || !dayNumber(day) || typeof activate !== "boolean") return undefined;
   const last = state.history.at(-1);
   if (last && (last.activate || last.day >= day)) return undefined;
@@ -116,8 +124,11 @@ function replaceOrderPrinceState(
 }
 
 /** 先查JSON.stringify callee，再晚读原role／投影；不增加undefined拒绝或把知识数据当权限。 */
-function encodeOrderPrinceProjection(role: () => RoleComponent | undefined): string {
-  return JSON.stringify(projectOrderPrinceState(role()));
+function encodeOrderPrinceProjection(
+  role: () => RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
+): string {
+  return JSON.stringify(projectOrderPrinceState(role(), currentCamp));
 }
 
 /** 原next比对：authority先替换槽及绑定引用，再查JSON.stringify；错误保留前缀，不替代档案codec。 */

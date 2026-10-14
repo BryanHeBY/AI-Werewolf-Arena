@@ -102,7 +102,8 @@ function captureChoiceTarget(world: World, id: number): DebateParticipant | null
     role = world.getComponent(id, COMPONENT.Role);
   if (!life || !role) return null;
   const roleId = ownData(role, "role"),
-    camp = ownData(role, "camp"),
+    campComponent = world.getComponent(id, COMPONENT.Camp),
+    camp = campComponent ? ownData(campComponent, "camp") : undefined,
     state = ownData(role, "privateState");
   if (typeof roleId !== "string" || typeof camp !== "string" || !state || typeof state !== "object")
     return null;
@@ -110,18 +111,20 @@ function captureChoiceTarget(world: World, id: number): DebateParticipant | null
     life,
     role,
     roleId: roleId as RoleComponent["role"],
-    camp: camp as RoleComponent["camp"],
+    camp: camp as Camp,
     state: state as RoleComponent["privateState"],
   };
 }
 function sameChoiceTarget(world: World, snapshot: DebateParticipant): boolean {
-  return (
-    livingNightLife(world, snapshot.life) &&
-    world.getComponent(snapshot.life.id, COMPONENT.Role) === snapshot.role &&
-    ownData(snapshot.role, "role") === snapshot.roleId &&
-    ownData(snapshot.role, "camp") === snapshot.camp &&
-    ownData(snapshot.role, "privateState") === snapshot.state
-  );
+  if (
+    !livingNightLife(world, snapshot.life) ||
+    world.getComponent(snapshot.life.id, COMPONENT.Role) !== snapshot.role ||
+    ownData(snapshot.role, "role") !== snapshot.roleId
+  ) return false;
+  // 目标只比较阵营值；当前组件缺失拒绝，同值替换不增加引用撤权，也不调用缺失对象的 descriptor。
+  const camp = world.getComponent(snapshot.life.id, COMPONENT.Camp);
+  return !!camp && ownData(camp, "camp") === snapshot.camp &&
+    ownData(snapshot.role, "privateState") === snapshot.state;
 }
 function validWildChildIdentity(b: WildChildBinding): boolean {
   return (
@@ -129,7 +132,7 @@ function validWildChildIdentity(b: WildChildBinding): boolean {
     !failedTransformations.has(b) &&
     b.world.getComponent(b.actorId, COMPONENT.Role) === b.actor.role &&
     ownData(b.actor.role, "role") === Role.WildChild &&
-    ownData(b.actor.role, "camp") === b.actor.camp &&
+    ownData(b.camp, "camp") === b.actor.camp &&
     ownData(b.actor.role, "privateState") === b.actor.state &&
     ownData(b.actor.state, "wildChild") === b.state &&
     safeJson(b.state) !== "invalid" &&
@@ -288,24 +291,22 @@ export function resolveWildChildDeathWave(
       deadIds: [...ids],
     },
   });
-  // 在原最后 descriptor 参数读取处保存同一 Role；catch 不再读取可被安装回调改写的公开 binding。
-  let executionRole: RoleComponent | undefined;
   if (
     !validWildChildOwner(b) ||
     b.state.status !== "chosen" ||
     b.actor.camp !== Camp.Good ||
     !["status", "eligibleNight"].every(
       (k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable,
-    ) ||
-    !Object.getOwnPropertyDescriptor((executionRole = b.actor.role), "camp")?.writable
+    )
   )
     return;
-  // 资格与原可写检查通过后才进入转换核心；Role→Camp→Victory→绑定／槽的原写序不变。
+  // 旧 Role.camp descriptor／写入渠道退休；资格通过后、try 前保存同一 Role，catch 不晚读 binding。
+  const executionRole = b.actor.role;
+  // 只安装真实 Camp→Victory→绑定／槽；不增加 Camp 可写检查或补偿镜像字段。
   // Camp 安装及后续写失败保留已完成前缀，先撤销本族绑定资格再传播同一错误，不补偿或退款。
   try {
     const camp = createCampComponent(Camp.Wolf, world.locale),
       victory = createVictoryComponent([{ kind: "faction", faction: Camp.Wolf }]);
-    b.actor.role.camp = Camp.Wolf;
     world.addComponent(b.actorId, COMPONENT.Camp, camp);
     world.addComponent(b.actorId, COMPONENT.Victory, victory);
     b.actor.camp = Camp.Wolf;
@@ -316,7 +317,7 @@ export function resolveWildChildDeathWave(
   } catch (error) {
     failedTransformations.add(b);
     // 资格通过时已在原读取点捕获对象；纯身份墓碑不写冻结字段，也不重读 binding 遮盖原异常。
-    retireRoleExecution(executionRole!);
+    retireRoleExecution(executionRole);
     throw error;
   }
   // 核心已经全部提交；事实发表晚抛保已付转换与资格，不将错误重新解释为转换失败。

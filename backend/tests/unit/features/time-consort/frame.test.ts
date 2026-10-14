@@ -26,11 +26,12 @@ function fixture(scope: ReflectionScope = "whole_night") {
       i + 1,
       {
         role,
-        camp: i === 0 || i === 5 ? Camp.Wolf : Camp.Good,
         privateState: i === 0 ? { timeConsort: state } : {},
       } as unknown as RoleComponent,
     ]),
   );
+  // 独立实际Camp组件输入；Role只保角色和原privateState，名单历史仍按原时点捕获。
+  const camps = new Map([...roles.keys()].map((id) => [id, { camp: id === 1 || id === 6 ? Camp.Wolf : Camp.Good }]));
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const identities = new Map(
     [...roles.keys()].map((id) => [
@@ -41,8 +42,10 @@ function fixture(scope: ReflectionScope = "whole_night") {
   const world = {
     entityIds: () => [...roles.keys()],
     getComponent: (id: number, kind: unknown) =>
-      kind === COMPONENT.Role
-        ? roles.get(id)
+      kind === COMPONENT.Camp
+        ? camps.get(id)
+        : kind === COMPONENT.Role
+          ? roles.get(id)
         : kind === COMPONENT.Alive
           ? lives.get(id)
           : kind === COMPONENT.Identity

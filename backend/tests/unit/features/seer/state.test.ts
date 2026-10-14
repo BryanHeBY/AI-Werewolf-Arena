@@ -28,9 +28,10 @@ const emptyState = (): SeerState => ({ lastTarget: null, lastIsWerewolf: null, h
 test("the original ability slot owns installation copies and repeated reads; replacing state revokes its captured scope", () => {
   const world = new World("en"),
     id = world.createEntity(),
-    role = createRoleComponent(Role.Seer, Camp.Good, "en"),
+    role = createRoleComponent(Role.Seer, "en"),
     template = emptyState();
   world.addComponent(id, COMPONENT.Role, role);
+  world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(id, COMPONENT.Alive, createAliveComponent(true, "en"));
   const owned = setSeerState(role, template),
     ability = findNightAbility(role, "seer_check")!,
@@ -109,7 +110,7 @@ test("a history failure retains exactly the preceding scalar writes and the orig
 });
 
 test("recipient inspection keeps repeated owner-field reads and their failure prefix", () => {
-  const role = createRoleComponent(Role.Seer, Camp.Good, "en"),
+  const role = createRoleComponent(Role.Seer, "en"),
     state = setSeerState(role, emptyState()),
     ability = findNightAbility(role, "seer_check")!,
     accesses: string[] = [],

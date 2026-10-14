@@ -653,8 +653,8 @@ for (const locale of ["zh-CN", "en"] as const)
     });
     const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }),
       acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
-    sdk.world.getComponent(5, COMPONENT.Role)!.camp =
-      acp.world.getComponent(5, COMPONENT.Role)!.camp = Camp.Wolf;
+    sdk.world.getComponent(5, COMPONENT.Camp)!.camp =
+      acp.world.getComponent(5, COMPONENT.Camp)!.camp = Camp.Wolf;
     const input: ActionRequest = {
       actorId: 1,
       phase: Phase.Day,

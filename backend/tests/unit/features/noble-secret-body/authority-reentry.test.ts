@@ -396,7 +396,7 @@ test("nonactor unknown role kind must not become an original native roster ident
 });
 test("nonactor equal invalid Camp values must not establish valid ownership", () => {
   const world = uninstalled();
-  (world.getComponent(3, COMPONENT.Role) as unknown as Record<string, unknown>).camp = "not_a_camp";
+  // F05b不再给Role副本写阵营；坏实际Camp仍须拒绝，合法角色与状态完整保留。
   (world.getComponent(3, COMPONENT.Camp) as unknown as Record<string, unknown>).camp = "not_a_camp";
   expect(() => commit(world)).toThrow();
 });
@@ -404,7 +404,7 @@ test("nonactor Camp accessors must fail without executing getters instead of com
   const world = uninstalled();
   let reads = 0,
     error: unknown;
-  for (const name of [COMPONENT.Role, COMPONENT.Camp])
+  for (const name of [COMPONENT.Camp])
     Object.defineProperty(world.getComponent(3, name)!, "camp", {
       enumerable: true,
       configurable: true,

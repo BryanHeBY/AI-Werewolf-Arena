@@ -18,11 +18,13 @@ function instance() {
   const world = new World(),
     sourceId = world.createEntity(),
     targetId = world.createEntity(),
-    source = createRoleComponent(Role.Seer, Camp.Good),
-    target = createRoleComponent(Role.EclipseMaid, Camp.Wolf),
+    source = createRoleComponent(Role.Seer),
+    target = createRoleComponent(Role.EclipseMaid),
     events: GameEvent[] = [];
   world.addComponent(sourceId, COMPONENT.Role, source);
+  world.addComponent(sourceId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(targetId, COMPONENT.Role, target);
+  world.addComponent(targetId, COMPONENT.Camp, { camp: Camp.Wolf });
   installNativeAbility(source, "seer_check", {
     lastTarget: null,
     lastIsWerewolf: null,

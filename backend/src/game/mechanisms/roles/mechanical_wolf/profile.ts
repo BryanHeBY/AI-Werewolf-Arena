@@ -48,11 +48,11 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
     init: (role) => {
       if (!getMechanicalState(role)) setMechanicalState(role, freshMechanicalState());
     },
-    wolfTeam: (role, world) => ({
+    wolfTeam: (role, world, currentCamp) => ({
       recognizedByPack: false,
       recognizes: "none",
       canChat: false,
-      canVoteForKill: canMechanicalKnife(role, world),
+      canVoteForKill: canMechanicalKnife(role, world, currentCamp),
     }),
     inspectionLabels: (role) => ({
       camp: Camp.Wolf,
@@ -111,7 +111,7 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
         ),
       },
     },
-    baselineAction: (role, request, pick, byCamp, locale, world) => {
+    baselineAction: (role, request, pick, byCamp, locale, world, currentCamp) => {
       if (request.allowedTools.includes("mechanical_mode")) {
         const state = getMechanicalState(role);
         return {
@@ -144,7 +144,7 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
         return { name: "mechanical_attack", args: { target_id: byCamp("good") } };
       if (request.allowedTools.includes("shoot"))
         return { name: "shoot", args: { target_id: byCamp("good") } };
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world, currentCamp);
     },
   },
   presentation: nativeRolePresentation("mechanical_wolf"),

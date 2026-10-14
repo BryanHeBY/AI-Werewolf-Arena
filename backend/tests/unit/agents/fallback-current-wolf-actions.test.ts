@@ -119,7 +119,7 @@ test("a trusted permission callback cannot leave stale true flags after changing
       contributions: getDefaultRoleContributions().map((entry) => entry.metadata.role === Role.Wolf
         ? { ...entry, runtime: { ...entry.runtime, wolfTeam: (role, world) => {
             if (change === "role") role.role = Role.Villager;
-            if (change === "camp") role.camp = Camp.Good;
+            if (change === "camp") world!.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
             if (change === "alive") world!.getComponent(1, COMPONENT.Alive)!.alive = false;
             return { recognizedByPack: true, recognizes: "pack" as const, canChat: true, canVoteForKill: true };
           } } }

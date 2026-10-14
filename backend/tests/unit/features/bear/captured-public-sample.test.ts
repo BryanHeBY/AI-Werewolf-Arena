@@ -110,7 +110,7 @@ test("Bear sensing requires true Wolf faction, ignores Seer disguise, and respec
     [Camp.Wolf, () => false, false],
     [Camp.Good, () => true, false],
   ] as const) {
-    role(game, 2).camp = camp;
+    game.world.getComponent(2, COMPONENT.Camp)!.camp = camp;
     const catalog = createRoleCatalog({
         contributions: profiles.map((p) =>
           p === wolf
@@ -155,13 +155,13 @@ for (const mutation of [
       life.alive = true;
     }
     if (mutation === "role_replace") {
-      const fresh = createRoleComponent(Role.Bear, Camp.Good);
-      getDefaultRoleCatalog().applyRuntime(fresh);
+      const fresh = createRoleComponent(Role.Bear);
+      getDefaultRoleCatalog().applyRuntime(fresh, { initialCamp: { camp: Camp.Good }, currentCamp: () => game.world.getComponent(1, COMPONENT.Camp) });
       game.world.addComponent(1, COMPONENT.Role, fresh);
     }
     if (mutation === "state_replace")
       (role(game, 1).privateState as Record<string, unknown>).bear = { history: [] };
-    if (mutation === "faction") role(game, 1).camp = Camp.Wolf;
+    if (mutation === "faction") game.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Wolf;
     frame.publish(game.world, events, () => mutation !== "clock");
     expect(events).toEqual([]);
     expect(old.history).toEqual([]);
@@ -204,7 +204,7 @@ test("night role/state/faction or seat changes of neighbors do not rewrite the c
   const game = bootstrapGame(config(), { fixedRoles: deck }),
     frame = BearNightFrame.capture(game.world, 1)!,
     events: GameEvent[] = [];
-  role(game, 2).camp = Camp.Good;
+  game.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Good;
   game.world.getComponent(2, COMPONENT.Identity)!.seat = 4;
   frame.publish(game.world, events, () => true);
   BearNightFrame.capture(game.world, 2)!.publish(game.world, events, () => true);

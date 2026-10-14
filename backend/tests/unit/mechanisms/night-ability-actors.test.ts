@@ -40,9 +40,10 @@ const ability = (id: string): NightAbility<"seer_check"> => ({
 function worldWithAbility(selected: NightAbility<"seer_check">) {
   const world = new World("en"),
     id = world.createEntity(),
-    role = createRoleComponent(Role.Villager, Camp.Good, "en");
+    role = createRoleComponent(Role.Villager, "en");
   (role.privateState as Record<string, unknown>).abilities = { [selected.id]: selected };
   world.addComponent(id, COMPONENT.Role, role);
+  world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(id, COMPONENT.Alive, createAliveComponent(true, "en"));
   return { world, role, id };
 }

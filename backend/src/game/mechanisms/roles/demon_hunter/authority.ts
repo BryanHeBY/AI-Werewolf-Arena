@@ -3,6 +3,7 @@
  * 输入保留原 World／state／request，输出为有限封存回合及已接受期限别名的原有写入。
  * 不变量：必须匹配原封存资格；审计只读最近合法同步提交，不能采用任意 live 库存。
  * 失效或失败保持部分写入与结算顺序，别名不增加能力；受保护白痴替换只恢复 idiot 槽，
+ * 阵营来自已捕获的真实 Camp，保原组件引用／own-data／审计归属检查；不复制回 Role。
  * 原生库存及 JSON／descriptor 检查仍归各自领域所有者。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -192,7 +193,7 @@ function originalIdentity(p: Participant, world: World): boolean {
     originalInventory(p) &&
     world.getComponent(p.id, COMPONENT.Role) === p.role &&
     ownDemonData(p.role, "role") === p.kind &&
-    ownDemonData(p.role, "camp") === p.camp &&
+    ownDemonData(p.campComponent, "camp") === p.camp &&
     ownDemonData(p.role, "privateState") === p.privateState &&
     Object.keys(descriptors).length === p.privateRefs.length &&
     p.privateRefs.every(
@@ -270,7 +271,7 @@ function capture(world: World, id: number): Participant {
     victory = world.getComponent(id, COMPONENT.Victory),
     life = world.getComponent(id, COMPONENT.Alive);
   const kind = ownDemonData(role, "role"),
-    camp = ownDemonData(role, "camp"),
+    camp = ownDemonData(campComponent, "camp"),
     privateState = ownDemonData(role, "privateState"),
     affiliations = ownDemonData(victory, "affiliations"),
     lifeDescriptor = life && aliveLifeDescriptor(life),
@@ -1571,7 +1572,7 @@ export function commitDemonRedMoonTransition(
     !privateAuditCurrent(b, p)
   )
     return false;
-  const state = getRedMoonState(p.role);
+  const state = getRedMoonState(p.role, () => world.getComponent(p.id, COMPONENT.Camp));
   if (!state || !writableDemonFields(state, ["blastDay", "exileDay", "expirySettled"]))
     return false;
   // 本族编码函数只消费已捕获的影子；解析查找先于 audit 字段读取，原体／夜权限仍留在这里。
@@ -1618,7 +1619,7 @@ export function demonRedMoonNightSealed(world: World, day: number): boolean {
   if (!p) return false;
   if (!validBinding(b) || ![...b.players.values()].every((p) => originalLife(p, world)))
     throw new Error("red_moon_original_state_revoked");
-  const state = getRedMoonState(p.role);
+  const state = getRedMoonState(p.role, () => world.getComponent(p.id, COMPONENT.Camp));
   if (!state || !privateAuditCurrent(b, p)) throw new Error("red_moon_original_state_revoked");
   const sealed = Number.isSafeInteger(day) && day > 1 && state.blastDay === day - 1;
   if (sealed && originalLife(p, world, true)) throw new Error("red_moon_blast_death_unsettled");
@@ -1708,7 +1709,7 @@ export function demonRedMoonCanBlast(world: World, actorId: number): boolean {
   if (demonRedMoonDay(world, actorId) === null) return false;
   const b = bindings.get(world)!,
     p = b.players.get(actorId)!;
-  const state = getRedMoonState(p.role);
+  const state = getRedMoonState(p.role, () => world.getComponent(p.id, COMPONENT.Camp));
   if (!state || state.blastDay !== null || state.exileDay !== null) return false;
   const wolves = [...b.players.values()].filter(
     (player) => player.camp === Camp.Wolf && originalLife(player, world, true),
@@ -1739,7 +1740,7 @@ export function demonRedMoonExpiry(world: World, day: number): number | null {
   const n = b.active;
   if (!n || n.day !== day || n.closed || !n.frozen)
     throw new Error("red_moon_expiry_phase_invalid");
-  const state = getRedMoonState(p.role);
+  const state = getRedMoonState(p.role, () => world.getComponent(p.id, COMPONENT.Camp));
   if (!state) throw new Error("red_moon_original_state_revoked");
   return state.exileDay === day - 1 && !state.expirySettled && originalLife(p, world, true)
     ? p.id

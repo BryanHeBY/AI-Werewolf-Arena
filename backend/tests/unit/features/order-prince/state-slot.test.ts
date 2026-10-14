@@ -13,6 +13,10 @@ import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player
 import { ORDER_PRINCE_STATE_SLOT as SLOT } from "../../../../src/game/mechanisms/roles/order_prince/state-slot";
 import { openOrderPrinceChoice, commitOrderPrinceChoice, orderPrinceChoicePending } from "../../../../src/game/mechanisms/roles/order_prince/authority";
 
+// worldless 数据样本只持显式 Camp 句柄，不建立 Role→World／Camp 回退。
+const fixtureCamp = { camp: Camp.Good };
+const currentCamp = () => fixtureCamp;
+
 test("slot init and replacement keep the container receiver, next identity and throwing setter prefix", () => {
   const trace: string[] = [], fault = new Error("order_slot_setter_failure");
   let written: unknown, receiver: unknown;
@@ -33,7 +37,7 @@ test("slot init and replacement keep the container receiver, next identity and t
 
 test("projected expected data looks up stringify before the late role read and remains detached", () => {
   const trace: string[] = [], current = SLOT.create();
-  const role = { role: "order_prince", camp: Camp.Good, privateState: { orderPrince: current } } as unknown as RoleComponent;
+  const role = { role: "order_prince", privateState: { orderPrince: current } } as unknown as RoleComponent;
   const next: OrderPrinceState = { policy: "awa_order_prince_first_ballot_v1", history: [{ day: 1, activate: false }] };
   const original = Object.getOwnPropertyDescriptor(JSON, "stringify")!;
   let encoded: string, receiver: unknown;
@@ -46,12 +50,12 @@ test("projected expected data looks up stringify before the late role read and r
         return function(this: unknown, value: unknown) { receiver = this; trace.push("call"); return original.value(value); };
       },
     });
-    encoded = SLOT.checkpoint.projection(() => (trace.push("role"), role));
+    encoded = SLOT.checkpoint.projection(() => (trace.push("role"), role), currentCamp);
   } finally { Reflect.defineProperty(JSON, "stringify", original); }
   expect(trace).toEqual(["callee", "role", "call"]);
   expect(receiver).toBe(JSON);
   expect(JSON.parse(encoded)).toEqual(next);
-  const projection = SLOT.project(role)!;
+  const projection = SLOT.project(role, currentCamp)!;
   projection.history[0]!.activate = true;
   expect(next.history).toEqual([{ day: 1, activate: false }]);
 });
@@ -66,7 +70,7 @@ test("authority preserves the replaced state when expected encoding throws after
   };
   const { world } = bootstrapGame(config, { fixedRoles: [Role.OrderPrince, Role.Wolf, Role.Wolf, Role.Wolf, Role.Wolf, Role.Villager, Role.Villager, Role.Villager, Role.Villager, Role.Seer, Role.Witch, Role.Hunter] });
   expect(openOrderPrinceChoice(world, 1)).toBe(1);
-  const role = world.getComponent(1, COMPONENT.Role)!, oldState = SLOT.get(role)!;
+  const role = world.getComponent(1, COMPONENT.Role)!, oldState = SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))!;
   const original = JSON.stringify, fault = new Error("order_expected_encoding_failure");
   let passed: unknown, caught: unknown;
   try {
@@ -83,8 +87,8 @@ test("authority preserves the replaced state when expected encoding throws after
     try { commitOrderPrinceChoice(world, 1, 1, true); } catch (error) { caught = error; }
   } finally { JSON.stringify = original; }
   expect(caught).toBe(fault);
-  expect(SLOT.get(role)).toBe(passed as OrderPrinceState);
-  expect(SLOT.get(role)).not.toBe(oldState);
-  expect(SLOT.get(role)?.history).toEqual([{ day: 1, activate: true }]);
+  expect(SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))).toBe(passed as OrderPrinceState);
+  expect(SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))).not.toBe(oldState);
+  expect(SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))?.history).toEqual([{ day: 1, activate: true }]);
   expect(() => orderPrinceChoicePending(world, 1, 1)).toThrow("order_prince_original_state_revoked");
 });

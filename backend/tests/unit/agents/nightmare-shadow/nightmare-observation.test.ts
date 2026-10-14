@@ -48,6 +48,7 @@ for (const fear of ["optional", "required_when_legal"] as const)
       );
       const privateState = getNightmareShadowState(
         f.world.getComponent(actor, COMPONENT.Role)!,
+        () => f.world.getComponent(actor, COMPONENT.Camp),
       )!;
       Object.defineProperty(privateState.history, "map", {
         get() {

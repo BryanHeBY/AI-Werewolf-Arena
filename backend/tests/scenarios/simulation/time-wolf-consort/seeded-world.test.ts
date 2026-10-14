@@ -40,7 +40,7 @@ for (const locale of ["zh-CN", "en"] as const)
           const state = game.world
             .entityIds()
             .map((id) =>
-              getTimeConsortState(game.world.getComponent(id, COMPONENT.Role)),
+              getTimeConsortState(game.world.getComponent(id, COMPONENT.Role), () => game.world.getComponent(id, COMPONENT.Camp)),
             )
             .find(Boolean);
           expect(state).toBeDefined();

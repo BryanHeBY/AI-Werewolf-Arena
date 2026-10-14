@@ -61,7 +61,7 @@ for (const transport of ["sdk", "acp"] as const) {
     const observations = [];
     for (const hiddenCamp of [Camp.Wolf, Camp.Good]) {
       const game = fixture();
-      game.world.getComponent(2, COMPONENT.Role)!.camp = hiddenCamp;
+      game.world.getComponent(2, COMPONENT.Camp)!.camp = hiddenCamp;
       const input = request(game);
       observations.push(policy(game).buildObservation(input));
       const provider =

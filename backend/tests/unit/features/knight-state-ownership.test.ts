@@ -22,12 +22,14 @@ function fixture() {
   const world = new World("en"),
     actorId = world.createEntity(),
     targetId = world.createEntity(),
-    actor = createRoleComponent(Role.Knight, Camp.Good, "en"),
-    target = createRoleComponent(Role.Wolf, Camp.Wolf, "en"),
+    actor = createRoleComponent(Role.Knight, "en"),
+    target = createRoleComponent(Role.Wolf, "en"),
     actorLife = createAliveComponent(true, "en"),
     targetLife = createAliveComponent(true, "en");
   world.addComponent(actorId, COMPONENT.Role, actor);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(targetId, COMPONENT.Role, target);
+  world.addComponent(targetId, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(actorId, COMPONENT.Alive, actorLife);
   world.addComponent(targetId, COMPONENT.Alive, targetLife);
   const state = setKnightState(actor, { canDuel: true });

@@ -4,7 +4,9 @@
  * 原 history 递增／相邻夜不能连续跳过／号码一次使用规则保留；失败不修复已写前缀或退还号码。
  * frame 仍唯一拥有原体生命、夜窗口、finished／exileResolved、映射与 expectedState。
  * 本槽不另建状态镜像，不授行动许可或结算放逐；身份 JSON 仅为运行比对，非档案 decoder。
+ * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import type {
   TricksterChoice,
   TricksterState,
@@ -50,10 +52,14 @@ function arrayItems(value: unknown): unknown[] | null {
   }
   return result;
 }
-/** 完整原校验先拒绝 Proxy，再仅读自身 data descriptor，不执行输入 getter、迭代器或数组方法。
+/** 完整原校验先拒绝 Proxy，再仅读自身 data descriptor，不执行 Role／状态字段 getter、迭代器或数组方法。
  * 合法 live 读返回原状态／history 引用；readonly 是读方类型，不提供写许可或原体生命保证。 */
-export function getTricksterState(role: RoleComponent | undefined): TricksterReadState | undefined {
-  if (field(role, "role") !== TRICKSTER_ROLE || field(role, "camp") !== Camp.Wolf) return undefined;
+// 显式 Camp source 在原 camp 点晚调用，可以执行调用方代码并抛错；返回组件保本族 descriptor／Proxy 策略，不回退角色或目录。
+export function getTricksterState(
+  role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
+): TricksterReadState | undefined {
+  if (field(role, "role") !== TRICKSTER_ROLE || field(currentCamp(), "camp") !== Camp.Wolf) return undefined;
   const state = field(field(role, "privateState"), "trickster");
   if (!exact(state, ["policy", "history"])) return undefined;
   if (field(state, "policy") !== TRICKSTER_POLICY) return undefined;
@@ -92,8 +98,11 @@ export function createTricksterState(): TricksterState {
   return { policy: TRICKSTER_POLICY, history: [] };
 }
 /** 仅复制历史及非空 pair；原可写知识副本不含 frame 句柄或夜／放逐许可。 */
-export function projectTricksterState(role: RoleComponent | undefined): TricksterState | undefined {
-  const state = getTricksterState(role);
+export function projectTricksterState(
+  role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
+): TricksterState | undefined {
+  const state = getTricksterState(role, currentCamp);
   if (!state) return undefined;
   const history: TricksterChoice[] = [];
   for (const row of arrayItems(field(state, "history"))!) {
@@ -116,8 +125,9 @@ export function nextTricksterChoice(
   day: number,
   pair: readonly [number, number] | null,
   legalIds: readonly number[],
+  currentCamp: CurrentCampSource,
 ): TricksterState {
-  const state = projectTricksterState(role);
+  const state = projectTricksterState(role, currentCamp);
   if (!state || !integer(day) || day <= (state.history.at(-1)?.day ?? 0))
     throw new Error("trickster_choice_invalid");
   if (pair === null) {
@@ -158,8 +168,11 @@ function appendTricksterHistory(state: () => TricksterReadState, choice: Trickst
 }
 
 /** 原 frame 身份编码：先 project／明确拒绝，再查 JSON.stringify，不提供序列化输入授权。 */
-function encodeTricksterStateIdentity(role: RoleComponent): string {
-  const view = projectTricksterState(role);
+function encodeTricksterStateIdentity(
+  role: RoleComponent,
+  currentCamp: CurrentCampSource,
+): string {
+  const view = projectTricksterState(role, currentCamp);
   if (!view) throw new Error("trickster_original_state_revoked");
   return JSON.stringify(view);
 }

@@ -1,5 +1,6 @@
 /**
  * 负责奇迹商人从实际库存选择赠予。输入为当前原体和已验证的技能／收货选择；
+ * 阵营只晚查实际值，同值组件替换不增加引用撤权；已付反噬仍使用原 owner 谓词。
  * 输出为实际拥有的赠予、反噬提案和跳过／提交事实。已付提案保留原生命资格，不转给替换赠予者。
  */
 import { closeMerchantTrade, recordMerchantTrade } from "./state";
@@ -34,13 +35,13 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
       const role = ctx.world.getComponent(actorId, COMPONENT.Role)!,
         state = getMerchantState(role),
         life = captureNightLife(ctx.world, actorId);
-      if (!state || !life || role.camp !== Camp.Good) continue;
+      if (!state || !life || ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good) continue;
       const privateState = role.privateState;
       const ownerCurrent = () =>
         ctx.isCurrent() &&
         ctx.world.getComponent(actorId, COMPONENT.Role) === role &&
         role.role === Role.MiracleMerchant &&
-        role.camp === Camp.Good &&
+        ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Good &&
         role.privateState === privateState &&
         getMerchantState(role) === state &&
         livingNightLife(ctx.world, life);
@@ -61,7 +62,7 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
                   life: captureNightLife(ctx.world, id)!,
                   role: targetRole,
                   kind: targetRole.role,
-                  camp: targetRole.camp,
+                  camp: ctx.world.getComponent(id, COMPONENT.Camp)?.camp,
                   privateState: targetRole.privateState,
                 },
               ] as const;
@@ -101,7 +102,7 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
           !livingNightLife(ctx.world, target.life) ||
           ctx.world.getComponent(targetId, COMPONENT.Role) !== target.role ||
           target.role.role !== target.kind ||
-          target.role.camp !== target.camp ||
+          ctx.world.getComponent(targetId, COMPONENT.Camp)?.camp !== target.camp ||
           target.role.privateState !== target.privateState
         )
           continue;

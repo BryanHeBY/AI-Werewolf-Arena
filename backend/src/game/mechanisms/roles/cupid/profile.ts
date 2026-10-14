@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { COMPONENT } from "../../../../core/domain/components/names";
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
@@ -67,11 +68,12 @@ export const CUPID_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: {
-      choose_lovers: ({ world, role, day, phase, toolCall }) => {
+      choose_lovers: (ctx) => {
+        const { world, role, day, phase, toolCall } = ctx;
         const state = getCupidState(role);
         if (
           role.role !== Role.Cupid ||
-          role.camp !== Camp.Good ||
+          world.getComponent(ctx.actorId, COMPONENT.Camp)?.camp !== Camp.Good ||
           !state ||
           state.remaining !== 1 ||
           state.choice !== null ||

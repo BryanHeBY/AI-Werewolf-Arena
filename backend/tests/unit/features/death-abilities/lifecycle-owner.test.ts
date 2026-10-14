@@ -19,7 +19,8 @@ function fixture() {
   const world = new World("en"),
     ids = Array.from({ length: 3 }, () => world.createEntity());
   for (const id of ids) {
-    world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+    world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager));
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
   }
   return {

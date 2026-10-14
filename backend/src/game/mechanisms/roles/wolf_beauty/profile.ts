@@ -85,7 +85,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
         const state = getWolfBeautyState(role);
         if (
           role.role !== Role.WolfBeauty ||
-          role.camp !== Camp.Wolf ||
+          world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf ||
           !state ||
           !animalBeautyCharmAllowed(world, day ?? 0) ||
           state.lastActedDay === day
@@ -112,7 +112,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (role, request, pick, byCamp, locale) => {
+    baselineAction: (role, request, pick, byCamp, locale, _world, currentCamp) => {
       if (request.allowedTools.includes("charm")) {
         const target = pick(),
           previous = getWolfBeautyState(role)?.history.at(-1);
@@ -126,7 +126,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
           },
         };
       }
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, undefined, currentCamp);
     },
   },
   presentation: nativeRolePresentation("wolf_beauty"),

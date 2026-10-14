@@ -60,7 +60,7 @@ for (const revoke of ["camp", "private_state", "owner_state", "learning"] as con
         [1],
         { 1: [DeathCause.Exile] },
         async () => {
-          if (revoke === "camp") game.role.camp = Camp.Good;
+          if (revoke === "camp") game.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
           if (revoke === "private_state")
             (game.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
               ...game.role.privateState,

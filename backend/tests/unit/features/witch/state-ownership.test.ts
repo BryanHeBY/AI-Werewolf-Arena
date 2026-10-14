@@ -84,7 +84,7 @@ for (const [potion, consume] of [
     expect(s[potion === "heal" ? "poison" : "heal"]).toBe(1);
   });
 test("self-heal refresh writes the original LHS slot despite changing RHS state getters", () => {
-  const role = createRoleComponent(Role.Witch, Camp.Good, "en"),
+  const role = createRoleComponent(Role.Witch, "en"),
     original = setWitchState(role, state()),
     ability = findNightAbility(role, "potion")!,
     replacement = state(WitchSelfHealRule.Always),
@@ -101,7 +101,7 @@ test("self-heal refresh writes the original LHS slot despite changing RHS state 
   expect(replacement.canSelfHeal).toBe(false);
 });
 test("recipient postfix payment retains two state reads and leaves use accounting to the caller", () => {
-  const role = createRoleComponent(Role.Witch, Camp.Good, "en"),
+  const role = createRoleComponent(Role.Witch, "en"),
     first = setWitchState(role, state()),
     ability = findNightAbility(role, "potion")!,
     second = state(),

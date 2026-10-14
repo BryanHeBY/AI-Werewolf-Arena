@@ -33,7 +33,7 @@ function fixture(
   const world = new World("en"),
     actor = world.createEntity(),
     target = world.createEntity();
-  const role = createRoleComponent(Role.WolfBeauty, Camp.Wolf);
+  const role = createRoleComponent(Role.WolfBeauty);
   setWolfBeautyState(role, {
     targetId: target,
     lastActedDay: 1,
@@ -41,7 +41,9 @@ function fixture(
     deathLinkPolicy: policy,
   });
   world.addComponent(actor, COMPONENT.Role, role);
-  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Wolf });
+  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(target, COMPONENT.Camp, { camp: Camp.Good });
   const actorLife = createAliveComponent(),
     targetLife = createAliveComponent();
   world.addComponent(actor, COMPONENT.Alive, actorLife);
@@ -232,7 +234,7 @@ test("the real death hook and resolver consume a claimed receipt before publishi
 function deniedReadWrites(binding: CharmBinding, blocked: CharmBlockedReceipt) {
   // @ts-expect-error 查询端点不授予目标原生命的修改权。
   binding.targetLife.alive = true;
-  // @ts-expect-error 关系读视图不能修改角色阵营。
+  // @ts-expect-error Role.camp旧运行输入已退休，关系读视图不重新提供该字段。
   binding.role.camp = Camp.Good;
   // @ts-expect-error 领取标记属于唯一 relation owner。
   binding.resolved = false;

@@ -1,5 +1,6 @@
 /**
  * 负责魔术师夜间交换原体绑定、当前窗口和目标映射回执；输入为原玩家生命／身份和二人选择。
+ * Camp 只在原字段点查询实际组件，名单保原值比较，不额外以同值新组件撤权。
  * 输出为仍当前的映射及原关闭／取消结果；boards 唯一拥有夜关系和状态身份检查点，state-slot
  * 只执行原数据读写／编码。当前性失败不修复原体或恢复已经使用的号码，不让旧交换续权。
  * 先校验原体，再写历史、刷新 expectedState、安装本夜 pair 并提交窗口；后续失败不回滚已写前缀。
@@ -8,7 +9,7 @@ import type { MagicianReadState } from "@ai-werewolf-arena/game-contract";
 import { isWolfSorcererBoard, resolveWolfSorcererNightTarget } from "../wolf_sorcerer/exchange-ports";
 import { matchingExchangePairs } from "../trickster/exchange-ports";
 import { types } from "node:util";
-import { COMPONENT, type RoleComponent, type World } from "../../../../core";
+import { COMPONENT, type Camp, type RoleComponent, type World } from "../../../../core";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
@@ -21,7 +22,7 @@ interface OriginalPlayer {
   id: number;
   role: RoleComponent;
   roleName: RoleComponent["role"];
-  camp: RoleComponent["camp"];
+  camp: Camp | undefined;
   privateState: RoleComponent["privateState"];
   identity: unknown;
   seat: number;
@@ -55,7 +56,7 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
   if (
     world.getComponent(p.id, COMPONENT.Role) !== p.role ||
     ownData(p.role, "role") !== p.roleName ||
-    ownData(p.role, "camp") !== p.camp ||
+    ownData(world.getComponent(p.id, COMPONENT.Camp), "camp") !== p.camp ||
     ownData(p.role, "privateState") !== p.privateState ||
     world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
     ownData(p.identity, "id") !== p.id ||
@@ -91,7 +92,7 @@ function requireBoard(world: World): Board {
   )
     throw new Error("magician_original_state_revoked");
   const actor = b.players.get(b.actorId)!;
-  if (getMagicianState(actor.role) !== b.state || MAGICIAN_STATE_SLOT.checkpoint.identity(actor.role) !== b.expectedState)
+  if (getMagicianState(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.state || MAGICIAN_STATE_SLOT.checkpoint.identity(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.expectedState)
     throw new Error("magician_original_state_revoked");
   return b;
 }
@@ -121,7 +122,7 @@ export function installMagicianBoard(world: World): void {
       throw new Error("magician_original_roster_invalid");
     if (
       ownData(role, "role") === undefined ||
-      ownData(role, "camp") === undefined ||
+      ownData(world.getComponent(id, COMPONENT.Camp), "camp") === undefined ||
       ownData(role, "privateState") === undefined
     )
       throw new Error("magician_original_roster_invalid");
@@ -144,7 +145,7 @@ export function installMagicianBoard(world: World): void {
       id,
       role,
       roleName: role.role,
-      camp: role.camp,
+      camp: world.getComponent(id, COMPONENT.Camp)?.camp,
       privateState: role.privateState,
       identity,
       seat,
@@ -156,7 +157,7 @@ export function installMagicianBoard(world: World): void {
     if (String(role.role) === MAGICIAN_ROLE) {
       if (actorId !== null) throw new Error("magician_original_roster_invalid");
       actorId = id;
-      state = getMagicianState(role);
+      state = getMagicianState(role, () => world.getComponent(id, COMPONENT.Camp));
     }
   }
   if (actorId === null || !state || state.history.length !== 0)
@@ -164,7 +165,7 @@ export function installMagicianBoard(world: World): void {
   boards.set(world, {
     actorId,
     state,
-    expectedState: MAGICIAN_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role),
+    expectedState: MAGICIAN_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp)),
     players,
     night: null,
   });
@@ -185,7 +186,7 @@ export function beginMagicianNight(world: World, day: number): number | null {
   )
     throw new Error("magician_night_invalid");
   const used = new Set<number>();
-  for (const choice of projectMagicianState(b.players.get(b.actorId)!.role)!.history)
+  for (const choice of projectMagicianState(b.players.get(b.actorId)!.role, () => world.getComponent(b.actorId, COMPONENT.Camp))!.history)
     if (choice.pair) {
       used.add(choice.pair[0]);
       used.add(choice.pair[1]);
@@ -243,7 +244,7 @@ export function commitMagicianExchange(
   }
   // 槽内仍先找 defineProperty callee，再两次晚读 state/history；成功写历史后才推进原 frame 检查点。
   MAGICIAN_STATE_SLOT.allowedWrites.appendHistory(() => b.state, day, chosen);
-  b.expectedState = MAGICIAN_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role);
+  b.expectedState = MAGICIAN_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp));
   n.pair = chosen && Object.freeze([chosen[0], chosen[1]] as [number, number]);
   n.committed = true;
 }

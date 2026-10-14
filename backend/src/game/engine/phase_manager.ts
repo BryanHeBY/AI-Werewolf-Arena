@@ -195,7 +195,7 @@ export class PhaseManager {
             seat: identity?.seat ?? id,
             name: identity?.name ?? text(this.world.locale, "common.player_name", { id }),
             role: role?.role ?? "unknown",
-            camp: role?.camp ?? "unknown",
+            camp: (role && this.world.getComponent(id, COMPONENT.Camp)?.camp) ?? "unknown",
           };
         }),
       },

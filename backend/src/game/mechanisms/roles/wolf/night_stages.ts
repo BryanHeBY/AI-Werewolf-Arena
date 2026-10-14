@@ -2,6 +2,7 @@
  * 负责按原狼队权限执行夜聊轮次与刀票重试，捕获行动者与目标的原身体／生命版本。
  * 输入为原夜上下文、狼队资格和已校验工具；输出为夜聊、共识和带来源的刀口贡献。
  * 收票后由普通狼刀规则组合按原时点处理迷雾抽刀、映射和印记；贵族 God 刀口事实及必需记录归贵族发布 owner。
+ * 原演员快照晚查实际阵营值，不增加 Camp 引用撤权；每个提交仍晚查现有狼队执行资格。
  * 不增加重试额度、重建已失效的身体或把发表事实当付款；首失败和已写前缀维持原边界。
  */
 import { publishNobleNightKnife } from "../noble_secret_body/knife-ports";
@@ -31,7 +32,7 @@ function strictWolfFailurePrefix(ctx: NightStageContext): string | null {
 function captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boolean {
   const role = ctx.world.getComponent(actorId, COMPONENT.Role),
     kind = role?.role,
-    camp = role?.camp,
+    camp = role == null ? undefined : ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp,
     state = role?.privateState,
     refs = state ? Object.entries(state) : [];
   const life = ctx.world.getComponent(actorId, COMPONENT.Alive),
@@ -41,7 +42,7 @@ function captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boo
     !!role &&
     ctx.world.getComponent(actorId, COMPONENT.Role) === role &&
     role.role === kind &&
-    role.camp === camp &&
+    ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp === camp &&
     role.privateState === state &&
     refs.every(([key, value]) => (state! as Readonly<Record<string, unknown>>)[key] === value) &&
     !!life &&

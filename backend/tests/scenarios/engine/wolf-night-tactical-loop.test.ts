@@ -245,7 +245,7 @@ describe("night wolf tactical loop", () => {
 
     const wolfTargetId = context.world.getAliveEntityIds().find((id) => {
       const role = context.world.getComponent(id, COMPONENT.Role);
-      return role?.camp === Camp.Good;
+      return !!role && context.world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good;
     })!;
 
     const provider = new TacticalOrderProvider(wolfTargetId);
@@ -279,7 +279,7 @@ describe("night wolf tactical loop", () => {
 
     const wolfTargetId = context.world.getAliveEntityIds().find((id) => {
       const role = context.world.getComponent(id, COMPONENT.Role);
-      return role?.camp === Camp.Good;
+      return !!role && context.world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good;
     })!;
 
     const provider = new EarlyEndWolfDiscussionProvider(wolfTargetId);
@@ -342,7 +342,7 @@ describe("night wolf tactical loop", () => {
 
     const aliveGood = context.world.getAliveEntityIds().filter((id) => {
       const role = context.world.getComponent(id, COMPONENT.Role);
-      return role?.camp === Camp.Good;
+      return !!role && context.world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good;
     });
 
     const wolfTargetId = aliveGood[0];
@@ -417,7 +417,7 @@ describe("night wolf tactical loop", () => {
     });
     const targetId = context.world.getAliveEntityIds().find((id) => {
       const role = context.world.getComponent(id, COMPONENT.Role);
-      return role?.camp === Camp.Good;
+      return !!role && context.world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good;
     })!;
     const provider = new RetryThenKillVoteProvider(targetId);
 

@@ -54,6 +54,7 @@ function context(
   };
   return {
     world: game.world,
+    get requestFactory() { return GameActionRequestFactory; },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },

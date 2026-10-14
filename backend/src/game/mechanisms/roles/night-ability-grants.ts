@@ -55,7 +55,7 @@ export function grantNightAbility<K extends NightAbilityKind>(
   return commitGrantedNightAbility(role, actorId, ability, events, sourceRole) as NightAbilityReadView<K>;
 }
 
-/** 原安装预检捕获目标及原读取点的源 Role；这两个数据引用只供提交复验永久退休，不是许可或新原体策略。 */
+/** 阵营政策在原值表达式晚读实际 Camp，不复制到 Role；原安装预检捕获目标及原读取点的源 Role；这两个数据引用只供提交复验永久退休，不是许可或新原体策略。 */
 function validateAbilityInstall(
   world: World,
   actorId: EntityId,
@@ -108,7 +108,7 @@ function validateAbilityInstall(
     (source.kind === "copy" ||
       input.sourceDisclosed !== false ||
       input.id !== "gift:black-market" ||
-      role.camp !== "good" ||
+      world.getComponent(actorId, COMPONENT.Camp)?.camp !== "good" ||
       input.startsOnDay < 2)
   )
     throw new Error("ability_black_market_policy_invalid");
@@ -187,8 +187,8 @@ export function transferNightAbility<K extends NightAbilityKind>(
     black &&
     (!fromLife ||
       !toLife ||
-      source.camp !== "good" ||
-      target.camp !== "good" ||
+      world.getComponent(fromId, COMPONENT.Camp)?.camp !== "good" ||
+      world.getComponent(toId, COMPONENT.Camp)?.camp !== "good" ||
       targetId !== id ||
       options.sourceDisclosed === true)
   )
@@ -222,11 +222,11 @@ export function transferNightAbility<K extends NightAbilityKind>(
       options.sourceDisclosed === true ||
       world.getComponent(fromId, COMPONENT.Role) !== source ||
       source.role !== originalRole ||
-      source.camp !== "good" ||
+      world.getComponent(fromId, COMPONENT.Camp)?.camp !== "good" ||
       source.privateState !== sourcePrivate ||
       world.getComponent(toId, COMPONENT.Role) !== target ||
       target.role !== targetRole ||
-      target.camp !== "good" ||
+      world.getComponent(toId, COMPONENT.Camp)?.camp !== "good" ||
       target.privateState !== targetPrivate ||
       !livingNightLife(world, fromLife!) ||
       !livingNightLife(world, toLife!) ||

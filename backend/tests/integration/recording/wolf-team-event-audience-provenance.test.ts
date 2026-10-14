@@ -86,7 +86,7 @@ function fixture(locale: "zh-CN" | "en") {
       return profile;
     }),
   });
-  for (const id of [3, 4, 5]) role(game.world, id).camp = Camp.Wolf;
+  for (const id of [3, 4, 5]) game.world.getComponent(id, COMPONENT.Camp)!.camp = Camp.Wolf;
   return { ...game, catalog };
 }
 
@@ -123,10 +123,10 @@ for (const locale of ["zh-CN", "en"] as const) {
     }
     // Admission after emission cannot reveal any previous private event. Exit
     // cannot erase past knowledge. A knife-only grant is independent of chat.
-    role(world, 1).camp = Camp.Good;
+    world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
     alive(world, 2).alive = false;
     role(world, 6).role = Role.Wolf;
-    role(world, 6).camp = Camp.Wolf;
+    world.getComponent(6, COMPONENT.Camp)!.camp = Camp.Wolf;
     (role(world, 3).privateState as Record<string, unknown>).knife = true;
     events.push(
       wolfTeamEvent(world, catalog, {

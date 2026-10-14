@@ -13,7 +13,7 @@ import { EVIL_KNIGHT_STATE_SLOT, getEvilKnightState } from "./state-slot";
 /** 在等待其他玩家提交前绑定原体；每次提交仍校验生命、组件、私有容器与政策未被替换。 */
 export function captureEvilKnight(world: World, target: NightLifeScope) {
   const role = world.getComponent(target.id, COMPONENT.Role);
-  const state = getEvilKnightState(role);
+  const state = getEvilKnightState(role, () => world.getComponent(target.id, COMPONENT.Camp));
   if (!role || !state || !livingNightLife(world, target)) return null;
   const privateState = role.privateState,
     shotPolicy = state.shotPolicy;
@@ -21,7 +21,7 @@ export function captureEvilKnight(world: World, target: NightLifeScope) {
     livingNightLife(world, target) &&
     world.getComponent(target.id, COMPONENT.Role) === role &&
     role.privateState === privateState &&
-    getEvilKnightState(role) === state &&
+    getEvilKnightState(role, () => world.getComponent(target.id, COMPONENT.Camp)) === state &&
     state.shotPolicy === shotPolicy;
   return { target, state, isCurrent };
 }
@@ -47,7 +47,7 @@ export function commitEvilKnightReflection(
     !livingNightLife(world, caster) ||
     !casterCurrent() ||
     casterRole?.role !== expected ||
-    casterRole.camp !== Camp.Good
+    world.getComponent(caster.id, COMPONENT.Camp)?.camp !== Camp.Good
   )
     return null;
   const privateState = casterRole.privateState;
@@ -64,7 +64,7 @@ export function commitEvilKnightReflection(
       casterCurrent() &&
       world.getComponent(caster.id, COMPONENT.Role) === casterRole &&
       casterRole.role === expected &&
-      casterRole.camp === Camp.Good &&
+      world.getComponent(caster.id, COMPONENT.Camp)?.camp === Camp.Good &&
       casterRole.privateState === privateState,
   };
 }

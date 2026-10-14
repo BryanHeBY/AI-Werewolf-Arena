@@ -76,7 +76,7 @@ export class SelfDestructWindow {
           tool === "self_destruct" &&
           (String(role.role) === RED_MOON_ROLE
             ? !demonRedMoonCanBlast(this.world, actorId)
-            : !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
+            : !canRoleSelfDestruct(role, getDefaultRoleCatalog(), () => this.world.getComponent(actorId, COMPONENT.Camp)))
         )
           return null;
         // 白狼王复验同一库存对象；这里不消费，实际消耗仍归提交函数。

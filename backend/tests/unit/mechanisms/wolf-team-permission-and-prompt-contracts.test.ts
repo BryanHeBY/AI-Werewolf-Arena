@@ -107,7 +107,7 @@ function fixture(locale: "zh-CN" | "en") {
     return profile;
   });
   const catalog = createRoleCatalog({ contributions });
-  for (const id of [3, 4, 5]) role(game.world, id).camp = Camp.Wolf;
+  for (const id of [3, 4, 5]) game.world.getComponent(id, COMPONENT.Camp)!.camp = Camp.Wolf;
   return { ...game, catalog, contributions };
 }
 
@@ -168,7 +168,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     ];
     const state = () =>
       world.entityIds().map((id) => ({
-        camp: role(world, id).camp,
+        camp: world.getComponent(id, COMPONENT.Camp)?.camp,
         state: structuredClone(role(world, id).privateState),
         alive: alive(world, id).alive,
       }));
@@ -227,7 +227,7 @@ for (const locale of ["zh-CN", "en"] as const)
       });
       const before = policy.buildBoardInfo();
       role(world, 6).role = Role.Wolf;
-      role(world, 6).camp = Camp.Wolf;
+      world.getComponent(6, COMPONENT.Camp)!.camp = Camp.Wolf;
       role(world, 3).role = Role.Villager;
       board.roleSetups[0].count = 99;
       board.boardSize = 99;

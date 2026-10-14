@@ -134,13 +134,14 @@ export function demonHunterFixture(
   for (const kind of deck) {
     const id = world.createEntity(),
       camp = kind === Role.Wolf ? Camp.Wolf : Camp.Good,
-      role = createRoleComponent(kind, camp, locale);
+      initialCamp = createCampComponent(camp, locale),
+      role = createRoleComponent(kind, locale);
     if (String(kind) === DEMON_HUNTER_ROLE)
       (role.privateState as Record<string, unknown>).demonHunter = freshDemonHunterState();
-    else getDefaultRoleCatalog().applyRuntime(role, { boardConfig: config, locale, world });
+    else getDefaultRoleCatalog().applyRuntime(role, { boardConfig: config, locale, world, initialCamp, currentCamp: () => world.getComponent(id, COMPONENT.Camp) });
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, id, String(id)));
     world.addComponent(id, COMPONENT.Role, role);
-    world.addComponent(id, COMPONENT.Camp, createCampComponent(camp, locale));
+    world.addComponent(id, COMPONENT.Camp, initialCamp);
     world.addComponent(
       id,
       COMPONENT.Victory,

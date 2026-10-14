@@ -26,9 +26,10 @@ function state(): NightStageState {
   return { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [] };
 }
 function fixture() {
-  const world = new World(), actorId = world.createEntity(), role = createRoleComponent(Role.EvilKnight, Camp.Wolf), life = createAliveComponent();
+  const world = new World(), actorId = world.createEntity(), role = createRoleComponent(Role.EvilKnight), life = createAliveComponent();
   (role.privateState as Record<string, unknown>).evilKnight = freshEvilKnightState();
   world.addComponent(actorId, COMPONENT.Role, role);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(actorId, COMPONENT.Alive, life);
   installEvilKnightBoard(world);
   const binding = captureEvilKnight(world, captureNightLife(world, actorId)!)!;

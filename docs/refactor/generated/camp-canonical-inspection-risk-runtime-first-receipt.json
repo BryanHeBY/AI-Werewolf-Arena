@@ -1,0 +1,17 @@
+{
+  "command": "bun --no-env-file test backend/tests/unit/engine/visibility/camp-canonical-inspection-input.test.ts",
+  "outputPath": "docs/refactor/generated/camp-canonical-inspection-risk-runtime-first-output.txt",
+  "result": {
+    "chunk_id": "a11781",
+    "wall_time_seconds": 0.085260384,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "counts": {
+    "pass": 3,
+    "fail": 0,
+    "expectCalls": 11
+  },
+  "scope": "First execution of the three new actual-input cases, no old suite or successful checks repeated."
+}

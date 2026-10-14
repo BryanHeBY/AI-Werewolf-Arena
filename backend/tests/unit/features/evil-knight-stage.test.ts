@@ -127,7 +127,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(damage.deathSources[victim]).toEqual([DeathCause.EvilKnightReflection]);
       expect(f.ctx.state.retaliationAttacks).toHaveLength(1);
       expect(
-        getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role))!
+        getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role), () => f.world.getComponent(f.knight, COMPONENT.Camp))!
           .reflectionRemaining,
       ).toBe(0);
       expect(
@@ -146,7 +146,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     f.choices.inspectKnight = false;
     expect((await f.run()).deaths).toEqual([]);
     expect(
-      getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role))!
+      getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role), () => f.world.getComponent(f.knight, COMPONENT.Camp))!
         .reflectionRemaining,
     ).toBe(1);
   });

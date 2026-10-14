@@ -1,0 +1,266 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/src/core/domain/original-participant.ts",
+      "sha256": "c3ed6480f467f51d4bede580119226ffa3927c32b7b011602486423f444132c8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "c25a953a4b7aa8aadc955c4e516d7b0e7f8a7cbe0c496019ab6989dd30d91b6b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts",
+      "sha256": "6177b2859382df1e4649ee7971dc2f6c8b9bf56c057ac17fb308a4bacf9f0776"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "sha256": "661a171bc61f0bda82c236c154e8427cd342309e1de841649603a8daade6ee31"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "0f517f7e9825c33a48f1d88a02ca74ea4cbc587a61ab129af455699793d54e23"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "sha256": "45d372dcd7a8f6ce253adda4c6fcbf4cdc84503e6fed82052dedbfa3fc692d82"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "sha256": "44bb5627508eee472d8cd3eec4477a8cc064f31096df26467beffef86b5258a5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "sha256": "0b3e7b100cb96cc835ee2ff4db604b8144e4070519cf3f17432a24bfef459285"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "73c16805e5068a46ddfa56a4285f87a617584ee37c8fcae88d0926bdb5e5217b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+      "sha256": "dda3d8fe50e8d4c52301bac9baca7b199ebb9ac63cf9e125c0478b2d6912b077"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "83d3d08c5daa8782c5864484b7f78e60053b20138536f34afc8ea703a6f3caa3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "cf7ec272d7a468f1ef8d96df2580c464ad47451b9ca68cdd11a18b98d388f2e4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/victory.ts",
+      "sha256": "1327a1113a861e619904f30dc13de6a58eac0856ff1889e5aba3578fbe02fdb4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+      "sha256": "98db67f2cfa4ebed1d1e7a042a0c967b6cd539ce80b019fab3ead37420312dc8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/victory.ts",
+      "sha256": "c80cf6416962bb4c0d99c26b4c8da8285b31d91d0c7bcc2346fa5f55e154e87a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "sha256": "883050c82241de386c62bb467f837e4d7972172600955f5d688649c27fc9fd1c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "5aed9cbf6a3dd5024c6cc7ece6a24b0820f820ef0251cd35b3bf303ddc17a7f0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "e5979116849aa821d0741ef082e8df0811db57a6b5c97bbab749621b8f7469af"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "8fe289a8c0e7f5ad13a9b1f47dee6d6c2d7fcc85ffa8ccada30f23fb4fe0e398"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+      "sha256": "e3dc713c76840f0ebca986c964ee637662e7418da86905a93b199644c4c1d06a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "sha256": "7fdf17b7355524bbea802e9cdddae0e8013f8b2ed728edcc9be54f269c5e1672"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "0a2fe1768760f2539e5f4637a8e48ac9d751b54a1db3165f14a0b33267abc335"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+      "sha256": "33348d8eadb27de2e22086e5cef6ea7db2318c4bc61b60f3dc40c2dd6c3ce055"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/profile.ts",
+      "sha256": "aa093f409cefac9e690bd1b5b438dd8943c076774016575a6d90c05a57a4e181"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "60f09f95bbc6e839949b9b0254d6e89be866ef8ea59cb5fcf081b956788a6702"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "sha256": "3b8012ae79371772e9bd9dac89e1d11b5a9f17e77a1533ca74462694719f4c01"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "e7fc96c56fd078b469cc121c33447cb370c7c0c91d8c21488659c03f0fc3319f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/inspection.ts",
+      "sha256": "941750be2fc3893df1cac3c0870e7ae5917061ab34b882868ba7f919fa42d215"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "sha256": "ea640c87b52ba9001cce9e13eadeaf4a955699434f4c5f984fc6e021732b4789"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "sha256": "6735fd720f97bdb8c095119ac2ffe02e76746f3aa86892870914685c91e62b89"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "1ba929c601ef9a867fd2c6dc04d8069475d9c79980ea494d751ee56ba211137c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts",
+      "sha256": "8ee14beea93a17cdebdf366f03d95336dd31a0fed0e59ff70d422ea6393870d8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "sha256": "1f947cb0d92edc15fe85fb1e1cf27677e633788a0ae3b1cbfd5edb3c0a8aebe9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/profile.ts",
+      "sha256": "7814aa01c26eb53aa2d281a9b4cb766ea40eeb30196156205d745ef99fb983ee"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "sha256": "55c36a42dbfddb9c96d818f13480572588450d9fba7f2d4951a8ced99ddaec5c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "e1247c64a7e3d03e9269c8fe5a5346d0ab711949b56e1334c3ed7017955a1d51"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+      "sha256": "cdf435f8591dda606b7fc7c51cce1987d39c4a4292c11ff09a5c87e6a3e3563f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "sha256": "a1bc87c0b9e15faeecfe2d61e07a89f9ce8cb6713e324f6109b9400cb745095a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "sha256": "ce62ab9cd95eacf38058a82422b4ddca704d550b23de39aa8dea786a6a13a263"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+      "sha256": "b655cd1101718e20c7a789d1b1f036c7d20bd1b3b9d29410e1c70a2bdd814597"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "sha256": "35cc5290ee62e2561c42c01aa9c9cfdeec4c65218adcf9ac4409498951a2bd8e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "sha256": "5b50f0524b8d4ec7708c20288acca8be841d4a6bbbbc0b31f24ea79a7cea97e7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "154cc40f73ac8caf748b0399036f20ea6935df495a2595871565b184f5b4c237"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "1a664d10b50cc7704ab14bafdfb14bbef7d5cc545c02c13338d6c271d9bcadcd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/original_player_scope.ts",
+      "sha256": "84a72d742cb560944c5282f934bb2bccbf43b5020587138f6ed441ea15f8a8d6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "sha256": "831b30b9c7f3f92c6f8cf3779c1d10c139ec8d30536c0e3a4008ef35dbc25b10"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "sha256": "86f8be8f779e13f9a442ee1b26319919e9f852b9136355a2e34001af1241dd20"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "8d2c0c1c659f17520f3759bc1c221ee66680e0917495fe0d12431af76ca260e9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "52fc0a6a6034cab7f3594c9cf6da98bd237ab76e01a1521cff3012ec6ff283b1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "sha256": "49a4ddf2054dd3f29e991b24af2cbcd6073cf10058137c4ad2b580af381b36a5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "24fcf1365d620d5963a72d791ba426b31512daabd887c7d537aa564d4188ca65"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "sha256": "28dcc2c6309ab32d7d11c1bec481830e5b46c116166166634ad80600aad7f2e6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "sha256": "920f16dadb5b0f5727c3b32dede56816633ace8bf8eae7917eebcc714b38affb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "sha256": "7e4549cf2550883d9da7b56bd621ca69f2faf82f18bbae9b4783a3c8fdfb45dd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "sha256": "a2d122681f672e95282b1c90c6ac97f318d9e0ad7fd757a88e189a2cd04b8b89"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+      "sha256": "e1d8c32e38a42f9a5206ed6fd6360773f103ae73a1ea8f18aa5300ad275f38f7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "baed0154edc7068011e52b76dd1b9a0e861d38dc49207362b1c44e26f25401b8"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/camp-canonical-role-owners-scope-final.json",
+    "sha256": "2721a5c777f26a5ccf67c3cc4b1882d083ea1da050e38c0f216569625b2697bb"
+  },
+  "document": {
+    "path": "docs/refactor/camp-canonical-role-owners.md",
+    "sha256": "2d2e42572f66b3dd458cfdf3d86e94f2bf84bb99fc389df6d888699ccd409314"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/camp-canonical-role-owners-evidence.json",
+    "sha256": "bdef401f109c2b7bfdf7e3b51d1ce64d6a118aa089fe2f05f82e4df8262a313e"
+  },
+  "integrity": {
+    "freshSources": 57,
+    "actualGitBefore": 69,
+    "controls": 0,
+    "artifactHashes": 14,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "CurrentCampSource单一源与原Role缺失短路/默认null数据政策",
+    "value-only和dual-ref及paid-current不加执行退休flag",
+    "actual4ff69完整Git/245精确原稿和实际首红修复收据",
+    "中文结构/源回调/部分失败与引用归属真实"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { COMPONENT } from "../../../../core/domain/components/names";
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -55,11 +56,11 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
     init: (role) => {
       if (!getAwakenedState(role)) setAwakenedState(role, freshAwakenedState());
     },
-    wolfTeam: (role, world) => ({
+    wolfTeam: (role, world, currentCamp) => ({
       recognizedByPack: false,
       recognizes: "none",
       canChat: false,
-      canVoteForKill: canAwakenedKnife(role, world),
+      canVoteForKill: canAwakenedKnife(role, world, currentCamp),
     }),
     inspectionLabels: (role) => ({
       camp: Camp.Wolf,
@@ -89,7 +90,7 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
         return validateDeathShot(
           ctx,
           ctx.role.role === Role.AwakenedHiddenWolf &&
-            ctx.role.camp === Camp.Wolf &&
+            ctx.world.getComponent(ctx.actorId, COMPONENT.Camp)?.camp === Camp.Wolf &&
             learned?.role === Role.Hunter &&
             learned.activationNight != null &&
             gun?.kind === "hunter" &&
@@ -116,7 +117,7 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
         ),
       },
     },
-    baselineAction: (role, request, pick, byCamp, locale, world) => {
+    baselineAction: (role, request, pick, byCamp, locale, world, currentCamp) => {
       if (request.allowedTools.includes("awakened_mimic")) {
         const target = pick();
         return target === null ? null : { name: "awakened_mimic", args: { target_id: target } };
@@ -139,7 +140,7 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
       }
       if (request.allowedTools.includes("shoot"))
         return { name: "shoot", args: { target_id: byCamp("good") } };
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world, currentCamp);
     },
   },
   presentation: nativeRolePresentation("awakened_hidden_wolf"),

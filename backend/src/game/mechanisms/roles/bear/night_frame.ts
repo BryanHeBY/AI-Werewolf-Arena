@@ -1,5 +1,5 @@
 /**
- * 负责熊的夜间采样 frame 与延迟到天亮的发布。输入为原相邻玩家和采样吼声；只有匹配原 frame 时才产生历史与天亮事件。不重复发布同一夜，不以复活或替换相邻身体继续旧采样；关闭和失败保持原前缀。
+ * 负责熊的夜间采样 frame 与延迟到天亮的发布。阵营只读实际 Camp；默认只核值，黎明政策保原组件引用撤权。输入为原相邻玩家和采样吼声；只有匹配原 frame 时才产生历史与天亮事件。不重复发布同一夜，不以复活或替换相邻身体继续旧采样；关闭和失败保持原前缀。
  */
 import {
   recordBearRoar,
@@ -60,7 +60,7 @@ function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): bool
   return neighbors.some((id) => {
     const target = world.getComponent(id, COMPONENT.Role);
     return (
-      target?.camp === Camp.Wolf &&
+      !!target && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf &&
       (catalog.runtime(target.role)?.detectableByBear?.(world, target) ?? true)
     );
   });
@@ -103,7 +103,7 @@ export class BearNightFrame {
       state = getBearState(role),
       life = world.getComponent(actorId, COMPONENT.Alive),
       version = life && aliveLifeVersion(life);
-    if (role.camp !== Camp.Good || !state || !life || version === undefined) return null;
+    if (world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good || !state || !life || version === undefined) return null;
     const originals =
         signalPolicy === "netease_dawn_live_v1"
           ? world.getAliveEntityIds().map((id) => captureOriginalPlayer(world, id))
@@ -144,7 +144,7 @@ export class BearNightFrame {
       !isCurrent() ||
       world.getComponent(this.actorId, COMPONENT.Role) !== this.role ||
       this.role.role !== Role.Bear ||
-      this.role.camp !== Camp.Good ||
+      world.getComponent(this.actorId, COMPONENT.Camp)?.camp !== Camp.Good ||
       getBearState(this.role) !== this.state ||
       world.getComponent(this.actorId, COMPONENT.Alive) !== this.life ||
       aliveLifeVersion(this.life) !==
@@ -166,7 +166,7 @@ export class BearNightFrame {
       actual?.set === factory.set &&
       world.getComponent(this.actorId, COMPONENT.Role) === this.role &&
       ownData(this.role, "role") === Role.Bear &&
-      ownData(this.role, "camp") === Camp.Good &&
+      ownData(this.camp, "camp") === Camp.Good &&
       ownData(ownData(this.role, "privateState"), "bear") === this.state &&
       world.getComponent(this.actorId, COMPONENT.Alive) === this.life &&
       aliveLifeVersion(this.life) ===

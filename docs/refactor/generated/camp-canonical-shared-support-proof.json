@@ -1,0 +1,170 @@
+{
+  "approved": true,
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+      "sha256": "5ca4d8d9008c1ce22f98e384c308a27f361446dc27679071f1f08d3d55947226"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "sha256": "9ce6d4ec5184c113f10db3ffbed26310f20cc2a280daf94f3d0032d8d364e214"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+      "sha256": "f4137085ed419f468a46a4a7970bc6cdce94f744c92f00a1582590b2a825fcea"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "sha256": "3fdeaea6ed9d7f92c28d7acb8343ce40cadeb3d3bdd62081ed33fd9532f4f06b"
+    },
+    {
+      "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+      "sha256": "327dfb5828c85aa67f4aff3e55295c171662c537480fdbe31664aae91a238a4e"
+    }
+  ],
+  "programs": [
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+      "beforeSha256": "ca24d67e56efb9e58129a0c54852c15e0decdd6e66a07a3087fdd641af08656b",
+      "sha256": "5ca4d8d9008c1ce22f98e384c308a27f361446dc27679071f1f08d3d55947226",
+      "completeForwardInverse": true,
+      "exactEdits": 2,
+      "typedNodes": 586,
+      "nodeArrays": 91,
+      "noncommentLeaves": 299,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "e0dda627a9bfa5ca3dc3db5ceadb60770400b83043774a39a5fa2a41270e37b5",
+          "actualSha256": "a1497ff3dce7956f81682d7fa98cd83976c4936560f800a5112d445eca4b1726"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "eac4f17f3db0e9033174ff98b31c50d95c83234c997351b5aeeb8c94c377d43b",
+          "actualSha256": "aa0f10506053da0f8ef476d98ef3e0301e551a15064a47af5b1afe9932b4411f"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "beforeSha256": "65775e45a8459054935f459fc9fb9848d39dcaf6fee635423a7874637a32f188",
+      "sha256": "9ce6d4ec5184c113f10db3ffbed26310f20cc2a280daf94f3d0032d8d364e214",
+      "completeForwardInverse": true,
+      "exactEdits": 3,
+      "typedNodes": 891,
+      "nodeArrays": 135,
+      "noncommentLeaves": 442,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "9080cd4e0c002f15398c697424901c384e1ce7498762075e97ee2fae7487005d",
+          "actualSha256": "c87ab8a42d3b79c1f2a106d4420df2f60bcd3b7cbbc177a0a8a180796880c3c6"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "071a848d8680b13e4ef71411d98e81c029c2795dfa957a6ae13179a84e61ac92",
+          "actualSha256": "30855555dc6ba4c00934549d362a0613e41f2349c57a36cbcead7636ce3d5ba6"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+      "beforeSha256": "66995081db763623e693a14d188812ff50b9f56b14e345a0acdd575fbf005bb3",
+      "sha256": "f4137085ed419f468a46a4a7970bc6cdce94f744c92f00a1582590b2a825fcea",
+      "completeForwardInverse": true,
+      "exactEdits": 3,
+      "typedNodes": 527,
+      "nodeArrays": 86,
+      "noncommentLeaves": 260,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "8f8eb7d8acedbfeae9b66b9e71562f8ed952a008ab1d10cf7d55fcd49f00a590",
+          "actualSha256": "a940efae0078b12f5fb711aee80011a67f766cbc8b958305769ee57c470c9bf3"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "3bf41a7f6616b897cea29029db53a983ce9535d157ed60aba66a891cda732ae4",
+          "actualSha256": "791b1d5428a0329199222013d2acaf945114aedaa3e830847b3b574470bd4936"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "beforeSha256": "d0627ee4936e9cc5a7e117ffe28dfc0cd8b337b8a0b56d9027c29e12c36a978d",
+      "sha256": "3fdeaea6ed9d7f92c28d7acb8343ce40cadeb3d3bdd62081ed33fd9532f4f06b",
+      "completeForwardInverse": true,
+      "exactEdits": 2,
+      "typedNodes": 382,
+      "nodeArrays": 62,
+      "noncommentLeaves": 193,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "8cb303d3412d03882e846ddc8dc5abfb7f729788b60617d810dbee01ed279f41",
+          "actualSha256": "8cc8d1526c9b8d166c60fd61bb1fd1068a7099e298c159e1b678a64115a598fe"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "946f1332b91e6f22507e62b4a6633d2a8bb33c5fe8e358b009a867d91a5e139e",
+          "actualSha256": "d47ef0c13c49d7e1afb4be93e73fd3e27407354e322a46937e6a86782f439dd0"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+      "beforeSha256": "dbf4e3cb7226233d52dcae571a003ced09e0c82b4a9b7f775ff458cd3f73f09c",
+      "sha256": "327dfb5828c85aa67f4aff3e55295c171662c537480fdbe31664aae91a238a4e",
+      "completeForwardInverse": true,
+      "exactEdits": 3,
+      "typedNodes": 393,
+      "nodeArrays": 67,
+      "noncommentLeaves": 190,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "d936b3bdeba6f2e10955804925c96136d9cb18eb72f6b1d8fe4601edf2718ed3",
+          "actualSha256": "64af2fe0f5ff5c23afa1e0e7dcf5420d45cded1d25fa350999e92efc3172e62d"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSha256": "70344f9a3b622898578ff0dce6bff545d762fda2c1c709ac8f8042add16e814b",
+          "actualSha256": "0d5b765b244c245b90ea7a6fc05a7aee5cf69d0a087c589be68d498a14cb2e8c"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "actualPrograms": 5,
+    "exactEdits": 13,
+    "typedNodes": 2779,
+    "nodeArrays": 441,
+    "noncommentLeaves": 1384,
+    "inverseWholeOutputs": 10
+  },
+  "limits": [
+    "Camp is explicit new source/API/initialization/failure data policy. Actual JS differs; inverse proves edited range only.",
+    "No runtime/type/comment gate or production loading is performed. SourceReady and first-check successor are separate staged inputs."
+  ]
+}

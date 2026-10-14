@@ -1,0 +1,17 @@
+{
+  "sourceFrozen": true,
+  "scope": {
+    "path": "docs/refactor/generated/camp-canonical-shared-inputs-scope-final.json",
+    "sha256": "922b0988240fa306f287c662c445adaaef1336b3dcc6d264bde74720d64b3d8e"
+  },
+  "document": {
+    "path": "docs/refactor/camp-canonical-shared-inputs.md",
+    "sha256": "6a96c9502e2a5e4defb40d32bda3ef2ecdcf1a22d3877fb8b0413eba7970518b"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/camp-canonical-shared-inputs-evidence.json",
+    "sha256": "fa3e21bb85f3e174c15aaddcdfc698e62e41e5bcfec70331c0ed4c022284735e"
+  },
+  "author": "native_final_architecture_review",
+  "gitStagedOrCommittedByAuthor": false
+}

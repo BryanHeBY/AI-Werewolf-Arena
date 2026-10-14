@@ -4,6 +4,7 @@
  * 捕获资格和原资源事实。owners/counters 是原唯一状态，不复制为第二份实例仓库。
  * 仅写 deathAbilities、retiredDeathAbilityIds 及本枪资源；不执行死亡、枪目标选择或录制 I/O。
  * 已付前缀和原 getter／提交顺序保持，替身或复活不能重新获得首次死亡枪权。
+ * 阵营只晚取当前值，同值 Camp 替换不增加引用撤权；原纯已付体复验不变成新执行资格。
  * F05a 将永久退休拒绝放在新执行入口；已消费提案的纯原体／来源／生命及 capture.isCurrent 不含此判断。
  */
 import type { DeathGun, DeathGunReadView } from "@ai-werewolf-arena/game-contract";
@@ -21,7 +22,7 @@ interface GunOwner {
   actorId: number;
   role: RoleComponent;
   roleKind: RoleComponent["role"];
-  camp: Camp;
+  camp: Camp | undefined;
   privateState: RoleComponent["privateState"];
   life: AliveComponent;
   version: number;
@@ -56,7 +57,7 @@ function bind(world: World, actorId: number, gun: DeathGun, sourceRole: RoleComp
   const role = world.getComponent(actorId, COMPONENT.Role),
     life = world.getComponent(actorId, COMPONENT.Alive),
     version = life && aliveLifeVersion(life);
-  if (!role || role.camp !== Camp.Good || !life?.alive || version === undefined)
+  if (!role || world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good || !life?.alive || version === undefined)
     throw new Error("death_ability_owner_invalid");
   // 这是新赠枪绑定入口；只否决退休演员，原体／已付提案复验仍由不含墓碑的 ownerCurrent 执行。
   if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))
@@ -66,7 +67,7 @@ function bind(world: World, actorId: number, gun: DeathGun, sourceRole: RoleComp
     actorId,
     role,
     roleKind: role.role,
-    camp: role.camp,
+    camp: world.getComponent(actorId, COMPONENT.Camp)?.camp,
     privateState: role.privateState,
     life,
     version,
@@ -101,7 +102,7 @@ export function deathGunOwnerCurrent(
     gun.armedOnNight === owner.armedOnNight &&
     world.getComponent(actorId, COMPONENT.Role) === owner.role &&
     owner.role.role === owner.roleKind &&
-    owner.role.camp === owner.camp &&
+    world.getComponent(actorId, COMPONENT.Camp)?.camp === owner.camp &&
     owner.role.privateState === owner.privateState &&
     findDeathGun(owner.role, gun.id) === gun &&
     world.getComponent(actorId, COMPONENT.Alive) === owner.life &&
@@ -150,10 +151,10 @@ export function grantDeathGun(
   if (
     fromId === toId ||
     !from ||
-    from.camp !== Camp.Good ||
+    world.getComponent(fromId, COMPONENT.Camp)?.camp !== Camp.Good ||
     !world.getComponent(fromId, COMPONENT.Alive)?.alive ||
     !to ||
-    to.camp !== Camp.Good ||
+    world.getComponent(toId, COMPONENT.Camp)?.camp !== Camp.Good ||
     !world.getComponent(toId, COMPONENT.Alive)?.alive ||
     !Number.isSafeInteger(night) ||
     night < 1
@@ -356,7 +357,7 @@ export function transferDeathGun(
     fromId === toId ||
     !deathGunOwnerCurrent(world, fromId, gun) ||
     !target ||
-    target.camp !== Camp.Good ||
+    world.getComponent(toId, COMPONENT.Camp)?.camp !== Camp.Good ||
     !world.getComponent(toId, COMPONENT.Alive)?.alive ||
     allDeathGuns(target).length ||
     (

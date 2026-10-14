@@ -14,8 +14,12 @@ import { projectEvilKnightState } from "../../../src/game/mechanisms/roles/evil_
 import { capturePlayerObservation } from "../../../src/game/observation/player-observation-projector";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 
+// 无World的投影fixture独立持有当前Camp；同值组件引用不是额外身份门槛。
+const projectionCamp = { camp: Camp.Wolf };
+const currentProjectionCamp = () => projectionCamp;
+
 test("red moon and evil knight return selected detached data and retain invalid-slot rejection", () => {
-  const red = createRoleComponent(Role.RedMoonApostle, Camp.Wolf);
+  const red = createRoleComponent(Role.RedMoonApostle);
   const redState = {
     policy: "awa_red_moon_demon_v1",
     lastWolfBlastPolicy: "forbidden",
@@ -24,7 +28,7 @@ test("red moon and evil knight return selected detached data and retain invalid-
     expirySettled: false,
   };
   Object.assign(red.privateState, { redMoon: redState });
-  const redView = projectRedMoonState(red)!;
+  const redView = projectRedMoonState(red, currentProjectionCamp)!;
   expect(redView).toEqual({
     policy: "awa_red_moon_demon_v1",
     lastWolfBlastPolicy: "forbidden",
@@ -36,27 +40,27 @@ test("red moon and evil knight return selected detached data and retain invalid-
   redView.expirySettled = true;
   expect(redState.expirySettled).toBe(false);
   Object.defineProperty(redState, "extra", { value: 1 });
-  expect(projectRedMoonState(red)).toBeUndefined();
+  expect(projectRedMoonState(red, currentProjectionCamp)).toBeUndefined();
 
-  const evil = createRoleComponent(Role.EvilKnight, Camp.Wolf);
+  const evil = createRoleComponent(Role.EvilKnight);
   const evilState = {
     policy: "awa_evil_knight_v1",
     shotPolicy: "hunter_shot_bypasses",
     reflectionRemaining: 1,
   };
   Object.assign(evil.privateState, { evilKnight: evilState });
-  expect(projectEvilKnightState(evil)).toEqual({
+  expect(projectEvilKnightState(evil, currentProjectionCamp)).toEqual({
     policy: "awa_evil_knight_v1",
     shotPolicy: "hunter_shot_bypasses",
     reflectionRemaining: 1,
   });
-  expect(projectEvilKnightState(evil)).not.toBe(evilState);
+  expect(projectEvilKnightState(evil, currentProjectionCamp)).not.toBe(evilState);
   evilState.reflectionRemaining = 3;
-  expect(projectEvilKnightState(evil)).toBeUndefined();
+  expect(projectEvilKnightState(evil, currentProjectionCamp)).toBeUndefined();
 });
 
 test("nightmare copies ordered nullable history without array helpers or extra-entry accessors", () => {
-  const role = createRoleComponent(Role.NightmareShadow, Camp.Wolf);
+  const role = createRoleComponent(Role.NightmareShadow);
   const entry = { day: 1, targetId: null };
   const history = [entry, { day: 2, targetId: 4 }];
   Object.defineProperty(history, "map", {
@@ -81,7 +85,7 @@ test("nightmare copies ordered nullable history without array helpers or extra-e
       history,
     },
   });
-  const view = projectNightmareShadowState(role)!;
+  const view = projectNightmareShadowState(role, currentProjectionCamp)!;
   expect(view).toEqual({
     policy: "awa_nightmare_dreamer_v1",
     fearActionPolicy: "required_when_legal",
@@ -104,13 +108,13 @@ test("nightmare copies ordered nullable history without array helpers or extra-e
       throw new Error("malformed_target_getter_must_not_run");
     },
   });
-  expect(projectNightmareShadowState(role)).toBeUndefined();
+  expect(projectNightmareShadowState(role, currentProjectionCamp)).toBeUndefined();
 });
 
 test("the observation consumer freezes the mechanism projection without changing live stock", () => {
   const world = new World();
   world.createEntity();
-  const role = createRoleComponent(Role.EvilKnight, Camp.Wolf);
+  const role = createRoleComponent(Role.EvilKnight);
   const liveState = {
     policy: "awa_evil_knight_v1",
     shotPolicy: "night_shot_immune",
@@ -118,6 +122,7 @@ test("the observation consumer freezes the mechanism projection without changing
   };
   Object.assign(role.privateState, { evilKnight: liveState });
   world.addComponent(1, COMPONENT.Role, role);
+  world.addComponent(1, COMPONENT.Camp, { camp: Camp.Wolf });
   const request: ActionRequest = {
     actorId: 1,
     phase: Phase.Night,

@@ -56,8 +56,8 @@ function requireAuthority(world: World): Authority {
   if (
     world.getComponent(b.actorId, COMPONENT.Role) !== b.role ||
     own(b.role, "privateState") !== b.privateState ||
-    getOrderPrinceState(b.role) !== b.state ||
-    ORDER_PRINCE_STATE_SLOT.checkpoint.projection(() => b.role) !== b.expected ||
+    getOrderPrinceState(b.role, () => world.getComponent(b.actorId, COMPONENT.Camp)) !== b.state ||
+    ORDER_PRINCE_STATE_SLOT.checkpoint.projection(() => b.role, () => world.getComponent(b.actorId, COMPONENT.Camp)) !== b.expected ||
     world.getComponent(b.actorId, COMPONENT.Identity) !== b.identity ||
     identityValue(b.identity) !== b.identityValue
   )
@@ -86,7 +86,7 @@ export function installOrderPrinceBoard(world: World): void {
   if (actors.length !== 1) throw new Error("order_prince_original_roster_invalid");
   const actorId = actors[0]!;
   const role = world.getComponent(actorId, COMPONENT.Role)!;
-  const state = getOrderPrinceState(role);
+  const state = getOrderPrinceState(role, () => world.getComponent(actorId, COMPONENT.Camp));
   const life = captureNightLife(world, actorId);
   const identity = world.getComponent(actorId, COMPONENT.Identity);
   if (!state || state.history.length || !life || own(identity, "id") !== actorId)
@@ -96,7 +96,7 @@ export function installOrderPrinceBoard(world: World): void {
     role,
     privateState: role.privateState,
     state,
-    expected: ORDER_PRINCE_STATE_SLOT.checkpoint.projection(() => role),
+    expected: ORDER_PRINCE_STATE_SLOT.checkpoint.projection(() => role, () => world.getComponent(actorId, COMPONENT.Camp)),
     identity,
     identityValue: identityValue(identity),
     life,
@@ -107,7 +107,7 @@ export function openOrderPrinceChoice(world: World, day: number): number | null 
   const b = requireAuthority(world);
   if (b.pendingDay !== null) throw new Error("order_prince_choice_reentrant");
   if (!livingNightLife(world, b.life)) return null;
-  if (!nextOrderPrinceChoice(b.role, day, false)) return null;
+  if (!nextOrderPrinceChoice(b.role, day, false, () => world.getComponent(b.actorId, COMPONENT.Camp))) return null;
   b.pendingDay = day;
   return b.actorId;
 }
@@ -117,7 +117,7 @@ export function orderPrinceChoicePending(world: World, actorId: number, day: num
     b.actorId === actorId &&
     b.pendingDay === day &&
     livingNightLife(world, b.life) &&
-    !!nextOrderPrinceChoice(b.role, day, false)
+    !!nextOrderPrinceChoice(b.role, day, false, () => world.getComponent(b.actorId, COMPONENT.Camp))
   );
 }
 export function assertOrderPrinceCurrent(world: World, actorId: number): void {
@@ -133,7 +133,7 @@ export function commitOrderPrinceChoice(
 ): void {
   if (!orderPrinceChoicePending(world, actorId, day)) throw new Error("order_prince_choice_stale");
   const b = requireAuthority(world);
-  const next = nextOrderPrinceChoice(b.role, day, activate);
+  const next = nextOrderPrinceChoice(b.role, day, activate, () => world.getComponent(b.actorId, COMPONENT.Camp));
   if (!next) throw new Error("order_prince_choice_invalid");
   // 顺序不能合成事务：原槽先替换，随后更新绑定／证据并关闭 pending；失败不回滚已写前缀。
   ORDER_PRINCE_STATE_SLOT.allowedWrites.replace(() => b.privateState, next);

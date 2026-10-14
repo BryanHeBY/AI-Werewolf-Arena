@@ -81,7 +81,7 @@ const mimicStage: NightStageHandler = {
         const roles = new Map(
           [...candidates.keys()].map((id) => {
             const component = ctx.world.getComponent(id, COMPONENT.Role)!;
-            return [id, { component, role: component.role, camp: component.camp }] as const;
+            return [id, { component, role: component.role, camp: ctx.world.getComponent(id, COMPONENT.Camp)?.camp }] as const;
           }),
         );
         const action = candidates.size
@@ -128,7 +128,7 @@ const mimicStage: NightStageHandler = {
           !origin ||
           ctx.world.getComponent(targetId, COMPONENT.Role) !== origin.component ||
           origin.component.role !== origin.role ||
-          origin.component.camp !== origin.camp
+          ctx.world.getComponent(targetId, COMPONENT.Camp)?.camp !== origin.camp
         )
           continue;
         if (!learnAwakenedRole(owner.state, targetId, origin.role, day)) continue;
@@ -272,7 +272,7 @@ const attackStage: NightStageHandler = {
     for (const owner of owners(ctx, day)) {
       const bound = bindAwakenedSkill(owner, day);
       if (bound?.skill.kind !== "wolf") continue;
-      const effectCurrent = () => bound.isCurrent() && canAwakenedKnife(owner.role, ctx.world);
+      const effectCurrent = () => bound.isCurrent() && canAwakenedKnife(owner.role, ctx.world, () => ctx.world.getComponent(owner.actorId, COMPONENT.Camp));
       const current = () => effectCurrent() && canAwakenedExtraKnife(owner.state, day);
       if (!current()) continue;
       let completed = false;

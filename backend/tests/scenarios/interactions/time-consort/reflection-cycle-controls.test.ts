@@ -101,7 +101,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
       };
       await game.phaseManager.runSingleCycle(provider, 30);
       const state = getTimeConsortState(
-        game.world.getComponent(consort, COMPONENT.Role),
+        game.world.getComponent(consort, COMPONENT.Role), () => game.world.getComponent(consort, COMPONENT.Camp)
       )!;
       const reflected = game.phaseManager
         .getEvents()

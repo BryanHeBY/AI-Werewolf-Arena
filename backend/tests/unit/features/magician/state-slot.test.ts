@@ -80,20 +80,21 @@ test("历史写先查callee再两次读state，原pair引用与可写descriptor�
 test("frame在历史之后刷新原身份JSON，编码失败保留历史并撤销旧检查点", () => {
   const world = new World(), state = MAGICIAN_STATE_SLOT.create(1);
   for (let seat = 1; seat <= 4; seat++) {
-    const id = world.createEntity(), role = createRoleComponent(seat === 1 ? Role.Magician : Role.Villager, Camp.Good);
+    const id = world.createEntity(), role = createRoleComponent(seat === 1 ? Role.Magician : Role.Villager);
     // 测试自己的初始化容器明确可写；不经 reader 或玩家观察取得写权。
     if (seat === 1) (role.privateState as Record<string, unknown>).magician = state;
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     world.addComponent(id, COMPONENT.Identity, { id, seat, name: `Player ${seat}`, sessionId: `player_${seat}` });
   }
   const actor = world.getComponent(1, COMPONENT.Role)!;
-  expect(MAGICIAN_STATE_SLOT.get(actor)).toBe(state);
-  expect(MAGICIAN_STATE_SLOT.schema(actor)).toBe(state);
-  const view = MAGICIAN_STATE_SLOT.project(actor)!;
+  expect(MAGICIAN_STATE_SLOT.get(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(state);
+  expect(MAGICIAN_STATE_SLOT.schema(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(state);
+  const view = MAGICIAN_STATE_SLOT.project(actor, () => world.getComponent(1, COMPONENT.Camp))!;
   expect(view).not.toBe(state);
   expect(view.history).not.toBe(state.history);
-  expect(MAGICIAN_STATE_SLOT.checkpoint.identity(actor)).toBe('{"policy":"awa_magician_wolf_king_v1","firstNight":1,"deathShotTargetPolicy":"original","history":[]}');
+  expect(MAGICIAN_STATE_SLOT.checkpoint.identity(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe('{"policy":"awa_magician_wolf_king_v1","firstNight":1,"deathShotTargetPolicy":"original","history":[]}');
   installMagicianBoard(world);
   expect(beginMagicianNight(world, 1)).toBe(1);
   const descriptor = Object.getOwnPropertyDescriptor(JSON, "stringify")!, stringify = JSON.stringify;

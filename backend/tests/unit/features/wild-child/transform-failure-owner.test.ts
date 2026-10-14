@@ -63,7 +63,8 @@ test("Camp installation failure keeps its prefix and restoring duplicate fields 
   expect(caught).toBe(error);
   expect(writes).toEqual(["Camp:throw"]);
   expect(g.world.getComponent(1, COMPONENT.Role)).toBe(role);
-  expect(role.camp).toBe(Camp.Wolf);
+  // 原Camp安装未执行即抛，单一实际阵营仍是旧Good，已退休Role不因读数一致恢复。
+  expect(camp.camp).toBe(Camp.Good);
   expect(g.world.getComponent(1, COMPONENT.Camp)).toBe(camp);
   expect(camp.camp).toBe(Camp.Good);
   expect(g.world.getComponent(1, COMPONENT.Victory)).toBe(victory);
@@ -72,7 +73,8 @@ test("Camp installation failure keeps its prefix and restoring duplicate fields 
   expect(b.modelCommitted).toBe(true);
   expect(g.events.map(e => e.type)).toEqual(["wild_child_model_chosen", "wild_child_model_eliminated"]);
   expect(validWildChildOwner(b)).toBe(false);
-  role.camp = Camp.Good;
+  camp.camp = Camp.Wolf;
+  camp.camp = Camp.Good;
   expect(validWildChildOwner(b)).toBe(false);
   expect(projectWildChild(g.world, role)?.status).toBe("closed");
   expect(wildChildPackKnown(role, g.world)).toBe(false);
@@ -107,14 +109,15 @@ test("Victory installation failure keeps installed Wolf Camp while retiring only
   expect(g.world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Wolf);
   expect(g.world.getComponent(1, COMPONENT.Victory)).toBe(victory);
   expect(victory.affiliations).toEqual([{ kind: "faction", faction: Camp.Good }]);
-  expect(b.actor.role.camp).toBe(Camp.Wolf);
+  expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
   expect(b.actor.camp).toBe(Camp.Good);
   expect(b.camp).toBe(camp);
   expect(b.state).toEqual(state);
   expect(validWildChildOwner(b)).toBe(false);
   // 恢复原组件和重复值仍不解锁失败标记；同值新引用的旧撤权规则没有在此改写。
   g.world.addComponent(1, COMPONENT.Camp, camp);
-  b.actor.role.camp = Camp.Good;
+  g.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Wolf;
+  g.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
   expect(validWildChildOwner(b)).toBe(false);
   expect(projectWildChild(g.world, b.actor.role)?.status).toBe("closed");
   expect(g.events.map(e => e.type)).toEqual(["wild_child_model_chosen", "wild_child_model_eliminated"]);
@@ -170,9 +173,11 @@ test("a frozen public binding does not replace the original Camp error while pri
   expect(caught).toBe(error);
   expect(Object.isFrozen(b)).toBe(true);
   expect(g.world.getComponent(1, COMPONENT.Camp)).toBe(camp);
-  expect(b.actor.role.camp).toBe(Camp.Wolf);
+  // 此注入同样在原Camp写入之前抛；冻结binding不改变actual旧Good或原错误。
+  expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
   expect(validWildChildOwner(b)).toBe(false);
-  b.actor.role.camp = Camp.Good;
+  g.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Wolf;
+  g.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
   expect(validWildChildOwner(b)).toBe(false);
   expect(projectWildChild(g.world, b.actor.role)?.status).toBe("closed");
 });

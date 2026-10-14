@@ -17,9 +17,10 @@ import { allDeathGuns, findDeathGun, grantDeathGun, armDeathGun, activeDeathGun,
 function fixture() {
   const world = new World(), ids = [world.createEntity(), world.createEntity(), world.createEntity()];
   const origin = ids[0]!, holder = ids[1]!, target = ids[2]!;
-  const originRole = createRoleComponent(Role.Guard, Camp.Good), holderRole = createRoleComponent(Role.Villager, Camp.Good), targetRole = createRoleComponent(Role.Villager, Camp.Good);
+  const originRole = createRoleComponent(Role.Guard), holderRole = createRoleComponent(Role.Villager), targetRole = createRoleComponent(Role.Villager);
   for (const [id, role] of [[origin, originRole], [holder, holderRole], [target, targetRole]] as const) {
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
   }
   return { world, origin, holder, target, originRole, holderRole, targetRole, events: [] as GameEvent[] };
@@ -53,8 +54,8 @@ test("F05a night grant rejects retired captured endpoints while data reads and p
   retireRoleExecution(f.originRole);
   expect(activeNightAbility(f.holderRole, "guard", 2)).toBe(ability);
   retireRoleExecution(f.holderRole);
-  f.holderRole.camp = Camp.Wolf;
-  f.holderRole.camp = Camp.Good;
+  f.world.getComponent(f.holder, COMPONENT.Camp)!.camp = Camp.Wolf;
+  f.world.getComponent(f.holder, COMPONENT.Camp)!.camp = Camp.Good;
   expect(isRoleExecutionRetired(f.holderRole)).toBe(true);
   expect(findNightAbility(f.holderRole, "guard", "gift:retirement")).toBe(ability);
   expect(allNightAbilities(f.holderRole)).toEqual([ability]);
@@ -62,6 +63,7 @@ test("F05a night grant rejects retired captured endpoints while data reads and p
   expect(activeNightAbility(f.holderRole, "guard", 2)).toBeUndefined();
   const other = new World(), alias = other.createEntity();
   other.addComponent(alias, COMPONENT.Role, f.holderRole);
+  other.addComponent(alias, COMPONENT.Camp, { camp: Camp.Good });
   expect(allNightAbilities(other.getComponent(alias, COMPONENT.Role))).toEqual([ability]);
   expect(activeNightAbility(other.getComponent(alias, COMPONENT.Role), "guard", 2)).toBeUndefined();
 });
@@ -161,7 +163,8 @@ test("F05a gift-gun endpoints and late binding getter cannot install a new gun a
   expect(trace).toEqual(["target-private", "target-private", "target-private"]);
   expect(Object.hasOwn(originalPrivate, "deathAbilities")).toBe(false);
   expect(f.events).toEqual([]);
-  f.world.addComponent(f.origin, COMPONENT.Role, createRoleComponent(Role.Guard, Camp.Good));
+  f.world.addComponent(f.origin, COMPONENT.Role, createRoleComponent(Role.Guard));
+  f.world.addComponent(f.origin, COMPONENT.Camp, { camp: Camp.Good });
   const first = grantDeathGun(f.world, f.origin, f.target, 1, f.events);
   expect(first.id).toBe("gift-gun:1");
 });

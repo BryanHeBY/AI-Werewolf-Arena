@@ -4,6 +4,7 @@
  * 状态 raw／库存／历史／JSON 绑定及实际数据写归本族 state-slot，有限板免疫与碰撞规则归 rules。
  * 不变量：槽提交成功才删 pending／追加 selection；普通已提交交换可跨一次正常死亡，不可跨复活或换生命。
  * 关闭仍要求原加成全处理，abort 只改原夜窗口；不为替换原体补授库存或复制运行回执。
+ * 当前 Camp 在原字段点由实际 World 查询；保原值比较，不把同值组件替换改成新的引用撤权。
  */
 import type {
   ModifierMode,
@@ -32,7 +33,7 @@ interface OriginalPlayer {
   id: number;
   role: RoleComponent;
   roleName: RoleComponent["role"];
-  camp: RoleComponent["camp"];
+  camp: Camp | undefined;
   privateState: RoleComponent["privateState"];
   identity: unknown;
   seat: number;
@@ -145,7 +146,7 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
     !p.abilityAuthority() ||
     world.getComponent(p.id, COMPONENT.Role) !== p.role ||
     ownData(p.role, "role") !== p.roleName ||
-    ownData(p.role, "camp") !== p.camp ||
+    ownData(world.getComponent(p.id, COMPONENT.Camp), "camp") !== p.camp ||
     ownData(p.role, "privateState") !== p.privateState ||
     world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
     ownData(p.identity, "id") !== p.id ||
@@ -203,7 +204,7 @@ export function installScholarMentorBoard(world: World): void {
       !life ||
       types.isProxy(life) ||
       version === undefined ||
-      (role.camp !== Camp.Wolf && role.camp !== Camp.Good)
+      (world.getComponent(id, COMPONENT.Camp)?.camp !== Camp.Wolf && world.getComponent(id, COMPONENT.Camp)?.camp !== Camp.Good)
     )
       throw new Error("scholar_mentor_original_roster_invalid");
     const expected = aliveLifeDescriptor(life);
@@ -220,7 +221,7 @@ export function installScholarMentorBoard(world: World): void {
       throw new Error("scholar_mentor_original_roster_invalid");
     if (
       ownData(role, "role") === undefined ||
-      ownData(role, "camp") === undefined ||
+      ownData(world.getComponent(id, COMPONENT.Camp), "camp") === undefined ||
       ownData(role, "privateState") === undefined
     )
       throw new Error("scholar_mentor_original_roster_invalid");
@@ -244,7 +245,7 @@ export function installScholarMentorBoard(world: World): void {
       id,
       role,
       roleName: role.role,
-      camp: role.camp,
+      camp: world.getComponent(id, COMPONENT.Camp)?.camp,
       privateState: role.privateState,
       identity,
       seat,

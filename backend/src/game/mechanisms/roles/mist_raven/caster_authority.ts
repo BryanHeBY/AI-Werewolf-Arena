@@ -1,6 +1,7 @@
 /**
  * 负责炼金魔女／狼鸦之爪的原角色、阵营、身份与生命授权，输入为 World、参与者和夜序。
  * 输出为原当前性检查、脱离知识与经授权的雾／蛇／额外刀提交；资源绑定及槽写入归 state-slot。
+ * 阵营只取已捕获 Camp 的 own-data，组件替换／字段变化仍撤权，不向 Role 写镜像。
  * 不变量：原体、身份或生命撤权后禁止新付款；原首次死亡仅可读取已付款效果／保留知识。
  * 夜初 ravenChecked 先写再转换，后续失败不重开检查；不修补被替换的槽或重复保存库存。
  */
@@ -65,7 +66,7 @@ export class MistCasterAuthority {
     if (
       !role ||
       own(role, "role") !== caster ||
-      own(role, "camp") !== this.camp ||
+      own(campComponent, "camp") !== this.camp ||
       own(campComponent, "camp") !== this.camp ||
       !life ||
       !this.factoryLife(life) ||
@@ -115,7 +116,7 @@ export class MistCasterAuthority {
     if (
       this.world.getComponent(this.actorId, COMPONENT.Role) !== this.role ||
       own(this.role, "role") !== this.caster ||
-      own(this.role, "camp") !== this.camp ||
+      own(this.campComponent, "camp") !== this.camp ||
       this.world.getComponent(this.actorId, COMPONENT.Camp) !== this.campComponent ||
       own(this.campComponent, "camp") !== this.camp ||
       own(this.role, "privateState") !== this.privateState ||

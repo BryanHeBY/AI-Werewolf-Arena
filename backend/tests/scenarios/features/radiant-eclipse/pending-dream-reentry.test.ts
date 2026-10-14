@@ -47,7 +47,7 @@ function fixture() {
   for (const kind of roles) {
     const id = world.createEntity(),
       camp = kind === Role.EclipseMaid || kind === Role.Wolf ? Camp.Wolf : Camp.Good,
-      role = createRoleComponent(kind, camp);
+      role = createRoleComponent(kind);
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, createCampComponent(camp));
     world.addComponent(

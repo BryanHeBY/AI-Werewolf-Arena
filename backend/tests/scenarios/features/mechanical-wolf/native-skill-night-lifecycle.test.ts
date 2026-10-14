@@ -137,6 +137,7 @@ function stageContext(
     factory = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
+    get requestFactory() { return GameActionRequestFactory; },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -207,7 +208,7 @@ for (const locale of ["zh-CN", "en"] as const)
         .map((r) => r.context.stage),
     ).toEqual(["mechanical_mimic"]);
     expect(game.role.role).toBe(Role.MechanicalWolf);
-    expect(game.role.camp).toBe(Camp.Wolf);
+    expect(game.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
     expect(game.state.learned).toEqual({
       targetId: 5,
       role: Role.Guard,
@@ -225,7 +226,7 @@ for (const locale of ["zh-CN", "en"] as const)
       kind: "camp",
       camp: Camp.Wolf,
     });
-    expect(canMechanicalKnife(game.role, game.world)).toBe(false);
+    expect(canMechanicalKnife(game.role, game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
     const events = game.phaseManager.getEvents();
     expect(events.filter((e) => e.type === "role_inspected").map((e) => e.payload)).toContainEqual({
       actorId: 3,

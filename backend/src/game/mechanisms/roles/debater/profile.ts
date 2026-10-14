@@ -75,7 +75,7 @@ export const DEBATER_ROLE_PROFILE: NativeRoleContributions = {
         if (toolCall.name !== "challenge") return { code: RuleError.ToolMismatch };
         if (
           role?.role !== Role.Debater ||
-          role.camp !== Camp.Good ||
+          world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good ||
           !a ||
           a.stage !== "challenge" ||
           a.actorId !== actorId ||

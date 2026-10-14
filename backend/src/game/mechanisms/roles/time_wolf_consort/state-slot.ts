@@ -4,7 +4,9 @@
  * Node Proxy／自身数据 descriptor、历史日期、重复目标和触发关联保持原政策；写入失败保留已写前缀。
  * frame 独自拥有原体、生命、能力、夜回执及 expectedState；槽不另存镜像、付款、开启窗口或授予许可。
  * 内部 JSON 只用于原运行比对，不是严格档案 codec；玩家历史可见至 day，耗尽只在触发日之后告知。
+ * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import type {
   ReflectionScope,
   TimeConsortChoice,
@@ -54,10 +56,12 @@ function arrayItems(value: unknown): unknown[] | null {
 }
 
 /** 完整原 live 校验先拒绝 Proxy，再读自身数据 descriptor；合法时保原状态／历史引用，不复制或冻结库存。 */
+// 显式 Camp source 在原 camp 点晚调用，可以执行调用方代码并抛错；返回组件保本族 descriptor／Proxy 策略，不回退角色或目录。
 export function getTimeConsortState(
   role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
 ): TimeConsortReadState | undefined {
-  if (field(role, "role") !== TIME_CONSORT_ROLE || field(role, "camp") !== Camp.Wolf)
+  if (field(role, "role") !== TIME_CONSORT_ROLE || field(currentCamp(), "camp") !== Camp.Wolf)
     return undefined;
   const state = field(field(role, "privateState"), "timeConsort");
   if (!exact(state, ["policy", "reflectionScope", "history", "triggeredDay"])) return undefined;
@@ -106,8 +110,9 @@ export function createTimeConsortState(
 export function projectTimeConsortState(
   role: RoleComponent | undefined,
   day: number,
+  currentCamp: CurrentCampSource,
 ): PlayerTimeConsortState | undefined {
-  const state = getTimeConsortState(role);
+  const state = getTimeConsortState(role, currentCamp);
   if (!state || !integer(day)) return undefined;
   const history: TimeConsortChoice[] = [];
   // 保留原 when<=day 的历史边界与逐行新副本；不能把耗尽的严格早于规则套到历史。
@@ -132,10 +137,11 @@ export function timeConsortReflectionTarget(
   sourceId: number,
   requestedId: number,
   kind: string,
+  currentCamp: CurrentCampSource,
 ): number {
   if (!integer(day) || !integer(sourceId) || !integer(requestedId))
     throw new Error("time_consort_invalid_target");
-  const state = getTimeConsortState(role);
+  const state = getTimeConsortState(role, currentCamp);
   if (!state) throw new Error("time_consort_invalid_state");
   if (sourceCamp !== Camp.Good || !["check", "guard", "poison"].includes(kind)) return requestedId;
   const choice = arrayItems(field(state, "history"))!.find((h) => field(h, "day") === day);
@@ -176,10 +182,13 @@ function triggerTimeConsortState(state: () => TimeConsortReadState, day: number)
 }
 
 /** 原身份比对先投影／拒绝，再读取 JSON.stringify 与触发日；不替代归档格式或回执权限。 */
-function encodeTimeConsortStateIdentity(role: RoleComponent): string {
-  const view = projectTimeConsortState(role, Number.MAX_SAFE_INTEGER - 1);
+function encodeTimeConsortStateIdentity(
+  role: RoleComponent,
+  currentCamp: CurrentCampSource,
+): string {
+  const view = projectTimeConsortState(role, Number.MAX_SAFE_INTEGER - 1, currentCamp);
   if (!view) throw new Error("time_consort_original_state_revoked");
-  return JSON.stringify({ ...view, triggeredDay: getTimeConsortState(role)!.triggeredDay });
+  return JSON.stringify({ ...view, triggeredDay: getTimeConsortState(role, currentCamp)!.triggeredDay });
 }
 /**
  * 本族唯一槽的方法表。schema/get 使用同一完整原校验，allowedWrites 收走原两项写入，

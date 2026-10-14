@@ -353,18 +353,24 @@ export class InitialIdentitySetupWindow {
       }
       const chosen = slot === null ? null : scope.cards[slot].card;
       const catalog = getDefaultRoleCatalog();
-      const newRole = chosen
-        ? createRoleComponent(chosen.role, catalog.getCamp(chosen.role), this.world.locale)
+      // chosen 才准备实际 Camp；创建前移是明确输入政策，retained 路径不额外查询。
+      const newCamp = chosen
+        ? createCampComponent(catalog.getCamp(chosen.role), this.world.locale)
         : null;
+      const newRole = chosen
+        ? createRoleComponent(chosen.role, this.world.locale)
+        : null;
+      const currentCamp = () => this.world.getComponent(actorId, COMPONENT.Camp);
       if (newRole)
         catalog.applyRuntime(newRole, {
           boardConfig: config,
           locale: this.world.locale,
           world: this.world,
+          initialCamp: newCamp!,
+          currentCamp,
         });
-      const newCamp = newRole ? createCampComponent(newRole.camp, this.world.locale) : null;
       const newVictory = newRole
-        ? createVictoryComponent([{ kind: "faction", faction: newRole.camp }])
+        ? createVictoryComponent([{ kind: "faction", faction: newCamp!.camp }])
         : null;
       if (!sameInitialIdentityScope(scope) || delivery.current() !== true) {
         status = "cancelled";
@@ -398,7 +404,12 @@ export class InitialIdentitySetupWindow {
         actorId,
         day: 1 as const,
         role: newRole?.role ?? initialIdentityRole(this.kind),
-        camp: newRole?.camp ?? Camp.Good,
+        camp: newRole ? (() => {
+          // 完整安装／关闭已成功；晚字段读取失败保完成前缀，不落候选安装的退休 catch。
+          const camp = currentCamp();
+          if (!camp) throw new Error("role_current_camp_missing");
+          return camp.camp;
+        })() : Camp.Good,
       };
       this.events.push(
         this.kind === "shapeshifter"

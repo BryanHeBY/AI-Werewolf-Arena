@@ -74,9 +74,9 @@ for (const locale of ["zh-CN", "en"] as const)
     });
     expect(world.getComponent(5, COMPONENT.Role)).toMatchObject({
       role: Role.Villager,
-      camp: Camp.Good,
     });
-    world.getComponent(3, COMPONENT.Role)!.camp = Camp.ThirdParty;
+    expect(world.getComponent(5, COMPONENT.Camp)!.camp).toBe(Camp.Good);
+    world.getComponent(3, COMPONENT.Camp)!.camp = Camp.ThirdParty;
     dead(world, [4]);
     expect(
       new ConditionRegistry(new WinConditionRegistry()).evaluate(world, WinCondition.SlaughterSide)!

@@ -34,8 +34,9 @@ const permissions = { recognizedByPack: true, recognizes: "pack" as const, canCh
 function fixture(trace: string[] = []) {
   const world = new World();
   const players = [Role.Wolf, Role.Villager, Role.Villager].map((kind, i) => {
-    const id = world.createEntity(), role = createRoleComponent(kind, i === 0 ? Camp.Wolf : Camp.Good);
+    const id = world.createEntity(), role = createRoleComponent(kind);
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: i === 0 ? Camp.Wolf : Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     return { id, role };
   });

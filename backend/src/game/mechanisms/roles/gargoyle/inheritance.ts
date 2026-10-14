@@ -4,6 +4,7 @@
  * 刷新先写继承标记，后发表觉醒事实，发表失败不退标记；本模块不改角色或从未提交死亡推断继承。
  * 查验完成通过轻公开记账端口晚读，不能以公开函数或合法状态形状重新授权旧请求。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
@@ -11,24 +12,30 @@ import type { World } from "../../../../core/domain/world";
 import { getGargoyleState, recordGargoyleKnifeInheritance } from "./state";
 import { completedGargoyleInspection } from "../role_inspection/night-commit-ports";
 
-export function canGargoyleKnife(role: RoleComponent, world?: World): boolean {
+export function canGargoyleKnife(role: RoleComponent, world: World | undefined, currentCamp: CurrentCampSource): boolean {
   if (
     !world ||
     role.role !== Role.Gargoyle ||
-    role.camp !== Camp.Wolf ||
+    currentCamp()?.camp !== Camp.Wolf ||
     getGargoyleState(role)?.hasInheritedKnife !== true ||
     !completedGargoyleInspection(world, role)
   )
     return false;
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => {
+      const role = world.getComponent(id, COMPONENT.Role);
+      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+    });
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 export function refreshGargoyleInheritance(world: World, events: GameEvent[], day: number): void {
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => {
+      const role = world.getComponent(id, COMPONENT.Role);
+      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+    });
   if (wolves.length !== 1) return;
   const actorId = wolves[0]!,
     role = world.getComponent(actorId, COMPONENT.Role)!,

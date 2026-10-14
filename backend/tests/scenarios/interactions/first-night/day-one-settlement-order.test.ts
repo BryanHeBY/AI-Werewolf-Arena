@@ -28,7 +28,7 @@ class DeterministicFlowProvider implements ActionProvider {
           return false;
         }
         const role = this.world.getComponent(id, COMPONENT.Role);
-        return role?.camp !== "wolf";
+        return (role && this.world.getComponent(id, COMPONENT.Camp)?.camp) !== "wolf";
       }) ?? null;
   }
 

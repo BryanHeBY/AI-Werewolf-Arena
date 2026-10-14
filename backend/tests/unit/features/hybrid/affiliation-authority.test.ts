@@ -184,7 +184,8 @@ for (const locale of ["zh-CN", "en"] as const)
         remaining: 0,
         choice: { day: 1, targetId: target },
       });
-      expect(role(game)).toMatchObject({ role: Role.Hybrid, camp: Camp.Good });
+      expect(role(game)).toMatchObject({ role: Role.Hybrid });
+      expect(game.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
       expect(getDefaultRoleCatalog().requireMetadata(Role.Hybrid).goodSide).toBe("villager");
       expect(resolveInspection(game.world, 1, "camp", getDefaultRoleCatalog())).toEqual({
         kind: "camp",
@@ -196,7 +197,7 @@ for (const locale of ["zh-CN", "en"] as const)
       });
       expect(knownWolfTeammates(game.world, 1, getDefaultRoleCatalog())).toEqual([]);
       expect(knownWolfTeammates(game.world, 2, getDefaultRoleCatalog())).not.toContain(1);
-      expect(wolfTeamPermissions(role(game), getDefaultRoleCatalog(), game.world)).toEqual({
+      expect(wolfTeamPermissions(role(game), getDefaultRoleCatalog(), () => game.world.getComponent(1, COMPONENT.Camp), game.world)).toEqual({
         recognizedByPack: false,
         recognizes: "none",
         canChat: false,
@@ -240,7 +241,7 @@ for (const locale of ["zh-CN", "en"] as const)
       );
       if (locale === "en")
         expect(renderRolePrompt(role(game), locale)).not.toMatch(/[\u4e00-\u9fff]/);
-      role(game, target).camp = faction === "wolf" ? Camp.Good : Camp.Wolf;
+      game.world.getComponent(target, COMPONENT.Camp)!.camp = faction === "wolf" ? Camp.Good : Camp.Wolf;
       game.world.getComponent(target, COMPONENT.Alive)!.alive = false;
       game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
       expect(victory(game).affiliations).toEqual([{ kind: "faction", faction }]);
@@ -348,7 +349,7 @@ for (const point of ["await", "gateway"] as const)
         if (change === "actor_role") game.world.addComponent(1, COMPONENT.Role, { ...role(game) });
         if (change === "actor_state")
           (role(game).privateState as Record<string, unknown>).hybrid = { ...state };
-        if (change === "actor_camp") role(game).camp = Camp.Wolf;
+        if (change === "actor_camp") game.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Wolf;
         if (change === "victory_component")
           game.world.addComponent(1, COMPONENT.Victory, createVictoryComponent([]));
         if (change === "victory_push")
@@ -359,7 +360,7 @@ for (const point of ["await", "gateway"] as const)
         if (change === "target_role")
           game.world.addComponent(6, COMPONENT.Role, { ...role(game, 6) });
         if (change === "target_camp")
-          role(game, 6).camp = role(game, 6).camp === Camp.Good ? Camp.Wolf : Camp.Good;
+          game.world.getComponent(6, COMPONENT.Camp)!.camp = game.world.getComponent(6, COMPONENT.Camp)!.camp === Camp.Good ? Camp.Wolf : Camp.Good;
       };
       const ctx = context(
         game,

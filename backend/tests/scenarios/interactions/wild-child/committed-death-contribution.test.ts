@@ -61,7 +61,7 @@ test("mandatory committed-wave contributions survive a legacy custom hook regist
   dreams.recordDeaths = () => {
     trace.push("dream");
     expect(world.getComponent(2, COMPONENT.Alive)?.alive).toBe(false);
-    expect(world.getComponent(1, COMPONENT.Role)?.camp).toBe(Camp.Wolf);
+    expect(world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Wolf);
     expect(events.some((event) => event.type === "wild_child_transformed")).toBe(true);
   };
   await resolver.resolve(

@@ -55,7 +55,7 @@ export const animalInternalConfig = () => ({
     voteWeight: 1.5,
   },
 });
-/** Raw component fixture: no Profile initialization, public board loading, PM, transport or replay. */
+/** 原始组件夹具：独立实际 Camp 槽，不初始化 Profile、不读取公开板子或运行 PM／传输／复盘。 */
 export function animalRosterFixture(
   beforeInstall?: (world: World) => void,
   install: (
@@ -81,7 +81,7 @@ export function animalRosterFixture(
   for (const [index, roleId] of roles.entries()) {
     const id = world.createEntity(),
       camp = index < 4 ? Camp.Wolf : Camp.Good,
-      role = createRoleComponent(roleId as Role, camp);
+      role = createRoleComponent(roleId as Role);
     if (roleId === "white_cat")
       (role.privateState as Record<string, unknown>).whiteCat = freshWhiteCatState();
     if (roleId === "fox_cub")

@@ -22,7 +22,6 @@ test("initialization reads the private-state left side before creating and stori
   const store: Record<string, unknown> = {};
   const role: RoleInitializationComponent = {
     role: Role.GhostBride,
-    camp: Camp.ThirdParty,
     get privateState() {
       trace.push("left-side");
       return store;

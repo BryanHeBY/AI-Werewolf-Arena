@@ -15,37 +15,39 @@ import {
   matchingExchangePairs,
   mapTricksterExileTarget,
 } from "../../../../src/game/mechanisms/roles/trickster/exile_mapping";
+// 测试自持当前 Camp，不经旧 Role 属性或隐藏映射提供阵营。
+const fixtureCamp = { camp: Camp.Wolf };
+const currentCamp = () => fixtureCamp;
 function role(state: unknown = createTricksterState()): RoleComponent {
   return {
     role: "trickster",
-    camp: Camp.Wolf,
     privateState: { trickster: state },
   } as unknown as RoleComponent;
 }
 test("trickster immutable choice consumes distinct numbers and canonicalizes pair", () => {
   const r = role(),
-    before = projectTricksterState(r)!;
-  const next = nextTricksterChoice(r, 1, [4, 2], [1, 2, 3, 4]);
+    before = projectTricksterState(r, currentCamp)!;
+  const next = nextTricksterChoice(r, 1, [4, 2], [1, 2, 3, 4], currentCamp);
   expect(next.history).toEqual([{ day: 1, pair: [2, 4] }]);
-  expect(projectTricksterState(r)).toEqual(before);
-  expect(() => nextTricksterChoice(role(next), 2, [2, 3], [1, 2, 3, 4])).toThrow(
+  expect(projectTricksterState(r, currentCamp)).toEqual(before);
+  expect(() => nextTricksterChoice(role(next), 2, [2, 3], [1, 2, 3, 4], currentCamp)).toThrow(
     "trickster_target_invalid",
   );
-  expect(nextTricksterChoice(role(next), 2, null, [1, 3]).history).toHaveLength(2);
+  expect(nextTricksterChoice(role(next), 2, null, [1, 3], currentCamp).history).toHaveLength(2);
 });
 test("trickster cannot voluntarily pass consecutive nights", () => {
-  const one = nextTricksterChoice(role(), 1, null, [1, 2]);
-  expect(() => nextTricksterChoice(role(one), 2, null, [1, 2])).toThrow(
+  const one = nextTricksterChoice(role(), 1, null, [1, 2], currentCamp);
+  expect(() => nextTricksterChoice(role(one), 2, null, [1, 2], currentCamp)).toThrow(
     "trickster_consecutive_pass",
   );
-  const two = nextTricksterChoice(role(one), 2, [1, 2], [1, 2]);
-  expect(nextTricksterChoice(role(two), 3, null, [3, 4]).history).toHaveLength(3);
+  const two = nextTricksterChoice(role(one), 2, [1, 2], [1, 2], currentCamp);
+  expect(nextTricksterChoice(role(two), 3, null, [3, 4], currentCamp).history).toHaveLength(3);
 });
 test("trickster projection is deeply detached", () => {
   const r = role({ policy: TRICKSTER_POLICY, history: [{ day: 1, pair: [1, 2] }] });
-  const projected = projectTricksterState(r)!;
+  const projected = projectTricksterState(r, currentCamp)!;
   projected.history[0]!.pair![0] = 8;
-  expect(getTricksterState(r)!.history[0]!.pair).toEqual([1, 2]);
+  expect(getTricksterState(r, currentCamp)!.history[0]!.pair).toEqual([1, 2]);
 });
 for (const history of [
   [{ day: 1, pair: [1, 1] }],
@@ -66,7 +68,7 @@ for (const history of [
   [{ day: 1, pair: [1, Number.MAX_SAFE_INTEGER] }],
 ])
   test("trickster rejects invalid history " + JSON.stringify(history), () => {
-    expect(getTricksterState(role({ policy: TRICKSTER_POLICY, history }))).toBeUndefined();
+    expect(getTricksterState(role({ policy: TRICKSTER_POLICY, history }), currentCamp)).toBeUndefined();
   });
 test("trickster rejects accessors and proxies without invoking user code", () => {
   let calls = 0;
@@ -77,14 +79,14 @@ test("trickster rejects accessors and proxies without invoking user code", () =>
       return [];
     },
   };
-  expect(getTricksterState(role(raw))).toBeUndefined();
+  expect(getTricksterState(role(raw), currentCamp)).toBeUndefined();
   const proxy = new Proxy(createTricksterState(), {
     get() {
       calls++;
       throw new Error("accessed");
     },
   });
-  expect(getTricksterState(role(proxy))).toBeUndefined();
+  expect(getTricksterState(role(proxy), currentCamp)).toBeUndefined();
   const pair = [1, 2];
   Object.defineProperty(pair, "0", {
     get() {
@@ -92,16 +94,16 @@ test("trickster rejects accessors and proxies without invoking user code", () =>
       return 1;
     },
   });
-  expect(() => nextTricksterChoice(role(), 1, pair as [number, number], [1, 2])).toThrow();
+  expect(() => nextTricksterChoice(role(), 1, pair as [number, number], [1, 2], currentCamp)).toThrow();
   expect(calls).toBe(0);
 });
 test("trickster rejects foreign camp, policy and target", () => {
   const r = role();
-  r.camp = Camp.Good;
-  expect(getTricksterState(r)).toBeUndefined();
-  expect(getTricksterState(role({ policy: "unknown", history: [] }))).toBeUndefined();
-  expect(() => nextTricksterChoice(role(), 1, [1, 3], [1, 2])).toThrow();
-  expect(() => nextTricksterChoice(role(), 0, [1, 2], [1, 2])).toThrow();
+  const wrongCamp = { camp: Camp.Good };
+  expect(getTricksterState(r, () => wrongCamp)).toBeUndefined();
+  expect(getTricksterState(role({ policy: "unknown", history: [] }), currentCamp)).toBeUndefined();
+  expect(() => nextTricksterChoice(role(), 1, [1, 3], [1, 2], currentCamp)).toThrow();
+  expect(() => nextTricksterChoice(role(), 0, [1, 2], [1, 2], currentCamp)).toThrow();
 });
 test("trickster maps only final output once and preserves passed input", () => {
   const pair: [number, number] = [2, 6];
@@ -112,7 +114,7 @@ test("trickster maps only final output once and preserves passed input", () => {
   expect(pair).toEqual([2, 6]);
 });
 test("identical unordered pairs cancel effects without mutating spent history", () => {
-  const state = nextTricksterChoice(role(), 1, [2, 6], [2, 6]);
+  const state = nextTricksterChoice(role(), 1, [2, 6], [2, 6], currentCamp);
   expect(matchingExchangePairs([2, 6], [6, 2])).toBe(true);
   expect(mapTricksterExileTarget(2, state.history[0]!.pair, [6, 2])).toBe(2);
   expect(state.history).toEqual([{ day: 1, pair: [2, 6] }]);

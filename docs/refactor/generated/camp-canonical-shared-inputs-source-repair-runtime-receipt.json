@@ -1,0 +1,12 @@
+{
+  "command": "bun --no-env-file test backend/tests/unit/agents/bilingual-player-prompt.test.ts --test-name-pattern '^player original text and explicit injected profile/directive text survive both locales$'",
+  "outputPath": "docs/refactor/generated/camp-canonical-shared-inputs-source-repair-runtime-output.txt",
+  "result": {
+    "chunk_id": "4a5c82",
+    "wall_time_seconds": 0.052998471,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "scope": "First selected original bilingual public flat Catalog input case; source now uses actual World Camp instead of a Good fixture object."
+}

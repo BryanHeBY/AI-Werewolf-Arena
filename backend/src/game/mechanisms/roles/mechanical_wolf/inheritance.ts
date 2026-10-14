@@ -1,8 +1,9 @@
 /**
- * Checks Mechanical Wolf knife succession and records its inherited knife fact. Inputs are
- * actual surviving wolves and original mechanical state; outputs retain the current inheritance
- * predicate. It never changes the copied skill inventory or the player role/camp.
+ * 负责机械狼当前刀继承资格与原继承事实；输入为实际存活名单、原槽和晚阵营 source。
+ * 状态先按原点查询，再核角色／阵营／模式；无 World 时仍保守拒刀，不建立 Role 反向索引。
+ * 输出为刀权资格或原继承事实；刷新不改复制技能或真实阵营，先写继承再发表，后续错误保留已写前缀。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type EntityId, type GameEvent } from "../../../../core/domain/model";
@@ -16,13 +17,13 @@ export interface MechanicalInheritanceFact {
   readonly firstKnifeNight: number;
 }
 
-/** Queries are conservative and never create inheritance or restore past mode authority. */
-export function canMechanicalKnife(role: RoleComponent, world?: World): boolean {
+/** 只读资格保持保守分支，不创建继承，也不恢复已失效的本夜模式。 */
+export function canMechanicalKnife(role: RoleComponent, world: World | undefined, currentCamp: CurrentCampSource): boolean {
   const state = getMechanicalState(role);
   if (
     !world ||
     role.role !== Role.MechanicalWolf ||
-    role.camp !== Camp.Wolf ||
+    currentCamp()?.camp !== Camp.Wolf ||
     !state ||
     !mechanicalKnifeSelected(state, state.mode?.day ?? 0) ||
     !hasCurrentMechanicalKillMode(world, role)
@@ -30,11 +31,14 @@ export function canMechanicalKnife(role: RoleComponent, world?: World): boolean 
     return false;
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => {
+      const role = world.getComponent(id, COMPONENT.Role);
+      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+    });
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 
-/** Called only by assembly or the death owner after marking the complete actual proposal. */
+/** 仅装配或死亡 owner 提交完整实际死亡后调用；事实副本不授当前刀权。 */
 export function refreshMechanicalInheritance(
   world: World,
   day: number,
@@ -42,7 +46,10 @@ export function refreshMechanicalInheritance(
 ): MechanicalInheritanceFact[] {
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => {
+      const role = world.getComponent(id, COMPONENT.Role);
+      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+    });
   if (wolves.length !== 1) return [];
   const actorId = wolves[0]!,
     role = world.getComponent(actorId, COMPONENT.Role)!;

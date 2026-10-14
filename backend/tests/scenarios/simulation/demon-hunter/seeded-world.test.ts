@@ -40,7 +40,7 @@ for (const size of [6, 12] as const)
               const role = game.world.getComponent(id, COMPONENT.Role)!;
               return [
                 id,
-                { ref: role, role: role.role, camp: role.camp, state: role.privateState },
+                { ref: role, role: role.role, camp: game.world.getComponent(id, COMPONENT.Camp)!.camp, state: role.privateState },
               ];
             }),
           );
@@ -65,7 +65,7 @@ for (const size of [6, 12] as const)
             const actual = game.world.getComponent(id, COMPONENT.Role)!;
             expect(actual).toBe(expected.ref);
             expect(actual.role).toBe(expected.role);
-            expect(actual.camp).toBe(expected.camp);
+            expect(game.world.getComponent(id, COMPONENT.Camp)!.camp).toBe(expected.camp);
             expect(actual.privateState).toBe(expected.state);
           }
           const publicDead = new Set<number>();

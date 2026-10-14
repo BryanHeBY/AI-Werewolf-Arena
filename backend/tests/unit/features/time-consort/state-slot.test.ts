@@ -9,6 +9,10 @@ import type { TimeConsortReadState, TimeConsortState } from "@ai-werewolf-arena/
 import { Camp, type RoleComponent } from "../../../../src/core";
 import { TIME_CONSORT_STATE_SLOT as SLOT } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state-slot";
 
+// worldless 数据样本只持显式 Camp 句柄，不建立 Role→World／Camp 回退。
+const fixtureCamp = { camp: Camp.Wolf };
+const currentCamp = () => fixtureCamp;
+
 test("slot initialization preserves container, scope, creation and throwing setter order", () => {
   const trace: string[] = [], fault = new Error("time_slot_setter_failure");
   let observed: unknown;
@@ -65,7 +69,7 @@ test("trigger write failures keep their prefix and identity reads the trigger af
   const valid: TimeConsortState = SLOT.create();
   valid.history.push({ day: 1, targetId: 3 });
   valid.triggeredDay = 1;
-  const role = { role: "time_wolf_consort", camp: Camp.Wolf, privateState: { timeConsort: valid } } as unknown as RoleComponent;
+  const role = { role: "time_wolf_consort", privateState: { timeConsort: valid } } as unknown as RoleComponent;
   const original = Object.getOwnPropertyDescriptor(JSON, "stringify")!;
   let encoded: string, receiver: unknown;
   try {
@@ -76,7 +80,7 @@ test("trigger write failures keep their prefix and identity reads the trigger af
         return function(this: unknown, value: unknown) { receiver = this; return original.value(value); };
       },
     });
-    encoded = SLOT.checkpoint.identity(role);
+    encoded = SLOT.checkpoint.identity(role, currentCamp);
   } finally { Reflect.defineProperty(JSON, "stringify", original); }
   expect(receiver).toBe(JSON);
   expect(JSON.parse(encoded)).toEqual({ policy: "awa_time_consort_reflection_v1", reflectionScope: "whole_night", history: [{ day: 1, targetId: 3 }], exhausted: true, triggeredDay: null });

@@ -1,0 +1,381 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+      "sha256": "30985b731e3b5c7a724726032f2b824d2bb525d9a6c567df58d9a03e5f2d09a9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/reflection.ts",
+      "sha256": "851b726cf0eb0dd66c10e3f38c4200da7c877bb0c92889c9f9b3e22f147086eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/state-slot.ts",
+      "sha256": "37a4224510990cf5b5a11bb3d8e73f1942e1b7839a13fd60902048e0ed733aef"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "21dde886d372423af2cd775c6e9e8f7884a010f2a5933109de0e200aa9f58784"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "sha256": "85e775ebfe49de6c957fef3283c0e2922dde3ae793bb4e5d06d0c842e26350e6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "sha256": "b9fb9c3334487faa7872bb4e73b715b96777fdf9547c89af0b3df341d3271c60"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "sha256": "01e69672ea7dbb0b3f350b5a73b86b4f053742472a70ca85b7e09a671d056904"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "sha256": "2e3702bfc73afa429fbe5321cf69bd6e1b81966edb6e8d0f039bd2c6eb75687a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+      "sha256": "8f2f6132047eed467bf10ebd5ba28ba057848567de443a6db2e94a8fe77dccc4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "sha256": "312c196d739d282553558cff6072b58f09381eec6b8b4dcf783e67599f6393f3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+      "sha256": "839649a123665a47ed584bbfe22c539dcb847e602ec63ebe31237307b587e7a8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+      "sha256": "9820bce4d1874a46ad224d3f29005f2e4cad313aba2d78a01be11d076838bdaf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+      "sha256": "32d07ebf00bdce854a950b4d50957cac4d3057c8b82bcbc0e4daa5f9506c0f7e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "sha256": "ab2c6604f5dec40028de336d1b92f0294bedefd9829d77e9a217cd0c5855f0a0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+      "sha256": "79c8b2602502b38e5f4d7e4ad11abe51b858f191d73a604d2e35b968bbc9fda5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+      "sha256": "d48466065082ccf61e7ae38008d010f8435f7e24b7349c78bb9ef13e4cdc5703"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+      "sha256": "1df08aacc30111c3a7de68136b1ca4fb7a95df73adcfbab7dca2e95e90a5c85b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "sha256": "3a41b3175342f8d1cd5be7574e5f752d193daf05411ddf11bd830b621a70c920"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "6671366dd3f8c35ec069032d13ddef978edce2d30bb56f54ac3deb770fc3693d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/profile.ts",
+      "sha256": "b562ba24acc24ccab15ecf41850da134610c226658d713dbd468a454af268de5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/state-slot.ts",
+      "sha256": "299c8283309222fbc63686c713c238cf5594520de9596853e0b15f54476cc664"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "sha256": "f128abadcd67a93d5c1e6727f446eb10dd833458e48e7b82ba2843e828ea11be"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "sha256": "1256ebae5357a16e2ea23a769a458000e63aa00373686c8957009abb5f093a95"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "sha256": "218f7130cf909a2bd8231091506341a5e8c0dba4e52d44b86a2164670a06afba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "sha256": "81e9a863cb9172b6d7d0acc962c7b89b2f654aa228806ceac062b8617b3e4039"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_frame.ts",
+      "sha256": "da838d97dd736d95d08dac4a232cfc2ad58a21adc7a2867a6550c83c5ecca818"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "sha256": "10c667d97b5c71f818d4f6a6fc90a881fbb4ba43187b96de47fefcc2439898d2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/profile.ts",
+      "sha256": "149d6eac2e9377f397b1c2b760251483494fcdd4135dab709c5e9d7c9aebcc2f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/state-slot.ts",
+      "sha256": "d2f4812e6b356a99eeb5b38d18bffcfb895f84dc98a991fcaf796e93d46cb93b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "sha256": "4399e9de3931c6b297c266d4321fc6e64bb7a9c764716efcff4cebdce2d74943"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_stages.ts",
+      "sha256": "9b41b933aefde53911839e5112b3eb4fd4b13c02e3eff4ed07a33cc16ff56f37"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+      "sha256": "fce0e72d6f347fc86c47d967f3ff017fc9e150600926ce5a7c1db5a56057b098"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+      "sha256": "6d2db06aa54a798f587d85cdb14a7b8a782633c81adf3037487a5fa18ff1886f"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+      "sha256": "affc0c6fd0d86ded8be67710836503d9ee67159523f2fd41606a78e45635eb9c"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts",
+      "sha256": "4b3a71b86eeb4699599d0d7b23ababc7e171a6b640083f5ab7b1b678f098e1b8"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+      "sha256": "1b40308ff62b5c548b789076e11d2fcf576f3ede0381e48c5b0c90ebabee82a3"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+      "sha256": "4b9a67c0043f6d830d79e31ef88e06cc80172b820f4e9a3828ebc7813658785a"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+      "sha256": "a9345b4f649b310e8782d9368270a3e65c2bc865191ef073ba71d3f794178fda"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+      "sha256": "349e4b81ec7722a0b998b0fe209f288640a773dc182e4e258875a4da563094e6"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+      "sha256": "bc3b75990aeaff092abf410322b90ec4ca977546f0b12c8e50658b0b52e8f821"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+      "sha256": "d0f12f832ce3475b395d845e8170ac066f6b1844e5c4ec19bc524bfed1da1c82"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/trickster/seeded-world.test.ts",
+      "sha256": "d824eaa0f682c95c3f558733413f4d2a9a35c82e9185d1a8bef182d2943fe021"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+      "sha256": "60a0c147fdc1d68df1be74f56f53bf3420dce0d5891afe282f4f0da83b64bd7f"
+    },
+    {
+      "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+      "sha256": "9938891c33d3cb005673eb1445a92a5ab11eb0a3f16e4b7d59817f7fe97a1ad8"
+    },
+    {
+      "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+      "sha256": "e78380c5cfb6c380a31caa0ff2315c2bc3baaef6ed7363e6fc6a628b0173a83f"
+    },
+    {
+      "path": "backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+      "sha256": "590784ac51a954c9beffdc2171661c79881ba59e108c0ff628245b7162e01aad"
+    },
+    {
+      "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+      "sha256": "f92d89d1b9c596c5bee8d257bde8b65ecc8c3dc9f9194f2da009539cc6a91e4b"
+    },
+    {
+      "path": "backend/tests/unit/configuration/evil-knight-configuration.test.ts",
+      "sha256": "3c3ee85c88ecdb3bb2d267ba4521ad629864b1442ccd3240c48807e10e2ae87d"
+    },
+    {
+      "path": "backend/tests/unit/configuration/red-moon-candidate.test.ts",
+      "sha256": "970cd32de2f39fb4fc602c68e7fd54b4e681e3d93e8af6488e1ee712729021b3"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+      "sha256": "6b8212dcfce5593803862160f9ffae4ca83cdc186799f4a5dda106b751b705e7"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/evil-knight-state.test.ts",
+      "sha256": "b6ec2745990c4f7a157bfc2aaa534b489ed77141e02667861ea156002e63992a"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/state-slot.test.ts",
+      "sha256": "0d5e6d811cef637b0e79cab093fec65b7e02451cdd73390539a1f88dad17a0b9"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state-slot.test.ts",
+      "sha256": "cd2f8a7fb4b8d0a319094f499abab5cd99625debb30a318eeba8e3541d6bcee1"
+    },
+    {
+      "path": "backend/tests/unit/features/magician/state.test.ts",
+      "sha256": "3c3d424e64d73d699cf49d8e1a6a4ed6f47a41eb91a7d4ca479366cfbe6fabd4"
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/state-slot.test.ts",
+      "sha256": "59bc13ae96aec879450c11fd727618d66a6d0ccce30d7140e913b7af8ae1cbfd"
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/state.test.ts",
+      "sha256": "85f0e4c377a235d1aa72b6438241b6223c3ff7f0da716dea829e7c0d8702481f"
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/order-prince-voting.test.ts",
+      "sha256": "5dfccad17db1a394b9bf60d45df8593fcfaaae34d663fefd54c46e89d464c55e"
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/state-slot.test.ts",
+      "sha256": "1e92ea70cd8bd34cd9f5b4836a92154c7622ede61a1a2b1d23ee077677e7f6f6"
+    },
+    {
+      "path": "backend/tests/unit/features/order-prince/state.test.ts",
+      "sha256": "423f51093fb3a623df5240edcd9ce447ce2de57d6489dd56ca0197974fd723c5"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "f6968f40d5be38c0d44ac276c028177959bad528b0d87fdda4efc7713b120b76"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/exile-contribution.test.ts",
+      "sha256": "5f96850f6a525a3a8ad40a9e9566cecb1ba8283e16f89c82e4212ba8ab5cc4fd"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/foundation.test.ts",
+      "sha256": "e72272d416376b54b0f7fd85aa7fdb71202149a4415713f570bc6a15628e42d5"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/state-slot.test.ts",
+      "sha256": "166038fc2ab00c034b331729a146063882d4567888fcbba6f0ee079491937a63"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/frame.test.ts",
+      "sha256": "68a9df40f707d8b0c766feac5a3ce5e1cec04281d361eb758e5f431796561bba"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state-slot.test.ts",
+      "sha256": "cc7364cdb827cca4029ce5a3c9a1e15fcb473c80c74e68807ec95c46b7b7ba87"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state.test.ts",
+      "sha256": "38189a44d3600b0a343abf5d3c14c9ebd3c3386d0f48ee8bc42753ef3b8dac0b"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster-combination.test.ts",
+      "sha256": "2efc63b71266bb2576edc4cb1affb739ba297385d180021693a1783047f75a39"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster/frame.test.ts",
+      "sha256": "059f548dda50efb26bbca4995fdad20ab76802c25bd8861b084d73b313e95aa4"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster/state-slot.test.ts",
+      "sha256": "74b5f899658595a7dbc7d917f474287c5abf68bcfe82de04b40db88bf970c380"
+    },
+    {
+      "path": "backend/tests/unit/features/trickster/state.test.ts",
+      "sha256": "cea7fb7e3f916616e40d94f4bd8f0e1d461f9e982fc3b0d16be5ca087efb0890"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer/state-slot.test.ts",
+      "sha256": "a06478531f97e1c326b19626f60c512086d017f95dc53de3b04816f11e675079"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer/state.test.ts",
+      "sha256": "b3d3c48a92270e02a720aa37ec2e49e1bb710c3f8d06f07c845c0f076c0ffe23"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/order-prince-revote.test.ts",
+      "sha256": "be7561e180938d34639917375137469d57323332174bf0cfdf547bd4ebc792b1"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+      "sha256": "41bc1d2b233ed5e95a5a221cb378fed70c6d5cb25853e89e69924dbc3bb8e7c4"
+    }
+  ],
+  "unchangedCandidates": [
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+      "sha256": "9f7317c222f87405a649ebb4e28e80ec7ceb8f4df2a454545c3e54a4c68b6379",
+      "candidateNotChanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+      "sha256": "726e139330e587d2a85bf713122e207baceef5817081d56ebb4ed7af5c2c14cf",
+      "candidateNotChanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "sha256": "c4d7cc002c3ee614dba1735d56cf3ef4ccc464f5a69c2b8aa7ffd48a1ca1a574",
+      "candidateNotChanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/ports.ts",
+      "sha256": "2a784b5a3d22c031557fe2b52f54cc8e15885cdb8fb7e7e8a37c7d9ddfda225b",
+      "candidateNotChanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+      "sha256": "0f855e1d5d7a65941bf75c8eb8248cfe0c27508255ced563a75721e9410e6802",
+      "candidateNotChanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+      "sha256": "2f13dcd94675e783d2db58e2f1c117db031e98976efe99719b68936a3be52392",
+      "candidateNotChanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+      "sha256": "138ba5d3f0d116a56a82fdb68628f1906785bf6b2a690345c28a87509cd71f5a",
+      "candidateNotChanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+      "sha256": "40bc6486a0fa337dfa6fc7bf239c359c95e6b58d7ab77148b3040dabdb5ebe15",
+      "candidateNotChanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+      "sha256": "89a96ec1eca62bac39d8a8b051154a03b9108557cb1659d11f2b96094a44c816",
+      "candidateNotChanged": true
+    }
+  ],
+  "before": {
+    "path": "docs/refactor/generated/camp-canonical-nine-families-before.json",
+    "sha256": "674cd3f891b080e3ab83d3433b8b01c57a1df092a1239edb832152eed8632b70"
+  },
+  "edits": {
+    "path": "docs/refactor/generated/camp-canonical-nine-families-edits.json",
+    "sha256": "58dd9bedf3e405c060f93a9638e161a1c32d7b6dc3308c78a2055fe53794ee91",
+    "records": 118
+  },
+  "allSourceReady": true,
+  "checksExecuted": true,
+  "newRiskCasesPrepared": 1,
+  "notImmutableControls": "Root shared17 or other groups; linked frozen actual4ff captures carry before, no current foreign whole-byte claim.",
+  "sourceNotes": [
+    "new CurrentCampSource required tail; family-specific own-data helpers and no global Camp schema",
+    "same refs/history/schema/creation/write/paid body policies retained outside explicit input channels",
+    "Scholar unconditional source point, four identities/Order+Trick next/Time reflection/World Nightmare target actual routes",
+    "own tests trueRole badactualCamp negatives; actual Camp fixture components and worldless explicit handles",
+    "one temporary source-edit helper ModuleNotFound red before production edits, not tests/type/proof red; no green checks were run"
+  ],
+  "postFirstStaticPeerRepair": {
+    "beforePath": "docs/refactor/generated/camp-canonical-nine-families-peer-repair-before.json",
+    "beforeSHA256": "821a48793649e0a798c911bd6c074e3d0eb436a4f30e4c1bb342b3587aa010b6",
+    "changedProgramPaths": [
+      "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "backend/src/game/mechanisms/roles/trickster/state-slot.ts",
+      "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+      "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+    ],
+    "scope": "1 actual Role-query restoration plus 5 comment-only slot boundaries. First full proof/runtime/type/head retained; only phase delta and one not-yet-run original Nightmare case planned."
+  }
+}

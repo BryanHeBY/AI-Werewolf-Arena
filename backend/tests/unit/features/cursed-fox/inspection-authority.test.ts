@@ -132,7 +132,7 @@ for (const changed of ["life", "role", "camp", "state", "owner"] as const)
       role = world.getComponent(1, COMPONENT.Role)!;
     if (changed === "life") world.addComponent(1, COMPONENT.Alive, createAliveComponent(true));
     if (changed === "role") role.role = Role.Villager;
-    if (changed === "camp") role.camp = Camp.Good;
+    if (changed === "camp") world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
     if (changed === "state")
       (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
     if (changed === "owner") current = false;
@@ -223,7 +223,7 @@ for (const stage of ["native", "lucky"] as const) {
                 inspectionLabels: () => {
                   const role = world.getComponent(1, COMPONENT.Role)!;
                   role.role = Role.Villager;
-                  role.camp = Camp.Good;
+                  world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
                   (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
                   return { camp: Camp.Good };
                 },

@@ -1,7 +1,7 @@
 /**
- * Captures Mechanical Wolf owner, copied-skill and selected-mode scopes. Inputs are original
- * life, state and source identities; outputs are current mode checks and real-night commitment
- * records. It never lets replacement mode/state reuse the old mimic or knife permission.
+ * 负责机械狼原体、复制技能与已选模式范围，输入保原生命／槽／来源，输出为复验和实际本夜提交记录。
+ * 原阵营表达式晚查当前值，不新增 Camp 引用撤权；替换模式／槽仍不能复用原学习或刀权。
+ * 已付技能谓词保原资源独立性，不将行动退休混入原体复验或删除知识数据。
  */
 import type {
   MechanicalMode,
@@ -29,7 +29,7 @@ export interface MechanicalOwnerScope {
   isCurrent(): boolean;
 }
 
-/** Runtime-only references; never serialized into player state, DTOs or the Tape. */
+/** 仅运行引用，不序列化进玩家 DTO 或 Tape，也不是状态副本的授权。 */
 export function captureMechanicalOwner(
   world: World,
   actorId: EntityId,
@@ -42,7 +42,7 @@ export function captureMechanicalOwner(
     !phaseCurrent() ||
     !role ||
     role.role !== Role.MechanicalWolf ||
-    role.camp !== Camp.Wolf ||
+    world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf ||
     !state ||
     !life
   )
@@ -58,14 +58,14 @@ export function captureMechanicalOwner(
       phaseCurrent() &&
       world.getComponent(actorId, COMPONENT.Role) === role &&
       role.role === Role.MechanicalWolf &&
-      role.camp === Camp.Wolf &&
+      world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Wolf &&
       role.privateState === privateState &&
       getMechanicalState(role) === state &&
       livingNightLife(world, life),
   };
 }
 
-/** Bind a committed active effect to the exact learning and chosen mode, not resource counters. */
+/** 已提交效果绑定原学习和所选模式；不按已经消费的库存取消效果。 */
 export function bindMechanicalSkill(
   scope: MechanicalOwnerScope,
   day: number,
@@ -122,7 +122,7 @@ export function recordMechanicalNightCommit(world: World, day: number): void {
   committed.set(world, days);
 }
 
-/** Save authority only after an accepted mode choice or its explicit skill-mode default. */
+/** 接受模式选择或原明确 skill 默认后才保存本夜 authority，失败不重建旧范围。 */
 export function recordMechanicalModeScope(
   world: World,
   scope: MechanicalOwnerScope,
@@ -142,7 +142,7 @@ export function recordMechanicalModeScope(
   return true;
 }
 
-/** Read-only knife authorization; serialized mode facts alone do not restore old authority. */
+/** 只读刀权查询；序列化模式事实不能恢复已经失效的原 authority。 */
 export function hasCurrentMechanicalMode(
   world: World,
   role: RoleComponent,

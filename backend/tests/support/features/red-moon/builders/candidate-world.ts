@@ -42,15 +42,17 @@ export function redMoonCandidateWorld(policy: LastWolfBlastPolicy = "ends_game")
   const roles = config.roleSetups.flatMap((row) => Array<Role>(row.count).fill(row.role));
   const ids = roles.map((kind, i) => {
     const id = world.createEntity();
-    const role = createRoleComponent(kind, catalog.getCamp(kind), world.locale);
-    catalog.applyRuntime(role, { boardConfig: config, locale: world.locale, world });
+    const initialCamp = createCampComponent(catalog.getCamp(kind), world.locale);
+    const role = createRoleComponent(kind, world.locale);
+    const currentCamp = () => world.getComponent(id, COMPONENT.Camp);
+    catalog.applyRuntime(role, { boardConfig: config, locale: world.locale, world, initialCamp, currentCamp });
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, i + 1, "player-" + id));
     world.addComponent(id, COMPONENT.Role, role);
-    world.addComponent(id, COMPONENT.Camp, createCampComponent(role.camp, world.locale));
+    world.addComponent(id, COMPONENT.Camp, initialCamp);
     world.addComponent(
       id,
       COMPONENT.Victory,
-      createVictoryComponent([{ kind: "faction", faction: role.camp }]),
+      createVictoryComponent([{ kind: "faction", faction: initialCamp.camp }]),
     );
     world.addComponent(id, COMPONENT.Alive, createAliveComponent(true, world.locale));
     world.addComponent(id, COMPONENT.StatusMarks, createStatusMarksComponent(world.locale));

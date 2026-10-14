@@ -43,7 +43,7 @@ function fixture(locale: "zh-CN" | "en" = "zh-CN") {
   for (const kind of roles) {
     const id = world.createEntity(),
       camp = kind === Role.Wolf ? Camp.Wolf : Camp.Good,
-      role = createRoleComponent(kind, camp);
+      role = createRoleComponent(kind);
     if (String(kind) === DEMON_HUNTER_ROLE)
       (role.privateState as Record<string, unknown>).demonHunter = freshDemonHunterState();
     if (kind === Role.Witch)
@@ -135,7 +135,7 @@ for (const [targetId, expected] of [
       { scope } = turn(f);
     expect(commitDemonHunt(f.world, scope, hunt(targetId))).toEqual({ day: 2, targetId });
     expect(f.role).toBe(nativeRole);
-    expect(f.role.camp).toBe(Camp.Good);
+    expect(f.world.getComponent(6, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     expect((f.role.privateState as { readonly demonHunter?: unknown }).demonHunter).toBe(state);
     expect(projectDemonHunter(f.world, f.role)?.history).toEqual([{ day: 2, targetId }]);
     expect(freezeDemonHunt(f.world)).toEqual({
@@ -271,9 +271,9 @@ for (const variant of [
       f.world.addComponent(
         6,
         COMPONENT.Role,
-        createRoleComponent(DEMON_HUNTER_ROLE as Role, Camp.Good),
+        createRoleComponent(DEMON_HUNTER_ROLE as Role),
       );
-    if (variant === "camp") f.role.camp = Camp.Wolf;
+    if (variant === "camp") f.world.getComponent(6, COMPONENT.Camp)!.camp = Camp.Wolf;
     if (variant === "state")
       (f.role.privateState as Record<string, unknown>).demonHunter = freshDemonHunterState();
     if (variant === "victory")

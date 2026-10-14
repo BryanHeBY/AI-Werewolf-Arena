@@ -1,6 +1,6 @@
 /**
  * 负责全 55 个内建角色在展示时的具体状态捕获。输入为原角色对象、当前语言和原上下文
- * World 引用；输出为原拼接规则的提示字符串，每次只把已选标量／已序列化知识交纯展示包，立即完成该片段后才继续读后段。
+ * World 引用及晚读当前阵营 source；输出为原拼接规则的提示字符串，每次只把已选标量／已序列化知识交纯展示包，立即完成该片段后才继续读后段。
  * 原生文案使用原不绑定 ability_id 的选择规则，不能用请求观察的赠予／借用状态替代。
  * 这里不复制库存、不授予权限、不提前读取 World 或冻结演员；失败保留已读取前缀。
  */
@@ -16,6 +16,7 @@ import {
 import { formatNativeRolePart } from "@ai-werewolf-arena/game-presentation";
 import type { RoleComponent } from "../../core/domain/components/role";
 import type { World } from "../../core/domain/world";
+import type { CurrentCampSource } from "../../core/domain/components/camp";
 import { COMPONENT } from "../../core/domain/components/names";
 import { inspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { nativeMirror, freshMirrorInspectionState } from "../mechanisms/roles/mirror_girl/ports";
@@ -196,13 +197,13 @@ const capture_night_mentor = (
 const capture_time_wolf_consort = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world?: World,
+  world: World | undefined, currentCamp: CurrentCampSource,
 ): string =>
   nativeText(locale, "role.time_wolf_consort.brief") +
   " " +
   nativeText(
     locale,
-    getTimeConsortState(role)?.reflectionScope === "first_effect"
+    getTimeConsortState(role, currentCamp)?.reflectionScope === "first_effect"
       ? "role.time_wolf_consort.scope_first_effect"
       : "role.time_wolf_consort.scope_whole_night",
   );
@@ -210,12 +211,12 @@ const capture_time_wolf_consort = (
 const capture_wolf_sorcerer = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world?: World,
+  world: World | undefined, currentCamp: CurrentCampSource,
 ): string =>
   nativeText(locale, "role.wolf_sorcerer.brief") +
   " " +
   nativeText(locale, "role.wolf_sorcerer.first_night", {
-    day: getWolfSorcererState(role)?.firstNight ?? 2,
+    day: getWolfSorcererState(role, currentCamp)?.firstNight ?? 2,
   });
 
 const capture_trickster = (_role: RoleComponent, locale: Locale = "zh-CN", world?: World): string =>
@@ -227,8 +228,8 @@ const capture_order_prince = (
   world?: World,
 ): string => nativeText(locale, "role.order_prince.brief");
 
-const capture_magician = (role: RoleComponent, locale: Locale = "zh-CN", world?: World): string => {
-  const state = getMagicianState(role);
+const capture_magician = (role: RoleComponent, locale: Locale = "zh-CN", world: World | undefined, currentCamp: CurrentCampSource): string => {
+  const state = getMagicianState(role, currentCamp);
   return [
     nativeText(locale, "role.magician.brief"),
     nativeText(locale, "role.magician.trickster_rule"),
@@ -247,9 +248,9 @@ const capture_magician = (role: RoleComponent, locale: Locale = "zh-CN", world?:
 const capture_red_moon_apostle = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world?: World,
+  world: World | undefined, currentCamp: CurrentCampSource,
 ): string => {
-  const state = getRedMoonState(role);
+  const state = getRedMoonState(role, currentCamp);
   return (
     nativeText(locale, "role.red_moon_apostle.state", {
       blastDay: state?.blastDay ?? nativeText(locale, "replay.none"),
@@ -268,9 +269,9 @@ const capture_red_moon_apostle = (
 const capture_nightmare = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world?: World,
+  world: World | undefined, currentCamp: CurrentCampSource,
 ): string => {
-  const state = getNightmareShadowState(role);
+  const state = getNightmareShadowState(role, currentCamp);
   return [
     nativeText(locale, "role.nightmare.state"),
     nativeText(
@@ -291,9 +292,9 @@ const capture_nightmare = (
 const capture_evil_knight = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world?: World,
+  world: World | undefined, currentCamp: CurrentCampSource,
 ): string => {
-  const state = getEvilKnightState(role);
+  const state = getEvilKnightState(role, currentCamp);
   return (
     nativeText(locale, "role.evil_knight.state", { remaining: state?.reflectionRemaining ?? 0 }) +
     " " +
@@ -340,9 +341,14 @@ const capture_ghost_bride = (
     ),
   });
 
-const capture_wild_child = (role: RoleComponent, locale: Locale = "zh-CN", world?: World): string =>
+const capture_wild_child = (role: RoleComponent, locale: Locale = "zh-CN", world: World | undefined, currentCamp: CurrentCampSource): string =>
   nativeText(locale, "role.wild_child.state", {
-    camp: role.camp,
+    camp: (() => {
+      // 只在此实际显示字段晚查；缺少必需组件不能把初始化元数据伪装成当前阵营。
+      const camp = currentCamp();
+      if (!camp) throw new Error("role_current_camp_missing");
+      return camp.camp;
+    })(),
     state: JSON.stringify(world ? projectWildChild(world, role) : undefined),
   });
 
@@ -532,7 +538,7 @@ const capture_debater = (role: RoleComponent, locale: Locale = "zh-CN", world?: 
 const capture_hidden_wolf = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world?: World,
+  world: World | undefined, currentCamp: CurrentCampSource,
 ): string =>
   nativeText(
     locale,
@@ -546,10 +552,10 @@ const capture_hidden_wolf = (
       locale,
       getHiddenWolfState(role)?.hasInheritedKnife === true ? "common.yes" : "common.no",
     ),
-    active: nativeText(locale, canHiddenWolfKnife(role, world) ? "common.yes" : "common.no"),
+    active: nativeText(locale, canHiddenWolfKnife(role, world, currentCamp) ? "common.yes" : "common.no"),
   });
 
-const capture_gargoyle = (role: RoleComponent, locale: Locale = "zh-CN", world?: World): string => {
+const capture_gargoyle = (role: RoleComponent, locale: Locale = "zh-CN", world: World | undefined, currentCamp: CurrentCampSource): string => {
   const report = getRoleInspectionState(role)?.history.at(-1);
   return (
     nativeText(
@@ -566,7 +572,7 @@ const capture_gargoyle = (role: RoleComponent, locale: Locale = "zh-CN", world?:
         locale,
         getGargoyleState(role)?.hasInheritedKnife === true ? "common.yes" : "common.no",
       ),
-      active: nativeText(locale, canGargoyleKnife(role, world) ? "common.yes" : "common.no"),
+      active: nativeText(locale, canGargoyleKnife(role, world, currentCamp) ? "common.yes" : "common.no"),
     }) +
     (report
       ? " " +
@@ -786,7 +792,7 @@ const capture_idiot = (_roleComp: RoleComponent, locale: Locale = "zh-CN", world
 /** 这张表只选择具体捕获程序，不读取角色或 World，也不作为角色数据 shape 约束。 */
 const nativeCaptures: Record<
   NativeRolePresentationId,
-  (role: RoleComponent, locale: Locale, world?: World) => string
+  (role: RoleComponent, locale: Locale, world: World | undefined, currentCamp: CurrentCampSource) => string
 > = {
   white_cat: capture_white_cat,
   fox_cub: capture_fox_cub,
@@ -848,7 +854,9 @@ export function captureNativeRolePresentation(
   id: NativeRolePresentationId,
   role: RoleComponent,
   locale: Locale,
-  world?: World,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
 ): string {
-  return nativeCaptures[id](role, locale, world);
+  // 表只传输入；语言及前段失败仍在各具体捕获点，source未被dispatcher提前执行。
+  return nativeCaptures[id](role, locale, world, currentCamp);
 }

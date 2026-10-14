@@ -1,9 +1,11 @@
 /**
  * 负责 定序王子 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 当前阵营通过调用方的晚读 source 传入；目录阵营仅为初值，不替代现场 Camp 或授予许可。
  * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { COMPONENT } from "../../../../core/domain/components/names";
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -71,7 +73,7 @@ export const ORDER_PRINCE_ROLE_PROFILE: NativeRoleContributions = {
     validationRules: {
       reset_exile_vote: ({ world, role, actorId, day, phase, toolCall }) => {
         if (
-          !getOrderPrinceState(role) ||
+          !getOrderPrinceState(role, () => world.getComponent(actorId, COMPONENT.Camp)) ||
           day === undefined ||
           phase !== Phase.Voting ||
           toolCall.name !== "reset_exile_vote" ||
@@ -81,8 +83,8 @@ export const ORDER_PRINCE_ROLE_PROFILE: NativeRoleContributions = {
         return null;
       },
     },
-    baselineAction: (role, request) =>
-      request.allowedTools.includes("reset_exile_vote") && getOrderPrinceState(role)
+    baselineAction: (role, request, _pick, _pickCamp, _locale, _world, currentCamp) =>
+      request.allowedTools.includes("reset_exile_vote") && getOrderPrinceState(role, currentCamp)
         ? { name: "reset_exile_vote", args: { activate: true } }
         : null,
   },

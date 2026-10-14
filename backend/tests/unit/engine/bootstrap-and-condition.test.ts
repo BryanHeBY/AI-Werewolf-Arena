@@ -33,8 +33,7 @@ describe("PhaseManager", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const aliveIds = context.world.getAliveEntityIds();
     const goodIds = aliveIds.filter((id) => {
-      const role = context.world.getComponent(id, COMPONENT.Role);
-      return role?.camp === Camp.Good;
+      return context.world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good;
     });
     // 6人局初始 2狼4好，击杀两名好人后达到 2狼2好，满足“狼人达半”。
     for (let i = 0; i < 2; i++) {

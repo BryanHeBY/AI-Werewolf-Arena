@@ -62,7 +62,7 @@ describe("LlmActionProvider audit", () => {
       players: context.world.entityIds().map((id) => ({
         player_id: id,
         role: context.world.getComponent(id, COMPONENT.Role)?.role ?? "unknown",
-        camp: context.world.getComponent(id, COMPONENT.Role)?.camp ?? "unknown",
+        camp: context.world.getComponent(id, COMPONENT.Camp)?.camp ?? "unknown",
         alive: true,
       })),
     });
@@ -119,7 +119,7 @@ describe("LlmActionProvider audit", () => {
       players: context.world.entityIds().map((id) => ({
         player_id: id,
         role: context.world.getComponent(id, COMPONENT.Role)?.role ?? "unknown",
-        camp: context.world.getComponent(id, COMPONENT.Role)?.camp ?? "unknown",
+        camp: context.world.getComponent(id, COMPONENT.Camp)?.camp ?? "unknown",
         alive: true,
       })),
     });

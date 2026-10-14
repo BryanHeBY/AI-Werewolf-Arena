@@ -41,7 +41,7 @@ for (const locale of ["zh-CN", "en"] as const)
     camp.camp = Camp.ThirdParty;
     expect(renderCampPrompt(camp)).toContain(locale === "en" ? "Third party team" : "第三方阵营");
     expect(renderRolePrompt(role)).toContain(locale === "en" ? "Your role is Werewolf." : "狼人");
-    expect(renderRolePrompt(createRoleComponent(Role.Wolf, Camp.Wolf, locale))).toBe(
+    expect(renderRolePrompt(createRoleComponent(Role.Wolf, locale))).toBe(
       locale === "en" ? "Your role is Werewolf." : "你的底牌是【狼人】。",
     );
     expect(renderBadgePrompt(badge)).toBe(

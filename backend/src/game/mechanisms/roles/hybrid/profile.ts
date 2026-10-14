@@ -67,7 +67,7 @@ export const HYBRID_ROLE_PROFILE: NativeRoleContributions = {
           victory = world.getComponent(actorId, COMPONENT.Victory);
         if (
           role.role !== Role.Hybrid ||
-          role.camp !== Camp.Good ||
+          world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good ||
           !state ||
           day === undefined ||
           !canChooseExemplar(state, day) ||

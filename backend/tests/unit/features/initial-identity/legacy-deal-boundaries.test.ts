@@ -60,6 +60,7 @@ test("legacy Thief boundary never exposes or closes a different initial mechanis
     wolfTeamPermissions(
       g.world.getComponent(1, COMPONENT.Role)!,
       getDefaultRoleCatalog(),
+      () => g.world.getComponent(1, COMPONENT.Camp),
       g.world,
     ),
   ).toMatchObject({ canChat: false, canVoteForKill: false, recognizes: "none" });

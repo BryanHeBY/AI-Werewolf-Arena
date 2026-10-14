@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts:
+(pass) zh-CN: native Mirror keeps Good identity and specific-role privacy while repeats stay forbidden after target/owner revival and role changes [61.03ms]
+
+ 1 pass
+ 17 filtered out
+ 0 fail
+ 24 expect() calls
+Ran 1 test across 1 file. [320.00ms]

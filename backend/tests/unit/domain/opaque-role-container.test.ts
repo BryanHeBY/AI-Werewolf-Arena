@@ -25,7 +25,7 @@ void deniedCoreAccess;
 test("Eclipse projection preserves original slot getter order and detached state", () => {
   const calls: string[] = [],
     state = { policy: "awa_radiant_eclipse_v1", history: [] },
-    role = createRoleComponent(Role.EclipseMaid, Camp.Wolf);
+    role = createRoleComponent(Role.EclipseMaid);
   Object.defineProperty(role, "privateState", {
     get() {
       calls.push("privateState");
@@ -46,7 +46,7 @@ test("Eclipse projection preserves original slot getter order and detached state
 
 test("Eclipse slot failure stays before the existing detached reader", () => {
   const fault = new Error("literal_slot_failure"),
-    role = createRoleComponent(Role.EclipseMaid, Camp.Wolf),
+    role = createRoleComponent(Role.EclipseMaid),
     trace: string[] = [];
   Object.defineProperty(role, "privateState", {
     value: {
@@ -67,7 +67,7 @@ test("Eclipse slot failure stays before the existing detached reader", () => {
 });
 
 test("retired inventory query keeps the original list and fresh nullish fallback", () => {
-  const role = createRoleComponent(Role.MirrorGirl, Camp.Good),
+  const role = createRoleComponent(Role.MirrorGirl),
     original = ["native:role_check"],
     trace: string[] = [];
   Object.defineProperty(role, "privateState", {
@@ -83,7 +83,7 @@ test("retired inventory query keeps the original list and fresh nullish fallback
   });
   expect(retiredNightAbilityIds(role)).toBe(original);
   expect(trace).toEqual(["privateState", "retiredAbilityIds"]);
-  const empty = createRoleComponent(Role.Villager, Camp.Good);
+  const empty = createRoleComponent(Role.Villager);
   const first = retiredNightAbilityIds(empty),
     second = retiredNightAbilityIds(empty);
   expect(first).toEqual([]);

@@ -10,10 +10,12 @@ import {
   freshNightmareShadowState,
   getNightmareShadowState,
 } from "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";
+// 测试自持当前 Camp，不经旧 Role 属性或隐藏映射提供阵营。
+const fixtureCamp = { camp: Camp.Wolf };
+const currentCamp = () => fixtureCamp;
 function role(state: unknown): RoleComponent {
   return {
     role: "nightmare",
-    camp: Camp.Wolf,
     privateState: { nightmareShadow: state },
   } as unknown as RoleComponent;
 }
@@ -31,13 +33,13 @@ describe("nightmare shadow private state", () => {
     a.lastTarget = 2;
     a.packReady = true;
     expect(b.history).toEqual([]);
-    expect(getNightmareShadowState(role(a))).toBe(a);
+    expect(getNightmareShadowState(role(a), currentCamp)).toBe(a);
   });
   for (const fear of ["optional", "required_when_legal"] as const)
     for (const wolf of ["standard", "no_blast_no_self_knife"] as const)
       test(fear + "/" + wolf, () => {
         const state = freshNightmareShadowState(fear, wolf);
-        expect(getNightmareShadowState(role(state))).toBe(state);
+        expect(getNightmareShadowState(role(state), currentCamp)).toBe(state);
       });
   for (const [key, value] of [
     ["policy", "unknown"],
@@ -52,7 +54,7 @@ describe("nightmare shadow private state", () => {
   ] as const)
     test("reject invalid " + key + "/" + String(value), () => {
       const state = { ...freshNightmareShadowState(), [key]: value };
-      expect(getNightmareShadowState(role(state))).toBeUndefined();
+      expect(getNightmareShadowState(role(state), currentCamp)).toBeUndefined();
     });
   test("reject state getters without evaluating them", () => {
     let reads = 0;
@@ -63,7 +65,7 @@ describe("nightmare shadow private state", () => {
         return false;
       },
     });
-    expect(getNightmareShadowState(role(state))).toBeUndefined();
+    expect(getNightmareShadowState(role(state), currentCamp)).toBeUndefined();
     expect(reads).toBe(0);
   });
   test("reject proxy state and proxy role without reading traps", () => {
@@ -75,17 +77,17 @@ describe("nightmare shadow private state", () => {
       },
     };
     expect(
-      getNightmareShadowState(role(new Proxy(freshNightmareShadowState(), handler))),
+      getNightmareShadowState(role(new Proxy(freshNightmareShadowState(), handler)), currentCamp),
     ).toBeUndefined();
     expect(
-      getNightmareShadowState(new Proxy(role(freshNightmareShadowState()), handler)),
+      getNightmareShadowState(new Proxy(role(freshNightmareShadowState()), handler), currentCamp),
     ).toBeUndefined();
     expect(reads).toBe(0);
   });
   test("reject wrong role or camp", () => {
     const r = role(freshNightmareShadowState());
-    expect(getNightmareShadowState({ ...r, camp: Camp.Good })).toBeUndefined();
-    expect(getNightmareShadowState({ ...r, role: "wolf" } as RoleComponent)).toBeUndefined();
+    expect(getNightmareShadowState(r, () => ({ camp: Camp.Good }))).toBeUndefined();
+    expect(getNightmareShadowState({ ...r, role: "wolf" } as RoleComponent, currentCamp)).toBeUndefined();
   });
 });
 
@@ -94,8 +96,8 @@ test("nightmare rejects revoked history and inconsistent progression", () => {
   const state = freshNightmareShadowState();
   state.history = revoked.proxy;
   revoked.revoke();
-  expect(() => getNightmareShadowState(role(state))).not.toThrow();
-  expect(getNightmareShadowState(role(state))).toBeUndefined();
+  expect(() => getNightmareShadowState(role(state), currentCamp)).not.toThrow();
+  expect(getNightmareShadowState(role(state), currentCamp)).toBeUndefined();
   for (const value of [
     { packReady: true, lastDay: 1, lastTarget: null, history: [{ day: 1, targetId: 2 }] },
     { packReady: false, lastDay: 1, lastTarget: 2, history: [{ day: 1, targetId: 2 }] },
@@ -112,6 +114,6 @@ test("nightmare rejects revoked history and inconsistent progression", () => {
     },
   ])
     expect(
-      getNightmareShadowState(role({ ...freshNightmareShadowState(), ...value })),
+      getNightmareShadowState(role({ ...freshNightmareShadowState(), ...value }), currentCamp),
     ).toBeUndefined();
 });

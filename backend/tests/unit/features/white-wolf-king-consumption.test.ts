@@ -22,12 +22,14 @@ function fixture() {
   const world = new World("en"),
     actorId = world.createEntity(),
     targetId = world.createEntity(),
-    actor = createRoleComponent(Role.WhiteWolfKing, Camp.Wolf, "en"),
-    target = createRoleComponent(Role.Villager, Camp.Good, "en"),
+    actor = createRoleComponent(Role.WhiteWolfKing, "en"),
+    target = createRoleComponent(Role.Villager, "en"),
     actorLife = createAliveComponent(true, "en"),
     targetLife = createAliveComponent(true, "en");
   world.addComponent(actorId, COMPONENT.Role, actor);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(targetId, COMPONENT.Role, target);
+  world.addComponent(targetId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(actorId, COMPONENT.Alive, actorLife);
   world.addComponent(targetId, COMPONENT.Alive, targetLife);
   const state = setWhiteWolfKingState(actor, { canDetonate: true });

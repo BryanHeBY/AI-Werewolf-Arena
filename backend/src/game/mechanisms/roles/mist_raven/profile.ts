@@ -248,7 +248,7 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
         }
       },
     },
-    baselineAction: (role, request, pick, pickCamp, locale, world) =>
+    baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) =>
       request.allowedTools.includes("raven_knife")
         ? { name: "raven_knife", args: { target_id: null } }
         : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
@@ -258,6 +258,7 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
             pickCamp,
             locale,
             world,
+            currentCamp,
           ) ?? null),
   },
   presentation: nativeRolePresentation("raven_claw_wolf"),

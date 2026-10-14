@@ -1,0 +1,454 @@
+{
+  "approved": true,
+  "reviewer": "native_presentation_finish",
+  "scope": {
+    "path": "docs/refactor/generated/camp-canonical-shared-api-scope-final.json",
+    "sha256": "3afc13da9dcf01074228c6716e3674c52e96584d82c23a255911ff57793762ed"
+  },
+  "document": {
+    "path": "docs/refactor/camp-canonical-shared-api.md",
+    "sha256": "e1b0bfad89518a8e4c060d4a1e0f6c56256d5fb7a6764fbf58f959771541809e"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/camp-canonical-shared-api-evidence.json",
+    "sha256": "f8d11a7a96609fa1868dd4f3deb74b78ca7ae0543e27657635218a71fee3c651"
+  },
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "sha256": "f8351838d1361cab7e16abd37bbf425f9900400877a46fe5850b26127350ae9a"
+    },
+    {
+      "path": "backend/src/core/domain/components/camp.ts",
+      "sha256": "4116eae18797945fed877e9d4bb29e916a23e0b40544eebc1e0c85fea1b444d6"
+    },
+    {
+      "path": "backend/src/core/domain/components/role.ts",
+      "sha256": "ced0523d070ccd57f0d4e5183545fb28507a33090372e57d91307f7eeda2998a"
+    },
+    {
+      "path": "backend/src/game/drivers/privileged-baseline.ts",
+      "sha256": "0a3d2474f50fb76725d9321da9fb3c5b7f439524819264ff776bf846ef7af4c6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/catalog.ts",
+      "sha256": "79084bb52e17e5bfd980730e18866d7433d418e2ca650af6c4d6407a9b15e7bf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/contracts.ts",
+      "sha256": "74f05ad61ef66a52aa16625890cff3fe430bb2818521b7006a9b50a495d9544a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "sha256": "ae278c531a16f94f5a3a892a3ffcd450791770617af00cbf9f6cfa1facd84353"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "39b6e18bd4af1cb53e42d32cb3aab877baf02ea956006318b485ecc9d63334ee"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "eca6b18484df06065a9a2ee16e141f65499b79235dc984d545e0f4ce28f065ec"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "sha256": "5b7e8489084b23710d5fc1e29a978e44a59ae00f2fb869d8021f7a24e621c658"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "sha256": "746fe49427d9a845d88e0e16efd9db703ec5a1bf33e8329966b61525e9166ddc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "5ca5596b9823f17946738853253a70ea22a4312378144cbb088e471573bae459"
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "sha256": "bfc61b828b8b7da69967204f95f159d1845aa149b8ad80945b115deba76f7912"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "b12828302e3b17279caf3832d7673b5b2e226de6e55f95417ad367b227c6ce04"
+    },
+    {
+      "path": "backend/src/game/observation/role-presentation.ts",
+      "sha256": "b57f8c46e079a32df35fb719df98434717a7597180ab0ea378bcd77a63b807f6"
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "sha256": "969b216bf141ce8264f9a1e26cb64c08ee0f6c6a35e0967989e0b644b6f2746b"
+    },
+    {
+      "path": "backend/src/rulesets/wolf-tool-admission.ts",
+      "sha256": "6613fb86d4724f798a701f89da7dc737c7d638010c2c3b55a5d600af1c4aae90"
+    },
+    {
+      "path": "backend/src/core/domain/components/victory.ts",
+      "sha256": "afc4684874140fc2afab31cbae289f9cbeb3d13d29d65779b7b5bf7cd7c0ef19"
+    }
+  ],
+  "deleted": [],
+  "controls": [],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/camp-canonical-cohort-checks.json",
+      "sha256": "eeb4715b6284554805ba0bb93a443116f88667abd6a263394dc59f5a992faf35"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-before-expanded.json",
+      "sha256": "b96a74bb288777df69fabebb4a2c4a6cc5230ef4584c4d80e7cc3c63e63f02db"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-before.json",
+      "sha256": "1e52c53132a02a52910ae0ca7a91069b3bdb0f16676d72fcd5229bceb34af7e9"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-edit-tool-first-stage.json",
+      "sha256": "e7ea50777c2b5419993b2a329ddec3224fa5efe5dc7786783164b5d77cc69d13"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-edit-tool-first.py",
+      "sha256": "672c98d49cba20155377a4720f4fcb31a73aebbc771e80bc6f9d0ba94b6bacf5"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-edits.json",
+      "sha256": "024e629400251f8f025553eb6f9c0071f8c63c28ef350effdef340e19f0c2180"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-paths.json",
+      "sha256": "8648358539a10a82ab82d81e9a034a4db443028499ee9ff3966917e65117ca21"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-post-first-check-before.json",
+      "sha256": "9264f9f936d47656f178ddacddee2b8cc69da1937a00fdbe9defc7cde0f04f78"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-preflight-findings-first-snapshot.json",
+      "sha256": "2f3d9217f8c4f64e62675441a061ce99236db2aa53222bd89289426232c38d6a"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-preflight-findings.json",
+      "sha256": "bb1b33a4030d32167312dc5e9c4116aa79eab7ae9be8eae673f00a9594131aaa"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-proof.json",
+      "sha256": "695440a231d35aac4c777689fd695f51102f865c4bcb702968bce7a7c6cbb594"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-source-ready-first-checked-snapshot.json",
+      "sha256": "e2af585734673f50769ba1c975cec9244485b28a60573a45e83abb1e47f5aed1"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-source-ready-first-snapshot.json",
+      "sha256": "f8819f3453da81255b582c418dfca95256e4e9f226283fa0c7db542df763ef23"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-api-source-ready.json",
+      "sha256": "68168151074979c8b44c55e4e27292bd925476527abb51f37534c3ddfd14534e"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-proof-first-output.txt",
+      "sha256": "7c13133e5e09bf750b09e6884b93472a45a6f5376530f99c6a9bc11e9c9b1cc0"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-proof.cjs",
+      "sha256": "0360f13e6c06c2cf85df4cf9c95b6751238a5f2129b0d957c6524c19996a66f2"
+    }
+  ],
+  "independentSourceEvidence": {
+    "path": "/tmp/camp-canonical-shared-api-independent-final-source.json",
+    "sha256": "bf059f94f9c31a9c701c1c83e6bacd11dc5b89af602a5e024b05d780369f62bb",
+    "actualGitBefore": [
+      {
+        "path": "backend/src/app/bootstrap.ts",
+        "sha256": "07d32cc09ca3d45952c6c9112dc21ed040ae29746a4a8b6ff0950866ee60b192"
+      },
+      {
+        "path": "backend/src/core/domain/components/role.ts",
+        "sha256": "2ef9aeddcfec6176d2f3010a055476974d6f00004a9c555bd57fb8306e531d35"
+      },
+      {
+        "path": "backend/src/game/drivers/privileged-baseline.ts",
+        "sha256": "9a7d789cc2483eca439446952fff0a36fba1bb6088a09fa673b36b68d9f2444b"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/catalog.ts",
+        "sha256": "6a1fd6b06edb63d05a0d26ae06a62f834d62b29cea6dfc86ef2cd9d23ec9ac72"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/contracts.ts",
+        "sha256": "316e33fdb318b97896298b87168b0a0f5d3ab1ea573edc75ad73e18ba22722a9"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+        "sha256": "4cc9f9bfde4053ed9878dd26e2c6fb866aa81c8eb062e6a6db2d3f988456cf75"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+        "sha256": "15908775ab360ad2802202cb9387790bd7a269c188979af8824e5fc539593a3d"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+        "sha256": "a27cde5e18091c4509e835470d4bf1b246e92bb283e2a9877845ef65acae61b4"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+        "sha256": "835bde69cca6cca4d7cba274ba45b1a0b0bb218c5421be5f5b920bc329acac40"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "sha256": "c8744aca9ab80da9ce11b93b99d889805a0a39c6e7692a64e615f6ceb7ce9de0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+        "sha256": "c7f649af4aec9042554196d27091e3064ee3b4987a9be2e8855212175d3d6916"
+      },
+      {
+        "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "sha256": "80f9ba89b8ba5592298de82c625d7bb6bf8edf7ac6e8f3047b191408b988e62f"
+      },
+      {
+        "path": "backend/src/game/observation/role-presentation.ts",
+        "sha256": "0256b108a21c4c8aaf9cc5118b5457a5dac5e8293fa80f3e58b1ba7cbed21419"
+      },
+      {
+        "path": "backend/src/rulesets/self-destruct-window.ts",
+        "sha256": "8ad5e9b0c10721d87450ca4d4d519363ab7724eac240e26f6b314b0a3eaaa52f"
+      },
+      {
+        "path": "backend/src/rulesets/wolf-tool-admission.ts",
+        "sha256": "7e173c7ac467c3da79eeedc9f02a0d1f52b7831e6d4286a16beedb2085e337f6"
+      },
+      {
+        "path": "backend/src/core/domain/components/camp.ts",
+        "sha256": "e25dfb25783bed0f9756066282318b488bb8ffed8531c30b6f9289eba873b02e"
+      },
+      {
+        "path": "backend/src/core/domain/components/victory.ts",
+        "sha256": "cf078b5e8707fb17736f9bd453c4f66d8363f01baeb39bf78052b632aefc7059"
+      }
+    ],
+    "wholePreciseForwards": [
+      {
+        "path": "backend/src/app/bootstrap.ts",
+        "sha256": "f8351838d1361cab7e16abd37bbf425f9900400877a46fe5850b26127350ae9a",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 4
+      },
+      {
+        "path": "backend/src/core/domain/components/role.ts",
+        "sha256": "ced0523d070ccd57f0d4e5183545fb28507a33090372e57d91307f7eeda2998a",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 7
+      },
+      {
+        "path": "backend/src/game/drivers/privileged-baseline.ts",
+        "sha256": "0a3d2474f50fb76725d9321da9fb3c5b7f439524819264ff776bf846ef7af4c6",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 3
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/catalog.ts",
+        "sha256": "79084bb52e17e5bfd980730e18866d7433d418e2ca650af6c4d6407a9b15e7bf",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 7
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/contracts.ts",
+        "sha256": "74f05ad61ef66a52aa16625890cff3fe430bb2818521b7006a9b50a495d9544a",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 8
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+        "sha256": "ae278c531a16f94f5a3a892a3ffcd450791770617af00cbf9f6cfa1facd84353",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 1
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+        "sha256": "39b6e18bd4af1cb53e42d32cb3aab877baf02ea956006318b485ecc9d63334ee",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 1
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+        "sha256": "eca6b18484df06065a9a2ee16e141f65499b79235dc984d545e0f4ce28f065ec",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 4
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+        "sha256": "5b7e8489084b23710d5fc1e29a978e44a59ae00f2fb869d8021f7a24e621c658",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 4
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "sha256": "746fe49427d9a845d88e0e16efd9db703ec5a1bf33e8329966b61525e9166ddc",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 12
+      },
+      {
+        "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+        "sha256": "5ca5596b9823f17946738853253a70ea22a4312378144cbb088e471573bae459",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 1
+      },
+      {
+        "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "sha256": "bfc61b828b8b7da69967204f95f159d1845aa149b8ad80945b115deba76f7912",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 22
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "sha256": "b12828302e3b17279caf3832d7673b5b2e226de6e55f95417ad367b227c6ce04",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 14
+      },
+      {
+        "path": "backend/src/game/observation/role-presentation.ts",
+        "sha256": "b57f8c46e079a32df35fb719df98434717a7597180ab0ea378bcd77a63b807f6",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 4
+      },
+      {
+        "path": "backend/src/rulesets/self-destruct-window.ts",
+        "sha256": "969b216bf141ce8264f9a1e26cb64c08ee0f6c6a35e0967989e0b644b6f2746b",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 2
+      },
+      {
+        "path": "backend/src/rulesets/wolf-tool-admission.ts",
+        "sha256": "6613fb86d4724f798a701f89da7dc737c7d638010c2c3b55a5d600af1c4aae90",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 8
+      },
+      {
+        "path": "backend/src/core/domain/components/camp.ts",
+        "sha256": "4116eae18797945fed877e9d4bb29e916a23e0b40544eebc1e0c85fea1b444d6",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 1
+      },
+      {
+        "path": "backend/src/core/domain/components/victory.ts",
+        "sha256": "afc4684874140fc2afab31cbae289f9cbeb3d13d29d65779b7b5bf7cd7c0ef19",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 2
+      }
+    ],
+    "actualNewAbsent": []
+  },
+  "semanticReview": [
+    "Role.camp and old constructor parameter expressly retired; Role only role/privateState, CampComponent unique actual runtime data",
+    "Same initialCamp draft is installed; default Victory queries installed Camp only original fallback field; custom membership no extra query or World ctx",
+    "Catalog original init/locale/render getter and receiver order retained; ()=>ctx.currentCamp() invokes source only real capture point",
+    "Initial chosen draft/init and completed currentCamp fact field are distinct; retained fixedGood and F05a partial install catch preserved",
+    "No-world wolf/self-destruct callback source explicit; constants may ignore it; actor entry F05a guards remain; knowledge/paid not globally filtered",
+    "All nine real Observation project calls now receive required late Camp source; native capture dispatcher forwards source without evaluation",
+    "Static six missing tails and unbound window world closed before checks; Role head responsibility-only fix closed first actual head red"
+  ],
+  "resolvedFindings": [
+    "Observation six source omissions; this.world late receiver; finding-path metadata; scope-specific MD before-template precision; Role head first diagnostic"
+  ],
+  "findings": [],
+  "sharedReceiptBinding": {
+    "path": "docs/refactor/generated/camp-canonical-cohort-checks.json",
+    "sha256": "eeb4715b6284554805ba0bb93a443116f88667abd6a263394dc59f5a992faf35",
+    "attachments": [
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-checked-first-fence.json",
+        "sha256": "2ea0cd3be0109af49043e49d4011c11ec30c3e3c661a475df0ec7970538e97bf"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-fence.json",
+        "sha256": "5ffe15bafc7b286b18ef18095468a9f475020c3a28fcc4f1094e2882a1a998f6"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-first-output.txt",
+        "sha256": "dd616123513ae741955a58863a3790134a44964a54dcf080c6ab0d1e970f0834"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-first-output.txt",
+        "sha256": "8cca0ae58a9fd5e3da0bd1e65ad3f068815eb1b7f3c5fef017707bd6496c2f18"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-first.json",
+        "sha256": "c9001a79bd544e358e3add649184475756677d84da36d6bf9bcc03ea286b2be4"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-shared-proof-first-output.txt",
+        "sha256": "7c13133e5e09bf750b09e6884b93472a45a6f5376530f99c6a9bc11e9c9b1cc0"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-shared-api-proof.json",
+        "sha256": "695440a231d35aac4c777689fd695f51102f865c4bcb702968bce7a7c6cbb594"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-shared-support-proof.json",
+        "sha256": "bf4e53652760b1d923b6fc00b0c0616f6d6d122ee30990bfa2f54b04c6eaf8d6"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-config-first.json",
+        "sha256": "b65d18ed6bbd957d4925c907694debf28b601ad6cc4fe242d99d720adc1ac08c"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-config-first-output.txt",
+        "sha256": "760269d0a2a26a300dce82b5786ddf07b4ad07c6fa612d16a74f6007fa21d51d"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-config.json",
+        "sha256": "8cb75a60b3585f48f3aef433f9cd687a3ec1c8a4b1683ab4b16a4867d2159d01"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-input.json",
+        "sha256": "365ba770ddb8b53b82518021a2839fcc54000367c7b9ddb170366134fee4cacf"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-output.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-repair-output.txt",
+        "sha256": "c81015edbbe30a412431a30b666bbe0c19a306e3ec5c13e7e803344f733e67dd"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-repair.json",
+        "sha256": "1e3ce62a0a1785327c6fb2179881322f58e8e09fa3295df5f8dab7a617c59f62"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-missing-role-roster-runtime-first-output.txt",
+        "sha256": "55a1d2d047a7ac26d820448bccf915031719c167c68524c05369d5bc3687c35d"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-missing-role-roster-source-ready.json",
+        "sha256": "d8368ca26bf5c6d5fd3c710c2c9f4b10d88e119bdedd75aa6e08aeaa9ce9ba86"
+      }
+    ],
+    "firstFullTypeExit": 2,
+    "finiteFailedChangedType40Exit": 0,
+    "firstHeads331Exit": 1,
+    "failedNewHeads14Exit": 0,
+    "notClaimedFullBackendPostRepairPass": true
+  },
+  "integrity": {
+    "fresh": 18,
+    "actualOldGit": 18,
+    "newAbsent": 0,
+    "completeForwardInverse": 18,
+    "artifacts": 16,
+    "mismatches": []
+  },
+  "limits": [
+    "Reviewer only read actual source/full diff/Git/text/hash/docs/proof/receipts; no author script, compiler, head, runtime, business load or architecture gate invoked.",
+    "Camp source/constructor/descriptor/nullable/initialization failure behaviors are explicit F05b API policy, not arbitrary old getter/prototype/CJS/whole-cold equivalence.",
+    "No all55 actor authority, all-role schema or P9/final behavioral acceptance claimed.",
+    "Own Ref57 producer audit belongs to separate author scope and is not approved by this non-author report."
+  ]
+}

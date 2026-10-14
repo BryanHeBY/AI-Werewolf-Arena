@@ -17,8 +17,10 @@ import { publishInitialIdentityDeal } from "../../../../src/game/mechanisms/role
 function fixture(kind: "thief" | "shapeshifter") {
   const world = new World();
   const ids = [world.createEntity(), world.createEntity()];
-  world.addComponent(ids[0]!, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf));
-  world.addComponent(ids[1]!, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(ids[0]!, COMPONENT.Role, createRoleComponent(Role.Wolf));
+  world.addComponent(ids[0]!, COMPONENT.Camp, { camp: Camp.Wolf });
+  world.addComponent(ids[1]!, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(ids[1]!, COMPONENT.Camp, { camp: Camp.Good });
   for (const id of ids) world.addComponent(id, COMPONENT.Alive, createAliveComponent());
   world.addComponent(ids[0]!, COMPONENT.Victory, createVictoryComponent([{ kind: "faction", faction: Camp.Wolf }]));
   world.addComponent(ids[1]!, COMPONENT.Victory, createVictoryComponent([{ kind: "faction", faction: Camp.Good }]));

@@ -52,8 +52,9 @@ test("runtime catalog rejects duplicate or missing profiles", () => {
     "role_profile_duplicate",
   );
   expect(() => createRoleCatalog([]).getCamp(Role.Seer)).toThrow("role_profile_not_registered");
-  const component = createRoleComponent(Role.Wolf, Camp.Wolf);
-  getDefaultRoleCatalog().applyRuntime(component);
+  const component = createRoleComponent(Role.Wolf);
+  const initialCamp = { camp: Camp.Wolf };
+  getDefaultRoleCatalog().applyRuntime(component, { initialCamp, currentCamp: () => initialCamp });
   component.role = "awakened_knight" as Role;
   expect(() => renderRolePrompt(component)).toThrow("role_profile_not_registered");
 });

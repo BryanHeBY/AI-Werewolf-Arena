@@ -3,6 +3,7 @@
  * 输出是当前恐惧／狼刀阻断查询和原提交结果；仅原名单参与，组件替换不能悄然重开夜。
  * 数据构造、校验、写入和身份编码归同族状态槽；本 frame 保留 expectedState 更新和夜字段提交顺序。
  * 失败保留已写前缀，不以玩家投影或恐惧文案替代原生命／能力复验，也不回滚历史或补做关闭。
+ * 当前 Camp 在原字段点由实际 World 查询；保原值比较，不把同值组件替换改成新的引用撤权。
  */
 import type {
   NightmareShadowReadState,
@@ -53,7 +54,7 @@ function captureRole(world: World, id: EntityId) {
   const role = world.getComponent(id, COMPONENT.Role);
   if (!role) throw new Error("nightmare_roster_missing");
   const kind = role.role,
-    camp = role.camp,
+    camp = world.getComponent(id, COMPONENT.Camp)?.camp,
     privateState = role.privateState;
   const life = world.getComponent(id, COMPONENT.Alive);
   const descriptor = life && aliveLifeDescriptor(life);
@@ -90,7 +91,7 @@ function captureRole(world: World, id: EntityId) {
       lifeCurrent() &&
       world.getComponent(id, COMPONENT.Role) === role &&
       role.role === kind &&
-      role.camp === camp &&
+      world.getComponent(id, COMPONENT.Camp)?.camp === camp &&
       role.privateState === privateState &&
       refs.every(
         ([key, value]) => (privateState as Readonly<Record<string, unknown>>)[key] === value,
@@ -129,9 +130,9 @@ const boards = new WeakMap<World, Board>();
 export function installNightmareBoard(world: World): void {
   if (boards.has(world)) throw new Error("nightmare_board_reinstall");
   const roster = world.entityIds().map((id) => captureRole(world, id));
-  const actors = roster.filter((row) => getNightmareShadowState(row.role));
+  const actors = roster.filter((row) => getNightmareShadowState(row.role, () => world.getComponent(row.id, COMPONENT.Camp)));
   if (actors.length !== 1) throw new Error("nightmare_actor_count");
-  const state = getNightmareShadowState(actors[0].role)!;
+  const state = getNightmareShadowState(actors[0].role, () => world.getComponent(actors[0].id, COMPONENT.Camp))!;
   boards.set(world, {
     actorId: actors[0].id,
     state,
@@ -149,7 +150,7 @@ export function assertNightmareRosterCurrent(world: World): void {
   if (
     world.entityIds().length !== board.roster.length ||
     board.roster.some((row) => !row.current()) ||
-    getNightmareShadowState(world.getComponent(board.actorId, COMPONENT.Role)) !== board.state ||
+    getNightmareShadowState(world.getComponent(board.actorId, COMPONENT.Role), () => world.getComponent(board.actorId, COMPONENT.Camp)) !== board.state ||
     NIGHTMARE_SHADOW_STATE_SLOT.checkpoint.identity(board.state) !== board.expectedState
   )
     throw new Error("nightmare_roster_revoked");
@@ -205,7 +206,8 @@ export function commitNightmareFear(
   const target = targetId === null ? null : captureNightLife(world, targetId);
   if (targetId !== null && !target) throw new Error("nightmare_fear_target_invalid");
   const wolfBlocked =
-    targetId !== null && world.getComponent(targetId, COMPONENT.Role)?.camp === Camp.Wolf;
+    targetId !== null && !!world.getComponent(targetId, COMPONENT.Role) &&
+    world.getComponent(targetId, COMPONENT.Camp)?.camp === Camp.Wolf;
   NIGHTMARE_SHADOW_STATE_SLOT.allowedWrites.recordFear(() => board.state, day, targetId);
   board.expectedState = NIGHTMARE_SHADOW_STATE_SLOT.checkpoint.identity(board.state);
   night.committed = true;

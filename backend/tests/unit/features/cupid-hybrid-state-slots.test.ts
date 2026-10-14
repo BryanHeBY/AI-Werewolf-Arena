@@ -47,7 +47,7 @@ function context(game: ReturnType<typeof fixture>, events: GameEvent[], action: 
 
 test("Cupid init captures the original assignment container before a late policy failure", () => {
   const trace: string[] = [], error = new Error("late_policy_failure");
-  const role = createRoleComponent(Role.Cupid, Camp.Good) as RoleInitializationComponent;
+  const role = createRoleComponent(Role.Cupid) as RoleInitializationComponent;
   const container = {};
   Object.defineProperty(container, "cupid", {
     get() { trace.push("slot:get"); return undefined; },
@@ -58,7 +58,7 @@ test("Cupid init captures the original assignment container before a late policy
     get() { trace.push("container"); return container; },
     configurable: true,
   });
-  const ctx: RoleInitContext = {
+  const ctx: Pick<RoleInitContext, "boardConfig"> = {
     get boardConfig() {
       trace.push("board");
       return {

@@ -47,12 +47,13 @@ for (const c of cases) {
   test(`${c.role}: publication rejection retains the original inherited reference without killing its owner`, () => {
     const world = new World("en"),
       id = world.createEntity(),
-      role = createRoleComponent(c.role, Camp.Wolf, "en"),
+      role = createRoleComponent(c.role, "en"),
       life = createAliveComponent(true, "en"),
       events: GameEvent[] = [],
       failure = new Error("inheritance_publication_failed"),
       accesses: unknown[] = [];
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Wolf });
     world.addComponent(id, COMPONENT.Alive, life);
     const state = c.install(role, { hasInheritedKnife: false });
     let inherited = false;
@@ -89,11 +90,13 @@ for (const c of cases) {
     const world = new World("en"),
       id = world.createEntity(),
       peer = world.createEntity(),
-      role = createRoleComponent(c.role, Camp.Wolf, "en"),
+      role = createRoleComponent(c.role, "en"),
       events: GameEvent[] = [];
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Wolf });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent(true, "en"));
-    world.addComponent(peer, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf, "en"));
+    world.addComponent(peer, COMPONENT.Role, createRoleComponent(Role.Wolf, "en"));
+    world.addComponent(peer, COMPONENT.Camp, { camp: Camp.Wolf });
     world.addComponent(peer, COMPONENT.Alive, createAliveComponent(true, "en"));
     const state = c.install(role, { hasInheritedKnife: false });
     let reads = 0;

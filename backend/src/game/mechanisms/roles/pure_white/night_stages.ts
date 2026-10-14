@@ -2,6 +2,7 @@
  * 负责纯白之女与狼巫各自原生角色查验政策。
  * 输入为共享只读查询后的当前 actor、合法目标和验证行动；输出保留历史及既定攻击效果。
  * 三个状态读取与历史追加委托 RoleInspection 具体 writer，use 委托实例 owner，仍在原位置。
+ * 目标阵营只晚查真实值；已付攻击保原 owner／target谓词，不添加动作墓碑或组件引用撤权。
  * 不合并阵营／角色查验、失败语义或阶段顺序，不引入最终目标复检。
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
@@ -50,7 +51,7 @@ async function execute(ctx: NightStageContext, policy: "pure_white" | "wolf_witc
       pureWhiteInspectionTargets(ctx.world, actorId, policy).map((id) => {
         const life = captureNightLife(ctx.world, id);
         const role = ctx.world.getComponent(id, COMPONENT.Role);
-        return [id, { life, role, identity: role?.role, camp: role?.camp }] as const;
+        return [id, { life, role, identity: role?.role, camp: role == null ? undefined : ctx.world.getComponent(id, COMPONENT.Camp)?.camp }] as const;
       }),
     );
     if (!current()) continue;
@@ -91,7 +92,7 @@ async function execute(ctx: NightStageContext, policy: "pure_white" | "wolf_witc
       livingNightLife(ctx.world, target.life) &&
       ctx.world.getComponent(targetId, COMPONENT.Role) === target.role &&
       target.role.role === target.identity &&
-      target.role.camp === target.camp &&
+      ctx.world.getComponent(targetId, COMPONENT.Camp)?.camp === target.camp &&
       pureWhiteInspectionTargets(ctx.world, actorId, policy).includes(targetId);
     if (!targetCurrent()) throw new Error("pure_white_inspection_target_stale");
     const result = resolveInspection(ctx.world, targetId, "role", ctx.roleCatalog);

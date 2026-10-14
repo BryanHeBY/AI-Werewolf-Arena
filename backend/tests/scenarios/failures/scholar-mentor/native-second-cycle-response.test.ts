@@ -126,7 +126,7 @@ for (const variant of [
       expect(events.some((e) => e.type === "modifier_bonus_resolved")).toBe(false);
       expect(events.some((e) => e.type === "night_resolved")).toBe(false);
       const state = scholarMentorStateForRole(
-        game.world.getComponent(scholar, COMPONENT.Role),
+        game.world.getComponent(scholar, COMPONENT.Role), () => game.world.getComponent(scholar, COMPONENT.Camp)
       )!;
       const choiceInvalid =
         variant === "missing-choice" || variant === "invalid-mode" || variant === "invalid-target";

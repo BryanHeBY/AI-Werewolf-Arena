@@ -105,7 +105,7 @@ function rejectedLiveWrites(
 void rejectedLiveWrites;
 
 test("installation copies input while all/find/active return the same unfrozen stored references", () => {
-  const role = createRoleComponent(Role.Seer, Camp.Good),
+  const role = createRoleComponent(Role.Seer),
     input: NightAbilityStates["seer_check"] = {
       lastTarget: null,
       lastIsWerewolf: null,
@@ -125,7 +125,7 @@ test("installation copies input while all/find/active return the same unfrozen s
 });
 
 test("actor enumeration exposes the same read alias and existing metadata commands update that instance", () => {
-  const role = createRoleComponent(Role.Seer, Camp.Good);
+  const role = createRoleComponent(Role.Seer);
   installNativeAbility(role, "seer_check", { lastTarget: null, lastIsWerewolf: null, history: [] });
   const selected = findNightAbility(role, "seer_check")!,
     query = createNightAbilityActorQuery(

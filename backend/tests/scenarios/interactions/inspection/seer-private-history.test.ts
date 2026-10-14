@@ -86,7 +86,7 @@ for (const locale of ["zh-CN", "en"] as const) {
           isWerewolf: inspectedCamp === Camp.Wolf,
         },
       ]);
-      expect(world.getComponent(1, COMPONENT.Role)!.camp).toBe(Camp.Wolf);
+      expect(world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
       const state = getSeerState(world.getComponent(3, COMPONENT.Role)!)!;
       expect(state.lastResult).toEqual({ kind: "camp", camp: inspectedCamp });
       expect(state.history).toEqual([

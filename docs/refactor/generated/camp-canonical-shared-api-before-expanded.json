@@ -1,0 +1,19 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "originalSnapshot": {
+    "path": "docs/refactor/generated/camp-canonical-shared-api-before.json",
+    "sha256": "1e52c53132a02a52910ae0ca7a91069b3bdb0f16676d72fcd5229bceb34af7e9",
+    "sourceCount": 17
+  },
+  "additionalSource": [
+    {
+      "path": "backend/src/core/domain/components/victory.ts",
+      "mode": "100644",
+      "blob": "6ce13f3d45f35bfe80f3e07d13725b8b4a88be2b",
+      "sha256": "cf078b5e8707fb17736f9bd453c4f66d8363f01baeb39bf78052b632aefc7059",
+      "text": "/**\n * 负责玩家胜利归属组件的结构与创建。输入为明确 affiliations，输出经共享 reader 校验复制后的组件；胜利归属与 Role.camp、技能独立。\n * 运行组件仍归 World 持有，创建器不推断真实阵营、不选择胜者或授予行动许可。\n */\nimport type { VictoryAffiliation } from \"@ai-werewolf-arena/game-contract\";\nimport { readVictoryAffiliations } from \"@ai-werewolf-arena/replay-contract\";\n\n/** 独立胜利成员归属，与 Role.camp 和能力刻意分开。 */\nexport interface VictoryComponent {\n  affiliations: VictoryAffiliation[];\n}\nexport function createVictoryComponent(\n  affiliations: readonly VictoryAffiliation[],\n): VictoryComponent {\n  return { affiliations: readVictoryAffiliations(affiliations) };\n}\n"
+    }
+  ],
+  "totalOwnedCandidates": 18,
+  "scope": "Victory comment mentions retired Role.camp; exact comment-only precision correction, original body retained."
+}

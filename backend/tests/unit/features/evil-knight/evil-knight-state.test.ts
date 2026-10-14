@@ -91,7 +91,7 @@ for (const mode of ["role", "state", "camp", "policy", "life", "revive"] as cons
       (f.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
         evilKnight: freshEvilKnightState(),
       };
-    if (mode === "camp") f.role.camp = Camp.Good;
+    if (mode === "camp") f.world.getComponent(f.knight, COMPONENT.Camp)!.camp = Camp.Good;
     if (mode === "policy") f.state.shotPolicy = "hunter_shot_bypasses";
     if (mode === "life") f.world.addComponent(f.knight, COMPONENT.Alive, createAliveComponent());
     if (mode === "revive") {
@@ -144,7 +144,7 @@ test("state reading rejects accessor fields without executing them", () => {
       return 1;
     },
   });
-  expect(getEvilKnightState(f.role)).toBeUndefined();
+  expect(getEvilKnightState(f.role, () => f.world.getComponent(f.knight, COMPONENT.Camp))).toBeUndefined();
   expect(read).toBe(0);
 });
 for (const marks of [

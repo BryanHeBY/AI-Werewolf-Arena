@@ -29,13 +29,14 @@ import type { RoleInitializationComponent } from "../../../src/game/mechanisms/r
 function fixture() {
   const world = new World("en"),
     id = world.createEntity(),
-    role = createRoleComponent(Role.Villager, Camp.Good),
+    role = createRoleComponent(Role.Villager),
     privateState = { custom: [{ amount: 2 }] },
     marks = createStatusMarksComponent("en");
   (role as RoleInitializationComponent).privateState = privateState;
   marks.add(StatusMark.GuardMark);
   world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, 4, "literal-name"));
   world.addComponent(id, COMPONENT.Role, role);
+  world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(id, COMPONENT.Alive, createAliveComponent(true, "en"));
   world.addComponent(id, COMPONENT.Badge, createBadgeComponent(false, false, "en"));
   world.addComponent(id, COMPONENT.VotingRight, createVotingRightComponent(1, true, "en"));

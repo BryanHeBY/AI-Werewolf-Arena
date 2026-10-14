@@ -60,12 +60,12 @@ function ordinaryReadersCannotWrite(
 void ordinaryReadersCannotWrite;
 
 test("plain installation keeps its original input reference while Mechanical keeps its original copy", () => {
-  const hunterRole = createRoleComponent(Role.Hunter, Camp.Good),
+  const hunterRole = createRoleComponent(Role.Hunter),
     input = { canShoot: true },
     installed = setHunterState(hunterRole, input);
   expect(installed).toBe(input);
   expect(getHunterState(hunterRole)).toBe(input);
-  const mechanicalRole = createRoleComponent(Role.MechanicalWolf, Camp.Wolf),
+  const mechanicalRole = createRoleComponent(Role.MechanicalWolf),
     data = freshMechanicalState(),
     copied = setMechanicalState(mechanicalRole, data);
   expect(copied).not.toBe(data);

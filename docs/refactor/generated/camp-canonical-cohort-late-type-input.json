@@ -1,0 +1,16 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "sha256": "2e3702bfc73afa429fbe5321cf69bd6e1b81966edb6e8d0f039bd2c6eb75687a"
+    },
+    {
+      "path": "backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+      "sha256": "18d01e4aa855174b573d66841787e1c267b815849f85843b2b704b83c73e8247"
+    }
+  ],
+  "limits": [
+    "Only late repaired Nightmare frame and real Wolf Camp fixture root; no repeat of earlier 40/root sources or successful cases.",
+    "Five slot comment-only changes and one unused named-import removal have whole-program / actual-output bridges, no additional behavior/type gate."
+  ]
+}

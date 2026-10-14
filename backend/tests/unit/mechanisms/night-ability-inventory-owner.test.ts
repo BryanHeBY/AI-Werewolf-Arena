@@ -40,7 +40,7 @@ function retiredMetadataAndInternalRootExports() {
 void retiredMetadataAndInternalRootExports;
 
 test("native retired-ID getter failure keeps the already-created empty dictionary", () => {
-  const role = createRoleComponent(Role.Guard, Camp.Good),
+  const role = createRoleComponent(Role.Guard),
     failure = Error("literal_native_retired_getter_failed"),
     trace: string[] = [],
     owned = { lastTarget: null };
@@ -66,7 +66,7 @@ test("native retired-ID getter failure keeps the already-created empty dictionar
 });
 
 test("a native source conflict preserves the stored instance, payload and counters", () => {
-  const role = createRoleComponent(Role.Guard, Camp.Good),
+  const role = createRoleComponent(Role.Guard),
     state = { lastTarget: 3 },
     replacement = { lastTarget: null };
   const existing: NightAbility<"guard"> = {
@@ -97,7 +97,7 @@ test("a native source conflict preserves the stored instance, payload and counte
 });
 
 test("Eclipse initialization retains its preceding state installation when dictionary clearing fails", () => {
-  const role = createRoleComponent(Role.EclipseMaid, Camp.Wolf) as RoleInitializationComponent,
+  const role = createRoleComponent(Role.EclipseMaid) as RoleInitializationComponent,
     failure = Error("literal_eclipse_dictionary_setter_failed"),
     previous = { "gift:old": { remaining: 1 } },
     trace: string[] = [];
@@ -126,7 +126,8 @@ test("Eclipse initialization retains its preceding state installation when dicti
   });
   let caught: unknown;
   try {
-    ECLIPSE_MAID_ROLE_PROFILE.runtime.init!(role, {});
+    const initialCamp = { camp: Camp.Wolf };
+    ECLIPSE_MAID_ROLE_PROFILE.runtime.init!(role, { initialCamp, currentCamp: () => initialCamp });
   } catch (error) {
     caught = error;
   }

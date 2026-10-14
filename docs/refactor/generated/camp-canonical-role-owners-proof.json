@@ -1,0 +1,1682 @@
+{
+  "approved": true,
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/src/core/domain/original-participant.ts",
+      "sha256": "c3ed6480f467f51d4bede580119226ffa3927c32b7b011602486423f444132c8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "c25a953a4b7aa8aadc955c4e516d7b0e7f8a7cbe0c496019ab6989dd30d91b6b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts",
+      "sha256": "6177b2859382df1e4649ee7971dc2f6c8b9bf56c057ac17fb308a4bacf9f0776"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "sha256": "661a171bc61f0bda82c236c154e8427cd342309e1de841649603a8daade6ee31"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "0f517f7e9825c33a48f1d88a02ca74ea4cbc587a61ab129af455699793d54e23"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "sha256": "45d372dcd7a8f6ce253adda4c6fcbf4cdc84503e6fed82052dedbfa3fc692d82"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "sha256": "44bb5627508eee472d8cd3eec4477a8cc064f31096df26467beffef86b5258a5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "sha256": "0b3e7b100cb96cc835ee2ff4db604b8144e4070519cf3f17432a24bfef459285"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "73c16805e5068a46ddfa56a4285f87a617584ee37c8fcae88d0926bdb5e5217b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+      "sha256": "dda3d8fe50e8d4c52301bac9baca7b199ebb9ac63cf9e125c0478b2d6912b077"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "83d3d08c5daa8782c5864484b7f78e60053b20138536f34afc8ea703a6f3caa3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "cf7ec272d7a468f1ef8d96df2580c464ad47451b9ca68cdd11a18b98d388f2e4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/victory.ts",
+      "sha256": "1327a1113a861e619904f30dc13de6a58eac0856ff1889e5aba3578fbe02fdb4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+      "sha256": "98db67f2cfa4ebed1d1e7a042a0c967b6cd539ce80b019fab3ead37420312dc8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/victory.ts",
+      "sha256": "c80cf6416962bb4c0d99c26b4c8da8285b31d91d0c7bcc2346fa5f55e154e87a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "sha256": "883050c82241de386c62bb467f837e4d7972172600955f5d688649c27fc9fd1c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "5aed9cbf6a3dd5024c6cc7ece6a24b0820f820ef0251cd35b3bf303ddc17a7f0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "e5979116849aa821d0741ef082e8df0811db57a6b5c97bbab749621b8f7469af"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "8fe289a8c0e7f5ad13a9b1f47dee6d6c2d7fcc85ffa8ccada30f23fb4fe0e398"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+      "sha256": "e3dc713c76840f0ebca986c964ee637662e7418da86905a93b199644c4c1d06a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "sha256": "7fdf17b7355524bbea802e9cdddae0e8013f8b2ed728edcc9be54f269c5e1672"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "0a2fe1768760f2539e5f4637a8e48ac9d751b54a1db3165f14a0b33267abc335"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+      "sha256": "33348d8eadb27de2e22086e5cef6ea7db2318c4bc61b60f3dc40c2dd6c3ce055"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/profile.ts",
+      "sha256": "aa093f409cefac9e690bd1b5b438dd8943c076774016575a6d90c05a57a4e181"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "60f09f95bbc6e839949b9b0254d6e89be866ef8ea59cb5fcf081b956788a6702"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "sha256": "3b8012ae79371772e9bd9dac89e1d11b5a9f17e77a1533ca74462694719f4c01"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "e7fc96c56fd078b469cc121c33447cb370c7c0c91d8c21488659c03f0fc3319f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/inspection.ts",
+      "sha256": "941750be2fc3893df1cac3c0870e7ae5917061ab34b882868ba7f919fa42d215"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "sha256": "ea640c87b52ba9001cce9e13eadeaf4a955699434f4c5f984fc6e021732b4789"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "sha256": "6735fd720f97bdb8c095119ac2ffe02e76746f3aa86892870914685c91e62b89"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "1ba929c601ef9a867fd2c6dc04d8069475d9c79980ea494d751ee56ba211137c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts",
+      "sha256": "8ee14beea93a17cdebdf366f03d95336dd31a0fed0e59ff70d422ea6393870d8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "sha256": "1f947cb0d92edc15fe85fb1e1cf27677e633788a0ae3b1cbfd5edb3c0a8aebe9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/profile.ts",
+      "sha256": "7814aa01c26eb53aa2d281a9b4cb766ea40eeb30196156205d745ef99fb983ee"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "sha256": "55c36a42dbfddb9c96d818f13480572588450d9fba7f2d4951a8ced99ddaec5c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "e1247c64a7e3d03e9269c8fe5a5346d0ab711949b56e1334c3ed7017955a1d51"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+      "sha256": "cdf435f8591dda606b7fc7c51cce1987d39c4a4292c11ff09a5c87e6a3e3563f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "sha256": "a1bc87c0b9e15faeecfe2d61e07a89f9ce8cb6713e324f6109b9400cb745095a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "sha256": "ce62ab9cd95eacf38058a82422b4ddca704d550b23de39aa8dea786a6a13a263"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+      "sha256": "b655cd1101718e20c7a789d1b1f036c7d20bd1b3b9d29410e1c70a2bdd814597"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "sha256": "35cc5290ee62e2561c42c01aa9c9cfdeec4c65218adcf9ac4409498951a2bd8e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "sha256": "5b50f0524b8d4ec7708c20288acca8be841d4a6bbbbc0b31f24ea79a7cea97e7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "154cc40f73ac8caf748b0399036f20ea6935df495a2595871565b184f5b4c237"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "1a664d10b50cc7704ab14bafdfb14bbef7d5cc545c02c13338d6c271d9bcadcd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/original_player_scope.ts",
+      "sha256": "84a72d742cb560944c5282f934bb2bccbf43b5020587138f6ed441ea15f8a8d6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "sha256": "831b30b9c7f3f92c6f8cf3779c1d10c139ec8d30536c0e3a4008ef35dbc25b10"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "sha256": "86f8be8f779e13f9a442ee1b26319919e9f852b9136355a2e34001af1241dd20"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "8d2c0c1c659f17520f3759bc1c221ee66680e0917495fe0d12431af76ca260e9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "52fc0a6a6034cab7f3594c9cf6da98bd237ab76e01a1521cff3012ec6ff283b1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "sha256": "49a4ddf2054dd3f29e991b24af2cbcd6073cf10058137c4ad2b580af381b36a5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "24fcf1365d620d5963a72d791ba426b31512daabd887c7d537aa564d4188ca65"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "sha256": "28dcc2c6309ab32d7d11c1bec481830e5b46c116166166634ad80600aad7f2e6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "sha256": "920f16dadb5b0f5727c3b32dede56816633ace8bf8eae7917eebcc714b38affb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "sha256": "7e4549cf2550883d9da7b56bd621ca69f2faf82f18bbae9b4783a3c8fdfb45dd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "sha256": "a2d122681f672e95282b1c90c6ac97f318d9e0ad7fd757a88e189a2cd04b8b89"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+      "sha256": "e1d8c32e38a42f9a5206ed6fd6360773f103ae73a1ea8f18aa5300ad275f38f7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "baed0154edc7068011e52b76dd1b9a0e861d38dc49207362b1c44e26f25401b8"
+    }
+  ],
+  "deleted": [],
+  "programs": [
+    {
+      "path": "backend/src/core/domain/original-participant.ts",
+      "beforeSha256": "66f03294e2a84d922973e1a0eb932323d0b7632bf19cefc64d09a76433bf8467",
+      "sha256": "c3ed6480f467f51d4bede580119226ffa3927c32b7b011602486423f444132c8",
+      "exactEdits": 6,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "cf817692f9ffbcf245e686d108044bceb577e58476a94e65032fe5e776de94be"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "f01472f20cfab383459c826e1e2c5222a32a4649135421f5d7abdad95d0aeff4"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "beforeSha256": "dda929882ccfd106d527166ec6bac58660a799008df9abae74599b22bd4b019d",
+      "sha256": "c25a953a4b7aa8aadc955c4e516d7b0e7f8a7cbe0c496019ab6989dd30d91b6b",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 1,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "3077609c594a5688e63bbcacdfe4ce0278b0e9ec7dce51971bc484f7139e42b6"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "93688e1b232fd976ac286da91a9cc07e9c9db5fb6568bffab98e220b8e627106"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts",
+      "beforeSha256": "af04cbb3f334a08197b3e73a19f96afe93ca90b6554d1066fd4bea23b1c18cdb",
+      "sha256": "6177b2859382df1e4649ee7971dc2f6c8b9bf56c057ac17fb308a4bacf9f0776",
+      "exactEdits": 8,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "1217a3cf81471d1c7c11a335d757425cf5c94e823adb0c24e92838eb39151f4e"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "280e2ec02b9ef959c46b931ffe3cb81c4ef49139745723dece5d6dabbca03ed5"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "beforeSha256": "21b9c80ed75728f5a8495bcf189645f7b48eb1bd7cf51959e2ba8ea69a7e4393",
+      "sha256": "661a171bc61f0bda82c236c154e8427cd342309e1de841649603a8daade6ee31",
+      "exactEdits": 6,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "4366947e7a5c872b83b22ec7dc1014632e5694389edab9395cc27f2e664e0dd3"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "f2e11370ca89706cb5b131c810f96964057201544e73d05600c1faca8bc6d3ea"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "beforeSha256": "b4d6782c6ca06f65ff1ad82eca28b8dfc018878e69e66c3b166a8009e30f2b9d",
+      "sha256": "0f517f7e9825c33a48f1d88a02ca74ea4cbc587a61ab129af455699793d54e23",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "e3948973d438cd00432cc21a71cf91d28dee5b9d6de3e16741e166f2b8149992"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "d7b5274ae75782baf1c57e55aafbd3ea81bd0229480f97b5d70eb0bbdfac8688"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "beforeSha256": "2f4efcce82abf784e4272002340f9641aed3fdb3bd19ec174c5245c2b04eee8f",
+      "sha256": "45d372dcd7a8f6ce253adda4c6fcbf4cdc84503e6fed82052dedbfa3fc692d82",
+      "exactEdits": 6,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "8b1f0e10ffdbbf1a7ca4e841df9625dc2491bbdf8259e627d93237846f4844b1"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "7d998878fd37d13c1eeca386311d40484920bc15d776bc0da6a22e2105c96ccc"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "beforeSha256": "4259e33681d17b30ddea30465279efcbb31f42270af846a5f789c165dee1a580",
+      "sha256": "44bb5627508eee472d8cd3eec4477a8cc064f31096df26467beffef86b5258a5",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "375afba8b9f508be0c34e9a2b0c97e25371e9581468c2626d88fd2b08fe2614d"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "0d4e4d5a546a89fe5d7ea8066af8e8c230346f5fdb443215e0b73427313d335c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "beforeSha256": "4210f560a9c547e23695c0b86c53819ee684611ffec1131a8cd210596835ecb4",
+      "sha256": "0b3e7b100cb96cc835ee2ff4db604b8144e4070519cf3f17432a24bfef459285",
+      "exactEdits": 5,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "79372938998fa868978a5f8946747cbeffac7a8bd866162a616d27281e470126"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "3ae3b760b34cc86c31687acf9de7e1ab68fd2ce9a04f0d070a635a5d739b30d6"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "beforeSha256": "e6ff1da8ed75cce6993c9242afd7dd5d2988ac8abdc508ec3f1e1ae481011ec5",
+      "sha256": "73c16805e5068a46ddfa56a4285f87a617584ee37c8fcae88d0926bdb5e5217b",
+      "exactEdits": 5,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "0957d7b9d2d3beaff663da2ccaece4f8920db5f4963ae3493ce43f57116015f8"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "61da0c05be4538c99a1a545681cfb641ffaa0051622d5399f6d5420065f488e4"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+      "beforeSha256": "430e738139e5c3c3e04667872b082e6939e901ac1438d7b0b61fc3856ea0d398",
+      "sha256": "dda3d8fe50e8d4c52301bac9baca7b199ebb9ac63cf9e125c0478b2d6912b077",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "666e95164cec32e38e18cdbb99b4ef7ee8f05abea23bab012632870c963def73"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "9c0dbca6d3200b7853814bc7837046e789f8c8f5ed7af8a018700e1b3fc8bef4"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "beforeSha256": "a3c75c8e1ba24d4b232110cc55344431cc1ee5bcb88d59197a06885c8a0ad032",
+      "sha256": "83d3d08c5daa8782c5864484b7f78e60053b20138536f34afc8ea703a6f3caa3",
+      "exactEdits": 6,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "450d8451fb862c484d3209d965f8653f1b19394144eeeb651c806b98b43349af"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "be5ed66541c06b6d5ce5fa9a0406d5bfb13063862af12b0bad64463993936a96"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "beforeSha256": "db31288f223fc2ae0fb871f45aed1c17b5d06e466c79aa1c2bc04a3fc2730d37",
+      "sha256": "cf7ec272d7a468f1ef8d96df2580c464ad47451b9ca68cdd11a18b98d388f2e4",
+      "exactEdits": 4,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "76e1fbfba7597a92cc17dbacc04bc2f52692673f8bc94e846f788b10bb3de8a4"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "ef049d8e7b9b516510fd38c0511fc3fe1c4416f9a1d9af4ba3f25f4a2ee05309"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/victory.ts",
+      "beforeSha256": "2416ab5128c33c734b1b29fb840219447e3b10f9402ce27e235c89d60c5a0241",
+      "sha256": "1327a1113a861e619904f30dc13de6a58eac0856ff1889e5aba3578fbe02fdb4",
+      "exactEdits": 6,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "4d2062ebeca6ef1492b05e4546958bfed8f4a75d1bdd0da285f809a503ec9c34"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "c40844ec90062f34598c13486a32b3fe4c3434a61557b894c0b036a0dfe0092c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+      "beforeSha256": "1c74f35ab997825f6e07adf908192bd69180e6f4bd27bd6ebde848dff352fe25",
+      "sha256": "98db67f2cfa4ebed1d1e7a042a0c967b6cd539ce80b019fab3ead37420312dc8",
+      "exactEdits": 8,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "185a65c4a77d1cad35b894119e0f231dc3fa9a5bb24a173aaa144671d3842d55"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "1d3c7b77a0f3fa1d193909781a74c19f53af894fb69cf64d0afe5ffde8da6150"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/victory.ts",
+      "beforeSha256": "dc727ebe8cd97b5522430f73fb83e92846c164d64e77e1d0629049e5e7e609d6",
+      "sha256": "c80cf6416962bb4c0d99c26b4c8da8285b31d91d0c7bcc2346fa5f55e154e87a",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "60e5d952cc46b89d85295516235b422114d6ffba236f71513db80736830c3b7d"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "bbb05f91fc976c5e98bc712ce135dd7b4edab0284fad234cc5279bfdb97c8c33"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "beforeSha256": "5b10b423987c58a4eaafb4d65d7266930abf9366c4121220bba9964a674433c3",
+      "sha256": "883050c82241de386c62bb467f837e4d7972172600955f5d688649c27fc9fd1c",
+      "exactEdits": 8,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 16,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "329027bc1c824069931b013dea3dc0610790523fcda77ac98a0621bc9792e372"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "2fa6361fc98f20a7eba1df0d3afe1823e4d9acb952dc51a4a737e7aa46d6f84e"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "beforeSha256": "25a8cad2591d98cd1b6a9923621448a4a44b15f65e6191aa056c1ca8dc98cd79",
+      "sha256": "5aed9cbf6a3dd5024c6cc7ece6a24b0820f820ef0251cd35b3bf303ddc17a7f0",
+      "exactEdits": 1,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "16099cc35b610970ea45332787f9d1e9b082af2c00ed24e2e1ba4252f4c728b4"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "d6f7bf12f327d22f26adbae55d0e29a4ea3bdc6fd33ea547dcdb9558819b8d04"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "beforeSha256": "bd675e17531805ee2f250f93ae81d474da8f1b7efe9a6e51dc32b6951f6874dc",
+      "sha256": "e5979116849aa821d0741ef082e8df0811db57a6b5c97bbab749621b8f7469af",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "d6ef6908accded7abdc1e16ad3ba5b3eb8a80cbd17f55bde39284406718cfda7"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "7d7d2f9759b56ca5c46ab686e3a6113cddc9496996bfd3d3c3dd45a92f1ccd31"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "beforeSha256": "087388805ce44780b3985a595dfa59822366cbcdf02ad96527ff8d70a837d8ff",
+      "sha256": "8fe289a8c0e7f5ad13a9b1f47dee6d6c2d7fcc85ffa8ccada30f23fb4fe0e398",
+      "exactEdits": 4,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "79483392aa741e0cf97c12186878e33f0f5e85c15ae8ed6d33bf035e6e69b097"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "f2672e33cc0dbf003b73668cb3ad32a760a4af43e0c51c948bc1509e386c3766"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+      "beforeSha256": "266a82a91ff434e7b10c98e9ee54d2e3988a6b85e64a57c2e44bde57c22f8c18",
+      "sha256": "e3dc713c76840f0ebca986c964ee637662e7418da86905a93b199644c4c1d06a",
+      "exactEdits": 5,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "6ed55b8ca7b98e844b08f66ab5a154d708899f8d15a3af9bc5b520da12e74683"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "161e8f2698f20b1e0d655da3ea442ad8c8518fcad179b1edbd3731035ea33ff4"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "beforeSha256": "9ed28386876da30da31b5836a41a7ec26128027b0baff3be08f9a45f4f2e90f3",
+      "sha256": "7fdf17b7355524bbea802e9cdddae0e8013f8b2ed728edcc9be54f269c5e1672",
+      "exactEdits": 4,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "758e56f82953aa0c19f8998de29dec56219f9d18aa186d26d0ed470843a5f768"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "ded8d417ebeb44adbaa7beaeb4149f99bfab0b2e8a4d96a842050ac8c955c49f"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "beforeSha256": "ca8aab8c8876a39c7046ea381de08ea446068a64b7a1be29820451cfb5d07131",
+      "sha256": "0a2fe1768760f2539e5f4637a8e48ac9d751b54a1db3165f14a0b33267abc335",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "670f85d941af944313e7143fe880272f49b7731824fbc678507e81419cd69521"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "721565f547f507f782f7c292e27a54c7f7fa31735e3a1f8eb98cae79c14ccbbd"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+      "beforeSha256": "c24ccce7ddc4da3bf01cb5e50f54751b9b93233deb2d88176fb914b797339a85",
+      "sha256": "33348d8eadb27de2e22086e5cef6ea7db2318c4bc61b60f3dc40c2dd6c3ce055",
+      "exactEdits": 9,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "13e78f33a35c6ec88006248d65f1c36212c3652cff99fbd6a4c356dd0c074d42"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "8a19856edf4a1ce40210325b0e36f1ce32adcbddb469fd78f0581e00638c9184"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/profile.ts",
+      "beforeSha256": "b23fe280b661449c035d990aec740e2958a1e31748e6bdf603b7a0d91a90b01f",
+      "sha256": "aa093f409cefac9e690bd1b5b438dd8943c076774016575a6d90c05a57a4e181",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "355ed2c422d8ba321664347d7e5a424fee0de2bef9bbc938474cf8da15ea1c06"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "e8112d12d7a8b74190838e64b0281a1959fb55c6aab309ef70f4cc45015ae723"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "beforeSha256": "b06fe82de0733d61edaabeed2b076f5b50d2e253675608a7eec1831798aad08d",
+      "sha256": "60f09f95bbc6e839949b9b0254d6e89be866ef8ea59cb5fcf081b956788a6702",
+      "exactEdits": 6,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "734cde9a0941d5fec24b505bae4a29bcca726ea497416bee8674b9b79ffea1be"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "eee77491c4181d8a2bfb6cbe117b049e1a115799223b357350c424eb22ebb470"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "beforeSha256": "af69ed84483491502eac71332c3975a485ccb441e140e7df61a8eeacd6f153e8",
+      "sha256": "3b8012ae79371772e9bd9dac89e1d11b5a9f17e77a1533ca74462694719f4c01",
+      "exactEdits": 1,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "f5fe9ed1c6e7d0b29b9b6dff36399c68a557c4a2905fc88088e2f5560a940c3e"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "ef6f9c440fc63d73fabec77f08272141d4f7ec19d407a00d238a11f634af2b83"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "beforeSha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "sha256": "e7fc96c56fd078b469cc121c33447cb370c7c0c91d8c21488659c03f0fc3319f",
+      "exactEdits": 5,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "2e84e3982ea6b3b5d04c64644ad022412a9257bb3aa8e4faf0fcc2c081749e75"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "b88d04dfb25f3e8379ec6664f86e9f3dcda22d91502b4a5f6bc789090dd62605"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/inspection.ts",
+      "beforeSha256": "ee08665185f951505f5be31d87c00fd71008ce02cbcf4ee757e49c6bfa68a53c",
+      "sha256": "941750be2fc3893df1cac3c0870e7ae5917061ab34b882868ba7f919fa42d215",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "6fdeb4f57ffd5ec09447c42b4df15b3c621f79562917f049a6eb0d44e3399307"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "895427836b5fb3c872eb4c7067cdce718651aec38dc7d1663863590b4bbd5968"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "beforeSha256": "5f9ca0621483cc7e44489bdbb621f88b95e5561f4c082ae68abcc759419abf44",
+      "sha256": "ea640c87b52ba9001cce9e13eadeaf4a955699434f4c5f984fc6e021732b4789",
+      "exactEdits": 1,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "9be448e847e43dc3777dd1adde78fcc00229c7ee49dae65415c4d5a1652fbf39"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "24745ab162742dc33cf4c66b843cb8377baaf14933024e457717ab7a26dbb9b1"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "beforeSha256": "6ee51443dfc8645490a2aaff39a7f56a6eba1ff986c64e9c905f05865102b3cf",
+      "sha256": "6735fd720f97bdb8c095119ac2ffe02e76746f3aa86892870914685c91e62b89",
+      "exactEdits": 7,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "674e7eb623cd29bcb32a700bdbe4c0fd02688c96818908c73a53226a7ff843e2"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "7a447783e9d61d3c1c23fc0907d0f8138068cbf539b5d1e63a860d39d5ae5db3"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "beforeSha256": "d7fa95fd1f236b9452290be6977cf0e325d77002cdee81a303d238d16aa2fbba",
+      "sha256": "1ba929c601ef9a867fd2c6dc04d8069475d9c79980ea494d751ee56ba211137c",
+      "exactEdits": 9,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "a3cc6adfb88971c74d8835ec78bea0aed04204521a21ed23bf63287e940066be"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "b1a55eb516fe834e1c560dd392fa5e299a60af0486804e1288c6d8b565e60884"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts",
+      "beforeSha256": "6118fc85ce13235148d6e80ebfc9e831283e4d5284aec13970fd673fd753ad5d",
+      "sha256": "8ee14beea93a17cdebdf366f03d95336dd31a0fed0e59ff70d422ea6393870d8",
+      "exactEdits": 9,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "530e063afb55de0f04304cde5667d4be06b2ba648d7bc3eda30b1a0dbb386366"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "03dadb9a5e05030933729c521c67ff4e30e66d794a7ec4cdf86f18b484c01b91"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "beforeSha256": "2ae8ac77b6a1e139e8b5043166ba9c95560848bee9937edc83686e2fa27c65e9",
+      "sha256": "1f947cb0d92edc15fe85fb1e1cf27677e633788a0ae3b1cbfd5edb3c0a8aebe9",
+      "exactEdits": 7,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "14bf1b223f5bc989260f712bfc194264fca2367b12681013d367294079b6d0b4"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "7a5dda39a33f3de84b49c121f75c98ba95507734fe0409a22fa675e79f3155d8"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/profile.ts",
+      "beforeSha256": "8407023a66ce0c57458349bd3c891fdc47221786f2e0bd13a1259f42e22529f7",
+      "sha256": "7814aa01c26eb53aa2d281a9b4cb766ea40eeb30196156205d745ef99fb983ee",
+      "exactEdits": 4,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "185836b6b8496d2ad1a1dafef0baed5cbd9c54da8199b09b0c83c3cf0d5ef01e"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "b27724c8edca7963250256bcd56ae1ae188c0100c9cca2042f1f4f9bba7dde3b"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "beforeSha256": "2bb21d091b83529b119eac2e96052b21935b27d537eda178d8504a8667dcd87a",
+      "sha256": "55c36a42dbfddb9c96d818f13480572588450d9fba7f2d4951a8ced99ddaec5c",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "3c1c65fe3e576ef2877a079b09e8b42d10cba74797d15fdd3fd93a67cdd61d2b"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "2856d07669f8e2f14d920709edd60c20a2a172646f8ebe066599abc8a666703c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "beforeSha256": "1c9923cca5e56ba38043ce3311c024fd1874e3fcf81e59cc84b10a0d1112afa8",
+      "sha256": "e1247c64a7e3d03e9269c8fe5a5346d0ab711949b56e1334c3ed7017955a1d51",
+      "exactEdits": 5,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "4d14e9b30b587ae82f2ab2b7e4d42dfc1484030083f0fde8454dcb5d36b717af"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "5a90af41433114aecd7858c70c8471077e884bfdff47fc83d9976f12021d3386"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+      "beforeSha256": "ffd92260a6776d181a255320053d5e2be7943da2ac33e9285a4e973c58847748",
+      "sha256": "cdf435f8591dda606b7fc7c51cce1987d39c4a4292c11ff09a5c87e6a3e3563f",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "5ded64bd10c3e7906d17a8c6faa952a584796b084eaa75378cfda9b896284b0e"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "14dab707025d41042723087e9c3939df8d46d12d861c4e07fd46305cdfd7af12"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "beforeSha256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578",
+      "sha256": "a1bc87c0b9e15faeecfe2d61e07a89f9ce8cb6713e324f6109b9400cb745095a",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "e3fbfbc1b2be8ac083df453f95809e3a4cca80e8ffb72f3a0c68df750ac8e819"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "ee3d6e21e0186e32312e4f4e27e8edddaa6d57332a8e004279d35e7f5b42f760"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "beforeSha256": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+      "sha256": "ce62ab9cd95eacf38058a82422b4ddca704d550b23de39aa8dea786a6a13a263",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "569c25bc726fc29bfb511f8364f456b9f29430184f48ff12bc65a776580a9bf8"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "63d5ba7fcb1277fefd59133f362658556f890704f9a386949ff83399fda13ce1"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+      "beforeSha256": "2068e953eb674497d9562e21660c8542f9f6587811d362891a45e12b98132d47",
+      "sha256": "b655cd1101718e20c7a789d1b1f036c7d20bd1b3b9d29410e1c70a2bdd814597",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "9463dc49655a95df5676cf53d740a7039f1dd9a15c4ec3c6203149f721367c0a"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "7bfb3a9f039aa41e152c0d17043a1c397cb73376a2a100e192244d8794cfaa1d"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "beforeSha256": "c97b94bf0517c5ff84dfea295c282aebee31330e7c18a1b8daa0aba2c9968250",
+      "sha256": "35cc5290ee62e2561c42c01aa9c9cfdeec4c65218adcf9ac4409498951a2bd8e",
+      "exactEdits": 5,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "618836fc811550fecbb6ad0ec4e7ca06725a5355bc6fc2bf2cfa40e2cc3c69e9"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "4920d32860b31376805401f622d6b614c41dea1d0b6cc82d1bfcf458f48ebd3d"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "beforeSha256": "92f3514445786bc719e30830603c8ab9d8a76af0ab5f1dd3b16cbf59b5442f35",
+      "sha256": "5b50f0524b8d4ec7708c20288acca8be841d4a6bbbbc0b31f24ea79a7cea97e7",
+      "exactEdits": 8,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 7,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "67fd15cebeccbd8d54e8c0e94bc9964f418e07ded428fc2d37090a522fceb619"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "cc6710f4f075b0478b3bc104144862bc7239fd96d45d60ce04742e50d72423e6"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "beforeSha256": "92ac91a3df1e5faa7d609f2969b6c5f8b8a30ae1befbb347d655ebe6da58de6c",
+      "sha256": "154cc40f73ac8caf748b0399036f20ea6935df495a2595871565b184f5b4c237",
+      "exactEdits": 4,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 2,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "8df635110e4fe7e5a253c6d8eca6952951bedb25f5087f0b2f7622e2792a105e"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "76c43bc64bf96dc99f684d56bf6e216977bc6c9f34739439799035e1e7706a75"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "beforeSha256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+      "sha256": "1a664d10b50cc7704ab14bafdfb14bbef7d5cc545c02c13338d6c271d9bcadcd",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "fa55dd732768b7b28aa4f34934dec40daa74e7a75228cca8738fee748260bc1d"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "5efb21f946bed6d0abba04e294e0711925a7562a51fa0205b2572ad0018d4b30"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/original_player_scope.ts",
+      "beforeSha256": "e150a4d2ab8d96a645f30d780f58fabde5716ac5777acc0ea553776043b1d0f6",
+      "sha256": "84a72d742cb560944c5282f934bb2bccbf43b5020587138f6ed441ea15f8a8d6",
+      "exactEdits": 6,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "1c351be713ed9a325318085eadc04421eb4219c48b8dc6434b226c77ca1c9543"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "0c09bddb0a859f19664ca8fdf641dfae61d09e040c1990f77ff4058ff671987f"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "beforeSha256": "9d496c4771b3ac546df8e2b4555ecbf6248fdbc9ee8618ffd466808486684ba2",
+      "sha256": "831b30b9c7f3f92c6f8cf3779c1d10c139ec8d30536c0e3a4008ef35dbc25b10",
+      "exactEdits": 4,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "e44947a41de44372ffb2f2e7c5e4e6609bfaaa7eb69f1fcd8cd9f8c866016fda"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "88be4e6f9bb87e0df3c4b451ba3f1ca77c0e3524e624e156e1f5ba2de2617057"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "beforeSha256": "cfddef3f2d3d1bc79f2ec6f2432fe387d3dfd5b35f8ec39cc7a12793e7095c9d",
+      "sha256": "86f8be8f779e13f9a442ee1b26319919e9f852b9136355a2e34001af1241dd20",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "6267c8c83c240b63618924e66aa50f578df2a533ef2df09289493f169ad53a66"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "57ab3226101a54f091a254275f1d2fda89b76913166d6be7a5bfade546de80e1"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "beforeSha256": "4518e7e6c0e7d21e6ce3ae9f9e47e22ae6d69ff49a75b7f21bd9482ba52e2d06",
+      "sha256": "8d2c0c1c659f17520f3759bc1c221ee66680e0917495fe0d12431af76ca260e9",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "ca1932ecc1b168c1735b7f3911146e8740937984e4b90af393a2ca0478a9fd0e"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "fd7eb75b639901cac7c3181e59f167b6573b1b8c17a8107085071ae92d4f52a2"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "beforeSha256": "444167c069020e000e11789df31dc2f7620a2855d96ad12613d54fc381554a6c",
+      "sha256": "52fc0a6a6034cab7f3594c9cf6da98bd237ab76e01a1521cff3012ec6ff283b1",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "9ed1fc6523bc1123879a9a3ed66f8feb555ebfd5e863ee7778255a974ab5d086"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "4d3cddb3d883bf17fd7a9211bd469d03bee40da6f6fee7d148bc7e50bf59d1e4"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "beforeSha256": "22daeebeb9742db0af28d4bb110bd9effd98612cae2977bf577e77c894c8642a",
+      "sha256": "49a4ddf2054dd3f29e991b24af2cbcd6073cf10058137c4ad2b580af381b36a5",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "3d57359a4d28abceeb46c95c971c41c0d43e79d65cdb0ee0b1369dbdfaa0f528"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "f1d23ec754ea425d90378098e24b9b4f24521504bd247b3857bf8cd45d1c8c6e"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "beforeSha256": "f01842f3ef4e9a5f28f35e673ba0ea24c9dfa487dcba0f9015fd8aa8f21460c4",
+      "sha256": "24fcf1365d620d5963a72d791ba426b31512daabd887c7d537aa564d4188ca65",
+      "exactEdits": 11,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 1
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "4818fa9590a3bb5d353b992e09f3f6c448def5d089251c46f0de3895ca2fe24a"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "eeb0714831f6f84ba9f14af50ca269411121a698936dd3d9f4d82e79e628b706"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "beforeSha256": "5858f2ff590c1591634b735b54c4c1536295cabf01f68758f1596f3a946be71b",
+      "sha256": "28dcc2c6309ab32d7d11c1bec481830e5b46c116166166634ad80600aad7f2e6",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "8e0c003914b424ecd914b8adf80fcd82fccb3650314872858a361c175fbed2bf"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "83318d98bfc916af26126cbd908a87a8723dc72e62b32ab89e6abd6689548e7e"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "beforeSha256": "434d69c2b67089c2ce2475738f7c8ce99e955950118a58f90da669bc42223496",
+      "sha256": "920f16dadb5b0f5727c3b32dede56816633ace8bf8eae7917eebcc714b38affb",
+      "exactEdits": 4,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "5361fd6f12af8ac213b591025b31f2cf521262f1f7f6d1b22de444aed9299cd9"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "ddfda48f96f0befb7f71514998d7ac76d7f901b7dd955a5a9f56b1d79d82117a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "beforeSha256": "05d1a6979eb7b856b9666be1e85fdbbd1ee1accae6abb1b78f1b84fe8f3011f0",
+      "sha256": "7e4549cf2550883d9da7b56bd621ca69f2faf82f18bbae9b4783a3c8fdfb45dd",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "cc780c3b3bd4695a9e906e42fc1c8fa11e6da76010770a76776d3cceff4d2420"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "6a5ef2e343d8d0d2f6c74e9b6ad517da2bd939fa2a50f77af67f973e307d39fd"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "beforeSha256": "007f4168b47ca7e5609650ad3ed80058d98b07881a396e323bc7ac8df91b72ff",
+      "sha256": "a2d122681f672e95282b1c90c6ac97f318d9e0ad7fd757a88e189a2cd04b8b89",
+      "exactEdits": 3,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "1f65e9c16a26b34ccbd954e24b9a3916727687fd2131a4dd374bcee644dbefda"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "59ae038a7f97c7f1b843ae25945161fa588e70529bdf3b3a1e615dd03425a96f"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+      "beforeSha256": "5006db830dd9a0c01eb6f16f1744ee67e252f79c411eb7119924637daa03750b",
+      "sha256": "e1d8c32e38a42f9a5206ed6fd6360773f103ae73a1ea8f18aa5300ad275f38f7",
+      "exactEdits": 2,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "8e76eb015b9ecebad25fb1e4c7d0edd35b5a7f36918821623dd5dd084cb6ee5e"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "fc3e6d2986723550495e54893f476a3b1b8a339cc85edf3155b06902c87605d6"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "beforeSha256": "f34dee6205bc4c068d0b482bf7344c70d0b26294b5712be255eaf01d6f58ed82",
+      "sha256": "baed0154edc7068011e52b76dd1b9a0e861d38dc49207362b1c44e26f25401b8",
+      "exactEdits": 1,
+      "completeForwardInverse": true,
+      "retirementCallCountsUnchanged": {
+        "isRoleExecutionRetired": 0,
+        "retireRoleExecution": 0
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "bfe8b19d404782718642e29a52f46da893ec4eaa4abd05ca6d9f15a4b1e04c58"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualRawSame": false,
+          "actualSha256": "c508b493d6e4fff7ca7070c798f6c65aa8f4c08a53296bf8bc0c0b7d284ce411"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "actualModifiedPrograms": 57,
+    "ownedCandidates": 69,
+    "unchangedCandidates": 12,
+    "exactEdits": 245,
+    "completeInverseWholeOutputs": 114,
+    "cumulativeTypedComparisons": 159484,
+    "cumulativeNonCommentASTLeaves": 83398,
+    "cumulativeNodeArrays": 19976,
+    "actualNativeStateMemberCalls": 3,
+    "actualReturnedGunReaders": 2,
+    "retirementCallSitesUnchanged": true
+  },
+  "limits": [
+    "F05b is explicit input/API/failure-policy change; actual JS differs. Whole inverse verifies all retained programs outside recorded edits, not all behavioral equivalence.",
+    "No production module load, type diagnostic, runtime test, cold graph or whole gate is performed by this script.",
+    "Original69 before uses immutable68 snapshot plus one added actualGit source. Root original140 was not complete API closure.",
+    "Typed/leaf/NodeArray counts are cumulative comparison units, not distinct program tokens.",
+    "Camp early factory/channel/getter changes, Wild failed paid matching and Inspection nullable missing result are explicit policy; no mirror/metadata fallback or action flag in paid bodies."
+  ]
+}

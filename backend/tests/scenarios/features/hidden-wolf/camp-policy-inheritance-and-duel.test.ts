@@ -72,7 +72,7 @@ for (const campInspection of ["awa_inheritance_v1", "netease_2020_good_v1"] as c
     expect(knownWolfTeammates(game.world, 2, catalog)).toEqual([]);
     await game.phaseManager.runSingleCycle({ getAction: act });
     expect(getHiddenWolfState(hidden)?.hasInheritedKnife).toBe(true);
-    expect(hidden.camp).toBe(Camp.Wolf);
+    expect(game.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
     expect(resolveInspection(game.world, 1, "camp", catalog)).toEqual({
       kind: "camp",
       camp: campInspection === "netease_2020_good_v1" ? Camp.Good : Camp.Wolf,

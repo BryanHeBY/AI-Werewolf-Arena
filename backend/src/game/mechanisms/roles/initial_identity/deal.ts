@@ -1,5 +1,5 @@
 /**
- * 负责拥有盗贼／变形者发到的卡、原手牌与首夜设置状态。
+ * 负责拥有盗贼／千面人发到的卡、原手牌与首夜设置状态；阵营只晚读真实 Camp，保原组件引用撤权。
  * 输入为已安装阵容和明确选牌；输出为库存、设置状态和玩家 setup 数据副本。
  * 原 World 对应的 deal owner 持有手牌及参与者快照；关闭后保留选牌身份，后续角色替换
  * 不重新发库存，副本不授予 live 选择权限。
@@ -10,7 +10,7 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT, type RoleComponent, Role, type World } from "../../../../core/domain";
+import { COMPONENT, type RoleComponent, type Camp, Role, type World } from "../../../../core/domain";
 export interface InitialIdentityCard {
   cardId: string;
   role: Role;
@@ -47,7 +47,7 @@ interface InitialPlayer {
   id: number;
   role: RoleComponent;
   roleId: Role;
-  camp: RoleComponent["camp"];
+  camp: Camp | undefined;
   state: RoleComponent["privateState"];
   life: NightLifeScope;
   campComponent: unknown;
@@ -115,7 +115,7 @@ export function installInitialIdentityDeal(
       id,
       role,
       roleId: role.role,
-      camp: role.camp,
+      camp: world.getComponent(id, COMPONENT.Camp)?.camp,
       state: role.privateState,
       life,
       campComponent: world.getComponent(id, COMPONENT.Camp),
@@ -183,7 +183,7 @@ export function pendingInitialIdentityDealValid(world: World): boolean {
         livingNightLife(world, p.life) &&
         world.getComponent(p.id, COMPONENT.Role) === p.role &&
         field(p.role, "role") === p.roleId &&
-        field(p.role, "camp") === p.camp &&
+        field(p.campComponent, "camp") === p.camp &&
         field(p.role, "privateState") === p.state &&
         world.getComponent(p.id, COMPONENT.Camp) === p.campComponent &&
         field(p.campComponent, "camp") === p.camp &&

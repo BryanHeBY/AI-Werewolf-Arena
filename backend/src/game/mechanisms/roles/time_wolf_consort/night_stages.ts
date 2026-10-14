@@ -36,7 +36,7 @@ export const TIME_CONSORT_LOCK_STAGE: NightStageHandler = {
       return;
     }
     const role = ctx.world.getComponent(actorId, COMPONENT.Role);
-    if (!getTimeConsortState(role)) throw new Error("time_consort_actor_invalid");
+    if (!getTimeConsortState(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp))) throw new Error("time_consort_actor_invalid");
     const request = ctx.makeRequest(actorId, ["lock_time"], {
       stage: "time_consort_lock",
       requiresAction: true,

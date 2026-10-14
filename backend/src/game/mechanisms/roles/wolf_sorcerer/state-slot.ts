@@ -4,7 +4,9 @@
  * 日期、排序与一次性号码规则保持，写入失败保留原已写前缀，不回滚或付新资源。
  * frame 仍拥有原体生命、夜窗口、映射关系和 expectedState；此槽不另存 shadow、
  * 授予行动许可、关闭或标死。身份 JSON 仅为原运行比对，档案格式与独立核验仍归原 owner。
+ * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import type {
   WolfSorcererChoice,
   WolfSorcererState,
@@ -50,12 +52,14 @@ function arrayItems(value: unknown): unknown[] | null {
   }
   return result;
 }
-/** 完整原 live 校验先拒绝 Proxy，再仅读自身数据 descriptor；不调用 caller getter、迭代器或数组方法。
+/** 完整原 live 校验先拒绝 Proxy，再仅读自身数据 descriptor；不调用 Role／状态字段 getter、迭代器或数组方法。
  * 合法时返回原状态／历史引用，不克隆或冻结；readonly 是读方类型，原体与夜窗口授权仍由 frame 复验。 */
+// 显式 Camp source 在原 camp 点晚调用，可以执行调用方代码并抛错；返回组件保本族 descriptor／Proxy 策略，不回退角色或目录。
 export function getWolfSorcererState(
   role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
 ): WolfSorcererReadState | undefined {
-  if (field(role, "role") !== WOLF_SORCERER_ROLE || field(role, "camp") !== Camp.Wolf)
+  if (field(role, "role") !== WOLF_SORCERER_ROLE || field(currentCamp(), "camp") !== Camp.Wolf)
     return undefined;
   const state = field(field(role, "privateState"), "wolfSorcerer");
   if (!exact(state, ["policy", "firstNight", "history"])) return undefined;
@@ -96,8 +100,9 @@ export function createWolfSorcererState(firstNight: 1 | 2): WolfSorcererState {
 /** 复制原知识历史和非空 pair；可写副本不含运行窗口，也不经投影授予交换写权。 */
 export function projectWolfSorcererState(
   role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
 ): WolfSorcererState | undefined {
-  const state = getWolfSorcererState(role);
+  const state = getWolfSorcererState(role, currentCamp);
   if (!state) return undefined;
   const history: WolfSorcererChoice[] = [];
   for (const row of arrayItems(field(state, "history"))!) {
@@ -138,8 +143,11 @@ function appendWolfSorcererHistory(
 }
 
 /** 原 frame 身份编码：先 project／拒绝，再找 JSON.stringify；不是严格档案 decoder 或权限。 */
-function encodeWolfSorcererStateIdentity(role: RoleComponent): string {
-  const view = projectWolfSorcererState(role);
+function encodeWolfSorcererStateIdentity(
+  role: RoleComponent,
+  currentCamp: CurrentCampSource,
+): string {
+  const view = projectWolfSorcererState(role, currentCamp);
   if (!view) throw new Error("wolf_sorcerer_original_state_revoked");
   return JSON.stringify(view);
 }

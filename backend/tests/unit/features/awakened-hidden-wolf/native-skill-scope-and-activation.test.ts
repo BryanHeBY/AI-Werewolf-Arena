@@ -95,6 +95,7 @@ function context(
     requests = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
+    get requestFactory() { return GameActionRequestFactory; },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -449,7 +450,7 @@ for (const mutation of [
             (role(game).privateState as Record<string, unknown>).awakened_hidden_wolf =
               structuredClone(original);
           if (mutation === "role") role(game).role = Role.Wolf;
-          if (mutation === "camp") role(game).camp = Camp.Good;
+          if (mutation === "camp") game.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
           if (mutation === "phase") clock.open = false;
           if (mutation === "day") clock.day = 2;
           return { name: "awakened_mimic", args: { target_id: 3 } };
@@ -558,15 +559,15 @@ test("same-night opening cannot replace a revoked original-body knife permission
     throw new Error("must_not_request");
   });
   await stage("awakened_opening").execute(ctx);
-  expect(canAwakenedKnife(role(game), game.world)).toBe(true);
+  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
   const life = game.world.getComponent(1, COMPONENT.Alive)!;
   life.alive = false;
   life.alive = true;
-  expect(canAwakenedKnife(role(game), game.world)).toBe(false);
+  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   await expect(stage("awakened_opening").execute(ctx)).rejects.toThrow(
     "awakened_night_reentry_after_commit",
   );
-  expect(canAwakenedKnife(role(game), game.world)).toBe(false);
+  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
 });
 
 test("another Wolf revival temporarily removes a current knife without resetting its inheritance or extra stock", async () => {
@@ -579,12 +580,12 @@ test("another Wolf revival temporarily removes a current knife without resetting
     throw new Error("unexpected_request");
   });
   await stage("awakened_opening").execute(ctx);
-  expect(canAwakenedKnife(role(game), game.world)).toBe(true);
+  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
   other.alive = true;
-  expect(canAwakenedKnife(role(game), game.world)).toBe(false);
+  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   other.alive = false;
   refreshAwakenedInheritance(game.world, 9, []);
-  expect(canAwakenedKnife(role(game), game.world)).toBe(true);
+  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
   expect(state(game).firstKnifeNight).toBe(2);
   expect(state(game).learned!.skill).toEqual({ kind: "wolf", extraKnife: "available" });
 });

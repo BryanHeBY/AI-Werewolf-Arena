@@ -37,7 +37,7 @@ test("无原候选或未关闭的夜不读取事件方法、不消费延期", ()
   freezeDemonHunt(fixture.world);
   expect(redMoonVotedOutHook(fixture.world, 4, events)).toBeNull();
   expect(trace).toEqual([]);
-  expect(getRedMoonState(fixture.world.getComponent(4, COMPONENT.Role))!.exileDay).toBeNull();
+  expect(getRedMoonState(fixture.world.getComponent(4, COMPONENT.Role), () => fixture.world.getComponent(4, COMPONENT.Camp))!.exileDay).toBeNull();
   expect(fixture.world.getComponent(4, COMPONENT.Alive)!.alive).toBe(true);
 });
 
@@ -48,7 +48,7 @@ test("延期提交后push查找失败保留审计与生命，重试不再次发�
     get(): never { trace.push("push"); throw failure; },
   });
   expect(() => redMoonVotedOutHook(fixture.world, 4, events)).toThrow(failure);
-  expect(getRedMoonState(fixture.world.getComponent(4, COMPONENT.Role))!.exileDay).toBe(1);
+  expect(getRedMoonState(fixture.world.getComponent(4, COMPONENT.Role), () => fixture.world.getComponent(4, COMPONENT.Camp))!.exileDay).toBe(1);
   expect(fixture.world.getComponent(4, COMPONENT.Alive)!.alive).toBe(true);
   // 检查完整原生审计仍接受已提交库存，不仅读某个公开字段；调用不发布事实。
   expect(demonHunterCheckpointPlayers(fixture.world, true)).toHaveLength(12);
@@ -84,7 +84,7 @@ test("先取push再读时钟，时钟失败不调用已取方法且不退款", (
     Object.defineProperty(Date, "now", descriptor);
   }
   expect(trace).toEqual(["push_lookup", "clock_lookup", "clock_call"]);
-  expect(getRedMoonState(fixture.world.getComponent(4, COMPONENT.Role))!.exileDay).toBe(1);
+  expect(getRedMoonState(fixture.world.getComponent(4, COMPONENT.Role), () => fixture.world.getComponent(4, COMPONENT.Camp))!.exileDay).toBe(1);
   expect(fixture.world.getComponent(4, COMPONENT.Alive)!.alive).toBe(true);
   expect(demonHunterCheckpointPlayers(fixture.world, true)).toHaveLength(12);
   expect(events).toHaveLength(0);

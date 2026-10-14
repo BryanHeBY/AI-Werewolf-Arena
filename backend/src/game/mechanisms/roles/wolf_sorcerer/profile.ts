@@ -1,9 +1,11 @@
 /**
  * 负责 狼术师 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 当前阵营通过调用方的晚读 source 传入；目录阵营仅为初值，不替代现场 Camp 或授予许可。
  * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { COMPONENT } from "../../../../core/domain/components/names";
 import { nativeRolePresentation } from "../presentation-contribution";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { z } from "zod";
@@ -43,8 +45,8 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
-    wolfTeam: (role, world) => {
-      const known = !!getWolfSorcererState(role)?.history.length;
+    wolfTeam: (role, world, currentCamp) => {
+      const known = !!getWolfSorcererState(role, currentCamp)?.history.length;
       const active = known && (!world || wolfSorcererPackReady(world));
       return {
         recognizedByPack: known,
@@ -94,7 +96,7 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       swap_night_seats: ({ world, role, actorId, day, phase, toolCall }) => {
         if (
-          !getWolfSorcererState(role) ||
+          !getWolfSorcererState(role, () => world.getComponent(actorId, COMPONENT.Camp)) ||
           day === undefined ||
           phase !== Phase.Night ||
           toolCall.name !== "swap_night_seats" ||
@@ -117,11 +119,11 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
       },
     },
     nightStages: [WOLF_SORCERER_EXCHANGE_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
-    baselineAction: (role, request, pick, pickCamp, locale, world) => {
+    baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
       if (
         !request.allowedTools.includes("swap_night_seats") ||
         !world ||
-        !getWolfSorcererState(role)
+        !getWolfSorcererState(role, currentCamp)
       )
         return (
           ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
@@ -131,6 +133,7 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
             pickCamp,
             locale,
             world,
+            currentCamp,
           ) ?? null
         );
       const targets = wolfSorcererChoiceTargets(world, request.context.day);

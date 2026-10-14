@@ -20,9 +20,10 @@ import {
 function fixture() {
   const world = new World(),
     actorId = world.createEntity();
-  const role = createRoleComponent(Role.Seer, Camp.Good),
+  const role = createRoleComponent(Role.Seer),
     life = createAliveComponent();
   world.addComponent(actorId, COMPONENT.Role, role);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(actorId, COMPONENT.Alive, life);
   world.addComponent(actorId, COMPONENT.Identity, {
     id: actorId,

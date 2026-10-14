@@ -49,7 +49,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(combined).toEqual({ kind: "combined", role: "villager", camp: "good" });
     expect(wolf.privateState).toEqual(before);
     expect(wolf.role).toBe(Role.Wolf);
-    expect(wolf.camp).toBe(Camp.Wolf);
+    expect(world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
     expect(catalog.runtime(Role.Wolf)?.wolfTeam).toEqual(
       getDefaultRoleCatalog().runtime(Role.Wolf)?.wolfTeam,
     );
@@ -60,7 +60,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       camp: "wolf",
     });
     expect(combined).toEqual({ kind: "combined", role: "villager", camp: "good" });
-    world.getComponent(6, COMPONENT.Role)!.camp = Camp.ThirdParty;
+    world.getComponent(6, COMPONENT.Camp)!.camp = Camp.ThirdParty;
     expect(resolveInspection(world, 6, "camp", catalog)).toEqual({
       kind: "camp",
       camp: "third_party",

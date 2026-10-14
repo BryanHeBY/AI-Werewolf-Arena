@@ -23,14 +23,11 @@ import { MistCasterAuthority } from "../../../../src/game/mechanisms/roles/mist_
 function participant(caster: "alchemist" | "raven_claw_wolf" = "alchemist") {
   const world = new World(),
     id = world.createEntity();
-  const role = createRoleComponent(
-    caster === "alchemist" ? Role.Alchemist : Role.RavenClawWolf,
-    caster === "alchemist" ? Camp.Good : Camp.Wolf,
-  );
+  const role = createRoleComponent(caster === "alchemist" ? Role.Alchemist : Role.RavenClawWolf);
   const raw = caster === "alchemist" ? createAlchemistState() : createRavenState();
   (role.privateState as Record<string, unknown>)[caster === "alchemist" ? "alchemist" : "ravenClaw"] = raw;
   world.addComponent(id, COMPONENT.Role, role);
-  world.addComponent(id, COMPONENT.Camp, createCampComponent(role.camp));
+  world.addComponent(id, COMPONENT.Camp, createCampComponent(caster === "alchemist" ? Camp.Good : Camp.Wolf));
   world.addComponent(id, COMPONENT.Alive, createAliveComponent());
   world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, 1, "字面施法者"));
   return { world, id, role, raw, caster };

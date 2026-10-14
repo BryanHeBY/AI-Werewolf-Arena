@@ -161,7 +161,7 @@ for (const locale of ["zh-CN", "en"] as const)
         const bonus = events.filter((e) => e.type === "modifier_bonus_resolved"),
           conflict = events.filter((e) => e.type === "modifier_conflict_resolved");
         const charge = scholarMentorStateForRole(
-          game.world.getComponent(scholar, COMPONENT.Role),
+          game.world.getComponent(scholar, COMPONENT.Role), () => game.world.getComponent(scholar, COMPONENT.Camp)
         )!;
         expect(charge.history).toHaveLength(1);
         expect(charge.history[0]!.day).toBe(2);

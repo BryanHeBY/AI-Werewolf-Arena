@@ -79,10 +79,10 @@ for (const { name, board } of boards)
             const actualRoles = alive.map(
               (id) => [id, game.world.getComponent(id, COMPONENT.Role)!] as const,
             );
-            const wolves = actualRoles.filter(([, role]) => role.camp === Camp.Wolf).length;
+            const wolves = actualRoles.filter(([id]) => game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Wolf).length;
             const good = actualRoles.filter(
               ([id, role]) =>
-                role.camp === Camp.Good &&
+                game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Good &&
                 !(
                   record.policy === "netease_2017_cupid_follows_lovers_v1" &&
                   id === record.actorId &&

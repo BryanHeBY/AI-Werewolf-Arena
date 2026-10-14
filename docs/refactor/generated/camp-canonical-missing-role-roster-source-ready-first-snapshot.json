@@ -1,0 +1,16 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/tests/unit/mechanisms/camp-canonical-missing-role-roster.test.ts",
+      "sha256": "220fcdf72a9083dba54824d194458d0a63f319944eb344f52554486446f64798"
+    }
+  ],
+  "sourceReady": true,
+  "checksExecuted": false,
+  "riskCasesPrepared": 4,
+  "before": {
+    "path": "docs/refactor/generated/camp-canonical-missing-role-roster-before.json",
+    "sha256": "91c7f71c6621e9c03e2e9d31c1070b756f7f4b7bd1ed62ff84b3b0f5d4085b29"
+  }
+}

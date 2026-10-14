@@ -68,7 +68,7 @@ for (const locale of ["zh-CN", "en"] as const)
       await provider.getAction(request(actor));
       expect(seen[0]!.ownState.magician!.history).toEqual([]);
       expect(seen[1]!.ownState.magician!.history).toEqual([{ day: 1, pair }]);
-      const state = getMagicianState(f.world.getComponent(actor, COMPONENT.Role))!;
+      const state = getMagicianState(f.world.getComponent(actor, COMPONENT.Role), () => f.world.getComponent(actor, COMPONENT.Camp))!;
       expect(seen[1]!.ownState.magician!.history).not.toBe(state.history);
       expect(seen[1]!.ownState.magician!.history[0]!.pair).not.toBe(state.history[0]!.pair);
       expect(Object.isFrozen(seen[1]!.ownState.magician!.history[0]!.pair)).toBe(true);

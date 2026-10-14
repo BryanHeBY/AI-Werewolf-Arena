@@ -78,7 +78,7 @@ const invalid: Record<string, (w: ReturnType<typeof animalRosterFixture>["world"
     w.getComponent(10, COMPONENT.Role)!.role = Role.Seer;
   },
   "wrong actual Fox camp": (w) => {
-    w.getComponent(10, COMPONENT.Role)!.camp = Camp.Wolf;
+    w.getComponent(10, COMPONENT.Camp)!.camp = Camp.Wolf;
     w.getComponent(10, COMPONENT.Camp)!.camp = Camp.Wolf;
   },
   "shared life": (w) => {

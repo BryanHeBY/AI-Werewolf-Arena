@@ -1,0 +1,20 @@
+{
+  "command": "bun --no-env-file test backend/tests/unit/features/magician/state.test.ts --test-name-pattern 'explicit Camp sources preserve lazy value comparison own data width and Scholar unconditional lookup'",
+  "outputPath": "docs/refactor/generated/camp-canonical-nine-families-runtime-first-output.txt",
+  "result": {
+    "chunk_id": "888d7d",
+    "wall_time_seconds": 0.00001202,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "counts": {
+    "pass": 1,
+    "fail": 0,
+    "filtered": 8,
+    "expectCalls": 11
+  },
+  "scope": "Only new explicit-current-Camp risk, first execution. Original 8 tests filtered.",
+  "metadataToolError": "The enclosing functions.exec printed the complete successful tool result, then attempted to store undefined from a missing key and failed. This was metadata only, after the command exited 0; the command was not repeated.",
+  "checkedFenceSHA256": "2ea0cd3be0109af49043e49d4011c11ec30c3e3c661a475df0ec7970538e97bf"
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+    "before": "createRoleComponent(roleId as Role, camp)",
+    "after": "createRoleComponent(roleId as Role)",
+    "offset": 3350
+  },
+  {
+    "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+    "before": "/** Raw component fixture: no Profile initialization, public board loading, PM, transport or replay. */",
+    "after": "/** 原始组件夹具：独立实际 Camp 槽，不初始化 Profile、不读取公开板子或运行 PM／传输／复盘。 */",
+    "offset": 2631
+  },
+  {
+    "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+    "before": "beforeInstall?: (role: RoleComponent) => void,",
+    "after": "beforeInstall?: (role: RoleComponent, world: World) => void,",
+    "offset": 1697
+  },
+  {
+    "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+    "before": "createRoleComponent(roleId, camp)",
+    "after": "createRoleComponent(roleId)",
+    "offset": 2241
+  },
+  {
+    "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+    "before": "beforeInstall?.(world.getComponent(5, COMPONENT.Role)!);",
+    "after": "// 额外 World 输入让负例修改真正 Camp；不把退出支持的 Role.camp 留成无效测试桥。\n  beforeInstall?.(world.getComponent(5, COMPONENT.Role)!, world);",
+    "offset": 3024
+  },
+  {
+    "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+    "before": "createRoleComponent(id === 1 ? Role.Wolf : Role.Villager, camp)",
+    "after": "createRoleComponent(id === 1 ? Role.Wolf : Role.Villager)",
+    "offset": 1606
+  },
+  {
+    "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+    "before": "/** Explicit subsystem fixture. Surrogate existing cards prove original-object ownership;\n * this does not register the two planned roles or pretend to run their game rules. */",
+    "after": "/** 显式子系统夹具：既有替身身份验证原对象所有权与实际 Camp 槽；不注册额外角色或冒整局规则验收。 */",
+    "offset": 1201
+  },
+  {
+    "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+    "before": "    const role = createRoleComponent(kind, catalog.getCamp(kind), world.locale);\n    catalog.applyRuntime(role, { boardConfig: config, locale: world.locale, world });",
+    "after": "    const initialCamp = createCampComponent(catalog.getCamp(kind), world.locale);\n    const role = createRoleComponent(kind, world.locale);\n    const currentCamp = () => world.getComponent(id, COMPONENT.Camp);\n    catalog.applyRuntime(role, { boardConfig: config, locale: world.locale, world, initialCamp, currentCamp });",
+    "offset": 2107
+  },
+  {
+    "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+    "before": "world.addComponent(id, COMPONENT.Camp, createCampComponent(role.camp, world.locale));",
+    "after": "world.addComponent(id, COMPONENT.Camp, initialCamp);",
+    "offset": 2583
+  },
+  {
+    "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+    "before": "faction: role.camp",
+    "after": "faction: initialCamp.camp",
+    "offset": 2744
+  },
+  {
+    "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+    "before": "      role = createRoleComponent(kind, camp, locale);",
+    "after": "      initialCamp = createCampComponent(camp, locale),\n      role = createRoleComponent(kind, locale);",
+    "offset": 5702
+  },
+  {
+    "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+    "before": "getDefaultRoleCatalog().applyRuntime(role, { boardConfig: config, locale, world });",
+    "after": "getDefaultRoleCatalog().applyRuntime(role, { boardConfig: config, locale, world, initialCamp, currentCamp: () => world.getComponent(id, COMPONENT.Camp) });",
+    "offset": 5950
+  },
+  {
+    "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+    "before": "world.addComponent(id, COMPONENT.Camp, createCampComponent(camp, locale));",
+    "after": "world.addComponent(id, COMPONENT.Camp, initialCamp);",
+    "offset": 6253
+  }
+]

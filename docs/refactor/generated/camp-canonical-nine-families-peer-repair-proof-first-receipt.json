@@ -1,0 +1,12 @@
+{
+  "command": "bun --no-env-file docs/refactor/generated/camp-canonical-nine-families-peer-repair-proof.cjs",
+  "outputPath": "docs/refactor/generated/camp-canonical-nine-families-peer-repair-proof-output.txt",
+  "result": {
+    "chunk_id": "f87be5",
+    "wall_time_seconds": 0.162407162,
+    "exit_code": 1,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "kind": "Tool-only phase selection failure: original source-ready.edits has path/SHA, no records field; slice(undefined) wrongly selected all prior edits. Source was not modified and no runtime test executed."
+}

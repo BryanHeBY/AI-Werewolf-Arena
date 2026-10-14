@@ -45,7 +45,7 @@ export function projectCupidState(
 }
 
 /** 原完整初始化：槽不存在时才建初态，不提前读取政策或把整个私有容器复制／冻结。 */
-export function installCupidState(role: RoleInitializationComponent, ctx: RoleInitContext): void {
+export function installCupidState(role: RoleInitializationComponent, ctx: Pick<RoleInitContext, "boardConfig">): void {
   if (!getCupidState(role))
     role.privateState.cupid = {
       policy: ctx.boardConfig?.cupid?.policy ?? "netease_2017_cupid_follows_lovers_v1",

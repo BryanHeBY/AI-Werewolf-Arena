@@ -4,7 +4,9 @@
  * 不变量：raw、remaining、history 三层原引用和脱离 JSON 内容分别核验；同内容替换不能续权。
  * 真实写入口只有初始化与已校验选择提交；副本、JSON 指纹和只读数据不是角色／生命／阶段或行动许可。
  * frame 仍拥有 roster、原生命、夜 pending／selections、加成与提交／关闭；有限板碰撞另归同族 rules。
+ * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import type {
   ModifierCaster,
   ModifierMode,
@@ -203,11 +205,13 @@ export class ScholarMentorStateSlot {
 }
 
 /** 只检查原角色／阵营和数据形状，返回原 raw 只读视图；不读取 board 或授予 modify_skill 权限。 */
+// 先保原 role 读取，再无条件取得当前 Camp；即使身份随后拒绝，也不提前省略原 camp 点。
 export function scholarMentorStateForRole(
   role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
 ): ModifierReadState | undefined {
   const name = modifierOwnData(role, "role"),
-    camp = modifierOwnData(role, "camp");
+    camp = modifierOwnData(currentCamp(), "camp");
   if (
     (name !== "day_scholar" && name !== "night_mentor") ||
     camp !== (name === "day_scholar" ? Camp.Good : Camp.Wolf)

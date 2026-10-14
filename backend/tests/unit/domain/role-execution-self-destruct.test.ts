@@ -45,8 +45,8 @@ test("retirement rejects ordinary and Red Moon execution while keeping wolf know
     moon = world.getComponent(4, COMPONENT.Role)!,
     moonAudit = demonHunterAuditPlayer(world, 4),
     events: GameEvent[] = [];
-  expect(canRoleSelfDestruct(wolf, catalog)).toBe(true);
-  expect(wolfTeamPermissions(wolf, catalog, world)).toEqual({
+  expect(canRoleSelfDestruct(wolf, catalog, () => world.getComponent(1, COMPONENT.Camp))).toBe(true);
+  expect(wolfTeamPermissions(wolf, catalog, () => world.getComponent(1, COMPONENT.Camp), world)).toEqual({
     recognizedByPack: true,
     recognizes: "pack",
     canChat: true,
@@ -56,12 +56,12 @@ test("retirement rejects ordinary and Red Moon execution while keeping wolf know
   // 两个身份分别退休；还原普通字段不清除对象终态，目标知识不因此过滤队友。
   retireRoleExecution(teammate);
   retireRoleExecution(wolf);
-  wolf.camp = Camp.Good;
-  wolf.camp = Camp.Wolf;
+  world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
+  world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Wolf;
   expect(world.getComponent(1, COMPONENT.Role)).toBe(wolf);
   expect(world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
-  expect(canRoleSelfDestruct(wolf, catalog)).toBe(false);
-  expect(wolfTeamPermissions(wolf, catalog, world)).toEqual({
+  expect(canRoleSelfDestruct(wolf, catalog, () => world.getComponent(1, COMPONENT.Camp))).toBe(false);
+  expect(wolfTeamPermissions(wolf, catalog, () => world.getComponent(1, COMPONENT.Camp), world)).toEqual({
     recognizedByPack: true,
     recognizes: "pack",
     canChat: false,
@@ -79,7 +79,7 @@ test("retirement rejects ordinary and Red Moon execution while keeping wolf know
     world, { kind: "ordinary", actorId: 4, targetId: null },
     ActionWindow.OnPreVote, Phase.Voting, events,
   )).toBeNull();
-  expect(getRedMoonState(moon)?.blastDay).toBeNull();
+  expect(getRedMoonState(moon, () => world.getComponent(4, COMPONENT.Camp))?.blastDay).toBeNull();
   expect(demonHunterAuditPlayer(world, 4)).toEqual(moonAudit);
   expect(events).toEqual([]);
   expect(world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);

@@ -1,6 +1,7 @@
 /**
  * 负责鬼魂新娘婚礼回合、原参与者授权与有序提交，拥有婚约、回合和绑定别名的写权。
  * 输入保留原 World 及封存请求；输出为原校验后已接受的选择、消息与结算记录。
+ * 原参与者阵营只取真实 Camp，仍核同组件／own-data与Victory；婚约历史阵营不改为晚查询。
  * 资源及参与者私态数据写入归 state；身体／身份复验、Victory 与回执仍在这里按原顺序处理。
  * 不变量：提交必须匹配原参与者和绑定回合，别名不能替代本地校验。取消、关闭或失败
  * 均保持原结算及部分写入顺序，不修复被替换的库存。
@@ -189,7 +190,7 @@ function capture(world: World, id: number): Participant {
     life = world.getComponent(id, COMPONENT.Alive),
     victory = world.getComponent(id, COMPONENT.Victory);
   const kind = data(role, "role"),
-    camp = data(role, "camp"),
+    camp = data(campComponent, "camp"),
     state = data(role, "privateState"),
     affiliations = data(victory, "affiliations"),
     version = life && aliveLifeVersion(life),
@@ -256,7 +257,7 @@ function sameIdentity(b: Binding, p: Participant): boolean {
   return (
     b.world.getComponent(p.id, COMPONENT.Role) === p.role &&
     data(p.role, "role") === p.kind &&
-    data(p.role, "camp") === p.camp &&
+    data(p.campComponent, "camp") === p.camp &&
     data(p.role, "privateState") === p.state &&
     ghostBridePrivateRefsCurrent(p, fields) &&
     b.world.getComponent(p.id, COMPONENT.Camp) === p.campComponent &&

@@ -3,7 +3,9 @@
  * 输入是原角色容器或明确枪政策；输出为原状态引用／新状态／纯数据副本，不提供生命或行动许可。
  * 安装与反射余量写入只收本族实际数据步骤；原体、夜窗口与付款资格仍由 frame／反射命令复核。
  * 方法表冻结不冻结状态或副本；仍接受原字段宽度，Proxy／访问器拒绝不等于严格档案 decoder。
+ * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import type { EvilKnightShotPolicy, EvilKnightState, EvilKnightReadState } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -21,10 +23,12 @@ export function freshEvilKnightState(
 ): EvilKnightState {
   return { policy: EVIL_KNIGHT_POLICY, shotPolicy, reflectionRemaining: 1 };
 }
+// 当前阵营只在原 camp 数据读取点取得；保本族自身 descriptor／Proxy 策略，不回退角色或目录。
 export function getEvilKnightState(
   role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
 ): EvilKnightReadState | undefined {
-  if (data(role, "role") !== EVIL_KNIGHT_ROLE || data(role, "camp") !== Camp.Wolf) return undefined;
+  if (data(role, "role") !== EVIL_KNIGHT_ROLE || data(currentCamp(), "camp") !== Camp.Wolf) return undefined;
   const state = data(data(role, "privateState"), "evilKnight");
   const shot = data(state, "shotPolicy"),
     remaining = data(state, "reflectionRemaining");
@@ -37,8 +41,9 @@ export function getEvilKnightState(
 /** 字段裁剪由机制拥有；只返回纯数据副本，不把反射运行绑定带进玩家观察。 */
 export function projectEvilKnightState(
   role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
 ): EvilKnightState | undefined {
-  const evilKnight = getEvilKnightState(role);
+  const evilKnight = getEvilKnightState(role, currentCamp);
   if (evilKnight)
     return {
       policy: evilKnight.policy,

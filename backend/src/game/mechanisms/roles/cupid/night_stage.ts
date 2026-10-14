@@ -2,6 +2,7 @@
  * 负责丘比特首夜恋人选择的请求、await 复验、关系绑定、成员归属与事实发布。
  * 输入为原夜上下文和经网关验证的配对；输出是同一关系记录及原事件，数据库存／选择写入由本族槽负责。
  * 原角色、容器、生命与双方 Victory 在等待前后复验；最终同步段依次绑定关系、消费选择、安装归属再发布。
+ * 目标阵营按原点捕获并复验当前值，pairCamps仍是提交历史；不将关系／Victory当真实阵营。
  * 同步段不是事务：字段、组件或事件失败保留先完成的前缀，不退款或重新使用旧请求，殉情与判胜另有 owner。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -29,7 +30,7 @@ export const CUPID_STAGE: NightStageHandler = {
         state = getCupidState(role),
         life = captureNightLife(ctx.world, actorId),
         victory = ctx.world.getComponent(actorId, COMPONENT.Victory);
-      if (!state || !life || !victory || role.camp !== Camp.Good) continue;
+      if (!state || !life || !victory || ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good) continue;
       const privateState = role.privateState,
         policy = state.policy,
         affiliations = victory.affiliations,
@@ -39,7 +40,7 @@ export const CUPID_STAGE: NightStageHandler = {
         ctx.currentDay() === day &&
         ctx.world.getComponent(actorId, COMPONENT.Role) === role &&
         role.role === Role.Cupid &&
-        role.camp === Camp.Good &&
+        ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Good &&
         role.privateState === privateState &&
         getCupidState(role) === state &&
         state.policy === policy &&
@@ -64,7 +65,7 @@ export const CUPID_STAGE: NightStageHandler = {
                 life: captureNightLife(ctx.world, id)!,
                 role: targetRole,
                 kind: targetRole.role,
-                camp: targetRole.camp,
+                camp: ctx.world.getComponent(id, COMPONENT.Camp)?.camp,
                 privateState: targetRole.privateState,
                 victory: targetVictory,
                 affiliations: targetVictory.affiliations,
@@ -102,7 +103,7 @@ export const CUPID_STAGE: NightStageHandler = {
               !livingNightLife(ctx.world, target.life) ||
               ctx.world.getComponent(pairIds[index]!, COMPONENT.Role) !== target.role ||
               target.role.role !== target.kind ||
-              target.role.camp !== target.camp ||
+              ctx.world.getComponent(pairIds[index]!, COMPONENT.Camp)?.camp !== target.camp ||
               target.role.privateState !== target.privateState ||
               (target.camp !== Camp.Good && target.camp !== Camp.Wolf) ||
               ctx.world.getComponent(pairIds[index]!, COMPONENT.Victory) !== target.victory ||
@@ -135,7 +136,7 @@ export const CUPID_STAGE: NightStageHandler = {
             createVictoryComponent([
               mixed
                 ? { kind: "relationship", groupId: record.groupId }
-                : { kind: "faction", faction: first.camp },
+                : { kind: "faction", faction: first.camp! },
             ]),
           );
         ctx.events.push({

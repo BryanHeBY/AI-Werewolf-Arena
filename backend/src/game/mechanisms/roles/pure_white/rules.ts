@@ -19,11 +19,13 @@ export function pureWhiteInspectionTargets(
 ): EntityId[] {
   return world
     .getAliveEntityIds()
-    .filter(
-      (id) =>
-        id !== actorId &&
-        (policy === "pure_white" || world.getComponent(id, COMPONENT.Role)?.camp !== Camp.Wolf),
-    );
+    .filter((id) => {
+      if (id === actorId) return false;
+      if (policy === "pure_white") return true;
+      const role = world.getComponent(id, COMPONENT.Role);
+      // 原缺 Role 分支仍允许此目标且不读 Camp；不能借换来源新增角色存在门槛。
+      return !role || world.getComponent(id, COMPONENT.Camp)?.camp !== Camp.Wolf;
+    });
 }
 export const PURE_WHITE_INSPECTION_TOOL: NonNullable<RoleProfile["toolSpecs"]>[number] = {
   name: "inspect_night_identity",

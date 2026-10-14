@@ -14,16 +14,16 @@ function make(firstNight: 1 | 2 = 2) {
   const state = createWolfSorcererState(firstNight);
   const role = {
     role: "wolf_sorcerer",
-    camp: Camp.Wolf,
     privateState: { wolfSorcerer: state },
   } as unknown as RoleComponent;
-  return { state, role };
+  const camp = { camp: Camp.Wolf };
+  return { state, role, camp, currentCamp: () => camp };
 }
 test("Wolf Sorcerer state preserves first-night policy and returns detached history", () => {
-  const { state, role } = make();
+  const { state, role, currentCamp } = make();
   state.history.push({ day: 2, pair: [1, 3] }, { day: 3, pair: null }, { day: 4, pair: [2, 4] });
-  expect(getWolfSorcererState(role)).toBe(state);
-  const projection = projectWolfSorcererState(role)!;
+  expect(getWolfSorcererState(role, currentCamp)).toBe(state);
+  const projection = projectWolfSorcererState(role, currentCamp)!;
   expect(projection).toEqual(state);
   projection.history[0]!.pair![0] = 99;
   projection.history.push({ day: 5, pair: null });
@@ -52,27 +52,27 @@ for (const history of [
   [{ day: 2, pair: [0, 2] }],
 ])
   test("Wolf Sorcerer rejects invalid immutable number history " + JSON.stringify(history), () => {
-    const { state, role } = make();
+    const { state, role, currentCamp } = make();
     Object.assign(state, { history });
-    expect(getWolfSorcererState(role)).toBeUndefined();
-    expect(projectWolfSorcererState(role)).toBeUndefined();
+    expect(getWolfSorcererState(role, currentCamp)).toBeUndefined();
+    expect(projectWolfSorcererState(role, currentCamp)).toBeUndefined();
   });
 test("Wolf Sorcerer explicit first-night variant allows night one", () => {
-  const { state, role } = make(1);
+  const { state, role, currentCamp } = make(1);
   state.history.push({ day: 1, pair: [1, 2] });
-  expect(getWolfSorcererState(role)).toBe(state);
+  expect(getWolfSorcererState(role, currentCamp)).toBe(state);
 });
 test("Wolf Sorcerer rejects foreign role, camp, policy and extra fields", () => {
   for (const mutation of [
     (r: ReturnType<typeof make>) => Object.assign(r.role, { role: "wolf_witch" }),
-    (r: ReturnType<typeof make>) => Object.assign(r.role, { camp: Camp.Good }),
+    (r: ReturnType<typeof make>) => Object.assign(r.camp, { camp: Camp.Good }),
     (r: ReturnType<typeof make>) => Object.assign(r.state, { policy: "other" }),
     (r: ReturnType<typeof make>) => Object.assign(r.state, { extra: true }),
     (r: ReturnType<typeof make>) => Object.assign(r.state, { firstNight: 3 }),
   ]) {
     const r = make();
     mutation(r);
-    expect(getWolfSorcererState(r.role)).toBeUndefined();
+    expect(getWolfSorcererState(r.role, r.currentCamp)).toBeUndefined();
   }
 });
 test("Wolf Sorcerer parser does not invoke supplied accessors or proxy traps", () => {
@@ -84,7 +84,7 @@ test("Wolf Sorcerer parser does not invoke supplied accessors or proxy traps", (
       return [];
     },
   });
-  expect(getWolfSorcererState(a.role)).toBeUndefined();
+  expect(getWolfSorcererState(a.role, a.currentCamp)).toBeUndefined();
   expect(calls).toBe(0);
   const b = make();
   (b.role.privateState as Record<string, unknown>).wolfSorcerer = new Proxy(b.state, {
@@ -93,6 +93,6 @@ test("Wolf Sorcerer parser does not invoke supplied accessors or proxy traps", (
       throw new Error("read");
     },
   });
-  expect(getWolfSorcererState(b.role)).toBeUndefined();
+  expect(getWolfSorcererState(b.role, b.currentCamp)).toBeUndefined();
   expect(calls).toBe(0);
 });

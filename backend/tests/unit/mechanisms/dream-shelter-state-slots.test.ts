@@ -35,7 +35,7 @@ test("Dream JSON schema and Shelter preparation keep old extra fields while stri
 });
 
 test("generic and direct native installs retain owned references and do not insert strict Shelter rejection", () => {
-  const role = createRoleComponent(Role.Villager, Camp.Good), input = freshDream();
+  const role = createRoleComponent(Role.Villager), input = freshDream();
   const dreamState = dream.install(role, input);
   expect(dream.get(role)).toBe(dreamState);
   expect(findNightAbility(role, "dream")!.state).toBe(dreamState);
@@ -101,9 +101,11 @@ test("strict Shelter schema rejects Proxy and accessor before invoking reflectio
 
 test("gifted Dream uses its independent history and preserves native-first state lookup", () => {
   const world = new World(), actor = world.createEntity(), giver = world.createEntity();
-  const role = createRoleComponent(Role.Dreamer, Camp.Good);
+  const role = createRoleComponent(Role.Dreamer);
   world.addComponent(actor, COMPONENT.Role, role);
-  world.addComponent(giver, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Good });
+  world.addComponent(giver, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(giver, COMPONENT.Camp, { camp: Camp.Good });
   const native = dream.install(role, freshDream());
   const gift = grantNightAbility(world, actor, {
     id: "gift:literal:dream", kind: "dream", state: freshDream(),

@@ -4,6 +4,7 @@
  */
 import { MECHANICAL_TOOL_NAMES } from "./tool_names";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
+import { COMPONENT } from "../../../../core/domain/components/names";
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import type { ToolRule, ToolRuleMap } from "../../validation/contracts";
 import { isAliveTarget } from "../../validation/contracts";
@@ -19,7 +20,7 @@ import {
 
 const validateMechanical: ToolRule = ({ world, actorId, role, day, phase, toolCall }) => {
   const state = getMechanicalState(role);
-  if (role.role !== Role.MechanicalWolf || role.camp !== Camp.Wolf || !state || day === undefined)
+  if (role.role !== Role.MechanicalWolf || world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf || !state || day === undefined)
     return { code: RuleError.MechanicalUnavailable };
   if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
   if (toolCall.name === "mechanical_mode") {
@@ -34,7 +35,7 @@ const validateMechanical: ToolRule = ({ world, actorId, role, day, phase, toolCa
       : { code: RuleError.MechanicalTarget };
   }
   if (toolCall.name === "mechanical_attack") {
-    if (!canMechanicalKnife(role, world) || !canMechanicalExtraKnife(state, day))
+    if (!canMechanicalKnife(role, world, () => world.getComponent(actorId, COMPONENT.Camp)) || !canMechanicalExtraKnife(state, day))
       return { code: RuleError.MechanicalUnavailable };
     return toolCall.args.target_id === null || isAliveTarget(world, toolCall.args.target_id)
       ? null

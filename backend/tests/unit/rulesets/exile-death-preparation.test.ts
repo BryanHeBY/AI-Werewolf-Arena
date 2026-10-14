@@ -29,7 +29,8 @@ test("动物死亡提案保重复来源合并和首次席位顺序，普通提�
 
 test("普通反馈在标死前捕获，动物反馈只在主目标真正放逐死亡之后捕获", () => {
   const world = new World(), target = world.createEntity(), life = createAliveComponent();
-  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf));
+  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Wolf));
+  world.addComponent(target, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(target, COMPONENT.Alive, life);
   const selection = { summary: { target }, removed: [target] }, reads: string[] = [];
   const runtime = () => { reads.push("world"); return world; };

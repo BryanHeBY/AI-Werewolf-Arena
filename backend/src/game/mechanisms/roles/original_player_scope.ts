@@ -1,5 +1,6 @@
 /**
  * 负责捕获玩家原角色、阵营与工厂生命／版本引用。输入为 World 和玩家 ID，输出为原生命及仍当前的查询谓词。
+ * 阵营只由真实 Camp 组件提供，保原 own-data／枚举与组件引用撤权；不退回角色镜像。
  * 运行范围不成为协议数据，也不替换已捕获组件；原体身份与当前性仍在实际查询时复核。
  */
 import { types } from "node:util";
@@ -20,7 +21,6 @@ export interface OriginalPlayerScope {
   readonly version: number;
   readonly role: RoleComponent;
   readonly roleId: RoleId;
-  readonly roleCamp: Camp;
   readonly camp: CampComponent;
   readonly campValue: Camp;
 }
@@ -43,12 +43,10 @@ export function captureOriginalPlayer(world: World, id: number): OriginalPlayerS
   if (!Number.isSafeInteger(id) || id < 1 || !safeAlive(life) || !life.alive || !role || !camp)
     return null;
   const roleId = own(role, "role"),
-    roleCamp = own(role, "camp"),
     campValue = own(camp, "camp");
   if (
     !isRoleId(roleId) ||
-    !Object.values(Camp).includes(roleCamp as Camp) ||
-    roleCamp !== campValue
+    !Object.values(Camp).includes(campValue as Camp)
   )
     return null;
   const scope = Object.freeze({
@@ -57,7 +55,6 @@ export function captureOriginalPlayer(world: World, id: number): OriginalPlayerS
     version: aliveLifeVersion(life)!,
     role,
     roleId,
-    roleCamp: roleCamp as Camp,
     camp,
     campValue: campValue as Camp,
   });
@@ -80,7 +77,6 @@ export function originalPlayerSameLife(
     world.getComponent(s.id, COMPONENT.Role) === s.role &&
     world.getComponent(s.id, COMPONENT.Camp) === s.camp &&
     own(s.role, "role") === s.roleId &&
-    own(s.role, "camp") === s.roleCamp &&
     own(s.camp, "camp") === s.campValue
   );
 }

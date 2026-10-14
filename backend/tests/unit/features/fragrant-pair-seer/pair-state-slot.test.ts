@@ -19,7 +19,7 @@ import {
 } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot";
 
 function fixture() {
-  const role = createRoleComponent(Role.AwakenedSeer, Camp.Good, "en");
+  const role = createRoleComponent(Role.AwakenedSeer, "en");
   installPairStateSlot(role);
   const ability = findNightAbility(role, "pair_check")!,
     slot: PairStateSlot = {
@@ -32,11 +32,12 @@ function fixture() {
 }
 
 test("actual profile initialization owns separate native instances with one state behind both checkpoint aliases", () => {
-  const first = createRoleComponent(Role.AwakenedSeer, Camp.Good, "en"),
-    second = createRoleComponent(Role.AwakenedSeer, Camp.Good, "en");
+  const first = createRoleComponent(Role.AwakenedSeer, "en"),
+    second = createRoleComponent(Role.AwakenedSeer, "en");
   const profile = getDefaultRoleCatalog().runtime(Role.AwakenedSeer)!;
-  profile.init!(first as RoleInitializationComponent, { locale: "en" });
-  profile.init!(second as RoleInitializationComponent, { locale: "en" });
+  const firstCamp = { camp: Camp.Good }, secondCamp = { camp: Camp.Good };
+  profile.init!(first as RoleInitializationComponent, { locale: "en", initialCamp: firstCamp, currentCamp: () => firstCamp });
+  profile.init!(second as RoleInitializationComponent, { locale: "en", initialCamp: secondCamp, currentCamp: () => secondCamp });
   const one = findNightAbility(first, "pair_check")!,
     two = findNightAbility(second, "pair_check")!;
   expect((first.privateState as { readonly pairSeer?: unknown }).pairSeer).toBe(one.state);
@@ -64,7 +65,7 @@ test("actual profile initialization owns separate native instances with one stat
 });
 
 test("initializer evaluates the checkpoint alias left-hand reference before installation reads privateState", () => {
-  const role = createRoleComponent(Role.AwakenedSeer, Camp.Good, "en"),
+  const role = createRoleComponent(Role.AwakenedSeer, "en"),
     aliasContainer: Record<string, unknown> = {},
     abilityContainer: Record<string, unknown> = {},
     reads: number[] = [];

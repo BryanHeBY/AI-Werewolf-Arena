@@ -34,10 +34,11 @@ import { parseBoardDefinition } from "../../../src/runtime/config/board_definiti
 import { createRandom } from "../../../src/core/domain/random";
 import mistDefinition from "../../../../configs.example/boards/awa_mist_raven_12_v1.json";
 
-function targetWorld(role: RoleComponent = createRoleComponent(Role.Villager, Camp.Good, "en")) {
+function targetWorld(role: RoleComponent = createRoleComponent(Role.Villager, "en"), camp = Camp.Good) {
   const world = new World("en"),
     id = world.createEntity();
   world.addComponent(id, COMPONENT.Role, role);
+  world.addComponent(id, COMPONENT.Camp, { camp });
   world.addComponent(id, COMPONENT.Alive, createAliveComponent(true, "en"));
   return { world, id, role };
 }
@@ -143,13 +144,13 @@ test("the declared five-step composition stops at each original short-circuit bo
 });
 
 test("Noble and Nightmare preserve the conditional second live Role lookup without caching", () => {
-  const ordinary = createRoleComponent(Role.Villager, Camp.Good, "en"),
-    nobleFirst = createRoleComponent(Role.NightNoble, Camp.Wolf, "en"),
-    nobleSecond = createRoleComponent(Role.Villager, Camp.Good, "en");
+  const ordinary = createRoleComponent(Role.Villager, "en"),
+    nobleFirst = createRoleComponent(Role.NightNoble, "en"),
+    nobleSecond = createRoleComponent(Role.Villager, "en");
   (nobleFirst.privateState as Record<string, unknown>).noble =
     createNobleState("no_blast_no_self_knife");
   (nobleSecond.privateState as Record<string, unknown>).noble = createNobleState("standard");
-  const a = targetWorld(ordinary),
+  const a = targetWorld(ordinary, Camp.Wolf),
     aTrace: string[] = [];
   observeRoleReads(a.world, aTrace, (read) =>
     read === 1 ? nobleFirst : read === 2 ? nobleSecond : ordinary,
@@ -157,13 +158,13 @@ test("Noble and Nightmare preserve the conditional second live Role lookup witho
   expect(bindWolfKnifeTargetQuery(a.world).allows(a.id)).toBe(true);
   expect(aTrace).toEqual(["role", "role", "alive", "role", "role"]);
 
-  const nightmareFirst = createRoleComponent(Role.NightmareShadow, Camp.Wolf, "en"),
-    nightmareSecond = createRoleComponent(Role.NightmareShadow, Camp.Wolf, "en");
+  const nightmareFirst = createRoleComponent(Role.NightmareShadow, "en"),
+    nightmareSecond = createRoleComponent(Role.NightmareShadow, "en");
   (nightmareFirst.privateState as Record<string, unknown>).nightmareShadow =
     freshNightmareShadowState("optional", "no_blast_no_self_knife");
   (nightmareSecond.privateState as Record<string, unknown>).nightmareShadow =
     freshNightmareShadowState("optional", "standard");
-  const b = targetWorld(ordinary),
+  const b = targetWorld(ordinary, Camp.Wolf),
     bTrace: string[] = [];
   observeRoleReads(b.world, bTrace, (read) =>
     read === 3 ? nightmareFirst : read === 4 ? nightmareSecond : ordinary,
@@ -173,16 +174,16 @@ test("Noble and Nightmare preserve the conditional second live Role lookup witho
 });
 
 test("live role restrictions remain active outside installed boards and reject malformed candidates without coercion", () => {
-  const noble = createRoleComponent(Role.NightNoble, Camp.Wolf, "en"),
-    nightmare = createRoleComponent(Role.NightmareShadow, Camp.Wolf, "en");
+  const noble = createRoleComponent(Role.NightNoble, "en"),
+    nightmare = createRoleComponent(Role.NightmareShadow, "en");
   (noble.privateState as Record<string, unknown>).noble =
     createNobleState("no_blast_no_self_knife");
   (nightmare.privateState as Record<string, unknown>).nightmareShadow = freshNightmareShadowState(
     "optional",
     "no_blast_no_self_knife",
   );
-  for (const role of [noble, nightmare, createRoleComponent(Role.EvilKnight, Camp.Wolf, "en")]) {
-    const f = targetWorld(role);
+  for (const role of [noble, nightmare, createRoleComponent(Role.EvilKnight, "en")]) {
+    const f = targetWorld(role, Camp.Wolf);
     expect(bindWolfKnifeTargetQuery(f.world).allows(f.id)).toBe(false);
     role.role = Role.Villager;
     expect(bindWolfKnifeTargetQuery(f.world).allows(f.id)).toBe(true);
@@ -201,10 +202,10 @@ test("live role restrictions remain active outside installed boards and reject m
 });
 
 test("a conditional Role field failure propagates the same object before alive or later contributions", () => {
-  const first = createRoleComponent(Role.NightNoble, Camp.Wolf, "en"),
-    second = createRoleComponent(Role.NightNoble, Camp.Wolf, "en"),
+  const first = createRoleComponent(Role.NightNoble, "en"),
+    second = createRoleComponent(Role.NightNoble, "en"),
     failure = new Error("original_noble_private_state_failure"),
-    f = targetWorld(first),
+    f = targetWorld(first, Camp.Wolf),
     trace: string[] = [];
   Object.defineProperty(second, "privateState", {
     get() {
@@ -267,26 +268,27 @@ test("real Mist absent or closed circles stay null while revoked rosters still f
   expect(query.allows(2)).toBe(false);
   abortMistNight(world);
   expect(query.allows(2)).toBe(true);
-  world.addComponent(5, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good, "en"));
+  world.addComponent(5, COMPONENT.Role, createRoleComponent(Role.Villager, "en"));
+  world.addComponent(5, COMPONENT.Camp, { camp: Camp.Good });
   expect(() => query.allows(999)).toThrow("mist_original_roster_revoked");
 });
 
-/** Compile-only permissions of public candidate queries and primitive ID roster views. */
+/** 仅类型检查：公共候选查询及原始编号名单的读权限，不执行这组负例。 */
 function rejectedTargetCapabilities(
   query: WolfKnifeTargetQuery,
   roster: WolfKnifeRosterQuery,
   mist: MistKnifeTargetQuery,
   world: World,
 ) {
-  // @ts-expect-error Target query has no arbitrary World argument.
+  // @ts-expect-error 目标查询不接受任意World参数。
   query.allows(1, world);
-  // @ts-expect-error Target query cannot write a knife effect.
+  // @ts-expect-error 目标查询不能提交狼刀效果。
   query.commit();
-  // @ts-expect-error Target query exposes no mutable World.
+  // @ts-expect-error 目标查询不暴露可写World。
   query.world;
   // @ts-expect-error 查询消费者不能修改只读存活成员集合。
   roster.aliveIds().push(2);
-  // @ts-expect-error Mist circle membership is read-only.
+  // @ts-expect-error 雾区名单保持只读。
   mist.targets()?.push(2);
 }
 void rejectedTargetCapabilities;

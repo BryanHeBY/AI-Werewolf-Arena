@@ -1,0 +1,2 @@
+{"prefix":"camp-canonical-shared-api","actualPrograms":18,"exactEdits":105,"typedNodes":16757,"nodeArrays":2209,"noncommentLeaves":8703,"inverseWholeOutputs":36}
+{"prefix":"camp-canonical-shared-support","actualPrograms":5,"exactEdits":13,"typedNodes":2779,"nodeArrays":441,"noncommentLeaves":1384,"inverseWholeOutputs":10}

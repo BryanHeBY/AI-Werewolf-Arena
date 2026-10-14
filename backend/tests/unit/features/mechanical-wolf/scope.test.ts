@@ -26,9 +26,10 @@ function fixture(mode: "skill" | "kill" = "skill") {
   // An isolated World exercises scope controls separately from full lifecycle scenarios.
   const world = new World(),
     actor = world.createEntity();
-  const role = createRoleComponent(Role.MechanicalWolf, Camp.Wolf),
+  const role = createRoleComponent(Role.MechanicalWolf),
     life = createAliveComponent();
   world.addComponent(actor, COMPONENT.Role, role);
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(actor, COMPONENT.Alive, life);
   const state = setMechanicalState(role, freshMechanicalState());
   learnMechanicalRole(state, 5, "guard", 1);
@@ -66,7 +67,7 @@ for (const revoke of [
     expect(bound.isCurrent()).toBe(true);
     if (revoke === "cancel") f.cancel();
     if (revoke === "role") f.role.role = Role.Villager;
-    if (revoke === "camp") f.role.camp = Camp.Good;
+    if (revoke === "camp") f.world.getComponent(f.actor, COMPONENT.Camp)!.camp = Camp.Good;
     if (revoke === "component") f.world.addComponent(f.actor, COMPONENT.Role, { ...f.role });
     if (revoke === "private_state")
       (f.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {

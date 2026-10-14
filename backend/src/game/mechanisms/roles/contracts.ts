@@ -2,7 +2,7 @@
  * 负责定义角色资料、运行贡献及展示贡献的独立装配契约。资料只有身份、公开名称和组合约束，
  * 运行贡献拥有原初始化、许可、工具、阶段与 hook，展示声明只标识原生捕获或受信任原文。
  * 三者不相互授权或复制状态；自定义 flat profile 是明确支持的输入，Catalog 保留其原对象、
- * getter、receiver 与读取时点，不在接入时摊平或调用展示。初始化仍仅获得原容器写权。
+ * getter、receiver 与读取时点，不在接入时摊平或调用展示。init 可写原容器及实际初始 Camp，当前 source 不授许可。
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
@@ -11,6 +11,7 @@ import type { Locale } from "@ai-werewolf-arena/game-contract";
 import type { VictoryAffiliation } from "@ai-werewolf-arena/game-contract";
 import type { InspectionCamp, RoleId } from "@ai-werewolf-arena/game-contract";
 import { RoleComponent } from "../../../core/domain/components/role";
+import type { CampComponent, CurrentCampSource } from "../../../core/domain/components/camp";
 import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../../core/domain/model";
 import type { ToolSpec, StageDirectiveRule } from "../contracts";
 import type { ToolRepairPack } from "../llm/contracts";
@@ -20,8 +21,12 @@ import type { DeathHook, VotedOutHook } from "../hooks/hook_registry";
 import type { z } from "zod";
 import type { World } from "../../../core/domain/world";
 
-/** 角色初始化上下文。 */
+/** 初始化持有实际待安装 Camp；运行 source 在原读取点查询当前组件，不能以 draft 回退当前状态。 */
 export interface RoleInitContext {
+  /** 只读句柄仍指向可写组件；custom init 修改后安装同一对象。 */
+  readonly initialCamp: CampComponent;
+  /** 展示与运行晚读；source 本身不授角色、阶段或库存权限。 */
+  readonly currentCamp: CurrentCampSource;
   locale?: Locale;
   boardConfig?: ReadonlyBoardConfig;
   world?: World;
@@ -66,11 +71,11 @@ export interface RoleRuntimeContribution {
   participation?:
     | { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean }
     | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
-  wolfTeam?: WolfTeamPermissions | ((role: RoleComponent, world?: World) => WolfTeamPermissions);
+  wolfTeam?: WolfTeamPermissions | ((role: RoleComponent, world: World | undefined, currentCamp: CurrentCampSource) => WolfTeamPermissions);
   /** 特定时点获知队友的角色，显式保留其已有知识。 */
   knownTeammates?: (role: RoleComponent, world: World) => readonly number[];
   /** 显式公开自爆资格，独立于阵营及刀权。 */
-  canSelfDestruct?: boolean | ((role: RoleComponent) => boolean);
+  canSelfDestruct?: boolean | ((role: RoleComponent, currentCamp: CurrentCampSource) => boolean);
   inspectionLabels?:
     | { camp?: InspectionCamp; role?: RoleId }
     | ((role: RoleComponent) => { camp?: InspectionCamp; role?: RoleId });
@@ -96,8 +101,9 @@ export interface RoleRuntimeContribution {
     request: ActionRequest,
     pickAliveNotSelf: () => number | null,
     pickAliveByCamp: (camp: "good" | "wolf" | "third_party") => number | null,
-    locale?: Locale,
-    world?: World,
+    locale: Locale | undefined,
+    world: World | undefined,
+    currentCamp: CurrentCampSource,
   ) => ToolCall | null;
 }
 
@@ -118,7 +124,7 @@ export interface RoleContributions {
 
 /** 明确支持的用户 flat 输入；读取与调用仍针对原对象，不经复制或强制规范化。 */
 export interface RoleProfile extends RoleMetadata, RoleRuntimeContribution {
-  renderPrompt?: (roleComp: RoleComponent, locale?: Locale, world?: World) => string;
+  renderPrompt?: (roleComp: RoleComponent, locale: Locale | undefined, world: World | undefined, currentCamp: CurrentCampSource) => string;
 }
 
 /** 内建 55 个角色均有原生展示声明，不能被宽化为可缺失原生 ID 的自定义分支。 */

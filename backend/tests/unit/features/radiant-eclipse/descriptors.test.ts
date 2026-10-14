@@ -44,7 +44,7 @@ function fixture(open = true, commit = true) {
   const components = roles.map((kind, index) => {
     const id = world.createEntity(),
       camp = [Role.EclipseMaid, Role.Wolf].includes(kind) ? Camp.Wolf : Camp.Good,
-      role = createRoleComponent(kind, camp);
+      role = createRoleComponent(kind);
     if (kind === Role.EclipseMaid) {
       (role.privateState as Record<string, unknown>).eclipse = createEclipseState();
       (role.privateState as Record<string, unknown>).abilities = {};

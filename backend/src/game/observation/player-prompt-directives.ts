@@ -5,6 +5,7 @@
  * 每次 World／语言／Catalog／板子读取保留位置，不建立新状态镜像；角色 renderer 晚调用，
  * 失败保留原回调和读取前缀。模板、人设、传输提示及实际行动提交由各自所有者负责。
  */
+import { COMPONENT } from "../../core/domain/components/names";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { rolePresentationRenderer } from "./role-presentation";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -210,11 +211,12 @@ export function buildPlayerStatusDirective(
         text(queries.locale(), "common.none"),
     }),
   );
+  // 身份文字仍先取角色标签；阵营到原字段点才读实际Camp，不授予新行动资格。
   if (role)
     lines.push(
       text(queries.locale(), "ability.identity", {
         role: queries.catalog().label(role.role, queries.locale()),
-        camp: term("camp", role.camp, queries.locale()),
+        camp: term("camp", queries.world().getComponent(request.actorId, COMPONENT.Camp)!.camp, queries.locale()),
       }),
     );
   // 自持能力仍用原实例／日期计算摘要；库存可见不等于本次行动可提交。

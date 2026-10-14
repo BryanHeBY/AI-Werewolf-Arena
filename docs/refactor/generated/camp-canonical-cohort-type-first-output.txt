@@ -1,0 +1,73 @@
+backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts(22,33): error TS2304: Cannot find name 'COMPONENT'.
+backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts(37,74): error TS2304: Cannot find name 'COMPONENT'.
+backend/src/game/mechanisms/roles/cupid/profile.ts(75,30): error TS2304: Cannot find name 'actorId'.
+backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts(22,72): error TS2304: Cannot find name 'COMPONENT'.
+backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts(37,76): error TS2304: Cannot find name 'COMPONENT'.
+backend/src/game/observation/player-prompt-directives.ts(218,74): error TS2304: Cannot find name 'COMPONENT'.
+backend/tests/scenarios/boards/cursed-fox/simulation.test.ts(91,50): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/scenarios/boards/cursed-fox/simulation.test.ts(92,52): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/scenarios/boards/cursed-fox/simulation.test.ts(98,60): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/scenarios/engine/phase-pipelines.test.ts(35,52): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts(80,3): error TS2741: Property 'requestFactory' is missing in type '{ world: World; readonly nightActors: NightAbilityActorQuery; readonly nativeNightFailure: NativeNightFailurePolicy; ... 14 more ...; state: { ...; }; }' but required in type 'NightStageContext'.
+backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts(200,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts(345,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts(129,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts(490,18): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts(512,18): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/features/hidden-wolf/camp-policy-inheritance-and-duel.test.ts(75,19): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts(364,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts(387,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts(390,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts(437,12): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts(138,3): error TS2741: Property 'requestFactory' is missing in type '{ world: World; readonly nightActors: NightAbilityActorQuery; readonly nativeNightFailure: NativeNightFailurePolicy; ... 14 more ...; state: { ...; }; }' but required in type 'NightStageContext'.
+backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts(228,12): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts(68,27): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts(62,64): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts(65,38): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/unit/agents/bilingual-player-prompt.test.ts(230,33): error TS2304: Cannot find name 'Camp'.
+backend/tests/unit/engine/visibility/inspection-result-contract.test.ts(52,17): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts(96,3): error TS2741: Property 'requestFactory' is missing in type '{ world: World; readonly nightActors: NightAbilityActorQuery; readonly nativeNightFailure: NativeNightFailurePolicy; ... 14 more ...; state: { ...; }; }' but required in type 'NightStageContext'.
+backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts(561,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts(565,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts(569,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts(582,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts(584,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts(587,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts(68,3): error TS2741: Property 'requestFactory' is missing in type '{ world: World; readonly nightActors: NightAbilityActorQuery; readonly nativeNightFailure: NativeNightFailurePolicy; ... 14 more ...; state: { ...; }; }' but required in type 'NightStageContext'.
+backend/tests/unit/features/dreamer/dream-scope.test.ts(55,3): error TS2741: Property 'requestFactory' is missing in type '{ world: World; readonly nightActors: NightAbilityActorQuery; readonly nativeNightFailure: NativeNightFailurePolicy; ... 14 more ...; state: { ...; }; }' but required in type 'NightStageContext'.
+backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts(251,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts(275,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts(364,12): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(58,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(62,38): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(67,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(69,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(88,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(90,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(95,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(104,10): error TS2554: Expected 3 arguments, but got 1.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(105,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(107,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/mechanical-wolf/inheritance.test.ts(109,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts(71,3): error TS2741: Property 'requestFactory' is missing in type '{ world: World; readonly nightActors: NightAbilityActorQuery; readonly nativeNightFailure: NativeNightFailurePolicy; ... 14 more ...; state: { ...; }; }' but required in type 'NightStageContext'.
+backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts(530,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts(418,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/role-inspection-scope.test.ts(223,12): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/role-inspection-scope.test.ts(248,12): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/features/role-inspection-scope.test.ts(321,12): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts(212,26): error TS2554: Expected 7 arguments, but got 6.
+backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts(516,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts(539,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts(547,10): error TS2554: Expected 3 arguments, but got 2.
+backend/tests/unit/mechanisms/role-execution-resource-retirement.test.ts(57,16): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+backend/tests/unit/mechanisms/role-execution-resource-retirement.test.ts(58,16): error TS2339: Property 'camp' does not exist on type 'RoleComponent'.
+tooling/refactor/architecture/contracts.ts(11,34): error TS2307: Cannot find module 'typescript' or its corresponding type declarations.
+tooling/refactor/fixture-manifest.ts(1114,21): error TS2307: Cannot find module 'typescript' or its corresponding type declarations.
+tooling/refactor/fixture-manifest.ts(1127,31): error TS2307: Cannot find module 'typescript' or its corresponding type declarations.
+tooling/refactor/fixture-manifest.ts(1128,25): error TS2307: Cannot find module 'typescript' or its corresponding type declarations.
+tooling/refactor/fixture-manifest.ts(1159,73): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+tooling/refactor/fixture-manifest.ts(1189,47): error TS7006: Parameter 'node' implicitly has an 'any' type.
+tooling/refactor/fixture-manifest.ts(1196,21): error TS2307: Cannot find module 'typescript' or its corresponding type declarations.
+tooling/refactor/fixture-manifest.ts(1199,40): error TS7006: Parameter 'node' implicitly has an 'any' type.
+tooling/refactor/fixture-manifest.ts(1208,25): error TS7006: Parameter 'modifier' implicitly has an 'any' type.
+tooling/refactor/fixture-manifest.ts(1209,21): error TS7006: Parameter 'modifier' implicitly has an 'any' type.

@@ -28,7 +28,8 @@ type FactoryInput = Parameters<GameActionRequestFactory["create"]>[0];
 function wallFixture() {
   const world = new World(),
     actor = world.createEntity();
-  world.addComponent(actor, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(actor, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(actor, COMPONENT.Alive, createAliveComponent());
   const wall = openWall(world, () => true),
     author = grantWallNote(world, wall, actor)!;

@@ -44,13 +44,13 @@ export function prepareBeautyExileVictory(
   return { target, candidate };
 }
 
-/** 仅在真实放逐已确定、完整死亡波尚未执行时捕获候选，不提前封盘。 */
+/** 仅在真实放逐已确定、完整死亡波尚未执行时捕获候选；实际Camp在各原比较点晚读，不提前封盘。 */
 function captureBeautyExile(world: World, actorId: EntityId): BeautyExileCandidate | null {
   const actor = world.getComponent(actorId, COMPONENT.Role),
     binding = activeCharm(world, actorId);
   if (
     actor?.role !== Role.WolfBeauty ||
-    actor.camp !== Camp.Wolf ||
+    world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf ||
     !binding ||
     !binding.targetLife.alive
   )
@@ -58,12 +58,12 @@ function captureBeautyExile(world: World, actorId: EntityId): BeautyExileCandida
   if (
     world
       .getAliveEntityIds()
-      .some((id) => id !== actorId && world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf)
+      .some((id) => id !== actorId && !!world.getComponent(id, COMPONENT.Role) && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf)
   )
     return null;
   const target = world.getComponent(binding.targetId, COMPONENT.Role),
     side = target ? getDefaultRoleCatalog().metadata(target.role)?.goodSide : undefined;
-  return target?.camp === Camp.Good && side
+  return target && world.getComponent(binding.targetId, COMPONENT.Camp)?.camp === Camp.Good && side
     ? { actorId, targetId: binding.targetId, side, binding }
     : null;
 }
@@ -85,7 +85,7 @@ export function resolveBeautyExileVictory(
   const sideAlive = world.getAliveEntityIds().some((id) => {
     const role = world.getComponent(id, COMPONENT.Role);
     return (
-      role?.camp === Camp.Good &&
+      role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good &&
       getDefaultRoleCatalog().metadata(role.role)?.goodSide === candidate.side
     );
   });

@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts:
+(pass) failed role_getter: safe original audit snapshot invokes no foreign getter [41.69ms]
+(pass) failed replaced_state_getter: safe original audit snapshot invokes no foreign getter [1.57ms]
+(pass) failed target_getter: safe original audit snapshot invokes no foreign getter [1.07ms]
+
+ 3 pass
+ 54 filtered out
+ 0 fail
+ 21 expect() calls
+Ran 3 tests across 1 file. [169.00ms]

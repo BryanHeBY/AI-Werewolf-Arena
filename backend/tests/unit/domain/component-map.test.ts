@@ -9,7 +9,7 @@ import { createRoleComponent } from "../../../src/game/observation/role-presenta
 function compilerExamples(world: World, actorId: number) {
   const alive = createAliveComponent(),
     camp = createCampComponent(Camp.Good),
-    role = createRoleComponent(Role.Villager, Camp.Good);
+    role = createRoleComponent(Role.Villager);
   world.addComponent(actorId, COMPONENT.Alive, alive);
   world.addComponent(actorId, COMPONENT.Camp, { ...camp, customExtra: { original: true } });
   world.addComponent(actorId, COMPONENT.Role, { ...role, customExtra: "unchanged width" });
@@ -27,7 +27,7 @@ function compilerExamples(world: World, actorId: number) {
   // @ts-expect-error Role 的独有字段不能装入 Camp 槽。
   world.addComponent(actorId, COMPONENT.Camp, role);
   // @ts-expect-error 缺少必需字段不能退回任意类型重载。
-  world.addComponent(actorId, COMPONENT.Role, { role: Role.Wolf, camp: Camp.Wolf });
+  world.addComponent(actorId, COMPONENT.Role, { role: Role.Wolf });
   // @ts-expect-error 接收变量的类型不能把 Alive 槽改成 Camp。
   const wrong: CampComponent | undefined = world.getComponent(actorId, COMPONENT.Alive);
   const unionName: typeof COMPONENT.Role | typeof COMPONENT.Camp =
@@ -75,7 +75,7 @@ test("eleven existing slot IDs and inferred reads preserve mutable original refe
   const world = new World(),
     actorId = world.createEntity(),
     identity = createIdentityComponent(actorId, 1, "Raw {player} name"),
-    role = createRoleComponent(Role.Villager, Camp.Good),
+    role = createRoleComponent(Role.Villager),
     camp = createCampComponent(Camp.Good);
   expect(world.getComponent(actorId, COMPONENT.Identity)).toBeUndefined();
   world.addComponent(actorId, COMPONENT.Identity, identity);
@@ -95,7 +95,7 @@ test("typed Alive reads retain original factory life revisions and death-permiss
   const world = new World(),
     actorId = world.createEntity(),
     life = createAliveComponent(false);
-  world.addComponent(actorId, COMPONENT.Role, createRoleComponent(Role.Hunter, Camp.Good));
+  world.addComponent(actorId, COMPONENT.Role, createRoleComponent(Role.Hunter));
   world.addComponent(actorId, COMPONENT.Alive, life);
   const original = world.openDeathAction(actorId, "shoot", Phase.Day, 1);
   expect(world.getComponent(actorId, COMPONENT.Alive)).toBe(life);

@@ -1,0 +1,133 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+      "sha256": "36f202b15e8826ccc69d92f686aac7a7fe86ed8e8ff50534a216609392b24392"
+    },
+    {
+      "path": "backend/tests/unit/agents/fallback-current-wolf-actions.test.ts",
+      "sha256": "bd8fabae40d4e20d404064d17b4984b623814881f7df1c97d49b5ab8511e6176"
+    },
+    {
+      "path": "backend/tests/unit/domain/component-map.test.ts",
+      "sha256": "0aa580dae05aa782fdcf1229dee7c8c09e74a03b33abb27cb64885877793cc0f"
+    },
+    {
+      "path": "backend/tests/unit/domain/opaque-role-container.test.ts",
+      "sha256": "048bf509a3b893d71d7ae450617b2f25b5abd15e47883ec66cc824cf52c61cbe"
+    },
+    {
+      "path": "backend/tests/unit/domain/original-participant.test.ts",
+      "sha256": "53b683d79bd65670743b703550e43a888101d40fdedf702b9403a54d36ddc5c4"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-execution-self-destruct.test.ts",
+      "sha256": "b84858693f6091ccef2330cff8c131a1ceaefde742af36ee950040e3a669a9be"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-private-container.test.ts",
+      "sha256": "506b0b5a2d56a3ebc451b658ace998f0baf55f7a41917fe4342eeb87bebd9f5b"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-state-read-boundary.test.ts",
+      "sha256": "d3166839d55b98809d8a4509bd971acd8ab74322207d1362427974c0239d3d19"
+    },
+    {
+      "path": "backend/tests/unit/engine/bootstrap-and-condition.test.ts",
+      "sha256": "c4642cfe50d796bc3d52c2f8092d7f4c3a28eb9d514b572800244030f141ffad"
+    },
+    {
+      "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+      "sha256": "f307c8b62cc07ce3dbb66479ff9afd7ac3b60f1a9ace34fe74e8d4b83496fad6"
+    },
+    {
+      "path": "backend/tests/unit/engine/player-observation-projector.test.ts",
+      "sha256": "6ad0649764a5e30fb37b16888367c31764b7ba3581f9aac6e3031d2f983416bf"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/role-execution-install-retirement.test.ts",
+      "sha256": "8a090dc6c638de76dcb8237cb75772cd1d5653fdf1adca8f79f8ad7cdf059403"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "f8a8e4cf205c2283b44b8a9c36830a616be254f73a9f8a6c4f91559648792762"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/role-catalog-contract.test.ts",
+      "sha256": "8f7e9724e37014f32de5fa27b760f75f67f307b0538786320ef793df08d513ed"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/role-contributions.test.ts",
+      "sha256": "7abc89e40cae4fe8cdfe37a2b11fd2cdf9c185cf7e71b8ac797edac4593ff882"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-team-permission-and-prompt-contracts.test.ts",
+      "sha256": "57e1f9ea966980117c9908d43a295f477a3d20aa44fe902b42e9542bbc5ad50d"
+    },
+    {
+      "path": "backend/tests/unit/presentation/component-localization.test.ts",
+      "sha256": "24e77d34208ce143405035685b3c41f92a4c81518dc8e58224c97a3736d6f7fc"
+    },
+    {
+      "path": "backend/tests/unit/presentation/mist-raven-projection.test.ts",
+      "sha256": "102de878c225819ac4b0acdac4c5739bacba4a0b4f148b6b0617f20bbbf86caf"
+    },
+    {
+      "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+      "sha256": "3a4fd911c3c7e513bafcd8e3b66200658f7f7e329aaeea2292ba49bb03aadd7f"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "sha256": "f2b3b635a0a8a6128974a87d25819b2eee6ee3b01c0f9a018080b32365d8ff04"
+    }
+  ],
+  "unchangedCandidates": [],
+  "before": {
+    "path": "docs/refactor/generated/camp-canonical-shared-inputs-before.json",
+    "sha256": "b9a51587643f23fdb2051def142296cb1f7ca01d98d2cb63a3600c457d9cd4a1",
+    "fullSourceCapture": {
+      "path": "docs/refactor/generated/camp-canonical-cohort-test-before.json",
+      "sha256": "9f17b52b4fae59eb8f9cce99bc2786c19f41789835e9e56c63c50feece78d3c3"
+    }
+  },
+  "edits": {
+    "path": "docs/refactor/generated/camp-canonical-shared-inputs-edits.json",
+    "sha256": "12c1e65571e4f5281fbacda01272e71f1aa89df6a188c04219c1b916941d58c4",
+    "records": 37
+  },
+  "allSourceReady": true,
+  "checksExecuted": true,
+  "authorScope": "20 Rootshared test files excluding the 5 support owners; no Root production or other tests edited.",
+  "inputPolicyDeltas": [
+    "Role constructor Camp parameter and Role key are retired; locale remains its original value.",
+    "RoleInitContext has explicit initialCamp and lazy currentCamp; original init/locale/world/renderer traces remain.",
+    "World fixtures install actual Camp and worldless fixtures own explicit Camp values; no Role-to-World index or fallback.",
+    "OriginalParticipant reads current Camp at its old camp value position. Getter/Proxy error and reference width stay; replacing Camp with a different value now rejects, not the former duplicate Role field oracle.",
+    "Old candidate Role.camp failure-prefix assertion now reads current World Camp; restoring current Camp cannot clear the existing role-execution tombstone.",
+    "DTO/metadata/known-camp fields remain, including archive and captured participant camp fields."
+  ],
+  "newRiskCasesPrepared": 0,
+  "toolOnlyReadError": {
+    "description": "Initial /tmp AST call inventory assumed root node_modules/typescript and got MODULE_NOT_FOUND. Corrected to backend/node_modules/typescript; this was source reading only, not a compiler, proof, test, head, gate or production load."
+  },
+  "remainingValidation": "Only this failed type root is queued with Root; author did not rerun type, heads or runtime.",
+  "checksExecutedByThisAuthor": false,
+  "cohortFirstTypeReportedByRoot": {
+    "reportedBy": "Root",
+    "launchChunk": "795278",
+    "terminalChunk": "7bf53c",
+    "exitCode": 2,
+    "path": "backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+    "line": 230,
+    "reason": "Camp identifier lacked named import; sole shared20 diagnostic in first full cohort type run."
+  },
+  "postTypeImportBridge": {
+    "path": "docs/refactor/generated/camp-canonical-shared-inputs-type-import-bridge.json",
+    "sha256": "8dee314ea5a3086282e633024ed21aec4de46d9f82ff1cc67905f423a95aea3f",
+    "beforePath": "docs/refactor/generated/camp-canonical-shared-inputs-type-import-before.json",
+    "beforeSHA256": "954a6a04326ac18b306a1463b749515220f8e5969bf63ce1e66454905fcab5dd",
+    "firstReadySnapshot": "docs/refactor/generated/camp-canonical-shared-inputs-source-ready-first-snapshot.json",
+    "firstReadySHA256": "415a2fe5097bf71fb1f54487075a612e3899118d62e1b1672786647100e3cf10"
+  }
+}

@@ -58,7 +58,7 @@ export function commitSelfDestructSelection(
       choice.targetId !== null ||
       (redMoon
         ? ![ActionWindow.OnPreElection, ActionWindow.OnPreVote].includes(window)
-        : !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
+        : !canRoleSelfDestruct(role, getDefaultRoleCatalog(), () => world.getComponent(choice.actorId, COMPONENT.Camp)))
     )
       return null;
     // 原普通能力／赤月窗口资格已经读取；直接赤月旁路也须在实际权威付款前拒退休演员。

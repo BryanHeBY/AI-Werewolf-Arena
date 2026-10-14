@@ -40,17 +40,17 @@ test("three slots retain the original JSON schema-copy function and do not inven
 });
 
 test("all three actual native installs preserve owned payload, instance identity and native-first reads", () => {
-  const role = createRoleComponent(Role.Seer, Camp.Good), input = freshSeer(), state = seer.install(role, input);
+  const role = createRoleComponent(Role.Seer), input = freshSeer(), state = seer.install(role, input);
   const ability = findNightAbility(role, "seer_check")!;
   expect(ability.state).toBe(state);
   expect(seer.get(role)).toBe(state);
   expect(state).not.toBe(input);
   expect(seer.install(role, freshSeer())).not.toBe(state);
   expect(findNightAbility(role, "seer_check")).toBe(ability);
-  const guardRole = createRoleComponent(Role.Guard, Camp.Good), guardState = guard.install(guardRole, freshGuard());
+  const guardRole = createRoleComponent(Role.Guard), guardState = guard.install(guardRole, freshGuard());
   expect(findNightAbility(guardRole, "guard")!.state).toBe(guardState);
   expect(guard.get(guardRole)).toBe(guardState);
-  const witchRole = createRoleComponent(Role.Witch, Camp.Good), witchState = witch.install(witchRole, freshWitch());
+  const witchRole = createRoleComponent(Role.Witch), witchState = witch.install(witchRole, freshWitch());
   expect(findNightAbility(witchRole, "potion")!.state).toBe(witchState);
   expect(witch.get(witchRole)).toBe(witchState);
   (findNightAbility(witchRole, "potion") as { disabled: boolean }).disabled = true;
@@ -58,7 +58,7 @@ test("all three actual native installs preserve owned payload, instance identity
 });
 
 test("generic native installation uses the same Seer Guard and Witch owned state", () => {
-  const role = createRoleComponent(Role.Villager, Camp.Good), input = freshSeer();
+  const role = createRoleComponent(Role.Villager), input = freshSeer();
   const seerState = installNativeAbility(role, "seer_check", input);
   const guardState = installNativeAbility(role, "guard", freshGuard());
   const witchState = installNativeAbility(role, "potion", freshWitch());
@@ -101,9 +101,11 @@ test("Witch reset failure preserves both reset writes before currentDay and leav
 });
 
 test("gifted potion recipient writes remain independent from native bottles and metadata", () => {
-  const world = new World(), actor = world.createEntity(), giver = world.createEntity(), role = createRoleComponent(Role.Witch, Camp.Good);
+  const world = new World(), actor = world.createEntity(), giver = world.createEntity(), role = createRoleComponent(Role.Witch);
   world.addComponent(actor, COMPONENT.Role, role);
-  world.addComponent(giver, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Good });
+  world.addComponent(giver, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(giver, COMPONENT.Camp, { camp: Camp.Good });
   const native = witch.install(role, freshWitch()), gift = grantNightAbility(world, actor, {
     id: "gift:ordinary:potion", kind: "potion", state: freshWitch(), source: { kind: "gift", actorId: giver }, startsOnDay: 1, maxUses: 1,
   }, []);

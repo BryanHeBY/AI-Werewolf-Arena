@@ -314,7 +314,7 @@ const attackStage: NightStageHandler = {
         owner.state.mode === mode &&
         mode.day === day &&
         mode.kind === "kill" &&
-        canMechanicalKnife(owner.role, ctx.world);
+        canMechanicalKnife(owner.role, ctx.world, () => ctx.world.getComponent(owner.actorId, COMPONENT.Camp));
       const current = () => effectCurrent() && canMechanicalExtraKnife(owner.state, day);
       if (!current()) continue;
       let completed = false;

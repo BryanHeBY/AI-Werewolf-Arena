@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/mechanisms/camp-canonical-missing-role-roster.test.ts:
+(pass) hidden wolf inheritance ignores a live Camp-only entity without touching its Camp [0.56ms]
+(pass) gargoyle inheritance ignores a live Camp-only entity without touching its Camp [0.10ms]
+(pass) mechanical wolf inheritance ignores a live Camp-only entity without touching its Camp [0.08ms]
+(pass) awakened hidden wolf inheritance ignores a live Camp-only entity without touching its Camp [0.10ms]
+
+ 4 pass
+ 0 fail
+ 16 expect() calls
+Ran 4 tests across 1 file. [44.00ms]

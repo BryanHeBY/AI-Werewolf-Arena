@@ -34,7 +34,7 @@ const choose: NightStageHandler = {
       pending = beginScholarMentorNight(ctx.world, day);
     for (const actorId of ctx.world.entityIds()) {
       const role = ctx.world.getComponent(actorId, COMPONENT.Role),
-        state = scholarMentorStateForRole(role);
+        state = scholarMentorStateForRole(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp));
       if (!state) continue;
       if (!pending.includes(actorId)) {
         const reason =

@@ -3,6 +3,7 @@
  * 输出为原名单拒绝、同一 binding Map 与免疫提案。名单不在角色替换后重建，失效保原错误前缀。
  * 每次状态读取和原 capture／Map.set 顺序保持；本族登记 Map 后才展开免疫数组，后续失败不退款或撤销安装。
  * 捕获与反射资格归 reflection，实际余量写入归 state-slot；运行回调／生命引用不进入玩家观察或归档，也不授权行动。
+ * 当前 Camp 在原字段点由实际 World 查询；保原值比较，不把同值组件替换改成新的引用撤权。
  */
 import type { World } from "../../../../core/domain/world";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -45,7 +46,7 @@ type RosterBinding = {
   id: number;
   role: RoleComponent;
   kind: Role;
-  camp: Camp;
+  camp: Camp | undefined;
   state: RoleComponent["privateState"];
   refs: [string, unknown][];
   abilityRefs: [string, unknown][];
@@ -63,7 +64,7 @@ export function installEvilKnightBoard(world: World): void {
         id,
         role,
         kind: role.role,
-        camp: role.camp,
+        camp: world.getComponent(id, COMPONENT.Camp)?.camp,
         state: role.privateState,
         refs: Object.entries(role.privateState),
         abilityRefs: Object.entries(
@@ -92,7 +93,7 @@ export function assertEvilKnightRosterCurrent(world: World): void {
     if (
       world.getComponent(entry.id, COMPONENT.Role) !== entry.role ||
       entry.role.role !== entry.kind ||
-      entry.role.camp !== entry.camp ||
+      world.getComponent(entry.id, COMPONENT.Camp)?.camp !== entry.camp ||
       entry.role.privateState !== entry.state ||
       entry.refs.some(
         ([key, value]) => (entry.state as Readonly<Record<string, unknown>>)[key] !== value,
@@ -120,7 +121,7 @@ export function assertEvilKnightNativeActor(world: World, actorId: number, expec
   if (!isEvilKnightBoard(world)) return;
   assertEvilKnightRosterCurrent(world);
   const role = world.getComponent(actorId, COMPONENT.Role);
-  if (role?.role !== expected || role.camp !== Camp.Good)
+  if (role?.role !== expected || world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good)
     throw new Error("evil_knight_actor_identity_revoked");
 }
 export const EVIL_KNIGHT_FRAME_STAGE: NightStageHandler = {

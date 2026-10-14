@@ -13,8 +13,9 @@ import { captureDeathShotEligibility, grantDeathGun, armDeathGun } from "../../.
 import { demonHunterNativeGunCurrent } from "../../../../src/game/mechanisms/roles/demon_hunter/ports";
 
 function hunter() {
-  const world = new World(), actorId = world.createEntity(), role = createRoleComponent(Role.Hunter, Camp.Good);
+  const world = new World(), actorId = world.createEntity(), role = createRoleComponent(Role.Hunter);
   world.addComponent(actorId, COMPONENT.Role, role);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(actorId, COMPONENT.Alive, createAliveComponent());
   return { world, actorId, role };
 }
@@ -80,7 +81,8 @@ test("native qualification retains Demon then scope then stock and cause order a
 
 test("a Hunter holding a real gift still checks Demon but never captures the native stock or pays", () => {
   const f = hunter(), fromId = f.world.createEntity(), events: GameEvent[] = [], trace: string[] = [];
-  f.world.addComponent(fromId, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  f.world.addComponent(fromId, COMPONENT.Role, createRoleComponent(Role.Villager));
+  f.world.addComponent(fromId, COMPONENT.Camp, { camp: Camp.Good });
   f.world.addComponent(fromId, COMPONENT.Alive, createAliveComponent());
   Object.defineProperty(f.role.privateState, "hunter", { get() { throw new Error("gift_native_stock_must_not_read"); } });
   const gun = grantDeathGun(f.world, fromId, f.actorId, 2, events);

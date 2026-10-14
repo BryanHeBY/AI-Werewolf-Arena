@@ -2,6 +2,7 @@
  * 负责孤独少女首夜选择、原参与者／生命与独立 Victory 归属，拥有原关系绑定及窗口时序。
  * 输入为原 World 参与者和首夜请求；输出为已接受选择、捕获目标阵营对应的成员关系及原准备结果。
  * 不变量：仅在原身份／资源仍匹配时提交；关闭或替换参与者使 scope 失效，包括期限别名。
+ * 阵营捕获与晚复验只来自同一真实 Camp；保原组件引用与值检查，成员关系仍用捕获历史值。
  * 选择不改变演员的 Role／Camp，已选成员关系在双方死亡后仍保留；本模块不新增目标死亡结算。
  * 数据写由槽执行，失败窗口审计保留原授权身份，不读取外来 accessor 或恢复已消耗库存。
  * 请求记录及别名传播归独立公共实例；观察请求或原领域失配后许可不复活；付款/取消仍由本族执行，别名自身损坏不毒原请求。
@@ -32,7 +33,6 @@ interface Participant {
   alive: PropertyDescriptor;
   role: RoleComponent;
   kind: Role;
-  roleCamp: Camp;
   state: RoleComponent["privateState"];
   camp: CampComponent;
   campValue: Camp;
@@ -83,7 +83,7 @@ function capture(world: World, id: number): Participant | null {
     version = life && aliveLifeVersion(life),
     alive = life && Object.getOwnPropertyDescriptor(life, "alive"),
     kind = lonelyData(role, "role"),
-    roleCamp = lonelyData(role, "camp"),
+    capturedCamp = lonelyData(camp, "camp"),
     state = lonelyData(role, "privateState"),
     campValue = lonelyData(camp, "camp");
   if (
@@ -96,8 +96,8 @@ function capture(world: World, id: number): Participant | null {
     typeof kind !== "string" ||
     !state ||
     typeof state !== "object" ||
-    ![Camp.Good, Camp.Wolf].includes(roleCamp as Camp) ||
-    campValue !== roleCamp
+    ![Camp.Good, Camp.Wolf].includes(capturedCamp as Camp) ||
+    campValue !== capturedCamp
   )
     return null;
   return {
@@ -107,7 +107,6 @@ function capture(world: World, id: number): Participant | null {
     alive,
     role,
     kind: kind as Role,
-    roleCamp: roleCamp as Camp,
     state: state as RoleComponent["privateState"],
     camp,
     campValue: campValue as Camp,
@@ -126,7 +125,7 @@ function same(world: World, p: Participant): boolean {
     p.life.alive === true &&
     world.getComponent(p.id, COMPONENT.Role) === p.role &&
     lonelyData(p.role, "role") === p.kind &&
-    lonelyData(p.role, "camp") === p.roleCamp &&
+    lonelyData(p.camp, "camp") === p.campValue &&
     lonelyData(p.role, "privateState") === p.state &&
     world.getComponent(p.id, COMPONENT.Camp) === p.camp &&
     lonelyData(p.camp, "camp") === p.campValue
@@ -181,7 +180,7 @@ function pendingOwner(b: LonelyGirlBinding): boolean {
     b.participants.size === b.world.entityIds().length &&
     [...b.participants.values()].every((p) => same(b.world, p)) &&
     b.actor.kind === Role.LonelyGirl &&
-    b.actor.roleCamp === Camp.Good &&
+    b.actor.campValue === Camp.Good &&
     getLonelyGirlState(b.actor.role) === b.state &&
     rem?.value === 1 &&
     rem.writable === true &&
@@ -317,7 +316,7 @@ export function projectLonelyGirlAuditPlayer(world: World, id: number) {
   const alive = p.alive.get ? p.alive.get.call(p.life) === true : p.alive.value === true;
   return {
     role: p.kind,
-    camp: p.roleCamp,
+    camp: p.campValue,
     alive,
     privateState:
       id === b.actorId

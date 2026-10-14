@@ -2,6 +2,7 @@
  * 负责夜之贵族／秘密之身的原体、生命、夜仆契约和实际付款权威。输入为原 roster、实际夜间及受控行动；
  * 输出为已重检提交、通知、到期提案与显式纯数据快照；纯状态写入和唯一审计影子由 state 槽拥有。
  * 正常／撤销、原体替换、资源与记录失败保留原合法前缀，不恢复已付契约或修改对局阶段。
+ * 原阵营值在捕获点取真实 Camp，随后保组件引用与 own-data 复验；去除 Role 镜像不补许可。
  * 新夜间身份仅关联本 Night 对象；到期消费同一身份，不改变旧日次数值、期限或归档字段。
  * 规则依据：docs/rules/awa-noble-secret-body-twelve-v1.md。
  */
@@ -116,8 +117,8 @@ function capture(world: World, id: number): OriginalPlayer {
     victory = world.getComponent(id, COMPONENT.Victory);
   const privateState = own(role, "privateState"),
     kind = own(role, "role"),
-    camp = own(role, "camp"),
     campComponent = world.getComponent(id, COMPONENT.Camp),
+    camp = own(campComponent, "camp"),
     identityValues = identityKeys.map((k) => own(identity, k)),
     victoryValues = victoryJson(victory);
   const [identityId, seat, name, sessionId] = identityValues;
@@ -164,7 +165,7 @@ function playerCurrent(world: World, p: OriginalPlayer, living = false): boolean
   if (
     world.getComponent(p.id, COMPONENT.Role) !== p.role ||
     own(p.role, "role") !== p.kind ||
-    own(p.role, "camp") !== p.camp ||
+    own(p.campComponent, "camp") !== p.camp ||
     own(p.role, "privateState") !== p.privateState ||
     world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
     identityKeys.some((k, i) => own(p.identity, k) !== p.identityValues[i]) ||

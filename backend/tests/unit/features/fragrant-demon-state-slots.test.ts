@@ -23,8 +23,8 @@ import {
 
 test("both data installers read the original left-hand container and keep exact creator fields", () => {
   const trace: string[] = [],
-    phantom = createRoleComponent(Role.FragrantPhantom, Camp.Wolf),
-    hunter = createRoleComponent(Role.DemonHunter, Camp.Good);
+    phantom = createRoleComponent(Role.FragrantPhantom),
+    hunter = createRoleComponent(Role.DemonHunter);
   let fragrant: FragrantState | undefined,
     demon: ReturnType<typeof freshDemonHunterState> | undefined;
   const fragrantContainer = { set fragrant(value: FragrantState) { trace.push("fragrant-write"); fragrant = value; } },

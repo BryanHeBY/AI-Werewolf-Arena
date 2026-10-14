@@ -12,7 +12,7 @@ import { encodeCheckpointPrivateState } from "../../../src/recording/checkpoint/
 
 test("ordinary codec keeps full-container aliases, cycles, undefined and legal getter values", () => {
   const world = new World("en"),
-    role = createRoleComponent(Role.Villager, Camp.Good),
+    role = createRoleComponent(Role.Villager),
     shared = { amount: 2 },
     reads: string[] = [],
     container: Record<string, unknown> = {
@@ -40,7 +40,7 @@ test("ordinary codec keeps full-container aliases, cycles, undefined and legal g
 
 test("ordinary codec finds clone callee before private-state getter and preserves its failure", () => {
   const world = new World("en"),
-    role = createRoleComponent(Role.Villager, Camp.Good),
+    role = createRoleComponent(Role.Villager),
     trace: string[] = [],
     failure = new Error("test_private_state_getter_failed"),
     cloneDescriptor = Object.getOwnPropertyDescriptor(globalThis, "structuredClone")!;

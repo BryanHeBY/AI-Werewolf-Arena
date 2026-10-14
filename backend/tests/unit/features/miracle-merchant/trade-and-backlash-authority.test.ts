@@ -70,6 +70,7 @@ function context(
   const factory = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
+    get requestFactory() { return GameActionRequestFactory; },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -132,7 +133,7 @@ for (const locale of ["zh-CN", "en"] as const)
         closedDay: 1,
         choice: { day: 1, targetId: 6, skill },
       });
-      expect(role(game).camp).toBe(Camp.Good);
+      expect(game.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
       expect(role(game, 6).role).toBe(Role.Villager);
       const gift = allNightAbilities(role(game, 6))[0];
       expect(gift).toMatchObject({
@@ -227,7 +228,7 @@ for (const dream of [false, true])
     game.world
       .getComponent(1, COMPONENT.StatusMarks)!
       .add(StatusMark.HealMark);
-    role(game, 2).camp = Camp.Good;
+    game.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Good;
     game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     const damage = new DamageResolutionSystem().resolve(game.world, {
       merchantBacklashes: ctx.state.merchantBacklashes,

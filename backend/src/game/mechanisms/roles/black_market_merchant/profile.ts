@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { COMPONENT } from "../../../../core/domain/components/names";
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
@@ -75,7 +76,7 @@ export const BLACK_MARKET_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
         const state = getBlackMarketState(role);
         if (
           role.role !== Role.BlackMarketMerchant ||
-          role.camp !== Camp.Good ||
+          world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good ||
           !state ||
           day === undefined ||
           !canBlackMarketTrade(state, day)

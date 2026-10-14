@@ -127,7 +127,7 @@ test("checkpoint codec preserves JSON method lookup before lazy fields without n
 });
 
 test("append writer keeps state-before-JSON-error and leaves the resource use unpaid", () => {
-  const role = createRoleComponent(Role.AwakenedSeer, Camp.Good);
+  const role = createRoleComponent(Role.AwakenedSeer);
   installPairStateSlot(role);
   const ability = findNightAbility(role, "pair_check")!,
     failure = Error("pair_json_field_failed"),

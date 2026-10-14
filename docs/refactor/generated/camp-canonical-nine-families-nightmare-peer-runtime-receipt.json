@@ -1,0 +1,12 @@
+{
+  "command": "bun --no-env-file test backend/tests/unit/features/nightmare/frame.test.ts --test-name-pattern '^first fear precedes pack knowledge and blocks all knife but not identity$'",
+  "outputPath": "docs/refactor/generated/camp-canonical-nine-families-nightmare-peer-runtime-output.txt",
+  "result": {
+    "chunk_id": "12cab0",
+    "wall_time_seconds": 0.000012329,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "scope": "First selected original Nightmare first-fear branch with corrected current policy inputs; no other Nightmare cases or prior green risk rerun."
+}

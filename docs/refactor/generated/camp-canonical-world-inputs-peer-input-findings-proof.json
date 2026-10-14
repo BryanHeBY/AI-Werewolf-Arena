@@ -1,0 +1,260 @@
+{
+  "approved": true,
+  "originalFormalScopeSHA256": "0cb6997222fdc30aa59e0b2337f320a99e5ec82b970ec9db062ff326002a0a02",
+  "source": [
+    {
+      "path": "backend/tests/integration/filesystem/configuration/fragrant-policy-files.test.ts",
+      "sha256": "9c23a1eeb2875bd0fbfb8dba876cfd36b456b4bb74082d966d5dbc9b9e44ede4"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+      "sha256": "cefbc83df2e7100b6892f89970f4c5dc0a21cf0b3a0b33e427003c5e72086aff"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/authority.test.ts",
+      "sha256": "473d6d330435aaaf10a907a79b920784062111e6642802cd2918bb844fd05723"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "6a2d3212d4131669c27f740d0a48dc921d292f0a1cef03199f6cfdb7632855b8"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "4ddc7438235137bccf6e616f4ad56486bfd94d28811096de933372cd59d8cc7b"
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "sha256": "bf6a71d067616f87a9a7fb1560609a3f0eb409acedc742c2ebe4561b5b00866a"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "3778f6a77dc58dfc0e1d5d172f152b6238868e4141248e97259671b5bcaef02e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+      "sha256": "fda5e73b915ce4907c948fac6c3691fe7ed8df972ff45188e8aec9437212c1f4"
+    }
+  ],
+  "programs": [
+    {
+      "path": "backend/tests/integration/filesystem/configuration/fragrant-policy-files.test.ts",
+      "beforeSHA256": "4836e8e426176991ae5015c7bebf55d0b0a0b58e202442b819e6a225f886eef0",
+      "sourceSHA256": "9c23a1eeb2875bd0fbfb8dba876cfd36b456b4bb74082d966d5dbc9b9e44ede4",
+      "preciseSteps": 1,
+      "wholeForwardInverse": true,
+      "typedNodes": 701,
+      "nodeArrays": 141,
+      "noncommentLeaves": 873,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "5b97fe2ddca73b9dbf2c0141aeaa692e24f90e0c0d67c411c9dd0ec714f26cc8",
+          "actualSHA256": "9e33f536239df91e0fe74ed27ac9ce730451f802bc9a26c6ee1ad936d7cf3576"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "276f663616c6cf1343b076fc7c5c16d53e5bb542ee7846134de5d4c97dc04d08",
+          "actualSHA256": "ef815d0e4f7f6e5c37bf6fb1d768852b16379aaaef85981f92a4b6511f229d85"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+      "beforeSHA256": "0b332acd2e6b16109f821ff5f12a5373c95542d74b9029fd61a42f1ccd3e0d48",
+      "sourceSHA256": "cefbc83df2e7100b6892f89970f4c5dc0a21cf0b3a0b33e427003c5e72086aff",
+      "preciseSteps": 1,
+      "wholeForwardInverse": true,
+      "typedNodes": 1759,
+      "nodeArrays": 378,
+      "noncommentLeaves": 2327,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "6d9869e3eb6649429d02d217bc7a0194184f5746bc2f94b8083dea37ba263850",
+          "actualSHA256": "a8d60f8c94f017df0a3199256b9f2df3163516c440cd24427c2977f4a8a37483"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "1eda27533f2e1aa808da800f9af94c570ff377492c37c2007a2187fceecef01f",
+          "actualSHA256": "3b5cf26ff39680b5e79076bbf630e3871bb3a9b7d76a7f80b43dec17472b0b3c"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/authority.test.ts",
+      "beforeSHA256": "2b5127352220c380ead42ae2f30a8970c4a46405df767ee9a996842c7f3d3ce8",
+      "sourceSHA256": "473d6d330435aaaf10a907a79b920784062111e6642802cd2918bb844fd05723",
+      "preciseSteps": 1,
+      "wholeForwardInverse": true,
+      "typedNodes": 1438,
+      "nodeArrays": 292,
+      "noncommentLeaves": 1905,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "8055c4de43b2709aec85de95779b24b7d3757eb780db70b0e6438a2262f8fad8",
+          "actualSHA256": "b4ea80c6878007bbc0605da4c1b51d993ca7e72b8f05944abba5dfc617c118eb"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "0a5cb16e53b124d4b5ad484ac0ed02b8afa88d790895cb0eac3cef7239e0fe33",
+          "actualSHA256": "70801803f2f4d914e4dec8541dd084eb098a257cf92f1188fd86388e0400f497"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "beforeSHA256": "4f63adb0f96988d167f1e7fde8dc610cd38771b78afbbea9e7fb6d42fd20ee7b",
+      "sourceSHA256": "6a2d3212d4131669c27f740d0a48dc921d292f0a1cef03199f6cfdb7632855b8",
+      "preciseSteps": 1,
+      "wholeForwardInverse": true,
+      "typedNodes": 4496,
+      "nodeArrays": 971,
+      "noncommentLeaves": 5944,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "e8e2ca9040e73e3efe6d3cdad35e3ea635963ed77968a544d3bb64db4a7c7c70",
+          "actualSHA256": "d2a78f0fc5b7bf47155644275b25414c5b432d23a0e5bdbef8ee546a56159394"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "791751315a5f3a68e11954649494bbea279ba97da9f5dfd1fe2ecd4c3ae99016",
+          "actualSHA256": "933ccde687f0188bc63444482dc61f855777c6a2e0f31ca21a9f4a4ce1a35c2d"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "beforeSHA256": "82c777b45012609a4d79a08717aa34e9f95039dafb69c3c750a63773f6c9dfaf",
+      "sourceSHA256": "4ddc7438235137bccf6e616f4ad56486bfd94d28811096de933372cd59d8cc7b",
+      "preciseSteps": 1,
+      "wholeForwardInverse": true,
+      "typedNodes": 2249,
+      "nodeArrays": 446,
+      "noncommentLeaves": 2957,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "89edcbdf12082f4923a1e5477d0e26a32ba4a7a3a945766c664ccec40f0219a0",
+          "actualSHA256": "80e3ccb1d33b815d536e3b3f889574e58cff1e1aa84673f1fe1c6d6d8253b950"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "ce5b87d0280bfc1275fa26a8824d75ea12b63ca015f8302b3256767edde6fe23",
+          "actualSHA256": "306dc14cda62ee96d49da5266b417af28b653de8102aac6de25e6066c6af4802"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "beforeSHA256": "928ed5b64e6e5993eeec23e13243fc2c1972e170b552be53e73f554de4c11457",
+      "sourceSHA256": "bf6a71d067616f87a9a7fb1560609a3f0eb409acedc742c2ebe4561b5b00866a",
+      "preciseSteps": 1,
+      "wholeForwardInverse": true,
+      "typedNodes": 3159,
+      "nodeArrays": 619,
+      "noncommentLeaves": 4146,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "223ca930e493c5b0b8b9e702879940db81a959b11970031debd525180bfc24b5",
+          "actualSHA256": "319e413d251bc8cf85cf27cb0683ec7199456c04cfe8a1273ec233ba51b9d072"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "5f269c47bcafe8133526584de8e615eb6d85a273954c618d7e9a62f7c202bc94",
+          "actualSHA256": "69b072de8b2d80b55b85e24311b67657e5d49f59b8331104b4b6ea5e41a3ef9c"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "beforeSHA256": "764c0ca86cb31d39e157312199465db027256756ca9586b54a2c9993d47fa04b",
+      "sourceSHA256": "3778f6a77dc58dfc0e1d5d172f152b6238868e4141248e97259671b5bcaef02e",
+      "preciseSteps": 2,
+      "wholeForwardInverse": true,
+      "typedNodes": 4261,
+      "nodeArrays": 825,
+      "noncommentLeaves": 5650,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "c6c0a403bf5432e484231e9f277e3ee1b4b12f1b72c1fc4c3974de367a14c490",
+          "actualSHA256": "8d8929f5e1dd12fa90d1ff6a7ee2dd6fc04b54cbce7ad91155bd111aaa12c35b"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "24a1e672c190a707ea659a0d330515d42a72af34de644e9f73151fbb94969a31",
+          "actualSHA256": "4a8926c62bcd1041614fee6939dcea94a476a561f7b916b1e61fcf212dfc23f8"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+      "beforeSHA256": "66f0b179d58597e3786d85cbd15e70dcbe6ccfaf8a860a948439db838246c4e8",
+      "sourceSHA256": "fda5e73b915ce4907c948fac6c3691fe7ed8df972ff45188e8aec9437212c1f4",
+      "preciseSteps": 1,
+      "wholeForwardInverse": true,
+      "typedNodes": 1164,
+      "nodeArrays": 241,
+      "noncommentLeaves": 1592,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "82dc15e89d5a3f77b18e621a801638ff6f58a81b760bd09866bef28afaedcc23",
+          "actualSHA256": "ec5b5e615f461e23e1d81d99584021c38f8c1bb7f02e2dc6acee16c8a03aab41"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualWholeRawSame": false,
+          "beforeSHA256": "c35133da67552b6376af028abf4ac30495f886ec68de6b8bb17426c695c32fe7",
+          "actualSHA256": "62badb5c134ada25f33bd5268a686bfeb88866eea5037b7f51e84ea73e2c1b7a"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "programs": 8,
+    "exactSteps": 9,
+    "typedNodes": 19227,
+    "nodeArrays": 3913,
+    "noncommentLeaves": 25394,
+    "inverseWholeOutputs": 16
+  },
+  "limits": [
+    "测试输入／oracle必要差异，不冒纯注释或类型擦除，也不宣称全部原assert字节同。",
+    "首165proof/22delta/rostercomment及四绿runtime原阶段保；只这8完整程序当前前样承接。"
+  ]
+}

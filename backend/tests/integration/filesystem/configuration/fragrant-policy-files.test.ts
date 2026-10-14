@@ -48,10 +48,10 @@ test("public example load, roundtrip, game resolve and bootstrap agree", async (
     ).toHaveLength(row.count);
   for (const i of g.playerIds) {
     const role = g.world.getComponent(i, COMPONENT.Role)!;
-    expect(role.camp).toBe(
+    expect(g.world.getComponent(i, COMPONENT.Camp)!.camp).toBe(
       [Role.Wolf, Role.FragrantPhantom].includes(role.role) ? Camp.Wolf : Camp.Good,
     );
-    expect(g.world.getComponent(i, COMPONENT.Camp)!.camp).toBe(role.camp);
+    expect(Object.hasOwn(role, "camp")).toBe(false);
   }
 });
 

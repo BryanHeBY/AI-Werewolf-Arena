@@ -67,7 +67,8 @@ for (const failingInstall of ["Role", "Camp", "Victory"] as const) {
     const candidate = observed.candidate!;
     expect(caught).toBe(error);
     expect(candidate.role).toBe(Role.Seer);
-    expect(candidate.camp).toBe(Camp.Good);
+    // 旧Role.camp已退休；失败前缀的真实阵营仍取当前Camp组件。
+    expect(world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Good);
     expect(isRoleExecutionRetired(candidate)).toBe(true);
     expect(isRoleExecutionRetired(oldRole)).toBe(false);
     expect(stock.hands.get(1)).toBe(chosen);
@@ -93,8 +94,9 @@ for (const failingInstall of ["Role", "Camp", "Victory"] as const) {
       expect(fresh.scope.isOwnerCurrent()).toBe(true);
       expect(fresh.scope.isEligible()).toBe(false);
       expect(allNightAbilities(candidate)).toContain(fresh.ability);
-      candidate.camp = Camp.Wolf;
-      candidate.camp = Camp.Good;
+      // 旧Role重复字段退出；恢复真实当前Camp仍不能清除同Role执行墓碑。
+      game.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Wolf;
+      game.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
       expect(observed.scope!.isEligible()).toBe(false);
       expect(fresh.scope.isEligible()).toBe(false);
     }

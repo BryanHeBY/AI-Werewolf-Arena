@@ -123,13 +123,13 @@ function captureCurrentWolfActions(
     actorId = request.actorId,
     role = world.getComponent(actorId, COMPONENT.Role),
     roleId = role?.role,
-    permissions = wolfTeamPermissions(role, queries.catalog(), world),
+    permissions = wolfTeamPermissions(role, queries.catalog(), () => world.getComponent(actorId, COMPONENT.Camp), world),
     canChat = permissions.canChat === true,
     canVoteForKill = permissions.canVoteForKill === true;
   const current =
     world.getComponent(actorId, COMPONENT.Role) === role &&
     role?.role === roleId &&
-    role?.camp === Camp.Wolf &&
+    !!role && world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Wolf &&
     world.getComponent(actorId, COMPONENT.Alive)?.alive === true;
   return current ? { canChat, canVoteForKill } : { canChat: false, canVoteForKill: false };
 }
@@ -187,24 +187,24 @@ export function capturePlayerObservation(
     raven = projectRaven(role);
   if (alchemist) ownState.alchemist = alchemist;
   if (raven) ownState.ravenClaw = raven;
-  const modifier = readModifierState(scholarMentorStateForRole(role));
+  const modifier = readModifierState(scholarMentorStateForRole(role, () => queries.world().getComponent(request.actorId, COMPONENT.Camp)));
   if (modifier) ownState.scholarMentor = modifier;
-  const timeConsort = projectTimeConsortState(role, request.context.day);
+  const timeConsort = projectTimeConsortState(role, request.context.day, () => queries.world().getComponent(request.actorId, COMPONENT.Camp));
   if (timeConsort) ownState.timeConsort = timeConsort;
-  const wolfSorcerer = projectWolfSorcererState(role);
+  const wolfSorcerer = projectWolfSorcererState(role, () => queries.world().getComponent(request.actorId, COMPONENT.Camp));
   if (wolfSorcerer) ownState.wolfSorcerer = wolfSorcerer;
-  const trickster = projectTricksterState(role);
+  const trickster = projectTricksterState(role, () => queries.world().getComponent(request.actorId, COMPONENT.Camp));
   if (trickster) ownState.trickster = trickster;
-  const prince = projectOrderPrinceState(role);
+  const prince = projectOrderPrinceState(role, () => queries.world().getComponent(request.actorId, COMPONENT.Camp));
   if (prince) ownState.orderPrince = prince;
-  const magician = projectMagicianState(role);
+  const magician = projectMagicianState(role, () => queries.world().getComponent(request.actorId, COMPONENT.Camp));
   if (magician) ownState.magician = magician;
   // 各机制拥有字段裁剪；此处只按原顺序组装，末尾统一脱离并冻结整个观察。
-  const redMoon = projectRedMoonState(role);
+  const redMoon = projectRedMoonState(role, () => queries.world().getComponent(request.actorId, COMPONENT.Camp));
   if (redMoon) ownState.redMoon = redMoon;
-  const nightmare = projectNightmareShadowState(role);
+  const nightmare = projectNightmareShadowState(role, () => queries.world().getComponent(request.actorId, COMPONENT.Camp));
   if (nightmare) ownState.nightmare = nightmare;
-  const evilKnight = projectEvilKnightState(role);
+  const evilKnight = projectEvilKnightState(role, () => queries.world().getComponent(request.actorId, COMPONENT.Camp));
   if (evilKnight) ownState.evilKnight = evilKnight;
   const thief = projectThiefState(role, queries.world()),
     choices = projectThiefChoices(queries.world(), request.actorId);
@@ -287,7 +287,7 @@ export function capturePlayerObservation(
     const state = getHiddenWolfState(role);
     ownState.hiddenWolf = {
       hasInheritedKnife: state?.hasInheritedKnife === true,
-      canVoteForKill: canHiddenWolfKnife(role, queries.world()),
+      canVoteForKill: canHiddenWolfKnife(role, queries.world(), () => queries.world().getComponent(request.actorId, COMPONENT.Camp)),
       ...(state?.campInspection === "netease_2020_good_v1"
         ? { campInspection: state.campInspection }
         : {}),
@@ -296,7 +296,7 @@ export function capturePlayerObservation(
   if (role?.role === Role.Gargoyle)
     ownState.gargoyle = {
       hasInheritedKnife: getGargoyleState(role)?.hasInheritedKnife === true,
-      canVoteForKill: canGargoyleKnife(role, queries.world()),
+      canVoteForKill: canGargoyleKnife(role, queries.world(), () => queries.world().getComponent(request.actorId, COMPONENT.Camp)),
     };
   if (role?.role === Role.MechanicalWolf) {
     const state = getMechanicalState(role);
@@ -342,7 +342,7 @@ export function capturePlayerObservation(
   return freezeObservation({
     request: { ...request, context },
     identity: {
-      ...(role ? { role: role.role, camp: role.camp } : {}),
+      ...(role ? { role: role.role, camp: queries.world().getComponent(request.actorId, COMPONENT.Camp)?.camp } : {}),
       name: queries.world().getComponent(request.actorId, COMPONENT.Identity)?.name,
     },
     knownAliveIds: queries

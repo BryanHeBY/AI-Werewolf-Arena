@@ -23,6 +23,10 @@ import {
 import { World } from "../../../src/core/domain/world";
 
 // 编译约束限定各 facet 的消费权限，不执行这些反例。
+// 自定义展示测试自持原当前阵营；ctx引用和晚回调顺序仍是字面oracle。
+const initialCamp = { camp: Camp.Good };
+const currentCamp = () => initialCamp;
+
 function denyCrossFacetRead(contribution: RoleContributions) {
   // @ts-expect-error 资料不能代替运行初始化贡献。
   contribution.metadata.init;
@@ -56,7 +60,7 @@ test("builtin registrations contain exactly three independently consumed facets"
 test("custom flat input remains its original receiver and queries never eagerly read fields", () => {
   const trace: string[] = [],
     world = new World("en");
-  const role = createRoleComponent(Role.Villager, Camp.Good, "en");
+  const role = createRoleComponent(Role.Villager, "en");
   const profile: RoleProfile = {
     role: Role.Villager,
     label: "custom raw label",
@@ -92,6 +96,7 @@ test("custom flat input remains its original receiver and queries never eagerly 
     },
   });
   const ctx: RoleInitContext = {
+    initialCamp, currentCamp,
     get locale(): Locale {
       trace.push("locale");
       return "en";
@@ -122,7 +127,7 @@ test("custom flat input remains its original receiver and queries never eagerly 
 
 test("native assembly observes current role and calls the supplied renderer only at display", () => {
   const trace: string[] = [],
-    role = createRoleComponent(Role.Witch, Camp.Good, "en");
+    role = createRoleComponent(Role.Witch, "en");
   const witch: RoleContributions = {
     metadata: { role: Role.Witch, camp: Camp.Good, label: "Witch", skillBrief: "witch rules" },
     runtime: {
@@ -150,7 +155,7 @@ test("native assembly observes current role and calls the supplied renderer only
     },
     [],
   );
-  catalog.applyRuntime(role, { locale: "en" });
+  catalog.applyRuntime(role, { locale: "en", initialCamp, currentCamp });
   expect(trace).toEqual(["init"]);
   role.role = Role.Guard;
   expect(renderRolePrompt(role)).toBe("native guard");
@@ -160,7 +165,7 @@ test("native assembly observes current role and calls the supplied renderer only
 test("new custom presentation callback keeps its own receiver and late World access", () => {
   const trace: string[] = [],
     world = new World("en"),
-    role = createRoleComponent(Role.Villager, Camp.Good, "en");
+    role = createRoleComponent(Role.Villager, "en");
   const presentation: Extract<RoleContributions["presentation"], { kind: "custom" }> = {
     kind: "custom",
   };
@@ -196,6 +201,7 @@ test("new custom presentation callback keeps its own receiver and late World acc
     [],
   );
   catalog.applyRuntime(role, {
+    initialCamp, currentCamp,
     locale: "en",
     get world() {
       trace.push("world");

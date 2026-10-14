@@ -26,7 +26,7 @@ import {
 } from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 /** 构造固定角色 roster 与原生双验资源供 authority 单元测试使用；不初始化 profile、判断板子支持或运行流水线、传输和复现。 */
 export function fragrantPairOwnerFixture(
-  beforeInstall?: (role: RoleComponent) => void,
+  beforeInstall?: (role: RoleComponent, world: World) => void,
   nightHook?: () => boolean,
 ) {
   const world = new World(),
@@ -48,7 +48,7 @@ export function fragrantPairOwnerFixture(
   for (const [index, roleId] of roles.entries()) {
     const id = world.createEntity(),
       camp = index < 4 ? Camp.Wolf : Camp.Good,
-      role = createRoleComponent(roleId, camp);
+      role = createRoleComponent(roleId);
     if (id === 1) (role.privateState as Record<string, unknown>).fragrant = freshFragrantState();
     if (id === 5)
       (role.privateState as Record<string, unknown>).pairSeer = installNativeAbility(
@@ -67,7 +67,8 @@ export function fragrantPairOwnerFixture(
     );
   }
   // roster 已按字面顺序写入后才调用测试钩子，再安装 authority；抛错不回滚此前组件写入。
-  beforeInstall?.(world.getComponent(5, COMPONENT.Role)!);
+  // 额外 World 输入让负例修改真正 Camp；不把退出支持的 Role.camp 留成无效测试桥。
+  beforeInstall?.(world.getComponent(5, COMPONENT.Role)!, world);
   installFragrantPairAuthority(world, events, 1, 5);
   let current = true,
     draws = 0;

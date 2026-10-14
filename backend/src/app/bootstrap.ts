@@ -156,8 +156,11 @@ function createPlayers(
   for (let seat = 1; seat <= config.boardSize; seat++) {
     const entityId = world.createEntity();
     const role = roles[seat - 1];
-    const roleComp = createRoleComponent(role, roleCatalog.getCamp(role), world.locale);
-    roleCatalog.applyRuntime(roleComp, { boardConfig: config, locale: world.locale, world });
+    // 初始 Camp 是唯一待安装对象；init 可改它，运行 source 则只查询实际 World，不回退 draft。
+    const initialCamp = createCampComponent(roleCatalog.getCamp(role), world.locale);
+    const roleComp = createRoleComponent(role, world.locale);
+    const currentCamp = () => world.getComponent(entityId, COMPONENT.Camp);
+    roleCatalog.applyRuntime(roleComp, { boardConfig: config, locale: world.locale, world, initialCamp, currentCamp });
 
     world.addComponent(
       entityId,
@@ -170,15 +173,20 @@ function createPlayers(
       ),
     );
     world.addComponent(entityId, COMPONENT.Role, roleComp);
-    world.addComponent(entityId, COMPONENT.Camp, createCampComponent(roleComp.camp, world.locale));
+    world.addComponent(entityId, COMPONENT.Camp, initialCamp);
     const membership = roleCatalog.requireRuntime(role).initialVictoryAffiliations;
     world.addComponent(
       entityId,
       COMPONENT.Victory,
       createVictoryComponent(
         typeof membership === "function"
-          ? membership(roleComp, { boardConfig: config, locale: world.locale })
-          : (membership ?? [{ kind: "faction", faction: roleComp.camp }]),
+          ? membership(roleComp, { boardConfig: config, locale: world.locale, initialCamp, currentCamp })
+          : (membership ?? [{ kind: "faction", faction: (() => {
+              // 仅默认分支在原字段点晚查；自定义 membership 仍持独立无 World 的上下文。
+              const camp = currentCamp();
+              if (!camp) throw new Error("role_current_camp_missing");
+              return camp.camp;
+            })() }]),
       ),
     );
     world.addComponent(entityId, COMPONENT.Alive, createAliveComponent(true, world.locale));

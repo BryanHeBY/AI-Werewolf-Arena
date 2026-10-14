@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/magician/state.test.ts:
+(pass) explicit Camp sources preserve lazy value comparison own data width and Scholar unconditional lookup [0.50ms]
+
+ 1 pass
+ 8 filtered out
+ 0 fail
+ 11 expect() calls
+Ran 1 test across 1 file. [46.00ms]

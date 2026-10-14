@@ -1,0 +1,211 @@
+{
+  "fence": {
+    "path": "docs/refactor/generated/camp-canonical-cohort-fence.json",
+    "sha256": "5ffe15bafc7b286b18ef18095468a9f475020c3a28fcc4f1094e2882a1a998f6"
+  },
+  "roots": [
+    "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts",
+    "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+    "backend/src/game/mechanisms/roles/cupid/profile.ts",
+    "backend/src/game/mechanisms/roles/cupid/victory.ts",
+    "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+    "backend/src/game/mechanisms/roles/debater/window.ts",
+    "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+    "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+    "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+    "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts",
+    "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+    "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+    "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+    "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+    "backend/src/game/observation/player-prompt-directives.ts",
+    "backend/tests/scenarios/boards/cursed-fox/simulation.test.ts",
+    "backend/tests/scenarios/engine/phase-pipelines.test.ts",
+    "backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+    "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+    "backend/tests/scenarios/features/hidden-wolf/camp-policy-inheritance-and-duel.test.ts",
+    "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+    "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+    "backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+    "backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+    "backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+    "backend/tests/unit/engine/visibility/inspection-result-contract.test.ts",
+    "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+    "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+    "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+    "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+    "backend/tests/unit/features/mechanical-wolf/inheritance.test.ts",
+    "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+    "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+    "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+    "backend/tests/unit/features/role-inspection-scope.test.ts",
+    "backend/tests/unit/mechanisms/camp-canonical-missing-role-roster.test.ts",
+    "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+    "backend/tests/unit/mechanisms/role-execution-resource-retirement.test.ts",
+    "tooling/refactor/architecture/contracts.ts",
+    "tooling/refactor/fixture-manifest.ts"
+  ],
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts",
+      "sha256": "6177b2859382df1e4649ee7971dc2f6c8b9bf56c057ac17fb308a4bacf9f0776"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "sha256": "44bb5627508eee472d8cd3eec4477a8cc064f31096df26467beffef86b5258a5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "cf7ec272d7a468f1ef8d96df2580c464ad47451b9ca68cdd11a18b98d388f2e4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/victory.ts",
+      "sha256": "1327a1113a861e619904f30dc13de6a58eac0856ff1889e5aba3578fbe02fdb4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+      "sha256": "98db67f2cfa4ebed1d1e7a042a0c967b6cd539ce80b019fab3ead37420312dc8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "e5979116849aa821d0741ef082e8df0811db57a6b5c97bbab749621b8f7469af"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+      "sha256": "e3dc713c76840f0ebca986c964ee637662e7418da86905a93b199644c4c1d06a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+      "sha256": "33348d8eadb27de2e22086e5cef6ea7db2318c4bc61b60f3dc40c2dd6c3ce055"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "sha256": "6735fd720f97bdb8c095119ac2ffe02e76746f3aa86892870914685c91e62b89"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts",
+      "sha256": "8ee14beea93a17cdebdf366f03d95336dd31a0fed0e59ff70d422ea6393870d8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "sha256": "55c36a42dbfddb9c96d818f13480572588450d9fba7f2d4951a8ced99ddaec5c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "sha256": "831b30b9c7f3f92c6f8cf3779c1d10c139ec8d30536c0e3a4008ef35dbc25b10"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "sha256": "86f8be8f779e13f9a442ee1b26319919e9f852b9136355a2e34001af1241dd20"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "sha256": "920f16dadb5b0f5727c3b32dede56816633ace8bf8eae7917eebcc714b38affb"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "5e008ad57418f1b9c16c28eda70a1d3a28f0869038adfd38cda52528a3d9541f"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/cursed-fox/simulation.test.ts",
+      "sha256": "6c6a6f002a6efb8898a36a61b42799c93cb98bca3bb877b54bb6586d05d9ab8d"
+    },
+    {
+      "path": "backend/tests/scenarios/engine/phase-pipelines.test.ts",
+      "sha256": "5fe6499d7eb1b964fba03f08cc678aba3fae78fa5d0a70442ec568ad47b7b0c9"
+    },
+    {
+      "path": "backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+      "sha256": "e83b1e9106287c8f50b742bf99e8920fc2d54d584f595099d4e9cc983e793ac4"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "5d39de41ace3ab449513edd14456f2aba5cdfc6b68d3c11c0976b363128ab06a"
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/camp-policy-inheritance-and-duel.test.ts",
+      "sha256": "6ca4ef865322d0607a80e73174ba858afc677679d32bfaf4ed7bab7555db483d"
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "7075e7cf9eca6ddcd42f1ddc5b9e64dc493a84e022f9c13883287948d3153e88"
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "0e2ee1aaca815441c8872a74f8cd45a88c9247508d67b1757a9de97f23318eff"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+      "sha256": "a158bd118dbb3981618c95c1c9dc107122e13d80e438090e9561d0b2308677f5"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+      "sha256": "ea385dcddebb346858d7bd98e88b2c1bf7b99226f06e8403eee48bc5510a4fd6"
+    },
+    {
+      "path": "backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+      "sha256": "36f202b15e8826ccc69d92f686aac7a7fe86ed8e8ff50534a216609392b24392"
+    },
+    {
+      "path": "backend/tests/unit/engine/visibility/inspection-result-contract.test.ts",
+      "sha256": "df265c49032739655959389ea960856181dd20322a39d06b47704d86e8df8a1e"
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "sha256": "210e29167f7242a039c6eb4b8234ec11c506c0fc5464ea0969745ee23c4912f5"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "82c777b45012609a4d79a08717aa34e9f95039dafb69c3c750a63773f6c9dfaf"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "61bc9092ff6364d3a80f1573d044d17c9dc57ad7be7b212b96f9d15b50d33bc7"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "a0e606d03885a67abc421074272cd1d91df6f4fa9a921eab0b07d12766012dfb"
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/inheritance.test.ts",
+      "sha256": "45d1c78dfbb2846bb805dc02ddda0775cfdbb2a33dfe28cb6a440efb1b13f47f"
+    },
+    {
+      "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "sha256": "46dc08456c086e97d4b4809317c57623bdc0e7a2937bfedc53ec4e9dab6305f4"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "764c0ca86cb31d39e157312199465db027256756ca9586b54a2c9993d47fa04b"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "f7ea39a53ec405b90adf7a1bd1ffca0637d0e98364c483c2bbe85ddc81d74835"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "c26f9bec8e9c0bff6ad9a8e7205347b518a47ec204097308e89f08b47e5edd75"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/camp-canonical-missing-role-roster.test.ts",
+      "sha256": "016cc47434e497e7a13ba6f9df752c0cf219727c7edadc0a20e5ac7f6f99722b"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "c7d725b0da77a81c6d0187ac5669ea5b0bfb679c600a5ddb7f9acfb067ff30c3"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/role-execution-resource-retirement.test.ts",
+      "sha256": "60e2319269c1ca40216215aeaff4c4ea7a3252684abcea9bccc12c5636f1e4fe"
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d"
+    },
+    {
+      "path": "tooling/refactor/fixture-manifest.ts",
+      "sha256": "79ba0ea058368f6bafd345dff214851e9f62eda0911234caf9c2c9f5d4d0c43b"
+    }
+  ],
+  "reason": "Only first failing roots, post-first changed product roots, and new missing-Role risk. Explicit TypeScript module alias binds same installed backend compiler; first full diagnostic retained. No strictness relaxation."
+}

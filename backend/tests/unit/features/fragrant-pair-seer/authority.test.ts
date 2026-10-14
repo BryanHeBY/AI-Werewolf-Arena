@@ -156,7 +156,7 @@ for (const field of ["life", "role", "camp", "actorState"] as const)
       originalState = (f.role(5).privateState as { readonly pairSeer?: unknown }).pairSeer;
     if (field === "life") f.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
     if (field === "role")
-      f.world.addComponent(6, COMPONENT.Role, createRoleComponent(Role.Witch, Camp.Good));
+      f.world.addComponent(6, COMPONENT.Role, createRoleComponent(Role.Witch));
     if (field === "camp") f.world.addComponent(6, COMPONENT.Camp, createCampComponent(Camp.Good));
     if (field === "actorState")
       (f.role(5).privateState as Record<string, unknown>).pairSeer = freshPairSeerState();
@@ -195,7 +195,7 @@ test("an observed target identity replacement permanently revokes its old choice
   f.open();
   const lease = openPairCheckChoice(f.world, 1),
     originalRole = f.role(6);
-  f.world.addComponent(6, COMPONENT.Role, createRoleComponent(Role.Witch, Camp.Good));
+  f.world.addComponent(6, COMPONENT.Role, createRoleComponent(Role.Witch));
   expect(lease.isCurrent()).toBe(false);
   f.world.addComponent(6, COMPONENT.Role, originalRole);
   expect(lease.isCurrent()).toBe(false);

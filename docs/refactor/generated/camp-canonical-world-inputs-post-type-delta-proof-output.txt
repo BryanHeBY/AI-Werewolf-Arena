@@ -1,0 +1,1 @@
+{"programs":22,"newGitConsumers":5,"typedNodes":52035,"nodeArrays":9597,"noncommentLeaves":66836,"inverseWholeOutputs":44}

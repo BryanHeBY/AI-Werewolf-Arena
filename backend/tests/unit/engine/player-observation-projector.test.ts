@@ -32,8 +32,9 @@ function fixture() {
   const world = new World();
   world.createEntity();
   world.createEntity();
-  const role = createRoleComponent(Role.Villager, Camp.Good);
+  const role = createRoleComponent(Role.Villager);
   world.addComponent(1, COMPONENT.Role, role);
+  world.addComponent(1, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(1, COMPONENT.Identity, createIdentityComponent(1, 1, "原文 Player"));
   world.addComponent(2, COMPONENT.Alive, createAliveComponent(false));
   const request: ActionRequest = {

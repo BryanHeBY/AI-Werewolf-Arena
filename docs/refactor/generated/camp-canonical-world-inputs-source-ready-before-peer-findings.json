@@ -1,0 +1,899 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/src/ai/agents/reporting/bug_report_service.ts",
+      "sha256": "eab0b0a660fc0cfd8e93aad2598e0e7e14d4fb2942464b2cefdec45ed52af19c",
+      "changed": true
+    },
+    {
+      "path": "backend/src/app/player-round-recorder.ts",
+      "sha256": "a3d42cbea8e3dccedd4045c0171be4c95ebdfbe937e781977a92abb718d675fe",
+      "changed": true
+    },
+    {
+      "path": "backend/src/core/domain/initial_roster.ts",
+      "sha256": "4f089e5c88dda9932242e7c7110e4d574761faa1d50a7aeb9caedb6a11f71f3a",
+      "changed": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "1d89bfee4ee71dd0c281b6c75aebc4638570f92a33bd8591c9fded302e96bed3",
+      "changed": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/broadcast/visibility_registry.ts",
+      "sha256": "ed1b2e02bd0c2778f8c6b5e12c32657f9c86af231224072271cb936dfce9bbfd",
+      "changed": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "sha256": "ccf0bfbd94025d392aea65dc277cccefc4cfd709e687f1cd8ca380e1242fe381",
+      "changed": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/default_specs.ts",
+      "sha256": "9cecaaa3a616a037e1b5f437d502d524871b6547e9c8aa40479697a699c3c219",
+      "changed": true
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "5e008ad57418f1b9c16c28eda70a1d3a28f0869038adfd38cda52528a3d9541f",
+      "changed": true
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "118aebddf58bcdbc83cfde96d8cd49274495397f818bd4c7960b651629363caf",
+      "changed": true
+    },
+    {
+      "path": "backend/src/rulesets/beauty-exile-victory.ts",
+      "sha256": "970d9fd9c20dd5ee1e41a05a19f324793de20e6821ebae2a665e402b32185565",
+      "changed": true
+    },
+    {
+      "path": "backend/src/runtime/game_event_recorder.ts",
+      "sha256": "994062d9b1bad1cb1e3e57a3d2a2350d1ca84570ca05029e47e6b0541cbfe5ca",
+      "changed": true
+    },
+    {
+      "path": "backend/src/runtime/game_runner.ts",
+      "sha256": "56e9f4373391aa4fbbf9fcd4a49d54e0bf473de458cb133f2f7685eced36bede",
+      "changed": true
+    },
+    {
+      "path": "backend/src/runtime/simulation/simulate_games.ts",
+      "sha256": "cabf9ac04358c85aedd32850ec624019e679168ecf8a920e239e01bf2f2b8f37",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/architecture/refactor-characterization.test.ts",
+      "sha256": "c4b8b856c20a337327abcc4fbed94b5af0330ec9f69db8471636ab2b063b79cd",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/bug-report-recording.test.ts",
+      "sha256": "ea835ba112933bcb33e9a984cdcd34d085a091544b256649d53dc9e139c7dcee",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/integration/agents/protocol/action-reception-sdk-mcp-parity.test.ts",
+      "sha256": "9a100cb5241e1f0b7a59a6512d5735e7f8a3843c31f83ffeb24c2ff8e585b700",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/integration/filesystem/configuration/fragrant-policy-files.test.ts",
+      "sha256": "4836e8e426176991ae5015c7bebf55d0b0a0b58e202442b819e6a225f886eef0",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/integration/filesystem/session-persistence.test.ts",
+      "sha256": "fe10807e4fa99a4e611571400a7178f97d32fca42e99050b91552ad2379b38db",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/integration/recording/wolf-team-event-audience-provenance.test.ts",
+      "sha256": "24736a312d2b29260d7c64b14011a734f6aef74d6b7d7fe2a27ff05dd0aee918",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/cupid/simulation.test.ts",
+      "sha256": "48eb72c5b2f67af1aa66a97d75d48f45fd5b5ff6cee353860f3e22040abf85cf",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/cursed-fox/simulation.test.ts",
+      "sha256": "6c6a6f002a6efb8898a36a61b42799c93cb98bca3bb877b54bb6586d05d9ab8d",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "sha256": "10c19e44de3a01afbe9f971bc8e11643e6cee4fe423dd2bfe0a5df1fcfb244dc",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/standard/scripted-six-and-twelve-seat-games.test.ts",
+      "sha256": "071a7fef07391097f7087e3744aa647b1af27611c8a16ae15ac1105810d6b3a8",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/engine/phase-pipelines.test.ts",
+      "sha256": "5fe6499d7eb1b964fba03f08cc678aba3fae78fa5d0a70442ec568ad47b7b0c9",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/engine/wolf-night-tactical-loop.test.ts",
+      "sha256": "c61f541742978f33eb8f7e6ebb79810a5c5511f7cd95d04188180b28b321e509",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/failures/recording/scripted-game-finalization.test.ts",
+      "sha256": "bce1688876cd817d25ae7eb22f65167cf0b07b7e88bbe1179f87964ca2ae56cb",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/cursed-fox/reentry-and-final-victory.test.ts",
+      "sha256": "3090f3db5172aae457896ee2eecb5c041d517e7d4949472cc06586d59eb6ff70",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/demon-hunter/native-fact-recording.test.ts",
+      "sha256": "91466bf23b66b4ba10dbb98028dc0860f49b61dd59bceaad5fa553fca77d1c3e",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "5d39de41ace3ab449513edd14456f2aba5cdfc6b68d3c11c0976b363128ab06a",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sha256": "d4e34dd947649cccd84e4508cf9b89287f12deda4f5e128ebf46bf46c58d3757",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/camp-policy-inheritance-and-duel.test.ts",
+      "sha256": "6ca4ef865322d0607a80e73174ba858afc677679d32bfaf4ed7bab7555db483d",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "0e2ee1aaca815441c8872a74f8cd45a88c9247508d67b1757a9de97f23318eff",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/noble-secret-body/legal-day-prompt-history.test.ts",
+      "sha256": "cef47631d9d9e48214c094fe3e4e5d2b06ada57a18db75b5ee74ef2d722da731",
+      "changed": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "64356b4dcc71969234da7e5a3c75c2975fe7ac59ecd047f3282f999b9b49969c",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+      "sha256": "9587e61362f1d082e28d31d4fb0d0df133cb722f49f7fe1114a091c1e1d8ba86",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "sha256": "5a4edec7eec6c004a9d8cafe6589cbaf2e85ab0252fb56fc5a186fedda04d388",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/first-night/day-one-settlement-order.test.ts",
+      "sha256": "6e922eaec1429aab73fe08b09e6331f8ca581402b2ab5395d09c89112a372d6c",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/inspection/seer-private-history.test.ts",
+      "sha256": "0c8ed26f8774b88e63394d6e87b473bdfe901f86990415ffdd5c00eadcb01052",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts",
+      "sha256": "1619f6880e75122083fba8b08786108b78ffc091acee018ff038ad0ad32b22b7",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/wolf-team-dynamic-night-scheduling.test.ts",
+      "sha256": "5244d35ffb6c8ce73de058786be6b76c61a53202e77d739098e551fd806a6b5b",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/historical-beauty-and-dream-policy-chains.test.ts",
+      "sha256": "f914e0ecd54ac0d1be1422ef57f3fe3e20e3862c0d357b4d3fa209eb12faa241",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+      "sha256": "a158bd118dbb3981618c95c1c9dc107122e13d80e438090e9561d0b2308677f5",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+      "sha256": "ea385dcddebb346858d7bd98e88b2c1bf7b99226f06e8403eee48bc5510a4fd6",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/agents/observation-fallback.test.ts",
+      "sha256": "48929bafecc99fce8434b826f786d178f1377fd71ff3b77aded027a6342904cc",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/agents/player-initial-public-counts.test.ts",
+      "sha256": "923e2cc5be7838ac381574f9faca4daa31ff51f54c2d5722035fc062726dd38a",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/agents/player-prompt-directives.test.ts",
+      "sha256": "b696cc3547edd9ee56c83834ace38c4777462f525bbd0b97fe750746c687c25e",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/engine/death/death-committer.test.ts",
+      "sha256": "1d4f52082e6cbb05bb430f6ea4e41a8530518cddefc0cc5e7ccee65f8ca656bd",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/engine/death/typed-wave-receipts.test.ts",
+      "sha256": "fdea15aedf2c92e66aa7af30d55125ee4facff87e948b5f7aed2e95eddbf0cb3",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/engine/elimination-priority.test.ts",
+      "sha256": "3f6a4ecc1d34f836b2de90d44f79b5b29a5e5d0984e59ca032c77084958e1493",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/engine/visibility/inspection-result-contract.test.ts",
+      "sha256": "df265c49032739655959389ea960856181dd20322a39d06b47704d86e8df8a1e",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "9ef87f63214a7741c12d75bdaa894039961c667475bfec91a63fcbf825577d8d",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/roster.test.ts",
+      "sha256": "a0b8a8b03e698a92ad44d28b95784f2a9277b7789581e4814ce8fc6c118c5de7",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "sha256": "210e29167f7242a039c6eb4b8234ec11c506c0fc5464ea0969745ee23c4912f5",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/state.test.ts",
+      "sha256": "08b1c11d25468d62e87585ede32571fcdde7282b8da47dc77f69d36015603977",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+      "sha256": "ba929137096185b4fdc7f28f46da897ccfec17aa4304a5677004149b7d38b273",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "82c777b45012609a4d79a08717aa34e9f95039dafb69c3c750a63773f6c9dfaf",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/cupid-hybrid-state-slots.test.ts",
+      "sha256": "32a73717efb909290f6ff1f3de6053c52bba37374e5d12eae0e69ef77cafeb5d",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+      "sha256": "cf7c24c7f8a23de423ba96bd014ff86d83b21f155526f79bb549808765a3ad13",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "8a122293301bd37fe1017453282ff7fab3783b7cc0db6620074b52c817ab9008",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/death-abilities/lifecycle-owner.test.ts",
+      "sha256": "e25c484518fc3db9c7fdc08ecc7e2720f22c5ca74bfd7f6263230aee3c7961fd",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/death-gun/eligibility-capture.test.ts",
+      "sha256": "24422508ad73a6197647175a67eb1b585c0c1f243ac41e469ecf83df50b32534",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/debater-state-owner.test.ts",
+      "sha256": "91afca415751cd7c1d1afba0e3bc3d1479b084882326fa94ef188906ca578778",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "sha256": "52baf9fd1617b71412aea34179cdeec60982bc9c965bd7847830f72681bf571a",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+      "sha256": "c20e5439d49b08511f9fd593748e288a5e9bf0e7468f6c1817afacfc99ac601a",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+      "sha256": "ec7b6cf5d949c394a41648946e29d510b4c0bb73a486c5baf6ed889c81da0473",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-demon-state-slots.test.ts",
+      "sha256": "3aae9a8aad95846bc39ba6a0159a90ef7ee652679900c38b7880dccdd1a972be",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "87160398cba9df40556775b3480448fd5c2c2bcda7eeb3728f4153e2d7ed8b8f",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/authority.test.ts",
+      "sha256": "1d79736d2c0701fccd5c34828398e43e33ca5087739a3b8bb5d5c39a52124692",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/pair-slot-contract.test.ts",
+      "sha256": "7b2d37a495b90ef8b082b0a1a8c061c686f527d9536cbfc8e173b07a1384b6fa",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/pair-state-slot.test.ts",
+      "sha256": "a905f611dda7b55806bf842fdb15720891b40ec54cafc65370231e0e8302d5e2",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/target-scope.test.ts",
+      "sha256": "ae0ae543bde031577a9daca1a4879d3c074a107647202cb771a5db6ce7197a2f",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "a0e606d03885a67abc421074272cd1d91df6f4fa9a921eab0b07d12766012dfb",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/ghost-bride-authority.test.ts",
+      "sha256": "052be6bb48d220b9658331ab378d97662bb6e72f283d29b0398c0ddaaaad4278",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/state-ownership.test.ts",
+      "sha256": "b326f662b62c545464ec4e1fac02c4e9cabfadd9d0c6307a52ca1d1a58c37c8c",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/gravekeeper/private-feedback-boundaries.test.ts",
+      "sha256": "c8b98b0ea4fd277141fdac421fe6018456226d0d61fa20531454b0b3644856b0",
+      "changed": false
+    },
+    {
+      "path": "backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+      "sha256": "1569d15dcadef4a2f1126734623a3050274c818cdc228ad59134e11676b4e3a9",
+      "changed": false
+    },
+    {
+      "path": "backend/tests/unit/features/guard/state-ownership.test.ts",
+      "sha256": "6af2a67a9ae2074413c681bf96508f0550e71f61d78472dc302dd01bae79af60",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/hidden-wolf/camp-policy-configuration-and-projection.test.ts",
+      "sha256": "cbf3dce9207c1df8e9d760b08241c74ad8106bd32e02214c405e0fd93161be38",
+      "changed": false
+    },
+    {
+      "path": "backend/tests/unit/features/hidden-wolf/pack-permission-contracts.test.ts",
+      "sha256": "19503895083c310b06fbf821fb0cd9afe6db93d1dcf98e13fbfc07abb033d661",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "sha256": "928ed5b64e6e5993eeec23e13243fc2c1972e170b552be53e73f554de4c11457",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts",
+      "sha256": "949aedcbf849021fc9ea06a55d25693ba5dbea71a3a2ee92386b07698b3c3437",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "sha256": "42ebc4a76c31c9e884809c14e8554ee7ba0f31eab56e58c194f17d5280f771e1",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/knife-inheritance-ownership.test.ts",
+      "sha256": "e84099406780a3d7f356889bde5a1f9754e13706ff297ddab26bed818159ecfb",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+      "sha256": "d040586365e460b59718c9a8d6bc24261d145e27209b24b76947dbe827bbadeb",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "sha256": "2d80b80c0cd14231013d54c4672db455bff2c79887a059d0d51fbe1f7b788e1e",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "4f63adb0f96988d167f1e7fde8dc610cd38771b78afbbea9e7fb6d42fd20ee7b",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/magician/frame.test.ts",
+      "sha256": "07f4bfff9624e7a1cc01ee3ce44380a79c83d534e2c638315e9f99777db7367f",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/captured-gun-ownership.test.ts",
+      "sha256": "9776e6a8ab6a57f05a45f635c91f1a46bf81b6d356acc973e4fcbc9d8e4351be",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/inheritance.test.ts",
+      "sha256": "45d1c78dfbb2846bb805dc02ddda0775cfdbb2a33dfe28cb6a440efb1b13f47f",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/scope.test.ts",
+      "sha256": "fed9b5be4b64f267cbbcde7880891cb202c20958ae796d279ca2e64ca8b14620",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/state.test.ts",
+      "sha256": "84caa5c364c13753aadc9155487c1f2b9874fad7b41e398bcc8af7b9b14176ac",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "sha256": "46dc08456c086e97d4b4809317c57623bdc0e7a2937bfedc53ec4e9dab6305f4",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "764c0ca86cb31d39e157312199465db027256756ca9586b54a2c9993d47fa04b",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+      "sha256": "0b332acd2e6b16109f821ff5f12a5373c95542d74b9029fd61a42f1ccd3e0d48",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "sha256": "b65c67e788b5d27e058017a71aeb8edb15702d2c25d688324db404287a403d95",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/mist-raven-profile.test.ts",
+      "sha256": "86a4558900fb01d87f88384baf5a65e2020d83f0f734b9cdf528985b28d67aeb",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/night-frame.test.ts",
+      "sha256": "3476608fc85249ac169b2fc5f3ef83d047ee0c5f08289ccfc240511d6f425147",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+      "sha256": "b7bb46168772261d9464962726cf003e9a38ce5d9b3fc9b2b1037df5de91a5a3",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/authority-reentry.test.ts",
+      "sha256": "febb7391e1c26987cbc70e815a74fe7c1e13a0d96c4d256c301795d55548b744",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/authority.test.ts",
+      "sha256": "2b5127352220c380ead42ae2f30a8970c4a46405df767ee9a996842c7f3d3ce8",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "f7ea39a53ec405b90adf7a1bd1ffca0637d0e98364c483c2bbe85ddc81d74835",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+      "sha256": "2be9b406ea39745962057c0fd3af2ea2eeedb9786a932dac6f679371942e78e0",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+      "sha256": "6a3d2a0da67e1e7f36fbeb09dc54178483ed48217bf30abc32cb9bc18d6e8ccf",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+      "sha256": "ee1ec0d46f3887f5a938f2cab0cebca00089c2471d94a5689e35a7b08b2932fb",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "d6c48a385d08732ce5f2aca9c279b25dcda6f68979c782ab21215ee8228ecd56",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+      "sha256": "92a74bc68d93d4b27e2d7dba16d70a3a65876f764aab1b6aa3f60e1728fc6177",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+      "sha256": "a2141aaa4d7d91396001ab974231ed5898d191478f9fc653963f688ebe7f83e2",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+      "sha256": "a8cec4f5c3b53bf5982a4021b6127904755d587b99e732c038244b231fe8917d",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+      "sha256": "04ad5a89a7a7857d64f323d6db10a094b973d1cf2123c751dab43b4fed8861e9",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/suppression-serialization.test.ts",
+      "sha256": "63e30460db845950fb1f2edc14064cf927288b538503fd675328d08ea9e6c96d",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/suppression.test.ts",
+      "sha256": "b39d28c31998125e45e31bad47c171df65257fb050018ce68e60e979f39d062a",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "9b619dfc4b199ac5611c8b5f19e9c26803b2c36f56b1a7ddf93334d23cbbc328",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/seer/readonly-state.test.ts",
+      "sha256": "643611b7473b0a4c4960f7286919aacd0ebc8eae5209909de33cc5cfeadb5bdf",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+      "sha256": "a340e3db84d9e057efd7a82be394f4905abc4efa90364d74e173b1fb20d63b50",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/seer/state.test.ts",
+      "sha256": "16397ebe9876845c049de351ce1e1053b9793b6e4f080ab87faff3297dc0e145",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "392826db21a091acde35c2c80044914368bd7989af3c66de7208a96db27a8c26",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "238fd86b96324f68467171777771806bc16054ceef79e289290de37526527322",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+      "sha256": "1340bd9c4154c4d800f09587da8f90e81ad9efa09413bd47b3c41bc53df9e140",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+      "sha256": "b674eb05b01454d6ac4ec2784067ef739013e444315d0bba71e623cba4348309",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "cbf854bcb9865e5d5e771ed071648b828aa141bde24bd9caf38965606aaf45da",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/role-execution-retirement.test.ts",
+      "sha256": "d9975fd2d1d637f19fb8aded4e175dd033c7f083b5b4c6d1af5f73bbb3c2fb4c",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/transform-failure-owner.test.ts",
+      "sha256": "9b389c90ddd941e06e356cca4c8b4674098066b3d5abaea1be9917e0b54b8bd8",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "sha256": "9dcf6720f82b669d151694c7aa7cb2d7106bf6498fc57c85c6a2d5c512fa585e",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/witch/state-ownership.test.ts",
+      "sha256": "3cf65973019ece71f8d39b9ec45fea6e6e45a8e5c8803a7be56b20f4b5275b71",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+      "sha256": "692e1a013f94943ad40d5627a5eeedc83f7d42db6c36c3eb48ec0c7ecfb6cb44",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/trigger-receipts.test.ts",
+      "sha256": "6323804a9c6a602bbd53f50313b65e8e93b3ed62697490851d09e0432d0037fb",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+      "sha256": "eff5d1d1012d6b669e65d5eba83a7c51484b1b3574863fdbd7bde79394ca9d65",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "sha256": "5a19fa777e280994ad0fe8abc9a06e700c9962892ae9987148ec46527f7bdd68",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf/ability-assembly.test.ts",
+      "sha256": "a55509252bc462a6f85e37240a48dd9d3fdfe993a2bc92a4c20afcffafe8320b",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "306404882912dd0082ceef33b1b1ac711776c3de24a7ff9a9190bde2714276ea",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/death-wave-contributions.test.ts",
+      "sha256": "c45fcd7941429650b7236dda7b0ddf046e32d5346ea106364304f57725922498",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/deathgun-read-boundary.test.ts",
+      "sha256": "0530be454fc3bda0273b30cde8462128bd323e54241996f2d52d68ed7e38cff8",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "8350ffdce35ac718b2a7eb63c210f1d38d06168b5c554705c5888b5bb72f33a9",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/gifted-gun-resource-boundaries.test.ts",
+      "sha256": "58c4a4d2cc9954b5e968c0dd01b8edf981c9f95915e510aff3a780da48144366",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/native-learned-death-guns.test.ts",
+      "sha256": "e17ed656d21769cc44db69731d3292b7ecf6f72c8b729d27cfc9e64faaa996bd",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-actors.test.ts",
+      "sha256": "aa26df56e9fb5940d12ffd8679a18c2bf46d4ca57c0faa6aabfd50e8cc3f3a02",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "f377753b396a635b010a5e4e0477911cde9be6bfc73a2860194da34770f5a1f5",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "59b76a933b5e7bab5b45ec41b057e9eaf504cfa8dd470153cc1bc529b29c0bd5",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-inventory-owner.test.ts",
+      "sha256": "1610bd161c7376b569434b2a8674668616f76e4a7db4d74341dcdafb465b42eb",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-lifecycle-owner.test.ts",
+      "sha256": "bedb149f4873efbfeb73601646c586a06bb73af37f445055e5e96f2d9b6429d6",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+      "sha256": "33618f544f8b772f94ec38d26c248beffb3f02dd53aac05f4c59b5994eb13248",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-transfer-failure-policy.test.ts",
+      "sha256": "454e3f642d55143ad71039b222cfe5db4ecca73d5062de2df3e0c9b6026de5cb",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+      "sha256": "4fe5b4bb65c6d849ba50f13f154533ab75a83dd9a10ec256ada051aedf4540bd",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/role-execution-resource-retirement.test.ts",
+      "sha256": "60e2319269c1ca40216215aeaff4c4ea7a3252684abcea9bccc12c5636f1e4fe",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/sheriff/request-construction.test.ts",
+      "sha256": "f901a8b9adcde34a66226ecd7fe46805acb6317ac90e09c08edece20e1b52f76",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/validated-victory.test.ts",
+      "sha256": "557a605e77d90b9884f6d51bdf4235470c5eac9f453357bae0c0b42981b470b6",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+      "sha256": "66f0b179d58597e3786d85cbd15e70dcbe6ccfaf8a860a948439db838246c4e8",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+      "sha256": "b00c203022fe41248d8cc4a75287ceef73b80421a2cc0c82aa56809ec4bdc9de",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/recording/board-config-recording.test.ts",
+      "sha256": "e5f87a65bee9c07b3c14411a4e43db2f11e66f63f2c1c1130956fa986bacd46d",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/recording/checkpoint-contributions.test.ts",
+      "sha256": "3b162bd9b46ddc5f73d223bd057051c47868438f55da66be3d17639791aaa9c7",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/recording/private-state-codec.test.ts",
+      "sha256": "885709052a9a718be3c7197d8f6aa594b044eaf4993191a8991f1c638eec3406",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/recording/red-moon-record.test.ts",
+      "sha256": "ea28539d3b67b79ef470b39579cfc60633adb3501e736f7878ca55e93ac2a279",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/action-request-bindings.test.ts",
+      "sha256": "5d71de5e34fc4b5ce5b363cb1f3061f1e266af7e14024e71e19ab37eb3a24c9c",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+      "sha256": "de0307db71a834f5cdb68e00b6fe9e636be993c926d63448d67c2165b079a491",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/exile-death-preparation.test.ts",
+      "sha256": "adb8d0a1bc91452177b9018ec2566585f48bae7db213e52b2e8c090a19657e16",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/guard-tool-admission.test.ts",
+      "sha256": "08357151f43d2f6ca23cb869013d5fe2bc4574fae143987b01e1b4611168494d",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "sha256": "8501fef490b35104969c11fdb15af712ecf3c7b86ae2406b2c2179c896b600b1",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/knight-day-settlement.test.ts",
+      "sha256": "63f38192f5d9b7f5532dca012c154f153ace6b2f30ebf88050207ab2fa279726",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/mapped-exile-resolution.test.ts",
+      "sha256": "ec63f665e3445c2cfd658c248570c9286c1412890a18b9648467bf52c905e1a9",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+      "sha256": "ab66d8e45ba475cd6b15af399890146c895697264c1b6ccfca2ae988333c8e25",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "sha256": "c95de59c01fd1564aa7e00809ca08cab1d086acce28cf14fcc6229421e584665",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+      "sha256": "840081f901c170e52b1ee81fa1e08f2db9e3334d49f7e7593e9876c57add7288",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/terminal-victory-policy.test.ts",
+      "sha256": "a479bd77b8a545913bd4f04f11ef119e1887cbbd7495425c83fc19c4b78b713b",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/wolf-knife-inheritance-plan.test.ts",
+      "sha256": "63b92e5778fd2f691546feb408d52318392e99bbdf387c8ad0ea995f74e35e8c",
+      "changed": true
+    },
+    {
+      "path": "frontend/tests/support/fixtures/manifest.ts",
+      "sha256": "3ffcd2aa409a47faa9e8374e618bda7a2d5a53cdda008032576e041b598978b2",
+      "changed": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+      "sha256": "e83b1e9106287c8f50b742bf99e8920fc2d54d584f595099d4e9cc983e793ac4",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "sha256": "7075e7cf9eca6ddcd42f1ddc5b9e64dc493a84e022f9c13883287948d3153e88",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "61bc9092ff6364d3a80f1573d044d17c9dc57ad7be7b212b96f9d15b50d33bc7",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "c26f9bec8e9c0bff6ad9a8e7205347b518a47ec204097308e89f08b47e5edd75",
+      "changed": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "c7d725b0da77a81c6d0187ac5669ea5b0bfb679c600a5ddb7f9acfb067ff30c3",
+      "changed": true
+    }
+  ],
+  "deleted": [],
+  "production": 13,
+  "tests": 157,
+  "actualEdited": 165,
+  "candidateScope": 170,
+  "preciseRecordedEdits": 478,
+  "checksRun": {
+    "ownFullProof": true,
+    "ownRuntime": {
+      "distinctCases": 4,
+      "executions": 4,
+      "assertions": 192,
+      "actualAllExitZero": true
+    },
+    "ownType": false,
+    "ownHead": false,
+    "jointTypeFirst": "actual exit2 from Root; own precise failure repairs complete, awaiting failed-only joint check",
+    "ownPostTypeDelta": true,
+    "ownRosterCommentBridge": true
+  },
+  "waitForCohortFence": true,
+  "notes": [
+    "Actual4ff linked full165before＋new5Git before＝170candidate；首完整proof165绿色保持原采样字节。",
+    "首次联合类型报告exit2；补own Role aliases/actualsource尾/COMPONENT及授权的6既有requestFactory构造器漏输入。",
+    "requestFactory返回真实class，不是已有instance；旧makeRequest实例和构造点保持。",
+    "统一类型由Root只失败根复查，作者不重复类型／原完整proof。",
+    "行为尚未开始，等Ref及其他共享诊断修复后绑定最终树。",
+    "同行initial_roster唯一头精度后只一完整noncomment＋2raw桥；source1变，原type/head/proof/runtime阶段保。"
+  ],
+  "sourceFrozen": true,
+  "firstReady": {
+    "path": "docs/refactor/generated/camp-canonical-world-inputs-source-ready-first.json",
+    "sha256": "2a31ec40411b7e12b62ac690265b13460ce0b07d73ae713bab13c245f0721be7"
+  },
+  "expandedBefore": {
+    "path": "docs/refactor/generated/camp-canonical-world-inputs-before-expanded.json",
+    "sha256": "606e6fa381473aa73f6a32732676699f2d2373b9b5aecc89079b153159152e90"
+  },
+  "proofSample": {
+    "sourceReadySHA256": "18149d13a993fde3f464e726080d1fa2d2af67a91f776e9b47dab068694f68e5",
+    "proofSHA256": "558d2e7289b9e7143e592ee90452ca3defdbf586c82677faa94d8a7024489d37",
+    "scope": 165,
+    "actualExitCode": 0
+  }
+}

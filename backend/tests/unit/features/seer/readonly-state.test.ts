@@ -28,7 +28,7 @@ function rejectedWrites(state: SeerReadState): void {
 void rejectedWrites;
 
 test("public Seer reads and owner writes keep one unfrozen ability slot", () => {
-  const role = createRoleComponent(Role.Seer, Camp.Good);
+  const role = createRoleComponent(Role.Seer);
   const installed = setSeerState(role, { lastTarget: null, lastIsWerewolf: null, history: [] });
   expect(publicRead).toBe(getSeerState);
   expect(publicRead(role)).toBe(installed);

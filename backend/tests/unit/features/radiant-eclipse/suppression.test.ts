@@ -27,9 +27,10 @@ import {
 function fixture(disabled = false) {
   const world = new World(),
     actorId = world.createEntity();
-  const role = createRoleComponent(Role.Seer, Camp.Good),
+  const role = createRoleComponent(Role.Seer),
     life = createAliveComponent();
   world.addComponent(actorId, COMPONENT.Role, role);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(actorId, COMPONENT.Alive, life);
   world.addComponent(actorId, COMPONENT.Identity, {
     id: actorId,
@@ -165,7 +166,7 @@ for (const mode of [
       identity.name = "changed";
     if (mode === "identity_ref")
       f.world.addComponent(f.actorId, COMPONENT.Identity, { ...identity });
-    if (mode === "camp") f.role.camp = Camp.Wolf;
+    if (mode === "camp") f.world.getComponent(f.actorId, COMPONENT.Camp)!.camp = Camp.Wolf;
     if (mode === "state_ref")
       (
         f.ability as {
@@ -197,7 +198,8 @@ test("actual gateway and public ability state agree during native suppression an
     targetId = f.world.createEntity(),
     gateway = new ToolGateway();
   f.world.addComponent(targetId, COMPONENT.Alive, createAliveComponent());
-  f.world.addComponent(targetId, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  f.world.addComponent(targetId, COMPONENT.Role, createRoleComponent(Role.Villager));
+  f.world.addComponent(targetId, COMPONENT.Camp, { camp: Camp.Good });
   const check = () =>
     gateway.validateAndSanitize(
       f.world,

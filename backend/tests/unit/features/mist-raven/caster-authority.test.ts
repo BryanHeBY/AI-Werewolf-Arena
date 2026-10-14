@@ -18,14 +18,14 @@ import { MistCasterAuthority } from "../../../../src/game/mechanisms/roles/mist_
 function fixture(caster: "alchemist" | "raven_claw_wolf" = "alchemist", day = 1) {
   const world = new World(),
     id = world.createEntity(),
-    role = createRoleComponent(caster as Role, caster === "alchemist" ? Camp.Good : Camp.Wolf),
+    role = createRoleComponent(caster as Role),
     life = createAliveComponent(),
     identity = createIdentityComponent(id, 1, "Literal Player");
   (role.privateState as Record<string, unknown>)[
     caster === "alchemist" ? "alchemist" : "ravenClaw"
   ] = caster === "alchemist" ? createAlchemistState() : createRavenState();
   world.addComponent(id, COMPONENT.Role, role);
-  world.addComponent(id, COMPONENT.Camp, createCampComponent(role.camp));
+  world.addComponent(id, COMPONENT.Camp, createCampComponent(caster === "alchemist" ? Camp.Good : Camp.Wolf));
   world.addComponent(id, COMPONENT.Alive, life);
   world.addComponent(id, COMPONENT.Identity, identity);
   const authority = new MistCasterAuthority(world, id, day, caster);
@@ -69,7 +69,7 @@ function fixtureWorld(role: ReturnType<typeof createRoleComponent>) {
   const world = new World(),
     id = world.createEntity();
   world.addComponent(id, COMPONENT.Role, role);
-  world.addComponent(id, COMPONENT.Camp, createCampComponent(role.camp));
+  world.addComponent(id, COMPONENT.Camp, createCampComponent(Camp.Wolf));
   world.addComponent(id, COMPONENT.Alive, createAliveComponent());
   world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, 1, "Literal Player"));
   return world;
@@ -102,13 +102,13 @@ for (const edit of [
     const { world, id, role, life, identity, authority } = fixture();
     switch (edit) {
       case "role_object":
-        world.addComponent(id, COMPONENT.Role, createRoleComponent(role.role, role.camp));
+        world.addComponent(id, COMPONENT.Role, createRoleComponent(role.role));
         break;
       case "role_name":
         role.role = "villager" as Role;
         break;
       case "camp":
-        role.camp = Camp.Wolf;
+        world.getComponent(id, COMPONENT.Camp)!.camp = Camp.Wolf;
         break;
       case "identity_object":
         world.addComponent(id, COMPONENT.Identity, { ...identity });

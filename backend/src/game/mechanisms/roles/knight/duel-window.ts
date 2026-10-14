@@ -13,6 +13,7 @@ import {
   Role,
   Phase,
   KnightDuelWindow as DuelWindow,
+  type Camp,
   type ActionProvider,
   type KnightDuelSelection,
   type KnightDuelCommit,
@@ -28,9 +29,9 @@ interface DuelParticipantSnapshot {
   life: AliveComponent;
   version: ReturnType<typeof aliveLifeVersion>;
   role: RoleComponent;
-  // 角色与阵营按原读取点捕获，复验时仍检查同一 Role 对象及这两个字段。
+  // 角色保原引用，阵营在原值点晚查；同值 Camp 组件替换仍保持这个值快照，不加引用撤权。
   roleId: Role;
-  camp: RoleComponent["camp"];
+  camp: Camp | undefined;
 }
 
 /** 决斗收集保留原提交等待点；真实付款、事实和死亡提案仍归回调与后续经理结算。 */
@@ -68,7 +69,7 @@ export class KnightDuelWindow {
           role = this.world.getComponent(id, COMPONENT.Role)!;
         return [
           id,
-          { life, version: aliveLifeVersion(life), role, roleId: role?.role, camp: role?.camp },
+          { life, version: aliveLifeVersion(life), role, roleId: role?.role, camp: role == null ? undefined : this.world.getComponent(id, COMPONENT.Camp)?.camp },
         ] as const;
       }),
     );
@@ -100,7 +101,7 @@ export class KnightDuelWindow {
       aliveLifeVersion(snapshot.life) === snapshot.version &&
       this.world.getComponent(id, COMPONENT.Role) === snapshot.role &&
       snapshot.role?.role === snapshot.roleId &&
-      snapshot.role?.camp === snapshot.camp;
+      (snapshot.role == null ? undefined : this.world.getComponent(id, COMPONENT.Camp)?.camp) === snapshot.camp;
     for (const pick of picks
       .filter((item): item is NonNullable<typeof item> => item !== null)
       .sort((a, b) => a.actorId - b.actorId)) {

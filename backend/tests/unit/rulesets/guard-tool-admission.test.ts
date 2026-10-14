@@ -24,8 +24,9 @@ import { beginScholarMentorNight, settleScholarMentorChoices, closeScholarMentor
 function fixture() {
   const world = new World();
   const players = [Role.Guard, Role.Villager, Role.Villager].map((kind) => {
-    const id = world.createEntity(), role = createRoleComponent(kind, Camp.Good);
+    const id = world.createEntity(), role = createRoleComponent(kind);
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     return { id, role };
   });

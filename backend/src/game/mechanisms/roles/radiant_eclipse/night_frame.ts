@@ -54,7 +54,7 @@ interface Original {
   id: number;
   role: RoleComponent;
   kind: Role;
-  camp: Camp;
+  camp: Camp | undefined;
   privateState: RoleComponent["privateState"];
   identity: unknown;
   identityValues: unknown[];
@@ -139,7 +139,7 @@ function original(world: World, id: number): Original {
     id,
     role,
     kind: role.role,
-    camp: role.camp,
+    camp: world.getComponent(id, COMPONENT.Camp)?.camp,
     privateState: role.privateState,
     identity,
     identityValues: identityKeys.map((k) => own(identity, k)),
@@ -161,7 +161,7 @@ function current(world: World, p: Original, allowDeath = true): boolean {
   if (
     world.getComponent(p.id, COMPONENT.Role) !== p.role ||
     own(p.role, "role") !== p.kind ||
-    own(p.role, "camp") !== p.camp ||
+    own(p.campComponent, "camp") !== p.camp ||
     own(p.role, "privateState") !== p.privateState ||
     world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
     !identityKeys.every((k, i) => own(p.identity, k) === p.identityValues[i]) ||

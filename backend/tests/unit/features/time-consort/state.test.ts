@@ -16,25 +16,25 @@ function fixture(scope: ReflectionScope = "whole_night") {
   const state = createTimeConsortState(scope);
   const role = {
     role: "time_wolf_consort",
-    camp: Camp.Wolf,
     privateState: { timeConsort: state },
   } as unknown as RoleComponent;
-  return { state, role };
+  const camp = { camp: Camp.Wolf };
+  return { state, role, camp, currentCamp: () => camp };
 }
 test("Consort accepts ordered choices and forbids consecutive same targets", () => {
   const f = fixture();
-  expect(getTimeConsortState(f.role)).toBe(f.state);
+  expect(getTimeConsortState(f.role, f.currentCamp)).toBe(f.state);
   f.state.history.push({ day: 1, targetId: 3 }, { day: 2, targetId: 3 });
-  expect(getTimeConsortState(f.role)).toBeUndefined();
+  expect(getTimeConsortState(f.role, f.currentCamp)).toBeUndefined();
   f.state.history[1]!.targetId = null;
   f.state.history.push({ day: 3, targetId: 3 });
-  expect(getTimeConsortState(f.role)).toBe(f.state);
+  expect(getTimeConsortState(f.role, f.currentCamp)).toBe(f.state);
   f.state.triggeredDay = 2;
-  expect(getTimeConsortState(f.role)).toBeUndefined();
+  expect(getTimeConsortState(f.role, f.currentCamp)).toBeUndefined();
   f.state.triggeredDay = 3;
-  expect(getTimeConsortState(f.role)).toBe(f.state);
+  expect(getTimeConsortState(f.role, f.currentCamp)).toBe(f.state);
   f.state.history.push({ day: 4, targetId: null });
-  expect(getTimeConsortState(f.role)).toBeUndefined();
+  expect(getTimeConsortState(f.role, f.currentCamp)).toBeUndefined();
 });
 test("Consort refuses malformed state without invoking accessors or proxy traps", () => {
   const f = fixture();
@@ -45,7 +45,7 @@ test("Consort refuses malformed state without invoking accessors or proxy traps"
       return [];
     },
   });
-  expect(getTimeConsortState(f.role)).toBeUndefined();
+  expect(getTimeConsortState(f.role, f.currentCamp)).toBeUndefined();
   expect(calls).toBe(0);
   const g = fixture();
   (g.role.privateState as Record<string, unknown>).timeConsort = new Proxy(g.state, {
@@ -54,7 +54,7 @@ test("Consort refuses malformed state without invoking accessors or proxy traps"
       throw new Error("trap");
     },
   });
-  expect(getTimeConsortState(g.role)).toBeUndefined();
+  expect(getTimeConsortState(g.role, g.currentCamp)).toBeUndefined();
   expect(calls).toBe(0);
   const h = fixture();
   h.state.history.push({ day: 1, targetId: 3 });
@@ -64,21 +64,21 @@ test("Consort refuses malformed state without invoking accessors or proxy traps"
       return 3;
     },
   });
-  expect(getTimeConsortState(h.role)).toBeUndefined();
+  expect(getTimeConsortState(h.role, h.currentCamp)).toBeUndefined();
   expect(calls).toBe(0);
 });
 test("Consort private projection delays exhaustion and never reveals reflecting actors", () => {
   const f = fixture();
   f.state.history.push({ day: 1, targetId: 3 });
   f.state.triggeredDay = 1;
-  expect(projectTimeConsortState(f.role, 1)).toEqual({
+  expect(projectTimeConsortState(f.role, 1, f.currentCamp)).toEqual({
     policy: "awa_time_consort_reflection_v1",
     reflectionScope: "whole_night",
     history: [{ day: 1, targetId: 3 }],
     exhausted: false,
   });
-  expect(projectTimeConsortState(f.role, 2)?.exhausted).toBe(true);
-  const p = projectTimeConsortState(f.role, 2)!;
+  expect(projectTimeConsortState(f.role, 2, f.currentCamp)?.exhausted).toBe(true);
+  const p = projectTimeConsortState(f.role, 2, f.currentCamp)!;
   p.history[0]!.targetId = 5;
   expect(f.state.history[0]!.targetId).toBe(3);
 });
@@ -87,15 +87,15 @@ for (const scope of ["whole_night", "first_effect"] as const)
     const f = fixture(scope);
     f.state.history.push({ day: 1, targetId: 3 });
     for (const skill of ["check", "guard", "poison"]) {
-      expect(timeConsortReflectionTarget(f.role, 1, Camp.Good, 2, 3, skill)).toBe(2);
-      expect(timeConsortReflectionTarget(f.role, 1, Camp.Wolf, 2, 3, skill)).toBe(3);
-      expect(timeConsortReflectionTarget(f.role, 1, Camp.Good, 2, 4, skill)).toBe(4);
+      expect(timeConsortReflectionTarget(f.role, 1, Camp.Good, 2, 3, skill, f.currentCamp)).toBe(2);
+      expect(timeConsortReflectionTarget(f.role, 1, Camp.Wolf, 2, 3, skill, f.currentCamp)).toBe(3);
+      expect(timeConsortReflectionTarget(f.role, 1, Camp.Good, 2, 4, skill, f.currentCamp)).toBe(4);
     }
     for (const skill of ["heal", "kill", "shoot", "vote"])
-      expect(timeConsortReflectionTarget(f.role, 1, Camp.Good, 2, 3, skill)).toBe(3);
+      expect(timeConsortReflectionTarget(f.role, 1, Camp.Good, 2, 3, skill, f.currentCamp)).toBe(3);
     f.state.triggeredDay = 1;
-    expect(timeConsortReflectionTarget(f.role, 1, Camp.Good, 2, 3, "poison")).toBe(
+    expect(timeConsortReflectionTarget(f.role, 1, Camp.Good, 2, 3, "poison", f.currentCamp)).toBe(
       scope === "whole_night" ? 2 : 3,
     );
-    expect(timeConsortReflectionTarget(f.role, 2, Camp.Good, 2, 3, "check")).toBe(3);
+    expect(timeConsortReflectionTarget(f.role, 2, Camp.Good, 2, 3, "check", f.currentCamp)).toBe(3);
   });

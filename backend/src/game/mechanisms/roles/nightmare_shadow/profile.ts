@@ -1,9 +1,11 @@
 /**
  * 负责 噩梦之影 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 当前阵营通过调用方的晚读 source 传入；目录阵营仅为初值，不替代现场 Camp 或授予许可。
  * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { COMPONENT } from "../../../../core/domain/components/names";
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -44,10 +46,10 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
-    canSelfDestruct: (role) => getNightmareShadowState(role)?.wolfActionPolicy === "standard",
-    wolfTeam: (role, world) => {
+    canSelfDestruct: (role, currentCamp) => getNightmareShadowState(role, currentCamp)?.wolfActionPolicy === "standard",
+    wolfTeam: (role, world, currentCamp) => {
       const ready =
-        !!getNightmareShadowState(role)?.packReady && (!world || nightmarePackReady(world));
+        !!getNightmareShadowState(role, currentCamp)?.packReady && (!world || nightmarePackReady(world));
       return {
         recognizedByPack: ready,
         recognizes: ready ? "pack" : "none",
@@ -93,7 +95,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
     validationRules: {
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       fear: ({ world, role, actorId, day, phase, toolCall }) => {
-        const state = getNightmareShadowState(role);
+        const state = getNightmareShadowState(role, () => world.getComponent(actorId, COMPONENT.Camp));
         if (
           !state ||
           !nightmareFearPending(world, actorId, day ?? 0) ||
@@ -115,7 +117,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
       },
     },
     nightStages: [NIGHTMARE_FEAR_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
-    baselineAction: (role, request, pick, pickCamp, locale, world) => {
+    baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
       if (!request.allowedTools.includes("fear"))
         return (
           ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
@@ -125,6 +127,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
             pickCamp,
             locale,
             world,
+            currentCamp,
           ) ?? null
         );
       const target = world

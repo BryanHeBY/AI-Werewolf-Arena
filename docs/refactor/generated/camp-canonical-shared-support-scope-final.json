@@ -1,0 +1,71 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+      "sha256": "5ca4d8d9008c1ce22f98e384c308a27f361446dc27679071f1f08d3d55947226"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "sha256": "9ce6d4ec5184c113f10db3ffbed26310f20cc2a280daf94f3d0032d8d364e214"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+      "sha256": "f4137085ed419f468a46a4a7970bc6cdce94f744c92f00a1582590b2a825fcea"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "sha256": "3fdeaea6ed9d7f92c28d7acb8343ce40cadeb3d3bdd62081ed33fd9532f4f06b"
+    },
+    {
+      "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+      "sha256": "327dfb5828c85aa67f4aff3e55295c171662c537480fdbe31664aae91a238a4e"
+    }
+  ],
+  "deleted": [],
+  "controls": [],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/camp-canonical-cohort-checks.json",
+      "sha256": "eeb4715b6284554805ba0bb93a443116f88667abd6a263394dc59f5a992faf35"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-proof-first-output.txt",
+      "sha256": "7c13133e5e09bf750b09e6884b93472a45a6f5376530f99c6a9bc11e9c9b1cc0"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-proof.cjs",
+      "sha256": "0360f13e6c06c2cf85df4cf9c95b6751238a5f2129b0d957c6524c19996a66f2"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-before.json",
+      "sha256": "ec75f28739758585290924425d75662f6578df9ef5efe3c7e9b9e1117a7f1afc"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-edits.json",
+      "sha256": "9445e17751d3e0e77b43bd1c658e348a231e8d3a9ebc1bdfebe6c70ff4218ea8"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-paths.json",
+      "sha256": "dc754899b5f0887e5de870b168438a780819be3dcd9580c5a4dcb3d5a8867ce1"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-proof.json",
+      "sha256": "bf4e53652760b1d923b6fc00b0c0616f6d6d122ee30990bfa2f54b04c6eaf8d6"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-source-ready.json",
+      "sha256": "656c652878a2bb7a3dce7105208e998f7a2a722d4df0efa838394ea883adccd7"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/camp-canonical-shared-support.md",
+    "sha256": "e4bbb0f3e28d3bc0051aad9136aab0c34abf38fd290df2f13d1c494beebed181"
+  },
+  "candidateCount": 5,
+  "actualModified": 5,
+  "evidence": {
+    "path": "docs/refactor/generated/camp-canonical-shared-support-evidence.json",
+    "sha256": "d853aac7a22d86b6ec978ecfa3e168eaae8f04cb003232b4c505a6b2ce1f850e"
+  }
+}

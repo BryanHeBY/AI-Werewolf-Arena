@@ -144,7 +144,7 @@ for (const locale of ["zh-CN", "en"] as const)
   test(`configured personal and public rules explain the AWA day policy/${locale}`, () => {
     const f = fixture();
     for (const prose of [
-      captureNativeRolePresentation(WOLF_KING_ROLE_PROFILE.presentation!.id, f.king, locale),
+      captureNativeRolePresentation(WOLF_KING_ROLE_PROFILE.presentation!.id, f.king, locale, undefined, () => f.world.getComponent(3, COMPONENT.Camp)),
       getDefaultConfigRenderRegistry().renderBoardConfigPrompt(f.config, locale),
     ]) {
       expect(prose).toContain(

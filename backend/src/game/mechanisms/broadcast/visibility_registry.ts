@@ -20,7 +20,7 @@ export class VisibilityRegistry {
 
   isWolfPlayer(world: World, actorId: EntityId): boolean {
     const roleComp = world.getComponent(actorId, COMPONENT.Role);
-    return roleComp?.camp === Camp.Wolf;
+    return !!roleComp && world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Wolf;
   }
 
   isWolfAudience(identity: AudienceIdentity): boolean {

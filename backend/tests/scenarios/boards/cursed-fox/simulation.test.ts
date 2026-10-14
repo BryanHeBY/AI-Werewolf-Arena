@@ -88,14 +88,14 @@ for (const { name, board } of boards)
             expect(result.outcome.winningPlayerIds).toEqual([fox]);
             expect(alive).toContain(fox);
             expect(
-              alive.every((id) => roles.get(id)!.camp !== Camp.Wolf) ||
-                alive.every((id) => roles.get(id)!.camp !== Camp.Good),
+              alive.every((id) => game.world.getComponent(id, COMPONENT.Camp)!.camp !== Camp.Wolf) ||
+                alive.every((id) => game.world.getComponent(id, COMPONENT.Camp)!.camp !== Camp.Good),
             ).toBe(true);
           } else {
             expect(result.outcome.primary.kind).toBe("faction");
             expect(alive).not.toContain(fox);
             expect(result.outcome.winningPlayerIds).toEqual(
-              game.playerIds.filter((id) => roles.get(id)!.camp === result.winner),
+              game.playerIds.filter((id) => game.world.getComponent(id, COMPONENT.Camp)!.camp === result.winner),
             );
           }
         } else expect(result.reason).toBe("max_days_reached");

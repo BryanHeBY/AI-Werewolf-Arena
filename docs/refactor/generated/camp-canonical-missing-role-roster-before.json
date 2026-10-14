@@ -1,0 +1,13 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/tests/unit/mechanisms/camp-canonical-missing-role-roster.test.ts",
+      "expectedAbsent": true,
+      "gitShowExit": 128,
+      "gitShowStderr": "fatal: path 'backend/tests/unit/mechanisms/camp-canonical-missing-role-roster.test.ts' does not exist in '4ffba3d9820d1fee72f28af20c2125732ade3013'\n"
+    }
+  ],
+  "controls": [],
+  "policy": "Original missing Role excludes wolf roster and short-circuits Camp reads. Ref post-first static fix is independently exercised; source dependencies are joint inputs, not immutable controls."
+}

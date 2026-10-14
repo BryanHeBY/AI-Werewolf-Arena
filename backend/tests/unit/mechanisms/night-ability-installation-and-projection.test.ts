@@ -113,7 +113,7 @@ for (const locale of ["zh-CN", "en"] as const)
     recordNightAbilityUse(transferred, 3, true);
     expect(abilityStatus(transferred, 3)).toBe("spent");
     expect(role(world, 5).role).toBe(Role.Villager);
-    expect(role(world, 6).camp).toBe(Camp.Good);
+    expect(world.getComponent(6, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     for (const actor of world.entityIds())
       expect(
         buildAgentVisibleEventFeed(world, events, actor).every(

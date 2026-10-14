@@ -1,0 +1,25 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/tests/unit/engine/visibility/camp-canonical-inspection-input.test.ts",
+      "sha256": "87a727501e71d412e7a78274535e369d2e16e16bd2a525dc185418bfa750b243"
+    }
+  ],
+  "paths": [
+    {
+      "path": "backend/tests/unit/engine/visibility/camp-canonical-inspection-input.test.ts",
+      "sha256": "87a727501e71d412e7a78274535e369d2e16e16bd2a525dc185418bfa750b243"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/camp-canonical-inspection-risk.md",
+    "sha256": "7443453a69b03c04df5bbd2ddbe7fb7965915e214ec55de04fca339187285079"
+  },
+  "sourceFrozen": true,
+  "checks": {
+    "path": "docs/refactor/generated/camp-canonical-inspection-risk-checks.json",
+    "sha256": "f8c88c1a8cef28d0c14b4e9e6926d2ad89f179de87d136def3d7f824d2d35c2a"
+  }
+}

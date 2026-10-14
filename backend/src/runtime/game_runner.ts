@@ -448,6 +448,7 @@ function replayPlayers(world: World) {
         name: identity.name,
       };
     });
+  // 原名单／开局牌组是历史数据；仅普通fallback在原字段位置查询当前Camp。
   const initial = initialIdentityDeal(world);
   return world.entityIds().map((id, index) => {
     const role = world.getComponent(id, COMPONENT.Role);
@@ -456,7 +457,7 @@ function replayPlayers(world: World) {
       role: initialPlayerIdentity(world, id)?.role ?? initial?.[index] ?? role?.role ?? "unknown",
       camp:
         initialPlayerIdentity(world, id)?.camp ??
-        (initial ? (initial[index] === "wolf" ? "wolf" : "good") : (role?.camp ?? "unknown")),
+        (initial ? (initial[index] === "wolf" ? "wolf" : "good") : ((role && world.getComponent(id, COMPONENT.Camp)?.camp) ?? "unknown")),
       alive: world.getComponent(id, COMPONENT.Alive)?.alive === true,
       name: world.getComponent(id, COMPONENT.Identity)?.name,
     };

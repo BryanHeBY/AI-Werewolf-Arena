@@ -1,0 +1,12 @@
+{
+  "command": "bun --no-env-file docs/refactor/generated/camp-canonical-shared-inputs-unused-import-proof.cjs",
+  "outputPath": "docs/refactor/generated/camp-canonical-shared-inputs-unused-import-proof-output.txt",
+  "result": {
+    "chunk_id": "83243f",
+    "wall_time_seconds": 0.296527498,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "scope": "Only the unused added named binding removal; two actual emitted outputs same, no runtime/type/head repeat."
+}

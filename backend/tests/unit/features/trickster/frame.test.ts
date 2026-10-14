@@ -100,7 +100,7 @@ test("trickster cancellation preserves consumed numbers", () => {
   cancelTricksterExchange(f.world, 1);
   finishTricksterNight(f.world, 1);
   expect(resolveTricksterExile(f.world, 1, 2).effectiveId).toBe(2);
-  expect(getTricksterState(f.role)!.history).toEqual([{ day: 1, pair: [2, 6] }]);
+  expect(getTricksterState(f.role, () => f.world.getComponent(1, COMPONENT.Camp))!.history).toEqual([{ day: 1, pair: [2, 6] }]);
   beginTricksterNight(f.world, 2);
   expect(tricksterChoiceTargets(f.world, 2)).not.toContain(2);
 });
@@ -118,7 +118,7 @@ test("trickster rejects second voluntary pass and permits forced exhausted night
     if (id !== 1) f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   expect(beginTricksterNight(f.world, 3)).toBeNull();
   finishTricksterNight(f.world, 3);
-  expect(getTricksterState(f.role)!.history).toHaveLength(2);
+  expect(getTricksterState(f.role, () => f.world.getComponent(1, COMPONENT.Camp))!.history).toHaveLength(2);
 });
 test("trickster unfinished aborted night cannot yield an exile mapping", () => {
   const f = fixture();
@@ -146,7 +146,7 @@ for (const kind of ["state", "role", "revival"] as const)
       (f.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
         ...f.role.privateState,
       };
-    if (kind === "role") f.role.camp = Camp.Good;
+    if (kind === "role") f.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
     if (kind === "revival") {
       const life = f.world.getComponent(6, COMPONENT.Alive)!;
       life.alive = false;

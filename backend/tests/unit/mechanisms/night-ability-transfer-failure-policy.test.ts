@@ -19,9 +19,10 @@ import { grantNightAbility, transferNightAbility } from "../../../src/game/mecha
 
 function fixture() {
   const world = new World(), origin = world.createEntity(), from = world.createEntity(), to = world.createEntity();
-  const sourceRole = createRoleComponent(Role.Villager, Camp.Good), targetRole = createRoleComponent(Role.Villager, Camp.Good);
-  for (const [id, role] of [[origin, createRoleComponent(Role.Guard, Camp.Good)], [from, sourceRole], [to, targetRole]] as const) {
+  const sourceRole = createRoleComponent(Role.Villager), targetRole = createRoleComponent(Role.Villager);
+  for (const [id, role] of [[origin, createRoleComponent(Role.Guard)], [from, sourceRole], [to, targetRole]] as const) {
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
   }
   const events: GameEvent[] = [];

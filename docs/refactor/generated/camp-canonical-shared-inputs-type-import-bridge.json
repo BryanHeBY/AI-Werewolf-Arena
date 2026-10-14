@@ -1,0 +1,15 @@
+{
+  "source": {
+    "path": "backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+    "beforeSHA256": "88e902cfd0370b6386cd139a72049a99fc27da94ad4b271c0b58126b772f3a87",
+    "sha256": "36f202b15e8826ccc69d92f686aac7a7fe86ed8e8ff50534a216609392b24392"
+  },
+  "delta": {
+    "before": "import {\n  Phase,\n  Role,\n  WinCondition,",
+    "after": "import {\n  Camp,\n  Phase,\n  Role,\n  WinCondition,"
+  },
+  "exactForward": true,
+  "exactInverse": true,
+  "scope": "Only the missing named Camp import is added; no body/oracle/getter/callback edits. Runtime imports really differ.",
+  "checksRerunByAuthor": false
+}

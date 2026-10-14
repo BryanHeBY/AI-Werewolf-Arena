@@ -110,7 +110,7 @@ for (const locale of ["zh-CN", "en"] as const)
         turn_constraints: { min_valid_actions: 0, max_valid_actions: 1 },
       },
     };
-    expect(role(game, 1).camp).toBe(Camp.Good);
+    expect(game.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     expect(ability.state.policy).toBe("psychic");
     for (const target_id of [1, 999, null, 2.5])
       expect(
@@ -179,7 +179,7 @@ test("two policies on one Villager run at separate priorities, keep their real i
   expect(garg.uses).toBe(1);
   expect(psychic.uses).toBe(1);
   expect(role(game, 5).role).toBe(Role.Villager);
-  expect(role(game, 5).camp).toBe(Camp.Good);
+  expect(game.world.getComponent(5, COMPONENT.Camp)!.camp).toBe(Camp.Good);
   const request: ActionRequest = {
     actorId: 5,
     phase: Phase.Night,
@@ -415,7 +415,7 @@ test("invalid policy is rejected before installing an instance, and gifted Psych
     context(game, events, async () => ({ name: "inspect_role", args: { target_id: 2 } })),
   );
   expect(getGargoyleState(role(game, 1))!.hasInheritedKnife).toBe(true);
-  expect(canGargoyleKnife(role(game, 1), game.world)).toBe(false);
+  expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   expect(roleInspectionPolicy(native.state)).toBe("gargoyle");
 });
 
@@ -508,7 +508,7 @@ test("cancelled null is not a legal pass and copied Psychic policy keeps indepen
   expect(native.uses).toBe(1);
   expect(copy.state.history).toEqual(native.state.history);
   expect(copy.state.history).not.toBe(native.state.history);
-  expect(role(game, 5).camp).toBe(Camp.Good);
+  expect(game.world.getComponent(5, COMPONENT.Camp)!.camp).toBe(Camp.Good);
   (copy.state.history[0] as { targetId: number }).targetId = 6;
   expect(native.state.history[0].targetId).toBe(2);
 });

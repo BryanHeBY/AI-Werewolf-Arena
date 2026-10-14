@@ -60,10 +60,12 @@ test("狐狸保原函数绑定和不适用引用，个人成员核完才读日�
   const world = new World(), trace: string[] = [];
   const fox = world.createEntity(), wolf = world.createEntity();
   world.addComponent(fox, COMPONENT.Alive, createAliveComponent());
-  world.addComponent(fox, COMPONENT.Role, createRoleComponent(Role.CursedFox, Camp.ThirdParty));
+  world.addComponent(fox, COMPONENT.Role, createRoleComponent(Role.CursedFox));
+  world.addComponent(fox, COMPONENT.Camp, { camp: Camp.ThirdParty });
   world.addComponent(fox, COMPONENT.Victory, createVictoryComponent([{ kind: "individual", goalId: "netease_cursed_fox_last_faction_v1" }]));
   world.addComponent(wolf, COMPONENT.Alive, createAliveComponent());
-  world.addComponent(wolf, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf));
+  world.addComponent(wolf, COMPONENT.Role, createRoleComponent(Role.Wolf));
+  world.addComponent(wolf, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(wolf, COMPONENT.Victory, createVictoryComponent([{ kind: "faction", faction: Camp.Wolf }]));
   expect(TERMINAL_VICTORY_POLICY.replaceFactionResult).toBe(replaceWithFoxVictory);
   const third: WinDecision = { ...faction, winner: Camp.ThirdParty, outcome: { ...faction.outcome, kind: "victory", primary: { kind: "faction", faction: Camp.ThirdParty, winningPlayerIds: [] } } };

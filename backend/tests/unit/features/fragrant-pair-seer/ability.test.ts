@@ -29,13 +29,15 @@ import {
 import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";
 function fixture() {
   const world = new World(),
-    role = createRoleComponent(Role.AwakenedSeer, Camp.Good),
+    role = createRoleComponent(Role.AwakenedSeer),
     actorId = world.createEntity(),
     targetId = world.createEntity(),
     events: GameEvent[] = [];
   world.addComponent(actorId, COMPONENT.Role, role);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(actorId, COMPONENT.Alive, createAliveComponent());
-  world.addComponent(targetId, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(targetId, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(targetId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(targetId, COMPONENT.Alive, createAliveComponent());
   const input = freshPairSeerState(),
     state = installNativeAbility(role, "pair_check", input),
@@ -125,7 +127,7 @@ test("gift, copy and transfer cannot broaden the finite pair capability or mutat
   ).toBeUndefined();
 });
 test("invalid native pair state is rejected before creating a resource", () => {
-  const role = createRoleComponent(Role.AwakenedSeer, Camp.Good);
+  const role = createRoleComponent(Role.AwakenedSeer);
   const malformed = { ...freshPairSeerState(), count: 1 };
   expect(() => installNativeAbility(role, "pair_check", malformed)).toThrow(
     "fragrant_pair_state_invalid",
@@ -133,7 +135,7 @@ test("invalid native pair state is rejected before creating a resource", () => {
   expect(role.privateState).toEqual({});
 });
 test("native pair initialization rejects raw history getter before cloning can execute it", () => {
-  const role = createRoleComponent(Role.AwakenedSeer, Camp.Good);
+  const role = createRoleComponent(Role.AwakenedSeer);
   let reads = 0;
   const state = {
     policy: "awa_fragrant_pair_seer_v1" as const,

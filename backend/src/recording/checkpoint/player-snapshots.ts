@@ -59,7 +59,7 @@ export function capturePlayerContributions(
         ? (auditData(original.audit.vote, ["weight", "canVote"]) as VotingRightComponent)
         : world.getComponent(id, COMPONENT.VotingRight)!;
       const weddingAudit = weddingAuditPlayer(world, id, !complete);
-      // 婚约审计优先于孤女审计；此处覆盖的是记录字段，不改角色真实阵营或独立胜利成员。
+      // 婚约审计优先于孤女审计；记录覆盖与历史Camp保原优先级，普通fallback才晚读实际Camp。
       const audit = weddingAudit ?? projectLonelyGirlAuditPlayer(world, id);
       const wall = projectWallNote(world, id);
       const wallNote = wall
@@ -75,7 +75,7 @@ export function capturePlayerContributions(
         seat: identity.seat,
         name: identity.name,
         role: (original?.scope.roleId as RoleComponent["role"]) ?? audit?.role ?? role.role,
-        camp: original?.scope.campValue ?? audit?.camp ?? role.camp,
+        camp: original?.scope.campValue ?? audit?.camp ?? world.getComponent(id, COMPONENT.Camp)!.camp,
         alive: original
           ? aliveLifeDescriptor(original.scope.life)!.get!.call(original.scope.life)
           : (audit?.alive ?? world.getComponent(id, COMPONENT.Alive)!.alive),

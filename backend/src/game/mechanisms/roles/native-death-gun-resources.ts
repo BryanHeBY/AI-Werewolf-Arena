@@ -3,8 +3,10 @@
  * 输入为原角色、原学习对象与晚取查询；输出保留同一槽／枪引用和原每次 hook 的捕获表。
  * 原生安装不克隆、不冻库存；学习模板仅创建自己的全新枪，已有整学习数据的复制仍由各族安装 owner 执行。
  * 本 owner 安装两个原生槽并写原枪字段，原体、生命、死因及请求许可仍在结算／具体权威复验；只读类型不是权限屏障。
+ * 学习枪先晚取原查询并裸调用、读 skill，再在原阵营点调用显式 source；不存 Camp 引用。
  * 猎魔板子先捕获原审计库存，支付仍由同一权威执行；setter／编码或后续发表失败均不退款。
  */
+import type { CurrentCampSource } from "../../../core/domain/components/camp";
 import type {
   HunterState,
   HunterReadState,
@@ -88,7 +90,7 @@ export function armAwakenedNativeGun(learned: AwakenedLearning): void {
 /** 生产每次 hook 独立持有原捕获表；这里不另验 World，换学习／原枪后返回 undefined。 */
 export function createMechanicalGunReader(runtime: {
   readonly getMechanicalState: (role: RoleComponent | undefined) => MechanicalReadState | undefined;
-}): (role: RoleComponent) => LearnedNativeGun | undefined {
+}): (role: RoleComponent, currentCamp: CurrentCampSource) => LearnedNativeGun | undefined {
   const owners = new Map<
     RoleComponent,
     {
@@ -97,12 +99,12 @@ export function createMechanicalGunReader(runtime: {
       gun: Extract<MechanicalSkill, { kind: "hunter" }>;
     }
   >();
-  return (role) => {
+  return (role, currentCamp) => {
     const query = runtime.getMechanicalState;
     const state = query(role),
       learning = state?.learned,
       skill = learning?.skill;
-    if (role.camp !== Camp.Wolf || !state || !learning || skill?.kind !== "hunter" || !skill.armed)
+    if (currentCamp()?.camp !== Camp.Wolf || !state || !learning || skill?.kind !== "hunter" || !skill.armed)
       return undefined;
     const prior = owners.get(role);
     if (prior && (state !== prior.state || learning !== prior.learning || skill !== prior.gun))
@@ -115,7 +117,7 @@ export function createMechanicalGunReader(runtime: {
 /** 生产每次 hook 独立持有原捕获表；这里不另验 World，换学习／原枪后返回 undefined。 */
 export function createAwakenedGunReader(runtime: {
   readonly getAwakenedState: (role: RoleComponent | undefined) => AwakenedReadState | undefined;
-}): (role: RoleComponent) => LearnedNativeGun | undefined {
+}): (role: RoleComponent, currentCamp: CurrentCampSource) => LearnedNativeGun | undefined {
   const owners = new Map<
     RoleComponent,
     {
@@ -129,13 +131,13 @@ export function createAwakenedGunReader(runtime: {
       activeFromNight: number;
     }
   >();
-  return (role) => {
+  return (role, currentCamp) => {
     const query = runtime.getAwakenedState;
     const state = query(role),
       learned = state?.learned,
       gun = learned?.skill;
     if (
-      role.camp !== Camp.Wolf ||
+      currentCamp()?.camp !== Camp.Wolf ||
       !state ||
       !learned ||
       learned.role !== Role.Hunter ||

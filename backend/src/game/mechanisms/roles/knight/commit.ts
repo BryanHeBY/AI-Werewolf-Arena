@@ -37,7 +37,7 @@ export function commitKnightDuel(
     !world.getComponent(choice.targetId, COMPONENT.Alive)?.alive
   )
     return null;
-  const hit = target.camp === Camp.Wolf;
+  const hit = world.getComponent(choice.targetId, COMPONENT.Camp)?.camp === Camp.Wolf;
   // 使用本次已读的同一个槽；资源 setter 失败先于发表，发表失败不退还已付资源。
   consumeKnightDuel(state);
   events.push({

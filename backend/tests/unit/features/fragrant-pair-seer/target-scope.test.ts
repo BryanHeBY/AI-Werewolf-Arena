@@ -21,7 +21,7 @@ function targets() {
     world.addComponent(
       id,
       COMPONENT.Role,
-      createRoleComponent(camp === Camp.Wolf ? Role.Wolf : Role.Villager, camp),
+      createRoleComponent(camp === Camp.Wolf ? Role.Wolf : Role.Villager),
     );
     world.addComponent(id, COMPONENT.Camp, createCampComponent(camp));
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
@@ -39,7 +39,7 @@ for (const changed of ["life", "role", "camp"] as const)
     const { world, scopes } = targets();
     if (changed === "life") world.addComponent(2, COMPONENT.Alive, createAliveComponent(true));
     if (changed === "role")
-      world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf));
+      world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf));
     if (changed === "camp") world.addComponent(2, COMPONENT.Camp, createCampComponent(Camp.Wolf));
     expect(pairTargetCurrent(world, scopes[0]!)).toBe(true);
     expect(capturedPairContainsWolf(world, scopes)).toBeNull();
@@ -57,7 +57,7 @@ test("field changes and getters cannot provide new identity or execute while val
   expect(capturedPairContainsWolf(world, scopes)).toBeNull();
   scopes[1]!.camp.camp = Camp.Wolf;
   let reads = 0;
-  Object.defineProperty(scopes[1]!.role, "camp", {
+  Object.defineProperty(scopes[1]!.camp, "camp", {
     get() {
       reads++;
       return Camp.Wolf;

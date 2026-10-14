@@ -17,11 +17,13 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { ActionWindow, Phase } from "../core/domain/model";
 import type { ToolRuleMap } from "../game/mechanisms/validation/contracts";
 import { wolfTeamPermissions } from "../game/mechanisms/roles/wolf_team";
+import { COMPONENT } from "../core/domain/components/names";
 
-/** 三工具保持各自完整首失败顺序；不把婚礼刀权、普通候选或自爆窗口统一成新授权策略。 */
+/** 三工具保原首失败顺序；actorId仅在原Camp读取点的source内取得，常量能力不新增查询。 */
 export const WOLF_VALIDATION_RULES: ToolRuleMap = {
-  speak_to_wolves: ({ world, role, roleCatalog, phase }) => {
-    if (!wolfTeamPermissions(role, roleCatalog, world).canChat) {
+  speak_to_wolves: (ctx) => {
+    const { world, role, roleCatalog, phase } = ctx;
+    if (!wolfTeamPermissions(role, roleCatalog, () => world.getComponent(ctx.actorId, COMPONENT.Camp), world).canChat) {
       return { code: RuleError.WolfChatPermission };
     }
     if (phase !== Phase.Night) return { code: RuleError.WolfChatPhase };
@@ -33,7 +35,7 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
       return canSubmitWeddingTool(world, actorId, phase, day ?? 0, ghostBrideScope, toolCall)
         ? null
         : { code: RuleError.GhostBrideUnavailable };
-    if (!wolfTeamPermissions(role, roleCatalog, world).canVoteForKill) {
+    if (!wolfTeamPermissions(role, roleCatalog, () => world.getComponent(actorId, COMPONENT.Camp), world).canVoteForKill) {
       return { code: RuleError.WolfKillPermission };
     }
     if (phase !== Phase.Night) return { code: RuleError.WolfKillPhase };
@@ -52,7 +54,8 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     }
     return null;
   },
-  self_destruct: ({
+  self_destruct: (ctx) => {
+    const {
     world,
     role,
     roleCatalog,
@@ -60,11 +63,11 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     actionWindow,
     allowSelfDestruct,
     toolCall,
-  }) => {
+    } = ctx;
     // 原婚礼成员排除先于角色自爆能力；阶段与窗口关系通过后检查已取出的 allowSelfDestruct，再读工具名／confirm。
     if (weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))
       return { code: RuleError.WolfBlastOnly };
-    if (!canRoleSelfDestruct(role, roleCatalog)) {
+    if (!canRoleSelfDestruct(role, roleCatalog, () => world.getComponent(ctx.actorId, COMPONENT.Camp))) {
       return { code: RuleError.WolfBlastOnly };
     }
     if (phase !== Phase.Day && phase !== Phase.Voting) {

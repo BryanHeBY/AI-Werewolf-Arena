@@ -19,9 +19,11 @@ export function resolveInspection<K extends InspectionKind>(
   if (!target) return null;
   const definition = catalog.runtime(target.role)?.inspectionLabels;
   const labels = typeof definition === "function" ? definition(target) : definition;
-  const camp = labels?.camp ?? target.camp,
+  const camp = labels?.camp ?? world.getComponent(targetId, COMPONENT.Camp)?.camp,
     role = labels?.role ?? target.role;
-  const result: InspectionResult =
-    kind === "camp" ? { kind, camp } : kind === "role" ? { kind, role } : { kind, camp, role };
+  // 两个原字段已按原序读取；身份结果不要求阵营，阵营／组合结果缺当前来源时明确返回 null。
+  if (kind === "role") return { kind, role } as Extract<InspectionResult, { kind: K }>;
+  if (camp === undefined) return null;
+  const result: InspectionResult = kind === "camp" ? { kind, camp } : { kind, camp, role };
   return result as Extract<InspectionResult, { kind: K }>;
 }

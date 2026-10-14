@@ -1,8 +1,8 @@
 /**
- * Owns Mist/Raven roster snapshots, mist choices and the pending-night handoff. Inputs are
- * original players and accepted caster choices; outputs include sourced knife targets, Snake
- * windows and close/abort operations. Only the matching night may hand off its captured damage;
- * revived bodies cannot resume it.
+ * 负责炼金魔女／狼鸦之爪的阵容原体、雾目标选择与待交付夜间伤害。输入为原玩家和已接受
+ * 的施法选择；输出保留原生命来源刀口、蛇窗及关闭／中止操作，付款仍由施法权威负责。
+ * 原阵营点读取实际 Camp 的 own-data，组件引用、原字段或生命改变仍按原规则撤权，不保 Role 镜像。
+ * 只有匹配的原夜间对象可以交付捕获伤害；身体复活不能恢复该对象的旧许可，失败不补交付。
  */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -175,7 +175,7 @@ function originalCurrent(world: World, player: OriginalPlayer): boolean {
   return (
     world.getComponent(player.id, COMPONENT.Role) === player.role &&
     data(player.role, "role") === player.roleName &&
-    data(player.role, "camp") === player.camp &&
+    data(player.campComponent, "camp") === player.camp &&
     data(player.role, "privateState") === player.privateState &&
     world.getComponent(player.id, COMPONENT.Camp) === player.campComponent &&
     data(player.campComponent, "camp") === player.camp &&
@@ -221,7 +221,7 @@ export function installMistRavenBoard(world: World): void {
       identity = world.getComponent(id, COMPONENT.Identity),
       campComponent = world.getComponent(id, COMPONENT.Camp),
       life = world.getComponent(id, COMPONENT.Alive);
-    const camp = data(role, "camp"),
+    const camp = data(campComponent, "camp"),
       roleName = data(role, "role");
     if (
       !role ||

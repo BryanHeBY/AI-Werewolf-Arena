@@ -15,7 +15,7 @@ function fixture(policy: "ends_game" | "forbidden" = "ends_game"): any {
       normalizedBoard: config,
       players: world.entityIds().map((id) => {
         const role = world.getComponent(id, COMPONENT.Role)!;
-        return { id, role: role.role, camp: role.camp };
+        return { id, role: role.role, camp: world.getComponent(id, COMPONENT.Camp)!.camp };
       }),
     },
     events: [],
@@ -148,9 +148,9 @@ test("Incremental Demon record still enforces original checkpoint identity", () 
         return {
           id,
           role: role.role,
-          camp: role.camp,
+          camp: world.getComponent(id, COMPONENT.Camp)!.camp,
           alive: true,
-          victory: { affiliations: [{ kind: "faction", faction: role.camp }] },
+          victory: { affiliations: [{ kind: "faction", faction: world.getComponent(id, COMPONENT.Camp)!.camp }] },
           privateState: structuredClone(role.privateState),
         };
       }),

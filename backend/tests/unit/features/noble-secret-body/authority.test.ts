@@ -122,7 +122,7 @@ for (const replace of ["role", "state", "life", "revive"] as const)
     beginNobleBodyNight(f.world, 1, () => true);
     const choice = openSecretBodyChoice(f.world, 1);
     if (replace === "role")
-      f.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+      f.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Villager));
     if (replace === "state")
       (f.roles[1]!.privateState as Record<string, unknown>).secretBody = structuredClone(
         (f.roles[1]!.privateState as { readonly secretBody?: unknown }).secretBody,

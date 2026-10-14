@@ -211,7 +211,8 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
             (tool !== "kill_vote" || bindWolfKnifeTargetQuery(ctx.world).allows(id)) &&
             (tool !== "inspect_night_identity" ||
               ctx.actorRole !== Role.WolfWitch ||
-              ctx.world.getComponent(id, COMPONENT.Role)?.camp !== "wolf") &&
+              (ctx.world.getComponent(id, COMPONENT.Role) &&
+                ctx.world.getComponent(id, COMPONENT.Camp)?.camp) !== "wolf") &&
             (tool !== "awakened_guard" ||
               awakenedGuard?.kind !== "guard" ||
               awakenedGuard.lastGuardDay !== (ctx.day ?? 1) - 1 ||

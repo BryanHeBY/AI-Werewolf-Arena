@@ -12,6 +12,12 @@ export interface CampComponent {
 }
 
 /**
+ * 晚读取实际当前阵营的数据端口；不是许可，不缓存初值，也不反向查找 Role 所属 World。
+ * 无 World 的调用者显式拥有组件；值捕获与组件引用撤权规则分别由原机制决定。
+ */
+export type CurrentCampSource = () => CampComponent | undefined;
+
+/**
  * 创建阵营组件。
  */
 export function createCampComponent(camp: Camp): CampComponent {

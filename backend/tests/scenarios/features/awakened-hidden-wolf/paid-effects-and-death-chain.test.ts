@@ -79,6 +79,7 @@ function context(
     requests = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
+    get requestFactory() { return GameActionRequestFactory; },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -197,7 +198,7 @@ test("an extra knife remains current after its stock is spent and the slot close
   refreshAwakenedInheritance(game.world, 1, []);
   const ctx = context(game, 2, async () => ({ name: "awakened_attack", args: { target_id: 6 } }));
   await stage("awakened_opening").execute(ctx);
-  expect(canAwakenedKnife(role(game), game.world)).toBe(true);
+  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
   await stage("awakened_attack").execute(ctx);
   expect(state(game).learned!.skill).toEqual({ kind: "wolf", extraKnife: "spent" });
   expect(ctx.state.awakenedEffects!.attacks[0].isCurrent()).toBe(true);
@@ -342,7 +343,7 @@ test("inheritance before a later actual Hunter shot death keeps the paid fact an
     events.findIndex((e) => e.type === "hunter_shot"),
   );
   expect(state(game).hasInheritedKnife).toBe(true);
-  expect(canAwakenedKnife(role(game), game.world)).toBe(false);
+  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   expect(game.world.getAliveEntityIds()).toEqual([4, 5, 6]);
   expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });

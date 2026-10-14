@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts:
+(pass) three policy instances on one Villager use distinct slots, counters and histories, and only Spirit Seer repeats [61.56ms]
+
+ 1 pass
+ 17 filtered out
+ 0 fail
+ 13 expect() calls
+Ran 1 test across 1 file. [315.00ms]

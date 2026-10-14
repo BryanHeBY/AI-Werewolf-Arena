@@ -5,7 +5,9 @@
  * 状态提交只写 blastDay、exileDay、expirySettled；后项失败保留前项写入，不回滚或重读角色槽。
  * 内部审计编码函数 保留完整容器字段和 JSON 方法的原查找时点，不是严格档案读器 或复现授权。
  * 原生命、末狼、夜窗口、请求租约和完整容器失效／最终审计写入仍由恶魔猎手权威持有。
+ * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import type {
   LastWolfBlastPolicy,
   RedMoonState,
@@ -78,15 +80,22 @@ export function readRedMoonPayload(state: unknown): RedMoonReadState | undefined
 }
 
 /** 原角色／阵营门槛先于容器与 payload 校验；不以合法副本替换所属 live 状态。 */
-export function getRedMoonState(role: RoleComponent | undefined): RedMoonReadState | undefined {
-  if (own(role, "role") !== RED_MOON_ROLE || own(role, "camp") !== Camp.Wolf) return undefined;
+// 当前阵营只在原 camp 数据读取点取得；保本族自身 descriptor／Proxy 策略，不回退角色或目录。
+export function getRedMoonState(
+  role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
+): RedMoonReadState | undefined {
+  if (own(role, "role") !== RED_MOON_ROLE || own(currentCamp(), "camp") !== Camp.Wolf) return undefined;
   const state = own(own(role, "privateState"), "redMoon");
   return readRedMoonPayload(state);
 }
 
 /** 机制自己决定玩家字段；校验失败仍为 undefined，不补默认政策或猜测到期结果。 */
-export function projectRedMoonState(role: RoleComponent | undefined): RedMoonState | undefined {
-  const redMoon = getRedMoonState(role);
+export function projectRedMoonState(
+  role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
+): RedMoonState | undefined {
+  const redMoon = getRedMoonState(role, currentCamp);
   if (redMoon)
     return {
       policy: redMoon.policy,

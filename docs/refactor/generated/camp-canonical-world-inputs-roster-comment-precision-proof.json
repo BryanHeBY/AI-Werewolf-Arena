@@ -1,0 +1,26 @@
+{
+  "approved": true,
+  "path": "backend/src/core/domain/initial_roster.ts",
+  "beforeSHA256": "36388c844fa9b64270f2241ccc8cffe6bc89d095025c08aa6d5f08f8be402ee1",
+  "sourceSHA256": "4f089e5c88dda9932242e7c7110e4d574761faa1d50a7aeb9caedb6a11f71f3a",
+  "exactSingleCommentForwardInverse": true,
+  "typedNodes": 163,
+  "nodeArrays": 36,
+  "noncommentLeaves": 214,
+  "protectedJSDocTags": [],
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "sha256": "0ec175744fe7e972d6d9e8f6fdf4b97e5de6401b36d1d1a13ebde808aabd3324"
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "sha256": "a2433c5bd10f9266178d1338346710d0899a29a4d3e2ef4565d120dfa3dba60a"
+    }
+  ],
+  "limits": [
+    "只改实体名单中文说明；首proof／type／head／runtime仍原采样阶段，未重这些绿。"
+  ]
+}

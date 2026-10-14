@@ -21,14 +21,15 @@ import {
 function fixture() {
   const state = NIGHTMARE_SHADOW_STATE_SLOT.create();
   const roles = new Map<number, RoleComponent>([
-    [1, { role: "nightmare", camp: Camp.Wolf, privateState: { nightmareShadow: state } } as unknown as RoleComponent],
-    [2, { role: "seer", camp: Camp.Good, privateState: {} } as RoleComponent],
+    [1, { role: "nightmare", privateState: { nightmareShadow: state } } as unknown as RoleComponent],
+    [2, { role: "seer", privateState: {} } as RoleComponent],
   ]);
+  const camps = new Map([[1, { camp: Camp.Wolf }], [2, { camp: Camp.Good }]]);
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const world = {
     entityIds: () => [...roles.keys()],
     getAliveEntityIds: () => [...lives].filter(([, life]) => life.alive).map(([id]) => id),
-    getComponent: (id: number, kind: unknown) => kind === COMPONENT.Role ? roles.get(id) : kind === COMPONENT.Alive ? lives.get(id) : undefined,
+    getComponent: (id: number, kind: unknown) => kind === COMPONENT.Role ? roles.get(id) : kind === COMPONENT.Alive ? lives.get(id) : kind === COMPONENT.Camp ? camps.get(id) : undefined,
   } as unknown as World;
   installNightmareBoard(world);
   beginNightmareNight(world, 1);

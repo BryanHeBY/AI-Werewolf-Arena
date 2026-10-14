@@ -273,7 +273,7 @@ for (const mutation of [
             rc.role = Role.Villager;
             break;
           case "camp":
-            rc.camp = Camp.Good;
+            g.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
             break;
           case "state":
             (rc as { privateState: Readonly<Record<string, unknown>> }).privateState = {};

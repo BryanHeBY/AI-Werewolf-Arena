@@ -65,7 +65,7 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         },
         context,
       ),
-    baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale) =>
+    baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale, _world, currentCamp) =>
       request.allowedTools.includes("shoot")
         ? { name: "shoot", args: { target_id: pickAliveByCamp("good") ?? pickAliveNotSelf() } }
         : ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
@@ -74,6 +74,8 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
             pickAliveNotSelf,
             pickAliveByCamp,
             locale,
+            undefined,
+            currentCamp,
           ),
   },
   presentation: nativeRolePresentation("wolf_king"),

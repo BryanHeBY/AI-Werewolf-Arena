@@ -1,0 +1,29 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "firstReadySHA256": "2a31ec40411b7e12b62ac690265b13460ce0b07d73ae713bab13c245f0721be7",
+  "finalReadySHA256": "18149d13a993fde3f464e726080d1fa2d2af67a91f776e9b47dab068694f68e5",
+  "source": [
+    {
+      "path": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+      "firstReadySHA256": "cd954217788114da8072648c3c14adee50bc7e387ddd30a831cd737f35e5579b",
+      "finalReadySHA256": "ba929137096185b4fdc7f28f46da897ccfec17aa4304a5677004149b7d38b273"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "firstReadySHA256": "f445df6d6eba04f7e884365823105f235529cf176c0c1a1d9881ad92105cf43d",
+      "finalReadySHA256": "52baf9fd1617b71412aea34179cdeec60982bc9c965bd7847830f72681bf571a"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/authority.test.ts",
+      "firstReadySHA256": "dd8970f73f138c7bea8630a2a3c03af4feca996d04066c072c3baf11f070110a",
+      "finalReadySHA256": "1d79736d2c0701fccd5c34828398e43e33ca5087739a3b8bb5d5c39a52124692"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+      "firstReadySHA256": "4e8f88ecffd57b37ae79a3c321923a9c53529ce2bc6fb6fc7e7130f210455b55",
+      "finalReadySHA256": "04ad5a89a7a7857d64f323d6db10a094b973d1cf2123c751dab43b4fed8861e9"
+    }
+  ],
+  "checksRun": false,
+  "note": "首次ready之后的输入精度／中文校准，尚未启动任何联合检查。"
+}

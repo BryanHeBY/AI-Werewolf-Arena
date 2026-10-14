@@ -213,7 +213,7 @@ for (const slot of [0, 1] as const)
       return choose(slot);
     });
     expect(actor(g).role).toBe(Role.Wolf);
-    expect(actor(g).camp).toBe(Camp.Wolf);
+    expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
     expect(g.world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Wolf);
     expect(g.world.getComponent(1, COMPONENT.Victory)).toEqual({
       affiliations: [{ kind: "faction", faction: Camp.Wolf }],
@@ -308,7 +308,7 @@ for (const [label, mutate] of [
   [
     "camp",
     (g: Fixture) => {
-      actor(g).camp = Camp.Wolf;
+      g.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Wolf;
     },
   ],
   [

@@ -248,7 +248,7 @@ test("mandatory exhausted invalid responses throw, preserving no false result/co
     "role_inspection_required_action_missing",
   );
   expect(calls).toBe(3);
-  expect(canGargoyleKnife(role(game, 1), game.world)).toBe(false);
+  expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   const ability = findNightAbility(role(game, 1), "role_check")!;
   (
     ability.state as unknown as {
@@ -272,7 +272,7 @@ test("mandatory exhausted invalid responses throw, preserving no false result/co
   );
   expect(ability.uses).toBe(0);
   expect(ability.lastUsedDay).toBeNull();
-  expect(canGargoyleKnife(role(game, 1), game.world)).toBe(true);
+  expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
   expect(events.filter((e) => e.type === "role_inspected")).toEqual([]);
 });
 
@@ -299,7 +299,7 @@ test("a gifted role check keeps its real Villager identity and a controlled tran
     })),
   );
   expect(role(game, 5).role).toBe(Role.Villager);
-  expect(role(game, 5).camp).toBe(Camp.Good);
+  expect(game.world.getComponent(5, COMPONENT.Camp)!.camp).toBe(Camp.Good);
   expect(gift.uses).toBe(1);
   expect(gift.state.history).toEqual([
     { day: 1, targetId: 2, result: { kind: "role", role: Role.Wolf } },
@@ -326,7 +326,7 @@ test("a gifted role check keeps its real Villager identity and a controlled tran
   expect(moved.uses).toBe(1);
   expect(findNightAbility(role(game, 5), "role_check", gift.id)).toBeUndefined();
   expect(events.filter((e) => e.type === "role_inspected")).toHaveLength(before);
-  expect(role(game, 6).camp).toBe(Camp.Good);
+  expect(game.world.getComponent(6, COMPONENT.Camp)!.camp).toBe(Camp.Good);
   expect(wolfChatParticipants(game.world, catalog)).toEqual([2]);
 });
 
@@ -361,7 +361,7 @@ for (const exhaustedOn of [2, 3])
     expect(ability.lastUsedDay).toBeNull();
     expect(ability.state.history).toHaveLength(1);
     expect(events).toEqual([]);
-    expect(canGargoyleKnife(role(game, 1), game.world)).toBe(true);
+    expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
   });
 
 test("native, gift and copy instances each inspect the same target once with separate history/resources and actor-only reports", async () => {
@@ -405,7 +405,7 @@ test("native, gift and copy instances each inspect the same target once with sep
   }
   expect(gift.state).not.toBe(copy.state);
   expect(gift.state.history).not.toBe(copy.state.history);
-  expect(role(game, 5).camp).toBe(Camp.Good);
+  expect(game.world.getComponent(5, COMPONENT.Camp)!.camp).toBe(Camp.Good);
   expect(role(game, 6).role).toBe(Role.Villager);
   for (const actor of game.world.entityIds())
     expect(

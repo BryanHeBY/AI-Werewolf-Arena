@@ -52,11 +52,12 @@ test("native audit rejection precedes an unaudited reveal getter and ordinary wr
 test("ordinary badge lookup failure preserves reveal and voting writes without killing", () => {
   const world = new World();
   const id = world.createEntity();
-  const role = createRoleComponent(Role.Idiot, Camp.Good);
+  const role = createRoleComponent(Role.Idiot);
   setIdiotState(role, { revealed: false });
   const voting = createVotingRightComponent();
   const alive = createAliveComponent();
   world.addComponent(id, COMPONENT.Role, role);
+  world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(id, COMPONENT.VotingRight, voting);
   world.addComponent(id, COMPONENT.Alive, alive);
   const originalGet = world.getComponent;

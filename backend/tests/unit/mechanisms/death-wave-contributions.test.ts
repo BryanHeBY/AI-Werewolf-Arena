@@ -27,7 +27,7 @@ function fixture(hooks: (f: { world: World; actor: number; target: number }) => 
   const world = new World("en"),
     actor = world.createEntity(),
     target = world.createEntity();
-  const role = createRoleComponent(Role.WolfBeauty, Camp.Wolf);
+  const role = createRoleComponent(Role.WolfBeauty);
   setWolfBeautyState(role, {
     targetId: target,
     lastActedDay: 1,
@@ -35,7 +35,9 @@ function fixture(hooks: (f: { world: World; actor: number; target: number }) => 
     deathLinkPolicy: "awa_exile_poison_v1",
   });
   world.addComponent(actor, COMPONENT.Role, role);
-  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Wolf });
+  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(target, COMPONENT.Camp, { camp: Camp.Good });
   const actorLife = createAliveComponent(),
     targetLife = createAliveComponent();
   world.addComponent(actor, COMPONENT.Alive, actorLife);

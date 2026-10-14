@@ -23,7 +23,7 @@ function removedQueryWrites() {
 void removedQueryWrites;
 
 test("native installation and metadata commits retain the same queried instance with the original copy", () => {
-  const role = createRoleComponent(Role.Seer, Camp.Good);
+  const role = createRoleComponent(Role.Seer);
   const input = { lastTarget: null, lastIsWerewolf: null, history: [] };
   const stored = installNativeAbility(role, "seer_check", input);
   const ability = queries.findNightAbility(role, "seer_check")!;
@@ -76,7 +76,7 @@ test("use accounting retains last-day payment before a throwing increment setter
 });
 
 test("the original native Pair role guard precedes cloning foreign data and installing a slot", () => {
-  const role = createRoleComponent(Role.Villager, Camp.Good);
+  const role = createRoleComponent(Role.Villager);
   let dataReads = 0;
   const input = {
     get policy() {

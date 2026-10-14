@@ -1,0 +1,58 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "baseUrl": "../../..",
+    "paths": {
+      "typescript": [
+        "backend/node_modules/typescript"
+      ]
+    },
+    "typeRoots": [
+      "../../../backend/node_modules",
+      "../../../backend/node_modules/@types"
+    ]
+  },
+  "files": [
+    "../../../backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts",
+    "../../../backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+    "../../../backend/src/game/mechanisms/roles/cupid/profile.ts",
+    "../../../backend/src/game/mechanisms/roles/cupid/victory.ts",
+    "../../../backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+    "../../../backend/src/game/mechanisms/roles/debater/window.ts",
+    "../../../backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+    "../../../backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+    "../../../backend/src/game/mechanisms/roles/knight/duel-window.ts",
+    "../../../backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts",
+    "../../../backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+    "../../../backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+    "../../../backend/src/game/mechanisms/roles/pure_white/rules.ts",
+    "../../../backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+    "../../../backend/src/game/observation/player-prompt-directives.ts",
+    "../../../backend/tests/scenarios/boards/cursed-fox/simulation.test.ts",
+    "../../../backend/tests/scenarios/engine/phase-pipelines.test.ts",
+    "../../../backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+    "../../../backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+    "../../../backend/tests/scenarios/features/hidden-wolf/camp-policy-inheritance-and-duel.test.ts",
+    "../../../backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+    "../../../backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+    "../../../backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+    "../../../backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+    "../../../backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+    "../../../backend/tests/unit/engine/visibility/inspection-result-contract.test.ts",
+    "../../../backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+    "../../../backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+    "../../../backend/tests/unit/features/dreamer/dream-scope.test.ts",
+    "../../../backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+    "../../../backend/tests/unit/features/mechanical-wolf/inheritance.test.ts",
+    "../../../backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+    "../../../backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+    "../../../backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+    "../../../backend/tests/unit/features/role-inspection-scope.test.ts",
+    "../../../backend/tests/unit/mechanisms/camp-canonical-missing-role-roster.test.ts",
+    "../../../backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+    "../../../backend/tests/unit/mechanisms/role-execution-resource-retirement.test.ts",
+    "../../../tooling/refactor/architecture/contracts.ts",
+    "../../../tooling/refactor/fixture-manifest.ts"
+  ],
+  "include": []
+}

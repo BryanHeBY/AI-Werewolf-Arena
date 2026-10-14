@@ -101,7 +101,7 @@ export class AgentBugReportService {
       return { ok: true, accepted: false, dropped: true, reason: droppedReason };
     }
 
-    // 限流通过后才查询角色并直接追加诊断记录；无记录器仍返回原占位标识，未作行动授权。
+    // 限流通过后才查询角色并直接追加诊断记录；Camp在其原字段位置晚读，未作行动授权。
     const role = this.world.getComponent(report.actorId, COMPONENT.Role);
     const reportId =
       getSessionRecorder()?.recordDebugReport({
@@ -111,7 +111,7 @@ export class AgentBugReportService {
         stage: report.stage,
         actorId: report.actorId,
         actorRole: role?.role ?? "unknown",
-        actorCamp: role?.camp ?? "unknown",
+        actorCamp: (role && this.world.getComponent(report.actorId, COMPONENT.Camp)?.camp) ?? "unknown",
         category: report.category,
         severity: report.severity,
         message: report.message,

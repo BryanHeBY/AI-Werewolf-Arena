@@ -89,7 +89,7 @@ test("order prince revote: roster failure retains paid choice and strict replace
   expect(trace).toEqual(["previousCurrent", "day", "previousCurrent", "replace", "world"]);
   expect(options.strictRequired).toBe(true);
   expect(options.orderPrinceRevote).toBe(true);
-  expect(getOrderPrinceState(f.world.getComponent(12, COMPONENT.Role))?.history)
+  expect(getOrderPrinceState(f.world.getComponent(12, COMPONENT.Role), () => f.world.getComponent(12, COMPONENT.Camp))?.history)
     .toEqual([{ day: 1, activate: true }]);
   expect(f.events.map(event => event.type)).toEqual([
     "order_prince_choice_committed", "order_prince_revote_started", "day_speech",
@@ -121,7 +121,7 @@ test("order prince revote: collection rejection preserves paid prefix without op
   if (collected.done) throw new Error("test_collection_missing");
   await expect(collected.value).rejects.toBe(failure);
   expect(trace).toEqual(["collect"]);
-  expect(getOrderPrinceState(f.world.getComponent(12, COMPONENT.Role))?.history)
+  expect(getOrderPrinceState(f.world.getComponent(12, COMPONENT.Role), () => f.world.getComponent(12, COMPONENT.Camp))?.history)
     .toEqual([{ day: 1, activate: true }]);
   expect(f.events.map(event => event.type)).toEqual([
     "order_prince_choice_committed", "order_prince_revote_started", "day_speech",

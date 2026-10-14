@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/hybrid/affiliation-authority.test.ts:
+(pass) zh-CN/2: Hybrid commits true camp, keeps Good villager identity and exposes only its own choice [73.62ms]
+
+ 1 pass
+ 34 filtered out
+ 0 fail
+ 45 expect() calls
+Ran 1 test across 1 file. [288.00ms]

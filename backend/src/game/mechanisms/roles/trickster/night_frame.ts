@@ -7,7 +7,7 @@
 import type { TricksterReadState } from "@ai-werewolf-arena/game-contract";
 import { mapTricksterExileTarget } from "./exile_mapping";
 import { types } from "node:util";
-import { COMPONENT, type RoleComponent, type World } from "../../../../core";
+import { COMPONENT, type Camp, type RoleComponent, type World } from "../../../../core";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
@@ -25,7 +25,7 @@ interface OriginalPlayer {
   id: number;
   role: RoleComponent;
   roleName: RoleComponent["role"];
-  camp: RoleComponent["camp"];
+  camp: Camp | undefined;
   privateState: RoleComponent["privateState"];
   identity: unknown;
   seat: number;
@@ -61,7 +61,7 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
   if (
     world.getComponent(p.id, COMPONENT.Role) !== p.role ||
     ownData(p.role, "role") !== p.roleName ||
-    ownData(p.role, "camp") !== p.camp ||
+    ownData(world.getComponent(p.id, COMPONENT.Camp), "camp") !== p.camp ||
     ownData(p.role, "privateState") !== p.privateState ||
     world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
     ownData(p.identity, "id") !== p.id ||
@@ -97,7 +97,7 @@ function requireBoard(world: World): Board {
   )
     throw new Error("trickster_original_state_revoked");
   const actor = b.players.get(b.actorId)!;
-  if (getTricksterState(actor.role) !== b.state || TRICKSTER_STATE_SLOT.checkpoint.identity(actor.role) !== b.expectedState)
+  if (getTricksterState(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.state || TRICKSTER_STATE_SLOT.checkpoint.identity(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.expectedState)
     throw new Error("trickster_original_state_revoked");
   return b;
 }
@@ -127,7 +127,7 @@ export function installTricksterBoard(world: World): void {
       throw new Error("trickster_original_roster_invalid");
     if (
       ownData(role, "role") === undefined ||
-      ownData(role, "camp") === undefined ||
+      ownData(world.getComponent(id, COMPONENT.Camp), "camp") === undefined ||
       ownData(role, "privateState") === undefined
     )
       throw new Error("trickster_original_roster_invalid");
@@ -150,7 +150,7 @@ export function installTricksterBoard(world: World): void {
       id,
       role,
       roleName: role.role,
-      camp: role.camp,
+      camp: world.getComponent(id, COMPONENT.Camp)?.camp,
       privateState: role.privateState,
       identity,
       seat,
@@ -162,7 +162,7 @@ export function installTricksterBoard(world: World): void {
     if (String(role.role) === TRICKSTER_ROLE) {
       if (actorId !== null) throw new Error("trickster_original_roster_invalid");
       actorId = id;
-      state = getTricksterState(role);
+      state = getTricksterState(role, () => world.getComponent(id, COMPONENT.Camp));
     }
   }
   if (actorId === null || !state || state.history.length !== 0)
@@ -170,7 +170,7 @@ export function installTricksterBoard(world: World): void {
   boards.set(world, {
     actorId,
     state,
-    expectedState: TRICKSTER_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role),
+    expectedState: TRICKSTER_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp)),
     players,
     night: null,
   });
@@ -193,7 +193,7 @@ export function beginTricksterNight(world: World, day: number): number | null {
     throw new Error("trickster_night_invalid");
   if (b.night) b.night.closed = true;
   const used = new Set(
-    projectTricksterState(b.players.get(b.actorId)!.role)!.history.flatMap((row) => row.pair ?? []),
+    projectTricksterState(b.players.get(b.actorId)!.role, () => world.getComponent(b.actorId, COMPONENT.Camp))!.history.flatMap((row) => row.pair ?? []),
   );
   const targets = new Map([...b.players].filter(([id, p]) => p.life.alive && !used.has(id)));
   const eligible = b.players.get(b.actorId)!.life.alive && targets.size >= 2;
@@ -246,10 +246,11 @@ export function commitTricksterExchange(
     day,
     pair,
     tricksterChoiceTargets(world, day),
+    () => world.getComponent(actorId, COMPONENT.Camp),
   );
   const choice = next.history.at(-1)!;
   TRICKSTER_STATE_SLOT.allowedWrites.appendHistory(() => b.state, choice);
-  b.expectedState = TRICKSTER_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role);
+  b.expectedState = TRICKSTER_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp));
   n.pair = choice.pair && Object.freeze([choice.pair[0], choice.pair[1]] as [number, number]);
   n.committed = true;
 }

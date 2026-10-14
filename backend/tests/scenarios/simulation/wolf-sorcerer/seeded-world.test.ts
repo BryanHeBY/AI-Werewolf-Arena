@@ -43,7 +43,7 @@ for (const firstNight of [1, 2] as const)
             const state = game.world
               .entityIds()
               .map((id) =>
-                getWolfSorcererState(game.world.getComponent(id, COMPONENT.Role)),
+                getWolfSorcererState(game.world.getComponent(id, COMPONENT.Role), () => game.world.getComponent(id, COMPONENT.Camp)),
               )
               .find(Boolean);
             expect(state?.history.every((row) => row.day >= firstNight)).toBe(true);

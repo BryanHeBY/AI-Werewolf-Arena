@@ -1,5 +1,6 @@
 /**
  * 负责黑市商人在后置受赠行动之前的交易阶段。输入为当前商人库存与已验证的技能／收货选择；
+ * 阵营在原捕获／复验点取真实 Camp 值；已付反噬 owner 保原谓词，不混入新执行退休。
  * 输出为独立受赠能力或赠枪、反噬提案和跳过／提交事实。已付效果仍绑定原生命，不转给替换商人。
  */
 import { closeBlackMarketTrade, recordBlackMarketTrade } from "./state";
@@ -34,14 +35,14 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
       const role = ctx.world.getComponent(actorId, COMPONENT.Role)!,
         state = getBlackMarketState(role),
         life = captureNightLife(ctx.world, actorId);
-      if (!state || !life || role.camp !== Camp.Good) continue;
+      if (!state || !life || ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good) continue;
       const privateState = role.privateState;
       const ownerCurrent = (paid = false) =>
         ctx.isCurrent() &&
         ctx.currentDay() === day &&
         ctx.world.getComponent(actorId, COMPONENT.Role) === role &&
         role.role === Role.BlackMarketMerchant &&
-        role.camp === Camp.Good &&
+        ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Good &&
         role.privateState === privateState &&
         getBlackMarketState(role) === state &&
         (livingNightLife(ctx.world, life) ||
@@ -75,7 +76,7 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
                   life: captureNightLife(ctx.world, id)!,
                   role: targetRole,
                   kind: targetRole.role,
-                  camp: targetRole.camp,
+                  camp: ctx.world.getComponent(id, COMPONENT.Camp)?.camp,
                   privateState: targetRole.privateState,
                 },
               ] as const;
@@ -112,7 +113,7 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
           !livingNightLife(ctx.world, target.life) ||
           ctx.world.getComponent(targetId, COMPONENT.Role) !== target.role ||
           target.role.role !== target.kind ||
-          target.role.camp !== target.camp ||
+          ctx.world.getComponent(targetId, COMPONENT.Camp)?.camp !== target.camp ||
           target.role.privateState !== target.privateState
         )
           continue;

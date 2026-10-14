@@ -1,0 +1,19 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts:
+36 |   ): Promise<boolean> {
+37 |     if (hasActiveLonelyGirl(this.world)) throw new Error("lonely_girl_setup_reentry");
+38 |     if (lonelyGirlReady(this.world)) return true;
+39 |     const b = lonelyGirlBinding(this.world);
+40 |     if (!b || b.status !== "pending" || config !== b.config || day !== 1)
+41 |       throw new Error("lonely_girl_setup_unavailable");
+                     ^
+error: lonely_girl_setup_unavailable
+      at execute (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/lonely_girl/setup.ts:41:17)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts:644:13)
+(fail) failed replaced_state_getter: safe original audit snapshot invokes no foreign getter [60.14ms]
+
+ 0 pass
+ 56 filtered out
+ 1 fail
+Ran 1 test across 1 file. [301.00ms]

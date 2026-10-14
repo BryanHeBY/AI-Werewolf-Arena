@@ -4,7 +4,9 @@
  * 校验保留原字段宽度与历史一致性，不新增精确键限制；readonly 视图不提供写权或夜许可。
  * frame 仍拥有名单、生命、夜窗口及 expectedState，写入或编码失败不回滚已写前缀。
  * 身份 JSON 仅用于原运行比对，不是档案 decoder；目标政策归同族 targets 所有者。
+ * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
+import type { CurrentCampSource } from "../../../../core/domain/components/camp";
 import type {
   FearActionPolicy,
   NightmareWolfActionPolicy,
@@ -42,12 +44,14 @@ function validId(value: unknown): value is EntityId {
 function validDay(value: unknown): value is number {
   return validId(value);
 }
-/** 仅读自身 data descriptor，先拒绝 Proxy；不执行输入 getter。
+/** 仅读自身 data descriptor，先拒绝 Proxy；不执行 Role／状态字段 getter。
  * 合法时返回原 live 状态及 history，不复制、不冻结，也不以形状校验续期运行许可。 */
+// 显式 Camp source 在原 camp 点晚调用，可以执行调用方代码并抛错；返回组件保本族 descriptor／Proxy 策略，不回退角色或目录。
 export function getNightmareShadowState(
   role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
 ): NightmareShadowReadState | undefined {
-  if (data(role, "role") !== NIGHTMARE_SHADOW_ROLE || data(role, "camp") !== Camp.Wolf)
+  if (data(role, "role") !== NIGHTMARE_SHADOW_ROLE || data(currentCamp(), "camp") !== Camp.Wolf)
     return undefined;
   const state = data(data(role, "privateState"), "nightmareShadow");
   const fear = data(state, "fearActionPolicy"),
@@ -93,8 +97,9 @@ export function getNightmareShadowState(
 /** 按原顺序复制玩家字段及每条历史；不返回运行状态或复用 history／entry 对象。 */
 export function projectNightmareShadowState(
   role: RoleComponent | undefined,
+  currentCamp: CurrentCampSource,
 ): NightmareShadowState | undefined {
-  const nightmare = getNightmareShadowState(role);
+  const nightmare = getNightmareShadowState(role, currentCamp);
   if (nightmare) {
     const history: Array<{ day: number; targetId: number | null }> = [];
     for (let i = 0; i < nightmare.history.length; i++) {

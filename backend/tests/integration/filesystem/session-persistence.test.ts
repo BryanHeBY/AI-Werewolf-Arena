@@ -135,7 +135,7 @@ describe("SessionRecordManager", () => {
       manager.recordPlayerEvent({
         playerId,
         role: role?.role ?? "unknown",
-        camp: role?.camp ?? "unknown",
+        camp: (role && context.world.getComponent(playerId, COMPONENT.Camp)?.camp) ?? "unknown",
         day: 1,
         phase: Phase.Night,
         stage: registry.toReplayStage(event as any),

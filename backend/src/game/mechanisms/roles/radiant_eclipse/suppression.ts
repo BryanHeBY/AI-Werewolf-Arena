@@ -1,5 +1,6 @@
 /**
  * 负责原生能力实例在本夜的蚀日抑制；输入原 World／能力／日次，输出同一 marker 与原体复验／关闭方法。
+ * 阵营按原值点晚读实际 Camp 的 own-data，同值组件替换不新增引用撤权；关闭仍归原资源。
  * marker 只写原实例所属槽，持有运行引用不等于玩家数据或新的行动许可；永久 disabled 仍归原能力所有者。
  * 角色、生命、能力与政策被替换后不重新授权；close 先消费 closed，再核原资源与 marker，失败不恢复无关组件。
  * 允许第一次实际死亡的关闭仍只删除同一 marker，不退款、清空库存或改写原永久禁用字段。
@@ -76,7 +77,7 @@ export function openEclipseSuppression(
     state = own(ability, "state"),
     source = own(ability, "source");
   const roleKind = own(role, "role"),
-    camp = own(role, "camp");
+    camp = own(world.getComponent(actorId, COMPONENT.Camp), "camp");
   const identity = world.getComponent(actorId, COMPONENT.Identity);
   const identityFields = ["id", "seat", "name", "sessionId"] as const;
   const identityValues = identityFields.map((key) => own(identity, key));
@@ -146,7 +147,7 @@ export function openEclipseSuppression(
     plain(state) &&
     plain(source) &&
     own(role, "role") === roleKind &&
-    own(role, "camp") === camp &&
+    own(world.getComponent(actorId, COMPONENT.Camp), "camp") === camp &&
     own(ability, "id") === id &&
     own(ability, "kind") === kind &&
     own(ability, "state") === state &&

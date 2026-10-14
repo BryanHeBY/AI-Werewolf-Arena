@@ -126,7 +126,7 @@ test("a native role result is actor-only and independent of the Seer's camp; Day
   };
   await game.phaseManager.runSingleCycle(provider);
   expect(getGargoyleState(role(game, 1))).toEqual({ hasInheritedKnife: true });
-  expect(canGargoyleKnife(role(game, 1), game.world)).toBe(false);
+  expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   expect(getRoleInspectionState(role(game, 1))!.history).toEqual([
     { day: 1, targetId: 3, result: { kind: "role", role: Role.Seer } },
   ]);
@@ -352,7 +352,7 @@ test("Gargoyle and Hidden Wolf cannot have simultaneous knives; independent role
     kind: "role",
     role: Role.Villager,
   });
-  expect(role(game, 5).camp).toBe(Camp.Good);
+  expect(game.world.getComponent(5, COMPONENT.Camp)!.camp).toBe(Camp.Good);
 });
 
 test("Knight uses Gargoyle true camp despite a prior private role inspection", async () => {
@@ -487,7 +487,7 @@ for (const mutation of [
         if (request.allowedTools.includes("inspect_role"))
           return { name: "inspect_role", args: { target_id: 2 } };
         if (request.allowedTools.includes("guard")) {
-          expect(canGargoyleKnife(role(game, 1), game.world)).toBe(true);
+          expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
           if (mutation === "disabled") (ability as { disabled: boolean }).disabled = true;
           if (mutation === "transfer")
             transferNightAbility(game.world, 1, 4, ability.id, "transfer:completed-check", [], {
@@ -509,7 +509,7 @@ for (const mutation of [
           }
           if (mutation === "wolf_revive")
             game.world.getComponent(6, COMPONENT.Alive)!.alive = true;
-          expect(canGargoyleKnife(role(game, 1), game.world)).toBe(false);
+          expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
           return { name: "guard", args: { target_id: 5, abstain: false } };
         }
         if (request.allowedTools.includes("kill_vote")) {

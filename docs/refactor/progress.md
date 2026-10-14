@@ -910,3 +910,9 @@
 
 
 - F05a 身份失败共同执行退休：13生产＋4新unit／17source一个功能原子提交，避免仅writer提交令依赖reader的新unit在中间树失败。唯一Role WeakSet不存Camp/World/库存，Initial三安装核心只退休捕获候选，Wild原九核心catch保本族终态＋Role标记；原Error/付款/物理换牌/组件和finally优先保，晚事实不误退休。Root及非作者循环审全部actual bd2e12旧源/新5absence/稳定控制/各完整程序及精确差分、真实首/末采样批准。新增16different/233assert五run通过；三类型首红（Root fixture this、Wild配置未入源、Wild getter返回type）保只失败根修和全输出桥，原绿色不复。同行静态查出mapping/canShoot getter晚退休缺口后，只末native/selector/unit三根窄修、五原consume紧邻守卫＋末eligible，新增1/11/4filtered及三变根type、七完整差分桥闭，不伪已执行红或复首4/55。数据、目标、知识/NO_ACCESS单例、已付night/gift/native pending纯当前性和清理不加行动过滤；request permission正文与gift active传递资格区别准确中文就地说明，sourceRole真实尾参数拒绝与late容器前缀保。首/updated fence及各formal首快照保，有限联合树不冒完整fixedGit或全55；Camp来源/构造器尚未迁移，全仓中文及完整P9继续。见 role-execution-failure-policy.md 与四独立范围说明。
+
+- F05b 当前阵营单一来源：121 生产＋221 测试／support，共 342 实际源、三个新增风险 unit，9 个互斥范围与 18 份作者／非作者审批一起原子提交。删除 Role.camp、旧工厂 camp 参数与空 init ctx；同一 initialCamp draft 安装，CurrentCampSource 只在原字段点晚查实际 World，无 Role→World 索引、影子值或 metadata 当前回退。值捕获／双引用、历史知识／Victory、F05a 行动退休与纯已付当前性分别保持；Camp 安装前失败实际仍 Good 的数据匹配为明确政策，不靠新旗伪造旧镜像失配。初始完成事实、缺阵营查验 null、必填字段失败、source 回调／ActorId 新可观察通道均明列。
+
+  首完整类型真实 73 行诊断／退出 2及有限配置 TS2688 原样保，修后只 40 个失败／变化／新增根、末两变根及新查验一根实际通过；标准 backend 测试入口对工具 TypeScript 的解析仍待下一独立配置切片，不冒末全量复绿。首次 331 头有 5 项诊断／4 根失败，仅失败与新 14 头及查验新一头通过，五 reader 的“getter 不执行”明确只指字段、源调用可抛错；Mist 英文首头、关键结构／部分失败／付款与 Camp 生命周期同步中文说明。完整逆证明只界定各原稿差分，实际输入政策／JS 变化不冒旧行为全等。
+
+  29 不同案例最终通过／437 成功断言：World 15／348、Bootstrap 4／24、Magician 1／11、缺 Role 继承名单 4／16、缺 Camp 查验 3／11、Nightmare 1／13、双语实际 Wolf 输入 1／14。World 16 次案例执行保一次 raw 配置早 guard 真实失败，限定原三 getter 循环使用已绑定板子后只重失败一例／新增两例，其余绿不复。同行发现并修 six／eight 继承名单及其它可空 Role 短路、漏 source／receiver／imports、自等式、五 Role matcher、误增 Camp 引用和假 Good source；原身份／Camp 预期与单一撤权原因保。作者完整来源与程序证明、后继小桥／全部首后收据、最终冻结清单实际匹配，未调用模型／私配置／种子矩阵／全门禁。完整目标、全角色闭包、严格复现及 P9 继续，见 camp-canonical-input-policy.md 与 camp-canonical-feature-manifest.json。

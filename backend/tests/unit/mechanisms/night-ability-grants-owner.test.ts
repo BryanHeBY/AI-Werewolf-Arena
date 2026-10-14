@@ -24,11 +24,12 @@ void retiredGrantExports;
 
 function fixture() {
   const world = new World(), origin = world.createEntity(), from = world.createEntity(), to = world.createEntity();
-  const originRole = createRoleComponent(Role.Seer, Camp.Good),
-    fromRole = createRoleComponent(Role.Villager, Camp.Good),
-    toRole = createRoleComponent(Role.Villager, Camp.Good);
+  const originRole = createRoleComponent(Role.Seer),
+    fromRole = createRoleComponent(Role.Villager),
+    toRole = createRoleComponent(Role.Villager);
   for (const [id, role] of [[origin, originRole], [from, fromRole], [to, toRole]] as const) {
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
   }
   return { world, origin, from, to, fromRole, toRole };

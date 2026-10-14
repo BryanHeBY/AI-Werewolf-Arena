@@ -80,7 +80,7 @@ test("到期前已胜候选保原引用、三参数评估及晚读取，不请�
   expect(step.value).toBe(candidate);
   expect(trace).toEqual(["world", "registry", "callee", "world", "world", "config", "config", "config", "checkpoint"]);
   expect(f.world.getComponent(4, COMPONENT.Alive)!.alive).toBe(true);
-  expect(getRedMoonState(f.world.getComponent(4, COMPONENT.Role))!.expirySettled).toBe(false);
+  expect(getRedMoonState(f.world.getComponent(4, COMPONENT.Role), () => f.world.getComponent(4, COMPONENT.Camp))!.expirySettled).toBe(false);
 });
 
 test("暂停后先核真实死亡，事件失败保已提交到期和原审计且不恢复生命", () => {
@@ -96,10 +96,10 @@ test("暂停后先核真实死亡，事件失败保已提交到期和原审计�
       registry: new ConditionRegistry({ evaluate: () => null }),
     }, true, 2);
     expect(settlement.next()).toEqual({ done: false, value: 4 });
-    expect(getRedMoonState(f.world.getComponent(4, COMPONENT.Role))!.expirySettled).toBe(false);
+    expect(getRedMoonState(f.world.getComponent(4, COMPONENT.Role), () => f.world.getComponent(4, COMPONENT.Camp))!.expirySettled).toBe(false);
     if (markedDead) f.world.getComponent(4, COMPONENT.Alive)!.alive = false;
     expect(() => settlement.next()).toThrow(markedDead ? failure : "red_moon_expiry_death_unsettled");
-    expect(getRedMoonState(f.world.getComponent(4, COMPONENT.Role))!.expirySettled).toBe(markedDead);
+    expect(getRedMoonState(f.world.getComponent(4, COMPONENT.Role), () => f.world.getComponent(4, COMPONENT.Camp))!.expirySettled).toBe(markedDead);
     expect(f.world.getComponent(4, COMPONENT.Alive)!.alive).toBe(!markedDead);
     expect(publications).toBe(markedDead ? 1 : 0);
     expect(events).toEqual([]);

@@ -29,14 +29,14 @@ export class PlayerRoundRecorder {
     const role = this.world.getComponent(request.actorId, COMPONENT.Role);
     const round = (this.roundCounters.get(request.actorId) ?? 0) + 1;
     this.roundCounters.set(request.actorId, round);
-    // 计数已更新才读取请求元数据，后续 getter／录制错误不恢复旧计数。
+    // 计数已更新才读取请求元数据；实际Camp到记录字段才查询，后续 getter／录制错误不恢复旧计数。
     const day = getActionRequestDay(request);
     const phase = String(request.phase);
     const stage = getActionRequestStage(request);
     recorder.recordPlayerRound({
       playerId: request.actorId,
       role: role?.role ?? "unknown",
-      camp: role?.camp ?? "unknown",
+      camp: (role && this.world.getComponent(request.actorId, COMPONENT.Camp)?.camp) ?? "unknown",
       day,
       phase,
       stage,

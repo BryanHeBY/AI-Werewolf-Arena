@@ -37,11 +37,11 @@ export const HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
           : {}),
       });
     },
-    wolfTeam: (role, world) => ({
+    wolfTeam: (role, world, currentCamp) => ({
       recognizedByPack: false,
       recognizes: "all",
       canChat: false,
-      canVoteForKill: canHiddenWolfKnife(role, world),
+      canVoteForKill: canHiddenWolfKnife(role, world, currentCamp),
     }),
     inspectionLabels: (role) => {
       const state = getHiddenWolfState(role),

@@ -96,7 +96,7 @@ test("first-day sheriff policy retains second board getter failure before langua
 });
 
 test("bound prompt rule uses the original ability reference and three kind reads without consuming it", () => {
-  const role = createRoleComponent(Role.Villager, Camp.Good);
+  const role = createRoleComponent(Role.Villager);
   installNativeAbility(role, "guard", { lastTarget: null });
   const ability = findNightAbility(role, "guard")!,
     trace: string[] = [];
@@ -149,8 +149,9 @@ test("ordinary board skill brief preserves catalog receiver/callee before locale
 test("actual policy preserves ordinary getter order and calls role renderer after identity/teammates", () => {
   const world = new World(),
     actor = world.createEntity(),
-    role = createRoleComponent(Role.Villager, Camp.Good);
+    role = createRoleComponent(Role.Villager);
   world.addComponent(actor, COMPONENT.Role, role);
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Good });
   const trace: string[] = [],
     catalog = getDefaultRoleCatalog();
   const options: PlayerPromptPolicyOptions = {
@@ -209,8 +210,12 @@ test("actual policy preserves ordinary getter order and calls role renderer afte
 
 test("late role renderer failure preserves previous knowledge reads without a new cleanup policy", () => {
   const world = new World(),
-    role = createRoleComponent(Role.Villager, Camp.Good),
+    role = createRoleComponent(Role.Villager),
     trace: string[] = [];
+  // 原role-only World输入退休；为同一playerId提供独立实际Camp，晚renderer错误仍是原故障。
+  const actorId = world.createEntity();
+  world.addComponent(actorId, COMPONENT.Role, role);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Good });
   const failure = new Error("literal_renderer_failure");
   bindRolePresentation(role, () => {
     trace.push("renderer");

@@ -19,15 +19,16 @@ test("evil knight initialization evaluates the original left side before parsing
   let assigned: unknown;
   const container: Record<string, unknown> = {};
   Object.defineProperty(container, "evilKnight", { set(value) { trace.push("assign"); assigned = value; } });
-  const role = { role: Role.EvilKnight, camp: Camp.Wolf, get privateState() { trace.push("container"); return container; } };
-  const context = { get boardConfig() { trace.push("board"); return undefined; } };
+  const role = { role: Role.EvilKnight, get privateState() { trace.push("container"); return container; } };
+  const initialCamp = { camp: Camp.Wolf };
+  const context = { initialCamp, currentCamp: () => initialCamp, get boardConfig() { trace.push("board"); return undefined; } };
   EVIL_KNIGHT_ROLE_PROFILE.runtime.init!(role, context);
   expect(trace).toEqual(["container", "board", "assign"]);
   expect(assigned).toEqual({ policy: "awa_evil_knight_v1", shotPolicy: "night_shot_immune", reflectionRemaining: 1 });
 
   const failure = new Error("test_evil_knight_container_failure");
   trace.length = 0;
-  const bad = { role: Role.EvilKnight, camp: Camp.Wolf, get privateState(): Record<string, unknown> { trace.push("container"); throw failure; } };
+  const bad = { role: Role.EvilKnight, get privateState(): Record<string, unknown> { trace.push("container"); throw failure; } };
   expect(() => EVIL_KNIGHT_ROLE_PROFILE.runtime.init!(bad, context)).toThrow(failure);
   expect(trace).toEqual(["container"]);
 });
@@ -35,12 +36,13 @@ test("evil knight initialization evaluates the original left side before parsing
 test("evil knight caster container failure precedes payment while attack construction failure retains payment", () => {
   const world = new World();
   const knight = world.createEntity(), casterId = world.createEntity();
-  const knightRole = createRoleComponent(Role.EvilKnight, Camp.Wolf);
-  const casterRole = createRoleComponent(Role.Seer, Camp.Good);
+  const knightRole = createRoleComponent(Role.EvilKnight);
+  const casterRole = createRoleComponent(Role.Seer);
   const state = EVIL_KNIGHT_STATE_SLOT.create();
   Object.assign(knightRole.privateState, { evilKnight: state });
   for (const [id, role] of [[knight, knightRole], [casterId, casterRole]] as const) {
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: id === knight ? Camp.Wolf : Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
   }
   const binding = captureEvilKnight(world, captureNightLife(world, knight)!)!;
@@ -58,6 +60,6 @@ test("evil knight caster container failure precedes payment while attack constru
   Object.defineProperty(binding, "target", { get() { throw afterPayment; } });
   expect(() => commitEvilKnightReflection(world, binding, caster, "seer_check", () => true)).toThrow(afterPayment);
   expect(state.reflectionRemaining).toBe(0);
-  expect(EVIL_KNIGHT_STATE_SLOT.get(knightRole)).toBe(state);
+  expect(EVIL_KNIGHT_STATE_SLOT.get(knightRole, () => world.getComponent(knight, COMPONENT.Camp))).toBe(state);
   expect(world.getComponent(casterId, COMPONENT.Alive)!.alive).toBe(true);
 });

@@ -25,7 +25,8 @@ function fixture() {
   for (let i = 0; i < 2; i++) {
     const id = world.createEntity();
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
-    world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+    world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager));
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, id, "literal:" + id));
     world.addComponent(id, COMPONENT.Badge, createBadgeComponent());
     world.addComponent(id, COMPONENT.VotingRight, createVotingRightComponent());

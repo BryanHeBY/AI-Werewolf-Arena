@@ -1,7 +1,6 @@
 /**
- * Replaces an existing result with Fox victory only at the configured final predicate. Inputs
- * are the World and existing faction victory decision; output preserves the appropriate Fox result data. It
- * does not run night inspections or resolve damage during result projection.
+ * 负责在原最终谓词通过时用狐狸独立胜利替换已有阵营结果；输入保 World 与原决策。
+ * 只在原角色短路后晚读真实 Camp，不执行查验、伤害或重写归属；输出仍由原决策 owner 构造。
  */
 import {
   COMPONENT,
@@ -22,7 +21,7 @@ export function replaceWithFoxVictory(world: World, decision: WinDecision): WinD
     return decision;
   const fox = world.getAliveEntityIds().find((id) => {
     const role = world.getComponent(id, COMPONENT.Role);
-    return role?.role === Role.CursedFox && role.camp === Camp.ThirdParty;
+    return role?.role === Role.CursedFox && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.ThirdParty;
   });
   return fox === undefined
     ? decision

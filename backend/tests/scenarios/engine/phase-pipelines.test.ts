@@ -32,7 +32,7 @@ class WolfOnlyNightProvider implements ActionProvider {
 
     const target = this.world.getAliveEntityIds().find((id) => {
       const targetRole = this.world.getComponent(id, COMPONENT.Role);
-      return id !== request.actorId && targetRole?.camp !== Camp.Wolf;
+      return id !== request.actorId && (targetRole ? this.world.getComponent(id, COMPONENT.Camp)?.camp : undefined) !== Camp.Wolf;
     });
 
     return target

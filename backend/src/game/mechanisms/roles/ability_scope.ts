@@ -1,6 +1,7 @@
 /**
  * 捕获原角色、生命、状态、来源及政策身份的夜能力 owner。输入为已选择实例与阶段当前性
  * 回调；输出为原体当前性和行动资格检查。替换原槽或政策仍撤销 scope，不写状态或付款。
+ * 阵营仅捕获晚取的当前值，同值组件替换不加引用撤权，缺失值仍按原值比较。
  * isOwnerCurrent 保原已付效果复验，不因运行授权墓碑失效；仅 isEligible 在原复验后拒绝退休演员。
  * 查验政策身份字节由该状态族的唯一 codec 在原表达式位置生成，生命、id、来源及允许
  * 首次死亡的版本判断仍只在此 owner，不因 payload 合法而重新授权。
@@ -57,7 +58,7 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
   if (!role || !life) return null;
   const radiantCurrent = captureRadiantTurn(world, actorId, ability, day);
   const roleKind = role.role,
-    camp = role.camp,
+    camp = world.getComponent(actorId, COMPONENT.Camp)?.camp,
     privateState = role.privateState;
   const state = ability.state,
     kind = ability.kind,
@@ -76,7 +77,7 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
     phaseCurrent() &&
     world.getComponent(actorId, COMPONENT.Role) === role &&
     role.role === roleKind &&
-    role.camp === camp &&
+    world.getComponent(actorId, COMPONENT.Camp)?.camp === camp &&
     role.privateState === privateState &&
     (livingNightLife(world, life) ||
       (allowFirstDeath &&

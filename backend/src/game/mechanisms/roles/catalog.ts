@@ -9,6 +9,7 @@ import { Camp, type Role, type NativeRolePresentationId } from "@ai-werewolf-are
 import { roleName, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { World } from "../../../core/domain/world";
+import type { CurrentCampSource } from "../../../core/domain/components/camp";
 import { bindRolePresentation } from "../../observation/role-presentation";
 import type {
   RoleContributions,
@@ -23,7 +24,8 @@ export type NativeRoleRenderer = (
   id: NativeRolePresentationId,
   role: RoleComponent,
   locale: Locale,
-  world?: World,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
 ) => string;
 
 /** 内建运行必须显式提供展示装配；自定义数组保持既有 flat 用户输入协议。 */
@@ -129,26 +131,27 @@ export class RoleCatalog {
     return text(locale, `role.${role}.brief` as MessageKey);
   }
 
-  applyRuntime(roleComp: RoleComponent, ctx: RoleInitContext = {}): void {
+  applyRuntime(roleComp: RoleComponent, ctx: RoleInitContext): void {
     const entry = this.requireEntry(roleComp.role);
     const runtime = entry.kind === "custom-profile" ? entry.profile : entry.contributions.runtime;
     runtime.init?.(roleComp as RoleInitializationComponent, ctx);
     const defaultLocale = ctx.locale ?? "zh-CN";
     bindRolePresentation(roleComp, (locale = defaultLocale) => {
+      // 只传晚读函数；不提前访问 ctx.currentCamp，保原贡献 getter、receiver 和 ctx.world 的失败时点。
       const active = this.requireEntry(roleComp.role);
       if (active.kind === "custom-profile") {
         // 保留原两次方法 getter、profile receiver 及随后 ctx.world 求值的完整失败前缀。
         return active.profile.renderPrompt
-          ? active.profile.renderPrompt(roleComp, locale, ctx.world)
+          ? active.profile.renderPrompt(roleComp, locale, ctx.world, () => ctx.currentCamp())
           : text(locale, "role.generic.state", {
               role: this.label(active.profile.role, locale),
             });
       }
       const presentation = active.contributions.presentation;
       if (presentation.kind === "native")
-        return active.renderNative(presentation.id, roleComp, locale, ctx.world);
+        return active.renderNative(presentation.id, roleComp, locale, ctx.world, () => ctx.currentCamp());
       return presentation.renderPrompt
-        ? presentation.renderPrompt(roleComp, locale, ctx.world)
+        ? presentation.renderPrompt(roleComp, locale, ctx.world, () => ctx.currentCamp())
         : text(locale, "role.generic.state", {
             role: this.label(active.contributions.metadata.role, locale),
           });

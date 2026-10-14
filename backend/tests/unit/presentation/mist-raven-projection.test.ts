@@ -16,7 +16,7 @@ import { AgentEventVisibilityRegistry } from "../../../src/game/mechanisms/broad
 import { ScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
 import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
 const role = (kind: Role) => {
-  const value = createRoleComponent(kind, kind === Role.Alchemist ? Camp.Good : Camp.Wolf);
+  const value = createRoleComponent(kind);
   if (kind === Role.Alchemist)
     (value.privateState as Record<string, unknown>).alchemist = createAlchemistState();
   else (value.privateState as Record<string, unknown>).ravenClaw = createRavenState();

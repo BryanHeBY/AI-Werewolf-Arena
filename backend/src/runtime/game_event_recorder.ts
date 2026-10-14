@@ -68,7 +68,7 @@ export class GameEventRecorder {
         this.options.replayManager.recordPlayerEvent({
           playerId,
           role: roleComp?.role ?? "unknown",
-          camp: roleComp?.camp ?? "unknown",
+          camp: (roleComp && this.options.world.getComponent(playerId, COMPONENT.Camp)?.camp) ?? "unknown",
           day: this.replayDayCursor,
           phase: this.replayPhaseCursor,
           stage: visibleEvent.type === "player_shot" ? "death_shot" : stage,

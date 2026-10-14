@@ -77,14 +77,14 @@ test("derived mocks read a replaced runtime and method getter at each original c
   try {
     for (const profile of [WOLF_BEAUTY_ROLE_PROFILE, GARGOYLE_ROLE_PROFILE, WILD_CHILD_ROLE_PROFILE, MENTOR_ROLE_PROFILE]) {
       trace.length = 0;
-      const role = createRoleComponent(profile.metadata.role, profile.metadata.camp ?? Camp.Good);
-      const result = profile.runtime.baselineAction!(role, request(["kill_vote"]), () => 2, () => 3);
+      const role = createRoleComponent(profile.metadata.role);
+      const result = profile.runtime.baselineAction!(role, request(["kill_vote"]), () => 2, () => 3, undefined, undefined, () => ({ camp: profile.metadata.camp ?? Camp.Good }));
       expect(result).toEqual({ name: "kill_vote", args: { target_id: 9, abstain: false } });
       expect(trace).toEqual(["runtime", "method", "call"]);
     }
     // 同一闭包再调用时再次解析新属性，不缓存首次 runtime 或方法 getter 的结果。
     trace.length = 0;
-    expect(MENTOR_ROLE_PROFILE.runtime.baselineAction!(createRoleComponent(Role.NightMentor, Camp.Wolf), request(["kill_vote"]), () => 2, () => 3)).toEqual({ name: "kill_vote", args: { target_id: 9, abstain: false } });
+    expect(MENTOR_ROLE_PROFILE.runtime.baselineAction!(createRoleComponent(Role.NightMentor), request(["kill_vote"]), () => 2, () => 3, undefined, undefined, () => ({ camp: Camp.Wolf }))).toEqual({ name: "kill_vote", args: { target_id: 9, abstain: false } });
     expect(trace).toEqual(["runtime", "method", "call"]);
   } finally {
     Object.defineProperty(WOLF_ROLE_PROFILE, "runtime", original);
@@ -93,14 +93,14 @@ test("derived mocks read a replaced runtime and method getter at each original c
 });
 
 test("ordinary mock keeps chat before knife and never defaults an optional self destruct", () => {
-  const role = createRoleComponent(Role.Wolf, Camp.Wolf), seen: string[] = [];
+  const role = createRoleComponent(Role.Wolf), seen: string[] = [], actualCamp = { camp: Camp.Wolf };
   const mock = WOLF_ROLE_PROFILE.runtime.baselineAction!;
   const pick = (camp: "good" | "wolf" | "third_party") => { seen.push(camp); return 6; };
-  const chat = mock(role, request(["kill_vote", "speak_to_wolves"]), () => 2, pick, "en");
+  const chat = mock(role, request(["kill_vote", "speak_to_wolves"]), () => 2, pick, "en", undefined, () => actualCamp);
   expect(chat?.name).toBe("speak_to_wolves");
   expect(seen).toEqual([]);
-  expect(mock(role, request(["kill_vote"]), () => 2, pick)).toEqual({ name: "kill_vote", args: { target_id: 6, abstain: false } });
+  expect(mock(role, request(["kill_vote"]), () => 2, pick, undefined, undefined, () => actualCamp)).toEqual({ name: "kill_vote", args: { target_id: 6, abstain: false } });
   expect(seen).toEqual(["good"]);
-  expect(mock(role, request(["kill_vote"]), () => 2, () => null)).toEqual({ name: "kill_vote", args: { target_id: null, abstain: true } });
-  expect(mock(role, request(["self_destruct"]), () => { throw new Error("pick_must_not_run"); }, () => { throw new Error("camp_pick_must_not_run"); })).toBeNull();
+  expect(mock(role, request(["kill_vote"]), () => 2, () => null, undefined, undefined, () => actualCamp)).toEqual({ name: "kill_vote", args: { target_id: null, abstain: true } });
+  expect(mock(role, request(["self_destruct"]), () => { throw new Error("pick_must_not_run"); }, () => { throw new Error("camp_pick_must_not_run"); }, undefined, undefined, () => actualCamp)).toBeNull();
 });

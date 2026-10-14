@@ -1,0 +1,13 @@
+{
+  "command": "bun --no-env-file docs/refactor/generated/camp-canonical-nine-families-proof.cjs",
+  "outputPath": "docs/refactor/generated/camp-canonical-nine-families-proof-first-output.txt",
+  "result": {
+    "chunk_id": "986528",
+    "wall_time_seconds": 0.464544471,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "checkedFenceSHA256": "2ea0cd3be0109af49043e49d4011c11ec30c3e3c661a475df0ec7970538e97bf",
+  "scope": "First complete actual source inverse proof; no production load, tests, type or head execution."
+}

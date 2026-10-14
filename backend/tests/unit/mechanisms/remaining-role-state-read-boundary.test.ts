@@ -102,8 +102,12 @@ function forbiddenLiveWrites(
 }
 void forbiddenLiveWrites;
 
+// 这些worldless数据读fixture自持当前Camp，不从Role或目录恢复已退休字段。
+const readCamp = { camp: Camp.Good };
+const currentReadCamp = () => readCamp;
+
 function roleWithSlot(role: Role, key: string, state: unknown) {
-  const result = createRoleComponent(role, Camp.Good);
+  const result = createRoleComponent(role);
   (result as RoleInitializationComponent).privateState[key] = state;
   return result;
 }
@@ -131,8 +135,8 @@ test("Magician validation keeps the original live record and a separately copied
     history: [{ day: 1, pair: [2, 3] }],
   };
   const role = roleWithSlot(Role.Magician, "magician", state);
-  expect(getMagicianState(role)).toBe(state);
-  const projected = projectMagicianState(role)!;
+  expect(getMagicianState(role, currentReadCamp)).toBe(state);
+  const projected = projectMagicianState(role, currentReadCamp)!;
   expect(projected).not.toBe(state);
   expect(projected.history[0]!.pair).not.toBe(state.history[0]!.pair);
   projected.history[0]!.pair![0] = 4;
@@ -144,7 +148,7 @@ test("Magician validation keeps the original live record and a separately copied
       return [];
     },
   });
-  expect(getMagicianState(role)).toBeUndefined();
+  expect(getMagicianState(role, currentReadCamp)).toBeUndefined();
   expect(reads).toBe(0);
 });
 
@@ -156,7 +160,7 @@ test("Scholar normalized DTO remains detached and writable while its live slot r
     history: [{ day: 2, mode: "enhance", targetId: 2 }],
   };
   const role = roleWithSlot(Role.DayScholar, "scholarMentor", state);
-  expect(scholarMentorStateForRole(role)).toBe(state);
+  expect(scholarMentorStateForRole(role, currentReadCamp)).toBe(state);
   const normalized = readModifierState(state)!;
   expect(normalized).toEqual(state);
   expect(normalized).not.toBe(state);

@@ -10,7 +10,7 @@ import { getNightmareShadowState, nightmareStateDayValid } from "./state-slot";
 
 /** 请求、校验、基线策略与目标提示使用同一目标政策，避免相邻两夜的禁选规则漂移。 */
 export function nightmareFearTargets(world: World, actorId: EntityId, day: number): EntityId[] {
-  const state = getNightmareShadowState(world.getComponent(actorId, COMPONENT.Role));
+  const state = getNightmareShadowState(world.getComponent(actorId, COMPONENT.Role), () => world.getComponent(actorId, COMPONENT.Camp));
   if (
     !state ||
     !nightmareStateDayValid(day) ||
@@ -22,6 +22,6 @@ export function nightmareFearTargets(world: World, actorId: EntityId, day: numbe
   return world.getAliveEntityIds().filter((id) => {
     if (id === actorId || (state.lastDay === day - 1 && state.lastTarget === id)) return false;
     const target = world.getComponent(id, COMPONENT.Role);
-    return !!target && (!state.packReady || target.camp !== Camp.Wolf);
+    return !!target && (!state.packReady || world.getComponent(id, COMPONENT.Camp)?.camp !== Camp.Wolf);
   });
 }

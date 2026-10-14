@@ -23,9 +23,10 @@ import { installMagicianBoard, beginMagicianNight, commitMagicianExchange } from
 function fixture(actorRole: Role = Role.Villager) {
   const world = new World(), roles = [actorRole, Role.Magician, Role.Villager];
   const players = roles.map((kind) => {
-    const id = world.createEntity(), role = createRoleComponent(kind, Camp.Good);
+    const id = world.createEntity(), role = createRoleComponent(kind);
     if (kind === Role.Magician) Object.assign(role.privateState, { magician: createMagicianState(1, "original") });
     world.addComponent(id, COMPONENT.Role, role);
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     world.addComponent(id, COMPONENT.Identity, { id, seat: id, name: "literal-" + id, sessionId: "literal-" + id });
     return { id, role };

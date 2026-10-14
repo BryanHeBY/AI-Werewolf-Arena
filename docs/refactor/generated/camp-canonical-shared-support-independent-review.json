@@ -1,0 +1,237 @@
+{
+  "approved": true,
+  "reviewer": "native_presentation_finish",
+  "scope": {
+    "path": "docs/refactor/generated/camp-canonical-shared-support-scope-final.json",
+    "sha256": "a60a692452cb9d9c08ea44f6b60834284ee4acff3aa9054fe652157a2e9ea83d"
+  },
+  "document": {
+    "path": "docs/refactor/camp-canonical-shared-support.md",
+    "sha256": "e4bbb0f3e28d3bc0051aad9136aab0c34abf38fd290df2f13d1c494beebed181"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/camp-canonical-shared-support-evidence.json",
+    "sha256": "d853aac7a22d86b6ec978ecfa3e168eaae8f04cb003232b4c505a6b2ce1f850e"
+  },
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+      "sha256": "5ca4d8d9008c1ce22f98e384c308a27f361446dc27679071f1f08d3d55947226"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "sha256": "9ce6d4ec5184c113f10db3ffbed26310f20cc2a280daf94f3d0032d8d364e214"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+      "sha256": "f4137085ed419f468a46a4a7970bc6cdce94f744c92f00a1582590b2a825fcea"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "sha256": "3fdeaea6ed9d7f92c28d7acb8343ce40cadeb3d3bdd62081ed33fd9532f4f06b"
+    },
+    {
+      "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+      "sha256": "327dfb5828c85aa67f4aff3e55295c171662c537480fdbe31664aae91a238a4e"
+    }
+  ],
+  "deleted": [],
+  "controls": [],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/camp-canonical-cohort-checks.json",
+      "sha256": "eeb4715b6284554805ba0bb93a443116f88667abd6a263394dc59f5a992faf35"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-proof-first-output.txt",
+      "sha256": "7c13133e5e09bf750b09e6884b93472a45a6f5376530f99c6a9bc11e9c9b1cc0"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-proof.cjs",
+      "sha256": "0360f13e6c06c2cf85df4cf9c95b6751238a5f2129b0d957c6524c19996a66f2"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-before.json",
+      "sha256": "ec75f28739758585290924425d75662f6578df9ef5efe3c7e9b9e1117a7f1afc"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-edits.json",
+      "sha256": "9445e17751d3e0e77b43bd1c658e348a231e8d3a9ebc1bdfebe6c70ff4218ea8"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-paths.json",
+      "sha256": "dc754899b5f0887e5de870b168438a780819be3dcd9580c5a4dcb3d5a8867ce1"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-proof.json",
+      "sha256": "bf4e53652760b1d923b6fc00b0c0616f6d6d122ee30990bfa2f54b04c6eaf8d6"
+    },
+    {
+      "path": "docs/refactor/generated/camp-canonical-shared-support-source-ready.json",
+      "sha256": "656c652878a2bb7a3dce7105208e998f7a2a722d4df0efa838394ea883adccd7"
+    }
+  ],
+  "independentSourceEvidence": {
+    "path": "/tmp/camp-canonical-shared-api-independent-final-source.json",
+    "sha256": "bf059f94f9c31a9c701c1c83e6bacd11dc5b89af602a5e024b05d780369f62bb",
+    "actualGitBefore": [
+      {
+        "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+        "sha256": "ca24d67e56efb9e58129a0c54852c15e0decdd6e66a07a3087fdd641af08656b"
+      },
+      {
+        "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+        "sha256": "65775e45a8459054935f459fc9fb9848d39dcaf6fee635423a7874637a32f188"
+      },
+      {
+        "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+        "sha256": "66995081db763623e693a14d188812ff50b9f56b14e345a0acdd575fbf005bb3"
+      },
+      {
+        "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+        "sha256": "d0627ee4936e9cc5a7e117ffe28dfc0cd8b337b8a0b56d9027c29e12c36a978d"
+      },
+      {
+        "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+        "sha256": "dbf4e3cb7226233d52dcae571a003ced09e0c82b4a9b7f775ff458cd3f73f09c"
+      }
+    ],
+    "wholePreciseForwards": [
+      {
+        "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+        "sha256": "5ca4d8d9008c1ce22f98e384c308a27f361446dc27679071f1f08d3d55947226",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 2
+      },
+      {
+        "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+        "sha256": "9ce6d4ec5184c113f10db3ffbed26310f20cc2a280daf94f3d0032d8d364e214",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 3
+      },
+      {
+        "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+        "sha256": "f4137085ed419f468a46a4a7970bc6cdce94f744c92f00a1582590b2a825fcea",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 3
+      },
+      {
+        "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+        "sha256": "3fdeaea6ed9d7f92c28d7acb8343ce40cadeb3d3bdd62081ed33fd9532f4f06b",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 2
+      },
+      {
+        "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+        "sha256": "327dfb5828c85aa67f4aff3e55295c171662c537480fdbe31664aae91a238a4e",
+        "actualWholeForwardInverseEqual": true,
+        "steps": 3
+      }
+    ],
+    "actualNewAbsent": []
+  },
+  "semanticReview": [
+    "Five actual old4ff builders preserve fixed roles/stocks/World install sequence; actual Camp stored independently",
+    "Init builders carry same draft and current-source; no Role-to-World/cache metadata bridge",
+    "Fragrant beforeInstall callback gains explicit World at original after roster construction point; original oracle logic not normalized",
+    "No gameplay whole run or production permission inferred from fixture data; controls empty because transitive cohort changed"
+  ],
+  "resolvedFindings": [
+    "MD original-before scope template precision; product source unchanged"
+  ],
+  "findings": [],
+  "sharedReceiptBinding": {
+    "path": "docs/refactor/generated/camp-canonical-cohort-checks.json",
+    "sha256": "eeb4715b6284554805ba0bb93a443116f88667abd6a263394dc59f5a992faf35",
+    "attachments": [
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-checked-first-fence.json",
+        "sha256": "2ea0cd3be0109af49043e49d4011c11ec30c3e3c661a475df0ec7970538e97bf"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-fence.json",
+        "sha256": "5ffe15bafc7b286b18ef18095468a9f475020c3a28fcc4f1094e2882a1a998f6"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-first-output.txt",
+        "sha256": "dd616123513ae741955a58863a3790134a44964a54dcf080c6ab0d1e970f0834"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-first-output.txt",
+        "sha256": "8cca0ae58a9fd5e3da0bd1e65ad3f068815eb1b7f3c5fef017707bd6496c2f18"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-first.json",
+        "sha256": "c9001a79bd544e358e3add649184475756677d84da36d6bf9bcc03ea286b2be4"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-shared-proof-first-output.txt",
+        "sha256": "7c13133e5e09bf750b09e6884b93472a45a6f5376530f99c6a9bc11e9c9b1cc0"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-shared-api-proof.json",
+        "sha256": "695440a231d35aac4c777689fd695f51102f865c4bcb702968bce7a7c6cbb594"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-shared-support-proof.json",
+        "sha256": "bf4e53652760b1d923b6fc00b0c0616f6d6d122ee30990bfa2f54b04c6eaf8d6"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-config-first.json",
+        "sha256": "b65d18ed6bbd957d4925c907694debf28b601ad6cc4fe242d99d720adc1ac08c"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-config-first-output.txt",
+        "sha256": "760269d0a2a26a300dce82b5786ddf07b4ad07c6fa612d16a74f6007fa21d51d"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-config.json",
+        "sha256": "8cb75a60b3585f48f3aef433f9cd687a3ec1c8a4b1683ab4b16a4867d2159d01"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-input.json",
+        "sha256": "365ba770ddb8b53b82518021a2839fcc54000367c7b9ddb170366134fee4cacf"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-type-repair-output.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-repair-output.txt",
+        "sha256": "c81015edbbe30a412431a30b666bbe0c19a306e3ec5c13e7e803344f733e67dd"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-cohort-heads-repair.json",
+        "sha256": "1e3ce62a0a1785327c6fb2179881322f58e8e09fa3295df5f8dab7a617c59f62"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-missing-role-roster-runtime-first-output.txt",
+        "sha256": "55a1d2d047a7ac26d820448bccf915031719c167c68524c05369d5bc3687c35d"
+      },
+      {
+        "path": "docs/refactor/generated/camp-canonical-missing-role-roster-source-ready.json",
+        "sha256": "d8368ca26bf5c6d5fd3c710c2c9f4b10d88e119bdedd75aa6e08aeaa9ce9ba86"
+      }
+    ],
+    "firstFullTypeExit": 2,
+    "finiteFailedChangedType40Exit": 0,
+    "firstHeads331Exit": 1,
+    "failedNewHeads14Exit": 0,
+    "notClaimedFullBackendPostRepairPass": true
+  },
+  "integrity": {
+    "fresh": 5,
+    "actualOldGit": 5,
+    "newAbsent": 0,
+    "completeForwardInverse": 5,
+    "artifacts": 8,
+    "mismatches": []
+  },
+  "limits": [
+    "Reviewer only read actual source/full diff/Git/text/hash/docs/proof/receipts; no author script, compiler, head, runtime, business load or architecture gate invoked.",
+    "Camp source/constructor/descriptor/nullable/initialization failure behaviors are explicit F05b API policy, not arbitrary old getter/prototype/CJS/whole-cold equivalence.",
+    "No all55 actor authority, all-role schema or P9/final behavioral acceptance claimed.",
+    "Own Ref57 producer audit belongs to separate author scope and is not approved by this non-author report."
+  ]
+}

@@ -79,7 +79,8 @@ test("a committed Fox inspection wins before Dream and Mechanical without readin
   const world = new World(),
     fox = world.createEntity(),
     trace: string[] = [];
-  world.addComponent(fox, COMPONENT.Role, createRoleComponent(Role.CursedFox, Camp.ThirdParty));
+  world.addComponent(fox, COMPONENT.Role, createRoleComponent(Role.CursedFox));
+  world.addComponent(fox, COMPONENT.Camp, { camp: Camp.ThirdParty });
   world.addComponent(fox, COMPONENT.Alive, createAliveComponent());
   const state: NightStageState = {
     wolfChatOrder: [],
@@ -113,9 +114,10 @@ test("a committed Fox inspection wins before Dream and Mechanical without readin
 test("Black Market trade and recipient commits keep their separate short-circuit prefixes before Lucky", async () => {
   const tradedWorld = new World(),
     merchant = tradedWorld.createEntity(),
-    role = createRoleComponent(Role.BlackMarketMerchant, Camp.Good);
+    role = createRoleComponent(Role.BlackMarketMerchant);
   setBlackMarketState(role, freshBlackMarketState());
   tradedWorld.addComponent(merchant, COMPONENT.Role, role);
+  tradedWorld.addComponent(merchant, COMPONENT.Camp, { camp: Camp.Good });
   tradedWorld.addComponent(merchant, COMPONENT.Alive, createAliveComponent());
   const context = nightStageContext({
     world: tradedWorld,

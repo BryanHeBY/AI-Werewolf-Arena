@@ -33,6 +33,10 @@ import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-abil
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import type { RoleComponent } from "../../../src/core/domain/components/role";
 
+// worldless贡献持有自己的Camp，World参数仅在原展示点读取，不回退目录或索引Role。
+const initialCamp = { camp: Camp.Good };
+const currentCamp = () => initialCamp;
+
 function deniedRuntimeHandles(role: RoleComponent) {
   const part: NativeRolePresentationPart = {
     kind: "message",
@@ -47,20 +51,20 @@ function deniedRuntimeHandles(role: RoleComponent) {
 void deniedRuntimeHandles;
 
 test("standalone role keeps saved default locale and reads its current role without native initialization", () => {
-  const en = createRoleComponent(Role.Wolf, Camp.Wolf, "en"),
-    zh = createRoleComponent(Role.Wolf, Camp.Wolf);
+  const en = createRoleComponent(Role.Wolf, "en"),
+    zh = createRoleComponent(Role.Wolf);
   expect(renderRolePrompt(en)).toBe("Your role is Werewolf.");
   expect(renderRolePrompt(zh)).toBe("你的底牌是【狼人】。");
   en.role = Role.Seer;
   expect(renderRolePrompt(en)).toBe("Your role is Seer.");
   expect(renderRolePrompt(en, "zh-CN")).toBe("你的底牌是【预言家】。");
-  expect(Object.keys(en)).toEqual(["role", "camp", "privateState"]);
+  expect(Object.keys(en)).toEqual(["role", "privateState"]);
 });
 
 test("custom contribution preserves init receiver and two late renderer getters before World", () => {
   const trace: string[] = [],
     world = new World(),
-    role = createRoleComponent(Role.Villager, Camp.Good);
+    role = createRoleComponent(Role.Villager);
   const profile: RoleProfile = {
     role: Role.Villager,
     label: "raw {label}",
@@ -92,6 +96,7 @@ test("custom contribution preserves init receiver and two late renderer getters 
     },
   });
   const context: RoleInitContext = {
+    initialCamp, currentCamp,
     get locale(): Locale {
       trace.push("locale");
       return "en";
@@ -112,10 +117,11 @@ test("custom contribution preserves init receiver and two late renderer getters 
 
 test("native Witch prose keeps native-first stock even when the current action binds a gifted potion", () => {
   const world = new World("en"),
-    role = createRoleComponent(Role.Witch, Camp.Good, "en"),
+    role = createRoleComponent(Role.Witch, "en"),
     id = world.createEntity();
   world.addComponent(id, COMPONENT.Role, role);
-  getDefaultRoleCatalog().applyRuntime(role, { world, locale: "en" });
+  world.addComponent(id, COMPONENT.Camp, initialCamp);
+  getDefaultRoleCatalog().applyRuntime(role, { world, locale: "en", initialCamp, currentCamp: () => world.getComponent(id, COMPONENT.Camp) });
   grantNightAbility(
     world,
     id,
@@ -144,7 +150,7 @@ test("native Witch prose keeps native-first stock even when the current action b
 });
 
 test("Guard formatting failure happens before its late private-state read", () => {
-  const role = createRoleComponent(Role.Guard, Camp.Good),
+  const role = createRoleComponent(Role.Guard),
     failure = new Error("late_state_read"),
     reads: string[] = [];
   Object.defineProperty(role, "privateState", {
@@ -153,17 +159,17 @@ test("Guard formatting failure happens before its late private-state read", () =
       throw failure;
     },
   });
-  expect(() => captureNativeRolePresentation("guard", role, "unknown" as Locale)).toThrow(
+  expect(() => captureNativeRolePresentation("guard", role, "unknown" as Locale, undefined, currentCamp)).toThrow(
     "i18n_locale_invalid",
   );
   expect(reads).toEqual([]);
-  expect(() => captureNativeRolePresentation("guard", role, "en")).toThrow(failure);
+  expect(() => captureNativeRolePresentation("guard", role, "en", undefined, currentCamp)).toThrow(failure);
   expect(reads).toEqual(["private"]);
 });
 
 test("legacy custom fallback does not read an unused native descriptor getter", () => {
   const reads: string[] = [],
-    role = createRoleComponent(Role.Villager, Camp.Good, "en");
+    role = createRoleComponent(Role.Villager, "en");
   const profile = {
     role: Role.Villager,
     label: "raw label",
@@ -178,7 +184,7 @@ test("legacy custom fallback does not read an unused native descriptor getter", 
     },
   };
   const catalog = createRoleCatalog([profile]);
-  catalog.applyRuntime(role, { locale: "en" });
+  catalog.applyRuntime(role, { locale: "en", initialCamp, currentCamp });
   expect(renderRolePrompt(role)).toBe("Your role is raw label. Follow the rules of this board.");
   expect(reads).toEqual(["renderer"]);
 });
@@ -186,8 +192,8 @@ test("legacy custom fallback does not read an unused native descriptor getter", 
 test("native contribution survives copied and inherited profiles without binding a requested ability", () => {
   const original = getDefaultRoleContributions().find((item) => item.metadata.role === Role.Witch)!;
   for (const profile of [{ ...original }, Object.create(original) as RoleContributions]) {
-    const role = createRoleComponent(Role.Witch, Camp.Good, "en");
-    createRoleCatalog({ contributions: [profile] }).applyRuntime(role, { locale: "en" });
+    const role = createRoleComponent(Role.Witch, "en");
+    createRoleCatalog({ contributions: [profile] }).applyRuntime(role, { locale: "en", initialCamp, currentCamp });
     expect(renderRolePrompt(role)).toBe(
       "Your role is Witch. Antidote:1 Poison:1 AWA native knife disclosure: reveal the wolf target only while heal is usable tonight. AWA native potion policy: at most one potion per night.",
     );
@@ -200,8 +206,8 @@ test("a copied native contribution with an explicitly empty raw renderer keeps g
     ...original,
     presentation: { kind: "custom", renderPrompt: undefined },
   };
-  const role = createRoleComponent(Role.Witch, Camp.Good, "en");
-  createRoleCatalog({ contributions: [profile] }).applyRuntime(role, { locale: "en" });
+  const role = createRoleComponent(Role.Witch, "en");
+  createRoleCatalog({ contributions: [profile] }).applyRuntime(role, { locale: "en", initialCamp, currentCamp });
   expect(renderRolePrompt(role)).toBe("Your role is Witch. Follow the rules of this board.");
 });
 
@@ -216,9 +222,10 @@ test("native contribution proxy reads its explicit presentation before late Worl
       return Reflect.get(target, property, receiver);
     },
   });
-  const role = createRoleComponent(Role.Witch, Camp.Good, "en");
+  const role = createRoleComponent(Role.Witch, "en");
   const world = new World("en");
   createRoleCatalog({ contributions: [profile] }).applyRuntime(role, {
+    initialCamp, currentCamp,
     locale: "en",
     get world() {
       trace.push("world");
@@ -234,7 +241,7 @@ test("native contribution proxy reads its explicit presentation before late Worl
 
 for (const mode of ["frozen", "setter"] as const)
   test(`off-domain binding does not recreate the retired Role renderer write/${mode}`, () => {
-    const role = createRoleComponent(Role.Villager, Camp.Good, "en");
+    const role = createRoleComponent(Role.Villager, "en");
     const trace: string[] = [];
     // 旧领域方法已退出：字面冻结／拒绝 setter 明确记录新 API 不写此属性。
     if (mode === "setter")
@@ -257,6 +264,7 @@ for (const mode of ["frozen", "setter"] as const)
       },
     };
     createRoleCatalog([profile]).applyRuntime(role, {
+      initialCamp, currentCamp,
       get locale(): Locale {
         trace.push("locale");
         return "en";

@@ -121,7 +121,7 @@ for (const [role, stage, event] of [
               .some((e) => e.type === event && e.payload.actorId === actor),
           ).toBe(false);
           const state = getTimeConsortState(
-            game.world.getComponent(consort, COMPONENT.Role),
+            game.world.getComponent(consort, COMPONENT.Role), () => game.world.getComponent(consort, COMPONENT.Camp)
           )!;
           expect(state.history).toHaveLength(timing === "before-stage" ? 0 : 1);
           expect(state.triggeredDay).toBeNull();

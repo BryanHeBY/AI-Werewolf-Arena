@@ -140,7 +140,7 @@ test("actual event recorder keeps complete God facts and source operations; all 
       return {
         player_id: id,
         role: role.role,
-        camp: role.camp,
+        camp: f.world.getComponent(id, COMPONENT.Camp)!.camp,
         alive: f.world.getAliveEntityIds().includes(id),
       };
     }),

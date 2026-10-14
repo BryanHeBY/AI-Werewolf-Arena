@@ -129,7 +129,8 @@ for (const locale of ["zh-CN", "en"] as const)
       ability = native(game),
       events: GameEvent[] = [],
       receive = new ActionReception(game.world);
-    expect(role(game)).toMatchObject({ role: Role.MirrorGirl, camp: Camp.Good });
+    expect(role(game)).toMatchObject({ role: Role.MirrorGirl });
+    expect(game.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
     // 阵营分类和人数上限归角色元数据；运行贡献只提供能力、阶段与回调。
     expect(getDefaultRoleCatalog().requireMetadata(Role.MirrorGirl)).toMatchObject({
       goodSide: "god",
@@ -174,6 +175,8 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(ability.state.history.map((r) => r.result.role)).toEqual([Role.Wolf, Role.Witch]);
     expect(ability.uses).toBe(2);
     getDefaultRoleCatalog().applyRuntime(role(game), {
+      initialCamp: game.world.getComponent(1, COMPONENT.Camp)!,
+      currentCamp: () => game.world.getComponent(1, COMPONENT.Camp),
       world: game.world,
       boardConfig: game.config,
       locale,
@@ -317,7 +320,8 @@ test("three policy instances on one Villager use distinct slots, counters and hi
     expect(ability.uses).toBe(1);
     expect(ability.state.history.map((r) => r.targetId)).toEqual([2]);
   }
-  expect(role(game, 6)).toMatchObject({ role: Role.Villager, camp: Camp.Good });
+  expect(role(game, 6)).toMatchObject({ role: Role.Villager });
+  expect(game.world.getComponent(6, COMPONENT.Camp)!.camp).toBe(Camp.Good);
   for (const ability of [garg, mirror, psychic]) {
     const request = context(game, events, async () => null, 2).makeRequest(6, ["inspect_role"], {
       stage: roleInspectionPolicy(ability.state) === "psychic" ? "psychic" : "mirror_girl",
@@ -410,7 +414,9 @@ test("fresh Mirror copy/gift reject inherited or private state, while transfer p
     kind: "role_check",
     statePolicy: (state) => structuredClone(state),
   });
-  getDefaultRoleCatalog().applyRuntime(role(game), { world: game.world, boardConfig: game.config });
+  getDefaultRoleCatalog().applyRuntime(role(game), {
+      initialCamp: game.world.getComponent(1, COMPONENT.Camp)!,
+      currentCamp: () => game.world.getComponent(1, COMPONENT.Camp), world: game.world, boardConfig: game.config });
   expect(allNightAbilities(role(game)).filter((a) => a.source.kind === "native")).toEqual([]);
 });
 
@@ -523,7 +529,7 @@ test("a gifted Mirror instance runs without a Mirror entity and cannot replace n
     }),
   );
   expect(gift.uses).toBe(1);
-  expect(canGargoyleKnife(role(game, 2), game.world)).toBe(false);
+  expect(canGargoyleKnife(role(game, 2), game.world, () => game.world.getComponent(2, COMPONENT.Camp))).toBe(false);
   expect(hasRoleInspectionNightCommit(game.world, 1)).toBe(true);
 });
 

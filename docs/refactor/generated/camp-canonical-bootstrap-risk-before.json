@@ -1,0 +1,40 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/tests/unit/engine/camp-canonical-bootstrap.test.ts",
+      "expectedAbsent": true,
+      "gitShowExit": 128,
+      "gitShowStderr": "fatal: path 'backend/tests/unit/engine/camp-canonical-bootstrap.test.ts' does not exist in '4ffba3d9820d1fee72f28af20c2125732ade3013'\n"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/villager/profile.ts",
+      "sha256": "a4283cc3db00f2a61167be1de07045a940afa87efce685369abd592f1fd16a0d",
+      "text": "/**\n * 负责 平民 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。\n * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。\n * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。\n * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。\n */\nimport { nativeRolePresentation } from \"../presentation-contribution\";\nimport { roleName, text } from \"@ai-werewolf-arena/game-text\";\n/** 文件说明：平民角色 profile。 */\nimport { Camp, Role } from \"../../../../core/domain/model\";\nimport { NativeRoleContributions } from \"../contracts\";\n\n/** 平民角色配置。 */\nexport const VILLAGER_ROLE_PROFILE: NativeRoleContributions = {\n  metadata: {\n    role: Role.Villager,\n    camp: Camp.Good,\n    label: roleName(\"villager\"),\n    skillBrief: text(\"zh-CN\", \"role.villager.brief\"),\n    goodSide: \"villager\",\n  },\n  runtime: {},\n  presentation: nativeRolePresentation(\"villager\"),\n};\n"
+    },
+    {
+      "path": "backend/src/core/domain/components/victory.ts",
+      "sha256": "cf078b5e8707fb17736f9bd453c4f66d8363f01baeb39bf78052b632aefc7059",
+      "text": "/**\n * 负责玩家胜利归属组件的结构与创建。输入为明确 affiliations，输出经共享 reader 校验复制后的组件；胜利归属与 Role.camp、技能独立。\n * 运行组件仍归 World 持有，创建器不推断真实阵营、不选择胜者或授予行动许可。\n */\nimport type { VictoryAffiliation } from \"@ai-werewolf-arena/game-contract\";\nimport { readVictoryAffiliations } from \"@ai-werewolf-arena/replay-contract\";\n\n/** 独立胜利成员归属，与 Role.camp 和能力刻意分开。 */\nexport interface VictoryComponent {\n  affiliations: VictoryAffiliation[];\n}\nexport function createVictoryComponent(\n  affiliations: readonly VictoryAffiliation[],\n): VictoryComponent {\n  return { affiliations: readVictoryAffiliations(affiliations) };\n}\n"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/six_player_mvp.ts",
+      "sha256": "d0d537c761fb4272397898319eb05f63f1fc4c6dbec7888a74bb2ac4bb53fa34",
+      "text": "import { BoardConfig, Role, WinCondition } from \"../../core/domain/model\";\n\n/**\n * 6 人 MVP：最小闭环板子，用于验证基础夜昼流转与守卫/预言家核心规则。\n */\nexport const sixPlayerMvpConfig: BoardConfig = {\n  boardSize: 6,\n  enableSheriff: false,\n  winConditions: [WinCondition.SlaughterCity, WinCondition.WolfReachHalf],\n  hooks: {\n    onDaybreak: false,\n    onPreElection: false,\n    onPreVote: false,\n    onPerSpeechGap: false,\n  },\n  roleSetups: [\n    { role: Role.Wolf, count: 2 },\n    { role: Role.Villager, count: 2 },\n    { role: Role.Seer, count: 1 },\n    { role: Role.Guard, count: 1 },\n  ],\n};\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+      "sha256": "9e72867c0928b9a05a4d314170a17ea7206cc021699035a603c5762227f71789",
+      "text": "/**\n * 负责实际装配角色资料、运行与展示。输入是原自定义 flat profile 或明确三贡献集合，默认使用\n * 原 55 角色的登记顺序；输出为唯一默认 Catalog 或独立 Catalog。捕获函数在此实际注入，\n * 不在 profile 声明时建立反向展示依赖。初始化／显示仍由 Catalog 在原时点执行，不复制状态。\n */\nimport { RoleCatalog } from \"./catalog\";\nimport type { RoleContributions, RoleProfile, NativeRoleContributions } from \"./contracts\";\n\nexport function createRoleCatalog(\n  input?: readonly RoleProfile[] | { contributions: readonly RoleContributions[] },\n): RoleCatalog {\n  // 登记也在实际装配时加载，避免单独导入某个角色时经运行查询绕回尚未初始化的登记表。\n  const { BUILTIN_ROLE_CONTRIBUTIONS } =\n    require(\"./builtin-contributions\") as typeof import(\"./builtin-contributions\");\n  const resolved = input ?? { contributions: BUILTIN_ROLE_CONTRIBUTIONS };\n  const builtinMetadata = BUILTIN_ROLE_CONTRIBUTIONS.map((entry) => entry.metadata);\n  if (Array.isArray(resolved)) return new RoleCatalog(resolved, builtinMetadata);\n  // 仅在实际装配原生运行时加载完整捕获；声明及纯自定义接入不提前初始化展示依赖。\n  const { captureNativeRolePresentation } =\n    require(\"../../observation/native-role-presentation-capture\") as typeof import(\"../../observation/native-role-presentation-capture\");\n  return new RoleCatalog(\n    {\n      contributions: (resolved as { contributions: readonly RoleContributions[] }).contributions,\n      renderNative: captureNativeRolePresentation,\n    },\n    builtinMetadata,\n  );\n}\n\nlet defaultCatalog: RoleCatalog | null = null;\n\n/** 默认实例只缓存实际装配的 Catalog，不保存另一份角色状态或展示结果。 */\nexport function getDefaultRoleCatalog(): RoleCatalog {\n  if (!defaultCatalog) defaultCatalog = createRoleCatalog();\n  return defaultCatalog;\n}\n\n/** 按原顺序公开组合声明的副本；保留每份贡献引用，不向调用者开放登记数组写权。 */\nexport function getDefaultRoleContributions(): readonly NativeRoleContributions[] {\n  const { BUILTIN_ROLE_CONTRIBUTIONS } =\n    require(\"./builtin-contributions\") as typeof import(\"./builtin-contributions\");\n  return Array.from(BUILTIN_ROLE_CONTRIBUTIONS);\n}\n"
+    }
+  ],
+  "currentBootstrapInput": {
+    "path": "backend/src/app/bootstrap.ts",
+    "sha256": "f8351838d1361cab7e16abd37bbf425f9900400877a46fe5850b26127350ae9a",
+    "immutableControl": false,
+    "reason": "Root-owned F05b initialization source is current WIP; base Git is not claimed to implement new input policy."
+  },
+  "checksExecuted": false
+}

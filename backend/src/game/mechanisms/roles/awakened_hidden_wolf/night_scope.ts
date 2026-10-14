@@ -1,8 +1,7 @@
 /**
- * Captures Awakened Hidden Wolf owner, mimic skill and mirror scopes for one real night. Inputs
- * are the original ability and role/life references; outputs are currentness checks and
- * night-commit bookkeeping. It never lets a new state, source or body inherit the old captured
- * permission.
+ * 负责觉醒隐狼本夜原体、学习与镜像范围捕获；输入保原能力／Role／生命引用，输出为复验与本夜记录。
+ * 原阵营表达式晚查当前值，不新增 Camp 引用撤权；槽／来源／生命替换仍按原规则失效。
+ * 已付 skill／mirror 原谓词不因行动墓碑失效；不以合法数据副本授予原捕获权限。
  */
 import type {
   AwakenedReadState as AwakenedState,
@@ -42,7 +41,7 @@ export function captureAwakenedOwner(
     !phaseCurrent() ||
     !role ||
     role.role !== Role.AwakenedHiddenWolf ||
-    role.camp !== Camp.Wolf ||
+    world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf ||
     !state ||
     !life
   )
@@ -63,7 +62,7 @@ export function captureAwakenedOwner(
         phaseCurrent() &&
         world.getComponent(actorId, COMPONENT.Role) === role &&
         role.role === Role.AwakenedHiddenWolf &&
-        role.camp === Camp.Wolf &&
+        world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Wolf &&
         role.privateState === privateState &&
         getAwakenedState(role) === state &&
         original &&
@@ -72,7 +71,7 @@ export function captureAwakenedOwner(
     },
   };
 }
-/** Bind paid facts without reading a closed slot or spent bottle/knife. */
+/** 绑定已付事实，复验原学习引用，不读已关闭槽或已消费瓶／刀来取消效果。 */
 export function bindAwakenedSkill(
   owner: AwakenedOwnerScope,
   day: number,
@@ -103,7 +102,7 @@ export function bindAwakenedSkill(
       learned.activeFromNight === activeFromNight,
   };
 }
-/** Only the Aw-owned native Mirror depends on its learning; independent gifts/copies do not. */
+/** 仅觉醒原生镜像依赖本学习；独立赠予／复制实例不附加这项来源关系。 */
 export function captureAwakenedMirrorScope(
   world: World,
   actorId: EntityId,
@@ -157,8 +156,7 @@ export function beginAwakenedNight(
   if ((nights.get(world)?.day ?? day) > day) throw new Error("awakened_night_clock_regressed");
   const currentOwners = owners.filter((owner) => owner.world === world && owner.isCurrent());
   nights.set(world, { day, owners: new Map(currentOwners.map((owner) => [owner.role, owner])) });
-  // Establishing this night's original-body authority is itself a committed prefix,
-  // including nights with only an inherited base knife or no copied active skill.
+  // 建立本夜原体 authority 本身就是已提交前缀；仅继承刀或没有复制主动技能的夜也保此记录。
   if (currentOwners.length) recordAwakenedNightCommit(world, day);
 }
 export function currentAwakenedNight(world: World, role: RoleComponent): number | null {

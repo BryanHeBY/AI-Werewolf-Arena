@@ -227,7 +227,8 @@ test("player original text and explicit injected profile/directive text survive 
     expect(catalog.label(Role.Wolf, locale)).toBe("自定狼人");
     expect(catalog.skillBrief(Role.Wolf, locale)).toBe("原文说明");
     const role = game.world.getComponent(1, COMPONENT.Role)!;
-    catalog.applyRuntime(role, { locale });
+    const initialCamp = game.world.getComponent(1, COMPONENT.Camp)!;
+    catalog.applyRuntime(role, { locale, initialCamp, currentCamp: () => game.world.getComponent(1, COMPONENT.Camp) });
     expect(renderRolePrompt(role, locale)).toBe("原文私有状态");
     const tools = new ToolSpecRegistry([], [{ match: () => true, text: "定制阶段 {actor}" }]);
     expect(tools.getStageDirective(["speak"], locale)).toBe("定制阶段 {actor}");

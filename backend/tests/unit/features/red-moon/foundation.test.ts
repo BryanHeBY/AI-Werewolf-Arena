@@ -10,10 +10,12 @@ import {
   RED_MOON_ROLE,
 } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact, RED_MOON_BLAST_EVENT, RED_MOON_EXILE_EVENT, RED_MOON_EXPIRY_EVENT } from "@ai-werewolf-arena/game-contract/facts/red-moon";
+// 测试自持当前 Camp，不经旧 Role 属性或隐藏映射提供阵营。
+const fixtureCamp = { camp: Camp.Wolf };
+const currentCamp = () => fixtureCamp;
 function role(state: unknown = freshRedMoonState()): RoleComponent {
   return {
     role: RED_MOON_ROLE,
-    camp: Camp.Wolf,
     privateState: { redMoon: state },
   } as unknown as RoleComponent;
 }
@@ -21,7 +23,7 @@ describe("Red Moon finite state", () => {
   test("defaults and both named last-wolf policies are readable", () => {
     for (const policy of ["ends_game", "forbidden"] as const) {
       const state = freshRedMoonState(policy);
-      expect(getRedMoonState(role(state))).toBe(state);
+      expect(getRedMoonState(role(state), currentCamp)).toBe(state);
     }
   });
   test("blast and exile states are separate, expiry requires exile", () => {
@@ -31,12 +33,12 @@ describe("Red Moon finite state", () => {
       { exileDay: 2, expirySettled: true },
     ]) {
       const state = { ...freshRedMoonState(), ...changes };
-      expect(getRedMoonState(role(state))).toBe(state);
+      expect(getRedMoonState(role(state), currentCamp)).toBe(state);
     }
     expect(
-      getRedMoonState(role({ ...freshRedMoonState(), blastDay: 2, exileDay: 2 })),
+      getRedMoonState(role({ ...freshRedMoonState(), blastDay: 2, exileDay: 2 }), currentCamp),
     ).toBeUndefined();
-    expect(getRedMoonState(role({ ...freshRedMoonState(), expirySettled: true }))).toBeUndefined();
+    expect(getRedMoonState(role({ ...freshRedMoonState(), expirySettled: true }), currentCamp)).toBeUndefined();
   });
   test("malformed states and wrong authority fail closed", () => {
     for (const field of [
@@ -50,8 +52,8 @@ describe("Red Moon finite state", () => {
       { expirySettled: 1 },
       { extra: true },
     ])
-      expect(getRedMoonState(role({ ...freshRedMoonState(), ...field }))).toBeUndefined();
-    expect(getRedMoonState({ ...role(), camp: Camp.Good } as RoleComponent)).toBeUndefined();
+      expect(getRedMoonState(role({ ...freshRedMoonState(), ...field }), currentCamp)).toBeUndefined();
+    expect(getRedMoonState(role(), () => ({ camp: Camp.Good }))).toBeUndefined();
   });
   test("accessors and proxies are never evaluated", () => {
     let reads = 0;
@@ -63,7 +65,7 @@ describe("Red Moon finite state", () => {
       },
       enumerable: true,
     });
-    expect(getRedMoonState(role(state))).toBeUndefined();
+    expect(getRedMoonState(role(state), currentCamp)).toBeUndefined();
     expect(
       getRedMoonState(
         new Proxy(role(), {
@@ -71,12 +73,12 @@ describe("Red Moon finite state", () => {
             reads++;
             throw new Error("proxy");
           },
-        }),
+        }), currentCamp
       ),
     ).toBeUndefined();
     const revoked = Proxy.revocable(freshRedMoonState(), {});
     revoked.revoke();
-    expect(getRedMoonState(role(revoked.proxy))).toBeUndefined();
+    expect(getRedMoonState(role(revoked.proxy), currentCamp)).toBeUndefined();
     expect(reads).toBe(0);
   });
 });

@@ -1,0 +1,81 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "sha256": "f8351838d1361cab7e16abd37bbf425f9900400877a46fe5850b26127350ae9a"
+    },
+    {
+      "path": "backend/src/core/domain/components/camp.ts",
+      "sha256": "4116eae18797945fed877e9d4bb29e916a23e0b40544eebc1e0c85fea1b444d6"
+    },
+    {
+      "path": "backend/src/core/domain/components/role.ts",
+      "sha256": "5a81609c7f9d954fc7ecb6d8d362232064c8177ae174787da52a8f09ec543c36"
+    },
+    {
+      "path": "backend/src/game/drivers/privileged-baseline.ts",
+      "sha256": "0a3d2474f50fb76725d9321da9fb3c5b7f439524819264ff776bf846ef7af4c6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/catalog.ts",
+      "sha256": "79084bb52e17e5bfd980730e18866d7433d418e2ca650af6c4d6407a9b15e7bf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/contracts.ts",
+      "sha256": "74f05ad61ef66a52aa16625890cff3fe430bb2818521b7006a9b50a495d9544a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "sha256": "ae278c531a16f94f5a3a892a3ffcd450791770617af00cbf9f6cfa1facd84353"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "39b6e18bd4af1cb53e42d32cb3aab877baf02ea956006318b485ecc9d63334ee"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "eca6b18484df06065a9a2ee16e141f65499b79235dc984d545e0f4ce28f065ec"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "sha256": "5b7e8489084b23710d5fc1e29a978e44a59ae00f2fb869d8021f7a24e621c658"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "sha256": "746fe49427d9a845d88e0e16efd9db703ec5a1bf33e8329966b61525e9166ddc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "5ca5596b9823f17946738853253a70ea22a4312378144cbb088e471573bae459"
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "sha256": "bfc61b828b8b7da69967204f95f159d1845aa149b8ad80945b115deba76f7912"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "b12828302e3b17279caf3832d7673b5b2e226de6e55f95417ad367b227c6ce04"
+    },
+    {
+      "path": "backend/src/game/observation/role-presentation.ts",
+      "sha256": "b57f8c46e079a32df35fb719df98434717a7597180ab0ea378bcd77a63b807f6"
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "sha256": "969b216bf141ce8264f9a1e26cb64c08ee0f6c6a35e0967989e0b644b6f2746b"
+    },
+    {
+      "path": "backend/src/rulesets/wolf-tool-admission.ts",
+      "sha256": "6613fb86d4724f798a701f89da7dc737c7d638010c2c3b55a5d600af1c4aae90"
+    },
+    {
+      "path": "backend/src/core/domain/components/victory.ts",
+      "sha256": "afc4684874140fc2afab31cbae289f9cbeb3d13d29d65779b7b5bf7cd7c0ef19"
+    }
+  ],
+  "sourceReady": true,
+  "checksExecuted": false,
+  "exactEdits": 104,
+  "scopeNote": "Root18 source, extra Victory two Chinese comments; initial Root17 readiness preserved. Peer static six omitted project tails and unresolved World receiver fixed before any check."
+}

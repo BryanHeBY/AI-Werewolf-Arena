@@ -1,0 +1,44 @@
+{
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "authorProof": {
+    "path": "docs/refactor/generated/camp-canonical-role-owners-proof-receipt.json",
+    "sha256": "ca1d936ad11a1d71d77d844c1658833c59c30fe9e5c93a5219e584713f9e4987",
+    "firstRunOnly": true,
+    "exitCode": 0
+  },
+  "jointChecks": {
+    "path": "docs/refactor/generated/camp-canonical-cohort-checks.json",
+    "sha256": "eeb4715b6284554805ba0bb93a443116f88667abd6a263394dc59f5a992faf35",
+    "owner": "Root",
+    "firstFullBackendTypeExitCode": 2,
+    "firstFullTypeDiagnosticCount": 73,
+    "firstHeadDiagnostics": 5,
+    "firstHeadFailedRoots": 4,
+    "finiteFailedChangedTypeRoots": 40,
+    "finiteTypeExitCode": 0,
+    "failedAndNewHeadRoots": 14,
+    "headRepairExitCode": 0,
+    "fullBackendTypePassedAfterRepairNotClaimed": true
+  },
+  "rootMissingRoleRisk": {
+    "cases": 4,
+    "expect": 16,
+    "exitCode": 0,
+    "owner": "Root",
+    "authorRuntimeRun": false,
+    "sourceReady": "docs/refactor/generated/camp-canonical-missing-role-roster-source-ready.json",
+    "runtimeOutput": "docs/refactor/generated/camp-canonical-missing-role-roster-runtime-first-output.txt"
+  },
+  "phases": [
+    "492b ready before one Mist Chinese head; no checks",
+    "15e ready sampled by first joint type/head; own proof not run",
+    "fa6 current source after 14 narrow necessary revisions; only own proof first0 and delegated failed/new checks",
+    "Source-ready historical checksRun=false is capture stage, not final receipt status"
+  ],
+  "greenRepeats": false,
+  "limits": [
+    "Type/head are Root-run delegated checkpoints; author did not run a second type/head program.",
+    "First full type failure, first head failure and first failed finite configuration remain original artifacts.",
+    "No whole game, model, cold-graph or all55 action-authority acceptance claimed."
+  ]
+}

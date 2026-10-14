@@ -89,7 +89,7 @@ for (const change of ["camp", "permission"] as const)
     const gateway = new ToolGateway();
     gateway.validateAndSanitize = (world, actor, action, context) => {
       const result = base.validateAndSanitize(world, actor, action, context);
-      if (change === "camp") role(game, actor).camp = Camp.Good;
+      if (change === "camp") game.world.getComponent(actor, COMPONENT.Camp)!.camp = Camp.Good;
       else chat = false;
       return result;
     };
@@ -198,7 +198,7 @@ test("opening sole Hidden Wolf inherits once, has only the basic knife and no ch
   expect(getHiddenWolfState(role(game, 1))).toEqual({ hasInheritedKnife: true });
   expect(wolfKnifeHolders(game.world, catalog)).toEqual([1]);
   expect(wolfChatParticipants(game.world, catalog)).toEqual([]);
-  expect(wolfTeamPermissions(role(game, 1), catalog).canVoteForKill).toBe(false);
+  expect(wolfTeamPermissions(role(game, 1), catalog, () => game.world.getComponent(1, COMPONENT.Camp)).canVoteForKill).toBe(false);
   expect(resolveInspection(game.world, 1, "role", catalog)).toEqual({
     kind: "role",
     role: Role.HiddenWolf,

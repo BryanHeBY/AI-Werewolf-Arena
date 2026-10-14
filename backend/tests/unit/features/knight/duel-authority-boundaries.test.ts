@@ -197,7 +197,7 @@ for (const locale of ["zh-CN", "en"] as const)
     ).toBe(false);
     expect(receive.validate({ ...req, actorId: 4 }, "duel", duel(2).args).ok).toBe(false);
     expect(getKnightState(role(world, 1))).toEqual({ canDuel: true });
-    role(world, 4).camp = Camp.ThirdParty;
+    world.getComponent(4, COMPONENT.Camp)!.camp = Camp.ThirdParty;
     const events: GameEvent[] = [];
     expect(commitKnightDuel(world, { actorId: 1, targetId: 4 }, Phase.Day, events)).toEqual({
       deaths: [1],

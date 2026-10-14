@@ -1,0 +1,58 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "4ffba3d9820d1fee72f28af20c2125732ade3013",
+  "source": [
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+      "sha256": "5ca4d8d9008c1ce22f98e384c308a27f361446dc27679071f1f08d3d55947226"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "sha256": "9ce6d4ec5184c113f10db3ffbed26310f20cc2a280daf94f3d0032d8d364e214"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/owner.ts",
+      "sha256": "f4137085ed419f468a46a4a7970bc6cdce94f744c92f00a1582590b2a825fcea"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "sha256": "3fdeaea6ed9d7f92c28d7acb8343ce40cadeb3d3bdd62081ed33fd9532f4f06b"
+    },
+    {
+      "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+      "sha256": "327dfb5828c85aa67f4aff3e55295c171662c537480fdbe31664aae91a238a4e"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/camp-canonical-shared-support-scope-final.json",
+    "sha256": "a60a692452cb9d9c08ea44f6b60834284ee4acff3aa9054fe652157a2e9ea83d"
+  },
+  "document": {
+    "path": "docs/refactor/camp-canonical-shared-support.md",
+    "sha256": "e4bbb0f3e28d3bc0051aad9136aab0c34abf38fd290df2f13d1c494beebed181"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/camp-canonical-shared-support-evidence.json",
+    "sha256": "d853aac7a22d86b6ec978ecfa3e168eaae8f04cb003232b4c505a6b2ce1f850e"
+  },
+  "integrity": {
+    "freshSources": 5,
+    "actualGitBefore": 5,
+    "controls": 0,
+    "artifactHashes": 8,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "真实Camp与同一draft fixture输入",
+    "原world和locale/负例保持",
+    "完整actualGit前稿/13精确变更与共用实际收据",
+    "中文结构和写权边界"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

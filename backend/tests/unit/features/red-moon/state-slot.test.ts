@@ -27,18 +27,21 @@ const literalState = (): RedMoonState => ({
   expirySettled: false,
 });
 
+// worldless 数据样本只持显式 Camp 句柄，不建立 Role→World／Camp 回退。
+const fixtureCamp = { camp: Camp.Wolf };
+const currentCamp = () => fixtureCamp;
+
 test("schema retains the original readonly and nonenumerable data while rejecting getters and proxies", () => {
   const state = literalState();
   Object.defineProperty(state, "blastDay", { enumerable: false });
   Object.freeze(state);
   const role: RoleComponent = {
     role: Role.RedMoonApostle,
-    camp: Camp.Wolf,
     privateState: { redMoon: state },
   };
   expect(RED_MOON_STATE_SLOT.schema(state)).toBe(state);
-  expect(RED_MOON_STATE_SLOT.get(role)).toBe(state);
-  expect(RED_MOON_STATE_SLOT.invalidations.readCurrent(role)).toBe(state);
+  expect(RED_MOON_STATE_SLOT.get(role, currentCamp)).toBe(state);
+  expect(RED_MOON_STATE_SLOT.invalidations.readCurrent(role, currentCamp)).toBe(state);
   expect(RED_MOON_STATE_SLOT.schema({ ...literalState(), extra: true })).toBeUndefined();
   let reads = 0;
   const accessor = literalState();
@@ -67,13 +70,15 @@ test("the real profile reads the installation left side before policy and retain
     privateState: Record<string, unknown> = {};
   const role: RoleInitializationComponent = {
     role: Role.RedMoonApostle,
-    camp: Camp.Wolf,
     get privateState() {
       trace.push("left:privateState");
       return privateState;
     },
   };
+  const initialCamp = { camp: Camp.Wolf };
   const context: RoleInitContext = {
+    initialCamp,
+    currentCamp: () => initialCamp,
     get boardConfig() {
       trace.push("right:boardConfig");
       return undefined;

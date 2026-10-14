@@ -42,7 +42,7 @@ function trace(config: BoardConfig) {
       dealMode: "fixed",
       players: game.playerIds.map((id) => {
         const role = game.world.getComponent(id, COMPONENT.Role)!;
-        return { id, name: String(id), role: role.role, camp: role.camp };
+        return { id, name: String(id), role: role.role, camp: game.world.getComponent(id, COMPONENT.Camp)!.camp };
       }),
     },
     () => {},

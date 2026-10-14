@@ -54,7 +54,7 @@ test("six implemented native-role paths install one original instance and replac
     [Role.PureWhiteGirl, "pure_white"], [Role.WolfWitch, "wolf_witch"], [Role.AwakenedHiddenWolf, "gargoyle"],
   ] as const;
   for (const [roleId, policy] of cases) {
-    const role = createRoleComponent(roleId, Camp.Good), input = fresh(policy);
+    const role = createRoleComponent(roleId), input = fresh(policy);
     const first = slot.install(role, input), ability = findNightAbility(role, "role_check")!;
     expect(ability.id).toBe("native:role_check");
     expect(ability.source).toEqual({ kind: "native", role: roleId });
@@ -72,9 +72,11 @@ test("six implemented native-role paths install one original instance and replac
 
 test("a gifted role-check instance keeps independent knowledge and native selection", () => {
   const world = new World(), id = world.createEntity(), giver = world.createEntity();
-  const role = createRoleComponent(Role.Psychic, Camp.Good);
+  const role = createRoleComponent(Role.Psychic);
   world.addComponent(id, COMPONENT.Role, role);
-  world.addComponent(giver, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
+  world.addComponent(giver, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(giver, COMPONENT.Camp, { camp: Camp.Good });
   const native = slot.install(role, fresh());
   const gift = grantNightAbility(world, id, {
     id: "gift:inspection:1", kind: "role_check", state: fresh(),
@@ -126,8 +128,9 @@ test("policy identity codec looks up stringify before two live state reads", () 
 });
 
 test("original ability scope remains the owner of state replacement and real life revocation", () => {
-  const world = new World(), id = world.createEntity(), role = createRoleComponent(Role.Gargoyle, Camp.Wolf), life = createAliveComponent();
+  const world = new World(), id = world.createEntity(), role = createRoleComponent(Role.Gargoyle), life = createAliveComponent();
   world.addComponent(id, COMPONENT.Role, role);
+  world.addComponent(id, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(id, COMPONENT.Alive, life);
   slot.install(role, fresh("gargoyle"));
   const ability = findNightAbility(role, "role_check")!, scope = captureNightAbilityScope(world, id, ability, 1, () => true)!;
@@ -146,7 +149,6 @@ test("native entry paths retain clone before two inventory reads and late source
     const trace: string[] = [], container = {};
     const role = {
       get role(): Role { trace.push("role"); return Role.Psychic; },
-      camp: Camp.Good,
       get privateState(): object { trace.push("private"); return container; },
     };
     const input: RoleInspectionState = {
@@ -161,7 +163,7 @@ test("native entry paths retain clone before two inventory reads and late source
 });
 
 test("prepared native writes keep revision and conflict identity before replacing payload", () => {
-  const role = createRoleComponent(Role.Psychic, Camp.Good), first = slot.install(role, fresh());
+  const role = createRoleComponent(Role.Psychic), first = slot.install(role, fresh());
   const data = role.privateState as { abilities: Record<string, NightAbilityReadView>; retiredAbilityIds?: string[] };
   const original = data.abilities["native:role_check"];
   data.retiredAbilityIds = ["native:role_check"];

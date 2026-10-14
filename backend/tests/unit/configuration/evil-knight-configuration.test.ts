@@ -28,11 +28,9 @@ for (const shotPolicy of ["night_shot_immune", "hunter_shot_bypasses"] as const)
       ).toEqual(config);
       const { world } = bootstrapGame(config);
       expect(world.entityIds()).toHaveLength(12);
-      const knight = world
-        .entityIds()
-        .map((id) => world.getComponent(id, COMPONENT.Role))
-        .find((r) => r?.role === Role.EvilKnight)!;
-      expect(getEvilKnightState(knight)).toEqual({
+      const knightId = world.entityIds().find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.EvilKnight)!;
+      const knight = world.getComponent(knightId, COMPONENT.Role)!;
+      expect(getEvilKnightState(knight, () => world.getComponent(knightId, COMPONENT.Camp))).toEqual({
         policy: "awa_evil_knight_v1",
         shotPolicy,
         reflectionRemaining: 1,

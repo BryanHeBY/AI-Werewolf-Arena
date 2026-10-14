@@ -102,7 +102,7 @@ for (const locale of ["zh-CN", "en"] as const) {
           } else {
             expect(decision?.outcome).toMatchObject({
               winningPlayerIds: [...members]
-                .filter(([, role]) => role.camp === expected)
+                .filter(([id]) => world.getComponent(id, COMPONENT.Camp)!.camp === expected)
                 .map(([id]) => id)
                 .sort((a, b) => a - b),
             });

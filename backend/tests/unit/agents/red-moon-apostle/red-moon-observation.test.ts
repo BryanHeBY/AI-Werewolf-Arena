@@ -50,7 +50,7 @@ for (const policy of ["ends_game", "forbidden"] as const)
             requiresAction: true,
             summary: "Vote",
           });
-        const state = getRedMoonState(f.world.getComponent(actor, COMPONENT.Role))!;
+        const state = getRedMoonState(f.world.getComponent(actor, COMPONENT.Role), () => f.world.getComponent(actor, COMPONENT.Camp))!;
         await provider.getAction(request(actor));
         const snapshot = seen[0]!.ownState.redMoon!;
         expect(snapshot).toEqual(state);

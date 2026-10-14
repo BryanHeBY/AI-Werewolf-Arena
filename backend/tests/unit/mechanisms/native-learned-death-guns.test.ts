@@ -43,10 +43,12 @@ function shotWorld() {
   const world = new World("en"),
     actor = world.createEntity(),
     target = world.createEntity();
-  const role = createRoleComponent(Role.Hunter, Camp.Good);
+  const role = createRoleComponent(Role.Hunter);
   world.addComponent(actor, COMPONENT.Role, role);
+  world.addComponent(actor, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(actor, COMPONENT.Alive, createAliveComponent(false));
-  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+  world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Villager));
+  world.addComponent(target, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(target, COMPONENT.Alive, createAliveComponent(true));
   return { world, actor, target, role };
 }
@@ -71,7 +73,7 @@ test("原生创建保配置重复读取、可选政策及同引用安装，不�
     },
   } as unknown as Pick<RoleInitContext, "boardConfig">;
   const state = createHunterState(ctx),
-    role = createRoleComponent(Role.Hunter, Camp.Good);
+    role = createRoleComponent(Role.Hunter);
   expect(trace).toEqual(["board", "hunter", "policy", "board", "hunter", "policy"]);
   expect(state).toEqual({ canShoot: true, deathActionPolicy: "awa_knife_or_exile_v1" });
   expect(setHunterState(role, state)).toBe(state);
@@ -85,7 +87,7 @@ test("原生创建保配置重复读取、可选政策及同引用安装，不�
 });
 
 test("学习枪每次hook独立捕获、查询晚裸调用，机械和觉醒保各自复验字段", () => {
-  const mechanical = createRoleComponent(Role.MechanicalWolf, Camp.Wolf);
+  const mechanical = createRoleComponent(Role.MechanicalWolf), mechanicalCamp = { camp: Camp.Wolf };
   const ms = setMechanicalState(mechanical, freshMechanicalState());
   learnMechanicalRole(ms, 3, Role.Hunter, 1);
   advanceMechanicalNight(ms, 2);
@@ -101,19 +103,19 @@ test("学习枪每次hook独立捕获、查询晚裸调用，机械和觉醒保�
   });
   expect(trace).toEqual([]);
   const gun = ms.learned!.skill;
-  expect(reader(mechanical)).toBe(gun as LearnedNativeGun);
+  expect(reader(mechanical, () => mechanicalCamp)).toBe(gun as LearnedNativeGun);
   expect(trace).toEqual(["lookup", undefined]);
   (ms as { learned: typeof ms.learned }).learned = { ...ms.learned! };
-  expect(reader(mechanical)).toBeUndefined();
-  expect(createMechanicalGunReader({ getMechanicalState })(mechanical)).toBe(gun as LearnedNativeGun);
-  const awakened = createRoleComponent(Role.AwakenedHiddenWolf, Camp.Wolf);
+  expect(reader(mechanical, () => mechanicalCamp)).toBeUndefined();
+  expect(createMechanicalGunReader({ getMechanicalState })(mechanical, () => mechanicalCamp)).toBe(gun as LearnedNativeGun);
+  const awakened = createRoleComponent(Role.AwakenedHiddenWolf), awakenedCamp = { camp: Camp.Wolf };
   const as = setAwakenedState(awakened, freshAwakenedState());
   learnAwakenedRole(as, 3, Role.Hunter, 1);
   activateAwakenedLearning(as, 1);
   const awReader = createAwakenedGunReader({ getAwakenedState });
-  expect(awReader(awakened)).toBe(as.learned!.skill as LearnedNativeGun);
+  expect(awReader(awakened, () => awakenedCamp)).toBe(as.learned!.skill as LearnedNativeGun);
   (as.learned as { activationNight: number | null }).activationNight = 2;
-  expect(awReader(awakened)).toBeUndefined();
+  expect(awReader(awakened, () => awakenedCamp)).toBeUndefined();
   expect(gun).toEqual({ kind: "hunter", canShoot: true, armed: true });
 });
 

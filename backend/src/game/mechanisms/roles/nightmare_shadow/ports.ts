@@ -31,7 +31,7 @@ export function bindNightmareKnifeTargetQuery(world: World): NightmareKnifeTarge
   return Object.freeze({
     allows: (targetId: EntityId) =>
       world.getComponent(targetId, COMPONENT.Role)?.role !== Role.NightmareShadow ||
-      getNightmareShadowState(world.getComponent(targetId, COMPONENT.Role))?.wolfActionPolicy ===
+      getNightmareShadowState(world.getComponent(targetId, COMPONENT.Role), () => world.getComponent(targetId, COMPONENT.Camp))?.wolfActionPolicy ===
         "standard",
   });
 }

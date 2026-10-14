@@ -61,10 +61,11 @@ test("later role failure retains the earlier real hidden-wolf inheritance and st
     events: GameEvent[] = [],
     failure = new Error("literal_second_role_failure");
   const actorId = world.createEntity(),
-    role = createRoleComponent(Role.HiddenWolf, Camp.Wolf);
+    role = createRoleComponent(Role.HiddenWolf);
   // 原机制状态直接作为手写输入，不由被测组合推导自己的预期。
   (role.privateState as Record<string, unknown>).hidden_wolf = { hasInheritedKnife: false };
   world.addComponent(actorId, COMPONENT.Role, role);
+  world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(actorId, COMPONENT.Alive, createAliveComponent());
   let rosterReads = 0;
   world.getAliveEntityIds = () => {

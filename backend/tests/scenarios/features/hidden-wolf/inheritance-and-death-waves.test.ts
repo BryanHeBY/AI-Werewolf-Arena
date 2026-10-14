@@ -361,7 +361,7 @@ test("raw expected deaths and permission queries do not inherit; the actual deat
     events: GameEvent[] = [],
     life = game.world.getComponent(2, COMPONENT.Alive)!;
   life.alive = false;
-  expect(canHiddenWolfKnife(role(game, 1), game.world)).toBe(false);
+  expect(canHiddenWolfKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   expect(resolveInspection(game.world, 1, "camp", catalog)).toEqual({
     kind: "camp",
     camp: Camp.Good,
@@ -384,10 +384,10 @@ test("raw expected deaths and permission queries do not inherit; the actual deat
     Phase.Voting,
   );
   expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(true);
-  expect(canHiddenWolfKnife(role(game, 1), game.world)).toBe(true);
+  expect(canHiddenWolfKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
   expect(events.filter((e) => e.type === "hidden_wolf_awakened")).toHaveLength(1);
   life.alive = true;
-  expect(canHiddenWolfKnife(role(game, 1), game.world)).toBe(false);
+  expect(canHiddenWolfKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   expect(resolveInspection(game.world, 1, "camp", catalog)).toEqual({
     kind: "camp",
     camp: Camp.Wolf,
@@ -434,7 +434,7 @@ test("all wolves in one initial death batch never fake inheritance, while an ext
       kind: "camp",
       camp: additional ? Camp.Wolf : Camp.Good,
     });
-    expect(canHiddenWolfKnife(role(game, 1), game.world)).toBe(false);
+    expect(canHiddenWolfKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
   }
 });
 

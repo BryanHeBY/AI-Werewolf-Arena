@@ -43,7 +43,8 @@ function setup() {
   const world = new World("en"),
     ids = [world.createEntity(), world.createEntity(), world.createEntity()];
   for (const id of ids) {
-    world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
+    world.addComponent(id, COMPONENT.Role, createRoleComponent(Role.Villager));
+    world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent(true));
   }
   return { world, from: ids[0]!, to: ids[1]!, recipient: ids[2]! };

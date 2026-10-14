@@ -271,7 +271,7 @@ export async function simulateGames(
               return {
                 player_id: id,
                 role: role.role,
-                camp: role.camp,
+                camp: context.world.getComponent(id, COMPONENT.Camp)!.camp,
                 alive: context.world.getAliveEntityIds().includes(id),
               };
             }),

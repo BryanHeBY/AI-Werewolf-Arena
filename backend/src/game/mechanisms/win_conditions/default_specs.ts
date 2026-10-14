@@ -35,12 +35,13 @@ function statAlive(world: World): AliveStat {
       continue;
     }
 
-    if (roleComp.camp === Camp.Wolf) {
+    // 两阵营分支各在原比较点晚读唯一Camp，缺失不以角色资料补成默认阵营。
+    if (world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf) {
       stat.wolves += 1;
       continue;
     }
 
-    if (roleComp.camp === Camp.Good) {
+    if (world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good) {
       stat.good += 1;
       const profile = getDefaultRoleCatalog().metadata(roleComp.role);
       if (profile?.goodSide === "god" || demonHunterIsGod(world, roleComp)) stat.gods += 1;

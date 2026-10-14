@@ -59,10 +59,10 @@ for (const policy of ["ends_game", "forbidden"] as const)
           }
           const alive = game.world.getAliveEntityIds();
           expect(game.playerIds.filter((id) => !dead.has(id))).toEqual(alive);
-          const wolves = alive.filter((id) => initial.get(id)!.camp === Camp.Wolf);
+          const wolves = alive.filter((id) => game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Wolf);
           const villagers = alive.filter((id) => initial.get(id)!.role === Role.Villager);
           const gods = alive.filter(
-            (id) => initial.get(id)!.camp === Camp.Good && initial.get(id)!.role !== Role.Villager,
+            (id) => game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Good && initial.get(id)!.role !== Role.Villager,
           );
           const winner =
             wolves.length === 0 ? Camp.Good : !villagers.length || !gods.length ? Camp.Wolf : null;

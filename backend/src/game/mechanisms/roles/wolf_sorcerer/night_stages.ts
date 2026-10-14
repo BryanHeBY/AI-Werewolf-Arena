@@ -26,7 +26,7 @@ export const WOLF_SORCERER_EXCHANGE_STAGE: NightStageHandler = {
     if (actorId === null) {
       const id = wolfSorcererActorId(ctx.world),
         own = ctx.world.getComponent(id, COMPONENT.Role);
-      const state = getWolfSorcererState(own)!;
+      const state = getWolfSorcererState(own, () => ctx.world.getComponent(id, COMPONENT.Camp))!;
       const reason =
         day < state.firstNight
           ? "not_started"
@@ -42,7 +42,7 @@ export const WOLF_SORCERER_EXCHANGE_STAGE: NightStageHandler = {
       return;
     }
     const role = ctx.world.getComponent(actorId, COMPONENT.Role);
-    if (!getWolfSorcererState(role)) throw new Error("wolf_sorcerer_actor_invalid");
+    if (!getWolfSorcererState(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp))) throw new Error("wolf_sorcerer_actor_invalid");
     const request = ctx.makeRequest(actorId, ["swap_night_seats"], {
       stage: "wolf_sorcerer_exchange",
       requiresAction: true,

@@ -4,8 +4,10 @@
  * await 后先核 current 与捕获 stock，再依原角色、学习、政策、来源及原生命复验，失效不付款。
  * pass／映射 miss／保护阻挡按原规则付款；消费先于保护与事实，后续失败保已付前缀。
  * 已退休 Role 只在未消费行动入口与等待后拒绝；原 stock 异常与完整原体检查先行。
+ * state 只接晚取阵营 source，普通 Hunter／WolfKing 可忽略；原值比较不升级组件引用撤权。
  * 已消费延期提案保原 isCurrent，不因行动墓碑撤回已付前缀；本 owner 不开许可、标死或封盘。
  */
+import type { CurrentCampSource } from "../../../core/domain/components/camp";
 import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
 import {
   captureNativeGunStock,
@@ -33,6 +35,7 @@ export interface NativeDeathShotRules extends NativeDeathGunStockQueries {
   role: Role;
   state: (
     role: RoleComponent,
+    currentCamp: CurrentCampSource,
   ) => { readonly canShoot: boolean; readonly deathActionPolicy?: DeathActionPolicy } | undefined;
   policy?: (state: {
     readonly canShoot: boolean;
@@ -57,7 +60,7 @@ export async function resolveNativeDeathShots(
   for (const actorId of deadIds) {
     if (context?.isCurrent && !context.isCurrent()) break;
     const role = world.getComponent(actorId, COMPONENT.Role);
-    const state = role ? rules.state(role) : undefined;
+    const state = role ? rules.state(role, () => world.getComponent(actorId, COMPONENT.Camp)) : undefined;
     if (
       !role ||
       role.role !== rules.role ||
@@ -92,7 +95,7 @@ export async function resolveNativeDeathShots(
     }
     const actorLife = world.getComponent(actorId, COMPONENT.Alive)!;
     const actorVersion = aliveLifeVersion(actorLife);
-    const camp = role.camp,
+    const camp = world.getComponent(actorId, COMPONENT.Camp)?.camp,
       privateState = role.privateState;
     const targets = new Map(
       world.getAliveEntityIds().map((id) => [id, captureNightLife(world, id)]),
@@ -104,9 +107,9 @@ export async function resolveNativeDeathShots(
     if (
       currentRole !== role ||
       currentRole.role !== rules.role ||
-      currentRole.camp !== camp ||
+      world.getComponent(actorId, COMPONENT.Camp)?.camp !== camp ||
       currentRole.privateState !== privateState ||
-      rules.state(currentRole) !== state ||
+      rules.state(currentRole, () => world.getComponent(actorId, COMPONENT.Camp)) !== state ||
       rules.policy?.(state) !== policy ||
       context?.deathOriginPhase !== deathPhase ||
       context?.nightEffect !== nightEffect ||
@@ -182,9 +185,9 @@ export async function resolveNativeDeathShots(
           (context.isCurrent?.() ?? true) &&
           world.getComponent(actorId, COMPONENT.Role) === role &&
           role.role === rules.role &&
-          role.camp === camp &&
+          world.getComponent(actorId, COMPONENT.Camp)?.camp === camp &&
           role.privateState === privateState &&
-          rules.state(role) === state &&
+          rules.state(role, () => world.getComponent(actorId, COMPONENT.Camp)) === state &&
           rules.policy?.(state) === policy &&
           context?.deathOriginPhase === deathPhase &&
           context?.nightEffect === nightEffect &&

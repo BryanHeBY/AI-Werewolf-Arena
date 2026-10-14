@@ -64,7 +64,7 @@ test("actual policy gives initial N+2 counts priority and keeps its original cac
     [thief, Role.Thief],
     [villager, Role.Villager],
   ] as const) {
-    world.addComponent(id, COMPONENT.Role, createRoleComponent(role, Camp.Good));
+    world.addComponent(id, COMPONENT.Role, createRoleComponent(role));
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Victory, {
@@ -97,7 +97,8 @@ test("actual policy gives initial N+2 counts priority and keeps its original cac
     [Role.Villager, 2],
     [Role.Wolf, 1],
   ]);
-  world.addComponent(villager, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf));
+  world.addComponent(villager, COMPONENT.Role, createRoleComponent(Role.Wolf));
+  world.addComponent(villager, COMPONENT.Camp, { camp: Camp.Wolf });
   expect(cache(policy).publicRoleCounts).toBe(originalCounts);
   expect([...cache(policy).publicRoleCounts]).toEqual([
     [Role.Thief, 1],
@@ -202,7 +203,7 @@ test("actual no-board policy keeps World receivers and two distinct role field r
   const world = new World(),
     first = world.createEntity(),
     second = world.createEntity(),
-    role = createRoleComponent(Role.Villager, Camp.Good),
+    role = createRoleComponent(Role.Villager),
     trace: string[] = [];
   let boardReads = 0,
     roleReads = 0;
