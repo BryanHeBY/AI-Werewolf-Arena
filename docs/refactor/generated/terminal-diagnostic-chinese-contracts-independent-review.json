@@ -1,0 +1,275 @@
+{
+  "schema": 1,
+  "reviewer": "native_presentation_finish independent non-author",
+  "approved": true,
+  "findings": [],
+  "source": [
+    {
+      "path": "backend/src/utils/ansi.ts",
+      "sha256": "eb319fbef6ee8ed5e526a1bce41387f19059136dce4b382dbb6a02222a3f616a"
+    },
+    {
+      "path": "backend/src/utils/error_diagnostic.ts",
+      "sha256": "fc53ad805707eef7be22348ae5373b35e924e4b625808f596b3e3cdb1671a028"
+    },
+    {
+      "path": "backend/src/utils/speech_text.ts",
+      "sha256": "d65a4e06211d6e7225cab712a78e2b5c45fbf47110123fbfa78b2c4b7d117efc"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-scope-final.json",
+    "sha256": "14cd3bb9599173fbca6b9f52620165d41bae0328534ac330c71bd1250f1f0412",
+    "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+    "orderedSourceCount": 3,
+    "commentOnly": true,
+    "commentStages": {
+      "first": 18,
+      "precision": 2
+    }
+  },
+  "document": {
+    "path": "docs/refactor/terminal-diagnostic-chinese-contracts.md",
+    "sha256": "24f51f6b126a9c15c9575149d9ca151de7e4ec94d8561b496e6438b1c6751f73"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-evidence.json",
+    "sha256": "b424024cb1c0f72e5d9e33e115f2556c3914dda29068612f0077c11f8b92e4b2"
+  },
+  "actualGitBefore": [
+    {
+      "path": "backend/src/utils/ansi.ts",
+      "sha256": "f7bab253e12169b1dc755b2c91f0c95ed381c9bcb5adcfa0363bf98472a48851",
+      "mode": "100644",
+      "blob": "a0fc665885794c5d1048f45f30670935b26f43ba"
+    },
+    {
+      "path": "backend/src/utils/error_diagnostic.ts",
+      "sha256": "3768225e93cc8e266a0756081e4c5914c4c2de870ec198a7d88b512eabd92f4c",
+      "mode": "100644",
+      "blob": "5db3a03b09be91d3a9d4b336fd8e8f368981843f"
+    },
+    {
+      "path": "backend/src/utils/speech_text.ts",
+      "sha256": "d3e1a47d3b0d7e8cee3e91f5f3c07d7aa3ebe4d8562a4a0f7fa9a6fe102bfd94",
+      "mode": "100644",
+      "blob": "134b744c0cad4f36fb88e5e22e27490bf589babe"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6",
+      "blob": "19ed356bf04d559dc37d308ed3de7583ca5fe0a4",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/runtime/console_presenter.ts",
+      "sha256": "d725196a6ecb7755ea0a24ec23b6eee576d003a0c5ca1573852cde78c861daab",
+      "blob": "9323e3d18f15b3d9ec09986c2d58c04d33ce8e30",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/runtime/cli/error_codes.ts",
+      "sha256": "8b39aeffc48ebcd7712ebbff241153ccd9ed21030e5fcf3af18a2cbb18c7345d",
+      "blob": "c18392d0815c3176b761bf57313d43a9450af60e",
+      "mode": "100644"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-before.json",
+      "sha256": "16cc16ba7ca77d0a2726702462a1ce3c784afb1deb1235867dbfe765f61bd85e"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-edits.json",
+      "sha256": "ce4255c789b5e8de1ab80e9354b0c99d3350cf68751a0e20af39e21a22ed46d6"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-final-source-ready.json",
+      "sha256": "aecc18b76619777da58507925c4c1c8ded83bfedaa531ff02e55e4120a3fcd72"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-first-document.md",
+      "sha256": "5d879173f138e3858c6f302b61f565a972759aefe3737092d65c30022b193850"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-first-evidence.json",
+      "sha256": "833c72e327417072d95b066efba59d3b3eebdbe029058e469dc1a4db20bcfe1d"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-first-receipts.json",
+      "sha256": "ccd42e487fab1e78417dfbfb48533bb4e13fe530bec8d0e25afcb6e16c3c8e50"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-first-root-snapshot.json",
+      "sha256": "66792e9178c84d08aa3a1b06b5e69447375cca7df3623b1a56cf22ba180a1ded"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-first-scope-final.json",
+      "sha256": "5f9daad2b1549af7f920567fae33e9bbbdc83e9ba254f92b5f8045da351ef103"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-heads-output.txt",
+      "sha256": "f172b9b9942aeac21fd05bdd007fd8993d42cea6dc3231a0d8c09beaa04166db"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-heads.json",
+      "sha256": "0a218f4084f29b867a05f847429e2bf0ca48927761363be81053c1d8895c1f17"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-heads.ts",
+      "sha256": "3ebca812638198b10a70abdc2c5be189f70194f4dda1ef456a9524905e14f18e"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-precision-before.json",
+      "sha256": "05a213aae9c5886ec10a9a583e10bc8b908684d7c5c68a3988982a4559acf2b7"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-precision-edits.json",
+      "sha256": "e15119942b56621b38140eeea5c24ac4476ff1e658851f4ee2b96d64405810c2"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-precision-proof-output.txt",
+      "sha256": "0f9526d8d209fd3f3a38d12384acb514073db9e9a57238cad2ec8b7990ab641f"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-precision-proof.cjs",
+      "sha256": "a4e8f8c6a475548e181fe27f74b48d2aee76d50958bae9fadcbe346a0ce30edf"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-precision-proof.json",
+      "sha256": "ddee3e48730f7bbb3d90ab705acac1ae7dbcae83470e97744cf9d68f64c20746"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-precision-source-ready.json",
+      "sha256": "0af2ef2365bf58aa91ec7cb6de0e676b2eae6b0a5e7c00a0f2cc66958eac133d"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-proof-output.txt",
+      "sha256": "d8ea183631ab5fd856d5e898ca6e30765d753afee3349e18f7fc59c71690f052"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-proof.cjs",
+      "sha256": "3edfcc32a971770c2365de6613de9e487e52a8d7f04282fa077ebd064270bf96"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-proof.json",
+      "sha256": "a6ac85fc2c1a3bc191f37f1338ee3f84372e20230b2b387de7e1cb734863c334"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-receipts.json",
+      "sha256": "55cf4ae31e411aa17dc86e166052f69173ac5d4af842d5e142dec7357f55f1b6"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-source-ready.json",
+      "sha256": "bc40793640e03835c6aa90e429d561e08c750e27e808ef76b66d1b8b1b08c7b4"
+    }
+  ],
+  "boundArtifactReferences": 22,
+  "wholeTextPhases": [
+    {
+      "path": "backend/src/utils/ansi.ts",
+      "firstEdits": 4,
+      "precisionEdits": 1,
+      "firstSHA256": "495991c13e594924eed5ac2bc07f4f0f8a56b96291e5f67329d4bd1c326b61bb",
+      "finalSHA256": "eb319fbef6ee8ed5e526a1bce41387f19059136dce4b382dbb6a02222a3f616a",
+      "wholeForwardInverse": true
+    },
+    {
+      "path": "backend/src/utils/error_diagnostic.ts",
+      "firstEdits": 12,
+      "precisionEdits": 1,
+      "firstSHA256": "33905b9674ee02b918468b00dca8eea7dac1defc4798dd3acd9c46b8991f8355",
+      "finalSHA256": "fc53ad805707eef7be22348ae5373b35e924e4b625808f596b3e3cdb1671a028",
+      "wholeForwardInverse": true
+    },
+    {
+      "path": "backend/src/utils/speech_text.ts",
+      "firstEdits": 2,
+      "precisionEdits": 0,
+      "firstSHA256": "d65a4e06211d6e7225cab712a78e2b5c45fbf47110123fbfa78b2c4b7d117efc",
+      "finalSHA256": "d65a4e06211d6e7225cab712a78e2b5c45fbf47110123fbfa78b2c4b7d117efc",
+      "wholeForwardInverse": true
+    }
+  ],
+  "semanticReview": [
+    "All three original/current complete modules, ToolGateway/ConsolePresenter/CLI error-code controls and actual CLI diagnostic display caller read. Error-code table is a stable data reference, not a direct diagnostic caller.",
+    "ANSI explicit non-undefined argument returns immediately; otherwise NO_COLOR trimmed nonempty wins, accepted FORCE_COLOR values precede stdout.isTTY. No caching/environment writes. colorize retains original text when off and raw tone lookup/control wrapping when on.",
+    "Foreign fields are own descriptor values without invoking their ordinary field accessors/toString/toJSON; Proxy descriptor traps may execute and are caught. Native DOMException name getter is captured at module initialization, brand errors fall back to own name data.",
+    "Every current error layer reads original status/errno/native name/message first. Valid100–599 integer HTTP classification precedes file/network/abort/timeout/internal messages; any later valid HTTP replaces prior candidate, while other candidates replace only transport_error. This does not choose retries or gameplay fallback.",
+    "lastError nullish-coalesces to cause. Non-nullish primitive lastError ends traversal rather than visiting cause; repeated object terminates, maximum8 layers. Retry-After is own lowercase header string with1–5 integer digits and optional1–3 decimal digits, finite integer milliseconds at most86400000; no date/whitespace/sign parsing.",
+    "Output includes only code plus accepted diagnostic metadata and dictionary message; no original arbitrary error message or entire headers/body copied. JSON/localization failures remain the original call behavior.",
+    "Speech regex anchors the beginning, allows repeated whitespace-surrounded reserved labels and case-insensitive English, preserving embedded same text. Original raw.replace(...).trim() calls and exceptions stay unchanged, without new String conversion or permission claims.",
+    "Actual gateway cleans before validator call and preserves its shallow-copy/getter order. Console/CLI callers select locale, print or set exit state themselves; these utilities do not commit game actions or own transport close."
+  ],
+  "evidenceReview": {
+    "runs": [
+      {
+        "key": "proof",
+        "terminalChunk": "34b03b",
+        "actualExitCode": 0
+      },
+      {
+        "key": "heads",
+        "terminalChunk": "b416b2",
+        "actualExitCode": 0
+      },
+      {
+        "key": "precision-proof",
+        "terminalChunk": "01f3b4",
+        "actualExitCode": 0
+      }
+    ],
+    "firstProof": {
+      "sources": 3,
+      "commentEdits": 18,
+      "typedNodes": 918,
+      "nodeArrays": 116,
+      "noncommentLeaves": 1057,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeRawOutputs": 6
+    },
+    "firstHeads": {
+      "sources": 3,
+      "documentationPaths": 715,
+      "diagnostics": 0,
+      "terminal": "b416b2"
+    },
+    "precisionProof": {
+      "sources": 2,
+      "commentEdits": 2,
+      "typedNodes": 893,
+      "nodeArrays": 109,
+      "noncommentLeaves": 1024,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeRawOutputs": 4
+    },
+    "firstMetadataAndSourceReadyPreserved": true,
+    "firstProgramAndHeadNotRerun": true
+  },
+  "resolvedFindings": [
+    {
+      "description": "ANSI environment-reading sentence limited to absent explicit switch and actual short circuit.",
+      "path": "backend/src/utils/ansi.ts",
+      "status": "closed via single descriptive comment, no runtime change"
+    },
+    {
+      "description": "Seen error object terminates traversal rather than proceeding past it.",
+      "path": "backend/src/utils/error_diagnostic.ts",
+      "status": "closed via single descriptive comment, no runtime change"
+    }
+  ],
+  "readerHistory": [
+    "53e235 attempted object-items() on a precision-edits list during metadata printing; corrected only the read method. No author file/check execution or product failure."
+  ],
+  "limitations": [
+    "Reviewer only read Git/text/hash/JSON and wrote this report; no compiler/head/proof/tests/gates/product import rerun.",
+    "Whole AST/NodeArray/noncomment leaf/JSDoc/protected and ESNext/CJS comparisons are author evidence read, not independently executed by reviewer.",
+    "Original head and main proof bind first18 comment stage; final2 comments are linked through the sole two-program bridge, without claiming a final head rerun.",
+    "No source/author metadata/Git/progress changed. Raw comment bytes alter sourceHash; no archive exemption, arbitrary global monkeypatch guarantee, all-role/P9 completion or behavior-test claim."
+  ]
+}

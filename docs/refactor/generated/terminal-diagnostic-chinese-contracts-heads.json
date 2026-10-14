@@ -1,0 +1,20 @@
+{
+  "source": [
+    {
+      "path": "backend/src/utils/ansi.ts",
+      "sha256": "495991c13e594924eed5ac2bc07f4f0f8a56b96291e5f67329d4bd1c326b61bb"
+    },
+    {
+      "path": "backend/src/utils/error_diagnostic.ts",
+      "sha256": "33905b9674ee02b918468b00dca8eea7dac1defc4798dd3acd9c46b8991f8355"
+    },
+    {
+      "path": "backend/src/utils/speech_text.ts",
+      "sha256": "d65a4e06211d6e7225cab712a78e2b5c45fbf47110123fbfa78b2c4b7d117efc"
+    }
+  ],
+  "sourceReadySHA256": "bc40793640e03835c6aa90e429d561e08c750e27e808ef76b66d1b8b1b08c7b4",
+  "documentationPaths": 715,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

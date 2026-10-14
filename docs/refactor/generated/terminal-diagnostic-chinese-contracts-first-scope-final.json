@@ -1,0 +1,103 @@
+{
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "source": [
+    {
+      "path": "backend/src/utils/ansi.ts",
+      "sha256": "495991c13e594924eed5ac2bc07f4f0f8a56b96291e5f67329d4bd1c326b61bb"
+    },
+    {
+      "path": "backend/src/utils/error_diagnostic.ts",
+      "sha256": "33905b9674ee02b918468b00dca8eea7dac1defc4798dd3acd9c46b8991f8355"
+    },
+    {
+      "path": "backend/src/utils/speech_text.ts",
+      "sha256": "d65a4e06211d6e7225cab712a78e2b5c45fbf47110123fbfa78b2c4b7d117efc"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6",
+      "blob": "19ed356bf04d559dc37d308ed3de7583ca5fe0a4",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/runtime/console_presenter.ts",
+      "sha256": "d725196a6ecb7755ea0a24ec23b6eee576d003a0c5ca1573852cde78c861daab",
+      "blob": "9323e3d18f15b3d9ec09986c2d58c04d33ce8e30",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/runtime/cli/error_codes.ts",
+      "sha256": "8b39aeffc48ebcd7712ebbff241153ccd9ed21030e5fcf3af18a2cbb18c7345d",
+      "blob": "c18392d0815c3176b761bf57313d43a9450af60e",
+      "mode": "100644"
+    }
+  ],
+  "before": {
+    "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-before.json",
+    "sha256": "16cc16ba7ca77d0a2726702462a1ce3c784afb1deb1235867dbfe765f61bd85e"
+  },
+  "sourceReady": {
+    "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-source-ready.json",
+    "sha256": "bc40793640e03835c6aa90e429d561e08c750e27e808ef76b66d1b8b1b08c7b4"
+  },
+  "edits": {
+    "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-edits.json",
+    "sha256": "ce4255c789b5e8de1ab80e9354b0c99d3350cf68751a0e20af39e21a22ed46d6"
+  },
+  "commentEdits": 18,
+  "commentOnly": true,
+  "sourceFrozen": true,
+  "document": {
+    "path": "docs/refactor/terminal-diagnostic-chinese-contracts.md",
+    "sha256": "5d879173f138e3858c6f302b61f565a972759aefe3737092d65c30022b193850"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-before.json",
+      "sha256": "16cc16ba7ca77d0a2726702462a1ce3c784afb1deb1235867dbfe765f61bd85e"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-edits.json",
+      "sha256": "ce4255c789b5e8de1ab80e9354b0c99d3350cf68751a0e20af39e21a22ed46d6"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-heads-output.txt",
+      "sha256": "f172b9b9942aeac21fd05bdd007fd8993d42cea6dc3231a0d8c09beaa04166db"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-heads.json",
+      "sha256": "0a218f4084f29b867a05f847429e2bf0ca48927761363be81053c1d8895c1f17"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-heads.ts",
+      "sha256": "3ebca812638198b10a70abdc2c5be189f70194f4dda1ef456a9524905e14f18e"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-proof-output.txt",
+      "sha256": "d8ea183631ab5fd856d5e898ca6e30765d753afee3349e18f7fc59c71690f052"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-proof.cjs",
+      "sha256": "3edfcc32a971770c2365de6613de9e487e52a8d7f04282fa077ebd064270bf96"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-proof.json",
+      "sha256": "a6ac85fc2c1a3bc191f37f1338ee3f84372e20230b2b387de7e1cb734863c334"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-receipts.json",
+      "sha256": "ccd42e487fab1e78417dfbfb48533bb4e13fe530bec8d0e25afcb6e16c3c8e50"
+    },
+    {
+      "path": "docs/refactor/generated/terminal-diagnostic-chinese-contracts-source-ready.json",
+      "sha256": "bc40793640e03835c6aa90e429d561e08c750e27e808ef76b66d1b8b1b08c7b4"
+    }
+  ],
+  "limits": [
+    "只核三完整程序的精确注释正逆、完整语法/非注释叶/受保护指令和六整输出；形状不代替说明语义审查。",
+    "不运行类型、业务、模型或全门禁；完整角色迁移、全仓中文与P9继续。"
+  ]
+}

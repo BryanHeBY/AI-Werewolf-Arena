@@ -1,0 +1,100 @@
+{
+  "approved": true,
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "sampledSourceReadySHA256": "0af2ef2365bf58aa91ec7cb6de0e676b2eae6b0a5e7c00a0f2cc66958eac133d",
+  "programs": [
+    {
+      "path": "backend/src/utils/ansi.ts",
+      "beforeSha256": "495991c13e594924eed5ac2bc07f4f0f8a56b96291e5f67329d4bd1c326b61bb",
+      "afterSha256": "eb319fbef6ee8ed5e526a1bce41387f19059136dce4b382dbb6a02222a3f616a",
+      "commentEdits": 1,
+      "typedNodes": 174,
+      "nodeArrays": 28,
+      "noncommentLeaves": 217,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 801,
+          "sha256": "f9f711658b3cb02ddacdc13d720490875a246e0423e063e262e581d80160de8c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 932,
+          "sha256": "cd13599fbad7c022e2b70d751787e23c9ec2742b5d42148e5835745371093240"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/utils/error_diagnostic.ts",
+      "beforeSha256": "33905b9674ee02b918468b00dca8eea7dac1defc4798dd3acd9c46b8991f8355",
+      "afterSha256": "fc53ad805707eef7be22348ae5373b35e924e4b625808f596b3e3cdb1671a028",
+      "commentEdits": 1,
+      "typedNodes": 719,
+      "nodeArrays": 81,
+      "noncommentLeaves": 807,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4823,
+          "sha256": "096226fc3b25c4fb26b5a512e273ad758d074c3b4199847d7c00ecbb0d65773f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5034,
+          "sha256": "a0d4831a982db552a21908fecf67f0a7d6e20f499d102ad305d2dd2d2f351a4f"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6",
+      "blob": "19ed356bf04d559dc37d308ed3de7583ca5fe0a4",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/runtime/console_presenter.ts",
+      "sha256": "d725196a6ecb7755ea0a24ec23b6eee576d003a0c5ca1573852cde78c861daab",
+      "blob": "9323e3d18f15b3d9ec09986c2d58c04d33ce8e30",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/runtime/cli/error_codes.ts",
+      "sha256": "8b39aeffc48ebcd7712ebbff241153ccd9ed21030e5fcf3af18a2cbb18c7345d",
+      "blob": "c18392d0815c3176b761bf57313d43a9450af60e",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/utils/speech_text.ts",
+      "sha256": "d65a4e06211d6e7225cab712a78e2b5c45fbf47110123fbfa78b2c4b7d117efc"
+    }
+  ],
+  "summary": {
+    "sources": 2,
+    "commentEdits": 2,
+    "typedNodes": 893,
+    "nodeArrays": 109,
+    "noncommentLeaves": 1024,
+    "jsdocTags": 0,
+    "protectedComments": 0,
+    "wholeRawOutputs": 4
+  },
+  "limits": [
+    "两个实际完整程序的非注释 AST／NodeArray／叶文本／受保护指令与4份移除注释ESNext/CJS整输出；没有类型检查、生产加载或行为测试。",
+    "完整精确正逆仅证明2注释变换的来源；职责头形状和emit相同不代替独立说明语义审查。",
+    "当前源码SHA改变；不改严格归档字段、历史sourceHash或门禁豁免。"
+  ]
+}
