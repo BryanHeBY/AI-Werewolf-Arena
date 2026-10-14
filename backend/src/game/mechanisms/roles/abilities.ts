@@ -25,6 +25,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import type { EntityId, GameEvent } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
 import { roleOf, emit } from "./night-ability-change-runtime";
+import { types as utilTypes } from "node:util";
 import type {
   NightAbilityMetadata,
   AbilityStatus,
@@ -304,22 +305,91 @@ export function commitGrantedNightAbility(
   return ability;
 }
 
-/** 目标安装及发表已成功；原槽删除、退休 ID push、转出事实各保已完成前缀，不做事务退款。 */
-export function retireTransferredNightAbility(
+/** 转移只接收稳定的自有数据槽；这不是其他 live payload 的通用 schema，也不改变授予的接受面。 */
+function transferPrivateState(role: RoleComponent): object {
+  if (utilTypes.isProxy(role)) throw new Error("ability_transfer_inventory_invalid");
+  const descriptor = Object.getOwnPropertyDescriptor(role, "privateState");
+  const value = descriptor && "value" in descriptor ? descriptor.value : undefined;
+  if (!value || typeof value !== "object" || utilTypes.isProxy(value))
+    throw new Error("ability_transfer_inventory_invalid");
+  const prototype = Object.getPrototypeOf(value);
+  if (prototype !== Object.prototype && prototype !== null)
+    throw new Error("ability_transfer_inventory_invalid");
+  return value;
+}
+
+/** 库存与条目保持同引用；不调用库存访问器，也不把两次 getter 相等当作稳定性证明。 */
+function transferInventory(privateState: object): Record<string, NightAbility> | undefined {
+  const descriptor = Object.getOwnPropertyDescriptor(privateState, "abilities");
+  if (!descriptor) {
+    if ("abilities" in privateState) throw new Error("ability_transfer_inventory_invalid");
+    return undefined;
+  }
+  if (!("value" in descriptor)) throw new Error("ability_transfer_inventory_invalid");
+  const value = descriptor.value;
+  if (value === undefined || value === null) return undefined;
+  if (typeof value !== "object" || utilTypes.isProxy(value))
+    throw new Error("ability_transfer_inventory_invalid");
+  const prototype = Object.getPrototypeOf(value);
+  if (prototype !== Object.prototype && prototype !== null)
+    throw new Error("ability_transfer_inventory_invalid");
+  for (const key of Reflect.ownKeys(value)) {
+    if (!("value" in Object.getOwnPropertyDescriptor(value, key)!))
+      throw new Error("ability_transfer_inventory_invalid");
+  }
+  return value as Record<string, NightAbility>;
+}
+
+/**
+ * 完整预检已完成后，唯一库存 owner 晚核原角色与真实数据槽，再按源删除／退休、目标安装、两条事实提交。
+ * 同角色、同容器、同字典或源条目别名不属于合法转移输入；空目标字典仍到安装点才创建。
+ * 退休列表的 getter／push 在源删除后原点执行；任何抛错保已完成前缀与原 Error，不退款、不补偿、不暗改 disabled。
+ * 记录 sink 只获得事件输入，不取得库存写权；任意强制写回旧槽的 JS monkeypatch 不属于这一有界唯一 owner 保证。
+ */
+export function commitTransferredNightAbility(
+  world: World,
   source: RoleComponent,
+  originalPrivateState: object,
+  target: RoleComponent,
   fromId: EntityId,
+  toId: EntityId,
   id: string,
   ability: NightAbilityReadView,
+  received: NightAbility,
   events: GameEvent[],
 ): void {
-  delete (
-    (source.privateState as { readonly abilities?: unknown }).abilities as Record<
-      string,
-      NightAbility
-    >
-  )[id];
+  if (source === target) throw new Error("ability_transfer_inventory_alias");
+  if (roleOf(world, fromId) !== source || roleOf(world, toId) !== target)
+    throw new Error("ability_transfer_owner_revoked");
+  const sourcePrivate = transferPrivateState(source), targetPrivate = transferPrivateState(target);
+  if (sourcePrivate !== originalPrivateState) throw new Error("ability_transfer_owner_revoked");
+  if (sourcePrivate === targetPrivate) throw new Error("ability_transfer_inventory_alias");
+  const sourceStored = transferInventory(sourcePrivate), targetStored = transferInventory(targetPrivate);
+  if (sourceStored === targetStored && sourceStored !== undefined)
+    throw new Error("ability_transfer_inventory_alias");
+  if (utilTypes.isProxy(ability)) throw new Error("ability_transfer_inventory_invalid");
+  const sourceEntry = sourceStored && Object.getOwnPropertyDescriptor(sourceStored, id),
+    sourceId = Object.getOwnPropertyDescriptor(ability, "id");
+  if (
+    !sourceStored || !sourceEntry || !("value" in sourceEntry) || sourceEntry.value !== ability ||
+    !sourceId || !("value" in sourceId) || sourceId.value !== id ||
+    Reflect.ownKeys(sourceStored).filter(
+      (key) => Object.getOwnPropertyDescriptor(sourceStored, key)!.value === ability,
+    ).length !== 1
+  )
+    throw new Error("ability_transfer_source_slot_invalid");
+  if (targetStored && Reflect.ownKeys(targetStored).some(
+    (key) => Object.getOwnPropertyDescriptor(targetStored, key)!.value === ability,
+  ))
+    throw new Error("ability_transfer_inventory_alias");
+  // 删除按已核对的真实 key，而非凭 Object.values 中的实例 id 猜测槽；失败不进入目标安装。
+  delete sourceStored[id];
   (
-    ((source.privateState as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]
+    ((sourcePrivate as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]
   ).push(id);
+  // 空目标库存的创建也在源退休之后；安装或 granted 发布失败不会重装源槽。
+  const stored = targetStored ?? ((targetPrivate as { abilities?: Record<string, NightAbility> }).abilities = {});
+  stored[received.id] = received;
+  emit(events, toId, received, "granted");
   emit(events, fromId, ability, "transferred_out");
 }

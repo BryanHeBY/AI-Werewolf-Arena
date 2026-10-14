@@ -1,0 +1,109 @@
+{
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "sampledSource": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "e0fb16df609c83d24262343564abf9738719142d93cf637091c2d2117bc40d97"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "888c3ac4693bea5719a63cf8e375608c08f3cacd730a79e8b7f23109e057f621"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "0dc21ebd321640d9e14d301475d188176b34498008b83720a99802ea518d9f5f"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-transfer-failure-policy.test.ts",
+      "sha256": "47632ecfc3d83ffa3d2d8c723012b413d3d050cc5a43b902c9da3ad2f41238ed"
+    }
+  ],
+  "noEnvFile": true,
+  "executions": [
+    {
+      "kind": "new-tests",
+      "command": "bun --no-env-file test backend/tests/unit/mechanisms/night-ability-transfer-failure-policy.test.ts",
+      "chunk": "b31462",
+      "exitCode": 0,
+      "cases": 3,
+      "assertions": 60,
+      "inputVariants": 8,
+      "log": "docs/refactor/generated/night-ability-transfer-failure-policy-new-tests.log"
+    },
+    {
+      "kind": "old-input-new-policy",
+      "command": "bun --no-env-file test backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts --test-name-pattern '^F03 '",
+      "chunk": "337c25",
+      "exitCode": 0,
+      "cases": 2,
+      "assertions": 16,
+      "filtered": 2,
+      "log": "docs/refactor/generated/night-ability-transfer-failure-policy-old-input-tests.log",
+      "scope": "原两个输入及thrower保留；F03新oracle，不称行为等价。"
+    },
+    {
+      "kind": "old-success",
+      "command": "bun --no-env-file test backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts --test-name-pattern '^zh-CN: independent sources/resources survive grant, expiry, blocking and transfer without changing role or camp$'",
+      "chunk": "e818f3",
+      "exitCode": 0,
+      "cases": 1,
+      "assertions": 24,
+      "filtered": 11,
+      "log": "docs/refactor/generated/night-ability-transfer-failure-policy-success.log"
+    },
+    {
+      "kind": "finite-types",
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --noEmit --pretty false -p docs/refactor/generated/night-ability-transfer-failure-policy-types-config.json",
+      "launchChunk": "db1f94",
+      "session": 34130,
+      "terminalChunk": "14f9d7",
+      "exitCode": 0,
+      "roots": 4,
+      "log": "docs/refactor/generated/night-ability-transfer-failure-policy-types.log",
+      "terminalBasis": "真实write_stdin终态exit_code=0，不以空log推断。"
+    },
+    {
+      "kind": "heads",
+      "command": "bun --no-env-file docs/refactor/generated/night-ability-transfer-failure-policy-heads.ts",
+      "chunk": "b47e2b",
+      "exitCode": 0,
+      "roots": 4,
+      "documentationPaths": 664,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "log": "docs/refactor/generated/night-ability-transfer-failure-policy-heads.log"
+    },
+    {
+      "kind": "bounded-body-proof",
+      "command": "bun --no-env-file docs/refactor/generated/night-ability-transfer-failure-policy-proof.cjs",
+      "launchChunk": "52b9d0",
+      "session": 6238,
+      "terminalChunk": "39f392",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/night-ability-transfer-failure-policy-proof.json",
+      "log": "docs/refactor/generated/night-ability-transfer-failure-policy-proof.log",
+      "scope": "13comparison/12mapped outputs；首grant展开旧return借用新尾，补充窄bridge独立验证原返回，不冒全transfer政策等价。"
+    },
+    {
+      "kind": "actual-old-grant-return-origin",
+      "command": "bun --no-env-file docs/refactor/generated/night-ability-transfer-failure-policy-grant-return-proof.cjs",
+      "chunk": "6b156e",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/night-ability-transfer-failure-policy-grant-return-proof.json",
+      "log": "docs/refactor/generated/night-ability-transfer-failure-policy-grant-return-proof.log",
+      "scope": "只补实际旧return与外层cast来源、wholegrant和2outputs；其余green未重。"
+    }
+  ],
+  "summary": {
+    "distinctCases": 6,
+    "assertions": 100,
+    "runtimeExecutions": 3,
+    "typeAllGreen": true,
+    "greenRepeats": 0
+  },
+  "limits": [
+    "新单元三case内八输入变体，不把八输入说八独立test。",
+    "原grant失败与黑市拒绝两case未改，不重复其绿。",
+    "有界合法唯一数据库存和只写记录sink；任意强制跨槽写回的JS monkeypatch不属于保证。"
+  ]
+}

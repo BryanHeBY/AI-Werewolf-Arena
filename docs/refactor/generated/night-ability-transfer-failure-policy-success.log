@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts:
+(pass) zh-CN: independent sources/resources survive grant, expiry, blocking and transfer without changing role or camp [43.05ms]
+
+ 1 pass
+ 11 filtered out
+ 0 fail
+ 24 expect() calls
+Ran 1 test across 1 file. [198.00ms]

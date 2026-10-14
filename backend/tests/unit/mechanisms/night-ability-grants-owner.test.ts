@@ -10,7 +10,7 @@ import { COMPONENT } from "../../../src/core/domain/components/names";
 import { createRoleComponent } from "../../../src/core/domain/components/role";
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
 import type { GameEvent } from "../../../src/core/domain/events";
-import { allNightAbilities } from "../../../src/game/mechanisms/roles/abilities";
+import { allNightAbilities, activeNightAbility, findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
 import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import * as metadataCommands from "../../../src/game/mechanisms/roles/ability_changes";
 
@@ -60,7 +60,8 @@ test("grant publication reads push before source and retains the installed insta
   expect(events).toHaveLength(0);
 });
 
-test("target publication failure retains both installed target and undeleted original source", () => {
+// F03 新 oracle：原输入／抛错 sink 不变；来源先退休，目标发表失败不能留下两份合法有效库存。
+test("F03 target publication failure retains installed target after retiring the original source", () => {
   const f = fixture(), events: GameEvent[] = [], original = guardGift(f, events), failure = Error("literal_target_publication_failure"), trace: string[] = [];
   Object.defineProperty(events, "push", { configurable: true, value(event: GameEvent) {
     trace.push(this === events ? "push:same-array" : "push:wrong-array");
@@ -68,26 +69,40 @@ test("target publication failure retains both installed target and undeleted ori
     trace.push(event.payload.operation);
     throw failure;
   } });
-  expect(() => transferNightAbility(f.world, f.from, f.to, original.id, "transfer:prefix", events, {
-    kind: "guard", statePolicy: (state) => ({ ...state }),
-  })).toThrow(failure);
+  let caught: unknown;
+  try {
+    transferNightAbility(f.world, f.from, f.to, original.id, "transfer:prefix", events, {
+      kind: "guard", statePolicy: (state) => ({ ...state }),
+    });
+  } catch (error) { caught = error; }
+  expect(caught).toBe(failure);
   expect(trace).toEqual(["push:same-array", "granted"]);
-  expect(allNightAbilities(f.fromRole)[0]).toBe(original);
+  expect(allNightAbilities(f.fromRole)).toEqual([]);
+  expect(findNightAbility(f.fromRole, "guard", original.id)).toBeUndefined();
+  expect(activeNightAbility(f.fromRole, "guard", 2)).toBeUndefined();
   expect(allNightAbilities(f.toRole)[0]!.id).toBe("transfer:prefix");
-  expect(Object.hasOwn(f.fromRole.privateState, "retiredAbilityIds")).toBe(false);
+  expect(activeNightAbility(f.toRole, "guard", 2)?.id).toBe("transfer:prefix");
+  expect(allNightAbilities(f.toRole)[0]).toMatchObject({ uses: 0, lastUsedDay: null, maxUses: 2, startsOnDay: 2, disabled: false });
+  expect((f.fromRole.privateState as { retiredAbilityIds: string[] }).retiredAbilityIds).toEqual([original.id]);
   expect(events.map((event) => event.type === "ability_changed" ? event.payload.operation : event.type)).toEqual(["granted"]);
 });
 
-test("retired-id getter failure follows source deletion and retains the target grant fact", () => {
+// 退休列表仍在 delete 后晚读；F03 将目标安装移到这一步之后，原 getter Error 不被替换。
+test("F03 retired-id getter failure follows source deletion before target installation or fact", () => {
   const f = fixture(), events: GameEvent[] = [], original = guardGift(f, events), failure = Error("literal_retired_id_failure"), trace: string[] = [];
   Object.defineProperty(f.fromRole.privateState, "retiredAbilityIds", { configurable: true, get() { trace.push("retired:get"); throw failure; } });
-  expect(() => transferNightAbility(f.world, f.from, f.to, original.id, "transfer:prefix", events, {
-    kind: "guard", statePolicy: (state) => ({ ...state }),
-  })).toThrow(failure);
+  let caught: unknown;
+  try {
+    transferNightAbility(f.world, f.from, f.to, original.id, "transfer:prefix", events, {
+      kind: "guard", statePolicy: (state) => ({ ...state }),
+    });
+  } catch (error) { caught = error; }
+  expect(caught).toBe(failure);
   expect(trace).toEqual(["retired:get"]);
   expect(allNightAbilities(f.fromRole)).toEqual([]);
-  expect(allNightAbilities(f.toRole)[0]!.source).toEqual({ kind: "transfer", actorId: f.from, abilityId: "gift:prefix" });
-  expect(events.map((event) => event.type === "ability_changed" ? [event.payload.actorId, event.payload.operation] : event.type)).toEqual([[f.from, "granted"], [f.to, "granted"]]);
+  expect(allNightAbilities(f.toRole)).toEqual([]);
+  expect(Object.hasOwn(f.toRole.privateState, "abilities")).toBe(false);
+  expect(events.map((event) => event.type === "ability_changed" ? [event.payload.actorId, event.payload.operation] : event.type)).toEqual([[f.from, "granted"]]);
 });
 
 test("a late black-market policy replacement revokes transfer before installing another owner", () => {

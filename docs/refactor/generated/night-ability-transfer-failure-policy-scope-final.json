@@ -1,0 +1,130 @@
+{
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "e0fb16df609c83d24262343564abf9738719142d93cf637091c2d2117bc40d97"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "888c3ac4693bea5719a63cf8e375608c08f3cacd730a79e8b7f23109e057f621"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "0dc21ebd321640d9e14d301475d188176b34498008b83720a99802ea518d9f5f"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-transfer-failure-policy.test.ts",
+      "sha256": "47632ecfc3d83ffa3d2d8c723012b413d3d050cc5a43b902c9da3ad2f41238ed"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "sha256": "03cd4912cb8cc77b4b9943dc7f14b491fed6a74a5a46fb2a83354ecce0a88031"
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "a18099d50c962f4c869eef7c753442d35148c0247fc48b8046e5fc82cce197b9"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-installation-and-projection.test.ts",
+      "sha256": "958ecb9bee68793a5d3093dba537248b1bfaee04bef262dcc7477176d16e898b"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/night-ability-transfer-failure-policy.md",
+    "sha256": "89d40c74cc11d8f97a85a933214d4a1d6b1026becc1bc3b9144de222d828f3cc"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-before.json",
+      "sha256": "2b8c28b28bf5ecb61cefc645db64d6e8b3f39f378b6c63e056a2efa7cb24c4ee"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-check-phase.json",
+      "sha256": "a63a6894f95bc787e86543c70af1317bd896c988dff0cd9366a638b3acef102e"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-edits.json",
+      "sha256": "3abefb0a44284d3c31bb98457de96bf933ff986cda07260c95aab6d29cfc4ce8"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-grant-return-proof.cjs",
+      "sha256": "06ba6be9ee1e5c1fda42e9d9842be501bf4819d0ddb5d29646da14fb97e6f946"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-grant-return-proof.json",
+      "sha256": "bf059ed19c03944350df716069e3956638d635b05d34440d05d6562edd47483e"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-grant-return-proof.log",
+      "sha256": "9e4ac08f293db012fcce4378c06ef0c7285f95fccac07e7ae7dbdaabbca56aea"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-handoff.md",
+      "sha256": "d8fa8081caafa0678f33bfb0c7bbef72f4fdc881b030aa6e1bcc39a2500b550b"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-heads.json",
+      "sha256": "af1d68d490f07289ff3c339f9150f73998be7781118cd0a4487800b3c0c8fcba"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-heads.log",
+      "sha256": "5096cb25a4bb4d0b5945c53a165fc31dcdee25055fb2b28a0d9dd39694b448f8"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-heads.ts",
+      "sha256": "891169b35ff2f56f3830763a5c85e1311f7da2b2d40d0d1b9a7086d4140de971"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-new-tests.log",
+      "sha256": "d9a076d1afb85a810e8d4d3735f9dbd880ef7651ee96b96ca419b49d70f68585"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-old-failure-inputs.json",
+      "sha256": "025c112d9b63533c6e7dd87b991e2d86e6f52a9c082452f867d63cbb2fd86c6f"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-old-input-tests.log",
+      "sha256": "af1669b17f355e59586e969df60ec264a97129aaf2c04aab8ab61b27cb81e557"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-paths.json",
+      "sha256": "4f4e5c5a79769e8eea948d725910f8f26a64052f6a3ada9f4fcdb19c016d7e8e"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-proof.cjs",
+      "sha256": "3695313d1cbe2713b7ac1e3b677abdc42c648f9e268fe2aa611c89eb1e1c0650"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-proof.json",
+      "sha256": "85dfbb3583ff278235dc9b36396cf115c0aaac1a239a7ab5edb097adf4d49279"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-proof.log",
+      "sha256": "dbfdef1fe082b36149afe7da691094f235069f65ebd190b140fb48c09bcfe767"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-receipts.json",
+      "sha256": "1670b2dc1d41785e64a0865d349e49da3581d2e43165219b370d903678bb6adc"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-success.log",
+      "sha256": "333e5cde92eee17af63ebe623d16910c0e9fbed8558d7289415c7d0dde163cdb"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-summary.json",
+      "sha256": "4bc701937be705256fef7c814ed248225dbca8e0d42afd6dde7a6f694f5342ea"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-types-config.json",
+      "sha256": "562606a84a6ecb9c883910e19f527e3cc9cb304bf8e3a8d4399ba6de9c6e40a9"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-transfer-failure-policy-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

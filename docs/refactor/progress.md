@@ -873,3 +873,5 @@
 - 两首夜请求夹具输入独立修正：仅野孩子／孤独少女此前两个失败标题传同一 bootstrap.boardConfig；Wild helper 类型只收实际 World／事件／板子，原动作与 159 个 expect 表达式全文保留，其它 raw 输入不改。Root 与非作者核五处精确全文正逆及四生产控制，实际 JS 输入变化明列；唯一 failed-title run 两案例九断言通过，有限两根类型及两中文头一次无诊断。没有新增测试或复跑已绿案例，原 C18 两红与 before-overlay 收据仍保；见 setup-request-fixture-board.md。
 
 - 固定 e0dd0306 阶段结构检查：后台唯一 gate 实际退出 0；3,257 原 Git blob／665 同 Git 文档，0 新增、240 原债剩余、1,539 已清。相对固定 2da71936 清两原 ID（猎魔人毒请求职责头、PhaseManager 对寻香 authority 直接依赖），无返回；原 1,779 ID／SHA、无映射渐进政策不改。纯输入／分区各一次核对通过，Root 与独立审查核完整 blob、来源、分区及原收据，不复门禁。后继 F02／F03／ACP 中文工作树排除；不是全类型／行为、全部有效中文或 P9 严格零债，见 architecture-checkpoint-e0dd0306.md。
+
+- F03 夜能力转移失败独立修正：四源完整原预检后，由唯一库存 owner 晚核真实自有槽，先源删除／退休，再安装目标并按原 granted／out 顺序发布；普通授予保原接受与提交。共享 Role／容器／字典、源 id-key 失配或局部别名及 Proxy／访问器库存明确作为新转移拒绝政策，不偷偷加 metadata latch。原两故障输入保持，独立新预期核同 Error 与已完成前缀；新三案例含八输入共 60 断言、旧两新 oracle 16、原成功精准 24，六不同案例 100 断言通过，四根类型和中文头首绿。Root 与非作者核三真实 Git／三控制／22 附件及完整验证、返回窄桥、原绑定；Root审查器首次误读新增不存在前态的工具失败已保，仅工具补 absent 核验。仅合法 owned 写路径保证不出现双有效库存；不冒任意 JS 强制写回防御或全 C17/P6 完成，见 night-ability-transfer-failure-policy.md。

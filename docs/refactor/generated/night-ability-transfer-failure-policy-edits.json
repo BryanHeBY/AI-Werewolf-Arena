@@ -1,0 +1,1007 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "beforeSHA256": "33e7144db8d7389ac5823f70bec3110fb0866daec8e6e969e568285fd6730a22",
+      "afterSHA256": "e0fb16df609c83d24262343564abf9738719142d93cf637091c2d2117bc40d97",
+      "wholePreciseForwardSame": true,
+      "new": false,
+      "edits": [
+        {
+          "beforeStart": 1158,
+          "beforeEnd": 1158,
+          "before": "",
+          "after": "\";\nimport { types as utilTypes } from \"node:util"
+        },
+        {
+          "beforeStart": 10857,
+          "beforeEnd": 10857,
+          "before": "",
+          "after": "转移只接收稳定的自有数据槽；这不是其他 live payload 的通用 schema，也不改变授予的接受面。 */\nfunction transferPrivateState(role: RoleComponent): object {\n  if (utilTypes.isProxy(role)) throw new Error(\"ability_transfer_inventory_invalid\");\n  const descriptor = Object.getOwnPropertyDescriptor(role, \"privateState\");\n  const value = descriptor && \"value\" in descriptor ? descriptor.value : undefined;\n  if (!value || typeof value !== \"object\" || utilTypes.isProxy(value))\n    throw new Error(\"ability_transfer_inventory_invalid\");\n  const prototype = Object.getPrototypeOf(value);\n  if (prototype !== Object.prototype && prototype !== null)\n    throw new Error(\"ability_transfer_inventory_invalid\");\n  return value;\n}\n\n/** 库存与条目保持同引用；不调用库存访问器，也不把两次 getter 相等当作稳定性证明。 */\nfunction transferInventory(privateState: object): Record<string, NightAbility> | undefined {\n  const descriptor = Object.getOwnPropertyDescriptor(privateState, \"abilities\");\n  if (!descriptor) {\n    if (\"abilities\" in privateState) throw new Error(\"ability_transfer_inventory_invalid\");\n    return undefined;\n  }\n  if (!(\"value\" in descriptor)) throw new Error(\"ability_transfer_inventory_invalid\");\n  const value = descriptor.value;\n  if (value === undefined || value === null) return undefined;\n  if (typeof value !== \"object\" || utilTypes.isProxy(value))\n    throw new Error(\"ability_transfer_inventory_invalid\");\n  const prototype = Object.getPrototypeOf(value);\n  if (prototype !== Object.prototype && prototype !== null)\n    throw new Error(\"ability_transfer_inventory_invalid\");\n  for (const key of Reflect.ownKeys(value)) {\n    if (!(\"value\" in Object.getOwnPropertyDescriptor(value, key)!))\n      throw new Error(\"ability_transfer_inventory_invalid\");\n  }\n  return value as Record<string, NightAbility>;\n}\n\n/**\n * 完整预检已完成后，唯一库存 owner 晚核原角色与真实数据槽，再按源删除／退休、"
+        },
+        {
+          "beforeStart": 10861,
+          "beforeEnd": 10867,
+          "before": "及发表已成功",
+          "after": "、两条事实提交。\n * 同角色、同容器、同字典或源条目别名不属于合法转移输入"
+        },
+        {
+          "beforeStart": 10868,
+          "beforeEnd": 10873,
+          "before": "原槽删除、",
+          "after": "空目标字典仍到安装点才创建。\n * "
+        },
+        {
+          "beforeStart": 10875,
+          "beforeEnd": 10875,
+          "before": "",
+          "after": "列表的"
+        },
+        {
+          "beforeStart": 10876,
+          "beforeEnd": 10879,
+          "before": "ID ",
+          "after": "getter／"
+        },
+        {
+          "beforeStart": 10883,
+          "beforeEnd": 10889,
+          "before": "、转出事实各",
+          "after": " 在源删除后原点执行；任何抛错"
+        },
+        {
+          "beforeStart": 10895,
+          "beforeEnd": 10895,
+          "before": "",
+          "after": "与原 Error"
+        },
+        {
+          "beforeStart": 10897,
+          "beforeEnd": 10900,
+          "before": "做事务",
+          "after": ""
+        },
+        {
+          "beforeStart": 10902,
+          "beforeEnd": 10902,
+          "before": "",
+          "after": "、不补偿、不暗改 disabled"
+        },
+        {
+          "beforeStart": 10903,
+          "beforeEnd": 10903,
+          "before": "",
+          "after": "\n * 记录 sink 只获得事件输入，不取得库存写权；任意强制写回旧槽的 JS monkeypatch 不属于这一有界唯一 owner 保证。\n"
+        },
+        {
+          "beforeStart": 10923,
+          "beforeEnd": 10925,
+          "before": "re",
+          "after": "commi"
+        },
+        {
+          "beforeStart": 10926,
+          "beforeEnd": 10929,
+          "before": "ire",
+          "after": ""
+        },
+        {
+          "beforeStart": 10953,
+          "beforeEnd": 10953,
+          "before": "",
+          "after": "\n  world: World,"
+        },
+        {
+          "beforeStart": 10981,
+          "beforeEnd": 10981,
+          "before": "",
+          "after": "originalPrivateState: object,\n  target: RoleComponent,\n  "
+        },
+        {
+          "beforeStart": 10985,
+          "beforeEnd": 10985,
+          "before": "",
+          "after": "Id: EntityId,\n  to"
+        },
+        {
+          "beforeStart": 11048,
+          "beforeEnd": 11048,
+          "before": "",
+          "after": "received: NightAbility,\n  "
+        },
+        {
+          "beforeStart": 11081,
+          "beforeEnd": 11093,
+          "before": "delete (\n   ",
+          "after": "if"
+        },
+        {
+          "beforeStart": 11101,
+          "beforeEnd": 11103,
+          "before": ".p",
+          "after": " === target) throw new Error(\"ability_transfer_inventory_alias\");\n  if (roleOf(world, fromId) !== source || roleOf(world, toId) !== target)\n    throw new Error(\"ability_transfer_owner_revoked\");\n  const sourcePrivate = transferP"
+        },
+        {
+          "beforeStart": 11114,
+          "beforeEnd": 11114,
+          "before": "",
+          "after": "(source),"
+        },
+        {
+          "beforeStart": 11115,
+          "beforeEnd": 11115,
+          "before": "",
+          "after": "targetPrivate = transferPrivateState(target);\n  if (sourcePrivate !== originalPrivateState) throw new Error(\"ability_transfer_owner_revoked\");\n  if (sourcePrivate === targetPrivate) throw new Error(\"ability_transfer_inventory_ali"
+        },
+        {
+          "beforeStart": 11117,
+          "beforeEnd": 11117,
+          "before": "",
+          "after": "\");\n"
+        },
+        {
+          "beforeStart": 11118,
+          "beforeEnd": 11119,
+          "before": "{",
+          "after": ""
+        },
+        {
+          "beforeStart": 11120,
+          "beforeEnd": 11120,
+          "before": "",
+          "after": "const sourceSto"
+        },
+        {
+          "beforeStart": 11122,
+          "beforeEnd": 11122,
+          "before": "",
+          "after": "d = tr"
+        },
+        {
+          "beforeStart": 11123,
+          "beforeEnd": 11123,
+          "before": "",
+          "after": "nsferInventory(sourcePrivate), targetStore"
+        },
+        {
+          "beforeStart": 11124,
+          "beforeEnd": 11124,
+          "before": "",
+          "after": " = transferInventory(targetPrivate);\n  if (sourceStored === targetStored && sourceStored !== undefined)\n    throw new Error(\"ability_transfer_inventory_alias\");\n  if (utilTypes.isProxy(ability)) throw new Error(\"ability_transfer_inventory_invalid\");\n  c"
+        },
+        {
+          "beforeStart": 11126,
+          "beforeEnd": 11126,
+          "before": "",
+          "after": "st sourceEntry = sourceStored && Object.getOwnPropertyDescriptor(sourceStored, id),\n    sourceId = Object.getOwnPropertyDescriptor(abi"
+        },
+        {
+          "beforeStart": 11127,
+          "beforeEnd": 11127,
+          "before": "",
+          "after": "it"
+        },
+        {
+          "beforeStart": 11128,
+          "beforeEnd": 11128,
+          "before": "",
+          "after": ", \"id\");\n  if (\n    !sourceStored || !sourceEntry || !(\"value\" in sourceEntry) || sourceEntry.value !=="
+        },
+        {
+          "beforeStart": 11135,
+          "beforeEnd": 11135,
+          "before": "",
+          "after": "y ||\n    !sourceId || !(\"value\" "
+        },
+        {
+          "beforeStart": 11136,
+          "beforeEnd": 11136,
+          "before": "",
+          "after": "n sourc"
+        },
+        {
+          "beforeStart": 11137,
+          "beforeEnd": 11137,
+          "before": "",
+          "after": "Id) || "
+        },
+        {
+          "beforeStart": 11138,
+          "beforeEnd": 11140,
+          "before": "?:",
+          "after": "ourceId.value"
+        },
+        {
+          "beforeStart": 11141,
+          "beforeEnd": 11145,
+          "before": "unkn",
+          "after": "!== id ||\n    Reflect."
+        },
+        {
+          "beforeStart": 11148,
+          "beforeEnd": 11150,
+          "before": " }",
+          "after": "Keys(sourceStored"
+        },
+        {
+          "beforeStart": 11152,
+          "beforeEnd": 11154,
+          "before": "ab",
+          "after": "f"
+        },
+        {
+          "beforeStart": 11156,
+          "beforeEnd": 11157,
+          "before": "i",
+          "after": ""
+        },
+        {
+          "beforeStart": 11158,
+          "beforeEnd": 11159,
+          "before": "i",
+          "after": ""
+        },
+        {
+          "beforeStart": 11160,
+          "beforeEnd": 11169,
+          "before": "s as Reco",
+          "after": ""
+        },
+        {
+          "beforeStart": 11170,
+          "beforeEnd": 11172,
+          "before": "d<",
+          "after": "("
+        },
+        {
+          "beforeStart": 11179,
+          "beforeEnd": 11179,
+          "before": "",
+          "after": "(key) => Object.getOwnPropertyDe"
+        },
+        {
+          "beforeStart": 11180,
+          "beforeEnd": 11181,
+          "before": "t",
+          "after": "c"
+        },
+        {
+          "beforeStart": 11183,
+          "beforeEnd": 11185,
+          "before": "ng",
+          "after": "ptor(sourceStored, key)!.value === ability"
+        },
+        {
+          "beforeStart": 11191,
+          "beforeEnd": 11191,
+          "before": "",
+          "after": ").length !== 1\n"
+        },
+        {
+          "beforeStart": 11193,
+          "beforeEnd": 11196,
+          "before": "Nig",
+          "after": ")\n    t"
+        },
+        {
+          "beforeStart": 11197,
+          "beforeEnd": 11199,
+          "before": "tA",
+          "after": "row new Error(\"a"
+        },
+        {
+          "beforeStart": 11205,
+          "beforeEnd": 11205,
+          "before": "",
+          "after": "_transfer_source_slot_invalid\");\n  if (targetStored && Reflect.ownKeys(targetStored).some("
+        },
+        {
+          "beforeStart": 11210,
+          "beforeEnd": 11210,
+          "before": "",
+          "after": "(key) ="
+        },
+        {
+          "beforeStart": 11211,
+          "beforeEnd": 11211,
+          "before": "",
+          "after": " Object.getOwnPropertyDescriptor(targetStored, key)!.value === ability,"
+        },
+        {
+          "beforeStart": 11215,
+          "beforeEnd": 11215,
+          "before": "",
+          "after": ")\n    throw new Error(\"ability_transfer_inventory_alias\");\n  // 删除按已核对的真实 key，而非凭 Object.values 中的实例 id 猜测槽；失败不进入目标安装。\n  delete sourceStored"
+        },
+        {
+          "beforeStart": 11237,
+          "beforeEnd": 11239,
+          "before": ".p",
+          "after": "P"
+        },
+        {
+          "beforeStart": 11242,
+          "beforeEnd": 11247,
+          "before": "ateSt",
+          "after": ""
+        },
+        {
+          "beforeStart": 11342,
+          "beforeEnd": 11342,
+          "before": "",
+          "after": "// 空目标库存的创建也在源退休之后；安装或 granted 发布失败不会重装源槽。\n  const stored = targetStored ?? ((targetPrivate as { abilities?: Record<string, NightAbility> }).abilities = {});\n  stored[received.id] = received;\n  emit(events, toId, received, \"granted\");\n  "
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "beforeSHA256": "0699bfa18845d52cedd4647a2b0899c89b3c5010b2ea6eb067b6c1a15148a5f5",
+      "afterSHA256": "888c3ac4693bea5719a63cf8e375608c08f3cacd730a79e8b7f23109e057f621",
+      "wholePreciseForwardSame": true,
+      "new": false,
+      "edits": [
+        {
+          "beforeStart": 120,
+          "beforeEnd": 122,
+          "before": "保留",
+          "after": "授予仍安装后发布；独立 F03 转移政策先完整预检，再由唯一库存 owner 先删源／退休、后安装"
+        },
+        {
+          "beforeStart": 124,
+          "beforeEnd": 126,
+          "before": "安装",
+          "after": ""
+        },
+        {
+          "beforeStart": 129,
+          "beforeEnd": 139,
+          "before": "在前、原槽删除／退役",
+          "after": "。\n"
+        },
+        {
+          "beforeStart": 140,
+          "beforeEnd": 143,
+          "before": "ID／",
+          "after": "* "
+        },
+        {
+          "beforeStart": 144,
+          "beforeEnd": 152,
+          "before": "出发布在后的顺序",
+          "after": "移拒绝共享或不稳定库存路径"
+        },
+        {
+          "beforeStart": 155,
+          "beforeEnd": 156,
+          "before": "只",
+          "after": ""
+        },
+        {
+          "beforeStart": 165,
+          "beforeEnd": 165,
+          "before": "",
+          "after": "和原 Error"
+        },
+        {
+          "beforeStart": 169,
+          "beforeEnd": 169,
+          "before": "",
+          "after": "，记录 sink 不取得库存写权"
+        },
+        {
+          "beforeStart": 852,
+          "beforeEnd": 852,
+          "before": "",
+          "after": "type { RoleComponent } from \"../../../core/domain/components/role\";\nimport "
+        },
+        {
+          "beforeStart": 1005,
+          "beforeEnd": 1007,
+          "before": "re",
+          "after": "commi"
+        },
+        {
+          "beforeStart": 1008,
+          "beforeEnd": 1011,
+          "before": "ire",
+          "after": ""
+        },
+        {
+          "beforeStart": 2234,
+          "beforeEnd": 2234,
+          "before": "",
+          "after": "const role = validateAbilityInstall(world, actorId, ability);\n  "
+        },
+        {
+          "beforeStart": 2241,
+          "beforeEnd": 2241,
+          "before": "",
+          "after": "comm"
+        },
+        {
+          "beforeStart": 2242,
+          "beforeEnd": 2242,
+          "before": "",
+          "after": "tGra"
+        },
+        {
+          "beforeStart": 2243,
+          "beforeEnd": 2244,
+          "before": "s",
+          "after": ""
+        },
+        {
+          "beforeStart": 2245,
+          "beforeEnd": 2248,
+          "before": "all",
+          "after": "edNight"
+        },
+        {
+          "beforeStart": 2256,
+          "beforeEnd": 2257,
+          "before": "w",
+          "after": "r"
+        },
+        {
+          "beforeStart": 2258,
+          "beforeEnd": 2259,
+          "before": "r",
+          "after": ""
+        },
+        {
+          "beforeStart": 2260,
+          "beforeEnd": 2261,
+          "before": "d",
+          "after": "e"
+        },
+        {
+          "beforeStart": 2320,
+          "beforeEnd": 2320,
+          "before": "",
+          "after": "/** 完整原安装预检只返回实际目标 Role；库存提交另有唯一 owner，授予和转移共用原政策。 */\n"
+        },
+        {
+          "beforeStart": 2329,
+          "beforeEnd": 2333,
+          "before": "inst",
+          "after": "v"
+        },
+        {
+          "beforeStart": 2335,
+          "beforeEnd": 2336,
+          "before": "l",
+          "after": "idate"
+        },
+        {
+          "beforeStart": 2343,
+          "beforeEnd": 2343,
+          "before": "",
+          "after": "Install"
+        },
+        {
+          "beforeStart": 2407,
+          "beforeEnd": 2407,
+          "before": "",
+          "after": "):"
+        },
+        {
+          "beforeStart": 2408,
+          "beforeEnd": 2409,
+          "before": " ",
+          "after": "Rol"
+        },
+        {
+          "beforeStart": 2410,
+          "beforeEnd": 2411,
+          "before": "v",
+          "after": "Compon"
+        },
+        {
+          "beforeStart": 2414,
+          "beforeEnd": 2445,
+          "before": "s: GameEvent[],\n): NightAbility",
+          "after": ""
+        },
+        {
+          "beforeStart": 5636,
+          "beforeEnd": 5662,
+          "before": "commitGrantedNightAbility(",
+          "after": ""
+        },
+        {
+          "beforeStart": 5666,
+          "beforeEnd": 5693,
+          "before": ", actorId, ability, events)",
+          "after": ""
+        },
+        {
+          "beforeStart": 5703,
+          "beforeEnd": 5705,
+          "before": "验证",
+          "after": "完成原复制"
+        },
+        {
+          "beforeStart": 5706,
+          "beforeEnd": 5708,
+          "before": "安装",
+          "after": "资源／来源／"
+        },
+        {
+          "beforeStart": 5710,
+          "beforeEnd": 5712,
+          "before": "，再",
+          "after": "预检；转"
+        },
+        {
+          "beforeStart": 5713,
+          "beforeEnd": 5722,
+          "before": "除原 owner；",
+          "after": "提交"
+        },
+        {
+          "beforeStart": 5723,
+          "beforeEnd": 5724,
+          "before": "留",
+          "after": ""
+        },
+        {
+          "beforeStart": 5726,
+          "beforeEnd": 5727,
+          "before": "、",
+          "after": "和"
+        },
+        {
+          "beforeStart": 5731,
+          "beforeEnd": 5736,
+          "before": "与中途发布",
+          "after": "，但"
+        },
+        {
+          "beforeStart": 5738,
+          "beforeEnd": 5740,
+          "before": "前缀",
+          "after": "不再留下两份合法有效库存"
+        },
+        {
+          "beforeStart": 11080,
+          "beforeEnd": 11103,
+          "before": "// 目标安装与其发布成功后才移除源；dele",
+          "after": "cons"
+        },
+        {
+          "beforeStart": 11104,
+          "beforeEnd": 11134,
+          "before": "e、退休数组 push 和转出发布各有已写前缀，不回滚。\n ",
+          "after": ""
+        },
+        {
+          "beforeStart": 11142,
+          "beforeEnd": 11142,
+          "before": "",
+          "after": "ationTarget = validate"
+        },
+        {
+          "beforeStart": 11149,
+          "beforeEnd": 11149,
+          "before": "",
+          "after": "Install"
+        },
+        {
+          "beforeStart": 11171,
+          "beforeEnd": 11179,
+          "before": ", events",
+          "after": ""
+        },
+        {
+          "beforeStart": 11184,
+          "beforeEnd": 11186,
+          "before": "re",
+          "after": "// 预检和复制全通过才交库存写权；F03 的源先退休政策不伪装成旧失败前缀等价。\n  commi"
+        },
+        {
+          "beforeStart": 11187,
+          "beforeEnd": 11190,
+          "before": "ire",
+          "after": ""
+        },
+        {
+          "beforeStart": 11214,
+          "beforeEnd": 11214,
+          "before": "",
+          "after": "world, "
+        },
+        {
+          "beforeStart": 11222,
+          "beforeEnd": 11222,
+          "before": "",
+          "after": "sourcePrivate, installationTarget, "
+        },
+        {
+          "beforeStart": 11226,
+          "beforeEnd": 11226,
+          "before": "",
+          "after": "Id, to"
+        },
+        {
+          "beforeStart": 11243,
+          "beforeEnd": 11243,
+          "before": "",
+          "after": "received, "
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "beforeSHA256": "c7e676b790ed0ec7029df1d7c74b00ecd31f5e0fe4df1f9d00bc505500199462",
+      "afterSHA256": "0dc21ebd321640d9e14d301475d188176b34498008b83720a99802ea518d9f5f",
+      "wholePreciseForwardSame": true,
+      "new": false,
+      "edits": [
+        {
+          "beforeStart": 648,
+          "beforeEnd": 648,
+          "before": "",
+          "after": ", activeNightAbility, findNightAbility"
+        },
+        {
+          "beforeStart": 2911,
+          "beforeEnd": 2911,
+          "before": "",
+          "after": "// F03 新 oracle：原输入／抛错 sink 不变；来源先退休，目标发表失败不能留下两份合法有效库存。\n"
+        },
+        {
+          "beforeStart": 2917,
+          "beforeEnd": 2917,
+          "before": "",
+          "after": "F03 "
+        },
+        {
+          "beforeStart": 2952,
+          "beforeEnd": 2957,
+          "before": "both ",
+          "after": ""
+        },
+        {
+          "beforeStart": 2975,
+          "beforeEnd": 2977,
+          "before": "nd",
+          "after": "fter"
+        },
+        {
+          "beforeStart": 2978,
+          "beforeEnd": 2983,
+          "before": "undel",
+          "after": "r"
+        },
+        {
+          "beforeStart": 2985,
+          "beforeEnd": 2985,
+          "before": "",
+          "after": "iring th"
+        },
+        {
+          "beforeStart": 2986,
+          "beforeEnd": 2987,
+          "before": "d",
+          "after": ""
+        },
+        {
+          "beforeStart": 3488,
+          "beforeEnd": 3488,
+          "before": "",
+          "after": "l"
+        },
+        {
+          "beforeStart": 3489,
+          "beforeEnd": 3492,
+          "before": "xpe",
+          "after": "t "
+        },
+        {
+          "beforeStart": 3493,
+          "beforeEnd": 3493,
+          "before": "",
+          "after": "augh"
+        },
+        {
+          "beforeStart": 3494,
+          "beforeEnd": 3497,
+          "before": "(()",
+          "after": ":"
+        },
+        {
+          "beforeStart": 3498,
+          "beforeEnd": 3500,
+          "before": "=>",
+          "after": "unknown;\n  try {\n   "
+        },
+        {
+          "beforeStart": 3591,
+          "beforeEnd": 3591,
+          "before": "",
+          "after": "  "
+        },
+        {
+          "beforeStart": 3648,
+          "beforeEnd": 3648,
+          "before": "",
+          "after": "  "
+        },
+        {
+          "beforeStart": 3650,
+          "beforeEnd": 3650,
+          "before": "",
+          "after": ";\n  } catch (error) { caught = error; }\n  expect(caught"
+        },
+        {
+          "beforeStart": 3654,
+          "beforeEnd": 3659,
+          "before": "Throw",
+          "after": "Be"
+        },
+        {
+          "beforeStart": 3765,
+          "beforeEnd": 3768,
+          "before": "[0]",
+          "after": ""
+        },
+        {
+          "beforeStart": 3772,
+          "beforeEnd": 3773,
+          "before": "B",
+          "after": "Equal([]);\n  "
+        },
+        {
+          "beforeStart": 3774,
+          "beforeEnd": 3774,
+          "before": "",
+          "after": "xpect"
+        },
+        {
+          "beforeStart": 3775,
+          "beforeEnd": 3775,
+          "before": "",
+          "after": "findNightAbility(f.fromRole, \"guard\", "
+        },
+        {
+          "beforeStart": 3783,
+          "beforeEnd": 3783,
+          "before": "",
+          "after": ".id)).toBeUndefined();\n  expect(activeNightAbility(f.fromRole, \"guard\", 2)).toBeUndefined("
+        },
+        {
+          "beforeStart": 3865,
+          "beforeEnd": 3865,
+          "before": "",
+          "after": "activeNightAbility(f.toRole, \"guard\", 2)?.id).toBe(\"transfer:prefix\");\n  expect(allNightAbilities(f.toRole)[0]).toMatch"
+        },
+        {
+          "beforeStart": 3871,
+          "beforeEnd": 3873,
+          "before": ".h",
+          "after": "({ uses: 0, l"
+        },
+        {
+          "beforeStart": 3875,
+          "beforeEnd": 3875,
+          "before": "",
+          "after": "tUsedDay: null, maxUses: 2, starts"
+        },
+        {
+          "beforeStart": 3876,
+          "beforeEnd": 3877,
+          "before": "w",
+          "after": ""
+        },
+        {
+          "beforeStart": 3878,
+          "beforeEnd": 3878,
+          "before": "",
+          "after": "Day: 2, disabled: false });\n  expect("
+        },
+        {
+          "beforeStart": 3902,
+          "beforeEnd": 3903,
+          "before": ",",
+          "after": ""
+        },
+        {
+          "beforeStart": 3904,
+          "beforeEnd": 3905,
+          "before": "\"",
+          "after": "as { "
+        },
+        {
+          "beforeStart": 3922,
+          "beforeEnd": 3923,
+          "before": "\"",
+          "after": ": string[] }"
+        },
+        {
+          "beforeStart": 3924,
+          "beforeEnd": 3924,
+          "before": "",
+          "after": ".retiredAbilityIds"
+        },
+        {
+          "beforeStart": 3928,
+          "beforeEnd": 3932,
+          "before": "Be(f",
+          "after": "Equ"
+        },
+        {
+          "beforeStart": 3934,
+          "beforeEnd": 3936,
+          "before": "se",
+          "after": "([original.id]"
+        },
+        {
+          "beforeStart": 4071,
+          "beforeEnd": 4071,
+          "before": "",
+          "after": "// 退休列表仍在 delete 后晚读；F03 将目标安装移到这一步之后，原 getter Error 不被替换。\n"
+        },
+        {
+          "beforeStart": 4077,
+          "beforeEnd": 4077,
+          "before": "",
+          "after": "F03 "
+        },
+        {
+          "beforeStart": 4127,
+          "beforeEnd": 4131,
+          "before": "and ",
+          "after": "befo"
+        },
+        {
+          "beforeStart": 4132,
+          "beforeEnd": 4141,
+          "before": "etains th",
+          "after": ""
+        },
+        {
+          "beforeStart": 4150,
+          "beforeEnd": 4151,
+          "before": "g",
+          "after": "installation o"
+        },
+        {
+          "beforeStart": 4152,
+          "beforeEnd": 4155,
+          "before": "ant",
+          "after": ""
+        },
+        {
+          "beforeStart": 4472,
+          "beforeEnd": 4472,
+          "before": "",
+          "after": "l"
+        },
+        {
+          "beforeStart": 4473,
+          "beforeEnd": 4476,
+          "before": "xpe",
+          "after": "t "
+        },
+        {
+          "beforeStart": 4477,
+          "beforeEnd": 4477,
+          "before": "",
+          "after": "augh"
+        },
+        {
+          "beforeStart": 4478,
+          "beforeEnd": 4481,
+          "before": "(()",
+          "after": ":"
+        },
+        {
+          "beforeStart": 4482,
+          "beforeEnd": 4484,
+          "before": "=>",
+          "after": "unknown;\n  try {\n   "
+        },
+        {
+          "beforeStart": 4575,
+          "beforeEnd": 4575,
+          "before": "",
+          "after": "  "
+        },
+        {
+          "beforeStart": 4632,
+          "beforeEnd": 4632,
+          "before": "",
+          "after": "  "
+        },
+        {
+          "beforeStart": 4634,
+          "beforeEnd": 4634,
+          "before": "",
+          "after": ";\n  } catch (error) { caught = error; }\n  expect(caught"
+        },
+        {
+          "beforeStart": 4638,
+          "beforeEnd": 4643,
+          "before": "Throw",
+          "after": "Be"
+        },
+        {
+          "beforeStart": 4785,
+          "beforeEnd": 4796,
+          "before": "[0]!.source",
+          "after": ""
+        },
+        {
+          "beforeStart": 4806,
+          "beforeEnd": 4807,
+          "before": "{",
+          "after": "[]);\n"
+        },
+        {
+          "beforeStart": 4808,
+          "beforeEnd": 4809,
+          "before": "k",
+          "after": " expect(Object.hasOwn(f.toRole.pr"
+        },
+        {
+          "beforeStart": 4810,
+          "beforeEnd": 4813,
+          "before": "nd:",
+          "after": "vateState,"
+        },
+        {
+          "beforeStart": 4815,
+          "beforeEnd": 4843,
+          "before": "transfer\", actorId: f.from, ",
+          "after": ""
+        },
+        {
+          "beforeStart": 4849,
+          "beforeEnd": 4854,
+          "before": "yId: ",
+          "after": "ies"
+        },
+        {
+          "beforeStart": 4855,
+          "beforeEnd": 4857,
+          "before": "gi",
+          "after": ")).toBe("
+        },
+        {
+          "beforeStart": 4858,
+          "beforeEnd": 4862,
+          "before": "t:pr",
+          "after": "als"
+        },
+        {
+          "beforeStart": 4863,
+          "beforeEnd": 4869,
+          "before": "fix\" }",
+          "after": ""
+        },
+        {
+          "beforeStart": 5018,
+          "beforeEnd": 5037,
+          "before": ", \"granted\"], [f.to",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-transfer-failure-policy.test.ts",
+      "beforeSHA256": null,
+      "afterSHA256": "47632ecfc3d83ffa3d2d8c723012b413d3d050cc5a43b902c9da3ad2f41238ed",
+      "wholePreciseForwardSame": true,
+      "new": true,
+      "edits": [
+        {
+          "beforeStart": 0,
+          "beforeEnd": 0,
+          "before": "",
+          "after": "/**\n * 单元测试：负责 F03 转移的真实库存接受边界和源先退休后的数据安装失败。\n * 输入为实际 World、字面守卫资源、共享／访问器／Proxy 槽及冻结空目标字典；输出为手写错误、引用、计数与事件前缀。\n * 只调用实际授予／转移 owner；不推进阶段、模型或整局，不复制实现作为 oracle。\n * 非法预存别名只拒绝本次命令、不修复旧数据；目标安装失败不退款，持有裸实例不等于仍在有效库存。\n */\nimport { expect, test } from \"bun:test\";\nimport { Camp, Role } from \"@ai-werewolf-arena/game-contract\";\nimport { World } from \"../../../src/core/domain/world\";\nimport { COMPONENT } from \"../../../src/core/domain/components/names\";\nimport { createRoleComponent } from \"../../../src/core/domain/components/role\";\nimport { createAliveComponent } from \"../../../src/core/domain/components/alive\";\nimport type { GameEvent } from \"../../../src/core/domain/events\";\nimport {\n  allNightAbilities, activeNightAbility, findNightAbility,\n  type NightAbilityReadView,\n} from \"../../../src/game/mechanisms/roles/abilities\";\nimport { grantNightAbility, transferNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";\n\nfunction fixture() {\n  const world = new World(), origin = world.createEntity(), from = world.createEntity(), to = world.createEntity();\n  const sourceRole = createRoleComponent(Role.Villager, Camp.Good), targetRole = createRoleComponent(Role.Villager, Camp.Good);\n  for (const [id, role] of [[origin, createRoleComponent(Role.Guard, Camp.Good)], [from, sourceRole], [to, targetRole]] as const) {\n    world.addComponent(id, COMPONENT.Role, role);\n    world.addComponent(id, COMPONENT.Alive, createAliveComponent());\n  }\n  const events: GameEvent[] = [];\n  const original = grantNightAbility(world, from, {\n    id: \"gift:bounded\", kind: \"guard\", state: { lastTarget: null },\n    source: { kind: \"gift\", actorId: origin }, startsOnDay: 2, maxUses: 2,\n  }, events);\n  const sourcePrivate = sourceRole.privateState as { abilities: Record<string, NightAbilityReadView>; retiredAbilityIds?: string[] };\n  return { world, origin, from, to, sourceRole, targetRole, sourcePrivate, stored: sourcePrivate.abilities, original, events };\n}\n\nfunction transfer(f: ReturnType<typeof fixture>, trace: string[]) {\n  transferNightAbility(f.world, f.from, f.to, f.original.id, \"transfer:bounded\", f.events, {\n    kind: \"guard\", statePolicy(state) { trace.push(\"policy\"); return { ...state }; },\n  });\n}\n\ntest(\"F03 rejects aliased roles, private containers and dictionaries without owned writes\", () => {\n  // 三个输入分别覆盖实际 Role、privateState 和 abilities 身份；非法旧库存不被测试当作合法唯一来源。\n  for (const alias of [\"role\", \"private\", \"dictionary\"] as const) {\n    const f = fixture(), trace: string[] = [];\n    if (alias === \"role\") f.world.addComponent(f.to, COMPONENT.Role, f.sourceRole);\n    if (alias === \"private\") Object.defineProperty(f.targetRole, \"privateState\", { value: f.sourcePrivate });\n    if (alias === \"dictionary\") Object.defineProperty(f.targetRole.privateState, \"abilities\", { value: f.stored });\n    expect(() => transfer(f, trace)).toThrow(\"ability_transfer_inventory_alias\");\n    expect(trace).toEqual([\"policy\"]);\n    expect(Object.keys(f.stored)).toEqual([\"gift:bounded\"]);\n    expect(f.stored[\"gift:bounded\"]).toBe(f.original);\n    expect(f.original).toMatchObject({ uses: 0, lastUsedDay: null, maxUses: 2, disabled: false });\n    expect(Object.hasOwn(f.sourcePrivate, \"retiredAbilityIds\")).toBe(false);\n    expect(f.events.map((e) => e.type === \"ability_changed\" ? [e.payload.actorId, e.payload.operation] : e.type)).toEqual([[f.from, \"granted\"]]);\n  }\n});\n\ntest(\"F03 rejects actual source-key mismatch, local aliases and unstable inventory paths before data writes\", () => {\n  for (const input of [\"wrong-key\", \"local-alias\", \"alternating-getter\", \"dictionary-proxy\"] as const) {\n    const f = fixture(), trace: string[] = [];\n    if (input === \"wrong-key\") { delete f.stored[\"gift:bounded\"]; f.stored.shadow = f.original; }\n    if (input === \"local-alias\") f.stored.shadow = f.original;\n    if (input === \"alternating-getter\") {\n      let reads = 0;\n      Object.defineProperty(f.sourcePrivate, \"abilities\", { get() { reads++; return reads % 2 ? f.stored : { ...f.stored }; } });\n    }\n    if (input === \"dictionary-proxy\") f.sourcePrivate.abilities = new Proxy(f.stored, {});\n    const keys = Object.keys(f.stored);\n    expect(() => transfer(f, trace)).toThrow(input === \"wrong-key\" || input === \"local-alias\" ? \"ability_transfer_source_slot_invalid\" : \"ability_transfer_inventory_invalid\");\n    expect(trace).toEqual([\"policy\"]);\n    expect(Object.keys(f.stored)).toEqual(keys);\n    expect(Object.values(f.stored).every((ability) => ability === f.original)).toBe(true);\n    expect(Object.hasOwn(f.sourcePrivate, \"retiredAbilityIds\")).toBe(false);\n    expect(Object.hasOwn(f.targetRole.privateState, \"abilities\")).toBe(false);\n    expect(f.events).toHaveLength(1);\n  }\n});\n\ntest(\"F03 target installation failure leaves the source retired and no effective target\", () => {\n  const f = fixture(), trace: string[] = [], targetStored = Object.freeze({});\n  Object.defineProperty(f.targetRole.privateState, \"abilities\", { value: targetStored });\n  // 冻结字典仍是普通 data 输入；失败发生在源 delete／退休之后的实际赋值，不能提前改成预检拒绝。\n  expect(() => transfer(f, trace)).toThrow(TypeError);\n  expect(trace).toEqual([\"policy\"]);\n  expect(f.sourcePrivate.retiredAbilityIds).toEqual([\"gift:bounded\"]);\n  expect(allNightAbilities(f.sourceRole)).toEqual([]);\n  expect(findNightAbility(f.sourceRole, \"guard\", \"gift:bounded\")).toBeUndefined();\n  expect(activeNightAbility(f.sourceRole, \"guard\", 2)).toBeUndefined();\n  expect(allNightAbilities(f.targetRole)).toEqual([]);\n  expect(activeNightAbility(f.targetRole, \"guard\", 2)).toBeUndefined();\n  expect((f.targetRole.privateState as { abilities: object }).abilities).toBe(targetStored);\n  expect(f.original).toMatchObject({ uses: 0, lastUsedDay: null, maxUses: 2, startsOnDay: 2, disabled: false, state: { lastTarget: null } });\n  expect(f.events.map((e) => e.type === \"ability_changed\" ? [e.payload.actorId, e.payload.operation] : e.type)).toEqual([[f.from, \"granted\"]]);\n});\n"
+        }
+      ]
+    }
+  ],
+  "policy": "F03独立行为与接受政策；全文精确正演只说明scope，没有把新转移尾逆掉后称行为等价。"
+}

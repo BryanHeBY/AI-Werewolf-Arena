@@ -1,0 +1,18 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/abilities.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/night-ability-transfer-failure-policy.test.ts"
+  ]
+}

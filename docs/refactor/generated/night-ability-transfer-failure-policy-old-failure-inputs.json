@@ -1,0 +1,22 @@
+[
+  {
+    "title": "target publication failure retains both installed target and undeleted original source",
+    "originalWholeCase": "test(\"target publication failure retains both installed target and undeleted original source\", () => {\n  const f = fixture(), events: GameEvent[] = [], original = guardGift(f, events), failure = Error(\"literal_target_publication_failure\"), trace: string[] = [];\n  Object.defineProperty(events, \"push\", { configurable: true, value(event: GameEvent) {\n    trace.push(this === events ? \"push:same-array\" : \"push:wrong-array\");\n    if (event.type !== \"ability_changed\") throw Error(\"unexpected_literal_event\");\n    trace.push(event.payload.operation);\n    throw failure;\n  } });\n  expect(() => transferNightAbility(f.world, f.from, f.to, original.id, \"transfer:prefix\", events, {\n    kind: \"guard\", statePolicy: (state) => ({ ...state }),\n  })).toThrow(failure);\n  expect(trace).toEqual([\"push:same-array\", \"granted\"]);\n  expect(allNightAbilities(f.fromRole)[0]).toBe(original);\n  expect(allNightAbilities(f.toRole)[0]!.id).toBe(\"transfer:prefix\");\n  expect(Object.hasOwn(f.fromRole.privateState, \"retiredAbilityIds\")).toBe(false);\n  expect(events.map((event) => event.type === \"ability_changed\" ? event.payload.operation : event.type)).toEqual([\"granted\"]);\n})",
+    "originalCaseSHA256": "9ab1f1a739c95b2eab41b45f2c10c480f1b83325d48221def449ff0c5cca4283",
+    "newTitle": "F03 target publication failure retains installed target after retiring the original source",
+    "inputPreludeRawEqual": true,
+    "completeTransferCallTypedEqual": true,
+    "parameterLiteralTextAndCallbacksPreserved": true,
+    "callIndentationDifferenceOnly": true
+  },
+  {
+    "title": "retired-id getter failure follows source deletion and retains the target grant fact",
+    "originalWholeCase": "test(\"retired-id getter failure follows source deletion and retains the target grant fact\", () => {\n  const f = fixture(), events: GameEvent[] = [], original = guardGift(f, events), failure = Error(\"literal_retired_id_failure\"), trace: string[] = [];\n  Object.defineProperty(f.fromRole.privateState, \"retiredAbilityIds\", { configurable: true, get() { trace.push(\"retired:get\"); throw failure; } });\n  expect(() => transferNightAbility(f.world, f.from, f.to, original.id, \"transfer:prefix\", events, {\n    kind: \"guard\", statePolicy: (state) => ({ ...state }),\n  })).toThrow(failure);\n  expect(trace).toEqual([\"retired:get\"]);\n  expect(allNightAbilities(f.fromRole)).toEqual([]);\n  expect(allNightAbilities(f.toRole)[0]!.source).toEqual({ kind: \"transfer\", actorId: f.from, abilityId: \"gift:prefix\" });\n  expect(events.map((event) => event.type === \"ability_changed\" ? [event.payload.actorId, event.payload.operation] : event.type)).toEqual([[f.from, \"granted\"], [f.to, \"granted\"]]);\n})",
+    "originalCaseSHA256": "d33776db73beb23346c06fbfd7e7023467b1a307e55c3232d608b86e1763c1a3",
+    "newTitle": "F03 retired-id getter failure follows source deletion before target installation or fact",
+    "inputPreludeRawEqual": true,
+    "completeTransferCallTypedEqual": true,
+    "parameterLiteralTextAndCallbacksPreserved": true,
+    "callIndentationDifferenceOnly": true
+  }
+]

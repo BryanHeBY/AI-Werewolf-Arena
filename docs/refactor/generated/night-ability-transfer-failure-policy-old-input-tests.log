@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts:
+(pass) F03 target publication failure retains installed target after retiring the original source [1.54ms]
+(pass) F03 retired-id getter failure follows source deletion before target installation or fact [0.27ms]
+
+ 2 pass
+ 2 filtered out
+ 0 fail
+ 16 expect() calls
+Ran 2 tests across 1 file. [63.00ms]

@@ -1,7 +1,8 @@
 /**
  * 负责普通夜能力授予、复制与明确转移的完整提交。输入为原 World、拥有者、安装数据与具体 statePolicy；
  * 输出为同一实际库存中的只读实例及原能力变化事实。校验、复制、来源复验和目标安装都由本模块负责。
- * 保留目标安装／发布在前、原槽删除／退役 ID／转出发布在后的顺序；异常只保留已经发生的前缀，不退款。
+ * 授予仍安装后发布；独立 F03 转移政策先完整预检，再由唯一库存 owner 先删源／退休、后安装目标／发布。
+ * 转移拒绝共享或不稳定库存路径；异常保留已经发生的前缀和原 Error，不退款，记录 sink 不取得库存写权。
  * 字典安装／发布与删除／退休提交交唯一 abilities owner；本模块保完整来源政策，角色 payload、生命／租约和临时抑制仍有原负责人。
  * 数据复制仍消费唯一 copyAbilityData，原接受集合不加强；这不是全部角色状态 schema 或严格复盘 codec。
  */
@@ -12,8 +13,9 @@ import { DREAM_PROTECTION_POLICIES } from "../../../core/domain/board";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { type EntityId, type GameEvent } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
+import type { RoleComponent } from "../../../core/domain/components/role";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
-import { allNightAbilities, copyAbilityData, commitGrantedNightAbility, retireTransferredNightAbility, type NightAbility, type NightAbilityReadView } from "./abilities";
+import { allNightAbilities, copyAbilityData, commitGrantedNightAbility, commitTransferredNightAbility, type NightAbility, type NightAbilityReadView } from "./abilities";
 import { projectNightState } from "../../observation/night-ability-projection";
 import { roleOf } from "./night-ability-change-runtime";
 
@@ -47,15 +49,16 @@ export function grantNightAbility<K extends NightAbilityKind>(
     lastUsedDay: null,
     disabled: false,
   }) as unknown as NightAbility<K>;
-  return installAbility(world, actorId, ability, events) as NightAbilityReadView<K>;
+  const role = validateAbilityInstall(world, actorId, ability);
+  return commitGrantedNightAbility(role, actorId, ability, events) as NightAbilityReadView<K>;
 }
 
-function installAbility(
+/** 完整原安装预检只返回实际目标 Role；库存提交另有唯一 owner，授予和转移共用原政策。 */
+function validateAbilityInstall(
   world: World,
   actorId: EntityId,
   ability: NightAbility,
-  events: GameEvent[],
-): NightAbility {
+): RoleComponent {
   const input = ability;
   if (input.kind === "pair_check") throw Error("ability_pair_native_only");
   if (input.kind === "role_check") roleInspectionPolicy(input.state);
@@ -141,10 +144,10 @@ function installAbility(
     )
   )
     throw new Error("ability_source_mismatch");
-  return commitGrantedNightAbility(role, actorId, ability, events);
+  return role;
 }
 
-/** 先验证／安装目标，再移除原 owner；保留计数、原夜时点与中途发布失败前缀。 */
+/** 先完成原复制／资源／来源／目标预检；转移提交保计数和原夜时点，但失败不再留下两份合法有效库存。 */
 export function transferNightAbility<K extends NightAbilityKind>(
   world: World,
   fromId: EntityId,
@@ -289,7 +292,7 @@ export function transferNightAbility<K extends NightAbilityKind>(
     sourceDisclosed: options.sourceDisclosed ?? false,
     source: { kind: "transfer", actorId: fromId, abilityId: id },
   }) as NightAbility;
-  // 目标安装与其发布成功后才移除源；delete、退休数组 push 和转出发布各有已写前缀，不回滚。
-  installAbility(world, toId, received, events);
-  retireTransferredNightAbility(source, fromId, id, ability, events);
+  const installationTarget = validateAbilityInstall(world, toId, received);
+  // 预检和复制全通过才交库存写权；F03 的源先退休政策不伪装成旧失败前缀等价。
+  commitTransferredNightAbility(world, source, sourcePrivate, installationTarget, fromId, toId, id, ability, received, events);
 }

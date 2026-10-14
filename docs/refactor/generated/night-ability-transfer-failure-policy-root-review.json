@@ -1,0 +1,55 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "e0fb16df609c83d24262343564abf9738719142d93cf637091c2d2117bc40d97"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "888c3ac4693bea5719a63cf8e375608c08f3cacd730a79e8b7f23109e057f621"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-grants-owner.test.ts",
+      "sha256": "0dc21ebd321640d9e14d301475d188176b34498008b83720a99802ea518d9f5f"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-transfer-failure-policy.test.ts",
+      "sha256": "47632ecfc3d83ffa3d2d8c723012b413d3d050cc5a43b902c9da3ad2f41238ed"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/night-ability-transfer-failure-policy-scope-final.json",
+    "sha256": "3ac13826f66bdcdf3d1cdb585935b3e839bc20cca342b5281f4fcaf291f4746b"
+  },
+  "document": {
+    "path": "docs/refactor/night-ability-transfer-failure-policy.md",
+    "sha256": "89d40c74cc11d8f97a85a933214d4a1d6b1026becc1bc3b9144de222d828f3cc"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/night-ability-transfer-failure-policy-evidence.json",
+    "sha256": "65c56fdf631b5b80315d7649bd1b9b854e0af7940f2704393711224518ce408f"
+  },
+  "integrity": {
+    "freshSources": 4,
+    "actualGitBefore": 3,
+    "controls": 3,
+    "artifactHashes": 22,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整实际transfercommit顺序和owned库存接受边界",
+    "原完整validator与ordinary grant不夹新政策",
+    "两旧故障同input-同Error的独立F03新oracle",
+    "原成功metadata-计数-事件顺序及实际绑定",
+    "有效中文和真实22附件-三控制-first收据及grant窄桥"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

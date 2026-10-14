@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/night-ability-transfer-failure-policy.test.ts:
+(pass) F03 rejects aliased roles, private containers and dictionaries without owned writes [1.81ms]
+(pass) F03 rejects actual source-key mismatch, local aliases and unstable inventory paths before data writes [1.87ms]
+(pass) F03 target installation failure leaves the source retired and no effective target [0.45ms]
+
+ 3 pass
+ 0 fail
+ 60 expect() calls
+Ran 3 tests across 1 file. [58.00ms]
