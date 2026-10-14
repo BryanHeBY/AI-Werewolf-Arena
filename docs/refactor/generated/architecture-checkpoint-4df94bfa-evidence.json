@@ -1,0 +1,93 @@
+{
+  "fixedCommit": "4df94bfafcf0f249b900a46a568ad427d069ad83",
+  "documentation": {
+    "path": "docs/refactor/architecture-checkpoint-4df94bfa.md",
+    "sha256": "790fa60a08928a670c5eb9b4dfd7f133a6355945f70b817864970991b4bbeec3"
+  },
+  "execution": {
+    "launchChunk": "e93618",
+    "session": 47701,
+    "terminalChunk": "dc6353",
+    "exitCode": 1,
+    "executions": 1
+  },
+  "counts": {
+    "files": 3160,
+    "violations": 354,
+    "failures": 1,
+    "remainingDebt": 353,
+    "clearedDebt": 1426
+  },
+  "input": {
+    "files": 3160,
+    "documentationPaths": 508,
+    "tools": 6,
+    "sourceDigest": "789b87bb5c4b62505f3bf6307ce3512cf8e622e9a30c0f4c9bfe31de5fc347e3",
+    "debtSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "rawInput": {
+      "path": "/tmp/awa-architecture-checkpoint-4df94bfa-input.json",
+      "sha256": "c18841cf05d2bbe1e2ca85526a334bcff0e3d92267d7a6e786f5896a0b044cd6",
+      "bytes": 80028003
+    }
+  },
+  "original1779Partition": {
+    "remaining": 353,
+    "cleared": 1426,
+    "completeDisjoint": true
+  },
+  "previous37f360Delta": {
+    "newlyCleared": 7,
+    "returned": 0,
+    "newFailures": 1
+  },
+  "newFailure": [
+    {
+      "id": "80ca2331d1f38d39021d69130507b4e89e21b7f4597187cc45bce51a8dc11533",
+      "rule": "dependency.unresolved-target",
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "line": 24,
+      "column": 37,
+      "detail": "Dependency does not resolve to enumerated public input.",
+      "specifier": "../../../src/game/mechanisms/roles/wolf/validation_rules",
+      "binding": "{\"kind\":\"import-type\",\"typeOnly\":true,\"symbols\":[\"namespace:*\"]}"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-run.ts",
+      "sha256": "b886ce6915bbd00917ebcc1b599fffbc1bf7bbe1cb6f83fa07cd36da9c96c041"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-run.log",
+      "sha256": "cdc7949a9646dae92772f2f1f15de86f0fe36f7aa54fc283de51edd1d211ba74"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-capture.json",
+      "sha256": "65614b3190ad906dc5bf5308cefd3b93d1a26ff24173cc5187792e3a1d47cd74"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-report.json",
+      "sha256": "1a44a31c509441f75001fbcb6345140d835a7cbb8015e8419e2a88047b7c520a"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-partition.json",
+      "sha256": "ad2f88be10f59090a8eca652c0cc5443d77049d24304cc03f3f2609246c5d664"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-debt-delta.json",
+      "sha256": "19e8d4d45c05fbf84169e8f60214d3f9988699ac83f0f85240065da09d19caf9"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-harness-history.json",
+      "sha256": "54826d2ee662df8d115d05facfe27cdd4f629ff33689175df51b08f2825c7f2c"
+    }
+  ],
+  "noSourceDebtMappingOrGatePolicyMutation": true,
+  "independentReview": "pending",
+  "limits": [
+    "真实fixed4df红报告只运行一次，后继诊断/修复不覆写此结果。",
+    "当前WIP和私有配置不入Git输入；raw临时可丢失，durable hash/blob元数据可恢复。",
+    "仅原progressive结构gate，无strict/豁免/mappings；未type/test/Tape/model/fullgate。",
+    "353结构余债与全C45/行为/P9待，不Goalcomplete、不Git/progress/Matrix。"
+  ]
+}

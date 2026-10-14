@@ -670,3 +670,5 @@
 - C24/C26 夜间来源完整交付：三源原59行八声明归rulesets，NP保discard→封存交付→compose、摘要后deathLives和finally原点；真实1428 NP/九controls与Root/独立完整新body668/436及整NP5163/四raw/12实体69保留核真。窄thunks晚World/day，falseowns仍原voters/scope/unknown读取，seal后失败保已封前缀，marks清后late未知守护不被native撤权抹掉；token/closure非JSON中文说明有效，原loader懒加载不改。新3/43原精准seal1/5两次48通过，四根首次5ffd8b/0/三CN头0，未全门禁或重复绿。全C24/C26继续，见 night-source-delivery.md。
 
 - 狼人旧入口退休验证修复：固定4df门禁原有1项新增失效依赖，独立一源将编译负例替为真实模块解析负例；新owner同基点解析完整路径、旧owner要求失败，原3准入例从permissions起完整保留。新增1例2断言与单根类型分别实际退出0；原固定3160输入仅替换这一源的后继门禁实际0，0新增/353余债/1426已清，两个完整债务集合保持。Root与独立源/输入/收据审查批准，六门禁与原1779债务未改，原4df失败历史保留。不是当前工作区全量验收，见 wolf-retired-entry-check.md。
+
+- 固定4df结构检查归档：3160实际Git原blob、508同Git文档、六工具与1779原债按原字节核对，唯一后台终态实际退出1（新增狼人退休负例静态未解析import）。353原余债/1426清除完整互斥分区，比37f另清7无返回；Root与独立全输入/集合/收据审查通过，历史红不覆写。后继 d3b14a16 的单源解析负例修复与覆盖门禁通过另属输入。完整中文/角色行为与最终P9验收仍待，见 architecture-checkpoint-4df94bfa.md。

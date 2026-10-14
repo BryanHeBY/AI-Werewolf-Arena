@@ -1,0 +1,49 @@
+{
+  "fixedCommit": "4df94bfafcf0f249b900a46a568ad427d069ad83",
+  "actualExecution": {
+    "launchChunk": "e93618",
+    "session": 47701,
+    "terminalChunk": "dc6353",
+    "exitCode": 1,
+    "executions": 1
+  },
+  "script": {
+    "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-run.ts",
+    "sha256": "b886ce6915bbd00917ebcc1b599fffbc1bf7bbe1cb6f83fa07cd36da9c96c041"
+  },
+  "log": {
+    "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-run.log",
+    "sha256": "cdc7949a9646dae92772f2f1f15de86f0fe36f7aa54fc283de51edd1d211ba74",
+    "bytes": 882
+  },
+  "inputCaptureBeforeGate": {
+    "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-capture.json",
+    "sha256": "65614b3190ad906dc5bf5308cefd3b93d1a26ff24173cc5187792e3a1d47cd74",
+    "rawInput": {
+      "path": "/tmp/awa-architecture-checkpoint-4df94bfa-input.json",
+      "sha256": "c18841cf05d2bbe1e2ca85526a334bcff0e3d92267d7a6e786f5896a0b044cd6",
+      "bytes": 80028003
+    },
+    "files": 3160,
+    "documentationPaths": 508,
+    "gateSources": 6,
+    "sourceDigest": "789b87bb5c4b62505f3bf6307ce3512cf8e622e9a30c0f4c9bfe31de5fc347e3",
+    "debtSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d"
+  },
+  "report": {
+    "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-report.json",
+    "sha256": "1a44a31c509441f75001fbcb6345140d835a7cbb8015e8419e2a88047b7c520a",
+    "counts": {
+      "files": 3160,
+      "violations": 354,
+      "failures": 1,
+      "remainingDebt": 353,
+      "clearedDebt": 1426
+    }
+  },
+  "limits": [
+    "actual退出1来源工具terminal，不以空日志或后台启动推断成功。",
+    "raw全text输入仅/tmp可缺席；持久capture每file原Git blob/mode/rawSHA与固定commit可完整恢复，docs同固定Git。",
+    "此progressive架构gate一次，无strict/mappings；不执行types/tests/Tape/models/full gates，不纳DR4/NP3WIP，不修改1779旧债。"
+  ]
+}

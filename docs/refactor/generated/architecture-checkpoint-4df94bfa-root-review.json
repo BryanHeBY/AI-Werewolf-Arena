@@ -1,0 +1,70 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "captureSHA256": "65614b3190ad906dc5bf5308cefd3b93d1a26ff24173cc5187792e3a1d47cd74",
+  "reportSHA256": "1a44a31c509441f75001fbcb6345140d835a7cbb8015e8419e2a88047b7c520a",
+  "input": {
+    "commit": "4df94bfafcf0f249b900a46a568ad427d069ad83",
+    "publicRawFilesVerifiedAgainstActualGitBlobs": 3160,
+    "sameGitDocumentationPaths": 508,
+    "actualUnchangedGateTools": 6,
+    "sourceDigest": "789b87bb5c4b62505f3bf6307ce3512cf8e622e9a30c0f4c9bfe31de5fc347e3",
+    "debtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d"
+  },
+  "partition": {
+    "original": 1779,
+    "remaining": 353,
+    "cleared": 1426,
+    "disjointComplete": true
+  },
+  "result": "固定源实际新增1未解析旧路径，真实exit1保持；后继单源修复另记录，不将该报告改成Green",
+  "limits": [
+    "静态结构不是全中文/行为/最终P9验收",
+    "不读取或夹带NP/DR/Wolf修复WIP，不重门禁/类型/运行"
+  ],
+  "finalPackageBindings": {
+    "evidence": {
+      "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-evidence.json",
+      "sha256": "87e38302e9d6a21bc8af113e985a91c3d080f178afc55400376b233c2e68dfc2"
+    },
+    "artifactsAndDocument": [
+      {
+        "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-run.ts",
+        "sha256": "b886ce6915bbd00917ebcc1b599fffbc1bf7bbe1cb6f83fa07cd36da9c96c041"
+      },
+      {
+        "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-run.log",
+        "sha256": "cdc7949a9646dae92772f2f1f15de86f0fe36f7aa54fc283de51edd1d211ba74"
+      },
+      {
+        "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-capture.json",
+        "sha256": "65614b3190ad906dc5bf5308cefd3b93d1a26ff24173cc5187792e3a1d47cd74"
+      },
+      {
+        "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-report.json",
+        "sha256": "1a44a31c509441f75001fbcb6345140d835a7cbb8015e8419e2a88047b7c520a"
+      },
+      {
+        "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-partition.json",
+        "sha256": "ad2f88be10f59090a8eca652c0cc5443d77049d24304cc03f3f2609246c5d664"
+      },
+      {
+        "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-debt-delta.json",
+        "sha256": "19e8d4d45c05fbf84169e8f60214d3f9988699ac83f0f85240065da09d19caf9"
+      },
+      {
+        "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-harness-history.json",
+        "sha256": "54826d2ee662df8d115d05facfe27cdd4f629ff33689175df51b08f2825c7f2c"
+      },
+      {
+        "path": "docs/refactor/architecture-checkpoint-4df94bfa.md",
+        "sha256": "790fa60a08928a670c5eb9b4dfd7f133a6355945f70b817864970991b4bbeec3"
+      }
+    ],
+    "independentReview": {
+      "path": "docs/refactor/generated/architecture-checkpoint-4df94bfa-independent-review.json",
+      "sha256": "be5531d2f8fea0ba0b9cc62d925dccbd6ede43a0c33c6009dd5cb0b96f046882"
+    },
+    "publicationState": "已完成 Root 与独立审查；作者冻结文件中的 pending 保留其捕获时点。后继修复见 d3b14a16，不覆盖固定红。"
+  }
+}
