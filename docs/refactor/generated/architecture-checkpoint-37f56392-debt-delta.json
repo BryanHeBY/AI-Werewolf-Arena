@@ -1,0 +1,19 @@
+{
+  "previousCommit": "cc7242548708543a674d2b898aef36e28f9e3dfc",
+  "fixedCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "previousRemaining": 361,
+  "currentRemaining": 360,
+  "exitedPreviousDebt": [
+    {
+      "id": "8905172ff8d9ce6e76855f4d536f3658ae716086635e0c9f4c3f10830367aadf",
+      "rule": "comment.missing-head",
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    }
+  ],
+  "addedPreviousRemaining": [],
+  "immutableDebtSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+  "limits": "精确比较两个固定报告的原债ID，不据移动路径更改基线或放宽新增违规。"
+}

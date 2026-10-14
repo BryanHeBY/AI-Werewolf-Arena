@@ -1,0 +1,52 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "fixedCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "actualExecution": {
+    "launchChunk": "62fb7e",
+    "session": 34246,
+    "terminalChunk": "e2b666",
+    "exitCode": 0
+  },
+  "counts": {
+    "files": 3153,
+    "violations": 360,
+    "failures": 0,
+    "remainingDebt": 360,
+    "clearedDebt": 1419
+  },
+  "actualImmutableDebtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+  "partitionComplete": true,
+  "previousRemainingExited": 1,
+  "previousRemainingAdded": 0,
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-37f56392.json",
+      "sha256": "dbcc332562bff3c7239790124f94c3d6b27331d8162ac91353ddb959d07da0e9"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-37f56392-harness-history.json",
+      "sha256": "2d61ee1464b8d2761f3562f3d86b150d7255e6a283aa3b424ca0ba413afa83c9"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-37f56392-debt-delta.json",
+      "sha256": "cc25ec766a52264cfcdc4c8be4592eefa758b54f9b73c1a2d22850e9bf7df7df"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-37f56392-review.json",
+      "sha256": "b0c02807e2bc9f8110bd203b711517073df0346fec49ebfb957f3bdfbe7097dc"
+    },
+    {
+      "path": "docs/refactor/architecture-checkpoint-37f56392.md",
+      "sha256": "1b68d567bf611c3306ab15e230413927392e2e49e9a37a393570e1a02ce45f4d"
+    }
+  ],
+  "independentReview": {
+    "path": "docs/refactor/generated/architecture-checkpoint-37f56392-review.json",
+    "sha256": "b0c02807e2bc9f8110bd203b711517073df0346fec49ebfb957f3bdfbe7097dc"
+  },
+  "limits": [
+    "Root实际执行固定Git结构门禁及独立peer一次3153全raw/工具同字节/完整partition核；没有重跑。",
+    "0new不等于strict零债或全部中文，固定37排除Witch及paid fixture后继，不借固定green为当前全树/P9。"
+  ]
+}

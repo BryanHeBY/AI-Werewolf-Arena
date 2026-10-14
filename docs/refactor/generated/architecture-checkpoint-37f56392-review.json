@@ -1,0 +1,146 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "mode": "Independent read-only actual Git raw blob batch, explicit public selection, metadata order/hash, tool bytes, immutable debt/delta/receipts review. No gate/compiler/runtime test execution.",
+  "fixedCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "publicInput": {
+    "files": 3153,
+    "sameGitDocumentationPaths": 489,
+    "pathOrderAndAllRawSHAExactlyMatch": true,
+    "documentationOrderExactlyMatch": true,
+    "duplicates": 0,
+    "selectedSymlinks": 0,
+    "inputDigest": "032f0909b7e8d6a8e9c7788cdb4bc3cbfe5dfce217e7c5b452e3329d9f2fa48a",
+    "capturedDigest": "032f0909b7e8d6a8e9c7788cdb4bc3cbfe5dfce217e7c5b452e3329d9f2fa48a",
+    "meaning": "Sorted path/SHA metadata only, not Tape engine fingerprint; every raw Git blob SHA separately checked in this read-only batch."
+  },
+  "tools": [
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+      "gitSHA": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+      "currentSHA": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+      "matchesClaim": true,
+      "currentBytesSame": true
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d",
+      "gitSHA": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d",
+      "currentSHA": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d",
+      "matchesClaim": true,
+      "currentBytesSame": true
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb",
+      "gitSHA": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb",
+      "currentSHA": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb",
+      "matchesClaim": true,
+      "currentBytesSame": true
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "gitSHA": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "currentSHA": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "matchesClaim": true,
+      "currentBytesSame": true
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3",
+      "gitSHA": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3",
+      "currentSHA": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3",
+      "matchesClaim": true,
+      "currentBytesSame": true
+    },
+    {
+      "path": "tooling/refactor/inventory.ts",
+      "sha256": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce",
+      "gitSHA": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce",
+      "currentSHA": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce",
+      "matchesClaim": true,
+      "currentBytesSame": true
+    }
+  ],
+  "debtCheck": {
+    "currentAndFixedBytesSame": true,
+    "previousAndFixedBytesSame": true,
+    "fixedSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "captureSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "deltaSHA": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+    "baselineFileMetadataDigest": "ea74d14ca1d1e12f4df442a2e04aab63d162e30509780159274d97c3337830db",
+    "declaredBaselineDigest": "ea74d14ca1d1e12f4df442a2e04aab63d162e30509780159274d97c3337830db",
+    "partition": {
+      "original": 1779,
+      "remaining": 360,
+      "cleared": 1419,
+      "baselineDuplicates": 0,
+      "remainingDuplicates": 0,
+      "clearedDuplicates": 0,
+      "overlap": [],
+      "unclassified": [],
+      "unknownRemaining": [],
+      "unknownCleared": []
+    }
+  },
+  "deltaCheck": {
+    "previousCommit": "cc7242548708543a674d2b898aef36e28f9e3dfc",
+    "previousRemaining": 361,
+    "currentRemaining": 360,
+    "exited": 1,
+    "added": 0,
+    "exactExitsSame": true,
+    "exactAddsSame": true
+  },
+  "actualScriptAndLog": {
+    "scriptHashSame": true,
+    "stdoutHashSame": true,
+    "terminal": {
+      "launchChunk": "62fb7e",
+      "session": 34246,
+      "terminalChunk": "e2b666",
+      "exitCode": 0
+    },
+    "commitSame": true,
+    "countsSame": true,
+    "failuresSame": true,
+    "fileCountSame": true,
+    "docsSame": true,
+    "debtSame": true
+  },
+  "counts": {
+    "files": 3153,
+    "violations": 360,
+    "failures": 0,
+    "remainingDebt": 360,
+    "clearedDebt": 1419
+  },
+  "documents": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-37f56392.json",
+      "sha256": "dbcc332562bff3c7239790124f94c3d6b27331d8162ac91353ddb959d07da0e9"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-37f56392-harness-history.json",
+      "sha256": "2d61ee1464b8d2761f3562f3d86b150d7255e6a283aa3b424ca0ba413afa83c9"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-37f56392-debt-delta.json",
+      "sha256": "cc25ec766a52264cfcdc4c8be4592eefa758b54f9b73c1a2d22850e9bf7df7df"
+    },
+    {
+      "path": "docs/refactor/architecture-checkpoint-37f56392.md",
+      "sha256": "1b68d567bf611c3306ab15e230413927392e2e49e9a37a393570e1a02ce45f4d"
+    }
+  ],
+  "findings": [],
+  "limits": [
+    "Only fixed37f committed public inputs; Witch and paid fixture WIP are excluded, not a final worktree pass.",
+    "Strict zero-debt, complete gameplay/types/browser/Chinese prose truth and P9 completion are not claimed.",
+    "Author62fb7e/session34246/e2b666 actual0 receipt is attributed and checked, not gate rerun.",
+    "Caller direct API obtains actual text/hash from fixed Git; this review verifies immutable debt bytes/hash against prior fixed/current records, not baseline gate regeneration."
+  ]
+}
