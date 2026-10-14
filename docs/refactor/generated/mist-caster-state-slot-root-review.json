@@ -1,0 +1,46 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "sha256": "285b224bb194fe0e77ec148ebb15b76692707dc802928dc18a66433a110d1bb9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "sha256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+      "sha256": "df3b6dada429c2ed1727cd1a2bdf85d89dbd5205fd0e7f3b2b2526b9199af6e9"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "sha256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552"
+    }
+  ],
+  "scopeSHA256": "48c64eb97915719f55c8cfc522b9d52f6a2c285fca2604a39210f6b5c40b58d6",
+  "review": {
+    "ownership": "唯一binding raw/expected与array/row/nestedTargets原引用归slot，Authority保World/Role/Camp/Identity/life/day及ravenChecked。current先授权后槽current，再原reader副本；没有第二库存或把schema当授权。",
+    "guard": "构造仅创建现场current闭包不执行，slot.install只用同一queries.assertCurrent，4原caller不能临时替换guard；callee和receiver仍由实际原authority查找。",
+    "orderAndFailure": "原bind(reader→JSON→逐层引用)、授权→bind(next)→defineProperty→binding保留；Object.defineProperty查找先于原容器/key。ravenChecked在unseal之前已写，失败不重开。物理写后抛错保新库存和旧binding，isCurrent撤权。",
+    "dataComments": "state两库存/历史与raven首次解封知识说明已对selectMist/selectSnake/unsealRaven实读；StateBinding raw/脱离JSON/原数组行与targetIds引用不同职责就地说明，JSON相同不足续权。",
+    "verification": "新8/27与旧1/5不同9case首收据已读，唯一guard增量只重字面case及必要unit；末comment全程序四emit桥，不重已绿类型/行为。完整19区域5406节点、Authority2641 mapped证明限界明确，不冒当前全二进制等价。",
+    "scopeAndArtifacts": "最终四source以及evidence全部列举artifacts实际SHA核同；中文头/数据结构已看，原schema/原控制未迁玩法。"
+  },
+  "findingsClosed": [
+    "Root提出逐调用可选guard来源，作者归唯一构造query并保late查找。",
+    "Root要求重要数据结构旁中文说明，末comment-only桥保留旧真实收据。",
+    "第三方对RavenState首次觉醒说明的precision finding已闭：实际存活狼少于三人时首次确定觉醒日及当时已知同伴；仅此文字，3012完整非注释程序及两wholeemit桥保留此前收据。"
+  ],
+  "limits": [
+    "C17雾鸦四源有界迁移，55角色与全P3仍未完成。",
+    "新class、JS-private布局、导入和栈变化明确；未承诺任意private monkey patch兼容。"
+  ],
+  "finalCommentDelta": {
+    "path": "docs/refactor/generated/mist-caster-state-slot-raven-comment-precision.json",
+    "sha256": "2e057cbec064f1fbbaf1180de6d776acdf43f22d0d9ff87d16b91391cbe79b5c",
+    "actualToolChunk": "4d51a9",
+    "noTypesOrRuntimeRerun": true
+  }
+}

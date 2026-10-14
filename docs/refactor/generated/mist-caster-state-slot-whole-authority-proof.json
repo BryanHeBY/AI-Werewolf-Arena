@@ -1,0 +1,25 @@
+{
+  "base": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+  "actualSource": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+  "sourceSHA256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578",
+  "slotSHA256": "4c50dea331ad09a237911a5afce3c308101c820f0b8bd8871d32844a0d2d30cb",
+  "oldNodes": 2641,
+  "mappedNodes": 2641,
+  "wholeAuthorityProgramSame": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeMappedRawSame": true,
+      "oldSHA256": "b99ea4debc5104f6e455e01a24c2db7c5784948db73653b8f42b9f3f08be087d",
+      "mappedSHA256": "b99ea4debc5104f6e455e01a24c2db7c5784948db73653b8f42b9f3f08be087d"
+    },
+    {
+      "module": "CommonJS",
+      "wholeMappedRawSame": true,
+      "oldSHA256": "4fd07f80d248930d614e1f18e52c68eed38edd5f4c71d24e2c6321ad4116576e",
+      "mappedSHA256": "4fd07f80d248930d614e1f18e52c68eed38edd5f4c71d24e2c6321ad4116576e"
+    }
+  ],
+  "reconstruction": "read/bind/install 删除处实际从新owner完整body按已列latequery/current映射构建，不从before恢复旧body；签名采用原被退休私有方法仅作为程序逆API边界。isCurrent状态tail同取实际新slot AST。其它精确接口/注释delta来自已保存列表，完整程序所有其它statement仍参与。",
+  "actualWholeAuthorityRuntimeRawSameClaim": false
+}

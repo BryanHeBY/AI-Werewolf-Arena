@@ -1,0 +1,195 @@
+{
+  "parsedSources": 1504,
+  "actualModuleReferences": [
+    {
+      "path": "backend/tests/unit/presentation/mist-raven-projection.test.ts",
+      "kind": "ImportDeclaration",
+      "route": "../../../src/game/mechanisms/roles/mist_raven/state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import {\n  createAlchemistState,\n  createRavenState,\n} from \"../../../src/game/mechanisms/roles/mist_raven/state\";"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "kind": "ImportDeclaration",
+      "route": "../../../../src/game/mechanisms/roles/mist_raven/state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import {\n  createAlchemistState,\n  createRavenState,\n  type AlchemistState,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/state\";"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "kind": "ImportDeclaration",
+      "route": "../../../../src/game/mechanisms/roles/mist_raven/caster_authority",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/caster_authority",
+      "node": "import { MistCasterAuthority } from \"../../../../src/game/mechanisms/roles/mist_raven/caster_authority\";"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/state.test.ts",
+      "kind": "ImportDeclaration",
+      "route": "../../../../src/game/mechanisms/roles/mist_raven/state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import {\n  createAlchemistState,\n  readAlchemistState,\n  selectMist,\n  selectSnake,\n  createRavenState,\n  readRavenState,\n  unsealRaven,\n  selectRavenKnife,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/state\";"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+      "kind": "ImportDeclaration",
+      "route": "../../../../src/game/mechanisms/roles/mist_raven/state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import {\n  createAlchemistState,\n  createRavenState,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/state\";"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+      "kind": "ImportDeclaration",
+      "route": "../../../../src/game/mechanisms/roles/mist_raven/caster_authority",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/caster_authority",
+      "node": "import { MistCasterAuthority } from \"../../../../src/game/mechanisms/roles/mist_raven/caster_authority\";"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/night-frame.test.ts",
+      "kind": "ImportDeclaration",
+      "route": "../../../../src/game/mechanisms/roles/mist_raven/state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import {\n  createAlchemistState,\n  createRavenState,\n  type AlchemistState,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/state\";"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "kind": "ImportDeclaration",
+      "route": "../../../src/game/mechanisms/roles/mist_raven/state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import type { MIST_RAVEN_POLICY } from \"../../../src/game/mechanisms/roles/mist_raven/state\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+      "kind": "ImportDeclaration",
+      "route": "./state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import { readAlchemistState, readRavenState } from \"./state\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "kind": "ImportDeclaration",
+      "route": "./state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import {\n  readMistOwnData as own,\n  selectMist,\n  selectSnake,\n  selectRavenKnife,\n  unsealRaven,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "kind": "ImportDeclaration",
+      "route": "./state-slot",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state-slot",
+      "node": "import { MistCasterStateSlot, type MistCasterKind as Caster, type MistCasterState as State } from \"./state-slot\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+      "kind": "ImportDeclaration",
+      "route": "./state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import {\n  readMistOwnData as own,\n  readAlchemistState,\n  readRavenState,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "kind": "ImportDeclaration",
+      "route": "./state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import { MIST_RAVEN_POLICY, readAlchemistState, readRavenState } from \"./state\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+      "kind": "ImportDeclaration",
+      "route": "./state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import {\n  MIST_RAVEN_POLICY,\n  createAlchemistState,\n  createRavenState,\n  readAlchemistState,\n  readRavenState,\n  selectMist,\n  selectRavenKnife,\n} from \"./state\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "kind": "ImportDeclaration",
+      "route": "./caster_authority",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/caster_authority",
+      "node": "import { MistCasterAuthority } from \"./caster_authority\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "kind": "ImportDeclaration",
+      "route": "./state",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "node": "import {\n  createAlchemistState,\n  createRavenState,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+    }
+  ],
+  "ownedGraph": [
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "to": "node:util",
+      "typeOnly": false,
+      "node": "import { types } from \"node:util\";"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "to": "backend/src/core/domain/components/names",
+      "typeOnly": false,
+      "node": "import { COMPONENT } from \"../../../../core/domain/components/names\";"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "to": "backend/src/core/domain/components/alive",
+      "typeOnly": false,
+      "node": "import {\n  aliveLifeDescriptor,\n  aliveLifeVersion,\n  type AliveComponent,\n} from \"../../../../core/domain/components/alive\";"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "to": "backend/src/core/domain/components/role",
+      "typeOnly": true,
+      "node": "import type { RoleComponent } from \"../../../../core/domain/components/role\";"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "to": "backend/src/core/domain/identity",
+      "typeOnly": false,
+      "node": "import { Camp } from \"../../../../core/domain/identity\";"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "to": "backend/src/core/domain/world",
+      "typeOnly": true,
+      "node": "import type { World } from \"../../../../core/domain/world\";"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "to": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "typeOnly": false,
+      "node": "import {\n  readMistOwnData as own,\n  selectMist,\n  selectSnake,\n  selectRavenKnife,\n  unsealRaven,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "to": "backend/src/game/mechanisms/roles/mist_raven/state-slot",
+      "typeOnly": false,
+      "node": "import { MistCasterStateSlot, type MistCasterKind as Caster, type MistCasterState as State } from \"./state-slot\";"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+      "to": "backend/src/game/mechanisms/roles/mist_raven/state",
+      "typeOnly": false,
+      "node": "import {\n  readMistOwnData as own,\n  readAlchemistState,\n  readRavenState,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "to": "node:util",
+      "typeOnly": false,
+      "node": "import { types } from \"node:util\";"
+    }
+  ],
+  "fields": [
+    "private binding: StateBinding;"
+  ],
+  "newSlotCallers": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "kind": "ImportDeclaration",
+      "route": "./state-slot",
+      "target": "backend/src/game/mechanisms/roles/mist_raven/state-slot",
+      "node": "import { MistCasterStateSlot, type MistCasterKind as Caster, type MistCasterState as State } from \"./state-slot\";"
+    }
+  ],
+  "authorityPrivateReadBindInstallRetired": true,
+  "noWeakMapMapNewOwner": true,
+  "noWorldLifeOrClockInSlot": true,
+  "note": "新slot唯一本族caller是caster_authority；真实night_frame仍通过原class，跨feature ports和值消费者不迁。只核本三owner静态字面导入，不称全仓coldload图。"
+}

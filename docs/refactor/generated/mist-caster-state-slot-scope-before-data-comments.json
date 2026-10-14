@@ -1,0 +1,23 @@
+{
+  "base": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "sha256": "3767e5f086357726c14092908c062a2ede2ca9e35e7fc03f81c1750ba156bffb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "sha256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+      "sha256": "4c50dea331ad09a237911a5afce3c308101c820f0b8bd8871d32844a0d2d30cb"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "sha256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552"
+    }
+  ],
+  "existingCount": 2,
+  "newCount": 2
+}

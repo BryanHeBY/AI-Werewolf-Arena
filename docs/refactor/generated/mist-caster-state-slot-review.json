@@ -1,0 +1,306 @@
+{
+  "审查状态": "批准",
+  "基线": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+  "方式": "独立实读四完整源、原authority和state差分、新8字面case、完整两个证明脚本和真实阶段收据；核真实Git、完整17精确authority编辑正向到当前、唯一guard与两末注释桥，不重运行类型、测试、编译输出、门禁或整证明。",
+  "当前四源": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "sha256": "285b224bb194fe0e77ec148ebb15b76692707dc802928dc18a66433a110d1bb9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "sha256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+      "sha256": "df3b6dada429c2ed1727cd1a2bdf85d89dbd5205fd0e7f3b2b2526b9199af6e9"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "sha256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552"
+    }
+  ],
+  "真实两旧源": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "sha256": "b13a5cc8f7538971d6c712a4d266c78522daf4ce12b0cc7b7f6c880d214fa3be",
+      "实际GitBefore同字节": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "sha256": "c10368b98b4889e0349a82e7cc514e3075d939f672cac9e271e075f3fb8d4346",
+      "实际GitBefore同字节": true
+    }
+  ],
+  "六控制": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "sha256": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+      "当前仍同实际Git": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+      "sha256": "abea1770efdadab2d01005a51ba008efffa7fb0262f6c89d2fea48372655c7ae",
+      "当前仍同实际Git": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+      "sha256": "6b9355fdb6eab41e12d3da58ca5a9addf3d591f84f36dcb17bf20a69385da845",
+      "当前仍同实际Git": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "sha256": "56206fba37c3a0f2dc7a18400ad046df283af49e41bbf9ea02233884b8e1e88a",
+      "当前仍同实际Git": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+      "sha256": "49aae448082d5cc57c43bdd543d7b4dc25b871d85ecd2da1a69de5c3201a68aa",
+      "当前仍同实际Git": true
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+      "sha256": "84d7ba20b3ceafe83ce8b32ff53ec68e2c3918069b2d457b6f592f247c0bf7cf",
+      "当前仍同实际Git": true
+    }
+  ],
+  "完整authority精确编辑": {
+    "条数": 17,
+    "独立全原文应用到当前相同": true
+  },
+  "职责及边界审查": [
+    "原raw身份、normalized JSON内容、历史/队友数组、行和nested targetIds原引用完整归唯一binding。reader始终返回脱离副本，不把相同JSON新数组/行/targets当原体；没有第二库存或新Map/WeakMap。",
+    "Role/camp/privateContainer/Identity/life/version/day/allowFirstDeath保authority；原guard先行，之后才读槽内容；current成功后仍再reader，不合并副本或提前读取caster/container/key。",
+    "安装保原current→bind(next)的schema/JSON/refs→Object.defineProperty→binding替换；callee仍先于晚container/key。先物理写后抛错保新库存、旧binding撤权；不修复、退款或重新开启窗口。",
+    "ravenChecked在current通过后先写，再可能失败的unseal/install；原首次死亡仅可读取paid effects/retained knowledge，不允许新资源提交。",
+    "最终唯一assertCurrent由constructor捕获()=>this.current()，构造不执行；install(next)才查原方法并保this，四真实caller无可选择guard，阶段/目标/付款仍原night owner。",
+    "原own descriptor helper全算法归state并由authority/slot两个真实caller共享；两factory、两reader、选择/解封接受集合不改，无新增schema或完整档案codec。",
+    "中文原raw/副本、数组成员与history对象、逐层targets身份说明真实；Raven已知队友是既有知识，选择与余量相关性保。只读查询接口不构成权限品牌或序列化隔离。"
+  ],
+  "程序证据核读": {
+    "区域": 19,
+    "完整区域节点": 5406,
+    "区域完整映射输出": 8,
+    "完整Authority节点": 2641,
+    "整Authority映射输出": 2,
+    "说明": "完整新slot的read/bind/install及isCurrent尾部来自实际body；只明确query/current/interface/caller参数映射，全部children与leaf都参与，没有mask整个旧body或callback。当前完整模块raw并非全部相同。"
+  },
+  "唯一guard增量": "保存初稿before/after源码与firstCandidate proof；只重复原字面late风险case1/2，必要单元root76685/bdbb29 exit0，不把其计第十独立case。",
+  "验证来源归作者": {
+    "newTests": {
+      "command": "bun test backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "chunk": "d6bb62",
+      "exitCode": 0,
+      "cases": 8,
+      "failures": 0,
+      "assertions": 27,
+      "log": "docs/refactor/generated/mist-caster-state-slot-new-tests.log"
+    },
+    "originalCase": {
+      "command": "bun test backend/tests/unit/features/mist-raven/caster-authority.test.ts --test-name-pattern '^original first death preserves paid knowledge while never allowing another resource commit$'",
+      "batchLaunchChunk": "c1225b",
+      "cases": 1,
+      "failures": 0,
+      "assertions": 5,
+      "filtered": 25,
+      "log": "docs/refactor/generated/mist-caster-state-slot-original-case.log",
+      "note": "同批在有限编译启动前运行，计数按真实 Bun 日志；该批最终编译 exit2 不当作此单例终态。"
+    },
+    "types": {
+      "first": {
+        "roots": 4,
+        "launchChunk": "c1225b",
+        "session": 67022,
+        "completionChunk": "80f5e1",
+        "exitCode": 2,
+        "log": "docs/refactor/generated/mist-caster-state-slot-types.log",
+        "reason": "仅new unit object/{}私有记录访问八诊断；三生产根无诊断。"
+      },
+      "failedUnitOnly": {
+        "roots": 1,
+        "launchChunk": "48ebb9",
+        "session": 65594,
+        "completionChunk": "15934d",
+        "exitCode": 0,
+        "log": "docs/refactor/generated/mist-caster-state-slot-unit-types.log",
+        "fix": "只type cast，两个whole newunit运行输出同，未重复三生产roots或已绿 runtime。"
+      }
+    },
+    "uniqueGuardRisk": {
+      "command": "bun test backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts --test-name-pattern '^caster and JSON reads remain late around prepare and descriptor publication$'",
+      "launchChunk": "506f11",
+      "cases": 1,
+      "failures": 0,
+      "assertions": 2,
+      "filtered": 7,
+      "log": "docs/refactor/generated/mist-caster-state-slot-unique-guard-case.log",
+      "types": {
+        "roots": 1,
+        "session": 76685,
+        "completionChunk": "bdbb29",
+        "exitCode": 0,
+        "log": "docs/refactor/generated/mist-caster-state-slot-unique-guard-types.log"
+      },
+      "reason": "唯一guard源收口后只验证这个真实读取风险及受影响unit root；不复跑原8+旧1。"
+    }
+  },
+  "首失败说明": "首4根67022/80f5e1真实exit2只新fixture八object字段诊断，cast修后failed1根65594/15934d exit0；原8/27+旧1/5仅初稿一次。首强逆漏原RavenKnife末逗号的harness失败保留，后来只修真实映射。",
+  "公开API及初始化限制": "Authority旧JS-private read/bind/install/binding布局退休，新class/stateSlot字段和值import边新增。原公开方法/参数保，静态有限图Authority→slot→state无新反向同族边；不保证私有反射/CJS覆盖或整个构建coldload等价。",
+  "文档": {
+    "path": "docs/refactor/mist-caster-state-slot.md",
+    "sha256": "5f355efb434a65ee718b938395ecbfb324762bf2a75599f6d6c123a320c19a02"
+  },
+  "证据": {
+    "path": "docs/refactor/generated/mist-caster-state-slot-evidence.json",
+    "sha256": "48e6554e4637ade926021d3da7f1c7f1faabf99f7fc54207528827cfbe738f34"
+  },
+  "已核附件": [
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-before.json",
+      "sha256": "49a629fac613572aae237bf17cf28e37dc29bd0b29f996ac48789ad192fd3974"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-edits.json",
+      "sha256": "0ef9edb574019146473b52e8184eb2c46d1e13c932f690eaf7ef74ba2ce22a66"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-program-proof.json",
+      "sha256": "bfe7465f0e719c191bf9e977ad87ea337f2a09a7fad19f7ce3f30f53d5c488c4"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-whole-authority-proof.json",
+      "sha256": "50ea48753b0331046b77ae57f4b0bcb6e17789bc6466aad79dff3d0d31c1b3b6"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-bindings.json",
+      "sha256": "eda1eb7a5f5e1add906d2dc0ff3c50f5a3764c139de2c879762a6888ed44d6a4"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-heads.json",
+      "sha256": "945589ae5f31d74af2be0165677105c46f989910b8ad170371cb73fe24b707a2"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-scope-final.json",
+      "sha256": "48c64eb97915719f55c8cfc522b9d52f6a2c285fca2604a39210f6b5c40b58d6"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-receipts.json",
+      "sha256": "6c9cf89a0af4478c5035990b9a7489dfd0b562e8ad74b71ab2615911f02a144b"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-unit-type-delta.json",
+      "sha256": "67612b8c8d1b669205a17a11c4525cb7d09bbdfd8384a5ff14ab8efdab1779f8"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-types-config.json",
+      "sha256": "be1ee3b51253c4233be115d3eef48e5d5df5d80774c22078c0862c22b8049bcb"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-unit-types-config.json",
+      "sha256": "7499f2a882e530dad6c2328c877a54ca4ed3dbcbde73f599acfa10ac148b8d9f"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-proof-first-failure.json",
+      "sha256": "ebac3fac3f68b33bc73a8196953c39759e2d608477811f1886dcbd1d01d7c39e"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-unique-guard-delta.json",
+      "sha256": "9e4b82cafaad3da7bf6a8931d31d0eddd5d304ad01b384a85c0397a92440fc2c"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-program-proof-before-unique-guard.json",
+      "sha256": "cc519d7643f579e5515584c794ecb00fa1df37ad559dc1e207c7709dc2ac91f9"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-edits-before-unique-guard.json",
+      "sha256": "0618e99525397c5a62016a5df386439e662ea7506d0170c1726feab121c99857"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-scope-before-data-comments.json",
+      "sha256": "bfa4eb5fdf14db60c2dbcd137f19e2fb2217290320842e6e17843a44a317bd16"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-data-comment-delta.json",
+      "sha256": "7499a86a9203f1d82890cd624525eb6834bb5ebb8efb093072442700d984015f"
+    },
+    {
+      "path": "docs/refactor/generated/mist-caster-state-slot-raven-comment-precision.json",
+      "sha256": "2e057cbec064f1fbbaf1180de6d776acdf43f22d0d9ff87d16b91391cbe79b5c"
+    }
+  ],
+  "发现": [
+    {
+      "来源": "第三独立peer",
+      "类别": "已闭中文说明精度",
+      "内容": "原Raven数据旁未写首次觉醒的存活狼少于三人条件；精确单句已补，与实际函数一致，无执行token改动。",
+      "状态": "已修闭"
+    }
+  ],
+  "限制": [
+    "本批不是所有C17机制或strictTape验收，独立记录/黄金不改。",
+    "原types/runtime/heads/proof对应末comment前真实源码，保存before与双输出桥承接最终SHA，没有伪重跑。",
+    "没有重运行旧suite、整局、模型、网络、完整类型或全量门禁。",
+    "本次仅最后觉醒条件一句精度、4最终SHA与MD/证据绑定增量核；原独立完整业务批准和所有真实阶段收据保持，不伪造新运行。"
+  ],
+  "原数据结构注释桥": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "beforeSHA256": "3767e5f086357726c14092908c062a2ede2ca9e35e7fc03f81c1750ba156bffb",
+      "finalSHA256": "c47d0e110cac49b479dea015573bf4ffb47ff97c4c5ab10c971e64a4ec19787d",
+      "独立逐差仅注释": true,
+      "作者完整程序节点": 3012,
+      "作者双输出同": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true
+        }
+      ],
+      "阶段": "最后Raven觉醒条件文字精度修正之前；该中间SHA不是最终stateSHA"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+      "beforeSHA256": "4c50dea331ad09a237911a5afce3c308101c820f0b8bd8871d32844a0d2d30cb",
+      "finalSHA256": "df3b6dada429c2ed1727cd1a2bdf85d89dbd5205fd0e7f3b2b2526b9199af6e9",
+      "独立逐差仅注释": true,
+      "作者完整程序节点": 963,
+      "作者双输出同": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true
+        }
+      ],
+      "阶段": "最后Raven觉醒条件文字精度修正之前；该中间SHA不是最终stateSHA"
+    }
+  ],
+  "末Raven文字精度增量": {
+    "priorReviewSHA256": "07b3dbf0b25ee4fd7ae01b8887d2eab4e448ebd5457a1c273dfbdddc42105da0",
+    "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+    "beforeSHA256": "c47d0e110cac49b479dea015573bf4ffb47ff97c4c5ab10c971e64a4ec19787d",
+    "finalSHA256": "285b224bb194fe0e77ec148ebb15b76692707dc802928dc18a66433a110d1bb9",
+    "独立完整原文只精确单句替换同": true,
+    "准确实际依据": "unsealRaven只有尚未觉醒且livingWolfIds.length<3才首次设置awakenedDay/knownTeammateIds，后续保持既有知识。",
+    "修正原文": "夜初解封首次确定觉醒日和已知同伴，后续保留知识而非当前存活名单",
+    "修正后": "满足存活狼少于三人的觉醒条件时，夜初首次记录觉醒日和当时已知同伴；后续保留知识而非当前存活名单",
+    "作者节点": 3012,
+    "作者双输出同": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true
+      }
+    ],
+    "真实作者chunk": "4d51a9",
+    "没有重复正文或已绿检查": true
+  }
+}

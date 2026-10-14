@@ -1,0 +1,18 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/mist_raven/state.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

@@ -1,0 +1,280 @@
+{
+  "base": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "sha256": "3767e5f086357726c14092908c062a2ede2ca9e35e7fc03f81c1750ba156bffb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "sha256": "9ee1ae57f906199b0c2c53fc55af73201801ea61e076e196a24265e6994d4e13"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+      "sha256": "df36d3267091a0f6ed71c4309642185f8ac608af42325fdb86b5d7c68cfc1874"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "sha256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552"
+    }
+  ],
+  "reports": [
+    {
+      "label": "原完整 own descriptor helper 新唯一 state owner",
+      "nodes": 91,
+      "same": true,
+      "oldSHA256": "88239b3a5a6b5a8dd1db104c2964273d0b703e6adaa4f59d7bbd0b99557b097e",
+      "currentMappedSHA256": "88239b3a5a6b5a8dd1db104c2964273d0b703e6adaa4f59d7bbd0b99557b097e"
+    },
+    {
+      "label": "完整 schema选择 read 方法实际新owner body",
+      "nodes": 41,
+      "same": true,
+      "oldSHA256": "bab05f239429298c8f62286960b7247f7e9ab4b481cb4a5add0f50d47203af3f",
+      "currentMappedSHA256": "bab05f239429298c8f62286960b7247f7e9ab4b481cb4a5add0f50d47203af3f"
+    },
+    {
+      "label": "完整 bind read→JSON→array/row/nestedTargets 真实 body",
+      "nodes": 278,
+      "same": true,
+      "oldSHA256": "f1f409a08e372fce15432e560546676687b7b61fb1ec4e2276c1dae8998af5bb",
+      "currentMappedSHA256": "f1f409a08e372fce15432e560546676687b7b61fb1ec4e2276c1dae8998af5bb"
+    },
+    {
+      "label": "完整 install current→bind→defineProperty→binding prefix",
+      "nodes": 97,
+      "same": true,
+      "oldSHA256": "f852561d92fef538f384f80b446e8fbae448edf5133de03a6b47353466188ae4",
+      "currentMappedSHA256": "f852561d92fef538f384f80b446e8fbae448edf5133de03a6b47353466188ae4"
+    },
+    {
+      "label": "原整参与者/角色/阵营/身份/生命 guard 前缀",
+      "nodes": 322,
+      "same": true,
+      "oldSHA256": "8ac60090914e5c09f457c6808e00b71562ecb3531c772c0aa7f81785578dd9f3",
+      "currentMappedSHA256": "8ac60090914e5c09f457c6808e00b71562ecb3531c772c0aa7f81785578dd9f3"
+    },
+    {
+      "label": "完整原槽身份＋schema＋JSON＋每个array/row/targets状态检查",
+      "nodes": 240,
+      "same": true,
+      "oldSHA256": "3b6a2cdb00b1814c10c141029c91fe7fc435e818a2bfe6c8140f880b167a6df0",
+      "currentMappedSHA256": "3b6a2cdb00b1814c10c141029c91fe7fc435e818a2bfe6c8140f880b167a6df0"
+    },
+    {
+      "label": "完整构造参数/修饰符同",
+      "nodes": 43,
+      "same": true,
+      "oldSHA256": "c941e5135a0669edd4a1a101fd7b22aff03772f5e666f0f2ff5f675c22adf9cf",
+      "currentMappedSHA256": "c941e5135a0669edd4a1a101fd7b22aff03772f5e666f0f2ff5f675c22adf9cf"
+    },
+    {
+      "label": "原整个constructor初始化前缀（只末binding归ownedslot）",
+      "nodes": 547,
+      "same": true,
+      "oldSHA256": "a3c43cf551357a6659e1236fe16bf40c48f3c362d2b8fd3ceab1240fff27a047",
+      "currentMappedSHA256": "a3c43cf551357a6659e1236fe16bf40c48f3c362d2b8fd3ceab1240fff27a047"
+    },
+    {
+      "label": "原constructor最后own(raw,key)参数时点表达式",
+      "nodes": 21,
+      "same": true,
+      "oldSHA256": "365484a5a62373f3051dc3fade40fa4b43a64419bf12508e7f3c11d3c88d662c",
+      "currentMappedSHA256": "365484a5a62373f3051dc3fade40fa4b43a64419bf12508e7f3c11d3c88d662c"
+    },
+    {
+      "label": "查询无缓存/绑定，现场caster/container/key receiver保持",
+      "nodes": 52,
+      "same": true,
+      "oldSHA256": "62d9798096aebd9730e88c0b71361a519f63bcf03c141198efa4494269daffc8",
+      "currentMappedSHA256": "62d9798096aebd9730e88c0b71361a519f63bcf03c141198efa4494269daffc8"
+    },
+    {
+      "label": "原完整保留authority方法 factoryLife",
+      "nodes": 129,
+      "same": true,
+      "oldSHA256": "23e0f9c173c47c580aa74bc16e711f5e7255c05cd81de33855e96157484529a6",
+      "currentMappedSHA256": "23e0f9c173c47c580aa74bc16e711f5e7255c05cd81de33855e96157484529a6"
+    },
+    {
+      "label": "原完整保留authority方法 state",
+      "nodes": 36,
+      "same": true,
+      "oldSHA256": "190a62509d13abf3820fe4355b4c7214767dd944907a528f74653108972b2679",
+      "currentMappedSHA256": "190a62509d13abf3820fe4355b4c7214767dd944907a528f74653108972b2679"
+    },
+    {
+      "label": "授权current完整body（末脱离再次读取指向真正slot.read）",
+      "nodes": 61,
+      "same": true,
+      "oldSHA256": "d8633b263956fb01b8d4043ba97354d55f4e6519da6952f0784962c6bd828131",
+      "currentMappedSHA256": "d8633b263956fb01b8d4043ba97354d55f4e6519da6952f0784962c6bd828131"
+    },
+    {
+      "label": "slot.read真正完整再次reader表达式",
+      "nodes": 32,
+      "same": true,
+      "oldSHA256": "3cc68e20e6d5435a3718e700e14e48565c2b6ca26ee7ee131187acf84e2a21c1",
+      "currentMappedSHA256": "3cc68e20e6d5435a3718e700e14e48565c2b6ca26ee7ee131187acf84e2a21c1"
+    },
+    {
+      "label": "实际完整caller checkRavenAtNightStart 非调用body保持",
+      "nodes": 128,
+      "same": true,
+      "oldSHA256": "ce293fb10a856156ec7512c1bc7546e306269e4184e39fc024d494cd92e9b307",
+      "currentMappedSHA256": "ce293fb10a856156ec7512c1bc7546e306269e4184e39fc024d494cd92e9b307"
+    },
+    {
+      "label": "实际完整caller commitMist 非调用body保持",
+      "nodes": 114,
+      "same": true,
+      "oldSHA256": "558835ad67852264bade2cd092335825cfefd8544ff478253c88c44ac3b6dd25",
+      "currentMappedSHA256": "558835ad67852264bade2cd092335825cfefd8544ff478253c88c44ac3b6dd25"
+    },
+    {
+      "label": "实际完整caller commitSnake 非调用body保持",
+      "nodes": 111,
+      "same": true,
+      "oldSHA256": "147ee9fd088a517f7655266721de3a3c0dfc7478da34d66713e09d57d62a4fed",
+      "currentMappedSHA256": "147ee9fd088a517f7655266721de3a3c0dfc7478da34d66713e09d57d62a4fed"
+    },
+    {
+      "label": "实际完整caller commitRavenKnife 非调用body保持",
+      "nodes": 125,
+      "same": true,
+      "oldSHA256": "7c6ed927e979d4cf43fa34198a7e354917c375da4ec3e412e37ec27c3f07f0d7",
+      "currentMappedSHA256": "7c6ed927e979d4cf43fa34198a7e354917c375da4ec3e412e37ec27c3f07f0d7"
+    },
+    {
+      "label": "state完整旧程序（新增完整shared own除外，未遮body）",
+      "nodes": 2921,
+      "same": true,
+      "oldSHA256": "7f738c40bcd1acf6bc4465286dc3ced5dcbe1e4179886728fdccc4c5aa75e811",
+      "currentMappedSHA256": "7f738c40bcd1acf6bc4465286dc3ced5dcbe1e4179886728fdccc4c5aa75e811"
+    }
+  ],
+  "outputs": [
+    {
+      "scope": "state完整旧程序除新增helper",
+      "module": "ESNext",
+      "rawSame": true
+    },
+    {
+      "scope": "实际新owner完整算法 read",
+      "module": "ESNext",
+      "rawSame": true
+    },
+    {
+      "scope": "实际新owner完整算法 bind",
+      "module": "ESNext",
+      "rawSame": true
+    },
+    {
+      "scope": "实际新owner完整算法 install",
+      "module": "ESNext",
+      "rawSame": true
+    },
+    {
+      "scope": "state完整旧程序除新增helper",
+      "module": "CommonJS",
+      "rawSame": true
+    },
+    {
+      "scope": "实际新owner完整算法 read",
+      "module": "CommonJS",
+      "rawSame": true
+    },
+    {
+      "scope": "实际新owner完整算法 bind",
+      "module": "CommonJS",
+      "rawSame": true
+    },
+    {
+      "scope": "实际新owner完整算法 install",
+      "module": "CommonJS",
+      "rawSame": true
+    }
+  ],
+  "callSites": [
+    {
+      "name": "checkRavenAtNightStart",
+      "actualCall": "this.stateSlot.install(unsealRaven(state, this.day, this.actorId, livingWolfIds), () => this.current())",
+      "argumentAndLateCurrentSame": true
+    },
+    {
+      "name": "commitMist",
+      "actualCall": "this.stateSlot.install(selectMist(this.current() as AlchemistState, this.day, targets, livingIds), () => this.current())",
+      "argumentAndLateCurrentSame": true
+    },
+    {
+      "name": "commitSnake",
+      "actualCall": "this.stateSlot.install(selectSnake(this.current() as AlchemistState, this.day, target, legalTargets), () => this.current())",
+      "argumentAndLateCurrentSame": true
+    },
+    {
+      "name": "commitRavenKnife",
+      "actualCall": "this.stateSlot.install(\n      selectRavenKnife(this.current() as RavenState, this.day, this.actorId, target, livingIds),\n      () => this.current(),\n    )",
+      "argumentAndLateCurrentSame": true
+    }
+  ],
+  "retiredMethods": true,
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "sha256": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+      "currentSHA256": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+      "gitBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+      "sha256": "abea1770efdadab2d01005a51ba008efffa7fb0262f6c89d2fea48372655c7ae",
+      "currentSHA256": "abea1770efdadab2d01005a51ba008efffa7fb0262f6c89d2fea48372655c7ae",
+      "gitBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+      "sha256": "6b9355fdb6eab41e12d3da58ca5a9addf3d591f84f36dcb17bf20a69385da845",
+      "currentSHA256": "6b9355fdb6eab41e12d3da58ca5a9addf3d591f84f36dcb17bf20a69385da845",
+      "gitBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "sha256": "56206fba37c3a0f2dc7a18400ad046df283af49e41bbf9ea02233884b8e1e88a",
+      "currentSHA256": "56206fba37c3a0f2dc7a18400ad046df283af49e41bbf9ea02233884b8e1e88a",
+      "gitBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+      "sha256": "49aae448082d5cc57c43bdd543d7b4dc25b871d85ecd2da1a69de5c3201a68aa",
+      "currentSHA256": "49aae448082d5cc57c43bdd543d7b4dc25b871d85ecd2da1a69de5c3201a68aa",
+      "gitBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+      "sha256": "84d7ba20b3ceafe83ce8b32ff53ec68e2c3918069b2d457b6f592f247c0bf7cf",
+      "currentSHA256": "84d7ba20b3ceafe83ce8b32ff53ec68e2c3918069b2d457b6f592f247c0bf7cf",
+      "gitBytesSame": true
+    }
+  ],
+  "newSlotStore": "单个binding字段，非WeakMap/Map；authority无raw/expected/arrays镜像。新owner字段/method布局与新模块加载不称旧wholebyte同。",
+  "approved": true,
+  "sourceBeforeFinalUnitTypeDelta": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "sha256": "3767e5f086357726c14092908c062a2ede2ca9e35e7fc03f81c1750ba156bffb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "sha256": "9ee1ae57f906199b0c2c53fc55af73201801ea61e076e196a24265e6994d4e13"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+      "sha256": "df36d3267091a0f6ed71c4309642185f8ac608af42325fdb86b5d7c68cfc1874"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "sha256": "cb6c6d3836f11b9e139460359f875bf2a619039ed02a92697ffd43f9e0fc172d"
+    }
+  ],
+  "finalUnitTypeDelta": "mist-caster-state-slot-unit-type-delta.json"
+}

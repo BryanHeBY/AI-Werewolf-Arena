@@ -1,0 +1,731 @@
+{
+  "scope": {
+    "base": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+        "sha256": "285b224bb194fe0e77ec148ebb15b76692707dc802928dc18a66433a110d1bb9"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "sha256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "sha256": "df3b6dada429c2ed1727cd1a2bdf85d89dbd5205fd0e7f3b2b2526b9199af6e9"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+        "sha256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552"
+      }
+    ],
+    "existingCount": 2,
+    "newCount": 2
+  },
+  "programProof": {
+    "base": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+        "sha256": "3767e5f086357726c14092908c062a2ede2ca9e35e7fc03f81c1750ba156bffb"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "sha256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "sha256": "4c50dea331ad09a237911a5afce3c308101c820f0b8bd8871d32844a0d2d30cb"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+        "sha256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552"
+      }
+    ],
+    "reports": [
+      {
+        "label": "原完整 own descriptor helper 新唯一 state owner",
+        "nodes": 91,
+        "same": true,
+        "oldSHA256": "88239b3a5a6b5a8dd1db104c2964273d0b703e6adaa4f59d7bbd0b99557b097e",
+        "currentMappedSHA256": "88239b3a5a6b5a8dd1db104c2964273d0b703e6adaa4f59d7bbd0b99557b097e"
+      },
+      {
+        "label": "完整 schema选择 read 方法实际新owner body",
+        "nodes": 41,
+        "same": true,
+        "oldSHA256": "bab05f239429298c8f62286960b7247f7e9ab4b481cb4a5add0f50d47203af3f",
+        "currentMappedSHA256": "bab05f239429298c8f62286960b7247f7e9ab4b481cb4a5add0f50d47203af3f"
+      },
+      {
+        "label": "完整 bind read→JSON→array/row/nestedTargets 真实 body",
+        "nodes": 278,
+        "same": true,
+        "oldSHA256": "f1f409a08e372fce15432e560546676687b7b61fb1ec4e2276c1dae8998af5bb",
+        "currentMappedSHA256": "f1f409a08e372fce15432e560546676687b7b61fb1ec4e2276c1dae8998af5bb"
+      },
+      {
+        "label": "完整 install current→bind→defineProperty→binding prefix",
+        "nodes": 97,
+        "same": true,
+        "oldSHA256": "f852561d92fef538f384f80b446e8fbae448edf5133de03a6b47353466188ae4",
+        "currentMappedSHA256": "f852561d92fef538f384f80b446e8fbae448edf5133de03a6b47353466188ae4"
+      },
+      {
+        "label": "原整参与者/角色/阵营/身份/生命 guard 前缀",
+        "nodes": 322,
+        "same": true,
+        "oldSHA256": "8ac60090914e5c09f457c6808e00b71562ecb3531c772c0aa7f81785578dd9f3",
+        "currentMappedSHA256": "8ac60090914e5c09f457c6808e00b71562ecb3531c772c0aa7f81785578dd9f3"
+      },
+      {
+        "label": "完整原槽身份＋schema＋JSON＋每个array/row/targets状态检查",
+        "nodes": 240,
+        "same": true,
+        "oldSHA256": "3b6a2cdb00b1814c10c141029c91fe7fc435e818a2bfe6c8140f880b167a6df0",
+        "currentMappedSHA256": "3b6a2cdb00b1814c10c141029c91fe7fc435e818a2bfe6c8140f880b167a6df0"
+      },
+      {
+        "label": "完整构造参数/修饰符同",
+        "nodes": 43,
+        "same": true,
+        "oldSHA256": "c941e5135a0669edd4a1a101fd7b22aff03772f5e666f0f2ff5f675c22adf9cf",
+        "currentMappedSHA256": "c941e5135a0669edd4a1a101fd7b22aff03772f5e666f0f2ff5f675c22adf9cf"
+      },
+      {
+        "label": "原整个constructor初始化前缀（只末binding归ownedslot）",
+        "nodes": 547,
+        "same": true,
+        "oldSHA256": "a3c43cf551357a6659e1236fe16bf40c48f3c362d2b8fd3ceab1240fff27a047",
+        "currentMappedSHA256": "a3c43cf551357a6659e1236fe16bf40c48f3c362d2b8fd3ceab1240fff27a047"
+      },
+      {
+        "label": "原constructor最后own(raw,key)参数时点表达式",
+        "nodes": 21,
+        "same": true,
+        "oldSHA256": "365484a5a62373f3051dc3fade40fa4b43a64419bf12508e7f3c11d3c88d662c",
+        "currentMappedSHA256": "365484a5a62373f3051dc3fade40fa4b43a64419bf12508e7f3c11d3c88d662c"
+      },
+      {
+        "label": "查询无缓存/绑定，现场caster/container/key receiver保持",
+        "nodes": 69,
+        "same": true,
+        "oldSHA256": "0932880c106463df556e8ad427cf8436b7ee199b51f4ce67cd282e3e4f8ec7b3",
+        "currentMappedSHA256": "0932880c106463df556e8ad427cf8436b7ee199b51f4ce67cd282e3e4f8ec7b3"
+      },
+      {
+        "label": "原完整保留authority方法 factoryLife",
+        "nodes": 129,
+        "same": true,
+        "oldSHA256": "23e0f9c173c47c580aa74bc16e711f5e7255c05cd81de33855e96157484529a6",
+        "currentMappedSHA256": "23e0f9c173c47c580aa74bc16e711f5e7255c05cd81de33855e96157484529a6"
+      },
+      {
+        "label": "原完整保留authority方法 state",
+        "nodes": 36,
+        "same": true,
+        "oldSHA256": "190a62509d13abf3820fe4355b4c7214767dd944907a528f74653108972b2679",
+        "currentMappedSHA256": "190a62509d13abf3820fe4355b4c7214767dd944907a528f74653108972b2679"
+      },
+      {
+        "label": "授权current完整body（末脱离再次读取指向真正slot.read）",
+        "nodes": 61,
+        "same": true,
+        "oldSHA256": "d8633b263956fb01b8d4043ba97354d55f4e6519da6952f0784962c6bd828131",
+        "currentMappedSHA256": "d8633b263956fb01b8d4043ba97354d55f4e6519da6952f0784962c6bd828131"
+      },
+      {
+        "label": "slot.read真正完整再次reader表达式",
+        "nodes": 32,
+        "same": true,
+        "oldSHA256": "3cc68e20e6d5435a3718e700e14e48565c2b6ca26ee7ee131187acf84e2a21c1",
+        "currentMappedSHA256": "3cc68e20e6d5435a3718e700e14e48565c2b6ca26ee7ee131187acf84e2a21c1"
+      },
+      {
+        "label": "实际完整caller checkRavenAtNightStart 非调用body保持",
+        "nodes": 128,
+        "same": true,
+        "oldSHA256": "ce293fb10a856156ec7512c1bc7546e306269e4184e39fc024d494cd92e9b307",
+        "currentMappedSHA256": "ce293fb10a856156ec7512c1bc7546e306269e4184e39fc024d494cd92e9b307"
+      },
+      {
+        "label": "实际完整caller commitMist 非调用body保持",
+        "nodes": 114,
+        "same": true,
+        "oldSHA256": "558835ad67852264bade2cd092335825cfefd8544ff478253c88c44ac3b6dd25",
+        "currentMappedSHA256": "558835ad67852264bade2cd092335825cfefd8544ff478253c88c44ac3b6dd25"
+      },
+      {
+        "label": "实际完整caller commitSnake 非调用body保持",
+        "nodes": 111,
+        "same": true,
+        "oldSHA256": "147ee9fd088a517f7655266721de3a3c0dfc7478da34d66713e09d57d62a4fed",
+        "currentMappedSHA256": "147ee9fd088a517f7655266721de3a3c0dfc7478da34d66713e09d57d62a4fed"
+      },
+      {
+        "label": "实际完整caller commitRavenKnife 非调用body保持",
+        "nodes": 125,
+        "same": true,
+        "oldSHA256": "7c6ed927e979d4cf43fa34198a7e354917c375da4ec3e412e37ec27c3f07f0d7",
+        "currentMappedSHA256": "7c6ed927e979d4cf43fa34198a7e354917c375da4ec3e412e37ec27c3f07f0d7"
+      },
+      {
+        "label": "state完整旧程序（新增完整shared own除外，未遮body）",
+        "nodes": 2921,
+        "same": true,
+        "oldSHA256": "7f738c40bcd1acf6bc4465286dc3ced5dcbe1e4179886728fdccc4c5aa75e811",
+        "currentMappedSHA256": "7f738c40bcd1acf6bc4465286dc3ced5dcbe1e4179886728fdccc4c5aa75e811"
+      }
+    ],
+    "outputs": [
+      {
+        "scope": "state完整旧程序除新增helper",
+        "module": "ESNext",
+        "rawSame": true
+      },
+      {
+        "scope": "实际新owner完整算法 read",
+        "module": "ESNext",
+        "rawSame": true
+      },
+      {
+        "scope": "实际新owner完整算法 bind",
+        "module": "ESNext",
+        "rawSame": true
+      },
+      {
+        "scope": "实际新owner完整算法 install",
+        "module": "ESNext",
+        "rawSame": true
+      },
+      {
+        "scope": "state完整旧程序除新增helper",
+        "module": "CommonJS",
+        "rawSame": true
+      },
+      {
+        "scope": "实际新owner完整算法 read",
+        "module": "CommonJS",
+        "rawSame": true
+      },
+      {
+        "scope": "实际新owner完整算法 bind",
+        "module": "CommonJS",
+        "rawSame": true
+      },
+      {
+        "scope": "实际新owner完整算法 install",
+        "module": "CommonJS",
+        "rawSame": true
+      }
+    ],
+    "callSites": [
+      {
+        "name": "checkRavenAtNightStart",
+        "actualCall": "this.stateSlot.install(unsealRaven(state, this.day, this.actorId, livingWolfIds))",
+        "argumentAndUniqueConstructorLateCurrentSame": true
+      },
+      {
+        "name": "commitMist",
+        "actualCall": "this.stateSlot.install(selectMist(this.current() as AlchemistState, this.day, targets, livingIds))",
+        "argumentAndUniqueConstructorLateCurrentSame": true
+      },
+      {
+        "name": "commitSnake",
+        "actualCall": "this.stateSlot.install(selectSnake(this.current() as AlchemistState, this.day, target, legalTargets))",
+        "argumentAndUniqueConstructorLateCurrentSame": true
+      },
+      {
+        "name": "commitRavenKnife",
+        "actualCall": "this.stateSlot.install(\n      selectRavenKnife(this.current() as RavenState, this.day, this.actorId, target, livingIds),\n    )",
+        "argumentAndUniqueConstructorLateCurrentSame": true
+      }
+    ],
+    "retiredMethods": true,
+    "controls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "sha256": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+        "currentSHA256": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+        "gitBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+        "sha256": "abea1770efdadab2d01005a51ba008efffa7fb0262f6c89d2fea48372655c7ae",
+        "currentSHA256": "abea1770efdadab2d01005a51ba008efffa7fb0262f6c89d2fea48372655c7ae",
+        "gitBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+        "sha256": "6b9355fdb6eab41e12d3da58ca5a9addf3d591f84f36dcb17bf20a69385da845",
+        "currentSHA256": "6b9355fdb6eab41e12d3da58ca5a9addf3d591f84f36dcb17bf20a69385da845",
+        "gitBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+        "sha256": "56206fba37c3a0f2dc7a18400ad046df283af49e41bbf9ea02233884b8e1e88a",
+        "currentSHA256": "56206fba37c3a0f2dc7a18400ad046df283af49e41bbf9ea02233884b8e1e88a",
+        "gitBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+        "sha256": "49aae448082d5cc57c43bdd543d7b4dc25b871d85ecd2da1a69de5c3201a68aa",
+        "currentSHA256": "49aae448082d5cc57c43bdd543d7b4dc25b871d85ecd2da1a69de5c3201a68aa",
+        "gitBytesSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+        "sha256": "84d7ba20b3ceafe83ce8b32ff53ec68e2c3918069b2d457b6f592f247c0bf7cf",
+        "currentSHA256": "84d7ba20b3ceafe83ce8b32ff53ec68e2c3918069b2d457b6f592f247c0bf7cf",
+        "gitBytesSame": true
+      }
+    ],
+    "newSlotStore": "单个binding字段，非WeakMap/Map；authority无raw/expected/arrays镜像。新owner字段/method布局与新模块加载不称旧wholebyte同。",
+    "approved": true,
+    "sourceBeforeFinalUnitTypeDelta": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+        "sha256": "3767e5f086357726c14092908c062a2ede2ca9e35e7fc03f81c1750ba156bffb"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "sha256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "sha256": "4c50dea331ad09a237911a5afce3c308101c820f0b8bd8871d32844a0d2d30cb"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+        "sha256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552"
+      }
+    ],
+    "finalUnitTypeDelta": "mist-caster-state-slot-unit-type-delta.json"
+  },
+  "wholeAuthority": {
+    "base": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+    "actualSource": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+    "sourceSHA256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578",
+    "slotSHA256": "4c50dea331ad09a237911a5afce3c308101c820f0b8bd8871d32844a0d2d30cb",
+    "oldNodes": 2641,
+    "mappedNodes": 2641,
+    "wholeAuthorityProgramSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeMappedRawSame": true,
+        "oldSHA256": "b99ea4debc5104f6e455e01a24c2db7c5784948db73653b8f42b9f3f08be087d",
+        "mappedSHA256": "b99ea4debc5104f6e455e01a24c2db7c5784948db73653b8f42b9f3f08be087d"
+      },
+      {
+        "module": "CommonJS",
+        "wholeMappedRawSame": true,
+        "oldSHA256": "4fd07f80d248930d614e1f18e52c68eed38edd5f4c71d24e2c6321ad4116576e",
+        "mappedSHA256": "4fd07f80d248930d614e1f18e52c68eed38edd5f4c71d24e2c6321ad4116576e"
+      }
+    ],
+    "reconstruction": "read/bind/install 删除处实际从新owner完整body按已列latequery/current映射构建，不从before恢复旧body；签名采用原被退休私有方法仅作为程序逆API边界。isCurrent状态tail同取实际新slot AST。其它精确接口/注释delta来自已保存列表，完整程序所有其它statement仍参与。",
+    "actualWholeAuthorityRuntimeRawSameClaim": false
+  },
+  "bindings": {
+    "parsedSources": 1504,
+    "actualModuleReferences": [
+      {
+        "path": "backend/tests/unit/presentation/mist-raven-projection.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../src/game/mechanisms/roles/mist_raven/state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import {\n  createAlchemistState,\n  createRavenState,\n} from \"../../../src/game/mechanisms/roles/mist_raven/state\";"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/mist_raven/state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import {\n  createAlchemistState,\n  createRavenState,\n  type AlchemistState,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/state\";"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/mist_raven/caster_authority",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/caster_authority",
+        "node": "import { MistCasterAuthority } from \"../../../../src/game/mechanisms/roles/mist_raven/caster_authority\";"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/state.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/mist_raven/state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import {\n  createAlchemistState,\n  readAlchemistState,\n  selectMist,\n  selectSnake,\n  createRavenState,\n  readRavenState,\n  unsealRaven,\n  selectRavenKnife,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/state\";"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/mist_raven/state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import {\n  createAlchemistState,\n  createRavenState,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/state\";"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-authority.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/mist_raven/caster_authority",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/caster_authority",
+        "node": "import { MistCasterAuthority } from \"../../../../src/game/mechanisms/roles/mist_raven/caster_authority\";"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/night-frame.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/mist_raven/state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import {\n  createAlchemistState,\n  createRavenState,\n  type AlchemistState,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/state\";"
+      },
+      {
+        "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../src/game/mechanisms/roles/mist_raven/state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import type { MIST_RAVEN_POLICY } from \"../../../src/game/mechanisms/roles/mist_raven/state\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import { readAlchemistState, readRavenState } from \"./state\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import {\n  readMistOwnData as own,\n  selectMist,\n  selectSnake,\n  selectRavenKnife,\n  unsealRaven,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state-slot",
+        "node": "import { MistCasterStateSlot, type MistCasterKind as Caster, type MistCasterState as State } from \"./state-slot\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import {\n  readMistOwnData as own,\n  readAlchemistState,\n  readRavenState,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import { MIST_RAVEN_POLICY, readAlchemistState, readRavenState } from \"./state\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import {\n  MIST_RAVEN_POLICY,\n  createAlchemistState,\n  createRavenState,\n  readAlchemistState,\n  readRavenState,\n  selectMist,\n  selectRavenKnife,\n} from \"./state\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "kind": "ImportDeclaration",
+        "route": "./caster_authority",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/caster_authority",
+        "node": "import { MistCasterAuthority } from \"./caster_authority\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "node": "import {\n  createAlchemistState,\n  createRavenState,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+      }
+    ],
+    "ownedGraph": [
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "to": "node:util",
+        "typeOnly": false,
+        "node": "import { types } from \"node:util\";"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "to": "backend/src/core/domain/components/names",
+        "typeOnly": false,
+        "node": "import { COMPONENT } from \"../../../../core/domain/components/names\";"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "to": "backend/src/core/domain/components/alive",
+        "typeOnly": false,
+        "node": "import {\n  aliveLifeDescriptor,\n  aliveLifeVersion,\n  type AliveComponent,\n} from \"../../../../core/domain/components/alive\";"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "to": "backend/src/core/domain/components/role",
+        "typeOnly": true,
+        "node": "import type { RoleComponent } from \"../../../../core/domain/components/role\";"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "to": "backend/src/core/domain/identity",
+        "typeOnly": false,
+        "node": "import { Camp } from \"../../../../core/domain/identity\";"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "to": "backend/src/core/domain/world",
+        "typeOnly": true,
+        "node": "import type { World } from \"../../../../core/domain/world\";"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "to": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "typeOnly": false,
+        "node": "import {\n  readMistOwnData as own,\n  selectMist,\n  selectSnake,\n  selectRavenKnife,\n  unsealRaven,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "to": "backend/src/game/mechanisms/roles/mist_raven/state-slot",
+        "typeOnly": false,
+        "node": "import { MistCasterStateSlot, type MistCasterKind as Caster, type MistCasterState as State } from \"./state-slot\";"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "to": "backend/src/game/mechanisms/roles/mist_raven/state",
+        "typeOnly": false,
+        "node": "import {\n  readMistOwnData as own,\n  readAlchemistState,\n  readRavenState,\n  type AlchemistState,\n  type RavenState,\n} from \"./state\";"
+      },
+      {
+        "from": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+        "to": "node:util",
+        "typeOnly": false,
+        "node": "import { types } from \"node:util\";"
+      }
+    ],
+    "fields": [
+      "private binding: StateBinding;"
+    ],
+    "newSlotCallers": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/mist_raven/state-slot",
+        "node": "import { MistCasterStateSlot, type MistCasterKind as Caster, type MistCasterState as State } from \"./state-slot\";"
+      }
+    ],
+    "authorityPrivateReadBindInstallRetired": true,
+    "noWeakMapMapNewOwner": true,
+    "noWorldLifeOrClockInSlot": true,
+    "note": "新slot唯一本族caller是caster_authority；真实night_frame仍通过原class，跨feature ports和值消费者不迁。只核本三owner静态字面导入，不称全仓coldload图。"
+  },
+  "heads": {
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+        "sha256": "3767e5f086357726c14092908c062a2ede2ca9e35e7fc03f81c1750ba156bffb"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "sha256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "sha256": "4c50dea331ad09a237911a5afce3c308101c820f0b8bd8871d32844a0d2d30cb"
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+        "sha256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552"
+      }
+    ],
+    "documentationPathsCount": 451,
+    "diagnostics": [],
+    "chinese": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+        "chineseHeader": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+        "chineseHeader": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "chineseHeader": true
+      },
+      {
+        "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+        "chineseHeader": true
+      }
+    ]
+  },
+  "receipts": {
+    "newTests": {
+      "command": "bun test backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+      "chunk": "d6bb62",
+      "exitCode": 0,
+      "cases": 8,
+      "failures": 0,
+      "assertions": 27,
+      "log": "docs/refactor/generated/mist-caster-state-slot-new-tests.log"
+    },
+    "originalCase": {
+      "command": "bun test backend/tests/unit/features/mist-raven/caster-authority.test.ts --test-name-pattern '^original first death preserves paid knowledge while never allowing another resource commit$'",
+      "batchLaunchChunk": "c1225b",
+      "cases": 1,
+      "failures": 0,
+      "assertions": 5,
+      "filtered": 25,
+      "log": "docs/refactor/generated/mist-caster-state-slot-original-case.log",
+      "note": "同批在有限编译启动前运行，计数按真实 Bun 日志；该批最终编译 exit2 不当作此单例终态。"
+    },
+    "types": {
+      "first": {
+        "roots": 4,
+        "launchChunk": "c1225b",
+        "session": 67022,
+        "completionChunk": "80f5e1",
+        "exitCode": 2,
+        "log": "docs/refactor/generated/mist-caster-state-slot-types.log",
+        "reason": "仅new unit object/{}私有记录访问八诊断；三生产根无诊断。"
+      },
+      "failedUnitOnly": {
+        "roots": 1,
+        "launchChunk": "48ebb9",
+        "session": 65594,
+        "completionChunk": "15934d",
+        "exitCode": 0,
+        "log": "docs/refactor/generated/mist-caster-state-slot-unit-types.log",
+        "fix": "只type cast，两个whole newunit运行输出同，未重复三生产roots或已绿 runtime。"
+      }
+    },
+    "uniqueGuardRisk": {
+      "command": "bun test backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts --test-name-pattern '^caster and JSON reads remain late around prepare and descriptor publication$'",
+      "launchChunk": "506f11",
+      "cases": 1,
+      "failures": 0,
+      "assertions": 2,
+      "filtered": 7,
+      "log": "docs/refactor/generated/mist-caster-state-slot-unique-guard-case.log",
+      "types": {
+        "roots": 1,
+        "session": 76685,
+        "completionChunk": "bdbb29",
+        "exitCode": 0,
+        "log": "docs/refactor/generated/mist-caster-state-slot-unique-guard-types.log"
+      },
+      "reason": "唯一guard源收口后只验证这个真实读取风险及受影响unit root；不复跑原8+旧1。"
+    }
+  },
+  "contracts": {
+    "stateOwner": "每个实际Authority实例一个state-slot binding；唯一保存raw/expectedJSON/arrays/rows/nestedTargets，authority无库存镜像，night_frame原latestCasters Map不动。",
+    "read": "两原reader始终返回脱离副本；原slot/raw仍另持身份，current成功后再read一次不合并。同JSON数组／行／targetIds新引用仍撤权。",
+    "write": "四真实caller直接slot.install(next)，唯一原current复验闭包在构造时捕获、安装时才执行，先实际current thunk→完整bind(next)→Object.defineProperty→binding替换；callee早于container/key，错误原引用及已写前缀保。",
+    "authority": "Role/camp/Identity/生命版本、day与allowFirstDeath仍原Authority；阶段、closed状态、目标与paid effects仍原night owner，不由slot重新授权。",
+    "raven": "current通过后ravenChecked先写，再unseal及install；selector/defineProperty失败不允许重试开夜。",
+    "scalarOwner": "原own descriptor helper全body移state，Authority+slot共用，Node Proxy先拒绝且不执行accessor；原2factory/2reader及4selector/unseal完整代码保。",
+    "reflectionAPI": "Authority旧JS-private read/bind/install/binding布局退出，新class/stateSlot字段与新的staticload边有意变化；不承诺私有反射或CJS覆写路径兼容。公共class方法/参数/runtime输出仍保。",
+    "moduleGraph": "Authority→state-slot→state，同族没有反向新循环；slot不import World/life/clock，无第二Map/WeakMap，不以state数据授予权限。"
+  },
+  "limits": [
+    "19完整区域5406节点＋Authority完整程序2641节点映射通过；八分离完整输出和两个Authority mapped whole输出不是当前全模块raw全同。",
+    "仅九不同cases/32assert分两执行与必要root类型，无wholegate/整局/网络/模型/黄金更新，不称C17全部机制完成。",
+    "新类增加内部方法receiver/模块初始化布局；纯算法与实际晚读合同保，JS-private反射/API退休明确列出。",
+    "Role帧/付款/选择schema与accepted集合不扩展；未将mechanical/awakened等族rawcast伪装为schema。"
+  ],
+  "harnesses": {
+    "actualProof": "const fs=require('fs'),cp=require('child_process'),crypto=require('crypto'),ts=require('/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/typescript'),sha=x=>crypto.createHash('sha256').update(x).digest('hex');const before=JSON.parse(fs.readFileSync('docs/refactor/generated/mist-caster-state-slot-before.json')),edits=JSON.parse(fs.readFileSync('docs/refactor/generated/mist-caster-state-slot-edits.json')),parse=s=>ts.createSourceFile('same.ts',s,ts.ScriptTarget.Latest,true);function walk(sf){const out=[];function visit(n){if(n.kind>=ts.SyntaxKind.FirstJSDocNode&&n.kind<=ts.SyntaxKind.LastJSDocNode||n.kind===ts.SyntaxKind.EndOfFileToken)return;const children=n.getChildren(sf).filter(c=>!(c.kind>=ts.SyntaxKind.FirstJSDocNode&&c.kind<=ts.SyntaxKind.LastJSDocNode)&&c.kind!==ts.SyntaxKind.EndOfFileToken);out.push([n.kind,children.length?null:n.getText(sf)]);for(const c of children){visit(c);}}visit(sf);return out;}const equal=(a,b)=>JSON.stringify(walk(parse(a)))===JSON.stringify(walk(parse(b))),reports=[];function check(label,a,b){const same=equal(a,b);reports.push({label,nodes:walk(parse(a)).length,same,oldSHA256:sha(JSON.stringify(walk(parse(a)))),currentMappedSHA256:sha(JSON.stringify(walk(parse(b))))});if(!same)throw Error('program_mismatch:'+label);}\nconst statePath=before.source[0].path,authorityPath=before.source[1].path,oldState=before.source[0].text,oldAuthority=before.source[1].text,state=fs.readFileSync(statePath,'utf8'),authority=fs.readFileSync(authorityPath,'utf8'),slot=fs.readFileSync('backend/src/game/mechanisms/roles/mist_raven/state-slot.ts','utf8');for(const x of before.source){if(sha(cp.execFileSync('git',['show',before.base+':'+x.path]))!==x.sha256)throw Error('before_git_mismatch');}\nconst stateSf=parse(state),oldSf=parse(oldAuthority),authoritySf=parse(authority),slotSf=parse(slot),oldClass=oldSf.statements.find(ts.isClassDeclaration),newClass=authoritySf.statements.find(ts.isClassDeclaration),slotClass=slotSf.statements.find(ts.isClassDeclaration);const method=(cls,name)=>cls.members.find(n=>ts.isMethodDeclaration(n)&&n.name.getText()==name);const oldMethod=n=>method(oldClass,n),newMethod=n=>method(newClass,n),slotMethod=n=>method(slotClass,n);const body=n=>n.body.getText();\nconst own=stateSf.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name.text==='readMistOwnData');check('原完整 own descriptor helper 新唯一 state owner',edits.originalOwn,own.getText(stateSf).replace('export function readMistOwnData','function own'));\nconst strip=(s)=>s.replaceAll('this.queries.caster()','this.caster').replaceAll('this.queries.privateState()','this.privateState').replaceAll('this.queries.key()','this.key').replaceAll('this.readState(', 'this.read(');\ncheck('完整 schema选择 read 方法实际新owner body','function p(raw:unknown) '+body(oldMethod('read')),'function p(raw:unknown) '+strip(body(slotMethod('readState'))));\ncheck('完整 bind read→JSON→array/row/nestedTargets 真实 body','function p(raw:unknown) '+body(oldMethod('bind')),'function p(raw:unknown) '+strip(body(slotMethod('bind'))));\ncheck('完整 install current→bind→defineProperty→binding prefix','function p(next:State) '+body(oldMethod('install')),'function p(next:State) '+strip(body(slotMethod('install'))).replace('this.queries.assertCurrent();','this.current();'));\nconst oldIf=oldMethod('isCurrent').body.statements[0],newIf=newMethod('isCurrent').body.statements[0];if(!ts.isBinaryExpression(oldIf.expression)||oldIf.expression.operatorToken.kind!==ts.SyntaxKind.BarBarToken)throw Error('old_last_or_changed');check('原整参与者/角色/阵营/身份/生命 guard 前缀', 'const q=('+oldIf.expression.left.getText(oldSf)+');','const q=('+newIf.expression.getText(authoritySf)+');');\nconst slotCheckpoint='{ if ('+oldIf.expression.right.getText(oldSf)+') return false;\\n'+edits.originalCurrentTail+'\\n}';check('完整原槽身份＋schema＋JSON＋每个array/row/targets状态检查','function p() '+slotCheckpoint,'function p() '+strip(body(slotMethod('isCurrent'))));\nconst oldCtor=oldClass.members.find(ts.isConstructorDeclaration),newCtor=newClass.members.find(ts.isConstructorDeclaration);check('完整构造参数/修饰符同', 'function p'+oldCtor.getText(oldSf).slice('constructor'.length,oldCtor.body.pos-oldCtor.getStart(oldSf))+'{}','function p'+newCtor.getText(authoritySf).slice('constructor'.length,newCtor.body.pos-newCtor.getStart(authoritySf))+'{}');const ctorBody=n=>'{'+n.body.statements.slice(0,-1).map(x=>x.getText()).join('\\n')+'}';check('原整个constructor初始化前缀（只末binding归ownedslot）','function p() '+ctorBody(oldCtor),'function p() '+ctorBody(newCtor));const oldLast=oldCtor.body.statements.at(-1).expression.right,newLast=newCtor.body.statements.at(-1).expression.right;check('原constructor最后own(raw,key)参数时点表达式', 'const q='+oldLast.arguments[0].getText(oldSf)+';','const q='+newLast.arguments[1].getText(authoritySf)+';');\nconst queries=newLast.arguments[0].getText(authoritySf);check('查询无缓存/绑定，现场caster/container/key receiver保持','const q={caster:()=>this.caster,privateState:()=>this.privateState,key:()=>this.key,assertCurrent:()=>this.current()};','const q='+queries+';');\nfor(const name of ['factoryLife','state'])check('原完整保留authority方法 '+name,'class C {'+oldMethod(name).getText(oldSf)+'}','class C {'+newMethod(name).getText(authoritySf)+'}');\nconst current=body(newMethod('current')).replace('return this.stateSlot.read();','return this.read(this.binding.raw)!;');check('授权current完整body（末脱离再次读取指向真正slot.read）','function p(allowFirstDeath=false) '+body(oldMethod('current')),'function p(allowFirstDeath=false) '+current);check('slot.read真正完整再次reader表达式','function p(){ return this.read(this.binding.raw)!; }','function p() '+strip(body(slotMethod('read'))));\nconst callSites=[];for(const name of ['checkRavenAtNightStart','commitMist','commitSnake','commitRavenKnife']){const old=oldMethod(name),now=newMethod(name);let installCall;function visit(n){if(ts.isCallExpression(n)&&n.expression.getText(authoritySf)==='this.stateSlot.install')installCall=n;ts.forEachChild(n,c=>{visit(c);});}visit(now);if(!installCall||installCall.arguments.length!==1)throw Error('bad_actual_authorization_callback');let mapped=now.getText(authoritySf);mapped=mapped.replace(installCall.getText(authoritySf),'this.install('+installCall.arguments[0].getText(authoritySf)+(name==='commitRavenKnife'?',':'')+')');check('实际完整caller '+name+' 非调用body保持','class C {'+old.getText(oldSf)+'}','class C {'+mapped+'}');callSites.push({name,actualCall:installCall.getText(authoritySf),argumentAndUniqueConstructorLateCurrentSame:true});}\nlet inverseState=state.slice(own.getFullStart(),own.end);const retainedState=state.slice(0,own.getFullStart())+state.slice(own.end);check('state完整旧程序（新增完整shared own除外，未遮body）',oldState,retainedState);const outputs=[];for(const [module,m]of [['ESNext',ts.ModuleKind.ESNext],['CommonJS',ts.ModuleKind.CommonJS]]){const emit=s=>ts.transpileModule(s,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:m,removeComments:true}}).outputText;outputs.push({scope:'state完整旧程序除新增helper',module,rawSame:emit(oldState)===emit(retainedState)});for(const [name,oldBody,currentBody]of [['read',body(oldMethod('read')),strip(body(slotMethod('readState')))],['bind',body(oldMethod('bind')),strip(body(slotMethod('bind')))],['install',body(oldMethod('install')),strip(body(slotMethod('install'))).replace('this.queries.assertCurrent();','this.current();')]]){outputs.push({scope:'实际新owner完整算法 '+name,module,rawSame:emit('function p() '+oldBody)===emit('function p() '+currentBody)});}}\nconst retiredMethods=['read','bind','install'].every(n=>!method(newClass,n));const controls=before.controls.map(x=>({...x,currentSHA256:sha(fs.readFileSync(x.path)),gitBytesSame:sha(fs.readFileSync(x.path))===x.sha256}));const paths=JSON.parse(fs.readFileSync('/tmp/awa-mist-caster-slot/paths.json'));const r={base:before.base,source:paths.map(path=>({path,sha256:sha(fs.readFileSync(path))})),reports,outputs,callSites,retiredMethods,controls,newSlotStore:'单个binding字段，非WeakMap/Map；authority无raw/expected/arrays镜像。新owner字段/method布局与新模块加载不称旧wholebyte同。',approved:reports.every(x=>x.same)&&outputs.every(x=>x.rawSame)&&controls.every(x=>x.gitBytesSame)&&retiredMethods};fs.writeFileSync('docs/refactor/generated/mist-caster-state-slot-program-proof.json',JSON.stringify(r,null,2)+'\\n');console.log(JSON.stringify({approved:r.approved,programs:reports.length,nodes:reports.reduce((s,x)=>s+x.nodes,0),wholeOwnedOutputs:outputs.length,controls:controls.length,retiredMethods}));\n",
+    "wholeAuthorityActual": "const fs=require('fs'),crypto=require('crypto'),ts=require('/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/typescript'),sha=x=>crypto.createHash('sha256').update(x).digest('hex'),before=JSON.parse(fs.readFileSync('docs/refactor/generated/mist-caster-state-slot-before.json')),e=JSON.parse(fs.readFileSync('docs/refactor/generated/mist-caster-state-slot-edits.json')),old=before.source[1].text,cur=fs.readFileSync(before.source[1].path,'utf8'),state=fs.readFileSync(before.source[0].path,'utf8'),slot=fs.readFileSync('backend/src/game/mechanisms/roles/mist_raven/state-slot.ts','utf8');const parse=s=>ts.createSourceFile('s.ts',s,ts.ScriptTarget.Latest,true),os=parse(old),ss=parse(slot),st=parse(state),oc=os.statements.find(ts.isClassDeclaration),sc=ss.statements.find(ts.isClassDeclaration),om=n=>oc.members.find(x=>ts.isMethodDeclaration(x)&&x.name.getText(os)===n),sm=n=>sc.members.find(x=>ts.isMethodDeclaration(x)&&x.name.getText(ss)===n);const normalize=s=>s.replaceAll('this.queries.caster()','this.caster').replaceAll('this.queries.privateState()','this.privateState').replaceAll('this.queries.key()','this.key').replaceAll('this.readState(','this.read(').replace('this.queries.assertCurrent();','this.current();');const method=(name,newName)=>om(name).getText(os).slice(0,om(name).body.getStart(os)-om(name).getStart(os))+normalize(sm(newName).body.getText(ss));const actualMethods={read:method('read','readState'),bind:method('bind','bind'),install:method('install','install')};const replacements=new Map([[e.originalMethods.read,actualMethods.read],[e.originalMethods.bind,actualMethods.bind],[e.originalMethods.install,actualMethods.install]]);let inverse=cur;for(const change of [...e.authorityEdits].reverse()){let restored=change.old;for(const [legacy,actual]of replacements)restored=restored.replace(legacy,actual);if(change.old===e.originalCurrentTail){restored=normalize(sm('isCurrent').body.statements.slice(1).map(n=>n.getText(ss)).join('\\n'));}if(change.new===''){const index=old.indexOf(change.old),anchor=old.slice(index+change.old.length,index+change.old.length+100);if(inverse.split(anchor).length!==2)throw Error('bad_anchor');inverse=inverse.replace(anchor,restored+anchor);}else{if(inverse.split(change.new).length!==2)throw Error('bad_delta');inverse=inverse.replace(change.new,restored);}}\nfunction nodes(sf){const a=[];function visit(n){if(n.kind>=ts.SyntaxKind.FirstJSDocNode&&n.kind<=ts.SyntaxKind.LastJSDocNode||n.kind===ts.SyntaxKind.EndOfFileToken)return;const cs=n.getChildren(sf).filter(c=>!(c.kind>=ts.SyntaxKind.FirstJSDocNode&&c.kind<=ts.SyntaxKind.LastJSDocNode)&&c.kind!==ts.SyntaxKind.EndOfFileToken);a.push([n.kind,cs.length?null:n.getText(sf)]);for(const c of cs){visit(c);}}visit(sf);return a;}const a=nodes(os),b=nodes(parse(inverse)),outputs=[];for(const [module,m]of [['ESNext',ts.ModuleKind.ESNext],['CommonJS',ts.ModuleKind.CommonJS]]){const emit=s=>ts.transpileModule(s,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:m,removeComments:true}}).outputText;outputs.push({module,wholeMappedRawSame:emit(old)===emit(inverse),oldSHA256:sha(emit(old)),mappedSHA256:sha(emit(inverse))});}const r={base:before.base,actualSource:before.source[1].path,sourceSHA256:sha(cur),slotSHA256:sha(slot),oldNodes:a.length,mappedNodes:b.length,wholeAuthorityProgramSame:JSON.stringify(a)===JSON.stringify(b),outputs,reconstruction:'read/bind/install 删除处实际从新owner完整body按已列latequery/current映射构建，不从before恢复旧body；签名采用原被退休私有方法仅作为程序逆API边界。isCurrent状态tail同取实际新slot AST。其它精确接口/注释delta来自已保存列表，完整程序所有其它statement仍参与。',actualWholeAuthorityRuntimeRawSameClaim:false};fs.writeFileSync('docs/refactor/generated/mist-caster-state-slot-whole-authority-proof.json',JSON.stringify(r,null,2)+'\\n');console.log(JSON.stringify(r));if(!r.wholeAuthorityProgramSame||!outputs.every(x=>x.wholeMappedRawSame))process.exit(1);\n",
+    "firstFailure": "const fs=require('fs'),cp=require('child_process'),crypto=require('crypto'),ts=require('/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/typescript'),sha=x=>crypto.createHash('sha256').update(x).digest('hex');const before=JSON.parse(fs.readFileSync('docs/refactor/generated/mist-caster-state-slot-before.json')),edits=JSON.parse(fs.readFileSync('docs/refactor/generated/mist-caster-state-slot-edits.json')),parse=s=>ts.createSourceFile('same.ts',s,ts.ScriptTarget.Latest,true);function walk(sf){const out=[];function visit(n){if(n.kind>=ts.SyntaxKind.FirstJSDocNode&&n.kind<=ts.SyntaxKind.LastJSDocNode||n.kind===ts.SyntaxKind.EndOfFileToken)return;const children=n.getChildren(sf).filter(c=>!(c.kind>=ts.SyntaxKind.FirstJSDocNode&&c.kind<=ts.SyntaxKind.LastJSDocNode)&&c.kind!==ts.SyntaxKind.EndOfFileToken);out.push([n.kind,children.length?null:n.getText(sf)]);for(const c of children){visit(c);}}visit(sf);return out;}const equal=(a,b)=>JSON.stringify(walk(parse(a)))===JSON.stringify(walk(parse(b))),reports=[];function check(label,a,b){const same=equal(a,b);reports.push({label,nodes:walk(parse(a)).length,same,oldSHA256:sha(JSON.stringify(walk(parse(a)))),currentMappedSHA256:sha(JSON.stringify(walk(parse(b))))});if(!same)throw Error('program_mismatch:'+label);}\nconst statePath=before.source[0].path,authorityPath=before.source[1].path,oldState=before.source[0].text,oldAuthority=before.source[1].text,state=fs.readFileSync(statePath,'utf8'),authority=fs.readFileSync(authorityPath,'utf8'),slot=fs.readFileSync('backend/src/game/mechanisms/roles/mist_raven/state-slot.ts','utf8');for(const x of before.source){if(sha(cp.execFileSync('git',['show',before.base+':'+x.path]))!==x.sha256)throw Error('before_git_mismatch');}\nconst stateSf=parse(state),oldSf=parse(oldAuthority),authoritySf=parse(authority),slotSf=parse(slot),oldClass=oldSf.statements.find(ts.isClassDeclaration),newClass=authoritySf.statements.find(ts.isClassDeclaration),slotClass=slotSf.statements.find(ts.isClassDeclaration);const method=(cls,name)=>cls.members.find(n=>ts.isMethodDeclaration(n)&&n.name.getText()==name);const oldMethod=n=>method(oldClass,n),newMethod=n=>method(newClass,n),slotMethod=n=>method(slotClass,n);const body=n=>n.body.getText();\nconst own=stateSf.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name.text==='readMistOwnData');check('原完整 own descriptor helper 新唯一 state owner',edits.originalOwn,own.getText(stateSf).replace('export function readMistOwnData','function own'));\nconst strip=(s)=>s.replaceAll('this.queries.caster()','this.caster').replaceAll('this.queries.privateState()','this.privateState').replaceAll('this.queries.key()','this.key').replaceAll('this.readState(', 'this.read(');\ncheck('完整 schema选择 read 方法实际新owner body','function p(raw:unknown) '+body(oldMethod('read')),'function p(raw:unknown) '+strip(body(slotMethod('readState'))));\ncheck('完整 bind read→JSON→array/row/nestedTargets 真实 body','function p(raw:unknown) '+body(oldMethod('bind')),'function p(raw:unknown) '+strip(body(slotMethod('bind'))));\ncheck('完整 install current→bind→defineProperty→binding prefix','function p(next:State) '+body(oldMethod('install')),'function p(next:State) '+strip(body(slotMethod('install'))).replace('assertCurrent();','this.current();'));\nconst oldIf=oldMethod('isCurrent').body.statements[0],newIf=newMethod('isCurrent').body.statements[0];if(!ts.isBinaryExpression(oldIf.expression)||oldIf.expression.operatorToken.kind!==ts.SyntaxKind.BarBarToken)throw Error('old_last_or_changed');check('原整参与者/角色/阵营/身份/生命 guard 前缀', 'const q=('+oldIf.expression.left.getText(oldSf)+');','const q=('+newIf.expression.getText(authoritySf)+');');\nconst slotCheckpoint='{ if ('+oldIf.expression.right.getText(oldSf)+') return false;\\n'+edits.originalCurrentTail+'\\n}';check('完整原槽身份＋schema＋JSON＋每个array/row/targets状态检查','function p() '+slotCheckpoint,'function p() '+strip(body(slotMethod('isCurrent'))));\nconst oldCtor=oldClass.members.find(ts.isConstructorDeclaration),newCtor=newClass.members.find(ts.isConstructorDeclaration);check('完整构造参数/修饰符同', 'function p'+oldCtor.getText(oldSf).slice('constructor'.length,oldCtor.body.pos-oldCtor.getStart(oldSf))+'{}','function p'+newCtor.getText(authoritySf).slice('constructor'.length,newCtor.body.pos-newCtor.getStart(authoritySf))+'{}');const ctorBody=n=>'{'+n.body.statements.slice(0,-1).map(x=>x.getText()).join('\\n')+'}';check('原整个constructor初始化前缀（只末binding归ownedslot）','function p() '+ctorBody(oldCtor),'function p() '+ctorBody(newCtor));const oldLast=oldCtor.body.statements.at(-1).expression.right,newLast=newCtor.body.statements.at(-1).expression.right;check('原constructor最后own(raw,key)参数时点表达式', 'const q='+oldLast.arguments[0].getText(oldSf)+';','const q='+newLast.arguments[1].getText(authoritySf)+';');\nconst queries=newLast.arguments[0].getText(authoritySf);check('查询无缓存/绑定，现场caster/container/key receiver保持','const q={caster:()=>this.caster,privateState:()=>this.privateState,key:()=>this.key};','const q='+queries+';');\nfor(const name of ['factoryLife','state'])check('原完整保留authority方法 '+name,'class C {'+oldMethod(name).getText(oldSf)+'}','class C {'+newMethod(name).getText(authoritySf)+'}');\nconst current=body(newMethod('current')).replace('return this.stateSlot.read();','return this.read(this.binding.raw)!;');check('授权current完整body（末脱离再次读取指向真正slot.read）','function p(allowFirstDeath=false) '+body(oldMethod('current')),'function p(allowFirstDeath=false) '+current);check('slot.read真正完整再次reader表达式','function p(){ return this.read(this.binding.raw)!; }','function p() '+strip(body(slotMethod('read'))));\nconst callSites=[];for(const name of ['checkRavenAtNightStart','commitMist','commitSnake','commitRavenKnife']){const old=oldMethod(name),now=newMethod(name);let installCall;function visit(n){if(ts.isCallExpression(n)&&n.expression.getText(authoritySf)==='this.stateSlot.install')installCall=n;ts.forEachChild(n,c=>{visit(c);});}visit(now);if(!installCall||installCall.arguments.length!==2||!equal('const q='+installCall.arguments[1].getText(authoritySf)+';','const q=()=>this.current();'))throw Error('bad_actual_authorization_callback');let mapped=now.getText(authoritySf);mapped=mapped.replace(installCall.getText(authoritySf),'this.install('+installCall.arguments[0].getText(authoritySf)+')');check('实际完整caller '+name+' 非调用body保持','class C {'+old.getText(oldSf)+'}','class C {'+mapped+'}');callSites.push({name,actualCall:installCall.getText(authoritySf),argumentAndLateCurrentSame:true});}\nlet inverseState=state.slice(own.getFullStart(),own.end);const retainedState=state.slice(0,own.getFullStart())+state.slice(own.end);check('state完整旧程序（新增完整shared own除外，未遮body）',oldState,retainedState);const outputs=[];for(const [module,m]of [['ESNext',ts.ModuleKind.ESNext],['CommonJS',ts.ModuleKind.CommonJS]]){const emit=s=>ts.transpileModule(s,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:m,removeComments:true}}).outputText;outputs.push({scope:'state完整旧程序除新增helper',module,rawSame:emit(oldState)===emit(retainedState)});for(const [name,oldBody,currentBody]of [['read',body(oldMethod('read')),strip(body(slotMethod('readState')))],['bind',body(oldMethod('bind')),strip(body(slotMethod('bind')))],['install',body(oldMethod('install')),strip(body(slotMethod('install'))).replace('assertCurrent();','this.current();')]]){outputs.push({scope:'实际新owner完整算法 '+name,module,rawSame:emit('function p() '+oldBody)===emit('function p() '+currentBody)});}}\nconst retiredMethods=['read','bind','install'].every(n=>!method(newClass,n));const controls=before.controls.map(x=>({...x,currentSHA256:sha(fs.readFileSync(x.path)),gitBytesSame:sha(fs.readFileSync(x.path))===x.sha256}));const paths=JSON.parse(fs.readFileSync('/tmp/awa-mist-caster-slot/paths.json'));const r={base:before.base,source:paths.map(path=>({path,sha256:sha(fs.readFileSync(path))})),reports,outputs,callSites,retiredMethods,controls,newSlotStore:'单个binding字段，非WeakMap/Map；authority无raw/expected/arrays镜像。新owner字段/method布局与新模块加载不称旧wholebyte同。',approved:reports.every(x=>x.same)&&outputs.every(x=>x.rawSame)&&controls.every(x=>x.gitBytesSame)&&retiredMethods};fs.writeFileSync('docs/refactor/generated/mist-caster-state-slot-program-proof.json',JSON.stringify(r,null,2)+'\\n');console.log(JSON.stringify({approved:r.approved,programs:reports.length,nodes:reports.reduce((s,x)=>s+x.nodes,0),wholeOwnedOutputs:outputs.length,controls:controls.length,retiredMethods}));\n"
+  },
+  "artifacts": {
+    "docs/refactor/generated/mist-caster-state-slot-before.json": {
+      "sha256": "49a629fac613572aae237bf17cf28e37dc29bd0b29f996ac48789ad192fd3974"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-edits.json": {
+      "sha256": "0ef9edb574019146473b52e8184eb2c46d1e13c932f690eaf7ef74ba2ce22a66"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-program-proof.json": {
+      "sha256": "bfe7465f0e719c191bf9e977ad87ea337f2a09a7fad19f7ce3f30f53d5c488c4"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-whole-authority-proof.json": {
+      "sha256": "50ea48753b0331046b77ae57f4b0bcb6e17789bc6466aad79dff3d0d31c1b3b6"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-bindings.json": {
+      "sha256": "eda1eb7a5f5e1add906d2dc0ff3c50f5a3764c139de2c879762a6888ed44d6a4"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-heads.json": {
+      "sha256": "945589ae5f31d74af2be0165677105c46f989910b8ad170371cb73fe24b707a2"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-scope-final.json": {
+      "sha256": "48c64eb97915719f55c8cfc522b9d52f6a2c285fca2604a39210f6b5c40b58d6"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-receipts.json": {
+      "sha256": "6c9cf89a0af4478c5035990b9a7489dfd0b562e8ad74b71ab2615911f02a144b"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-unit-type-delta.json": {
+      "sha256": "67612b8c8d1b669205a17a11c4525cb7d09bbdfd8384a5ff14ab8efdab1779f8"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-types-config.json": {
+      "sha256": "be1ee3b51253c4233be115d3eef48e5d5df5d80774c22078c0862c22b8049bcb"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-unit-types-config.json": {
+      "sha256": "7499f2a882e530dad6c2328c877a54ca4ed3dbcbde73f599acfa10ac148b8d9f"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-proof-first-failure.json": {
+      "sha256": "ebac3fac3f68b33bc73a8196953c39759e2d608477811f1886dcbd1d01d7c39e"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-unique-guard-delta.json": {
+      "sha256": "9e4b82cafaad3da7bf6a8931d31d0eddd5d304ad01b384a85c0397a92440fc2c"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-program-proof-before-unique-guard.json": {
+      "sha256": "cc519d7643f579e5515584c794ecb00fa1df37ad559dc1e207c7709dc2ac91f9"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-edits-before-unique-guard.json": {
+      "sha256": "0618e99525397c5a62016a5df386439e662ea7506d0170c1726feab121c99857"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-scope-before-data-comments.json": {
+      "sha256": "bfa4eb5fdf14db60c2dbcd137f19e2fb2217290320842e6e17843a44a317bd16"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-data-comment-delta.json": {
+      "sha256": "7499a86a9203f1d82890cd624525eb6834bb5ebb8efb093072442700d984015f"
+    },
+    "docs/refactor/generated/mist-caster-state-slot-raven-comment-precision.json": {
+      "sha256": "2e057cbec064f1fbbaf1180de6d776acdf43f22d0d9ff87d16b91391cbe79b5c"
+    }
+  },
+  "finalDataCommentBridge": {
+    "path": "docs/refactor/generated/mist-caster-state-slot-data-comment-delta.json",
+    "sha256": "7499a86a9203f1d82890cd624525eb6834bb5ebb8efb093072442700d984015f",
+    "actualChunk": "30fbf2",
+    "sources": 2,
+    "wholeNoncommentPrograms": 2,
+    "wholeOutputs": 4,
+    "scope": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+        "beforeSHA256": "3767e5f086357726c14092908c062a2ede2ca9e35e7fc03f81c1750ba156bffb",
+        "afterSHA256": "c47d0e110cac49b479dea015573bf4ffb47ff97c4c5ab10c971e64a4ec19787d",
+        "wholeProgramNodes": 3012
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "beforeSHA256": "4c50dea331ad09a237911a5afce3c308101c820f0b8bd8871d32844a0d2d30cb",
+        "afterSHA256": "df3b6dada429c2ed1727cd1a2bdf85d89dbd5205fd0e7f3b2b2526b9199af6e9",
+        "wholeProgramNodes": 963
+      }
+    ],
+    "headsUnchanged": true,
+    "stageNote": "原heads/proof/types/runtime收据源阶段保留不伪重跑；最后两源三个就地数据注释有完整typed/四wholeemit bridge。未改body/type/API。"
+  },
+  "finalRavenCommentPrecision": {
+    "path": "docs/refactor/generated/mist-caster-state-slot-raven-comment-precision.json",
+    "sha256": "2e057cbec064f1fbbaf1180de6d776acdf43f22d0d9ff87d16b91391cbe79b5c",
+    "wholeNoncommentNodes": 3012,
+    "wholeOutputs": 2,
+    "onlyComments": true
+  }
+}

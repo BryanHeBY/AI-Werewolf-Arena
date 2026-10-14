@@ -1,6 +1,19 @@
+/**
+ * 负责炼金魔女／狼鸦之爪的原严格数据读取、默认构造与选择／解封副本准备。
+ * 输入为未知状态、日次和 caller 已计算的目标；输出为脱离可写副本或原具名错误，公共政策不变。
+ * 本数据 owner 保持精确字段、剩余量／历史相关性和 Node Proxy 先拒绝；descriptor helper
+ * 供状态绑定与参与者授权共同使用，不执行 getter、不保存库存或授予行动／原生命权限。
+ */
 import { types } from "node:util";
 
+export function readMistOwnData(value: unknown, key: PropertyKey): unknown {
+  if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
+  const d = Object.getOwnPropertyDescriptor(value, key);
+  return d && "value" in d ? d.value : undefined;
+}
+
 export const MIST_RAVEN_POLICY = "awa_mist_raven_v1" as const;
+/** 雾和蛇各有独立 0/1 库存；实际 select 的非 null 选择消费对应资源，跳过只留历史，不补库存。 */
 export interface AlchemistState {
   policy: typeof MIST_RAVEN_POLICY;
   mistRemaining: 0 | 1;
@@ -8,6 +21,7 @@ export interface AlchemistState {
   mistHistory: Array<{ day: number; targetIds: number[] | null }>;
   healHistory: Array<{ day: number; targetId: number | null }>;
 }
+/** 满足存活狼少于三人的觉醒条件时，夜初首次记录觉醒日和当时已知同伴；后续保留知识而非当前存活名单；额外刀的 0/1 消费与历史独立于普通狼刀许可。 */
 export interface RavenState {
   policy: typeof MIST_RAVEN_POLICY;
   awakenedDay: number | null;
@@ -155,7 +169,7 @@ export function selectMist(
   if (targets !== null) next.mistRemaining = 0;
   return next;
 }
-/** Legal targets already embody the pending night's original knife, life and self-heal rule. */
+/** legalTargets 已由原 pending 夜 owner 按原刀口、生命与自救规则计算；本函数不重新推断权限。 */
 export function selectSnake(
   state: AlchemistState,
   day: number,
@@ -214,7 +228,7 @@ export function readRavenState(value: unknown): RavenState | undefined {
     extraHistory: history,
   };
 }
-/** Called once by the actual night-start owner, never by a query or daytime change. */
+/** 原开夜 owner 只调用一次；查询／白天变化不能解封，这里只准备独立 next 副本。 */
 export function unsealRaven(
   state: RavenState,
   day: number,

@@ -1,8 +1,8 @@
 /**
- * Owns Mist/Raven caster state bindings and audited mist, Snake and Raven knife writes. Inputs
- * are original role/life/state data; outputs are checked stock updates and committed effects
- * only while the captured caster matches. Stale or closed caster authority fails without
- * installing a replacement state.
+ * 负责炼金魔女／狼鸦之爪的原角色、阵营、身份与生命授权，输入为 World、参与者和夜序。
+ * 输出为原当前性检查、脱离知识与经授权的雾／蛇／额外刀提交；资源绑定及槽写入归 state-slot。
+ * 不变量：原体、身份或生命撤权后禁止新付款；原首次死亡仅可读取已付款效果／保留知识。
+ * 夜初 ravenChecked 先写再转换，后续失败不重开检查；不修补被替换的槽或重复保存库存。
  */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -15,8 +15,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp } from "../../../../core/domain/identity";
 import type { World } from "../../../../core/domain/world";
 import {
-  readAlchemistState,
-  readRavenState,
+  readMistOwnData as own,
   selectMist,
   selectSnake,
   selectRavenKnife,
@@ -25,20 +24,9 @@ import {
   type RavenState,
 } from "./state";
 
-type Caster = "alchemist" | "raven_claw_wolf";
-type State = AlchemistState | RavenState;
-function own(value: unknown, key: PropertyKey): unknown {
-  if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
-  const d = Object.getOwnPropertyDescriptor(value, key);
-  return d && "value" in d ? d.value : undefined;
-}
-interface StateBinding {
-  raw: State;
-  expected: string;
-  arrays: Array<{ key: string; value: unknown; rows: unknown[]; nestedTargets?: unknown[] }>;
-}
+import { MistCasterStateSlot, type MistCasterKind as Caster, type MistCasterState as State } from "./state-slot";
 
-/** Per-night caster state authority. The enclosing night owner supplies day, targets and phase scope. */
+/** 外层夜 owner 提供日次、目标与阶段作用域；本授权只保原参与者／生命，状态写权不反向拥有阶段。 */
 export class MistCasterAuthority {
   private readonly role: RoleComponent;
   private readonly privateState: RoleComponent["privateState"];
@@ -49,7 +37,7 @@ export class MistCasterAuthority {
   private readonly camp: Camp;
   private readonly campComponent: unknown;
   private readonly key: "alchemist" | "ravenClaw";
-  private binding: StateBinding;
+  private readonly stateSlot: MistCasterStateSlot;
   private ravenChecked = false;
 
   constructor(
@@ -104,7 +92,11 @@ export class MistCasterAuthority {
     this.identityFields = ["id", "seat", "name", "sessionId"].map((k) => own(identity, k));
     this.life = life;
     this.lifeVersion = aliveLifeVersion(life)!;
-    this.binding = this.bind(own(privateState, this.key));
+    // 原字段已赋值后才读取槽并建立绑定；查询 thunk 保持 caster／容器／key 在原调用点晚读。
+    this.stateSlot = new MistCasterStateSlot(
+      { caster: () => this.caster, privateState: () => this.privateState, key: () => this.key, assertCurrent: () => this.current() },
+      own(privateState, this.key),
+    );
   }
 
   private factoryLife(life: AliveComponent): boolean {
@@ -118,35 +110,6 @@ export class MistCasterAuthority {
       d.enumerable === expected.enumerable &&
       d.configurable === expected.configurable
     );
-  }
-  private read(raw: unknown): State | undefined {
-    return this.caster === "alchemist" ? readAlchemistState(raw) : readRavenState(raw);
-  }
-  private bind(raw: unknown): StateBinding {
-    const state = this.read(raw);
-    if (!state) throw new Error("mist_caster_state_invalid");
-    const names =
-      this.caster === "alchemist"
-        ? ["mistHistory", "healHistory"]
-        : ["knownTeammateIds", "extraHistory"];
-    return {
-      raw: raw as State,
-      expected: JSON.stringify(state),
-      arrays: names.map((key) => {
-        const value = own(raw, key) as unknown[];
-        const rows = Array.from({ length: own(value, "length") as number }, (_value, index) =>
-          own(value, String(index)),
-        );
-        return {
-          key,
-          value,
-          rows,
-          ...(key === "mistHistory"
-            ? { nestedTargets: rows.map((row) => own(row, "targetIds")) }
-            : {}),
-        };
-      }),
-    };
   }
   isCurrent(allowFirstDeath = false): boolean {
     if (
@@ -164,69 +127,44 @@ export class MistCasterAuthority {
       !this.factoryLife(this.life) ||
       !(this.life.alive
         ? aliveLifeVersion(this.life) === this.lifeVersion
-        : allowFirstDeath && aliveLifeVersion(this.life) === this.lifeVersion + 1) ||
-      own(this.privateState, this.key) !== this.binding.raw
+        : allowFirstDeath && aliveLifeVersion(this.life) === this.lifeVersion + 1)
     )
       return false;
-    const value = this.read(this.binding.raw);
-    return (
-      !!value &&
-      JSON.stringify(value) === this.binding.expected &&
-      this.binding.arrays.every(
-        (a) =>
-          own(this.binding.raw, a.key) === a.value &&
-          own(a.value, "length") === a.rows.length &&
-          a.rows.every(
-            (row, i) =>
-              own(a.value, String(i)) === row &&
-              (!a.nestedTargets || own(row, "targetIds") === a.nestedTargets[i]),
-          ),
-      )
-    );
+    // 参与者／生命全部通过后才复验原槽及逐层引用，不能提前读取或用相同 JSON 新数组补权。
+    return this.stateSlot.isCurrent();
   }
   private current(allowFirstDeath = false): State {
     if (!this.isCurrent(allowFirstDeath)) throw new Error("mist_caster_authority_revoked");
-    return this.read(this.binding.raw)!;
+    return this.stateSlot.read();
   }
-  private install(next: State): void {
-    this.current();
-    const binding = this.bind(next);
-    Object.defineProperty(this.privateState, this.key, {
-      value: next,
-      writable: true,
-      enumerable: true,
-      configurable: true,
-    });
-    this.binding = binding;
-  }
-  /** Paid effects/retained knowledge may be read after exactly the original body's first death. */
+  /** 已付款效果／保留知识可在原身体首次死亡后读取；这不会开启新的资源提交。 */
   state(allowFirstDeath = false): State {
     return this.current(allowFirstDeath);
   }
 
-  /** Called once by beginNight; permission queries never invoke this transition. */
+  /** 仅 beginNight 真实开夜调用一次；权限查询不触发解封，检查标志在可能失败的转换前已写。 */
   checkRavenAtNightStart(livingWolfIds: readonly number[]): RavenState {
     if (this.caster !== "raven_claw_wolf" || this.ravenChecked)
       throw new Error("raven_night_start_reentry");
     const state = this.current() as RavenState;
     this.ravenChecked = true;
-    this.install(unsealRaven(state, this.day, this.actorId, livingWolfIds));
+    this.stateSlot.install(unsealRaven(state, this.day, this.actorId, livingWolfIds));
     return this.current() as RavenState;
   }
   commitMist(targets: number[] | null, livingIds: readonly number[]): AlchemistState {
     if (this.caster !== "alchemist") throw new Error("mist_caster_kind_invalid");
-    this.install(selectMist(this.current() as AlchemistState, this.day, targets, livingIds));
+    this.stateSlot.install(selectMist(this.current() as AlchemistState, this.day, targets, livingIds));
     return this.current() as AlchemistState;
   }
   commitSnake(target: number | null, legalTargets: readonly number[]): AlchemistState {
     if (this.caster !== "alchemist") throw new Error("mist_caster_kind_invalid");
-    this.install(selectSnake(this.current() as AlchemistState, this.day, target, legalTargets));
+    this.stateSlot.install(selectSnake(this.current() as AlchemistState, this.day, target, legalTargets));
     return this.current() as AlchemistState;
   }
   commitRavenKnife(target: number | null, livingIds: readonly number[]): RavenState {
     if (this.caster !== "raven_claw_wolf" || !this.ravenChecked)
       throw new Error("raven_night_start_required");
-    this.install(
+    this.stateSlot.install(
       selectRavenKnife(this.current() as RavenState, this.day, this.actorId, target, livingIds),
     );
     return this.current() as RavenState;

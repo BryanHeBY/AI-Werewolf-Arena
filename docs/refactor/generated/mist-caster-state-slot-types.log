@@ -1,0 +1,9 @@
+backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts(31,3): error TS7053: Element implicitly has an 'any' type because expression of type '"alchemist" | "ravenClaw"' can't be used to index type '{}'.
+  Property 'alchemist' does not exist on type '{}'.
+backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts(46,30): error TS2339: Property 'ravenClaw' does not exist on type 'object'.
+backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts(56,30): error TS2339: Property 'ravenClaw' does not exist on type 'object'.
+backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts(80,30): error TS2339: Property 'alchemist' does not exist on type 'object'.
+backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts(81,30): error TS2339: Property 'alchemist' does not exist on type 'object'.
+backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts(106,30): error TS2339: Property 'alchemist' does not exist on type 'object'.
+backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts(161,30): error TS2339: Property 'alchemist' does not exist on type 'object'.
+backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts(172,37): error TS2339: Property 'alchemist' does not exist on type 'object'.
