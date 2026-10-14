@@ -1,7 +1,8 @@
 /**
- * Commits a selected Knight duel against its captured target and original actor. Inputs are the
- * validated selection and current window; outputs are the original duel effects and death
- * proposals. It does not reuse a revoked window or independently advance the day phase.
+ * 负责骑士决斗的本族资源消耗、公共事实和死亡提案。输入为原 World、所选编号、阶段与事件数组；
+ * 输出为命中／未中提案或 null。按原序核角色、库存、双方存活和目标真实阵营，不以查验伪装代替阵营。
+ * 先消费已读取的库存，再发表公共事件，后项失败保已写前缀；不标死、不推进日期或恢复资源。
+ * 请求／窗口的原体复验仍由调用方持有，本函数不另建租约或缓存。
  */
 import {
   Role,
@@ -17,7 +18,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { World } from "../../../../core/domain/world";
 import { getKnightState, consumeKnightDuel } from "./state";
 
-/** One Knight resource/public fact/death proposal; never writes Alive or advances the phase. */
+/** 只提交一次库存和事实并返回死亡提案；真正的生命写入仍由死亡结算器负责。 */
 export function commitKnightDuel(
   world: World,
   choice: KnightDuelSelection,
@@ -37,6 +38,7 @@ export function commitKnightDuel(
   )
     return null;
   const hit = target.camp === Camp.Wolf;
+  // 使用本次已读的同一个槽；资源 setter 失败先于发表，发表失败不退还已付资源。
   consumeKnightDuel(state);
   events.push({
     timestamp: Date.now(),

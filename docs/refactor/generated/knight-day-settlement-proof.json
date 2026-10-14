@@ -1,0 +1,220 @@
+{
+  "baseCommit": "7b202b1e35531eac47ea7f3bdc86667bf00a5961",
+  "approvedPreviousCommit": "71eb5e37ffef3d604ad82972e71d8c16c6d4f8f3",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "a4a2ebb549f0125772a183a355d8721b013e7a68e0618c29b835b97bc84c61cd"
+    },
+    {
+      "path": "backend/src/rulesets/knight-day-settlement.ts",
+      "sha256": "2ad71a2f5fa1d4c60710dbaa4e5af7caa31e3259c95297d3ad6a292628b687f1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "sha256": "aaec6658aee4605701c3ec15324d1e2d87027866464ea486653cf171b5f61e91"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/knight-day-settlement.test.ts",
+      "sha256": "5f1341f9bb2732c5cc7d686c77805e3a1990b1194fb3f4dd83b84b52a7d2998d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "sha256": "5f9ca0621483cc7e44489bdbb621f88b95e5561f4c082ae68abcc759419abf44"
+    }
+  ],
+  "originalCallbackLines": 20,
+  "wholeManager": {
+    "typedNonJSDocNodes": 4922,
+    "nonJSDocLeaves": 6207,
+    "wholeTreeLeafSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      }
+    ],
+    "wholeRawForwardInverse": true,
+    "preciseEdits": 4
+  },
+  "wholePorts": {
+    "typedNonJSDocNodes": 12,
+    "nonJSDocLeaves": 15,
+    "wholeTreeLeafSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      }
+    ],
+    "wholeRawForwardInverse": true,
+    "preciseEdits": 2
+  },
+  "completeMovedBody": {
+    "typedNonJSDocNodes": 118,
+    "nonJSDocLeaves": 152,
+    "wholeTreeLeafSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      }
+    ],
+    "ownerStatements": 9,
+    "callerStatements": 6,
+    "soleOriginalAwait": true,
+    "yieldHasOnlyTwoOriginalShorthandRefs": true
+  },
+  "callerMembers": [
+    {
+      "name": "world",
+      "actual": "get world() { return manager.world; }"
+    },
+    {
+      "name": "events",
+      "actual": "get events() { return manager.events; }"
+    },
+    {
+      "name": "isCurrent",
+      "actual": "get isCurrent() { return dayIsCurrent; }"
+    },
+    {
+      "name": "nightSettled",
+      "actual": "get nightSettled() { return nightSettled; }"
+    },
+    {
+      "name": "dayRevision",
+      "actual": "get dayRevision() { return dayRevision; }"
+    },
+    {
+      "name": "checkResult",
+      "actual": "checkResult() { return manager.checkAndSealResult(manager.#rulePlan.checkpoints.dayInterrupted); }"
+    }
+  ],
+  "isCurrentArrowInRealCaller": true,
+  "bindings": [
+    {
+      "before": {
+        "name": "Phase",
+        "imported": "Phase",
+        "specifier": "../../core/domain/model",
+        "target": "backend/src/core/domain/model.ts"
+      },
+      "current": {
+        "name": "Phase",
+        "imported": "Phase",
+        "specifier": "../core/domain/model",
+        "target": "backend/src/core/domain/model.ts"
+      },
+      "ultimatePhysicalOwner": "backend/src/core/domain/model.ts",
+      "sameOriginalBinding": true
+    },
+    {
+      "before": {
+        "name": "commitKnightDuel",
+        "imported": "commitKnightDuel",
+        "specifier": "../mechanisms/roles/knight/commit",
+        "target": "backend/src/game/mechanisms/roles/knight/commit.ts"
+      },
+      "current": {
+        "name": "commitKnightDuel",
+        "imported": "commitKnightDuel",
+        "specifier": "../game/mechanisms/roles/knight/ports",
+        "target": "backend/src/game/mechanisms/roles/knight/ports.ts"
+      },
+      "ultimatePhysicalOwner": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "sameOriginalBinding": true
+    }
+  ],
+  "publicCommitSameRuntimeBinding": true,
+  "commitCommentBridge": {
+    "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+    "beforeSha256": "cb957b3bed3124cf5e97818380e3dcb844c7c4e5c9e6d32e312125e168ece9d2",
+    "sha256": "5f9ca0621483cc7e44489bdbb621f88b95e5561f4c082ae68abcc759419abf44",
+    "typedNonJSDocNodes": 297,
+    "nonJSDocLeaves": 342,
+    "wholeTreeLeafSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      }
+    ]
+  },
+  "unitCommentBridge": {
+    "path": "backend/tests/unit/rulesets/knight-day-settlement.test.ts",
+    "beforeSha256": "93b695ae4a88f679193c93b160feea913c5c7fa2ee5c0dc9a8d7fd8af0c4d8b9",
+    "sha256": "5f1341f9bb2732c5cc7d686c77805e3a1990b1194fb3f4dd83b84b52a7d2998d",
+    "typedNonJSDocNodes": 927,
+    "nonJSDocLeaves": 1272,
+    "wholeTreeLeafSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      }
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "sha256": "97ef04cf6ea467ca79c1508a14ea148ce7164e74a117e71a72afb8e894e3a907",
+      "wholeGitCurrentSame": true,
+      "sameAsApprovedPreviousCommit": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "sha256": "6ee51443dfc8645490a2aaff39a7f56a6eba1ff986c64e9c905f05865102b3cf",
+      "wholeGitCurrentSame": true,
+      "sameAsApprovedPreviousCommit": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "sha256": "6364028a9ebaf77587dbff8ad61989684bca32a7db0fee4c59cd2d3f0df0771f",
+      "wholeGitCurrentSame": true,
+      "sameAsApprovedPreviousCommit": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/knight/native-day-duel-settlement.test.ts",
+      "sha256": "5aea38c447beded6e5ba93095b1291f213f0a9ddadb42050eb526afec14221c8",
+      "wholeGitCurrentSame": true,
+      "sameAsApprovedPreviousCommit": true
+    }
+  ],
+  "limits": [
+    "新增同步生成器、交接对象及公开函数出口是实际内部API／加载布局变化，不冒任意旧私有反射或CJS重绑定全等价。",
+    "实际PM isCurrent getter只返原词法dayIsCurrent arrow，所以新runtime方法receiver被忽略；任意外来普通函数this不作旧bare-call等价承诺。",
+    "checkResult在原点调用同经理方法，仍由经理写终态／阶段；yield只同引用，付款／事实仍原Knight，实际DR失败不resume。",
+    "只有限全程序／具体端点与两个comment桥；不跑全图、类型、行为或门禁。"
+  ]
+}

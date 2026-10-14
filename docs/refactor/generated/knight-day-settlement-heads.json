@@ -1,0 +1,27 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "a4a2ebb549f0125772a183a355d8721b013e7a68e0618c29b835b97bc84c61cd"
+    },
+    {
+      "path": "backend/src/rulesets/knight-day-settlement.ts",
+      "sha256": "2ad71a2f5fa1d4c60710dbaa4e5af7caa31e3259c95297d3ad6a292628b687f1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "sha256": "aaec6658aee4605701c3ec15324d1e2d87027866464ea486653cf171b5f61e91"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/knight-day-settlement.test.ts",
+      "sha256": "5f1341f9bb2732c5cc7d686c77805e3a1990b1194fb3f4dd83b84b52a7d2998d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "sha256": "5f9ca0621483cc7e44489bdbb621f88b95e5561f4c082ae68abcc759419abf44"
+    }
+  ],
+  "documentationPaths": 618,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

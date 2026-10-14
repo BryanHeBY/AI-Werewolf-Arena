@@ -13,6 +13,7 @@
  * 熊夜前采样与黎明知识发布归具名同步组合；本经理保原阶段、await／当前性和发布之后的判胜。
  * 动物单元关闭→快照→完成事实归本族发布owner；四原调用点的守卫、死亡await、反馈和判胜仍在这里。
  * 赤月到期查询、候选和提交发布归具名同步序列；本经理保原追加死亡等待、复验、夜报及唯一封盘。
+ * 骑士日结算在原提交与死亡之后恢复具名同步序列，本经理保原死亡等待、判胜回调和阶段写权。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
@@ -54,6 +55,7 @@ import { getSessionRecorder } from "../../recording/recording_context";
 import { safeRecordLogicOp } from "../../recording/session_recorder";
 import {
   ActionProvider,
+  type KnightDuelCommit,
   ActionWindow,
   BoardConfig,
   EntityId,
@@ -83,7 +85,7 @@ import { VotingPipeline } from "./phase_pipeline/voting_pipeline";
 import { RoleRegistry } from "../../core/domain/registries/role_registry";
 import { COMPONENT } from "../../core/domain/components/names";
 import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit";
-import { commitKnightDuel } from "../mechanisms/roles/knight/commit";
+import { settleKnightDay } from "../../rulesets/knight-day-settlement";
 import { prepareAnimalExileDeaths, captureAnimalExileFeedback, captureOrdinaryExileFeedback, prepareOrdinaryExileDeaths } from "../../rulesets/exile-death-preparation";
 import {
   prepareBeautyExileVictory,
@@ -742,12 +744,18 @@ export class PhaseManager {
         ? { afterSheriffElection: () => settleNight() }
         : {}),
       commitKnightDuel: async (choice) => {
-        if (!dayIsCurrent() || !nightSettled) return "rejected";
-        const duel = commitKnightDuel(this.world, choice, Phase.Day, this.events);
-        if (!duel) return "rejected";
-        // 原决斗没有 nightEffects；新元数据包无原型，不让缺项读取继承的回调／保护 getter。
-        const duelMetadata = Object.create(null) as { execution: { phaseRevision: number } };
-        duelMetadata.execution = { phaseRevision: dayRevision };
+        const settlement = settleKnightDay({
+          get world() { return manager.world; },
+          get events() { return manager.events; },
+          get isCurrent() { return dayIsCurrent; },
+          get nightSettled() { return nightSettled; },
+          get dayRevision() { return dayRevision; },
+          checkResult() { return manager.checkAndSealResult(manager.#rulePlan.checkpoints.dayInterrupted); },
+        }, choice);
+        const step = settlement.next();
+        if (step.done) return step.value;
+        // 只交原提案／元数据引用；DR callee在原参数前读取，deaths和sources不在yield时提前消费。
+        const { duel, duelMetadata } = step.value;
         await this.deathResolution.resolve(
           duel.deaths,
           duel.sources,
@@ -757,9 +765,8 @@ export class PhaseManager {
           {},
           duelMetadata,
         );
-        if (!dayIsCurrent()) return "terminal";
-        if (this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)) return "terminal";
-        return duel.endsDay ? "night" : "continue";
+        // DR抛错不恢复生成器，不补跑日裁决或退款；当前性、封盘、endsDay按原短路顺序恢复。
+        return settlement.next().value as KnightDuelCommit;
       },
     });
 
