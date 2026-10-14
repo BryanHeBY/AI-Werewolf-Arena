@@ -14,17 +14,17 @@
  * 动物单元关闭→快照→完成事实归本族发布owner；四原调用点的守卫、死亡await、反馈和判胜仍在这里。
  * 赤月到期查询、候选和提交发布归具名同步序列；本经理保原追加死亡等待、复验、夜报及唯一封盘。
  * 骑士日结算在原提交与死亡之后恢复具名同步序列，本经理保原死亡等待、判胜回调和阶段写权。
+ * 普通黎明原因／原生命提案及动物／双生夜报名单归规则 owner；本经理先写完成标志，保原死亡 await、清理及封盘。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
 import { PhaseRevisionClock } from "./phase-revision";
 import { damagePoisonRoutes } from "../../core/domain/damage-evidence";
-import type { DeathCommitReceipt, DeathOriginalLife } from "./death-wave";
-import type { DamageResolutionResult } from "../../core/domain/systems/damage_resolution_system";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { NightManagerLifecycle } from "../../rulesets/night-lifecycle-plan";
 import { prepareGameSetup, installFragrantGameSetup } from "../../rulesets/game-setup";
 import { prepareSpecialNightDamage } from "../../rulesets/special-night-damage-preparation";
+import { prepareOrdinaryNightDeaths, ordinaryNightDeathPublication } from "../../rulesets/ordinary-night-death-preparation";
 
 import { bindBoardParameters } from "../../rulesets/board-parameters";
 import { RulePlan } from "../../rulesets/rule-plan";
@@ -567,45 +567,16 @@ export class PhaseManager {
     ) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
-      let sourceDamage: DamageResolutionResult;
-      let originalLives: ReadonlyMap<EntityId, DeathOriginalLife> | undefined;
-      const retainedSources: DeathSources = Object.fromEntries(
-        (sourceDamage = night.damage).deaths.map((id) => [
-          id,
-          (night.damage.deathSources[id] ?? []).filter(
-            (source) =>
-              source !== DeathCause.FoxInspection ||
-              night.foxInspections?.some(
-                (claim) => claim.target.id === id && claim.isTargetCurrent(),
-              ),
-          ),
-        ]),
-      );
-      const nightDeaths = night.damage.deaths.filter((id) => {
-        const scope = (originalLives = night.deathLives).get(id);
-        return (
-          scope &&
-          retainedSources[id]?.length &&
-          this.world.getComponent(id, COMPONENT.Alive) === scope.life &&
-          scope.life.alive &&
-          scope.version !== undefined &&
-          aliveLifeVersion(scope.life) === scope.version
-        );
-      });
-      if (!this.config.fragrantPairSeer && !this.config.animalDream)
-        this.emitNightResolved(nightDeaths);
-      const sources: DeathSources = Object.fromEntries(
-        nightDeaths.map((id) => [id, [...(retainedSources[id] ?? [])]]),
-      );
-      const deaths = [...nightDeaths];
-      const deathPhases: Record<EntityId, Phase> = {};
-      if (blast !== undefined) {
-        for (const id of blast.deaths) {
-          if (!deaths.includes(id)) deaths.push(id);
-          sources[id] = [...new Set([...(sources[id] ?? []), ...(blast.sources[id] ?? [])])];
-          deathPhases[id] = Phase.Day;
-        }
-      }
+      // 只装配晚读视图；准备抛错仍保上面的完成标志，尚未进入原 DR try/finally。
+      const ordinaryNightRuntime = {
+        get world() { return manager.world; },
+        get night() { return night; },
+        get config() { return manager.config; },
+        // 名单在原经理方法 callee 之后求值，动物配置和逐原因匹配不能提前读。
+        publishNightResolved(deaths: () => EntityId[]) { return manager.emitNightResolved(deaths()); },
+      };
+      const { sourceDamage, originalLives, retainedSources, nightDeaths, sources, deaths, deathPhases } =
+        prepareOrdinaryNightDeaths(ordinaryNightRuntime, blast);
       try {
         await this.deathResolution.resolve(
           deaths,
@@ -622,30 +593,7 @@ export class PhaseManager {
             poisonRoutes: damagePoisonRoutes(sourceDamage!),
             execution: { night: nightUnitOf(night), exile: skippedUnit, phaseRevision: dayRevision },
             ...(animalSkip ? { animalUnit: animalSkip } : {}),
-            ...(this.config.fragrantPairSeer || this.config.animalDream
-              ? {
-                  onInitialWaveCommitted: (
-                    actualIds: readonly number[],
-                    actualSources: DeathSources | undefined,
-                    receipt: DeathCommitReceipt,
-                  ) => {
-                    const event = this.emitNightResolved(
-                      this.config.animalDream
-                        ? nightDeaths.filter(
-                            (id) =>
-                              actualIds.includes(id) &&
-                              (retainedSources[id] ?? []).some((c) =>
-                                (actualSources?.[id] ?? []).includes(c),
-                              ),
-                          )
-                        : nightDeaths,
-                    );
-                    // 只关联真正的公开事件；不以凭证缺项更改原 Animal／双生 pending 筛选。
-                    receipt.recordPublication(event, actualIds);
-                    return event;
-                  },
-                }
-              : {}),
+            ...ordinaryNightDeathPublication(ordinaryNightRuntime, nightDeaths, retainedSources),
           },
         );
         lifecycle.finishDay(cycleDay, dayIsCurrent);

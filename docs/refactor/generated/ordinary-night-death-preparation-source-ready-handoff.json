@@ -1,0 +1,42 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "sourceReadySHA256": "d054ec87cf9fdf7a694c8899c3f819d9d6daedfa9ee6119175927d9cbd97a264",
+  "preparedArtifacts": [
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-before.json",
+      "sha256": "88b2dca4926464172c4c7e626677782a391cc06455fcc0e33c94d5e07c16d79b"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-paths.json",
+      "sha256": "9528042f12c48595162f04d36906eac0f068d129c4aaaf58b0f7f0406090ebe7"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-edits.json",
+      "sha256": "08854399faa419f8e28eb0636c6b64f79e148d7ce509188176fb4c0af047b338"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-source-ready.json",
+      "sha256": "d054ec87cf9fdf7a694c8899c3f819d9d6daedfa9ee6119175927d9cbd97a264"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-types-config.json",
+      "sha256": "92ae6f05ca768e0cd60b02c310468d2269096be23c6ce5e75e0725d1d3248bfb"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-heads.ts",
+      "sha256": "6f722d4ebecaf9fd728e487ea4f24ffa970ebd85733da235e5f5d2875531e7e3"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-proof.cjs",
+      "sha256": "c5b4cbd06613a14daa871946f6c5a1d16966c65d1c59a517e7f762492f84c11b"
+    }
+  ],
+  "commands": {
+    "unit": "bun --no-env-file test backend/tests/unit/rulesets/ordinary-night-death-preparation.test.ts",
+    "types": "bun --no-env-file backend/node_modules/typescript/bin/tsc --noEmit --project docs/refactor/generated/ordinary-night-death-preparation-types-config.json",
+    "heads": "bun --no-env-file docs/refactor/generated/ordinary-night-death-preparation-heads.ts",
+    "proof": "bun --no-env-file docs/refactor/generated/ordinary-night-death-preparation-proof.cjs"
+  },
+  "commandWorkingDirectory": "/home/hby/dev/AI-Werewolf-Arena",
+  "allCommandsUnexecuted": true
+}

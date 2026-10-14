@@ -1,0 +1,1 @@
+{"oldPrograms":1,"newSources":2,"preciseEdits":5,"wholeInverseOutputs":2,"completePreparationStatements":9,"kernelOutputs":4,"originalCallerSites":3,"controls":5,"typedNodesBothSides":32056,"nodeArraysBothSides":4756,"astLeavesBothSides":15746}

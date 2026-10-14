@@ -1,0 +1,35 @@
+{
+  "scope": {
+    "path": "docs/refactor/generated/ordinary-night-death-preparation-scope-final.json",
+    "sha256": "bbc1a148cc33f894404bde15d5e84b07cfd59bf4c0d384f749fa5db5fd09a48b"
+  },
+  "document": {
+    "path": "docs/refactor/ordinary-night-death-preparation.md",
+    "sha256": "63cab4ebecf7b80401217ffdab351b2ae31e1691a9d04cae5a17cf6e9ca5a3c1"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ordinary-night-death-preparation-evidence.json",
+    "sha256": "e4df03b3fd75bef3bb7d850a8cec450b709acf2f28a04ef3f83f4a92c01eb649"
+  },
+  "authorReview": {
+    "path": "docs/refactor/generated/ordinary-night-death-preparation-author-review.json",
+    "sha256": "c6c248e5056db9524e8f5f4d1569713e2c19eebd52324d5862f9250b47c5fc9d"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "7e435c4484124db9fc7ccba725e922caccf1ce5f74f5777fb20c4ecbee810b20"
+    },
+    {
+      "path": "backend/src/rulesets/ordinary-night-death-preparation.ts",
+      "sha256": "1261c6ca92c2070e628555393bb5017eb67e8e739fd172ab34e29ebc8c951367"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/ordinary-night-death-preparation.test.ts",
+      "sha256": "41c524b6f020ad8fbb4300c84da19b3c3188c5b289330e19c282684632d1c646"
+    }
+  ],
+  "sourceFrozen": true,
+  "noFurtherChecksRequested": true,
+  "artifactCount": 22
+}

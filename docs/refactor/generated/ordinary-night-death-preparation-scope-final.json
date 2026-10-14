@@ -1,0 +1,147 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "paths": [
+    "backend/src/game/engine/phase_manager.ts",
+    "backend/src/rulesets/ordinary-night-death-preparation.ts",
+    "backend/tests/unit/rulesets/ordinary-night-death-preparation.test.ts"
+  ],
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "7e435c4484124db9fc7ccba725e922caccf1ce5f74f5777fb20c4ecbee810b20"
+    },
+    {
+      "path": "backend/src/rulesets/ordinary-night-death-preparation.ts",
+      "sha256": "1261c6ca92c2070e628555393bb5017eb67e8e739fd172ab34e29ebc8c951367"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/ordinary-night-death-preparation.test.ts",
+      "sha256": "41c524b6f020ad8fbb4300c84da19b3c3188c5b289330e19c282684632d1c646"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/components/alive.ts",
+      "sha256": "c6b681bded926aec1568887887baaff9fff7903a1fd8eba94e0c30f4a246e0a4"
+    },
+    {
+      "path": "backend/src/game/engine/death-wave.ts",
+      "sha256": "a22fcdd28f487b640fdcb52c0996400d9b9218d069349dc80ccc013d621c266f"
+    },
+    {
+      "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+      "sha256": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8"
+    },
+    {
+      "path": "backend/src/rulesets/dawn-knowledge-publication.ts",
+      "sha256": "63666bb96e72cd15de4904a457b0f092a61e2f81a54fdbf0e72bd8c1c477a889"
+    },
+    {
+      "path": "backend/src/core/domain/damage-evidence.ts",
+      "sha256": "b9eef5f6c769072e07a8413ecd50e88990852e730f1399a58272f31e4d6002f6"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/ordinary-night-death-preparation.md",
+    "sha256": "63cab4ebecf7b80401217ffdab351b2ae31e1691a9d04cae5a17cf6e9ca5a3c1"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-before.json",
+      "sha256": "88b2dca4926464172c4c7e626677782a391cc06455fcc0e33c94d5e07c16d79b"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-paths.json",
+      "sha256": "9528042f12c48595162f04d36906eac0f068d129c4aaaf58b0f7f0406090ebe7"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-edits.json",
+      "sha256": "08854399faa419f8e28eb0636c6b64f79e148d7ce509188176fb4c0af047b338"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-source-ready.json",
+      "sha256": "d054ec87cf9fdf7a694c8899c3f819d9d6daedfa9ee6119175927d9cbd97a264"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-source-ready-handoff.json",
+      "sha256": "bd747aa8dd8358109ee4f215c38628c4ce9f42b7f2c051129bd1edf83bcd77f3"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-types-config.json",
+      "sha256": "92ae6f05ca768e0cd60b02c310468d2269096be23c6ce5e75e0725d1d3248bfb"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-heads.ts",
+      "sha256": "6f722d4ebecaf9fd728e487ea4f24ffa970ebd85733da235e5f5d2875531e7e3"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-heads.json",
+      "sha256": "130f514e92d3975a17fb60a0e81fcce07be951e847c97d8b6bfffe35897a74a8"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-heads-output.txt",
+      "sha256": "358332f29963d1f2f31fa25de84583ca377e42c21d87e57ae7a0f9edc2766b49"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-proof-first-executed.cjs",
+      "sha256": "c5b4cbd06613a14daa871946f6c5a1d16966c65d1c59a517e7f762492f84c11b"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-proof-first-output.txt",
+      "sha256": "538d38fb70e86ddb1bbd1f5866f24d351fd432520b8027066d4cce53995cfeff"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-proof.cjs",
+      "sha256": "af8549f73c74f2ec556f9a36e648b6eec3fd6d54d9c8880e1f151e6bc9f5034f"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-proof.json",
+      "sha256": "b9a800ad2b47674ea12f0b57b14bb57f0c2e5848ce91f340f58ddacc1ac2746b"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-proof-output.txt",
+      "sha256": "3d6160f25c35384dca24bad1a0b0dde19f55dd32258f2d91190b56e99518aec4"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-unit-output.txt",
+      "sha256": "6894cdf73609fd4b06706b1ad2591b2f973aa7348f3abf3536b9deb747a64ea7"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-death-preparation-receipts.json",
+      "sha256": "39e8a6c317d4d9bb17b643063951fee0bcefc25c7a831d84eb1ec73f31d4bf57"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-source-fence.json",
+      "sha256": "7d05bae304459a0eb1fa55cfb7d07633407e031719ca57f30cc0b62034c3e3c6"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-config.json",
+      "sha256": "53703949f3b7bfc4ca41fae4bc184b6cf9491d9093e968d17322448ad6c86b26"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-output.txt",
+      "sha256": "8bedf987dd7f0a395e7be66fe20cf383a9627cb19d0e3ac871cc221b5c97af6c"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-config.json",
+      "sha256": "971a3b7c8a4ecb4eda59400a7f0ccd49de9eb4af7474edd70c2d0fe7272698b1"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-type-receipts.json",
+      "sha256": "832908b6d631af4c9fc91fd53da2c9e134879701248ba0f842c68801925c99a3"
+    }
+  ],
+  "actualBefore": {
+    "oldGitPrograms": 1,
+    "newGitAbsent": 2
+  },
+  "scopeLimits": [
+    "Complete ordinary-night proposal and publication selection only; PM retains clock/await/cleanup/seal, no C17/schema/codec scope.",
+    "Common first twelve-root fence is historic WIP input, not fixed whole Git type acceptance; only two foreign failed units subsequently rechecked."
+  ]
+}

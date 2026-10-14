@@ -1,0 +1,16 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "source": [
+    "backend/src/game/engine/phase_manager.ts",
+    "backend/src/rulesets/ordinary-night-death-preparation.ts",
+    "backend/tests/unit/rulesets/ordinary-night-death-preparation.test.ts"
+  ],
+  "deleted": [],
+  "controls": [
+    "backend/src/core/domain/components/alive.ts",
+    "backend/src/game/engine/death-wave.ts",
+    "backend/src/rulesets/night-lifecycle-plan.ts",
+    "backend/src/rulesets/dawn-knowledge-publication.ts",
+    "backend/src/core/domain/damage-evidence.ts"
+  ]
+}
