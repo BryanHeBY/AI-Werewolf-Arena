@@ -1,0 +1,35 @@
+{
+  "types": {
+    "launchChunk": "257f62",
+    "session": 44967,
+    "terminalChunk": "c6923e",
+    "exitCode": 0,
+    "executions": 1,
+    "roots": 1,
+    "onlyPreviouslyFailedTestRoot": true,
+    "output": "docs/refactor/generated/hybrid-fixture-request-factory-types-output.txt"
+  },
+  "proof": {
+    "terminalChunk": "c4aebb",
+    "exitCode": 0,
+    "executions": 1,
+    "directTestCalls": 7,
+    "expectExpressions": 62,
+    "outputs": 2,
+    "output": "docs/refactor/generated/hybrid-fixture-request-factory-proof-output.txt"
+  },
+  "heads": {
+    "terminalChunk": "d962f5",
+    "exitCode": 0,
+    "executions": 1,
+    "roots": 1,
+    "documentationPaths": 647,
+    "output": "docs/refactor/generated/hybrid-fixture-request-factory-heads-output.txt"
+  },
+  "notRun": [
+    "prior green cases",
+    "13 prior green roots",
+    "full gates",
+    "models"
+  ]
+}

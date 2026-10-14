@@ -1,0 +1,9 @@
+{
+  "backend/tests/unit/features/hybrid/affiliation-authority.test.ts": [
+    {
+      "before": "    world: game.world,\n    get nightActors()",
+      "after": "    world: game.world,\n    // 返回已有构造器端口，保持原 makeRequest 的实例与调用；这里不提前创建第二份请求工厂。\n    get requestFactory() {\n      return GameActionRequestFactory;\n    },\n    get nightActors()",
+      "count": 1
+    }
+  ]
+}

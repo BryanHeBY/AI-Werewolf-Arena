@@ -1,0 +1,46 @@
+{
+  "baseCommit": "bec1f8854fd12c479a1a1098cc08313096c88f08",
+  "source": [
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "beforeSHA256": "451af69184b042f57f1f43ccafc0701991e8915e8d095ca62c29197126c85224",
+      "sha256": "8e36fec03fbf867bb2928753150c066775295b64a9737b6a6720dc77639ec083"
+    }
+  ],
+  "exactForwardInverse": true,
+  "unchangedTestCalls": 7,
+  "unchangedExpectCalls": 62,
+  "rawOutputs": [
+    {
+      "module": "ESNext",
+      "inverseWholeRawSame": true,
+      "actualRawDifferent": true,
+      "oldSHA256": "b43169d2309cb8c93e90c0d4c374c86b377807d3c8a3d49798b3f0acccf14ec0",
+      "newSHA256": "f76d95d2f79febf19d8a6ab0cf933c6fbfb62362f0307a64f3eccde62d39f6c5"
+    },
+    {
+      "module": "CommonJS",
+      "inverseWholeRawSame": true,
+      "actualRawDifferent": true,
+      "oldSHA256": "e18a40120855c406bb1d0e165058f347bfa27c8ba3cb7f5329092581511574ba",
+      "newSHA256": "f2fbb6bfe1f09f13ff69a93259f530ebcccf0805fbf5353177e9c05eec13ff53"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "e0e5b0f73f3bd383132dad34e5dd48b3849ef0dc7a10047387afcadfbb4d7635",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/tests/support/builders/night-stage-context.ts",
+      "sha256": "d4d6d457218939df94f480ac1ea36d0932e1043ac0118209077654ebcf5b07d4",
+      "wholeGitCurrentSame": true
+    }
+  ],
+  "limits": [
+    "单一测试helper补必填构造器getter，实际JS新增该字段，不冒机械runtime等价。",
+    "原所有test调用全文及expect表达式保持；没有执行或重跑原已绿case。",
+    "Getter返回已导入构造器，不实例化新工厂，不替换原makeRequest闭包。"
+  ]
+}

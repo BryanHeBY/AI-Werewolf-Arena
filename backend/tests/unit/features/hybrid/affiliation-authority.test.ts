@@ -95,6 +95,10 @@ function context(
   const factory = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
+    // 返回已有构造器端口，保持原 makeRequest 的实例与调用；这里不提前创建第二份请求工厂。
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },

@@ -1,0 +1,44 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "bec1f8854fd12c479a1a1098cc08313096c88f08",
+  "source": [
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "sha256": "8e36fec03fbf867bb2928753150c066775295b64a9737b6a6720dc77639ec083",
+      "change": "test-input-contract-completion"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/hybrid-fixture-request-factory-scope-final.json",
+    "sha256": "bc2da9492506fe51358b8ab534bf57b1645f85df6d9e7ef71c63931340774d88"
+  },
+  "document": {
+    "path": "docs/refactor/hybrid-fixture-request-factory.md",
+    "sha256": "14ce14b30a39c34aa5410c70639260b7234a2e66a3dd007952c88a5fcfccfe48"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/hybrid-fixture-request-factory-evidence.json",
+    "sha256": "6508740f0d1f2e36f9158fc1fb6eef6d15f1c00fe24050daa71159d4e24ba158"
+  },
+  "integrity": {
+    "freshSources": 1,
+    "actualGitBefore": 1,
+    "controls": 2,
+    "artifactHashes": 11,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "真实bec测试全文／精确唯一输入field补全及两个控制源",
+    "已有Ctor getter不实例化、原makeRequest闭包与原case/expect完整保留",
+    "此前TS2741红和唯一失败根当前TSC0的范围",
+    "七direct tests和62expect文本、两mapped输出与actual JS差异",
+    "中文构造器／实例/授权区分"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

@@ -1,0 +1,1 @@
+{"source":[{"path":"backend/tests/unit/features/hybrid/affiliation-authority.test.ts","sha256":"8e36fec03fbf867bb2928753150c066775295b64a9737b6a6720dc77639ec083"}],"documentationPaths":647,"diagnostics":[],"chineseHeadFailures":[]}
