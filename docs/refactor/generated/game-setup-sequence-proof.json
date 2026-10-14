@@ -1,0 +1,447 @@
+{
+  "base": "27fbbc0e556027119d452d4dcb1d0409b99b620f",
+  "method": "Full getChildren traversal, skipping only entire JSDoc and EOF. PM imports excluded from whole-program mapping; actual nine physical endpoints separately checked. New public facets and driver interface are declared API changes.",
+  "driver": {
+    "same": true,
+    "nodes": 143,
+    "leaves": 99
+  },
+  "synchronousGenerator": true,
+  "rows": [
+    {
+      "label": "actual complete four setup guards with yield/query/boolean-return interface inverse",
+      "typed": {
+        "same": true,
+        "nodes": 402,
+        "leaves": 276
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "aabd39c3e5b7c1827f214083d0d4ee3faa7dd700fb0f8546140b46bee1e28643",
+          "afterSha256": "aabd39c3e5b7c1827f214083d0d4ee3faa7dd700fb0f8546140b46bee1e28643"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "aabd39c3e5b7c1827f214083d0d4ee3faa7dd700fb0f8546140b46bee1e28643",
+          "afterSha256": "aabd39c3e5b7c1827f214083d0d4ee3faa7dd700fb0f8546140b46bee1e28643"
+        }
+      ]
+    },
+    {
+      "label": "PhaseManager complete non-import program using actual moved guard bodies",
+      "typed": {
+        "same": true,
+        "nodes": 11921,
+        "leaves": 8004
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "2b8551963643709a6ec18001a08a45caf5aa703bf4ce51fd099ef59658055a68",
+          "afterSha256": "2b8551963643709a6ec18001a08a45caf5aa703bf4ce51fd099ef59658055a68"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "7fbf8c5737e7f44e82e561ba8b8af5b421c51189688b57cd10cc513051c08f9c",
+          "afterSha256": "7fbf8c5737e7f44e82e561ba8b8af5b421c51189688b57cd10cc513051c08f9c"
+        }
+      ]
+    },
+    {
+      "label": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "typed": {
+        "same": true,
+        "nodes": 29,
+        "leaves": 18
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "4a6bef52a1c2946c47e13c91f09eaf3a9e35b2ae252d90760c8e266a83de4d89",
+          "afterSha256": "4a6bef52a1c2946c47e13c91f09eaf3a9e35b2ae252d90760c8e266a83de4d89"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "846b2e79a0aaa62bb37cd63dd4e4ab61d905ea4acb4590c7a243d25bc79b5096",
+          "afterSha256": "846b2e79a0aaa62bb37cd63dd4e4ab61d905ea4acb4590c7a243d25bc79b5096"
+        }
+      ]
+    },
+    {
+      "label": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "typed": {
+        "same": true,
+        "nodes": 77,
+        "leaves": 48
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "96cb06448bfd932487a5eac9fc4a2c31074623e0a322db8918e2c84a30d2f1f3",
+          "afterSha256": "96cb06448bfd932487a5eac9fc4a2c31074623e0a322db8918e2c84a30d2f1f3"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "b9ecab48b36c8058ca3f375b77ad8aae0a4c16d670df6cba0aa77fb266c48d7b",
+          "afterSha256": "b9ecab48b36c8058ca3f375b77ad8aae0a4c16d670df6cba0aa77fb266c48d7b"
+        }
+      ]
+    },
+    {
+      "label": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "typed": {
+        "same": true,
+        "nodes": 55,
+        "leaves": 34
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "440e456185da91420ee9425f018b09a2b2a5686ae211baf62fb8d85170ad7127",
+          "afterSha256": "440e456185da91420ee9425f018b09a2b2a5686ae211baf62fb8d85170ad7127"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "881bc05a9b28d6f9ca53371b5ee081b94ed961112771c95e7590432ae802e66f",
+          "afterSha256": "881bc05a9b28d6f9ca53371b5ee081b94ed961112771c95e7590432ae802e66f"
+        }
+      ]
+    },
+    {
+      "label": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "typed": {
+        "same": true,
+        "nodes": 76,
+        "leaves": 48
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "43e371c12fddf52eedff1c0e2c3dbcdeab3f6f55b8ca090bf7bddadaccb07a6d",
+          "afterSha256": "43e371c12fddf52eedff1c0e2c3dbcdeab3f6f55b8ca090bf7bddadaccb07a6d"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "b6bd37a1abbf0072aae5727897aaaf629c517abc5d214118c604ec966603757a",
+          "afterSha256": "b6bd37a1abbf0072aae5727897aaaf629c517abc5d214118c604ec966603757a"
+        }
+      ]
+    },
+    {
+      "label": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "typed": {
+        "same": true,
+        "nodes": 4608,
+        "leaves": 3017
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "1f6b25199060dceba436af1aaa6d03935d25a20d4bc51089d311f255bed9e8b1",
+          "afterSha256": "1f6b25199060dceba436af1aaa6d03935d25a20d4bc51089d311f255bed9e8b1"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "3404c558e378f9110fe85c9116d7d86bb958957ec2b1b11973ccdb26a5b1ee7f",
+          "afterSha256": "3404c558e378f9110fe85c9116d7d86bb958957ec2b1b11973ccdb26a5b1ee7f"
+        }
+      ]
+    },
+    {
+      "label": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "typed": {
+        "same": true,
+        "nodes": 731,
+        "leaves": 483
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "9f184792768e9f234e068fec0face02a5eb6ed88847ca72f23a894d022aa7df4",
+          "afterSha256": "9f184792768e9f234e068fec0face02a5eb6ed88847ca72f23a894d022aa7df4"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "ff4c4f0ec828655bf1ed8b9cbdbc6e05407b368bae046d6d49b9adb6e0d5c0c3",
+          "afterSha256": "ff4c4f0ec828655bf1ed8b9cbdbc6e05407b368bae046d6d49b9adb6e0d5c0c3"
+        }
+      ]
+    },
+    {
+      "label": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "typed": {
+        "same": true,
+        "nodes": 782,
+        "leaves": 518
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "62a63b6b9dc9f3301fb7b2720d7eef8905b8066fedc0687becf068efd12da38e",
+          "afterSha256": "62a63b6b9dc9f3301fb7b2720d7eef8905b8066fedc0687becf068efd12da38e"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "059f0098ed7b88e8e5eccffd0a6d5704923aee861df20fb51f8f36b6d0750596",
+          "afterSha256": "059f0098ed7b88e8e5eccffd0a6d5704923aee861df20fb51f8f36b6d0750596"
+        }
+      ]
+    },
+    {
+      "label": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "typed": {
+        "same": true,
+        "nodes": 2198,
+        "leaves": 1467
+      },
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSha256": "c4ea7326df7a77df50d28c42acb23423d3464c918308619d3891f8619ac38117",
+          "afterSha256": "c4ea7326df7a77df50d28c42acb23423d3464c918308619d3891f8619ac38117"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSha256": "20f9413bfdb488e0b3ec44e41968b5d24a450857913273b3c67729879ff871eb",
+          "afterSha256": "20f9413bfdb488e0b3ec44e41968b5d24a450857913273b3c67729879ff871eb"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "completeRegions": 10,
+    "nodes": 20879,
+    "wholeMappedOutputs": 20
+  },
+  "negativeControls": {
+    "fourthGuardMutationDetected": true,
+    "nonFirstClassMethodLiteralDetected": true
+  },
+  "bindings": [
+    {
+      "symbol": "InitialIdentitySetupWindow",
+      "public": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+        "name": "InitialIdentitySetupWindow"
+      },
+      "sameActualImport": true,
+      "sameOriginalPhysical": true
+    },
+    {
+      "symbol": "WildChildSetupWindow",
+      "public": "backend/src/game/mechanisms/roles/wild_child/setup-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+        "name": "WildChildSetupWindow"
+      },
+      "sameActualImport": true,
+      "sameOriginalPhysical": true
+    },
+    {
+      "symbol": "LonelyGirlSetupWindow",
+      "public": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+        "name": "LonelyGirlSetupWindow"
+      },
+      "sameActualImport": true,
+      "sameOriginalPhysical": true
+    },
+    {
+      "symbol": "GhostBrideSetupWindow",
+      "public": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+        "name": "GhostBrideSetupWindow"
+      },
+      "sameActualImport": true,
+      "sameOriginalPhysical": true
+    },
+    {
+      "symbol": "initialIdentitySetupReady",
+      "public": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+        "name": "initialIdentitySetupReady"
+      },
+      "sameActualImport": true,
+      "sameOriginalPhysical": true
+    },
+    {
+      "symbol": "initialIdentityKind",
+      "public": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+        "name": "initialIdentityKind"
+      },
+      "sameActualImport": true,
+      "sameOriginalPhysical": true
+    },
+    {
+      "symbol": "wildChildReady",
+      "public": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "name": "wildChildReady"
+      },
+      "sameActualImport": true,
+      "sameOriginalPhysical": true
+    },
+    {
+      "symbol": "lonelyGirlReady",
+      "public": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "name": "lonelyGirlReady"
+      },
+      "sameActualImport": true,
+      "sameOriginalPhysical": true
+    },
+    {
+      "symbol": "ghostBrideReady",
+      "public": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "ghostBrideReady"
+      },
+      "sameActualImport": true,
+      "sameOriginalPhysical": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "e78ad051db063e88af5766107489803c7ec752110eb724278926fe31d092a34c",
+      "currentSha256": "e78ad051db063e88af5766107489803c7ec752110eb724278926fe31d092a34c",
+      "same": true
+    },
+    {
+      "path": "backend/src/rulesets/rule-plan.ts",
+      "sha256": "5c72f81441a6bf2685922a5b62bc50eb5073447a131abccc22db1826971377f6",
+      "currentSha256": "5c72f81441a6bf2685922a5b62bc50eb5073447a131abccc22db1826971377f6",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2533cf7bba1e6600d3bf883d36b3b6a7c53acf172499ee24d2796a0179de26b3",
+      "currentSha256": "2533cf7bba1e6600d3bf883d36b3b6a7c53acf172499ee24d2796a0179de26b3",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "sha256": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "currentSha256": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "currentSha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "b9d3cea1a5d323897ff7c02c153b9383dacf69b7958764a70f40a88f8e8d737c",
+      "currentSha256": "b9d3cea1a5d323897ff7c02c153b9383dacf69b7958764a70f40a88f8e8d737c",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "56949095bcf65e6c87ed47e243ce5a910eda09c784b5f03740a3567ae240dc04",
+      "currentSha256": "56949095bcf65e6c87ed47e243ce5a910eda09c784b5f03740a3567ae240dc04",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+      "currentSha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "sha256": "6aca872ccdd899bdb553b194e1994afeb72fc49de4d2ace3a22fd6a7f25fc7f3",
+      "currentSha256": "6aca872ccdd899bdb553b194e1994afeb72fc49de4d2ace3a22fd6a7f25fc7f3",
+      "same": true
+    }
+  ],
+  "scope": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "7331f4e13382dceac0c6f9dcb35b00ca9f39b9162f9788474ec506e7c214863f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "e17c1fab29924ee32837f7599263a2fbc24db848381d56c50cd02f0a6fc389a9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "sha256": "e5a24613eb7e9d84d83a672a276a1d3cd01310cfe06c7db613f7bb202491643e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "sha256": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "5af195b4a1ac50116ea8e76934a54ed67a8001ef64d180ffed0ae74c748b4b35"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "4900a6dab7e843cdeb005738374734037917a5f18e29092b1fd3212806c9d94b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "554c2b74a89dfd7076f1ff20e1af014a23e6384afa4f59780045b2882fd3fb21"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "602cef695d6127b1d3f3dff866f14219a2cc84719b91605774af1d3b8f9c147f"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "4aa1d1df8e638d74646fc98c50c3f27ab5f95089c4251aded26fbfd1c58508e7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup-ports.ts",
+      "sha256": "b82b5d5a971e421f4e51d50403dae8e9e53b5ca2a54420c74bfb648c3cb40b63"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+      "sha256": "44e4b51241b9a93b2d1d31972d0cae7e40ccea49a7fbcb92866d9eb51e0fca61"
+    }
+  ],
+  "limits": [
+    "Actual synchronous generator is a new orchestration interface; physical feature classes keep their original bodies.",
+    "Mapped outputs prove body equivalence, not whole cold-module binary identity.",
+    "No readiness/schema/resource policy, reflected private API retirement or historical replay fingerprint rewrite."
+  ],
+  "lateTestDriverDelta": {
+    "path": "docs/refactor/generated/game-setup-sequence-test-driver-delta.json",
+    "onlyChangedSource": "backend/tests/unit/rulesets/game-setup.test.ts",
+    "productionSourcesUnchanged": true,
+    "previousArtifact": "docs/refactor/generated/game-setup-sequence-proof-before-driver.json",
+    "headTextUnchanged": true
+  }
+}

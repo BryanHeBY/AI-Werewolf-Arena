@@ -1,0 +1,16 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "files": [
+    "../../../backend/src/game/engine/phase_manager.ts",
+    "../../../backend/src/rulesets/game-setup.ts",
+    "../../../backend/tests/unit/rulesets/game-setup.test.ts"
+  ],
+  "include": [],
+  "exclude": [],
+  "compilerOptions": {
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  }
+}

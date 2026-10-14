@@ -1,8 +1,8 @@
 /**
- * Runs the first-night Wild Child model-selection window with original participants.
- * Inputs are readonly board policy, provider and request factory; output is the
- * existing selected model or interrupted setup. Local lifecycle owns choice commits
- * and cancellation; this window never changes board parameters or grants a stale turn.
+ * 负责野孩子首夜榜样选择窗口，保留原参与者、只读板子和 provider／请求工厂。
+ * 输入为已安装绑定、首夜日期及当前性回调；输出为榜样提交成功或准备中断。
+ * 先核准备状态再开选择，await 两侧复验原生命和目标；选择、付款与失败关闭归原生命周期。
+ * 窗口不修改板子参数、不重新发库存，也不把过期请求当成选择许可。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../core/domain";

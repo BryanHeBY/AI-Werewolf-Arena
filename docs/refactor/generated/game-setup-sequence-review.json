@@ -1,0 +1,130 @@
+{
+  "status": "approved",
+  "reviewer": "/root/preflight_final_review",
+  "base": "27fbbc0e556027119d452d4dcb1d0409b99b620f",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "7331f4e13382dceac0c6f9dcb35b00ca9f39b9162f9788474ec506e7c214863f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "e17c1fab29924ee32837f7599263a2fbc24db848381d56c50cd02f0a6fc389a9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "sha256": "e5a24613eb7e9d84d83a672a276a1d3cd01310cfe06c7db613f7bb202491643e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "sha256": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "5af195b4a1ac50116ea8e76934a54ed67a8001ef64d180ffed0ae74c748b4b35"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "4900a6dab7e843cdeb005738374734037917a5f18e29092b1fd3212806c9d94b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "554c2b74a89dfd7076f1ff20e1af014a23e6384afa4f59780045b2882fd3fb21"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "602cef695d6127b1d3f3dff866f14219a2cc84719b91605774af1d3b8f9c147f"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "4aa1d1df8e638d74646fc98c50c3f27ab5f95089c4251aded26fbfd1c58508e7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup-ports.ts",
+      "sha256": "b82b5d5a971e421f4e51d50403dae8e9e53b5ca2a54420c74bfb648c3cb40b63"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+      "sha256": "44e4b51241b9a93b2d1d31972d0cae7e40ccea49a7fbcb92866d9eb51e0fca61"
+    }
+  ],
+  "findings": [],
+  "closedFinding": {
+    "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+    "kind": "最终生成器接口的测试调用迁移遗漏",
+    "before": "构造参数失败例直接对 prepareGameSetup 返回的同步 Generator 使用 rejects，未推进 next，因此最终测试输入不成立。",
+    "fix": "仅该 callee 改 finishSetup，实参／轨迹／断言全部保持；不改生产10源。",
+    "independentExactWholeTextForward": true,
+    "deltaSHA256": "04a796829397e278501730aa65ae59e3d02a92633d911de021037a0b926aee74",
+    "authorProof": "完整2344节点／两映射输出同，实际调用行为明确变化；没有替换 callbacks 或断言。",
+    "boundedReceipt": "a4e182：必要单case 1 pass/3 expect、4 filtered；441762/session51349→abcca7：单unit root actual0。"
+  },
+  "provenance": {
+    "beforeActualGit": 9,
+    "currentSources": 11,
+    "currentControls": 9,
+    "artifactHashesChecked": 34,
+    "mismatches": 0,
+    "newPaths": 3,
+    "restoredControl": "野孩子通用 ports 恢复原基线字节，不列最终改源。"
+  },
+  "responsibilityReview": [
+    "规则组合完整拥有原四个设置 guard 与确定顺序，盗贼／千面人→野孩子→孤独少女→鬼魂新娘；PM仍控制阶段时钟、唯一当前性、快照、名单／熊捕获及夜间执行。",
+    "新 owner 是同步生成器，next 同步推进现场查询和具体构造；只 yield 原窗口 execute Promise。PM只在该 Promise 原处 await，全ready与完成尾部没有 helper 微任务。",
+    "四个准备类使用真实同绑定公开端口，具体选择、库存、权限和 finally 关闭仍原窗口与生命周期；不造第二规则算法、类基架、注册器或关闭账本。"
+  ],
+  "orderAndFailureReview": [
+    "构造器→World→gateway→events→初始kind顺序保持；execute 原实例 receiver 和 config/provider/day/current 参数顺序保持，没有先收集 live getter 数据。",
+    "原 !ready || !nightIsCurrent 保 false-first 短路；false 不多读 current、不启动后续步骤；成功尾部也不补 current。",
+    "同步构造失败和 Promise 拒绝仍传入 PM 原 runSingleCycle catch/finally；窗口自己的 finally 原样关闭，生成器不加回滚或资源付款。",
+    "原设置程序仅中文头及准确角色名变化；wild/lonely 的请求绑定、await 两侧原引用复验和 close 次序完整保留。"
+  ],
+  "programAndModuleEvidence": {
+    "audit": "已完整读原四block、当前 generator/PMdriver 与完整 proof.cjs；getChildren 完整树／非注释叶，真实 owner 四guard展开，不用旧方法体替换候选。PM完整非imports包含所有其它程序，剩余 import 实际 diff 也独立读取。",
+    "completeRegions": 10,
+    "allNodes": 20879,
+    "mappedOutputs": 20,
+    "valueBindingsPhysicalSame": 9,
+    "controlsWholeBytesSame": 9,
+    "negativeCanaries": "第四 guard 与非首类方法字面 mutation 均由作者 proof 检出；本审未重跑。",
+    "coldCycle": "原通用 Wild ports 新增setup class出口导致 setup→Factory→feed→mechanisms→hooks→ports 返回链，真实旧候选保留。最终改独立 setup-ports，同class直导，普通 ports恢复control。",
+    "graphReceipt": "87881d/session22896→9baeb3：683相对backend静态值模块，4新增公开边无返回路径，owner不回PM；70bd55新公开入口真实冷加载。不是外部包／动态加载或全仓图等价。"
+  },
+  "testAndTypeAttribution": {
+    "newDistinctCases": 5,
+    "uniqueSuccessfulAssertions": 24,
+    "stageReceipts": "首async三个case成功3/10分阶段；最终generator两个timing case2/14；末driver必要重复1/3不算第六case或最终全五例重跑。",
+    "originalPrecise": "077832 原 Lonely PM case1/147只首async阶段；没有冒最终阶段再次运行。",
+    "initialNewFixtureFailures": "首取消配置引用误用、随后手写轨迹遗漏原 bindWildChildRequest current复验均保真实失败日志；只修新输入／预期，不改生产。",
+    "types": "临时config类型目录红后，真实11roots29096/02911d0；后generator3roots2543/4231200、route3roots92384/579c340；末单unit51349/abcca70。空日志不作为终止证据。",
+    "headers": "7c9318：11 source／当时462docs职责零诊断，中文11；末unit仅callee变，原头字节保持。",
+    "noIndependentExecution": true
+  },
+  "documents": [
+    {
+      "path": "docs/refactor/game-setup-sequence.md",
+      "sha256": "784f93fc8a0fa49db15fb0884d2e21987ab6c08f244a199fe9b5520afa0eb4f7"
+    },
+    {
+      "path": "docs/refactor/generated/game-setup-sequence-scope-final.json",
+      "sha256": "9e4f2467d789cdd1a5cd292a747b2f18733e8593c0de334a339c6d77d5f0c8c4"
+    },
+    {
+      "path": "docs/refactor/generated/game-setup-sequence-evidence.json",
+      "sha256": "093f45bcbb38c86360bfcf12f3b4c1acd7b7c06b8d34954cfe7a0cb6d4775c7b"
+    },
+    {
+      "path": "docs/refactor/generated/game-setup-sequence-receipts.json",
+      "sha256": "ab0dc6346cd6631f929e2cbdc1e24d7e7d603b3d55e46a6e679d8157caf3e77a"
+    }
+  ],
+  "limits": [
+    "公开类出口、生成器/query接口、额外同步调用与模块初始化布局明确变化；映射完整原算法输出不等于冷模块二进制、未知反射或任意monkeypatch全等价。",
+    "本批无schema／新资源政策／玩法变化，不重写历史指纹；具名facet规则工具属另C04功能批，未把当前全仓gate冒本批已通过。",
+    "本审读取、哈希和真实Git核验，未重跑proof/compiler/tests/gates/models；唯一真实测试接口finding已精确修闭。"
+  ],
+  "finalDocumentationDelta": {
+    "meaning": "首候选检查器只识别通用出口；具名公开facet由独立C04批支撑。本功能批本身不改门禁或宣称R01完成。只修阶段说明与文档SHA，原11源码与scope不变。",
+    "noSourceOrVerificationChange": true
+  }
+}

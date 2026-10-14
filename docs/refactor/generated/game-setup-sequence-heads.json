@@ -1,0 +1,63 @@
+{
+  "sourceCount": 11,
+  "documentationPaths": 462,
+  "actualResponsibilityViolations": [],
+  "chinesePresence": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "7331f4e13382dceac0c6f9dcb35b00ca9f39b9162f9788474ec506e7c214863f",
+      "chinese": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "e17c1fab29924ee32837f7599263a2fbc24db848381d56c50cd02f0a6fc389a9",
+      "chinese": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "sha256": "e5a24613eb7e9d84d83a672a276a1d3cd01310cfe06c7db613f7bb202491643e",
+      "chinese": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "sha256": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b",
+      "chinese": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "5af195b4a1ac50116ea8e76934a54ed67a8001ef64d180ffed0ae74c748b4b35",
+      "chinese": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "4900a6dab7e843cdeb005738374734037917a5f18e29092b1fd3212806c9d94b",
+      "chinese": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "554c2b74a89dfd7076f1ff20e1af014a23e6384afa4f59780045b2882fd3fb21",
+      "chinese": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "602cef695d6127b1d3f3dff866f14219a2cc84719b91605774af1d3b8f9c147f",
+      "chinese": true
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "4aa1d1df8e638d74646fc98c50c3f27ab5f95089c4251aded26fbfd1c58508e7",
+      "chinese": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup-ports.ts",
+      "sha256": "b82b5d5a971e421f4e51d50403dae8e9e53b5ca2a54420c74bfb648c3cb40b63",
+      "chinese": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+      "sha256": "e6cfd82d4b3693b31f8edaae3a1b541246a292c55326458517ee84130038bf8b",
+      "chinese": true
+    }
+  ],
+  "limits": "职责词项及文档目标形状检查，不等于注释语义或整仓架构检查。"
+}

@@ -1,0 +1,27 @@
+{
+  "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+  "beforeSha256": "e6cfd82d4b3693b31f8edaae3a1b541246a292c55326458517ee84130038bf8b",
+  "afterSha256": "44e4b51241b9a93b2d1d31972d0cae7e40ccea49a7fbcb92866d9eb51e0fca61",
+  "intent": "Only the constructor-failure test callee changes from prepareGameSetup to finishSetup so its Generator is actually driven. No production behavior change.",
+  "exactOnlyOneCallee": true,
+  "fullTypedInverse": {
+    "same": true,
+    "nodes": 2344
+  },
+  "wholeMappedOutputs": [
+    {
+      "module": "ESNext",
+      "same": true,
+      "beforeSha256": "d52ab238592118e6d75382a54d73b5a7adcb4933646dc2dbb79ea007c6691f1c",
+      "inverseSha256": "d52ab238592118e6d75382a54d73b5a7adcb4933646dc2dbb79ea007c6691f1c"
+    },
+    {
+      "module": "CommonJS",
+      "same": true,
+      "beforeSha256": "a1e18095b6aa591c24e97c32259dcf2c26ffed0aa299ecd8b974fc738d49d1f9",
+      "inverseSha256": "a1e18095b6aa591c24e97c32259dcf2c26ffed0aa299ecd8b974fc738d49d1f9"
+    }
+  ],
+  "headTextSame": true,
+  "limits": "Mapped outputs preserve all other test program input/expectation nodes; actual callee behavior intentionally changes. This is not a repeated production proof/type/test receipt."
+}

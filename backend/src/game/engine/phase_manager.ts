@@ -4,6 +4,7 @@
  * 与流水线、开局上下文及记录入口共享同一 BoardParameters/RulePlan 引用；
  * 每夜仍创建独立生命周期 receiver，沿原 current 检查和重复 finally 消费同一已交接单位。
  * 计划中的具名 checkpoint 只提供原值；同步重入准入由同一计划组合，
+ * 首夜四个准备窗口由具名规则组合串行推进，日期／当前性回调及中断快照仍归本经理；
  * 周期登记、阶段时钟、最终死亡链、判胜及失败清理仍由本经理拥有。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
@@ -14,6 +15,7 @@ import type { DeathCommitReceipt, DeathOriginalLife } from "./death-wave";
 import type { DamageResolutionResult } from "../../core/domain/systems/damage_resolution_system";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { NightManagerLifecycle } from "../../rulesets/night-lifecycle-plan";
+import { prepareGameSetup } from "../../rulesets/game-setup";
 
 import { bindBoardParameters } from "../../rulesets/board-parameters";
 import { RulePlan } from "../../rulesets/rule-plan";
@@ -42,30 +44,18 @@ import {
 } from "../mechanisms/roles/demon_hunter/ports";
 import { demonWitchMarksSafe } from "../mechanisms/roles/demon_hunter/native_potion_requests";
 import { freezeDeliveredDemonNightSources } from "../mechanisms/roles/demon_hunter/native_potion_controller";
-import { GhostBrideSetupWindow } from "../mechanisms/roles/ghost_bride/setup";
 import {
   weddingSetup,
-  ghostBrideReady,
   weddingAssignment,
   weddingKnifeCurrent,
 } from "../mechanisms/roles/ghost_bride/ports";
-import { LonelyGirlSetupWindow } from "../mechanisms/roles/lonely_girl/setup";
-import {
-  lonelyGirlReady,
-} from "../mechanisms/roles/lonely_girl/ports";
 import {
   initialIdentityDeal,
   INITIAL_IDENTITY_POLICIES,
 } from "../mechanisms/roles/initial_identity/deal";
-import { WildChildSetupWindow } from "../mechanisms/roles/wild_child/setup";
 import {
-  wildChildReady,
-} from "../mechanisms/roles/wild_child/ports";
-import {
-  initialIdentitySetupReady,
   initialIdentityKind,
 } from "../mechanisms/roles/initial_identity/ports";
-import { InitialIdentitySetupWindow } from "../mechanisms/roles/initial_identity/setup";
 import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
@@ -428,39 +418,16 @@ export class PhaseManager {
       this.state.phase === Phase.Night &&
       !this.state.gameOver &&
       this.phaseRevision.current === nightRevision;
-    if (!initialIdentitySetupReady(this.world)) {
-      const ready = await new InitialIdentitySetupWindow(
-        this.world,
-        this.toolGateway,
-        this.events,
-        initialIdentityKind(this.world)!,
-      ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
-      if (!ready || !nightIsCurrent()) return this.getSnapshot();
-    }
-    if (!wildChildReady(this.world)) {
-      const ready = await new WildChildSetupWindow(
-        this.world,
-        this.toolGateway,
-        this.events,
-      ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
-      if (!ready || !nightIsCurrent()) return this.getSnapshot();
-    }
-    if (!lonelyGirlReady(this.world)) {
-      const ready = await new LonelyGirlSetupWindow(
-        this.world,
-        this.toolGateway,
-        this.events,
-      ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
-      if (!ready || !nightIsCurrent()) return this.getSnapshot();
-    }
-    if (!ghostBrideReady(this.world)) {
-      const ready = await new GhostBrideSetupWindow(
-        this.world,
-        this.toolGateway,
-        this.events,
-      ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
-      if (!ready || !nightIsCurrent()) return this.getSnapshot();
-    }
+    const setupSequence = prepareGameSetup({
+      world: () => this.world,
+      toolGateway: () => this.toolGateway,
+      events: () => this.events,
+      config: () => this.config,
+    }, actionProvider, nightDay, nightIsCurrent);
+    let setupStep = setupSequence.next();
+    // 只等待原窗口的 execute；四项都已就绪时不让出微任务，阶段当前性也不额外查询。
+    while (!setupStep.done) setupStep = setupSequence.next(await setupStep.value);
+    if (!setupStep.value) return this.getSnapshot();
     assertDemonOriginalRoster(this.world);
     const bearFrame = BearNightFrame.capture(
       this.world,

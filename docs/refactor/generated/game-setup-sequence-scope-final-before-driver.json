@@ -1,0 +1,116 @@
+{
+  "base": "27fbbc0e556027119d452d4dcb1d0409b99b620f",
+  "sourceCount": 11,
+  "files": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "7331f4e13382dceac0c6f9dcb35b00ca9f39b9162f9788474ec506e7c214863f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "e17c1fab29924ee32837f7599263a2fbc24db848381d56c50cd02f0a6fc389a9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "sha256": "e5a24613eb7e9d84d83a672a276a1d3cd01310cfe06c7db613f7bb202491643e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "sha256": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "5af195b4a1ac50116ea8e76934a54ed67a8001ef64d180ffed0ae74c748b4b35"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "4900a6dab7e843cdeb005738374734037917a5f18e29092b1fd3212806c9d94b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "554c2b74a89dfd7076f1ff20e1af014a23e6384afa4f59780045b2882fd3fb21"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "602cef695d6127b1d3f3dff866f14219a2cc84719b91605774af1d3b8f9c147f"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "4aa1d1df8e638d74646fc98c50c3f27ab5f95089c4251aded26fbfd1c58508e7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup-ports.ts",
+      "sha256": "b82b5d5a971e421f4e51d50403dae8e9e53b5ca2a54420c74bfb648c3cb40b63"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+      "sha256": "e6cfd82d4b3693b31f8edaae3a1b541246a292c55326458517ee84130038bf8b"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "e78ad051db063e88af5766107489803c7ec752110eb724278926fe31d092a34c",
+      "currentSha256": "e78ad051db063e88af5766107489803c7ec752110eb724278926fe31d092a34c",
+      "same": true
+    },
+    {
+      "path": "backend/src/rulesets/rule-plan.ts",
+      "sha256": "5c72f81441a6bf2685922a5b62bc50eb5073447a131abccc22db1826971377f6",
+      "currentSha256": "5c72f81441a6bf2685922a5b62bc50eb5073447a131abccc22db1826971377f6",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2533cf7bba1e6600d3bf883d36b3b6a7c53acf172499ee24d2796a0179de26b3",
+      "currentSha256": "2533cf7bba1e6600d3bf883d36b3b6a7c53acf172499ee24d2796a0179de26b3",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "sha256": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "currentSha256": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "currentSha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "b9d3cea1a5d323897ff7c02c153b9383dacf69b7958764a70f40a88f8e8d737c",
+      "currentSha256": "b9d3cea1a5d323897ff7c02c153b9383dacf69b7958764a70f40a88f8e8d737c",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "56949095bcf65e6c87ed47e243ce5a910eda09c784b5f03740a3567ae240dc04",
+      "currentSha256": "56949095bcf65e6c87ed47e243ce5a910eda09c784b5f03740a3567ae240dc04",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+      "currentSha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "sha256": "6aca872ccdd899bdb553b194e1994afeb72fc49de4d2ace3a22fd6a7f25fc7f3",
+      "currentSha256": "6aca872ccdd899bdb553b194e1994afeb72fc49de4d2ace3a22fd6a7f25fc7f3",
+      "same": true
+    }
+  ],
+  "publicClassFacets": {
+    "initialIdentity": "initial_identity/ports.ts",
+    "wildChild": "wild_child/setup-ports.ts",
+    "lonelyGirl": "lonely_girl/ports.ts",
+    "ghostBride": "ghost_bride/ports.ts"
+  },
+  "limits": [
+    "The general Wild Child ports are a restored unchanged control, not a final changed source.",
+    "The current architecture checker recognises generic ports/index/contracts, not every named setup facet. This slice changes no gate or whitelist and does not claim R01 complete."
+  ]
+}

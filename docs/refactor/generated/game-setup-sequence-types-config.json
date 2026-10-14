@@ -1,0 +1,24 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "files": [
+    "../../../backend/src/game/engine/phase_manager.ts",
+    "../../../backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+    "../../../backend/src/game/mechanisms/roles/wild_child/ports.ts",
+    "../../../backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+    "../../../backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+    "../../../backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+    "../../../backend/src/game/mechanisms/roles/wild_child/setup.ts",
+    "../../../backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+    "../../../backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+    "../../../backend/src/rulesets/game-setup.ts",
+    "../../../backend/tests/unit/rulesets/game-setup.test.ts"
+  ],
+  "include": [],
+  "exclude": [],
+  "compilerOptions": {
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  }
+}

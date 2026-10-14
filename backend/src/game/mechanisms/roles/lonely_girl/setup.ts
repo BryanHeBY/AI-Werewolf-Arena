@@ -1,8 +1,8 @@
 /**
- * Drives Lonely Girl's first-night admired-player choice and existing retry path.
- * Inputs are readonly rules, original roster and action provider; output is the
- * selected target or setup interruption. Participant validity and stock remain
- * lifecycle-owned, and a failed or closed choice never rewrites game parameters.
+ * 负责孤独少女首夜心仪对象选择及原失败／取消路径。
+ * 输入为只读板子、原参与者与 provider；输出为心仪对象提交成功或准备中断。
+ * 先核准备状态再打开原窗口，await 两侧复验参与者；阵营归属、库存及 finally 关闭归原生命周期。
+ * 已失败或关闭的选择不重写游戏参数，不重新开启准备，也不授予过期请求许可。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../core/domain";

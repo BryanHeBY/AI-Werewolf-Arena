@@ -1,0 +1,68 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "7331f4e13382dceac0c6f9dcb35b00ca9f39b9162f9788474ec506e7c214863f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "e17c1fab29924ee32837f7599263a2fbc24db848381d56c50cd02f0a6fc389a9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "sha256": "e5a24613eb7e9d84d83a672a276a1d3cd01310cfe06c7db613f7bb202491643e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "sha256": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "5af195b4a1ac50116ea8e76934a54ed67a8001ef64d180ffed0ae74c748b4b35"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "4900a6dab7e843cdeb005738374734037917a5f18e29092b1fd3212806c9d94b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "554c2b74a89dfd7076f1ff20e1af014a23e6384afa4f59780045b2882fd3fb21"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "602cef695d6127b1d3f3dff866f14219a2cc84719b91605774af1d3b8f9c147f"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "4aa1d1df8e638d74646fc98c50c3f27ab5f95089c4251aded26fbfd1c58508e7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup-ports.ts",
+      "sha256": "b82b5d5a971e421f4e51d50403dae8e9e53b5ca2a54420c74bfb648c3cb40b63"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+      "sha256": "44e4b51241b9a93b2d1d31972d0cae7e40ccea49a7fbcb92866d9eb51e0fca61"
+    }
+  ],
+  "scopeSHA256": "9e4f2467d789cdd1a5cd292a747b2f18733e8593c0de334a339c6d77d5f0c8c4",
+  "review": {
+    "responsibility": "完整四setup guard和窗口装配归同步序列，PM保夜clock/day/current/snapshot以及后续Demon/Bear/nightPipeline；原各窗口生命/选择/付款/finally不迁。",
+    "timing": "实读完整generator与PMdriver，sequence.next同步执行准备查询，while只原窗口promise await；全部ready无额外await，窗口结果false先短路不再current，成功tail不新增current。抛错沿原PM外层清理，无generator自有补救账本。",
+    "bindingAndOwnership": "四class+四ready+Initialkind真实公开绑定，constructor/callee/args顺序与execute receiver保；Wild独立setup-ports避免通用端口挂重型窗口的新增回环，普通ports恢复control。",
+    "comments": "4设置头英文译CN及正式千面人/鬼魂新娘纠正；关键query延迟、生成器不增加等待、false先短路和资源归属中文准确。",
+    "evidence": "完整20879/20映射证明来自actual四guard而非旧wholebody；首async候选额外await由Root发现，真候选和冷环失败保留。新5distinct24成功assert分阶段，原Lonely1/147仅初段，不冒最终整套；末unitdriver漏项只callee改finishSetup，单1/3和unitroot实际0收据真实。"
+  },
+  "findingsClosed": [
+    "首asynchelper新增microtask，改同步generator与caller只原execute promise await。",
+    "新增Wild公共加载环，拆独立setup-ports保持同class引用。",
+    "同行发现新unit第二case漏生成器driver，末singlecallee必要修测闭合。"
+  ],
+  "rootHarnessHistory": "首scope字段工具误用source；实际scope为files，未发生stage或源改，纠正后全11source SHA真实核同。",
+  "limits": [
+    "新增同步生成器API/公共class出口/模块图和栈差异明列，无新许可/资源store。",
+    "完整C22–24与I03/55矩阵/P9继续，不重模型、全gate或旧已绿。"
+  ]
+}

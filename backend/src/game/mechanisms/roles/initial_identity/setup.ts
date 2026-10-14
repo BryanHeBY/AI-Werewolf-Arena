@@ -1,5 +1,5 @@
 /**
- * 负责盗贼／变形者的初始选择 scope 与请求绑定。输入为原 World 参与者和首夜请求；输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。失败选择与已关闭 setup 保留原终结决定；元数据不携带行动许可。
+ * 负责盗贼／千面人的初始选择 scope 与请求绑定。输入为原 World 参与者和首夜请求；输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。失败选择与已关闭 setup 保留原终结决定；元数据不携带行动许可。
  */
 import { createCampComponent } from "../../../observation/component-presentation";
 import type {

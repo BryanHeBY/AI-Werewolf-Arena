@@ -12,3 +12,6 @@ export { projectLonelyGirl } from "./lifecycle";
 export { lonelyGirlRequestScope } from "./lifecycle";
 
 export { readLonelyGirlTool } from "./state";
+
+/** 开局组合使用同一准备类绑定；具体窗口仍拥有选择校验、提交与失败关闭。 */
+export { LonelyGirlSetupWindow } from "./setup";
