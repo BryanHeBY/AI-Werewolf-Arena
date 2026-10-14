@@ -1,0 +1,67 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+    "before": "/**\n * Checks Gargoyle knife succession against the actual surviving wolf camp. Inputs are current\n * role state and World; outputs are eligibility or the existing inheritance state/fact. It does\n * not rewrite the role or infer inheritance from an uncommitted death.\n */",
+    "after": "/**\n * 负责石像鬼原刀权继承查询与继承状态／事实刷新；输入为原角色、World、事件和明确日次。\n * 查询依原顺序核角色、继承标记、本夜查验完成回执，再核当前存活真狼名单；输出只是原刀权资格。\n * 刷新先写继承标记，后发表觉醒事实，发表失败不退标记；本模块不改角色或从未提交死亡推断继承。\n * 查验完成通过轻公开记账端口晚读，不能以公开函数或合法状态形状重新授权旧请求。\n */"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+    "before": "import { completedGargoyleInspection } from \"../role_inspection/night_scope\";",
+    "after": "import { completedGargoyleInspection } from \"../role_inspection/night-commit-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+    "before": " * 负责纯白少女与狼巫各自原生角色查验政策。",
+    "after": " * 负责纯白之女与狼巫各自原生角色查验政策。"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+    "before": "import { recordRoleInspectionNightCommit } from \"../role_inspection/night_scope\";",
+    "after": "import { recordRoleInspectionNightCommit } from \"../role_inspection/night-commit-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+    "before": "      recordRoleInspectionNightCommit(ctx.world, day, ctx.isCurrent);",
+    "after": "      // 跳过事实已按原点发表，随后才经轻端口登记本夜；发表失败不补登记或撤销先写的 use。\n      recordRoleInspectionNightCommit(ctx.world, day, ctx.isCurrent);"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+    "before": " * 负责石像鬼、通灵师与镜女的原角色查验阶段。",
+    "after": " * 负责石像鬼、通灵师与魔镜少女的原角色查验阶段。"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+    "before": "import { captureAwakenedMirrorScope } from \"../awakened_hidden_wolf/night_scope\";",
+    "after": "import { captureAwakenedMirrorScope } from \"../awakened_hidden_wolf/mirror-scope-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+    "before": "    const awakenedCurrent =",
+    "after": "    // 只有原生觉醒隐狼来源捕获学习绑定；赠予／复制仍走原独立分支，不借公共入口扩大依赖或许可。\n    const awakenedCurrent ="
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+    "before": " * 资格枚举走只读查询，具体 Seer 状态与公共 use 命令在原 commit 位置执行；映射与子狐顺序不变。",
+    "after": " * 资格枚举走只读查询，具体 Seer 状态与公共 use 命令在原 commit 位置执行；映射与咒狐顺序不变。"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+    "before": "import { captureInspectionIdentity, commitFoxInspection } from \"../cursed_fox/inspection_effect\";",
+    "after": "import { captureInspectionIdentity, commitFoxInspection } from \"../cursed_fox/inspection-ports\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+    "before": "      commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));",
+    "after": "      // 原状态写入后才追加咒狐提案；仍传请求目标的原 life，随后 checks／use／效果与事实的失败不撤回此前前缀。\n      commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+    "before": " * 查验先调用状态 owner 再提交子狐效果；本模块不替换状态槽，也不记录运行时原体句柄。",
+    "after": " * 查验先调用状态 owner 再追加咒狐提案；本模块不替换状态槽，原体／当前性句柄仅留原运行效果，不进入玩家知识。"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+    "before": "import { captureInspectionIdentity, commitFoxInspection } from \"./cursed_fox/inspection_effect\";",
+    "after": "import { captureInspectionIdentity, commitFoxInspection } from \"./cursed_fox/inspection-ports\";"
+  }
+]

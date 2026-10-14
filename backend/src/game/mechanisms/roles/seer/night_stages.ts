@@ -1,7 +1,7 @@
 /**
  * 负责普通预言家对捕获能力及目标权威的查验请求。
  * 输入为原夜上下文和校验行动；输出保留查验结果、状态、use 和事件效果。
- * 资格枚举走只读查询，具体 Seer 状态与公共 use 命令在原 commit 位置执行；映射与子狐顺序不变。
+ * 资格枚举走只读查询，具体 Seer 状态与公共 use 命令在原 commit 位置执行；映射与咒狐顺序不变。
  * Demon 封存原生控制器保持独立，不额外验证租约、退款或将原体信息写入玩家知识。
  */
 import { SEER_STATE_SLOT } from "./ports";
@@ -19,7 +19,7 @@ import { captureNightAbilityScope } from "../ability_scope";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
 
-import { captureInspectionIdentity, commitFoxInspection } from "../cursed_fox/inspection_effect";
+import { captureInspectionIdentity, commitFoxInspection } from "../cursed_fox/inspection-ports";
 
 const seerCheckStage: NightStageHandler = {
   id: "seer_check",
@@ -151,6 +151,7 @@ const seerCheckStage: NightStageHandler = {
         SEER_STATE_SLOT.allowedWrites.recordSeerInspection(seerState, targetId, isWerewolf, inspection);
       }
 
+      // 原状态写入后才追加咒狐提案；仍传请求目标的原 life，随后 checks／use／效果与事实的失败不撤回此前前缀。
       commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));
       ctx.state.seerChecks.push({ seerId, targetId, isWerewolf, result: { ...inspection } });
       recordNightAbilityUse(ability, ctx.currentDay(), true);

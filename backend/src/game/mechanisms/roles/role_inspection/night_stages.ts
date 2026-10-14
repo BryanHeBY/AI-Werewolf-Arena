@@ -1,5 +1,5 @@
 /**
- * 负责石像鬼、通灵师与镜女的原角色查验阶段。
+ * 负责石像鬼、通灵师与魔镜少女的原角色查验阶段。
  * 输入为查询端口给出的活动实例与已验证目标；输出保留角色报告、次数和可选结束行为。
  * 共享资格查询先行，历史委托具体状态 owner，use metadata 委托实例 owner。
  * 各族失败、目标、学习、作用资格和事实发布顺序保持，不合并其不同规则。
@@ -24,7 +24,7 @@ import {
 import { inspectionRequired } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { roleInspectionTargets } from "./rules";
 import { captureNightAbilityScope } from "../ability_scope";
-import { captureAwakenedMirrorScope } from "../awakened_hidden_wolf/night_scope";
+import { captureAwakenedMirrorScope } from "../awakened_hidden_wolf/mirror-scope-ports";
 
 function finishOptionalInspection(
   ctx: NightStageContext,
@@ -72,6 +72,7 @@ async function executeInspections(
     const sourceOwner = source.kind === "native" ? source.role : source.actorId;
     const sourceAbilityId =
       source.kind === "copy" || source.kind === "transfer" ? source.abilityId : undefined;
+    // 只有原生觉醒隐狼来源捕获学习绑定；赠予／复制仍走原独立分支，不借公共入口扩大依赖或许可。
     const awakenedCurrent =
       source.kind === "native" && source.role === Role.AwakenedHiddenWolf
         ? captureAwakenedMirrorScope(

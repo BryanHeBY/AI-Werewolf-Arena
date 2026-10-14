@@ -2,7 +2,7 @@
  * 负责幸运儿或黑市受赠者的晚执行能力阶段。
  * 输入为捕获的受赠实例和已校验行动；输出保留效果、库存、次数与受赠提交的原顺序。
  * 原毒来源复用既有 abilityId／目标参数读取，不新增 getter、资格重检或资源回滚。
- * 查验先调用状态 owner 再提交子狐效果；本模块不替换状态槽，也不记录运行时原体句柄。
+ * 查验先调用状态 owner 再追加咒狐提案；本模块不替换状态槽，原体／当前性句柄仅留原运行效果，不进入玩家知识。
  */
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -45,7 +45,7 @@ export function recordRecipientNightCommit(
   committed.set(world, policies);
 }
 
-import { captureInspectionIdentity, commitFoxInspection } from "./cursed_fox/inspection_effect";
+import { captureInspectionIdentity, commitFoxInspection } from "./cursed_fox/inspection-ports";
 
 type LuckyAbility = NightAbilityReadView<"seer_check" | "potion" | "guard">;
 function isRecipient(

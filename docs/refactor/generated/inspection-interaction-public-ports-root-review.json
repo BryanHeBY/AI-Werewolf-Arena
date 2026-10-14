@@ -1,0 +1,70 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "065d1d6a315bdedd6c4c58e80e682084974de6b6",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night-commit-ports.ts",
+      "sha256": "4df632c4b562dd9af574c71e5d4e24aeb612820befe28f8d26ed8b404de8f25f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/mirror-scope-ports.ts",
+      "sha256": "1357704f8b88b7f7877c4ae6fe890b3addbcd65223f60c2520cce01380e34729"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/inspection-ports.ts",
+      "sha256": "b5c315f901c50081c79714fe6b2a73ff1daab56f8b8aec8963cbcb4b650c2b5d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+      "sha256": "266a82a91ff434e7b10c98e9ee54d2e3988a6b85e64a57c2e44bde57c22f8c18"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "sha256": "9d496c4771b3ac546df8e2b4555ecbf6248fdbc9ee8618ffd466808486684ba2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "sha256": "dab43a0848dbcb4451b635a6c62e705acdc6cc960fd13936d83dc64498477837"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "sha256": "ea94bc65357854a979edf655a8a49a72e54298b05a6ed268dfb99941532625b6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+      "sha256": "939fadf80a6094082ab1c39b5459b58d5f05705319ce92de0370a433e35e22bc"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/inspection-interaction-public-ports-scope-final.json",
+    "sha256": "a822553b09219c3b68a8338db53752c891e16e9403e6f43cd3c773bcb04db62e"
+  },
+  "document": {
+    "path": "docs/refactor/inspection-interaction-public-ports.md",
+    "sha256": "85e8420ef1d882608e25dda70f25c9987867d4384d1905bcc4162cc90e15116d"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/inspection-interaction-public-ports-evidence.json",
+    "sha256": "0f8358acfad095e5af8f27424837ed0b69e61e116d7df8362b8ce678e2c3a6b7"
+  },
+  "integrity": {
+    "freshSources": 8,
+    "actualGitBefore": 5,
+    "controls": 7,
+    "artifactHashes": 18,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "Root 已读五 consumer 接线与原完整 Gargoyle／PureWhite／Seer／scope／Fox 语境；等待与原生命复验、use／状态／事实／夜记账及失败前缀保持。",
+    "三个轻具名出口直接绑定唯一旧 owner；新公共 API 不创建回执、状态、夜实例或授权，固定静态值闭包只多三轻叶，原圈与有序边保。",
+    "完整五程序 13 精确编辑正逆、十输出和十三实际端点；八根类型／中文职责头与四原风险十五断言首绿，未重新运行。",
+    "真实 065d 五 Git／新三不存在前态、七同字节控制／十八附件与当前 scope／MD／evidence 无漂移；未全门禁或宣称全机制完成。"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

@@ -1,5 +1,5 @@
 /**
- * 负责纯白少女与狼巫各自原生角色查验政策。
+ * 负责纯白之女与狼巫各自原生角色查验政策。
  * 输入为共享只读查询后的当前 actor、合法目标和验证行动；输出保留历史及既定攻击效果。
  * 三个状态读取与历史追加委托 RoleInspection 具体 writer，use 委托实例 owner，仍在原位置。
  * 不合并阵营／角色查验、失败语义或阶段顺序，不引入最终目标复检。
@@ -16,7 +16,7 @@ import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { resolveInspection } from "../inspection";
 import { ROLE_INSPECTION_STATE_SLOT } from "../role_inspection/ports";
-import { recordRoleInspectionNightCommit } from "../role_inspection/night_scope";
+import { recordRoleInspectionNightCommit } from "../role_inspection/night-commit-ports";
 import { pureWhiteInspectionTargets } from "./rules";
 
 async function execute(ctx: NightStageContext, policy: "pure_white" | "wolf_witch"): Promise<void> {
@@ -43,6 +43,7 @@ async function execute(ctx: NightStageContext, policy: "pure_white" | "wolf_witc
         type: "role_inspection_skipped",
         payload: { actorId, day, reason },
       });
+      // 跳过事实已按原点发表，随后才经轻端口登记本夜；发表失败不补登记或撤销先写的 use。
       recordRoleInspectionNightCommit(ctx.world, day, ctx.isCurrent);
     };
     const targets = new Map(

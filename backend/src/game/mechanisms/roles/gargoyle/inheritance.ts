@@ -1,14 +1,15 @@
 /**
- * Checks Gargoyle knife succession against the actual surviving wolf camp. Inputs are current
- * role state and World; outputs are eligibility or the existing inheritance state/fact. It does
- * not rewrite the role or infer inheritance from an uncommitted death.
+ * 负责石像鬼原刀权继承查询与继承状态／事实刷新；输入为原角色、World、事件和明确日次。
+ * 查询依原顺序核角色、继承标记、本夜查验完成回执，再核当前存活真狼名单；输出只是原刀权资格。
+ * 刷新先写继承标记，后发表觉醒事实，发表失败不退标记；本模块不改角色或从未提交死亡推断继承。
+ * 查验完成通过轻公开记账端口晚读，不能以公开函数或合法状态形状重新授权旧请求。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import { getGargoyleState, recordGargoyleKnifeInheritance } from "./state";
-import { completedGargoyleInspection } from "../role_inspection/night_scope";
+import { completedGargoyleInspection } from "../role_inspection/night-commit-ports";
 
 export function canGargoyleKnife(role: RoleComponent, world?: World): boolean {
   if (
