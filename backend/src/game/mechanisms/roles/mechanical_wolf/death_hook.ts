@@ -1,34 +1,18 @@
 /**
- * Owns Mechanical Wolf's captured learned-gun contribution to ordered death shots.
- * Inputs are original state/learning/gun references and death contexts; outputs
- * preserve identity rechecks, cause eligibility and existing shot events.
- * Stored resources are read-only here; the shared death-shot owner consumes the
- * original gun, and this hook never clones state, refunds stock or grants a new lease.
- * After an actual death wave, the resolver rechecks currentness before and after
- * selecting a shot; stale or terminal windows never reopen a consumed learned gun.
+ * 负责机械狼原学习枪贡献的装配。输入为原死亡波与晚查询；输出为同枪捕获 reader 和原枪击提案。
+ * 捕获表每次 hook 独立创建；资源 owner 核原 state／learning／gun，不复制库存或复活已消费枪。
+ * 查询函数在原 callee 点取得并裸调用；此装配不授许可、不标死或切换阶段，付款／失败由完整结算处理。
+ * 在原有序死亡钩子时点只装配原读写贡献；许可与生命仍由结算复验，失败不补偿已付款库存。
  */
-
-import type {
-  MechanicalReadState as MechanicalState,
-  MechanicalReadLearning as MechanicalLearning,
-  MechanicalReadSkill as MechanicalSkill,
-} from "@ai-werewolf-arena/game-contract";
-import { Camp, Role, permitsDeathShot } from "../../../../core/domain/model";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import { Role, permitsDeathShot } from "../../../../core/domain/model";
 import type { DeathHook } from "../../hooks/hook_registry";
-import { resolveDeathShots } from "../death_shot";
+import { resolveNativeDeathShots } from "../native-death-shot-settlement";
 import { getMechanicalState } from "./state";
+import { createMechanicalGunReader } from "../native-death-gun-resources";
 
 export const mechanicalDeathHook: DeathHook = (world, ids, sources, choose, events, context) => {
-  const owners = new Map<
-    RoleComponent,
-    {
-      state: MechanicalState;
-      learning: MechanicalLearning;
-      gun: Extract<MechanicalSkill, { kind: "hunter" }>;
-    }
-  >();
-  return resolveDeathShots(
+  const readGun = createMechanicalGunReader({ get getMechanicalState() { return getMechanicalState; } });
+  return resolveNativeDeathShots(
     world,
     ids,
     sources,
@@ -36,24 +20,7 @@ export const mechanicalDeathHook: DeathHook = (world, ids, sources, choose, even
     events,
     {
       role: Role.MechanicalWolf,
-      state: (role) => {
-        const state = getMechanicalState(role),
-          learning = state?.learned,
-          skill = learning?.skill;
-        if (
-          role.camp !== Camp.Wolf ||
-          !state ||
-          !learning ||
-          skill?.kind !== "hunter" ||
-          !skill.armed
-        )
-          return undefined;
-        const prior = owners.get(role);
-        if (prior && (state !== prior.state || learning !== prior.learning || skill !== prior.gun))
-          return undefined;
-        if (!prior) owners.set(role, { state, learning, gun: skill });
-        return skill;
-      },
+      state: readGun,
       permits: permitsDeathShot,
       shotEvent: (actorId, targetId) => ({
         timestamp: Date.now(),

@@ -19,6 +19,7 @@ import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-contract"
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "../../../../core/domain/identity";
 import { copyAbilityData } from "../abilities";
+import { createLearnedNativeGun, armMechanicalNativeGun } from "../native-death-gun-resources";
 
 export function freshMechanicalState(): MechanicalState {
   return {
@@ -65,7 +66,7 @@ export function mechanicalLearning(
       skill = { kind: "guard", lastTarget: null, lastGuardDay: null };
       break;
     case "hunter":
-      skill = { kind: "hunter", canShoot: true, armed: false };
+      skill = createLearnedNativeGun();
       break;
     case "wolf":
       skill = { kind: "wolf", extraKnife: "available" };
@@ -123,8 +124,7 @@ export function learnMechanicalRole(
 export function advanceMechanicalNight(state: MechanicalReadState, day: number): void {
   const learned = state.learned;
   if (!learned) return;
-  if (learned.skill.kind === "hunter" && day >= learned.readyOnNight)
-    (learned.skill as { armed: boolean }).armed = true;
+  armMechanicalNativeGun(learned, day);
   if (
     learned.skill.kind === "wolf" &&
     learned.skill.extraKnife === "available" &&

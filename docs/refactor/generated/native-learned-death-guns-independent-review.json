@@ -1,0 +1,300 @@
+{
+  "approved": true,
+  "status": "approved",
+  "reviewer": "/root/preflight_final_review",
+  "baseCommit": "34239c73a92b2e59ed8c3499cf708fd51869a5e7",
+  "scope": {
+    "path": "docs/refactor/generated/native-learned-death-guns-scope-final.json",
+    "sha256": "e662dd807778bbb350105d4bea6ad59dbc05f8d9e173add8240af3d95edeae36"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/death_shot.ts",
+      "sha256": "316ad00815ef0dd6da44b45077eb0ef33406b1de6af749880e95d511821465d0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/profile.ts",
+      "sha256": "ff2b19ecf929263d5a0951b01236647b875d176be35f7fe3d1ecb62aba37c936"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/death_hook.ts",
+      "sha256": "1d50f9e2ab40a5966f2f059ae13af81785a13ccb30d4de3ac6d94218faf7b4fa"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/ports.ts",
+      "sha256": "3b17155b32c3983ce6e8975af830acded647f2c9c030e836434b5f11e0ae643b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+      "sha256": "5006db830dd9a0c01eb6f16f1744ee67e252f79c411eb7119924637daa03750b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/ports.ts",
+      "sha256": "7a9e019ebee8b308cb748a473f5c7f0efa469407ac90e8ab766efb46e9195b00"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+      "sha256": "6e86bb1c91e43a893a9a2feb57eb32e97296de097190c1ba751373a3b72257eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/death_hook.ts",
+      "sha256": "95fd791a29366a8bd829c9489eb25701150d96bc0570c7c491f9626d0a280453"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+      "sha256": "19c3bef24b27309a9e5beabcc21f05315865ef3b52613b33869f04d08e2ab75c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/death_hook.ts",
+      "sha256": "b0b3180995c9d2e7a7f7d841f8ee92eb5c98f96222119723ffcaf5448097e960"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-king/native-shot-authority.test.ts",
+      "sha256": "013e3ed04fc0cb31ba115eba70ff39afff3603f17886493c3f6bfcf060e7e74a"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+      "sha256": "e7e684e777c96970d9b14b889d0c7aa605b903878296e4a4ffd39ef59c3dff89"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-private-container.test.ts",
+      "sha256": "eb396e52449d2bc9f31e69c811836de113d59ca71819ab405ce8a586e9ef76b6"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-state-read-boundary.test.ts",
+      "sha256": "03d18f18b6f52cb485ed8f31b51e963c30583d9a7ee85a9210d8e46db77253ad"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "sha256": "c97b94bf0517c5ff84dfea295c282aebee31330e7c18a1b8daa0aba2c9968250"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "sha256": "e6b26b8be5d0e9f0fdb242812fb8064d7f6722c0d43e4f30aabba7261b67414f"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/native-learned-death-guns.test.ts",
+      "sha256": "7221fc0dcd9f90591a592fb474773486199cac1be816e432c186d2735f00e9d9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native-gun-ports.ts",
+      "sha256": "56624e39774f3cbda0ca9e012d0cc934d78ebfc2eb5ae4a9994f56c98924e489"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+      "sha256": "8fa8a8fc5d030fe18c2cfb1848251d2abe3b1d7b95231ee220328ce84de416f1",
+      "expectedAbsent": true,
+      "actualExpectedAbsent": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+      "sha256": "52d2fd9802f4bc96403fb4ba8b27845b76d35deabd86422d3d005272aad394cb",
+      "expectedAbsent": true,
+      "actualExpectedAbsent": true
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/native-learned-death-guns.md",
+    "sha256": "ba3099f1d7fd617838d60ea7d01925fa007fe4b60fd9c9f3f8b604767c793d3c"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/native-learned-death-guns-evidence.json",
+    "sha256": "3656b82f7f00de398f7903d2247133322d85b9a70d7fdc4ce6e9b863765055e4"
+  },
+  "handoff": {
+    "path": "docs/refactor/generated/native-learned-death-guns-handoff.md",
+    "sha256": "f297b947fba73c36cc247f095801450027ad29a4e12b8c74a1cfade474509be7"
+  },
+  "findings": [],
+  "closedFindings": [
+    {
+      "kind": "证据文字精度",
+      "description": "全文证明实际比较typed AST（kind、叶文本、NodeArray）和完整输出，未另遍历完整非注释token流；仅将MD中tokens精确收窄，不新增检查或更改原源码／证明。",
+      "evidence": "docs/refactor/generated/native-learned-death-guns-doc-precision.json"
+    }
+  ],
+  "reviewDimensions": {
+    "rulesAndResources": "完整实读原四族state/init/hook和原death_shot循环、两新完整owner、轻Demon facet、四生产接线和新四risk。普通Hunter/WolfKing裸privateState读与原setter接受面保持；完整配置创建、原native get/install、学习枪新模板、两武装条件与不同Map/metadata复验唯一归资源owner。赠枪、整体学习安装/copy、生命、死亡许可与审计权威独立保留。",
+    "ownershipOrderAndFailures": "原stock在role/state/Alivefalse之后sources之前捕获；await后current先于stock.current、stock错误先于currentRole。Poison/不许可原消费宽度、pass/mappedMiss/blocked付款、consume先保护、提案/原因→shotEvent→defer/pending，以及pending.current原宽度全保持。原getState和Demon命令通过晚getter取函数再bare call。init原callee和角色参数先于重复配置读取、setter内部才读容器；觉醒arm先于activation元数据写。两原物理state及旧resolve符号真退，新分配/closure/调用栈/API变化明确，不冒任意CJS/外来getter等价。",
+    "evidenceAndChinese": "独立读11算法及全proof walker/17原程序完整精确逆与helper展开，实际新owner完整算法未被旧body mask。Root两个共同domain测试只实际路由与12条expect-error解释中文化，markers/oracles不改。源码头与结构/付款/失败中文准确；七control、全部artifact及最后文档精度桥来源/阶段核真。"
+  },
+  "byteChecks": {
+    "actualGitOldSourceSnapshots": 19,
+    "gitControlsVerifiedBeforeScopeExpansion": 4,
+    "remainingThreeControlsFromVerifiedOldSourceSnapshots": true,
+    "originalProgramsForwarded": 17,
+    "frozenPresent": 18,
+    "frozenDeleted": 2,
+    "currentStableControls": 7,
+    "artifactFiles": 30,
+    "mismatches": 0
+  },
+  "proofRead": {
+    "ownedAlgorithms": 11,
+    "completeExistingPrograms": 17,
+    "mappedInverseWholeOutputs": 34,
+    "typedNodesCompared": 28870,
+    "nodeCountMeaning": "多个比较两侧的累计typed节点计数，非distinct源码节点／非token总数",
+    "nativeDeclarationsRawOutputs": 8,
+    "completeResolverWholeOutputs": 2,
+    "newRuntimeGraph": {
+      "modules": 72,
+      "edges": 113,
+      "newOwnerReturnCycles": 0,
+      "limits": "作者当前有限静态值图含字面dynamic，停止外部；未冷执行，不保证计算路径／require扩展／完整传递图不变。"
+    }
+  },
+  "receiptsRead": {
+    "distinctRuntimeCases": 6,
+    "successfulAssertions": 128,
+    "runtimeExecutions": 3,
+    "newFirst": "0aadcb / 4例28断言；最后完整arm迁移之前，完整原条件证明和随后旧机械例承接",
+    "oldNative": "e91a54 / 1例96断言 / 9filtered",
+    "oldMechanical": "2292d8 / 1例4断言 / 3filtered",
+    "typeStages": "474bff:18根exit2（7本批、2外来）；662a3a:2失败根exit2（新unit1）；9e583b:仅失败unit根exit0；不是重新全18根绿",
+    "heads": "741786:18根3诊断只2hook；c86e2f:仅2失败头exit0，其他绿色头未重",
+    "wholeProof": "af38db真实exit0仅一次，后两head/末unit类型经6整emit bridge承接",
+    "finalPrecisionBridge": "有实际JSON/log完成，分组shell未捕获单独bridge exit handle；未据此虚称独立0"
+  },
+  "independentExecution": {
+    "productionLoaded": false,
+    "authorProofTypesTestsGatesRerun": false,
+    "repositoryWrites": "仅本独立review JSON",
+    "rawReaderHistory": "71b3d6先核完19实际Git源码后，工具误要求control有全文text字段（实际path+sha）失败；6883fd按真实合同只核四Git/current SHA通过，未将工具假设误作产品红。"
+  },
+  "rootOwnedRoutes": [
+    "backend/tests/unit/domain/role-private-container.test.ts",
+    "backend/tests/unit/domain/role-state-read-boundary.test.ts"
+  ],
+  "limits": [
+    "旧resolve API以及两个旧state物理入口退休；新具名资源/结算API与late-query参数公开",
+    "每hook reader分配由rules对象点移到hook开头；真实原Map仍同一位置/同refs，新增closure与调用栈不冒任意反射等价",
+    "原宽native get/set接受面保留，没有新schema或档案codec",
+    "typeBridge实际全两program四输出同，不重4green风险；原stock命令及两个arm完整算法独立源码展开核",
+    "当前模块边/调用布局参与sourceHash；任意CJS monkeypatch或全冷图恒定不承诺"
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-before.json",
+      "sha256": "5887b34e92d0923bc33b06d5ca5ad404c58dd7da53299ce7c3bb0a34d097e344"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-paths.json",
+      "sha256": "ad601edc4633554bf91b2f311e9c79fdda48d64bf3ef57c85331cb60b44541bd"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-actual-scope-plan.json",
+      "sha256": "4f8d619da3b4dd2310baa0a45319b601b27207532307eabcb3842934fa517c2f"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-edits.json",
+      "sha256": "5c199a533cb70e321d7d91257f86ca5c8d9470b2de9aada3e8042a454cd78059"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-root-routes.json",
+      "sha256": "c32e0b37a9c12259b3eb3fd4d7ea658abf493767e4b4b8e5edf7f1122a7f26b5"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-light-facet-before.json",
+      "sha256": "52d51b747a9a3fd98a290d8b13e885b92ecda245449a29ce9fad5879600631e7"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-type-fix-before.json",
+      "sha256": "d4895e95df8d70810d2acab68a76ab63b9d9f5abad73aefe8027740bb977a1cb"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-proof.cjs",
+      "sha256": "ecdbaffe723b063310cf313ba704f86c59a395d88c6dbfc192e3634e85689a14"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-proof.json",
+      "sha256": "605d389177b2a9821b0a37d30c815ce8a6c4be64f3cd17ad58ff77ed1a615c1c"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-proof-first.log",
+      "sha256": "182f4b72939203dee71ada55c17b2e8d9c5881fd3983a3343e82fda7cf078703"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-new-tests.log",
+      "sha256": "a17ce1d2c249385b871e4d080fac62e66400b7ff3ed2c3a32f9beca71911bf5a"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-old-native.log",
+      "sha256": "bafb8cf41794f352ced83ad8af79a185a5e0e8469789cdeb065c897cb84b8ca7"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-old-learning.log",
+      "sha256": "23f3ba843faa4cb6873aa0cbbb6d8df5cdc9a585a4f246baa0c7df5ebae76f65"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-types-config.json",
+      "sha256": "8d1a36487a2c2a5776f1ee2cd805bbb175e3700dd5c8d074984bb2bef7a85ebe"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-types-first.log",
+      "sha256": "320f5c7fa8f36c9b17596adf99c556afe5ab374adc1cab0765ba9458c1846a9c"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-types-failed-config.json",
+      "sha256": "81dcc469e6bf2c57af684d83952db3ebbd84b471624c5f8f2a5b937707f733fa"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-types-failed.log",
+      "sha256": "5caf5819a57d65d0777df2f404d0068e057c414a35e0f0d8ba5270682a4ea43a"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-types-final-unit-config.json",
+      "sha256": "b93585445c8497ca167314bdaf61bec41c72d59d668b777b1250da469658548d"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-types-final-unit.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-heads.ts",
+      "sha256": "9346d7a2e99cb54e9f023c2d183386fc6a221473b82c06119a3f86ebee4325ae"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-heads-first.json",
+      "sha256": "7a119c737708da11f4cdf2db96e70e2a21999e7dd6c52c419934af9ae0fd965b"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-heads-first.log",
+      "sha256": "f19a96d2934882c8c12d9dc9bb4aa6d195d07048112633358105185a3ee54f17"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-heads-failed.json",
+      "sha256": "c741f74ab6c3f77c7027db1b6865b50eadc068cdaf97ae75b4f17fc9e6d1bbe1"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-heads-failed.log",
+      "sha256": "f5f44e000e8a2a6cd7c36de76ce8bca78a145ea4ef5a601c4ebe7b3093ba2732"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-final-precision-before.json",
+      "sha256": "d796aee4d8529595bb08138d10a77e0e680f4c79ae040d6dd49af7ff0d5a78a1"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-final-precision.cjs",
+      "sha256": "0f4c06fba5e8bde5254fedf9448c6640a87d9f8f25949d3a8aea94c47cbb3693"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-final-precision.json",
+      "sha256": "120ae10c7d5f70e0029da203ea163d52072b292344f90b31c1d9356d19a05a15"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-final-precision.log",
+      "sha256": "34a8c62a7ed08c21962805fd98e20bf6bba8b04ee7a634abe37bc295e3a2fa80"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-receipts.json",
+      "sha256": "03d3505acfb278e491b2d969b485d8eaa6647fee52fc606fed7a11213749b2a3"
+    },
+    {
+      "path": "docs/refactor/generated/native-learned-death-guns-doc-precision.json",
+      "sha256": "c20dba9b6826c8298809f21e5cb062064e2ddf1517a1885e19936c75f4898818"
+    }
+  ]
+}

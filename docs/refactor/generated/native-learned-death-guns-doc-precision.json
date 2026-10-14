@@ -1,0 +1,12 @@
+{
+  "kind": "documentation-only precision",
+  "before": "原全部语句／tokens及两raw输出同",
+  "after": "原全部语句／完整typed AST（含叶文本与NodeArray）及两raw输出同",
+  "beforeDocumentSHA256": "928ff152c88fbfc0e1e827307ef6d31cba9f13d21874c248def52f5604a42c99",
+  "documentSHA256": "ba3099f1d7fd617838d60ea7d01925fa007fe4b60fd9c9f3f8b604767c793d3c",
+  "beforeScopeSHA256": "bba91ece4df51c59a87f86d0bc51c9a26aa4fd1198cd3f9de8ecf28106101f65",
+  "beforeEvidenceSHA256": "a4103b723ff775c2bf3b9dba7949efba65b3466fabf144fa29fa51364a3c8940",
+  "completeOriginalDocumentRecoveredByExactInverse": true,
+  "sourceChanged": false,
+  "newChecks": false
+}

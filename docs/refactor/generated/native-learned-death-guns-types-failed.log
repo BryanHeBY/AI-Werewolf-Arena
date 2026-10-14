@@ -1,0 +1,4 @@
+backend/tests/unit/mechanisms/native-learned-death-guns.test.ts(94,9): error TS2322: Type '(this: unknown, role: ReturnType<typeof createRoleComponent>) => MechanicalReadState | undefined' is not assignable to type '(role: RoleComponent | undefined) => MechanicalReadState | undefined'.
+  Types of parameters 'role' and 'role' are incompatible.
+    Type 'RoleComponent | undefined' is not assignable to type 'RoleComponent'.
+      Type 'undefined' is not assignable to type 'RoleComponent'.

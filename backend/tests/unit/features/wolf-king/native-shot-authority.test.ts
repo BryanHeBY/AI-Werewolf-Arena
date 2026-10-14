@@ -27,7 +27,7 @@ import {
 import {
   getWolfKingState,
   setWolfKingState,
-} from "../../../../src/game/mechanisms/roles/wolf_king/state";
+} from "../../../../src/game/mechanisms/roles/native-death-gun-resources";
 import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";

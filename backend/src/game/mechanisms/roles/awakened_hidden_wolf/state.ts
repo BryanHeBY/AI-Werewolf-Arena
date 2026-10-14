@@ -21,6 +21,7 @@ import type { RoleId } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "../../../../core/domain/identity";
 import { copyAbilityData } from "../abilities";
+import { createLearnedNativeGun, armAwakenedNativeGun } from "../native-death-gun-resources";
 
 const validDay = (day: number) =>
   Number.isSafeInteger(day) && day >= 1 && day < Number.MAX_SAFE_INTEGER;
@@ -63,7 +64,7 @@ export function awakenedLearning(targetId: EntityId, role: RoleId, day: number):
       skill = { kind: "guard", lastTarget: null, lastGuardDay: null };
       break;
     case "hunter":
-      skill = { kind: "hunter", canShoot: true, armed: false };
+      skill = createLearnedNativeGun();
       break;
     case "wolf":
       skill = { kind: "wolf", extraKnife: "available" };
@@ -115,7 +116,7 @@ export function activateAwakenedLearning(
   if (learned.skill.kind !== "inspection" && mirrorAbilityId !== undefined) return false;
   if (learned.skill.kind === "inspection")
     (learned.skill as { abilityId: string | null }).abilityId = mirrorAbilityId!;
-  if (learned.skill.kind === "hunter") (learned.skill as { armed: boolean }).armed = true;
+  armAwakenedNativeGun(learned);
   (learned as { activationNight: number | null }).activationNight = night;
   (learned as { activeFromNight: number | null }).activeFromNight = night + 1;
   return true;

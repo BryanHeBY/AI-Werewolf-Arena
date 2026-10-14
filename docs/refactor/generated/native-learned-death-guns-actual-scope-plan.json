@@ -1,0 +1,65 @@
+{
+  "baseCommit": "34239c73a92b2e59ed8c3499cf708fd51869a5e7",
+  "source": [
+    "backend/src/game/mechanisms/roles/death_shot.ts",
+    "backend/src/game/mechanisms/roles/hunter/profile.ts",
+    "backend/src/game/mechanisms/roles/hunter/death_hook.ts",
+    "backend/src/game/mechanisms/roles/hunter/ports.ts",
+    "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+    "backend/src/game/mechanisms/roles/wolf_king/ports.ts",
+    "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+    "backend/src/game/mechanisms/roles/mechanical_wolf/death_hook.ts",
+    "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+    "backend/src/game/mechanisms/roles/awakened_hidden_wolf/death_hook.ts",
+    "backend/tests/unit/features/wolf-king/native-shot-authority.test.ts",
+    "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+    "backend/tests/unit/domain/role-private-container.test.ts",
+    "backend/tests/unit/domain/role-state-read-boundary.test.ts",
+    "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+    "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+    "backend/tests/unit/mechanisms/native-learned-death-guns.test.ts",
+    "backend/src/game/mechanisms/roles/demon_hunter/native-gun-ports.ts"
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+      "beforeSHA256": "8fa8a8fc5d030fe18c2cfb1848251d2abe3b1d7b95231ee220328ce84de416f1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+      "beforeSHA256": "52d2fd9802f4bc96403fb4ba8b27845b76d35deabd86422d3d005272aad394cb"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "sha256": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "sha256": "6131393d44f2d82e239effaa617e3a18252247100ad5b2afa492efcf79c70c25"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a"
+    },
+    {
+      "path": "packages/game-contract/src/death-ability-data.ts",
+      "sha256": "7a7b10788293005df3393c852854c869f7ee8247992ecb2d1b44322f60e420ec"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/ports.ts",
+      "sha256": "d56235652b0a8e29828b9be9d4896fd83a37f6bb1ff3a965b773c8ee64ffb1ae"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/ports.ts",
+      "sha256": "2c2c516d0df4064721d7d91b3977551d8c859e65cd50eaa6bada1d67abfdb925"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9139efec2cd11feee2c087a385b4f67fa92e75ac24f13de5fa9e7849f6485316"
+    }
+  ],
+  "originalCapturedOldSources": 19,
+  "scopeClassification": "原23capture paths中3重ports字节保持改列controls；20actual sourcepaths=18present+2delete，19before不重写"
+}

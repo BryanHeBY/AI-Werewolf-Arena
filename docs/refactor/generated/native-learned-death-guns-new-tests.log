@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/native-learned-death-guns.test.ts:
+(pass) 原生创建保配置重复读取、可选政策及同引用安装，不新增shape拒绝 [0.28ms]
+(pass) 学习枪每次hook独立捕获、查询晚裸调用，机械和觉醒保各自复验字段 [0.54ms]
+(pass) 审计stock在sources之前晚捕获，await后stock撤权先于角色复验 [1.05ms]
+(pass) 有效命中先付款再取保护方法，保护lookup失败不退款或产生提案事实 [0.37ms]
+
+ 4 pass
+ 0 fail
+ 28 expect() calls
+Ran 4 tests across 1 file. [51.00ms]

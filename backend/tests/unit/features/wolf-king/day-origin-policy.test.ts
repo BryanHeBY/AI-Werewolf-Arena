@@ -31,7 +31,7 @@ import {
   type DeathHookContext,
 } from "../../../../src/game/mechanisms/hooks/hook_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { getWolfKingState } from "../../../../src/game/mechanisms/roles/wolf_king/state";
+import { getWolfKingState } from "../../../../src/game/mechanisms/roles/wolf_king/ports";
 import {
   projectHunterState,
   projectWolfKingState,

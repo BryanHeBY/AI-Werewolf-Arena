@@ -11,12 +11,12 @@ import { createRoleComponent } from "../../../src/game/observation/role-presenta
 import { World } from "../../../src/core/domain/world";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import type { RoleProfile, RoleInitContext } from "../../../src/game/mechanisms/roles/contracts";
-import { setHunterState } from "../../../src/game/mechanisms/roles/hunter/state";
+import { setHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 
 function ordinaryReaderCannotWrite(role: RoleComponent) {
-  // @ts-expect-error An otherwise valid record cannot replace the read-only container.
+  // @ts-expect-error 即使记录值合法，也不能替换只读私有容器。
   role.privateState = {};
-  // @ts-expect-error An otherwise valid scalar cannot write an arbitrary private key.
+  // @ts-expect-error 即使标量值合法，也不能经读视图写任意私有键。
   role.privateState.custom = 42;
   // @ts-expect-error 只读索引也拒绝删除私有键。
   delete role.privateState.custom;

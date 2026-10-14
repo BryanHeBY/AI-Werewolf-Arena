@@ -1,0 +1,93 @@
+{
+  "author": "/root",
+  "baseCommit": "34239c73a92b2e59ed8c3499cf708fd51869a5e7",
+  "source": [
+    {
+      "path": "backend/tests/unit/domain/role-private-container.test.ts",
+      "beforeSHA256": "a02c6070fd989e09c7f50580690f3228be0cd216fcb3bd8a5dfe33238f7f7540",
+      "sha256": "eb396e52449d2bc9f31e69c811836de113d59ca71819ab405ce8a586e9ef76b6",
+      "edits": [
+        {
+          "before": "../../../src/game/mechanisms/roles/hunter/state",
+          "after": "../../../src/game/mechanisms/roles/hunter/ports",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error An otherwise valid record cannot replace the read-only container.",
+          "after": "@ts-expect-error 即使记录值合法，也不能替换只读私有容器。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error An otherwise valid scalar cannot write an arbitrary private key.",
+          "after": "@ts-expect-error 即使标量值合法，也不能经读视图写任意私有键。",
+          "count": 1
+        }
+      ],
+      "directiveMarkersPreserved": true
+    },
+    {
+      "path": "backend/tests/unit/domain/role-state-read-boundary.test.ts",
+      "beforeSHA256": "bb72bac85511d33ae273452a132968bb4e9c9769276e5704a10883d8c2b767b3",
+      "sha256": "03d18f18b6f52cb485ed8f31b51e963c30583d9a7ee85a9210d8e46db77253ad",
+      "edits": [
+        {
+          "before": "../../../src/game/mechanisms/roles/hunter/state",
+          "after": "../../../src/game/mechanisms/roles/hunter/ports",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Shooting stock belongs to the native death-shot owner.",
+          "after": "@ts-expect-error 枪库存由原生死亡枪的资源所有者消费。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Copied policy fields remain read-only in an installed view.",
+          "after": "@ts-expect-error 已安装读视图中的复制政策字段仍只读。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Trade stock is not a reader's write surface.",
+          "after": "@ts-expect-error 交易库存的写权不授予普通读取方。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Nullable trade-choice records are deeply read-only.",
+          "after": "@ts-expect-error 可空交易选择记录的内层字段也只读。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Roar histories cannot be appended through a getter view.",
+          "after": "@ts-expect-error 不能经读取视图追加咆哮历史。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Feedback results stay read-only below history rows.",
+          "after": "@ts-expect-error 历史条目内的反馈结果也保持只读。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Learned role metadata has no ordinary write authority.",
+          "after": "@ts-expect-error 普通读取方没有学习角色元数据的写权。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Mode metadata is read-only below its nullable record.",
+          "after": "@ts-expect-error 可空模式记录的内层元数据也只读。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Selected skill stock is read-only below learned metadata.",
+          "after": "@ts-expect-error 学习元数据中的所选技能库存也只读。",
+          "count": 1
+        },
+        {
+          "before": "@ts-expect-error Learned inspection rows/results do not expose writes.",
+          "after": "@ts-expect-error 学习查验的条目和结果不暴露普通写权。",
+          "count": 1
+        }
+      ],
+      "directiveMarkersPreserved": true
+    }
+  ],
+  "change": "仅Hunter原公开samebinding import路径和原指令说明中文化；未改断言/token/expect-error标记，有限type与heads由整个枪批唯一验证。"
+}

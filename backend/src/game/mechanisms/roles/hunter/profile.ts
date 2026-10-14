@@ -10,7 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：猎人角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { NativeRoleContributions } from "../contracts";
-import { getHunterState, setHunterState } from "./state";
+import { getHunterState, setHunterState, createHunterState } from "../native-death-gun-resources";
 import { hunterDeathHook } from "./death_hook";
 import { HUNTER_TOOL_SPECS } from "./tool_specs";
 import { DEATH_SHOT_REPAIR, validateDeathShot } from "../death_shot";
@@ -27,12 +27,8 @@ export const HUNTER_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     configuration: deathActionConfiguration("hunter"),
     init: (roleComp, ctx) => {
-      setHunterState(roleComp, {
-        canShoot: true,
-        ...(ctx.boardConfig?.hunter?.deathActionPolicy === "awa_knife_or_exile_v1"
-          ? { deathActionPolicy: ctx.boardConfig.hunter.deathActionPolicy }
-          : {}),
-      });
+      // 保原安装 callee／角色参数先于配置读取；状态由资源 owner 创建并同引用安装。
+      setHunterState(roleComp, createHunterState(ctx));
     },
     toolSpecs: HUNTER_TOOL_SPECS,
     validationRules: {

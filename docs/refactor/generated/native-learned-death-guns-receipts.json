@@ -1,0 +1,118 @@
+{
+  "baseCommit": "34239c73a92b2e59ed8c3499cf708fd51869a5e7",
+  "runtime": [
+    {
+      "kind": "newBoundaryRisk",
+      "launchChunk": "0aadcb",
+      "exitCode": 0,
+      "cases": 4,
+      "assertions": 28,
+      "log": "docs/refactor/generated/native-learned-death-guns-new-tests.log",
+      "sourceStage": "最终两族arm条件迁移前；四风险已绿不重跑，完整原arm体迁移由唯一proof验证"
+    },
+    {
+      "kind": "originalWolfKingCauseTable",
+      "launchChunk": "3c5ea7",
+      "session": 94268,
+      "terminalChunk": "e91a54",
+      "exitCode": 0,
+      "cases": 1,
+      "assertions": 96,
+      "filtered": 9,
+      "log": "docs/refactor/generated/native-learned-death-guns-old-native.log"
+    },
+    {
+      "kind": "originalMechanicalOwnerCamp",
+      "terminalChunk": "2292d8",
+      "exitCode": 0,
+      "cases": 1,
+      "assertions": 4,
+      "filtered": 3,
+      "log": "docs/refactor/generated/native-learned-death-guns-old-learning.log"
+    }
+  ],
+  "distinctCases": 6,
+  "assertions": 128,
+  "types": [
+    {
+      "kind": "firstAffectedRoots",
+      "launchChunk": "cc23bb",
+      "session": 83577,
+      "terminalChunk": "474bff",
+      "exitCode": 2,
+      "roots": 18,
+      "ownDiagnostics": 7,
+      "foreignDiagnostics": 2,
+      "log": "docs/refactor/generated/native-learned-death-guns-types-first.log"
+    },
+    {
+      "kind": "twoFailedRoots",
+      "launchChunk": "8151cf",
+      "session": 55302,
+      "terminalChunk": "662a3a",
+      "exitCode": 2,
+      "roots": 2,
+      "ownDiagnostics": 1,
+      "foreignDiagnostics": 0,
+      "log": "docs/refactor/generated/native-learned-death-guns-types-failed.log"
+    },
+    {
+      "kind": "failedUnitOnly",
+      "launchChunk": "ebf608",
+      "session": 17549,
+      "terminalChunk": "9e583b",
+      "exitCode": 0,
+      "roots": 1,
+      "log": "docs/refactor/generated/native-learned-death-guns-types-final-unit.log"
+    }
+  ],
+  "proof": {
+    "terminalChunk": "af38db",
+    "exitCode": 0,
+    "executions": 1,
+    "report": "docs/refactor/generated/native-learned-death-guns-proof.json",
+    "log": "docs/refactor/generated/native-learned-death-guns-proof-first.log",
+    "sourcePhase": "末2hook head和末unit optional参数类型之前；final-precision桥承接，不重全proof"
+  },
+  "heads": [
+    {
+      "terminalChunk": "741786",
+      "exitCode": 1,
+      "roots": 18,
+      "docs": 634,
+      "diagnostics": 3,
+      "files": 2,
+      "log": "docs/refactor/generated/native-learned-death-guns-heads-first.log"
+    },
+    {
+      "terminalChunk": "c86e2f",
+      "exitCode": 0,
+      "roots": 2,
+      "docs": 634,
+      "diagnostics": 0,
+      "log": "docs/refactor/generated/native-learned-death-guns-heads-failed.log",
+      "receiptScope": "分组shell最后head命令的真实退出"
+    }
+  ],
+  "finalPrecisionBridge": {
+    "log": "docs/refactor/generated/native-learned-death-guns-final-precision.log",
+    "report": "docs/refactor/generated/native-learned-death-guns-final-precision.json",
+    "fullEmitOutputs": 6,
+    "completedJSONAndLog": true,
+    "separateTerminalReceipt": false,
+    "scope": "分组命令先完成bridge报告再运行failed head；不伪造bridge独立exit handle"
+  },
+  "foreign": "B initial_identity/setup399/446两个类型诊断由独立状态cohort收窄字段类型解决，非A生产修改",
+  "typeOnlyBridges": {
+    "firstTwoWholePrograms": 4,
+    "finalUnit": 2
+  },
+  "notRun": [
+    "full architecture gate",
+    "full types",
+    "full old suites",
+    "models",
+    "recording/golden changes"
+  ],
+  "greenRepeated": false
+}

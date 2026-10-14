@@ -14,7 +14,7 @@ import type {
   HiddenWolfReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/hunter/state";
+import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 import {
   freshMechanicalState,
   getMechanicalState,
@@ -31,29 +31,29 @@ function ordinaryReadersCannotWrite(
   bear: BearReadState,
   hidden: HiddenWolfReadState,
 ) {
-  // @ts-expect-error Shooting stock belongs to the native death-shot owner.
+  // @ts-expect-error 枪库存由原生死亡枪的资源所有者消费。
   hunter.canShoot = false;
-  // @ts-expect-error Copied policy fields remain read-only in an installed view.
+  // @ts-expect-error 已安装读视图中的复制政策字段仍只读。
   hidden.campInspection = "awa_inheritance_v1";
-  // @ts-expect-error Trade stock is not a reader's write surface.
+  // @ts-expect-error 交易库存的写权不授予普通读取方。
   merchant.remaining = 0;
-  // @ts-expect-error Nullable trade-choice records are deeply read-only.
+  // @ts-expect-error 可空交易选择记录的内层字段也只读。
   merchant.choice!.targetId = 3;
-  // @ts-expect-error Roar histories cannot be appended through a getter view.
+  // @ts-expect-error 不能经读取视图追加咆哮历史。
   bear.history.push({ day: 1, roared: true });
-  // @ts-expect-error Feedback results stay read-only below history rows.
+  // @ts-expect-error 历史条目内的反馈结果也保持只读。
   grave.history[0]!.result.camp = "wolf";
-  // @ts-expect-error Learned role metadata has no ordinary write authority.
+  // @ts-expect-error 普通读取方没有学习角色元数据的写权。
   mechanical.learned!.readyOnNight = 3;
-  // @ts-expect-error Mode metadata is read-only below its nullable record.
+  // @ts-expect-error 可空模式记录的内层元数据也只读。
   mechanical.mode!.day = 3;
   const skill = mechanical.learned?.skill;
   if (skill?.kind === "poison") {
-    // @ts-expect-error Selected skill stock is read-only below learned metadata.
+    // @ts-expect-error 学习元数据中的所选技能库存也只读。
     skill.remaining = 0;
   }
   if (skill?.kind === "inspection") {
-    // @ts-expect-error Learned inspection rows/results do not expose writes.
+    // @ts-expect-error 学习查验的条目和结果不暴露普通写权。
     skill.history[0]!.result.role = Role.Wolf;
   }
 }

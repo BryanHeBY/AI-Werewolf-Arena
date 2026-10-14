@@ -1,0 +1,51 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/death_hook.ts",
+      "beforeSHA256": "1f6e0589c757aa14b4d86cfe4b249374bea52fc938ff3f212379008d4ecb8b1e",
+      "sha256": "95fd791a29366a8bd829c9489eb25701150d96bc0570c7c491f9626d0a280453",
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/death_hook.ts",
+      "beforeSHA256": "6e52944850a423f5f32e1ca9232101a9c48814dff13742e124d3ffdd9d2bc1b5",
+      "sha256": "b0b3180995c9d2e7a7f7d841f8ee92eb5c98f96222119723ffcaf5448097e960",
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/native-learned-death-guns.test.ts",
+      "beforeSHA256": "44fbb4437dc14bfb0375bee86fe974584f6c3609c66a5aa54f17ea3e8418dde9",
+      "sha256": "7221fc0dcd9f90591a592fb474773486199cac1be816e432c186d2735f00e9d9",
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true
+        }
+      ]
+    }
+  ],
+  "wholeOutputs": 6,
+  "bodyChanges": 0
+}

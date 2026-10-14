@@ -9,13 +9,13 @@ import { deathActionConfiguration, renderDeathActionPolicy } from "../death_acti
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, permitsDeathShot } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
-import { getWolfKingState, setWolfKingState } from "./state";
+import { getWolfKingState, setWolfKingState, createWolfKingState } from "../native-death-gun-resources";
 import {
-  resolveDeathShots,
   DEATH_SHOT_TOOL_SPECS,
   DEATH_SHOT_REPAIR,
   validateDeathShot,
 } from "../death_shot";
+import { resolveNativeDeathShots } from "../native-death-shot-settlement";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 
 /** AWA 狼王 1.0：普通狼队权限，加一次满足死亡来源条件的开枪机会。 */
@@ -30,13 +30,8 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     configuration: deathActionConfiguration("wolfKing"),
     init: (role, ctx) => {
-      setWolfKingState(role, {
-        canShoot: true,
-        ...(ctx.boardConfig?.wolfKing?.deathActionPolicy !== undefined &&
-        ctx.boardConfig.wolfKing.deathActionPolicy !== "awa_qualified_sources_v1"
-          ? { deathActionPolicy: ctx.boardConfig.wolfKing.deathActionPolicy }
-          : {}),
-      });
+      // 保原安装 callee／角色参数先于配置读取；状态由资源 owner 创建并同引用安装。
+      setWolfKingState(role, createWolfKingState(ctx));
     },
     toolSpecs: [...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!, ...DEATH_SHOT_TOOL_SPECS],
     validationRules: {
@@ -51,7 +46,7 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
       coerce: { ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce, ...DEATH_SHOT_REPAIR.coerce },
     },
     deathHook: (world, ids, sources, choose, events, context) =>
-      resolveDeathShots(
+      resolveNativeDeathShots(
         world,
         ids,
         sources,

@@ -3,4 +3,4 @@
  * 输出保留同一只读状态引用和原 getter 契约。读取之前的权限检查与失败、关闭窗口
  * 仍由原调用方负责。本入口仅具名导出本角色函数，不安装、校验、复制、冻结或存储状态。
  */
-export { getWolfKingState } from "./state";
+export { getWolfKingState } from "../native-death-gun-resources";
