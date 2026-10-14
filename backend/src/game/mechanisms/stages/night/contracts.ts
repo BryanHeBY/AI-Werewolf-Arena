@@ -5,7 +5,7 @@
  * 旧原毒／机械／觉醒注入 effect/claim 保留接受宽度；其额外 kind/origin/getter 不被当作新协议读取。
  * 所有内建原毒（含受赠及学者加成）均有来源；此契约不查询 World 或提交库存。
  * 这些外部自定义注入仍保留明确 legacy 接受政策，不把同名字段视为 owned 来源。
- * 本族加成回执记录不属于通用字段，按本夜状态身份由学者／导师唯一所有者保存。
+ * 本族加成回执与恶夜骑士原体绑定不属于通用字段，分别按本夜状态身份由各本族唯一所有者保存。
  */
 import { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
 import {
@@ -75,11 +75,6 @@ export interface NightStageState {
   inspectionAttacks?: NightInspectionAttack[];
   retaliationAttacks?: import("../../../../core/domain/night_effects").NightRetaliationAttack[];
   nightImmunities?: import("../../../../core/domain/night_effects").NightImmunityClaim[];
-  /** 恶夜骑士开夜时的原体绑定供付款后反射使用；含状态和回调，不是可公开的角色知识。 */
-  evilKnightBindings?: Map<
-    EntityId,
-    NonNullable<ReturnType<typeof import("../../roles/evil_knight/state").captureEvilKnight>>
-  >;
   foxInspections?: NightFoxInspectionClaim[];
   guardClaims?: NightGuardClaim[];
   merchantBacklashes?: NightMerchantBacklash[];

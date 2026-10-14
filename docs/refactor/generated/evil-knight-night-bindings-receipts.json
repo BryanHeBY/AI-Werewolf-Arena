@@ -1,0 +1,52 @@
+{
+  "oldNobleCharacterization": {
+    "chunk": "3472fd",
+    "exitCode": 0,
+    "pass": 1,
+    "fail": 0,
+    "assertions": 4,
+    "log": "docs/refactor/generated/evil-knight-night-bindings-old-noble-characterization.log",
+    "scope": "实际cc724254原完整旧probe，修改前执行；旧API退休，不冒新兼容。"
+  },
+  "newUnitAndMigratedScenario": {
+    "chunk": "f90408",
+    "exitCode": 0,
+    "pass": 4,
+    "fail": 0,
+    "assertions": 40,
+    "newUnitCases": 3,
+    "migratedScenarioCases": 1,
+    "log": "docs/refactor/generated/evil-knight-night-bindings-tests.log"
+  },
+  "types": {
+    "launchChunk": "07c35c",
+    "session": 8652,
+    "terminalChunk": "8c942b",
+    "exitCode": 0,
+    "roots": 9,
+    "log": "docs/refactor/generated/evil-knight-night-bindings-types.log",
+    "scope": "首九源真实一次，之后唯一function中文说明不改变程序/类型，完整最终程序对照涵盖。"
+  },
+  "proof": {
+    "chunk": "fe9233",
+    "exitCode": 0,
+    "programs": 6,
+    "nodes": 11216,
+    "wholeOutputs": 12,
+    "actualQueryNodes": 39,
+    "controls": 5,
+    "originalOracleChains": 4,
+    "firstProof": "07a31d实际通过；末工具进一步限定完整新owner语句数并以合法class wrapper核原getAction方法，无源修改，不重复测试/types。"
+  },
+  "heads": {
+    "chunk": "ba6535",
+    "exitCode": 0,
+    "files": 9,
+    "documentationPaths": 474,
+    "headDiagnostics": 0,
+    "ChineseHeadsMissing": 0,
+    "newOwnerValueImports": 0
+  },
+  "executionCounting": "原probe1/4与迁移probe1/4是同一原标题的前后执行，不冒两个新独立场景；最终仅3新单元+1迁移场景=4/40。",
+  "limits": "实际类型terminal0不是由空日志推断；未运行原全套、完整对局/全类型/全gate/模型。"
+}

@@ -1,0 +1,46 @@
+{
+  "baseCommit": "cc7242548708543a674d2b898aef36e28f9e3dfc",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "ecdae8abe557e284e208ae8154778b1415741d2622ceb64dab0d21ac93eda7d0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+      "sha256": "8367dba59f54c80534851691a51b892895952f83b85a97a3ea4b619b398c53c9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/night-bindings.ts",
+      "sha256": "5d1846fe3967eb9e488136f4eb229a739bf0b782cbcaee3106e19884a108dbd4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+      "sha256": "073720f68d7aa44ca7415e4664b94f1f256f2459e9512b35d09063ed7fe0364a"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-effects.ts",
+      "sha256": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "275c161a380c810a32a755b27ec0a469358931dccbe310f233ff88357a68ac16"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "df20fe51211ad8e1758c703a2807106ae13c9f869d055326b8dff763a8e3f39c"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+      "sha256": "5c11982b4c40cace13d43ce7fb5b863d1fb83a2174912372b50e3f58dfaa42fe"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/noble-secret-body/night-handoff-prefix.test.ts",
+      "sha256": "a62620c19772aa5ed553ec8ecdb61bac14cf9c2fcefb52b18fffa22854336cf9"
+    }
+  ],
+  "sourceCount": 9,
+  "existingProductionSources": 6,
+  "existingScenario": 1,
+  "newSources": 2,
+  "frozen": true
+}

@@ -1,10 +1,8 @@
 /**
- * Binds original native paid effect commands and lazy sealed-controller loaders.
- * Inputs are the original stage context, readonly receipts/abilities and deferred
- * effect arguments; outputs retain paid prefixes, modifier facts and reflection.
- * Only this command binding restores the original receipt commit permission.
- * Context, World, events and source getters remain at their original call sites;
- * binding reads none of them and never adds eligibility, refunds or serialization.
+ * 负责绑定原生已付效果命令与原延迟控制器。输入为原阶段上下文、回执／能力和延迟参数；
+ * 输出保原付款前缀、增益事实及反射；命令绑定本身不读 World、事件、状态或来源，也不授权新资格。
+ * 反射先取原提交 callee，再读取 World、本族同夜 binding、source 和种类；原状态命令负责资格与消费。
+ * 原 context／receipt receiver 与每次读取点保持，不增加退款、复制或序列化运行句柄。
  */
 import { Role } from "../core/domain/identity";
 import type { NightLifeScope } from "../core/domain/night_effects";
@@ -18,6 +16,7 @@ import {
 import {
   isEvilKnightBoard,
   commitEvilKnightReflection,
+  evilKnightNightBinding,
 } from "../game/mechanisms/roles/evil_knight/ports";
 import {
   commitTimeConsortEffect,
@@ -54,7 +53,7 @@ export interface NativeNightEffects {
   loadSealedPotionController: typeof loadDemonNativePotionController;
 }
 
-/** The same context object is handed to the existing paid command, without a copy. */
+/** 同一阶段上下文仍在原命令调用点交给已付效果命令，不复制引用或提前读取。 */
 export function bindNativeNightEffects(context: () => NightStageContext): NativeNightEffects {
   return Object.freeze({
     commitReflectedTarget(
@@ -108,7 +107,7 @@ export function bindNativeNightEffects(context: () => NightStageContext): Native
           );
         const reflection = commitEvilKnightReflection(
           context().world,
-          context().state.evilKnightBindings?.get(targetId) ?? null,
+          evilKnightNightBinding(context().state, targetId),
           source(),
           kind,
           isCurrent,

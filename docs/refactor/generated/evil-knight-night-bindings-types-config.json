@@ -1,0 +1,23 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/stages/night/contracts.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/evil_knight/night-bindings.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/native-night-effects.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_manager.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/interactions/noble-secret-body/night-handoff-prefix.test.ts"
+  ],
+  "exclude": []
+}

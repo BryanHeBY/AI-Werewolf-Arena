@@ -627,12 +627,8 @@ export class PhaseManager {
             originalLives,
             poisonRoutes: damagePoisonRoutes(sourceDamage!),
             execution: { night: nightUnitOf(night), phaseRevision: nightRevision },
-            blocksPassiveNightShot: (id) => {
-              const binding = night.evilKnightBindings?.get(id);
-              return (
-                !!binding && binding.isCurrent() && binding.state.shotPolicy === "night_shot_immune"
-              );
-            },
+            // 在原夜枪检查点晚读结果查询；本族闭包保同一 Map 与原体／政策顺序，不重抓 World。
+            blocksPassiveNightShot: (id) => night.blocksPassiveNightShot?.(id) ?? false,
           },
         );
         this.assertDemonReadable();

@@ -1,0 +1,28 @@
+{
+  "removedGenericField": "  /** 恶夜骑士开夜时的原体绑定供付款后反射使用；含状态和回调，不是可公开的角色知识。 */\n  evilKnightBindings?: Map<\n    EntityId,\n    NonNullable<ReturnType<typeof import(\"../../roles/evil_knight/state\").captureEvilKnight>>\n  >;\n",
+  "oldPMQuery": "            blocksPassiveNightShot: (id) => {\n              const binding = night.evilKnightBindings?.get(id);\n              return (\n                !!binding && binding.isCurrent() && binding.state.shotPolicy === \"night_shot_immune\"\n              );\n            },",
+  "sourceMappings": {
+    "frame": [
+      [
+        "ctx.state.evilKnightBindings",
+        "hasEvilKnightNightBindings(ctx.state)"
+      ],
+      [
+        "ctx.state.evilKnightBindings = bindings;",
+        "installEvilKnightNightBindings(ctx.state, bindings);"
+      ]
+    ],
+    "ruleset": [
+      [
+        "context().state.evilKnightBindings?.get(targetId) ?? null",
+        "evilKnightNightBinding(context().state, targetId)"
+      ]
+    ],
+    "pipeline": [
+      [
+        "evilKnightBindings: stageState.evilKnightBindings",
+        "blocksPassiveNightShot: captureEvilKnightNightShotProtection(stageState)"
+      ]
+    ]
+  }
+}

@@ -35,6 +35,7 @@ import {
 import {
   isEvilKnightBoard,
   assertEvilKnightRosterCurrent,
+  captureEvilKnightNightShotProtection,
 } from "../../mechanisms/roles/evil_knight/ports";
 import {
   sealNativeGuardContribution,
@@ -113,7 +114,8 @@ export type NightPipelineResult =
       mistDelay?: boolean;
       demonSources?: object;
       retaliationAttacks?: readonly import("../../../core/domain/night_effects").NightRetaliationAttack[];
-      evilKnightBindings?: NightStageState["evilKnightBindings"];
+      /** 本族捕获的运行查询；不携带可替换 Map 或私有库存结构。 */
+      blocksPassiveNightShot?: (targetId: EntityId) => boolean;
       inspectionAttacks?: readonly import("../../../core/domain/night_effects").NightInspectionAttack[];
       demonWolfSourceCurrent?: (targetId: number) => boolean;
       demonKnifeProtection?: Readonly<{
@@ -453,7 +455,7 @@ export class NightPipeline {
           ...(mist ? { mistDelay: mist.delayEligible } : {}),
           deathLives,
           retaliationAttacks: stageState.retaliationAttacks,
-          evilKnightBindings: stageState.evilKnightBindings,
+          blocksPassiveNightShot: captureEvilKnightNightShotProtection(stageState),
           inspectionAttacks: stageState.inspectionAttacks,
           foxInspections: stageState.foxInspections,
           ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),

@@ -1,7 +1,8 @@
 /**
- * Owns Evil Knight board roster bindings and its native-frame setup stage. Inputs are original
- * players and installed ability identities; outputs are current-roster checks and the registered
- * frame stage. It never rebuilds the roster after native actor replacement; stale bindings fail.
+ * 负责恶夜骑士固定名单的原体复验及本夜绑定捕获阶段。输入为原玩家、能力身份与当前夜状态；
+ * 输出为原名单拒绝、同一 binding Map 与免疫提案。名单不在角色替换后重建，失效保原错误前缀。
+ * 每次状态读取和原 capture／Map.set 顺序保持；本族登记 Map 后才展开免疫数组，后续失败不退款或撤销安装。
+ * 捕获数据与反射资源的原体资格仍归 state；运行回调／生命引用不进入玩家观察或归档，也不授权行动。
  */
 import type { World } from "../../../../core/domain/world";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -10,6 +11,7 @@ import { Camp, Role } from "../../../../core/domain/identity";
 import { captureNightLife } from "../../../../core/domain/night_effects";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { captureEvilKnight } from "./state";
+import { hasEvilKnightNightBindings, installEvilKnightNightBindings } from "./night-bindings";
 import type { NightAbilityReadView } from "../abilities";
 type AbilityAuthority = {
   ability: NightAbilityReadView;
@@ -127,14 +129,14 @@ export const EVIL_KNIGHT_FRAME_STAGE: NightStageHandler = {
   async execute(ctx) {
     if (!isEvilKnightBoard(ctx.world)) return;
     assertEvilKnightRosterCurrent(ctx.world);
-    if (ctx.state.evilKnightBindings) throw new Error("evil_knight_night_reentry");
+    if (hasEvilKnightNightBindings(ctx.state)) throw new Error("evil_knight_night_reentry");
     const bindings = new Map<number, NonNullable<ReturnType<typeof captureEvilKnight>>>();
     for (const id of ctx.world.getAliveEntityIds()) {
       const life = captureNightLife(ctx.world, id);
       const binding = life && captureEvilKnight(ctx.world, life);
       if (binding) bindings.set(id, binding);
     }
-    ctx.state.evilKnightBindings = bindings;
+    installEvilKnightNightBindings(ctx.state, bindings);
     ctx.state.nightImmunities = [...bindings.values()];
   },
 };

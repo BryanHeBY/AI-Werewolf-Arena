@@ -1,10 +1,8 @@
 /**
- * Interaction scenario checks Noble handoff after an actual native night.
- * Inputs are fixed players, literal valid native actions and one late result
- * getter failure; the same error, single getter read, still-open authority and
- * already-published native damage fact are the independent literal oracle.
- * Existing Demon potion delivery is executed before the failure; no fake bypass,
- * transport, model or complete-game driver supplies the expected outcome.
+ * 交互场景验证真实原生夜晚后的 Noble 输出失败前缀。输入保原固定玩家、合法行动与同一错误；
+ * 末阶段只捕获状态，在真实 native_damage 事件已进入测试数组后才安装晚输出字段 getter。
+ * 一次读取／同错误、仍 open 的 authority 与已发布末事实是原独立字面预期；原事件 push 接收方和返回值保留。
+ * 旧 evilKnightBindings 输出字段已退休，探针渠道／安装时点的迁移明确记录，不用生产 hook、模型或整局替代原结果。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -28,6 +26,7 @@ test("a later result getter failure preserves the already-transferred sender pre
     }),
     error = new Error("noble_return_getter_rejected");
   let reads = 0;
+  let capturedState: NightStageContext["state"] | undefined;
   class Stages extends NightStageRegistry {
     override getStages(config: BoardConfig, world?: World) {
       return [
@@ -36,12 +35,7 @@ test("a later result getter failure preserves the already-transferred sender pre
           id: "return-getter-probe",
           priority: 1,
           async execute(ctx: NightStageContext) {
-            Object.defineProperty(ctx.state, "evilKnightBindings", {
-              get() {
-                reads++;
-                throw error;
-              },
-            });
+            capturedState = ctx.state;
           },
         },
       ];
@@ -55,21 +49,38 @@ test("a later result getter failure preserves the already-transferred sender pre
       toolGateway: new ToolGateway(),
       damageResolutionSystem: new DamageResolutionSystem(),
     });
-  await expect(
-    pipeline.execute(
-      config,
-      {
-        async getAction(request) {
-          if (request.allowedTools.includes("protect_secret_body"))
-            return { name: "protect_secret_body", args: { target_id: null } };
-          if (request.allowedTools.includes("check_identity"))
-            return { name: "check_identity", args: { target_id: 6 } };
-          return demonNightChoice(request, 5, { knife: null, hunt: null });
+  const originalPush = events.push, originalDescriptor = Object.getOwnPropertyDescriptor(events, "push");
+  events.push = function(this: GameEvent[], ...items: GameEvent[]) {
+    const size = originalPush.apply(this, items);
+    // 先保原事实发布，再安装故障；伤害组合的早读取已经完成，return/handoff 尚未发生。
+    if (items.some((event) => event.type === "noble_body_native_damage_committed")) {
+      if (!capturedState) throw new Error("probe_state_missing");
+      Object.defineProperty(capturedState, "inspectionAttacks", {
+        get() { reads++; throw error; },
+      });
+    }
+    return size;
+  };
+  try {
+    await expect(
+      pipeline.execute(
+        config,
+        {
+          async getAction(request) {
+            if (request.allowedTools.includes("protect_secret_body"))
+              return { name: "protect_secret_body", args: { target_id: null } };
+            if (request.allowedTools.includes("check_identity"))
+              return { name: "check_identity", args: { target_id: 6 } };
+            return demonNightChoice(request, 5, { knife: null, hunt: null });
+          },
         },
-      },
-      1,
-    ),
-  ).rejects.toBe(error);
+        1,
+      ),
+    ).rejects.toBe(error);
+  } finally {
+    if (originalDescriptor) Object.defineProperty(events, "push", originalDescriptor);
+    else Reflect.deleteProperty(events, "push");
+  }
   expect(reads).toBe(1);
   expect(checkpointNobleBodyAuthority(game.world, false).nights[0]?.status).toBe("open");
   expect(events.at(-1)?.type).toBe("noble_body_native_damage_committed");
