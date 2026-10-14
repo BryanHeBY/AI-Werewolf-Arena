@@ -1,0 +1,32 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+    "sha256": "c11d14b5bce787f9109ff21eae484e0d3f745c6ee598d89491cfc9591da97db1",
+    "wholeBeforeSame": true
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+    "sha256": "a21fe89e98389dac1a3f68384bf0b7a56bc87cf8427d8c630cfa10a5be34d0b6",
+    "wholeBeforeSame": true
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+    "sha256": "dd3b451db74afad44d935042ea1e51bac3c72de68ca107184d7c7d70088696cc",
+    "wholeBeforeSame": true
+  },
+  {
+    "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+    "sha256": "fb7a8a9fa39cd55aa96cb6a206a8edeaf30a892a00fce994ebb45cffb92f9690",
+    "wholeBeforeSame": true
+  },
+  {
+    "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+    "sha256": "d0627ee4936e9cc5a7e117ffe28dfc0cd8b337b8a0b56d9027c29e12c36a978d",
+    "wholeBeforeSame": true
+  },
+  {
+    "path": "backend/tests/unit/features/noble-secret-body/authority.test.ts",
+    "sha256": "b8562eac202d2a10f922377db36bc905860c7aaeb5549759c1d796853d1c9cdb",
+    "wholeBeforeSame": true
+  }
+]

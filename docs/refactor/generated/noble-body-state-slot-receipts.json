@@ -1,0 +1,68 @@
+{
+  "newTests": {
+    "actualChunk": "9bc415",
+    "exitCode": 0,
+    "cases": 4,
+    "assertions": 27,
+    "log": "docs/refactor/generated/noble-body-state-slot-tests-new.log",
+    "runtimePhase": "首运行在新测试局部object视图type-only修正之前；无运行重测，两whole outputs同",
+    "logSHA256": "45934aed660de9deb3060a0b842bbc42bd38710d39756d8890614f5ee164ac93"
+  },
+  "oldExactCase": {
+    "actualChunk": "49aa1f",
+    "exitCode": 0,
+    "cases": 1,
+    "assertions": 3,
+    "filtered": 13,
+    "name": "normal action closure waits for required steps and next night waits for final damage",
+    "log": "docs/refactor/generated/noble-body-state-slot-tests-existing.log",
+    "logSHA256": "fbab18c1ae86b9545d36abe025b7677f9aaead086eb6e73bfe0125b40a5ae20a"
+  },
+  "types": {
+    "first": {
+      "roots": 3,
+      "launchChunk": "f05c14",
+      "session": 13061,
+      "completionChunk": "1b3df0",
+      "exitCode": 2,
+      "log": "docs/refactor/generated/noble-body-state-slot-types-first.log",
+      "diagnostic": "仅新unit148 privateState为object，直接secretBody访问TS2339；两个生产root没有诊断",
+      "logSHA256": "d3e6982bd05221ee00ce7c1dc4b44dd5756e4f89f0ce8e9556a78c7f985ec4cd"
+    },
+    "necessaryFailedUnit": {
+      "roots": 1,
+      "launchChunk": "dfb3b9",
+      "session": 60636,
+      "completionChunk": "fe0373",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/noble-body-state-slot-types-final.log",
+      "fix": "只补原object字段的明确type视图；运行输出两份同，不改变case输入/断言或生产接收类型，不重另外两根",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "programProof": {
+    "actualChunk": "0a48f4",
+    "exitCode": 0,
+    "logicallyVerifiedWholeInverseOutputs": 4,
+    "testTypeDeltaWholeOutputs": 2
+  },
+  "heads": {
+    "actualChunk": "3decfd",
+    "exitCode": 0,
+    "scopeSources": 3,
+    "documentationPaths": 452,
+    "diagnostics": 0
+  },
+  "whitespace": {
+    "actualChunk": "67ceb8",
+    "exitCode": 0,
+    "scopeSources": 3
+  },
+  "totals": {
+    "distinctCases": 5,
+    "assertions": 30,
+    "fullGame": false,
+    "fullTypes": false,
+    "models": false
+  }
+}

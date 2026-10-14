@@ -1,0 +1,34 @@
+{
+  "reviewer": "root",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "sha256": "396d7e5c6f8114cebf4770218537d9eed4bdc05be7e352089622ff82ec96fc78"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-slot.test.ts",
+      "sha256": "56441a47d32e12c31909a7dc3fbe71022f55d62da00a31a82b94dbd264ebdf2a"
+    }
+  ],
+  "scopeSHA256": "527736ea770b99f7d97cee60d12b236a7c4da65dd0733afb5641c42e03f3d02c",
+  "implementationReview": {
+    "owner": "原两状态引用及唯一两JSON影子归state槽；authority持roster、Role、生命、夜间、请求、付款，canonical先两原引用再归一化内容比较。",
+    "ordering": "原字段描述符预检与Reflect.ownKeys顺序写入保持，之后才编码next；构造按normalized nobleData→bodyData编码，checkpoint逐属性parse，七原提交点随后lease/知识/目标/标记未提前。",
+    "failure": "字段写或编码失败保raw已写和旧影子，无法继续原lease；readers接受集合与写入集合的差别保持，不新增schema或逐层引用品牌。",
+    "dataAndComments": "实际目录和两语消息确认夜之贵族及觉醒愚者秘密之身资源；合法选择与实际付款、夜伤耗身与免放逐、契约到期提案与实际标死就地中文明确。"
+  },
+  "verificationReview": {
+    "receipts": "已读实际新4/27与原1/3收据；三根首红仅unit object视图，失败根真实fe0373/0。后续纯注释40265a全文程序及六emit桥承接，不伪重测。",
+    "proof": "已读完整writer248、原authority8980/state3806的当前owner展开证据和冻结字节，当前新class二进制/API差异已明示；未重复测试或全仓门禁。",
+    "artifactsCurrentSHA256Verified": true
+  },
+  "limits": [
+    "有界C17三源，不代表全55角色、严格archive codec或P3全部完成。",
+    "新增class出口、私有布局、allocation和栈变化声明保留。"
+  ],
+  "approved": true
+}

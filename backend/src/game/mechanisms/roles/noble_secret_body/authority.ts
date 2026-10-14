@@ -1,6 +1,6 @@
 /**
- * 负责贵族／夜仆资源、原生命与契约权威。输入为原 roster、实际夜间及受控行动；
- * 输出为已重检提交、通知、到期提案与显式纯数据快照。单一 owner 持有原实例和付款状态。
+ * 负责夜之贵族／秘密之身的原体、生命、夜仆契约和实际付款权威。输入为原 roster、实际夜间及受控行动；
+ * 输出为已重检提交、通知、到期提案与显式纯数据快照；纯状态写入和唯一审计影子由 state 槽拥有。
  * 正常／撤销、原体替换、资源与记录失败保留原合法前缀，不恢复已付契约或修改对局阶段。
  * 新夜间身份仅关联本 Night 对象；到期消费同一身份，不改变旧日次数值、期限或归档字段。
  * 规则依据：docs/rules/awa-noble-secret-body-twelve-v1.md。
@@ -17,6 +17,7 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import {
+  NobleBodyStateSlot,
   readNobleState,
   readSecretBodyState,
   chooseServant,
@@ -207,10 +208,7 @@ interface Owner {
   readonly players: ReadonlyMap<number, OriginalPlayer>;
   readonly noble: OriginalPlayer;
   readonly body: OriginalPlayer;
-  readonly nobleState: NobleState;
-  readonly bodyState: SecretBodyState;
-  nobleJson: string;
-  bodyJson: string;
+  readonly stateSlot: NobleBodyStateSlot;
   readonly contracts: Map<string, ContractBinding>;
   readonly nights: Map<number, Night>;
   active: Night | null;
@@ -222,10 +220,9 @@ interface Owner {
 const owners = new WeakMap<World, Owner>();
 function canonicalState(owner: Owner): boolean {
   return (
-    own(owner.noble.privateState, "noble") === owner.nobleState &&
-    own(owner.body.privateState, "secretBody") === owner.bodyState &&
-    JSON.stringify(readNobleState(owner.nobleState)) === owner.nobleJson &&
-    JSON.stringify(readSecretBodyState(owner.bodyState)) === owner.bodyJson
+    own(owner.noble.privateState, "noble") === owner.stateSlot.nobleState &&
+    own(owner.body.privateState, "secretBody") === owner.stateSlot.bodyState &&
+    owner.stateSlot.matchesCanonicalData()
   );
 }
 function requireOwner(world: World): Owner {
@@ -262,40 +259,13 @@ function requireNight(
     !checkController(owner, night.isCurrent)
   )
     throw Error("noble_body_night_unavailable");
-  // The controller callback may synchronously cancel or change the owner.
+  // 控制回调可能同步取消或改变权威，返回后仍按原顺序再次复验。
   requireOwner(world);
   if (night.status !== "open" && !(allowNormal && night.status === "normal"))
     throw Error("noble_body_night_unavailable");
   return { owner, night };
 }
-function writeState<T extends NobleState | SecretBodyState>(current: T, next: T): void {
-  const keys = Reflect.ownKeys(current),
-    descriptors = Object.getOwnPropertyDescriptors(current);
-  if (
-    Object.getPrototypeOf(current) !== Object.prototype ||
-    keys.some(
-      (k) =>
-        typeof k !== "string" ||
-        !("value" in descriptors[k]!) ||
-        descriptors[k]!.writable !== true ||
-        descriptors[k]!.configurable !== true,
-    ) ||
-    keys.length !== Object.keys(next).length
-  )
-    throw Error("noble_body_state_write_revoked");
-  for (const key of keys as Array<keyof T>)
-    Object.defineProperty(current, key, { ...descriptors[key as string]!, value: next[key] });
-}
-function commitNoble(owner: Owner, next: NobleState): void {
-  writeState(owner.nobleState, next);
-  owner.nobleJson = JSON.stringify(next);
-}
-function commitBody(owner: Owner, next: SecretBodyState): void {
-  writeState(owner.bodyState, next);
-  owner.bodyJson = JSON.stringify(next);
-}
-/** Exact role/preset qualification is the bootstrap caller's responsibility. This captures
- * original native state objects once; it never initializes or grants replacement resources. */
+/** 精确角色／预设资格归 bootstrap；这里只捕获一次原状态及其归一化初值，不初始化或授予替代库存。 */
 export function installNobleBodyAuthority(world: World, nobleId: number, bodyId: number): void {
   if (owners.has(world)) throw Error("noble_body_already_installed");
   const players = new Map(world.entityIds().map((id) => [id, capture(world, id)])),
@@ -324,10 +294,12 @@ export function installNobleBodyAuthority(world: World, nobleId: number, bodyId:
     players,
     noble,
     body,
-    nobleState: nobleState as NobleState,
-    bodyState: bodyState as SecretBodyState,
-    nobleJson: JSON.stringify(nobleData),
-    bodyJson: JSON.stringify(bodyData),
+    stateSlot: new NobleBodyStateSlot(
+      nobleState as NobleState,
+      bodyState as SecretBodyState,
+      nobleData,
+      bodyData,
+    ),
     contracts: new Map(),
     nights: new Map(),
     active: null,
@@ -351,15 +323,14 @@ export function installNobleBodyAuthority(world: World, nobleId: number, bodyId:
 function mayBegin(owner: Owner, day: number): boolean {
   return (
     !owner.active &&
-    !owner.nobleState.contracts.some((c) => c.status.kind === "pending" && c.expiresNight < day) &&
+    !owner.stateSlot.nobleState.contracts.some((c) => c.status.kind === "pending" && c.expiresNight < day) &&
     ![...owner.nights.keys()].some((previous) => previous >= day) &&
     [...owner.nights.values()].every(
       (n) => n.status !== "normal" || (n.bodyResolved && n.expiryProcessed),
     )
   );
 }
-/** Returns synchronous notification receipts, even when no skill request follows.
- * The controller must append these to the private feed before issuing any night request. */
+/** 同步返回通知回执，即使之后没有技能请求；控制方须在当夜请求前按原顺序写入玩家私有记录。 */
 export function beginNobleBodyNight(
   world: World,
   day: number,
@@ -388,11 +359,11 @@ export function beginNobleBodyNight(
     status: "open",
     body: { opened: false, committed: false },
     noble: { opened: false, committed: false },
-    requiresBody: playerCurrent(world, owner.body, true) && owner.bodyState.body.kind === "intact",
+    requiresBody: playerCurrent(world, owner.body, true) && owner.stateSlot.bodyState.body.kind === "intact",
     requiresNoble:
       day >= 2 &&
       playerCurrent(world, owner.noble, true) &&
-      !owner.nobleState.contracts.some((c) => c.status.kind === "pending"),
+      !owner.stateSlot.nobleState.contracts.some((c) => c.status.kind === "pending"),
     bodyTarget: null,
     bodyResolved: false,
     expiryProcessed: false,
@@ -405,10 +376,10 @@ export function beginNobleBodyNight(
   const notices: NobleBodyNightNotice[] = [];
   if (playerCurrent(world, owner.noble, true)) {
     owner.nobleKnowledge = copyNobleKnowledge({
-      wolfActionPolicy: owner.nobleState.wolfActionPolicy,
+      wolfActionPolicy: owner.stateSlot.nobleState.wolfActionPolicy,
       lastNotifiedNight: day,
-      lastChoice: owner.nobleState.lastChoice,
-      contracts: owner.nobleState.contracts,
+      lastChoice: owner.stateSlot.nobleState.lastChoice,
+      contracts: owner.stateSlot.nobleState.contracts,
     });
     notices.push(
       Object.freeze({
@@ -421,17 +392,17 @@ export function beginNobleBodyNight(
   }
   if (playerCurrent(world, owner.body, true)) {
     owner.bodyKnowledge = copySecretBodyKnowledge({
-      protectionRepeatPolicy: owner.bodyState.protectionRepeatPolicy,
+      protectionRepeatPolicy: owner.stateSlot.bodyState.protectionRepeatPolicy,
       lastNotifiedNight: day,
-      lastChoice: owner.bodyState.lastChoice,
+      lastChoice: owner.stateSlot.bodyState.lastChoice,
       resource:
-        owner.bodyState.body.kind === "intact"
+        owner.stateSlot.bodyState.body.kind === "intact"
           ? "intact"
-          : owner.bodyState.body.kind === "exile_revealed"
+          : owner.stateSlot.bodyState.body.kind === "exile_revealed"
             ? "exile_revealed"
             : "spent",
       publicRevealDay:
-        owner.bodyState.body.kind === "exile_revealed" ? owner.bodyState.body.day : null,
+        owner.stateSlot.bodyState.body.kind === "exile_revealed" ? owner.stateSlot.bodyState.body.day : null,
     });
     notices.push(
       Object.freeze({
@@ -455,10 +426,10 @@ function choiceLease(world: World, day: number, kind: "body" | "noble") {
     kind === "noble" &&
     (!night.requiresNoble ||
       day < 2 ||
-      owner.nobleState.contracts.some((c) => c.status.kind === "pending"))
+      owner.stateSlot.nobleState.contracts.some((c) => c.status.kind === "pending"))
   )
     throw Error("night_noble_unavailable");
-  if (kind === "body" && (!night.requiresBody || owner.bodyState.body.kind !== "intact"))
+  if (kind === "body" && (!night.requiresBody || owner.stateSlot.bodyState.body.kind !== "intact"))
     throw Error("secret_body_unavailable");
   lease.opened = true;
   const eligible = () => {
@@ -483,14 +454,14 @@ export function openServantChoice(world: World, day: number) {
     commit(targetId: number | null) {
       if (!eligible()) throw Error("night_noble_choice_revoked");
       const next = chooseServant(
-        owner.nobleState,
+        owner.stateSlot.nobleState,
         day,
         targetId,
         owner.noble.id,
         [...owner.players.values()].filter((p) => playerCurrent(world, p, true)).map((p) => p.id),
       );
       const target = targetId === null ? null : owner.players.get(targetId)!;
-      commitNoble(owner, next);
+      owner.stateSlot.commitNoble(next);
       lease.committed = true;
       const created = next.contracts.find((c) => c.createdNight === day);
       owner.nobleKnowledge = copyNobleKnowledge({
@@ -526,12 +497,12 @@ export function openSecretBodyChoice(world: World, day: number) {
     commit(targetId: number | null) {
       if (!eligible()) throw Error("secret_body_choice_revoked");
       const next = chooseBodyTarget(
-        owner.bodyState,
+        owner.stateSlot.bodyState,
         day,
         targetId,
         [...owner.players.values()].filter((p) => playerCurrent(world, p, true)).map((p) => p.id),
       );
-      commitBody(owner, next);
+      owner.stateSlot.commitBody(next);
       owner.bodyKnowledge = copySecretBodyKnowledge({
         ...owner.bodyKnowledge,
         lastChoice: next.lastChoice,
@@ -542,25 +513,24 @@ export function openSecretBodyChoice(world: World, day: number) {
     },
   });
 }
-/** Hunt qualification remains owned by the delivered Demon action. This synchronous
- * exception closes the original contract; it does not itself deal or cancel other damage. */
+/** 猎魔资格归已交付猎魔行动；此同步例外只关闭原契约，不自行造成或取消其他伤害。 */
 export function clearServantFromHunt(
   world: World,
   day: number,
   targetId: number,
 ): Readonly<{ contractId: string; targetId: number }> | null {
   const { owner } = requireNight(world, day),
-    contract = owner.nobleState.contracts.find(
+    contract = owner.stateSlot.nobleState.contracts.find(
       (c) => c.status.kind === "pending" && c.targetId === targetId,
     );
   if (!contract) return null;
   const binding = owner.contracts.get(contract.id);
   if (!binding || !playerCurrent(world, binding.target, true))
     throw Error("night_noble_contract_revoked");
-  commitNoble(owner, endServant(owner.nobleState, contract.id, day, "cleared"));
+  owner.stateSlot.commitNoble(endServant(owner.stateSlot.nobleState, contract.id, day, "cleared"));
   return Object.freeze({ contractId: contract.id, targetId });
 }
-/** The caller records expiry and its returned proposal together, before any actual night damage. */
+/** 调用方在实际夜伤前同时记录到期与返回提案；本函数只结束契约，不标记目标死亡。 */
 export function expireServantAtNightEnd(
   world: World,
   day: number,
@@ -572,7 +542,7 @@ export function expireServantAtNightEnd(
   if (isNightUnit(nightUnit) && boundUnit && boundUnit !== nightUnit)
     throw Error("noble_body_night_unit_mismatch");
   if (night.expiryProcessed) throw Error("night_noble_expiry_already_processed");
-  const contract = owner.nobleState.contracts.find(
+  const contract = owner.stateSlot.nobleState.contracts.find(
     (c) => c.status.kind === "pending" && c.expiresNight === day,
   );
   if (!contract) {
@@ -582,7 +552,7 @@ export function expireServantAtNightEnd(
   const binding = owner.contracts.get(contract.id);
   if (!binding || !playerCurrent(world, binding.target, true))
     throw Error("night_noble_contract_revoked");
-  commitNoble(owner, endServant(owner.nobleState, contract.id, day, "expired"));
+  owner.stateSlot.commitNoble(endServant(owner.stateSlot.nobleState, contract.id, day, "expired"));
   night.expiryProcessed = true;
   return Object.freeze({
     contractId: contract.id,
@@ -590,14 +560,14 @@ export function expireServantAtNightEnd(
     cause: "servant_expiry" as const,
   });
 }
-/** Called at the actual original-life death commit, before last words or badge awaits. */
+/** 在原生命实际标死后、遗言或警徽 await 前关闭契约；状态槽写入不能替代这次生命提交。 */
 export function closeServantForDeath(
   world: World,
   day: number,
   targetId: number,
 ): Readonly<{ contractId: string; targetId: number }> | null {
   const owner = requireOwner(world),
-    contract = owner.nobleState.contracts.find(
+    contract = owner.stateSlot.nobleState.contracts.find(
       (c) => c.status.kind === "pending" && c.targetId === targetId,
     );
   if (!contract) return null;
@@ -609,21 +579,20 @@ export function closeServantForDeath(
     aliveLifeVersion(binding.target.life) !== binding.target.version + 1
   )
     throw Error("night_noble_death_not_committed");
-  commitNoble(owner, endServant(owner.nobleState, contract.id, day, "target_dead"));
+  owner.stateSlot.commitNoble(endServant(owner.stateSlot.nobleState, contract.id, day, "target_dead"));
   return Object.freeze({ contractId: contract.id, targetId });
 }
-/** Only a paid, original-body choice can consume the one body. The controller supplies
- * FINAL valid sources and pairs this returned receipt with its actual damage commit. */
+/** 只有已付且匹配原体的选择能消费一次身体；控制方提供最终有效来源，并把返回回执与实际伤害配对。 */
 export function resolveSecretBodyDamage(world: World, day: number, sources: SecretBodySources) {
   const originalOwner = owners.get(world),
     originalNight = originalOwner?.nights.get(day);
-  // A callback's recursive attempt must neither consume nor abort the outer settlement.
+  // 回调递归不得消费或终止外层结算，仍在原 try 前拒绝。
   if (originalOwner?.checkingController) throw Error("noble_body_controller_reentry");
   try {
     const { owner, night } = requireNight(world, day, true);
     if (night.status !== "normal") throw Error("secret_body_damage_before_action_close");
     if (night.bodyResolved) throw Error("secret_body_damage_already_processed");
-    if (!night.body.committed || owner.bodyState.body.kind !== "intact") {
+    if (!night.body.committed || owner.stateSlot.bodyState.body.kind !== "intact") {
       const unchanged = Object.freeze({ blocked: null, sources: copySecretBodySources(sources) });
       night.bodyResolved = true;
       return unchanged;
@@ -635,7 +604,7 @@ export function resolveSecretBodyDamage(world: World, day: number, sources: Secr
       throw Error("secret_body_paid_binding_revoked");
     const plan = planSecretBodyBlock(owner.body.id, night.bodyTarget?.id ?? null, sources);
     if (plan.blocked)
-      commitBody(owner, spendBodyForNight(owner.bodyState, day, owner.body.id, plan.blocked));
+      owner.stateSlot.commitBody(spendBodyForNight(owner.stateSlot.bodyState, day, owner.body.id, plan.blocked));
     night.bodyResolved = true;
     return plan;
   } catch (error) {
@@ -670,7 +639,7 @@ export function closeNobleBodyNight(world: World, day: number, status: "normal" 
   night.status = status;
   if (owner.active === night) owner.active = null;
 }
-/** Active-life exile qualification belongs to VotingPipeline, with a dedicated reveal speech. */
+/** 活人放逐资格归 VotingPipeline，并有独立翻牌发言；耗身保持原提交顺序，不作为死亡遗言。 */
 export function consumeSecretBodyExile(
   world: World,
   day: number,
@@ -686,7 +655,7 @@ export function consumeSecretBodyExile(
     !playerCurrent(world, owner.body, true)
   )
     throw Error("secret_body_exile_owner_revoked");
-  commitBody(owner, revealBodyByExile(owner.bodyState, day));
+  owner.stateSlot.commitBody(revealBodyByExile(owner.stateSlot.bodyState, day));
   owner.bodyKnowledge = copySecretBodyKnowledge({
     ...owner.bodyKnowledge,
     resource: "exile_revealed",
@@ -694,7 +663,7 @@ export function consumeSecretBodyExile(
   });
   return Object.freeze({ actorId: owner.body.id, day });
 }
-/** The sole player boundary; no actual inventory or hidden terminal state is consulted. */
+/** 玩家知识只从已告知数据投影；requireOwner仍复验原体和槽，不把真实库存或隐藏终态输出给玩家。 */
 export function getNobleBodyPlayerState(world: World, actorId: number, phase: Phase) {
   const owner = requireOwner(world);
   if (actorId === owner.body.id)
@@ -709,15 +678,15 @@ export function getNobleBodyPlayerState(world: World, actorId: number, phase: Ph
     };
   return null;
 }
-/** Failure checkpoints use only committed canonical snapshots, never replacement state. */
+/** 失败检查点逐属性解码已成功编码的槽影子；不读取替代库存，未完成编码仍保留原已记录影子。 */
 export function checkpointNobleBodyAuthority(world: World, complete: boolean) {
   const owner = complete ? requireOwner(world) : owners.get(world);
   if (!owner) throw Error("noble_body_owner_unavailable");
   return {
     nobleId: owner.noble.id,
     bodyId: owner.body.id,
-    noble: JSON.parse(owner.nobleJson) as NobleState,
-    body: JSON.parse(owner.bodyJson) as SecretBodyState,
+    noble: owner.stateSlot.decodeNobleShadow(),
+    body: owner.stateSlot.decodeBodyShadow(),
     knowledge: {
       noble: copyNobleKnowledge(owner.nobleKnowledge),
       body: copySecretBodyKnowledge(owner.bodyKnowledge),
@@ -774,7 +743,7 @@ export function nobleBodyChoiceTargets(
     !playerCurrent(world, owner[kind], true)
   )
     throw Error("noble_body_choice_unavailable");
-  const last = owner.bodyState.lastChoice;
+  const last = owner.stateSlot.bodyState.lastChoice;
   return Object.freeze(
     [...owner.players.values()]
       .filter(
@@ -783,7 +752,7 @@ export function nobleBodyChoiceTargets(
           (kind === "noble"
             ? p.id !== owner.noble.id
             : !(
-                owner.bodyState.protectionRepeatPolicy === "awa_nonconsecutive_nights_v1" &&
+                owner.stateSlot.bodyState.protectionRepeatPolicy === "awa_nonconsecutive_nights_v1" &&
                 last?.day === day - 1 &&
                 last.targetId === p.id
               )),
@@ -812,8 +781,8 @@ export function openSecretBodyRevealSpeech(world: World, day: number, isCurrent:
         !night.revealCompleted &&
         ![...owner.nights.keys()].some((d) => d > day) &&
         playerCurrent(world, owner.body, true) &&
-        owner.bodyState.body.kind === "exile_revealed" &&
-        owner.bodyState.body.day === day;
+        owner.stateSlot.bodyState.body.kind === "exile_revealed" &&
+        owner.stateSlot.bodyState.body.day === day;
       if (!available || !checkController(owner, isCurrent)) return false;
       requireOwner(world);
       return (

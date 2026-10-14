@@ -1,0 +1,185 @@
+{
+  "approved": true,
+  "reviewer": "native_presentation_finish, independent of Noble author",
+  "base": "354c935c3df0a784d8644bee53b0ec481e9a6934",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "sha256": "396d7e5c6f8114cebf4770218537d9eed4bdc05be7e352089622ff82ec96fc78",
+      "currentSHA256": "396d7e5c6f8114cebf4770218537d9eed4bdc05be7e352089622ff82ec96fc78",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+      "currentSHA256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-slot.test.ts",
+      "sha256": "56441a47d32e12c31909a7dc3fbe71022f55d62da00a31a82b94dbd264ebdf2a",
+      "currentSHA256": "56441a47d32e12c31909a7dc3fbe71022f55d62da00a31a82b94dbd264ebdf2a",
+      "matches": true
+    }
+  ],
+  "gitSavedBefore": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "gitSHA256": "63376b41dfee162aec50fddaba7acf638d9507f6fbcc25facaae23563243ca84",
+      "savedSHA256": "63376b41dfee162aec50fddaba7acf638d9507f6fbcc25facaae23563243ca84",
+      "match": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "gitSHA256": "30ec5828d2f7c4783145ef40cea1476cdbbec35cdcf1d3f8f6a632492f269795",
+      "savedSHA256": "30ec5828d2f7c4783145ef40cea1476cdbbec35cdcf1d3f8f6a632492f269795",
+      "match": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+      "gitSHA256": "c11d14b5bce787f9109ff21eae484e0d3f745c6ee598d89491cfc9591da97db1",
+      "savedSHA256": "c11d14b5bce787f9109ff21eae484e0d3f745c6ee598d89491cfc9591da97db1",
+      "match": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+      "gitSHA256": "a21fe89e98389dac1a3f68384bf0b7a56bc87cf8427d8c630cfa10a5be34d0b6",
+      "savedSHA256": "a21fe89e98389dac1a3f68384bf0b7a56bc87cf8427d8c630cfa10a5be34d0b6",
+      "match": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "gitSHA256": "dd3b451db74afad44d935042ea1e51bac3c72de68ca107184d7c7d70088696cc",
+      "savedSHA256": "dd3b451db74afad44d935042ea1e51bac3c72de68ca107184d7c7d70088696cc",
+      "match": true
+    },
+    {
+      "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+      "gitSHA256": "fb7a8a9fa39cd55aa96cb6a206a8edeaf30a892a00fce994ebb45cffb92f9690",
+      "savedSHA256": "fb7a8a9fa39cd55aa96cb6a206a8edeaf30a892a00fce994ebb45cffb92f9690",
+      "match": true
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "gitSHA256": "d0627ee4936e9cc5a7e117ffe28dfc0cd8b337b8a0b56d9027c29e12c36a978d",
+      "savedSHA256": "d0627ee4936e9cc5a7e117ffe28dfc0cd8b337b8a0b56d9027c29e12c36a978d",
+      "match": true
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/authority.test.ts",
+      "gitSHA256": "b8562eac202d2a10f922377db36bc905860c7aaeb5549759c1d796853d1c9cdb",
+      "savedSHA256": "b8562eac202d2a10f922377db36bc905860c7aaeb5549759c1d796853d1c9cdb",
+      "match": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+      "sha256": "c11d14b5bce787f9109ff21eae484e0d3f745c6ee598d89491cfc9591da97db1",
+      "wholeBeforeSame": true,
+      "currentSHA256": "c11d14b5bce787f9109ff21eae484e0d3f745c6ee598d89491cfc9591da97db1",
+      "match": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+      "sha256": "a21fe89e98389dac1a3f68384bf0b7a56bc87cf8427d8c630cfa10a5be34d0b6",
+      "wholeBeforeSame": true,
+      "currentSHA256": "a21fe89e98389dac1a3f68384bf0b7a56bc87cf8427d8c630cfa10a5be34d0b6",
+      "match": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "sha256": "dd3b451db74afad44d935042ea1e51bac3c72de68ca107184d7c7d70088696cc",
+      "wholeBeforeSame": true,
+      "currentSHA256": "dd3b451db74afad44d935042ea1e51bac3c72de68ca107184d7c7d70088696cc",
+      "match": true
+    },
+    {
+      "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+      "sha256": "fb7a8a9fa39cd55aa96cb6a206a8edeaf30a892a00fce994ebb45cffb92f9690",
+      "wholeBeforeSame": true,
+      "currentSHA256": "fb7a8a9fa39cd55aa96cb6a206a8edeaf30a892a00fce994ebb45cffb92f9690",
+      "match": true
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "sha256": "d0627ee4936e9cc5a7e117ffe28dfc0cd8b337b8a0b56d9027c29e12c36a978d",
+      "wholeBeforeSame": true,
+      "currentSHA256": "d0627ee4936e9cc5a7e117ffe28dfc0cd8b337b8a0b56d9027c29e12c36a978d",
+      "match": true
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/authority.test.ts",
+      "sha256": "b8562eac202d2a10f922377db36bc905860c7aaeb5549759c1d796853d1c9cdb",
+      "wholeBeforeSame": true,
+      "currentSHA256": "b8562eac202d2a10f922377db36bc905860c7aaeb5549759c1d796853d1c9cdb",
+      "match": true
+    }
+  ],
+  "commentStage": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "savedBeforeSHA256": "70a788a70128a897395b50d4f5346c4e24acf35b2989bc619e3e45b077166844",
+      "bridgeBeforeMatches": true,
+      "finalMatches": true,
+      "proofPhaseMatches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "savedBeforeSHA256": "0a0ab75c2ae6be04119acbf80243b23b83d55cf0dad75af23620c10bd10c6098",
+      "bridgeBeforeMatches": true,
+      "finalMatches": true,
+      "proofPhaseMatches": true
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-slot.test.ts",
+      "savedBeforeSHA256": "b8b312a43dc6d211d54bfcc29b411a45f13b9881da1bc41e3d4f5712fec69d79",
+      "bridgeBeforeMatches": true,
+      "finalMatches": true,
+      "proofPhaseMatches": true
+    }
+  ],
+  "receiptLogs": [
+    {
+      "path": "docs/refactor/generated/noble-body-state-slot-tests-new.log",
+      "sha256": "45934aed660de9deb3060a0b842bbc42bd38710d39756d8890614f5ee164ac93",
+      "match": true
+    },
+    {
+      "path": "docs/refactor/generated/noble-body-state-slot-tests-existing.log",
+      "sha256": "fbab18c1ae86b9545d36abe025b7677f9aaead086eb6e73bfe0125b40a5ae20a",
+      "match": true
+    },
+    {
+      "path": "docs/refactor/generated/noble-body-state-slot-types-first.log",
+      "sha256": "d3e6982bd05221ee00ce7c1dc4b44dd5756e4f89f0ce8e9556a78c7f985ec4cd",
+      "match": true
+    },
+    {
+      "path": "docs/refactor/generated/noble-body-state-slot-types-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    }
+  ],
+  "review": {
+    "ownership": "完整实读state原schema/factory/转换＋新10成员slot、整个authority和new4cases。stateSlot只持原noble/body引用和唯一两个#JSON；authority保owners唯一WeakMap/所有原体生命、contracttarget/夜间/paid知识，没有第二份可变库存。",
+    "identity": "canonical先own原槽refs，再normalized reader JSON内容比较并贵族优先短路；readers始终副本，没有加入Mist式逐数组/行身份lease。proto/null/data读取与writeState普通proto/writable/configurable规则各维持原差异。",
+    "prefix": "7实际writer完整保next求值点；同原对象先整descriptor校验再按Reflect.ownKeys逐字段defineProperty；writeState完整248节点。JSON getter lookup在所有字段写后，编码失败旧shadow保，下一lease/knowledge/targetmarker不前移，失败checkpoint分开decode旧shadow。",
+    "constructor": "原owners.set callee→object args位置仍在；两个原raw refs先捕获，normalized nobleData先编码/bodyData后编码，再Map和knowledge。新class allocation/methoddispatch/private布局差异有意明确，不claim任意私有monkeypatch兼容。",
+    "privacy": "知识只来自原已告知projection；slotcodec仅local audit，不偷代Tape schema/recordverifier或把raw库存给玩家。World/life/phase/request与死亡真实写权不归slot。",
+    "proof": "已实际读完整proof.cjs：getChildren全child显式loop；find回调void。完整算法actual新writer/commit/compare/decoder/constructor再逐接口展开7calls，entireAuthority8980/state3806/4mappedoutputs，而不是恢复旧wholebody。newtesttypeonly2emit和末3comment6emit仅作者原收据，不重验证。",
+    "comments": "末正式名称夜之贵族/觉醒愚者秘密之身准确；NightChoice知识与damage/payment区别、BodyResource夜伤/免放逐终态、ServantContract一次终态/仅提案而不标死说明与actual select/end/resolve/consume body一致。没有新增许可或假schema承诺。"
+  },
+  "findings": [],
+  "limits": [
+    "独立source/接口/失败语义审及freshSHA/actualGit/日志摘要来源核对；没有运行types/tests/gates/models或重新产出作者emit收据。",
+    "slot公开class出口／字段layout／调用栈和初始化allocation改变明确；未宣称当前新两模块whole binaries与旧直接相同。"
+  ],
+  "artifactSHA256": {
+    "scope": "527736ea770b99f7d97cee60d12b236a7c4da65dd0733afb5641c42e03f3d02c",
+    "md": "700740ac4e71b500ef7c5ada0a6cd265bc962be5949b2e14c9b8a292eb5493a9",
+    "evidence": "ceaf183ccc5e989558373aa9466580ebcbd9bccbb4073fc49ad23b473920f388",
+    "proof": "53e1c4fb0963dc5128d17637648d23fbb509876a7c3cbb494ba8ce935e9e843e",
+    "comments": "81ed92dfe9465c86345f6e0f06b75004279c39dd806b933c2a2668f35a52054a"
+  }
+}

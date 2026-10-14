@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/noble-secret-body/authority.test.ts:
+(pass) normal action closure waits for required steps and next night waits for final damage [3.64ms]
+
+ 1 pass
+ 13 filtered out
+ 0 fail
+ 3 expect() calls
+Ran 1 test across 1 file. [63.00ms]

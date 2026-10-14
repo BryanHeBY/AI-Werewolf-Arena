@@ -1,0 +1,69 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "beforeSHA256": "70a788a70128a897395b50d4f5346c4e24acf35b2989bc619e3e45b077166844",
+      "finalSHA256": "396d7e5c6f8114cebf4770218537d9eed4bdc05be7e352089622ff82ec96fc78",
+      "completeNoncommentNodes": 4390,
+      "same": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "23b96a6f743ce0eb5f17757a1586aaeaa01c3fb7d30edcf8c93a653e9678990b",
+          "finalSHA256": "23b96a6f743ce0eb5f17757a1586aaeaa01c3fb7d30edcf8c93a653e9678990b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "b48fb123647a11b5472287737a7d00cc0b1295b7152c8c9bc970ea81a75b56be",
+          "finalSHA256": "b48fb123647a11b5472287737a7d00cc0b1295b7152c8c9bc970ea81a75b56be"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "beforeSHA256": "0a0ab75c2ae6be04119acbf80243b23b83d55cf0dad75af23620c10bd10c6098",
+      "finalSHA256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+      "completeNoncommentNodes": 8669,
+      "same": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "d9cd9de8ee4d285f3c29b12b90d74d44e03a538f6e789b5760bb3792e5740949",
+          "finalSHA256": "d9cd9de8ee4d285f3c29b12b90d74d44e03a538f6e789b5760bb3792e5740949"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "3eb34fd04938fd0c94f336dcc1f5839b1766b4b9db049d4afc6e947d4673adfa",
+          "finalSHA256": "3eb34fd04938fd0c94f336dcc1f5839b1766b4b9db049d4afc6e947d4673adfa"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-slot.test.ts",
+      "beforeSHA256": "b8b312a43dc6d211d54bfcc29b411a45f13b9881da1bc41e3d4f5712fec69d79",
+      "finalSHA256": "56441a47d32e12c31909a7dc3fbe71022f55d62da00a31a82b94dbd264ebdf2a",
+      "completeNoncommentNodes": 2306,
+      "same": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "3bb575c443f5077b1f90545d80b1e073116696c94c7c1f1e89f743237f249866",
+          "finalSHA256": "3bb575c443f5077b1f90545d80b1e073116696c94c7c1f1e89f743237f249866"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "04e3bab934329456a48a8afef51349e5b6dca1649f0a08a5669fa93c696e38f0",
+          "finalSHA256": "04e3bab934329456a48a8afef51349e5b6dca1649f0a08a5669fa93c696e38f0"
+        }
+      ]
+    }
+  ],
+  "onlyChanges": "三head准确现行角色名，state三重要数据声明添加中文依据说明；没有执行token/类型/API变动。",
+  "approved": true
+}

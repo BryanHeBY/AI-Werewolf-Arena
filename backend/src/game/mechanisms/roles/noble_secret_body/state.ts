@@ -1,12 +1,20 @@
+/**
+ * 负责夜之贵族／秘密之身的初始数据、原接受集合、纯状态转换和同引用状态槽。
+ * 输入为原数据、选择或已由权威复验的下一状态；输出为归一化副本、原槽写入和本地审计影子。
+ * 槽拥有唯一两份 JSON 影子，先按原描述符次序写原对象，再编码下一状态；失败保留已写前缀。
+ * World、原体／生命、请求、夜间和实际付款仍归 authority；本地影子不是归档 schema 或行动许可。
+ */
 import { types } from "node:util";
 import type { SecretBodyCause } from "./damage";
 export const NOBLE_SECRET_BODY_POLICY = "awa_noble_secret_body_v1" as const;
 export type NobleWolfPolicy = "standard" | "no_blast_no_self_knife";
 export type BodyRepeatPolicy = "awa_nonconsecutive_nights_v1" | "awa_repeat_v1";
+/** 主动选择记录包含合法空过；它不代表伤害已发生或一次资源已付款，真实 lease 仍由权威持有。 */
 export interface NightChoice {
   day: number;
   targetId: number | null;
 }
+/** 一次身体的实际耗用终态：夜间最终抵伤与白天免放逐分别记录，exile_revealed 不是死亡。 */
 export type BodyResource =
   | { kind: "intact" }
   | { kind: "night_spent"; day: number; targetId: number; cause: SecretBodyCause }
@@ -17,6 +25,7 @@ export interface SecretBodyState {
   lastChoice: NightChoice | null;
   body: BodyResource;
 }
+/** 历史契约保存一次终态；到期日只供后续权威产生提案，本数据不标死目标或重开选择窗口。 */
 export interface ServantContract {
   id: string;
   targetId: number;
@@ -44,6 +53,7 @@ function data(value: unknown, keys: readonly string[]): Record<string, unknown> 
   if (proto !== Object.prototype && proto !== null) return;
   const fields = Object.getOwnPropertyDescriptors(value);
   if (Reflect.ownKeys(fields).length !== keys.length) return;
+  // 原 schema 读取 own data descriptor 后生成副本；不执行 getter，也不把副本当成原对象身份。
   const result: Record<string, unknown> = {};
   for (const key of keys) {
     const field = fields[key];
@@ -170,7 +180,7 @@ export function chooseBodyTarget(
     throw Error("secret_body_target");
   return { ...state, lastChoice: { day, targetId } };
 }
-/** Caller owns original-life authorization and synchronously pairs this consumption with the FINAL block. */
+/** 原生命授权归调用方；调用方将此消费与最终有效抵伤同步提交，本函数只准备下一数据。 */
 export function spendBodyForNight(
   raw: SecretBodyState,
   day: number,
@@ -341,7 +351,7 @@ export function chooseServant(
           ],
   };
 }
-/** One terminal transition. Original owner/target-life checks and expiry source commit belong to the controller. */
+/** 准备一次终态转换；原权威／目标生命复验和到期伤害来源的提交仍由控制方负责。 */
 export function endServant(
   raw: NobleState,
   id: string,
@@ -365,4 +375,76 @@ export function endServant(
     ...state,
     contracts: state.contracts.map((c) => (c.id === id ? { ...c, status: { kind, day } } : c)),
   };
+}
+
+/** 原对象的有序字段写入；先完整核描述符，再逐字段写，不创建替代库存或自动退款。 */
+function writeState<T extends NobleState | SecretBodyState>(current: T, next: T): void {
+  const keys = Reflect.ownKeys(current),
+    descriptors = Object.getOwnPropertyDescriptors(current);
+  if (
+    Object.getPrototypeOf(current) !== Object.prototype ||
+    keys.some(
+      (k) =>
+        typeof k !== "string" ||
+        !("value" in descriptors[k]!) ||
+        descriptors[k]!.writable !== true ||
+        descriptors[k]!.configurable !== true,
+    ) ||
+    keys.length !== Object.keys(next).length
+  )
+    throw Error("noble_body_state_write_revoked");
+  for (const key of keys as Array<keyof T>)
+    Object.defineProperty(current, key, { ...descriptors[key as string]!, value: next[key] });
+}
+
+/**
+ * 两种状态共用一个实际数据槽：原对象引用与已成功编码的影子分别保存，不存第二份可变状态。
+ * 创建者已检查初始归一化数据；这里仍先编码贵族、后编码身体，不新增校验或冻结原库存。
+ * 外层权威决定何时写入和失效；读影子只做原 JSON.parse，不复验或重构归档字段。
+ */
+export class NobleBodyStateSlot {
+  readonly nobleState: NobleState;
+  readonly bodyState: SecretBodyState;
+  #nobleJson: string;
+  #bodyJson: string;
+
+  constructor(
+    nobleState: NobleState,
+    bodyState: SecretBodyState,
+    nobleData: NobleState,
+    bodyData: SecretBodyState,
+  ) {
+    this.nobleState = nobleState;
+    this.bodyState = bodyState;
+    this.#nobleJson = JSON.stringify(nobleData);
+    this.#bodyJson = JSON.stringify(bodyData);
+  }
+
+  /** 原槽身份先由权威核对；按贵族、身体顺序读取 schema 副本并比较唯一影子，保留短路。 */
+  matchesCanonicalData(): boolean {
+    return (
+      JSON.stringify(readNobleState(this.nobleState)) === this.#nobleJson &&
+      JSON.stringify(readSecretBodyState(this.bodyState)) === this.#bodyJson
+    );
+  }
+
+  commitNoble(next: NobleState): void {
+    writeState(this.nobleState, next);
+    // 写字段已经发生；stringify 失败时旧影子保持，外层尚未继续 lease／知识或目标绑定提交。
+    this.#nobleJson = JSON.stringify(next);
+  }
+
+  commitBody(next: SecretBodyState): void {
+    writeState(this.bodyState, next);
+    this.#bodyJson = JSON.stringify(next);
+  }
+
+  /** 逐属性在原 checkpoint 位置解析已编码影子；不能提前聚合、触发另一影子的读取。 */
+  decodeNobleShadow(): NobleState {
+    return JSON.parse(this.#nobleJson) as NobleState;
+  }
+
+  decodeBodyShadow(): SecretBodyState {
+    return JSON.parse(this.#bodyJson) as SecretBodyState;
+  }
 }
