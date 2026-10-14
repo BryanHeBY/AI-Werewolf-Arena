@@ -1,0 +1,304 @@
+{
+  "schema": "awa-independent-source-review-v1",
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "baseline": "1428a210d931d4c043fb8d018f21e36c818fd05c",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "expectedSHA": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "actualSHA": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "same": true
+    },
+    {
+      "path": "backend/src/rulesets/night-source-delivery.ts",
+      "expectedSHA": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0",
+      "actualSHA": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-source-delivery.test.ts",
+      "expectedSHA": "bdfe30f500e3462fd245adc2a60991bd81032a1f2025856b1f120768a3f4cf9c",
+      "actualSHA": "bdfe30f500e3462fd245adc2a60991bd81032a1f2025856b1f120768a3f4cf9c",
+      "same": true
+    }
+  ],
+  "gitProvenance": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "actualGitSHA": "798dd22730bf8143736208965862e67549ba2269935884538f47fce9c7049670",
+      "capturedSHA": "798dd22730bf8143736208965862e67549ba2269935884538f47fce9c7049670",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": false,
+      "kind": "source"
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "actualGitSHA": "396a6628055e061ed38becc44d903ed51121386e962bb0aa4fe75007886c6f9c",
+      "capturedSHA": "396a6628055e061ed38becc44d903ed51121386e962bb0aa4fe75007886c6f9c",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": true,
+      "kind": "control"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-effects.ts",
+      "actualGitSHA": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4",
+      "capturedSHA": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": true,
+      "kind": "control"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "actualGitSHA": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "capturedSHA": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": true,
+      "kind": "control"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "actualGitSHA": "cb43b97eb1df5ccaa54b36faf023ae2f90de787aa292a10a2ab065093837469e",
+      "capturedSHA": "cb43b97eb1df5ccaa54b36faf023ae2f90de787aa292a10a2ab065093837469e",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": true,
+      "kind": "control"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "actualGitSHA": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+      "capturedSHA": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": true,
+      "kind": "control"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+      "actualGitSHA": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "capturedSHA": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": true,
+      "kind": "control"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "actualGitSHA": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8",
+      "capturedSHA": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": true,
+      "kind": "control"
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "actualGitSHA": "956bfdae5ad0056c3ecbeb73d46500e51c79e904c0769c9e12064fad1e59b4d4",
+      "capturedSHA": "956bfdae5ad0056c3ecbeb73d46500e51c79e904c0769c9e12064fad1e59b4d4",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": true,
+      "kind": "control"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "actualGitSHA": "01427b5b0abe4d39debc6f9d5b49beb33ef58273be6c0d7249575a061610408f",
+      "capturedSHA": "01427b5b0abe4d39debc6f9d5b49beb33ef58273be6c0d7249575a061610408f",
+      "capturedTextSameActualGit": true,
+      "capturedSHASameActualGit": true,
+      "currentSameGit": true,
+      "kind": "control"
+    }
+  ],
+  "artifactAndDocumentChecks": [
+    {
+      "path": "docs/refactor/generated/night-source-delivery-before.json",
+      "actualSHA": "d79ecb2069d064df6e1b166b26955e3954d9fdd0091a530d97f2b04c9658295e",
+      "expectedSHA": "d79ecb2069d064df6e1b166b26955e3954d9fdd0091a530d97f2b04c9658295e",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-edits.json",
+      "actualSHA": "3a0dab55f4e9ad011f226bef7ab31ad49c36fcd9d87fdd4cdd3b3443d10cc9f3",
+      "expectedSHA": "3a0dab55f4e9ad011f226bef7ab31ad49c36fcd9d87fdd4cdd3b3443d10cc9f3",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-proof.cjs",
+      "actualSHA": "85555659698883e9c2303aba3681531a45b70b24410f4efe682b2946181cbc09",
+      "expectedSHA": "85555659698883e9c2303aba3681531a45b70b24410f4efe682b2946181cbc09",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-proof.json",
+      "actualSHA": "e16ed93ae0a0a17add3cc7e81b72f34c42b91ad6b001f4f9b76b2029452c08cd",
+      "expectedSHA": "e16ed93ae0a0a17add3cc7e81b72f34c42b91ad6b001f4f9b76b2029452c08cd",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-proof.log",
+      "actualSHA": "abdfe2c2d09254286a622def6f45c0c684449f6f0d04d08767021dd08d6fb30d",
+      "expectedSHA": "abdfe2c2d09254286a622def6f45c0c684449f6f0d04d08767021dd08d6fb30d",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-inventory.cjs",
+      "actualSHA": "1c44ca7c5dc74cc74b748d0a4c303399cea814c9ca2af1eb7e1de755b51e747b",
+      "expectedSHA": "1c44ca7c5dc74cc74b748d0a4c303399cea814c9ca2af1eb7e1de755b51e747b",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-inventory.json",
+      "actualSHA": "81917e22e315893a57237d02066762e34df2e58c3b12c560768aba874fefd989",
+      "expectedSHA": "81917e22e315893a57237d02066762e34df2e58c3b12c560768aba874fefd989",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-inventory.log",
+      "actualSHA": "b7b9280d23280f87698d575a09951069b9a0ab106d95cf4bb40434f4ab842442",
+      "expectedSHA": "b7b9280d23280f87698d575a09951069b9a0ab106d95cf4bb40434f4ab842442",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-inventory-before-line-precision.json",
+      "actualSHA": "8c3cd4aef049ddf89080fc733a1c4d0136b141d534530a94ce8bbfcef9e2343d",
+      "expectedSHA": "8c3cd4aef049ddf89080fc733a1c4d0136b141d534530a94ce8bbfcef9e2343d",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-inventory-before-line-precision.log",
+      "actualSHA": "b7b9280d23280f87698d575a09951069b9a0ab106d95cf4bb40434f4ab842442",
+      "expectedSHA": "b7b9280d23280f87698d575a09951069b9a0ab106d95cf4bb40434f4ab842442",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-types-config.json",
+      "actualSHA": "f0e94bd18f184286beeaf9caa7286f13ffb8eb72d3edefe90328b953e68d439b",
+      "expectedSHA": "f0e94bd18f184286beeaf9caa7286f13ffb8eb72d3edefe90328b953e68d439b",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-types.log",
+      "actualSHA": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSHA": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-new-tests.log",
+      "actualSHA": "ad55428d6a93f579923a4384ac6d2cf76af10f69b2313b29845ec9cf83c59d88",
+      "expectedSHA": "ad55428d6a93f579923a4384ac6d2cf76af10f69b2313b29845ec9cf83c59d88",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-original-test.log",
+      "actualSHA": "e3c110805ca63b53cb142994116e4c128398f41bfd1bacdb4981cb40e0b513de",
+      "expectedSHA": "e3c110805ca63b53cb142994116e4c128398f41bfd1bacdb4981cb40e0b513de",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-heads.ts",
+      "actualSHA": "e065a26144830ecf8e8751d816cb3c7cfb793d334898d6536b57b961f6d89c21",
+      "expectedSHA": "e065a26144830ecf8e8751d816cb3c7cfb793d334898d6536b57b961f6d89c21",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-heads.json",
+      "actualSHA": "9536e8a6e9619e4da031c4dfc333d35998e3444dc7cad2ea3c4752935a28c604",
+      "expectedSHA": "9536e8a6e9619e4da031c4dfc333d35998e3444dc7cad2ea3c4752935a28c604",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-heads.log",
+      "actualSHA": "a78346bdc13a38eab2d276897594f23e987b8041c386024e787d1f55a73bbf4d",
+      "expectedSHA": "a78346bdc13a38eab2d276897594f23e987b8041c386024e787d1f55a73bbf4d",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-scope-final.json",
+      "actualSHA": "ab97418b690d046a529dbf1e6497af67cb3b28eb96af738037a08ac47edb074a",
+      "expectedSHA": "ab97418b690d046a529dbf1e6497af67cb3b28eb96af738037a08ac47edb074a",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/night-source-delivery-receipts.json",
+      "actualSHA": "c7c858daef0a2db196cdc15adba3be9d8bb021a7e47b48cca7bf3db36b5fe1a5",
+      "expectedSHA": "c7c858daef0a2db196cdc15adba3be9d8bb021a7e47b48cca7bf3db36b5fe1a5",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/night-source-delivery.md",
+      "actualSHA": "ba0399b6d4b8ccc928dd79b84fd6078bbfd961e84f84956e59f012deccdcb288",
+      "expectedSHA": "ba0399b6d4b8ccc928dd79b84fd6078bbfd961e84f84956e59f012deccdcb288",
+      "same": true
+    }
+  ],
+  "findings": [],
+  "sourceReview": [
+    {
+      "dimension": "完整业务责任",
+      "conclusion": "已逐行读原59行八声明、完整当前NP和新同步owner。新函数收全seal/voter/knife/guard/五字段闭包，原NP保discard两命令、紧后damage组合、摘要后的deathLives和finally。无新库存镜像、schema、付款或清理框架。"
+    },
+    {
+      "dimension": "读取与权限失败",
+      "conclusion": "四supplier只是原World/日次/捕获归属/同stageState；false归属仍读voters iterator、刀口及必要unknown snapshot。source current命令先于world/day参数，target不符不读World，投票者原spread副本。每条guard原flatMap receiver与contribution getter保持；后条失败保前token/seal。"
+    },
+    {
+      "dimension": "晚守护与原生命",
+      "conclusion": "五字段原freeze为浅层运行视图；guardCurrent先筛目标，再无sources snapshot回退或sealed.unknown→lateUnknown→native callback→living的短路。consume marks后late查询仍可保独立/未知守护，原生撤权不能抹其效果。原authority、tokens、life、支付与source消费者九控制当前/Git同。"
+    },
+    {
+      "dimension": "程序与真实绑定",
+      "conclusion": "完整读取proof.cjs逐完整八声明抽取与四限定表达式逆；完整树getChildren递归没有早返回，完整NP展开实际body后才逆imports/head；retained单独补证不替代whole。12物理endpoint实际声明已核，69保留具名binding保持、7退由owner/保留用途精确分开。本人只核源码/记录/原Git，不重新执行作者proof或编译输出。"
+    },
+    {
+      "dimension": "加载与API",
+      "conclusion": "旧native_potion_controller/guard_contribution直接函数保，同源权威与五字段类型仍公开ports；不新增静态loader重导或提前动态import。新同步调用、三字段记录/解构与窄query为明确API/分配/栈变化，限定不称任意runtime getter/私有反射或全历史初始化等价。"
+    },
+    {
+      "dimension": "测试／注释",
+      "conclusion": "三个字面新case完整实读：false归属精确iterator前缀、第二seal真拒保账本、三输入native/unknown/late未知在真实compose消费marks后的晚结果；旧precise真实case留原5oracle。三个中文头及原有效说明无权限/JSON夸大。现有收据3/43和1/5两次各不重复，4根类型实际终态来自作者5ffd8b，不据空log推绿。"
+    }
+  ],
+  "exactDiffCoverage": {
+    "recordedDifferences": 8,
+    "allOtherPipelineBytesSameAfterOnlyRecordedInverse": true,
+    "limits": "这一输入差分核对不代替新主体证明；完整新主体已人工实读，AST/双输出只引用实际作者收据，不恢复旧整块后冒新owner等价。"
+  },
+  "authorEvidence": {
+    "movedEightDeclarationsNodes": 668,
+    "movedLeaves": 436,
+    "wholePipelineNodes": 5163,
+    "mappedWholeOutputs": 4,
+    "ownerBindings": 12,
+    "retainedBindings": 69,
+    "removedBindings": 7,
+    "controls": 9,
+    "newTests": "b6a049 3/0/43一次",
+    "oldTest": "9a629b 1/0/5一次，141过滤",
+    "typeTerminal": "75640 → 5ffd8b actual exit0，4roots，1次",
+    "headTerminal": "abf4df 3source/507doc/0diagnostics/CN0",
+    "inventory": "1714完整字面形式；首行号缺失后仅harness字段修，不算source bug；1非字面不推断"
+  },
+  "document": {
+    "path": "docs/refactor/night-source-delivery.md",
+    "sha256": "ba0399b6d4b8ccc928dd79b84fd6078bbfd961e84f84956e59f012deccdcb288"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/night-source-delivery-evidence.json",
+    "sha256": "522b0b3d9c5bce3ee09e371bf14a1e0fad319c8b4aad09ec56d4b34bfedd883a"
+  },
+  "scope": {
+    "path": "docs/refactor/generated/night-source-delivery-scope-final.json",
+    "sha256": "ab97418b690d046a529dbf1e6497af67cb3b28eb96af738037a08ac47edb074a"
+  },
+  "limits": [
+    "未重复运行测试、compiler、proof harness、heads、全量gate、模型；未改源/Git/Matrix/progress。",
+    "真实1428输入与后继普通狼共享闭包阶段分开，九本批控制真同但不称全仓传递图历史等价。",
+    "批准这三源码功能边界，不作I01/I04/全重构或全角色验收。"
+  ]
+}

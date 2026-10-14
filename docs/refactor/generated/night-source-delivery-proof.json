@@ -1,0 +1,749 @@
+{
+  "baseCommit": "1428a210d931d4c043fb8d018f21e36c818fd05c",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "beforeSHA": "798dd22730bf8143736208965862e67549ba2269935884538f47fce9c7049670",
+      "currentSHA": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac"
+    },
+    {
+      "path": "backend/src/rulesets/night-source-delivery.ts",
+      "currentSHA": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0"
+    }
+  ],
+  "actualMovedProgram": {
+    "nonCommentNodeCount": 668,
+    "nonCommentLeafCount": 436,
+    "wholeShapeSame": true,
+    "wholeLeavesSame": true,
+    "statements": 8,
+    "basis": "实际新owner八个完整声明逐一提取，仅窄query表达式逆为原this.world/day/stageState/ownsDemon；未恢复旧完整程序。",
+    "outputs": [
+      {
+        "module": "ESNext",
+        "beforeSHA": "5ccba2dc03caf60d1beed8f1c3605634f2344dc04c92ca6fe9b378a0c45f94c6",
+        "mappedCurrentSHA": "5ccba2dc03caf60d1beed8f1c3605634f2344dc04c92ca6fe9b378a0c45f94c6",
+        "rawEqual": true
+      },
+      {
+        "module": "CommonJS",
+        "beforeSHA": "5ccba2dc03caf60d1beed8f1c3605634f2344dc04c92ca6fe9b378a0c45f94c6",
+        "mappedCurrentSHA": "5ccba2dc03caf60d1beed8f1c3605634f2344dc04c92ca6fe9b378a0c45f94c6",
+        "rawEqual": true
+      }
+    ]
+  },
+  "actualWholeIntegratedPipeline": {
+    "nonCommentNodeCount": 5163,
+    "nonCommentLeafCount": 3418,
+    "wholeShapeSame": true,
+    "wholeLeavesSame": true,
+    "basis": "完整currentNP真正新call展开为上述实际新body，再精确逆已记录imports/head；所有剩余方法、字段、错误、await、finally、summary/deathLives原顺序均纳入。",
+    "outputs": [
+      {
+        "module": "ESNext",
+        "beforeSHA": "bcc535b3b958adf84de357d290191aae34a1b747bf8d12abd2b14708bcdabd95",
+        "mappedCurrentSHA": "bcc535b3b958adf84de357d290191aae34a1b747bf8d12abd2b14708bcdabd95",
+        "rawEqual": true
+      },
+      {
+        "module": "CommonJS",
+        "beforeSHA": "1e75e392d8d5844942e851b19e06b80a2a947dc6748526606ab162d85f82e73e",
+        "mappedCurrentSHA": "1e75e392d8d5844942e851b19e06b80a2a947dc6748526606ab162d85f82e73e",
+        "rawEqual": true
+      }
+    ]
+  },
+  "wholeRetainedPipeline": {
+    "nonCommentNodeCount": 4507,
+    "nonCommentLeafCount": 2987,
+    "wholeShapeSame": true,
+    "wholeLeavesSame": true
+  },
+  "allActualOwnerBindings": [
+    {
+      "localName": "sealNativeGuardContribution",
+      "original": {
+        "name": "sealNativeGuardContribution",
+        "imported": "sealNativeGuardContribution",
+        "from": "../../mechanisms/roles/demon_hunter/guard_contribution",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "sealNativeGuardContribution",
+        "imported": "sealNativeGuardContribution",
+        "from": "../game/mechanisms/roles/demon_hunter/guard_contribution",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+        "name": "sealNativeGuardContribution"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+        "name": "sealNativeGuardContribution"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "lateUnknownGuardContribution",
+      "original": {
+        "name": "lateUnknownGuardContribution",
+        "imported": "lateUnknownGuardContribution",
+        "from": "../../mechanisms/roles/demon_hunter/guard_contribution",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "lateUnknownGuardContribution",
+        "imported": "lateUnknownGuardContribution",
+        "from": "../game/mechanisms/roles/demon_hunter/guard_contribution",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+        "name": "lateUnknownGuardContribution"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+        "name": "lateUnknownGuardContribution"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "demonOriginalWolfSourceCurrent",
+      "original": {
+        "name": "demonOriginalWolfSourceCurrent",
+        "imported": "demonOriginalWolfSourceCurrent",
+        "from": "../../mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "demonOriginalWolfSourceCurrent",
+        "imported": "demonOriginalWolfSourceCurrent",
+        "from": "../game/mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "name": "demonOriginalWolfSourceCurrent"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "name": "demonOriginalWolfSourceCurrent"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "demonOriginalWolfTargetCurrent",
+      "original": {
+        "name": "demonOriginalWolfTargetCurrent",
+        "imported": "demonOriginalWolfTargetCurrent",
+        "from": "../../mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "demonOriginalWolfTargetCurrent",
+        "imported": "demonOriginalWolfTargetCurrent",
+        "from": "../game/mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "name": "demonOriginalWolfTargetCurrent"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "name": "demonOriginalWolfTargetCurrent"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "DemonKnifeProtection",
+      "original": {
+        "name": "DemonKnifeProtection",
+        "imported": "DemonKnifeProtection",
+        "from": "../../mechanisms/roles/demon_hunter/ports",
+        "typeOnly": true
+      },
+      "current": {
+        "name": "DemonKnifeProtection",
+        "imported": "DemonKnifeProtection",
+        "from": "../game/mechanisms/roles/demon_hunter/ports",
+        "typeOnly": true
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+        "name": "DemonKnifeProtection"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+        "name": "DemonKnifeProtection"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "sealDeliveredDemonWitchSources",
+      "original": {
+        "name": "sealDeliveredDemonWitchSources",
+        "imported": "sealDeliveredDemonWitchSources",
+        "from": "../../mechanisms/roles/demon_hunter/native_potion_controller",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "sealDeliveredDemonWitchSources",
+        "imported": "sealDeliveredDemonWitchSources",
+        "from": "../game/mechanisms/roles/demon_hunter/native_potion_controller",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+        "name": "sealDeliveredDemonWitchSources"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+        "name": "sealDeliveredDemonWitchSources"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "COMPONENT",
+      "original": {
+        "name": "COMPONENT",
+        "imported": "COMPONENT",
+        "from": "../../../core/domain/components/names",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "COMPONENT",
+        "imported": "COMPONENT",
+        "from": "../core/domain/components/names",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/core/domain/components/names.ts",
+        "name": "COMPONENT"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/core/domain/components/names.ts",
+        "name": "COMPONENT"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "StatusMark",
+      "original": {
+        "name": "StatusMark",
+        "imported": "StatusMark",
+        "from": "../../../core/domain/model",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "StatusMark",
+        "imported": "StatusMark",
+        "from": "../core/domain/model",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "StatusMark"
+      },
+      "currentEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "StatusMark"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "statusMarkSnapshot",
+      "original": {
+        "name": "statusMarkSnapshot",
+        "imported": "statusMarkSnapshot",
+        "from": "../../../core/domain/components/status_marks",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "statusMarkSnapshot",
+        "imported": "statusMarkSnapshot",
+        "from": "../core/domain/components/status_marks",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/core/domain/components/status_marks.ts",
+        "name": "statusMarkSnapshot"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/core/domain/components/status_marks.ts",
+        "name": "statusMarkSnapshot"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "livingNightLife",
+      "original": {
+        "name": "livingNightLife",
+        "imported": "livingNightLife",
+        "from": "../../../core/domain/night_effects",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "livingNightLife",
+        "imported": "livingNightLife",
+        "from": "../core/domain/night_effects",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/core/domain/night_effects.ts",
+        "name": "livingNightLife"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/core/domain/night_effects.ts",
+        "name": "livingNightLife"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "World",
+      "original": {
+        "name": "World",
+        "imported": "World",
+        "from": "../../../core/domain/world",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "World",
+        "imported": "World",
+        "from": "../core/domain/world",
+        "typeOnly": true
+      },
+      "originalEndpoint": {
+        "path": "backend/src/core/domain/world.ts",
+        "name": "World"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/core/domain/world.ts",
+        "name": "World"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": true
+    },
+    {
+      "localName": "NightStageState",
+      "original": {
+        "name": "NightStageState",
+        "imported": "NightStageState",
+        "from": "../../mechanisms",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "NightStageState",
+        "imported": "NightStageState",
+        "from": "../game/mechanisms/stages/night/contracts",
+        "typeOnly": true
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "name": "NightStageState"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "name": "NightStageState"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": true
+    }
+  ],
+  "removedFromPipeline": [
+    {
+      "name": "sealNativeGuardContribution",
+      "imported": "sealNativeGuardContribution",
+      "from": "../../mechanisms/roles/demon_hunter/guard_contribution",
+      "typeOnly": false
+    },
+    {
+      "name": "lateUnknownGuardContribution",
+      "imported": "lateUnknownGuardContribution",
+      "from": "../../mechanisms/roles/demon_hunter/guard_contribution",
+      "typeOnly": false
+    },
+    {
+      "name": "demonOriginalWolfSourceCurrent",
+      "imported": "demonOriginalWolfSourceCurrent",
+      "from": "../../mechanisms/roles/demon_hunter/ports",
+      "typeOnly": false
+    },
+    {
+      "name": "demonOriginalWolfTargetCurrent",
+      "imported": "demonOriginalWolfTargetCurrent",
+      "from": "../../mechanisms/roles/demon_hunter/ports",
+      "typeOnly": false
+    },
+    {
+      "name": "sealDeliveredDemonWitchSources",
+      "imported": "sealDeliveredDemonWitchSources",
+      "from": "../../mechanisms/roles/demon_hunter/native_potion_controller",
+      "typeOnly": false
+    },
+    {
+      "name": "statusMarkSnapshot",
+      "imported": "statusMarkSnapshot",
+      "from": "../../../core/domain/components/status_marks",
+      "typeOnly": false
+    },
+    {
+      "name": "StatusMark",
+      "imported": "StatusMark",
+      "from": "../../../core/domain/model",
+      "typeOnly": false
+    }
+  ],
+  "retainedPipelineBindings": [
+    {
+      "name": "attachNightUnit",
+      "same": true
+    },
+    {
+      "name": "ReadonlyBoardConfig",
+      "same": true
+    },
+    {
+      "name": "prepareNightPipelineLifecycle",
+      "same": true
+    },
+    {
+      "name": "NightLifecycleHandoff",
+      "same": true
+    },
+    {
+      "name": "assertNightSetupReady",
+      "same": true
+    },
+    {
+      "name": "assertNightReadable",
+      "same": true
+    },
+    {
+      "name": "RulePlan",
+      "same": true
+    },
+    {
+      "name": "bindNightAbilityActorQuery",
+      "same": true
+    },
+    {
+      "name": "isFragrantPairBoard",
+      "same": true
+    },
+    {
+      "name": "fragrantAuthoritySnapshot",
+      "same": true
+    },
+    {
+      "name": "createNobleNightAbortReceiver",
+      "same": true
+    },
+    {
+      "name": "attachNobleNightReceiver",
+      "same": true
+    },
+    {
+      "name": "checkpointNobleBodyAuthority",
+      "same": true
+    },
+    {
+      "name": "isNobleBodyBoard",
+      "same": true
+    },
+    {
+      "name": "animalAuthoritySnapshot",
+      "same": true
+    },
+    {
+      "name": "isRadiantEclipseBoard",
+      "same": true
+    },
+    {
+      "name": "isScholarMentorBoard",
+      "same": true
+    },
+    {
+      "name": "mistKnifeTargets",
+      "same": true
+    },
+    {
+      "name": "isMistRavenBoard",
+      "same": true
+    },
+    {
+      "name": "assertScholarMentorBonusEffects",
+      "same": true
+    },
+    {
+      "name": "isTimeConsortBoard",
+      "same": true
+    },
+    {
+      "name": "isMagicianBoard",
+      "same": true
+    },
+    {
+      "name": "isRedMoonBoard",
+      "same": true
+    },
+    {
+      "name": "isNightmareBoard",
+      "same": true
+    },
+    {
+      "name": "isEvilKnightBoard",
+      "same": true
+    },
+    {
+      "name": "assertEvilKnightRosterCurrent",
+      "same": true
+    },
+    {
+      "name": "captureEvilKnightNightShotProtection",
+      "same": true
+    },
+    {
+      "name": "demonHunterActorId",
+      "same": true
+    },
+    {
+      "name": "originalDemonNightLives",
+      "same": true
+    },
+    {
+      "name": "DemonKnifeProtection",
+      "same": true
+    },
+    {
+      "name": "weddingSetup",
+      "same": true
+    },
+    {
+      "name": "discardStaleWeddingKnife",
+      "same": true
+    },
+    {
+      "name": "COMPONENT",
+      "same": true
+    },
+    {
+      "name": "RoleComponent",
+      "same": true
+    },
+    {
+      "name": "StatusMarksComponent",
+      "same": true
+    },
+    {
+      "name": "ActionProvider",
+      "same": true
+    },
+    {
+      "name": "ActionRequest",
+      "same": true
+    },
+    {
+      "name": "ActionRequestExtras",
+      "same": true
+    },
+    {
+      "name": "ActionStage",
+      "same": true
+    },
+    {
+      "name": "BoardConfig",
+      "same": true
+    },
+    {
+      "name": "EntityId",
+      "same": true
+    },
+    {
+      "name": "GameEvent",
+      "same": true
+    },
+    {
+      "name": "ExileFeedback",
+      "same": true
+    },
+    {
+      "name": "NightSummary",
+      "same": true
+    },
+    {
+      "name": "Phase",
+      "same": true
+    },
+    {
+      "name": "Role",
+      "same": true
+    },
+    {
+      "name": "TieBreakerStrategy",
+      "same": true
+    },
+    {
+      "name": "DeathCause",
+      "same": true
+    },
+    {
+      "name": "DamageResolutionResult",
+      "same": true
+    },
+    {
+      "name": "DamageResolutionSystem",
+      "same": true
+    },
+    {
+      "name": "World",
+      "same": true
+    },
+    {
+      "name": "ToolGateway",
+      "same": true
+    },
+    {
+      "name": "NightStageState",
+      "same": true
+    },
+    {
+      "name": "NightStageContext",
+      "same": true
+    },
+    {
+      "name": "getDefaultNightStageRegistry",
+      "same": true
+    },
+    {
+      "name": "NightStageRegistry",
+      "same": true
+    },
+    {
+      "name": "getSessionRecorder",
+      "same": true
+    },
+    {
+      "name": "safeRecordLogicOp",
+      "same": true
+    },
+    {
+      "name": "GameActionRequestFactory",
+      "same": true
+    },
+    {
+      "name": "createRandom",
+      "same": true
+    },
+    {
+      "name": "shuffled",
+      "same": true
+    },
+    {
+      "name": "RandomSource",
+      "same": true
+    },
+    {
+      "name": "DreamNightEffects",
+      "same": true
+    },
+    {
+      "name": "composeNightDamage",
+      "same": true
+    },
+    {
+      "name": "discardStaleWolfKnife",
+      "same": true
+    },
+    {
+      "name": "livingNightLife",
+      "same": true
+    },
+    {
+      "name": "AliveComponent",
+      "same": true
+    },
+    {
+      "name": "aliveLifeVersion",
+      "same": true
+    },
+    {
+      "name": "assertNightCommitAdmission",
+      "same": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "originalSHA": "396a6628055e061ed38becc44d903ed51121386e962bb0aa4fe75007886c6f9c",
+      "currentSHA": "396a6628055e061ed38becc44d903ed51121386e962bb0aa4fe75007886c6f9c",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/src/rulesets/native-night-effects.ts",
+      "originalSHA": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4",
+      "currentSHA": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "originalSHA": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "currentSHA": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "originalSHA": "cb43b97eb1df5ccaa54b36faf023ae2f90de787aa292a10a2ab065093837469e",
+      "currentSHA": "cb43b97eb1df5ccaa54b36faf023ae2f90de787aa292a10a2ab065093837469e",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "originalSHA": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+      "currentSHA": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+      "originalSHA": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "currentSHA": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "originalSHA": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8",
+      "currentSHA": "a2469a1d433a182a3c0abc5bc7ad269f7b8908ac23f8795a0e6b675409c878d8",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "originalSHA": "956bfdae5ad0056c3ecbeb73d46500e51c79e904c0769c9e12064fad1e59b4d4",
+      "currentSHA": "956bfdae5ad0056c3ecbeb73d46500e51c79e904c0769c9e12064fad1e59b4d4",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "originalSHA": "01427b5b0abe4d39debc6f9d5b49beb33ef58273be6c0d7249575a061610408f",
+      "currentSHA": "01427b5b0abe4d39debc6f9d5b49beb33ef58273be6c0d7249575a061610408f",
+      "wholeByteSame": true
+    }
+  ],
+  "limits": [
+    "新同步函数和三字段返回record是新的运行组合接口；额外窄query调用及声明／栈布局有意变化，不宣任意new-runtime getter路径与旧私有反射API同等。",
+    "逐个原World/日次/状态字段时点及原opaque token/五字段只读视图保留，不把guardCurrent或life组件移共享DTO，不新增权限、cleanup、schema或RNG。",
+    "调用原具体native/guardowner而不在广义Demonports新增静态控制器reexport，避免破坏其现有懒loader职责；不宣全部历史模块初始化相同。"
+  ],
+  "approved": true
+}

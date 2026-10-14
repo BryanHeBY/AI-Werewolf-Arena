@@ -9,7 +9,8 @@
  * intent 元数据不进入夜间摘要、事件或 schema2，旧注入 claim 保持兼容。
  * 晚交接保留真实单位的 owned 状态和原失败前缀，result 与最终伤害仍在原已付效果之后准备。
  * 已提交重入准入交有限规则组合，在原婚约开夜之后检查；拒绝不撤销原已付效果，原 finally 仍收尾。
- * 明辉／梦及增益的伤害输入组合归规则集；本流水线保原检查点，运行梦句柄不进入摘要或归档。
+ * 明辉／梦及增益伤害与猎魔来源交付各归具名规则组合；本流水线保封存、伤害结算及死亡生命捕获的原检查点。
+ * 运行梦句柄、猎魔 token 与晚保护闭包不进入玩家摘要或归档。
  */
 import { attachNightUnit } from "../../../core/domain/night-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -37,20 +38,14 @@ import {
   assertEvilKnightRosterCurrent,
   captureEvilKnightNightShotProtection,
 } from "../../mechanisms/roles/evil_knight/ports";
-import {
-  sealNativeGuardContribution,
-  lateUnknownGuardContribution,
-} from "../../mechanisms/roles/demon_hunter/guard_contribution";
-import { demonHunterActorId, originalDemonNightLives, demonOriginalWolfSourceCurrent, demonOriginalWolfTargetCurrent } from "../../mechanisms/roles/demon_hunter/ports";
+import { demonHunterActorId, originalDemonNightLives } from "../../mechanisms/roles/demon_hunter/ports";
 import type { DemonKnifeProtection } from "../../mechanisms/roles/demon_hunter/ports";
-import { sealDeliveredDemonWitchSources } from "../../mechanisms/roles/demon_hunter/native_potion_controller";
 import { weddingSetup } from "../../mechanisms/roles/ghost_bride/ports";
 import { discardStaleWeddingKnife } from "../../mechanisms/roles/ghost_bride/night_stages";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import {
   StatusMarksComponent,
-  statusMarkSnapshot,
 } from "../../../core/domain/components/status_marks";
 import {
   ActionProvider,
@@ -65,7 +60,6 @@ import {
   Phase,
   Role,
   TieBreakerStrategy,
-  StatusMark,
   DeathCause,
 } from "../../../core/domain/model";
 import {
@@ -86,6 +80,7 @@ import { GameActionRequestFactory } from "../action_request_factory";
 import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
 import type { DreamNightEffects } from "../../../core/domain/dream-night-effects";
 import { composeNightDamage } from "../../../rulesets/night-damage-composition";
+import { prepareNightSourceDelivery } from "../../../rulesets/night-source-delivery";
 import { discardStaleWolfKnife } from "../../mechanisms/roles/wolf/knife_scope";
 import { livingNightLife } from "../../../core/domain/night_effects";
 import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
@@ -306,65 +301,12 @@ export class NightPipeline {
 
       discardStaleWolfKnife(this.world, stageState);
       if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
-      const demonSources = ownsDemon ? sealDeliveredDemonWitchSources(this.world, day) : undefined;
-      const demonWolfActors = [...(stageState.wolfTargetVoters ?? [])];
-      const knifeScope = stageState.wolfTargetScope;
-      const demonWolfTarget = knifeScope?.targetId;
-      const demonWolfSourceCurrent = ownsDemon
-        ? (targetId: number) =>
-            targetId === demonWolfTarget &&
-            demonOriginalWolfSourceCurrent(this.world, day, demonWolfActors) &&
-            demonOriginalWolfTargetCurrent(this.world, day, targetId)
-        : undefined;
-      const demonGuardSources = ownsDemon
-        ? (stageState.guardClaims ?? []).flatMap((claim) =>
-            claim.contribution
-              ? [{ claim, sealed: sealNativeGuardContribution(claim.contribution) }]
-              : [],
-          )
-        : [];
-      const demonUnknownGuard =
-        knifeScope && statusMarkSnapshot(knifeScope.marks, StatusMark.GuardMark)?.present === true;
-      const demonKnifeProtection =
-        ownsDemon && knifeScope
-          ? Object.freeze({
-              targetId: knifeScope.targetId,
-              wolf: statusMarkSnapshot(knifeScope.marks, StatusMark.WolfKillMark)?.present === true,
-              guard:
-                statusMarkSnapshot(knifeScope.marks, StatusMark.GuardMark)?.present === true &&
-                (!(stageState.guardClaims ?? []).some(
-                  (claim) => claim.target.id === knifeScope.targetId,
-                ) ||
-                  (stageState.guardClaims ?? []).some(
-                    (claim) =>
-                      claim.target.id === knifeScope.targetId &&
-                      claim.marks === knifeScope.marks &&
-                      livingNightLife(this.world, claim.target),
-                  )),
-              guardCurrent: () => {
-                const sources = demonGuardSources.filter(
-                  ({ claim }) => claim.target.id === knifeScope.targetId,
-                );
-                if (!sources.length)
-                  return (
-                    !!demonUnknownGuard ||
-                    statusMarkSnapshot(
-                      this.world.getComponent(knifeScope.targetId, COMPONENT.StatusMarks),
-                      StatusMark.GuardMark,
-                    )?.present === true
-                  );
-                return sources.some(
-                  ({ claim, sealed }) =>
-                    sealed.unknown ||
-                    lateUnknownGuardContribution(claim.contribution!) ||
-                    (sealed.native &&
-                      claim.isCurrent?.() === true &&
-                      livingNightLife(this.world, claim.target)),
-                );
-              },
-              heal: statusMarkSnapshot(knifeScope.marks, StatusMark.HealMark)?.present === true,
-            })
-          : undefined;
+      const { demonSources, demonWolfSourceCurrent, demonKnifeProtection } = prepareNightSourceDelivery({
+        ownsDemon: () => ownsDemon,
+        world: () => this.world,
+        day: () => day,
+        claims: () => stageState,
+      });
       const { dreamFrame, damage } = composeNightDamage({
         ownsRadiant: () => ownsRadiant,
         world: () => this.world,

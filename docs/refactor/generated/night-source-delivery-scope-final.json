@@ -1,0 +1,23 @@
+{
+  "baseCommit": "1428a210d931d4c043fb8d018f21e36c818fd05c",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "change": "modified",
+      "sha256": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac"
+    },
+    {
+      "path": "backend/src/rulesets/night-source-delivery.ts",
+      "change": "added",
+      "sha256": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-source-delivery.test.ts",
+      "change": "added",
+      "sha256": "bdfe30f500e3462fd245adc2a60991bd81032a1f2025856b1f120768a3f4cf9c"
+    }
+  ],
+  "sourceCount": 3,
+  "frozen": true,
+  "policy": "仅完整夜间来源交付、原流水线调用点和定向单元；不改原权威、proof/库存、五字段共享类型、RulePlan、DR或其它并行候选。"
+}

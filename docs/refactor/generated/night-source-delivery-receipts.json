@@ -1,0 +1,80 @@
+{
+  "newTests": {
+    "terminalChunk": "b6a049",
+    "exitCode": 0,
+    "pass": 3,
+    "fail": 0,
+    "assertions": 43,
+    "executions": 1,
+    "log": "docs/refactor/generated/night-source-delivery-new-tests.log"
+  },
+  "originalTest": {
+    "terminalChunk": "9a629b",
+    "exitCode": 0,
+    "pass": 1,
+    "fail": 0,
+    "assertions": 5,
+    "filtered": 141,
+    "executions": 1,
+    "case": "delivered source seal cannot invent, copy, omit or cross Worlds",
+    "log": "docs/refactor/generated/night-source-delivery-original-test.log"
+  },
+  "successfulTotal": {
+    "distinctCases": 4,
+    "assertions": 48,
+    "executions": 2,
+    "limit": "两个独立执行，没有重跑已有绿色case或其余141例。"
+  },
+  "finiteTypes": {
+    "roots": 4,
+    "launchChunk": "2720fc",
+    "session": 75640,
+    "actualTerminalChunk": "5ffd8b",
+    "exitCode": 0,
+    "attempts": 1,
+    "log": "docs/refactor/generated/night-source-delivery-types.log",
+    "limit": "真实后继已提交普通狼共享装配可出现在传递闭包；不冒旧完整加载图。"
+  },
+  "completeProgramProof": {
+    "terminalChunk": "d2f928",
+    "exitCode": 0,
+    "actualMovedStatements": 8,
+    "actualMovedNonCommentNodes": 668,
+    "actualMovedNonCommentLeaves": 436,
+    "wholeIntegratedPipelineNodes": 5163,
+    "wholeESNextAndCJSOutputs": 4,
+    "actualOwnerBindings": 12,
+    "retainedPipelineBindings": 69,
+    "removedPipelineBindings": 7,
+    "controls": 9,
+    "report": "docs/refactor/generated/night-source-delivery-proof.json",
+    "log": "docs/refactor/generated/night-source-delivery-proof.log"
+  },
+  "heads": {
+    "terminalChunk": "abf4df",
+    "exitCode": 0,
+    "sources": 3,
+    "documentationPaths": 507,
+    "diagnostics": 0,
+    "missingChineseHeads": 0,
+    "report": "docs/refactor/generated/night-source-delivery-heads.json",
+    "log": "docs/refactor/generated/night-source-delivery-heads.log"
+  },
+  "inventory": {
+    "firstChunk": "abf4df",
+    "firstExitCode": 0,
+    "firstReport": "docs/refactor/generated/night-source-delivery-inventory-before-line-precision.json",
+    "firstLog": "docs/refactor/generated/night-source-delivery-inventory-before-line-precision.log",
+    "firstPrecision": "line字段误写三元条件导致undefined；端点/绑定/count无误，只修harness位置字段。",
+    "finalChunk": "ca482c",
+    "exitCode": 0,
+    "report": "docs/refactor/generated/night-source-delivery-inventory.json",
+    "log": "docs/refactor/generated/night-source-delivery-inventory.log",
+    "files": 1714
+  },
+  "diffCheck": {
+    "terminalChunk": "108947",
+    "exitCode": 0,
+    "limit": "只已跟踪差分；新源码另由完整程序/类型和真实单元检验，不宣gitdiffcheck检查untracked。"
+  }
+}

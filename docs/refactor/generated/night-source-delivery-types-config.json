@@ -1,0 +1,18 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/night-source-delivery.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/night-source-delivery.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/demon-hunter/authority.test.ts"
+  ]
+}

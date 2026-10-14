@@ -1,0 +1,506 @@
+{
+  "scanRootFiles": 1714,
+  "forms": [
+    "import/export incl star",
+    "inline importType/typeof-import",
+    "literal import()/require()",
+    "importEquals"
+  ],
+  "actualCanonicalOwnerSites": [
+    {
+      "path": "backend/tests/unit/rulesets/night-source-delivery.test.ts",
+      "sha256": "bdfe30f500e3462fd245adc2a60991bd81032a1f2025856b1f120768a3f4cf9c",
+      "form": "import",
+      "module": "../../../src/rulesets/night-source-delivery",
+      "target": "backend/src/rulesets/night-source-delivery.ts",
+      "names": [
+        {
+          "name": "prepareNightSourceDelivery",
+          "imported": "prepareNightSourceDelivery",
+          "typeOnly": false
+        },
+        {
+          "name": "NightSourceDeliveryRuntime",
+          "imported": "NightSourceDeliveryRuntime",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "form": "import",
+      "module": "../../../rulesets/night-source-delivery",
+      "target": "backend/src/rulesets/night-source-delivery.ts",
+      "names": [
+        {
+          "name": "prepareNightSourceDelivery",
+          "imported": "prepareNightSourceDelivery",
+          "typeOnly": false
+        }
+      ]
+    }
+  ],
+  "existingSourceCalleeBindings": [
+    {
+      "path": "backend/src/rulesets/night-source-delivery.ts",
+      "sha256": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0",
+      "form": "import",
+      "module": "../game/mechanisms/roles/demon_hunter/guard_contribution",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "names": [
+        {
+          "name": "sealNativeGuardContribution",
+          "imported": "sealNativeGuardContribution",
+          "typeOnly": false
+        },
+        {
+          "name": "lateUnknownGuardContribution",
+          "imported": "lateUnknownGuardContribution",
+          "typeOnly": false
+        }
+      ],
+      "binding": {
+        "name": "sealNativeGuardContribution",
+        "imported": "sealNativeGuardContribution",
+        "typeOnly": false
+      }
+    },
+    {
+      "path": "backend/src/rulesets/night-source-delivery.ts",
+      "sha256": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0",
+      "form": "import",
+      "module": "../game/mechanisms/roles/demon_hunter/guard_contribution",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "names": [
+        {
+          "name": "sealNativeGuardContribution",
+          "imported": "sealNativeGuardContribution",
+          "typeOnly": false
+        },
+        {
+          "name": "lateUnknownGuardContribution",
+          "imported": "lateUnknownGuardContribution",
+          "typeOnly": false
+        }
+      ],
+      "binding": {
+        "name": "lateUnknownGuardContribution",
+        "imported": "lateUnknownGuardContribution",
+        "typeOnly": false
+      }
+    },
+    {
+      "path": "backend/src/rulesets/night-source-delivery.ts",
+      "sha256": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0",
+      "form": "import",
+      "module": "../game/mechanisms/roles/demon_hunter/ports",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "names": [
+        {
+          "name": "demonOriginalWolfSourceCurrent",
+          "imported": "demonOriginalWolfSourceCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "demonOriginalWolfTargetCurrent",
+          "imported": "demonOriginalWolfTargetCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "DemonKnifeProtection",
+          "imported": "DemonKnifeProtection",
+          "typeOnly": true
+        }
+      ],
+      "binding": {
+        "name": "demonOriginalWolfSourceCurrent",
+        "imported": "demonOriginalWolfSourceCurrent",
+        "typeOnly": false
+      }
+    },
+    {
+      "path": "backend/src/rulesets/night-source-delivery.ts",
+      "sha256": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0",
+      "form": "import",
+      "module": "../game/mechanisms/roles/demon_hunter/ports",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "names": [
+        {
+          "name": "demonOriginalWolfSourceCurrent",
+          "imported": "demonOriginalWolfSourceCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "demonOriginalWolfTargetCurrent",
+          "imported": "demonOriginalWolfTargetCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "DemonKnifeProtection",
+          "imported": "DemonKnifeProtection",
+          "typeOnly": true
+        }
+      ],
+      "binding": {
+        "name": "demonOriginalWolfTargetCurrent",
+        "imported": "demonOriginalWolfTargetCurrent",
+        "typeOnly": false
+      }
+    },
+    {
+      "path": "backend/src/rulesets/night-source-delivery.ts",
+      "sha256": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0",
+      "form": "import",
+      "module": "../game/mechanisms/roles/demon_hunter/native_potion_controller",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "names": [
+        {
+          "name": "sealDeliveredDemonWitchSources",
+          "imported": "sealDeliveredDemonWitchSources",
+          "typeOnly": false
+        }
+      ],
+      "binding": {
+        "name": "sealDeliveredDemonWitchSources",
+        "imported": "sealDeliveredDemonWitchSources",
+        "typeOnly": false
+      }
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-source-delivery.test.ts",
+      "sha256": "bdfe30f500e3462fd245adc2a60991bd81032a1f2025856b1f120768a3f4cf9c",
+      "form": "import",
+      "module": "../../../src/game/mechanisms/roles/demon_hunter/guard_contribution",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "names": [
+        {
+          "name": "openNativeGuardContribution",
+          "imported": "openNativeGuardContribution",
+          "typeOnly": false
+        },
+        {
+          "name": "commitNativeGuardContribution",
+          "imported": "commitNativeGuardContribution",
+          "typeOnly": false
+        },
+        {
+          "name": "sealNativeGuardContribution",
+          "imported": "sealNativeGuardContribution",
+          "typeOnly": false
+        }
+      ],
+      "binding": {
+        "name": "sealNativeGuardContribution",
+        "imported": "sealNativeGuardContribution",
+        "typeOnly": false
+      }
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-source-delivery.test.ts",
+      "sha256": "bdfe30f500e3462fd245adc2a60991bd81032a1f2025856b1f120768a3f4cf9c",
+      "form": "import",
+      "module": "../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "names": [
+        {
+          "name": "sealDeliveredDemonWitchSources",
+          "imported": "sealDeliveredDemonWitchSources",
+          "typeOnly": false
+        }
+      ],
+      "binding": {
+        "name": "sealDeliveredDemonWitchSources",
+        "imported": "sealDeliveredDemonWitchSources",
+        "typeOnly": false
+      }
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "form": "export",
+      "module": "./authority",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "names": [
+        {
+          "name": "isRedMoonBoard",
+          "imported": "isRedMoonBoard",
+          "typeOnly": false
+        },
+        {
+          "name": "demonHunterActorId",
+          "imported": "demonHunterActorId",
+          "typeOnly": false
+        },
+        {
+          "name": "demonHunterNativeGunCurrent",
+          "imported": "demonHunterNativeGunCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "assertDemonNightReadable",
+          "imported": "assertDemonNightReadable",
+          "typeOnly": false
+        },
+        {
+          "name": "originalDemonNightLives",
+          "imported": "originalDemonNightLives",
+          "typeOnly": false
+        },
+        {
+          "name": "demonOriginalWolfSourceCurrent",
+          "imported": "demonOriginalWolfSourceCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "demonOriginalWolfTargetCurrent",
+          "imported": "demonOriginalWolfTargetCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "demonRedMoonExpiry",
+          "imported": "demonRedMoonExpiry",
+          "typeOnly": false
+        },
+        {
+          "name": "commitDemonRedMoonTransition",
+          "imported": "commitDemonRedMoonTransition",
+          "typeOnly": false
+        },
+        {
+          "name": "committedDemonFaultBoundary",
+          "imported": "committedDemonFaultBoundary",
+          "typeOnly": false
+        },
+        {
+          "name": "assertDemonOriginalRoster",
+          "imported": "assertDemonOriginalRoster",
+          "typeOnly": false
+        },
+        {
+          "name": "hasDemonNightStarted",
+          "imported": "hasDemonNightStarted",
+          "typeOnly": false
+        },
+        {
+          "name": "demonWitchRequiredThisNight",
+          "imported": "demonWitchRequiredThisNight",
+          "typeOnly": false
+        }
+      ],
+      "binding": {
+        "name": "demonOriginalWolfSourceCurrent",
+        "imported": "demonOriginalWolfSourceCurrent",
+        "typeOnly": false
+      }
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "form": "export",
+      "module": "./authority",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "names": [
+        {
+          "name": "isRedMoonBoard",
+          "imported": "isRedMoonBoard",
+          "typeOnly": false
+        },
+        {
+          "name": "demonHunterActorId",
+          "imported": "demonHunterActorId",
+          "typeOnly": false
+        },
+        {
+          "name": "demonHunterNativeGunCurrent",
+          "imported": "demonHunterNativeGunCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "assertDemonNightReadable",
+          "imported": "assertDemonNightReadable",
+          "typeOnly": false
+        },
+        {
+          "name": "originalDemonNightLives",
+          "imported": "originalDemonNightLives",
+          "typeOnly": false
+        },
+        {
+          "name": "demonOriginalWolfSourceCurrent",
+          "imported": "demonOriginalWolfSourceCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "demonOriginalWolfTargetCurrent",
+          "imported": "demonOriginalWolfTargetCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "demonRedMoonExpiry",
+          "imported": "demonRedMoonExpiry",
+          "typeOnly": false
+        },
+        {
+          "name": "commitDemonRedMoonTransition",
+          "imported": "commitDemonRedMoonTransition",
+          "typeOnly": false
+        },
+        {
+          "name": "committedDemonFaultBoundary",
+          "imported": "committedDemonFaultBoundary",
+          "typeOnly": false
+        },
+        {
+          "name": "assertDemonOriginalRoster",
+          "imported": "assertDemonOriginalRoster",
+          "typeOnly": false
+        },
+        {
+          "name": "hasDemonNightStarted",
+          "imported": "hasDemonNightStarted",
+          "typeOnly": false
+        },
+        {
+          "name": "demonWitchRequiredThisNight",
+          "imported": "demonWitchRequiredThisNight",
+          "typeOnly": false
+        }
+      ],
+      "binding": {
+        "name": "demonOriginalWolfTargetCurrent",
+        "imported": "demonOriginalWolfTargetCurrent",
+        "typeOnly": false
+      }
+    }
+  ],
+  "existingDemonKnifeProtectionSites": [
+    {
+      "path": "backend/tests/unit/features/demon-hunter/night-damage-contribution.test.ts",
+      "sha256": "2f067699a95a343d85f8de7595f9767c23d0cec5e9b569656d213c8e1d0be608",
+      "form": "import",
+      "module": "../../../../src/game/mechanisms/roles/demon_hunter/ports",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "names": [
+        {
+          "name": "appendDemonNightDamageSources",
+          "imported": "appendDemonNightDamageSources",
+          "typeOnly": false
+        },
+        {
+          "name": "publishDemonNightDamageSources",
+          "imported": "publishDemonNightDamageSources",
+          "typeOnly": false
+        },
+        {
+          "name": "DemonKnifeProtection",
+          "imported": "DemonKnifeProtection",
+          "typeOnly": true
+        },
+        {
+          "name": "DemonNightDamageQueries",
+          "imported": "DemonNightDamageQueries",
+          "typeOnly": true
+        }
+      ],
+      "binding": {
+        "name": "DemonKnifeProtection",
+        "imported": "DemonKnifeProtection",
+        "typeOnly": true
+      }
+    },
+    {
+      "path": "backend/src/rulesets/night-source-delivery.ts",
+      "sha256": "3d479890409d2b61f9c7b54d41217167e5ac0dfdcce8a76509dbddbc6caecfe0",
+      "form": "import",
+      "module": "../game/mechanisms/roles/demon_hunter/ports",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "names": [
+        {
+          "name": "demonOriginalWolfSourceCurrent",
+          "imported": "demonOriginalWolfSourceCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "demonOriginalWolfTargetCurrent",
+          "imported": "demonOriginalWolfTargetCurrent",
+          "typeOnly": false
+        },
+        {
+          "name": "DemonKnifeProtection",
+          "imported": "DemonKnifeProtection",
+          "typeOnly": true
+        }
+      ],
+      "binding": {
+        "name": "DemonKnifeProtection",
+        "imported": "DemonKnifeProtection",
+        "typeOnly": true
+      }
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9b06668dbadb630715fb104fe8b1037026837e5d7b4b09403319210ab1c5a0b8",
+      "form": "export",
+      "module": "./night-damage-contribution",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+      "names": [
+        {
+          "name": "appendDemonNightDamageSources",
+          "imported": "appendDemonNightDamageSources",
+          "typeOnly": false
+        },
+        {
+          "name": "publishDemonNightDamageSources",
+          "imported": "publishDemonNightDamageSources",
+          "typeOnly": false
+        },
+        {
+          "name": "DemonKnifeProtection",
+          "imported": "DemonKnifeProtection",
+          "typeOnly": true
+        },
+        {
+          "name": "DemonNightDamageQueries",
+          "imported": "DemonNightDamageQueries",
+          "typeOnly": true
+        },
+        {
+          "name": "DemonNightDamagePublicationRuntime",
+          "imported": "DemonNightDamagePublicationRuntime",
+          "typeOnly": true
+        }
+      ],
+      "binding": {
+        "name": "DemonKnifeProtection",
+        "imported": "DemonKnifeProtection",
+        "typeOnly": true
+      }
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "form": "import",
+      "module": "../../mechanisms/roles/demon_hunter/ports",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "names": [
+        {
+          "name": "DemonKnifeProtection",
+          "imported": "DemonKnifeProtection",
+          "typeOnly": true
+        }
+      ],
+      "binding": {
+        "name": "DemonKnifeProtection",
+        "imported": "DemonKnifeProtection",
+        "typeOnly": true
+      }
+    }
+  ],
+  "nonliteralLoadCount": 1,
+  "limits": [
+    "只盘点实际字面source及typed入口，不推断一个非字面load或任意仓外消费者。",
+    "原五字段DemonKnifeProtection唯一物理定义仍night-damage-contribution，经既有Demonports公开；新owner及NP复用，未退原type API／原native seal API。"
+  ],
+  "approved": true
+}

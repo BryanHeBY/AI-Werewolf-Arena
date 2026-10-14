@@ -1,0 +1,57 @@
+{
+  "baseCommit": "1428a210d931d4c043fb8d018f21e36c818fd05c",
+  "source": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+  "owner": "backend/src/rulesets/night-source-delivery.ts",
+  "edits": [
+    {
+      "from": "      const demonSources = ownsDemon ? sealDeliveredDemonWitchSources(this.world, day) : undefined;\n      const demonWolfActors = [...(stageState.wolfTargetVoters ?? [])];\n      const knifeScope = stageState.wolfTargetScope;\n      const demonWolfTarget = knifeScope?.targetId;\n      const demonWolfSourceCurrent = ownsDemon\n        ? (targetId: number) =>\n            targetId === demonWolfTarget &&\n            demonOriginalWolfSourceCurrent(this.world, day, demonWolfActors) &&\n            demonOriginalWolfTargetCurrent(this.world, day, targetId)\n        : undefined;\n      const demonGuardSources = ownsDemon\n        ? (stageState.guardClaims ?? []).flatMap((claim) =>\n            claim.contribution\n              ? [{ claim, sealed: sealNativeGuardContribution(claim.contribution) }]\n              : [],\n          )\n        : [];\n      const demonUnknownGuard =\n        knifeScope && statusMarkSnapshot(knifeScope.marks, StatusMark.GuardMark)?.present === true;\n      const demonKnifeProtection =\n        ownsDemon && knifeScope\n          ? Object.freeze({\n              targetId: knifeScope.targetId,\n              wolf: statusMarkSnapshot(knifeScope.marks, StatusMark.WolfKillMark)?.present === true,\n              guard:\n                statusMarkSnapshot(knifeScope.marks, StatusMark.GuardMark)?.present === true &&\n                (!(stageState.guardClaims ?? []).some(\n                  (claim) => claim.target.id === knifeScope.targetId,\n                ) ||\n                  (stageState.guardClaims ?? []).some(\n                    (claim) =>\n                      claim.target.id === knifeScope.targetId &&\n                      claim.marks === knifeScope.marks &&\n                      livingNightLife(this.world, claim.target),\n                  )),\n              guardCurrent: () => {\n                const sources = demonGuardSources.filter(\n                  ({ claim }) => claim.target.id === knifeScope.targetId,\n                );\n                if (!sources.length)\n                  return (\n                    !!demonUnknownGuard ||\n                    statusMarkSnapshot(\n                      this.world.getComponent(knifeScope.targetId, COMPONENT.StatusMarks),\n                      StatusMark.GuardMark,\n                    )?.present === true\n                  );\n                return sources.some(\n                  ({ claim, sealed }) =>\n                    sealed.unknown ||\n                    lateUnknownGuardContribution(claim.contribution!) ||\n                    (sealed.native &&\n                      claim.isCurrent?.() === true &&\n                      livingNightLife(this.world, claim.target)),\n                );\n              },\n              heal: statusMarkSnapshot(knifeScope.marks, StatusMark.HealMark)?.present === true,\n            })\n          : undefined;\n",
+      "to": "      const { demonSources, demonWolfSourceCurrent, demonKnifeProtection } = prepareNightSourceDelivery({\n        ownsDemon: () => ownsDemon,\n        world: () => this.world,\n        day: () => day,\n        claims: () => stageState,\n      });\n"
+    },
+    {
+      "from": "import {\n  sealNativeGuardContribution,\n  lateUnknownGuardContribution,\n} from \"../../mechanisms/roles/demon_hunter/guard_contribution\";\n",
+      "to": ""
+    },
+    {
+      "from": "import { demonHunterActorId, originalDemonNightLives, demonOriginalWolfSourceCurrent, demonOriginalWolfTargetCurrent } from \"../../mechanisms/roles/demon_hunter/ports\";",
+      "to": "import { demonHunterActorId, originalDemonNightLives } from \"../../mechanisms/roles/demon_hunter/ports\";"
+    },
+    {
+      "from": "import { sealDeliveredDemonWitchSources } from \"../../mechanisms/roles/demon_hunter/native_potion_controller\";\n",
+      "to": ""
+    },
+    {
+      "from": "  statusMarkSnapshot,\n",
+      "to": ""
+    },
+    {
+      "from": "import { composeNightDamage } from \"../../../rulesets/night-damage-composition\";",
+      "to": "import { composeNightDamage } from \"../../../rulesets/night-damage-composition\";\nimport { prepareNightSourceDelivery } from \"../../../rulesets/night-source-delivery\";"
+    },
+    {
+      "from": " * 明辉／梦及增益的伤害输入组合归规则集；本流水线保原检查点，运行梦句柄不进入摘要或归档。",
+      "to": " * 明辉／梦及增益伤害与猎魔来源交付各归具名规则组合；本流水线保封存、伤害结算及死亡生命捕获的原检查点。\n * 运行梦句柄、猎魔 token 与晚保护闭包不进入玩家摘要或归档。"
+    },
+    {
+      "from": "  StatusMark,\n",
+      "to": ""
+    }
+  ],
+  "bodySubstitutions": [
+    [
+      "runtime.ownsDemon()",
+      "ownsDemon"
+    ],
+    [
+      "runtime.world()",
+      "this.world"
+    ],
+    [
+      "runtime.day()",
+      "day"
+    ],
+    [
+      "runtime.claims()",
+      "stageState"
+    ]
+  ]
+}
