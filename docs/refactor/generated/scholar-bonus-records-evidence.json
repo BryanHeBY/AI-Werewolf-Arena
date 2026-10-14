@@ -1,0 +1,104 @@
+{
+  "schema": "awa-refactor-evidence-v1",
+  "batch": "scholar-mentor-bonus-effect-records",
+  "baseCommit": "2a2e447aaab16219508dea759e4a8eaf7971187b",
+  "sourceScope": {
+    "path": "docs/refactor/generated/scholar-bonus-records-scope-final.json",
+    "sha256": "7e1cc278f42c0f53891c8cefe44dad200db86396c4c61587ff1017185883bfd2",
+    "paths": 4
+  },
+  "documentation": {
+    "path": "docs/refactor/scholar-bonus-effect-records.md",
+    "sha256": "b79ff184c869fd747be7f48be098a8f809c807dc575a4dce1da5ce86c304cc5e"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-before.json",
+      "sha256": "e4a5c65b5e7ddc654c22323cec82a5c2dd440df03be6b6f68a1aa6ffdd96036f"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-edits.json",
+      "sha256": "0233d7abc4c5e4308b7f35d4f1c1cafa76dd25557b3ffafdf7ef716ecc089712"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-proof.json",
+      "sha256": "2debeaa9b542f17ce775e4de6063eca0045b130688ebb3650bc14c1dcff843f4"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-proof.cjs",
+      "sha256": "223bde1f2fca32ed7aa38ee6846aa27cc4f74ce9540c1231d0f62c48721c1d61"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-heads.json",
+      "sha256": "fbac6b0b9a61ded8e0173e677e769048c4f083fd3c8ccb07368f74ba59995abd"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-peer-comment-before.json",
+      "sha256": "f5c09efb1736215537368effef1383076e2bb93ef5f2214507f9e2294e0103f0"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-peer-comment-proof.json",
+      "sha256": "e98ccde245a4ad01f114ed32343595333b32cdac8d368c0df39e3f62a3c27dd8"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-boundaries.ts",
+      "sha256": "af7e6a6461842f8d4ade92d2b64af5c25e8bf9d1763a578799811205cd981fc9"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-receipts.json",
+      "sha256": "33e78e3b920a409346d848631f329aaf145c5beaea83e697f54e9382630e7160"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-test-type-before.json",
+      "sha256": "d00a402720692fcb2715d4c43f93b2a827eea6dca93c58a5650c2a30a5e82ba6"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-types-config.json",
+      "sha256": "c0405902d3af1014b3dfb1d223ce547adadf275a0203acfcf4957431fa290727"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-failed-root-types-config.json",
+      "sha256": "eec7ac5ff20469763015416b328aeea151accb79dc7b9c85839c394a4db2fac9"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-legacy-characterization.ts",
+      "sha256": "7015045fbda8ab8d3695fda3bd74bed2b674bfa665119b87e116cd434e5c4ee2"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-legacy-characterization.log",
+      "sha256": "cfb3873cf223b3f265e57e7501807e0d4d0d77104f39e59cc8469557d6ff49c8"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-new-tests.log",
+      "sha256": "9fdd5ffec3c3ee1b660081667ede8ff25f6ca0760a20fbd104e5a6e91acc237b"
+    }
+  ],
+  "sourceFrozen": true,
+  "reviewStatus": "awaiting final independent review",
+  "runtimeAPIChange": [
+    "旧通用modifierBonusEffects属性/getter/手写数组/prototype/浅clone继承注入退休，原字段不镜像。",
+    "同NightStageState identity唯一原数组；原record字段可写，receipt/marks同原引用且各自权限/原receipt冻结保持；无深freeze/schema或额外领域授权。"
+  ],
+  "proofSummary": {
+    "wholeStageNodes": 1261,
+    "wholeContractNodes": 519,
+    "originalWholePrograms": 2,
+    "stageWholeOutputs": 2,
+    "contractWholeOutputs": 2,
+    "controls": 5,
+    "threeActualSlotSites": 3,
+    "newOwnerValueImports": 0
+  },
+  "executionSummary": {
+    "newUniqueCases": 3,
+    "newAssertions": 25,
+    "first4Types": "exit2唯一newtest diagnostic",
+    "failed1RootTypes": "actual exit0",
+    "noGreenRerun": true
+  },
+  "limits": [
+    "原完整程序等价需明确3接口逆及删除type字段恢复；新物理runtime存储/API不同，不能宣称所有old外部输入相同。",
+    "末两中文comment精度通过完整叶/4outputs桥到final，之前types和unit不伪称sourceSHA未变。",
+    "并行PM/DR/Beauty/Noble代码不在本批全字节控制/功能提交；只有列明5控制源。"
+  ]
+}

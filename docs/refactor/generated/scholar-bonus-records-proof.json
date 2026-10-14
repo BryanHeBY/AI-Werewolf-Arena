@@ -1,0 +1,200 @@
+{
+  "baseCommit": "2a2e447aaab16219508dea759e4a8eaf7971187b",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "4a7bd3feae1842a6bf1ef713c111ba6f40d5f44f34dd84890642e300614be327"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "abb99e5c3a25eee95782a4c941bab864426a9b48005e38427442c97deeb6d0eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-records.ts",
+      "sha256": "a1be48d7e07e60e838a65478fb1e4a38830840fbf83231ad4e378d2983974260"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "sha256": "294fd9ffc974acf17fa28caca9f8806cf9a8a31666a2bbc0b013962af488bb3f"
+    }
+  ],
+  "wholeGenericContract": {
+    "nodes": 519,
+    "fullTypedTreeSame": true,
+    "allNoncommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "afterSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+        "afterSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+      }
+    ],
+    "actualTypeErasedWholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "afterSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+        "afterSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+      }
+    ]
+  },
+  "wholeNightStages": {
+    "nodes": 1261,
+    "fullTypedTreeSame": true,
+    "allNoncommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "ca8da48adc69e03fc49e78b0658142287b536b9cb1972b14d1afd5545f9ac1ee",
+        "afterSHA": "ca8da48adc69e03fc49e78b0658142287b536b9cb1972b14d1afd5545f9ac1ee"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "a798615742817c03b07e9500f2e3b97c9c9710ca100b21586f5b502472873f1b",
+        "afterSHA": "a798615742817c03b07e9500f2e3b97c9c9710ca100b21586f5b502472873f1b"
+      }
+    ]
+  },
+  "actualMappings": [
+    {
+      "before": "ctx.state.modifierBonusEffects ?? []",
+      "after": "readScholarMentorBonusEffectRecords(ctx.state)",
+      "count": 1,
+      "actualCount": 1
+    },
+    {
+      "before": "(ctx.state.modifierBonusEffects ??= []).push",
+      "after": "scholarMentorBonusEffectRecordsForAppend(ctx.state).push",
+      "count": 2,
+      "actualCount": 2
+    }
+  ],
+  "newOwner": {
+    "uniqueIdentityWeakMap": true,
+    "typeOnlyImports": 3,
+    "noWorldReceiptCallbackOrArrayCopyAtLookup": true,
+    "completeQuery": {
+      "nodes": 22,
+      "fullTypedTreeSame": true,
+      "allNoncommentLeafSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "9cd1a9403c73154908e6c5ae722d1b16bcf3155d831d746fccf6240487f0c89a",
+          "afterSHA": "9cd1a9403c73154908e6c5ae722d1b16bcf3155d831d746fccf6240487f0c89a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "9cd1a9403c73154908e6c5ae722d1b16bcf3155d831d746fccf6240487f0c89a",
+          "afterSHA": "9cd1a9403c73154908e6c5ae722d1b16bcf3155d831d746fccf6240487f0c89a"
+        }
+      ]
+    },
+    "completeAppendLookup": {
+      "nodes": 39,
+      "fullTypedTreeSame": true,
+      "allNoncommentLeafSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "680d1029a10efebd8f120cee1751ffb217b38a298ae3eee515ac8e4f8f074c02",
+          "afterSHA": "680d1029a10efebd8f120cee1751ffb217b38a298ae3eee515ac8e4f8f074c02"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "680d1029a10efebd8f120cee1751ffb217b38a298ae3eee515ac8e4f8f074c02",
+          "afterSHA": "680d1029a10efebd8f120cee1751ffb217b38a298ae3eee515ac8e4f8f074c02"
+        }
+      ]
+    },
+    "exactThreeMutableRecordFields": {
+      "nodes": 17,
+      "fullTypedTreeSame": true,
+      "allNoncommentLeafSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "afterSHA": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "afterSHA": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    "recordAndNestedTypesBidirectionalFixture": "bonus-effect-records.test.ts OldRecord ⇄ ScholarMentorBonusEffectRecord"
+  },
+  "newTestExactTypeOnlyFix": {
+    "actualSourceSameExpected": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "cb7db724b84a4e68a8a2e0f1c59c799b4bb323cd97d70fb79db0cc76e771a94c",
+        "afterSHA": "cb7db724b84a4e68a8a2e0f1c59c799b4bb323cd97d70fb79db0cc76e771a94c"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "930b8dfe5a8004c890c272caa6a5c995ec1c66cf587b50cd893709b42ed320cb",
+        "afterSHA": "930b8dfe5a8004c890c272caa6a5c995ec1c66cf587b50cd893709b42ed320cb"
+      }
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "sha256": "e50c030bc86c4f649923533aa6563653c6aae55913087798364458d076ff08c8",
+      "wholeCurrentBytesSame": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "e78ad051db063e88af5766107489803c7ec752110eb724278926fe31d092a34c",
+      "wholeCurrentBytesSame": true
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "sha256": "4b297b7acff93e84f06a3f8a85035d760104e8b09ba74b472095922248e3ba37",
+      "wholeCurrentBytesSame": true
+    },
+    {
+      "path": "backend/src/core/domain/components/status_marks.ts",
+      "sha256": "b7e13388552260b4255c6ea05087eb22549918a5293384d0633eef6f00b7fd2d",
+      "wholeCurrentBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/frame.test.ts",
+      "sha256": "9513c17511bde23ff68c8fdacb1d9abb1537b139f9a93d65edb6fda2e454f30d",
+      "wholeCurrentBytesSame": true
+    }
+  ],
+  "limits": [
+    "这是实际存储/私有runtime属性API迁移；旧modifierBonusEffects属性注入、getter、反射、复制继承能力退出，原接受面不宣称全等价。",
+    "完整stage逆只还原已核3实际slot调用与唯一新import，不恢复整个旧主体；新owner完整查询/首次建立/同数组返回亦按实际完整函数核，不把新算法排除为黑盒。",
+    "新functioncallee查找/WeakMap存储与property布局不同；原receipt.commit、目标/source/marks读取、发布和所有错误前缀完整程序保，不新增async/付款/授权。"
+  ],
+  "approved": true
+}

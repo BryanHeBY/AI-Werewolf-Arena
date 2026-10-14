@@ -1,0 +1,102 @@
+{
+  "status": "approved",
+  "reviewer": "/root/preflight_final_review",
+  "baseCommit": "2a2e447aaab16219508dea759e4a8eaf7971187b",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "4a7bd3feae1842a6bf1ef713c111ba6f40d5f44f34dd84890642e300614be327"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "abb99e5c3a25eee95782a4c941bab864426a9b48005e38427442c97deeb6d0eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-records.ts",
+      "sha256": "b8115cb12be31a85f246365bd92edab94c43a99815388c9c0c5b7ed230bbb503"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "sha256": "bea912adbcde71d8bdc14cd6b2a6f5d20285d1e282f75f3b2a69cf1ca2ed84d1"
+    }
+  ],
+  "findings": [],
+  "method": "独立只读实际四源、两原完整差分、完整bonus与原receipt/frame、三新case、旧characterization、完整证明脚本与末注释桥。核Git和当前SHA，不重跑任何执行／类型／门禁。",
+  "provenance": {
+    "beforeActualGit": 2,
+    "currentFrozenSources": 4,
+    "controlsActualGitAndCurrentBytes": 5,
+    "artifactHashesChecked": 15,
+    "mismatches": 0
+  },
+  "responsibilityAndStorage": [
+    "通用NightStageState退出modifierBonusEffects私有种类与回执字段；本族WeakMap仅按same状态身份持有一份实际记录数组，首次append才建立，没有旧字段镜像、第二资源索引、JSON或GC框架。",
+    "空read返回临时[]；有记录read/append返回同数组，kind/receipt/marks保原记录与引用，记录字段仍原可写。换同形state对象／浅clone不继承旧数组，这是明确API变化。",
+    "只有1原read与2原append真实消费owner。assert/phase当前性/生命和marks重验、原bonus所有算法和本族frame付款仍在原owner，不能以记录存在替代权限。"
+  ],
+  "orderAndFailure": [
+    "receipt.commit→check投影或ensureMarks/guard/poison/knife→追加记录→bonus事件顺序与callee-first字段构造保持；三个实际调用点的ctx.state仍原位置读取。",
+    "重验先assert roster/world，再state/数组→receipt.target→effectCurrent→目标life/version→可选marks；原错误scholar_mentor_bonus_effect_stale和短路前缀保持。",
+    "已消费receipt.isCurrent可为false而effectCurrent为true；源码仍用后者，本次字面正例实际防止把原合法已付效果拒绝。",
+    "数组查询或记录失败不回滚receipt、印记或已写原因；WeakMap lookup不commit、不读World、不授权新行动。"
+  ],
+  "apiAndLegacyBoundary": {
+    "characterization": "a54931旧实际assert读取外部slot getter，state→slot→target→current，返回原stale；持久脚本/日志属于修改前阶段，不能对当前源再跑当旧接受证明。",
+    "retired": "公共modifierBonusEffects属性、原型/getter/setter/反射及浅clone携数组注入路线退出；现新owner不咨询同名旧property。不是所有旧输入等价。",
+    "currentScope": "kind/receipt可空target与marks原类型和嵌套各自读写约束保持；新helper/callee、WeakMap布局与模块初始化变化如实声明，不冒全C17/I03/P9。"
+  },
+  "proofReview": {
+    "wholeStageNodes": 1261,
+    "wholeContractNodes": 519,
+    "wholeMappedRawOutputs": 4,
+    "actualContractTypeErasedOutputs": 2,
+    "audit": "完整forEachChild含全部arraychildren与hasTrailingComma；独立全非comment叶。仅恢复指定已删type字段和3实际slot读取／唯一新增import，原整个方法体没有mask。新两helper完整语句/唯一WeakMap及三record字段强模板核，不把新owner黑盒。",
+    "newOwnerBindings": "3条全部type-only：StatusMarksComponent真实core组件，NightStageState原generic声明，ModifierBonusKind/Receipt原night_frame；原函数／receipt body与5controls保持。",
+    "compileShape": "OldRecord的marks ReturnType<ensureMarks>与新StatusMarksComponent原端点双向兼容；原3字段仍mutable，旧key编译负例实际拒绝。",
+    "moduleLimit": "新owner擦除后无valueimport/export依赖，只有新WeakMap初始化；不是整个冷加载图或二进制等价。"
+  },
+  "closedChineseFinding": {
+    "issue": "原说明容易称nested receipt可变，实际ModifierBonusReceipt字段readonly且frame返回Object.freeze。",
+    "fix": "仅owner头和unit一条说明收窄：record字段可写，receipt/marks保原引用与各自权限，原具体receipt冻结仍frame；不新增deepfreeze。",
+    "actualWholeTextDiffRead": true,
+    "commentBridge": "d14043：139+1144完整非comment叶／4whole raw outputs到final；两生产before/previous-proof phase保持。"
+  },
+  "receipts": {
+    "newTests": "508478，3/25一次；之后唯一as string型擦除和两comment桥，不重复绿。",
+    "types": "89289/bd2eea首4roots actualexit2，仅新unit退休keymatcher TS2769；as string后仅failed unit root56184/1e32b0 actualexit0。",
+    "typeFixExactHistory": "独立整字节核type-before只expect(retiredKey)→expect(retiredKey as string)达到末comment-before；原negative directive/输入/断言保持，2whole emit同。",
+    "proof": "首283fd3真实helper模板尾逗号工具red，792e23只校正harness后0，不改产品求绿。",
+    "heads": "d14043最终4CN/4职责零诊断，469当时真实已跟踪文档路径。",
+    "executionAttribution": "以上归作者实际工具收据；空log不作为终止证明，本独立审未执行它们。"
+  },
+  "documents": [
+    {
+      "path": "docs/refactor/scholar-bonus-effect-records.md",
+      "sha256": "b79ff184c869fd747be7f48be098a8f809c807dc575a4dce1da5ce86c304cc5e"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-scope-final.json",
+      "sha256": "7e1cc278f42c0f53891c8cefe44dad200db86396c4c61587ff1017185883bfd2"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-evidence.json",
+      "sha256": "0ddad7a0bba96f61443c3fa48d782b14a4694bbdd0b480b9c7a75b014eacb745"
+    }
+  ],
+  "limits": [
+    "并行PM/DR/Noble/Beauty源均非本批wholebyte或功能范围，只有5控制文件。",
+    "没有新增schema/请求lease/付款/回收政策；新阵列存储的外部属性接受变化明确，角色规则保持。"
+  ],
+  "reviewToolHistory": [
+    {
+      "chunk": "2d63db",
+      "exitCode": 1,
+      "kind": "Git/SHA核验全0后，审查器把末comment-before的数组误作对象访问；无仓库候选变更。"
+    },
+    {
+      "chunk": "f7131d",
+      "exitCode": 0,
+      "kind": "按真实数组形状读两完整delta及type阶段链，0 sourcefinding。"
+    }
+  ]
+}

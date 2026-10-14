@@ -2,6 +2,7 @@
  * 负责学者／导师本夜选择及独立加成阶段。
  * 输入为有资格的加成行动者、原目标 receipt 和已校验行动；输出保留已付效果及本职历史。
  * 加成毒在原 receipt.commit 与印记付款之后附带来源，独立于女巫或受赠瓶数。
+ * 本族记录数组归 bonus-effect-records，原 receipt.commit 与 marks／效果追加顺序不变，重验仍在原检查点。
  * 本模块不重新计算别族的已付目标，也不将原体句柄或因果 Symbol 写入事件。
  */
 import { COMPONENT, Camp, Phase, StatusMark, type RoleComponent } from "../../../../core";
@@ -9,6 +10,10 @@ import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { originalPoisonIntent, type NightLifeScope } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { resolveInspection } from "../inspection";
+import {
+  readScholarMentorBonusEffectRecords,
+  scholarMentorBonusEffectRecordsForAppend,
+} from "./bonus-effect-records";
 import {
   beginScholarMentorNight,
   commitScholarMentorChoice,
@@ -91,7 +96,7 @@ const choose: NightStageHandler = {
 };
 export function assertScholarMentorBonusEffects(ctx: NightStageContext): void {
   assertScholarMentorRosterCurrent(ctx.world);
-  for (const effect of ctx.state.modifierBonusEffects ?? []) {
+  for (const effect of readScholarMentorBonusEffectRecords(ctx.state)) {
     const target = effect.receipt.target;
     if (
       !effect.receipt.effectCurrent() ||
@@ -157,7 +162,7 @@ function bonus(kind: ModifierBonusKind, priority: number): NightStageHandler {
               isWerewolf: inspection!.camp === Camp.Wolf,
               result: { ...inspection! },
             });
-            (ctx.state.modifierBonusEffects ??= []).push({ kind, receipt });
+            scholarMentorBonusEffectRecordsForAppend(ctx.state).push({ kind, receipt });
           } else {
             const marks = ctx.ensureMarks(targetId);
             if (kind === "guard") {
@@ -187,7 +192,7 @@ function bonus(kind: ModifierBonusKind, priority: number): NightStageHandler {
               marks.add(StatusMark.WolfKillMark);
               (ctx.state.modifierKnifeTargets ??= []).push(targetId);
             }
-            (ctx.state.modifierBonusEffects ??= []).push({ kind, receipt, marks });
+            scholarMentorBonusEffectRecordsForAppend(ctx.state).push({ kind, receipt, marks });
           }
         }
         ctx.events.push({

@@ -1,0 +1,60 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "4a7bd3feae1842a6bf1ef713c111ba6f40d5f44f34dd84890642e300614be327"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "abb99e5c3a25eee95782a4c941bab864426a9b48005e38427442c97deeb6d0eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-records.ts",
+      "sha256": "b8115cb12be31a85f246365bd92edab94c43a99815388c9c0c5b7ed230bbb503"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "sha256": "bea912adbcde71d8bdc14cd6b2a6f5d20285d1e282f75f3b2a69cf1ca2ed84d1"
+    }
+  ],
+  "scopeSHA256": "7e1cc278f42c0f53891c8cefe44dad200db86396c4c61587ff1017185883bfd2",
+  "actualGit2BeforeSame": true,
+  "readScope": [
+    "Complete4source including3new unit cases",
+    "All1read/2append source substitutions",
+    "Complete owner WeakMap/read/append/record declaration",
+    "Before/whole proof/code/types/characterization boundary and final MD/evidence hashes"
+  ],
+  "semanticChecks": [
+    "Original receipt.commit before check or marks/guard/poison/knife contributions and records/events retains exact position.",
+    "Recheck uses effectCurrent after payment, not the consumed isCurrent; target/life/marks short circuits retained.",
+    "Original state expression evaluated once at each actual site; original push callee before record creation.",
+    "One feature WeakMap keyed by same original state; no generic field mirror, array/record clone, JSON or new resource capability.",
+    "Old arbitrary property/getter/prototype/shallow-clone injection is explicitly retired runtime storage API, not old-width equivalence.",
+    "Original opaque claims and modifierDeaths/modifierKnifeTargets untouched."
+  ],
+  "findingsClosed": [
+    "Peer receipt mutability wording narrowed to original readonly/frozen receipt and each nested owner; two exact comments bridge final source."
+  ],
+  "documents": [
+    {
+      "path": "docs/refactor/scholar-bonus-effect-records.md",
+      "sha256": "b79ff184c869fd747be7f48be098a8f809c807dc575a4dce1da5ce86c304cc5e"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-evidence.json",
+      "sha256": "0ddad7a0bba96f61443c3fa48d782b14a4694bbdd0b480b9c7a75b014eacb745"
+    },
+    {
+      "path": "docs/refactor/generated/scholar-bonus-records-review.json",
+      "sha256": "0ad83daf590f7e0c2d9542396975b0eb43b26469d94d36b3bce6c8d094e17c8e"
+    }
+  ],
+  "limits": [
+    "No full role I03/C17 matrix completion.",
+    "No repeated author test/type/proof/gate.",
+    "New functions, physical storage and private API differ explicitly."
+  ]
+}

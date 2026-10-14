@@ -2,9 +2,10 @@
  * 负责流水线与 handler 共享的夜间状态及执行端口契约。
  * 输入为捕获的阶段操作、已付效果和 actor 查询；输出为有类型的贡献及原状态引用。
  * 机械、觉醒和原毒的内建生产者提交 sourced intent，源原体/因果信息只供运行时消费。
- * 旧注入 effect/claim 保留接受宽度；其额外 kind/origin/getter 不被当作新协议读取。
+ * 旧原毒／机械／觉醒注入 effect/claim 保留接受宽度；其额外 kind/origin/getter 不被当作新协议读取。
  * 所有内建原毒（含受赠及学者加成）均有来源；此契约不查询 World 或提交库存。
- * 外部自定义注入仍保留明确 legacy 接受政策，不把同名字段视为 owned 来源。
+ * 这些外部自定义注入仍保留明确 legacy 接受政策，不把同名字段视为 owned 来源。
+ * 本族加成回执记录不属于通用字段，按本夜状态身份由学者／导师唯一所有者保存。
  */
 import { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
 import {
@@ -59,12 +60,6 @@ export interface NightStageState {
   /** 学者／导师在原冲突检查点产生的死亡与刀口；不是直接修改 Alive 的指令。 */
   modifierDeaths?: import("../../../../core/domain/night_effects").NightLifeScope[];
   modifierKnifeTargets?: EntityId[];
-  /** 增益保留原领取回执和可选印记原体，伤害组合前仍须核对效果与目标的当前性。 */
-  modifierBonusEffects?: Array<{
-    kind: import("../../roles/scholar_mentor/night_frame").ModifierBonusKind;
-    receipt: import("../../roles/scholar_mentor/night_frame").ModifierBonusReceipt;
-    marks?: ReturnType<NightStageContext["ensureMarks"]>;
-  }>;
   wolfChatOrder: EntityId[];
   endedWolves: Set<EntityId>;
   wolfVotes: Record<number, number>;

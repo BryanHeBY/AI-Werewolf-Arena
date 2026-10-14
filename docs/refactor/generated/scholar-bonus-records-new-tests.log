@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/scholar-mentor/bonus-effect-records.test.ts:
+(pass) one lazy array retains original records and mutable fields without attaching a generic slot [0.35ms]
+(pass) effect recheck keeps target then callback then life and marks reads and never commits a receipt [0.25ms]
+(pass) retired generic property injection is not consulted or treated as an owned receipt [0.09ms]
+
+ 3 pass
+ 0 fail
+ 25 expect() calls
+Ran 3 tests across 1 file. [40.00ms]

@@ -1,0 +1,62 @@
+{
+  "legacyCharacterization": {
+    "chunk": "a54931",
+    "exitCode": 0,
+    "baseCommit": "2a2e447aaab16219508dea759e4a8eaf7971187b",
+    "log": "docs/refactor/generated/scholar-bonus-records-legacy-characterization.log",
+    "logSHA256": "cfb3873cf223b3f265e57e7501807e0d4d0d77104f39e59cc8469557d6ff49c8",
+    "scope": "修改前真实旧assert/外部getter注入接受面，仅此字面case，不是类型或旧套测试。"
+  },
+  "newTests": {
+    "chunk": "508478",
+    "exitCode": 0,
+    "pass": 3,
+    "fail": 0,
+    "assertions": 25,
+    "log": "docs/refactor/generated/scholar-bonus-records-new-tests.log",
+    "logSHA256": "9fdd5ffec3c3ee1b660081667ede8ff25f6ca0760a20fbd104e5a6e91acc237b",
+    "scope": "首run源码；此后唯一typecast与两comment通过整体输出桥，未复跑三绿。"
+  },
+  "types": [
+    {
+      "launchChunk": "d3a300",
+      "session": 89289,
+      "terminalChunk": "bd2eea",
+      "exitCode": 2,
+      "roots": 4,
+      "diagnostics": "仅新test61行 TS2769 matcher不接受退休key窄类型，原三个生产根无诊断。",
+      "log": "docs/refactor/generated/scholar-bonus-records-types.log"
+    },
+    {
+      "launchChunk": "01372b",
+      "session": 56184,
+      "terminalChunk": "1e32b0",
+      "exitCode": 0,
+      "roots": 1,
+      "log": "docs/refactor/generated/scholar-bonus-records-failed-root-types.log",
+      "scope": "只失败新test root；as string擦除，负例原expect-error及输入/断言保。"
+    }
+  ],
+  "programProof": {
+    "chunk": "792e23",
+    "exitCode": 0,
+    "scope": "末两comment前候选，之后由comment桥连接final；完整两个原程序和完整新owner方法/结构。"
+  },
+  "commentAndHead": {
+    "chunk": "d14043",
+    "exitCode": 0,
+    "sourceFiles": 4,
+    "documentationPaths": 469,
+    "headDiagnostics": 0,
+    "ChineseHeadsMissing": 0,
+    "newOwnerRuntimeDependencies": 0,
+    "commentDeltaFiles": 2,
+    "wholeOutputs": 4
+  },
+  "preservedToolFailure": {
+    "chunk": "283fd3",
+    "exitCode": 1,
+    "cause": "实际新helper签名含参数尾逗号，手写工具模板没有；完整原stage/contract和controls本已同，仅工具模板/打印布局纠正，未改生产源。"
+  },
+  "limits": "实际类型工具终态0而非从空log推断；未执行全量/原套/runtime/model或重复已绿单元。"
+}
