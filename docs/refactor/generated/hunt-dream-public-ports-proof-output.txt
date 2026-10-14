@@ -1,0 +1,1 @@
+{"sourcePaths":4,"oldWholePrograms":2,"exactEdits":7,"typedNodes":12548,"noncommentLeaves":14329,"nodeArrays":1558,"inverseWholeRawOutputs":4,"actualMappedWholeOutputs":4,"movedNamedBindings":7,"retainedNamedBindings":57}

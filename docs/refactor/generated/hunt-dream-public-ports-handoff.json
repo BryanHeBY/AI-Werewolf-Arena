@@ -1,0 +1,39 @@
+{
+  "frozen": true,
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/hunt-ports.ts",
+      "sha256": "11d57d3e0935849c804f4f1274efe54f9bd24d6d82d03e290163825e1049e872"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/paid-effect-ports.ts",
+      "sha256": "7e93142b04f927d10cdce418b7d53538ff1c61c06689f89e191d9a1dd1202f75"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "087388805ce44780b3985a595dfa59822366cbcdf02ad96527ff8d70a837d8ff"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "sha256": "ed4fce639b886c77ab4f6830163028754730740a08c0640b5a5f7db71c27eac4"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/hunt-dream-public-ports-scope-final.json",
+    "sha256": "22a0b55a2846d9129356b9f096e429ad030229d0bfad67530e729f2a92ea14c7"
+  },
+  "document": {
+    "path": "docs/refactor/hunt-dream-public-ports.md",
+    "sha256": "0f30641e6df600a7c70c6e321839eeb5614f7a22aff196189856a66f0ad18beb"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/hunt-dream-public-ports-evidence.json",
+    "sha256": "c0b51cbfbb22809370acbe3b86acee2a7fd3bc51dd4aa828f4b360d1349d96b5"
+  },
+  "types": "首次4根0",
+  "heads": "首次4根684docs0",
+  "runtime": "原两精准case首次2/28",
+  "proof": "末dc6dba0；三工具首红完整保",
+  "notRun": "不重已绿、不全gate、不模型/私配置、不stage/commit/progress"
+}

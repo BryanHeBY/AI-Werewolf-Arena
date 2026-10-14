@@ -7,14 +7,14 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
-import { recordNobleContractClosure } from "../noble_secret_body/facts";
+import { recordNobleContractClosure } from "../noble_secret_body/hunt-ports";
 import type { NobleContractClosedFact } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import {
   isNobleBodyBoard,
   assertNobleBodyRosterCurrent,
   checkpointNobleBodyAuthority,
   clearServantFromHunt,
-} from "../noble_secret_body/authority";
+} from "../noble_secret_body/hunt-ports";
 import {
   RED_MOON_ROLE,
   getRedMoonState,
@@ -80,6 +80,7 @@ interface Participant {
   lifeDescriptor: PropertyDescriptor;
   initialVersion: number;
   auditPrivateJson: string;
+  // 委托子树只由各自权威读写；其余私态仍保原引用／审计 JSON，不能把快照当活跃库存。
   delegatedKey: "noble" | "secretBody" | null;
   checkpoint: {
     identity: object;
@@ -326,6 +327,7 @@ function capture(world: World, id: number): Participant {
   if (!originalLife(p, world, true)) throw new Error("demon_hunter_original_life_invalid");
   return p;
 }
+/** 只有配置启用该共用板才先复验阵容、再取完整权威快照；原读取异常仅在此分支折为 false。 */
 function delegatedCurrent(b: Binding): boolean {
   if (!b.config.nobleSecretBody) return true;
   try {
@@ -747,6 +749,7 @@ export function freezeDemonHunt(
       const cleared = n.binding.config.nobleSecretBody
         ? clearServantFromHunt(world, n.day, choice.targetId)
         : null;
+      // 契约已先清除；必需录制失败不回滚该终态，也尚未将本猎魔夜写成 frozen。
       if (cleared) servantCleared = recordNobleContractClosure(world, n.day, cleared, Phase.Night);
       if (!servantCleared)
         damage = Object.freeze({

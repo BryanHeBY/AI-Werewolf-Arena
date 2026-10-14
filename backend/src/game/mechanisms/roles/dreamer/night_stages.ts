@@ -5,7 +5,7 @@
  * 本阶段不执行死亡波或刷新已失效目标，也不回滚已付历史。
  */
 import { DREAMER_STATE_SLOT } from "./ports";
-import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant_eclipse/night_frame";
+import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant_eclipse/paid-effect-ports";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase } from "../../../../core/domain/model";
@@ -103,6 +103,7 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
         markDreamNightCommitted(ctx.world, day);
         applied = true;
         // 历史、次数与开夜提交已经落下；先取本族同数组的 push，再构造原生命／已付效果条目。
+        // 原已付 predicate 在这个字段位置才捕获；不能用仍开放的行动 scope 替代它或重付资源。
         dreamNightLinksForAppend(ctx.state).push({
           actorId,
           targetId,

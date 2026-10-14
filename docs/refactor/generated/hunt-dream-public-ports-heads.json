@@ -1,0 +1,24 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/hunt-ports.ts",
+      "sha256": "11d57d3e0935849c804f4f1274efe54f9bd24d6d82d03e290163825e1049e872"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/paid-effect-ports.ts",
+      "sha256": "7e93142b04f927d10cdce418b7d53538ff1c61c06689f89e191d9a1dd1202f75"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "087388805ce44780b3985a595dfa59822366cbcdf02ad96527ff8d70a837d8ff"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "sha256": "ed4fce639b886c77ab4f6830163028754730740a08c0640b5a5f7db71c27eac4"
+    }
+  ],
+  "documentationPaths": 684,
+  "documentationPathsSha256": "e93f93032e510aaf102788cdb448e592f104dc9de279c7e13834fd2d2453b191",
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/scenarios/failures/noble-secret-body/hunt-clear-publication.test.ts:
+(pass) actual delivered hunt clear has required God op before subsequent FINAL-source failure [238.76ms]
+
+ 1 pass
+ 1 filtered out
+ 0 fail
+ 18 expect() calls
+Ran 1 test across 1 file. [376.00ms]

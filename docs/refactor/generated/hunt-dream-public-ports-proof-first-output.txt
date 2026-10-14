@@ -1,0 +1,21 @@
+ 9 | function mapRoutes(text){for(const [from,to] of routes)text=text.replaceAll(JSON.stringify(from),JSON.stringify(to));return text;}
+10 | function normalizeCjs(text){const f=parse(text,'emitted.js'),bindings=[];for(const n of f.statements)if(ts.isVariableStatement(n))for(const d of n.declarationList.declarations)if(ts.isIdentifier(d.name)&&d.initializer&&ts.isCallExpression(d.initializer)&&d.initializer.expression.getText(f)==='require')bindings.push(d.name.text);const replacements=[];function walk(n){if(ts.isIdentifier(n)&&bindings.includes(n.text))replacements.push([n.getStart(f),n.end,'__dependency_'+bindings.indexOf(n.text)]);ts.forEachChild(n,c=>{walk(c);});}walk(f);for(const [start,end,name] of replacements.sort((a,b)=>b[0]-a[0]))text=text.slice(0,start)+name+text.slice(end);return text;}
+11 | const programs=[];
+12 | for(const original of before.source.filter(x=>x.text!==undefined)){
+13 |  assert.equal(sha(original.text),original.sha256);const current=fs.readFileSync(original.path,'utf8'),rows=edits.filter(x=>x.path===original.path);assert.equal(apply(original.text,rows),current);
+14 |  let inverse=current;for(const e of [...rows].reverse()){assert.equal(inverse.split(e.after).length,2);inverse=inverse.replace(e.after,e.before);}assert.equal(inverse,original.text);
+                                                                     ^
+AssertionError: Expected values to be strictly equal:
+
+3 !== 2
+
+ generatedMessage: true,
+     actual: 3,
+   expected: 2,
+   operator: "strictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/hunt-dream-public-ports-proof.cjs:14:65
+
+Bun v1.4.3 (Linux x64)
