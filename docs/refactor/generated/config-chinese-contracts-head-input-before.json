@@ -1,0 +1,11 @@
+{
+  "baseCommit": "065d1d6a315bdedd6c4c58e80e682084974de6b6",
+  "source": [
+    {
+      "path": "backend/src/runtime/config/load_board_definition.ts",
+      "sha256": "48a3e4dd7ac8b5ff501a4bbd6297c5b0cad1c26c1f2b048ed1c768630a133469",
+      "text": "/**\n * 读取指定目录 boards 下的具名版本化板子，输出解析后的配置及 sourceFile 追踪路径。\n * 文件 I/O 和 JSON 错误由本入口转换，字段／支持范围交给 parseBoardDefinition；不创建对局或修改角色状态。\n * 未版本化文件明确要求迁移，不自动回退旧路径；缺失文件与坏 JSON 各保稳定错误码，其它读取失败保原错误。\n */\nimport { readFile } from \"node:fs/promises\";\nimport path from \"node:path\";\nimport {\n  CONFIG_ID_PATTERN,\n  parseBoardDefinition,\n  type ResolvedBoardDefinition,\n} from \"./board_definition\";\n\nexport async function loadBoardDefinition(\n  configDir: string,\n  boardId: string,\n): Promise<ResolvedBoardDefinition> {\n  if (!CONFIG_ID_PATTERN.test(boardId)) throw new Error(\"board_config_id_invalid\");\n  const file = path.resolve(configDir, \"boards\", `${boardId}.json`);\n  let text: string;\n  try {\n    text = await readFile(file, \"utf8\");\n  } catch (error) {\n    if ((error as NodeJS.ErrnoException).code === \"ENOENT\")\n      throw new Error(`board_config_file_missing: ${boardId}`);\n    throw error;\n  }\n  let raw: unknown;\n  try {\n    raw = JSON.parse(text);\n  } catch {\n    throw new Error(`board_config_json_invalid: ${boardId}`);\n  }\n  // 先要求版本标记，再完整解析；sourceFile 只说明来源，不替代板子版本或引擎构建指纹。\n  if (!raw || typeof raw !== \"object\" || !(\"version\" in raw))\n    throw new Error(`board_config_migration_required: ${boardId}`);\n  return { ...parseBoardDefinition(raw, boardId), sourceFile: file };\n}\n"
+    }
+  ],
+  "controls": []
+}

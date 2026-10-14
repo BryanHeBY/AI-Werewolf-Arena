@@ -8,6 +8,7 @@ export type ProviderType = "openai" | "anthropic" | "acp";
 export type GameBoard = string;
 export type ReasoningEffort = "none" | "minimal" | "low" | "medium" | "high" | "xhigh";
 
+/** 模型网关连接参数由 provider 持有；模型与单轮采样参数归 Agent profile。并发限额只约束本地请求调度。 */
 export interface LlmProviderConfig {
   type: "openai" | "anthropic";
   apiKey: string;
@@ -31,6 +32,7 @@ export interface AcpProviderConfig {
 
 export type ProviderConfig = LlmProviderConfig | AcpProviderConfig;
 
+/** 提示配置只保存人格文本；实际注入由玩家提示策略统一执行，不授予游戏动作权限。 */
 export interface AgentPromptConfig {
   personalityPrompt?: string;
 }
@@ -78,6 +80,7 @@ export type GameAgentSelection =
       personalityPrompt?: string;
     };
 
+/** 玩家专属人格可按语言选择；未设置表示继承，null 表示清除，选择后的字符串仍保留原文。 */
 export type LocalizedPrompt = string | Partial<Record<Locale, string>>;
 export interface PlayerConfig {
   name?: string;
@@ -105,6 +108,7 @@ export interface GameConfig {
   roleAgents?: Record<string, GameAgentSelection>;
   playerAgents?: Record<string, GameAgentSelection>;
   players?: Record<string, PlayerConfig>;
+  /** locale 控制玩家提示，displayLocale 控制展示；未设置的展示语言跟随玩家语言。 */
   locale?: Locale;
   displayLocale?: Locale;
   seed?: string;
@@ -143,6 +147,7 @@ export interface ResolvedAuditConfig {
   playerMaxItems: number;
 }
 
+/** 装配结果引用已校验的 provider 配置；这是运行输入，不包含进程、会话或请求租约。 */
 export interface ResolvedAgentRuntimeProfile extends AgentPromptConfig {
   name: string;
   providerName: string;

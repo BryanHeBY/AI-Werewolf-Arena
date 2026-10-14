@@ -1,0 +1,1 @@
+{"source":[{"path":"backend/src/runtime/config/load_board_definition.ts","sha256":"51e8109e07cde5a9faace92ecb46989f6d6f44ad7a344c4a26e7c454e847386e"}],"documentationPaths":684,"documentationPathsSha256":"e93f93032e510aaf102788cdb448e592f104dc9de279c7e13834fd2d2453b191","diagnostics":[],"chineseHeadFailures":[]}

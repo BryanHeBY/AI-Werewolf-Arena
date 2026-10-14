@@ -51,6 +51,7 @@ export interface ResolvedPlayerConfig {
   personalityPrompt?: string | null;
 }
 
+/** runner 的完整输入：已解析板子、逐玩家／角色 profile 与可选审计；不携带运行句柄或已分配身份。 */
 export interface ResolvedGameSetup {
   options: RunGameOptions;
   boardConfig: BoardConfig;
@@ -64,7 +65,7 @@ export interface ResolvedGameSetup {
   warnings: readonly GameSetupWarning[];
 }
 
-/** 座位／角色分配后才选择 Agent；名字不参与模型选择。 */
+/** 分配身份后按 players 显式 Agent→playerAgents→roleAgents→默认值选择；独立人格最后覆盖，null 清除继承。 */
 export function resolvePlayerProfile(
   setup: ResolvedGameSetup,
   actorId: number,
@@ -167,6 +168,7 @@ export function resolveGameSetup(
     throw new Error("runtime_config_missing_provider_or_agent_defaults");
   }
   const game = runtime.game;
+  // 空值合并让显式 false 保持有效；CLI 覆盖只作用于这里声明的运行选项，语言和 seed 仍由 game 提供。
   const options: RunGameOptions = {
     board: resolveGameBoard(runtime, overrides),
     maxDays: overrides.maxDays ?? game.maxDays ?? 10,
@@ -187,6 +189,7 @@ export function resolveGameSetup(
     if (!Number.isSafeInteger(options[key]) || options[key] <= 0)
       throw new Error(`runtime_config_positive_integer_invalid: game.${key}`);
   }
+  // 具名定义必须与选定板子一致；没有定义时只接受原两项内置板子，不由 runner 猜测支持组合。
   const boardDefinition =
     boardOverride && "definition" in boardOverride ? boardOverride : undefined;
   if (boardDefinition && boardDefinition.definition.id !== options.board)
@@ -219,6 +222,7 @@ export function resolveGameSetup(
     defaultProfile: resolveAgentProfileByName(runtime, game.agent),
     playerProfiles: resolveSelections(runtime, game.playerAgents),
     roleProfiles: resolveSelections(runtime, game.roleAgents),
+    // 只有显式 enabled:false 才关闭审计；省略配置保原默认值，创建与失败处理留给运行／审计 owner。
     audit:
       auditConfig?.enabled === false
         ? null
@@ -253,6 +257,7 @@ export function validateGameBindings(game: GameConfig, board: BoardConfig): void
       throw new Error(`runtime_config_player_binding_invalid: ${key}`);
     }
   }
+  // 同一座位同时出现于新 players 和旧 playerAgents 会拒绝，避免隐式优先级掩盖配置冲突。
   for (const key of Object.keys(game.players ?? {})) {
     if (
       !/^[1-9]\d*$/.test(key) ||
@@ -279,6 +284,7 @@ function resolvePlayers(
       let personalityPrompt: string | null | undefined =
         entry.personalityPrompt === null ? null : undefined;
       if (typeof entry.personalityPrompt === "string") personalityPrompt = entry.personalityPrompt;
+      // 语言表优先本语言，再优先中文、最后英文；只产生回退诊断，不翻译用户人格文本。
       else if (entry.personalityPrompt) {
         if (entry.personalityPrompt[locale]) personalityPrompt = entry.personalityPrompt[locale];
         else {

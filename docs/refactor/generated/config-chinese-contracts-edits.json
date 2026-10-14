@@ -1,0 +1,157 @@
+[
+  {
+    "path": "backend/src/runtime/config/contracts.ts",
+    "before": "export interface LlmProviderConfig {",
+    "after": "/** 模型网关连接参数由 provider 持有；模型与单轮采样参数归 Agent profile。并发限额只约束本地请求调度。 */\nexport interface LlmProviderConfig {"
+  },
+  {
+    "path": "backend/src/runtime/config/contracts.ts",
+    "before": "export interface AgentPromptConfig {",
+    "after": "/** 提示配置只保存人格文本；实际注入由玩家提示策略统一执行，不授予游戏动作权限。 */\nexport interface AgentPromptConfig {"
+  },
+  {
+    "path": "backend/src/runtime/config/contracts.ts",
+    "before": "export type LocalizedPrompt =",
+    "after": "/** 玩家专属人格可按语言选择；未设置表示继承，null 表示清除，选择后的字符串仍保留原文。 */\nexport type LocalizedPrompt ="
+  },
+  {
+    "path": "backend/src/runtime/config/contracts.ts",
+    "before": "  locale?: Locale;",
+    "after": "  /** locale 控制玩家提示，displayLocale 控制展示；未设置的展示语言跟随玩家语言。 */\n  locale?: Locale;"
+  },
+  {
+    "path": "backend/src/runtime/config/contracts.ts",
+    "before": "export interface ResolvedAgentRuntimeProfile extends",
+    "after": "/** 装配结果引用已校验的 provider 配置；这是运行输入，不包含进程、会话或请求租约。 */\nexport interface ResolvedAgentRuntimeProfile extends"
+  },
+  {
+    "path": "backend/src/runtime/config/parse_config.ts",
+    "before": " * 本解析模块不读文件、不启动 Agent 或写全局配置，实际执行及资源仍由运行装配持有。",
+    "after": " * 本模块不读配置文件、不启动 Agent 或缓存结果；环境表可显式传入，省略时在解析调用中读取 process.env，执行资源由运行装配持有。"
+  },
+  {
+    "path": "backend/src/runtime/config/parse_config.ts",
+    "before": "function assertKnownKeys(",
+    "after": "/** 只接受当前配置字段，拼写错误在装配前报出；这里的对象校验不承担惰性访问器或 Proxy 的隔离。 */\nfunction assertKnownKeys("
+  },
+  {
+    "path": "backend/src/runtime/config/parse_config.ts",
+    "before": "function readPromptText(",
+    "after": "/** 玩家专属人格检查非空后返回原字符串；其它配置字符串仍按各自读取函数裁掉首尾空白。 */\nfunction readPromptText("
+  },
+  {
+    "path": "backend/src/runtime/config/parse_config.ts",
+    "before": "  const match = /^\\$\\{([A-Z][A-Z0-9_]*)\\}$/.exec(value.trim());",
+    "after": "  // 只解析整个值为 ${NAME} 的占位符；不插值字符串片段，缺失变量的错误只包含字段和变量名。\n  const match = /^\\$\\{([A-Z][A-Z0-9_]*)\\}$/.exec(value.trim());"
+  },
+  {
+    "path": "backend/src/runtime/config/parse_config.ts",
+    "before": "  if (type === \"acp\") {",
+    "after": "  // ACP 配置描述进程传输，LLM 配置描述模型网关；各分支独立拒绝不属于自己的字段。\n  if (type === \"acp\") {"
+  },
+  {
+    "path": "backend/src/runtime/config/parse_config.ts",
+    "before": "      if (agent.kind === \"acp\" && provider.type !== \"acp\") {",
+    "after": "      // 先验证 Agent 与传输匹配，再验证本项目支持的供应商参数组合；此处不探测远端模型能力。\n      if (agent.kind === \"acp\" && provider.type !== \"acp\") {"
+  },
+  {
+    "path": "backend/src/runtime/config/parse_config.ts",
+    "before": "      let personalityPrompt: LocalizedPrompt | null | undefined;",
+    "after": "      // 三态保留到 setup：缺省继承、null 清除、字符串或语言表覆盖；名字与人格原文不作为模型选择键。\n      let personalityPrompt: LocalizedPrompt | null | undefined;"
+  },
+  {
+    "path": "backend/src/runtime/config/parse_config.ts",
+    "before": "  const environment = input.environment ?? process.env;",
+    "after": "  // 按 provider→Agent→game→audit 的依赖顺序解析，引用错误沿原字段路径抛出；不自行执行 .env 加载。\n  const environment = input.environment ?? process.env;"
+  },
+  {
+    "path": "backend/src/runtime/config/load_config.ts",
+    "before": "import { promises as fs } from \"node:fs\";",
+    "after": "/**\n * 从指定配置目录顺序读取 providers、agents、具名 game 与可选审计文件，输出已校验 RuntimeConfig。\n * 本模块拥有文件读取和 JSON 错误转换；配置解析由 parseRuntimeConfig 执行，Agent／会话资源由运行装配持有。\n * 必填文件缺失和其它 I/O 失败直接传播；仅审计文件缺失可省略，不自动探测旧目录、加载 .env 或缓存配置。\n */\nimport { promises as fs } from \"node:fs\";"
+  },
+  {
+    "path": "backend/src/runtime/config/load_config.ts",
+    "before": "    // JSON engine diagnostics can quote values from a providers file.",
+    "after": "    // JSON 引擎错误可能夹带 provider 密钥值；这里只保留文件类别，避免原内容进入报错。"
+  },
+  {
+    "path": "backend/src/runtime/config/load_config.ts",
+    "before": "async function readOptionalJsonFile(",
+    "after": "/** 只有缺失文件才省略；坏 JSON、权限问题等失败仍中断配置加载。 */\nasync function readOptionalJsonFile("
+  },
+  {
+    "path": "backend/src/runtime/config/load_config.ts",
+    "before": "  const configRoot = path.resolve(options.configDir);",
+    "after": "  // 所有相对路径以本次显式目录解析；顺序等待各文件，保持原错误先后次序。\n  const configRoot = path.resolve(options.configDir);"
+  },
+  {
+    "path": "backend/src/runtime/config/resolve_game_setup.ts",
+    "before": "export interface ResolvedGameSetup {",
+    "after": "/** runner 的完整输入：已解析板子、逐玩家／角色 profile 与可选审计；不携带运行句柄或已分配身份。 */\nexport interface ResolvedGameSetup {"
+  },
+  {
+    "path": "backend/src/runtime/config/resolve_game_setup.ts",
+    "before": "/** 座位／角色分配后才选择 Agent；名字不参与模型选择。 */",
+    "after": "/** 分配身份后按 players 显式 Agent→playerAgents→roleAgents→默认值选择；独立人格最后覆盖，null 清除继承。 */"
+  },
+  {
+    "path": "backend/src/runtime/config/resolve_game_setup.ts",
+    "before": "  const options: RunGameOptions = {",
+    "after": "  // 空值合并让显式 false 保持有效；CLI 覆盖只作用于这里声明的运行选项，语言和 seed 仍由 game 提供。\n  const options: RunGameOptions = {"
+  },
+  {
+    "path": "backend/src/runtime/config/resolve_game_setup.ts",
+    "before": "  const boardDefinition =\n",
+    "after": "  // 具名定义必须与选定板子一致；没有定义时只接受原两项内置板子，不由 runner 猜测支持组合。\n  const boardDefinition =\n"
+  },
+  {
+    "path": "backend/src/runtime/config/resolve_game_setup.ts",
+    "before": "    audit:\n",
+    "after": "    // 只有显式 enabled:false 才关闭审计；省略配置保原默认值，创建与失败处理留给运行／审计 owner。\n    audit:\n"
+  },
+  {
+    "path": "backend/src/runtime/config/resolve_game_setup.ts",
+    "before": "  for (const key of Object.keys(game.players ?? {})) {",
+    "after": "  // 同一座位同时出现于新 players 和旧 playerAgents 会拒绝，避免隐式优先级掩盖配置冲突。\n  for (const key of Object.keys(game.players ?? {})) {"
+  },
+  {
+    "path": "backend/src/runtime/config/resolve_game_setup.ts",
+    "before": "      else if (entry.personalityPrompt) {",
+    "after": "      // 语言表优先本语言，再优先中文、最后英文；只产生回退诊断，不翻译用户人格文本。\n      else if (entry.personalityPrompt) {"
+  },
+  {
+    "path": "backend/src/runtime/config/load_board_definition.ts",
+    "before": "import { readFile } from \"node:fs/promises\";",
+    "after": "/**\n * 读取指定目录 boards 下的具名版本化板子，输出解析后的配置及 sourceFile 追踪路径。\n * 文件 I/O 和 JSON 错误由本入口转换，字段／支持范围交给 parseBoardDefinition；不创建对局或修改角色状态。\n * 未版本化文件明确要求迁移，不自动回退旧路径；缺失文件与坏 JSON 各保稳定错误码，其它读取失败保原错误。\n */\nimport { readFile } from \"node:fs/promises\";"
+  },
+  {
+    "path": "backend/src/runtime/config/load_board_definition.ts",
+    "before": "  if (!raw || typeof raw !== \"object\" || !(\"version\" in raw))",
+    "after": "  // 先要求版本标记，再完整解析；sourceFile 只说明来源，不替代板子版本或引擎构建指纹。\n  if (!raw || typeof raw !== \"object\" || !(\"version\" in raw))"
+  },
+  {
+    "path": "backend/src/runtime/config/migrate_board.ts",
+    "before": "/** Explicit conversion of legacy overrides. Normal loading never tries legacy fallbacks. */",
+    "after": "/**\n * 显式将旧板子覆盖转换为版本化 BoardDefinition，输出定义及有序迁移警告；正常加载不调用旧格式回退。\n * 已带版本的输入直接交给当前解析器；旧输入先按指定历史基板解析，再保存其实际生效参数。\n * 本模块只生成转换数据，不读写文件、运行对局或改归档指纹；默认值、裁掉的窗口及无效角色参数通过稳定警告码说明。\n */"
+  },
+  {
+    "path": "backend/src/runtime/config/migrate_board.ts",
+    "before": "export interface BoardMigration {",
+    "after": "/** warnings 描述显式归一产生的差异；它们是迁移说明，不能当作运行时规则或通用容错授权。 */\nexport interface BoardMigration {"
+  },
+  {
+    "path": "backend/src/runtime/config/migrate_board.ts",
+    "before": "  // Unversioned files retain their historical execution semantics during conversion.",
+    "after": "  // 空自爆窗口在旧执行中触发默认窗口；先按旧语义展开，再转换，不能把空数组解释为新禁用政策。"
+  },
+  {
+    "path": "backend/src/runtime/config/migrate_board.ts",
+    "before": "  const unsupported =\n",
+    "after": "  // 当前版本只保留既有可执行的 OnPreVote 窗口；移除其它旧项时明确报警，不静默改变旧档来源。\n  const unsupported =\n"
+  },
+  {
+    "path": "backend/src/runtime/config/migrate_board.ts",
+    "before": "  if (override.winCondition && effective.winConditions?.length)",
+    "after": "  // 警告顺序固定，单一旧判胜项被实际生效的列表覆盖时也保留解释，定义只序列化最终配置。\n  if (override.winCondition && effective.winConditions?.length)"
+  }
+]

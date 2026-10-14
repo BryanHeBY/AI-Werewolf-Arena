@@ -1,6 +1,6 @@
 /**
  * 负责 unknown 配置的字段校验、默认归一和环境值解析。输入为原配置及环境表，输出 providers／agents／game／audit 配置或原字段错误。
- * 本解析模块不读文件、不启动 Agent 或写全局配置，实际执行及资源仍由运行装配持有。
+ * 本模块不读配置文件、不启动 Agent 或缓存结果；环境表可显式传入，省略时在解析调用中读取 process.env，执行资源由运行装配持有。
  */
 import type {
   AcpAgentEntryConfig,
@@ -24,6 +24,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+/** 只接受当前配置字段，拼写错误在装配前报出；这里的对象校验不承担惰性访问器或 Proxy 的隔离。 */
 function assertKnownKeys(value: Record<string, unknown>, keys: string[], field: string): void {
   const allowed = new Set(keys);
   for (const key of Object.keys(value)) {
@@ -45,6 +46,7 @@ function readOptionalString(value: unknown, field: string): string | undefined {
   return readRequiredString(value, field);
 }
 
+/** 玩家专属人格检查非空后返回原字符串；其它配置字符串仍按各自读取函数裁掉首尾空白。 */
 function readPromptText(value: unknown, field: string): string {
   readRequiredString(value, field);
   return value as string;
@@ -99,6 +101,7 @@ function resolveEnvironmentValue(
   field: string,
   environment: NodeJS.ProcessEnv,
 ): string {
+  // 只解析整个值为 ${NAME} 的占位符；不插值字符串片段，缺失变量的错误只包含字段和变量名。
   const match = /^\$\{([A-Z][A-Z0-9_]*)\}$/.exec(value.trim());
   if (!match) return value;
   const resolved = environment[match[1]]?.trim();
@@ -153,6 +156,7 @@ function normalizeProviderConfig(
     throw new Error(`runtime_config_provider_invalid: ${name}`);
   }
   const type = readRequiredString(raw.type, `providers.items.${name}.type`);
+  // ACP 配置描述进程传输，LLM 配置描述模型网关；各分支独立拒绝不属于自己的字段。
   if (type === "acp") {
     assertKnownKeys(
       raw,
@@ -339,6 +343,7 @@ function normalizeAgents(raw: unknown, providers: ProvidersConfig): AgentsConfig
           `runtime_config_agent_provider_not_found: agent=${name} provider=${agent.provider}`,
         );
       }
+      // 先验证 Agent 与传输匹配，再验证本项目支持的供应商参数组合；此处不探测远端模型能力。
       if (agent.kind === "acp" && provider.type !== "acp") {
         throw new Error(`runtime_config_acp_agent_requires_acp_provider: ${name}`);
       }
@@ -517,6 +522,7 @@ function normalizePlayers(
           : readStringArray(entry.spawnArgs, `${field}.spawnArgs`);
       if (spawnArgs && (!agent || agents.items[agent].kind !== "acp"))
         throw new Error(`runtime_config_spawn_args_require_explicit_acp_agent: ${field}`);
+      // 三态保留到 setup：缺省继承、null 清除、字符串或语言表覆盖；名字与人格原文不作为模型选择键。
       let personalityPrompt: LocalizedPrompt | null | undefined;
       if (entry.personalityPrompt === null) personalityPrompt = null;
       else if (entry.personalityPrompt !== undefined) {
@@ -607,6 +613,7 @@ export function parseRuntimeConfig(input: {
   debugSummary?: unknown;
   environment?: NodeJS.ProcessEnv;
 }): RuntimeConfig {
+  // 按 provider→Agent→game→audit 的依赖顺序解析，引用错误沿原字段路径抛出；不自行执行 .env 加载。
   const environment = input.environment ?? process.env;
   const providers = normalizeProviders(input.providers, environment);
   const agents = normalizeAgents(input.agents, providers);

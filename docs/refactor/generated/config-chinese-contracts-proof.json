@@ -1,0 +1,176 @@
+{
+  "approved": true,
+  "baseCommit": "065d1d6a315bdedd6c4c58e80e682084974de6b6",
+  "commentEditRecords": 31,
+  "programs": [
+    {
+      "path": "backend/src/runtime/config/contracts.ts",
+      "beforeSha256": "8ba67551eb76b4bf7ee368278eaae4c27356aae8f6d39b465acfdd65446b386b",
+      "afterSha256": "4bf58a85cd26d3535dbddb6b78ecebbbbc9baeef49ed4c4eb66e0c2a2a7b06bb",
+      "typedNodes": 522,
+      "noncommentLeaves": 637,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/config/parse_config.ts",
+      "beforeSha256": "60b6b455936615b38092a3b4e8e93fbcbc6f67d03127cced50312e5ff716fdec",
+      "afterSha256": "a244e6e89fc259fcd0f2f9912f8fd772cb5d02be920ca11bdb681580572a2115",
+      "typedNodes": 3137,
+      "noncommentLeaves": 3877,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 21314,
+          "sha256": "e45c3bbcf0352431a65c83f49a790da9738cf63e837310fde21e4575afd6a020"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 21462,
+          "sha256": "d85a171f0aa080aca5a1ceee6b8b9ed341dda04e4e495e1c9df540a761063aa9"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/config/load_config.ts",
+      "beforeSha256": "02d8fd36cac6136444bccb5dda9d72ec3d9c91c2c69cb25ae7ce322269b1819c",
+      "afterSha256": "0b7d0e8f6767b5b641b7946fe8dce543a7a201e15866322123119229aedaca83",
+      "typedNodes": 305,
+      "noncommentLeaves": 390,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1760,
+          "sha256": "d799ab58cf6bdba75040f2d1b816f9608854006c5ef8ed8002d2db2736be934a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1906,
+          "sha256": "c13972d5e396bde2367e3a8098b7d65421050dca455f40a70b9392d69cd1f2e9"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/config/resolve_game_setup.ts",
+      "beforeSha256": "5db14762264db756c9bff3fbc60473d641f7c79a113b6089fdd4d8874529dd07",
+      "afterSha256": "63d91c220bba4f18f0892f71e2d53459d5804f96dc63b38588b994cee8622bac",
+      "typedNodes": 1741,
+      "noncommentLeaves": 1987,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 9136,
+          "sha256": "84af409488cff51a9484b83ca6d3840535fadd1038165565e9043e0446b7ed8a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 9503,
+          "sha256": "7cf179c424b24b1e2f05f3e3f64e4248308c4dad488f36fa223e9e2d158f25a5"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/config/load_board_definition.ts",
+      "beforeSha256": "9e659d4e4f23da457671d269345a83d09805021fbbb6d1500bad086deff1d2ad",
+      "afterSha256": "48a3e4dd7ac8b5ff501a4bbd6297c5b0cad1c26c1f2b048ed1c768630a133469",
+      "typedNodes": 168,
+      "noncommentLeaves": 200,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 967,
+          "sha256": "4589440f4f0fbf2d98bc98671b81ac35257c51e2bb6262bbe6181142504df782"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1156,
+          "sha256": "59e662b8025dc577aecedcf790c2885ecf6f944836f2e66b6b47661a92e69c1a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/config/migrate_board.ts",
+      "beforeSha256": "e711c3b0991701a99eca238ec6002193a652a091720b933307ff60631a2fc6db",
+      "afterSha256": "1b291b5a345bece2f8f5f361b962920f8479dbe90260c6c5ce648d9ddac25a99",
+      "typedNodes": 434,
+      "noncommentLeaves": 506,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2964,
+          "sha256": "8a538906468ccde7afd35f77174c8027c879b5a87ab066441051ddae9e96591b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3226,
+          "sha256": "b24e55fcce886a0d5b83d63d812d43faedeee6f2061be1cee5fe7e859aedcb17"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/runtime/cli/run_game.ts",
+      "sha256": "4ed82753e2671683fde6bf6c4bb332dbb143621487b5af188536fceef901f8d6",
+      "text": "/**\n * 负责单局 CLI 参数、配置读取和已解析 setup 的运行接线。输入为 argv、展示上下文及配置目录，输出原 runner 执行结果。\n * 读取与板子合并仍归配置所有者，生命周期及异常收尾归 runner；本入口不实现角色规则或模型回退。\n */\nimport { isLocale, type Locale } from \"@ai-werewolf-arena/game-contract\";\nimport { runCli, takeDisplayArguments, type CliDisplayContext } from \"./display\";\nimport { loadRuntimeConfig } from \"../config/load_config\";\nimport { loadBoardDefinition } from \"../config/load_board_definition\";\nimport { resolveGameBoard, resolveGameSetup } from \"../config/resolve_game_setup\";\nimport { runGame } from \"../game_runner\";\nimport type { RunGameOptions } from \"../config/resolve_game_setup\";\nimport type { GameBoard } from \"../config/contracts\";\nimport { resolveCliConfigDirectory } from \"./config_directory\";\nfunction parseBoolean(value: string): boolean {\n  if ([\"1\", \"true\", \"yes\", \"on\"].includes(value.toLowerCase())) return true;\n  if ([\"0\", \"false\", \"no\", \"off\"].includes(value.toLowerCase())) return false;\n  throw new Error(\"runtime_cli_boolean_invalid\");\n}\n\nexport function parseRunGameArgs(\n  argv: string[],\n  environment: NodeJS.ProcessEnv = process.env,\n): { configDir: string; gameName: string; overrides: Partial<RunGameOptions>; locale?: Locale } {\n  const overrides: Partial<RunGameOptions> = {};\n  let locale: Locale | undefined;\n  let configDir = resolveCliConfigDirectory(undefined, environment);\n  let gameName = environment.GAME_CONFIG_NAME ?? \"default\";\n  for (let i = 0; i < argv.length; i += 1) {\n    const token = argv[i];\n    const value = argv[i + 1];\n    if (!value || value.startsWith(\"--\")) throw new Error(\"runtime_cli_value_missing\");\n    if (token === \"--configs-dir\") configDir = value;\n    else if (token === \"--game-config-name\") gameName = value;\n    else if (token === \"--game\" || token === \"--board\") overrides.board = value as GameBoard;\n    else if (token === \"--locale\") {\n      if (!isLocale(value)) throw new Error(\"runtime_cli_locale_invalid\");\n      locale = value;\n    } else if (token === \"--max-days\") overrides.maxDays = Number(value);\n    else if (token === \"--trace\") overrides.trace = parseBoolean(value);\n    else if (token === \"--max-runtime-ms\") overrides.maxRuntimeMs = Number(value);\n    else if (token === \"--llm-timeout-ms\") overrides.llmTimeoutMs = Number(value);\n    else if (token === \"--print-all-events\") overrides.printAllEvents = parseBoolean(value);\n    else if (token === \"--print-chat\") overrides.printChat = parseBoolean(value);\n    else if (token === \"--stream-events\") overrides.streamEvents = parseBoolean(value);\n    else if (token === \"--color\") overrides.color = parseBoolean(value);\n    else if (token === \"--print-llm-io\") overrides.printLlmIo = parseBoolean(value);\n    else if (token === \"--print-thinking\") overrides.printThinking = parseBoolean(value);\n    else if (token === \"--print-private-events\") overrides.printPrivateEvents = parseBoolean(value);\n    else if (token === \"--record-root-dir\") overrides.recordRootDir = value;\n    else throw new Error(\"runtime_cli_option_unknown\");\n    i += 1;\n  }\n  return { configDir, gameName, overrides, locale };\n}\n\nexport async function main(\n  argv = process.argv.slice(2),\n  display: CliDisplayContext = { locale: \"zh-CN\", explicit: false },\n): Promise<void> {\n  const args = parseRunGameArgs(takeDisplayArguments(argv, display));\n  if (!display.explicit && args.locale) display.locale = args.locale;\n  const runtime = await loadRuntimeConfig({ configDir: args.configDir, gameName: args.gameName });\n  const board = resolveGameBoard(runtime, args.overrides);\n  const boardOverride = await loadBoardDefinition(args.configDir, board);\n  const setup = resolveGameSetup(\n    {\n      ...runtime,\n      game: {\n        ...runtime.game,\n        ...(args.locale ? { locale: args.locale } : {}),\n        ...(display.explicit ? { displayLocale: display.locale } : {}),\n      },\n    },\n    args.overrides,\n    boardOverride,\n  );\n  display.locale = setup.context.displayLocale;\n  await runGame(setup);\n}\n\nif (require.main === module) void runCli(main);\n"
+    },
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "sha256": "03287c1215eadecc223f8fd6dd245197d83957e0bc80807ae207dec6a5430fbf",
+      "text": "/**\n * 负责校验和规范化公开板子格式。输入为纯公开 JSON 与已登记角色声明；输出为原 BoardConfig、诊断和反向序列化配置。解析拥有字段／默认值规范化，规则集拥有有限支持裁决；不读取认证、执行对局或授予行动租约。\n */\nimport { boardPresetViolation } from \"../../rulesets\";\n/** 唯一公开板子格式；未知字段和未注册角色保持原拒绝。 */\nimport { supportsWallRoles } from \"../../game/mechanisms/events/wall_notes/authority\";\nimport { z } from \"zod\";\nimport { RULESET } from \"@ai-werewolf-arena/game-catalog\";\nimport { ROLE_IDS, isRoleId } from \"@ai-werewolf-arena/game-contract\";\nimport { ActionWindow, Camp, Role, WinCondition, type BoardConfig } from \"../../core/domain/model\";\nimport { getDefaultRoleCatalog } from \"../../game/mechanisms/roles/role-catalog-assembly\";\nimport {\n  EVENT_PACK_IDS,\n  DEATH_REVEAL_POLICIES,\n  LAST_WORDS_POLICIES,\n  SHERIFF_BADGE_POLICIES,\n  SHERIFF_ELECTION_POLICIES,\n  EXILE_VOTE_POLICIES,\n} from \"../../core/domain/board\";\nimport { boardConfigSchema } from \"../../core/domain/board_schema\";\n\nexport const CONFIG_ID_PATTERN = /^[a-z][a-z0-9_-]*$/;\nexport const MAX_BOARD_PLAYERS = 128;\nexport const boardIdSchema = z.string().regex(CONFIG_ID_PATTERN);\nconst safePositive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);\nconst hooks = z.strictObject({\n  onDaybreak: z.boolean(),\n  onPreElection: z.boolean(),\n  onPreVote: z.boolean(),\n  onPerSpeechGap: z.boolean(),\n});\nconst schema = z.strictObject({\n  version: z.literal(2),\n  id: boardIdSchema,\n  ruleset: z.strictObject({ id: z.literal(RULESET.id), version: z.literal(RULESET.version) }),\n  board: z.strictObject({\n    size: safePositive.max(MAX_BOARD_PLAYERS),\n    roleSetups: z\n      .array(\n        z.strictObject({\n          role: z.enum(ROLE_IDS as [string, ...string[]]),\n          count: safePositive.max(MAX_BOARD_PLAYERS),\n        }),\n      )\n      .min(1),\n  }),\n  rules: z.strictObject({ winConditions: z.array(z.enum(WinCondition)).min(1), hooks }),\n  mechanisms: z.strictObject({\n    eventPack: z.enum(EVENT_PACK_IDS).optional(),\n    disclosure: z\n      .strictObject({ deathRevealPolicy: z.enum(DEATH_REVEAL_POLICIES).default(\"awa_hidden_v1\") })\n      .default({ deathRevealPolicy: \"awa_hidden_v1\" }),\n    lastWords: z\n      .strictObject({ policy: z.enum(LAST_WORDS_POLICIES).default(\"awa_initial_wave_v1\") })\n      .default({ policy: \"awa_initial_wave_v1\" }),\n    sheriff: z.strictObject({\n      enabled: z.boolean(),\n      electionPolicy: z.enum(SHERIFF_ELECTION_POLICIES).default(\"awa_final_candidates_v1\"),\n      badgePolicy: z.enum(SHERIFF_BADGE_POLICIES).default(\"awa_next_seat_v1\"),\n      initialSeat: safePositive.optional(),\n      voteWeight: z.number().finite().positive().default(1.5),\n      tieBreaker: z.enum([\"min_id\", \"min_seat\", \"no_elimination\"]).default(\"min_seat\"),\n    }),\n    voting: z\n      .strictObject({ exilePolicy: z.enum(EXILE_VOTE_POLICIES).default(\"awa_direct_v1\") })\n      .default({ exilePolicy: \"awa_direct_v1\" }),\n    selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)) }),\n    tieBreaker: z.strictObject({\n      exileVote: z.enum([\"min_id\", \"no_elimination\"]),\n      wolfKillVote: z.enum([\"min_id\", \"no_kill\"]),\n    }),\n  }),\n  roles: z.record(z.string(), z.unknown()).default({}),\n});\n\nexport type BoardDefinition = z.infer<typeof schema>;\nexport interface ResolvedBoardDefinition {\n  definition: BoardDefinition;\n  config: BoardConfig;\n  sourceFile?: string;\n  fieldSources: Readonly<Record<string, \"explicit\" | \"default\">>;\n}\n\nexport class BoardConfigurationError extends Error {\n  constructor(\n    readonly code: string,\n    readonly fieldPath: string,\n  ) {\n    super(`${code}: ${fieldPath}`);\n  }\n}\nfunction fail(code: string, path: string): never {\n  throw new BoardConfigurationError(code, path);\n}\n\nexport function parseBoardDefinition(raw: unknown, expectedId?: string): ResolvedBoardDefinition {\n  const result = schema.safeParse(raw);\n  if (!result.success) {\n    const issue = result.error.issues[0];\n    const key = issue.code === \"unrecognized_keys\" ? issue.keys[0] : undefined;\n    fail(\n      \"board_config_invalid_field\",\n      [...issue.path, ...(key ? [key] : [])].join(\".\") || \"document\",\n    );\n  }\n  const definition = result.data;\n  if (expectedId !== undefined && definition.id !== expectedId)\n    fail(\"board_config_id_mismatch\", \"id\");\n  const catalog = getDefaultRoleCatalog();\n  const seen = new Set<string>();\n  let total = 0;\n  for (const [index, entry] of definition.board.roleSetups.entries()) {\n    if (!isRoleId(entry.role) || !catalog.metadata(entry.role as Role))\n      fail(\"board_config_role_not_implemented\", `board.roleSetups.${index}.role`);\n    if (seen.has(entry.role)) fail(\"board_config_duplicate_role\", `board.roleSetups.${index}.role`);\n    const maximum = catalog.requireMetadata(entry.role as Role).maxCount;\n    if (maximum !== undefined && entry.count > maximum)\n      fail(\"board_config_invalid_field\", `board.roleSetups.${index}.count`);\n    seen.add(entry.role);\n    total += entry.count;\n  }\n  if (total !== definition.board.size) fail(\"board_config_role_count_mismatch\", \"board.roleSetups\");\n  if (\n    definition.board.roleSetups.some((row) => row.role === \"shapeshifter\") &&\n    (definition.board.size < 6 ||\n      definition.board.roleSetups\n        .filter((row) => row.role === \"wolf\")\n        .reduce((n, row) => n + row.count, 0) < 2 ||\n      !definition.board.roleSetups.some(\n        (row) => row.role !== \"shapeshifter\" && catalog.getCamp(row.role as Role) === Camp.Good,\n      ))\n  )\n    fail(\"board_config_role_combination_not_supported\", \"board.roleSetups\");\n  if (definition.board.roleSetups.some((row) => row.role === \"thief\")) {\n    const wolves = definition.board.roleSetups\n        .filter((row) => row.role === \"wolf\")\n        .reduce((n, row) => n + row.count, 0),\n      good = definition.board.roleSetups\n        .filter((row) => row.role !== \"thief\" && catalog.getCamp(row.role as Role) === Camp.Good)\n        .reduce((n, row) => n + row.count, 0);\n    if (wolves < 2 || good < 2)\n      fail(\"board_config_role_combination_not_supported\", \"board.roleSetups\");\n  }\n  if (\n    definition.board.roleSetups.some((row) => row.role === \"wild_child\") &&\n    !definition.board.roleSetups.some(\n      (row) => row.role !== \"wild_child\" && catalog.getCamp(row.role as Role) === Camp.Good,\n    )\n  )\n    fail(\"board_config_role_combination_not_supported\", \"board.roleSetups\");\n  if (\n    definition.board.roleSetups.some((row) => row.role === \"lonely_girl\") &&\n    (definition.board.size < 6 ||\n      !definition.board.roleSetups.some((row) => row.role === \"wolf\") ||\n      !definition.board.roleSetups.some(\n        (row) => row.role !== \"lonely_girl\" && catalog.getCamp(row.role as Role) === Camp.Good,\n      ))\n  )\n    fail(\"board_config_role_combination_not_supported\", \"board.roleSetups\");\n  const profiles = definition.board.roleSetups.map((entry) =>\n    catalog.requireMetadata(entry.role as Role),\n  );\n  for (const profile of profiles) {\n    if (\n      profile.supportedBoardRoles &&\n      definition.board.roleSetups.some(\n        (entry) => !profile.supportedBoardRoles!.includes(entry.role as Role),\n      )\n    ) {\n      fail(\"board_config_role_combination_not_supported\", \"board.roleSetups\");\n    }\n  }\n  if (\n    !profiles.some((item) => item.camp === Camp.Wolf) ||\n    !profiles.some((item) => item.camp === Camp.Good)\n  ) {\n    fail(\"board_config_requires_good_and_wolf\", \"board.roleSetups\");\n  }\n  for (const profile of profiles)\n    if (\n      profile.supportedWinConditions &&\n      definition.rules.winConditions.some(\n        (condition) => !profile.supportedWinConditions!.includes(condition),\n      )\n    )\n      fail(\"board_config_role_win_condition_not_supported\", \"rules.winConditions\");\n  if (new Set(definition.rules.winConditions).size !== definition.rules.winConditions.length)\n    fail(\"board_config_duplicate_win_condition\", \"rules.winConditions\");\n  if (\n    definition.mechanisms.eventPack &&\n    !supportsWallRoles(definition.board.roleSetups.map((e) => e.role as Role))\n  )\n    fail(\"board_config_role_combination_not_supported\", \"mechanisms.eventPack\");\n  const sheriff = definition.mechanisms.sheriff;\n  if (sheriff.initialSeat && sheriff.initialSeat > total)\n    fail(\"board_config_seat_out_of_range\", \"mechanisms.sheriff.initialSeat\");\n  if (\n    !sheriff.enabled &&\n    (sheriff.initialSeat ||\n      sheriff.voteWeight !== 1.5 ||\n      sheriff.tieBreaker !== \"min_seat\" ||\n      sheriff.electionPolicy !== \"awa_final_candidates_v1\" ||\n      sheriff.badgePolicy !== \"awa_next_seat_v1\")\n  ) {\n    fail(\"board_config_disabled_mechanism_parameters\", \"mechanisms.sheriff\");\n  }\n  const windows = definition.mechanisms.selfDestruct.enabledWindows;\n  if (new Set(windows).size !== windows.length)\n    fail(\"board_config_duplicate_window\", \"mechanisms.selfDestruct.enabledWindows\");\n  const windowHooks = {\n    [ActionWindow.OnPreVote]: \"onPreVote\",\n    [ActionWindow.OnDaybreak]: \"onDaybreak\",\n    [ActionWindow.OnPreElection]: \"onPreElection\",\n    [ActionWindow.OnPerSpeechGap]: \"onPerSpeechGap\",\n  } as const;\n  for (const window of windows)\n    if (!definition.rules.hooks[windowHooks[window]])\n      fail(\"board_config_window_hook_disabled\", `rules.hooks.${windowHooks[window]}`);\n  if (definition.rules.winConditions.includes(WinCondition.SlaughterSide)) {\n    if (\n      !profiles.some((item) => item.goodSide === \"god\") ||\n      !profiles.some((item) => item.goodSide === \"villager\")\n    ) {\n      fail(\"board_config_slaughter_side_requires_both_sides\", \"rules.winConditions\");\n    }\n  }\n  let config: BoardConfig = {\n    boardSize: total,\n    roleSetups: definition.board.roleSetups.map((entry) => ({\n      role: entry.role as Role,\n      count: entry.count,\n    })),\n    winConditions: [...definition.rules.winConditions],\n    hooks: { ...definition.rules.hooks },\n    enableSheriff: sheriff.enabled,\n    ...(sheriff.initialSeat ? { initialSheriffSeat: sheriff.initialSeat } : {}),\n    ...(sheriff.enabled\n      ? {\n          sheriff: {\n            voteWeight: sheriff.voteWeight,\n            electionPolicy: sheriff.electionPolicy,\n            badgePolicy: sheriff.badgePolicy,\n          },\n        }\n      : {}),\n    selfDestruct: { enabledWindows: [...windows] },\n    ...(definition.mechanisms.eventPack\n      ? { events: { pack: definition.mechanisms.eventPack } }\n      : {}),\n    voting: { ...definition.mechanisms.voting },\n    disclosure: { ...definition.mechanisms.disclosure },\n    lastWords: { ...definition.mechanisms.lastWords },\n    tieBreaker: {\n      ...definition.mechanisms.tieBreaker,\n      ...(sheriff.enabled ? { sheriffVote: sheriff.tieBreaker } : {}),\n    },\n  };\n  for (const [id, value] of Object.entries(definition.roles)) {\n    if (!seen.has(id)) fail(\"board_config_role_parameters_without_role\", `roles.${id}`);\n    const contribution = catalog.requireRuntime(id as Role).configuration;\n    if (!contribution) fail(\"board_config_role_parameters_not_supported\", `roles.${id}`);\n    const parsed = contribution.schema.safeParse(value);\n    if (!parsed.success) {\n      const issue = parsed.error.issues[0];\n      const unknown = issue.code === \"unrecognized_keys\" ? issue.keys[0] : undefined;\n      fail(\n        \"board_config_invalid_field\",\n        [\"roles\", id, ...issue.path, ...(unknown ? [unknown] : [])].join(\".\"),\n      );\n    }\n    definition.roles[id] = parsed.data;\n    config = contribution.apply(config, parsed.data);\n  }\n  for (const id of seen) {\n    const contribution = catalog.requireRuntime(id as Role).configuration;\n    if (contribution && !(id in definition.roles)) {\n      const defaults = contribution.schema.parse(contribution.defaults);\n      definition.roles[id] = defaults;\n      config = contribution.apply(config, defaults);\n    }\n  }\n  const presetViolation = boardPresetViolation(config);\n  if (presetViolation) fail(`board_config_${presetViolation}`, \"board\");\n  const fieldSources: Record<string, \"explicit\" | \"default\"> = {};\n  const recordSources = (value: unknown, original: unknown, prefix: string) => {\n    if (value && typeof value === \"object\" && !Array.isArray(value)) {\n      for (const [key, entry] of Object.entries(value)) {\n        const prior =\n          original && typeof original === \"object\"\n            ? (original as Record<string, unknown>)[key]\n            : undefined;\n        recordSources(entry, prior, prefix ? `${prefix}.${key}` : key);\n      }\n    } else fieldSources[prefix] = original === undefined ? \"default\" : \"explicit\";\n  };\n  recordSources(definition, raw, \"\");\n  return { definition, config, fieldSources };\n}\n\n/** 公开板子只含实际角色的参数；Tape 仍保留完整内部板子。 */\nexport function boardDefinitionFromConfig(id: string, config: BoardConfig): BoardDefinition {\n  const valid = boardConfigSchema.safeParse(config);\n  if (!valid.success) {\n    const issue = valid.error.issues[0];\n    const key = issue.code === \"unrecognized_keys\" ? issue.keys[0] : undefined;\n    fail(\"board_config_invalid_field\", [\"config\", ...issue.path, ...(key ? [key] : [])].join(\".\"));\n  }\n  const catalog = getDefaultRoleCatalog();\n  const roles: Record<string, unknown> = {};\n  for (const entry of config.roleSetups.filter((entry) => entry.count > 0)) {\n    const contribution = catalog.requireRuntime(entry.role).configuration;\n    if (contribution) roles[entry.role] = contribution.serialize(config);\n  }\n  const conditions = config.winConditions?.length\n    ? config.winConditions\n    : [config.winCondition ?? WinCondition.SlaughterCity];\n  return parseBoardDefinition({\n    version: 2,\n    id,\n    ruleset: RULESET,\n    board: {\n      size: config.boardSize,\n      roleSetups: config.roleSetups.filter((entry) => entry.count > 0),\n    },\n    rules: { winConditions: conditions, hooks: config.hooks },\n    mechanisms: {\n      ...(config.events ? { eventPack: config.events.pack } : {}),\n      disclosure: { deathRevealPolicy: config.disclosure?.deathRevealPolicy ?? \"awa_hidden_v1\" },\n      lastWords: { policy: config.lastWords?.policy ?? \"awa_initial_wave_v1\" },\n      sheriff: {\n        enabled: config.enableSheriff,\n        ...(config.enableSheriff\n          ? {\n              ...(config.initialSheriffSeat !== undefined\n                ? { initialSeat: config.initialSheriffSeat }\n                : {}),\n              voteWeight: config.sheriff?.voteWeight ?? 1.5,\n              electionPolicy: config.sheriff?.electionPolicy ?? \"awa_final_candidates_v1\",\n              badgePolicy: config.sheriff?.badgePolicy ?? \"awa_next_seat_v1\",\n              tieBreaker: config.tieBreaker?.sheriffVote ?? \"min_seat\",\n            }\n          : {}),\n      },\n      voting: { exilePolicy: config.voting?.exilePolicy ?? \"awa_direct_v1\" },\n      selfDestruct: {\n        enabledWindows: (config.selfDestruct?.enabledWindows ?? [ActionWindow.OnPreVote]).filter(\n          (window) =>\n            ({\n              [ActionWindow.OnPreVote]: config.hooks.onPreVote,\n              [ActionWindow.OnDaybreak]: config.hooks.onDaybreak,\n              [ActionWindow.OnPreElection]: config.hooks.onPreElection,\n              [ActionWindow.OnPerSpeechGap]: config.hooks.onPerSpeechGap,\n            })[window],\n        ),\n      },\n      tieBreaker: {\n        exileVote: config.tieBreaker?.exileVote ?? \"min_id\",\n        wolfKillVote: config.tieBreaker?.wolfKillVote ?? \"min_id\",\n      },\n    },\n    roles,\n  }).definition;\n}\n"
+    }
+  ],
+  "summary": {
+    "sources": 6,
+    "typedNodes": 6307,
+    "noncommentLeaves": 7597,
+    "jsdocTags": 0,
+    "protectedCommentRecords": 0,
+    "wholeRawOutputs": 12
+  },
+  "limits": [
+    "六个完整运行配置 模块的非注释程序、JSDoc tags 与移除注释的 ES2022 ESNext/CJS 输出比较；不执行请求、游戏、类型或全门禁。",
+    "职责头形状与输出相同不代替说明语义和生命周期的非作者人工审查。",
+    "源码 SHA 确实改变；不改历史 strict 身份或增豁免。"
+  ]
+}

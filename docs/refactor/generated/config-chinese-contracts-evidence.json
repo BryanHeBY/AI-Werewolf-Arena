@@ -1,0 +1,150 @@
+{
+  "baseCommit": "065d1d6a315bdedd6c4c58e80e682084974de6b6",
+  "source": [
+    {
+      "path": "backend/src/runtime/config/contracts.ts",
+      "sha256": "4bf58a85cd26d3535dbddb6b78ecebbbbc9baeef49ed4c4eb66e0c2a2a7b06bb"
+    },
+    {
+      "path": "backend/src/runtime/config/parse_config.ts",
+      "sha256": "a244e6e89fc259fcd0f2f9912f8fd772cb5d02be920ca11bdb681580572a2115"
+    },
+    {
+      "path": "backend/src/runtime/config/load_config.ts",
+      "sha256": "0b7d0e8f6767b5b641b7946fe8dce543a7a201e15866322123119229aedaca83"
+    },
+    {
+      "path": "backend/src/runtime/config/resolve_game_setup.ts",
+      "sha256": "63d91c220bba4f18f0892f71e2d53459d5804f96dc63b38588b994cee8622bac"
+    },
+    {
+      "path": "backend/src/runtime/config/load_board_definition.ts",
+      "sha256": "51e8109e07cde5a9faace92ecb46989f6d6f44ad7a344c4a26e7c454e847386e"
+    },
+    {
+      "path": "backend/src/runtime/config/migrate_board.ts",
+      "sha256": "1b291b5a345bece2f8f5f361b962920f8479dbe90260c6c5ce648d9ddac25a99"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/runtime/cli/run_game.ts",
+      "sha256": "4ed82753e2671683fde6bf6c4bb332dbb143621487b5af188536fceef901f8d6"
+    },
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "sha256": "03287c1215eadecc223f8fd6dd245197d83957e0bc80807ae207dec6a5430fbf"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-before.json",
+      "sha256": "5d278f9af07a4a48d084fe6bcca445f4e58f50202c783976b0029c1daf06f334"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-edits.json",
+      "sha256": "3c75268745d86da059f53a7ad72f4b5b4ccc88347537c3015c7c4d9eabbe509a"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-head-input-before.json",
+      "sha256": "dc55251314994b4d45279f1cbcd30fe8258efa965499b0802f362f45241162c4"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-head-input-edits.json",
+      "sha256": "4d3db579b5695c5c233b0a82da2022a9475c644df24046b46ef30ecf4b8b460b"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-head-input-heads-output.txt",
+      "sha256": "fd20d5dd1f623f84474f5d3f7748c26be01b8bdc26bb9ab94f1f7f2469988d0a"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-head-input-heads.json",
+      "sha256": "22b1cde23684de19b4bfd4f9db5cf7d401b2a90db004fea215576a2b2f6a4e56"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-head-input-heads.ts",
+      "sha256": "efa37d326edcb6ddd179a2c03cf68d8fd59c36415582c767d4956b825c9e21b8"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-head-input-proof-output.txt",
+      "sha256": "82da821366538e074ad4278e226e7128f276399f5c30c565b2ff7edab661f2cc"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-head-input-proof.cjs",
+      "sha256": "9155e8958393c8532ec5afd20144e67caa564899e5d75ca6377fd9600be71d99"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-head-input-proof.json",
+      "sha256": "13432795dc48b5f82dcd290226144a31c82c5290aba68f32f61effaa92f58bec"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-heads-output.txt",
+      "sha256": "c41c5ee16fd3470df3138fc24f133673bb1ef15fe57c524f1c3dc9be6b28a92e"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-heads.json",
+      "sha256": "d33353f85b80b6781acb7838adee0e04eaa5d004dce7ad65ec0f0bccd320fc49"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-heads.ts",
+      "sha256": "2e4d81e6321233ab9395f0a8d410f491ec8379c141827a9389ce849284d76da0"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-proof-output.txt",
+      "sha256": "0c35d8729603d15cef5f907d8165c32f5fc36ec3582578cd8b90715364f2fdf7"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-proof.cjs",
+      "sha256": "599d9f7db763241ae2e6c2c4ed7ba0df31cf23e145517bee560cd13924b2f2cc"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-proof.json",
+      "sha256": "0d921bfdd559d4b04c2150a29949ebbd1db23d6f7f08e2f2fb9db2abbb04be51"
+    },
+    {
+      "path": "docs/refactor/generated/config-chinese-contracts-receipts.json",
+      "sha256": "0dd40297b0d5958a1587adc0550308df66d81f7d5ab89be0e20aedc2b5d062e4"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/config-chinese-contracts.md",
+    "sha256": "770d1755c601252be3d6f05c23521a2b78ad4c162ef292319c8fffac58cecb5d"
+  },
+  "limitations": [
+    "仅六源有效中文维护注释，非注释程序与输出保持；不运行业务或重复已绿检查。",
+    "最后只修板子读取职责头输入，首阶段收据保持。"
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/config-chinese-contracts-scope-final.json",
+    "sha256": "2cd21ed1067719650dfc715511d4cc394d99dd175736676b9bcc771bf0157352"
+  },
+  "proof": {
+    "sources": 6,
+    "typedNodes": 6307,
+    "noncommentLeaves": 7597,
+    "jsdocTags": 0,
+    "protectedCommentRecords": 0,
+    "wholeRawOutputs": 12
+  },
+  "commentEditRecords": 31,
+  "finalCommentBridge": {
+    "sources": 1,
+    "typedNodes": 168,
+    "noncommentLeaves": 200,
+    "jsdocTags": 0,
+    "protectedCommentRecords": 0,
+    "wholeRawOutputs": 2
+  },
+  "headCoverage": {
+    "firstRoots": 6,
+    "firstFailures": 1,
+    "failedOnlyRoots": 1,
+    "finalDiagnostics": 0
+  },
+  "receipts": {
+    "path": "docs/refactor/generated/config-chinese-contracts-receipts.json",
+    "sha256": "0dd40297b0d5958a1587adc0550308df66d81f7d5ab89be0e20aedc2b5d062e4"
+  },
+  "reviewDigestPolicy": "不嵌审查报告以避免循环摘要"
+}
