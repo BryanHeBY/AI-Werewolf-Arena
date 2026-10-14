@@ -1,0 +1,1 @@
+{"approved":true,"mapNodes":159,"retainedNodes":495,"integratedNodes":647,"wholeOutputs":6,"controls":9,"canaries":[{"name":"non-first policy target argument","actualBodyMutation":true,"rejected":true},{"name":"last history day default","actualBodyMutation":true,"rejected":true}]}

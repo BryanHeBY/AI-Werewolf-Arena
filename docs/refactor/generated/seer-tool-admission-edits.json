@@ -1,0 +1,44 @@
+{
+  "baseCommit": "e601e69a0c0904785f5e95e33a1bb56153a43bfc",
+  "sourcePath": "backend/src/game/mechanisms/roles/seer/profile.ts",
+  "owner": "backend/src/rulesets/seer-tool-admission.ts",
+  "profileEdits": [
+    {
+      "label": "profile_assembly_head",
+      "old": " * 负责 预言家 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。",
+      "new": " * 负责预言家资料、配置与运行贡献的声明装配，完整查验准入由具名规则组合提供。",
+      "start": 4
+    },
+    {
+      "label": "owned_rule_import",
+      "old": "import { scholarMentorBlocks } from \"../scholar_mentor/night_frame\";",
+      "new": "import { SEER_VALIDATION_RULES } from \"../../../../rulesets/seer-tool-admission\";",
+      "start": 278
+    },
+    {
+      "label": "retire_callback_only_error_import",
+      "old": "import { RuleError } from \"@ai-werewolf-arena/game-contract\";\n",
+      "new": "",
+      "start": 557
+    },
+    {
+      "label": "retire_callback_only_phase_binding",
+      "old": "import { Camp, Role, Phase } from \"../../../../core/domain/model\";",
+      "new": "import { Camp, Role } from \"../../../../core/domain/model\";",
+      "start": 725
+    },
+    {
+      "label": "retire_callback_only_alive_import",
+      "old": "import { isAliveTarget } from \"../../validation/contracts\";\n",
+      "new": "",
+      "start": 1045
+    },
+    {
+      "label": "owned_complete_rule_table",
+      "old": "validationRules: {\n      check_identity: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {\n        const ability = activeNightAbility(role, \"seer_check\", day ?? 1, abilityId);\n        if (!ability) return { code: RuleError.SeerOnly };\n        if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };\n        if (toolCall.name !== \"check_identity\") return { code: RuleError.ToolMismatch };\n        if (scholarMentorBlocks(world, day ?? 1, actorId, \"check\"))\n          return { code: RuleError.ModifierUnavailable };\n        if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.CheckTarget };\n        if (!seerTargetAllowed(ability.state, actorId, toolCall.args.target_id))\n          return { code: RuleError.SeerTargetPolicy };\n        if (\n          !luckyTargetAllowed(world, actorId, ability, day ?? 1, \"check\", toolCall.args.target_id)\n        )\n          return { code: RuleError.LuckyTargetRepeat };\n        return null;\n      },\n    }",
+      "new": "validationRules: SEER_VALIDATION_RULES",
+      "start": 2417
+    }
+  ],
+  "policy": "六声明／装配／中文说明编辑；完整原表正文另直接比较，不恢复旧body作证明。"
+}

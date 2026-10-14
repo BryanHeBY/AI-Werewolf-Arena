@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/seer-tool-admission.test.ts:
+(pass) profile keeps one writable table while registry distinguishes late role rule from captured fallback [1.37ms]
+(pass) non-Seer granted check uses actual inventory and actor history without paying or adding a role gate [0.31ms]
+(pass) parameter getters and three target reads preserve phase short circuit and first thrown prefix [0.30ms]
+
+ 3 pass
+ 0 fail
+ 30 expect() calls
+Ran 3 tests across 1 file. [67.00ms]

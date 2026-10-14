@@ -1,0 +1,154 @@
+{
+  "baseCommit": "e601e69a0c0904785f5e95e33a1bb56153a43bfc",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+      "sha256": "f3e25080784b120530b99d0679135e38a5d2d6b63457c7467eba4cb09e897582"
+    },
+    {
+      "path": "backend/src/rulesets/seer-tool-admission.ts",
+      "sha256": "391295e12f455a85e3475b99f022f5dc45ca3af8a394b3791025ccb9d1526608"
+    }
+  ],
+  "originalMapSHA": "c1cbb6abcd607683dd418428771fdc96aee6e3720e266ee1fdc751305fcc3493",
+  "actualNewMapSHA": "1d9af7cf1ff409bef241a90584378db2c1c18da6eacb8bd984543c18483d86f5",
+  "actualCompleteTable": {
+    "originalNodes": 159,
+    "candidateNodes": 159,
+    "completeTypedTreeSame": true,
+    "originalNoncommentLeaves": 204,
+    "completeNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "originalSHA": "5c3d285ea6f588ea896a780a7e9a8dfbe09a3a4002a32bd0f88d1c1a86fd6ae9",
+        "candidateSHA": "5c3d285ea6f588ea896a780a7e9a8dfbe09a3a4002a32bd0f88d1c1a86fd6ae9"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "originalSHA": "5c3d285ea6f588ea896a780a7e9a8dfbe09a3a4002a32bd0f88d1c1a86fd6ae9",
+        "candidateSHA": "5c3d285ea6f588ea896a780a7e9a8dfbe09a3a4002a32bd0f88d1c1a86fd6ae9"
+      }
+    ]
+  },
+  "retainedProfile": {
+    "exactFiveDeclarationEditsInverseWithAlgorithmInSeparateProof": true,
+    "wholeRetainedSourceBytesSame": true,
+    "originalNodes": 495,
+    "candidateNodes": 495,
+    "completeTypedTreeSame": true,
+    "originalNoncommentLeaves": 597,
+    "completeNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "originalSHA": "cdc0035a09e43dac3461287e00f3f334c1ce599e99dc8246c41619b9c8bc2eb8",
+        "candidateSHA": "cdc0035a09e43dac3461287e00f3f334c1ce599e99dc8246c41619b9c8bc2eb8"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "originalSHA": "6f3a86a44e2d2fcf86697f6b5001597e9418e12d8071ff02b0cf360bf724b9ba",
+        "candidateSHA": "6f3a86a44e2d2fcf86697f6b5001597e9418e12d8071ff02b0cf360bf724b9ba"
+      }
+    ]
+  },
+  "integratedProfileWithActualNewInitializer": {
+    "originalNodes": 647,
+    "candidateNodes": 647,
+    "completeTypedTreeSame": true,
+    "originalNoncommentLeaves": 795,
+    "completeNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "originalSHA": "a1882f29b76eef43f1f21e42b0bcda8574a3cd9ce3df5215ad6ca296c842b11e",
+        "candidateSHA": "a1882f29b76eef43f1f21e42b0bcda8574a3cd9ce3df5215ad6ca296c842b11e"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "originalSHA": "09a46f17142412353daa24e4397111240b8a30f579da73471b2f15153d1cb88d",
+        "candidateSHA": "09a46f17142412353daa24e4397111240b8a30f579da73471b2f15153d1cb88d"
+      }
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+      "sha256": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/catalog.ts",
+      "sha256": "6a1fd6b06edb63d05a0d26ae06a62f834d62b29cea6dfc86ef2cd9d23ec9ac72",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "sha256": "0ae76ed484d42175c6662d1cd47136c24f8344163c1131bc773201f0aecc3f67",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/ports.ts",
+      "sha256": "04a5f73a1d08e3cea01f87cc1722e74b9ca7b505ce1e871a374492d065e48f3d",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "sha256": "1244e57c0db6d1a25df22929dd02174c506172e38ff029c0ec134c486e5c1059",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+      "sha256": "c89b1ee11c5796d327bbf45f124da8072c50101489ce362f6835f1338a2552f9",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "sha256": "e50c030bc86c4f649923533aa6563653c6aae55913087798364458d076ff08c8",
+      "actualGitSame": true,
+      "currentSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "00b43fed1cec30a93af24cedda7352b29ba07ada53699093b9224459cdaa3cdb",
+      "actualGitSame": true,
+      "currentSame": true
+    }
+  ],
+  "negativeNonfirstChildChecks": [
+    {
+      "name": "non-first policy target argument",
+      "actualBodyMutation": true,
+      "rejected": true
+    },
+    {
+      "name": "last history day default",
+      "actualBodyMutation": true,
+      "rejected": true
+    }
+  ],
+  "limits": [
+    "实际完整 table 正文来自新 owner initializer；没有用旧 whole callback 恢复来替代该正文比较。",
+    "保留程序的 symbolized 表位点只是将已独立完整核对的本体分区；另以真实新本体放回 property 比完整 profile。",
+    "所有 mapped 输出保源码程序，不声称真实模块位置／加载图／新出口布局全等价。"
+  ],
+  "approved": true
+}

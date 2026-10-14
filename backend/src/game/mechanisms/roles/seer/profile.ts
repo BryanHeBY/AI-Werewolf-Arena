@@ -1,11 +1,11 @@
 /**
- * 负责 预言家 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 负责预言家资料、配置与运行贡献的声明装配，完整查验准入由具名规则组合提供。
  * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 import { nativeRolePresentation } from "../presentation-contribution";
-import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
+import { SEER_VALIDATION_RULES } from "../../../../rulesets/seer-tool-admission";
 import { z } from "zod";
 import {
   SEER_TARGET_POLICIES,
@@ -13,17 +13,15 @@ import {
   DEFAULT_SEER_ACTION_POLICY,
 } from "../../../../core/domain/board";
 import { seerTargetAllowed } from "./ports";
-import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text, term } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 /** 文件说明：预言家角色 profile。 */
-import { Camp, Role, Phase } from "../../../../core/domain/model";
+import { Camp, Role } from "../../../../core/domain/model";
 import { NativeRoleContributions } from "../contracts";
 import { getSeerState, setSeerState } from "./ports";
 import { numberOrNull } from "../../llm/helpers";
 import { SEER_NIGHT_STAGES } from "./night_stages";
 import { SEER_TOOL_SPECS } from "./tool_specs";
-import { isAliveTarget } from "../../validation/contracts";
 import { activeNightAbility } from "../abilities";
 import { luckyTargetAllowed } from "../night_action_history";
 
@@ -62,24 +60,7 @@ export const SEER_ROLE_PROFILE: NativeRoleContributions = {
       });
     },
     toolSpecs: SEER_TOOL_SPECS,
-    validationRules: {
-      check_identity: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
-        const ability = activeNightAbility(role, "seer_check", day ?? 1, abilityId);
-        if (!ability) return { code: RuleError.SeerOnly };
-        if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
-        if (toolCall.name !== "check_identity") return { code: RuleError.ToolMismatch };
-        if (scholarMentorBlocks(world, day ?? 1, actorId, "check"))
-          return { code: RuleError.ModifierUnavailable };
-        if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.CheckTarget };
-        if (!seerTargetAllowed(ability.state, actorId, toolCall.args.target_id))
-          return { code: RuleError.SeerTargetPolicy };
-        if (
-          !luckyTargetAllowed(world, actorId, ability, day ?? 1, "check", toolCall.args.target_id)
-        )
-          return { code: RuleError.LuckyTargetRepeat };
-        return null;
-      },
-    },
+    validationRules: SEER_VALIDATION_RULES,
     nightStages: SEER_NIGHT_STAGES,
     llmRepair: {
       coerce: {

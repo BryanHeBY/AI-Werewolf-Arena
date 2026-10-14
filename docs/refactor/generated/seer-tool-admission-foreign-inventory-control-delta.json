@@ -1,0 +1,18 @@
+{
+  "owner": "/root/preflight_final_review",
+  "baseCommit": "e601e69a0c0904785f5e95e33a1bb56153a43bfc",
+  "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+  "originalSourceSHA": "00b43fed1cec30a93af24cedda7352b29ba07ada53699093b9224459cdaa3cdb",
+  "afterSourceSHA": "29a356061ce6d9fc6e933f4816d0a843f8e22604f3d1eae8883e25e3aece7c31",
+  "exactOldImport": "import {\n  grantNightAbility,\n  transferNightAbility,\n  setNightAbilityEnabled,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+  "exactNewImport": "import { setNightAbilityEnabled } from \"../../../src/game/mechanisms/roles/ability_changes\";\nimport { grantNightAbility, transferNightAbility } from \"../../../src/game/mechanisms/roles/night-ability-grants\";",
+  "entireCurrentInverseEqualsActualGit": true,
+  "sourceCountedInSeerScope": false,
+  "seerOwnSourcesUnchanged": true,
+  "phase": "Seer old precise case, finite types and complete proof were sampled before this later Inventory consumer import delta.",
+  "limits": [
+    "只后继Inventory旧test导入层；原fixture/case/assert/库存/目标/顺序完整不改。",
+    "本笔三owned文件不夹此delta，新unit仍原grant import。Inventory生产API WIP也属后继，最终Seer功能commit按保存的e601源层。",
+    "不重Seer已绿测试／类型／程序证明或后继Inventory检验。"
+  ]
+}
