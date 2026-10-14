@@ -1,6 +1,12 @@
+/**
+ * 负责贵族／秘密之身有限板的最终死因数据校验、脱离原引用的复制及单源阻断计划。
+ * 输入为救药、原生毒免疫和猎杀／侍从清除之后的有效来源；输出是冻结的来源副本与可空阻断描述。
+ * 本模块拥有数据形状与固定优先级，不查询 World、不消费保护库存、不标死或授予行动许可；
+ * 付款和原体仍归具体 authority。任一来源畸形时抛原错误，不返回半份快照。
+ */
 import { types } from "node:util";
-/** Finite AWA Noble board only. Input is the FINAL valid sources after rescue,
- * native toxin immunity and hunt/servant clearing; this function owns no resource. */
+
+/** 单次保护只移除首个存在的原因；顺序是本板规则，不能用原输入数组顺序或通用伤害排序替代。 */
 export const SECRET_BODY_CAUSE_ORDER = Object.freeze([
   "wolf_kill",
   "poison",
@@ -9,12 +15,14 @@ export const SECRET_BODY_CAUSE_ORDER = Object.freeze([
   "servant_expiry",
 ] as const);
 export type SecretBodyCause = (typeof SECRET_BODY_CAUSE_ORDER)[number];
+/** 输入只读视图不代表运行时已校验或冻结；复制入口仍检查全部键、数组及原因。 */
 export type SecretBodySources = Readonly<Record<string, readonly SecretBodyCause[]>>;
 function playerId(value: number): boolean {
   return Number.isSafeInteger(value) && value > 0 && value < Number.MAX_SAFE_INTEGER;
 }
 function snapshotSources(sources: SecretBodySources): Record<string, SecretBodyCause[]> {
   const copied: Record<string, SecretBodyCause[]> = {};
+  // 在反射前拒绝 Proxy；只接收普通或无原型的字典，不执行输入访问器来取得来源。
   if (
     !sources ||
     typeof sources !== "object" ||
@@ -34,6 +42,7 @@ function snapshotSources(sources: SecretBodySources): Record<string, SecretBodyC
       String(Number(key)) !== key
     )
       throw new Error("secret_body_sources_invalid");
+    // 玩家键必须符合原 ID 范围并使用规范十进制形式；数组须密集且每项为允许的唯一数据值。
     const raw: unknown = field.value;
     if (types.isProxy(raw) || !Array.isArray(raw) || Object.getPrototypeOf(raw) !== Array.prototype)
       throw new Error("secret_body_sources_invalid");
@@ -64,13 +73,14 @@ function snapshotSources(sources: SecretBodySources): Record<string, SecretBodyC
   }
   return copied;
 }
-/** Preserve all validated finite sources when there is no paid protection. */
+/** 无已付保护时保留全部已校验来源；同时冻结新字典及其数组，不冻结或修改原输入。 */
 export function copySecretBodySources(sources: SecretBodySources): SecretBodySources {
   const copied = snapshotSources(sources);
   return Object.freeze(
     Object.fromEntries(Object.entries(copied).map(([key, value]) => [key, Object.freeze(value)])),
   );
 }
+/** 有效选定目标没有致死来源时回到自身；选择与单源删除只生成计划，付款由 caller 完成。 */
 export function planSecretBodyBlock(
   actorId: number,
   selectedId: number | null,

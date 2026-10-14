@@ -1,0 +1,31 @@
+{
+  "baseCommit": "d9be88a2b9fe3834348bf310956099581e81a439",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+      "sha256": "e7ad330b041816d796d3b457d0ff60c553bd6ff323be6850b9f4401bf4174adf"
+    }
+  ],
+  "beforeSha256": "a21fe89e98389dac1a3f68384bf0b7a56bc87cf8427d8c630cfa10a5be34d0b6",
+  "wholeProgramTokenNodes": 1236,
+  "wholeProgramEqual": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeRawEqual": true,
+      "sha256": "07270232175796929527bc43300aad9795f081b378744345e4cf3686c7e44637"
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawEqual": true,
+      "sha256": "5639aefcc0cc177eab869ae6cbdd2233c962512e1ed344468a38d67cd013a061"
+    }
+  ],
+  "commentDiagnostics": [],
+  "limit": "只验证完整非注释程序和运行输出；不执行测试、类型、模型或全仓门禁，注释准确性另审。",
+  "actualExecution": {
+    "chunkId": "9760b8",
+    "exitCode": 0,
+    "summary": "1236 whole noncomment token nodes / 2 equal emitted raw outputs / 0 responsibility diagnostics"
+  }
+}

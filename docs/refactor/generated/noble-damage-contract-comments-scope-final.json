@@ -1,0 +1,9 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+      "sha256": "e7ad330b041816d796d3b457d0ff60c553bd6ff323be6850b9f4401bf4174adf"
+    }
+  ],
+  "frozen": true
+}
