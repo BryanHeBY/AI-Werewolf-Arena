@@ -94,6 +94,8 @@ function context(
   const factory = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
+    // 构造端口使用已有 Ctor；原 makeRequest 仍复用上方实例，不额外创建请求工厂。
+    get requestFactory() { return GameActionRequestFactory; },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },

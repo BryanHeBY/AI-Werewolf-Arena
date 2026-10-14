@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen-awaiting-independent-review",
+  "baseCommit": "b05f9067b499df4056acf33e3b37c202d1fdc54f",
+  "source": [
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "7062569a77f6d8cc2eeee903ed724cd685412e355e5bc5651399093cf15a07ae"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/lucky-fixture-request-factory-scope-final.json",
+    "sha256": "e374fde68e9252b96840ca25d5ca0b86e2f2ff83ccd96e1b8a88221e5fee2d2b"
+  },
+  "document": {
+    "path": "docs/refactor/lucky-fixture-request-factory.md",
+    "sha256": "2cfe4cbf9ef9cf037b53fe80779eed8a5aa071477b5292db01dcf7b9c413b0ee"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-before.json",
+      "sha256": "1c006c46a693e78f55fd920747c4aed6116c273fa7ab53bc0e9a62001dc0cdb4"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-edits.json",
+      "sha256": "453c307f9131012f4710a6aa0b311bde9be5c618af670fef8158bb6777b09bc8"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-heads-output.txt",
+      "sha256": "df19a29a28f40990c5e0e6de84852c8e0bf23e49f3aa4613e4c068ee22a1279d"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-heads.json",
+      "sha256": "b742aaa684a80f81ad047a12a22376d542c1047c77880ce184580de8bb3ccb92"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-heads.ts",
+      "sha256": "11c7e687c78d91b264014e08e82fd380e3c10fdfd7b3ac81800c1c6b95ea9aba"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-paths.json",
+      "sha256": "aacca56fad84252fb6270f476c1601647f14ae05a91f76535ee27402f436f475"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-proof-output.txt",
+      "sha256": "502f319b8b33087b1f552ca72918fd327129d7a00027f196e7738c40fe1cc29a"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-proof.cjs",
+      "sha256": "673f268363d8a57ddb5ec5cd7520843c5f840079468594d36a371ffeb5384515"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-proof.json",
+      "sha256": "f695ff0ee87bfe193f37fa3576ccdb7ef0e6e41f730dd38994950f3594745c4d"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-receipts.json",
+      "sha256": "9afc22e8cb526bf93525fe703ed128350848f7a498a4da2230922ba8d014bae2"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-types-config.json",
+      "sha256": "6b65ce16c711c74fd609d0564accc5efe0eace1c403e82ce20655697eb8635a9"
+    },
+    {
+      "path": "docs/refactor/generated/lucky-fixture-request-factory-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "receipts": {
+    "types": {
+      "launchChunk": "39cdcf",
+      "session": 90479,
+      "terminalChunk": "3bf258",
+      "exitCode": 0,
+      "roots": 1,
+      "executions": 1,
+      "output": "docs/refactor/generated/lucky-fixture-request-factory-types-output.txt"
+    },
+    "heads": {
+      "terminalChunk": "235110",
+      "exitCode": 0,
+      "roots": 1,
+      "documentationPaths": 657,
+      "executions": 1,
+      "output": "docs/refactor/generated/lucky-fixture-request-factory-heads-output.txt"
+    },
+    "proof": {
+      "terminalChunk": "5c0bf3",
+      "exitCode": 0,
+      "executions": 1,
+      "typedNodes": 5833,
+      "noncommentLeaves": 3938,
+      "unchangedTestCalls": 8,
+      "unchangedExpectCalls": 42,
+      "unchangedConstructors": 16,
+      "wholeInverseOutputs": 2,
+      "actualOutputsDiffer": true,
+      "output": "docs/refactor/generated/lucky-fixture-request-factory-proof-output.txt"
+    },
+    "notRun": [
+      "原已绿runtime case",
+      "其余33已绿类型根",
+      "全门禁",
+      "模型"
+    ]
+  }
+}
