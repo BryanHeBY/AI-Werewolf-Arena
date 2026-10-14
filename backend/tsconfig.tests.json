@@ -4,11 +4,28 @@
     "rootDir": "..",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "lib": ["ES2024", "DOM"],
+    "lib": [
+      "ES2024",
+      "DOM"
+    ],
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    "types": ["node", "bun-types", "bun-types/test-globals"]
+    "types": [
+      "node",
+      "bun-types",
+      "bun-types/test-globals"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "typescript": [
+        "./node_modules/typescript"
+      ]
+    }
   },
-  "include": ["src/**/*", "tests/**/*", "scripts/**/*"]
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "scripts/**/*"
+  ]
 }

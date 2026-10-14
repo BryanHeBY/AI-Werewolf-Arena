@@ -1,0 +1,15 @@
+{
+  "baseCommit": "7654533073e46150ee7181e6de6bf49d5e3e211d",
+  "source": [
+    {
+      "path": "backend/tsconfig.tests.json",
+      "sha256": "92ca421b343cb3a54314cee112c3f6486bbbe563c5f5488e7e3f86c0953ac28c"
+    }
+  ],
+  "sourceReady": true,
+  "checksRun": false,
+  "limits": [
+    "No new dependency/runtime module/path/cast or lowered type strictness. JSON responsibility explained in maintained document.",
+    "Source is frozen before the first normal entry verification, not a replay of finite Camp proof."
+  ]
+}

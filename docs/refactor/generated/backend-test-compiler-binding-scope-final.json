@@ -1,0 +1,54 @@
+{
+  "baseCommit": "7654533073e46150ee7181e6de6bf49d5e3e211d",
+  "source": [
+    {
+      "path": "backend/tsconfig.tests.json",
+      "sha256": "92ca421b343cb3a54314cee112c3f6486bbbe563c5f5488e7e3f86c0953ac28c"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/package.json",
+      "sha256": "3e5a263be4ad1b78812a83f61fca7596e152b536f00c6be2537f4266fa406e03"
+    },
+    {
+      "path": "backend/tsconfig.json",
+      "sha256": "0e05aa782d7a8638bae3a1525fb8fbd8e41deefb9eb170d874aca3cbb34f96d5"
+    },
+    {
+      "path": "tooling/tsconfig.json",
+      "sha256": "afa4982986b642f66cddd553982912a9fec5c5738d856410664902ef880738a4"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/backend-test-compiler-binding-before.json",
+      "sha256": "48dfa7edaba5be1be7e0832e8212459716bee252215e70d391fc2609e560bda8"
+    },
+    {
+      "path": "docs/refactor/generated/backend-test-compiler-binding-edits.json",
+      "sha256": "d993ec27a942a22e53bd0fb2f26ed9bc5367521fa229701224a621cfe1d704e0"
+    },
+    {
+      "path": "docs/refactor/generated/backend-test-compiler-binding-source-ready.json",
+      "sha256": "14e0aee065cef1098c7e611db4d0c3ab91fa5f54056f1f5c0e9365134b92bfb3"
+    },
+    {
+      "path": "docs/refactor/generated/backend-test-compiler-binding-type-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/backend-test-compiler-binding-verification.json",
+      "sha256": "2f16d454c186a16bd247eb34c6ddf9147be37d7bf33e0aa5e9e98741d1e84018"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/backend-test-compiler-binding.md",
+    "sha256": "ff4caf8c76e09fccae942b5bff734a7bb159241f5e521788ab2276bed15ca4b8"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/backend-test-compiler-binding-evidence.json",
+    "sha256": "c01de8f4a3c0dba4f10dc5dba934cbe287b1691e67f05b83d0e6cccf7d30afb9"
+  }
+}

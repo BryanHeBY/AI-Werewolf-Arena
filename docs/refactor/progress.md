@@ -916,3 +916,5 @@
   首完整类型真实 73 行诊断／退出 2及有限配置 TS2688 原样保，修后只 40 个失败／变化／新增根、末两变根及新查验一根实际通过；标准 backend 测试入口对工具 TypeScript 的解析仍待下一独立配置切片，不冒末全量复绿。首次 331 头有 5 项诊断／4 根失败，仅失败与新 14 头及查验新一头通过，五 reader 的“getter 不执行”明确只指字段、源调用可抛错；Mist 英文首头、关键结构／部分失败／付款与 Camp 生命周期同步中文说明。完整逆证明只界定各原稿差分，实际输入政策／JS 变化不冒旧行为全等。
 
   29 不同案例最终通过／437 成功断言：World 15／348、Bootstrap 4／24、Magician 1／11、缺 Role 继承名单 4／16、缺 Camp 查验 3／11、Nightmare 1／13、双语实际 Wolf 输入 1／14。World 16 次案例执行保一次 raw 配置早 guard 真实失败，限定原三 getter 循环使用已绑定板子后只重失败一例／新增两例，其余绿不复。同行发现并修 six／eight 继承名单及其它可空 Role 短路、漏 source／receiver／imports、自等式、五 Role matcher、误增 Camp 引用和假 Good source；原身份／Camp 预期与单一撤权原因保。作者完整来源与程序证明、后继小桥／全部首后收据、最终冻结清单实际匹配，未调用模型／私配置／种子矩阵／全门禁。完整目标、全角色闭包、严格复现及 P9 继续，见 camp-canonical-input-policy.md 与 camp-canonical-feature-manifest.json。
+
+- 后端标准测试编译入口：只在 tests tsconfig 明确绑定已经安装的 TypeScript 包，原严格选项与包含范围保持。Root 与非作者核实际 76545330 完整前态、唯一 JSON 差分、三稳定配置和真实 resolver；新增 baseUrl 对裸模块的静态查找影响明确说明，不宣称任意环境等价。修复后正常测试类型入口首次 83cee3／session87906→394068 实际退出 0，未重复 F05b 有限绿色根、角色案例或结构门禁；JSON 不植入非标准注释，由中文维护文档说明职责。普通源码构建、全角色闭包及 P9 继续，见 backend-test-compiler-binding.md。
