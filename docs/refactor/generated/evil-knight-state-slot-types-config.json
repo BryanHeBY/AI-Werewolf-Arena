@@ -1,0 +1,28 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  },
+  "files": [
+    "../../../backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+    "../../../backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+    "../../../backend/src/game/mechanisms/roles/evil_knight/night-bindings.ts",
+    "../../../backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+    "../../../backend/src/game/observation/player-observation-projector.ts",
+    "../../../backend/tests/unit/features/evil-knight/evil-knight-state.test.ts",
+    "../../../backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+    "../../../backend/tests/unit/features/evil-knight-stage.test.ts",
+    "../../../backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+    "../../../backend/tests/unit/engine/feature-player-state-projections.test.ts",
+    "../../../backend/tests/unit/configuration/evil-knight-configuration.test.ts",
+    "../../../backend/src/game/mechanisms/roles/evil_knight/state-slot.ts",
+    "../../../backend/src/game/mechanisms/roles/evil_knight/reflection.ts",
+    "../../../backend/tests/unit/features/evil-knight/state-slot.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

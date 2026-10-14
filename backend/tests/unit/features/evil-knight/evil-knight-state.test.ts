@@ -18,10 +18,9 @@ import { DamageResolutionSystem } from "../../../../src/core/domain/systems/dama
 import {
   captureEvilKnight,
   commitEvilKnightReflection,
-  freshEvilKnightState,
   evilKnightNightShotImmune,
-  getEvilKnightState,
-} from "../../../../src/game/mechanisms/roles/evil_knight/state";
+} from "../../../../src/game/mechanisms/roles/evil_knight/reflection";
+import { freshEvilKnightState, getEvilKnightState } from "../../../../src/game/mechanisms/roles/evil_knight/state-slot";
 
 function fixture(policy: EvilKnightShotPolicy = "night_shot_immune") {
   const { world } = bootstrapGame(sixPlayerMvpConfig);

@@ -10,7 +10,7 @@ import { COMPONENT } from "../../../src/core/domain/components/names";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { projectRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 import { projectNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/ports";
-import { projectEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/state";
+import { projectEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/ports";
 import { capturePlayerObservation } from "../../../src/game/observation/player-observation-projector";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 

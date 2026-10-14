@@ -14,7 +14,7 @@ import type { BoardConfig } from "../../../src/core/domain/board";
 import { boardConfigSchema } from "../../../src/core/domain/board_schema";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import type { RoleComponent } from "../../../src/core/domain/components/role";
-import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/state";
+import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/ports";
 for (const shotPolicy of ["night_shot_immune", "hunter_shot_bypasses"] as const) {
   for (const selfHeal of [WitchSelfHealRule.Disabled, WitchSelfHealRule.FirstNightOnly]) {
     test(`evil knight strict board roundtrip ${shotPolicy}/${selfHeal}`, () => {

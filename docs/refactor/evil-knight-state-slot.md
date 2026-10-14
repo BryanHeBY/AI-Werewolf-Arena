@@ -1,0 +1,39 @@
+# 恶夜骑士状态槽与反射所有权
+
+## 完整职责
+
+基线为真实 `59aea06ae24d3288c0be3b7d3ee664b903da8eda`。15 路径：14 现行源、删除原 `evil_knight/state.ts`；12 原源全文与四个稳定控制源核 Git。没有修改 PM、NP、DR、GC、玩法、档案字段或产品文案。
+
+- `state-slot.ts` 收完整 data／create／live 校验／get／project，真实 profile 初始化和唯一反射余量赋值。原 state／容器引用只存角色，不新增 WeakMap、影子库存或身份编码。
+- `reflection.ts` 收完整原体捕获、免疫查询和反射资格／付款／反击闭包。frame 仍唯一持名单、能力／生命关系、夜 Map 安装与免疫提案；`night-bindings` 只改原 capture 类型来源。
+- `ports` 公开原反射命令及真实 get／project 读者，不公开槽写者。projector 与六旧测试只迁实际模块路线；原测试标题、输入、预期全部保持。
+
+校验保原先拒绝 Proxy、自身 data descriptor、shot → remaining → policy 读取及 0／1 余量接受面；不新增精确键 schema，不要求可写 descriptor，不把 live 校验当档案 decoder。get 返回原引用，project 按原三字段顺序复制；冻结方法表不冻结状态，也不提供行动许可。
+
+## 写入与失败顺序
+
+初始化槽内先求 `role.privateState` 左值容器，再调用原 creator，原参数解析仍在 creator 的参数位置晚执行。解析或 setter 失败不回滚、不提前安装。
+
+反射命令仍先查询施法者 Role 和触发对应枚举，再按原短路检查 binding、当前性、余量、来源生命与回调、身份／阵营。来源私有容器先捕获，再在原赋值点晚读 `binding.state` 写 0，不重复 schema 或缓存状态。付款之后才读取 `binding.target.id` 构造反击；失败保留已付余量。反击闭包保持原 binding → 余量 → 来源生命／回调 → Role 引用／身份／阵营／容器复验顺序，迟到撤权不退款。
+
+原夜枪免疫独立于反射余量，原 source 许可与查验／毒药付款仍归具体请求／规则所有者；本批不扩大反击来源接受面。
+
+## 有界验证
+
+- 新两例 `9cdbb7` exit 0：2／0／10，验证实际 profile 左值先于解析，以及真实绑定的付款前容器错误／付款后 target 构造错误。
+- 原精准两例 `b24378` exit 0：2／0／8，另 26 filtered。四个不同成功用例、18 断言，分两次运行，没有重复绿。
+- 14 现行根有限类型 `285c23`／session 21653 → `759ebc`，实际 exit 0。
+- 同次 14 源原职责检查报告：581 Git 文档，诊断和中文头缺失均 0。调用器只保存 stdout，未保存独立退出字段；不凭该输出补造 exit 0，也没有为收据重复绿。
+- 完整七原函数、两个实际 writer 和 11 完整消费者：10,846 typed 节点、40 完整 ESNext／CJS 映射输出相同；初始化 writer 明确逆原末逗号语法标记，未忽略整函数或覆盖旧 body。
+- 265 原 import bindings 按真实所有者映射保持物理声明；唯一退出的 profile creator binding 改真实槽安装。两原公开命令／读者及新 project 直接出口单独核具体函数，不声称 import 统计包括所有 exports。
+- 五源码根当前 TS／MTS／CTS 字面 import／export／import-type／require／动态 import 库存 1,743 文件，旧 state 路由 0；该脚本未计 TSX／JS／CJS／MJS 或 importEquals；两个新 owner 相对值闭包 2／6，无回 frame／profile／ports。这是当前有限采样，不是完整历史 cold 初始化等价。
+
+证明工具首 `3afd99` red 是单参数末逗号比较，第二 `3947fe`／session 5036 → `8b60e6` red 是 compiler host 漏 Node typeRoots；只修具体比较器／host，原脚本与日志保存。最终 `3a612d`／session 51010 → `a13e5d` actual exit 0，没有改产品求绿。
+
+冻结前 Root 指出 reflection EOF 多余 LF，已仅删一个末尾 LF并保存精确字节桥；原测试／类型／头／程序证明仍按原采样。scoped tracked diff-check无诊断；新增三源 `git diff --no-index --check` 的状态 1 表示新增差异、无空白诊断，首 harness 误断言 0 已保存，更正状态解释后只继续未检查两源，未重复命令。
+
+## API 与范围
+
+旧私有 state 入口退休，新增 SLOT 冻结方法表、thunk／方法调用、反射模块和调用栈／初始化路线是明确 API 变化；不承诺仓外私有导入、任意 prototype 或 CJS namespace 重绑定等价。原可写 state、binding plain 对象、字段 getter／setter、生命／资源／当前性政策保持，没有新权限屏障。
+
+源路径与注释进入新的 sourceHash，历史档案身份原文保留；未提供跨构建动作复现豁免。字面库存只含 `backend/src`、`backend/tests`、`frontend/src`、`packages`、`tooling`，不涵盖仓外／计算加载／历史 generated／其余脚本测试目录。未跑完整对局、模型、全量门禁，不声明 C17／P9 或重构目标全部完成。

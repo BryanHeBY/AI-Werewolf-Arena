@@ -1,0 +1,21 @@
+24 | for(const x of before.controls)assert.equal(fs.readFileSync(x.path,'utf8'),x.text);
+25 | assert(!fs.existsSync(oldPath));
+26 | const config=ts.readConfigFile('backend/tsconfig.tests.json',ts.sys.readFile);assert(!config.error);const options=ts.parseJsonConfigFileContent(config.config,ts.sys,path.resolve('backend')).options;
+27 | function program(original){const overrides=new Map(original?before.source.map(x=>[path.resolve(x.path),x.text]):[]),host=ts.createCompilerHost(options);const read=host.readFile.bind(host),exists=host.fileExists.bind(host);host.readFile=p=>overrides.get(path.resolve(p))??read(p);host.fileExists=p=>overrides.has(path.resolve(p))||exists(p);return ts.createProgram(original?before.source.map(x=>x.path):paths.existing.filter(x=>x!==oldPath).concat(paths.new),options,host);}
+28 | const programs={old:program(true),current:program(false)},checkers={old:programs.old.getTypeChecker(),current:programs.current.getTypeChecker()};
+29 | function bindings(program,checker,p){const f=program.getSourceFile(p);assert(f,p);const out=[];for(const statement of f.statements){if(ts.isImportDeclaration(statement)&&statement.importClause){const clause=statement.importClause;if(clause.name)out.push({name:clause.name.text,id:clause.name});if(clause.namedBindings){if(ts.isNamespaceImport(clause.namedBindings))out.push({name:clause.namedBindings.name.text,id:clause.namedBindings.name});else for(const item of clause.namedBindings.elements)out.push({name:item.name.text,id:item.name});}}}return out.map(x=>{const symbol=checker.getSymbolAtLocation(x.id);assert(symbol,x.name);const actual=symbol.flags&ts.SymbolFlags.Alias?checker.getAliasedSymbol(symbol):symbol;assert(actual.declarations?.length,x.name);return{name:x.name,endpoints:actual.declarations.map(d=>({path:path.relative(process.cwd(),d.getSourceFile().fileName).replaceAll('\\','/'),name:d.name?.getText(d.getSourceFile())??String(d.kind)}))};});}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+AssertionError: types
+ generatedMessage: false,
+     actual: undefined,
+   expected: true,
+   operator: "==",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/evil-knight-state-slot-proof.cjs:29:719
+      at map (native:1:11)
+      at bindings (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/evil-knight-state-slot-proof.cjs:29:555)
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/evil-knight-state-slot-proof.cjs:32:46
+
+Bun v1.4.3 (Linux x64)

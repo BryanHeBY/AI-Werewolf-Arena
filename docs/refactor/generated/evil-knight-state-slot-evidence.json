@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "baseCommit": "59aea06ae24d3288c0be3b7d3ee664b903da8eda",
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+        "sha256": "726e139330e587d2a85bf713122e207baceef5817081d56ebb4ed7af5c2c14cf"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+        "sha256": "3980f81bd0fef96f6fcb5ffb392b39c6d37f01cb9ba4eff37fc9b1172604279b"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/night-bindings.ts",
+        "sha256": "7be6c96d9cc31c4d200c1c8eb1fdef64cb52a8594d0f928cb90a43df8b525120"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+        "sha256": "9f7317c222f87405a649ebb4e28e80ec7ceb8f4df2a454545c3e54a4c68b6379"
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "sha256": "8598def0aa170f14ffea6c86c33225529be74fe5b2cc62705dc1aa24f55fab22"
+      },
+      {
+        "path": "backend/tests/unit/features/evil-knight/evil-knight-state.test.ts",
+        "sha256": "b4441c7f3fa171446aaac661b2a872d90a8018b05d2bba3c6cbdc75c4b5bf26b"
+      },
+      {
+        "path": "backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+        "sha256": "3408db9c186c831949b8987459258b8a86c143880b2229964cadad5ff0c777da"
+      },
+      {
+        "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+        "sha256": "7b94f6205eaae7dd481da2a464715e006c932e6826654bc850fb20fbd60cbebe"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "sha256": "4e2358fcf7005196e13a320f986856193835cfe03189b8c172eb2f013da8f83c"
+      },
+      {
+        "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+        "sha256": "b2be60433b3f213f6910890f02d1f82765c357f87a6c6f4fcda56bf89668a8f9"
+      },
+      {
+        "path": "backend/tests/unit/configuration/evil-knight-configuration.test.ts",
+        "sha256": "01d272cb93847d38b21e1e7e37f2871675f4bb29c3291b7ba1f036ca7c0565fc"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state-slot.ts",
+        "sha256": "719e59fa7b5e2ce9f8fca2f9741eedad066cd53dd454118996f104a826f0728c"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/reflection.ts",
+        "sha256": "94fe5dae3f2108f9716cc82f5e0010a026945c13650ad3402d4ef95b5c74c0df"
+      },
+      {
+        "path": "backend/tests/unit/features/evil-knight/state-slot.test.ts",
+        "sha256": "d5773099dee3c80dadc42e0ec467b217c1a1205f0f31eb010f20d43528eb035b"
+      }
+    ],
+    "deleted": [
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+        "beforeSHA256": "0a324c252e162cf50ef0adb642509b64c689b4e565eec60a9de95c9f6796e18a",
+        "expectedAbsent": true
+      }
+    ],
+    "counts": {
+      "paths": 15,
+      "present": 14,
+      "deleted": 1,
+      "actualGitBefore": 12,
+      "new": 3,
+      "controls": 4
+    },
+    "controls": [
+      {
+        "path": "packages/game-contract/src/role-state-data.ts",
+        "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0"
+      },
+      {
+        "path": "backend/src/core/domain/components/alive.ts",
+        "sha256": "c6b681bded926aec1568887887baaff9fff7903a1fd8eba94e0c30f4a246e0a4"
+      },
+      {
+        "path": "backend/src/core/domain/night_effects.ts",
+        "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97"
+      },
+      {
+        "path": "backend/src/rulesets/native-night-effects.ts",
+        "sha256": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4"
+      }
+    ],
+    "sharedRouting": "本批独占projector一条恶夜骑士route及两common旧测试本族import；Nightmare59aea实际commit后采真实before，无其它族编辑。",
+    "limits": [
+      "旧state私有路径退休；新方法表/thunk/分模块是明确API变化。",
+      "不含PM/NP/DR/GC/其它族与并行注释WIP；controls四源完整字节核Git。"
+    ]
+  },
+  "scopeSHA256": "b47a2e6a017b5acfc668e7f649b109ad1ddef9d984fa4e009d8bbe8fd3628045",
+  "documentation": {
+    "path": "docs/refactor/evil-knight-state-slot.md",
+    "sha256": "414f885a619ff1cf81d7171c981683b227f2420b7b527f512580c6b1e65e7dcd"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-before.json",
+      "sha256": "7bafe3f8b299f401b0814826bd3275fc9abda5afafb165636cd2d76cec96ee7d"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-paths.json",
+      "sha256": "92706f4011850c5b80c630fe1d6ac0307dac64cdacb9c49321b0e38a4b5cfb5e"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-edits.json",
+      "sha256": "ae9805fc617ba8c79b762bb863b1d9afe486a04d448c7de0a534e87717074815"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-new-tests.log",
+      "sha256": "e0f0aed24d074d02e580310b8fffa20c4ec9c09d9d9013e03d9f38419658ebfe"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-original-tests.log",
+      "sha256": "e6a051fc64391c4614498d5da40d1ebad14945ca4cc02b754ff7a74037984657"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-types-config.json",
+      "sha256": "96c5230db13d25edda9c2070d70c8d3367bd2db49648c38c0df9891b7e61a578"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-heads.ts",
+      "sha256": "a887d7def1ffb6d2f1e935817b8fca68a9ff0880fc67ea9aa61eb23632d68767"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-heads.json",
+      "sha256": "03756217f552d753d0c0b09a31a743057592a9722e9db462f87f29f02818d12e"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-proof.cjs",
+      "sha256": "301fb6634e5fa6a625a0059f9b4e84bdfb491abfe72ea2ed09b2fba5dcaa7408"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-proof.json",
+      "sha256": "6e079c7e1e750c8147b684facb966ec8aee08e771542a2d0fb6e66ea1d9576bb"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-proof.log",
+      "sha256": "58f892978c4196f81e59d46ec2d8cd3298c764f1e6e596a81fc9b063ac33f29e"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-proof-first.cjs",
+      "sha256": "e92cd870f01bc34dbacd1d75f501046cab44fcc10b3734727e68be163232998d"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-proof-first.log",
+      "sha256": "d92c0ad21e58da1446912b3f3f66176d46a3cb0190991b4231d53ee2ecc0c866"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-proof-second.cjs",
+      "sha256": "0eda51af830299edb3daa492981be9779ef91e403bdc03de414059728ff09a4f"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-proof-second.log",
+      "sha256": "ed4e24f46a002cdd6904f9f4e2110a01f6b7856aa39dee6e32f886bf396bf79e"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-final-whitespace-bridge.json",
+      "sha256": "1a1332e1e50ef05e4512641054753d1124fba15dbdad0264b55923f78241ba95"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-diff-check.json",
+      "sha256": "579719af05b4f0f4d85ae3485094f5c88f934f6770347038d9843ad4b3b643ad"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-receipts.json",
+      "sha256": "7ede29fe2119d7e84f08af33eb967a47efee837e0a06e479f0c729dfbaf542b2"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-final-verification.json",
+      "sha256": "2812ce1bba62d6794c79279fbac9ddd46499665bcf62f35aada5bc3c5a0d594d"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-scope-final.json",
+      "sha256": "b47a2e6a017b5acfc668e7f649b109ad1ddef9d984fa4e009d8bbe8fd3628045"
+    },
+    {
+      "path": "docs/refactor/generated/evil-knight-state-slot-document-precision.json",
+      "sha256": "f350b25680c0b10fcb1e3cdff77a3488937443a2458b423b8d343e953a991be6"
+    }
+  ],
+  "proofSummary": {
+    "originalFunctions": 7,
+    "actualWriterPrograms": 2,
+    "wholeConsumers": 11,
+    "typedNodes": 10846,
+    "wholeMappedOutputs": 40
+  },
+  "retainedPhysicalImportBindings": 265,
+  "publicDirectEndpoints": 3,
+  "receipts": {
+    "newTests": {
+      "chunk": "9cdbb7",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 10
+    },
+    "originalPreciseTests": {
+      "chunk": "b24378",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 8,
+      "filtered": 26
+    },
+    "distinctSuccess": {
+      "cases": 4,
+      "assertions": 18,
+      "executions": 2
+    },
+    "finiteTypes": {
+      "roots": 14,
+      "launch": "285c23",
+      "session": 21653,
+      "terminal": "759ebc",
+      "exitCode": 0
+    },
+    "heads": {
+      "roots": 14,
+      "documentationPaths": 581,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "terminalExitCode": null,
+      "captureLimit": "该调用器只保存stdout；原头报告真实，不补造独立exit字段，不重跑。"
+    },
+    "proof": {
+      "first": {
+        "chunk": "3afd99",
+        "exitCode": 1,
+        "reason": "init末逗号语法逆遗漏"
+      },
+      "second": {
+        "launch": "3947fe",
+        "session": 5036,
+        "terminal": "8b60e6",
+        "exitCode": 1,
+        "reason": "工具host漏Node typeRoots"
+      },
+      "final": {
+        "launch": "3a612d",
+        "session": 51010,
+        "terminal": "a13e5d",
+        "exitCode": 0
+      }
+    },
+    "whitespace": {
+      "firstHarness": "f5a048",
+      "exitCode": 1,
+      "reason": "no-index新增差异返回1，无空白诊断；误按0断言"
+    },
+    "diffCheckContinued": {
+      "chunk": "e4eb60",
+      "exitCode": 0,
+      "repeatedCommands": 0
+    },
+    "notRun": [
+      "models",
+      "whole games",
+      "full gates",
+      "full types",
+      "repeated green cases"
+    ],
+    "sourceProofStage": "原green后只有reflection EOF删除一个LF，精确字节桥单列。"
+  },
+  "limits": [
+    "完整7函数逐体／11消费者／2实际写程序精确逆，未恢复旧整个state或付款函数覆盖候选。初始化writer明确附带唯一trailingComma语法映射及可能的打印布局差异，不冒全raw输出相同。",
+    "原import物理绑定真实比较；新方法表／thunk／旧路径退休与分模块冷加载是明确API变化，不承诺任意私有反射或模块导出替换。",
+    "当前相对值闭包只核两个新owner；字面语法库存限五根，不覆盖历史generated、计算加载、仓外、backend/scripts/frontend/tests。",
+    "不修改schema宽度、原引用或权限，不运行整局／模型／全门禁。",
+    "当前库存仅五根TS/MTS/CTS列明字面语法，未计TSX/JS/CJS/MJS和importEquals；本批全部实际消费者另外按真实before和route全文核，不以此有限库存冒全仓所有语言/语法。"
+  ],
+  "independentReview": "等待非作者只读 source/doc/SHA 审；root/peer报告不纳artifacts。"
+}

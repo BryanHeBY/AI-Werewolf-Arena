@@ -2,12 +2,12 @@
  * 负责恶夜骑士一夜原体绑定 Map 的唯一存储及反射／夜枪运行查询。
  * 输入为原 NightStageState 身份与开夜捕获的同一 Map；输出为原 binding 或捕获同一 Map 的夜枪闭包。
  * 原 binding 包含生命、库存引用和当前性回调，不是玩家 DTO 或 JSON，也不因查询而获得反射付款权限。
- * 原体捕获、免疫提案与反射资源消费仍归 night_frame／state；本模块不查询 World、不复制 Map 或重抓角色。
+ * 原体捕获／资格归 reflection，免疫提案归 night_frame，余量写入归 state-slot；本模块不查询 World、不复制 Map 或重抓角色。
  * 旧通用 map 属性／返回 map 注入接口退出；更换状态对象不接续旧 Map，已有结果闭包保原捕获引用。
  */
 import type { EntityId } from "../../../../core/domain/identity";
 import type { NightStageState } from "../../stages/night/contracts";
-import type { captureEvilKnight } from "./state";
+import type { captureEvilKnight } from "./reflection";
 
 type EvilKnightNightBinding = NonNullable<ReturnType<typeof captureEvilKnight>>;
 type EvilKnightNightBindings = Map<EntityId, EvilKnightNightBinding>;

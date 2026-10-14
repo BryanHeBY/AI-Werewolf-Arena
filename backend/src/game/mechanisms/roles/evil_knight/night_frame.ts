@@ -2,7 +2,7 @@
  * 负责恶夜骑士固定名单的原体复验及本夜绑定捕获阶段。输入为原玩家、能力身份与当前夜状态；
  * 输出为原名单拒绝、同一 binding Map 与免疫提案。名单不在角色替换后重建，失效保原错误前缀。
  * 每次状态读取和原 capture／Map.set 顺序保持；本族登记 Map 后才展开免疫数组，后续失败不退款或撤销安装。
- * 捕获数据与反射资源的原体资格仍归 state；运行回调／生命引用不进入玩家观察或归档，也不授权行动。
+ * 捕获与反射资格归 reflection，实际余量写入归 state-slot；运行回调／生命引用不进入玩家观察或归档，也不授权行动。
  */
 import type { World } from "../../../../core/domain/world";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -10,7 +10,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role } from "../../../../core/domain/identity";
 import { captureNightLife } from "../../../../core/domain/night_effects";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { captureEvilKnight } from "./state";
+import { captureEvilKnight } from "./reflection";
 import { hasEvilKnightNightBindings, installEvilKnightNightBindings } from "./night-bindings";
 import type { NightAbilityReadView } from "../abilities";
 type AbilityAuthority = {

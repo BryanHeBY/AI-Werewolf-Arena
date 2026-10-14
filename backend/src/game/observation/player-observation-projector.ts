@@ -32,7 +32,7 @@ import { projectOrderPrinceState } from "../mechanisms/roles/order_prince/ports"
 import { projectMagicianState } from "../mechanisms/roles/magician/ports";
 import { projectRedMoonState } from "../mechanisms/roles/red_moon_apostle/ports";
 import { projectNightmareShadowState } from "../mechanisms/roles/nightmare_shadow/ports";
-import { projectEvilKnightState } from "../mechanisms/roles/evil_knight/state";
+import { projectEvilKnightState } from "../mechanisms/roles/evil_knight/ports";
 import { projectDemonHunter } from "../mechanisms/roles/demon_hunter/authority";
 import { weddingActorView, weddingBrideState } from "../mechanisms/roles/ghost_bride/authority";
 import { projectLonelyGirl } from "../mechanisms/roles/lonely_girl/lifecycle";

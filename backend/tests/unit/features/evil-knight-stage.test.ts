@@ -21,7 +21,7 @@ import { GameActionRequestFactory } from "../../../src/game/engine/action_reques
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
-import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/state";
+import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/ports";
 import { EVIL_KNIGHT_FRAME_STAGE } from "../../../src/game/mechanisms/roles/evil_knight/night_frame";
 import { WITCH_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/witch/night_stages";
 import { SEER_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/seer/night_stages";

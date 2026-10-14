@@ -1,0 +1,69 @@
+3 | const prefix='docs/refactor/generated/evil-knight-state-slot-',before=JSON.parse(fs.readFileSync(prefix+'before.json','utf8')),edits=JSON.parse(fs.readFileSync(prefix+'edits.json','utf8')),paths=JSON.parse(fs.readFileSync(prefix+'paths.json','utf8')),sha=s=>createHash('sha256').update(s).digest('hex');
+4 | const oldPath=paths.deleted[0],slotPath=paths.new[0],reflectionPath=paths.new[1],old=before.source.find(x=>x.path===oldPath).text;
+5 | function parse(text,p){const f=ts.createSourceFile(p,text,ts.ScriptTarget.Latest,true);assert.deepEqual(f.parseDiagnostics,[]);return f;}
+6 | function tree(n,f){let nodes=1;const children=[];ts.forEachChild(n,c=>{const value=tree(c,f);nodes+=value.nodes;children.push(value.tree);},a=>{const values=a.map(c=>tree(c,f));nodes+=values.reduce((sum,x)=>sum+x.nodes,0);children.push(['array',a.length,!!a.hasTrailingComma,...values.map(x=>x.tree)]);});const leaves=[];function tokenTree(node){const children=node.getChildren(f).filter(c=>c.kind<ts.SyntaxKind.FirstJSDocNode||c.kind>ts.SyntaxKind.LastJSDocNode);if(!children.length){const value=[node.kind,node.getText(f)];leaves.push(value);return value;}return[node.kind,children.map(tokenTree)];}return{nodes,tree:[n.kind,children],tokenTree:tokenTree(n),leaves};}
+7 | function complete(text,p){const f=parse(text,p);return tree(f,f);}
+8 | function same(a,b,p){assert.deepEqual(complete(a,p),complete(b,p));return complete(a,p).nodes;}
+                                ^
+AssertionError: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  {
+    leaves: [
+      [
+        80,
+        'role'
+...
+      [
++       28,
++       ','
++     ],
++     [
+        22,
+        ')'
+      ],
+      [
+        27,
+...
+                            ],
++                           [
++                             28,
++                             ','
++                           ]
+                          ]
+                        ],
+                        [
+                          22,
+                          ')'
+...
+                        1,
++                       true,
+-                       false,
+                        [
+                          212,
+                          [
+                            [
+                              214,
+
+ generatedMessage: true,
+     actual: {
+  nodes: 27,
+  tree: [Array ...],
+  tokenTree: [Array ...],
+  leaves: [Array ...],
+},
+   expected: {
+  nodes: 27,
+  tree: [Array ...],
+  tokenTree: [Array ...],
+  leaves: [Array ...],
+},
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at same (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/evil-knight-state-slot-proof.cjs:8:29)
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/evil-knight-state-slot-proof.cjs:20:17
+
+Bun v1.4.3 (Linux x64)

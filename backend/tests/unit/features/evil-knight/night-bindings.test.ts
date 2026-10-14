@@ -12,7 +12,8 @@ import { createAliveComponent } from "../../../../src/core/domain/components/ali
 import { captureNightLife } from "../../../../src/core/domain/night_effects";
 import type { NightStageState, NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import type { NightPipelineResult } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { captureEvilKnight, freshEvilKnightState } from "../../../../src/game/mechanisms/roles/evil_knight/state";
+import { captureEvilKnight } from "../../../../src/game/mechanisms/roles/evil_knight/reflection";
+import { freshEvilKnightState } from "../../../../src/game/mechanisms/roles/evil_knight/state-slot";
 import { installEvilKnightBoard, EVIL_KNIGHT_FRAME_STAGE } from "../../../../src/game/mechanisms/roles/evil_knight/night_frame";
 import {
   hasEvilKnightNightBindings,

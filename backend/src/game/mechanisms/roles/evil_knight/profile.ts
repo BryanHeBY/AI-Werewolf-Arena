@@ -10,7 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { EVIL_KNIGHT_POLICY, freshEvilKnightState, getEvilKnightState } from "./state";
+import { EVIL_KNIGHT_POLICY, EVIL_KNIGHT_STATE_SLOT, getEvilKnightState } from "./state-slot";
 import { EVIL_KNIGHT_FRAME_STAGE } from "./night_frame";
 const parameters = z.strictObject({
   policy: z.literal(EVIL_KNIGHT_POLICY).default(EVIL_KNIGHT_POLICY),
@@ -41,8 +41,10 @@ export const EVIL_KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
       (spec) => spec.name !== "self_destruct" && spec.name !== "self_destruct_with_target",
     ),
     init: (role, ctx) => {
-      role.privateState.evilKnight = freshEvilKnightState(
-        parameters.parse(ctx.boardConfig?.evilKnight ?? {}).shotPolicy,
+      // 左值容器先读，原参数解析仍在 creator 的参数位置晚执行；失败不提前安装状态。
+      EVIL_KNIGHT_STATE_SLOT.install(
+        () => role.privateState,
+        () => parameters.parse(ctx.boardConfig?.evilKnight ?? {}).shotPolicy,
       );
     },
     configuration: {

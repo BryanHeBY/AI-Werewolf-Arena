@@ -1,0 +1,471 @@
+{
+  "approved": true,
+  "baseCommit": "59aea06ae24d3288c0be3b7d3ee664b903da8eda",
+  "presentSources": 14,
+  "deleted": [
+    "backend/src/game/mechanisms/roles/evil_knight/state.ts"
+  ],
+  "originalNamedFunctions": [
+    {
+      "name": "data",
+      "owner": "slot",
+      "typedNodes": 56,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "5a970e21aa36ede979f23262e50373ff2d13c2cefdf12f4435b9170d8f34ee65",
+          "sha256": "5a970e21aa36ede979f23262e50373ff2d13c2cefdf12f4435b9170d8f34ee65"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "5a970e21aa36ede979f23262e50373ff2d13c2cefdf12f4435b9170d8f34ee65",
+          "sha256": "5a970e21aa36ede979f23262e50373ff2d13c2cefdf12f4435b9170d8f34ee65"
+        }
+      ]
+    },
+    {
+      "name": "freshEvilKnightState",
+      "owner": "slot",
+      "typedNodes": 23,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "60e065475cdb0ed2797c1e56078e35658d7dc494c8c977e6690c5b1923baf8ec",
+          "sha256": "60e065475cdb0ed2797c1e56078e35658d7dc494c8c977e6690c5b1923baf8ec"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "622c07058701f9b4e5ca018b74bfb5d2563e2ab4ef40957920b85ca4fb15ae63",
+          "sha256": "622c07058701f9b4e5ca018b74bfb5d2563e2ab4ef40957920b85ca4fb15ae63"
+        }
+      ]
+    },
+    {
+      "name": "getEvilKnightState",
+      "owner": "slot",
+      "typedNodes": 105,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "2d89d4c8cd5bc63946a8febcf9bcf2c7995023d312f944643a05877ba3742448",
+          "sha256": "2d89d4c8cd5bc63946a8febcf9bcf2c7995023d312f944643a05877ba3742448"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "a09c5695a4f32946b95520ef2f9f486d0cf7e0db6fbdb7f63da01e9ead5cb985",
+          "sha256": "a09c5695a4f32946b95520ef2f9f486d0cf7e0db6fbdb7f63da01e9ead5cb985"
+        }
+      ]
+    },
+    {
+      "name": "projectEvilKnightState",
+      "owner": "slot",
+      "typedNodes": 42,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "31f8aa5cd8da3f6325d9b39d66ad443277ffb3c259187fffee40b93698ee9a5c",
+          "sha256": "31f8aa5cd8da3f6325d9b39d66ad443277ffb3c259187fffee40b93698ee9a5c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "adec7f957a0cc80eff8a6eaadb7b15049fad267b5843edd1c73d7f8367644be4",
+          "sha256": "adec7f957a0cc80eff8a6eaadb7b15049fad267b5843edd1c73d7f8367644be4"
+        }
+      ]
+    },
+    {
+      "name": "captureEvilKnight",
+      "owner": "reflection",
+      "typedNodes": 120,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "154bf7f977d3d0e8b68549cec6deaedfa9162334502bc9aad20f2e39a75cfe01",
+          "sha256": "154bf7f977d3d0e8b68549cec6deaedfa9162334502bc9aad20f2e39a75cfe01"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "4f221608c96485dfd4912b6e978d9ecf3d8aae0ea08c94bf65e3fef654926b43",
+          "sha256": "4f221608c96485dfd4912b6e978d9ecf3d8aae0ea08c94bf65e3fef654926b43"
+        }
+      ]
+    },
+    {
+      "name": "evilKnightNightShotImmune",
+      "owner": "reflection",
+      "typedNodes": 54,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "5aa36f9a74a7ebbb87fa8030e8c00020cbb7a318721634bfb71e01fcac4f9d77",
+          "sha256": "5aa36f9a74a7ebbb87fa8030e8c00020cbb7a318721634bfb71e01fcac4f9d77"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "2cf55fc51f115922107a42418561102f8cd9ecc3631a177ad2e1042dff0f3481",
+          "sha256": "2cf55fc51f115922107a42418561102f8cd9ecc3631a177ad2e1042dff0f3481"
+        }
+      ]
+    },
+    {
+      "name": "commitEvilKnightReflection",
+      "owner": "reflection",
+      "typedNodes": 225,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "dbf427ae6f11237681e5fb2b486c9c3e381db5286021c91b096133a15192b256",
+          "sha256": "dbf427ae6f11237681e5fb2b486c9c3e381db5286021c91b096133a15192b256"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "46e5165018ff1be95786bb077878a176eaf63fee0de569ab12509149e47b402f",
+          "sha256": "46e5165018ff1be95786bb077878a176eaf63fee0de569ab12509149e47b402f"
+        }
+      ]
+    }
+  ],
+  "newWriterPrograms": {
+    "install": {
+      "typedNodes": 27,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "05154d3d284c26773aeca32c47b7fd090aaace24d96135bf1d12f0ce764cb869",
+          "sha256": "05154d3d284c26773aeca32c47b7fd090aaace24d96135bf1d12f0ce764cb869"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "05154d3d284c26773aeca32c47b7fd090aaace24d96135bf1d12f0ce764cb869",
+          "sha256": "05154d3d284c26773aeca32c47b7fd090aaace24d96135bf1d12f0ce764cb869"
+        }
+      ],
+      "exactAdditionalSyntaxMapping": "原单参数调用带末逗号；新槽调用不带。仅逆该trailingComma标记后完整AST/token相同，原writer字段/调用/政策读取算法不变。"
+    },
+    "consumeReflection": {
+      "typedNodes": 19,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "c2f82a10af54b50f7c02d8d360624bf815a9aa987cbb5c67933653e591ee9edf",
+          "sha256": "c2f82a10af54b50f7c02d8d360624bf815a9aa987cbb5c67933653e591ee9edf"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "c2f82a10af54b50f7c02d8d360624bf815a9aa987cbb5c67933653e591ee9edf",
+          "sha256": "c2f82a10af54b50f7c02d8d360624bf815a9aa987cbb5c67933653e591ee9edf"
+        }
+      ]
+    }
+  },
+  "wholeConsumers": [
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+      "currentSha256": "726e139330e587d2a85bf713122e207baceef5817081d56ebb4ed7af5c2c14cf",
+      "wholeExactInverse": true,
+      "typedNodes": 298,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "1780f5d3967417dc7f6d2a80f96df8d866baac1143011567f4a31454939420e5",
+          "sha256": "1780f5d3967417dc7f6d2a80f96df8d866baac1143011567f4a31454939420e5"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "08bc001444afc1a80fcbd9f96bd48f527fcb41e9a57cac2d4e5ef8b0f87d1d35",
+          "sha256": "08bc001444afc1a80fcbd9f96bd48f527fcb41e9a57cac2d4e5ef8b0f87d1d35"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+      "currentSha256": "3980f81bd0fef96f6fcb5ffb392b39c6d37f01cb9ba4eff37fc9b1172604279b",
+      "wholeExactInverse": true,
+      "typedNodes": 805,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "ccd2ede678353745b69d4b69eb7c3478a9bf0187f260297b9987d53e89a0a7dc",
+          "sha256": "ccd2ede678353745b69d4b69eb7c3478a9bf0187f260297b9987d53e89a0a7dc"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "b8779aa2c38cc933b50fc88c803bea7d091e0242fd7e835e0a62c318d05ddf04",
+          "sha256": "b8779aa2c38cc933b50fc88c803bea7d091e0242fd7e835e0a62c318d05ddf04"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/night-bindings.ts",
+      "currentSha256": "7be6c96d9cc31c4d200c1c8eb1fdef64cb52a8594d0f928cb90a43df8b525120",
+      "wholeExactInverse": true,
+      "typedNodes": 172,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "cba17732dc53a4ba38d8c80f376f63c429f0684b46936bf0383646b5b70d5326",
+          "sha256": "cba17732dc53a4ba38d8c80f376f63c429f0684b46936bf0383646b5b70d5326"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "c467f371763f0cd364770aeb3f199e4153a29fe9e3d17c05be4a833b4bd5bb0b",
+          "sha256": "c467f371763f0cd364770aeb3f199e4153a29fe9e3d17c05be4a833b4bd5bb0b"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+      "currentSha256": "9f7317c222f87405a649ebb4e28e80ec7ceb8f4df2a454545c3e54a4c68b6379",
+      "wholeExactInverse": true,
+      "typedNodes": 98,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "ebc139aaedc16fdedf82435883d0a3b3553957f7769b9b36f819929258553179",
+          "sha256": "ebc139aaedc16fdedf82435883d0a3b3553957f7769b9b36f819929258553179"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "c21e1c63f02e82813ada1d4e911a99a190f857d27060b0a8c9f80fb7a3a8f497",
+          "sha256": "c21e1c63f02e82813ada1d4e911a99a190f857d27060b0a8c9f80fb7a3a8f497"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "currentSha256": "8598def0aa170f14ffea6c86c33225529be74fe5b2cc62705dc1aa24f55fab22",
+      "wholeExactInverse": true,
+      "typedNodes": 2494,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "10105642d4f22c34d56183235cfe5af02173a24eb7e1a9a182dd4158b1616fe9",
+          "sha256": "10105642d4f22c34d56183235cfe5af02173a24eb7e1a9a182dd4158b1616fe9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "430a5c2417c9fafb146b230668c650cdc40633c1d79a214dbedeeb0fa4080e61",
+          "sha256": "430a5c2417c9fafb146b230668c650cdc40633c1d79a214dbedeeb0fa4080e61"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/evil-knight-state.test.ts",
+      "currentSha256": "b4441c7f3fa171446aaac661b2a872d90a8018b05d2bba3c6cbdc75c4b5bf26b",
+      "wholeExactInverse": true,
+      "typedNodes": 1650,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "eabc920b613def69742d5baca80971e40ae234957496a4d726d5c93ec9cd31a1",
+          "sha256": "eabc920b613def69742d5baca80971e40ae234957496a4d726d5c93ec9cd31a1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "edd1e552f9e35abfa7dda4d44bbf7bf9ca7e24cadadf6f5b5032bf56528e4833",
+          "sha256": "edd1e552f9e35abfa7dda4d44bbf7bf9ca7e24cadadf6f5b5032bf56528e4833"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+      "currentSha256": "3408db9c186c831949b8987459258b8a86c143880b2229964cadad5ff0c777da",
+      "wholeExactInverse": true,
+      "typedNodes": 894,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "66e519bde3f75693f32126a36134f44e26088766aef3a1d80a477f30c92a8b74",
+          "sha256": "66e519bde3f75693f32126a36134f44e26088766aef3a1d80a477f30c92a8b74"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "5ff73a5561da580530cb9d8e43f1a2c94afcd39e3984f85d8a6aae1df6433721",
+          "sha256": "5ff73a5561da580530cb9d8e43f1a2c94afcd39e3984f85d8a6aae1df6433721"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+      "currentSha256": "7b94f6205eaae7dd481da2a464715e006c932e6826654bc850fb20fbd60cbebe",
+      "wholeExactInverse": true,
+      "typedNodes": 1370,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "5759e13dcf8d1dabb120c45a7155f6fe15ff837003bc6248958e37d0061b00a9",
+          "sha256": "5759e13dcf8d1dabb120c45a7155f6fe15ff837003bc6248958e37d0061b00a9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "cc53e057dc8857a2108ea97578ff2a3f261f81f8f58855c15653e9a02af95026",
+          "sha256": "cc53e057dc8857a2108ea97578ff2a3f261f81f8f58855c15653e9a02af95026"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "currentSha256": "4e2358fcf7005196e13a320f986856193835cfe03189b8c172eb2f013da8f83c",
+      "wholeExactInverse": true,
+      "typedNodes": 973,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "b6e09db6d58a9edfd6e71ba2c514ea676ac58595bd6e14b7792807ca51cbb7b6",
+          "sha256": "b6e09db6d58a9edfd6e71ba2c514ea676ac58595bd6e14b7792807ca51cbb7b6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "1e6982d648452b2cad423b9bb8ce960cf73f1a6c78c7dea77d1b159f1403bc93",
+          "sha256": "1e6982d648452b2cad423b9bb8ce960cf73f1a6c78c7dea77d1b159f1403bc93"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+      "currentSha256": "b2be60433b3f213f6910890f02d1f82765c357f87a6c6f4fcda56bf89668a8f9",
+      "wholeExactInverse": true,
+      "typedNodes": 716,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "83e57f90aceefd75c5e705a76fd2b90502f6abc64ca1a3f4d7f90044e19a7ae4",
+          "sha256": "83e57f90aceefd75c5e705a76fd2b90502f6abc64ca1a3f4d7f90044e19a7ae4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "c60e35b626b6d39d9de5b8aefa25f8c654f85d03c7a71d0c33efe2c18e5a175e",
+          "sha256": "c60e35b626b6d39d9de5b8aefa25f8c654f85d03c7a71d0c33efe2c18e5a175e"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/configuration/evil-knight-configuration.test.ts",
+      "currentSha256": "01d272cb93847d38b21e1e7e37f2871675f4bb29c3291b7ba1f036ca7c0565fc",
+      "wholeExactInverse": true,
+      "typedNodes": 705,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSha256": "8f38fcc1ba41399a1be2f2acb23d4e3603680ce1a2949e1fc823ec88488c0a70",
+          "sha256": "8f38fcc1ba41399a1be2f2acb23d4e3603680ce1a2949e1fc823ec88488c0a70"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSha256": "6928fb4b8072e8b634a5b47af9af3c2b3961c9f81ccb15932347d74186573926",
+          "sha256": "6928fb4b8072e8b634a5b47af9af3c2b3961c9f81ccb15932347d74186573926"
+        }
+      ]
+    }
+  ],
+  "retainedPhysicalBindings": 265,
+  "retiredBindings": 1,
+  "bindingChanges": [
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+      "name": "freshEvilKnightState",
+      "change": "原creator调用改为槽install，实际同creator已完整逆"
+    }
+  ],
+  "ownerClosures": {
+    "slot": [
+      "backend/src/core/domain/identity.ts",
+      "backend/src/game/mechanisms/roles/evil_knight/state-slot.ts"
+    ],
+    "reflection": [
+      "backend/src/core/domain/components/alive.ts",
+      "backend/src/core/domain/components/names.ts",
+      "backend/src/core/domain/identity.ts",
+      "backend/src/core/domain/night_effects.ts",
+      "backend/src/game/mechanisms/roles/evil_knight/reflection.ts",
+      "backend/src/game/mechanisms/roles/evil_knight/state-slot.ts"
+    ]
+  },
+  "inventory": {
+    "roots": [
+      "backend/src",
+      "backend/tests",
+      "frontend/src",
+      "packages",
+      "tooling"
+    ],
+    "files": 1743,
+    "oldRoutes": []
+  },
+  "controls": [
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/core/domain/components/alive.ts",
+      "sha256": "c6b681bded926aec1568887887baaff9fff7903a1fd8eba94e0c30f4a246e0a4",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/rulesets/native-night-effects.ts",
+      "sha256": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4",
+      "actualGitSame": true
+    }
+  ],
+  "summary": {
+    "originalFunctions": 7,
+    "actualWriterPrograms": 2,
+    "wholeConsumers": 11,
+    "typedNodes": 10846,
+    "wholeMappedOutputs": 40
+  },
+  "limits": [
+    "完整7函数逐体／11消费者／2实际写程序精确逆，未恢复旧整个state或付款函数覆盖候选。初始化writer明确附带唯一trailingComma语法映射及可能的打印布局差异，不冒全raw输出相同。",
+    "原import物理绑定真实比较；新方法表／thunk／旧路径退休与分模块冷加载是明确API变化，不承诺任意私有反射或模块导出替换。",
+    "当前相对值闭包只核两个新owner；字面语法库存限五根，不覆盖历史generated、计算加载、仓外、backend/scripts/frontend/tests。",
+    "不修改schema宽度、原引用或权限，不运行整局／模型／全门禁。"
+  ]
+}
