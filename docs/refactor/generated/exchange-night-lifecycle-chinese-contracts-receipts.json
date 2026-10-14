@@ -1,0 +1,29 @@
+{
+  "commentEdits": {
+    "terminalChunk": "b8984f",
+    "exitCode": 0,
+    "sources": 2,
+    "records": 14
+  },
+  "wholeCommentComparison": {
+    "command": "bun docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-proof.cjs",
+    "terminalChunk": "cb723f",
+    "exitCode": 0,
+    "sources": 2,
+    "nonCommentTokens": 333,
+    "exactGitWholeForwardAndInverse": true
+  },
+  "heads": {
+    "command": "bun docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-heads.ts",
+    "terminalChunk": "c87945",
+    "exitCode": 0,
+    "roots": 2,
+    "sameGitDocumentationPaths": 537,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0
+  },
+  "limits": [
+    "未执行算法AST/emit复证、类型、测试、模型或全量门禁；只核本批纯注释精确源码与原职责头形状。",
+    "HEADd92为checkpoint文档提交，两目标源码与5d42全字节相同，before保真实d92来源。"
+  ]
+}

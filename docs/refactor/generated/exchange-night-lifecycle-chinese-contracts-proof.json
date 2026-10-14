@@ -1,0 +1,33 @@
+{
+  "baseCommit": "d92d0a4033367ad5b3bdb15f44f75a3b352b46c6",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night-lifecycle.ts",
+      "beforeSHA256": "30e73ab92a4644ce7a9adb832e45f75f8abbde5bfa82b8d9af42f00928162acc",
+      "sha256": "578576bc86a41e3f31ced29a42458e07492c2faf3de25cab7d200c60d09ed0d1",
+      "exactWholeGitForwardAndInverseSame": true,
+      "wholeNonCommentTokenSequenceSame": true,
+      "nonCommentTokens": 185,
+      "commentRecords": 8
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night-lifecycle.ts",
+      "beforeSHA256": "3a3aa30aa3993bae45051bf141f6936d7569eea0244e1dc23595458b2669ba65",
+      "sha256": "172eed2e624fc34a7038a85793910862352b239bb767bdebe950f314ea939aa2",
+      "exactWholeGitForwardAndInverseSame": true,
+      "wholeNonCommentTokenSequenceSame": true,
+      "nonCommentTokens": 148,
+      "commentRecords": 6
+    }
+  ],
+  "stableControl": {
+    "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+    "sha256": "6cbfebad52535ce4a2859be33ecceb693f8056e917923485b474288c25e48b3c",
+    "wholeGitAndCurrentSame": true
+  },
+  "exactCommentRecords": 14,
+  "limits": [
+    "仅两源精确注释对照与非注释token；不重执行已有生命周期算法proof、types、tests或全门禁。",
+    "注释真义另由真实调用方和独立审查核实。"
+  ]
+}

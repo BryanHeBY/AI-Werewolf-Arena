@@ -1,0 +1,70 @@
+{
+  "baseCommit": "d92d0a4033367ad5b3bdb15f44f75a3b352b46c6",
+  "scope": {
+    "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-scope-final.json",
+    "sha256": "73a9dea540ba4487160ca94056d93c168f8e9ef275948b45232be17dbdff1ed3"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night-lifecycle.ts",
+      "sha256": "578576bc86a41e3f31ced29a42458e07492c2faf3de25cab7d200c60d09ed0d1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night-lifecycle.ts",
+      "sha256": "172eed2e624fc34a7038a85793910862352b239bb767bdebe950f314ea939aa2"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/exchange-night-lifecycle-chinese-contracts.md",
+    "sha256": "ab1a58173f41433f7e82ae5f76c338f51fb5243f858f96afb03b90834517d6d8"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-before.json",
+      "sha256": "761b3a7d7856ff55a4c9b2b6ae6d55af1b4054e6d6d38ebf9f5c516042bc1b17"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-edits.json",
+      "sha256": "a54c3dfbf792201eb4b5061fbd9bf998c5d0d0bdd478964f1575bb00da487768"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-proof.cjs",
+      "sha256": "45350d4292a925a3b611a31f00178aeaffaeffac6fa83240ef10ad9c9cfe92c1"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-proof.json",
+      "sha256": "518b8e4a4897c856559c9f7d3d7580a20f80ba330ea7d5a9073b49119b7c7b1d"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-heads.ts",
+      "sha256": "bf7e3a3ac35572efcbae91eacba1028ed5953f463005ce4ae4ccfa300365b8b6"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-heads.json",
+      "sha256": "76fbe534fb7c0a81d73bfde9196dd4637fd0e895c6698174d7c0fe87062cffe0"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-receipts.json",
+      "sha256": "0f1d700824b052f3f9b7025a416fc6bed827aac0f67beb55c823badf5683aa93"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-scope-final.json",
+      "sha256": "73a9dea540ba4487160ca94056d93c168f8e9ef275948b45232be17dbdff1ed3"
+    }
+  ],
+  "summary": {
+    "sourceCount": 2,
+    "commentRecords": 14,
+    "nonCommentTokens": 333,
+    "headRoots": 2,
+    "sameGitDocumentationPaths": 537,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0
+  },
+  "limits": [
+    "两个实际源码纯注释；原调用方／Wolf稳定控制不改。",
+    "完整forward/inverse/token对照与两职责头仅一次；没有额外类型、运行测试、AST/emits或全门禁。",
+    "readonly／freeze说明只关方法表，共享配置布尔不是引用、开夜回执或授权，关闭不宣称幂等。"
+  ]
+}

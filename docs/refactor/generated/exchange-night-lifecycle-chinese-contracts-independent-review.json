@@ -1,0 +1,114 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "baseCommit": "d92d0a4033367ad5b3bdb15f44f75a3b352b46c6",
+  "mode": "独立只读全源语义／实际Git／精确注释正逆与SHA绑定；未执行作者脚本或验证",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night-lifecycle.ts",
+      "sha256": "578576bc86a41e3f31ced29a42458e07492c2faf3de25cab7d200c60d09ed0d1",
+      "beforeSHA256": "30e73ab92a4644ce7a9adb832e45f75f8abbde5bfa82b8d9af42f00928162acc",
+      "actualGitWholeBeforeSame": true,
+      "same5d42Source": true,
+      "exactWholeCommentForwardAndInverse": true,
+      "commentRecords": 8
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night-lifecycle.ts",
+      "sha256": "172eed2e624fc34a7038a85793910862352b239bb767bdebe950f314ea939aa2",
+      "beforeSHA256": "3a3aa30aa3993bae45051bf141f6936d7569eea0244e1dc23595458b2669ba65",
+      "actualGitWholeBeforeSame": true,
+      "same5d42Source": true,
+      "exactWholeCommentForwardAndInverse": true,
+      "commentRecords": 6
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-scope-final.json",
+    "sha256": "73a9dea540ba4487160ca94056d93c168f8e9ef275948b45232be17dbdff1ed3"
+  },
+  "document": {
+    "path": "docs/refactor/exchange-night-lifecycle-chinese-contracts.md",
+    "sha256": "ab1a58173f41433f7e82ae5f76c338f51fb5243f858f96afb03b90834517d6d8"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-evidence.json",
+    "sha256": "bd13d4b8e5e00dbb3e24e71a7d1afb8630ad44ca14853e76e8a36fcc96f275f6"
+  },
+  "authorArtifacts": [
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-before.json",
+      "sha256": "761b3a7d7856ff55a4c9b2b6ae6d55af1b4054e6d6d38ebf9f5c516042bc1b17"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-edits.json",
+      "sha256": "a54c3dfbf792201eb4b5061fbd9bf998c5d0d0bdd478964f1575bb00da487768"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-proof.cjs",
+      "sha256": "45350d4292a925a3b611a31f00178aeaffaeffac6fa83240ef10ad9c9cfe92c1"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-proof.json",
+      "sha256": "518b8e4a4897c856559c9f7d3d7580a20f80ba330ea7d5a9073b49119b7c7b1d"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-heads.ts",
+      "sha256": "bf7e3a3ac35572efcbae91eacba1028ed5953f463005ce4ae4ccfa300365b8b6"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-heads.json",
+      "sha256": "76fbe534fb7c0a81d73bfde9196dd4637fd0e895c6698174d7c0fe87062cffe0"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-receipts.json",
+      "sha256": "0f1d700824b052f3f9b7025a416fc6bed827aac0f67beb55c823badf5683aa93"
+    },
+    {
+      "path": "docs/refactor/generated/exchange-night-lifecycle-chinese-contracts-scope-final.json",
+      "sha256": "73a9dea540ba4487160ca94056d93c168f8e9ef275948b45232be17dbdff1ed3"
+    }
+  ],
+  "stableControl": {
+    "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+    "sha256": "6cbfebad52535ce4a2859be33ecceb693f8056e917923485b474288c25e48b3c",
+    "actualGitAndCurrentWholeBytesSame": true
+  },
+  "findings": {
+    "open": [],
+    "closed": []
+  },
+  "semanticReview": [
+    "通读两源全body及新增十四说明；旁核完整night-lifecycle-plan构造／finishPipeline／abortPipeline／经理receiveExchange与finishDay，以及PM/NightPipeline真实调用、两frame终结函数、阶段priority和诡术师中文名。",
+    "transferToManager只是原configured布尔赋值（可再false）；同一cleanupOwnership闭包读取原transferred，Wolf与Trickster共用，无第二标志、原配置引用或acquired/许可语义。",
+    "构造只保runtime与ownership引用、终结字段原函数值；没有预读World或执行查询。abortIfOwned先条件，未移交才查原callee再晚读runtime.world；Trickster共享query保原receiver。",
+    "经理receiveExchange保原单位，同次World/day原参数交terminal；正常关闭与重复错误仍frame，表冻结不冻结资源或防重复执行。",
+    "Magician priority80/Trickster100仍原阶段开夜。finishTricksterNight原current guard后仅finished=true，resolveTricksterExile要求finished而!closed；abort只在已有night&&!finished关闭，中文准确未声称取消已付历史。",
+    "流水线按config分支清理；原终结错误／query／World getter失败不被catch重试，先写／传递前缀不退款、不新增外层周期清理。"
+  ],
+  "verificationAttribution": {
+    "commentRecords": 14,
+    "sources": 2,
+    "authorTokenComparison": {
+      "nonCommentTokens": 333,
+      "terminalChunk": "cb723f",
+      "exitCode": 0,
+      "meaning": "作者一次真实全Git精确正逆＋scanner非注释token；独立只核原脚本与报告，不重执行。"
+    },
+    "authorHeads": {
+      "roots": 2,
+      "sameGitDocumentationPaths": 537,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "terminalChunk": "c87945",
+      "exitCode": 0
+    },
+    "peerAction": "fresh两SHA、真实d92/fullbefore及同5d42、十四精确whole正逆、八artifact和MD/scope/evidence、Wolfcontrol独立核真；无产品写入。"
+  },
+  "limitations": [
+    "这批只中文注释，不改变生命周期算法、权限、产品文本或公开接口；没有新schema、付款、补偿或关闭幂等政策。",
+    "未运行算法AST、emits、types、tests、heads、模型或全门禁；333token与2head0均归作者实际收据，不能冒全生命周期验收。",
+    "不代表整个C45或主重构已完成。"
+  ]
+}
