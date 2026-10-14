@@ -1,0 +1,44 @@
+{
+  "path": "backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts",
+  "before": "/**\n * 单元测试验证雾鸦延迟夜的同步交接、原生命拒绝和已付／死亡失败前缀。输入为公开板子的真实\n * 装配、原蛇窗口及明确的受控回复；字面状态／读序／库存和错误是独立预期，不运行完整周期或模型。\n * 经理同样只等待原蛇与真实死亡两处 Promise；死亡失败不推进完成段，外层 abort 责任不交新序列。\n */\nimport { expect, test } from \"bun:test\";\nimport { readFileSync } from \"node:fs\";\nimport { bootstrapGame } from \"../../../src/app/bootstrap\";\nimport { parseBoardDefinition } from \"../../../src/runtime/config/board_definition\";\nimport { Role, Phase, DeathCause, type GameEvent } from \"@ai-werewolf-arena/game-contract\";\nimport type { ActionProvider } from \"../../../src/core/domain/actions\";\nimport { COMPONENT } from \"../../../src/core/domain/components/names\";\nimport { aliveLifeVersion } from \"../../../src/core/domain/components/alive\";\nimport { DreamNightFrame } from \"../../../src/game/mechanisms/roles/dreamer/night_frame\";\nimport { beginMistNight, commitMistChoice, handOffMistNight, closeMistNight, abortMistNight } from \"../../../src/game/mechanisms/roles/mist_raven/night_frame\";\nimport { readAlchemistState } from \"../../../src/game/mechanisms/roles/mist_raven/state\";\nimport { DeathResolution } from \"../../../src/game/engine/death_resolution\";\nimport { EventRegistry } from \"../../../src/game/engine/event_registry\";\nimport { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";\nimport { prepareMistDelayedNight, settleMistDelayedNight, type MistPreparedNightDamage } from \"../../../src/rulesets/mist-delayed-night-settlement\";\n\nconst board = parseBoardDefinition(JSON.parse(readFileSync(new URL(\"../../../../configs.example/boards/awa_mist_raven_12_v1.json\", import.meta.url), \"utf8\"))).config;\nfunction fixture(poison = false) {\n  const roles = [Role.Alchemist, Role.Seer, Role.Dreamer, Role.Idiot, Role.Villager, Role.Villager, Role.Villager, Role.Villager, Role.RavenClawWolf, Role.Wolf, Role.Wolf, Role.Wolf];\n  const game = bootstrapGame(structuredClone(board), { fixedRoles: roles });\n  beginMistNight(game.world, 1);\n  commitMistChoice(game.world, 1, null);\n  handOffMistNight(game.world, 1, 5);\n  const night = {\n    deathLives: new Map(game.world.getAliveEntityIds().map(id => {\n      const life = game.world.getComponent(id, COMPONENT.Alive)!;\n      return [id, {life, version: aliveLifeVersion(life)}] as const;\n    })),\n    summary: {wolfTarget: 5},\n    damage: {deaths:[5], deathSources:{5:poison ? [DeathCause.WolfKill, DeathCause.Poison] : [DeathCause.WolfKill]}},\n    dreamFrame: new DreamNightFrame([]),\n  };\n  return { ...game, night };\n}\n\nfunction settlement(f: ReturnType<typeof fixture>, provider: ActionProvider, close: () => void) {\n  const pending = prepareMistDelayedNight({world: f.world, cycleDay:1, night:f.night});\n  const events: GameEvent[] = [];\n  const gateway = new ToolGateway();\n  const sequence = settleMistDelayedNight({\n    pending, world:f.world, events, toolGateway:gateway, cycleDay:1,\n    lifecycle:{closeMistNormally(day) {close();closeMistNight(f.world, day);}},\n  }, provider, () => true, false);\n  const resolution = new DeathResolution(f.world, events, gateway, new EventRegistry(), {day:1, phase:Phase.Day, gameOver:false, result:null});\n  return {pending,events,sequence,resolution};\n}\n\ntest(\"建立时旧生命拒绝先于伤害与梦读取，不替换尚未发布的pending\", () => {\n  const f = fixture(), trace:string[]=[];\n  // 只损坏交接快照的版本；真实原体不撤销，以便精确进入原 pending 生命检查而非更早名单拒绝。\n  const scope = f.night.deathLives.get(5)!;\n  scope.version=scope.version!+1;\n  const night = {\n    deathLives:f.night.deathLives,\n    get summary() {trace.push(\"summary\");throw new Error(\"summary_must_not_read\");},\n    get damage() {trace.push(\"damage\");throw new Error(\"damage_must_not_read\");},\n    get dreamFrame() {trace.push(\"dream\");throw new Error(\"dream_must_not_read\");},\n  };\n  expect(() => prepareMistDelayedNight({world:f.world, cycleDay:1, night})).toThrow(\"mist_pending_life_stale\");\n  expect(trace).toEqual([]);\n  expect(f.world.getAliveEntityIds()).toHaveLength(12);\n});\n\ntest(\"同步序列交原蛇Promise，真实死亡完成之后才finish和正常关闭\", async () => {\n  const f=fixture(),trace:string[]=[];\n  const s=settlement(f,{async getAction(request) {\n    if(request.context.stage===\"alchemist_snake\") {trace.push(\"provider\");return {name:\"use_snake\",args:{target_id:null}};}\n    return {name:\"speak\",args:{text:\"Original words\"}};\n  }},()=>trace.push(\"closed\"));\n  try {\n    expect(s.pending.status).toBe(\"pending\");\n    const first=s.sequence.next();\n    expect(first.done).toBe(false);\n    expect(first.value).toBeInstanceOf(Promise);\n    expect(trace).toEqual([\"provider\"]);\n    expect(s.pending.status).toBe(\"committing\");\n    queueMicrotask(()=>trace.push(\"queued\"));\n    const healed=await (first.value as Promise<number|null>);\n    trace.push(\"snake-complete\");\n    const {damage,current}=s.sequence.next(healed).value as MistPreparedNightDamage;\n    trace.push(\"damage-ready\");\n    expect(damage.deaths).toEqual([5]);\n    expect(s.pending.status).toBe(\"committing\");\n    expect(f.world.getComponent(5,COMPONENT.Alive)!.alive).toBe(true);\n    await s.resolution.resolve(damage.deaths,damage.deathSources,{async getAction(){return {name:\"speak\",args:{text:\"Original words\"}};}},Phase.Night,Phase.Day,{}, {dreams:f.night.dreamFrame,nightOriginIds:damage.deaths,isCurrent:current});\n    trace.push(\"death-complete\");\n    expect(s.pending.status).toBe(\"committing\");\n    expect(s.sequence.next().done).toBe(true);\n    expect(s.pending.status).toBe(\"committed\");\n    expect(trace).toEqual([\"provider\",\"queued\",\"snake-complete\",\"damage-ready\",\"death-complete\",\"closed\"]);\n  } finally {abortMistNight(f.world);}\n});\n\ntest(\"蛇已疗救但死亡await失败时保付款和标死前缀，不恢复finish或正常关闭\", async () => {\n  const f=fixture(true),failure=new Error(\"literal_mist_death_failed\");let closed=0;\n  const s=settlement(f,{async getAction(){return {name:\"use_snake\",args:{target_id:5}};}},()=>closed++);\n  try {\n    const healed=await (s.sequence.next().value as Promise<number|null>);\n    const {damage,current}=s.sequence.next(healed).value as MistPreparedNightDamage;\n    expect(damage).toMatchObject({deaths:[5],deathSources:{5:[DeathCause.Poison]}});\n    expect(readAlchemistState(f.world.getComponent(1,COMPONENT.Role)!.privateState.alchemist)!.healRemaining).toBe(0);\n    await expect(s.resolution.resolve(damage.deaths,damage.deathSources,{async getAction(){throw failure;}},Phase.Night,Phase.Day,{}, {isCurrent:current})).rejects.toBe(failure);\n    expect(f.world.getComponent(5,COMPONENT.Alive)!.alive).toBe(false);\n    expect(s.pending.status).toBe(\"committing\");\n    expect(closed).toBe(0);\n    s.pending.abort();\n    expect(s.pending.status).toBe(\"aborted\");\n    expect(readAlchemistState(f.world.getComponent(1,COMPONENT.Role)!.privateState.alchemist)!.healRemaining).toBe(0);\n  } finally {abortMistNight(f.world);}\n});\n",
+  "beforeSHA": "6dd0f04267ae62228372ef63858e585997adb88866b16106c7b3f1ac621c9fae",
+  "afterSHA": "56f7b6c8a13686911f04409bf0b8cb3cf8218c1d39e56fe0a6144bbebdf4bc6a",
+  "edits": [
+    {
+      "from": "scope.version=scope.version!+1;",
+      "to": "(scope as {version:number|undefined}).version=scope.version!+1;"
+    },
+    {
+      "from": "get summary() {",
+      "to": "get summary(): never {"
+    },
+    {
+      "from": "get damage() {",
+      "to": "get damage(): never {"
+    },
+    {
+      "from": "get dreamFrame() {",
+      "to": "get dreamFrame(): never {"
+    },
+    {
+      "from": "f.world.getComponent(1,COMPONENT.Role)!.privateState.alchemist",
+      "to": "(f.world.getComponent(1,COMPONENT.Role)!.privateState as {alchemist?:unknown}).alchemist"
+    }
+  ],
+  "productionUnchanged": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "beforeSHA": "8c172d48051ee7e25a37eec4dd7208007ed9ba69697a857b578e35f5b159eff0",
+      "afterSHA": "8c172d48051ee7e25a37eec4dd7208007ed9ba69697a857b578e35f5b159eff0"
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "beforeSHA": "d6eda9b4f82e917c9b783e4561a06df1f7ffd4d6ddf3018a6accd2078e1b1292",
+      "afterSHA": "d6eda9b4f82e917c9b783e4561a06df1f7ffd4d6ddf3018a6accd2078e1b1292"
+    }
+  ],
+  "headBytesSame": true
+}

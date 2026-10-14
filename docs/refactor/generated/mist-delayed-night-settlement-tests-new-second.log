@@ -1,0 +1,24 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts:
+58 |     deathLives:f.night.deathLives,
+59 |     get summary() {trace.push("summary");throw new Error("summary_must_not_read");},
+60 |     get damage() {trace.push("damage");throw new Error("damage_must_not_read");},
+61 |     get dreamFrame() {trace.push("dream");throw new Error("dream_must_not_read");},
+62 |   };
+63 |   expect(() => prepareMistDelayedNight({world:f.world, cycleDay:1, night})).toThrow("mist_pending_life_stale");
+                                                                                 ^
+error: expect(received).toThrow(expected)
+
+Expected substring: "mist_pending_life_stale"
+Received message: "mist_original_roster_revoked"
+
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts:63:77)
+(fail) 建立时旧生命拒绝先于伤害与梦读取，不替换尚未发布的pending [12.22ms]
+(pass) 同步序列交原蛇Promise，真实死亡完成之后才finish和正常关闭 [10.91ms]
+(pass) 蛇已疗救但死亡await失败时保付款和标死前缀，不恢复finish或正常关闭 [3.48ms]
+
+ 2 pass
+ 1 fail
+ 21 expect() calls
+Ran 3 tests across 1 file. [175.00ms]

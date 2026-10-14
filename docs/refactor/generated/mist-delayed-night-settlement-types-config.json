@@ -1,0 +1,18 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_manager.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/mist-delayed-night-settlement.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/interactions/mist-raven/pending-owner-boundaries.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

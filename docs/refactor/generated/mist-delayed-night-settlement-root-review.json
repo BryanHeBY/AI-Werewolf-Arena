@@ -1,0 +1,52 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "01a3d3895cbca7ad8a8e38023d20c10cb0ec26fa47a8fd766145a87c339fea04",
+      "kind": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/mist-delayed-night-settlement.ts",
+      "sha256": "9ace43ac99f3b719a97eb0d47ff841d9ba7ab455c6cd922d0134c2d840eb3b63",
+      "kind": "new"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts",
+      "sha256": "56f7b6c8a13686911f04409bf0b8cb3cf8218c1d39e56fe0a6144bbebdf4bc6a",
+      "kind": "new"
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/mist-delayed-night-settlement-scope-final.json",
+    "sha256": "8f3191adeb86d224e4a5e5f6221d6bd8d2dea91d67a9727b3f70a3358634faaf"
+  },
+  "documentation": {
+    "path": "docs/refactor/mist-delayed-night-settlement.md",
+    "sha256": "421f8863814e68368aa938d53aed98398419a3f3a4c66f9f807acec0c2391ae5"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/mist-delayed-night-settlement-evidence.json",
+    "sha256": "25b5240cf514ea776e4ea06d977da3871ed4193ddac84829c244a1498880219a"
+  },
+  "checks": [
+    "实际27df完整PM与七edit完整forward等于当前全文；六controls实际Git/当前同，DR并行明确排除整文件控制。",
+    "完整factory/11statement generator/原PM driver与证明器全文读取；实际新body拼回原setup/settle与完整PM，原两await/current原引用、原emit和DR全参数纳入核对。",
+    "领取/原蛇选择→准备/记录→交damage+current→原公开及实际死亡await→复验/finish/正常close→nightSettled/判胜；失败不恢复后半段，付款/标死保前缀。",
+    "PM唯一pending字段、自爆已claim、abort/clear和旧9status反射断言保留；组合没有第二状态/phase或通用清理框架。",
+    "新unit五puretype edit（实际四单点及两raw槽读取）完整forward连末hash，原两输出/首头字节保持；原三绿type根和运行绿不重。",
+    "四不同成功case/29assert分阶段诚实；首loader与fixture早拒绝真红保留，末单failed type根bf48a9实际0，不以空log推断。",
+    "三个末source及20附件/MD哈希一致，中文恢复协议、当前性、原生命及已付/死亡失败契约准确。"
+  ],
+  "findings": [],
+  "reviewToolCorrections": [
+    "首次metadata误用documentation；实际键document，无作者/产品变更。",
+    "8ab1dc文本核误要求每条type edit单点；f937e4精确核第五条原来有两raw槽读取，整两点逆/forward均正确。"
+  ],
+  "limits": [
+    "只读核作者程序/收据，不重跑证明器/tests/types/gates。",
+    "生成器/getter/布局/调用栈是明确内部API变化，旧读取保留不保证任意私有反射等价。",
+    "完整C24/C28机制及最终P9/全中文验收继续。"
+  ]
+}

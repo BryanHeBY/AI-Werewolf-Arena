@@ -1,0 +1,126 @@
+{
+  "checks": [
+    {
+      "kind": "firstCapture",
+      "chunk": "739caf",
+      "exitCode": 1,
+      "cause": "工具错误要求并行DR当前byte同原Git，源未写；正确分层捕获下一阶段actual27df。"
+    },
+    {
+      "kind": "captureAndPlanningStop",
+      "chunk": "7ada9e",
+      "exitCode": 1,
+      "cause": "写PM前主动阻止重造current callback；最终第二yield传原同closure。原PM未写，无测试运行。"
+    },
+    {
+      "kind": "sourceImplemented",
+      "chunk": "32448f",
+      "exitCode": 0
+    },
+    {
+      "kind": "testsFirstModuleFailure",
+      "chunk": "0c96fc",
+      "exitCode": 1,
+      "pass": 0,
+      "loaderError": 1,
+      "cause": "新unit误猜getAlchemistState导出；改实际readAlchemistState/raw槽读取，不改产品。",
+      "log": "mist-delayed-night-settlement-tests-new-first.log"
+    },
+    {
+      "kind": "testsNewSecond",
+      "chunk": "ea10e4",
+      "exitCode": 1,
+      "pass": 2,
+      "fail": 1,
+      "reportedAssertions": 21,
+      "includesOneFailedAssertion": true,
+      "cause": "新fixture真复活在pending检查前触发原roster拒绝；只坏交接version到预期pending边界，原expect保持。",
+      "log": "mist-delayed-night-settlement-tests-new-second.log"
+    },
+    {
+      "kind": "newFailedOnly",
+      "chunk": "0c00fd",
+      "exitCode": 0,
+      "pass": 1,
+      "filtered": 2,
+      "assertions": 3,
+      "log": "mist-delayed-night-settlement-tests-new-repair.log"
+    },
+    {
+      "kind": "originalPrecise",
+      "chunk": "f7d60e",
+      "exitCode": 0,
+      "pass": 1,
+      "filtered": 20,
+      "assertions": 6,
+      "log": "mist-delayed-night-settlement-tests-old.log"
+    },
+    {
+      "kind": "typesFirstLaunch",
+      "chunk": "3cc72c",
+      "session": 45317,
+      "roots": 4,
+      "yielded": true
+    },
+    {
+      "kind": "typesFirstTerminal",
+      "chunk": "fd3309",
+      "session": 45317,
+      "exitCode": 2,
+      "diagnostics": 4,
+      "onlyNewTest": true,
+      "cause": "readonly版槽写、throwgetter void推断、privateState object字段；类型视图/never/明确raw shape修，不改变程序。",
+      "log": "mist-delayed-night-settlement-types.log"
+    },
+    {
+      "kind": "typeOnlyRepairLaunch",
+      "chunk": "c8118c",
+      "session": 44478,
+      "roots": 1,
+      "yielded": true,
+      "wholeTestESNextAndCJSOutputsSame": true,
+      "originalHeadWholeBytesSame": true
+    },
+    {
+      "kind": "sourceProof",
+      "chunk": "a63baa",
+      "exitCode": 0,
+      "openingNodes": 96,
+      "settlementNodes": 232,
+      "wholeManagerNodes": 6207,
+      "wholeOutputs": 6,
+      "sameOriginalBindings": 15,
+      "newPureTypes": 2,
+      "retainedManagerBindings": 95,
+      "gitControls": 6,
+      "log": "mist-delayed-night-settlement-proof.log"
+    },
+    {
+      "kind": "heads",
+      "chunk": "37f12e",
+      "exitCode": 0,
+      "sources": 3,
+      "documentationPaths": 522,
+      "failures": 0,
+      "chineseFailures": 0,
+      "sourcePhase": "类型fix之前；两production未变，unit完整头bytes保持，不伪称重跑。",
+      "log": "mist-delayed-night-settlement-heads.log"
+    },
+    {
+      "kind": "typeRepairActualTerminal",
+      "chunk": "bf48a9",
+      "session": 44478,
+      "exitCode": 0,
+      "roots": 1,
+      "log": "mist-delayed-night-settlement-types-repair.log",
+      "note": "实际write_stdin terminal，不以空log判断通过；原三绿根未重复。"
+    }
+  ],
+  "successfulUniqueCases": 4,
+  "successfulAssertions": 29,
+  "assertionAccounting": "ea10e4 21包含失败1，两个成功case20；repair3＋原6，共29成功assert；全日志另有失败1，不混称一次四例。",
+  "limits": [
+    "绿两个newcase及旧case均未重复；最终只失败unit根类型修复。",
+    "Pending/Snake/frame/lifecycle/旧scenario/NP六控制真Git；DR并行body排除，公开death调用本身纳入wholePM证明。"
+  ]
+}

@@ -1,0 +1,808 @@
+{
+  "baseline": "27df6552992404dbb1783917cbdaeeaa27e45de3",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "01a3d3895cbca7ad8a8e38023d20c10cb0ec26fa47a8fd766145a87c339fea04"
+    },
+    {
+      "path": "backend/src/rulesets/mist-delayed-night-settlement.ts",
+      "sha256": "9ace43ac99f3b719a97eb0d47ff841d9ba7ab455c6cd922d0134c2d840eb3b63"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts",
+      "sha256": "6dd0f04267ae62228372ef63858e585997adb88866b16106c7b3f1ac621c9fae"
+    }
+  ],
+  "completeOpening": {
+    "beforeNodes": 96,
+    "afterNodes": 96,
+    "completeTreeSame": true,
+    "completeNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSha": "82b2291fe076a2313299774f844635ccc90d16a61f068aa7e52e3e9b1222a9ae",
+        "afterSha": "82b2291fe076a2313299774f844635ccc90d16a61f068aa7e52e3e9b1222a9ae"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSha": "82b2291fe076a2313299774f844635ccc90d16a61f068aa7e52e3e9b1222a9ae",
+        "afterSha": "82b2291fe076a2313299774f844635ccc90d16a61f068aa7e52e3e9b1222a9ae"
+      }
+    ]
+  },
+  "completeSettlement": {
+    "beforeNodes": 232,
+    "afterNodes": 232,
+    "completeTreeSame": true,
+    "completeNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSha": "0f7b0d8157ebb17404f075c3347b802f3781bcbfd35c0839dc09a897c11fc885",
+        "afterSha": "0f7b0d8157ebb17404f075c3347b802f3781bcbfd35c0839dc09a897c11fc885"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSha": "0f7b0d8157ebb17404f075c3347b802f3781bcbfd35c0839dc09a897c11fc885",
+        "afterSha": "0f7b0d8157ebb17404f075c3347b802f3781bcbfd35c0839dc09a897c11fc885"
+      }
+    ]
+  },
+  "wholeManagerInverse": {
+    "beforeNodes": 6207,
+    "afterNodes": 6207,
+    "completeTreeSame": true,
+    "completeNoncommentLeavesSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSha": "617ae80269abfeb9521ade89fcb4d7efeaedae8eaa0bab28efb1cc6eeb672bc9",
+        "afterSha": "617ae80269abfeb9521ade89fcb4d7efeaedae8eaa0bab28efb1cc6eeb672bc9"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSha": "189645d10635631b9800df3b69909e141268d21b002245fbb49f8c4c5f273910",
+        "afterSha": "189645d10635631b9800df3b69909e141268d21b002245fbb49f8c4c5f273910"
+      }
+    ]
+  },
+  "driverLiteralVerified": true,
+  "preparedCurrentSameClosureVerified": true,
+  "originalTwoAwaitOnly": true,
+  "ownerBindings": [
+    {
+      "name": "EntityId",
+      "imported": "EntityId",
+      "typeOnly": true,
+      "from": "@ai-werewolf-arena/game-contract",
+      "original": {
+        "name": "EntityId",
+        "imported": "EntityId",
+        "typeOnly": false,
+        "from": "../../core/domain/model"
+      },
+      "target": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "EntityId"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "NightSummary",
+      "imported": "NightSummary",
+      "typeOnly": true,
+      "from": "@ai-werewolf-arena/game-contract",
+      "original": null,
+      "target": {
+        "path": "packages/game-contract/src/results.ts",
+        "name": "NightSummary"
+      },
+      "sameEndpoint": null
+    },
+    {
+      "name": "ActionProvider",
+      "imported": "ActionProvider",
+      "typeOnly": true,
+      "from": "../core/domain/actions",
+      "original": {
+        "name": "ActionProvider",
+        "imported": "ActionProvider",
+        "typeOnly": false,
+        "from": "../../core/domain/model"
+      },
+      "target": {
+        "path": "backend/src/core/domain/actions.ts",
+        "name": "ActionProvider"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "GameEvent",
+      "imported": "GameEvent",
+      "typeOnly": true,
+      "from": "../core/domain/events",
+      "original": {
+        "name": "GameEvent",
+        "imported": "GameEvent",
+        "typeOnly": false,
+        "from": "../../core/domain/model"
+      },
+      "target": {
+        "path": "packages/game-contract/src/events.ts",
+        "name": "GameEvent"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "World",
+      "imported": "World",
+      "typeOnly": true,
+      "from": "../core/domain/world",
+      "original": {
+        "name": "World",
+        "imported": "World",
+        "typeOnly": false,
+        "from": "../../core/domain/world"
+      },
+      "target": {
+        "path": "backend/src/core/domain/world.ts",
+        "name": "World"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "AliveComponent",
+      "imported": "AliveComponent",
+      "typeOnly": true,
+      "from": "../core/domain/components/alive",
+      "original": {
+        "name": "AliveComponent",
+        "imported": "AliveComponent",
+        "typeOnly": true,
+        "from": "../../core/domain/components/alive"
+      },
+      "target": {
+        "path": "backend/src/core/domain/components/alive.ts",
+        "name": "AliveComponent"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "aliveLifeVersion",
+      "imported": "aliveLifeVersion",
+      "typeOnly": false,
+      "from": "../core/domain/components/alive",
+      "original": {
+        "name": "aliveLifeVersion",
+        "imported": "aliveLifeVersion",
+        "typeOnly": false,
+        "from": "../../core/domain/components/alive"
+      },
+      "target": {
+        "path": "backend/src/core/domain/components/alive.ts",
+        "name": "aliveLifeVersion"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "COMPONENT",
+      "imported": "COMPONENT",
+      "typeOnly": false,
+      "from": "../core/domain/components/names",
+      "original": {
+        "name": "COMPONENT",
+        "imported": "COMPONENT",
+        "typeOnly": false,
+        "from": "../../core/domain/components/names"
+      },
+      "target": {
+        "path": "backend/src/core/domain/components/names.ts",
+        "name": "COMPONENT"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "DamageResolutionResult",
+      "imported": "DamageResolutionResult",
+      "typeOnly": true,
+      "from": "../core/domain/systems/damage_resolution_system",
+      "original": {
+        "name": "DamageResolutionResult",
+        "imported": "DamageResolutionResult",
+        "typeOnly": true,
+        "from": "../../core/domain/systems/damage_resolution_system"
+      },
+      "target": {
+        "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+        "name": "DamageResolutionResult"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "DreamNightEffects",
+      "imported": "DreamNightEffects",
+      "typeOnly": true,
+      "from": "../core/domain/dream-night-effects",
+      "original": null,
+      "target": {
+        "path": "backend/src/core/domain/dream-night-effects.ts",
+        "name": "DreamNightEffects"
+      },
+      "sameEndpoint": null
+    },
+    {
+      "name": "Phase",
+      "imported": "Phase",
+      "typeOnly": false,
+      "from": "@ai-werewolf-arena/game-contract",
+      "original": {
+        "name": "Phase",
+        "imported": "Phase",
+        "typeOnly": false,
+        "from": "../../core/domain/model"
+      },
+      "target": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "ToolGateway",
+      "imported": "ToolGateway",
+      "typeOnly": true,
+      "from": "../game/gateway/tool_gateway",
+      "original": {
+        "name": "ToolGateway",
+        "imported": "ToolGateway",
+        "typeOnly": false,
+        "from": "../gateway/tool_gateway"
+      },
+      "target": {
+        "path": "backend/src/game/gateway/tool_gateway.ts",
+        "name": "ToolGateway"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "NightManagerLifecycle",
+      "imported": "NightManagerLifecycle",
+      "typeOnly": true,
+      "from": "./night-lifecycle-plan",
+      "original": {
+        "name": "NightManagerLifecycle",
+        "imported": "NightManagerLifecycle",
+        "typeOnly": false,
+        "from": "../../rulesets/night-lifecycle-plan"
+      },
+      "target": {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "name": "NightManagerLifecycle"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "assertMistRosterCurrent",
+      "imported": "assertMistRosterCurrent",
+      "typeOnly": false,
+      "from": "../game/mechanisms/roles/mist_raven/ports",
+      "original": {
+        "name": "assertMistRosterCurrent",
+        "imported": "assertMistRosterCurrent",
+        "typeOnly": false,
+        "from": "../mechanisms/roles/mist_raven/ports"
+      },
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "name": "assertMistRosterCurrent"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "MistPendingNight",
+      "imported": "MistPendingNight",
+      "typeOnly": false,
+      "from": "../game/mechanisms/roles/mist_raven/pending_night",
+      "original": {
+        "name": "MistPendingNight",
+        "imported": "MistPendingNight",
+        "typeOnly": false,
+        "from": "../mechanisms/roles/mist_raven/pending_night"
+      },
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+        "name": "MistPendingNight"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "decideSnake",
+      "imported": "decideSnake",
+      "typeOnly": false,
+      "from": "../game/mechanisms/roles/mist_raven/snake_window",
+      "original": {
+        "name": "decideSnake",
+        "imported": "decideSnake",
+        "typeOnly": false,
+        "from": "../mechanisms/roles/mist_raven/snake_window"
+      },
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+        "name": "decideSnake"
+      },
+      "sameEndpoint": true
+    },
+    {
+      "name": "safeRecordLogicOp",
+      "imported": "safeRecordLogicOp",
+      "typeOnly": false,
+      "from": "../recording/session_recorder",
+      "original": {
+        "name": "safeRecordLogicOp",
+        "imported": "safeRecordLogicOp",
+        "typeOnly": false,
+        "from": "../../recording/session_recorder"
+      },
+      "target": {
+        "path": "backend/src/recording/session_recorder.ts",
+        "name": "safeRecordLogicOp"
+      },
+      "sameEndpoint": true
+    }
+  ],
+  "retainedBindings": [
+    {
+      "name": "openExileUnit",
+      "same": true
+    },
+    {
+      "name": "exileUnitOf",
+      "same": true
+    },
+    {
+      "name": "ExileUnit",
+      "same": true
+    },
+    {
+      "name": "nightUnitOf",
+      "same": true
+    },
+    {
+      "name": "PhaseRevisionClock",
+      "same": true
+    },
+    {
+      "name": "damagePoisonRoutes",
+      "same": true
+    },
+    {
+      "name": "DeathCommitReceipt",
+      "same": true
+    },
+    {
+      "name": "DeathOriginalLife",
+      "same": true
+    },
+    {
+      "name": "DamageResolutionResult",
+      "same": true
+    },
+    {
+      "name": "ReadonlyBoardConfig",
+      "same": true
+    },
+    {
+      "name": "NightManagerLifecycle",
+      "same": true
+    },
+    {
+      "name": "prepareGameSetup",
+      "same": true
+    },
+    {
+      "name": "bindBoardParameters",
+      "same": true
+    },
+    {
+      "name": "RulePlan",
+      "same": true
+    },
+    {
+      "name": "publishNobleNightDamage",
+      "same": true
+    },
+    {
+      "name": "checkpointNobleBodyAuthority",
+      "same": true
+    },
+    {
+      "name": "appendNobleContractClosure",
+      "same": true
+    },
+    {
+      "name": "demonRedMoonExpiry",
+      "same": true
+    },
+    {
+      "name": "commitDemonRedMoonTransition",
+      "same": true
+    },
+    {
+      "name": "appendDemonNightDamageSources",
+      "same": true
+    },
+    {
+      "name": "publishDemonNightDamageSources",
+      "same": true
+    },
+    {
+      "name": "StatusMark",
+      "same": true
+    },
+    {
+      "name": "statusMarkSnapshot",
+      "same": true
+    },
+    {
+      "name": "demonHunterActorId",
+      "same": true
+    },
+    {
+      "name": "committedDemonFaultBoundary",
+      "same": true
+    },
+    {
+      "name": "assertDemonOriginalRoster",
+      "same": true
+    },
+    {
+      "name": "assertDemonNightReadable",
+      "same": true
+    },
+    {
+      "name": "demonWitchMarksSafe",
+      "same": true
+    },
+    {
+      "name": "freezeDeliveredDemonNightSources",
+      "same": true
+    },
+    {
+      "name": "weddingSetup",
+      "same": true
+    },
+    {
+      "name": "weddingAssignment",
+      "same": true
+    },
+    {
+      "name": "weddingKnifeCurrent",
+      "same": true
+    },
+    {
+      "name": "initialIdentityDeal",
+      "same": true
+    },
+    {
+      "name": "INITIAL_IDENTITY_POLICIES",
+      "same": true
+    },
+    {
+      "name": "initialIdentityKind",
+      "same": true
+    },
+    {
+      "name": "WallNotesWindow",
+      "same": true
+    },
+    {
+      "name": "GameActionRequestFactory",
+      "same": true
+    },
+    {
+      "name": "replaceWithFoxVictory",
+      "same": true
+    },
+    {
+      "name": "validateVictoryDecision",
+      "same": true
+    },
+    {
+      "name": "VictoryCheckpoint",
+      "same": true
+    },
+    {
+      "name": "text",
+      "same": true
+    },
+    {
+      "name": "NightFaultPlan",
+      "same": true
+    },
+    {
+      "name": "FaultPlan",
+      "same": true
+    },
+    {
+      "name": "getSessionRecorder",
+      "same": true
+    },
+    {
+      "name": "safeRecordLogicOp",
+      "same": true
+    },
+    {
+      "name": "ActionProvider",
+      "same": true
+    },
+    {
+      "name": "ActionWindow",
+      "same": true
+    },
+    {
+      "name": "BoardConfig",
+      "same": true
+    },
+    {
+      "name": "EntityId",
+      "same": true
+    },
+    {
+      "name": "GameEvent",
+      "same": true
+    },
+    {
+      "name": "ExileFeedback",
+      "same": true
+    },
+    {
+      "name": "GameResult",
+      "same": true
+    },
+    {
+      "name": "WinDecision",
+      "same": true
+    },
+    {
+      "name": "Camp",
+      "same": true
+    },
+    {
+      "name": "Phase",
+      "same": true
+    },
+    {
+      "name": "RuntimeSnapshot",
+      "same": true
+    },
+    {
+      "name": "DeathCause",
+      "same": true
+    },
+    {
+      "name": "DeathSources",
+      "same": true
+    },
+    {
+      "name": "WinCondition",
+      "same": true
+    },
+    {
+      "name": "ConditionRegistry",
+      "same": true
+    },
+    {
+      "name": "DamageResolutionSystem",
+      "same": true
+    },
+    {
+      "name": "World",
+      "same": true
+    },
+    {
+      "name": "ToolGateway",
+      "same": true
+    },
+    {
+      "name": "findSheriffId",
+      "same": true
+    },
+    {
+      "name": "DeathResolution",
+      "same": true
+    },
+    {
+      "name": "EventRegistry",
+      "same": true
+    },
+    {
+      "name": "DayPipeline",
+      "same": true
+    },
+    {
+      "name": "NightPipeline",
+      "same": true
+    },
+    {
+      "name": "installFragrantPairAuthority",
+      "same": true
+    },
+    {
+      "name": "Role",
+      "same": true
+    },
+    {
+      "name": "VotingPipeline",
+      "same": true
+    },
+    {
+      "name": "RoleRegistry",
+      "same": true
+    },
+    {
+      "name": "COMPONENT",
+      "same": true
+    },
+    {
+      "name": "commitSelfDestructSelection",
+      "same": true
+    },
+    {
+      "name": "commitKnightDuel",
+      "same": true
+    },
+    {
+      "name": "captureExileFeedback",
+      "same": true
+    },
+    {
+      "name": "captureBeautyExile",
+      "same": true
+    },
+    {
+      "name": "resolveBeautyExileVictory",
+      "same": true
+    },
+    {
+      "name": "BeautyExileCandidate",
+      "same": true
+    },
+    {
+      "name": "BearNightFrame",
+      "same": true
+    },
+    {
+      "name": "AliveComponent",
+      "same": true
+    },
+    {
+      "name": "beginAnimalExileUnit",
+      "same": true
+    },
+    {
+      "name": "prepareAnimalCatExpiry",
+      "same": true
+    },
+    {
+      "name": "closeAnimalExileUnit",
+      "same": true
+    },
+    {
+      "name": "animalPufferReaction",
+      "same": true
+    },
+    {
+      "name": "animalAuthoritySnapshot",
+      "same": true
+    },
+    {
+      "name": "appendAnimalFact",
+      "same": true
+    },
+    {
+      "name": "appendAnimalBeautyNotice",
+      "same": true
+    },
+    {
+      "name": "noteAnimalBearPublication",
+      "same": true
+    },
+    {
+      "name": "aliveLifeVersion",
+      "same": true
+    },
+    {
+      "name": "VotingRightComponent",
+      "same": true
+    },
+    {
+      "name": "IdentityComponent",
+      "same": true
+    },
+    {
+      "name": "RoleComponent",
+      "same": true
+    },
+    {
+      "name": "createRandom",
+      "same": true
+    },
+    {
+      "name": "RandomSource",
+      "same": true
+    }
+  ],
+  "retainedCountSame": true,
+  "controls": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "gitSHA": "c08ce2e4c79cf186f611ff0a3608039586d3eacfd4f370884fd82312247a4aa8",
+      "capturedWorkingSHA": "ea0b00c7e2ab15b2bc6f3a1be85e191a9e963db6dbc396ec351c1ce7b7228da2",
+      "currentSHA": "ea0b00c7e2ab15b2bc6f3a1be85e191a9e963db6dbc396ec351c1ce7b7228da2",
+      "excludedConcurrentSource": true,
+      "unchanged": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "gitSHA": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "capturedWorkingSHA": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "currentSHA": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "excludedConcurrentSource": false,
+      "unchanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+      "gitSHA": "62b6d79504e3e6a4200669fca347f3e03b23848c3fd27bc92b7ba9e4b8e2701e",
+      "capturedWorkingSHA": "62b6d79504e3e6a4200669fca347f3e03b23848c3fd27bc92b7ba9e4b8e2701e",
+      "currentSHA": "62b6d79504e3e6a4200669fca347f3e03b23848c3fd27bc92b7ba9e4b8e2701e",
+      "excludedConcurrentSource": false,
+      "unchanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "gitSHA": "3d8d60b5ba133b1088146b327bb7d8708a3055d62c9d7a9675d054d888fa1b56",
+      "capturedWorkingSHA": "3d8d60b5ba133b1088146b327bb7d8708a3055d62c9d7a9675d054d888fa1b56",
+      "currentSHA": "3d8d60b5ba133b1088146b327bb7d8708a3055d62c9d7a9675d054d888fa1b56",
+      "excludedConcurrentSource": false,
+      "unchanged": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "gitSHA": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+      "capturedWorkingSHA": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+      "currentSHA": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+      "excludedConcurrentSource": false,
+      "unchanged": true
+    },
+    {
+      "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+      "gitSHA": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8",
+      "capturedWorkingSHA": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8",
+      "currentSHA": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8",
+      "excludedConcurrentSource": false,
+      "unchanged": true
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/pending-owner-boundaries.test.ts",
+      "gitSHA": "98bfb9ca517392171bbf59beb2b8b21c030a60ac1fac3a06116f35cfe6666bc8",
+      "capturedWorkingSHA": "98bfb9ca517392171bbf59beb2b8b21c030a60ac1fac3a06116f35cfe6666bc8",
+      "currentSHA": "98bfb9ca517392171bbf59beb2b8b21c030a60ac1fac3a06116f35cfe6666bc8",
+      "excludedConcurrentSource": false,
+      "unchanged": true
+    }
+  ],
+  "limits": [
+    "仅逆新factory返回和原field赋值、完整generator11语句里的两个明确yield/原两await协议、具体getter/thunk和类型／import接线；没有覆盖新body或原真实死亡回调。",
+    "新同步生成器、额外对象/解构、类型归属及调用栈是API变化，不宣任意私有反射或自定义runtime等价。",
+    "并行DeathResolution原Git/working差异明列且不作为整文件byte控制；其它六controls原Git/当前保持。"
+  ],
+  "approved": true
+}

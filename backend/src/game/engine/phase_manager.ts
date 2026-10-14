@@ -5,7 +5,8 @@
  * 每夜仍创建独立生命周期 receiver，沿原 current 检查和重复 finally 消费同一已交接单位。
  * 计划中的具名 checkpoint 只提供原值；同步重入准入由同一计划组合，
  * 首夜四个准备窗口由具名规则组合串行推进，日期／当前性回调及中断快照仍归本经理；
- * 周期登记、阶段时钟、最终死亡链、判胜及失败清理仍由本经理拥有。
+ * 雾鸦延迟夜的原体检查与反应准备归具名同步序列；本经理持唯一 pending、原两次 await，
+ * 公开夜报、真实死亡提交、周期时钟、判胜及失败清理仍归本经理。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
@@ -25,9 +26,7 @@ import {
   appendNobleContractClosure,
 } from "../mechanisms/roles/noble_secret_body/ports";
 
-import { assertMistRosterCurrent } from "../mechanisms/roles/mist_raven/ports";
-import { MistPendingNight } from "../mechanisms/roles/mist_raven/pending_night";
-import { decideSnake } from "../mechanisms/roles/mist_raven/snake_window";
+import { prepareMistDelayedNight, settleMistDelayedNight, type MistPreparedNightDamage } from "../../rulesets/mist-delayed-night-settlement";
 
 import {
   demonRedMoonExpiry,
@@ -140,7 +139,8 @@ export class PhaseManager {
   private previousExile: ExileFeedback | null = null;
   // 修订号唯一归此实例；正常同阶段不推进，debug 撤销与真实变化仍可分别推进。
   private readonly phaseRevision = new PhaseRevisionClock();
-  private mistPending: MistPendingNight | null = null;
+  // 唯一待处理实例仍归经理字段；本族序列不保存镜像，旧读取也观察同一实例。
+  private mistPending: ReturnType<typeof prepareMistDelayedNight> | null = null;
   private readonly nightFaultPlan?: NightFaultPlan;
 
   private state: RuntimeSnapshot = {
@@ -303,7 +303,7 @@ export class PhaseManager {
       this.pureWhiteStartedDays.has(this.state.day)
     )
       throw new Error("mist_phase_reentry");
-    // Mist 周期登记先行；其余机制通过后才推进原阶段时钟，拒绝不改变时钟。
+    // 雾鸦周期登记先行；其余机制通过后才推进原阶段时钟，拒绝不改变时钟。
     const manager = this;
     this.#rulePlan.phaseJumpAdmission({
       get world() { return manager.world; },
@@ -671,46 +671,25 @@ export class PhaseManager {
       this.phaseRevision.current === dayRevision;
     let nightSettled = ownsWedding || ownsDemon || ownsPureWhite || ownsEvilKnight;
     if (night.mistDelay) {
-      assertMistRosterCurrent(this.world);
-      for (const [id, scope] of night.deathLives) {
-        if (
-          this.world.getComponent(id, COMPONENT.Alive) !== scope.life ||
-          !scope.life.alive ||
-          scope.version === undefined ||
-          aliveLifeVersion(scope.life) !== scope.version
-        )
-          throw new Error("mist_pending_life_stale");
-      }
-      this.mistPending = new MistPendingNight(
-        this.world,
-        cycleDay,
-        night.summary.wolfTarget,
-        night.damage,
-        night.dreamFrame,
-      );
+      this.mistPending = prepareMistDelayedNight({
+        get world() { return manager.world; },
+        get cycleDay() { return cycleDay; },
+        get night() { return night; },
+      });
     }
     const settleMist = async (alreadyClaimed = false, interrupted = false): Promise<boolean> => {
       if (nightSettled) return this.state.gameOver;
-      const pending = this.mistPending;
-      if (!pending) throw new Error("mist_pending_night_missing");
-      const current = () => dayIsCurrent() && pending === this.mistPending;
-      if (!alreadyClaimed) pending.claim(current);
-      const healed = await decideSnake(
-        this.world,
-        this.events,
-        this.toolGateway,
-        actionProvider,
-        pending,
-        current,
-      );
-      const damage = pending.prepareFinalDamage(healed, current);
-      safeRecordLogicOp({
-        scope: "resolution",
-        op: "night_damage_resolved",
-        phase: Phase.Night,
-        status: "ok",
-        output: { deaths: damage.deaths, death_sources: damage.deathSources },
-      });
+      const settlement = settleMistDelayedNight({
+        get pending() { return manager.mistPending; },
+        get world() { return manager.world; },
+        get events() { return manager.events; },
+        get toolGateway() { return manager.toolGateway; },
+        get lifecycle() { return lifecycle; },
+        get cycleDay() { return cycleDay; },
+      }, actionProvider, dayIsCurrent, alreadyClaimed);
+      // 两个协议位置固定：第一次只有原蛇 Promise，第二次交原伤害和同一 current 闭包。
+      const healed = await (settlement.next().value as Promise<number | null>);
+      const { damage, current } = settlement.next(healed).value as MistPreparedNightDamage;
       this.emitNightResolved(damage.deaths);
       await this.deathResolution.resolve(
         damage.deaths,
@@ -727,9 +706,8 @@ export class PhaseManager {
           execution: { night: nightUnitOf(night), phaseRevision: dayRevision },
         },
       );
-      assertMistRosterCurrent(this.world);
-      pending.finish(current);
-      lifecycle.closeMistNormally(cycleDay);
+      // 仅真实死亡 resolve 成功后恢复完成段；抛错不 finish／正常 close，外层仍按原路径 abort。
+      settlement.next();
       nightSettled = true;
       return this.checkAndSealResult(
         interrupted

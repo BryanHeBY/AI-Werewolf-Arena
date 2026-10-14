@@ -1,0 +1,68 @@
+{
+  "baseline": "27df6552992404dbb1783917cbdaeeaa27e45de3",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "01a3d3895cbca7ad8a8e38023d20c10cb0ec26fa47a8fd766145a87c339fea04",
+      "kind": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/mist-delayed-night-settlement.ts",
+      "sha256": "9ace43ac99f3b719a97eb0d47ff841d9ba7ab455c6cd922d0134c2d840eb3b63",
+      "kind": "new"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts",
+      "sha256": "56f7b6c8a13686911f04409bf0b8cb3cf8218c1d39e56fe0a6144bbebdf4bc6a",
+      "kind": "new"
+    }
+  ],
+  "productionFrozen": true,
+  "currentTypeOnlyUnitDelta": "mist-delayed-night-settlement-type-fix.json",
+  "excludedConcurrentSource": "backend/src/game/engine/death_resolution.ts",
+  "controls": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "gitSHA": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "capturedWorkingSHA": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "wholeCurrentEqualActualGit": true,
+      "provenance": "actual Git，NP已提交"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+      "gitSHA": "62b6d79504e3e6a4200669fca347f3e03b23848c3fd27bc92b7ba9e4b8e2701e",
+      "capturedWorkingSHA": "62b6d79504e3e6a4200669fca347f3e03b23848c3fd27bc92b7ba9e4b8e2701e",
+      "wholeCurrentEqualActualGit": true,
+      "provenance": "actual Git"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "gitSHA": "3d8d60b5ba133b1088146b327bb7d8708a3055d62c9d7a9675d054d888fa1b56",
+      "capturedWorkingSHA": "3d8d60b5ba133b1088146b327bb7d8708a3055d62c9d7a9675d054d888fa1b56",
+      "wholeCurrentEqualActualGit": true,
+      "provenance": "actual Git"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "gitSHA": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+      "capturedWorkingSHA": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+      "wholeCurrentEqualActualGit": true,
+      "provenance": "actual Git"
+    },
+    {
+      "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+      "gitSHA": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8",
+      "capturedWorkingSHA": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8",
+      "wholeCurrentEqualActualGit": true,
+      "provenance": "actual Git"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/pending-owner-boundaries.test.ts",
+      "gitSHA": "98bfb9ca517392171bbf59beb2b8b21c030a60ac1fac3a06116f35cfe6666bc8",
+      "capturedWorkingSHA": "98bfb9ca517392171bbf59beb2b8b21c030a60ac1fac3a06116f35cfe6666bc8",
+      "wholeCurrentEqualActualGit": true,
+      "provenance": "actual Git"
+    }
+  ],
+  "ruleScope": "C24/C28雾鸦延迟夜setup/claim/snake/prepare/record/finish/正常close；经理仍phase/唯一pending/实际死亡/判胜"
+}

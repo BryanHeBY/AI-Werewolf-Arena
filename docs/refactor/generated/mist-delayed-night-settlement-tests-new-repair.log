@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts:
+(pass) 建立时旧生命拒绝先于伤害与梦读取，不替换尚未发布的pending [11.70ms]
+
+ 1 pass
+ 2 filtered out
+ 0 fail
+ 3 expect() calls
+Ran 1 test across 1 file. [164.00ms]
