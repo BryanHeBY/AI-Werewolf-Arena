@@ -1,0 +1,51 @@
+[
+  {
+    "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+    "kind": "actual-combination-import",
+    "before": "import { resolveTricksterExile } from \"../../mechanisms/roles/trickster/night_frame\";",
+    "after": "import { prepareMappedExile, resolveMappedExile, mappedExileSummary } from \"../../../rulesets/mapped-exile-resolution\";",
+    "beforeOffset": 725
+  },
+  {
+    "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+    "kind": "complete-target-preparation",
+    "before": "    const mapped = config.trickster ? resolveTricksterExile(this.world, options.day, target) : null;\n    if (mapped)\n      this.events.push({ timestamp: Date.now(), type: \"exile_target_mapped\", payload: mapped });\n    const effectiveTarget = mapped?.effectiveId ?? target;\n    const thisPipeline = this;",
+    "after": "    const thisPipeline = this;\n    // 原映射先付款／发表，再取有效目标；Noble 仍在两业务块之间，不按 missed 跳过。\n    const { mapped, effectiveTarget } = prepareMappedExile({\n      get enabled() { return config.trickster; },\n      get world() { return thisPipeline.world; },\n      get day() { return options.day; },\n      get events() { return thisPipeline.events; },\n    }, target);",
+    "beforeOffset": 13018
+  },
+  {
+    "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+    "kind": "complete-outcome-resolution",
+    "before": "    const votedOut = mapped?.missed\n      ? { removed: [] }\n      : this.eventRegistry.onVotedOut(this.world, effectiveTarget, this.events);\n    const removed = [...votedOut.removed];\n\n    if (removed.includes(effectiveTarget) && !animalUnit) {\n      // 只有真正出局才广播 voted_out；白痴翻牌由事件总线单独广播。\n      this.events.push({\n        timestamp: Date.now(),\n        type: \"voted_out\",\n        payload: {\n          target: effectiveTarget,\n        },\n      });\n    }\n",
+    "after": "    // Noble 同步完成之后才形成出局提案；原钩子 receiver 与参数读取保持晚读。\n    const removed = resolveMappedExile({\n      get eventRegistry() { return thisPipeline.eventRegistry; },\n      get world() { return thisPipeline.world; },\n      get events() { return thisPipeline.events; },\n      get animalUnit() { return animalUnit; },\n    }, mapped, effectiveTarget);\n",
+    "beforeOffset": 14296
+  },
+  {
+    "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+    "kind": "late-summary-field-projection",
+    "before": "        ...(mapped ? { effectiveTarget: mapped.missed ? null : effectiveTarget } : {}),",
+    "after": "        ...mappedExileSummary(mapped, effectiveTarget),",
+    "beforeOffset": 14714
+  },
+  {
+    "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+    "kind": "pipeline-head-owner",
+    "before": " * Animal复用原token且独占计数／到期政策。警长选举和狼刀维持各自流程，不合并为通用投票器。",
+    "after": " * Animal复用原token且独占计数／到期政策。警长选举和狼刀维持各自流程，不合并为通用投票器。\n * 诡术师最终映射／事实／出局提案归具名同步组合；本流水线保两块之间的 Noble 等待及原关闭、票与PK。",
+    "beforeOffset": 185
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+    "kind": "public-same-binding-resolution",
+    "before": "export { assertTricksterRosterCurrent } from \"./night_frame\";",
+    "after": "export { assertTricksterRosterCurrent, resolveTricksterExile } from \"./night_frame\";",
+    "beforeOffset": 423
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+    "kind": "ports-resolution-contract",
+    "before": " * 公开知识读不授库存／放逐写权，异常沿原调用栈传播，不增加关闭去重或许可。",
+    "after": " * 公开知识读不授库存／放逐写权；最终映射输出在原放逐点同步消费 frame 的唯一 exileResolved。\n * 返回同一原输出，不复制付款或提前发表；异常沿原调用栈传播，不增加关闭去重或许可。",
+    "beforeOffset": 184
+  }
+]

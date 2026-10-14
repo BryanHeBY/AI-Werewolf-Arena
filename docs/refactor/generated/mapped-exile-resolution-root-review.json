@@ -1,0 +1,59 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "7b0b708f62260288d42620cd7ae8ed4e0707092f7fc33bbf53a38a184fae59d2",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+      "sha256": "40bc6486a0fa337dfa6fc7bf239c359c95e6b58d7ab77148b3040dabdb5ebe15",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/mapped-exile-resolution.ts",
+      "sha256": "b2630d34ad7daa20316e6ddbd84598a60764ef31ee39eaf0f9377b9c341d9e96",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/mapped-exile-resolution.test.ts",
+      "sha256": "9742c31e0cc92e25c7aed91c8dda3696bbe0d396a05fe9730947bdf892948565",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/mapped-exile-resolution-scope-final.json",
+    "sha256": "5e3ab9b9f7ad6aacf1fb9140b87a9182b6851629ad2119f579b6ed88185dffca"
+  },
+  "document": {
+    "path": "docs/refactor/mapped-exile-resolution.md",
+    "sha256": "92593e947da2a3e9a69e3a19a4b46e12e53eaf3c40f4c9698444de12c987e69d"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/mapped-exile-resolution-evidence.json",
+    "sha256": "41a386be18041e263ce7b79d1e3f39b4218ffbc310b9c16bc5e596578cea29da"
+  },
+  "integrity": {
+    "freshSources": 4,
+    "actualGitBefore": 2,
+    "controls": 5,
+    "artifactHashes": 25,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整Voting映射→原Noble生成器await/finally/return→钩子提案→摘要原边界实读",
+    "同mapped payload push后effectiveId/Noble后missed/summary late missed与hook callee/receiver原序",
+    "真实623两Git/七全文编辑/五controls/二十五附件及三新owner body与10mapped输出",
+    "new3Camp fixture早红及types10→遗漏9→final0、olddead目标精准与工具index typo真实阶段",
+    "重要映射结构/付款不可回退/Animal广播门控/CN说明准确，不冒Order迁出或全P9"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

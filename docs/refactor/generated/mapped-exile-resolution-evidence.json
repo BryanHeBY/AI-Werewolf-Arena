@@ -1,0 +1,176 @@
+{
+  "approvedByAuthor": true,
+  "baseCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "7b0b708f62260288d42620cd7ae8ed4e0707092f7fc33bbf53a38a184fae59d2",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+      "sha256": "40bc6486a0fa337dfa6fc7bf239c359c95e6b58d7ab77148b3040dabdb5ebe15",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/mapped-exile-resolution.ts",
+      "sha256": "b2630d34ad7daa20316e6ddbd84598a60764ef31ee39eaf0f9377b9c341d9e96",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/mapped-exile-resolution.test.ts",
+      "sha256": "9742c31e0cc92e25c7aed91c8dda3696bbe0d396a05fe9730947bdf892948565",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/mapped-exile-resolution-scope-final.json",
+    "sha256": "5e3ab9b9f7ad6aacf1fb9140b87a9182b6851629ad2119f579b6ed88185dffca"
+  },
+  "document": {
+    "path": "docs/refactor/mapped-exile-resolution.md",
+    "sha256": "92593e947da2a3e9a69e3a19a4b46e12e53eaf3c40f4c9698444de12c987e69d"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-before.json",
+      "sha256": "c89ed2cddf2b46d183e3ccc26ce1313cde5e97258de60101c27106410ef10b9f"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-edits.json",
+      "sha256": "f329cfa6ebe891d09cfc81dd759181ff752ebaf6ca714ab5146c74ad61fc79cb"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-fixture-delta.json",
+      "sha256": "992c00949407fcc311b3339fbc01a7362bae20866b912d7e2eec76975e724a35"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-heads.json",
+      "sha256": "b42182c02543b25757afc780b1f81e887e404cec96383198aaf8abe36e2236b3"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-heads.log",
+      "sha256": "937c38181eef9a963cdce17dc12bb8555ec62ce16c597e75fb52625e5c2c89f1"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-heads.ts",
+      "sha256": "1e7a61588052ffabfec4075aa21ad518d386f884b57a70744938f19179fca680"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-new-tests-failed-only.log",
+      "sha256": "bedd1f5eb3ce4b0f3a0df4c6809f62a8d60ecb788bce4cea7a3b0316c8507d95"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-new-tests.log",
+      "sha256": "df3b00f2556f24f991760be687ac379954b5faa595d6602e43feb63a06edbe83"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-original-test.log",
+      "sha256": "a943013b27bbc431e1f6031eb1ad78fe1f34ca0dc4d46b0fc7b7bc02901f39fc"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-paths.json",
+      "sha256": "f41d2dbcf2e3c32004e104606c6e2e12a38bba4c336a1aafa0fe3a9f3776aff2"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-proof-final.log",
+      "sha256": "40b6df0fe68cfbedfd534c396c8ed16e441ff73df0e3e2577079bf0f20f97f99"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-proof-first.cjs",
+      "sha256": "d8b6896af991845d2d4dbda642e1bc444d669f8a976018d3f95118bb78ad0c1f"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-proof.cjs",
+      "sha256": "542974acb972dd8d1a9303a8af6f957a9f9d8e31bfd172629b1b6b1f753e3999"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-proof.json",
+      "sha256": "1aa2cdcb16071b184d5e5a537feb17c6411f2e21f663e88d3a3bfb33cc033fa7"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-proof.log",
+      "sha256": "ee75c4454599dcce2328a10f2ec85af4b8dd06c6d8590f37584c0f923db1d712"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-receipts.json",
+      "sha256": "84fb3e88e3bee6d65e2b9b8e009926caa920c3af464f439cc069dee85cf92ed2"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-scope-final.json",
+      "sha256": "5e3ab9b9f7ad6aacf1fb9140b87a9182b6851629ad2119f579b6ed88185dffca"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-test-typefix-before.json",
+      "sha256": "f0b809e763ac2b833734ccdc7307dcc540ef2dd54fd49c2e56fa09e8aef966de"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-test-typefix-first.json",
+      "sha256": "c40fd5cca7922c9572bd85c238ff5a1c1d6e476cfe1b20c71bb17a37da5ee611"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-test-typefix-second-before.json",
+      "sha256": "d83ced8529893dc6de694e4633a608cc76ec636589ef32cbbae3087ce4f476d7"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-types-config.json",
+      "sha256": "c1b3c611c6f693d42d6bfa278bb40277b64c5cdaa8181c919a754f404b2595db"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-types-failed-config.json",
+      "sha256": "31afa64c2d7787cef29b2a74ba3af0f4b4f1ba9e3b9775fe5659b5adf79132b2"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-types-failed.log",
+      "sha256": "c97794b0a0f1eb5a5adf1d4595bf54ebf44b176c74e0ddf50300c65b8f8ceb34"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-types-final-failed.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/mapped-exile-resolution-types.log",
+      "sha256": "c91f0fb9c061ffb9659f650f0befd34e37821c000cf8832ff13b70916f8dadcf"
+    }
+  ],
+  "artifactCount": 25,
+  "summary": {
+    "paths": 4,
+    "actualGitBefore": 2,
+    "controls": 5,
+    "programs": {
+      "wholeOriginalPrograms": 2,
+      "completeOwnerPrograms": 3,
+      "typedNodes": 3546,
+      "noncommentLeaves": 4462,
+      "wholeMappedOutputs": 10,
+      "rawSame": 10,
+      "testTypeOnlyOutputs": 2
+    },
+    "distinctCases": 4,
+    "distinctAssertions": 32,
+    "headsRoots": 4,
+    "headsDocumentationPaths": 606,
+    "headDiagnostics": 0,
+    "graph": {
+      "root": "backend/src/rulesets/mapped-exile-resolution.ts",
+      "backendModules": 40,
+      "relativeDeclaredValueEdges": 67,
+      "backEdges": [],
+      "limits": "保守相对字面声明值边，不计外部包/importEquals/非字面入口/完整cold，也不排除未标type但实际擦除的导入。"
+    }
+  },
+  "receipts": {
+    "path": "docs/refactor/generated/mapped-exile-resolution-receipts.json",
+    "sha256": "84fb3e88e3bee6d65e2b9b8e009926caa920c3af464f439cc069dee85cf92ed2"
+  },
+  "limitations": [
+    "完整两旧程序精准正逆；新prepare四语句／resolve四语句／summary单语句逐体核，不恢复整个旧Voting body掩owner。",
+    "新结构运行接口、模块及同绑定公开出口有明确API／初始化／来源指纹变化；不承诺任意namespace反射或全冷执行同等。",
+    "Frame唯一消费exileResolved，事件payload原引用、effectiveId/missed原点晚读；readonly字段不冻World／事件或授许可。",
+    "Noble await/Provider/finally/earlyreturn、attach单位、全部票/PK/Animal封票与河豚await未迁；本批不宣称Order边界退出。",
+    "其他并行代码只在当前图采样，不列whole-byte control或全图基线相等。"
+  ],
+  "reviewStatus": "待 Root 与非作者审；author artifacts 排除两者报告避免循环摘要。"
+}

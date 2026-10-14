@@ -1,0 +1,12 @@
+57 | const endpoint='backend/src/game/mechanisms/roles/trickster/night_frame.ts';find(parse(fs.readFileSync(endpoint,'utf8'),endpoint),'resolveTricksterExile');
+58 | const imports=f.statements.filter(ts.isImportDeclaration).map(n=>({module:n.moduleSpecifier.text,typeOnly:!!n.importClause?.isTypeOnly,names:n.importClause?.namedBindings?.elements.map(e=>e.name.text)??[]}));
+59 | assert.deepEqual(imports,[{module:'@ai-werewolf-arena/game-contract',typeOnly:true,names:['ReadonlyBoardConfig','EntityId','VotingSummary']},{module:'../core/domain/world',typeOnly:true,names:['World']},{module:'../core/domain/events',typeOnly:true,names:['GameEvent']},{module:'../game/mechanisms/hooks/hook_registry',typeOnly:true,names:['VotedOutResult']},{module:'../game/mechanisms/roles/trickster/ports',typeOnly:false,names:['resolveTricksterExile']}]);
+60 | // 原 Noble 整个交接及提前 return 是真实控制片段；不以复制整旧 body 掩 owner，也不移 await/finally。
+61 | const oldPipe=before.source[0].text,currentPipe=fs.readFileSync(paths[0],'utf8');
+62 | const boundary=text=>{const a=text.index('    const reveal = revealSecretBodyExile('),b=text.index('\n    }',text.index('      return attachExileUnit({ summary: { tally, target, removed: [] }',a))+6;assert(a>=0&&b>a);return text.slice(a,b);};
+                                        ^
+TypeError: text.index("    const reveal = revealSecretBodyExile is not a function. (In 'text.index("    const reveal = revealSecretBodyExile(")', 'text.index("    const reveal = revealSecretBodyExile' is undefined)
+      at boundary (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/mapped-exile-resolution-proof.cjs:62:36)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/mapped-exile-resolution-proof.cjs:63:14)
+
+Bun v1.4.3 (Linux x64)

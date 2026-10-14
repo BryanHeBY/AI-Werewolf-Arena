@@ -4,6 +4,7 @@
  * 首票前开同一单位，王子复收票与PK共用，零放逐、翻牌或映射落空仍属于已开单位。
  * 秘密之身的付款、必需发言与关闭归本族同步序列；本流水线只在原请求点 await，不额外等待未触发路径。
  * Animal复用原token且独占计数／到期政策。警长选举和狼刀维持各自流程，不合并为通用投票器。
+ * 诡术师最终映射／事实／出局提案归具名同步组合；本流水线保两块之间的 Noble 等待及原关闭、票与PK。
  */
 import { revealSecretBodyExile } from "../../mechanisms/roles/noble_secret_body/exile-ports";
 import { openExileUnit, attachExileUnit } from "../../../core/domain/exile-unit";
@@ -14,7 +15,7 @@ import {
   sealAnimalBallots,
 } from "../../mechanisms/roles/animal_dream/ballot-ports";
 import { runAnimalPufferChoice } from "../../mechanisms/roles/animal_dream/choice-ports";
-import { resolveTricksterExile } from "../../mechanisms/roles/trickster/night_frame";
+import { prepareMappedExile, resolveMappedExile, mappedExileSummary } from "../../../rulesets/mapped-exile-resolution";
 import { assertOrderPrinceOriginalCurrent } from "../../mechanisms/roles/order_prince/authority";
 import { runOrderPrinceChoice } from "../../mechanisms/roles/order_prince/voting_window";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
@@ -372,11 +373,14 @@ export class VotingPipeline {
       }, exileUnit);
     }
 
-    const mapped = config.trickster ? resolveTricksterExile(this.world, options.day, target) : null;
-    if (mapped)
-      this.events.push({ timestamp: Date.now(), type: "exile_target_mapped", payload: mapped });
-    const effectiveTarget = mapped?.effectiveId ?? target;
     const thisPipeline = this;
+    // 原映射先付款／发表，再取有效目标；Noble 仍在两业务块之间，不按 missed 跳过。
+    const { mapped, effectiveTarget } = prepareMappedExile({
+      get enabled() { return config.trickster; },
+      get world() { return thisPipeline.world; },
+      get day() { return options.day; },
+      get events() { return thisPipeline.events; },
+    }, target);
     const reveal = revealSecretBodyExile(
       {
         get enabled() { return config.nobleSecretBody; },
@@ -401,27 +405,19 @@ export class VotingPipeline {
       }
       return attachExileUnit({ summary: { tally, target, removed: [] }, removed: [], interrupted: false }, exileUnit);
     }
-    const votedOut = mapped?.missed
-      ? { removed: [] }
-      : this.eventRegistry.onVotedOut(this.world, effectiveTarget, this.events);
-    const removed = [...votedOut.removed];
-
-    if (removed.includes(effectiveTarget) && !animalUnit) {
-      // 只有真正出局才广播 voted_out；白痴翻牌由事件总线单独广播。
-      this.events.push({
-        timestamp: Date.now(),
-        type: "voted_out",
-        payload: {
-          target: effectiveTarget,
-        },
-      });
-    }
+    // Noble 同步完成之后才形成出局提案；原钩子 receiver 与参数读取保持晚读。
+    const removed = resolveMappedExile({
+      get eventRegistry() { return thisPipeline.eventRegistry; },
+      get world() { return thisPipeline.world; },
+      get events() { return thisPipeline.events; },
+      get animalUnit() { return animalUnit; },
+    }, mapped, effectiveTarget);
 
     return attachExileUnit({
       summary: {
         tally,
         target,
-        ...(mapped ? { effectiveTarget: mapped.missed ? null : effectiveTarget } : {}),
+        ...mappedExileSummary(mapped, effectiveTarget),
         removed,
       },
       interrupted: false,

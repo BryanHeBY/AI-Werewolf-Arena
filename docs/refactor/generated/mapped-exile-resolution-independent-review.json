@@ -1,0 +1,210 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "baseCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "7b0b708f62260288d42620cd7ae8ed4e0707092f7fc33bbf53a38a184fae59d2",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+      "sha256": "40bc6486a0fa337dfa6fc7bf239c359c95e6b58d7ab77148b3040dabdb5ebe15",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/mapped-exile-resolution.ts",
+      "sha256": "b2630d34ad7daa20316e6ddbd84598a60764ef31ee39eaf0f9377b9c341d9e96",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/mapped-exile-resolution.test.ts",
+      "sha256": "9742c31e0cc92e25c7aed91c8dda3696bbe0d396a05fe9730947bdf892948565",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/mapped-exile-resolution-scope-final.json",
+    "sha256": "5e3ab9b9f7ad6aacf1fb9140b87a9182b6851629ad2119f579b6ed88185dffca"
+  },
+  "document": {
+    "path": "docs/refactor/mapped-exile-resolution.md",
+    "sha256": "92593e947da2a3e9a69e3a19a4b46e12e53eaf3c40f4c9698444de12c987e69d"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/mapped-exile-resolution-evidence.json",
+    "sha256": "41a386be18041e263ce7b79d1e3f39b4218ffbc310b9c16bc5e596578cea29da"
+  },
+  "independentChecks": {
+    "freshSource": 4,
+    "actualGitWholeSources": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+        "beforeSHA256": "a543110a0e64a5c1745c724c507d7c743366461fe3d378ce84e781b5ab8daa97",
+        "wholeExactForwardAndInverse": true,
+        "edits": 5
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+        "beforeSHA256": "c7eb8dca619e67dd985982a5feee803c17d899dce8fb787dfd63d95bbfd18a35",
+        "wholeExactForwardAndInverse": true,
+        "edits": 2
+      }
+    ],
+    "wholeExactEditFragments": 7,
+    "stableActualGitAndCurrentControls": 5,
+    "artifactSHA256": 25,
+    "drift": 0,
+    "currentThreeCompleteOwnerBodiesMappedToOriginal": true,
+    "wholeNobleBoundaryRawSame": true,
+    "unitFixtureAndTypeWholeExactForward": true
+  },
+  "manualReview": [
+    "完整final放逐映射/事实/effective目标、Noble后钩子/removed副本/普通广播、late summary归具名ruleset；不是仅私有import换ports。Frame唯一持原roster/生命/配对/finished/day/exileResolved，原算法未改。",
+    "准备先truthy config→resolve原callee→World→day→target，Frame消费exileResolved之后push同mapped payload，随后才effectiveId；push回调改字段仍在原位置生效，失败不退款或重开映射。disabled只读enabled，不提前World/day/events。",
+    "Noble整个generator输入、next、唯一Provider await、finally return及earlyreturn完整原bytes保持，missed不跳Noble；thisPipeline只提前纯this别名不读任何字段，没有新async/cleanup。",
+    "Noble之后missed晚读，非missed按eventRegistry/onVotedOut callee→World/effectiveTarget/events调用原receiver，复制hook.removed；includes命中再读Animal，普通广播原push/time/payload及失败前缀保。EventRegistry仍只提案/免死不标死，真正DR/phase仍经理。",
+    "summary在原attachExileUnit参数展开处再次missed读取，允许hook或事件回调改同对象；missed输出null，无mapped不新增effectiveTarget，公开票/tally/PK不反写。移除数组副本与mapped同ref/可写shape不冻。",
+    "新Runtime只窄结构method且readonly字段不等于权限或数据快照；ports真实同resolve绑定，不增镜像/许可。新API、输入容器、返回容器、模块/调用栈变化有明确反射与cold范围限制。",
+    "新3literal oracle保disabled/late有效目标、hookreceiver/late missed/Animal抑制、两push失败已付前缀；首Camp fixture错误早于owner，精确改Wolf并仅失败组重查，不修改生产/原oracle。类型10→9→0历史与纯cast/getter never/policy literal/unknown擦除诚实。",
+    "新head/重要逻辑中文解释原字段晚读、知识/付款/许可分离准确，正式角色名诡术师；原pair/Frame/event/Noble算法控制没有因中文任务顺手改规则。"
+  ],
+  "findings": [],
+  "authorEvidenceAttribution": {
+    "programProof": {
+      "chunk": "dc2243",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/mapped-exile-resolution-proof-final.log",
+      "script": "docs/refactor/generated/mapped-exile-resolution-proof.cjs",
+      "report": "docs/refactor/generated/mapped-exile-resolution-proof.json",
+      "toolOnlyCorrection": "三处text.index→text.indexOf，首executed script/log原字节保持。",
+      "summary": {
+        "wholeOriginalPrograms": 2,
+        "completeOwnerPrograms": 3,
+        "typedNodes": 3546,
+        "noncommentLeaves": 4462,
+        "wholeMappedOutputs": 10,
+        "rawSame": 10,
+        "testTypeOnlyOutputs": 2
+      }
+    },
+    "firstProofHarnessFailure": {
+      "chunk": "985ad0",
+      "exitCode": 1,
+      "log": "docs/refactor/generated/mapped-exile-resolution-proof.log",
+      "executedScript": "docs/refactor/generated/mapped-exile-resolution-proof-first.cjs",
+      "reason": "Noble片段提取工具误写Python习惯 text.index，完整正文计算后该工具抛TypeError；无产品变化。"
+    },
+    "runtimeSummary": {
+      "successfulDistinctCases": 4,
+      "successfulDistinctAssertions": 32,
+      "runtimeExecutions": 3,
+      "newDistinctCases": 3,
+      "newAssertions": 30,
+      "oldCases": 1,
+      "oldAssertions": 2,
+      "typesPolicy": "首4仅unit10红→只failed1作者遗漏9红→精确type-only修完failed1真0；三production无诊断不重",
+      "fullGateOrModels": false
+    },
+    "newFirst": {
+      "chunk": "a66b08",
+      "exitCode": 1,
+      "log": "docs/refactor/generated/mapped-exile-resolution-new-tests.log",
+      "pass": 0,
+      "fail": 3,
+      "reason": "新fixture误将Trickster设Good，原getState/安装在进入owner前拒绝；三例均未执行断言。"
+    },
+    "newFailedOnly": {
+      "chunk": "552631",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/mapped-exile-resolution-new-tests-failed-only.log",
+      "pass": 3,
+      "fail": 0,
+      "assertions": 30,
+      "reason": "首3全部红，仅修新fixture演员为真实Wolf；titles、配对、目标、预期和生产保持。",
+      "delta": "docs/refactor/generated/mapped-exile-resolution-fixture-delta.json"
+    },
+    "originalPrecise": {
+      "chunk": "abbb26",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/mapped-exile-resolution-original-test.log",
+      "pass": 1,
+      "fail": 0,
+      "assertions": 2,
+      "filtered": 9,
+      "command": "bun --no-env-file test backend/tests/unit/features/trickster/frame.test.ts -t 'trickster mapped dead target yields'"
+    },
+    "typesFirst": {
+      "launchChunk": "c3825c",
+      "sessionId": 53865,
+      "terminalChunk": "b689fc",
+      "exitCode": 2,
+      "roots": 4,
+      "config": "docs/refactor/generated/mapped-exile-resolution-types-config.json",
+      "log": "docs/refactor/generated/mapped-exile-resolution-types.log",
+      "diagnostics": 10,
+      "onlyFailedSource": "backend/tests/unit/rulesets/mapped-exile-resolution.test.ts"
+    },
+    "typesFailedFirst": {
+      "launchChunk": "77b874",
+      "sessionId": 86004,
+      "terminalChunk": "d152e9",
+      "exitCode": 2,
+      "roots": 1,
+      "config": "docs/refactor/generated/mapped-exile-resolution-types-failed-config.json",
+      "log": "docs/refactor/generated/mapped-exile-resolution-types-failed.log",
+      "diagnostics": 9,
+      "reason": "作者首次failed-only只处理readonly写诊断，遗漏其余getter void/literal/matcher；真实红保留。"
+    },
+    "typesFailedFinal": {
+      "launchChunk": "51dd68",
+      "sessionId": 64016,
+      "terminalChunk": "42d11f",
+      "exitCode": 0,
+      "roots": 1,
+      "config": "docs/refactor/generated/mapped-exile-resolution-types-failed-config.json",
+      "log": "docs/refactor/generated/mapped-exile-resolution-types-final-failed.log",
+      "delta": "docs/refactor/generated/mapped-exile-resolution-test-typefix-before.json",
+      "sameRuntimeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "09104563cc64e7a6d0826bcda5db967d8787fa2d8de9d9f55ab39d1de36b4c20"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "aea2c7c77fedad9cb64b60562c462794d33b7d9ea9c0dcde4d94100c86553c69"
+        }
+      ]
+    },
+    "heads": {
+      "chunk": "55f0dc",
+      "exitCode": 0,
+      "roots": 4,
+      "documentationCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+      "documentationPaths": 606,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "report": "docs/refactor/generated/mapped-exile-resolution-heads.json",
+      "log": "docs/refactor/generated/mapped-exile-resolution-heads.log",
+      "sampling": "首newfixture/cast前；头未变，fixture精确delta及纯type/comment桥承接final；不重绿。"
+    },
+    "graph": {
+      "root": "backend/src/rulesets/mapped-exile-resolution.ts",
+      "backendModules": 40,
+      "relativeDeclaredValueEdges": 67,
+      "backEdges": [],
+      "limits": "保守相对字面声明值边，不计外部包/importEquals/非字面入口/完整cold，也不排除未标type但实际擦除的导入。"
+    }
+  },
+  "limits": [
+    "只读完整源码/真实Git/7全文正逆/当前3owner body有限显式映射/作者脚本收据，无proof/compiler/type/test/head/gate执行或poll。",
+    "真实作者3546 typed/4462 leaves/10映射输出与2测试擦除输出，不沿口头3556估计；未以恢复整oldVoting掩新owner，未额外启动AST证明。",
+    "4不同32成功断言，首new3早red保，olddeadtarget1/2只一次；首type只unit10red→作者failedonly遗漏9red→finalfailed1root42d11f0，三生产无diag未重。",
+    "head4/606原Git pathspec样本早于fixture/type修正，首head未变；图40/67保守声明边非实际完整cold，不将其它WIP作control。",
+    "旧Frame API保持，Pipeline private接线退出；未声明Order或全C24/C28/P9完成，无产品/Git/progress/矩阵/作者artifact改动。"
+  ]
+}

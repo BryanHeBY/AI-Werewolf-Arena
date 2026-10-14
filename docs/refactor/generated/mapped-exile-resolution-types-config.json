@@ -1,0 +1,18 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  },
+  "files": [
+    "../../../backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+    "../../../backend/src/game/mechanisms/roles/trickster/ports.ts",
+    "../../../backend/src/rulesets/mapped-exile-resolution.ts",
+    "../../../backend/tests/unit/rulesets/mapped-exile-resolution.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

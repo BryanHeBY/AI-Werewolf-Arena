@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/mapped-exile-resolution.test.ts:
+(pass) disabled mapping skips runtime fields and enabled mapping reads effectiveId after the original push [1.93ms]
+(pass) post-Noble hook retains receiver and late missed projection while Animal and misses suppress ordinary facts [0.64ms]
+(pass) mapped or voted_out push failure cannot refund the original one-use mapping or hook prefix [0.74ms]
+
+ 3 pass
+ 0 fail
+ 30 expect() calls
+Ran 3 tests across 1 file. [49.00ms]
