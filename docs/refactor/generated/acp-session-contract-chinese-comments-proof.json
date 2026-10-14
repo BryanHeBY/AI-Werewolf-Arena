@@ -1,0 +1,58 @@
+{
+  "approved": true,
+  "baseCommit": "5549ba0c0714bdea5a2056f01773858eb5cf0008",
+  "commentEditRecords": 14,
+  "programs": [
+    {
+      "path": "backend/src/ai/integrations/acp/session.ts",
+      "beforeSha256": "9e12e82f73e54a6be571cc496c93556fb2134725244fa1883e547aa709936729",
+      "afterSha256": "60c212198de3e1dd67c203740ae8ccc54043afd1224b279d0fb05f3b566bf98c",
+      "typedNodes": 185,
+      "noncommentLeaves": 248,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/acp_session_config.ts",
+      "beforeSha256": "6a32d6f78c1953151ec2f1715464e4b9a577170b6d0ca55f35f1e1f0c15dc0c2",
+      "afterSha256": "d6ac0c541a6733b4809c71926efc77012239287c0208623255043b0aa420340b",
+      "typedNodes": 207,
+      "noncommentLeaves": 234,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "fdeba8e620b40d6a29fb080a663d9f726563f4b59d915189a77e521190f3061b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "7a951f058583a16ea15685ab03c01e67d5702337a913701fcde6e26f6020715e"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "sources": 2,
+    "typedNodes": 392,
+    "noncommentLeaves": 482,
+    "wholeRawOutputs": 4
+  },
+  "limits": [
+    "只核两个完整ACP模块非注释程序与原运行输出；不执行业务、类型、对局或全门禁。",
+    "职责头形状不等于语义；具体会话归属、取消、配置确认与失败顺序由非作者实际源审。",
+    "注释改变真实源码SHA；不修改历史档案身份。"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "proof": {
+    "chunk_id": "27367f",
+    "wall_time_seconds": 0.120496703,
+    "exit_code": 0,
+    "original_token_count": 19,
+    "output": "{\"sources\":2,\"typedNodes\":392,\"noncommentLeaves\":482,\"wholeRawOutputs\":4}\n"
+  },
+  "heads": {
+    "chunk_id": "34e240",
+    "wall_time_seconds": 0.204356481,
+    "exit_code": 0,
+    "original_token_count": 88,
+    "output": "{\"source\":[{\"path\":\"backend/src/ai/integrations/acp/session.ts\",\"sha256\":\"60c212198de3e1dd67c203740ae8ccc54043afd1224b279d0fb05f3b566bf98c\"},{\"path\":\"backend/src/ai/integrations/acp/acp_session_config.ts\",\"sha256\":\"d6ac0c541a6733b4809c71926efc77012239287c0208623255043b0aa420340b\"}],\"documentationPaths\":593,\"diagnostics\":[],\"chineseHeadFailures\":[]}\n"
+  },
+  "limits": [
+    "只维护两模块注释，不运行模型、游戏、类型或全门禁。",
+    "两完整程序与四原始输出验证不替代中文契约实际语义审查。"
+  ]
+}

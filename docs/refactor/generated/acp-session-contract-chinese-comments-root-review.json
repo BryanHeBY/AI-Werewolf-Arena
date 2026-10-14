@@ -1,0 +1,48 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "5549ba0c0714bdea5a2056f01773858eb5cf0008",
+  "source": [
+    {
+      "path": "backend/src/ai/integrations/acp/session.ts",
+      "sha256": "60c212198de3e1dd67c203740ae8ccc54043afd1224b279d0fb05f3b566bf98c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/acp_session_config.ts",
+      "sha256": "d6ac0c541a6733b4809c71926efc77012239287c0208623255043b0aa420340b",
+      "change": "modified"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/acp-session-contract-chinese-comments-scope-final.json",
+    "sha256": "9e756f6f65c4f6a51fe0c5f140b260a513a26520aac17fddbb6922e09e9dc1df"
+  },
+  "document": {
+    "path": "docs/refactor/acp-session-contract-chinese-comments.md",
+    "sha256": "b18e7e27d9571ba2ce70d059c3b32f00464e1ec3febd1cdb37411921059f3290"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/acp-session-contract-chinese-comments-evidence.json",
+    "sha256": "eb997753c44645aaa1a7d7aa29e204c5d5b2fbc8de58fe01aca07a60721c5c76"
+  },
+  "integrity": {
+    "freshSources": 2,
+    "actualGitBefore": 2,
+    "controls": 0,
+    "artifactHashes": 7,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "作者两模块完整注释语义及实际process/sessionpool调用核对",
+    "取消/关闭、原始通知/审计/领域回执与运行registry边界",
+    "配置条目快照/响应列表替换/确认失败保已应用前缀",
+    "实际5549ba0c两Gitbefore、十四comment正演与四raw输出及七附件SHA，不重绿"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}
