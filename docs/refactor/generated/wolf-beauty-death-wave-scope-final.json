@@ -1,0 +1,21 @@
+{
+  "base": "354c935c3df0a784d8644bee53b0ec481e9a6934",
+  "files": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "d6f55e4c3c7fe3846e4e69ed65526c90391c5ff399e932a4b36d3eaeec2e9200"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "sha256": "bc3a6281444084b8214842c3b5dd5d71677107be7b106c99d847fb7a446b4012"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+      "sha256": "542ce369a343f9ec6bc997238d60c8e0f6abffa68f61c1bd9131851cbe176be1"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+      "sha256": "f5f2fd3a1c2a2f71c644a7555c4d04b7971e1d27770530b01ca7aec8a4bc96ff"
+    }
+  ]
+}

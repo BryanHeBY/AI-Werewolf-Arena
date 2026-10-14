@@ -1,7 +1,7 @@
 /**
  * 负责有序死亡波、角色死亡钩子、枪击选择、遗言与警徽交接。输入是待处理的死亡名单、
  * 原死因与原生命行动权限；输出是按原顺序提交的死亡、事件和内部关联凭证。实际生命修改和唯一已结算
- * 账本委托 DeathCommitter，双生、动物及婚约关系事实归具体贡献；已提交整波在梦／遗言前交角色扩展，
+ * 账本委托 DeathCommitter，双生、动物、婚约及狼美人关系事实归具体贡献；已提交整波在梦／遗言前交角色扩展，
  * 野孩子贡献自行核对榜样原生命。参数仍使用同一深只读规则视图，不建立第二份角色状态。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
@@ -68,8 +68,7 @@ import type { DreamNightEffects } from "../../core/domain/dream-night-effects";
 import {
   attemptCharmTrigger,
   commitCharmDeath,
-  type CharmBinding,
-  type CharmClaimReceipt,
+  WolfBeautyDeathWavePublication,
 } from "../mechanisms/roles/wolf_beauty/ports";
 import {
   activeDeathGun,
@@ -106,6 +105,16 @@ export class DeathResolution {
       get phase() {
         return resolution.state.phase;
       },
+    });
+  })();
+  // 仅捕获结算器；关系领取／标死后发布各自在原调用点读取 World 与事件，不缓存保护或资源。
+  private readonly wolfBeautyDeathWave = (() => {
+    const resolution = this;
+    return new WolfBeautyDeathWavePublication({
+      get world() { return resolution.world; },
+      get events() { return resolution.events; },
+      get attemptCharmTrigger() { return attemptCharmTrigger; },
+      get commitCharmDeath() { return commitCharmDeath; },
     });
   })();
   private readonly lastWordsMechanism = getDefaultLastWordsMechanism();
@@ -494,41 +503,16 @@ export class DeathResolution {
                 let newlyMarked = false;
                 const marked: number[] = [];
                 const additionalReceipts: DeathCommitReceipt[] = [];
-                const charmTriggers: Array<{ binding: CharmBinding; receipt: CharmClaimReceipt }> =
-                  [];
-                for (const proposal of result.charmLinks ?? []) {
-                  const binding = proposal.binding;
-                  // 具体关系 owner 在原位置领取和查询保护；延迟 World，permit 失败不新增读取。
-                  const trigger = attemptCharmTrigger(
-                    binding,
-                    allSources,
-                    nativeHunterShotTargets,
-                    seen,
-                    () => this.world,
-                    () =>
-                      proposal.nightEffect &&
-                      nightEffects?.dreams?.blocksNightCharm(this.world, binding.targetId, seen),
-                  );
-                  if (!trigger) continue;
-                  if (trigger.kind === "blocked") {
-                    this.events.push({
-                      timestamp: Date.now(),
-                      type: "charm_blocked",
-                      payload: {
-                        actorId: binding.actorId,
-                        targetId: binding.targetId,
-                        reason: "night_protection",
-                      },
-                    });
-                    continue;
-                  }
-                  charmTriggers.push({ binding, receipt: trigger });
-                  if (!proposed.includes(binding.targetId)) proposed.push(binding.targetId);
-                  proposedSources[binding.targetId] = [
-                    ...new Set([...(proposedSources[binding.targetId] ?? []), DeathCause.Charm]),
-                  ];
-                  if (proposal.nightEffect) nightTargets.push(binding.targetId);
-                }
+                const charmTriggers = this.wolfBeautyDeathWave.prepare(
+                  result,
+                  proposed,
+                  proposedSources,
+                  nightTargets,
+                  allSources,
+                  nativeHunterShotTargets,
+                  seen,
+                  nightEffects,
+                );
                 const charmTargets = new Set(charmTriggers.map(({ binding }) => binding.targetId));
                 for (const id of nightTargets) nightOrigin.add(id);
                 if (nightEffects?.dreams && nightTargets.length)
@@ -693,15 +677,7 @@ export class DeathResolution {
                       );
                     this.fragrantDeathWave.publishVisibleWave(fragrantGun, event);
                   }
-                  for (const { binding, receipt } of charmTriggers) {
-                    const applied = commitCharmDeath(this.world, receipt);
-                    if (applied?.kind === "applied")
-                      this.events.push({
-                        timestamp: Date.now(),
-                        type: "charm_death",
-                        payload: { actorId: binding.actorId, targetId: binding.targetId },
-                      });
-                  }
+                  this.wolfBeautyDeathWave.publish(charmTriggers);
                   nightEffects?.dreams?.recordDeaths([...next, ...linked], this.events);
                   for (const permit of actions.permits.splice(0)) permit.close();
                 } finally {

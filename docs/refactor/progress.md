@@ -596,3 +596,5 @@
 - C17夜之贵族／秘密之身状态槽：3源完整归原state所有者，原raw引用与唯一两JSON影子、七字段提交及canonical／checkpoint算法收拢；authority保roster、生命、夜间、请求与付款。当前writer248／authority8980／state3806及四精确逆输出保持；新4/27＋原1/3一次绿，首类型只新unit视图红，必要失败根fe0373实际0。三中文职责及选择／耗身／契约结构说明已补，末注释40265a三完整程序／六输出桥不重绿。Root与独立peer实读所有权、顺序、失败前缀并核最终三SHA；新增class／私有布局／栈差异及本地codec限界明列，全C17继续。见 noble-body-state-slot.md。
 
 - C17炼金魔女／狼鸦之爪状态绑定：4源收拢raw／脱离JSON／数组行和嵌套targets指纹与原槽写入；Authority保参与者／生命和raven夜初检查。完整19区域5406节点＋Authority2641及实际新owner精确逆输出保持；新8/27＋原1/5一次绿，唯一构造guard建议闭合只重复字面风险1/2及必要unit类型，不重其它绿。末三数据结构中文注释仅两全程序／四输出桥；原首次死亡知识不授新付款，写后失败／raven检查前缀有就地中文。Root、独立Preflight最终源审及四SHA批准；第三方指出首次觉醒条件，末中文补实际存活狼<3并以3012完整程序／两输出桥闭合、不重已绿。旧private read/bind/install退休与新class/init差异明确，全C17继续；见 mist-caster-state-slot.md。
+
+- C28狼美人死亡波贡献：4源完整prepare／publish归实际feature，relation保原体来源和resolved/applied，DR留生命mark及其他关系／枪／遗言／波次。185＋60完整原段及DR5006／两精确逆输出保持，四原控制不动。新增3case首29＋原精准1/7；命令delta仅重其中1/14，distinct4／最终37source断言与执行50分开。首实际新增冷环564红保留，以两个late原命令getter修闭，终49模块有界无返owner/DR/AI；readonly接口非授权。初4root0及delta2root2d2a36实际0，四中文职责与重要关系／付款／发布说明有效。Root与独立Preflight最终四SHA批准；不重整套绿，不宣称原历史环或全C28/P9完成。见 wolf-beauty-death-wave-publication.md。

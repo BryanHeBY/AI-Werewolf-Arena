@@ -1,0 +1,271 @@
+{
+  "base": "354c935c3df0a784d8644bee53b0ec481e9a6934",
+  "sourceSHA": {
+    "backend/src/game/engine/death_resolution.ts": "d6f55e4c3c7fe3846e4e69ed65526c90391c5ff399e932a4b36d3eaeec2e9200",
+    "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts": "542ce369a343f9ec6bc997238d60c8e0f6abffa68f61c1bd9131851cbe176be1",
+    "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts": "bc3a6281444084b8214842c3b5dd5d71677107be7b106c99d847fb7a446b4012"
+  },
+  "prepare": {
+    "beforeNodes": 185,
+    "afterNodes": 185,
+    "completeTreeSame": true,
+    "allNoncommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "8b57cc9d79e03b1d8a4033793a9f624b2fc533918f678cd1f58adc86ee82b2d8",
+        "afterSHA": "8b57cc9d79e03b1d8a4033793a9f624b2fc533918f678cd1f58adc86ee82b2d8"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "8b57cc9d79e03b1d8a4033793a9f624b2fc533918f678cd1f58adc86ee82b2d8",
+        "afterSHA": "8b57cc9d79e03b1d8a4033793a9f624b2fc533918f678cd1f58adc86ee82b2d8"
+      }
+    ],
+    "statementCount": 2,
+    "originalArrayTypeInverse": "Array<{ binding: CharmBinding; receipt: CharmClaimReceipt }>",
+    "newReturnOnlySameList": true,
+    "onlyLateCommandLocalInverse": "const attemptCharmTrigger = this.runtime.attemptCharmTrigger;"
+  },
+  "publish": {
+    "beforeNodes": 60,
+    "afterNodes": 60,
+    "completeTreeSame": true,
+    "allNoncommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "016630360e61568256d793829355321f87f0e6361a624f5380a76067245f5671",
+        "afterSHA": "016630360e61568256d793829355321f87f0e6361a624f5380a76067245f5671"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "016630360e61568256d793829355321f87f0e6361a624f5380a76067245f5671",
+        "afterSHA": "016630360e61568256d793829355321f87f0e6361a624f5380a76067245f5671"
+      }
+    ],
+    "onlyLateCommandLocalInverse": "const commitCharmDeath = this.runtime.commitCharmDeath;"
+  },
+  "completeDR": {
+    "beforeNodes": 5006,
+    "afterNodes": 5006,
+    "completeTreeSame": true,
+    "allNoncommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "0610befbe8e0960533a2d9102482778bd5ac35e1844a86ddca87c953936d2d6d",
+        "afterSHA": "0610befbe8e0960533a2d9102482778bd5ac35e1844a86ddca87c953936d2d6d"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "337f9b21cbe58068ce3fb710255417f3449bb221d6f0883b7ed28859836020d9",
+        "afterSHA": "337f9b21cbe58068ce3fb710255417f3449bb221d6f0883b7ed28859836020d9"
+      }
+    ],
+    "actual2CallArgumentsSame": true,
+    "actualLazyGetterFieldExact": true,
+    "independentExpectedFourGetterField": "private readonly wolfBeautyDeathWave = (() => {\n    const resolution = this;\n    return new WolfBeautyDeathWavePublication({\n      get world() { return resolution.world; },\n      get events() { return resolution.events; },\n      get attemptCharmTrigger() { return attemptCharmTrigger; },\n      get commitCharmDeath() { return commitCharmDeath; },\n    });\n  })();",
+    "lateBareCalleePositionExact": true,
+    "allRemainingBindingsSame": true,
+    "originalImportsRestoredOnlyAfterBindingCheck": true
+  },
+  "canonicalBindings": [
+    {
+      "name": "DeathCause",
+      "typeOnly": false,
+      "from": "@ai-werewolf-arena/game-contract",
+      "target": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "originalTarget": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "sameExistingPhysicalOwner": true
+    },
+    {
+      "name": "DeathSources",
+      "typeOnly": true,
+      "from": "@ai-werewolf-arena/game-contract",
+      "target": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathSources"
+      },
+      "originalTarget": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathSources"
+      },
+      "sameExistingPhysicalOwner": true
+    },
+    {
+      "name": "EntityId",
+      "typeOnly": true,
+      "from": "@ai-werewolf-arena/game-contract",
+      "target": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "EntityId"
+      },
+      "originalTarget": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "EntityId"
+      },
+      "sameExistingPhysicalOwner": true
+    },
+    {
+      "name": "GameEvent",
+      "typeOnly": true,
+      "from": "@ai-werewolf-arena/game-contract",
+      "target": {
+        "path": "packages/game-contract/src/events.ts",
+        "name": "GameEvent"
+      },
+      "originalTarget": {
+        "path": "packages/game-contract/src/events.ts",
+        "name": "GameEvent"
+      },
+      "sameExistingPhysicalOwner": true
+    },
+    {
+      "name": "World",
+      "typeOnly": true,
+      "from": "../../../../core/domain/world",
+      "target": {
+        "path": "backend/src/core/domain/world.ts",
+        "name": "World"
+      },
+      "originalTarget": {
+        "path": "backend/src/core/domain/world.ts",
+        "name": "World"
+      },
+      "sameExistingPhysicalOwner": true
+    },
+    {
+      "name": "DreamNightEffects",
+      "typeOnly": true,
+      "from": "../../../../core/domain/dream-night-effects",
+      "target": {
+        "path": "backend/src/core/domain/dream-night-effects.ts",
+        "name": "DreamNightEffects"
+      },
+      "originalTarget": {
+        "path": "backend/src/core/domain/dream-night-effects.ts",
+        "name": "DreamNightEffects"
+      },
+      "sameExistingPhysicalOwner": true
+    },
+    {
+      "name": "attemptCharmTrigger",
+      "typeOnly": true,
+      "from": "./relation",
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "name": "attemptCharmTrigger"
+      },
+      "originalTarget": {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "name": "attemptCharmTrigger"
+      },
+      "sameExistingPhysicalOwner": true
+    },
+    {
+      "name": "commitCharmDeath",
+      "typeOnly": true,
+      "from": "./relation",
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "name": "commitCharmDeath"
+      },
+      "originalTarget": {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "name": "commitCharmDeath"
+      },
+      "sameExistingPhysicalOwner": true
+    },
+    {
+      "name": "CharmBinding",
+      "typeOnly": true,
+      "from": "./relation",
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "name": "CharmBinding"
+      },
+      "originalTarget": {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "name": "CharmBinding"
+      },
+      "sameExistingPhysicalOwner": true
+    },
+    {
+      "name": "CharmClaimReceipt",
+      "typeOnly": true,
+      "from": "./relation",
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "name": "CharmClaimReceipt"
+      },
+      "originalTarget": {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "name": "CharmClaimReceipt"
+      },
+      "sameExistingPhysicalOwner": true
+    }
+  ],
+  "ports": {
+    "existingBindingsAndOrderSame": true,
+    "added": [
+      {
+        "name": "WolfBeautyDeathWavePublication",
+        "imported": "WolfBeautyDeathWavePublication",
+        "typeOnly": false,
+        "from": "./death-wave-publication"
+      },
+      {
+        "name": "CharmDeathWaveTrigger",
+        "imported": "CharmDeathWaveTrigger",
+        "typeOnly": true,
+        "from": "./death-wave-publication"
+      }
+    ],
+    "onlyExports": true
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "beforeSHA": "298a4bb9105bf9fae457b0de7e9a358fe2571d617f8ab5b2d4116943cc02af3a",
+      "currentSHA": "298a4bb9105bf9fae457b0de7e9a358fe2571d617f8ab5b2d4116943cc02af3a",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "beforeSHA": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "currentSHA": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+      "beforeSHA": "44741a01b3c3b0f64f3c9b51b5e57bad66a187f6c4b1735f3f944a7ebb118bb5",
+      "currentSHA": "44741a01b3c3b0f64f3c9b51b5e57bad66a187f6c4b1735f3f944a7ebb118bb5",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/trigger-receipts.test.ts",
+      "beforeSHA": "a328229a688ca3e5e4cb2182f47a232e9578d93b742ec93f9756c94377d54036",
+      "currentSHA": "a328229a688ca3e5e4cb2182f47a232e9578d93b742ec93f9756c94377d54036",
+      "wholeBytesSame": true
+    }
+  ],
+  "limits": [
+    "仅新完整owner的return原list、运行getter路径、同列表类型名字及两个实际late命令裸callee局部声明可逆；这些getter逐次返回原DR live binding，不cache跨proposal，其它主体不忽略。",
+    "whole DR inverse恢复imports和新增instance字段是明确结构/API初始化差异，不宣称新程序二进制/调用栈/未知monkeypatch全部同。",
+    "所有live关联与receipt仍原relation唯一保存，本族proof不控制其它并行状态槽/DTO或全传递图。"
+  ],
+  "approved": true
+}

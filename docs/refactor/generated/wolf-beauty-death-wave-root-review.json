@@ -1,0 +1,39 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "d6f55e4c3c7fe3846e4e69ed65526c90391c5ff399e932a4b36d3eaeec2e9200"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "sha256": "bc3a6281444084b8214842c3b5dd5d71677107be7b106c99d847fb7a446b4012"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+      "sha256": "542ce369a343f9ec6bc997238d60c8e0f6abffa68f61c1bd9131851cbe176be1"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+      "sha256": "f5f2fd3a1c2a2f71c644a7555c4d04b7971e1d27770530b01ca7aec8a4bc96ff"
+    }
+  ],
+  "scopeSHA256": "213c68030e694764352105caca2f4ac4c986328e9ab22e7493f08f73c3bc06ed",
+  "review": {
+    "ownership": "完整prepare/publish业务段归WolfBeauty贡献，relation保绑定/原体/来源及resolved/applied；DR保其它关系排序、实际生命mark、枪、遗言、关闭和波次。",
+    "order": "两个原调用点实际diff核对；领取先于dreams保护，来源不许时不读World，blocked后不加提案；proposed→sources Set→nightTargets仍原引用，实际mark后applied再events.push、随后dreams record/许可关闭不移。",
+    "commandsAndGraph": "实际新owner对relation只有type import，DR readonly命令getter到原callee点返回旧函数；每proposal先取const再裸call，World和参数晚读不跨proposal缓存。首环564 red有保存，当前owner仅GC值依赖49模块图是有界结论，旧环未宣称清零。",
+    "failure": "保护或blocked事件抛错保领取；实际目标标死后发布抛错保applied和原生命，无退款；source不合格不消费绑定。",
+    "comments": "中文头和runtime/opaque receipt/保护与付款/mark后发布说明就地准确，readonly不是授权或运行冻结。",
+    "validation": "actual3new/29与原1/7；命令增量只重其中1/14，distinct4而非新增4，source37expect站点和执行50分开。有限4root初0与delta2root2d2a36实际0；全文prepare185/publish60与DR5006精确逆有界，未重复tests/type/gate。"
+  },
+  "findingsClosed": [
+    "作者实际发现并修新增relation→catalog→capture→ports→newowner循环，完整算法仍新owner，未豁免gate。"
+  ],
+  "limits": [
+    "新增公开class/运行关联type、DR own field、初始化路线与栈变化明确。",
+    "可信同进程commands/query不是runtime权限屏障或JSON DTO；不得进入archive。",
+    "本批不关闭全部C28/旧coldcycles/最终P9。"
+  ]
+}
