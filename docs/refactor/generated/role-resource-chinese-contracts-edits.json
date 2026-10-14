@@ -1,0 +1,197 @@
+[
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface HunterState {",
+    "after": "/** 原生枪、决斗与自爆的资源标记由各族写入；可选死亡政策缺省时，资格解释仍归原调用方。 */\nexport interface HunterState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface GravekeeperReport extends ExileFeedback {",
+    "after": "/** 放逐反馈保留当时捕获的标签；receivedDay 是收到报告的日期，与反馈中的放逐日分开记录。 */\nexport interface GravekeeperReport extends ExileFeedback {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface BearState {",
+    "after": "/** 咆哮历史记录已经报告的日次与结果，不包含夜初或黎明的现场存活名单。 */\nexport interface BearState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface HiddenWolfState {",
+    "after": "/** 继承刀标记与查验政策分列；是否参与当前狼队聊天、投票或刀口仍由运行查询决定。 */\nexport interface HiddenWolfState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export type MechanicalSkill =",
+    "after": "/** kind 区分学习后的实际数据形状；库存、守护上次目标、武装标记与查验历史各保原嵌套可写性。 */\nexport type MechanicalSkill ="
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface BlackMarketState {",
+    "after": "/** 交易选择保存目标与技能种类；枪的武装／失效和夜能力实例的来源、次数不存放在这条选择中。 */\nexport interface BlackMarketState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export type HunterReadState = Readonly<HunterState>;",
+    "after": "/** 简单槽的读取类型保原字段；历史型槽以下另显式约束行与结果，均不在运行时生成或冻结对象。 */\nexport type HunterReadState = Readonly<HunterState>;"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface CupidState {",
+    "after": "/** 首夜选择与一次库存分别记录；丘比特的 pairIds 是选择数据，原生命关系及 Victory 归属另由关系所有者保存。 */\nexport interface CupidState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface WildChildState {",
+    "after": "/** 选择、转换与活跃状态分列；eligibleNight 和 activeFromNight 分别记录资格夜与实际激活夜，可空值不补默认夜号。 */\nexport interface WildChildState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface ThiefState {",
+    "after": "/** choice 的 0／1 是额外牌槽索引，null 不等于仍有库存；保留原身份与换牌的消费分支由首夜所有者区分。 */\nexport interface ThiefState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface ShapeshifterState {",
+    "after": "/** 千面人与盗贼虽有相同字段宽度，政策与消费／失败补偿仍各归本族，不能由数据形状合并。 */\nexport interface ShapeshifterState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface NightmareShadowState {",
+    "after": "/** packReady 与恐惧目标分开记录；已有日次的 null 目标可记录不行动，原历史一致性仍由槽 reader 校验。 */\nexport interface NightmareShadowState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface MagicianChoice {",
+    "after": "/** 三种交换历史均保日次和可空目标对；null 记录该次未交换，各族生效阶段与目标映射不由共同形状决定。 */\nexport interface MagicianChoice {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface TimeConsortState {",
+    "after": "/** triggeredDay 是内部触发日；玩家历史截止日及耗尽的延后披露另由投影计算，不直接公开此字段。 */\nexport interface TimeConsortState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface ModifierState {",
+    "after": "/** 增强／削弱各有原次数，历史也保留不行动的空选择；碰撞结算读取已提交选择，不凭剩余次数反推结果。 */\nexport interface ModifierState {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface ModifierPlayer {",
+    "after": "/** 有限板规则所用的玩家数据，不携带 World 组件或原生命；名单与选择合法性仍由规则及 frame 在原时点核对。 */\nexport interface ModifierPlayer {"
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface RedMoonState {",
+    "after": "/** 自爆日、放逐日与到期已结算标记分别保留；到期死亡和末狼策略仍由原生命周期处理，不在类型中推进。 */\nexport interface RedMoonState {"
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "/** 自身知识、能力与来源分别投影；这些结构不自动公开给其他玩家或复盘展示。 */",
+    "after": "/** 自身知识、能力与来源分别投影，不自动公开给其他玩家；可选政策只保留投影所得字段，不在 DTO 中补默认规则。 */"
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerHunterState {",
+    "after": "/** 枪、决斗、自爆与翻牌字段是观察时的资源／状态摘要，实际原生命、阶段及目标复验不随 DTO 一起传出。 */\nexport interface PlayerHunterState {"
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerWolfBeautyState {",
+    "after": "/** 可选准入标记与自身选择历史分开表达；历史目标并非可调用的死亡连结，也不保存原体绑定。 */\nexport interface PlayerWolfBeautyState {"
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerGravekeeperState {",
+    "after": "/** 已接受报告保留放逐日与收到日；投影不重新查验标签，也不把报告变成接收资格。 */\nexport interface PlayerGravekeeperState {"
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerCupidState {",
+    "after": "/** 自身首夜选择摘要；可写的 pairIds 类型不复用运行关系的原生命句柄或赋予重选权限。 */\nexport interface PlayerCupidState {"
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerMerchantState {",
+    "after": "/** 交易库存、关闭日和已选技能各保原空值；摘要不包含已赠实例的来源证明或库存写权。 */\nexport interface PlayerMerchantState {"
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export type PlayerMechanicalSkill =",
+    "after": "/** kind 保持不同习得技能的字段集合；机械狼的额外刀可到 expired，不能和觉醒技能的两态刀库存混同。 */\nexport type PlayerMechanicalSkill ="
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerHiddenWolfState {",
+    "after": "/** 继承刀的历史标记与本次投影所得投票资格分列；实际提交仍重新查询当前实例与狼队政策。 */\nexport interface PlayerHiddenWolfState {"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-data.ts",
+    "before": "export interface SeerState {",
+    "after": "/** lastIsWerewolf 的 null 与 false 分别保留尚无结果和非狼结果；可选 lastResult／政策缺省不在本契约补值。 */\nexport interface SeerState {"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-data.ts",
+    "before": "export interface RoleInspectionState {",
+    "after": "/** 角色查验历史只保存获知结果及日次；可选政策与上次目标不在这里执行目标、重复或必选限制。 */\nexport interface RoleInspectionState {"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-data.ts",
+    "before": "export interface GuardState {",
+    "after": "/** 只记录上次目标及可选重复政策，不存日次或活跃保护句柄；连续夜判断仍由本族原运行规则处理。 */\nexport interface GuardState {"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-data.ts",
+    "before": "export interface WitchState {",
+    "after": "/** 药瓶库存与当夜使用标记分列；是否还能进行同日第二次行动还需原政策、实例和关闭日复验。 */\nexport interface WitchState {"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-data.ts",
+    "before": "export interface DreamerState {",
+    "after": "/** 自身选择历史与上次日次不携带已付 DreamNightLink；原生命、保护和死亡闭包由效果所有者保存。 */\nexport interface DreamerState {"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-data.ts",
+    "before": "export interface PairSeerState {",
+    "after": "/** containsWerewolf 是双目标查验的已获知标签；readonly history 只限制数组类型，不深冻结历史行或目标对。 */\nexport interface PairSeerState {"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-data.ts",
+    "before": "export interface EclipseSuppression {",
+    "after": "/** 仅记录压制的政策与日次；实际效果归属、原实例引用及释放回执不进入此数据标记。 */\nexport interface EclipseSuppression {"
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-data.ts",
+    "before": "export interface ShelterState {",
+    "after": "/** 上次庇护目标和日次可为空；选择记录不会自行创建、续期或重新支付保护效果。 */\nexport interface ShelterState {"
+  },
+  {
+    "path": "packages/game-contract/src/death-ability-data.ts",
+    "before": "  remaining: 0 | 1;",
+    "after": "  /** 剩弹、临时禁用与死亡后永久到期分列；运行所有者拒绝重新启用已到期枪，不由这些字段自动执行。 */\n  remaining: 0 | 1;"
+  },
+  {
+    "path": "packages/game-contract/src/death-facts.ts",
+    "before": "/**\n * Owns stable death-cause identifiers and serialized source lists.\n * Inputs are committed cause values; outputs retain every enum member, value\n * and iteration order. Damage, source eligibility, original-life handles and\n * death-shot callbacks remain domain execution responsibilities, not data.\n */",
+    "after": "/**\n * 负责稳定死因机器标识与可序列化来源列表；输入为死亡提案或已记录的来源数据，\n * 输出保持枚举成员、值与迭代顺序，不在此处标死、过滤来源、决定优先级或处理伤害。\n * 原生命、来源资格、保护效果及死亡枪回调仍归运行所有者；数据记录不授予结算权限。\n */"
+  },
+  {
+    "path": "packages/game-contract/src/death-facts.ts",
+    "before": "export type DeathSources = Record<number, DeathCause[]>;",
+    "after": "/** 按实体编号保存可写来源数组；追加、覆盖、稳定去重与闭包展开由各结算调用方按原顺序执行。 */\nexport type DeathSources = Record<number, DeathCause[]>;"
+  },
+  {
+    "path": "packages/game-contract/src/cupid-relation.ts",
+    "before": "/**\n * Responsibility: define immutable God-only Cupid relation metadata for event archives.\n * Input: original actor/pair IDs, policy and enum-typed factions; output: unchanged\n * serializable relation shape. The domain owns original life references and paid\n * relation transitions; this DTO grants no authority and carries no callbacks.\n */",
+    "after": "/**\n * 负责丘比特恋人关系的上帝视角记录结构；输入为选择时的施法者、目标对、政策与阵营标签，\n * 输出保留首夜关系的可序列化元数据，不含原生命引用、已付关系回调或运行许可。\n * 实际关系绑定、Victory 归属与殉情展开仍归本族所有者，玩家自身关系知识另由投影裁剪。\n */"
+  },
+  {
+    "path": "packages/game-contract/src/cupid-relation.ts",
+    "before": "/** God-only immutable metadata; runtime life references stay outside serialization. */",
+    "after": "/** readonly 声明只限制读取类型；原提交方另冻结记录与目标／阵营对，原生命绑定保存在序列化之外。 */"
+  },
+  {
+    "path": "packages/game-contract/src/cupid-relation.ts",
+    "before": "  readonly pairCamps: readonly [Camp.Good | Camp.Wolf, Camp.Good | Camp.Wolf];",
+    "after": "  /** 捕获选择当时的两人阵营；mixed 描述该对是否异阵营，不重新读取后续真实阵营或单独判胜。 */\n  readonly pairCamps: readonly [Camp.Good | Camp.Wolf, Camp.Good | Camp.Wolf];"
+  }
+]

@@ -16,6 +16,7 @@ export interface DeathGun {
   grantedNight: number;
   /** null 保留未武装状态；非空也不能取代实际死亡因果、原生命与当前枪窗口检查。 */
   armedOnNight: number | null;
+  /** 剩弹、临时禁用与死亡后永久到期分列；运行所有者拒绝重新启用已到期枪，不由这些字段自动执行。 */
   remaining: 0 | 1;
   disabled: boolean;
   deathExpired: boolean;

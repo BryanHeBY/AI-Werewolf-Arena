@@ -1,0 +1,62 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c",
+  "source": [
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "f4c295ed2fcaba4792d80ea71d1ead3dec319122bc2c4a4f4214a2947ee797cd"
+    },
+    {
+      "path": "packages/game-contract/src/player-state-views.ts",
+      "sha256": "634a6b375b6877bdba6cb2addcec204d3ccad35615047b27817eb593d1c23e21"
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-data.ts",
+      "sha256": "2ff1490bd2ef8f5f65828df150c82389a8bbca1e9d41181908720bc5f779820d"
+    },
+    {
+      "path": "packages/game-contract/src/death-ability-data.ts",
+      "sha256": "0f5ad8ac784b73127300c1e5b08616fad6417452e5d4b8e2e79769ca4add83f8"
+    },
+    {
+      "path": "packages/game-contract/src/death-facts.ts",
+      "sha256": "055add42188e2e9c0ac69437fa1930e2a466e3229ba92f4c6b20709012684544"
+    },
+    {
+      "path": "packages/game-contract/src/cupid-relation.ts",
+      "sha256": "d0023edb76132c668d8fa90e78987c91383ab97b60dd20e21e17dc7d2f84d60e"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/role-resource-chinese-contracts-scope-final.json",
+    "sha256": "c256c8c8ece0d188bff51f672780826a8b36f6e5feb709c58517a0197ed93d36"
+  },
+  "document": {
+    "path": "docs/refactor/role-resource-chinese-contracts.md",
+    "sha256": "1cad976a564873e4438f39a260ea5c38a7c7ded5edc91028ce4314e184a1b77a"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/role-resource-chinese-contracts-evidence.json",
+    "sha256": "282a244d9f50873775ad75793ba7dc8fa265ea0a50210a46404c8d38c5f0b393"
+  },
+  "integrity": {
+    "freshSources": 6,
+    "actualGitBefore": 6,
+    "controls": 2,
+    "artifactHashes": 14,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整六声明与实际消费者：资源/历史/知识，nullable/optional/readonly深度和两学习刀状态",
+    "DeathSources含未标死提案，赠枪武装/死亡到期启停，Time延后披露与Pair载荷",
+    "Cupid真实候选先捕获camp、await后复验并冻结tuple/life绑定，单句时点精度桥明确",
+    "actualc9六Git/两出口controls/十四附件，39首comment全程序3712typed4352叶12raw同+末Cupid75typed81leaf两raw桥；不重检查"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

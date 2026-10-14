@@ -17,6 +17,7 @@ import type {
   HiddenWolfCampInspectionPolicy,
 } from "./boards";
 
+/** 原生枪、决斗与自爆的资源标记由各族写入；可选死亡政策缺省时，资格解释仍归原调用方。 */
 export interface HunterState {
   deathActionPolicy?: HunterDeathActionPolicy;
   canShoot: boolean;
@@ -35,6 +36,7 @@ export interface KnightState {
   readonly canDuel: boolean;
 }
 
+/** 放逐反馈保留当时捕获的标签；receivedDay 是收到报告的日期，与反馈中的放逐日分开记录。 */
 export interface GravekeeperReport extends ExileFeedback {
   receivedDay: number;
 }
@@ -50,10 +52,12 @@ export interface WolfBeautyState {
   history: Array<{ day: number; targetId: EntityId | null }>;
 }
 
+/** 咆哮历史记录已经报告的日次与结果，不包含夜初或黎明的现场存活名单。 */
 export interface BearState {
   history: Array<{ day: number; roared: boolean }>;
 }
 
+/** 继承刀标记与查验政策分列；是否参与当前狼队聊天、投票或刀口仍由运行查询决定。 */
 export interface HiddenWolfState {
   readonly hasInheritedKnife: boolean;
   campInspection?: HiddenWolfCampInspectionPolicy;
@@ -69,6 +73,7 @@ export interface IdiotState {
 
 export type MechanicalMode = "kill" | "skill";
 
+/** kind 区分学习后的实际数据形状；库存、守护上次目标、武装标记与查验历史各保原嵌套可写性。 */
 export type MechanicalSkill =
   | { kind: "villager" }
   | {
@@ -147,12 +152,14 @@ export interface MerchantState {
 
 export type BlackMarketSkill = "check" | "poison" | "gun";
 
+/** 交易选择保存目标与技能种类；枪的武装／失效和夜能力实例的来源、次数不存放在这条选择中。 */
 export interface BlackMarketState {
   remaining: 0 | 1;
   closedDay: number | null;
   choice: { day: number; targetId: number; skill: BlackMarketSkill } | null;
 }
 
+/** 简单槽的读取类型保原字段；历史型槽以下另显式约束行与结果，均不在运行时生成或冻结对象。 */
 export type HunterReadState = Readonly<HunterState>;
 export type WolfKingReadState = Readonly<WolfKingState>;
 export type WhiteWolfKingReadState = Readonly<WhiteWolfKingState>;
@@ -207,6 +214,7 @@ export type BlackMarketReadState = Readonly<Omit<BlackMarketState, "choice">> & 
   readonly choice: Readonly<NonNullable<BlackMarketState["choice"]>> | null;
 };
 
+/** 首夜选择与一次库存分别记录；丘比特的 pairIds 是选择数据，原生命关系及 Victory 归属另由关系所有者保存。 */
 export interface CupidState {
   policy: CupidPolicy;
   remaining: 0 | 1;
@@ -218,6 +226,7 @@ export interface HybridState {
   choice: { day: number; targetId: number } | null;
 }
 
+/** 选择、转换与活跃状态分列；eligibleNight 和 activeFromNight 分别记录资格夜与实际激活夜，可空值不补默认夜号。 */
 export interface WildChildState {
   policy: "awa_lui_meme_wild_child_v1";
   remaining: 0 | 1;
@@ -227,12 +236,14 @@ export interface WildChildState {
   activeFromNight: number | null;
 }
 
+/** choice 的 0／1 是额外牌槽索引，null 不等于仍有库存；保留原身份与换牌的消费分支由首夜所有者区分。 */
 export interface ThiefState {
   policy: "lui_meme_thief_two_extra_villagers_v1";
   remaining: 0 | 1;
   choice: 0 | 1 | null;
 }
 
+/** 千面人与盗贼虽有相同字段宽度，政策与消费／失败补偿仍各归本族，不能由数据形状合并。 */
 export interface ShapeshifterState {
   policy: "awa_netease_shapeshifter_two_extra_villagers_v1";
   remaining: 0 | 1;
@@ -257,6 +268,7 @@ export type FearActionPolicy = "optional" | "required_when_legal";
 
 export type NightmareWolfActionPolicy = "standard" | "no_blast_no_self_knife";
 
+/** packReady 与恐惧目标分开记录；已有日次的 null 目标可记录不行动，原历史一致性仍由槽 reader 校验。 */
 export interface NightmareShadowState {
   policy: "awa_nightmare_dreamer_v1";
   fearActionPolicy: FearActionPolicy;
@@ -267,6 +279,7 @@ export interface NightmareShadowState {
   history: { day: number; targetId: EntityId | null }[];
 }
 
+/** 三种交换历史均保日次和可空目标对；null 记录该次未交换，各族生效阶段与目标映射不由共同形状决定。 */
 export interface MagicianChoice {
   day: number;
   pair: [number, number] | null;
@@ -307,6 +320,7 @@ export interface TimeConsortChoice {
   targetId: number | null;
 }
 
+/** triggeredDay 是内部触发日；玩家历史截止日及耗尽的延后披露另由投影计算，不直接公开此字段。 */
 export interface TimeConsortState {
   policy: "awa_time_consort_reflection_v1";
   reflectionScope: ReflectionScope;
@@ -326,6 +340,7 @@ export interface ModifierChoice {
   targetId: number | null;
 }
 
+/** 增强／削弱各有原次数，历史也保留不行动的空选择；碰撞结算读取已提交选择，不凭剩余次数反推结果。 */
 export interface ModifierState {
   policy: "awa_scholar_mentor_twelve_v1";
   caster: ModifierCaster;
@@ -333,6 +348,7 @@ export interface ModifierState {
   history: ModifierChoice[];
 }
 
+/** 有限板规则所用的玩家数据，不携带 World 组件或原生命；名单与选择合法性仍由规则及 frame 在原时点核对。 */
 export interface ModifierPlayer {
   id: number;
   role: string;
@@ -364,6 +380,7 @@ export interface LonelyGirlState {
 
 export type LastWolfBlastPolicy = "ends_game" | "forbidden";
 
+/** 自爆日、放逐日与到期已结算标记分别保留；到期死亡和末狼策略仍由原生命周期处理，不在类型中推进。 */
 export interface RedMoonState {
   policy: "awa_red_moon_demon_v1";
   lastWolfBlastPolicy: LastWolfBlastPolicy;

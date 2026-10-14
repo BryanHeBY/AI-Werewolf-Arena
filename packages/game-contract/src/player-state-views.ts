@@ -11,12 +11,13 @@ import type { InspectionResult } from "./inspection";
 import type { RoleId } from "./role-ids";
 import type { DeathGun } from "./death-ability-data";
 
-/** 自身知识、能力与来源分别投影；这些结构不自动公开给其他玩家或复盘展示。 */
+/** 自身知识、能力与来源分别投影，不自动公开给其他玩家；可选政策只保留投影所得字段，不在 DTO 中补默认规则。 */
 export interface PlayerGuardState {
   lastTarget: number | null;
   repeatPolicy?: GuardRepeatPolicy;
 }
 
+/** 枪、决斗、自爆与翻牌字段是观察时的资源／状态摘要，实际原生命、阶段及目标复验不随 DTO 一起传出。 */
 export interface PlayerHunterState {
   deathActionPolicy?: import("./boards").HunterDeathActionPolicy;
   canShoot: boolean;
@@ -47,6 +48,7 @@ export interface PlayerDreamerState {
   history: Array<{ day: number; targetId: number }>;
 }
 
+/** 可选准入标记与自身选择历史分开表达；历史目标并非可调用的死亡连结，也不保存原体绑定。 */
 export interface PlayerWolfBeautyState {
   charmAllowed?: boolean;
   linkAllowed?: boolean;
@@ -101,10 +103,12 @@ export type PlayerDeathGun = Omit<DeathGun, "source"> & {
   status: "pending" | "active" | "spent" | "disabled";
 };
 
+/** 已接受报告保留放逐日与收到日；投影不重新查验标签，也不把报告变成接收资格。 */
 export interface PlayerGravekeeperState {
   history: GravekeeperReport[];
 }
 
+/** 自身首夜选择摘要；可写的 pairIds 类型不复用运行关系的原生命句柄或赋予重选权限。 */
 export interface PlayerCupidState {
   policy: import("./boards").CupidPolicy;
   remaining: 0 | 1;
@@ -116,6 +120,7 @@ export interface PlayerHybridState {
   choice: { day: number; targetId: number } | null;
 }
 
+/** 交易库存、关闭日和已选技能各保原空值；摘要不包含已赠实例的来源证明或库存写权。 */
 export interface PlayerMerchantState {
   remaining: 0 | 1;
   closedDay: number | null;
@@ -128,6 +133,7 @@ export interface PlayerBlackMarketState {
   choice: { day: number; targetId: number; skill: "check" | "poison" | "gun" } | null;
 }
 
+/** kind 保持不同习得技能的字段集合；机械狼的额外刀可到 expired，不能和觉醒技能的两态刀库存混同。 */
 export type PlayerMechanicalSkill =
   | { kind: "villager" }
   | {
@@ -183,6 +189,7 @@ export interface PlayerAwakenedState {
   firstKnifeNight: number | null;
 }
 
+/** 继承刀的历史标记与本次投影所得投票资格分列；实际提交仍重新查询当前实例与狼队政策。 */
 export interface PlayerHiddenWolfState {
   hasInheritedKnife: boolean;
   canVoteForKill: boolean;

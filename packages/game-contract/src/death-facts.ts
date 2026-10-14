@@ -1,8 +1,7 @@
 /**
- * Owns stable death-cause identifiers and serialized source lists.
- * Inputs are committed cause values; outputs retain every enum member, value
- * and iteration order. Damage, source eligibility, original-life handles and
- * death-shot callbacks remain domain execution responsibilities, not data.
+ * 负责稳定死因机器标识与可序列化来源列表；输入为死亡提案或已记录的来源数据，
+ * 输出保持枚举成员、值与迭代顺序，不在此处标死、过滤来源、决定优先级或处理伤害。
+ * 原生命、来源资格、保护效果及死亡枪回调仍归运行所有者；数据记录不授予结算权限。
  */
 export enum DeathCause {
   WhiteCatExpiry = "white_cat_expiry",
@@ -36,4 +35,5 @@ export enum DeathCause {
   MerchantBacklash = "merchant_backlash",
   BlackMarketBacklash = "black_market_backlash",
 }
+/** 按实体编号保存可写来源数组；追加、覆盖、稳定去重与闭包展开由各结算调用方按原顺序执行。 */
 export type DeathSources = Record<number, DeathCause[]>;

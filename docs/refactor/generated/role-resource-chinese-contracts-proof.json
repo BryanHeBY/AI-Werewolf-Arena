@@ -1,0 +1,187 @@
+{
+  "approved": true,
+  "baseCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c",
+  "commentEditRecords": 39,
+  "programs": [
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "beforeSha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+      "afterSha256": "f4c295ed2fcaba4792d80ea71d1ead3dec319122bc2c4a4f4214a2947ee797cd",
+      "typedNodes": 1998,
+      "nodeArrays": 474,
+      "noncommentLeaves": 2325,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/player-state-views.ts",
+      "beforeSha256": "c4f2543ba1bea6b661f5253aa598fadd1ab98d313bd95bf2576ba82b45a9fa69",
+      "afterSha256": "634a6b375b6877bdba6cb2addcec204d3ccad35615047b27817eb593d1c23e21",
+      "typedNodes": 809,
+      "nodeArrays": 140,
+      "noncommentLeaves": 960,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-data.ts",
+      "beforeSha256": "aa70034faed1fb480b144a61ec2e455c9d4b003290417ac7858c753da6469797",
+      "afterSha256": "2ff1490bd2ef8f5f65828df150c82389a8bbca1e9d41181908720bc5f779820d",
+      "typedNodes": 645,
+      "nodeArrays": 111,
+      "noncommentLeaves": 754,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/death-ability-data.ts",
+      "beforeSha256": "7a7b10788293005df3393c852854c869f7ee8247992ecb2d1b44322f60e420ec",
+      "afterSha256": "0f5ad8ac784b73127300c1e5b08616fad6417452e5d4b8e2e79769ca4add83f8",
+      "typedNodes": 81,
+      "nodeArrays": 16,
+      "noncommentLeaves": 93,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/death-facts.ts",
+      "beforeSha256": "eb7dd177480db587936b4fa874c4d37bdb6fc2b27da7d160b4adda04049ade66",
+      "afterSha256": "055add42188e2e9c0ac69437fa1930e2a466e3229ba92f4c6b20709012684544",
+      "typedNodes": 104,
+      "nodeArrays": 5,
+      "noncommentLeaves": 139,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1614,
+          "sha256": "4fd6d84b93c9b8501fcbbc6dc30ca75e2988acd696b17aad7ae8a8a9ca8c3375"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1734,
+          "sha256": "6875a125965a6a6995199b8861fde133dd01e9a9a7669b3365095773af0e1827"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/cupid-relation.ts",
+      "beforeSha256": "d5d4e6c31697d58bc65379a92d3861abfa58b2c530e0c2c1fcf142a4fc4e5a46",
+      "afterSha256": "211475842bb556a285f7636f95e22cef02ad02282902a7574f4c11dab63ead56",
+      "typedNodes": 75,
+      "nodeArrays": 16,
+      "noncommentLeaves": 81,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "packages/game-contract/src/index.ts",
+      "mode": "100644",
+      "blob": "f6eb76ba9ee30c5dd0847be24e4bf040334c2fa9",
+      "bytes": 5472,
+      "sha256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce"
+    },
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "mode": "100644",
+      "blob": "f4a94eb1a775d3626fb3d80816bb532de37a2ad9",
+      "bytes": 223,
+      "sha256": "2296ef3bb84963b5a7130db5c7f0ace0245abb42fb0d30a58e038d53881951f1"
+    }
+  ],
+  "summary": {
+    "sources": 6,
+    "typedNodes": 3712,
+    "nodeArrays": 762,
+    "noncommentLeaves": 4352,
+    "jsdocTags": 0,
+    "protectedCommentRecords": 0,
+    "wholeRawOutputs": 12
+  },
+  "limits": [
+    "六个完整角色／资源数据契约模块的非注释程序、JSDoc tags 与移除注释的 ES2022 ESNext/CJS 输出比较；不执行请求、游戏、类型或全门禁。",
+    "职责头形状与输出相同不代替说明语义和生命周期的非作者人工审查。",
+    "源码 SHA 确实改变；不改历史 strict 身份或增豁免。"
+  ]
+}
