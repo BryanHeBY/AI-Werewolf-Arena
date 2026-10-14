@@ -1,0 +1,167 @@
+{
+  "baseCommit": "5d42b6f866bb91a3fcb0deac88efd618397ba051",
+  "old": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+  "owner": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+      "before": "/**\n * Owns Wolf Sorcerer state construction, exact live reads and copied player projection.\n * Inputs are original role/history data; outputs retain existing descriptor, day and pair\n * validation. This boundary never exchanges seats, commits history or closes a frame.\n */",
+      "after": "/**\n * 负责狼术师唯一状态槽的创建、完整 live 校验、同引用读取、原初始化／历史写入及身份编码。\n * 输入为原角色、参数和晚读容器；输出原状态引用、脱离知识副本或原明确拒绝。原 descriptor、\n * 日期、排序与一次性号码规则保持，写入失败保留原已写前缀，不回滚或付新资源。\n * frame 仍拥有原体生命、夜窗口、映射关系和 expectedState；此槽不另存 shadow、\n * 授予行动许可、关闭或标死。身份 JSON 仅为原运行比对，档案格式与独立核验仍归原 owner。\n */",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+      "before": "/** Validate without invoking user-owned accessors, iterators or array methods. */",
+      "after": "/** 完整原 live 校验先拒绝 Proxy，再仅读自身数据 descriptor；不调用 caller getter、迭代器或数组方法。\n * 合法时返回原状态／历史引用，不克隆或冻结；readonly 是读方类型，原体与夜窗口授权仍由 frame 复验。 */",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+      "before": "  let previous = 0;",
+      "after": "  // 历史日期严格递增；非空二人组保原升序／全局号码一次使用，null 不消耗号码。\n  let previous = 0;",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+      "before": "export function projectWolfSorcererState(",
+      "after": "/** 复制原知识历史和非空 pair；可写副本不含运行窗口，也不经投影授予交换写权。 */\nexport function projectWolfSorcererState(",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+      "before": "import { WOLF_SORCERER_POLICY, createWolfSorcererState, getWolfSorcererState } from \"./state\";",
+      "after": "import { WOLF_SORCERER_POLICY, WOLF_SORCERER_STATE_SLOT, getWolfSorcererState } from \"./state-slot\";",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+      "before": "      role.privateState.wolfSorcerer = createWolfSorcererState(value.firstNight);",
+      "after": "      WOLF_SORCERER_STATE_SLOT.install(() => role.privateState, value);",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "before": "/**\n * Owns Wolf Sorcerer native exchange and night target-remapping receipts. Inputs are original\n * participants and the paired choice; outputs are current remaps, pack readiness and close/abort\n * decisions. Only the bound original players share an exchange, without silently replacing its\n * source.\n */",
+      "after": "/**\n * 负责狼术师原生换位、夜目标映射回执及原体生命／窗口撤权。输入为原参与者与成对选择，\n * 输出为当前映射、狼队就绪和关闭／中止结果；只有原绑定参与者共享交换，不替换来源。\n * 原状态与历史写入／身份编码归本族槽，frame 保原引用和 expectedState，并唯一拥有夜关系。\n * 历史先写、身份再刷新、pair／committed 最后提交；后续失败不退款、修复或覆盖已写前缀。\n */",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "before": "import { getWolfSorcererState, projectWolfSorcererState, WOLF_SORCERER_ROLE } from \"./state\";",
+      "after": "import { getWolfSorcererState, projectWolfSorcererState, WOLF_SORCERER_ROLE, WOLF_SORCERER_STATE_SLOT } from \"./state-slot\";",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "before": "function stateIdentity(role: RoleComponent): string {\n  const view = projectWolfSorcererState(role);\n  if (!view) throw new Error(\"wolf_sorcerer_original_state_revoked\");\n  return JSON.stringify(view);\n}\n",
+      "after": "",
+      "occurrences": 1,
+      "kind": "moved-declaration"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "before": "stateIdentity(",
+      "after": "WOLF_SORCERER_STATE_SLOT.checkpoint.identity(",
+      "occurrences": 3
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "before": "  Object.defineProperty(b.state.history, String(b.state.history.length), {\n    value: { day, pair: chosen },\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });\n",
+      "after": "  WOLF_SORCERER_STATE_SLOT.allowedWrites.appendHistory(() => b.state, day, chosen);\n",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "before": "  // A committed exchange survives one ordinary death, never revival or another life.",
+      "after": "  // 已提交换位保留原一次普通死亡效果；复活、换生命或 descriptor 变化仍撤权。",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "before": "/** Cleanup only: never validates or repairs a revoked roster, and never records a choice. */",
+      "after": "/** 仅清理原夜窗口；不校验／修复已撤权名单，不追加选择或重新取得资源。 */",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "before": "/** Initial pack knowledge is withheld until the first eligible night choice has settled. */",
+      "after": "/** 首次可行动的夜选择结算之前不公开初始狼队知识；知识就绪本身不授新请求许可。 */",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "before": "  expectedState: string;",
+      "after": "  /** 原知识 JSON 检查点与同引用状态一起复验；不是库存副本或档案授权。 */\n  expectedState: string;",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_stages.ts",
+      "before": "/**\n * Runs the Wolf Sorcerer exchange opportunity before remapped native actions. Inputs are the\n * current frame and validated paired selection; outputs preserve exchange commitment and its\n * fact. The stage does not own pack readiness or target receipt validity; the frame checks them.\n */",
+      "after": "/**\n * 负责在目标已映射的原生行动之前推进狼术师换位机会。输入为原 frame、日次及通过校验的成对选择；\n * 输出原换位提交和私有事实，狼队知识就绪、目标回执与生命撤权仍由 frame 负责。\n * Provider／工具校验之后保原名单与阶段复验；commit 先于发布，发布失败不撤销已付选择。\n */",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_stages.ts",
+      "before": "from \"./state\";",
+      "after": "from \"./state-slot\";",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_stages.ts",
+      "before": "/** Runs from the configured role set, including after the wolf_sorcerer's death. */",
+      "after": "/** 按原配置角色集合运行，狼术师死亡之后仍开启本族阶段并按原理由记录跳过。 */",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+      "before": "提供狼巫具体耦合清理",
+      "after": "提供狼术师具体耦合清理",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+      "before": "export { getWolfSorcererState } from \"./state\";",
+      "after": "/** 同绑定 live 读取保原引用，知识投影脱离；两者均不授库存／交换提交或阶段许可。 */\nexport { getWolfSorcererState, projectWolfSorcererState } from \"./state-slot\";",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "before": "from \"../mechanisms/roles/wolf_sorcerer/state\";",
+      "after": "from \"../mechanisms/roles/wolf_sorcerer/ports\";",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer/state.test.ts",
+      "before": "/wolf_sorcerer/state\"",
+      "after": "/wolf_sorcerer/state-slot\"",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "before": "/wolf_sorcerer/state\"",
+      "after": "/wolf_sorcerer/state-slot\"",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "before": "/wolf_sorcerer/state\"",
+      "after": "/wolf_sorcerer/state-slot\"",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+      "before": "/wolf_sorcerer/state\"",
+      "after": "/wolf_sorcerer/state-slot\"",
+      "occurrences": 1
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer/state.test.ts",
+      "before": "/**\n * Unit tests for wolf-sorcerer; Isolated wolf-sorcerer state contract; native in-memory owner/frame/readers, no assembled game cycle.\n * Inputs are existing in-memory fixtures, original callback controls and explicit\n * invalid mutations. Original literal expectations, identity snapshots and\n * rejection assertions supply the oracle; none are regenerated during relocation.\n * Test-owned mocks/components exercise this boundary without a model or physical\n * transport. Support files, fixture bytes, policy and state behavior are retained.\n */",
+      "after": "/**\n * 单元测试验证狼术师独立状态契约，输入为原内存 fixture、回调控制和显式非法变更。\n * 原字面预期、同引用／脱离副本和拒绝断言是独立 oracle，不因搬移重新生成。\n * 测试仅核本族读取边界，不执行组装对局、模型或物理传输；原政策与所有输入保持。\n */",
+      "occurrences": 1
+    }
+  ],
+  "movedIdentity": "function stateIdentity(role: RoleComponent): string {\n  const view = projectWolfSorcererState(role);\n  if (!view) throw new Error(\"wolf_sorcerer_original_state_revoked\");\n  return JSON.stringify(view);\n}",
+  "movedHistory": "  Object.defineProperty(b.state.history, String(b.state.history.length), {\n    value: { day, pair: chosen },\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });\n",
+  "addedOwnerProgram": "\n/** 原初始化先读左值容器，再读 firstNight 并创建／赋值；创建或 setter 失败不补写、回滚。 */\nfunction installWolfSorcererState(\n  privateState: () => Record<string, unknown>,\n  value: { firstNight: 1 | 2 },\n): void {\n  privateState().wolfSorcerer = createWolfSorcererState(value.firstNight);\n}\n\n/** 准入仍由 frame 负责；先取 defineProperty callee，再两次晚读原 state/history，保 index 与 descriptor。 */\nfunction appendWolfSorcererHistory(\n  state: () => WolfSorcererReadState,\n  day: number,\n  chosen: [number, number] | null,\n): void {\n  Object.defineProperty(state().history, String(state().history.length), {\n    value: { day, pair: chosen },\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });\n}\n\n/** 原 frame 身份编码：先 project／拒绝，再找 JSON.stringify；不是严格档案 decoder 或权限。 */\nfunction encodeWolfSorcererStateIdentity(role: RoleComponent): string {\n  const view = projectWolfSorcererState(role);\n  if (!view) throw new Error(\"wolf_sorcerer_original_state_revoked\");\n  return JSON.stringify(view);\n}\n\n/**\n * 本族唯一数据槽：schema/get 是同一个原完整 live 校验，不新增严格接受政策或第二份状态。\n * install 收走原赋值，allowedWrites 只收走历史 descriptor 追加；expectedState／pair／committed\n * 仍由 frame 在原顺序更新。checkpoint 仅提供原 JSON 比较，方法表冻结不冻结输入状态／知识副本。\n */\nexport const WOLF_SORCERER_STATE_SLOT = Object.freeze({\n  create: createWolfSorcererState,\n  schema: getWolfSorcererState,\n  get: getWolfSorcererState,\n  project: projectWolfSorcererState,\n  install: installWolfSorcererState,\n  allowedWrites: Object.freeze({ appendHistory: appendWolfSorcererHistory }),\n  checkpoint: Object.freeze({ identity: encodeWolfSorcererStateIdentity }),\n});\n"
+}

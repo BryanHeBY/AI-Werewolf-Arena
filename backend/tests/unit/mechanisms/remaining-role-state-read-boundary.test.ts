@@ -25,7 +25,7 @@ import {
   projectMagicianState,
 } from "../../../src/game/mechanisms/roles/magician/state-slot";
 import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/state";
-import { getWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state";
+import { getWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";
 import { getTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/state";
 import { scholarMentorStateForRole } from "../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
 import { readModifierState } from "../../../src/game/mechanisms/roles/scholar_mentor/state";

@@ -1,0 +1,98 @@
+{
+  "newTests": [
+    {
+      "stage": "first",
+      "command": "bun --no-env-file test backend/tests/unit/features/wolf-sorcerer/state-slot.test.ts",
+      "chunk": "644a38",
+      "exitCode": 1,
+      "pass": 2,
+      "fail": 1,
+      "assertionCalls": 20,
+      "log": "docs/refactor/generated/wolf-sorcerer-state-slot-new-tests.log",
+      "failure": "我新 fixture setter 错用 wolf_sorcerer，实际生产原键 wolfSorcerer 不变；不是生产失败。"
+    },
+    {
+      "stage": "failed-case-only",
+      "command": "bun --no-env-file test backend/tests/unit/features/wolf-sorcerer/state-slot.test.ts --test-name-pattern ^状态初始化先读左值容器和原参数，setter失败不补写或提前查询$",
+      "chunk": "05c1b9",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertionCalls": 6,
+      "filtered": 2,
+      "log": "docs/refactor/generated/wolf-sorcerer-state-slot-new-tests-failed-case.log",
+      "correction": "仅测试自有 setter 原键与缩进，所有原预期、生产body和前两green不改／不复跑。"
+    }
+  ],
+  "originalTest": {
+    "command": "bun --no-env-file test backend/tests/unit/features/wolf-sorcerer-frame.test.ts --test-name-pattern ^Ordered two-caster frame waits for both choices and resolves a directed cycle$",
+    "chunk": "44590b",
+    "exitCode": 0,
+    "pass": 1,
+    "fail": 0,
+    "assertionCalls": 6,
+    "filtered": 8,
+    "log": "docs/refactor/generated/wolf-sorcerer-state-slot-original-test.log"
+  },
+  "runtimeSummary": {
+    "executions": 3,
+    "distinctCases": 4,
+    "finalPass": 4,
+    "knownUnresolvedFailures": 0,
+    "successfulDistinctAssertions": 31,
+    "executedAssertionCallsIncludingFirstFailure": 32,
+    "limit": "不是首轮全绿，首红保留；new3不同成功case25＋原1/6。既有标题／fixture／预期均不改。"
+  },
+  "types": {
+    "configuration": "docs/refactor/generated/wolf-sorcerer-state-slot-types-config.json",
+    "roots": 11,
+    "launchChunk": "c36d15",
+    "sessionId": 49459,
+    "terminalChunk": "c906d4",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/wolf-sorcerer-state-slot-types.log",
+    "note": "真实terminal退出0，空log本身不推出关闭。首次有限11roots，没有重全门禁或绿根。"
+  },
+  "proof": [
+    {
+      "stage": "first",
+      "chunk": "16b5b1",
+      "exitCode": 1,
+      "log": "docs/refactor/generated/wolf-sorcerer-state-slot-proof-first.log",
+      "reason": "工具实际展开 history 语句时漏保原末换行；完整字节逆拒绝，产品源没有修改。"
+    },
+    {
+      "stage": "final",
+      "launchChunk": "95f4f1",
+      "sessionId": 70463,
+      "terminalChunk": "01ef4f",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/wolf-sorcerer-state-slot-proof.log",
+      "reason": "仅工具保精确换行，实际4producer+9wholeconsumer/10417typednodes/26whole输出同。"
+    }
+  ],
+  "bindings": {
+    "chunk": "260ff1",
+    "exitCode": 0,
+    "report": "docs/refactor/generated/wolf-sorcerer-state-slot-bindings.json",
+    "log": "docs/refactor/generated/wolf-sorcerer-state-slot-bindings.log"
+  },
+  "heads": {
+    "chunk": "69c47d",
+    "exitCode": 0,
+    "roots": 11,
+    "documentationPaths": 536,
+    "diagnostics": [],
+    "log": "docs/refactor/generated/wolf-sorcerer-state-slot-heads.log",
+    "report": "docs/refactor/generated/wolf-sorcerer-state-slot-heads-first.json"
+  },
+  "finalCommentPrecision": {
+    "chunk": "e9dd1b",
+    "exitCode": 0,
+    "report": "docs/refactor/generated/wolf-sorcerer-state-slot-final-comment-bridge.json",
+    "log": "docs/refactor/generated/wolf-sorcerer-state-slot-final-comment-bridge.log",
+    "beforeSHA256": "3f8c310a0a1f922bbc11d14e5cc1667c982a09cd783a7b76b80f9e7ee5fb7167",
+    "sha256": "ff5403c7c21d76416403561d0379b25dcaa239dbfb40cef01d6800e63194515c",
+    "meaning": "Root指出描述任意descriptor变化过宽，仅中文改为原数据字段变访问器；Alive descriptor原比较仍保，所有绿采样在末comment之前，窄桥连接最终SHA。"
+  }
+}

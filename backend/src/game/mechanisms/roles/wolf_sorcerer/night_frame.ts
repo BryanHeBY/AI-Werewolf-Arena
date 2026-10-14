@@ -1,8 +1,8 @@
 /**
- * Owns Wolf Sorcerer native exchange and night target-remapping receipts. Inputs are original
- * participants and the paired choice; outputs are current remaps, pack readiness and close/abort
- * decisions. Only the bound original players share an exchange, without silently replacing its
- * source.
+ * 负责狼术师原生换位、夜目标映射回执及原体生命／窗口撤权。输入为原参与者与成对选择，
+ * 输出为当前映射、狼队就绪和关闭／中止结果；只有原绑定参与者共享交换，不替换来源。
+ * 原状态与历史写入／身份编码归本族槽，frame 保原引用和 expectedState，并唯一拥有夜关系。
+ * 历史先写、身份再刷新、pair／committed 最后提交；后续失败不退款、修复或覆盖已写前缀。
  */
 import type { WolfSorcererReadState } from "@ai-werewolf-arena/game-contract";
 import { resolveOrderedSeatTarget } from "./seat_mapping";
@@ -14,7 +14,7 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import type { NightLifeScope } from "../../../../core/domain/night_effects";
-import { getWolfSorcererState, projectWolfSorcererState, WOLF_SORCERER_ROLE } from "./state";
+import { getWolfSorcererState, projectWolfSorcererState, WOLF_SORCERER_ROLE, WOLF_SORCERER_STATE_SLOT } from "./state-slot";
 
 interface OriginalPlayer {
   id: number;
@@ -39,16 +39,12 @@ interface ExchangeNight {
 interface Board {
   actorId: number;
   state: WolfSorcererReadState;
+  /** 原知识 JSON 检查点与同引用状态一起复验；不是库存副本或档案授权。 */
   expectedState: string;
   players: ReadonlyMap<number, OriginalPlayer>;
   night: ExchangeNight | null;
 }
 const boards = new WeakMap<World, Board>();
-function stateIdentity(role: RoleComponent): string {
-  const view = projectWolfSorcererState(role);
-  if (!view) throw new Error("wolf_sorcerer_original_state_revoked");
-  return JSON.stringify(view);
-}
 function ownData(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -80,7 +76,7 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
   )
     return false;
   const version = aliveLifeVersion(p.life);
-  // A committed exchange survives one ordinary death, never revival or another life.
+  // 已提交换位保留原一次普通死亡效果；复活、换生命或原数据字段改为访问器仍撤权。
   return p.life.alive ? version === p.version : version === p.version + 1;
 }
 function requireBoard(world: World): Board {
@@ -94,7 +90,7 @@ function requireBoard(world: World): Board {
   )
     throw new Error("wolf_sorcerer_original_state_revoked");
   const actor = b.players.get(b.actorId)!;
-  if (getWolfSorcererState(actor.role) !== b.state || stateIdentity(actor.role) !== b.expectedState)
+  if (getWolfSorcererState(actor.role) !== b.state || WOLF_SORCERER_STATE_SLOT.checkpoint.identity(actor.role) !== b.expectedState)
     throw new Error("wolf_sorcerer_original_state_revoked");
   return b;
 }
@@ -167,7 +163,7 @@ export function installWolfSorcererBoard(world: World): void {
   boards.set(world, {
     actorId,
     state,
-    expectedState: stateIdentity(players.get(actorId)!.role),
+    expectedState: WOLF_SORCERER_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role),
     players,
     night: null,
   });
@@ -244,13 +240,8 @@ export function commitWolfSorcererExchange(
       throw new Error("wolf_sorcerer_choice_target_invalid");
     chosen = a < z ? [a, z] : [z, a];
   }
-  Object.defineProperty(b.state.history, String(b.state.history.length), {
-    value: { day, pair: chosen },
-    writable: true,
-    enumerable: true,
-    configurable: true,
-  });
-  b.expectedState = stateIdentity(b.players.get(actorId)!.role);
+  WOLF_SORCERER_STATE_SLOT.allowedWrites.appendHistory(() => b.state, day, chosen);
+  b.expectedState = WOLF_SORCERER_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role);
   n.pair = chosen && Object.freeze([chosen[0], chosen[1]] as [number, number]);
   n.committed = true;
 }
@@ -331,13 +322,13 @@ export function wolfSorcererChoicePending(world: World, actorId: number, day: nu
   );
 }
 
-/** Cleanup only: never validates or repairs a revoked roster, and never records a choice. */
+/** 仅清理原夜窗口；不校验／修复已撤权名单，不追加选择或重新取得资源。 */
 export function abortWolfSorcererNight(world: World): void {
   const n = boards.get(world)?.night;
   if (n) n.closed = true;
 }
 
-/** Initial pack knowledge is withheld until the first eligible night choice has settled. */
+/** 首次可行动的夜选择结算之前不公开初始狼队知识；知识就绪本身不授新请求许可。 */
 export function wolfSorcererPackReady(world: World): boolean {
   const b = requireBoard(world),
     n = b.night;

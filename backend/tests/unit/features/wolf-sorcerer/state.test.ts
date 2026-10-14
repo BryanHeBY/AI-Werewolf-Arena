@@ -1,10 +1,7 @@
 /**
- * Unit tests for wolf-sorcerer; Isolated wolf-sorcerer state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证狼术师独立状态契约，输入为原内存 fixture、回调控制和显式非法变更。
+ * 原字面预期、同引用／脱离副本和拒绝断言是独立 oracle，不因搬移重新生成。
+ * 测试仅核本族读取边界，不执行组装对局、模型或物理传输；原政策与所有输入保持。
  */
 import { expect, test } from "bun:test";
 import { Camp, type RoleComponent } from "../../../../src/core";
@@ -12,7 +9,7 @@ import {
   createWolfSorcererState,
   getWolfSorcererState,
   projectWolfSorcererState,
-} from "../../../../src/game/mechanisms/roles/wolf_sorcerer/state";
+} from "../../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";
 function make(firstNight: 1 | 2 = 2) {
   const state = createWolfSorcererState(firstNight);
   const role = {

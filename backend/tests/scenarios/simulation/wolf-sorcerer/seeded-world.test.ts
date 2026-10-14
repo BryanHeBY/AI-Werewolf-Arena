@@ -2,7 +2,7 @@
  * 模拟场景测试：负责执行狼术师原种子的首夜、枪目标及语言政策实际 World。输入保留原矩阵；历史下限、正选择次数及非超时终局检查资格时点，不替代归档 golden 或声称新增独立规则覆盖。
  */
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
-import { getWolfSorcererState } from "../../../../src/game/mechanisms/roles/wolf_sorcerer/state";
+import { getWolfSorcererState } from "../../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

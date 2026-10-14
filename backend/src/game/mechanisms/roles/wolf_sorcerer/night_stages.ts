@@ -1,14 +1,14 @@
 /**
- * Runs the Wolf Sorcerer exchange opportunity before remapped native actions. Inputs are the
- * current frame and validated paired selection; outputs preserve exchange commitment and its
- * fact. The stage does not own pack readiness or target receipt validity; the frame checks them.
+ * 负责在目标已映射的原生行动之前推进狼术师换位机会。输入为原 frame、日次及通过校验的成对选择；
+ * 输出原换位提交和私有事实，狼队知识就绪、目标回执与生命撤权仍由 frame 负责。
+ * Provider／工具校验之后保原名单与阶段复验；commit 先于发布，发布失败不撤销已付选择。
  */
 import type { AliveComponent } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { getWolfSorcererState } from "./state";
+import { getWolfSorcererState } from "./state-slot";
 import {
   wolfSorcererActorId,
   assertWolfSorcererRosterCurrent,
@@ -16,7 +16,7 @@ import {
   commitWolfSorcererExchange,
   wolfSorcererChoiceTargets,
 } from "./night_frame";
-/** Runs from the configured role set, including after the wolf_sorcerer's death. */
+/** 按原配置角色集合运行，狼术师死亡之后仍开启本族阶段并按原理由记录跳过。 */
 export const WOLF_SORCERER_EXCHANGE_STAGE: NightStageHandler = {
   id: "wolf_sorcerer_exchange",
   priority: 100,

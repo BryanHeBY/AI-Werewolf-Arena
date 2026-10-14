@@ -11,7 +11,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_SORCERER_POLICY, createWolfSorcererState, getWolfSorcererState } from "./state";
+import { WOLF_SORCERER_POLICY, WOLF_SORCERER_STATE_SLOT, getWolfSorcererState } from "./state-slot";
 import {
   wolfSorcererChoicePending,
   wolfSorcererChoiceTargets,
@@ -55,7 +55,7 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
     },
     init: (role, ctx) => {
       const value = parameters.parse(ctx.boardConfig?.wolfSorcerer ?? {});
-      role.privateState.wolfSorcerer = createWolfSorcererState(value.firstNight);
+      WOLF_SORCERER_STATE_SLOT.install(() => role.privateState, value);
     },
     configuration: {
       schema: parameters,

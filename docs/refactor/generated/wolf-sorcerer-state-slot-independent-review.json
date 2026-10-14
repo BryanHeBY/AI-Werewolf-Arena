@@ -1,0 +1,347 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "mode": "独立只读源码／真实Git来源与最终SHA审查；未重执行作者验证",
+  "baseCommit": "5d42b6f866bb91a3fcb0deac88efd618397ba051",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+      "sha256": "77d4041e06dbadec99d0f19b85c3d6528a73d62929656170a189bff4cfb9cdfd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "sha256": "ff5403c7c21d76416403561d0379b25dcaa239dbfb40cef01d6800e63194515c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_stages.ts",
+      "sha256": "565e1eed84441edad14e9853b6c7a8232d7dcf68d4ef369257b812f3280f37dd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+      "sha256": "89a96ec1eca62bac39d8a8b051154a03b9108557cb1659d11f2b96094a44c816"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "d8d265d31de6a332a725bddf8562783f3497c1f765eff00830d56614781fba67"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer/state.test.ts",
+      "sha256": "249f395c36f603eff7475c8d90e50f7183664bdd60f7e8c9d29345553433a66f"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+      "sha256": "6ab2376f5ab03eeaa31b9fc15ed984001f3577db0383fe8c108751a39f4dc07a"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "ce25f5adc99942f4c474a672e075947ebd1350e402a8563e6cef2d0dff472468"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+      "sha256": "a515661d010504fa5c6aed1c01cc869dcca1e042e1d55f2f7f2d0c48b59ea44f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+      "sha256": "9da1a5a269eff57df28d670d802e93ceb31fdb5127699ad2983631b22e8a9949"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-sorcerer/state-slot.test.ts",
+      "sha256": "edf1496a7abffb22923bcd573e45000a14a01df059aedd533fd4051cdad1f069"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+      "status": "deleted",
+      "beforeSHA256": "dba657a15c531366b0f12a42ded1b710120c503a1256416c33c60678bbc92647",
+      "expectedAbsent": true,
+      "actualAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/wolf-sorcerer-state-slot-scope-final.json",
+    "sha256": "086621353180b4ec48735e5002020d69ed0c9802cb449d5a5a9faa2008c39786",
+    "presentSources": 11,
+    "deletedSources": 1
+  },
+  "document": {
+    "path": "docs/refactor/wolf-sorcerer-state-slot.md",
+    "sha256": "a235162498714ae28bd1fa11e09d8fdf8319bf5f61a4f4a06fcf9b99910a6296"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/wolf-sorcerer-state-slot-evidence.json",
+    "sha256": "7b8ffab3ce096d5a43a9347a84f33c105a27728e2f7c9acdc7c8f8a0dfb0b6a5"
+  },
+  "inputVerification": {
+    "actualGitWholeBefore": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+        "sha256": "dba657a15c531366b0f12a42ded1b710120c503a1256416c33c60678bbc92647",
+        "actualGitWholeBeforeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+        "sha256": "eddf89a8ead982c5579dc20d1c8f82ade64060f29ac696cf0f6342cf83de387c",
+        "actualGitWholeBeforeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+        "sha256": "68b2e65685ffba341eb36038f776067304c4c1c9dbb1872257c337682cc28277",
+        "actualGitWholeBeforeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_stages.ts",
+        "sha256": "10a7bb8b109f54de5126ea220f43398c16213779a23dbbc1e8d7792c815696a8",
+        "actualGitWholeBeforeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+        "sha256": "fa658942b569253b3a4ed2b1769676d2c5bf7a6b7838f3b322ae33252ff86a79",
+        "actualGitWholeBeforeSame": true
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "sha256": "b3dbf876fee5fca9bd98b7f2f562aa61e1bc29950286678b0aa1db858c8ded46",
+        "actualGitWholeBeforeSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/wolf-sorcerer/state.test.ts",
+        "sha256": "a751d3ab093f92eec105cdc709a898aa5271bc52b0c1cdcbbc19b0f3ee928a59",
+        "actualGitWholeBeforeSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+        "sha256": "9d4637c0c1e2254c9f0d2a36903c3c6fc2979787494ae35101bbda01a7e6e799",
+        "actualGitWholeBeforeSame": true
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "sha256": "a63d2f507bd3ff61a7e6d060341d9c268b9121429ae2d9096943305e71268f36",
+        "actualGitWholeBeforeSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+        "sha256": "8014006e143680f9d971f247d420f29dd3051e141f69f0ec3352838965629ee4",
+        "actualGitWholeBeforeSame": true
+      }
+    ],
+    "stableControls": [
+      {
+        "path": "packages/game-contract/src/role-state-data.ts",
+        "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+        "actualGitSHA": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+        "actualCurrentSHA": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+        "actualGitAndCurrentSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/seat_mapping.ts",
+        "sha256": "07631a14a16f28654cb45fae5548227a3269399ed31aabeacc2b47e6c39da834",
+        "actualGitSHA": "07631a14a16f28654cb45fae5548227a3269399ed31aabeacc2b47e6c39da834",
+        "actualCurrentSHA": "07631a14a16f28654cb45fae5548227a3269399ed31aabeacc2b47e6c39da834",
+        "actualGitAndCurrentSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+        "sha256": "6cbfebad52535ce4a2859be33ecceb693f8056e917923485b474288c25e48b3c",
+        "actualGitSHA": "6cbfebad52535ce4a2859be33ecceb693f8056e917923485b474288c25e48b3c",
+        "actualCurrentSHA": "6cbfebad52535ce4a2859be33ecceb693f8056e917923485b474288c25e48b3c",
+        "actualGitAndCurrentSame": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+        "sha256": "ad044e3884339425a1d25318c49d24cec423bfeb2d579f7492b37ad2096ed614",
+        "actualGitSHA": "ad044e3884339425a1d25318c49d24cec423bfeb2d579f7492b37ad2096ed614",
+        "actualCurrentSHA": "ad044e3884339425a1d25318c49d24cec423bfeb2d579f7492b37ad2096ed614",
+        "actualGitAndCurrentSame": true
+      }
+    ],
+    "authorArtifacts": [
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-before.json",
+        "sha256": "90f3596ac5f863b352ac41a0a930916203f8bd914166e9e5b1c4aa26668a0769",
+        "actualSHA": "90f3596ac5f863b352ac41a0a930916203f8bd914166e9e5b1c4aa26668a0769",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-edits.json",
+        "sha256": "f780650b80683a7529c12e31437ae2ab078be3f9a1978527e6152509c8c0e210",
+        "actualSHA": "f780650b80683a7529c12e31437ae2ab078be3f9a1978527e6152509c8c0e210",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-proof-first.cjs",
+        "sha256": "aa8c338d0b323c6a2ed998c52ed6efbb7c2788f1cb6bd5c3d2f93a4c7ed253ae",
+        "actualSHA": "aa8c338d0b323c6a2ed998c52ed6efbb7c2788f1cb6bd5c3d2f93a4c7ed253ae",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-proof-first.log",
+        "sha256": "8f1516bb639552c01ba9fa8d080a4007552674807e23600fce643b64a853a166",
+        "actualSHA": "8f1516bb639552c01ba9fa8d080a4007552674807e23600fce643b64a853a166",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-proof.cjs",
+        "sha256": "c2cd9f9b1ee0809c07c7d41924e54ab7862f6796c63c0ffb031aa5ee35c9419f",
+        "actualSHA": "c2cd9f9b1ee0809c07c7d41924e54ab7862f6796c63c0ffb031aa5ee35c9419f",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-proof.json",
+        "sha256": "8397db6128177345c2e162e617f27b118cca4e9125e132326c58ae924740c7a4",
+        "actualSHA": "8397db6128177345c2e162e617f27b118cca4e9125e132326c58ae924740c7a4",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-proof.log",
+        "sha256": "b4c1b6effeae17c581ae02d5a46e349cad8f409343b0a6c9b121427a0a6e3fe5",
+        "actualSHA": "b4c1b6effeae17c581ae02d5a46e349cad8f409343b0a6c9b121427a0a6e3fe5",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-bindings.cjs",
+        "sha256": "d0d1a667239d077343533a7a4393468f45ee01652805c922122c620f09c912d3",
+        "actualSHA": "d0d1a667239d077343533a7a4393468f45ee01652805c922122c620f09c912d3",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-bindings.json",
+        "sha256": "692c036d0c3d05489292042d7a080da68952ea3da0f926e9a071c0d511b4ef32",
+        "actualSHA": "692c036d0c3d05489292042d7a080da68952ea3da0f926e9a071c0d511b4ef32",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-bindings.log",
+        "sha256": "1a5c99631e0ac416a5b7af9462683a40f4a70b7bed6ce61644c84738e6b00d78",
+        "actualSHA": "1a5c99631e0ac416a5b7af9462683a40f4a70b7bed6ce61644c84738e6b00d78",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-heads.ts",
+        "sha256": "62c3986ee2f6ae4957f7edce79f2554c80c1e044f7fb7ce6ceb882ff369e40cb",
+        "actualSHA": "62c3986ee2f6ae4957f7edce79f2554c80c1e044f7fb7ce6ceb882ff369e40cb",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-heads-first.json",
+        "sha256": "3a80b016d22496f183bb1fead16edd893e0781cc8ae0f27ad784f62c1b4270b6",
+        "actualSHA": "3a80b016d22496f183bb1fead16edd893e0781cc8ae0f27ad784f62c1b4270b6",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-heads.log",
+        "sha256": "5cdbe2a9b861b2df84bee3cde048e57bdc8c7624e7fd644ba9093d39c048dcce",
+        "actualSHA": "5cdbe2a9b861b2df84bee3cde048e57bdc8c7624e7fd644ba9093d39c048dcce",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-types-config.json",
+        "sha256": "53723fa3562dc566ffb7792d140fdfa6caa33cf195039e36c0585fccd239cf3d",
+        "actualSHA": "53723fa3562dc566ffb7792d140fdfa6caa33cf195039e36c0585fccd239cf3d",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-types.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "actualSHA": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-new-tests.log",
+        "sha256": "21c9fea117134aaa64785430f057193e081bd3e625f6151e4194175810c98178",
+        "actualSHA": "21c9fea117134aaa64785430f057193e081bd3e625f6151e4194175810c98178",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-fixture-first-before.json",
+        "sha256": "269c6d72f1bb4cd28b2edfe3eb0f26e2304c5ef53d611b1cccbb44e60a666f1a",
+        "actualSHA": "269c6d72f1bb4cd28b2edfe3eb0f26e2304c5ef53d611b1cccbb44e60a666f1a",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-new-tests-failed-case.log",
+        "sha256": "5907a43cfadf183c9a8c6feb2dd4cc0b66616af318e25cb2b8b4bcca6107fc54",
+        "actualSHA": "5907a43cfadf183c9a8c6feb2dd4cc0b66616af318e25cb2b8b4bcca6107fc54",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-original-test.log",
+        "sha256": "ceac8efae44ca2414f9c7310e27661d0fbcbd1ba38c02a116a45900e2ff66be7",
+        "actualSHA": "ceac8efae44ca2414f9c7310e27661d0fbcbd1ba38c02a116a45900e2ff66be7",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-final-comment-before.json",
+        "sha256": "a4940de976f3973919dd6df266e89b6351a381acb17273e830a46dfa93459bf4",
+        "actualSHA": "a4940de976f3973919dd6df266e89b6351a381acb17273e830a46dfa93459bf4",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-final-comment-bridge.cjs",
+        "sha256": "b16695cb483f733fc9cceb4a497ac12bd7b64dfe670f3233f19545100e0affbe",
+        "actualSHA": "b16695cb483f733fc9cceb4a497ac12bd7b64dfe670f3233f19545100e0affbe",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-final-comment-bridge.json",
+        "sha256": "3f3b7536540536deb3e2e2d0878e720ca51d1a5c8368e4e2d1361b48a6c93f9f",
+        "actualSHA": "3f3b7536540536deb3e2e2d0878e720ca51d1a5c8368e4e2d1361b48a6c93f9f",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-final-comment-bridge.log",
+        "sha256": "ffb0556f90cb1a784a3cb8f457a73e811b8fa61ba8bf963f9d17b938c5960e09",
+        "actualSHA": "ffb0556f90cb1a784a3cb8f457a73e811b8fa61ba8bf963f9d17b938c5960e09",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-receipts.json",
+        "sha256": "18d2a32d0fafe31786b77c4f9b84d468eaa4893795502cbb040448ff10be538c",
+        "actualSHA": "18d2a32d0fafe31786b77c4f9b84d468eaa4893795502cbb040448ff10be538c",
+        "same": true
+      },
+      {
+        "path": "docs/refactor/generated/wolf-sorcerer-state-slot-scope-final.json",
+        "sha256": "086621353180b4ec48735e5002020d69ed0c9802cb449d5a5a9faa2008c39786",
+        "actualSHA": "086621353180b4ec48735e5002020d69ed0c9802cb449d5a5a9faa2008c39786",
+        "same": true
+      }
+    ],
+    "freshMismatchCount": 0
+  },
+  "sourceReview": [
+    "通读旧state和新slot全部程序、profile实际初始化、frame完整身份／历史／映射与撤权、stage和ports、Observation及四旧消费者、新三字面用例、真实共享数据和seat/nightlife/verifier控制。",
+    "原严格schema保持Proxy先拒绝、自身data descriptor、整数／夜次／pair与history约束；live get返回原引用，project复制history及pair，readonly知识不成为原体许可。",
+    "初始化保持参数parse后原左值容器→firstNight→创建→赋值；追加保持Object.defineProperty callee先读、两次state/history查询、原index和可写descriptor、chosen原引用。",
+    "history写入→expectedState JSON刷新→pair冻结副本→committed的前缀完整保持；JSON失败不回滚追加，原expectedState撤权仍由frame持有。",
+    "唯一槽拥有原数据读／创建／投影／实际三写或编码步骤；frame仍唯一拥有名单、原Role/Identity/Alive绑定、版本、窗口、选择准入与映射，没有第二状态store或新拒绝。",
+    "原有向换位M(W(target))、life/currentness、首夜packReady与死亡后已付效果仍原owner；新方法表冻结不冻结状态。",
+    "全部实际import/export路由和删旧入口公开API已解释；保留现有共享类型、seat算法、夜cleanup与独立verifier控制。"
+  ],
+  "findings": {
+    "open": [],
+    "closed": [
+      {
+        "origin": "Root",
+        "issue": "撤权注释将任意descriptor变化说得过宽",
+        "resolution": "仅改原数据字段转访问器，Role/Identity own data value和Alive完整descriptor校验正文保留",
+        "independentExactWholeCommentInverse": true,
+        "prefinalSHA256": "3f8c310a0a1f922bbc11d14e5cc1667c982a09cd783a7b76b80f9e7ee5fb7167",
+        "finalSHA256": "ff5403c7c21d76416403561d0379b25dcaa239dbfb40cef01d6800e63194515c"
+      }
+    ]
+  },
+  "verificationAttribution": {
+    "authorProof": "4真实生产程序＋9完整消费者，10417 typed节点，26完整mapped ES/CJS输出；独立阅读完整void-child证明脚本及实际新owner展开，不重执行。",
+    "authorHistory": "首证明history末换行工具红16b5b1，工具更正后01ef4f终态0，产品没有求绿改写。",
+    "authorRuntime": "新首轮2pass/1fail/20calls，fixture键误用underscore；onlyfailed05c1b9为1/0/6，旧有向mapping44590b为1/0/6，三执行共4不同成功case31成功断言，32实际calls含失败；未称首轮全绿。",
+    "authorTypes": "11root c906d4实际0；未重跑。",
+    "authorHeads": "11root/536同Gitdocs一次0，采样为末comment前；末单comment e9dd1b桥2542非注释叶和2whole输出接final，不伪改旧收据。",
+    "authorGraph": "当期94模块286值边，无新返frame/profile/Observation；静态采样不代表历史全Git图或运行冷加载。"
+  },
+  "limitations": [
+    "物理旧state路径退休；新增方法表初始化／调用栈／字段布局为有界API变化，不保证任意仓外私有反射或CJS namespace重新赋值。",
+    "字面all-form盘点不穷尽计算加载和仓外消费者。",
+    "未重执行证明、types、tests、heads、coldload、全门禁或模型；这不是全C17/P9完成。"
+  ]
+}
