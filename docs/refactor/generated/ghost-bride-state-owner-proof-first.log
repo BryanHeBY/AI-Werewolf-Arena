@@ -1,0 +1,27 @@
+node:internal/assert/utils:146
+  throw error;
+  ^
+
+AssertionError [ERR_ASSERTION]: backend/src/game/mechanisms/roles/ghost_bride/authority.ts unique inverse
+
+38572 !== 2
+
+    at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/ghost-bride-state-owner-proof.cjs:11:500
+    at Array.map (<anonymous>)
+    at Object.<anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/ghost-bride-state-owner-proof.cjs:11:30)
+    at Module._compile (node:internal/modules/cjs/loader:1968:14)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 38572,
+  expected: 2,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.11.1

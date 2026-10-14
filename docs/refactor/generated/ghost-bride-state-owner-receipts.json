@@ -1,0 +1,218 @@
+{
+  "baseCommit": "a6468c7749b62c76848d7437568ef8749677b20f",
+  "sourceAtNewTests": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+      "sha256": "65c3194c95d0534e0a295d8fcc973d938d6ab6d3f3de0607e4f4c6feb0728344"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "642950f3350e3c3f264a40e03e904f14f24fd286ca990647086b867b9bfda23b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/state.ts",
+      "sha256": "b0d661101c948fc58b8c1564565c6683a1babe9a558f7ae1de1f7b93d0279983"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/state-ownership.test.ts",
+      "sha256": "7de11dde4e33e71be38aed60889aec65941dc21b18dbd84ccc69a76cee0a6b78"
+    }
+  ],
+  "sourceAtFirstTypesAndOldTests": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+      "sha256": "65c3194c95d0534e0a295d8fcc973d938d6ab6d3f3de0607e4f4c6feb0728344"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "ca8aab8c8876a39c7046ea381de08ea446068a64b7a1be29820451cfb5d07131"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/state.ts",
+      "sha256": "b0d661101c948fc58b8c1564565c6683a1babe9a558f7ae1de1f7b93d0279983"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/state-ownership.test.ts",
+      "sha256": "7de11dde4e33e71be38aed60889aec65941dc21b18dbd84ccc69a76cee0a6b78"
+    }
+  ],
+  "capture": {
+    "terminalChunk": "cc490b",
+    "exitCode": 0,
+    "actualGitOldSources": 2,
+    "controls": 5
+  },
+  "newTests": {
+    "terminalChunk": "4a55c7",
+    "exitCode": 0,
+    "passed": 3,
+    "failed": 0,
+    "assertions": 15,
+    "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/features/ghost-bride/state-ownership.test.ts",
+    "cwd": "backend",
+    "output": "docs/refactor/generated/ghost-bride-state-owner-new-tests.log",
+    "firstPreparationError": "docs/refactor/generated/ghost-bride-state-owner-first-preparation-error.json",
+    "note": "同一command前Python错误cwd且未写；最终状态显式捕获Bun，真实测试日志3/0/15。随后只修authority头说明，无行为变化。"
+  },
+  "oldTests": {
+    "terminalChunk": "9ca93f",
+    "exitCode": 0,
+    "passed": 2,
+    "failed": 0,
+    "assertions": 19,
+    "filtered": 73,
+    "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/features/ghost-bride/ghost-bride-authority.test.ts --test-name-pattern '^(no foreign getter runs in request rejection or failed identity audit|private stock mutates naturally after setup but component/goal drift closes victory)$'",
+    "cwd": "backend",
+    "output": "docs/refactor/generated/ghost-bride-state-owner-old-tests.log"
+  },
+  "successfulCoverage": {
+    "distinctCases": 5,
+    "assertions": 34,
+    "runs": 2
+  },
+  "typesFirst": {
+    "launchChunk": "77d660",
+    "sessionId": 35349,
+    "terminalChunk": "bafd02",
+    "exitCode": 2,
+    "roots": 4,
+    "diagnostics": 1,
+    "failedRoot": "backend/tests/unit/features/ghost-bride/state-ownership.test.ts",
+    "output": "docs/refactor/generated/ghost-bride-state-owner-types-first.log",
+    "reason": "只newunit remaining局部字面1未因setter闭包更新而收窄，原预期0不改。"
+  },
+  "typesFailedOnly": {
+    "launchChunk": "41e2db",
+    "sessionId": 6141,
+    "terminalChunk": "b36885",
+    "exitCode": 0,
+    "roots": 1,
+    "output": "docs/refactor/generated/ghost-bride-state-owner-types-failed.log",
+    "delta": "docs/refactor/generated/ghost-bride-state-owner-unit-type-before.json",
+    "note": "仅0 as typeof remaining；完整双输出同，不重运行绿。"
+  },
+  "proofHistory": [
+    {
+      "terminalChunk": "820c93",
+      "exitCode": 1,
+      "script": "docs/refactor/generated/ghost-bride-state-owner-proof-first.cjs",
+      "output": "docs/refactor/generated/ghost-bride-state-owner-proof-first.log",
+      "reason": "工具逆向用空after作全文split，不能定位删除站点。"
+    },
+    {
+      "terminalChunk": "a9a732",
+      "exitCode": 1,
+      "script": "docs/refactor/generated/ghost-bride-state-owner-proof-second.cjs",
+      "output": "docs/refactor/generated/ghost-bride-state-owner-proof-second.log",
+      "reason": "手写包装换行导致raw不等，完整AST已同；保raw差异，增两输出树/叶比较，不修改源。"
+    },
+    {
+      "terminalChunk": "73beaa",
+      "exitCode": 1,
+      "script": "docs/refactor/generated/ghost-bride-state-owner-proof-third.cjs",
+      "output": "docs/refactor/generated/ghost-bride-state-owner-proof-third.log",
+      "reason": "工具选到两个同条件分支，改为原commit函数范围。"
+    },
+    {
+      "terminalChunk": "fb92a9",
+      "exitCode": 1,
+      "script": "docs/refactor/generated/ghost-bride-state-owner-proof-fourth.cjs",
+      "output": "docs/refactor/generated/ghost-bride-state-owner-proof-fourth.log",
+      "reason": "工具选到audit函数初始null-return守卫，改为真实sameBody/sameIdentity的原块。"
+    }
+  ],
+  "proof": {
+    "terminalChunk": "40938d",
+    "exitCode": 0,
+    "wholePrograms": 2,
+    "typedNodes": 8728,
+    "noncommentLeaves": 9877,
+    "inverseRawOutputs": 4,
+    "movedBodyPairs": 11,
+    "movedTypedNodes": 384,
+    "movedNoncommentLeaves": 457,
+    "movedCompleteEmittedTrees": 22,
+    "movedRawSame": 16,
+    "movedRawFalseLayout": 6,
+    "retainedWholeFunctions": 12,
+    "unitTypeOnlyRawOutputs": 2,
+    "output": "docs/refactor/generated/ghost-bride-state-owner-proof.log"
+  },
+  "heads": {
+    "terminalChunk": "cc5e71",
+    "exitCode": 0,
+    "sources": 4,
+    "actualDocumentationPaths": 652,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "output": "docs/refactor/generated/ghost-bride-state-owner-heads.log"
+  },
+  "bindingsFirst": {
+    "terminalChunk": "bb14d8",
+    "exitCode": 1,
+    "script": "docs/refactor/generated/ghost-bride-state-owner-bindings-first.cjs",
+    "output": "docs/refactor/generated/ghost-bride-state-owner-bindings-first.log",
+    "reason": "工具未带有限config绝对Node typeRoots，node:util types符号未解析；改用真实有限config，不更改源。"
+  },
+  "bindings": {
+    "launchChunk": "63e967",
+    "sessionId": 56218,
+    "terminalChunk": "a463a7",
+    "exitCode": 0,
+    "oldNamed": 47,
+    "currentNamed": 73,
+    "retainedEndpoints": 43,
+    "routedSameEndpoint": 1,
+    "removedSpecifiers": 3,
+    "currentAstFiles": 1911,
+    "dataWrites": 7,
+    "output": "docs/refactor/generated/ghost-bride-state-owner-bindings.log"
+  },
+  "publicReturnTypeInspection": {
+    "launchChunk": "d34c9a",
+    "sessionId": 79022,
+    "terminalChunk": "248136",
+    "exitCode": 0,
+    "sameBeforeAndCurrent": "{ role: Role; camp: Camp; alive: boolean; privateState: Record<string, unknown>; victory: VictoryAffiliation[]; } | null",
+    "note": "只有限checker typeToString取weddingAuditPlayer的返回形状，非再次types诊断/门禁；原公开签名保持。"
+  },
+  "limits": [
+    "types/head/绑定传递依赖属于执行时当前workspace，不是固定a646完整冷树；并行Debater/Fragrant/Demon修改没有混进本族source before。",
+    "新owner迁移会改变真实源码哈希与函数调用栈／模块组织，不改历史档案身份。",
+    "没有全玩法、全类型、全冷加载、结构checker或P9最终验收。"
+  ],
+  "unusedImport": {
+    "terminalChunk": "4d2e41",
+    "exitCode": 0,
+    "output": "docs/refactor/generated/ghost-bride-state-owner-unused-import.json",
+    "completeRawOutputsSame": 2,
+    "scope": "only original unused weddingBrideState specifier deletion"
+  },
+  "sourceAtPrefinalProofHeadsBindings": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+      "sha256": "65c3194c95d0534e0a295d8fcc973d938d6ab6d3f3de0607e4f4c6feb0728344"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "ca8aab8c8876a39c7046ea381de08ea446068a64b7a1be29820451cfb5d07131"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/state.ts",
+      "sha256": "b0d661101c948fc58b8c1564565c6683a1babe9a558f7ae1de1f7b93d0279983"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/state-ownership.test.ts",
+      "sha256": "a1d5b402919d7b353edf694cd9c037217873539a7a666ab1853bb5d72db25864"
+    }
+  ],
+  "finalCommentBridge": {
+    "terminalChunk": "ecd28b",
+    "exitCode": 0,
+    "path": "docs/refactor/generated/ghost-bride-state-owner-capture-comment-bridge.json",
+    "typedNodes": 541,
+    "noncommentLeaves": 654,
+    "rawOutputsSame": 2,
+    "note": "只capture JSDoc当前参与者字段 vs 随后完整阵容精度；首已绿收据/source SHA保prefinal，未重业务/types/heads/wholeproof。"
+  }
+}

@@ -1,0 +1,6 @@
+[
+  "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+  "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+  "backend/src/game/mechanisms/roles/ghost_bride/state.ts",
+  "backend/tests/unit/features/ghost-bride/state-ownership.test.ts"
+]

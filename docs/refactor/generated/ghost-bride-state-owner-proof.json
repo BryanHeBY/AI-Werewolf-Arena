@@ -1,0 +1,1167 @@
+{
+  "baseCommit": "a6468c7749b62c76848d7437568ef8749677b20f",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+      "sha256": "65c3194c95d0534e0a295d8fcc973d938d6ab6d3f3de0607e4f4c6feb0728344"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "ca8aab8c8876a39c7046ea381de08ea446068a64b7a1be29820451cfb5d07131"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/state.ts",
+      "sha256": "b0d661101c948fc58b8c1564565c6683a1babe9a558f7ae1de1f7b93d0279983"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/state-ownership.test.ts",
+      "sha256": "a1d5b402919d7b353edf694cd9c037217873539a7a666ab1853bb5d72db25864"
+    }
+  ],
+  "deleted": [],
+  "programs": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+      "beforeSha256": "c00d5845a9b78028fcdfde95939d82770b2ee79dd6edc1789a078cdcaf595d2e",
+      "sha256": "65c3194c95d0534e0a295d8fcc973d938d6ab6d3f3de0607e4f4c6feb0728344",
+      "exactEdits": 3,
+      "label": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts whole exact inverse",
+      "typedNodes": 421,
+      "noncommentLeaves": 548,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "beforeSha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+      "sha256": "ca8aab8c8876a39c7046ea381de08ea446068a64b7a1be29820451cfb5d07131",
+      "exactEdits": 16,
+      "label": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts whole exact inverse",
+      "typedNodes": 8307,
+      "noncommentLeaves": 9329,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    }
+  ],
+  "moved": [
+    {
+      "label": "original full profile initializer",
+      "typedNodes": 15,
+      "noncommentLeaves": 19,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "original complete writable descriptor algorithm",
+      "typedNodes": 35,
+      "noncommentLeaves": 40,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "actual capture data fragment (only static original state cast mapped)",
+      "typedNodes": 34,
+      "noncommentLeaves": 45,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "original Proxy then descriptor preparation",
+      "typedNodes": 28,
+      "noncommentLeaves": 37,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "original complete key-count and raw-reference identity predicate",
+      "typedNodes": 61,
+      "noncommentLeaves": 69,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": false,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": false,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "original complete every participant callback, with actual command expanded",
+      "typedNodes": 57,
+      "noncommentLeaves": 64,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": false,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": false,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "complete original conditional resource close",
+      "typedNodes": 21,
+      "noncommentLeaves": 27,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": false,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": false,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "original two complete choice resource writes",
+      "typedNodes": 23,
+      "noncommentLeaves": 24,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "original entire expected-private assignment including both Map lookups",
+      "typedNodes": 35,
+      "noncommentLeaves": 41,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "original complete safe audit refresh",
+      "typedNodes": 26,
+      "noncommentLeaves": 30,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "label": "original entire failed-private projection branch",
+      "typedNodes": 49,
+      "noncommentLeaves": 61,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    }
+  ],
+  "retainedFunctions": [
+    {
+      "name": "data",
+      "label": "complete retained data",
+      "typedNodes": 58,
+      "noncommentLeaves": 66,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "snapshot",
+      "label": "complete retained snapshot",
+      "typedNodes": 293,
+      "noncommentLeaves": 344,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "json",
+      "label": "complete retained json",
+      "typedNodes": 26,
+      "noncommentLeaves": 34,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "sameBody",
+      "label": "complete retained sameBody",
+      "typedNodes": 156,
+      "noncommentLeaves": 155,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "third",
+      "label": "complete retained third",
+      "typedNodes": 79,
+      "noncommentLeaves": 89,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "beginWeddingSetup",
+      "label": "complete retained beginWeddingSetup",
+      "typedNodes": 77,
+      "noncommentLeaves": 86,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "validTurn",
+      "label": "complete retained validTurn",
+      "typedNodes": 49,
+      "noncommentLeaves": 52,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "targetCurrent",
+      "label": "complete retained targetCurrent",
+      "typedNodes": 56,
+      "noncommentLeaves": 64,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "validConsent",
+      "label": "complete retained validConsent",
+      "typedNodes": 197,
+      "noncommentLeaves": 203,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "closeWeddingTurn",
+      "label": "complete retained closeWeddingTurn",
+      "typedNodes": 58,
+      "noncommentLeaves": 63,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "weddingActorView",
+      "label": "complete retained weddingActorView",
+      "typedNodes": 235,
+      "noncommentLeaves": 248,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    },
+    {
+      "name": "weddingBrideState",
+      "label": "complete retained weddingBrideState",
+      "typedNodes": 55,
+      "noncommentLeaves": 66,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        },
+        {
+          "module": "CommonJS",
+          "completeRawSame": true,
+          "completeEmittedTreeAndTokensSame": true
+        }
+      ]
+    }
+  ],
+  "unitType": {
+    "path": "backend/tests/unit/features/ghost-bride/state-ownership.test.ts",
+    "beforeSha256": "7de11dde4e33e71be38aed60889aec65941dc21b18dbd84ccc69a76cee0a6b78",
+    "sha256": "a1d5b402919d7b353edf694cd9c037217873539a7a666ab1853bb5d72db25864",
+    "outputs": [
+      {
+        "module": "ESNext",
+        "completeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "completeRawSame": true
+      }
+    ]
+  },
+  "bindings": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+      "phase": "before",
+      "named": [
+        {
+          "mode": "value",
+          "local": "nativeRolePresentation",
+          "imported": "nativeRolePresentation",
+          "module": "../presentation-contribution"
+        },
+        {
+          "mode": "value",
+          "local": "z",
+          "imported": "z",
+          "module": "zod"
+        },
+        {
+          "mode": "value",
+          "local": "roleName",
+          "imported": "roleName",
+          "module": "@ai-werewolf-arena/game-text"
+        },
+        {
+          "mode": "value",
+          "local": "text",
+          "imported": "text",
+          "module": "@ai-werewolf-arena/game-text"
+        },
+        {
+          "mode": "value",
+          "local": "GHOST_BRIDE_POLICY",
+          "imported": "GHOST_BRIDE_POLICY",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "freshGhostBrideState",
+          "imported": "freshGhostBrideState",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "RuleError",
+          "imported": "RuleError",
+          "module": "@ai-werewolf-arena/game-contract"
+        },
+        {
+          "mode": "value",
+          "local": "Role",
+          "imported": "Role",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "Camp",
+          "imported": "Camp",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "WinCondition",
+          "imported": "WinCondition",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "COMPONENT",
+          "imported": "COMPONENT",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "NativeRoleContributions",
+          "imported": "NativeRoleContributions",
+          "module": "../contracts"
+        },
+        {
+          "mode": "value",
+          "local": "canSubmitWeddingTool",
+          "imported": "canSubmitWeddingTool",
+          "module": "./authority"
+        },
+        {
+          "mode": "value",
+          "local": "weddingBrideState",
+          "imported": "weddingBrideState",
+          "module": "./authority"
+        },
+        {
+          "mode": "type",
+          "local": "ToolRule",
+          "imported": "ToolRule",
+          "module": "../../validation/contracts"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+      "phase": "after",
+      "named": [
+        {
+          "mode": "value",
+          "local": "nativeRolePresentation",
+          "imported": "nativeRolePresentation",
+          "module": "../presentation-contribution"
+        },
+        {
+          "mode": "value",
+          "local": "z",
+          "imported": "z",
+          "module": "zod"
+        },
+        {
+          "mode": "value",
+          "local": "roleName",
+          "imported": "roleName",
+          "module": "@ai-werewolf-arena/game-text"
+        },
+        {
+          "mode": "value",
+          "local": "text",
+          "imported": "text",
+          "module": "@ai-werewolf-arena/game-text"
+        },
+        {
+          "mode": "value",
+          "local": "GHOST_BRIDE_POLICY",
+          "imported": "GHOST_BRIDE_POLICY",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "RuleError",
+          "imported": "RuleError",
+          "module": "@ai-werewolf-arena/game-contract"
+        },
+        {
+          "mode": "value",
+          "local": "Role",
+          "imported": "Role",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "Camp",
+          "imported": "Camp",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "WinCondition",
+          "imported": "WinCondition",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "COMPONENT",
+          "imported": "COMPONENT",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "NativeRoleContributions",
+          "imported": "NativeRoleContributions",
+          "module": "../contracts"
+        },
+        {
+          "mode": "value",
+          "local": "canSubmitWeddingTool",
+          "imported": "canSubmitWeddingTool",
+          "module": "./authority"
+        },
+        {
+          "mode": "value",
+          "local": "initializeGhostBrideState",
+          "imported": "initializeGhostBrideState",
+          "module": "./state"
+        },
+        {
+          "mode": "type",
+          "local": "ToolRule",
+          "imported": "ToolRule",
+          "module": "../../validation/contracts"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "phase": "before",
+      "named": [
+        {
+          "mode": "type",
+          "local": "ReadonlyBoardConfig",
+          "imported": "ReadonlyBoardConfig",
+          "module": "@ai-werewolf-arena/game-contract"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingActorView",
+          "imported": "WeddingActorView",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "registerRequestAliasPropagation",
+          "imported": "registerRequestAliasPropagation",
+          "module": "../../../../core/domain/request_delivery"
+        },
+        {
+          "mode": "value",
+          "local": "types",
+          "imported": "types",
+          "module": "node:util"
+        },
+        {
+          "mode": "value",
+          "local": "GHOST_BRIDE_POLICY",
+          "imported": "GHOST_BRIDE_POLICY",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "GHOST_BRIDE_ROLE",
+          "imported": "GHOST_BRIDE_ROLE",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "freshGhostBrideState",
+          "imported": "freshGhostBrideState",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "readGhostBrideState",
+          "imported": "readGhostBrideState",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "GhostBrideState",
+          "imported": "GhostBrideState",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingPair",
+          "imported": "WeddingPair",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingGroup",
+          "imported": "WeddingGroup",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingSetup",
+          "imported": "WeddingSetup",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingKnifeCapture",
+          "imported": "WeddingKnifeCapture",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingTool",
+          "imported": "WeddingTool",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "readWeddingTool",
+          "imported": "readWeddingTool",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "bindRequestDeliveryGuard",
+          "imported": "bindRequestDeliveryGuard",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "settleRequestDelivery",
+          "imported": "settleRequestDelivery",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "DeathCause",
+          "imported": "DeathCause",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "DeathSources",
+          "imported": "DeathSources",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "COMPONENT",
+          "imported": "COMPONENT",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "Camp",
+          "imported": "Camp",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "Role",
+          "imported": "Role",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "Phase",
+          "imported": "Phase",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "createVictoryComponent",
+          "imported": "createVictoryComponent",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "World",
+          "imported": "World",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "RoleComponent",
+          "imported": "RoleComponent",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "CampComponent",
+          "imported": "CampComponent",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "VictoryComponent",
+          "imported": "VictoryComponent",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "aliveLifeVersion",
+          "imported": "aliveLifeVersion",
+          "module": "../../../../core/domain/components/alive"
+        },
+        {
+          "mode": "value",
+          "local": "aliveLifeDescriptor",
+          "imported": "aliveLifeDescriptor",
+          "module": "../../../../core/domain/components/alive"
+        },
+        {
+          "mode": "type",
+          "local": "AliveComponent",
+          "imported": "AliveComponent",
+          "module": "../../../../core/domain/components/alive"
+        },
+        {
+          "mode": "value",
+          "local": "assertGhostBridePreset",
+          "imported": "assertGhostBridePreset",
+          "module": "./preset"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "phase": "after",
+      "named": [
+        {
+          "mode": "type",
+          "local": "ReadonlyBoardConfig",
+          "imported": "ReadonlyBoardConfig",
+          "module": "@ai-werewolf-arena/game-contract"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingActorView",
+          "imported": "WeddingActorView",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "registerRequestAliasPropagation",
+          "imported": "registerRequestAliasPropagation",
+          "module": "../../../../core/domain/request_delivery"
+        },
+        {
+          "mode": "value",
+          "local": "types",
+          "imported": "types",
+          "module": "node:util"
+        },
+        {
+          "mode": "value",
+          "local": "GHOST_BRIDE_POLICY",
+          "imported": "GHOST_BRIDE_POLICY",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "GHOST_BRIDE_ROLE",
+          "imported": "GHOST_BRIDE_ROLE",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "GhostBrideState",
+          "imported": "GhostBrideState",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingPair",
+          "imported": "WeddingPair",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingGroup",
+          "imported": "WeddingGroup",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingSetup",
+          "imported": "WeddingSetup",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingKnifeCapture",
+          "imported": "WeddingKnifeCapture",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "type",
+          "local": "WeddingTool",
+          "imported": "WeddingTool",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "readWeddingTool",
+          "imported": "readWeddingTool",
+          "module": "@ai-werewolf-arena/game-contract/facts/ghost-bride"
+        },
+        {
+          "mode": "value",
+          "local": "bindRequestDeliveryGuard",
+          "imported": "bindRequestDeliveryGuard",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "settleRequestDelivery",
+          "imported": "settleRequestDelivery",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "DeathCause",
+          "imported": "DeathCause",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "DeathSources",
+          "imported": "DeathSources",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "COMPONENT",
+          "imported": "COMPONENT",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "Camp",
+          "imported": "Camp",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "Role",
+          "imported": "Role",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "Phase",
+          "imported": "Phase",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "createVictoryComponent",
+          "imported": "createVictoryComponent",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "World",
+          "imported": "World",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "RoleComponent",
+          "imported": "RoleComponent",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "CampComponent",
+          "imported": "CampComponent",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "type",
+          "local": "VictoryComponent",
+          "imported": "VictoryComponent",
+          "module": "../../../../core/domain"
+        },
+        {
+          "mode": "value",
+          "local": "aliveLifeVersion",
+          "imported": "aliveLifeVersion",
+          "module": "../../../../core/domain/components/alive"
+        },
+        {
+          "mode": "value",
+          "local": "aliveLifeDescriptor",
+          "imported": "aliveLifeDescriptor",
+          "module": "../../../../core/domain/components/alive"
+        },
+        {
+          "mode": "type",
+          "local": "AliveComponent",
+          "imported": "AliveComponent",
+          "module": "../../../../core/domain/components/alive"
+        },
+        {
+          "mode": "value",
+          "local": "assertGhostBridePreset",
+          "imported": "assertGhostBridePreset",
+          "module": "./preset"
+        },
+        {
+          "mode": "value",
+          "local": "readGhostBrideState",
+          "imported": "readGhostBrideState",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "ghostBrideStateWritable",
+          "imported": "ghostBrideStateWritable",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "captureGhostBrideParticipantData",
+          "imported": "captureGhostBrideParticipantData",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "ghostBridePrivateFields",
+          "imported": "ghostBridePrivateFields",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "ghostBridePrivateRefsCurrent",
+          "imported": "ghostBridePrivateRefsCurrent",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "acceptGhostBrideParticipantAudit",
+          "imported": "acceptGhostBrideParticipantAudit",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "closeGhostBrideResource",
+          "imported": "closeGhostBrideResource",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "consumeGhostBrideChoice",
+          "imported": "consumeGhostBrideChoice",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "updateGhostBrideExpectedData",
+          "imported": "updateGhostBrideExpectedData",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "refreshGhostBrideParticipantAudit",
+          "imported": "refreshGhostBrideParticipantAudit",
+          "module": "./state"
+        },
+        {
+          "mode": "value",
+          "local": "projectGhostBrideFailedPrivateData",
+          "imported": "projectGhostBrideFailedPrivateData",
+          "module": "./state"
+        },
+        {
+          "mode": "type",
+          "local": "GhostBrideParticipantData",
+          "imported": "GhostBrideParticipantData",
+          "module": "./state"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "packages/game-contract/src/facts/ghost-bride.ts",
+      "sha256": "ddc1b0a6077ddd025dec6b724f6de8d63c142a24b00bca713b70fc01c2629a85",
+      "currentWholeSame": true
+    },
+    {
+      "path": "packages/game-contract/src/inert-event-data.ts",
+      "sha256": "3cb9bd646e70f044a656c0aaf15993a004ce87aa3f7674298d95b997d53c81c9",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "d117e9a106c17cf18fad6a4fbadec5181d04cb9e0bc6f6ccd78232d2b740c4bd",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "sha256": "0162fba26bd7f1eb597abb5990c47d0cd5c2f884290f158d4b6ea78c836dbac3",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night-lifecycle.ts",
+      "sha256": "c7595996bf6fb150a72d59da65460bf4fc53fac408d8cdca21174c11cc37150f",
+      "currentWholeSame": true
+    }
+  ],
+  "nonfirstLiteralCounterexampleDetected": true,
+  "limits": [
+    "两个whole-program输出相同仅属于精确增量逆；不声称迁移后整个module raw与旧值相同。",
+    "实际新11函数的11项原数据体（字段准备带null分流及every数据命令展开）逐项核，输出raw因手写包装排版可false，但完整两输出树／叶逐项同；无恢复旧整个body以代替actualowner。",
+    "公共readGhostBrideState/fresh/schema与原authority data/snapshot/json不复制或更改；原World/life/Victory/turn WeakMaps仍authority。",
+    "新函数调用栈、capture临时数据片段对象分配、函数引用/模块初始化与公共新数据命令API确有变化，不承诺任意prototype/CJS重绑或完整冷加载等价。",
+    "bindings记录模式/名称/原模块端点；read同binding沿state具名reexport至原GC declaration，人工源核，不把所有barrel入口冒最终声明。"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "path": "backend/src/game/mechanisms/roles/ghost_bride/state.ts",
+  "beforeSha256": "b0d661101c948fc58b8c1564565c6683a1babe9a558f7ae1de1f7b93d0279983",
+  "sha256": "9ceab0befb130669d4debcfd29261d77c97bb04c298872f956d33c4183ba904c",
+  "exactCommentInverse": true,
+  "typedNodes": 541,
+  "noncommentLeaves": 654,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "completeRawSame": true
+    },
+    {
+      "module": "CommonJS",
+      "completeRawSame": true
+    }
+  ]
+}

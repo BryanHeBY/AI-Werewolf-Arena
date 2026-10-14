@@ -1,0 +1,5 @@
+tests/unit/features/ghost-bride/state-ownership.test.ts(78,26): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(expected: 1): void', gave the following error.
+    Argument of type '0' is not assignable to parameter of type '1'.
+  Overload 2 of 2, '(expected: 1): void', gave the following error.
+    Argument of type '0' is not assignable to parameter of type '1'.

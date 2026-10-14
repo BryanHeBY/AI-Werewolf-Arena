@@ -7,11 +7,12 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { GHOST_BRIDE_POLICY, freshGhostBrideState } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, COMPONENT } from "../../../../core/domain";
 import type { NativeRoleContributions } from "../contracts";
-import { canSubmitWeddingTool, weddingBrideState } from "./authority";
+import { canSubmitWeddingTool } from "./authority";
+import { initializeGhostBrideState } from "./state";
 import type { ToolRule } from "../../validation/contracts";
 const parameters = z.strictObject({
   policy: z.literal(GHOST_BRIDE_POLICY).default(GHOST_BRIDE_POLICY),
@@ -48,7 +49,7 @@ export const GHOST_BRIDE_ROLE_PROFILE: NativeRoleContributions = {
     canSelfDestruct: false,
     inspectionLabels: { camp: "good" },
     init: (role) => {
-      role.privateState.ghostBride = freshGhostBrideState();
+      initializeGhostBrideState(role);
     },
     configuration: {
       schema: parameters,

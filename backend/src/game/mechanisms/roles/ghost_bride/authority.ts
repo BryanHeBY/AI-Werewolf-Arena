@@ -1,6 +1,7 @@
 /**
- * 负责鬼魂新娘婚礼回合、原参与者快照与有序提交，拥有婚礼选择和绑定别名的写权。
+ * 负责鬼魂新娘婚礼回合、原参与者授权与有序提交，拥有婚约、回合和绑定别名的写权。
  * 输入保留原 World 及封存请求；输出为原校验后已接受的选择、消息与结算记录。
+ * 资源及参与者私态数据写入归 state；身体／身份复验、Victory 与回执仍在这里按原顺序处理。
  * 不变量：提交必须匹配原参与者和绑定回合，别名不能替代本地校验。取消、关闭或失败
  * 均保持原结算及部分写入顺序，不修复被替换的库存。
  */
@@ -8,7 +9,7 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { WeddingActorView } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
-import { GHOST_BRIDE_POLICY, GHOST_BRIDE_ROLE, freshGhostBrideState, readGhostBrideState, type GhostBrideState, type WeddingPair, type WeddingGroup, type WeddingSetup, type WeddingKnifeCapture, type WeddingTool, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import { GHOST_BRIDE_POLICY, GHOST_BRIDE_ROLE, type GhostBrideState, type WeddingPair, type WeddingGroup, type WeddingSetup, type WeddingKnifeCapture, type WeddingTool, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import {
   bindRequestDeliveryGuard,
   settleRequestDelivery,
@@ -30,6 +31,20 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import { assertGhostBridePreset } from "./preset";
+import {
+  readGhostBrideState,
+  ghostBrideStateWritable,
+  captureGhostBrideParticipantData,
+  ghostBridePrivateFields,
+  ghostBridePrivateRefsCurrent,
+  acceptGhostBrideParticipantAudit,
+  closeGhostBrideResource,
+  consumeGhostBrideChoice,
+  updateGhostBrideExpectedData,
+  refreshGhostBrideParticipantAudit,
+  projectGhostBrideFailedPrivateData,
+  type GhostBrideParticipantData,
+} from "./state";
 
 /** 只读 own data；拒绝或审计期间不执行被替换的 getter。 */
 function data(value: unknown, key: string): unknown {
@@ -85,17 +100,12 @@ function json(value: unknown): string | null {
     return null;
   }
 }
-interface Participant {
+interface Participant extends GhostBrideParticipantData {
   id: number;
   role: RoleComponent;
   kind: Role;
   camp: Camp;
   campComponent: CampComponent;
-  state: RoleComponent["privateState"];
-  stateRefs: ReadonlyArray<readonly [string, unknown]>;
-  initialPrivateState: unknown;
-  expectedPrivateJson: string;
-  auditPrivateJson: string;
   life: AliveComponent;
   version: number;
   aliveDescriptor: PropertyDescriptor;
@@ -217,11 +227,7 @@ function capture(world: World, id: number): Participant {
     campComponent,
     life,
     victory,
-    state: state as RoleComponent["privateState"],
-    stateRefs: Object.entries(state),
-    initialPrivateState: snapshot(state),
-    expectedPrivateJson: privateJson,
-    auditPrivateJson: privateJson,
+    ...captureGhostBrideParticipantData(state, privateJson, snapshot),
     affiliations,
     victoryJson,
     version,
@@ -245,17 +251,14 @@ function sameBody(b: Binding, p: Participant, mustLive = false): boolean {
   return (!mustLive || alive) && aliveLifeVersion(p.life) === p.version + (alive ? 0 : 1);
 }
 function sameIdentity(b: Binding, p: Participant): boolean {
-  if (types.isProxy(p.state)) return false;
-  const fields = Object.getOwnPropertyDescriptors(p.state);
+  const fields = ghostBridePrivateFields(p);
+  if (fields === null) return false;
   return (
     b.world.getComponent(p.id, COMPONENT.Role) === p.role &&
     data(p.role, "role") === p.kind &&
     data(p.role, "camp") === p.camp &&
     data(p.role, "privateState") === p.state &&
-    Object.keys(fields).length === p.stateRefs.length &&
-    p.stateRefs.every(
-      ([k, v]) => fields[k] && Object.hasOwn(fields[k], "value") && fields[k]!.value === v,
-    ) &&
+    ghostBridePrivateRefsCurrent(p, fields) &&
     b.world.getComponent(p.id, COMPONENT.Camp) === p.campComponent &&
     data(p.campComponent, "camp") === p.camp &&
     b.world.getComponent(p.id, COMPONENT.Victory) === p.victory &&
@@ -277,21 +280,10 @@ function validBinding(b: Binding, setup = false): boolean {
     data(b.participants.get(b.actorId)?.state, "ghostBride") === b.state &&
     [...b.participants.values()].every((p) => {
       const encoded = json(p.state);
-      if (
-        !sameBody(b, p, setup) ||
-        !sameIdentity(b, p) ||
-        encoded === null ||
-        (setup && encoded !== p.expectedPrivateJson)
-      )
-        return false;
-      p.auditPrivateJson = encoded;
-      return true;
+      if (!sameBody(b, p, setup) || !sameIdentity(b, p)) return false;
+      return acceptGhostBrideParticipantAudit(p, encoded, setup);
     })
   );
-}
-function writable(state: object, key: string): boolean {
-  const d = Object.getOwnPropertyDescriptor(state, key);
-  return !!d && Object.hasOwn(d, "value") && d.writable === true;
 }
 function third(b: Binding, id: number): void {
   const p = b.participants.get(id)!,
@@ -328,8 +320,8 @@ export function installGhostBride(world: World, config: ReadonlyBoardConfig): vo
     [...participants.values()].some(
       (p) => p.id !== actor.id && p.camp !== (p.kind === Role.Wolf ? Camp.Wolf : Camp.Good),
     ) ||
-    !writable(state as object, "remaining") ||
-    !writable(state as object, "groomId")
+    !ghostBrideStateWritable(state as object, "remaining") ||
+    !ghostBrideStateWritable(state as object, "groomId")
   )
     throw new Error("ghost_bride_initial_state_invalid");
   bindings.set(world, {
@@ -567,7 +559,7 @@ export function closeWeddingSetup(world: World, status: "failed" | "cancelled"):
   b.turn = null;
   b.pendingChat = null;
   b.setupCurrent = null;
-  if (writable(b.state, "remaining")) b.state.remaining = 0;
+  closeGhostBrideResource(b);
   // 仅保留实际提交的 pair，不消耗或修复替换状态。
 }
 const stages: Record<TurnKind, string> = {
@@ -713,8 +705,8 @@ function commitWeddingToolInternal(scope: object, value: unknown): boolean {
     if (
       id === b.actorId ||
       !targetCurrent(t, id) ||
-      !writable(b.state, "remaining") ||
-      !writable(b.state, "groomId")
+      !ghostBrideStateWritable(b.state, "remaining") ||
+      !ghostBrideStateWritable(b.state, "groomId")
     )
       return false;
     const pair = Object.freeze({
@@ -724,15 +716,12 @@ function commitWeddingToolInternal(scope: object, value: unknown): boolean {
       groomId: id,
       day: 1 as const,
     });
-    b.state.remaining = 0;
-    b.state.groomId = id;
+    consumeGhostBrideChoice(b, id);
     b.pair = pair;
     third(b, b.actorId);
     third(b, id);
     b.status = "paired";
-    b.participants.get(b.actorId)!.expectedPrivateJson = json(
-      b.participants.get(b.actorId)!.state,
-    )!;
+    updateGhostBrideExpectedData(b, json);
   } else if (call.name === "speak_to_partner") {
     const partner = t.actorId === b.actorId ? b.pair!.groomId : b.actorId;
     if (!targetCurrent(t, partner)) return false;
@@ -951,8 +940,7 @@ export function weddingAuditPlayer(world: World, id: number, failedCycle = false
   // 分别刷新仍归原 owner 的 plain 库存；其他参与者可能已经失败。
   // json 仅读 descriptor，foreign getter／Proxy 因而保留最近安全快照。
   if (sameBody(b, p) && sameIdentity(b, p)) {
-    const encoded = json(p.state);
-    if (encoded !== null) p.auditPrivateJson = encoded;
+    refreshGhostBrideParticipantAudit(p, json);
   }
   const alive = p.aliveDescriptor.get
     ? p.aliveDescriptor.get.call(p.life) === true
@@ -961,16 +949,7 @@ export function weddingAuditPlayer(world: World, id: number, failedCycle = false
     role: p.kind,
     camp: p.camp,
     alive,
-    privateState:
-      id === b.actorId
-        ? {
-            ghostBride: {
-              ...freshGhostBrideState(),
-              remaining: 0,
-              groomId: b.pair?.groomId ?? null,
-            },
-          }
-        : (JSON.parse(p.auditPrivateJson) as Record<string, unknown>),
+    privateState: projectGhostBrideFailedPrivateData(b, p, id),
     victory: JSON.parse(p.victoryJson) as VictoryComponent["affiliations"],
   };
 }
