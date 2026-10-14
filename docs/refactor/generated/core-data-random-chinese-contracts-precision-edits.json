@@ -1,0 +1,11 @@
+[
+  {
+    "path": "backend/src/core/domain/fault_plan.ts",
+    "beforeStart": 16,
+    "beforeEnd": 22,
+    "afterStart": 16,
+    "afterEnd": 20,
+    "before": "惰性数据读取",
+    "after": "数据复制"
+  }
+]

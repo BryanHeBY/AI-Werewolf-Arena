@@ -1,0 +1,160 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "scope": {
+    "path": "docs/refactor/generated/core-data-random-chinese-contracts-scope-final.json",
+    "sha256": "e99b111e9b825e94dd2ad2d97422a0bda6ebf883bcc80f2ebe9f9370849b07b4"
+  },
+  "source": [
+    {
+      "path": "backend/src/core/domain/plain_data.ts",
+      "sha256": "bf6473cfd3a31eec144d3fbda9f27eb0317ec7886aeb453c6d52ed032801da7b"
+    },
+    {
+      "path": "backend/src/core/domain/random.ts",
+      "sha256": "3e01c3980fb8ecc46483f37bbb3ca86f797d9b6bbb324dd6c8242907bc875f41"
+    },
+    {
+      "path": "backend/src/core/domain/fault_plan.ts",
+      "sha256": "d9cb40b9d201e179187f7509475a1b765c3e70f0f91c12a4a30d5c24922aa475"
+    },
+    {
+      "path": "backend/src/core/domain/entities/player.ts",
+      "sha256": "78064d897cb16e4309b8a267433364d707038a709aad09d1db0df01fda066266"
+    },
+    {
+      "path": "backend/src/core/domain/registries/phase_registry.ts",
+      "sha256": "5dd6c3ed1e35eb255c0f7e5a97ffb01db13c7d5fcac3c8bab82d6eb7bd9666c2"
+    },
+    {
+      "path": "backend/src/core/domain/registries/role_registry.ts",
+      "sha256": "10ca592289feeeb013f66bae1b3cf8cd64f7feb73dfda6199aba997883738213"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/core-data-random-chinese-contracts.md",
+    "sha256": "4f2af582dacbece4656fecdb7e27247f37c845687d1e5a31b6a25be7c9a894d7"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/core-data-random-chinese-contracts-evidence.json",
+    "sha256": "666ab1edfab2845e86005ef509f4bf05ecffb0d26f166097b85ed7e1f950e935"
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/engine/fault_plan.ts",
+      "sha256": "277a409b61332db28252fb5c385d1b99fd91e3889900b71d9547b0494c6a8002"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/permissions.ts",
+      "sha256": "4f1cf46387017566bc3eb600ca2910943538d6c4693ec073b4685a770d5f956b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "sha256": "061a792b1f5bb898cbf8a8162e9754012581b1007990af4a363179c20315eaf4"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-before.json",
+      "sha256": "be590f390910c9e6741a797146be8317697adf4d772b6b5eb28ab911000f523b"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-edits.json",
+      "sha256": "e3b1b9d4fac689f49d33b676e1b1fce7e07b6f7291242cb5b0c1307c5756b557"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-final-source-ready.json",
+      "sha256": "d069ef6cd54be923734558d65b108ae9b068432a95e1437ea3171fb2201e5f80"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-heads-output.txt",
+      "sha256": "709d7045a7ce8099f065e20df2bc8d174e1d55083cb982a96aa6d5d17176a61d"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-heads.json",
+      "sha256": "8c48cb0aa902505c433441f176fdfee078654e425c78c312c6ff4380ffc7b13b"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-heads.ts",
+      "sha256": "2ed14672deae528be0855e199eff7c6c3bfe779bde2013dad009e3607fd3a04e"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-precision-before.json",
+      "sha256": "74b1ac25404ce785d6a3e5ce9a2f439121860df8312510c789e3d1133364e63f"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-precision-edits.json",
+      "sha256": "e7a33f7328fcee84db21a160f4f13638c49a863365e551f6f986d5e5bca752ec"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-precision-proof-output.txt",
+      "sha256": "21d21c3131b81b8f0ec71ff896cd9bdb201b169e564e70cc47e5aead2d34dd49"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-precision-proof.cjs",
+      "sha256": "71bdb1d201bc63bf00b4d78df8e058edfc50791dbf22136dfd15b6d8e4f8e858"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-precision-proof.json",
+      "sha256": "5a6b2ed3c721510139053548fb904857be851f34139cc7f1017aa9590bc21f3a"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-precision-source-ready.json",
+      "sha256": "7b474fa4c16d473e721b2b1f83b0ae7c538305edc9ec4f6b1bce4c226ba74a6b"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-proof-output.txt",
+      "sha256": "c3fb264e14819d0729d8b16bc75450f6214cfd525d34657fe11f28f0524fc610"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-proof.cjs",
+      "sha256": "7778e38be3807d23e0f06ae118ba5da7ffa5643d4eac83537bfde4104b9e6fef"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-proof.json",
+      "sha256": "c11da71b648d9daba7153e1f22d00fc7940bfc6e4efc1eb86405687b02f9e53f"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-receipts.json",
+      "sha256": "f34647d9e21eeff579c15a5a206d13e6ceb126fef4fdd70d06587bed3729d37f"
+    },
+    {
+      "path": "docs/refactor/generated/core-data-random-chinese-contracts-source-ready.json",
+      "sha256": "48cbadbfbb7f96104e2464d492361eaf4f042bf8db39c22694f10bd4a0450fab"
+    }
+  ],
+  "reviewed": {
+    "baseCommit": "e18b4635606eac6ac8394f43e3e078efeb54d531",
+    "actualGitBeforePrograms": 6,
+    "stableGitAndCurrentWholeControls": 3,
+    "firstMechanicalCharacterEditRecords": 58,
+    "lateCommentWordEditRecords": 1,
+    "actualCompleteTextForwardInverse": true,
+    "firstSourceReadySHA256": "48cbadbfbb7f96104e2464d492361eaf4f042bf8db39c22694f10bd4a0450fab",
+    "finalSourceReadySHA256": "d069ef6cd54be923734558d65b108ae9b068432a95e1437ea3171fb2201e5f80",
+    "artifactHashes": 17,
+    "checksExecutedByReviewer": [],
+    "codeReading": [
+      "Complete six original/current modules and differences; three complete actual consumer controls.",
+      "Fault execution/Demon snapshot-history/role permission assembly, actual identity bootstrap and simulation/reproduction random consumers.",
+      "First/precision proof scripts and six-head script, reports/raw outputs/actual receipts were read, not executed."
+    ]
+  },
+  "closedPrecision": {
+    "path": "backend/src/core/domain/fault_plan.ts",
+    "kind": "Eager reader called lazy",
+    "resolution": "Only 惰性数据读取→数据复制; actual synchronous copy→parse (including refine)→deep freeze. World fault application remains engine owned. cfc685 word bridge preserves code/emit; first six checks unchanged."
+  },
+  "dimensions": {
+    "dataAndAuthority": "Own descriptors/Proxy/accessor/symbol/enumerability/finite/cycle/limits rejection matches bodies; original source writable/configurable flags are not strengthened. Object-copy fields default nonwritable/nonconfigurable; output arrays are ordinary writable arrays. seen tracks current recursive path and finally deletes only current object, so duplicate noncycles copy separately. Fault data intentionally differs on __proto__ and number pass-through; schema precedes deep freeze. No copies/identity/registry data grant runtime permission.",
+    "randomAndOrder": "Machine algorithm/version/name literals preserved. Trim only validates nonempty; raw strings and UTF-16 JSON hashing unchanged. Fork does not consume parent. Frozen randomDraws wrapper late calls source.next with original receiver. Shuffle copies and draws once per tail index, without validating custom draws. Identity session string is data; registries preserve order/duplicates and copy arrays, not current player authorization.",
+    "evidenceAndChineseMeaning": "Actuale18 six raw Git plus three whole controls,58-position transform and one-word delta, fresh6/17 artifacts/MD/scope/evidence matched. First04ed82 six-program1623typed269arrays1979leaf/12raw and 7f9957 heads belong to ready48cbadbf; cfc685 fault-only626typed101arrays751leaf/two raw bridges final word. 58 is mechanical position count, not58comments. Important structure/order/state/error CN read; no remaining finding."
+  },
+  "reviewReaderNote": "Initial ad hoc metadata read assumed a separate precision-receipt filename; actual receipts are in central runs. First pure binding reader assumed evidence.deleted key; optional absent key corrected before any report write. These are read/schema errors, no author/product checks or data were modified.",
+  "limits": [
+    "Review did not execute author proof/compiler/head/runtime/gate/model or load production.",
+    "Pure comments preserve original machine/program text; finite shape/emit is not all55/P9/all-language completion.",
+    "First heads predate one-word correction; narrow bridge preserves its program, no successful check repeated or historical sourceHash rewritten."
+  ]
+}

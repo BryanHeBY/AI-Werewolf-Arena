@@ -1,3 +1,8 @@
+/**
+ * 负责玩家身份数据的构造；输入实体编号、座位与显示名，输出新的可写组件对象。
+ * 原参数不在此校验或规范化；身份安装、编号唯一性及会话授权由调用方负责。
+ * 稳定会话标识用于关联记录，不是可序列化的行动凭据或跨局唯一认证。
+ */
 import { EntityId } from "../model";
 
 /**
@@ -11,7 +16,7 @@ export interface IdentityComponent {
 }
 
 /**
- * 创建玩家身份组件。
+ * 按原字段顺序构造身份；不读取 World 或安装组件。
  */
 export function createIdentityComponent(
   id: EntityId,
@@ -22,7 +27,7 @@ export function createIdentityComponent(
     id,
     seat,
     name,
-    // 会话 ID 目前采用稳定前缀 + 实体 ID，便于日志排查。
+    // 同实体编号产生同样的记录标识；不要把这个字符串用作真实会话权限。
     sessionId: `player_${id}`,
   };
 }

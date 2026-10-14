@@ -1,0 +1,204 @@
+{
+  "approved": true,
+  "baseCommit": "e18b4635606eac6ac8394f43e3e078efeb54d531",
+  "sampledSourceReadySHA256": "48cbadbfbb7f96104e2464d492361eaf4f042bf8db39c22694f10bd4a0450fab",
+  "programs": [
+    {
+      "path": "backend/src/core/domain/plain_data.ts",
+      "beforeSha256": "f7d6eadcc86bfe4ca3582c385649b8388911cd78520bc65bedce640039d07517",
+      "afterSha256": "bf6473cfd3a31eec144d3fbda9f27eb0317ec7886aeb453c6d52ed032801da7b",
+      "commentEdits": 9,
+      "typedNodes": 348,
+      "nodeArrays": 49,
+      "noncommentLeaves": 419,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1831,
+          "sha256": "a082d7e4761d27240b19fbf9a43ea72a0d47e41503e98e7debfbd7a0643aa33f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1967,
+          "sha256": "ae785944663c3f698b66e0ab376e400dc29433f33a60f617a684b578b0cda460"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/domain/random.ts",
+      "beforeSha256": "2eec2533e42c3da6bfd945ae14839ad7424d3cb3b84e76a5c36d55495a9d86a4",
+      "afterSha256": "3e01c3980fb8ecc46483f37bbb3ca86f797d9b6bbb324dd6c8242907bc875f41",
+      "commentEdits": 16,
+      "typedNodes": 426,
+      "nodeArrays": 72,
+      "noncommentLeaves": 523,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1721,
+          "sha256": "0e9f54377927e204eb69838721d55f294bea9930a0baec859854194a02050f7d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1950,
+          "sha256": "f99a005512aa29f4abbef1b352df3bb39066e900476e9c900bf60028c376cce8"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/domain/fault_plan.ts",
+      "beforeSha256": "f2cfd37f1e9ade7dfa5e9470498e28a6109d09dd6517390b9aede084e652d4be",
+      "afterSha256": "d885d29c2fb68aa7926f2129832349fc5118a2e83d6fcfb423558739a7493fae",
+      "commentEdits": 12,
+      "typedNodes": 626,
+      "nodeArrays": 101,
+      "noncommentLeaves": 751,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3093,
+          "sha256": "db1af3ae69c1662496453f9a0968f88c9f4e57b8bae515cbd4c6910de8277e96"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3350,
+          "sha256": "3d4fc638d3d5952c14c9114ff3b734f2245665a9628b12af9294406bd1ced798"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/domain/entities/player.ts",
+      "beforeSha256": "049fcd5d8650a7c2b01ecf5974f5b1849f1fa870967a3131e0d15f1310a72e1b",
+      "afterSha256": "78064d897cb16e4309b8a267433364d707038a709aad09d1db0df01fda066266",
+      "commentEdits": 5,
+      "typedNodes": 55,
+      "nodeArrays": 9,
+      "noncommentLeaves": 66,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 155,
+          "sha256": "27348dad040798003d40c36c2ced4fb68c9810ffca02cf91a27d5ee1d6aeb6f6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 284,
+          "sha256": "bf1a23b8177f018e3c4deb0e8dccf591764da455703b82c6ced7f48bd9cf9dd6"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/domain/registries/phase_registry.ts",
+      "beforeSha256": "13cbbfc58e2c31a7bbe18c76eeb42455d30824a059079161635a31423d3baf67",
+      "afterSha256": "5dd6c3ed1e35eb255c0f7e5a97ffb01db13c7d5fcac3c8bab82d6eb7bd9666c2",
+      "commentEdits": 7,
+      "typedNodes": 73,
+      "nodeArrays": 15,
+      "noncommentLeaves": 92,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 302,
+          "sha256": "3f1b2e14a03ef3cf13aa9881723e6d5e689b91bfcb12a072de70e07299adebae"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 470,
+          "sha256": "d4ef902a600c7244546126ed5a2458d15c76f7da9ae119b22e7ef2261e5158da"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/domain/registries/role_registry.ts",
+      "beforeSha256": "bc68678a6799ec67f0da5771ef978c5e5614540304cdbeda7ace6d918924c26d",
+      "afterSha256": "10ca592289feeeb013f66bae1b3cf8cd64f7feb73dfda6199aba997883738213",
+      "commentEdits": 9,
+      "typedNodes": 95,
+      "nodeArrays": 23,
+      "noncommentLeaves": 128,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeForwardInverse": true,
+      "completeTypedTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 390,
+          "sha256": "7e22a3e0395cf84aeccaeb324ca393e66fad95a1492a056f1eb767043d66300b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 540,
+          "sha256": "2bb746576c6cab7c43e2448953876b0222d55bfd47c811bca469f6730fa7ea70"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/engine/fault_plan.ts",
+      "sha256": "277a409b61332db28252fb5c385d1b99fd91e3889900b71d9547b0494c6a8002",
+      "blob": "2cebc2af9eb0667a8298eb86b9c48c4ed50a2c69",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/permissions.ts",
+      "sha256": "4f1cf46387017566bc3eb600ca2910943538d6c4693ec073b4685a770d5f956b",
+      "blob": "55a36b0a08564463a8c499287b3c12795d77469d",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "sha256": "061a792b1f5bb898cbf8a8162e9754012581b1007990af4a363179c20315eaf4",
+      "blob": "c81ce2270b3a0e81c05c09de65be283c6cbbe907",
+      "mode": "100644"
+    }
+  ],
+  "summary": {
+    "sources": 6,
+    "commentEdits": 58,
+    "typedNodes": 1623,
+    "nodeArrays": 269,
+    "noncommentLeaves": 1979,
+    "jsdocTags": 0,
+    "protectedComments": 0,
+    "wholeRawOutputs": 12
+  },
+  "limits": [
+    "六个实际完整程序的非注释 AST／NodeArray／叶文本／受保护指令与12份移除注释ESNext/CJS整输出；没有类型检查、生产加载或行为测试。",
+    "完整精确正逆仅证明实际精确注释变换的来源；职责头形状和emit相同不代替独立说明语义审查。",
+    "当前源码SHA改变；不改严格归档字段、历史sourceHash或门禁豁免。"
+  ]
+}

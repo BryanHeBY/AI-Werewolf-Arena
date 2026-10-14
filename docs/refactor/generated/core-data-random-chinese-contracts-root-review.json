@@ -1,0 +1,61 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "e18b4635606eac6ac8394f43e3e078efeb54d531",
+  "source": [
+    {
+      "path": "backend/src/core/domain/plain_data.ts",
+      "sha256": "bf6473cfd3a31eec144d3fbda9f27eb0317ec7886aeb453c6d52ed032801da7b"
+    },
+    {
+      "path": "backend/src/core/domain/random.ts",
+      "sha256": "3e01c3980fb8ecc46483f37bbb3ca86f797d9b6bbb324dd6c8242907bc875f41"
+    },
+    {
+      "path": "backend/src/core/domain/fault_plan.ts",
+      "sha256": "d9cb40b9d201e179187f7509475a1b765c3e70f0f91c12a4a30d5c24922aa475"
+    },
+    {
+      "path": "backend/src/core/domain/entities/player.ts",
+      "sha256": "78064d897cb16e4309b8a267433364d707038a709aad09d1db0df01fda066266"
+    },
+    {
+      "path": "backend/src/core/domain/registries/phase_registry.ts",
+      "sha256": "5dd6c3ed1e35eb255c0f7e5a97ffb01db13c7d5fcac3c8bab82d6eb7bd9666c2"
+    },
+    {
+      "path": "backend/src/core/domain/registries/role_registry.ts",
+      "sha256": "10ca592289feeeb013f66bae1b3cf8cd64f7feb73dfda6199aba997883738213"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/core-data-random-chinese-contracts-scope-final.json",
+    "sha256": "e99b111e9b825e94dd2ad2d97422a0bda6ebf883bcc80f2ebe9f9370849b07b4"
+  },
+  "document": {
+    "path": "docs/refactor/core-data-random-chinese-contracts.md",
+    "sha256": "4f2af582dacbece4656fecdb7e27247f37c845687d1e5a31b6a25be7c9a894d7"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/core-data-random-chinese-contracts-evidence.json",
+    "sha256": "666ab1edfab2845e86005ef509f4bf05ecffb0d26f166097b85ed7e1f950e935"
+  },
+  "integrity": {
+    "freshSources": 6,
+    "actualGitBefore": 6,
+    "controls": 3,
+    "artifactHashes": 17,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "comments": "实际六完整程序及真实consumer核说明，Root自己发现并限定修正fault eager复制措辞；有效说明覆盖descriptor、递归路径、对象字段与数组可写差异、RNG序列和metadata、身份/注册资料非许可。",
+    "provenance": "六actuale18完整原Git/三个同字节control与58精确位置差分、单comment后继和完整AST/NodeArray/非注释叶/原tags/12+2emit程序读取，真实04ed82/7f9957/cfc685均0。",
+    "boundaries": "只注释，原枚举/签名/数据/错误/机器文本/默认值/运行程序保持；sourceHash真实变化，不改历史输入或豁免。"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}
