@@ -8,8 +8,6 @@ import type { ToolGateway } from "../../../gateway/tool_gateway";
 import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import * as shared from "../initial_identity/setup";
 export type ThiefScope = shared.InitialIdentityScope;
-export const sameThiefScope = (s: ThiefScope) =>
-  s.kind === "thief" && shared.sameInitialIdentityScope(s);
 export const authorizedThiefScope = (
   world: World,
   actorId: number,
@@ -17,21 +15,21 @@ export const authorizedThiefScope = (
   phase: Phase,
   scope: object | undefined,
 ) => shared.authorizedInitialIdentityScope(world, actorId, day, phase, scope, "thief");
-export const bindThiefRequest = (world: World, r: ActionRequest) => {
-  if (r.context.stage === "thief") shared.bindInitialIdentityRequest(world, r);
-};
+/** 先让共享请求绑定检查原体／context，再按kind返回原scope；查询不接受行动或续期权限。 */
 export const thiefRequestScope = (world: World, r: ActionRequest) => {
   const s = shared.initialIdentityRequestScope(world, r);
   return s?.kind === "thief" ? s : undefined;
 };
+/** 原stage先短路；共享owner才复验仅deadline差异和别名绑定，错误阶段不传播另一族请求。 */
 export const inheritThiefDeadlineRequest = (a: ActionRequest, b: ActionRequest) => {
   if (a.context.stage === "thief") shared.inheritInitialIdentityDeadlineRequest(a, b);
 };
+/** 共享owner核actor／kind／当前性后，旧盗贼视图只保required与同一cards数组；不另公开allowedSlots。 */
 export function projectThiefChoices(world: World, actorId: number) {
   const s = shared.initialIdentityRequestChoices(world, actorId, "thief");
   return s ? { required: s.mustChoose, cards: s.cards } : undefined;
 }
-/** Catalog 可在共享 setup 尚在求值时导入此模块；因此只在实例构造时读取共享类，不在顶层捕获。 */
+/** Catalog可在共享setup求值中导入；原new点才读取shared类，保参数／惰性依赖原引用，不在顶层捕获构造器。 */
 export class ThiefSetupWindow {
   private readonly window: shared.InitialIdentitySetupWindow;
   constructor(

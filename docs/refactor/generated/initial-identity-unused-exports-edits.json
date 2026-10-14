@@ -1,0 +1,151 @@
+{
+  "sourceEdits": {
+    "backend/src/game/mechanisms/roles/thief/deal.ts": [
+      {
+        "before": "export const readThiefCard = shared.readInitialIdentityCard;\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "/** Legacy Thief boundary: shared storage is never exposed as another role's Thief deal. */",
+        "after": "/**\n * 负责盗贼对共享初始身份库存、准备状态和选择投影的kind隔离。输入为原World、牌组／玩家或选择；\n * 输出原库存引用、脱离投影或原族错误，不把另一种已安装机制当成盗贼deal。\n * 唯一库存、发牌和提交仍归initial_identity；异族库存／投影返回undefined，布尔验证沿原false，ready为true，关闭／开夜不操作异族。\n * 先核安装kind再调用原共享方法，不以当前玩家角色标签重新分配权限，也不创建第二份库存。\n */",
+        "count": 1
+      },
+      {
+        "before": "const owns = (world: World) => shared.initialIdentityKind(world) === \"thief\";",
+        "after": "// 安装kind来自同一共享owner；身份已换牌也不改本入口归属，不提前缓存World或共享查询。\nconst owns = (world: World) => shared.initialIdentityKind(world) === \"thief\";",
+        "count": 1
+      },
+      {
+        "before": "export function openThiefSetup(world: World): ThiefDeal {",
+        "after": "/** 错族先给原盗贼错误；只有本族才进入共享open和其原重入／状态检查，失败不补开窗口。 */\nexport function openThiefSetup(world: World): ThiefDeal {",
+        "count": 1
+      },
+      {
+        "before": "export function projectThiefSetup(world: World) {",
+        "after": "/** 先kind隔离，再读共享投影；保原新外层对象及共享selection副本，不披露异族牌面或新授选择。 */\nexport function projectThiefSetup(world: World) {",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/thief/setup.ts": [
+      {
+        "before": "export const sameThiefScope = (s: ThiefScope) =>\n  s.kind === \"thief\" && shared.sameInitialIdentityScope(s);\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "export const bindThiefRequest = (world: World, r: ActionRequest) => {\n  if (r.context.stage === \"thief\") shared.bindInitialIdentityRequest(world, r);\n};\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "export const thiefRequestScope = (world: World, r: ActionRequest) => {",
+        "after": "/** 先让共享请求绑定检查原体／context，再按kind返回原scope；查询不接受行动或续期权限。 */\nexport const thiefRequestScope = (world: World, r: ActionRequest) => {",
+        "count": 1
+      },
+      {
+        "before": "export const inheritThiefDeadlineRequest = (a: ActionRequest, b: ActionRequest) => {",
+        "after": "/** 原stage先短路；共享owner才复验仅deadline差异和别名绑定，错误阶段不传播另一族请求。 */\nexport const inheritThiefDeadlineRequest = (a: ActionRequest, b: ActionRequest) => {",
+        "count": 1
+      },
+      {
+        "before": "export function projectThiefChoices(world: World, actorId: number) {",
+        "after": "/** 共享owner核actor／kind／当前性后，旧盗贼视图只保required与同一cards数组；不另公开allowedSlots。 */\nexport function projectThiefChoices(world: World, actorId: number) {",
+        "count": 1
+      },
+      {
+        "before": "/** Catalog 可在共享 setup 尚在求值时导入此模块；因此只在实例构造时读取共享类，不在顶层捕获。 */",
+        "after": "/** Catalog可在共享setup求值中导入；原new点才读取shared类，保参数／惰性依赖原引用，不在顶层捕获构造器。 */",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/shapeshifter/deal.ts": [
+      {
+        "before": "export const readShapeshifterCard = shared.readInitialIdentityCard;\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "/** Own-role boundary over the common physical stock. */",
+        "after": "/**\n * 负责千面人对共享实体牌库存、准备状态与选择投影的kind边界。输入为原World、牌组／玩家或slot；\n * 输出本族原引用、选择副本或原拒绝，异族查询不披露库存，ready沿原true及关闭／开夜no-op。\n * 库存与物理换牌只归initial_identity；本入口保先kind后共享调用、原错误前缀及选择slot限制。\n * 显示投影不授予换牌或生命权限，不合并盗贼可保留身份与千面人必须选牌两种政策。\n */",
+        "count": 1
+      },
+      {
+        "before": "const owns = (world: World) => shared.initialIdentityKind(world) === \"shapeshifter\";",
+        "after": "// 只按共享owner已安装kind隔离；不从已换牌后的live角色或玩家知识推断本族许可。\nconst owns = (world: World) => shared.initialIdentityKind(world) === \"shapeshifter\";",
+        "count": 1
+      },
+      {
+        "before": "export function projectShapeshifterSetup(world: World) {",
+        "after": "/** 先kind与完整共享投影，再核null slot并重建selection；不提前复制／读选择或放宽千面人的原拒绝。 */\nexport function projectShapeshifterSetup(world: World) {",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/shapeshifter/setup.ts": [
+      {
+        "before": "export const sameShapeshifterScope = (s: ShapeshifterScope) =>\n  s.kind === \"shapeshifter\" && shared.sameInitialIdentityScope(s);\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "export const bindShapeshifterRequest = (world: World, r: ActionRequest) => {\n  if (r.context.stage === \"shapeshifter\") shared.bindInitialIdentityRequest(world, r);\n};\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "export const shapeshifterRequestScope = (world: World, r: ActionRequest) => {",
+        "after": "/** 先让共享请求绑定检查原体／context，再按kind返回原scope；查询不接受行动或续期权限。 */\nexport const shapeshifterRequestScope = (world: World, r: ActionRequest) => {",
+        "count": 1
+      },
+      {
+        "before": "export const inheritShapeshifterDeadlineRequest = (a: ActionRequest, b: ActionRequest) => {",
+        "after": "/** 原stage先短路；共享owner才复验仅deadline差异和别名绑定，错误阶段不传播另一族请求。 */\nexport const inheritShapeshifterDeadlineRequest = (a: ActionRequest, b: ActionRequest) => {",
+        "count": 1
+      },
+      {
+        "before": "export function projectShapeshifterChoices(world: World, actorId: number) {",
+        "after": "/** 返回原共享选择对象，保mustChoose／allowedSlots／cards形状；不照盗贼裁剪或重新推导必选政策。 */\nexport function projectShapeshifterChoices(world: World, actorId: number) {",
+        "count": 1
+      },
+      {
+        "before": "/** Catalog 可在共享 setup 尚在求值时导入此模块；因此只在实例构造时读取共享类，不在顶层捕获。 */",
+        "after": "/** Catalog可在共享setup求值中导入；原new点才读取shared类，保参数／惰性依赖原引用，不在顶层捕获构造器。 */",
+        "count": 1
+      }
+    ]
+  },
+  "retired": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "name": "readThiefCard",
+      "declaration": "export const readThiefCard = shared.readInitialIdentityCard;\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "name": "sameThiefScope",
+      "declaration": "export const sameThiefScope = (s: ThiefScope) =>\n  s.kind === \"thief\" && shared.sameInitialIdentityScope(s);\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "name": "bindThiefRequest",
+      "declaration": "export const bindThiefRequest = (world: World, r: ActionRequest) => {\n  if (r.context.stage === \"thief\") shared.bindInitialIdentityRequest(world, r);\n};\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "name": "readShapeshifterCard",
+      "declaration": "export const readShapeshifterCard = shared.readInitialIdentityCard;\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "name": "sameShapeshifterScope",
+      "declaration": "export const sameShapeshifterScope = (s: ShapeshifterScope) =>\n  s.kind === \"shapeshifter\" && shared.sameInitialIdentityScope(s);\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "name": "bindShapeshifterRequest",
+      "declaration": "export const bindShapeshifterRequest = (world: World, r: ActionRequest) => {\n  if (r.context.stage === \"shapeshifter\") shared.bindInitialIdentityRequest(world, r);\n};\n"
+    }
+  ],
+  "retiredCount": 6,
+  "totalPreciseEdits": 21
+}

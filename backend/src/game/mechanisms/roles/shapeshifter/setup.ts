@@ -8,8 +8,6 @@ import type { ToolGateway } from "../../../gateway/tool_gateway";
 import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import * as shared from "../initial_identity/setup";
 export type ShapeshifterScope = shared.InitialIdentityScope;
-export const sameShapeshifterScope = (s: ShapeshifterScope) =>
-  s.kind === "shapeshifter" && shared.sameInitialIdentityScope(s);
 export const authorizedShapeshifterScope = (
   world: World,
   actorId: number,
@@ -17,21 +15,21 @@ export const authorizedShapeshifterScope = (
   phase: Phase,
   scope: object | undefined,
 ) => shared.authorizedInitialIdentityScope(world, actorId, day, phase, scope, "shapeshifter");
-export const bindShapeshifterRequest = (world: World, r: ActionRequest) => {
-  if (r.context.stage === "shapeshifter") shared.bindInitialIdentityRequest(world, r);
-};
+/** 先让共享请求绑定检查原体／context，再按kind返回原scope；查询不接受行动或续期权限。 */
 export const shapeshifterRequestScope = (world: World, r: ActionRequest) => {
   const s = shared.initialIdentityRequestScope(world, r);
   return s?.kind === "shapeshifter" ? s : undefined;
 };
+/** 原stage先短路；共享owner才复验仅deadline差异和别名绑定，错误阶段不传播另一族请求。 */
 export const inheritShapeshifterDeadlineRequest = (a: ActionRequest, b: ActionRequest) => {
   if (a.context.stage === "shapeshifter") shared.inheritInitialIdentityDeadlineRequest(a, b);
 };
+/** 返回原共享选择对象，保mustChoose／allowedSlots／cards形状；不照盗贼裁剪或重新推导必选政策。 */
 export function projectShapeshifterChoices(world: World, actorId: number) {
   const s = shared.initialIdentityRequestChoices(world, actorId, "shapeshifter");
   return s;
 }
-/** Catalog 可在共享 setup 尚在求值时导入此模块；因此只在实例构造时读取共享类，不在顶层捕获。 */
+/** Catalog可在共享setup求值中导入；原new点才读取shared类，保参数／惰性依赖原引用，不在顶层捕获构造器。 */
 export class ShapeshifterSetupWindow {
   private readonly window: shared.InitialIdentitySetupWindow;
   constructor(

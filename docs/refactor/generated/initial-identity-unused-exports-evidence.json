@@ -1,0 +1,264 @@
+{
+  "baseCommit": "a78df2261c00478bd105660529d8a30537a32f2d",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "sha256": "ed0a0806617e90d671acb58990fa70876208d1e3e8562b3cb91a5c3ee336e2e4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "20557f4fd4b23ccb9c5c37e88309b89b1f2b41b5e4db2cab63bbc4be2ec74517"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "sha256": "7f58a8e42b501ec679eb64f2968a6fa9907c08189b143d70baa0142f9176d32b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "2b2ad2ef1b645556226e1ea18a6e9e0f38e201eb11f2d252aa53d7b49ee3ef17"
+    }
+  ],
+  "deleted": [],
+  "retiredExports": [
+    "readThiefCard",
+    "sameThiefScope",
+    "bindThiefRequest",
+    "readShapeshifterCard",
+    "sameShapeshifterScope",
+    "bindShapeshifterRequest"
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "6a7d05b7ab4f521694107d970275d41a6824ae7deca7c159de183aac4ebc6012"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts",
+      "sha256": "6cc42473ec388f359f6776a29b6853968d3a8c11786e1b1dbc661659f7e375c9"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "sha256": "19095edf4e70de68a76649a95f7efddcfaa93bf52aec627e23a5c261acea3400"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "ea3270ba78cc674ffa6ee9e9d9c84cdba4fe20b037c45b4c15e68fe2cbf92909"
+    },
+    {
+      "path": "backend/tests/architecture/identity-import-initialization.test.ts",
+      "sha256": "f4661b1376ae372c41e1bb44d3f8f81d70a7ea7752d2dafe59f51ebd4a7e9ce4"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/initial-identity-unused-exports.md",
+    "sha256": "ec7ce457704d13ea51ec78efc620499983699431b973e61f5f6cf8dc60ad5bcf"
+  },
+  "frozen": true,
+  "limits": [
+    "主动退休六零静态调用公共出口，不承诺仓外使用兼容；旧其它API/类型/class/所有保留算法和binding保持，不整退四模块。",
+    "readThiefCard/readShapeshifterCard删除也取消原顶层shared.readInitialIdentityCard属性读取；这是真实初始化/API变化，不冒任意CJS getter/rebinding或全部冷图等价。",
+    "其余四scope/bind箭头分配也退休，但shared namespace import与原晚构造类保留；不新增store、规则或cleanup。",
+    "所列wholeInverse输出与删准确六声明后的mapped-retained输出分别界定，不宣称完整旧／新模块raw相同。",
+    "首运行/类型先于Thief布尔说明纯comment校准，单comment全程序/两raw桥连接，不重绿。"
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/initial-identity-unused-exports-scope-final.json",
+    "sha256": "874339e155a19dc0e07189b5845e85693ca2333cab301513aeee077a71ebaabf"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-before.json",
+      "sha256": "d19482519e00da34f944fcb33e36a90d12840196ec6de32453ccdb179d01a966"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-edits.json",
+      "sha256": "4e6d76aa3fb294a9407691fe51d758a4d641e6979e9b051835e46e439a12c49d"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-head-precision-before.json",
+      "sha256": "9c67c7590564995e4b60fb9471102fe26fa1d64b0931850c55fbf7eea417b12e"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-heads-output.txt",
+      "sha256": "49bfc05df5aacb2e1cd58783f41475b4ec4ffaee68675003d413647375ce7e50"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-heads.json",
+      "sha256": "86bf98e8f4e3398bab2963d5c42cdb7b09514243b9e2bd670c57004e80f707ad"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-heads.ts",
+      "sha256": "d96efaa43307a94c817227caeeee7aab2c4b9647bf4f081b72ac0e489e5e7407"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-inventory-before.json",
+      "sha256": "f80d3bb5c809028718603af426622c0d58e0dc17afd1d41240e0716118998c52"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-inventory-output.txt",
+      "sha256": "7c3d869926f13246cbab0e60befd16737126e6d2f58b20372f410713b443c5c9"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-inventory.cjs",
+      "sha256": "13dadace0c1e7344aa2d8453d9f005b8f5adf9a2437c19bc5ae3e588bc473525"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-paths.json",
+      "sha256": "5f497601b27a5c4e15aec9a9871c707dc8fb28f15d7a65f98e7c68e02575ba7c"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-proof-output.txt",
+      "sha256": "7fb5ecf9cb4b880b522b668e89592858100ef346748dcebb5c918532f83b7261"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-proof.cjs",
+      "sha256": "e9118f1e8178c5abb4b018f877459191a0872409d3260d383ad35bbe98058364"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-proof.json",
+      "sha256": "2c102f0ff47b6e312cd34286ca23e15ef0089f10bde9713ff2f5f1d4290156f7"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-receipts.json",
+      "sha256": "aa3878d267dcc33af940b41aea515678ac7e9382b0171bc2af97a4d99ecdd1f3"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-shapeshifter-isolation-output.txt",
+      "sha256": "c6b717fec8ab80bd598ea37a51845b3f01150be145e0b72095e4e93961b5a6d7"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-thief-isolation-output.txt",
+      "sha256": "1927ac2c3538031ece8f3eacb3911eadb2f33e940ed2b77335aa17c843df1a44"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-types-config.json",
+      "sha256": "a9d4613154dcfb91ad179426575c02f461550e810a93afb6f024f0ef1da869a2"
+    },
+    {
+      "path": "docs/refactor/generated/initial-identity-unused-exports-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "summary": {
+    "sources": 4,
+    "preciseEdits": 21,
+    "wholeInverseTypedNodes": 1619,
+    "wholeInverseNoncommentLeaves": 1919,
+    "actualRetainedTypedNodes": 1491,
+    "actualRetainedNoncommentLeaves": 1785,
+    "wholeInverseRawOutputs": 8,
+    "retainedMappedRawOutputs": 8,
+    "headPrecisionRawOutputs": 2
+  },
+  "receipts": {
+    "capture": {
+      "baseCommit": "a78df2261c00478bd105660529d8a30537a32f2d",
+      "launchChunk": "dd743d",
+      "sourceGit": 4,
+      "controlsGitCurrent": 6
+    },
+    "inventory": {
+      "script": "docs/refactor/generated/initial-identity-unused-exports-inventory.cjs",
+      "launchChunk": "dd743d",
+      "session": 4664,
+      "terminalChunk": "19207b",
+      "exitCode": 0,
+      "sourceFiles": 1891,
+      "moduleSites": 21,
+      "namespaceUses": 10,
+      "zeroNamedConsumers": true,
+      "zeroReferences": true,
+      "zeroEmbeddedTargetStrings": true,
+      "output": "docs/refactor/generated/initial-identity-unused-exports-inventory-output.txt"
+    },
+    "runtime": [
+      {
+        "kind": "thiefOtherKindIsolation",
+        "command": "bun test backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts -t 'legacy Thief boundary never exposes or closes a different initial mechanism; shared gate blocks pre-setup wolf knowledge'",
+        "terminalChunk": "bcf637",
+        "exitCode": 0,
+        "cases": 1,
+        "assertions": 12,
+        "filtered": 1,
+        "output": "docs/refactor/generated/initial-identity-unused-exports-thief-isolation-output.txt"
+      },
+      {
+        "kind": "shapeshifterLegacyNoStock",
+        "command": "bun test backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts -t 'ordinary N-card deal preserves prior seeded RNG path and has no Shapeshifter stock'",
+        "terminalChunk": "594048",
+        "exitCode": 0,
+        "cases": 1,
+        "assertions": 3,
+        "filtered": 43,
+        "output": "docs/refactor/generated/initial-identity-unused-exports-shapeshifter-isolation-output.txt"
+      }
+    ],
+    "sourceAtRuntimeAndTypeLaunch": [
+      {
+        "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+        "sha256": "84a6aeb7bff4addaaaead35f3a4585633fe880fc8bb9f76282cc82ef80e73255"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+        "sha256": "20557f4fd4b23ccb9c5c37e88309b89b1f2b41b5e4db2cab63bbc4be2ec74517"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+        "sha256": "7f58a8e42b501ec679eb64f2968a6fa9907c08189b143d70baa0142f9176d32b"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+        "sha256": "2b2ad2ef1b645556226e1ea18a6e9e0f38e201eb11f2d252aa53d7b49ee3ef17"
+      }
+    ],
+    "types": {
+      "launchChunk": "4fe341",
+      "session": 26832,
+      "terminalChunk": "a6c992",
+      "exitCode": 0,
+      "roots": 4,
+      "config": "docs/refactor/generated/initial-identity-unused-exports-types-config.json",
+      "output": "docs/refactor/generated/initial-identity-unused-exports-types-output.txt"
+    },
+    "headPrecision": {
+      "chunk": "75219d",
+      "commentOnly": true,
+      "phase": "在唯一proof/head之前修正，首运行／type不重复",
+      "before": "docs/refactor/generated/initial-identity-unused-exports-head-precision-before.json",
+      "wholeTypedAndRawBridgeIn": "docs/refactor/generated/initial-identity-unused-exports-proof.json"
+    },
+    "proof": {
+      "terminalChunk": "a06341",
+      "exitCode": 0,
+      "executions": 1,
+      "script": "docs/refactor/generated/initial-identity-unused-exports-proof.cjs",
+      "report": "docs/refactor/generated/initial-identity-unused-exports-proof.json",
+      "output": "docs/refactor/generated/initial-identity-unused-exports-proof-output.txt"
+    },
+    "heads": {
+      "terminalChunk": "a50e01",
+      "exitCode": 0,
+      "executions": 1,
+      "source": 4,
+      "documentationPaths": 626,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "output": "docs/refactor/generated/initial-identity-unused-exports-heads-output.txt"
+    },
+    "distinctRuntimeCases": 2,
+    "successfulAssertions": 15,
+    "notRun": [
+      "new mirror units",
+      "full old groups",
+      "whole games",
+      "models",
+      "global gates",
+      "green repeats"
+    ]
+  },
+  "reviewStatus": "冻结交Root与非作者审查；作者不自审。"
+}

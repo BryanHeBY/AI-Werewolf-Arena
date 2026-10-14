@@ -1,0 +1,299 @@
+{
+  "baseCommit": "a78df2261c00478bd105660529d8a30537a32f2d",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "sha256": "ed0a0806617e90d671acb58990fa70876208d1e3e8562b3cb91a5c3ee336e2e4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "20557f4fd4b23ccb9c5c37e88309b89b1f2b41b5e4db2cab63bbc4be2ec74517"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "sha256": "7f58a8e42b501ec679eb64f2968a6fa9907c08189b143d70baa0142f9176d32b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "2b2ad2ef1b645556226e1ea18a6e9e0f38e201eb11f2d252aa53d7b49ee3ef17"
+    }
+  ],
+  "retired": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "name": "readThiefCard",
+      "declaration": "export const readThiefCard = shared.readInitialIdentityCard;\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "name": "sameThiefScope",
+      "declaration": "export const sameThiefScope = (s: ThiefScope) =>\n  s.kind === \"thief\" && shared.sameInitialIdentityScope(s);\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "name": "bindThiefRequest",
+      "declaration": "export const bindThiefRequest = (world: World, r: ActionRequest) => {\n  if (r.context.stage === \"thief\") shared.bindInitialIdentityRequest(world, r);\n};\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "name": "readShapeshifterCard",
+      "declaration": "export const readShapeshifterCard = shared.readInitialIdentityCard;\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "name": "sameShapeshifterScope",
+      "declaration": "export const sameShapeshifterScope = (s: ShapeshifterScope) =>\n  s.kind === \"shapeshifter\" && shared.sameInitialIdentityScope(s);\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "name": "bindShapeshifterRequest",
+      "declaration": "export const bindShapeshifterRequest = (world: World, r: ActionRequest) => {\n  if (r.context.stage === \"shapeshifter\") shared.bindInitialIdentityRequest(world, r);\n};\n"
+    }
+  ],
+  "retiredCount": 6,
+  "programs": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "beforeSha256": "709ab407961bc13de1b04dadf5bbdc4cd7e5fdec1430f3c82cb6384021b60122",
+      "sha256": "ed0a0806617e90d671acb58990fa70876208d1e3e8562b3cb91a5c3ee336e2e4",
+      "preciseEdits": 5,
+      "wholeRawForwardInverse": true,
+      "wholeInverse": {
+        "typedNodes": 484,
+        "noncommentLeaves": 576,
+        "completeTypedAndTokenSame": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true
+          }
+        ]
+      },
+      "actualRetained": {
+        "typedNodes": 476,
+        "noncommentLeaves": 568,
+        "completeTypedAndTokenSame": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true
+          }
+        ]
+      },
+      "allImportsSame": true,
+      "retired": [
+        "readThiefCard"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "beforeSha256": "31034848c1e14f7a73da7fb6e72152d8b368a2f549e5186b9e4fc8aa408edda2",
+      "sha256": "20557f4fd4b23ccb9c5c37e88309b89b1f2b41b5e4db2cab63bbc4be2ec74517",
+      "preciseEdits": 6,
+      "wholeRawForwardInverse": true,
+      "wholeInverse": {
+        "typedNodes": 318,
+        "noncommentLeaves": 370,
+        "completeTypedAndTokenSame": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true
+          }
+        ]
+      },
+      "actualRetained": {
+        "typedNodes": 262,
+        "noncommentLeaves": 311,
+        "completeTypedAndTokenSame": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true
+          }
+        ]
+      },
+      "allImportsSame": true,
+      "retired": [
+        "sameThiefScope",
+        "bindThiefRequest"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "beforeSha256": "c8b16b4a6a9dc16800b1afe3203c3b7bca523e483f532ff0d489d6900e4f8521",
+      "sha256": "7f58a8e42b501ec679eb64f2968a6fa9907c08189b143d70baa0142f9176d32b",
+      "preciseEdits": 4,
+      "wholeRawForwardInverse": true,
+      "wholeInverse": {
+        "typedNodes": 514,
+        "noncommentLeaves": 619,
+        "completeTypedAndTokenSame": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true
+          }
+        ]
+      },
+      "actualRetained": {
+        "typedNodes": 506,
+        "noncommentLeaves": 611,
+        "completeTypedAndTokenSame": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true
+          }
+        ]
+      },
+      "allImportsSame": true,
+      "retired": [
+        "readShapeshifterCard"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "beforeSha256": "890971484a377f4a2e98094cf3071985ea3ff9f981a25b10dec411bc801481dd",
+      "sha256": "2b2ad2ef1b645556226e1ea18a6e9e0f38e201eb11f2d252aa53d7b49ee3ef17",
+      "preciseEdits": 6,
+      "wholeRawForwardInverse": true,
+      "wholeInverse": {
+        "typedNodes": 303,
+        "noncommentLeaves": 354,
+        "completeTypedAndTokenSame": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true
+          }
+        ]
+      },
+      "actualRetained": {
+        "typedNodes": 247,
+        "noncommentLeaves": 295,
+        "completeTypedAndTokenSame": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true
+          }
+        ]
+      },
+      "allImportsSame": true,
+      "retired": [
+        "sameShapeshifterScope",
+        "bindShapeshifterRequest"
+      ]
+    }
+  ],
+  "headPrecision": {
+    "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+    "beforeSha256": "84a6aeb7bff4addaaaead35f3a4585633fe880fc8bb9f76282cc82ef80e73255",
+    "sha256": "ed0a0806617e90d671acb58990fa70876208d1e3e8562b3cb91a5c3ee336e2e4",
+    "typedNodes": 476,
+    "noncommentLeaves": 568,
+    "completeTypedAndTokenSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true
+      }
+    ]
+  },
+  "inventory": {
+    "path": "docs/refactor/generated/initial-identity-unused-exports-inventory-before.json",
+    "sha256": "f80d3bb5c809028718603af426622c0d58e0dc17afd1d41240e0716118998c52",
+    "files": 1891,
+    "moduleSites": 21,
+    "namespaceUses": 10,
+    "zeroStaticConsumers": true
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "wholeCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "6a7d05b7ab4f521694107d970275d41a6824ae7deca7c159de183aac4ebc6012",
+      "wholeCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts",
+      "sha256": "6cc42473ec388f359f6776a29b6853968d3a8c11786e1b1dbc661659f7e375c9",
+      "wholeCurrentSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "sha256": "19095edf4e70de68a76649a95f7efddcfaa93bf52aec627e23a5c261acea3400",
+      "wholeCurrentSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "ea3270ba78cc674ffa6ee9e9d9c84cdba4fe20b037c45b4c15e68fe2cbf92909",
+      "wholeCurrentSame": true
+    },
+    {
+      "path": "backend/tests/architecture/identity-import-initialization.test.ts",
+      "sha256": "f4661b1376ae372c41e1bb44d3f8f81d70a7ea7752d2dafe59f51ebd4a7e9ce4",
+      "wholeCurrentSame": true
+    }
+  ],
+  "nonfirstLiteralCounterexampleDetected": true,
+  "summary": {
+    "sources": 4,
+    "preciseEdits": 21,
+    "wholeInverseTypedNodes": 1619,
+    "wholeInverseNoncommentLeaves": 1919,
+    "actualRetainedTypedNodes": 1491,
+    "actualRetainedNoncommentLeaves": 1785,
+    "wholeInverseRawOutputs": 8,
+    "retainedMappedRawOutputs": 8,
+    "headPrecisionRawOutputs": 2
+  },
+  "limits": [
+    "主动退休六零静态调用公共出口，不承诺仓外使用兼容；旧其它API/类型/class/所有保留算法和binding保持，不整退四模块。",
+    "readThiefCard/readShapeshifterCard删除也取消原顶层shared.readInitialIdentityCard属性读取；这是真实初始化/API变化，不冒任意CJS getter/rebinding或全部冷图等价。",
+    "其余四scope/bind箭头分配也退休，但shared namespace import与原晚构造类保留；不新增store、规则或cleanup。",
+    "所列wholeInverse输出与删准确六声明后的mapped-retained输出分别界定，不宣称完整旧／新模块raw相同。",
+    "首运行/类型先于Thief布尔说明纯comment校准，单comment全程序/两raw桥连接，不重绿。"
+  ]
+}

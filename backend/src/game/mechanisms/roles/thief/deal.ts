@@ -1,11 +1,16 @@
-/** Legacy Thief boundary: shared storage is never exposed as another role's Thief deal. */
+/**
+ * 负责盗贼对共享初始身份库存、准备状态和选择投影的kind隔离。输入为原World、牌组／玩家或选择；
+ * 输出原库存引用、脱离投影或原族错误，不把另一种已安装机制当成盗贼deal。
+ * 唯一库存、发牌和提交仍归initial_identity；异族库存／投影返回undefined，布尔验证沿原false，ready为true，关闭／开夜不操作异族。
+ * 先核安装kind再调用原共享方法，不以当前玩家角色标签重新分配权限，也不创建第二份库存。
+ */
 import { type World, type Role } from "../../../../core/domain";
 import * as shared from "../initial_identity/deal";
 export type ThiefCard = shared.InitialIdentityCard;
 export type ThiefSlot = shared.InitialIdentitySlot;
 export type ThiefSetupStatus = shared.InitialIdentitySetupStatus;
 export type ThiefDeal = shared.InitialIdentityDeal;
-export const readThiefCard = shared.readInitialIdentityCard;
+// 安装kind来自同一共享owner；身份已换牌也不改本入口归属，不提前缓存World或共享查询。
 const owns = (world: World) => shared.initialIdentityKind(world) === "thief";
 export function installThiefDeal(
   world: World,
@@ -28,6 +33,7 @@ export const thiefSetupReady = (world: World): boolean =>
   !owns(world) || shared.initialIdentitySetupReady(world);
 export const pendingThiefDealValid = (world: World): boolean =>
   owns(world) && shared.pendingInitialIdentityDealValid(world);
+/** 错族先给原盗贼错误；只有本族才进入共享open和其原重入／状态检查，失败不补开窗口。 */
 export function openThiefSetup(world: World): ThiefDeal {
   if (!owns(world)) throw new Error("thief_setup_unavailable");
   return shared.openInitialIdentitySetup(world);
@@ -39,6 +45,7 @@ export function selectThiefCard(world: World, actorId: number, slot: ThiefSlot |
   if (!owns(world)) throw new Error("thief_selection_unavailable");
   return shared.selectInitialIdentityCard(world, actorId, slot);
 }
+/** 先kind隔离，再读共享投影；保原新外层对象及共享selection副本，不披露异族牌面或新授选择。 */
 export function projectThiefSetup(world: World) {
   if (!owns(world)) return;
   const data = shared.projectInitialIdentitySetup(world);

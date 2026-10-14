@@ -1,0 +1,565 @@
+{
+  "baseCommit": "a78df2261c00478bd105660529d8a30537a32f2d",
+  "roots": [
+    "backend/src",
+    "backend/tests",
+    "backend/scripts",
+    "frontend/src",
+    "frontend/tests",
+    "packages",
+    "tooling"
+  ],
+  "files": 1891,
+  "names": [
+    "sameThiefScope",
+    "sameShapeshifterScope",
+    "bindThiefRequest",
+    "bindShapeshifterRequest",
+    "readThiefCard",
+    "readShapeshifterCard"
+  ],
+  "originalDeclarations": [
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "line": 8,
+      "name": "readShapeshifterCard",
+      "kind": "originalDeclaration",
+      "text": "readShapeshifterCard = shared.readInitialIdentityCard",
+      "sha256": "c8b16b4a6a9dc16800b1afe3203c3b7bca523e483f532ff0d489d6900e4f8521"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "line": 11,
+      "name": "sameShapeshifterScope",
+      "kind": "originalDeclaration",
+      "text": "sameShapeshifterScope = (s: ShapeshifterScope) =>\n  s.kind === \"shapeshifter\" && shared.sameInitialIdentityScope(s)",
+      "sha256": "890971484a377f4a2e98094cf3071985ea3ff9f981a25b10dec411bc801481dd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "line": 20,
+      "name": "bindShapeshifterRequest",
+      "kind": "originalDeclaration",
+      "text": "bindShapeshifterRequest = (world: World, r: ActionRequest) => {\n  if (r.context.stage === \"shapeshifter\") shared.bindInitialIdentityRequest(world, r);\n}",
+      "sha256": "890971484a377f4a2e98094cf3071985ea3ff9f981a25b10dec411bc801481dd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "line": 8,
+      "name": "readThiefCard",
+      "kind": "originalDeclaration",
+      "text": "readThiefCard = shared.readInitialIdentityCard",
+      "sha256": "709ab407961bc13de1b04dadf5bbdc4cd7e5fdec1430f3c82cb6384021b60122"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "line": 11,
+      "name": "sameThiefScope",
+      "kind": "originalDeclaration",
+      "text": "sameThiefScope = (s: ThiefScope) =>\n  s.kind === \"thief\" && shared.sameInitialIdentityScope(s)",
+      "sha256": "31034848c1e14f7a73da7fb6e72152d8b368a2f549e5186b9e4fc8aa408edda2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "line": 20,
+      "name": "bindThiefRequest",
+      "kind": "originalDeclaration",
+      "text": "bindThiefRequest = (world: World, r: ActionRequest) => {\n  if (r.context.stage === \"thief\") shared.bindInitialIdentityRequest(world, r);\n}",
+      "sha256": "31034848c1e14f7a73da7fb6e72152d8b368a2f549e5186b9e4fc8aa408edda2"
+    }
+  ],
+  "namedConsumers": [],
+  "references": [],
+  "embeddedStrings": [],
+  "moduleSites": [
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "line": 38,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/shapeshifter/deal",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "bindings": [
+        {
+          "local": "installShapeshifterDeal",
+          "imported": "installShapeshifterDeal",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "07d32cc09ca3d45952c6c9112dc21ed040ae29746a4a8b6ff0950866ee60b192",
+      "text": "import { installShapeshifterDeal } from \"../game/mechanisms/roles/shapeshifter/deal\";"
+    },
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "line": 39,
+      "form": "import",
+      "specifier": "../game/mechanisms/roles/thief/deal",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "bindings": [
+        {
+          "local": "installThiefDeal",
+          "imported": "installThiefDeal",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "07d32cc09ca3d45952c6c9112dc21ed040ae29746a4a8b6ff0950866ee60b192",
+      "text": "import { installThiefDeal } from \"../game/mechanisms/roles/thief/deal\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+      "line": 10,
+      "form": "namedExport",
+      "specifier": "./setup",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "bindings": [
+        {
+          "local": "shapeshifterRequestScope",
+          "imported": "shapeshifterRequestScope",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "8a643007910ea687bfc8a5853fdcd588c08a8f5f53966be86a172beed6dc6c77",
+      "text": "export { shapeshifterRequestScope } from \"./setup\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+      "line": 19,
+      "form": "import",
+      "specifier": "./setup",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "bindings": [
+        {
+          "local": "authorizedShapeshifterScope",
+          "imported": "authorizedShapeshifterScope",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "eb812218e0d622e7870aed8cfe479c7433ece12aa6181a796354dbbd9b46699e",
+      "text": "import { authorizedShapeshifterScope } from \"./setup\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "line": 9,
+      "form": "import",
+      "specifier": "./deal",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "bindings": [
+        {
+          "local": "shapeshifterSetupStatus",
+          "imported": "shapeshifterSetupStatus",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "a5c0898575b002666d95dfe5b5fc0b3d8efdfd3b9e9855ef951fae72b4f44018",
+      "text": "import { shapeshifterSetupStatus } from \"./deal\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/ports.ts",
+      "line": 9,
+      "form": "namedExport",
+      "specifier": "./setup",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "bindings": [
+        {
+          "local": "thiefRequestScope",
+          "imported": "thiefRequestScope",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "de9a9b72870ec62a0b63b2581c60b8bc5b938c6463d083eac3e4d7d6faf39f32",
+      "text": "export { thiefRequestScope } from \"./setup\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/profile.ts",
+      "line": 14,
+      "form": "import",
+      "specifier": "./setup",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "bindings": [
+        {
+          "local": "authorizedThiefScope",
+          "imported": "authorizedThiefScope",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "786a7d6317c66d999af26c719e93d7ccaf75888c50be0c693b9fe08a22f3d107",
+      "text": "import { authorizedThiefScope } from \"./setup\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "line": 9,
+      "form": "import",
+      "specifier": "./deal",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "bindings": [
+        {
+          "local": "thiefSetupStatus",
+          "imported": "thiefSetupStatus",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "42234cd1201b7d1e2de8cbee1028327e54059a18f779d26e3d8ba81c3dc7ec3e",
+      "text": "import { thiefSetupStatus } from \"./deal\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 41,
+      "form": "import",
+      "specifier": "../mechanisms/roles/shapeshifter/setup",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "bindings": [
+        {
+          "local": "projectShapeshifterChoices",
+          "imported": "projectShapeshifterChoices",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "8598def0aa170f14ffea6c86c33225529be74fe5b2cc62705dc1aa24f55fab22",
+      "text": "import { projectShapeshifterChoices } from \"../mechanisms/roles/shapeshifter/setup\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 43,
+      "form": "import",
+      "specifier": "../mechanisms/roles/thief/setup",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "bindings": [
+        {
+          "local": "projectThiefChoices",
+          "imported": "projectThiefChoices",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "8598def0aa170f14ffea6c86c33225529be74fe5b2cc62705dc1aa24f55fab22",
+      "text": "import { projectThiefChoices } from \"../mechanisms/roles/thief/setup\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "line": 32,
+      "form": "import",
+      "specifier": "../mechanisms/roles/shapeshifter/setup",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "bindings": [
+        {
+          "local": "projectShapeshifterChoices",
+          "imported": "projectShapeshifterChoices",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "839f243b900e74032f959f5b2f846e5232052df524176bb61e91322ea677a240",
+      "text": "import { projectShapeshifterChoices } from \"../mechanisms/roles/shapeshifter/setup\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "line": 35,
+      "form": "import",
+      "specifier": "../mechanisms/roles/thief/setup",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "bindings": [
+        {
+          "local": "projectThiefChoices",
+          "imported": "projectThiefChoices",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "839f243b900e74032f959f5b2f846e5232052df524176bb61e91322ea677a240",
+      "text": "import { projectThiefChoices } from \"../mechanisms/roles/thief/setup\";"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/identity-setups.ts",
+      "line": 9,
+      "form": "import",
+      "specifier": "../../game/mechanisms/roles/thief/deal",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "bindings": [
+        {
+          "local": "projectThiefSetup",
+          "imported": "projectThiefSetup",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "28fcbde4b67742185b55eed56cfe166fd4874c674a53dfa91cbd8c41415e7661",
+      "text": "import { projectThiefSetup } from \"../../game/mechanisms/roles/thief/deal\";"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/identity-setups.ts",
+      "line": 10,
+      "form": "import",
+      "specifier": "../../game/mechanisms/roles/shapeshifter/deal",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "bindings": [
+        {
+          "local": "projectShapeshifterSetup",
+          "imported": "projectShapeshifterSetup",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "28fcbde4b67742185b55eed56cfe166fd4874c674a53dfa91cbd8c41415e7661",
+      "text": "import { projectShapeshifterSetup } from \"../../game/mechanisms/roles/shapeshifter/deal\";"
+    },
+    {
+      "path": "backend/tests/integration/configuration/shapeshifter-public-examples.test.ts",
+      "line": 13,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/shapeshifter/deal",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "bindings": [
+        {
+          "local": "initialShapeshifterDeal",
+          "imported": "initialShapeshifterDeal",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "836053477fd63402e62e206ab5ff1e0bc1e6215fec7432703667a70616f425e3",
+      "text": "import { initialShapeshifterDeal } from \"../../../src/game/mechanisms/roles/shapeshifter/deal\";"
+    },
+    {
+      "path": "backend/tests/integration/configuration/thief-public-examples.test.ts",
+      "line": 13,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/thief/deal",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "bindings": [
+        {
+          "local": "initialThiefDeal",
+          "imported": "initialThiefDeal",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "cee1ab48c4d3cdff3817c3f2d1991447a8f2c7411e4aa09475b7b2aa3deb063f",
+      "text": "import { initialThiefDeal } from \"../../../src/game/mechanisms/roles/thief/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "line": 9,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/thief/deal",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "bindings": [],
+      "namespace": "thief",
+      "sha256": "19095edf4e70de68a76649a95f7efddcfaa93bf52aec627e23a5c261acea3400",
+      "text": "import * as thief from \"../../../../src/game/mechanisms/roles/thief/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "line": 22,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/shapeshifter/setup",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "bindings": [
+        {
+          "local": "ShapeshifterSetupWindow",
+          "imported": "ShapeshifterSetupWindow",
+          "typeOnly": false
+        },
+        {
+          "local": "projectShapeshifterChoices",
+          "imported": "projectShapeshifterChoices",
+          "typeOnly": false
+        },
+        {
+          "local": "shapeshifterRequestScope",
+          "imported": "shapeshifterRequestScope",
+          "typeOnly": false
+        },
+        {
+          "local": "inheritShapeshifterDeadlineRequest",
+          "imported": "inheritShapeshifterDeadlineRequest",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "ea3270ba78cc674ffa6ee9e9d9c84cdba4fe20b037c45b4c15e68fe2cbf92909",
+      "text": "import {\n  ShapeshifterSetupWindow,\n  projectShapeshifterChoices,\n  shapeshifterRequestScope,\n  inheritShapeshifterDeadlineRequest,\n} from \"../../../../src/game/mechanisms/roles/shapeshifter/setup\";"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "line": 28,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/shapeshifter/deal",
+      "endpoint": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "bindings": [
+        {
+          "local": "shapeshifterDeal",
+          "imported": "shapeshifterDeal",
+          "typeOnly": false
+        },
+        {
+          "local": "shapeshifterSetupStatus",
+          "imported": "shapeshifterSetupStatus",
+          "typeOnly": false
+        },
+        {
+          "local": "shapeshifterSetupReady",
+          "imported": "shapeshifterSetupReady",
+          "typeOnly": false
+        },
+        {
+          "local": "hasActiveShapeshifterSetup",
+          "imported": "hasActiveShapeshifterSetup",
+          "typeOnly": false
+        },
+        {
+          "local": "projectShapeshifterSetup",
+          "imported": "projectShapeshifterSetup",
+          "typeOnly": false
+        },
+        {
+          "local": "initialShapeshifterDeal",
+          "imported": "initialShapeshifterDeal",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "ea3270ba78cc674ffa6ee9e9d9c84cdba4fe20b037c45b4c15e68fe2cbf92909",
+      "text": "import {\n  shapeshifterDeal,\n  shapeshifterSetupStatus,\n  shapeshifterSetupReady,\n  hasActiveShapeshifterSetup,\n  projectShapeshifterSetup,\n  initialShapeshifterDeal,\n} from \"../../../../src/game/mechanisms/roles/shapeshifter/deal\";"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "line": 22,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/thief/setup",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "bindings": [
+        {
+          "local": "ThiefSetupWindow",
+          "imported": "ThiefSetupWindow",
+          "typeOnly": false
+        },
+        {
+          "local": "projectThiefChoices",
+          "imported": "projectThiefChoices",
+          "typeOnly": false
+        },
+        {
+          "local": "thiefRequestScope",
+          "imported": "thiefRequestScope",
+          "typeOnly": false
+        },
+        {
+          "local": "inheritThiefDeadlineRequest",
+          "imported": "inheritThiefDeadlineRequest",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "32639ead018bdffc6d2c19d11e5ea29fd188b01aac0a0803435440c14b6e3b2f",
+      "text": "import {\n  ThiefSetupWindow,\n  projectThiefChoices,\n  thiefRequestScope,\n  inheritThiefDeadlineRequest,\n} from \"../../../../src/game/mechanisms/roles/thief/setup\";"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "line": 28,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/thief/deal",
+      "endpoint": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "bindings": [
+        {
+          "local": "thiefDeal",
+          "imported": "thiefDeal",
+          "typeOnly": false
+        },
+        {
+          "local": "thiefSetupStatus",
+          "imported": "thiefSetupStatus",
+          "typeOnly": false
+        },
+        {
+          "local": "thiefSetupReady",
+          "imported": "thiefSetupReady",
+          "typeOnly": false
+        },
+        {
+          "local": "hasActiveThiefSetup",
+          "imported": "hasActiveThiefSetup",
+          "typeOnly": false
+        },
+        {
+          "local": "projectThiefSetup",
+          "imported": "projectThiefSetup",
+          "typeOnly": false
+        },
+        {
+          "local": "initialThiefDeal",
+          "imported": "initialThiefDeal",
+          "typeOnly": false
+        }
+      ],
+      "sha256": "32639ead018bdffc6d2c19d11e5ea29fd188b01aac0a0803435440c14b6e3b2f",
+      "text": "import {\n  thiefDeal,\n  thiefSetupStatus,\n  thiefSetupReady,\n  hasActiveThiefSetup,\n  projectThiefSetup,\n  initialThiefDeal,\n} from \"../../../../src/game/mechanisms/roles/thief/deal\";"
+    }
+  ],
+  "namespaceUses": [
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 52,
+      "text": "thief.thiefDeal",
+      "form": "property"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 53,
+      "text": "thief.initialThiefDeal",
+      "form": "property"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 54,
+      "text": "thief.projectThiefSetup",
+      "form": "property"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 55,
+      "text": "thief.thiefCandidateCounts",
+      "form": "property"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 56,
+      "text": "thief.thiefSetupStatus",
+      "form": "property"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 57,
+      "text": "thief.thiefSetupReady",
+      "form": "property"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 66,
+      "text": "thief.openThiefSetup",
+      "form": "property"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 67,
+      "text": "thief.selectThiefCard",
+      "form": "property"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 68,
+      "text": "thief.closeThiefSetup",
+      "form": "property"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "namespace": "thief",
+      "line": 69,
+      "text": "thief.openThiefNight",
+      "form": "property"
+    }
+  ],
+  "zeroStaticConsumers": true,
+  "limits": [
+    "完整AST解析这些七个当前源码根，排node_modules/dist/generated；仓外、运行计算specifier／字段与任意CJS反射API不作保证。",
+    "模板内constructor冷启动脚本另人工读原architecture用例；原两个类仍保留，不改该测试。",
+    "命名空间其它旧函数访问明确记录，未把四完整模块当dead facade或整退。"
+  ]
+}
