@@ -1,0 +1,21 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/facts/radiant-eclipse.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/facts/wall-notes.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/components/wall_note.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/observation/player-observation.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/contracts/eclipse-wall-data-types.types.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

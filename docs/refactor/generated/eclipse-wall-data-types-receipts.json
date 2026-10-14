@@ -1,0 +1,42 @@
+{
+  "types": {
+    "roots": 7,
+    "launchChunk": "a21a5d",
+    "session": 50123,
+    "completionChunk": "fb77cf",
+    "exitCode": 0,
+    "command": "./backend/node_modules/.bin/tsc -p /tmp/awa-eclipse-wall-types/tsconfig.json --noEmit",
+    "config": "docs/refactor/generated/eclipse-wall-data-types-config.json",
+    "log": "docs/refactor/generated/eclipse-wall-data-types-types.log",
+    "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope": "继承真实backend tests配置，七affected roots含GC两源；不是GC整包own或全项目门禁。"
+  },
+  "compileOnlyFixture": {
+    "relations": 12,
+    "retiredTypeDeclarations": 2,
+    "invalidFieldCases": 5,
+    "runtimeExecuted": false
+  },
+  "sourceProof": {
+    "actualChunk": "4e0e58",
+    "exitCode": 0,
+    "completePrograms": 6,
+    "nodes": 13361,
+    "actualWholeOutputs": 12,
+    "actualCompleteFunctionBodies": 88
+  },
+  "lastUnicodeComment": {
+    "reason": "精确说明码点和孤立UTF-16代理码元，不改validWallText，源阶段明确桥接。",
+    "fullNodes": 1646,
+    "wholeOutputs": 2
+  },
+  "heads": {
+    "actualChunk": "625d23",
+    "sources": 7,
+    "diagnostics": 0,
+    "chineseHeaders": 7
+  },
+  "testsExecuted": false,
+  "models": false,
+  "fullGate": false
+}

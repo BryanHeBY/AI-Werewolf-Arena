@@ -46,7 +46,7 @@ export interface PlayerObservation {
     fragrantPhantom?: import("@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer").FragrantPlayerState;
     nightNoble?: import("@ai-werewolf-arena/game-contract/facts/noble-secret-body").NoblePlayerState;
     secretBody?: import("@ai-werewolf-arena/game-contract/facts/noble-secret-body").SecretBodyPlayerState;
-    eclipse?: import("../mechanisms/roles/radiant_eclipse/state").EclipseState;
+    eclipse?: import("@ai-werewolf-arena/game-contract/facts/radiant-eclipse").EclipseState;
     alchemist?: import("@ai-werewolf-arena/game-contract/facts/mist-raven").PlayerAlchemistState;
     ravenClaw?: import("@ai-werewolf-arena/game-contract/facts/mist-raven").PlayerRavenState;
     scholarMentor?: import("@ai-werewolf-arena/game-contract").ModifierState;
@@ -72,7 +72,7 @@ export interface PlayerObservation {
       allowedSlots?: Array<0 | 1>;
       cards?: Array<{ slot: 0 | 1; role: Role }>;
     };
-    wallNote?: import("../../core/domain/components/wall_note").WallNoteComponent & {
+    wallNote?: import("@ai-werewolf-arena/game-contract/facts/wall-notes").WallNoteComponent & {
       effectiveRemaining: 0 | 1;
     };
     blackMarket?: PlayerBlackMarketState;

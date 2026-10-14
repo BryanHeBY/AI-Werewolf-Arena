@@ -1,8 +1,10 @@
 /**
- * 黯月独立 history 的严格读取、纯选择与原私有状态投影。共享政策和 scalar reader 来自
- * state-data，数组与吞噬 history 的完整校验仍在此处；本模块不写 live 能力或借用 lease。
- * 明辉庇护的数据已归独立 owner，不能借迁移合并两种状态的验证或付款规则。
+ * 负责蚀日侍女吞噬历史的严格读取、纯选择与原私有槽的数据投影。
+ * 输入为原状态、日次和目标；输出为独立 history 副本或原具名错误，不写 live 能力或借用租约。
+ * 公共结构唯一归 GC facts/radiant-eclipse；本 owner 保留原 runtime 五角色数组和全部校验，
+ * scalar 读取仍来自 state-data。流光伯爵庇护的验证／付款独立，不能因类型迁移合并规则。
  */
+import type { EclipseState, EclipseSwallowedRole } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 
 import { types } from "node:util";
@@ -10,16 +12,6 @@ import { RADIANT_ECLIPSE_POLICY, record, positive } from "./state-data";
 export { RADIANT_ECLIPSE_POLICY } from "./state-data";
 
 const goodRoles = ["villager", "seer", "witch", "dreamer", "radiant_count"] as const;
-export type EclipseSwallowedRole = (typeof goodRoles)[number];
-export interface EclipseState {
-  policy: typeof RADIANT_ECLIPSE_POLICY;
-  history: Array<{
-    day: number;
-    targetId: number | null;
-    roleId: EclipseSwallowedRole | null;
-    abilityId: string | null;
-  }>;
-}
 
 function items(value: unknown): unknown[] | undefined {
   if (types.isProxy(value) || !Array.isArray(value)) return;
@@ -121,7 +113,7 @@ export function selectEclipse(
   };
 }
 
-/** 原 Eclipse 私有槽仍通过既有 reader 投影为独立数据。 */
+/** 蚀日侍女原私有槽仍经既有 reader 逐行复制；ID 知识不是 live 借用句柄。 */
 export function projectEclipseState(role: RoleComponent): EclipseState | undefined {
   return readEclipseState((role.privateState as { readonly eclipse?: unknown }).eclipse);
 }

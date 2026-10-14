@@ -1,12 +1,25 @@
 /**
- * Owns pure radiant-eclipse facts, knowledge shapes and their inert-data readers.
- * Inputs are original event identifiers and JSON.parse/no-reviver or proven
- * inert payloads; outputs preserve exact copied shapes, null rejection, limits
- * and visibility classifications. These facts never authorize actions or write
- * domain resources/state. Node ingress must reject hostile Proxy objects before
- * shared reflection; this browser-compatible module supplies no runtime handles.
+ * 负责流光伯爵／蚀日侍女事件事实及蚀日侍女历史的公共纯数据结构与 inert reader。
+ * 输入为机器事件类型和无 reviver 的 JSON.parse／已确认 inert 载荷；输出为原脱离事实／null。
+ * 数据 owner 保留复制、可空字段和可见性规则，不授予行动、不保存 live 能力、原体或租约。
+ * history 的 abilityId 只是原串 ID；吞噬／抑制／借用许可仍归后端。浏览器反射可能触发
+ * Proxy trap，恶意对象的预先拒绝仍归 Node 准入，不因公共类型新增 schema 或组合。
  */
 import { copyEventData } from "../inert-event-data";
+
+/** 原有限五角色纯联合；真实目标白名单与当前性仍由后端原 runtime 数组／权威判定。 */
+export type EclipseSwallowedRole = "villager" | "seer" | "witch" | "dreamer" | "radiant_count";
+/** 原可写吞噬 history；空过／村民可无 abilityId，不含所借能力 payload 或原生命句柄。 */
+export interface EclipseState {
+  policy: "awa_radiant_eclipse_v1";
+  history: Array<{
+    day: number;
+    targetId: number | null;
+    roleId: EclipseSwallowedRole | null;
+    abilityId: string | null;
+  }>;
+}
+
 export const RADIANT_ECLIPSE_EVENT_TYPES = Object.freeze([
   "eclipse_swallowed",
   "eclipse_native_suppressed",

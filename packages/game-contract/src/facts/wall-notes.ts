@@ -1,14 +1,20 @@
 /**
- * Owns pure Wall Note text, event, item snapshot and tool contracts for wire consumers.
- * Inputs are identifiers and proven inert payload data; outputs are detached
- * shapes or null with original keys, limits, defaults and scalar correlations.
- * Text validity preserves the exact Unicode limit and user text; it does not
- * translate/render wording or grant the anonymous-note item capability.
- * For these inputs the reader never changes rules, resources, phases or action
- * authority. Proxy reflection safety belongs to Node ingress before calling;
- * browser consumers must supply inert data rather than arbitrary JS objects.
+ * 负责匿名留言道具、文本、事件与工具的公共纯数据契约。输入为标识与已确认 inert 载荷；
+ * 输出为脱离结构／null，保留原字段、默认、相关性与 Unicode 码点上限／UTF-16 孤立代理码元检查。
+ * 公共数据 owner 唯一声明道具四字段，source 保持首日墙事件 literal；expired／remaining
+ * 只描述原数据，不授予写信许可。文本不会被翻译、裁剪或替换，reader 不写库存／阶段。
+ * 浏览器消费者须提供 inert 数据；反射可能触发 Proxy trap，Node 准入负责先拒绝恶意对象。
  */
 import { copyEventData } from "../inert-event-data";
+
+/** 原道具可写数据结构；source 是原事件来源，实例 ID 不能替代原库存／生命授权。 */
+export interface WallNoteComponent {
+  instanceId: string;
+  source: { kind: "wall_event"; eventId: "awa_wall_notes_v1"; day: 1 };
+  remaining: 0 | 1;
+  expired: boolean;
+}
+
 export const WALL_EVENT_TYPES = [
   "wall_notes_started",
   "wall_notes_published",
@@ -121,12 +127,7 @@ export function readWallEventFact(type: string, value: unknown): Record<string, 
   }
 }
 
-export function readWallNoteData(value: unknown): {
-  instanceId: string;
-  source: { kind: "wall_event"; eventId: "awa_wall_notes_v1"; day: 1 };
-  remaining: 0 | 1;
-  expired: boolean;
-} | null {
+export function readWallNoteData(value: unknown): WallNoteComponent | null {
   try {
     const p = copyEventData(value) as any;
     if (

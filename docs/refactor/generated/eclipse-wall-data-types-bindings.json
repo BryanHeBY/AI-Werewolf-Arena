@@ -1,0 +1,199 @@
+{
+  "parsedFiles": 1652,
+  "references": [
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "kind": "Named",
+      "route": "../../../../src/core",
+      "remote": "WallNoteComponent",
+      "local": "WallNoteComponent",
+      "node": "type WallNoteComponent"
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "kind": "Named",
+      "route": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+      "remote": "EclipseState",
+      "local": "EclipseState",
+      "node": "EclipseState"
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "kind": "Named",
+      "route": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+      "remote": "EclipseSwallowedRole",
+      "local": "EclipseSwallowedRole",
+      "node": "EclipseSwallowedRole"
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "kind": "Named",
+      "route": "@ai-werewolf-arena/game-contract/facts/wall-notes",
+      "remote": "WallNoteComponent",
+      "local": "WallNoteComponent",
+      "node": "WallNoteComponent"
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "kind": "Named",
+      "route": "../../../src/core/domain/components/wall_note",
+      "remote": "WallNoteComponent",
+      "local": "WorldWallNote",
+      "node": "WallNoteComponent as WorldWallNote"
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "kind": "Named",
+      "route": "../../../src/game/mechanisms/roles/radiant_eclipse/state",
+      "remote": "EclipseState",
+      "local": "RetiredState",
+      "node": "EclipseState as RetiredState"
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "kind": "Named",
+      "route": "../../../src/game/mechanisms/roles/radiant_eclipse/state",
+      "remote": "EclipseSwallowedRole",
+      "local": "RetiredRole",
+      "node": "EclipseSwallowedRole as RetiredRole"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "kind": "ImportType",
+      "node": "import(\"../core/domain/components/wall_note\").WallNoteComponent"
+    },
+    {
+      "path": "backend/src/core/domain/component-map.ts",
+      "kind": "Named",
+      "route": "./components/wall_note",
+      "remote": "WallNoteComponent",
+      "local": "WallNoteComponent",
+      "node": "WallNoteComponent"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "kind": "ImportType",
+      "node": "import(\"@ai-werewolf-arena/game-contract/facts/radiant-eclipse\").EclipseState"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "kind": "ImportType",
+      "node": "import(\"@ai-werewolf-arena/game-contract/facts/wall-notes\").WallNoteComponent"
+    },
+    {
+      "path": "backend/src/core/domain/index.ts",
+      "kind": "StarExport",
+      "route": "./components/wall_note",
+      "node": "export * from \"./components/wall_note\";"
+    },
+    {
+      "path": "backend/src/core/domain/components/wall_note.ts",
+      "kind": "NamedExport",
+      "route": "@ai-werewolf-arena/game-contract/facts/wall-notes",
+      "node": "WallNoteComponent"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "kind": "Named",
+      "route": "../../../../core/domain",
+      "remote": "WallNoteComponent",
+      "local": "WallNoteComponent",
+      "node": "type WallNoteComponent"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "kind": "Named",
+      "route": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+      "remote": "EclipseState",
+      "local": "EclipseState",
+      "node": "EclipseState"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "kind": "Named",
+      "route": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+      "remote": "EclipseSwallowedRole",
+      "local": "EclipseSwallowedRole",
+      "node": "EclipseSwallowedRole"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "kind": "Named",
+      "route": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+      "remote": "EclipseState",
+      "local": "EclipseState",
+      "node": "EclipseState"
+    }
+  ],
+  "physicalSymbols": [
+    {
+      "path": "backend/src/core/domain/component-map.ts",
+      "remote": "WallNoteComponent",
+      "local": "WallNoteComponent",
+      "declarations": [
+        "packages/game-contract/src/facts/wall-notes.ts"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "remote": "EclipseState",
+      "local": "EclipseState",
+      "declarations": [
+        "packages/game-contract/src/facts/radiant-eclipse.ts"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "remote": "EclipseSwallowedRole",
+      "local": "EclipseSwallowedRole",
+      "declarations": [
+        "packages/game-contract/src/facts/radiant-eclipse.ts"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "remote": "EclipseState",
+      "local": "EclipseState",
+      "declarations": [
+        "packages/game-contract/src/facts/radiant-eclipse.ts"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "remote": "EclipseState",
+      "local": "EclipseState",
+      "declarations": [
+        "packages/game-contract/src/facts/radiant-eclipse.ts"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "remote": "EclipseSwallowedRole",
+      "local": "EclipseSwallowedRole",
+      "declarations": [
+        "packages/game-contract/src/facts/radiant-eclipse.ts"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "remote": "WallNoteComponent",
+      "local": "WallNoteComponent",
+      "declarations": [
+        "packages/game-contract/src/facts/wall-notes.ts"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "remote": "WallNoteComponent",
+      "local": "WorldWallNote",
+      "declarations": [
+        "packages/game-contract/src/facts/wall-notes.ts"
+      ]
+    }
+  ],
+  "componentBridgeReason": "World公开组件键与原core公共API有真实消费者，旧component leaf保唯一canonical type re-export；GC是唯一字段声明，Observation直接GC。不冒桥清零。",
+  "remainingObservationPrivateTypeModules": [
+    "import(\"../../core/domain/board\")"
+  ],
+  "scope": "三名实际named/inline/star/namespace/dynamic字面形态递归，void回调；不是只rg。"
+}

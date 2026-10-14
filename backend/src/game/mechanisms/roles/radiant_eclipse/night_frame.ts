@@ -26,7 +26,8 @@ import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "../
 import { grantNightAbility, retireBorrowedNightAbility } from "../ability_changes";
 import { openEclipseSuppression } from "./suppression";
 import { snapshotBorrowedState, type BorrowedKind } from "./borrowed_state";
-import { readEclipseState, selectEclipse, type EclipseState } from "./state";
+import type { EclipseState } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
+import { readEclipseState, selectEclipse } from "./state";
 import { readShelterState } from "./shelter-state";
 
 const invalid = Symbol("invalid_radiant_binding");
