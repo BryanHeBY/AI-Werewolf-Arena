@@ -1,0 +1,116 @@
+{
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "source": [
+    {
+      "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+      "sha256": "c9007ebda1219a62d8d2c95091130d2bf9c223d3d13134e800def70a8dac3fda"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/index.ts",
+      "sha256": "29f99e005d9fa73303d97ec53f4126dcffa1426bc82ebd7ddf9c90890412b07e"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+      "sha256": "305fa5b60adbfe22b1fb3c8d2511befbb90e30b186ae2a51f026607c25899adf"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts",
+      "sha256": "1ba83ee20d1c67da26227cb98c0e86fbc53e3292a65eb53ebe1f09203d531bee"
+    },
+    {
+      "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "sha256": "7c72b94ee8bb8e62a3877123675663f41fa1728746b0ccd8fd7da41390e69f64"
+    },
+    {
+      "path": "backend/src/ai/runtime/index.ts",
+      "sha256": "a14140e5afa3030d7cdbd2056d6037cc3bb745b8aa134de304ce6c540d78580b"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/ai/agents/acp/acp_action_provider.ts",
+      "sha256": "64309d1b146cd73f55f482fdcb1dad4d284178e524ca3c5a4de83597c994ecc2"
+    },
+    {
+      "path": "backend/src/ai/audit/acp_audit_runner.ts",
+      "sha256": "26bba92c1050001b2028879575af6b9f6f7d1e7744dcae19a50b4fdcb3aba07a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-before.json",
+      "sha256": "762e796bf7734220483511d35bcbdc554bc0a7406aa6f3fda2fe2f66e168ad08"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-edits.json",
+      "sha256": "0973693f77b819206f74e7c03bfe6e1392723e6a5116bfa88fb2e4856311373a"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-proof.cjs",
+      "sha256": "e6fe8f93a97a3ead204188f855776c0ff198480de6466e61750b451f72185342"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-proof.json",
+      "sha256": "cc74b222bdae4a5bf50930afeaa780ada8849e1f830546f6df87e7b49527a884"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-proof-output.txt",
+      "sha256": "ec3a206628bf7e0e587d86fb4b83b6f44f242e865cff93cc41582482e318bf9d"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-heads.ts",
+      "sha256": "d5474e18342d3e7080f667bf8f0b80ac045042ae3a752a3e37e9f123a7dacf95"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-heads.json",
+      "sha256": "1a3113f64ead27ce9c1bfa773ba7fe48685318f945507c004de0bc094c61133f"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-heads-output.txt",
+      "sha256": "26cb18e9afbd59878be72e18f54aa7ce8667760524f9c9159900adfb702fd8aa"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-receipts.json",
+      "sha256": "21424552be1274c3fba74fa191e0dff0161a68096bdf68768f807b8e47858099"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-before.json",
+      "sha256": "a2f8e8f76d4b56e0568719c9eb170d2cfc8a34f6f176c64062f3de48f5a05229"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-edits.json",
+      "sha256": "edfe4a37ad43bf041d9adfcd95af0f87534551a04830d331506165cc586e7d75"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-bridge.cjs",
+      "sha256": "9469904ef77f66f39604e46b506d7f64e19d2c84e703d7a4b09cced94a9575f6"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-bridge.json",
+      "sha256": "443d340e3c5abe3c60b6b7bd249be77f61085badadeed34d9d9b0c43d8e7b880"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-output.txt",
+      "sha256": "28828777e284f694cfa7ea7c5f5c75dfdc06d9a26cd470d9bccde30029cf6f15"
+    },
+    {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-receipt.json",
+      "sha256": "b4f168dc3f9d211def76fe14afddd6a545d4f197fb08161f5fd34aad67a7f80a"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/acp-process-turn-chinese-contracts.md",
+    "sha256": "9b630ed6e0b67e2a36a10994b643bd455eed0c1b4f1228a1189e6beb34351a54"
+  },
+  "frozen": true,
+  "scope": "六个完整 ACP／任务端口模块纯注释中文契约，运行程序和出口不变；排除 F02／F03 及其它工作树 WIP。",
+  "sourceStages": {
+    "firstCommentRecords": 37,
+    "firstProofChunk": "2354b2",
+    "firstHeadsChunk": "551cb5",
+    "laterClientCommentPrecisionRecords": 3,
+    "laterBridgeChunk": "ee55d7",
+    "otherSourcesUnchanged": 5
+  }
+}

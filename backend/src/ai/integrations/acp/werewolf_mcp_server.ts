@@ -1,3 +1,8 @@
+/**
+ * 负责 stdio MCP 工具发现、公共输入解析与本机控制面的 JSON 转发；输入环境 endpoint／token 和工具请求。
+ * 输出文本及结构回包，网络／协议副作用在此发生；回合身份与行动授权仍归控制面 registry。
+ * 此入口不另设请求期限或取消器；序列化、fetch、解码和启动失败沿原路径传播，不提供游戏提交许可。
+ */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
@@ -5,6 +10,7 @@ import { text, toolFailure } from "@ai-werewolf-arena/game-text";
 import { gameToolProtocol } from "../../agents/game_tool_protocol";
 import { taskLocale } from "./task_locale";
 
+// 入口加载时读取原环境地址与 token；它们只用于本机传输认证，不替代 turn_id／领域规则。
 const endpoint = process.env.WEREWOLF_MCP_CONTROL_URL;
 const token = process.env.WEREWOLF_MCP_TOKEN;
 
@@ -18,9 +24,11 @@ async function invoke(
     headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
     body: JSON.stringify({ tool, arguments: args }),
   });
+  // 原路径不检查 HTTP 状态；解码结果的断言不做 schema 验证，JSON／传输失败直接传播。
   return (await response.json()) as Record<string, unknown>;
 }
 
+// 文本现场序列化，structuredContent 保同一 value 引用；只有 ok === false 标记 MCP 错误。
 function result(value: Record<string, unknown>) {
   return {
     content: [{ type: "text" as const, text: JSON.stringify(value) }],
@@ -57,8 +65,8 @@ async function main(): Promise<void> {
     },
     async (args) => result(await invoke("report_bug", args)),
   );
-  // Keep canonical discovery schemas. Input validation failures must reach the
-  // addressed turn's owner before MCP rejects them; no action is executed.
+  // 发现列表保公共 schema；无效 submit_action 先将原 turn_id 交原回合 owner，再返回 MCP 拒绝。
+  // 此拒绝路径不执行行动；其他工具的输入失败仍按各自原错误返回。
   server.server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const name = request.params.name;
     if (name !== "get_game_schema" && name !== "submit_action" && name !== "report_bug")

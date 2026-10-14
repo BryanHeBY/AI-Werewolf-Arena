@@ -1,0 +1,63 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "source": [
+    {
+      "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+      "sha256": "c9007ebda1219a62d8d2c95091130d2bf9c223d3d13134e800def70a8dac3fda"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/index.ts",
+      "sha256": "29f99e005d9fa73303d97ec53f4126dcffa1426bc82ebd7ddf9c90890412b07e"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+      "sha256": "305fa5b60adbfe22b1fb3c8d2511befbb90e30b186ae2a51f026607c25899adf"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts",
+      "sha256": "1ba83ee20d1c67da26227cb98c0e86fbc53e3292a65eb53ebe1f09203d531bee"
+    },
+    {
+      "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "sha256": "7c72b94ee8bb8e62a3877123675663f41fa1728746b0ccd8fd7da41390e69f64"
+    },
+    {
+      "path": "backend/src/ai/runtime/index.ts",
+      "sha256": "a14140e5afa3030d7cdbd2056d6037cc3bb745b8aa134de304ce6c540d78580b"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-scope-final.json",
+    "sha256": "d643528ee89d9881e042db43faf5f187a5204c447cdcdbe069e4a43fa06ad37e"
+  },
+  "document": {
+    "path": "docs/refactor/acp-process-turn-chinese-contracts.md",
+    "sha256": "9b630ed6e0b67e2a36a10994b643bd455eed0c1b4f1228a1189e6beb34351a54"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-evidence.json",
+    "sha256": "c7b8aa2ab1def053f9234df72e3c71410c3d4e18e4bc1b675b8a3594ee3c2a74"
+  },
+  "integrity": {
+    "freshSources": 6,
+    "actualGitBefore": 6,
+    "controls": 2,
+    "artifactHashes": 15,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "创建等待中止与ACP取消通知不同责任",
+    "真实捕获的清理失败与未全catch限界",
+    "协议会话-本机registry-MCP权限分开",
+    "重要结构和回收逻辑有效中文",
+    "原六程序-机器文本-签名-JSDoc和末puretrivia两输出"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

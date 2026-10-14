@@ -1,0 +1,17 @@
+[
+  {
+    "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+    "before": " * 创建期限取外部绝对期限与初始化预算的较早值；取消只终止等待，迟到资源和有界关闭仍沿原所有者处理。",
+    "after": " * 创建期限取外部绝对期限与初始化预算的较早值；创建等待中止不抢占底层 Promise，迟到资源和有界关闭仍沿原所有者处理。"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+    "before": "    // 普通路径先尝试 cancel／可用的 session.close，再 dispose、断连接和 stdin；失败不阻止其余收尾。",
+    "after": "    // 普通路径先尝试 cancel／可用的 session.close，再 dispose、断连接和 stdin；这些已捕获的失败不阻止其余收尾。"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+    "before": "    // 两项状态成立也不证明每个子孙已确认退出；前面任何收尾失败仍按原顺序聚合抛出。",
+    "after": "    // 两项状态成立也不证明每个子孙已确认退出；已捕获的收尾失败仍按原顺序聚合抛出。"
+  }
+]

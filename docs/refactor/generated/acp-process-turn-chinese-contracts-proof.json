@@ -1,0 +1,180 @@
+{
+  "approved": true,
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "commentEditRecords": 37,
+  "programs": [
+    {
+      "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+      "beforeSha256": "c6bf0310d6185b23de36b1e3b000ac371645aef688cb265670bd82f27835faae",
+      "afterSha256": "3f8ce2c41b9d90362d70ad68624795a5ce5b9da5a1f1fd42de78b29edcffcd61",
+      "typedNodes": 2857,
+      "noncommentLeaves": 3492,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 18660,
+          "sha256": "e115e2161bfa5442dcba6f98ccabf156515d7d1b0c0ea947ba747d79afc037e9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 19099,
+          "sha256": "06cd6f1595c3f9e6e4dd901d26eb085203a0024778144f017be78ed4d362ca2f"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/index.ts",
+      "beforeSha256": "8d442d19979f36dc2596a86a5bb06ef98cbc3bb00d231e5d779632f4963bdd0d",
+      "afterSha256": "29f99e005d9fa73303d97ec53f4126dcffa1426bc82ebd7ddf9c90890412b07e",
+      "typedNodes": 18,
+      "noncommentLeaves": 41,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 298,
+          "sha256": "8d442d19979f36dc2596a86a5bb06ef98cbc3bb00d231e5d779632f4963bdd0d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1199,
+          "sha256": "b9cf79e084d7e2b499ec2f97a69aa6cad7c2b2061ef5549b31fed0b3cc2d1ddc"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+      "beforeSha256": "988d305c4bcc2df466f4ba51abc456e65503c686f30ff7d1e4e2c52d64ea00a0",
+      "afterSha256": "305fa5b60adbfe22b1fb3c8d2511befbb90e30b186ae2a51f026607c25899adf",
+      "typedNodes": 318,
+      "noncommentLeaves": 390,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1986,
+          "sha256": "058ef6a6a2f080c3fa64df8c8d7dac95528073077a184856d848ac6ceb918fcd"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2248,
+          "sha256": "ba745e77af39293aa5af2ff98caa5b9b428d676b374bb6225ba448c2a498263a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts",
+      "beforeSha256": "7a5b3e6036a1fc67d9dee1e9a2f54817208a8f3d46f814ed2c4310c10dc0ce5b",
+      "afterSha256": "1ba83ee20d1c67da26227cb98c0e86fbc53e3292a65eb53ebe1f09203d531bee",
+      "typedNodes": 470,
+      "noncommentLeaves": 600,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2908,
+          "sha256": "128adc6b699a4bf99943dc8e2e0d5bbb0c25898eae496d781b3c567df4db54d9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3097,
+          "sha256": "8284383ce56e327d44e375946872c60fc1a7b68d970b36a27f686e61094081d4"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "beforeSha256": "23332331421a8bb000267c7cddd350749940154ca1387e11a1b6bc3c1375cb33",
+      "afterSha256": "7c72b94ee8bb8e62a3877123675663f41fa1728746b0ccd8fd7da41390e69f64",
+      "typedNodes": 37,
+      "noncommentLeaves": 48,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/ai/runtime/index.ts",
+      "beforeSha256": "151b633b3a40a1ffe218c9a22ca5160186db5c4eb10ebea955fc1cb540cf4914",
+      "afterSha256": "a14140e5afa3030d7cdbd2056d6037cc3bb745b8aa134de304ce6c540d78580b",
+      "typedNodes": 4,
+      "noncommentLeaves": 6,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 39,
+          "sha256": "151b633b3a40a1ffe218c9a22ca5160186db5c4eb10ebea955fc1cb540cf4914"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 814,
+          "sha256": "bd2092185be66827bd971760981cb5690c20089b6891968af72c24d051f247e6"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/ai/agents/acp/acp_action_provider.ts",
+      "sha256": "64309d1b146cd73f55f482fdcb1dad4d284178e524ca3c5a4de83597c994ecc2",
+      "gitBlob": "a6e68a66f80de4f628971a092780a405bd4ae66e",
+      "mode": "100644",
+      "bytes": 25543
+    },
+    {
+      "path": "backend/src/ai/audit/acp_audit_runner.ts",
+      "sha256": "26bba92c1050001b2028879575af6b9f6f7d1e7744dcae19a50b4fdcb3aba07a",
+      "gitBlob": "8be0cdbdd043c4f8c1f53511df68105e35b43913",
+      "mode": "100644",
+      "bytes": 9743
+    }
+  ],
+  "summary": {
+    "sources": 6,
+    "typedNodes": 3704,
+    "noncommentLeaves": 4577,
+    "jsdocTags": 0,
+    "protectedCommentRecords": 0,
+    "wholeRawOutputs": 12
+  },
+  "limits": [
+    "六个完整 ACP／任务端口模块的非注释程序、JSDoc tags 与移除注释的 ES2022 ESNext/CJS 输出比较；不执行请求、进程、游戏、类型或全门禁。",
+    "职责头形状与输出相同不代替说明语义和生命周期的非作者人工审查。",
+    "源码 SHA 确实改变；不改历史 strict 身份或增豁免。"
+  ]
+}

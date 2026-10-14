@@ -1,0 +1,276 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "source": [
+    {
+      "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+      "sha256": "c9007ebda1219a62d8d2c95091130d2bf9c223d3d13134e800def70a8dac3fda"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/index.ts",
+      "sha256": "29f99e005d9fa73303d97ec53f4126dcffa1426bc82ebd7ddf9c90890412b07e"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+      "sha256": "305fa5b60adbfe22b1fb3c8d2511befbb90e30b186ae2a51f026607c25899adf"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts",
+      "sha256": "1ba83ee20d1c67da26227cb98c0e86fbc53e3292a65eb53ebe1f09203d531bee"
+    },
+    {
+      "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "sha256": "7c72b94ee8bb8e62a3877123675663f41fa1728746b0ccd8fd7da41390e69f64"
+    },
+    {
+      "path": "backend/src/ai/runtime/index.ts",
+      "sha256": "a14140e5afa3030d7cdbd2056d6037cc3bb745b8aa134de304ce6c540d78580b"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-scope-final.json",
+    "sha256": "d643528ee89d9881e042db43faf5f187a5204c447cdcdbe069e4a43fa06ad37e"
+  },
+  "documentation": {
+    "path": "docs/refactor/acp-process-turn-chinese-contracts.md",
+    "sha256": "9b630ed6e0b67e2a36a10994b643bd455eed0c1b4f1228a1189e6beb34351a54"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-evidence.json",
+    "sha256": "c7b8aa2ab1def053f9234df72e3c71410c3d4e18e4bc1b675b8a3594ee3c2a74"
+  },
+  "findings": [],
+  "sourceReview": {
+    "completeSourcesRead": 6,
+    "actualGitBeforeSources": 6,
+    "freshSourceMismatches": 0,
+    "controls": [
+      {
+        "path": "backend/src/ai/agents/acp/acp_action_provider.ts",
+        "sha256": "64309d1b146cd73f55f482fdcb1dad4d284178e524ca3c5a4de83597c994ecc2"
+      },
+      {
+        "path": "backend/src/ai/audit/acp_audit_runner.ts",
+        "sha256": "26bba92c1050001b2028879575af6b9f6f7d1e7744dcae19a50b4fdcb3aba07a"
+      }
+    ],
+    "artifactMismatches": 0,
+    "artifacts": [
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-before.json",
+        "sha256": "762e796bf7734220483511d35bcbdc554bc0a7406aa6f3fda2fe2f66e168ad08"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-edits.json",
+        "sha256": "0973693f77b819206f74e7c03bfe6e1392723e6a5116bfa88fb2e4856311373a"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-proof.cjs",
+        "sha256": "e6fe8f93a97a3ead204188f855776c0ff198480de6466e61750b451f72185342"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-proof.json",
+        "sha256": "cc74b222bdae4a5bf50930afeaa780ada8849e1f830546f6df87e7b49527a884"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-proof-output.txt",
+        "sha256": "ec3a206628bf7e0e587d86fb4b83b6f44f242e865cff93cc41582482e318bf9d"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-heads.ts",
+        "sha256": "d5474e18342d3e7080f667bf8f0b80ac045042ae3a752a3e37e9f123a7dacf95"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-heads.json",
+        "sha256": "1a3113f64ead27ce9c1bfa773ba7fe48685318f945507c004de0bc094c61133f"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-heads-output.txt",
+        "sha256": "26cb18e9afbd59878be72e18f54aa7ce8667760524f9c9159900adfb702fd8aa"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-receipts.json",
+        "sha256": "21424552be1274c3fba74fa191e0dff0161a68096bdf68768f807b8e47858099"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-before.json",
+        "sha256": "a2f8e8f76d4b56e0568719c9eb170d2cfc8a34f6f176c64062f3de48f5a05229"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-edits.json",
+        "sha256": "edfe4a37ad43bf041d9adfcd95af0f87534551a04830d331506165cc586e7d75"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-bridge.cjs",
+        "sha256": "9469904ef77f66f39604e46b506d7f64e19d2c84e703d7a4b09cced94a9575f6"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-bridge.json",
+        "sha256": "443d340e3c5abe3c60b6b7bd249be77f61085badadeed34d9d9b0c43d8e7b880"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-output.txt",
+        "sha256": "28828777e284f694cfa7ea7c5f5c75dfdc06d9a26cd470d9bccde30029cf6f15"
+      },
+      {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-receipt.json",
+        "sha256": "b4f168dc3f9d211def76fe14afddd6a545d4f197fb08161f5fd34aad67a7f80a"
+      }
+    ],
+    "sourceStages": [
+      {
+        "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+        "actualGitBeforeSHA256": "c6bf0310d6185b23de36b1e3b000ac371645aef688cb265670bd82f27835faae",
+        "firstCommentSHA256": "3f8ce2c41b9d90362d70ad68624795a5ce5b9da5a1f1fd42de78b29edcffcd61",
+        "finalSHA256": "c9007ebda1219a62d8d2c95091130d2bf9c223d3d13134e800def70a8dac3fda",
+        "preciseWholeForwardSame": true
+      },
+      {
+        "path": "backend/src/ai/integrations/acp/index.ts",
+        "actualGitBeforeSHA256": "8d442d19979f36dc2596a86a5bb06ef98cbc3bb00d231e5d779632f4963bdd0d",
+        "firstCommentSHA256": "29f99e005d9fa73303d97ec53f4126dcffa1426bc82ebd7ddf9c90890412b07e",
+        "finalSHA256": "29f99e005d9fa73303d97ec53f4126dcffa1426bc82ebd7ddf9c90890412b07e",
+        "preciseWholeForwardSame": true
+      },
+      {
+        "path": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+        "actualGitBeforeSHA256": "988d305c4bcc2df466f4ba51abc456e65503c686f30ff7d1e4e2c52d64ea00a0",
+        "firstCommentSHA256": "305fa5b60adbfe22b1fb3c8d2511befbb90e30b186ae2a51f026607c25899adf",
+        "finalSHA256": "305fa5b60adbfe22b1fb3c8d2511befbb90e30b186ae2a51f026607c25899adf",
+        "preciseWholeForwardSame": true
+      },
+      {
+        "path": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts",
+        "actualGitBeforeSHA256": "7a5b3e6036a1fc67d9dee1e9a2f54817208a8f3d46f814ed2c4310c10dc0ce5b",
+        "firstCommentSHA256": "1ba83ee20d1c67da26227cb98c0e86fbc53e3292a65eb53ebe1f09203d531bee",
+        "finalSHA256": "1ba83ee20d1c67da26227cb98c0e86fbc53e3292a65eb53ebe1f09203d531bee",
+        "preciseWholeForwardSame": true
+      },
+      {
+        "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+        "actualGitBeforeSHA256": "23332331421a8bb000267c7cddd350749940154ca1387e11a1b6bc3c1375cb33",
+        "firstCommentSHA256": "7c72b94ee8bb8e62a3877123675663f41fa1728746b0ccd8fd7da41390e69f64",
+        "finalSHA256": "7c72b94ee8bb8e62a3877123675663f41fa1728746b0ccd8fd7da41390e69f64",
+        "preciseWholeForwardSame": true
+      },
+      {
+        "path": "backend/src/ai/runtime/index.ts",
+        "actualGitBeforeSHA256": "151b633b3a40a1ffe218c9a22ca5160186db5c4eb10ebea955fc1cb540cf4914",
+        "firstCommentSHA256": "a14140e5afa3030d7cdbd2056d6037cc3bb745b8aa134de304ce6c540d78580b",
+        "finalSHA256": "a14140e5afa3030d7cdbd2056d6037cc3bb745b8aa134de304ce6c540d78580b",
+        "preciseWholeForwardSame": true
+      }
+    ],
+    "lifecycle": "完整读client创建、等待中止、已登记资源cleanup、protocol cancel、普通/force close和审计更新缓冲。创建abort只拒绝外层等待，原任务被接住而可能迟到；调用方session pool/审计executor承担原迟到退役。协议cancel是另一条有界通知，不关闭registry回合或证明资源回收。",
+    "failure": "普通关闭各捕获块按原次序累计；forcedError与原closing失败保原对象/顺序。未全catch的destroy/unref等调用仍可直接抛，不能把首注释汇总措辞解读为所有调用都必捕获。reclaimed=exited&&controlClosed只涵盖根进程和控制面，原process-group kill不证明子孙确认退出。",
+    "permissions": "MCP injected server/toolCallId的批准表只是协议选项，真实行动仍由原registry/ActionTurn复验；控制面只路由，不执行库存付款。错session/turn_id和无效schema沿原owner处理，不由类型断言授权。",
+    "payloadAndText": "result现场JSON.stringify，structuredContent同value引用，仅ok===false给isError。invoke不检查HTTP状态，公共schema、错误/模型文本、协议token/env名字全保；更新按messageId归并、截断/规范化并在takeAuditTrace后清缓冲，不解析成行动。",
+    "contractAndIndexes": "两个index保原reexport次序，本文件不构造资源/发请求的说明准确且没有承诺所有叶初始化无副作用；AgentTurnExecutor仅结构，timeout输入不实现抢占，audit pipeline真实finally close，SDK no-op close与ACP回收不同。",
+    "callerReads": [
+      "backend/src/ai/integrations/acp/session_lifecycle.ts",
+      "backend/src/ai/runtime/turn_deadline.ts",
+      "backend/src/ai/integrations/acp/loopback_mcp_control_server.ts",
+      "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+      "backend/src/ai/agents/acp/session_pool.ts",
+      "backend/src/runtime/player_agent_factory.ts",
+      "backend/src/audit/pipeline.ts",
+      "backend/src/ai/audit/sdk_audit_runner.ts"
+    ],
+    "chinese": "职责头和状态/关闭/取消/失败关键注释有效，Root后三精度将创建abort与wire cancel及已捕获聚合区分；机器协议和原接受面未改。"
+  },
+  "proofReview": {
+    "executedByReviewer": false,
+    "originalCommentRecords": 37,
+    "laterClientPrecisionRecords": 3,
+    "originalSummary": {
+      "sources": 6,
+      "typedNodes": 3704,
+      "noncommentLeaves": 4577,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "wholeRawOutputs": 12
+    },
+    "laterClient": {
+      "typedNodes": 2857,
+      "noncommentLeaves": 3492,
+      "wholeOutputs": 2,
+      "exactForwardInverse": true
+    },
+    "reading": "实读完整执行脚本：forEachChild完整typed和NodeArray/叶文本/保护directive、原JSDoc tags；六完整原程序及12raw输出首采样、末客户端完整前样三replacement正逆与2raw输出桥。没有执行任何checker/emit/生产。"
+  },
+  "authorReceipts": {
+    "proof": {
+      "command": "bun --no-env-file docs/refactor/generated/acp-process-turn-chinese-contracts-proof.cjs > docs/refactor/generated/acp-process-turn-chinese-contracts-proof-output.txt 2>&1",
+      "chunk_id": "2354b2",
+      "exit_code": 0,
+      "executions": 1,
+      "summary": {
+        "sources": 6,
+        "typedNodes": 3704,
+        "noncommentLeaves": 4577,
+        "jsdocTags": 0,
+        "protectedCommentRecords": 0,
+        "wholeRawOutputs": 12
+      },
+      "output": {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-proof-output.txt",
+        "sha256": "ec3a206628bf7e0e587d86fb4b83b6f44f242e865cff93cc41582482e318bf9d"
+      }
+    },
+    "heads": {
+      "command": "bun --no-env-file docs/refactor/generated/acp-process-turn-chinese-contracts-heads.ts > docs/refactor/generated/acp-process-turn-chinese-contracts-heads-output.txt 2>&1",
+      "chunk_id": "551cb5",
+      "exit_code": 0,
+      "executions": 1,
+      "sources": 6,
+      "trackedDocumentationPathsAtSampling": 664,
+      "documentationPathsSha256": "2273bc2db789bc3690c05344c498e8f78b5c7064b9cac2d062dd1c82d9f6d906",
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "output": {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-heads-output.txt",
+        "sha256": "26cb18e9afbd59878be72e18f54aa7ce8667760524f9c9159900adfb702fd8aa"
+      }
+    },
+    "precision": {
+      "command": "bun --no-env-file docs/refactor/generated/acp-process-turn-chinese-contracts-precision-bridge.cjs > docs/refactor/generated/acp-process-turn-chinese-contracts-precision-output.txt 2>&1",
+      "chunk_id": "ee55d7",
+      "exit_code": 0,
+      "executions": 1,
+      "source": {
+        "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+        "beforeSha256": "3f8ce2c41b9d90362d70ad68624795a5ce5b9da5a1f1fd42de78b29edcffcd61",
+        "afterSha256": "c9007ebda1219a62d8d2c95091130d2bf9c223d3d13134e800def70a8dac3fda"
+      },
+      "records": 3,
+      "typedNodes": 2857,
+      "noncommentLeaves": 3492,
+      "wholeRawOutputs": 2,
+      "output": {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-precision-output.txt",
+        "sha256": "28828777e284f694cfa7ea7c5f5c75dfdc06d9a26cd470d9bccde30029cf6f15"
+      },
+      "originalReceiptsUnchanged": {
+        "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-receipts.json",
+        "sha256": "21424552be1274c3fba74fa191e0dff0161a68096bdf68768f807b8e47858099"
+      },
+      "notRun": [
+        "main proof repeat",
+        "heads repeat",
+        "types",
+        "business tests",
+        "production loading",
+        "full gates"
+      ]
+    }
+  },
+  "limits": [
+    "仅六源纯注释；角色/规则/F02/F03或API/政策没有借本批修改。",
+    "首proof和heads客户端SHA仍3f8ce2c4，末c9007ebd由ee55d7桥承接，其余五源不变；没有声称首head采到最终客户端字节。",
+    "两个真实Git/current controls完整不变；其它调用方仅语义旁读，不将全闭包或当前传递WIP当immutable。",
+    "本独审只读完整源/实际Git/精确comment全文正演及附件SHA，没有重proof/head/type/test/gate、模型、网络或加载生产。",
+    "只批准说明与原程序同，不能据此说整个生命周期无失败、所有资源已回收或任意反射/冷加载完全验收。"
+  ]
+}

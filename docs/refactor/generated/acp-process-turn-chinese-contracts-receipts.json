@@ -1,0 +1,51 @@
+{
+  "capture": {
+    "actualGitCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+    "chunk_id": "93803f",
+    "exit_code": 0,
+    "wholeGitBeforeEqualsWorkingSources": 6,
+    "controls": 2
+  },
+  "proof": {
+    "command": "bun --no-env-file docs/refactor/generated/acp-process-turn-chinese-contracts-proof.cjs > docs/refactor/generated/acp-process-turn-chinese-contracts-proof-output.txt 2>&1",
+    "chunk_id": "2354b2",
+    "exit_code": 0,
+    "executions": 1,
+    "summary": {
+      "sources": 6,
+      "typedNodes": 3704,
+      "noncommentLeaves": 4577,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "wholeRawOutputs": 12
+    },
+    "output": {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-proof-output.txt",
+      "sha256": "ec3a206628bf7e0e587d86fb4b83b6f44f242e865cff93cc41582482e318bf9d"
+    }
+  },
+  "heads": {
+    "command": "bun --no-env-file docs/refactor/generated/acp-process-turn-chinese-contracts-heads.ts > docs/refactor/generated/acp-process-turn-chinese-contracts-heads-output.txt 2>&1",
+    "chunk_id": "551cb5",
+    "exit_code": 0,
+    "executions": 1,
+    "sources": 6,
+    "trackedDocumentationPathsAtSampling": 664,
+    "documentationPathsSha256": "2273bc2db789bc3690c05344c498e8f78b5c7064b9cac2d062dd1c82d9f6d906",
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "output": {
+      "path": "docs/refactor/generated/acp-process-turn-chinese-contracts-heads-output.txt",
+      "sha256": "26cb18e9afbd59878be72e18f54aa7ce8667760524f9c9159900adfb702fd8aa"
+    }
+  },
+  "notRun": [
+    "production loading",
+    "business tests",
+    "types",
+    "games",
+    "models",
+    "full gates",
+    "same-input green repeats"
+  ]
+}
