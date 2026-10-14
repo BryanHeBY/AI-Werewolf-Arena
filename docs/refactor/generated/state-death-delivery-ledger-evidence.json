@@ -1,0 +1,237 @@
+{
+  "actualMatrixBaseCommit": "96d3d0272392f8ad625ece176cee36df6dd789ea",
+  "beforeMatrixPath": "docs/refactor/generated/state-death-delivery-ledger-before.json",
+  "beforeMatrixSHA256": "fd85771c95cd1993cc39e67941655b33d0d71dd440e4ac5fc9e7f1b2323e9d70",
+  "beforeSameActualGit": true,
+  "afterMatrixSHA256": "c1cd2fc3277ff1f178580dcf97ccad965e2a9689a77481950176d0b74480c3d0",
+  "immutableBaselineSHA256": "60f1eb79143813b944abbc5f6ce7b0e6a22f4debf92a9f4e428b2d887cbb72c9",
+  "immutableBaselineSameActualBaseBlob": true,
+  "immutableBaselineCreationCommit": "b56d2824cf90cea6fe68d65330f036328f5b6475",
+  "immutableBaselineSameActualCreationBlob": true,
+  "baselineMetadataCommitMeaning": "27a97cb为冻结测量输入commit，不是生成JSON文件已存在的commit；原metadata不改。",
+  "beforeCounts": {
+    "baselineRows": 89,
+    "currentOnlyRows": 2,
+    "rows": 91,
+    "cells": 910,
+    "pending": 707,
+    "partial": 203,
+    "complete": 0,
+    "not-applicable": 0
+  },
+  "afterCounts": {
+    "baselineRows": 89,
+    "currentOnlyRows": 2,
+    "rows": 91,
+    "cells": 910,
+    "pending": 704,
+    "partial": 206,
+    "complete": 0,
+    "not-applicable": 0
+  },
+  "originalPartCount": 298,
+  "addedPartCount": 3,
+  "afterPartCount": 301,
+  "originalRemainingCount": 1120,
+  "addedRemainingCount": 3,
+  "afterRemainingCount": 1123,
+  "allOriginalPartsAndRemainingOrderPrefixesPreserved": true,
+  "changedCells": [
+    {
+      "row": "noble_secret_body",
+      "column": "state",
+      "beforeStatus": "pending",
+      "afterStatus": "partial"
+    },
+    {
+      "row": "mist_raven",
+      "column": "state",
+      "beforeStatus": "pending",
+      "afterStatus": "partial"
+    },
+    {
+      "row": "wolf_beauty",
+      "column": "lifecycle",
+      "beforeStatus": "pending",
+      "afterStatus": "partial"
+    }
+  ],
+  "unchangedCells": 907,
+  "entireExpectedReconstructionSame": true,
+  "samePrettyByteSerialization": true,
+  "allOtherRowColumnPolicyBaselineFieldsSame": true,
+  "allowedRootMetadataChanges": [
+    "observedCommit",
+    "counts",
+    "scope"
+  ],
+  "commitEvidence": [
+    {
+      "row": "noble_secret_body",
+      "commit": "771a7bf43fb7d9ca49afd21812548e74e450713c",
+      "ancestorOfActualBase": true,
+      "ownerPathsChangedByThisCommit": [
+        "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+        "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts"
+      ],
+      "committedSourceScope": "docs/refactor/generated/noble-body-state-slot-scope-final.json",
+      "scopeCommittedSHA256": "527736ea770b99f7d97cee60d12b236a7c4da65dd0733afb5641c42e03f3d02c",
+      "committedSources": [
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+          "committedSHA256": "396d7e5c6f8114cebf4770218537d9eed4bdc05be7e352089622ff82ec96fc78",
+          "capturedCurrentSHA256": "396d7e5c6f8114cebf4770218537d9eed4bdc05be7e352089622ff82ec96fc78",
+          "capturedCurrentSameCommit": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "committedSHA256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+          "capturedCurrentSHA256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+          "capturedCurrentSameCommit": true
+        },
+        {
+          "path": "backend/tests/unit/features/noble-secret-body/state-slot.test.ts",
+          "committedSHA256": "56441a47d32e12c31909a7dc3fbe71022f55d62da00a31a82b94dbd264ebdf2a",
+          "capturedCurrentSHA256": "56441a47d32e12c31909a7dc3fbe71022f55d62da00a31a82b94dbd264ebdf2a",
+          "capturedCurrentSameCommit": true
+        }
+      ],
+      "documents": [
+        {
+          "path": "docs/refactor/noble-body-state-slot.md",
+          "sha256": "700740ac4e71b500ef7c5ada0a6cd265bc962be5949b2e14c9b8a292eb5493a9",
+          "currentSameCommitted": true
+        }
+      ]
+    },
+    {
+      "row": "mist_raven",
+      "commit": "5db015dfedafbbe44252b537f3afaa272fababaa",
+      "ancestorOfActualBase": true,
+      "ownerPathsChangedByThisCommit": [
+        "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+        "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts"
+      ],
+      "committedSourceScope": "docs/refactor/generated/mist-caster-state-slot-scope-final.json",
+      "scopeCommittedSHA256": "48c64eb97915719f55c8cfc522b9d52f6a2c285fca2604a39210f6b5c40b58d6",
+      "committedSources": [
+        {
+          "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+          "committedSHA256": "285b224bb194fe0e77ec148ebb15b76692707dc802928dc18a66433a110d1bb9",
+          "capturedCurrentSHA256": "285b224bb194fe0e77ec148ebb15b76692707dc802928dc18a66433a110d1bb9",
+          "capturedCurrentSameCommit": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+          "committedSHA256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578",
+          "capturedCurrentSHA256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578",
+          "capturedCurrentSameCommit": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+          "committedSHA256": "df3b6dada429c2ed1727cd1a2bdf85d89dbd5205fd0e7f3b2b2526b9199af6e9",
+          "capturedCurrentSHA256": "df3b6dada429c2ed1727cd1a2bdf85d89dbd5205fd0e7f3b2b2526b9199af6e9",
+          "capturedCurrentSameCommit": true
+        },
+        {
+          "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+          "committedSHA256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552",
+          "capturedCurrentSHA256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552",
+          "capturedCurrentSameCommit": true
+        }
+      ],
+      "documents": [
+        {
+          "path": "docs/refactor/mist-caster-state-slot.md",
+          "sha256": "5f355efb434a65ee718b938395ecbfb324762bf2a75599f6d6c123a320c19a02",
+          "currentSameCommitted": true
+        }
+      ]
+    },
+    {
+      "row": "wolf_beauty",
+      "commit": "40dd1e4d2a0f3c35197a8acb86318c3ccb057a75",
+      "ancestorOfActualBase": true,
+      "ownerPathsChangedByThisCommit": [
+        "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+        "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+        "backend/src/game/engine/death_resolution.ts"
+      ],
+      "committedSourceScope": "docs/refactor/generated/wolf-beauty-death-wave-scope-final.json",
+      "scopeCommittedSHA256": "213c68030e694764352105caca2f4ac4c986328e9ab22e7493f08f73c3bc06ed",
+      "committedSources": [
+        {
+          "path": "backend/src/game/engine/death_resolution.ts",
+          "committedSHA256": "d6f55e4c3c7fe3846e4e69ed65526c90391c5ff399e932a4b36d3eaeec2e9200",
+          "capturedCurrentSHA256": "2533cf7bba1e6600d3bf883d36b3b6a7c53acf172499ee24d2796a0179de26b3",
+          "capturedCurrentSameCommit": false
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+          "committedSHA256": "bc3a6281444084b8214842c3b5dd5d71677107be7b106c99d847fb7a446b4012",
+          "capturedCurrentSHA256": "bc3a6281444084b8214842c3b5dd5d71677107be7b106c99d847fb7a446b4012",
+          "capturedCurrentSameCommit": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+          "committedSHA256": "542ce369a343f9ec6bc997238d60c8e0f6abffa68f61c1bd9131851cbe176be1",
+          "capturedCurrentSHA256": "542ce369a343f9ec6bc997238d60c8e0f6abffa68f61c1bd9131851cbe176be1",
+          "capturedCurrentSameCommit": true
+        },
+        {
+          "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+          "committedSHA256": "f5f2fd3a1c2a2f71c644a7555c4d04b7971e1d27770530b01ca7aec8a4bc96ff",
+          "capturedCurrentSHA256": "f5f2fd3a1c2a2f71c644a7555c4d04b7971e1d27770530b01ca7aec8a4bc96ff",
+          "capturedCurrentSameCommit": true
+        }
+      ],
+      "documents": [
+        {
+          "path": "docs/refactor/wolf-beauty-death-wave-publication.md",
+          "sha256": "2351b9b79916540c85469d93a3e7aea1b3255c9ce49cf7eb4fa15f67e3f98956",
+          "currentSameCommitted": true
+        }
+      ]
+    }
+  ],
+  "verification": "仅字节／真实Git来源和精确登记核对，不运行源码、类型、测试或门禁。",
+  "currentDeathResolutionConsumer": {
+    "capturedSHA256": "2533cf7bba1e6600d3bf883d36b3b6a7c53acf172499ee24d2796a0179de26b3",
+    "sameWolfBeautyPrepareCaller": true,
+    "sameWolfBeautyPublishCaller": true,
+    "sameFourLateGetterField": true,
+    "otherCurrentBodyNotClaimedSameCommit": true
+  },
+  "harnessHistory": [
+    {
+      "actualChunk": "909fba",
+      "exitCode": 1,
+      "reason": "误把baseline测量输入commit27a97当作生成JSON已存在的blob；真实Git show128。只改核对器，冻结字节不动。"
+    },
+    {
+      "actualChunks": [
+        "97964b",
+        "b3ddcf"
+      ],
+      "exitCode": 1,
+      "reason": "核对器沿用先前读取的40dd当captured HEAD，但实际变更时已推进文档审查commit96d3；候选observedCommit原本记录实际96d3。只修检查器输入，原910cells未改。"
+    },
+    {
+      "actualChunk": "e56f57",
+      "exitCode": 0,
+      "reason": "按实际96d3来源、真实b56d基线生成commit及明确3新增映射完整重建；旧前缀与其它907格全同。"
+    }
+  ],
+  "artifacts": {
+    "docs/refactor/generated/state-death-delivery-ledger-before.json": {
+      "sha256": "fd85771c95cd1993cc39e67941655b33d0d71dd440e4ac5fc9e7f1b2323e9d70"
+    },
+    "docs/refactor/generated/state-death-delivery-ledger-additions.json": {
+      "sha256": "b9694a5b2ca2598d26ae9d133de1cad88f91915b9f07c097ff62947e42ce1b34"
+    },
+    "docs/refactor/generated/state-death-delivery-ledger-check.py": {
+      "sha256": "f67568352fb5c34ccfc0fe91e4b266b63bdd28b1a3a96ecffa9dea026edc3e38"
+    }
+  }
+}

@@ -602,3 +602,5 @@
 - O2蚀日侍女／匿名留言公共数据：7源，Eclipse五literal／policy／可写history与Wall四字段归唯一GC fact owner，Observation直canonical；Eclipse两旧type出口退休及唯一namedconsumer同批直连，World组件持续具名canonical type公开入口保真实consumer。六完整程序13361／十二wholeemit／88完整body与三decl146保持；单7roots50123→fb77cf实际0，12独立关系／2退休／5字段负例，fixture不执行。七CN头0，末Unicode码点／孤立UTF16说明纯注释桥保旧收据，不重绿。Root实源／接口／知识边界与独立7SHA/真实Git控制/证据批准，不冒全O2或桥全退；见 eclipse-wall-data-types.md。
 
 - C22–24夜间设置与名单可读性组合：5源完整四setup及原assertReadable归rulesets，Pipeline保取消/开夜/await两侧/stage/伤害后的所有原检查点和finally，原权威持原体/库存/付款。六完整区域5940＋两nonimport输出保持，23physicalbinding与remaining顺序同、有限264值图无返owner/Pipeline/AI；new3/9一次绿，首5type仅newfixture与宽Config不合，缩Pick实际五字段后只failedroot29850→dd64c7实际0，纯type两输出桥。五CN头0；独立审发现unused Nightmare specifier只删单项、模块边保，末两whole输出同不重绿。作者自审与独立完整源/首失败/权限时序/final5SHA批准；全C22–24继续，见 night-readability.md。
+
+- 状态槽／死亡波已交付台账补3part：仅Noble771a／Mist5db0两个state格与Wolf40dd一lifecycle格，91行910格／298旧part和1120remaining完整前缀保持，其他907格同；203partial707pending→206partial704pending，0complete/N/A。actual96d3 before与冻结60f1基线／真实生成b56d同字节，三功能ancestor/owner/path/十一committedsourceSHA绑定，Gun等WIP不纳入。Root完整矩阵重建与独立源映射／接口限界／scope SHA批准，不重types/tests/gate，不以台账作为完成率；见 state-death-delivery-ledger.md。

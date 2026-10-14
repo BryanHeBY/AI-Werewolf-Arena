@@ -1,0 +1,52 @@
+[
+  {
+    "row": "noble_secret_body",
+    "column": "state",
+    "part": {
+      "part": "原两种factory／schema／纯next与完整同引用数据写入归同一state owner；七原writer直接使用唯一槽，描述符字段顺序、两JSON影子的编码／比较／逐属性解码及写后失败前缀保原。World、原体／生命、夜间、请求、知识通知和实际付款仍由原authority持有。",
+      "commit": "771a7bf43fb7d9ca49afd21812548e74e450713c",
+      "owners": [
+        "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+        "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts"
+      ],
+      "evidence": [
+        "docs/refactor/noble-body-state-slot.md"
+      ]
+    },
+    "remaining": "本格其余公共／内部状态类型、真实所有消费者与旧出口及完整原容器／生命／请求／夜间失效验收继续待收口；本地JSON影子不是独立记录或strict Tape schema，七数据writer归槽不代表整个族的lease、生命周期或实际付款已完成。"
+  },
+  {
+    "row": "mist_raven",
+    "column": "state",
+    "part": {
+      "part": "原raw／normalized JSON／数组、行及nested targetIds指纹的完整bind／compare／read／install归唯一state-slot；四真实提交点使用构造捕获的同一晚复验源，先绑定准备后写槽再换检查点。原schema／factory／selector、首次死亡读与ravenChecked失败前缀保留，不建第二库存。",
+      "commit": "5db015dfedafbbe44252b537f3afaa272fababaa",
+      "owners": [
+        "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+        "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+        "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts"
+      ],
+      "evidence": [
+        "docs/refactor/mist-caster-state-slot.md"
+      ]
+    },
+    "remaining": "本格其余公共／内部状态类型与旧出口、全族当前消费者和原身体／夜间／请求失效的完整验收仍待汇合；逐层引用与本地JSON证据不等于新归档schema或许可品牌，具体Role／Identity／生命、阶段、目标和付款仍由原authority／night owner负责。"
+  },
+  {
+    "row": "wolf_beauty",
+    "column": "lifecycle",
+    "part": {
+      "part": "原完整追加死亡波prepare／publish归本族贡献：来源许可、原关系领取、晚夜梦阻断、提案／死因／夜目标原地写入，以及真实目标标死后的applied与事实发布保持。relation仍唯一持有原体与resolved／applied；两晚命令接线修闭新增依赖环，不迁移引擎标死、枪／遗言许可或finally。",
+      "commit": "40dd1e4d2a0f3c35197a8acb86318c3ccb057a75",
+      "owners": [
+        "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+        "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+        "backend/src/game/engine/death_resolution.ts"
+      ],
+      "evidence": [
+        "docs/refactor/wolf-beauty-death-wave-publication.md"
+      ]
+    },
+    "remaining": "本格其他死亡钩子、关系胜利、完整原生命／请求许可、枪／遗言／警徽交互及同输入机制级失败验收继续待收口；本part不重建relation权威、不直接标死或判胜，也不把有界冷图修正当全仓门禁完成。"
+  }
+]

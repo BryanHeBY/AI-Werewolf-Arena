@@ -1,0 +1,190 @@
+{
+  "status": "approved",
+  "reviewer": "/root/native_final_architecture_review",
+  "scope": "独立只读审Root三part台账及实际source/commit/scope来源；本次不重审全功能或执行type/test/gate，不修改matrix。",
+  "actualMatrixBaseCommit": "96d3d0272392f8ad625ece176cee36df6dd789ea",
+  "candidatePaths": [
+    {
+      "path": "docs/refactor/generated/current-mechanism-migration.json",
+      "sha256": "c1cd2fc3277ff1f178580dcf97ccad965e2a9689a77481950176d0b74480c3d0"
+    },
+    {
+      "path": "docs/refactor/state-death-delivery-ledger.md",
+      "sha256": "40967f053bc5890b546ef63b3c7bb58df37bf5a86c3fd891dab0c4034943302e"
+    },
+    {
+      "path": "docs/refactor/generated/state-death-delivery-ledger-before.json",
+      "sha256": "fd85771c95cd1993cc39e67941655b33d0d71dd440e4ac5fc9e7f1b2323e9d70"
+    },
+    {
+      "path": "docs/refactor/generated/state-death-delivery-ledger-additions.json",
+      "sha256": "b9694a5b2ca2598d26ae9d133de1cad88f91915b9f07c097ff62947e42ce1b34"
+    },
+    {
+      "path": "docs/refactor/generated/state-death-delivery-ledger-check.py",
+      "sha256": "f67568352fb5c34ccfc0fe91e4b266b63bdd28b1a3a96ecffa9dea026edc3e38"
+    },
+    {
+      "path": "docs/refactor/generated/state-death-delivery-ledger-evidence.json",
+      "sha256": "91efd687288fa6f895d8144c427ea22762413582f5ae32f36a920d9aed61279b"
+    }
+  ],
+  "scopeSHA256": "ccc388124087f3f7c93869fffea9da630d4cbf30c5951292653e1503b6d3fdc2",
+  "matrixAudit": {
+    "91Rows910CellsSame": true,
+    "oldParts": 298,
+    "oldRemaining": 1120,
+    "oldOrderedPrefixesAllSame": true,
+    "exactAppendParts": 3,
+    "exactAppendRemaining": 3,
+    "afterParts": 301,
+    "afterRemaining": 1123,
+    "changedCells": [
+      {
+        "row": "mist_raven",
+        "column": "state",
+        "before": "pending",
+        "after": "partial"
+      },
+      {
+        "row": "noble_secret_body",
+        "column": "state",
+        "before": "pending",
+        "after": "partial"
+      },
+      {
+        "row": "wolf_beauty",
+        "column": "lifecycle",
+        "before": "pending",
+        "after": "partial"
+      }
+    ],
+    "unchangedWholeCells": 907,
+    "entireCandidateExactReconstructionAndRawSerializationSame": true,
+    "preservedRootFields": [
+      "schema",
+      "baseline",
+      "columns",
+      "policy"
+    ],
+    "permittedRootChanges": [
+      "observedCommit",
+      "counts",
+      "scope"
+    ],
+    "currentCounts": {
+      "baselineRows": 89,
+      "currentOnlyRows": 2,
+      "rows": 91,
+      "cells": 910,
+      "pending": 704,
+      "partial": 206,
+      "complete": 0,
+      "not-applicable": 0
+    },
+    "notCompletionOrCoverageRate": true
+  },
+  "frozenBaseline": {
+    "sha256": "60f1eb79143813b944abbc5f6ce7b0e6a22f4debf92a9f4e428b2d887cbb72c9",
+    "actualBaseAndCreationBytesSame": true,
+    "creationCommit": "b56d2824cf90cea6fe68d65330f036328f5b6475",
+    "measurementInputCommitMeaning": "27a97cb测量输入，不声称generated文件在该时点存在，冻结metadata未改。"
+  },
+  "commitChecks": [
+    {
+      "row": "noble_secret_body",
+      "commit": "771a7bf43fb7d9ca49afd21812548e74e450713c",
+      "actualAncestorOrBase": true,
+      "ownerPathsActuallyChanged": true,
+      "scopeAtActualCommitSHA": "527736ea770b99f7d97cee60d12b236a7c4da65dd0733afb5641c42e03f3d02c",
+      "sourceChecks": [
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+          "committedSHA256": "396d7e5c6f8114cebf4770218537d9eed4bdc05be7e352089622ff82ec96fc78",
+          "currentSame": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "committedSHA256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+          "currentSame": true
+        },
+        {
+          "path": "backend/tests/unit/features/noble-secret-body/state-slot.test.ts",
+          "committedSHA256": "56441a47d32e12c31909a7dc3fbe71022f55d62da00a31a82b94dbd264ebdf2a",
+          "currentSame": true
+        }
+      ],
+      "maintainedDocsAtCommitSame": true
+    },
+    {
+      "row": "mist_raven",
+      "commit": "5db015dfedafbbe44252b537f3afaa272fababaa",
+      "actualAncestorOrBase": true,
+      "ownerPathsActuallyChanged": true,
+      "scopeAtActualCommitSHA": "48c64eb97915719f55c8cfc522b9d52f6a2c285fca2604a39210f6b5c40b58d6",
+      "sourceChecks": [
+        {
+          "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+          "committedSHA256": "285b224bb194fe0e77ec148ebb15b76692707dc802928dc18a66433a110d1bb9",
+          "currentSame": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+          "committedSHA256": "c1b78a922983fbeae99c070e229d6bd2add161bc8bd8905203b1cc048863b578",
+          "currentSame": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+          "committedSHA256": "df3b6dada429c2ed1727cd1a2bdf85d89dbd5205fd0e7f3b2b2526b9199af6e9",
+          "currentSame": true
+        },
+        {
+          "path": "backend/tests/unit/features/mist-raven/caster-state-prefix.test.ts",
+          "committedSHA256": "f700e867bc2ccb76567f1f6a10be04b85b6d1c8b060e8a9f21dfa1b52334d552",
+          "currentSame": true
+        }
+      ],
+      "maintainedDocsAtCommitSame": true
+    },
+    {
+      "row": "wolf_beauty",
+      "commit": "40dd1e4d2a0f3c35197a8acb86318c3ccb057a75",
+      "actualAncestorOrBase": true,
+      "ownerPathsActuallyChanged": true,
+      "scopeAtActualCommitSHA": "213c68030e694764352105caca2f4ac4c986328e9ab22e7493f08f73c3bc06ed",
+      "sourceChecks": [
+        {
+          "path": "backend/src/game/engine/death_resolution.ts",
+          "committedSHA256": "d6f55e4c3c7fe3846e4e69ed65526c90391c5ff399e932a4b36d3eaeec2e9200",
+          "currentSame": false
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+          "committedSHA256": "bc3a6281444084b8214842c3b5dd5d71677107be7b106c99d847fb7a446b4012",
+          "currentSame": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+          "committedSHA256": "542ce369a343f9ec6bc997238d60c8e0f6abffa68f61c1bd9131851cbe176be1",
+          "currentSame": true
+        },
+        {
+          "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+          "committedSHA256": "f5f2fd3a1c2a2f71c644a7555c4d04b7971e1d27770530b01ca7aec8a4bc96ff",
+          "currentSame": true
+        }
+      ],
+      "maintainedDocsAtCommitSame": true
+    }
+  ],
+  "claimsReview": {
+    "Noble": "实际state写入保持同原对象、两JSON影子与write→encode失败前缀；七真实commitNoble/commitBody写点已实际查源码。state格只partial，lease/payment/World/recording验收未冒完成。",
+    "Mist": "实际唯一slot保存raw/JSON/array-row-targets身份，四install同一constructor late current源；此前本同行独立实际source审已批准。knowledge与请求/生命/阶段许可、归档schema分清。",
+    "Wolf": "两个完整prepare/publish及actualmarks前后位置对应40dd实际功能；relation原体/resolved/applied及World标死/permits/finally边界保。此功能源本人作者，台账为Root新映射，本审不冒独立再审本人功能。",
+    "noOtherCells": "只Noble/Mist state及Wolf lifecycle，未复制到checkpoint/effect/oldExports；其他907格保持，0complete/NA。",
+    "postCommitWIP": "实际currentDR不同于40dd，作为本人Gun并行后层；本登记只核Wolf2caller+4getter字段同，未把Gun纳入已提交机制part。"
+  },
+  "harnessHistoryRead": "Root baseline源commit与生成blob/捕获HEAD两错误仅修核对器，原冻结字节与矩阵不为过检查改写；本审实际96d3与b56d生成blob核真。",
+  "findings": [],
+  "executed": "仅read完整候选、三映射对应owner小段/文档、原910格差量和实际Git ancestors/committedsourceSHA、既有Wolf2caller/4getter；未run产品/pytest/compiler/boundedtests/gate/models/network。"
+}
