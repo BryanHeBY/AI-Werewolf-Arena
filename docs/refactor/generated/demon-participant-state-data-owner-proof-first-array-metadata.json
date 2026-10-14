@@ -1,0 +1,47 @@
+{
+  "mode": "failed-kernel-read-only-AST-metadata",
+  "rawBodyLines": 18,
+  "rawArrays": 27,
+  "printedArrays": 27,
+  "differences": [
+    {
+      "index": 15,
+      "raw": {
+        "length": 1,
+        "hasTrailingComma": false,
+        "first": "idiot: typeof next"
+      },
+      "printed": {
+        "length": 1,
+        "hasTrailingComma": false,
+        "first": "idiot: typeof next;"
+      }
+    },
+    {
+      "index": 19,
+      "raw": {
+        "length": 1,
+        "hasTrailingComma": true,
+        "first": "([key, value]) => [key, key === \"idiot\" ? next : value] as const"
+      },
+      "printed": {
+        "length": 1,
+        "hasTrailingComma": false,
+        "first": "([key, value]) => [key, key === \"idiot\" ? next : value] as const"
+      }
+    },
+    {
+      "index": 23,
+      "raw": {
+        "length": 1,
+        "hasTrailingComma": true,
+        "first": "([path, value]) => [path, path.length === 1 && path[0] === \"idiot\" ? next :"
+      },
+      "printed": {
+        "length": 1,
+        "hasTrailingComma": false,
+        "first": "([path, value]) => [path, path.length === 1 && path[0] === \"idiot\" ? next :"
+      }
+    }
+  ]
+}

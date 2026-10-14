@@ -1,0 +1,771 @@
+{
+  "unitInputRepair": {
+    "typeOnly": false,
+    "completeForward": true,
+    "completeInverse": true,
+    "otherTwoGreenDeclarationsSame": true,
+    "outputs": [
+      {
+        "module": 99,
+        "beforeSha256": "7b303730862f07846e1f4f370f67c91a027c110d89f05c79d40146ebbe5c15d6",
+        "inverseSame": true,
+        "currentSame": false
+      },
+      {
+        "module": 1,
+        "beforeSha256": "4697d5fec01c5f3a71795d07f1d5cb9730a480cc24943e8c704ace065086af30",
+        "inverseSame": true,
+        "currentSame": false
+      }
+    ]
+  },
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "readySHA256": "262a5ed597a67620588e2afd6db3ffa2124264f92ba6bd1b876b0abb0a52dd55",
+  "wholeAuthority": {
+    "forward": true,
+    "inverse": true,
+    "sha256": "6fc46e78526fe2e936409a3d78355e5444ff58bde7e34cb04816b35e010d7e3e",
+    "nodes": 11833,
+    "leaves": 6264,
+    "arrays": 1455,
+    "outputs": [
+      {
+        "module": 99,
+        "beforeSha256": "79483392aa741e0cf97c12186878e33f0f5e85c15ae8ed6d33bf035e6e69b097",
+        "inverseSha256": "79483392aa741e0cf97c12186878e33f0f5e85c15ae8ed6d33bf035e6e69b097",
+        "same": true,
+        "actualCurrentSame": false
+      },
+      {
+        "module": 1,
+        "beforeSha256": "f2672e33cc0dbf003b73668cb3ad32a760a4af43e0c51c948bc1509e386c3766",
+        "inverseSha256": "f2672e33cc0dbf003b73668cb3ad32a760a4af43e0c51c948bc1509e386c3766",
+        "same": true,
+        "actualCurrentSame": false
+      }
+    ]
+  },
+  "completeActualKernels": [
+    {
+      "name": "inventoryReferences",
+      "old": {
+        "sha256": "535f0b4890029bd84b758fd99870b45a969c02fe848dfd7d19e468d138a45d7c",
+        "nodes": 103,
+        "leaves": 48,
+        "arrays": 23
+      },
+      "currentMapped": {
+        "sha256": "535f0b4890029bd84b758fd99870b45a969c02fe848dfd7d19e468d138a45d7c",
+        "nodes": 103,
+        "leaves": 48,
+        "arrays": 23
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "01974dc9730a71d223b9e3ab8280473987081d3aab51d28e935da452baa6c8c9",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "01974dc9730a71d223b9e3ab8280473987081d3aab51d28e935da452baa6c8c9",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "originalInventory",
+      "old": {
+        "sha256": "8fe10fdd2ff81e6c892fa31d14f8b58d7ee177257d6b262a6575c6e0aa801c59",
+        "nodes": 55,
+        "leaves": 26,
+        "arrays": 11
+      },
+      "currentMapped": {
+        "sha256": "8fe10fdd2ff81e6c892fa31d14f8b58d7ee177257d6b262a6575c6e0aa801c59",
+        "nodes": 55,
+        "leaves": 26,
+        "arrays": 11
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "eaf783acd1364571617362d43fdadf95eb417e43ce93b519a5b05001bd4a018e",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "eaf783acd1364571617362d43fdadf95eb417e43ce93b519a5b05001bd4a018e",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "demonBadgeJson",
+      "old": {
+        "sha256": "51f1c2aef1fb84b84fdb0457024e29d4cb2943e68998930079d3c579603b2036",
+        "nodes": 152,
+        "leaves": 85,
+        "arrays": 16
+      },
+      "currentMapped": {
+        "sha256": "51f1c2aef1fb84b84fdb0457024e29d4cb2943e68998930079d3c579603b2036",
+        "nodes": 152,
+        "leaves": 85,
+        "arrays": 16
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "cb09ff932f3c4b0f4fffedc2ac666fafb5e17c375b1deb5a88bd628b4bdbe23d",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "cb09ff932f3c4b0f4fffedc2ac666fafb5e17c375b1deb5a88bd628b4bdbe23d",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "demonVoteJson",
+      "old": {
+        "sha256": "92b469b1e9b0222064d18303e7bbd3902f6dcb8ab37a76684eb6496ef4e5a8d1",
+        "nodes": 72,
+        "leaves": 40,
+        "arrays": 9
+      },
+      "currentMapped": {
+        "sha256": "92b469b1e9b0222064d18303e7bbd3902f6dcb8ab37a76684eb6496ef4e5a8d1",
+        "nodes": 72,
+        "leaves": 40,
+        "arrays": 9
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "6fb8b65fa9f3ac6afd0d1b6fda71836352f0ee6f5f940a45684bca628ffbc6fb",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "6fb8b65fa9f3ac6afd0d1b6fda71836352f0ee6f5f940a45684bca628ffbc6fb",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "privateAuditCurrent",
+      "old": {
+        "sha256": "9747d37c0ebc81f609182e8b7a1766d1aae65d08748b98754dcf95c1188a72f2",
+        "nodes": 83,
+        "leaves": 39,
+        "arrays": 11
+      },
+      "currentMapped": {
+        "sha256": "9747d37c0ebc81f609182e8b7a1766d1aae65d08748b98754dcf95c1188a72f2",
+        "nodes": 83,
+        "leaves": 39,
+        "arrays": 11
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "da59b8f48256c61727a44882015ef73b972219bb8af4ba03ecaf2575c1eb88ff",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "da59b8f48256c61727a44882015ef73b972219bb8af4ba03ecaf2575c1eb88ff",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "committedPrivate",
+      "old": {
+        "sha256": "04254d81b69b089e66379df4b72e4a59089ead25279553054fe9f82e9252c5bd",
+        "nodes": 87,
+        "leaves": 47,
+        "arrays": 10
+      },
+      "currentMapped": {
+        "sha256": "04254d81b69b089e66379df4b72e4a59089ead25279553054fe9f82e9252c5bd",
+        "nodes": 87,
+        "leaves": 47,
+        "arrays": 10
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "cda035a2f1097b35de036ee4f5bb920e2bc863bd29a779010ef44e08b7c3d602",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "cda035a2f1097b35de036ee4f5bb920e2bc863bd29a779010ef44e08b7c3d602",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "witch-capture",
+      "old": {
+        "sha256": "ada601b5899dffbdc74c6bf461a7211f90a819545ce1cc86c18712fbe22f1534",
+        "nodes": 52,
+        "leaves": 30,
+        "arrays": 12
+      },
+      "currentMapped": {
+        "sha256": "ada601b5899dffbdc74c6bf461a7211f90a819545ce1cc86c18712fbe22f1534",
+        "nodes": 52,
+        "leaves": 30,
+        "arrays": 12
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "f08550178cb174962bc1e928a9d9c6ebfb1cd138e8edbc0e9fd9de417986c84d",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "f08550178cb174962bc1e928a9d9c6ebfb1cd138e8edbc0e9fd9de417986c84d",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "witch-reset",
+      "old": {
+        "sha256": "3266b71a17c63d921ec555d9fbe5b5534c6a70aae19675855a287cb023ef6ba6",
+        "nodes": 108,
+        "leaves": 54,
+        "arrays": 17
+      },
+      "currentMapped": {
+        "sha256": "3266b71a17c63d921ec555d9fbe5b5534c6a70aae19675855a287cb023ef6ba6",
+        "nodes": 108,
+        "leaves": 54,
+        "arrays": 17
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "29a52959a0117727dd609d565637fcc9009ccc5053aafa6f57dfa3d5406cf8e7",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "29a52959a0117727dd609d565637fcc9009ccc5053aafa6f57dfa3d5406cf8e7",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "witch-commit",
+      "old": {
+        "sha256": "499289e35ad2ca4fb0af3dcffc6fc110d04aa129df4e89edf512bd4ca9e5a9e3",
+        "nodes": 149,
+        "leaves": 77,
+        "arrays": 14
+      },
+      "currentMapped": {
+        "sha256": "499289e35ad2ca4fb0af3dcffc6fc110d04aa129df4e89edf512bd4ca9e5a9e3",
+        "nodes": 149,
+        "leaves": 77,
+        "arrays": 14
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "ec944e62adad86b343cfab83de7bd0d558237222ab8363c486617ab282587971",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "ec944e62adad86b343cfab83de7bd0d558237222ab8363c486617ab282587971",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "native-original",
+      "old": {
+        "sha256": "c2db0a282c7ded82fc50c7ad08bad96ac88fe4c06868b1841d517eea90d6bd7f",
+        "nodes": 78,
+        "leaves": 41,
+        "arrays": 16
+      },
+      "currentMapped": {
+        "sha256": "c2db0a282c7ded82fc50c7ad08bad96ac88fe4c06868b1841d517eea90d6bd7f",
+        "nodes": 78,
+        "leaves": 41,
+        "arrays": 16
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "601a0682a0b1edaf9104fbd46c308a141bfb6501c2b8b8b4d7fd87cbbe471c25",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "601a0682a0b1edaf9104fbd46c308a141bfb6501c2b8b8b4d7fd87cbbe471c25",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "native-commit",
+      "old": {
+        "sha256": "083c83ac4b8b9382a04a975145a228a4df797c49b27642281eead5f1a5350e92",
+        "nodes": 314,
+        "leaves": 161,
+        "arrays": 35
+      },
+      "currentMapped": {
+        "sha256": "083c83ac4b8b9382a04a975145a228a4df797c49b27642281eead5f1a5350e92",
+        "nodes": 314,
+        "leaves": 161,
+        "arrays": 35
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "93d66f7646a57b826ca4f39950df9e47475f4c991d9ca9c561886c4ca1263706",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "93d66f7646a57b826ca4f39950df9e47475f4c991d9ca9c561886c4ca1263706",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "hunter-capture",
+      "old": {
+        "sha256": "80a20874799433ebed541b7c40d5e027f0ec62e2e2cadbea7c24ec0ab47859ce",
+        "nodes": 24,
+        "leaves": 12,
+        "arrays": 5
+      },
+      "currentMapped": {
+        "sha256": "80a20874799433ebed541b7c40d5e027f0ec62e2e2cadbea7c24ec0ab47859ce",
+        "nodes": 24,
+        "leaves": 12,
+        "arrays": 5
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "a2a691fb364f0f004df25587009b309be23ef00fb1b67f218bbb0bfd2249ea4c",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "a2a691fb364f0f004df25587009b309be23ef00fb1b67f218bbb0bfd2249ea4c",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "hunter-consume",
+      "old": {
+        "sha256": "238a600106a576d86515b8b3421517d87dfc7c1daad55f73b820b65226c2812c",
+        "nodes": 62,
+        "leaves": 31,
+        "arrays": 10
+      },
+      "currentMapped": {
+        "sha256": "238a600106a576d86515b8b3421517d87dfc7c1daad55f73b820b65226c2812c",
+        "nodes": 62,
+        "leaves": 31,
+        "arrays": 10
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "e37c611be963443c9cff187b5a744dfaae546d8237380beedf43f97161d78355",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "e37c611be963443c9cff187b5a744dfaae546d8237380beedf43f97161d78355",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-record",
+      "old": {
+        "sha256": "4b602690e7c7f25f78b19795081e150d8d77adfc135a4b04f55a5db8d1a2ee73",
+        "nodes": 143,
+        "leaves": 76,
+        "arrays": 17
+      },
+      "currentMapped": {
+        "sha256": "4b602690e7c7f25f78b19795081e150d8d77adfc135a4b04f55a5db8d1a2ee73",
+        "nodes": 143,
+        "leaves": 76,
+        "arrays": 17
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "6a847105644f28c26bb0b3505014c093bc20f7414e8b9d3ce5ae22fc3bd07ebd",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "6a847105644f28c26bb0b3505014c093bc20f7414e8b9d3ce5ae22fc3bd07ebd",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "badge-audit-tail",
+      "old": {
+        "sha256": "e2f1fff40d16a874e93b034eff8e1f0a36ad6e2f2fa90fc0fca5d9d1ed2e457b",
+        "nodes": 53,
+        "leaves": 24,
+        "arrays": 10
+      },
+      "currentMapped": {
+        "sha256": "e2f1fff40d16a874e93b034eff8e1f0a36ad6e2f2fa90fc0fca5d9d1ed2e457b",
+        "nodes": 53,
+        "leaves": 24,
+        "arrays": 10
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "c4a2929e7e259bcd96dc950505df577a36a5b8d3155f5644d8a054ac1ae58719",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "c4a2929e7e259bcd96dc950505df577a36a5b8d3155f5644d8a054ac1ae58719",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "redmoon-audit-tail",
+      "old": {
+        "sha256": "47aa0181a6444d229f4cf206ac3705846f1313f71ba269d3f0fa2e0f4f2db5bc",
+        "nodes": 25,
+        "leaves": 13,
+        "arrays": 5
+      },
+      "currentMapped": {
+        "sha256": "47aa0181a6444d229f4cf206ac3705846f1313f71ba269d3f0fa2e0f4f2db5bc",
+        "nodes": 25,
+        "leaves": 13,
+        "arrays": 5
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "de9c7cd615d3d18136cdd3a83bfd441e650b7ee8a1e50771fd81a66f8066a1f7",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "de9c7cd615d3d18136cdd3a83bfd441e650b7ee8a1e50771fd81a66f8066a1f7",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "idiot-data-commit",
+      "old": {
+        "sha256": "fe82a29496e9da29e66eb5004d2f4a9ea7649ca22598a061865c016274b6573e",
+        "nodes": 225,
+        "leaves": 113,
+        "arrays": 27
+      },
+      "currentMapped": {
+        "sha256": "fe82a29496e9da29e66eb5004d2f4a9ea7649ca22598a061865c016274b6573e",
+        "nodes": 225,
+        "leaves": 113,
+        "arrays": 27
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "363e790aafe7e85983008bbdeb6d44ac03d3ba0e41ed0a369c81a4bcec66e9af",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "363e790aafe7e85983008bbdeb6d44ac03d3ba0e41ed0a369c81a4bcec66e9af",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "original-capture-fields",
+      "old": {
+        "sha256": "23113f726b12044ee0580cfbaa97599d7654c4767b0bcf3a4a155cb95d51e66e",
+        "nodes": 56,
+        "leaves": 28,
+        "arrays": 9
+      },
+      "currentMapped": {
+        "sha256": "23113f726b12044ee0580cfbaa97599d7654c4767b0bcf3a4a155cb95d51e66e",
+        "nodes": 56,
+        "leaves": 28,
+        "arrays": 9
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "2f0cf447b9bab178d456f032a91568ae2b23ef8cf1cfd1815ade34eae9384f09",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "2f0cf447b9bab178d456f032a91568ae2b23ef8cf1cfd1815ade34eae9384f09",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "hunt-and-poison-refresh",
+      "old": {
+        "sha256": "904767c8bd024e3a96b24fe3acb842d7b6ce7c0a94ca513b08d5f7ae486b45d0",
+        "nodes": 17,
+        "leaves": 8,
+        "arrays": 4
+      },
+      "currentMapped": {
+        "sha256": "904767c8bd024e3a96b24fe3acb842d7b6ce7c0a94ca513b08d5f7ae486b45d0",
+        "nodes": 17,
+        "leaves": 8,
+        "arrays": 4
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "cf4ac1c63f9252a1d26424b720dc7c932c8d93f4512dd56e525898906efc4898",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "cf4ac1c63f9252a1d26424b720dc7c932c8d93f4512dd56e525898906efc4898",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    },
+    {
+      "name": "top-descriptor-refs",
+      "old": {
+        "sha256": "eef40743ed64307cbeb04996e8c93c4de4485c2e875b6e3d4281b68a01284da4",
+        "nodes": 59,
+        "leaves": 30,
+        "arrays": 7
+      },
+      "currentMapped": {
+        "sha256": "eef40743ed64307cbeb04996e8c93c4de4485c2e875b6e3d4281b68a01284da4",
+        "nodes": 59,
+        "leaves": 30,
+        "arrays": 7
+      },
+      "outputs": [
+        {
+          "module": 99,
+          "mappedCompleteSha256": "87d37cb774a5a8fcf8ae02eb1382d985f515ddb41e331934867338c3a4796ac2",
+          "same": true,
+          "unprintedRawSame": true
+        },
+        {
+          "module": 1,
+          "mappedCompleteSha256": "87d37cb774a5a8fcf8ae02eb1382d985f515ddb41e331934867338c3a4796ac2",
+          "same": true,
+          "unprintedRawSame": true
+        }
+      ]
+    }
+  ],
+  "declarationBindings": [
+    {
+      "name": "inventoryReferences",
+      "sha256": "48a0652b47cb8b434f631997476dbef72725b64adf3290090f0cee0cbf33bb3f",
+      "line": 44
+    },
+    {
+      "name": "originalInventory",
+      "sha256": "65bb65a2a7ce404730e0724e64a4a31d36e130f1cea8509296f0fbbb79390819",
+      "line": 58
+    },
+    {
+      "name": "demonBadgeJson",
+      "sha256": "a508648e342018a742c45f03d9d68be1bc76a8d69fb4b9cc26ca5185d7b7c986",
+      "line": 66
+    },
+    {
+      "name": "demonVoteJson",
+      "sha256": "8a3ca58fb491079f7f717708126fbe4dea9f364e81d21e1f238f1458602d2e05",
+      "line": 90
+    },
+    {
+      "name": "privateAuditCurrent",
+      "sha256": "90d2f67959fc450f98d9c0d858f58aa8b03cdafa18bb83d396d1e40d96d01f89",
+      "line": 101
+    },
+    {
+      "name": "committedPrivate",
+      "sha256": "8056bb8286ec38592490e37bc2f8fd8fef48b6043f5d0a9e7b3ce524b75d367c",
+      "line": 112
+    },
+    {
+      "name": "captureDemonParticipantPrivateData",
+      "sha256": "f145a4a41b0529b961a108e73690f060cdfae09b55e70307bfe9690c510fe691",
+      "line": 123
+    },
+    {
+      "name": "demonPrivateRefsCurrent",
+      "sha256": "0714acffbe99cd93cd46e7c3faf4658e4dab5260b2f4f15383de949e3cfe7921",
+      "line": 139
+    },
+    {
+      "name": "refreshDemonParticipantAudit",
+      "sha256": "617850a0b28afda98303ce17702b5c1d5f198a3cc9302f9e54727361154f1bd2",
+      "line": 147
+    },
+    {
+      "name": "captureDemonWitchAuditData",
+      "sha256": "9fc331769a6f51914c9e8c9e514942be05ea0a43ae1a76034c90bc1e3f58583c",
+      "line": 151
+    },
+    {
+      "name": "resetDemonWitchParticipantData",
+      "sha256": "7c72c078cb74ce4f63b74b343d6a22a712f631a1c01786643c0ba3769626003d",
+      "line": 159
+    },
+    {
+      "name": "commitDemonWitchParticipantData",
+      "sha256": "4d094bbc7e7e9debfb5c7f3b70aedee4bdea58673a8e802ee82c936cdc95fc24",
+      "line": 181
+    },
+    {
+      "name": "captureDemonNativeAuditData",
+      "sha256": "b839ebf53b841811a5dc291417caa56e621317d84914dbc9a17321ccb6b63bdf",
+      "line": 209
+    },
+    {
+      "name": "commitDemonNativeParticipantData",
+      "sha256": "533298aa4a70df60e5c3326668d634a9653571097d9b0a7c8446b897f5934484",
+      "line": 222
+    },
+    {
+      "name": "captureDemonHunterAuditData",
+      "sha256": "6b42bf049dab93659523edafd687be63203b673225186cb0864d2ee30dd5c8c5",
+      "line": 268
+    },
+    {
+      "name": "consumeDemonHunterParticipantData",
+      "sha256": "71dea71241254daf32c86fdfe4ec3e9c0b0e0535ae592506abf3a835bd17046d",
+      "line": 275
+    },
+    {
+      "name": "projectDemonParticipantCheckpoint",
+      "sha256": "00d84760249212cc942e34f9c9b775ad3c64cb074c8b061cff42ce1a0cdd4a74",
+      "line": 287
+    },
+    {
+      "name": "acceptDemonBadgeAudits",
+      "sha256": "5823c71379c8e5292c13e61d91dd13a6cd377dd7c846782d20f3ab78625a962e",
+      "line": 313
+    },
+    {
+      "name": "acceptDemonRedMoonAudit",
+      "sha256": "443e65b0ca3ffd2a07672de7fdb3e3f3237c1eaac3f9a58aebfc55183d438c91",
+      "line": 324
+    },
+    {
+      "name": "commitDemonIdiotParticipantData",
+      "sha256": "1f193071ce6586a7256b2a37bd7c671779699a37fa9804bd1edac4a0bcb18a36",
+      "line": 332
+    }
+  ],
+  "originalNativePushCaptureRetained": true,
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "sha256": "061a792b1f5bb898cbf8a8162e9754012581b1007990af4a363179c20315eaf4",
+      "sameWorking": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+      "sha256": "1df08aacc30111c3a7de68136b1ca4fb7a95df73adcfbab7dca2e95e90a5c85b",
+      "sameWorking": true
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "118aebddf58bcdbc83cfde96d8cd49274495397f818bd4c7960b651629363caf",
+      "sameWorking": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "2d91efc17dbd98b3f5b14cf5bf4007262bc209cf73f7f41b2f7c1d41b3c64ed9",
+      "sameWorking": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+      "sha256": "1f2936b5d3da10748e445c231c8ea4154c1668ed3032d766a43cc6d3aa21620d",
+      "sameWorking": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+      "sha256": "c2affe8a9c31be6460c66c4d0882d5b4b1b5b88a650d9a04ba7ac8fd2f06ca6a",
+      "sameWorking": true
+    }
+  ],
+  "limits": [
+    "这三个实际源码／一个原程序及当前完整迁出数据body；不运行类型、行为或全门禁。",
+    "节点/leaf来自forEachChild并排除JSDoc；内核emit经过明确runtime表达式映射和共同printer布局，原布局raw是否相同另列。",
+    "新helper/thunk/返回对象/导出和调用栈有意变化，不承诺任意namespace/private/global monkeypatch初始化或事务等价。",
+    "原nativeArrayPush仍在authority原module点捕获；committed回调只设置原局部旗，数据字段仍原Participant。"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "source": {
+    "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+    "beforeSha256": "58ef77f2fdf99b2c14b566f8cc1e7e42ff955a7b7ff3d6ffe496d3d36fb571c5",
+    "sha256": "932d622b943712d54c763963039d5867965aaa56971c7cfda6d3fa23e657b9b2"
+  },
+  "singleCommentForward": true,
+  "singleCommentInverse": true,
+  "before": {
+    "nodes": 10189,
+    "arrays": 1286,
+    "leaves": 5418,
+    "sha256": "66484711d323a903ef0c33827e7867495699baac50f7fdc1e42f586da31c65d8"
+  },
+  "current": {
+    "nodes": 10189,
+    "arrays": 1286,
+    "leaves": 5418,
+    "sha256": "66484711d323a903ef0c33827e7867495699baac50f7fdc1e42f586da31c65d8"
+  },
+  "protectedTagsSame": true,
+  "wholeRawOutputs": [
+    {
+      "module": 99,
+      "sha256": "d9a1312ccc08fc3f25dff36e2f1f0314f56297c64a0599ec6fafba9c158975fe",
+      "same": true
+    },
+    {
+      "module": 1,
+      "sha256": "ae34281bb34e700ac0d4e27bf1857ddf9e9e01bf8add29ee8a632bfa20c9eb62",
+      "same": true
+    }
+  ],
+  "otherTwoSourceSame": true,
+  "limits": [
+    "仅末comment桥，不替代或重跑主proof/类型/头/运行，旧采样SHA与历史脚本保留。"
+  ]
+}

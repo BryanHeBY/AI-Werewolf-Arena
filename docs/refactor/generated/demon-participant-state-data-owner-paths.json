@@ -1,0 +1,23 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "source": [
+    "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+    "backend/src/game/mechanisms/roles/demon_hunter/participant-state-data.ts",
+    "backend/tests/unit/features/demon-hunter/participant-state-data.test.ts"
+  ],
+  "deleted": [],
+  "controls": [
+    "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+    "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+    "backend/src/recording/checkpoint/player-snapshots.ts",
+    "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+    "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+    "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts"
+  ],
+  "parallelExcluded": [
+    "backend/src/game/engine/phase_manager.ts",
+    "backend/src/game/engine/death_resolution.ts",
+    "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+    "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts"
+  ]
+}

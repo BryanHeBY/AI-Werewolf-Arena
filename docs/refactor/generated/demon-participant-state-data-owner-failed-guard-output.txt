@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/demon-hunter/participant-state-data.test.ts:
+(pass) native Guard writes original resource fields before an encoding failure leaves its safe audit unchanged [0.99ms]
+
+ 1 pass
+ 2 filtered out
+ 0 fail
+ 10 expect() calls
+Ran 1 test across 1 file. [59.00ms]

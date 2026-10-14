@@ -1,0 +1,93 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "932d622b943712d54c763963039d5867965aaa56971c7cfda6d3fa23e657b9b2",
+      "bytes": 55204
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/participant-state-data.ts",
+      "sha256": "3d31915430bfbfc93de81d6242afb7212ef657493ee690d2b556ec422226a482",
+      "bytes": 17371
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/participant-state-data.test.ts",
+      "sha256": "353b7bd908fd89af3671560b859c291682688961fef7cf17dc10fbaa34beb7c5",
+      "bytes": 7252
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "sha256": "061a792b1f5bb898cbf8a8162e9754012581b1007990af4a363179c20315eaf4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+      "sha256": "1df08aacc30111c3a7de68136b1ca4fb7a95df73adcfbab7dca2e95e90a5c85b"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "118aebddf58bcdbc83cfde96d8cd49274495397f818bd4c7960b651629363caf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "2d91efc17dbd98b3f5b14cf5bf4007262bc209cf73f7f41b2f7c1d41b3c64ed9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+      "sha256": "1f2936b5d3da10748e445c231c8ea4154c1668ed3032d766a43cc6d3aa21620d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+      "sha256": "c2affe8a9c31be6460c66c4d0882d5b4b1b5b88a650d9a04ba7ac8fd2f06ca6a"
+    }
+  ],
+  "sourceFrozen": true,
+  "commentOnly": false,
+  "policyChange": false,
+  "document": {
+    "path": "docs/refactor/demon-participant-state-data-owner.md",
+    "sha256": "90a27ae75f98d178faeb3406e64f86e9033e3968cbce1348603ea541c96674dd"
+  },
+  "firstSourceReady": {
+    "path": "docs/refactor/generated/demon-participant-state-data-owner-source-ready.json",
+    "sha256": "6ef2d7c47a213d02d51b3e6e20b19b5221c7fcad7ef285c8cb7d0815c7047ce9"
+  },
+  "finalSourceReady": {
+    "path": "docs/refactor/generated/demon-participant-state-data-owner-source-ready-final.json",
+    "sha256": "7c8d71deea174700dd82fb14fbae2a94220876f2e29d89689ad1834219860d25"
+  },
+  "staticAuditSource": [
+    {
+      "path": "docs/refactor/generated/remaining-state-codec-ownership-audit.json",
+      "sha256": "4e46fa59b12f1cc6dd47cb8d05d977fefe7f46ff619033a86ac38d3e61ec0980"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-state-codec-ownership-inventory.json",
+      "sha256": "b7deafab100746fd386bbaa9ea169285e8320ec00474f42c2271cdf3c3a81608"
+    }
+  ],
+  "limits": [
+    "仅猎魔参与者数据证据/codec职责，原authority仍唯一World/stock/lease/phase/生命/冻结权威。",
+    "数据字段仍原Participant/checkpoint；新导出/回调/返回对象及module调用面明列，不称全JS反射事务等价。",
+    "初次Guard fixture输入真实失败，仅修该输入并失败only；当前数据生产正文从首fence未改。",
+    "原完整joint12type红，只有两failed unit后继0；不冒全树/全部55机制/type全scope最终复跑。",
+    "Noble state/profile、PM/DR并行组不列immutable控制，不声明历史全闭包不变。"
+  ],
+  "finalCommentPrecision": {
+    "before": {
+      "path": "docs/refactor/generated/demon-participant-state-data-owner-final-comment-before.json",
+      "sha256": "52b6b1e68bb8b96804a23ad84d98d0154e52d269b7298e3a9ace1e5fbbbb6ba4"
+    },
+    "proof": {
+      "path": "docs/refactor/generated/demon-participant-state-data-owner-final-comment-proof.json",
+      "sha256": "30d600356293702df5c56a63370acc10290312206d4c0836d51c357a193ac621"
+    },
+    "originalMetadata": {
+      "path": "docs/refactor/generated/demon-participant-state-data-owner-first-approved-metadata-snapshot.json",
+      "sha256": "dcd6a7c1ce2e380d32c9f8c5a0ad878d71db5d2c53bd7be7c3546eb7f0507040"
+    }
+  }
+}

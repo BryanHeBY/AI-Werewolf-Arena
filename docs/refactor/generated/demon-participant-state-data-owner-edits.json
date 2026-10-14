@@ -1,0 +1,270 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "source": {
+    "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+    "edits": [
+      {
+        "label": "move-inventory-functions",
+        "before": "function inventoryReferences(value: object): Array<readonly [readonly string[], object]> {\n  const references: Array<readonly [readonly string[], object]> = [];\n  const visit = (item: object, path: string[]): void => {\n    for (const [key, descriptor] of Object.entries(Object.getOwnPropertyDescriptors(item))) {\n      if (\"value\" in descriptor && descriptor.value && typeof descriptor.value === \"object\") {\n        const next = [...path, key];\n        references.push([next, descriptor.value]);\n        visit(descriptor.value, next);\n      }\n    }\n  };\n  visit(value, []);\n  return references;\n}\nfunction originalInventory(p: Participant): boolean {\n  return p.inventoryRefs.every(([path, original]) => {\n    let current: unknown = p.privateState;\n    for (const key of path) current = ownDemonData(current, key);\n    return current === original && !types.isProxy(original);\n  });\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "move-badge-vote-codecs",
+        "before": "function demonBadgeJson(badge: unknown): string | null {\n  if (!badge || typeof badge !== \"object\" || types.isProxy(badge)) return null;\n  const optional = Object.getOwnPropertyDescriptor(badge, \"handoffPolicy\");\n  if (optional && !(\"value\" in optional)) return null;\n  const isSheriff = ownDemonData(badge, \"isSheriff\"),\n    destroyed = ownDemonData(badge, \"destroyed\"),\n    voteWeight = ownDemonData(badge, \"voteWeight\"),\n    handoffPolicy = ownDemonData(badge, \"handoffPolicy\");\n  return typeof isSheriff === \"boolean\" &&\n    typeof destroyed === \"boolean\" &&\n    typeof voteWeight === \"number\" &&\n    Number.isFinite(voteWeight) &&\n    voteWeight > 0 &&\n    (handoffPolicy === undefined ||\n      handoffPolicy === \"awa_next_seat_v1\" ||\n      handoffPolicy === \"awa_holder_choice_v1\")\n    ? JSON.stringify({\n        isSheriff,\n        destroyed,\n        voteWeight,\n        ...(handoffPolicy === undefined ? {} : { handoffPolicy }),\n      })\n    : null;\n}\nfunction demonVoteJson(vote: unknown): string | null {\n  const weight = ownDemonData(vote, \"weight\"),\n    canVote = ownDemonData(vote, \"canVote\");\n  return typeof weight === \"number\" &&\n    Number.isFinite(weight) &&\n    (weight > 0 || (weight === 0 && canVote === false)) &&\n    typeof canVote === \"boolean\"\n    ? JSON.stringify({ weight, canVote })\n    : null;\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "move-private-compare-and-decode",
+        "before": "function privateAuditCurrent(b: Binding, p: Participant): boolean {\n  const current = demonJson(p.privateState);\n  if (!current) return false;\n  if (!p.delegatedKey) return current === p.auditPrivateJson;\n  if (!delegatedCurrent(b)) return false;\n  const actual = JSON.parse(current),\n    expected = JSON.parse(p.auditPrivateJson);\n  delete actual[p.delegatedKey];\n  delete expected[p.delegatedKey];\n  return JSON.stringify(actual) === JSON.stringify(expected);\n}\nfunction committedPrivate(b: Binding, p: Participant, complete = false): Record<string, unknown> {\n  const cached = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;\n  if (p.delegatedKey) {\n    const owned = checkpointNobleBodyAuthority(b.world, complete);\n    if (p.id !== (p.delegatedKey === \"noble\" ? owned.nobleId : owned.bodyId))\n      throw Error(\"demon_hunter_delegated_actor_invalid\");\n    cached[p.delegatedKey] = p.delegatedKey === \"noble\" ? owned.noble : owned.body;\n  }\n  return cached;\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "capture-private-data-fields",
+        "before": "    privateState: privateState as RoleComponent[\"privateState\"],\n    privateRefs: Object.entries(privateState),\n    inventoryRefs: inventoryReferences(privateState).filter(\n      ([path]) => path.length === 1 || path[0] !== delegatedKey,\n    ),\n    delegatedKey,\n    auditPrivateJson: privateJson,",
+        "after": "    ...captureDemonParticipantPrivateData(privateState, delegatedKey, privateJson),",
+        "count": 1
+      },
+      {
+        "label": "private-top-ref-expression",
+        "before": "Object.keys(descriptors).length === p.privateRefs.length &&\n    p.privateRefs.every(\n      ([key, value]) =>\n        descriptors[key] && \"value\" in descriptors[key]! && descriptors[key]!.value === value,\n    )",
+        "after": "demonPrivateRefsCurrent(p, descriptors)",
+        "count": 1
+      },
+      {
+        "label": "hunt-audit-refresh",
+        "before": "  actor.auditPrivateJson = demonJson(actor.privateState)!;",
+        "after": "  refreshDemonParticipantAudit(actor);",
+        "count": 1
+      },
+      {
+        "label": "poison-cache-refresh",
+        "before": "      if (isCurrent()) p.auditPrivateJson = demonJson(p.privateState)!;",
+        "after": "      if (isCurrent()) refreshDemonParticipantAudit(p);",
+        "count": 1
+      },
+      {
+        "label": "private-audit-call-1",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "private-audit-call-2",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "private-audit-call-3",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "private-audit-call-4",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "private-audit-call-5",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "private-audit-call-6",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "private-audit-call-7",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "private-audit-call-8",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "private-audit-call-9",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "private-audit-call-10",
+        "before": "privateAuditCurrent(b, p)",
+        "after": "privateAuditCurrent(p, () => delegatedCurrent(b))",
+        "count": 1,
+        "sequentialOccurrence": 1
+      },
+      {
+        "label": "audit-player-decode-call",
+        "before": "committedPrivate(b, p) : undefined",
+        "after": "committedPrivate(p, () => checkpointNobleBodyAuthority(b.world, false)) : undefined",
+        "count": 1
+      },
+      {
+        "label": "witch-capture-data",
+        "before": "  const original = demonSnapshot(p.privateState) as Record<string, unknown>,\n    abilities = ownDemonData(original, \"abilities\") as Record<string, unknown>,\n    snapshot = ownDemonData(abilities, \"native:potion\") as Record<string, unknown>,\n    state = ownDemonData(snapshot, \"state\") as Record<string, unknown>;\n",
+        "after": "  const { original, abilities, snapshot, state } = captureDemonWitchAuditData(p);\n",
+        "count": 1
+      },
+      {
+        "label": "witch-reset-data",
+        "before": "  const resetState: Record<string, unknown> = {\n    ...state,\n    healUsedThisNight: false,\n    poisonUsedThisNight: false,\n    canSelfHeal: false,\n  };\n  const resetAbility = { ...snapshot, state: resetState };\n  const resetJson = JSON.stringify(resetAbility);\n  originalState.healUsedThisNight = false;\n  originalState.poisonUsedThisNight = false;\n  originalState.canSelfHeal = false;\n  const resetPrivate = { ...original, abilities: { ...abilities, \"native:potion\": resetAbility } };\n  if (demonJson(p.privateState) !== JSON.stringify(resetPrivate))\n    throw new Error(\"demon_hunter_native_reset_failed\");\n  p.auditPrivateJson = JSON.stringify(resetPrivate);\n",
+        "after": "  const { resetState, resetAbility, resetJson } = resetDemonWitchParticipantData(\n    p, original, abilities, snapshot, state, originalState,\n  );\n",
+        "count": 1
+      },
+      {
+        "label": "witch-commit-data",
+        "before": "      const expectedState = { ...resetState };\n      if (potion !== \"none\") {\n        if ((resetState[potion] as number) < 1) return false;\n        expectedState[potion] = (resetState[potion] as number) - 1;\n        expectedState[potion === \"heal\" ? \"healUsedThisNight\" : \"poisonUsedThisNight\"] = true;\n      }\n      const expectedAbility = {\n        ...resetAbility,\n        state: expectedState,\n        uses: (snapshot.uses as number) + (potion === \"none\" ? 0 : 1),\n        lastUsedDay: n.day,\n      };\n      const expectedPrivate = {\n        ...original,\n        abilities: { ...abilities, \"native:potion\": expectedAbility },\n      };\n      const json = JSON.stringify(expectedPrivate);\n      if (demonJson(p.privateState) !== json) return false;\n      committed = true;\n      committedJson = json;\n      p.auditPrivateJson = json;\n      return true;\n",
+        "after": "      return commitDemonWitchParticipantData(\n        p, original, abilities, snapshot, resetState, resetAbility, n, potion,\n        (json) => { committed = true; committedJson = json; },\n      );\n",
+        "count": 1
+      },
+      {
+        "label": "native-original-data",
+        "before": "  const originalJson = p?.auditPrivateJson;\n  const original = originalJson ? (JSON.parse(originalJson) as Record<string, unknown>) : null;\n  const abilities = original?.abilities as Record<string, unknown> | undefined;\n  const snapshot = abilities?.[id] as Record<string, unknown> | undefined;\n  const state = snapshot?.state as Record<string, unknown> | undefined;\n",
+        "after": "  const { originalJson, original, abilities, snapshot, state } = captureDemonNativeAuditData(p, id);\n",
+        "count": 1
+      },
+      {
+        "label": "native-full-commit-data",
+        "before": "    let nextState: Record<string, unknown>;\n    if (kind === \"seer_check\") {\n      if (targetId === null) return false;\n      const result = { kind: \"camp\", camp: b.players.get(targetId)!.camp };\n      if (demonJson(inspection) !== demonJson(result)) return false;\n      const row = { targetId, isWerewolf: result.camp === Camp.Wolf, result: { ...result } };\n      nextState = {\n        ...state,\n        lastTarget: targetId,\n        lastIsWerewolf: row.isWerewolf,\n        lastResult: { ...result },\n        history: [...(state.history as unknown[]), row],\n      };\n      const liveState = originalState as Record<string, unknown>;\n      liveState.lastTarget = targetId;\n      liveState.lastIsWerewolf = row.isWerewolf;\n      liveState.lastResult = { ...result };\n      nativeArrayPush.call(ownDemonData(originalState, \"history\"), row);\n    } else {\n      if (targetId !== null && snapshot.lastUsedDay === day - 1 && state.lastTarget === targetId)\n        return false;\n      nextState = { ...state, lastTarget: targetId };\n      (originalState as Record<string, unknown>).lastTarget = targetId;\n    }\n    const nextAbility = {\n      ...snapshot,\n      state: nextState,\n      uses: (snapshot.uses as number) + (targetId === null ? 0 : 1),\n      lastUsedDay: day,\n    };\n    (ability as Record<string, unknown>).uses = nextAbility.uses;\n    (ability as Record<string, unknown>).lastUsedDay = day;\n    const json = JSON.stringify({ ...original, abilities: { ...abilities, [id]: nextAbility } });\n    if (demonJson(p.privateState) !== json)\n      throw new Error(\"demon_hunter_native_night_commit_failed\");\n    committed = true;\n    p.auditPrivateJson = json;\n    return true;\n",
+        "after": "    return commitDemonNativeParticipantData(\n      p, original, abilities!, snapshot, state, originalState, ability, kind, id, day,\n      targetId, inspection, (id) => b.players.get(id)!.camp, nativeArrayPush,\n      () => { committed = true; },\n    );\n",
+        "count": 1
+      },
+      {
+        "label": "hunter-original-data",
+        "before": "  const originalJson = p.auditPrivateJson,\n    original = JSON.parse(originalJson),\n    hunter = original.hunter;\n",
+        "after": "  const { originalJson, original, hunter } = captureDemonHunterAuditData(p);\n",
+        "count": 1
+      },
+      {
+        "label": "hunter-full-consume-data",
+        "before": "      (state as Record<string, unknown>).canShoot = false;\n      const json = JSON.stringify({ ...original, hunter: { ...hunter, canShoot: false } });\n      if (demonJson(p.privateState) !== json)\n        throw new Error(\"demon_hunter_native_hunter_commit_failed\");\n      committed = true;\n      p.auditPrivateJson = json;\n",
+        "after": "      consumeDemonHunterParticipantData(p, state, original, hunter, () => { committed = true; });\n",
+        "count": 1
+      },
+      {
+        "label": "checkpoint-whole-record-codec",
+        "before": "    return {\n      id: p.id,\n      seat: cp.seat,\n      name: cp.name,\n      role: p.kind,\n      camp: p.camp,\n      alive: p.lifeDescriptor.get!.call(p.life) === true,\n      privateState: committedPrivate(b, p, complete),\n      victory: { affiliations: JSON.parse(p.victoryJson) as VictoryComponent[\"affiliations\"] },\n      vote: JSON.parse(cp.voteJson) as { weight: number; canVote: boolean },\n      badge: JSON.parse(cp.badgeJson) as {\n        isSheriff: boolean;\n        destroyed: boolean;\n        voteWeight: number;\n        handoffPolicy?: import(\"../../../../core/domain/board\").SheriffBadgePolicy;\n      },\n      marks: marks.flatMap(([mark, snapshot]) => (snapshot?.present ? [mark] : [])),\n    };\n",
+        "after": "    return projectDemonParticipantCheckpoint(\n      p, cp, marks, () => p.lifeDescriptor.get!.call(p.life) === true,\n      () => checkpointNobleBodyAuthority(b.world, complete),\n    );\n",
+        "count": 1
+      },
+      {
+        "label": "badge-full-audit-loop",
+        "before": "      for (const [id, next] of expected) {\n        const cp = before.get(id)!.cp;\n        cp.badgeJson = JSON.stringify(next.badge);\n        cp.voteJson = JSON.stringify(next.vote);\n      }\n",
+        "after": "      acceptDemonBadgeAudits(before, expected);\n",
+        "count": 1
+      },
+      {
+        "label": "redmoon-whole-audit-tail",
+        "before": "  if (demonJson(p.privateState) !== expected) throw new Error(\"red_moon_state_commit_failed\");\n  p.auditPrivateJson = expected;",
+        "after": "  acceptDemonRedMoonAudit(p, expected);",
+        "count": 1
+      },
+      {
+        "label": "idiot-complete-data-commit",
+        "before": "  const next = { revealed: true };\n  const original = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;\n  const expectedPrivate = JSON.stringify({ ...original, idiot: next });\n  const expectedVote = JSON.stringify({ ...JSON.parse(cp.voteJson), canVote: false, weight: 0 });\n  (p.privateState as { idiot: typeof next }).idiot = next;\n  (cp.vote as VotingRightComponent).canVote = false;\n  (cp.vote as VotingRightComponent).weight = 0;\n  if (demonJson(p.privateState) !== expectedPrivate || demonVoteJson(cp.vote) !== expectedVote)\n    throw new Error(\"demon_hunter_idiot_commit_failed\");\n  p.privateRefs = p.privateRefs.map(\n    ([key, value]) => [key, key === \"idiot\" ? next : value] as const,\n  );\n  p.inventoryRefs = p.inventoryRefs.map(\n    ([path, value]) => [path, path.length === 1 && path[0] === \"idiot\" ? next : value] as const,\n  );\n  p.auditPrivateJson = expectedPrivate;\n  cp.voteJson = expectedVote;\n  return true;",
+        "after": "  return commitDemonIdiotParticipantData(p, cp);",
+        "count": 1
+      },
+      {
+        "label": "participant-owned-type",
+        "before": "interface Participant {",
+        "after": "interface Participant extends DemonParticipantStateData {",
+        "count": 1
+      },
+      {
+        "label": "participant-field-type-move",
+        "before": "  privateState: RoleComponent[\"privateState\"];\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "participant-field-type-move",
+        "before": "  privateRefs: ReadonlyArray<readonly [string, unknown]>;\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "participant-field-type-move",
+        "before": "  inventoryRefs: ReadonlyArray<readonly [readonly string[], object]>;\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "participant-field-type-move",
+        "before": "  victoryJson: string;\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "participant-field-type-move",
+        "before": "  auditPrivateJson: string;\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "participant-field-type-move",
+        "before": "  // 委托子树只由各自权威读写；其余私态仍保原引用／审计 JSON，不能把快照当活跃库存。\n  delegatedKey: \"noble\" | \"secretBody\" | null;\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "checkpoint-owned-type",
+        "before": "  checkpoint: {",
+        "after": "  checkpoint: DemonCheckpointAuditData & {",
+        "count": 1
+      },
+      {
+        "label": "checkpoint-ref-type-move",
+        "before": "    badge: object;\n    vote: object;\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "checkpoint-json-type-move",
+        "before": "    badgeJson: string;\n    voteJson: string;\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "label": "authority-head-owner",
+        "before": " * 原生库存及 JSON／descriptor 检查仍归各自领域所有者。",
+        "after": " * 原参与者数据证据／审计编码归 participant-state-data；权限与成功标记继续在这里按原点提交。",
+        "count": 1
+      },
+      {
+        "label": "new-owner-import",
+        "before": "interface Participant extends DemonParticipantStateData {",
+        "after": "import {\n  originalInventory, demonBadgeJson, demonVoteJson,\n  privateAuditCurrent, committedPrivate, captureDemonParticipantPrivateData, demonPrivateRefsCurrent,\n  refreshDemonParticipantAudit, captureDemonWitchAuditData, resetDemonWitchParticipantData,\n  commitDemonWitchParticipantData, captureDemonNativeAuditData, commitDemonNativeParticipantData,\n  captureDemonHunterAuditData, consumeDemonHunterParticipantData, projectDemonParticipantCheckpoint,\n  acceptDemonBadgeAudits, acceptDemonRedMoonAudit, commitDemonIdiotParticipantData,\n  type DemonParticipantStateData, type DemonCheckpointAuditData,\n} from \"./participant-state-data\";\ninterface Participant extends DemonParticipantStateData {",
+        "count": 1
+      },
+      {
+        "label": "retain-native-nullable-data-input",
+        "before": "      p, original, abilities!, snapshot, state, originalState, ability, kind, id, day,",
+        "after": "      p, original, abilities, snapshot, state, originalState, ability, kind, id, day,",
+        "count": 1
+      }
+    ]
+  }
+}

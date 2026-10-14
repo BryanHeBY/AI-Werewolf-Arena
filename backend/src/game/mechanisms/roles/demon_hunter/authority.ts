@@ -4,7 +4,7 @@
  * 不变量：必须匹配原封存资格；审计只读最近合法同步提交，不能采用任意 live 库存。
  * 失效或失败保持部分写入与结算顺序，别名不增加能力；受保护白痴替换只恢复 idiot 槽，
  * 阵营来自已捕获的真实 Camp，保原组件引用／own-data／审计归属检查；不复制回 Role。
- * 原生库存及 JSON／descriptor 检查仍归各自领域所有者。
+ * 原参与者数据证据／审计编码归 participant-state-data；权限与成功标记继续在这里按原点提交。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
@@ -65,33 +65,31 @@ import type { DemonHunterChoice, DemonHunterState } from "@ai-werewolf-arena/gam
 import { statusMarkSnapshot } from "../../../../core/domain/components/status_marks";
 import { assertDemonHunterPreset } from "./preset";
 import type { FaultDecisionBoundary } from "../../../engine/fault_plan";
-interface Participant {
+import {
+  originalInventory, demonBadgeJson, demonVoteJson,
+  privateAuditCurrent, committedPrivate, captureDemonParticipantPrivateData, demonPrivateRefsCurrent,
+  refreshDemonParticipantAudit, captureDemonWitchAuditData, resetDemonWitchParticipantData,
+  commitDemonWitchParticipantData, captureDemonNativeAuditData, commitDemonNativeParticipantData,
+  captureDemonHunterAuditData, consumeDemonHunterParticipantData, projectDemonParticipantCheckpoint,
+  acceptDemonBadgeAudits, acceptDemonRedMoonAudit, commitDemonIdiotParticipantData,
+  type DemonParticipantStateData, type DemonCheckpointAuditData,
+} from "./participant-state-data";
+interface Participant extends DemonParticipantStateData {
   id: number;
   role: RoleComponent;
   kind: Role;
   camp: Camp;
   campComponent: CampComponent;
-  privateState: RoleComponent["privateState"];
-  privateRefs: ReadonlyArray<readonly [string, unknown]>;
-  inventoryRefs: ReadonlyArray<readonly [readonly string[], object]>;
   victory: VictoryComponent;
   affiliations: VictoryComponent["affiliations"];
-  victoryJson: string;
   life: AliveComponent;
   lifeDescriptor: PropertyDescriptor;
   initialVersion: number;
-  auditPrivateJson: string;
-  // 委托子树只由各自权威读写；其余私态仍保原引用／审计 JSON，不能把快照当活跃库存。
-  delegatedKey: "noble" | "secretBody" | null;
-  checkpoint: {
+  checkpoint: DemonCheckpointAuditData & {
     identity: object;
     seat: number;
     name: string;
-    badge: object;
-    vote: object;
     marks: StatusMarksComponent;
-    badgeJson: string;
-    voteJson: string;
   } | null;
 }
 interface Binding extends DemonHunterStateSlot {
@@ -165,27 +163,6 @@ function originalLife(p: Participant, world: World, live = false, version?: numb
     (!live || alive) && aliveLifeVersion(p.life) === (version ?? p.initialVersion + (alive ? 0 : 1))
   );
 }
-function inventoryReferences(value: object): Array<readonly [readonly string[], object]> {
-  const references: Array<readonly [readonly string[], object]> = [];
-  const visit = (item: object, path: string[]): void => {
-    for (const [key, descriptor] of Object.entries(Object.getOwnPropertyDescriptors(item))) {
-      if ("value" in descriptor && descriptor.value && typeof descriptor.value === "object") {
-        const next = [...path, key];
-        references.push([next, descriptor.value]);
-        visit(descriptor.value, next);
-      }
-    }
-  };
-  visit(value, []);
-  return references;
-}
-function originalInventory(p: Participant): boolean {
-  return p.inventoryRefs.every(([path, original]) => {
-    let current: unknown = p.privateState;
-    for (const key of path) current = ownDemonData(current, key);
-    return current === original && !types.isProxy(original);
-  });
-}
 function originalIdentity(p: Participant, world: World): boolean {
   if (types.isProxy(p.privateState)) return false;
   const descriptors = Object.getOwnPropertyDescriptors(p.privateState);
@@ -195,11 +172,7 @@ function originalIdentity(p: Participant, world: World): boolean {
     ownDemonData(p.role, "role") === p.kind &&
     ownDemonData(p.campComponent, "camp") === p.camp &&
     ownDemonData(p.role, "privateState") === p.privateState &&
-    Object.keys(descriptors).length === p.privateRefs.length &&
-    p.privateRefs.every(
-      ([key, value]) =>
-        descriptors[key] && "value" in descriptors[key]! && descriptors[key]!.value === value,
-    ) &&
+    demonPrivateRefsCurrent(p, descriptors) &&
     world.getComponent(p.id, COMPONENT.Camp) === p.campComponent &&
     ownDemonData(p.campComponent, "camp") === p.camp &&
     world.getComponent(p.id, COMPONENT.Victory) === p.victory &&
@@ -230,40 +203,6 @@ function captureDemonCheckpointMetadata(world: World, id: number): Participant["
   )
     return null;
   return { identity, seat: seat as number, name, badge, vote, marks, badgeJson, voteJson };
-}
-function demonBadgeJson(badge: unknown): string | null {
-  if (!badge || typeof badge !== "object" || types.isProxy(badge)) return null;
-  const optional = Object.getOwnPropertyDescriptor(badge, "handoffPolicy");
-  if (optional && !("value" in optional)) return null;
-  const isSheriff = ownDemonData(badge, "isSheriff"),
-    destroyed = ownDemonData(badge, "destroyed"),
-    voteWeight = ownDemonData(badge, "voteWeight"),
-    handoffPolicy = ownDemonData(badge, "handoffPolicy");
-  return typeof isSheriff === "boolean" &&
-    typeof destroyed === "boolean" &&
-    typeof voteWeight === "number" &&
-    Number.isFinite(voteWeight) &&
-    voteWeight > 0 &&
-    (handoffPolicy === undefined ||
-      handoffPolicy === "awa_next_seat_v1" ||
-      handoffPolicy === "awa_holder_choice_v1")
-    ? JSON.stringify({
-        isSheriff,
-        destroyed,
-        voteWeight,
-        ...(handoffPolicy === undefined ? {} : { handoffPolicy }),
-      })
-    : null;
-}
-function demonVoteJson(vote: unknown): string | null {
-  const weight = ownDemonData(vote, "weight"),
-    canVote = ownDemonData(vote, "canVote");
-  return typeof weight === "number" &&
-    Number.isFinite(weight) &&
-    (weight > 0 || (weight === 0 && canVote === false)) &&
-    typeof canVote === "boolean"
-    ? JSON.stringify({ weight, canVote })
-    : null;
 }
 function capture(world: World, id: number): Participant {
   const role = world.getComponent(id, COMPONENT.Role),
@@ -316,13 +255,7 @@ function capture(world: World, id: number): Participant {
     life,
     lifeDescriptor,
     initialVersion: version,
-    privateState: privateState as RoleComponent["privateState"],
-    privateRefs: Object.entries(privateState),
-    inventoryRefs: inventoryReferences(privateState).filter(
-      ([path]) => path.length === 1 || path[0] !== delegatedKey,
-    ),
-    delegatedKey,
-    auditPrivateJson: privateJson,
+    ...captureDemonParticipantPrivateData(privateState, delegatedKey, privateJson),
     checkpoint: captureDemonCheckpointMetadata(world, id),
   };
   if (!originalLife(p, world, true)) throw new Error("demon_hunter_original_life_invalid");
@@ -341,28 +274,6 @@ function delegatedCurrent(b: Binding): boolean {
   } catch {
     return false;
   }
-}
-/** 两个原生子树只归其领域 owner；其他 private key 仍与原同步恶魔快照比较。 */
-function privateAuditCurrent(b: Binding, p: Participant): boolean {
-  const current = demonJson(p.privateState);
-  if (!current) return false;
-  if (!p.delegatedKey) return current === p.auditPrivateJson;
-  if (!delegatedCurrent(b)) return false;
-  const actual = JSON.parse(current),
-    expected = JSON.parse(p.auditPrivateJson);
-  delete actual[p.delegatedKey];
-  delete expected[p.delegatedKey];
-  return JSON.stringify(actual) === JSON.stringify(expected);
-}
-function committedPrivate(b: Binding, p: Participant, complete = false): Record<string, unknown> {
-  const cached = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
-  if (p.delegatedKey) {
-    const owned = checkpointNobleBodyAuthority(b.world, complete);
-    if (p.id !== (p.delegatedKey === "noble" ? owned.nobleId : owned.bodyId))
-      throw Error("demon_hunter_delegated_actor_invalid");
-    cached[p.delegatedKey] = p.delegatedKey === "noble" ? owned.noble : owned.body;
-  }
-  return cached;
 }
 function validBinding(b: Binding): boolean {
   const state = readDemonHunterState(b.state);
@@ -685,7 +596,7 @@ export function commitDemonHunt(
   const choice = appendDemonHunterChoiceData(b, n, targetId);
   if (!choice) return null;
   const actor = b.players.get(b.actorId)!;
-  actor.auditPrivateJson = demonJson(actor.privateState)!;
+  refreshDemonParticipantAudit(actor);
   n.choice = choice;
   n.turn = null;
   settleRequestDelivery(scope, true);
@@ -800,7 +711,7 @@ export function demonHunterAuditPlayer(
 ): Record<string, unknown> | undefined {
   const b = bindings.get(world),
     p = b?.players.get(id);
-  return b && p ? committedPrivate(b, p) : undefined;
+  return b && p ? committedPrivate(p, () => checkpointNobleBodyAuthority(b.world, false)) : undefined;
 }
 export function demonHunterFreezeDay(world: World): number {
   const n = bindings.get(world)?.active;
@@ -860,7 +771,7 @@ export function demonNativePoisonFrame(
       demonHunterFreezeDay(world);
     },
     cacheConsumption: () => {
-      if (isCurrent()) p.auditPrivateJson = demonJson(p.privateState)!;
+      if (isCurrent()) refreshDemonParticipantAudit(p);
     },
   });
 }
@@ -890,11 +801,8 @@ export function openDemonWitchTurnFrame(world: World): Readonly<DemonWitchTurnFr
     n.isCurrent() &&
     validBinding(b) &&
     targetCurrent(n, p.id);
-  if (!current() || !privateAuditCurrent(b, p)) return null;
-  const original = demonSnapshot(p.privateState) as Record<string, unknown>,
-    abilities = ownDemonData(original, "abilities") as Record<string, unknown>,
-    snapshot = ownDemonData(abilities, "native:potion") as Record<string, unknown>,
-    state = ownDemonData(snapshot, "state") as Record<string, unknown>;
+  if (!current() || !privateAuditCurrent(p, () => delegatedCurrent(b))) return null;
+  const { original, abilities, snapshot, state } = captureDemonWitchAuditData(p);
   if (
     !exactDemonData(snapshot, [
       "id",
@@ -947,21 +855,9 @@ export function openDemonWitchTurnFrame(world: World): Readonly<DemonWitchTurnFr
   if (!writable()) return null;
   // 重置本身是有限同步转换，不能采用任意 live 库存。
   n.witchOpened = true;
-  const resetState: Record<string, unknown> = {
-    ...state,
-    healUsedThisNight: false,
-    poisonUsedThisNight: false,
-    canSelfHeal: false,
-  };
-  const resetAbility = { ...snapshot, state: resetState };
-  const resetJson = JSON.stringify(resetAbility);
-  originalState.healUsedThisNight = false;
-  originalState.poisonUsedThisNight = false;
-  originalState.canSelfHeal = false;
-  const resetPrivate = { ...original, abilities: { ...abilities, "native:potion": resetAbility } };
-  if (demonJson(p.privateState) !== JSON.stringify(resetPrivate))
-    throw new Error("demon_hunter_native_reset_failed");
-  p.auditPrivateJson = JSON.stringify(resetPrivate);
+  const { resetState, resetAbility, resetJson } = resetDemonWitchParticipantData(
+    p, original, abilities, snapshot, state, originalState,
+  );
   let committed = false,
     committedJson: string | null = null;
   return Object.freeze({
@@ -974,33 +870,15 @@ export function openDemonWitchTurnFrame(world: World): Readonly<DemonWitchTurnFr
       current() &&
       writable() &&
       demonJson(ability) === resetJson &&
-      privateAuditCurrent(b, p),
+      privateAuditCurrent(p, () => delegatedCurrent(b)),
     targetCurrent: (id: number) => current() && targetCurrent(n, id),
     sourceCurrent: () => committed && current() && demonJson(p.privateState) === committedJson,
     commit: (potion: "heal" | "poison" | "none") => {
       if (committed || !current() || !["heal", "poison", "none"].includes(potion)) return false;
-      const expectedState = { ...resetState };
-      if (potion !== "none") {
-        if ((resetState[potion] as number) < 1) return false;
-        expectedState[potion] = (resetState[potion] as number) - 1;
-        expectedState[potion === "heal" ? "healUsedThisNight" : "poisonUsedThisNight"] = true;
-      }
-      const expectedAbility = {
-        ...resetAbility,
-        state: expectedState,
-        uses: (snapshot.uses as number) + (potion === "none" ? 0 : 1),
-        lastUsedDay: n.day,
-      };
-      const expectedPrivate = {
-        ...original,
-        abilities: { ...abilities, "native:potion": expectedAbility },
-      };
-      const json = JSON.stringify(expectedPrivate);
-      if (demonJson(p.privateState) !== json) return false;
-      committed = true;
-      committedJson = json;
-      p.auditPrivateJson = json;
-      return true;
+      return commitDemonWitchParticipantData(
+        p, original, abilities, snapshot, resetState, resetAbility, n, potion,
+        (json) => { committed = true; committedJson = json; },
+      );
     },
   });
 }
@@ -1136,11 +1014,7 @@ export function openDemonNativeNightFrame(
     id = `native:${kind}`;
   if (n && demonRedMoonNightSealed(world, n.day)) return null;
   const role = kind === "seer_check" ? Role.Seer : Role.Guard;
-  const originalJson = p?.auditPrivateJson;
-  const original = originalJson ? (JSON.parse(originalJson) as Record<string, unknown>) : null;
-  const abilities = original?.abilities as Record<string, unknown> | undefined;
-  const snapshot = abilities?.[id] as Record<string, unknown> | undefined;
-  const state = snapshot?.state as Record<string, unknown> | undefined;
+  const { originalJson, original, abilities, snapshot, state } = captureDemonNativeAuditData(p, id);
   const originalState = ownDemonData(ability, "state");
   if (
     !n ||
@@ -1215,44 +1089,11 @@ export function openDemonNativeNightFrame(
   if (!current()) throw new Error("demon_hunter_native_night_stock_revoked");
   const commit = (targetId: number | null, inspection?: unknown) => {
     if (!current() || (targetId !== null && !targetCurrent(n, targetId))) return false;
-    let nextState: Record<string, unknown>;
-    if (kind === "seer_check") {
-      if (targetId === null) return false;
-      const result = { kind: "camp", camp: b.players.get(targetId)!.camp };
-      if (demonJson(inspection) !== demonJson(result)) return false;
-      const row = { targetId, isWerewolf: result.camp === Camp.Wolf, result: { ...result } };
-      nextState = {
-        ...state,
-        lastTarget: targetId,
-        lastIsWerewolf: row.isWerewolf,
-        lastResult: { ...result },
-        history: [...(state.history as unknown[]), row],
-      };
-      const liveState = originalState as Record<string, unknown>;
-      liveState.lastTarget = targetId;
-      liveState.lastIsWerewolf = row.isWerewolf;
-      liveState.lastResult = { ...result };
-      nativeArrayPush.call(ownDemonData(originalState, "history"), row);
-    } else {
-      if (targetId !== null && snapshot.lastUsedDay === day - 1 && state.lastTarget === targetId)
-        return false;
-      nextState = { ...state, lastTarget: targetId };
-      (originalState as Record<string, unknown>).lastTarget = targetId;
-    }
-    const nextAbility = {
-      ...snapshot,
-      state: nextState,
-      uses: (snapshot.uses as number) + (targetId === null ? 0 : 1),
-      lastUsedDay: day,
-    };
-    (ability as Record<string, unknown>).uses = nextAbility.uses;
-    (ability as Record<string, unknown>).lastUsedDay = day;
-    const json = JSON.stringify({ ...original, abilities: { ...abilities, [id]: nextAbility } });
-    if (demonJson(p.privateState) !== json)
-      throw new Error("demon_hunter_native_night_commit_failed");
-    committed = true;
-    p.auditPrivateJson = json;
-    return true;
+    return commitDemonNativeParticipantData(
+      p, original, abilities, snapshot, state, originalState, ability, kind, id, day,
+      targetId, inspection, (id) => b.players.get(id)!.camp, nativeArrayPush,
+      () => { committed = true; },
+    );
   };
   return Object.freeze({
     targetCurrent: (id: number) =>
@@ -1264,7 +1105,7 @@ export function openDemonNativeNightFrame(
       n.isCurrent() &&
       validBinding(b) &&
       targetCurrent(n, actorId) &&
-      privateAuditCurrent(b, p),
+      privateAuditCurrent(p, () => delegatedCurrent(b)),
     isCurrent: current,
     commitSeer: (targetId: number, result: unknown) =>
       kind === "seer_check" && commit(targetId, result),
@@ -1288,13 +1129,11 @@ export function openDemonHunterStockFrame(
     !validBinding(b) ||
     !originalLife(p, world) ||
     p.lifeDescriptor.get!.call(p.life) !== false ||
-    !privateAuditCurrent(b, p) ||
+    !privateAuditCurrent(p, () => delegatedCurrent(b)) ||
     !writableDemonFields(state, ["canShoot"])
   )
     throw new Error("demon_hunter_native_hunter_stock_revoked");
-  const originalJson = p.auditPrivateJson,
-    original = JSON.parse(originalJson),
-    hunter = original.hunter;
+  const { originalJson, original, hunter } = captureDemonHunterAuditData(p);
   if (
     !exactDemonData(hunter, ["canShoot", "deathActionPolicy"]) ||
     typeof hunter.canShoot !== "boolean" ||
@@ -1321,12 +1160,7 @@ export function openDemonHunterStockFrame(
         !writableDemonFields(state, ["canShoot"])
       )
         throw new Error("demon_hunter_native_hunter_stock_revoked");
-      (state as Record<string, unknown>).canShoot = false;
-      const json = JSON.stringify({ ...original, hunter: { ...hunter, canShoot: false } });
-      if (demonJson(p.privateState) !== json)
-        throw new Error("demon_hunter_native_hunter_commit_failed");
-      committed = true;
-      p.auditPrivateJson = json;
+      consumeDemonHunterParticipantData(p, state, original, hunter, () => { committed = true; });
     },
   });
 }
@@ -1338,7 +1172,7 @@ export function demonHunterCheckpointPlayers(world: World, complete: boolean) {
   if (
     complete &&
     (!validBinding(b) ||
-      ![...b.players.values()].every((p) => originalLife(p, world) && privateAuditCurrent(b, p)))
+      ![...b.players.values()].every((p) => originalLife(p, world) && privateAuditCurrent(p, () => delegatedCurrent(b))))
   )
     throw new Error("demon_hunter_checkpoint_original_state_revoked");
   return [...b.players.values()].map((p) => {
@@ -1367,24 +1201,10 @@ export function demonHunterCheckpointPlayers(world: World, complete: boolean) {
       )
         throw new Error("demon_hunter_checkpoint_metadata_revoked");
     }
-    return {
-      id: p.id,
-      seat: cp.seat,
-      name: cp.name,
-      role: p.kind,
-      camp: p.camp,
-      alive: p.lifeDescriptor.get!.call(p.life) === true,
-      privateState: committedPrivate(b, p, complete),
-      victory: { affiliations: JSON.parse(p.victoryJson) as VictoryComponent["affiliations"] },
-      vote: JSON.parse(cp.voteJson) as { weight: number; canVote: boolean },
-      badge: JSON.parse(cp.badgeJson) as {
-        isSheriff: boolean;
-        destroyed: boolean;
-        voteWeight: number;
-        handoffPolicy?: import("../../../../core/domain/board").SheriffBadgePolicy;
-      },
-      marks: marks.flatMap(([mark, snapshot]) => (snapshot?.present ? [mark] : [])),
-    };
+    return projectDemonParticipantCheckpoint(
+      p, cp, marks, () => p.lifeDescriptor.get!.call(p.life) === true,
+      () => checkpointNobleBodyAuthority(b.world, complete),
+    );
   });
 }
 
@@ -1399,7 +1219,7 @@ export function demonHunterNativeGunCurrent(world: World, actorId: number): bool
     validBinding(b) &&
     originalLife(p, world) &&
     p.lifeDescriptor.get!.call(p.life) === false &&
-    privateAuditCurrent(b, p)
+    privateAuditCurrent(p, () => delegatedCurrent(b))
   );
 }
 
@@ -1507,11 +1327,7 @@ export function openDemonBadgeFrame(world: World): Readonly<{
           throw new Error("demon_hunter_badge_commit_revoked");
       }
       committed = true;
-      for (const [id, next] of expected) {
-        const cp = before.get(id)!.cp;
-        cp.badgeJson = JSON.stringify(next.badge);
-        cp.voteJson = JSON.stringify(next.vote);
-      }
+      acceptDemonBadgeAudits(before, expected);
     },
   });
 }
@@ -1569,7 +1385,7 @@ export function commitDemonRedMoonTransition(
     !validBinding(b) ||
     String(p.kind) !== RED_MOON_ROLE ||
     ![...b.players.values()].every((player) => originalLife(player, world)) ||
-    !privateAuditCurrent(b, p)
+    !privateAuditCurrent(p, () => delegatedCurrent(b))
   )
     return false;
   const state = getRedMoonState(p.role, () => world.getComponent(p.id, COMPONENT.Camp));
@@ -1606,8 +1422,7 @@ export function commitDemonRedMoonTransition(
   const expected = encodeRedMoonShadow(original, next);
   // 三写只归本族 slot；完整容器验收和 audit 最终更新保持原点，后续失败不撤销先前字段。
   writeRedMoonTransition(state, next);
-  if (demonJson(p.privateState) !== expected) throw new Error("red_moon_state_commit_failed");
-  p.auditPrivateJson = expected;
+  acceptDemonRedMoonAudit(p, expected);
   return true;
 }
 
@@ -1620,7 +1435,7 @@ export function demonRedMoonNightSealed(world: World, day: number): boolean {
   if (!validBinding(b) || ![...b.players.values()].every((p) => originalLife(p, world)))
     throw new Error("red_moon_original_state_revoked");
   const state = getRedMoonState(p.role, () => world.getComponent(p.id, COMPONENT.Camp));
-  if (!state || !privateAuditCurrent(b, p)) throw new Error("red_moon_original_state_revoked");
+  if (!state || !privateAuditCurrent(p, () => delegatedCurrent(b))) throw new Error("red_moon_original_state_revoked");
   const sealed = Number.isSafeInteger(day) && day > 1 && state.blastDay === day - 1;
   if (sealed && originalLife(p, world, true)) throw new Error("red_moon_blast_death_unsettled");
   return sealed;
@@ -1638,7 +1453,7 @@ export function commitDemonIdiotReveal(world: World, actorId: number): boolean {
     p.kind !== Role.Idiot ||
     !validBinding(b) ||
     !originalLife(p, world, true) ||
-    !privateAuditCurrent(b, p) ||
+    !privateAuditCurrent(p, () => delegatedCurrent(b)) ||
     world.getComponent(actorId, COMPONENT.VotingRight) !== cp.vote ||
     demonVoteJson(cp.vote) !== cp.voteJson ||
     !writableDemonFields(p.privateState, ["idiot"]) ||
@@ -1650,24 +1465,7 @@ export function commitDemonIdiotReveal(world: World, actorId: number): boolean {
     throw new Error("demon_hunter_idiot_state_revoked");
   // 消耗翻牌前先验证后续同步警徽交接。
   openDemonBadgeFrame(world);
-  const next = { revealed: true };
-  const original = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
-  const expectedPrivate = JSON.stringify({ ...original, idiot: next });
-  const expectedVote = JSON.stringify({ ...JSON.parse(cp.voteJson), canVote: false, weight: 0 });
-  (p.privateState as { idiot: typeof next }).idiot = next;
-  (cp.vote as VotingRightComponent).canVote = false;
-  (cp.vote as VotingRightComponent).weight = 0;
-  if (demonJson(p.privateState) !== expectedPrivate || demonVoteJson(cp.vote) !== expectedVote)
-    throw new Error("demon_hunter_idiot_commit_failed");
-  p.privateRefs = p.privateRefs.map(
-    ([key, value]) => [key, key === "idiot" ? next : value] as const,
-  );
-  p.inventoryRefs = p.inventoryRefs.map(
-    ([path, value]) => [path, path.length === 1 && path[0] === "idiot" ? next : value] as const,
-  );
-  p.auditPrivateJson = expectedPrivate;
-  cp.voteJson = expectedVote;
-  return true;
+  return commitDemonIdiotParticipantData(p, cp);
 }
 
 /** 在任何旧状态 getter 可执行前读取已提交的白痴状态。 */
@@ -1682,7 +1480,7 @@ export function demonIdiotRevealed(world: World, actorId: number): boolean | nul
     p.kind !== Role.Idiot ||
     !validBinding(b) ||
     !originalLife(p, world, true) ||
-    !privateAuditCurrent(b, p) ||
+    !privateAuditCurrent(p, () => delegatedCurrent(b)) ||
     world.getComponent(actorId, COMPONENT.VotingRight) !== cp.vote ||
     demonVoteJson(cp.vote) !== cp.voteJson
   )

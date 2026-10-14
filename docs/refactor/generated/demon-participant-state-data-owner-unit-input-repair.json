@@ -1,0 +1,18 @@
+{
+  "path": "backend/tests/unit/features/demon-hunter/participant-state-data.test.ts",
+  "beforeSha256": "ef8cce5e956f9aa64e3eae6aa66a70046e44081be5ef3a3b2312c4d9d0385bf1",
+  "afterSha256": "353b7bd908fd89af3671560b859c291682688961fef7cf17dc10fbaa34beb7c5",
+  "edits": [
+    {
+      "before": "import { installNativeAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";",
+      "after": "import { installNativeAbility } from \"../../../../src/game/mechanisms/roles/ability_changes\";\nimport { findNightAbility } from \"../../../../src/game/mechanisms/roles/abilities\";"
+    },
+    {
+      "before": "  const ability = installNativeAbility(role, \"guard\", { lastTarget: null, repeatPolicy: \"netease_consecutive_nights_v1\" });",
+      "after": "  installNativeAbility(role, \"guard\", { lastTarget: null, repeatPolicy: \"netease_consecutive_nights_v1\" });\n  const ability = findNightAbility(role, \"guard\", \"native:guard\")!;"
+    }
+  ],
+  "typeOnly": false,
+  "expectedDelta": "仅使用原公开query取已实际安装能力元数据；state仍同一原生槽。原字面Error、资源counter/引用/轨迹断言不改，其他两个已绿declaration全文不改。",
+  "checksRun": false
+}

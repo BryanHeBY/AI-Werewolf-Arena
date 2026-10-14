@@ -1,0 +1,34 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "stage": "final-comment-only-successor",
+  "createdAt": "2026-10-14T23:40:58.726298+00:00",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "932d622b943712d54c763963039d5867965aaa56971c7cfda6d3fa23e657b9b2",
+      "bytes": 55204
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/participant-state-data.ts",
+      "sha256": "3d31915430bfbfc93de81d6242afb7212ef657493ee690d2b556ec422226a482",
+      "bytes": 17371
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/participant-state-data.test.ts",
+      "sha256": "353b7bd908fd89af3671560b859c291682688961fef7cf17dc10fbaa34beb7c5",
+      "bytes": 7252
+    }
+  ],
+  "checksRun": true,
+  "limits": [
+    "只3实际源，无第二库存或跨族writer改动。",
+    "原nativeArrayPush capture仍原authority点；新owner不value-import World/authority/其他特殊族。",
+    "Root Noble以及并行PM/DR working闭包不当本批immutable controls。"
+  ],
+  "firstReadySHA256": "6ef2d7c47a213d02d51b3e6e20b19b5221c7fcad7ef285c8cb7d0815c7047ce9",
+  "primaryReady": {
+    "path": "docs/refactor/generated/demon-participant-state-data-owner-source-ready-unit-repair.json",
+    "sha256": "262a5ed597a67620588e2afd6db3ffa2124264f92ba6bd1b876b0abb0a52dd55"
+  },
+  "checksScope": "仅Root215536末一comment桥成功；原主proof/heads/type/runtime采样仍首/repair阶段，不复绿色。"
+}

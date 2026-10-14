@@ -1,0 +1,25 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "stage": "first-source-ready-before-checks",
+  "createdAt": "2026-10-14T23:20:13.958418+00:00",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "58ef77f2fdf99b2c14b566f8cc1e7e42ff955a7b7ff3d6ffe496d3d36fb571c5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/participant-state-data.ts",
+      "sha256": "3d31915430bfbfc93de81d6242afb7212ef657493ee690d2b556ec422226a482"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/participant-state-data.test.ts",
+      "sha256": "ef8cce5e956f9aa64e3eae6aa66a70046e44081be5ef3a3b2312c4d9d0385bf1"
+    }
+  ],
+  "checksRun": false,
+  "limits": [
+    "只3实际源，无第二库存或跨族writer改动。",
+    "原nativeArrayPush capture仍原authority点；新owner不value-import World/authority/其他特殊族。",
+    "Root Noble以及并行PM/DR working闭包不当本批immutable controls。"
+  ]
+}
