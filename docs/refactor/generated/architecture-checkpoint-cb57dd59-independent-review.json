@@ -1,0 +1,193 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "fixedCommit": "cb57dd5900f0e03b7f9c2758e190e6658b2800c1",
+  "source": [],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-scope-final.json",
+    "sha256": "6c4931dd010f551de32b09478ec31c2501d32bf0a4ae24f32dd16a77532c3fae"
+  },
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-cb57dd59.md",
+    "sha256": "56f3f66a9a5f1c913557032836eb3e20118e3c6a4f7e644e8b08dffac3363423"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-evidence.json",
+    "sha256": "64837eaf292ba8d9130767fa81588e26e546e5301001bc16483b9b8af1a7e92a"
+  },
+  "controls": [
+    {
+      "path": "tooling/refactor/inventory.ts",
+      "sha256": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce"
+    },
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394"
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d"
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb"
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db"
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-before.json",
+      "sha256": "1d96622379b3d0538b47f7716c68438ade1aa12c1bf0eaf421d8987debe0ae1e"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-capture.json",
+      "sha256": "dee6f15194107c8e5e1bfd301b732f9f684e49bfed5096b209a1f7aa2c0846d2"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-debt-delta.json",
+      "sha256": "2d6de4e459694a5895d2b02f2ae5c2325e839b450fa49d80b79e4a67bdfc30b8"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-harness-history.json",
+      "sha256": "2e8969175aae5ee588c58ca3c979244bfea302f787cd07ddfc751a949b385ea0"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-input-verification.json",
+      "sha256": "ff8f37cf188f7768c8a968e14e6f82da91d4ab2f8689f8c6dffb50f083e2eb39"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-input-verification.py",
+      "sha256": "93d422357055868a0d6fa8ec2305c6abfdd156ba410611dd592622d48b6fa575"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-output.txt",
+      "sha256": "29be70a9b840acfc56b43cf7aaabe166e37a3281326e3e7fac00fd6c381025ea"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-partition.json",
+      "sha256": "632ebd17dee534f4e3b3e9dce5d82fc944dcd3d8e4f9e9f2fa6b21e07d01a547"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-partition.py",
+      "sha256": "6c10700693c528908ab12c4cf9cef95e951c3d8b9bdee32bfeb0a093120d2d9b"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-report.json",
+      "sha256": "0add286884237efc7c650e818f3954e4ef4b215002e1f129dcef878244558d03"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-run.ts",
+      "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775"
+    }
+  ],
+  "verification": {
+    "actualGitPublicPathsBlobsModesRawSHAAndUTF8Order": 3274,
+    "sameGitDocs": 690,
+    "rawInput": {
+      "path": "/tmp/awa-architecture-checkpoint-cb57dd59-input.json",
+      "sha256": "8c17abef5188e905d0e06a65612b6e6acb9edc5b8b6394991fadf98621a5d876",
+      "bytes": 80684321
+    },
+    "sourceDigest": "7e020d82be487386a54ca988b113400dfad21eab50a9e2d9dbde59bf47eef730",
+    "actualGitAndCurrentTools": 6,
+    "originalDebtWholeByteSha256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "originalDebtUniquePartition": 1779,
+    "newFailures": 0,
+    "remaining": 199,
+    "cleared": 1580,
+    "previousFixedCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c",
+    "previousRemaining": 225,
+    "previousCleared": 1554,
+    "newlyCleared": 26,
+    "returned": 0,
+    "newlyClearedDependency": 22,
+    "newlyClearedComment": 4,
+    "remainingRules": {
+      "comment.missing-head": 87,
+      "comment.boundary": 26,
+      "comment.first-paragraph": 19,
+      "comment.input": 21,
+      "comment.output": 20,
+      "comment.responsibility": 19,
+      "comment.consumer": 5,
+      "comment.owner": 2
+    },
+    "authorArtifacts": 11,
+    "mismatches": 0
+  },
+  "actualReceiptAttribution": {
+    "gate": {
+      "launch": "a596bb",
+      "sessionId": 32659,
+      "terminal": "12714b",
+      "exitCode": 0,
+      "executions": 1,
+      "command": "bun --no-env-file docs/refactor/generated/architecture-checkpoint-cb57dd59-run.ts cb57dd5900f0e03b7f9c2758e190e6658b2800c1 > docs/refactor/generated/architecture-checkpoint-cb57dd59-output.txt 2>&1"
+    },
+    "rootPureInput": {
+      "from": "docs/refactor/generated/architecture-checkpoint-c9adfd31-input-verification.py",
+      "change": "仅prefix替换c9adfd31→cb57dd59",
+      "chunk": "cf06df",
+      "exitCode": 0,
+      "executions": 1
+    },
+    "rootPurePartition": {
+      "from": "docs/refactor/generated/architecture-checkpoint-c9adfd31-partition.py",
+      "change": "仅本prefix、前fixedCommit／report／partition和准确当前差分说明",
+      "chunk": "326c23",
+      "exitCode": 0,
+      "executions": 1
+    },
+    "gateOptions": {
+      "strict": false,
+      "mappings": []
+    },
+    "terminalBasis": "Root原工具终态12714b与冻结harness-history/evidence一致，不由report存在、stdout completed或空log推断。Root Camp库存只读c350a8不是这次结构门禁，不混入收据。"
+  },
+  "independentRead": [
+    "直接读取固定Git ls-tree及所有3274 cat-file blobs，一次核全公共白名单路径/mode/blob、SHA1身份、rawSHA256和UTF8text/顺序；690文档路径同Git、80,684,321字节临时输入真实性与metadata摘要分别核实。没有调用Root纯输入/partition脚本或任何checker。",
+    "六执行工具源码及原1779债务与固定Git/current字节同；runner与实际c9ad脚本完整同SHA，参数明确cb57固定commit。原政策、空mapping、原工具词项及publicfacet识别未扩大。",
+    "按原progressive rule/path/specifier/binding/target及comment条件匹配回原baseline身份；199/1580互斥且并集1779，实际c9ad分区225/1554至当前精确26退出/0返回；22dependency与4comments，当前199全部comment结构债。",
+    "最终MD、source[]/deleted[]、六tools控制、十一附件、input/report/partition/delta/harness-history和真实launch/terminal相互绑定。原报告/原债与历史失败记录不改写。"
+  ],
+  "ownVerification": {
+    "rawInputRead": {
+      "chunk": "26fc79",
+      "exitCode": 0,
+      "report": {
+        "path": "/tmp/architecture-checkpoint-cb57dd59-independent-input-read.json",
+        "sha256": "7677136d430cea0ad1518cc24cfdab26bbefdab0373c4592cbdcdf0e85af95f7"
+      },
+      "firstInlineSourcePreservedAfterExecution": {
+        "path": "/tmp/architecture-checkpoint-cb57dd59-independent-first-reader.py",
+        "sha256": "e757d7622059535055939f5a50bf0ba3b8dac666e0dc5070a82c8cf9d45e7e60",
+        "basis": "按26fc79工具调用的实际heredoc原文留存；原调用通过stdin执行，此保存文件未再次执行。"
+      }
+    },
+    "deltaCorrection": {
+      "chunk": "4aa9fa",
+      "exitCode": 0,
+      "report": {
+        "path": "/tmp/architecture-checkpoint-cb57dd59-independent-delta-correction.json",
+        "sha256": "c8b40351991c12f2d3680626db99466aa24ccdb54c378cbd8b1c65698164d689"
+      },
+      "cause": "首reader把本轮简称c9误锚旧c9e7a3c8（280/1499）；81及相对2da的43是更旧快照比较，不纳本轮正式26。首报告/原source保留，不虚构它由产品或ID变化造成，不是gate失败。修正同时改为完整progressive原债匹配，以实际c9ad40位提交为正式唯一比较。",
+      "noRaw3274Reread": true
+    }
+  },
+  "findings": [],
+  "limits": [
+    "这是固定cb57公共Git结构报告的只读独审，未再次运行架构检查、Root输入或partition脚本、proof、types、tests、生产加载或模型。",
+    "0new不是strict零债；199结构注释仍剩，不代表有效中文内容、全55机制/51功能、授权/数据codec、玩法或P9完成。",
+    "临时文本可按同固定Git恢复；sourceDigest仅path/SHA元数据摘要，原输入真实性由raw字节核对提供，它不是对局档案sourceHash。",
+    "后继工作树/工具改动不能借用本报告绿色；原debt/history完整保持，审查仅证明当次固定输入、分区和终態收据。"
+  ]
+}

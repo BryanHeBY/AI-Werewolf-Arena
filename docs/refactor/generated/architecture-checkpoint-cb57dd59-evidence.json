@@ -1,0 +1,148 @@
+{
+  "baseCommit": "cb57dd5900f0e03b7f9c2758e190e6658b2800c1",
+  "fixedCommit": "cb57dd5900f0e03b7f9c2758e190e6658b2800c1",
+  "source": [],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "tooling/refactor/inventory.ts",
+      "sha256": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce"
+    },
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394"
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d"
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb"
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db"
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-before.json",
+      "sha256": "1d96622379b3d0538b47f7716c68438ade1aa12c1bf0eaf421d8987debe0ae1e"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-capture.json",
+      "sha256": "dee6f15194107c8e5e1bfd301b732f9f684e49bfed5096b209a1f7aa2c0846d2"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-debt-delta.json",
+      "sha256": "2d6de4e459694a5895d2b02f2ae5c2325e839b450fa49d80b79e4a67bdfc30b8"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-harness-history.json",
+      "sha256": "2e8969175aae5ee588c58ca3c979244bfea302f787cd07ddfc751a949b385ea0"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-input-verification.json",
+      "sha256": "ff8f37cf188f7768c8a968e14e6f82da91d4ab2f8689f8c6dffb50f083e2eb39"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-input-verification.py",
+      "sha256": "93d422357055868a0d6fa8ec2305c6abfdd156ba410611dd592622d48b6fa575"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-output.txt",
+      "sha256": "29be70a9b840acfc56b43cf7aaabe166e37a3281326e3e7fac00fd6c381025ea"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-partition.json",
+      "sha256": "632ebd17dee534f4e3b3e9dce5d82fc944dcd3d8e4f9e9f2fa6b21e07d01a547"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-partition.py",
+      "sha256": "6c10700693c528908ab12c4cf9cef95e951c3d8b9bdee32bfeb0a093120d2d9b"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-report.json",
+      "sha256": "0add286884237efc7c650e818f3954e4ef4b215002e1f129dcef878244558d03"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-run.ts",
+      "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-cb57dd59.md",
+    "sha256": "56f3f66a9a5f1c913557032836eb3e20118e3c6a4f7e644e8b08dffac3363423"
+  },
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-scope-final.json",
+    "sha256": "6c4931dd010f551de32b09478ec31c2501d32bf0a4ae24f32dd16a77532c3fae"
+  },
+  "capturedInput": {
+    "files": 3274,
+    "documentationPaths": 690,
+    "sourceDigest": "7e020d82be487386a54ca988b113400dfad21eab50a9e2d9dbde59bf47eef730",
+    "rawInput": {
+      "path": "/tmp/awa-architecture-checkpoint-cb57dd59-input.json",
+      "sha256": "8c17abef5188e905d0e06a65612b6e6acb9edc5b8b6394991fadf98621a5d876",
+      "bytes": 80684321
+    }
+  },
+  "originalDebt": {
+    "count": 1779,
+    "sha256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d"
+  },
+  "gate": {
+    "launch": "a596bb",
+    "sessionId": 32659,
+    "terminal": "12714b",
+    "exitCode": 0,
+    "executions": 1,
+    "command": "bun --no-env-file docs/refactor/generated/architecture-checkpoint-cb57dd59-run.ts cb57dd5900f0e03b7f9c2758e190e6658b2800c1 > docs/refactor/generated/architecture-checkpoint-cb57dd59-output.txt 2>&1"
+  },
+  "counts": {
+    "files": 3274,
+    "violations": 199,
+    "failures": 0,
+    "remainingDebt": 199,
+    "clearedDebt": 1580
+  },
+  "delta": {
+    "newlyCleared": 26,
+    "returned": 0
+  },
+  "remainingRules": {
+    "comment.missing-head": 87,
+    "comment.boundary": 26,
+    "comment.first-paragraph": 19,
+    "comment.input": 21,
+    "comment.output": 20,
+    "comment.responsibility": 19,
+    "comment.consumer": 5,
+    "comment.owner": 2
+  },
+  "pureInput": {
+    "from": "docs/refactor/generated/architecture-checkpoint-c9adfd31-input-verification.py",
+    "change": "仅prefix替换c9adfd31→cb57dd59",
+    "chunk": "cf06df",
+    "exitCode": 0,
+    "executions": 1
+  },
+  "purePartition": {
+    "from": "docs/refactor/generated/architecture-checkpoint-c9adfd31-partition.py",
+    "change": "仅本prefix、前fixedCommit／report／partition和准确当前差分说明",
+    "chunk": "326c23",
+    "exitCode": 0,
+    "executions": 1
+  },
+  "limits": [
+    "仅本固定Git渐进结构验收，不重复gate或green。",
+    "诊断形状合规不是全中文内容或全业务验收；完整目标继续。",
+    "不嵌Root／peer报告避免摘要循环。"
+  ]
+}

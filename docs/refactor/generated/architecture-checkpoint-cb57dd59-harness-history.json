@@ -1,0 +1,38 @@
+{
+  "runner": {
+    "from": "docs/refactor/generated/architecture-checkpoint-c9adfd31-run.ts",
+    "wholeSHA256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775",
+    "wholeBytesSame": true,
+    "dynamicFixedCommitArgument": "cb57dd5900f0e03b7f9c2758e190e6658b2800c1"
+  },
+  "inputVerification": {
+    "from": "docs/refactor/generated/architecture-checkpoint-c9adfd31-input-verification.py",
+    "change": "仅prefix替换c9adfd31→cb57dd59",
+    "chunk": "cf06df",
+    "exitCode": 0,
+    "executions": 1
+  },
+  "partition": {
+    "from": "docs/refactor/generated/architecture-checkpoint-c9adfd31-partition.py",
+    "change": "仅本prefix、前fixedCommit／report／partition和准确当前差分说明",
+    "chunk": "326c23",
+    "exitCode": 0,
+    "executions": 1
+  },
+  "gate": {
+    "launch": "a596bb",
+    "sessionId": 32659,
+    "terminal": "12714b",
+    "exitCode": 0,
+    "executions": 1,
+    "command": "bun --no-env-file docs/refactor/generated/architecture-checkpoint-cb57dd59-run.ts cb57dd5900f0e03b7f9c2758e190e6658b2800c1 > docs/refactor/generated/architecture-checkpoint-cb57dd59-output.txt 2>&1"
+  },
+  "notRun": [
+    "strict final gate",
+    "types",
+    "runtime suites",
+    "full games",
+    "model calls",
+    "green gate repeats"
+  ]
+}

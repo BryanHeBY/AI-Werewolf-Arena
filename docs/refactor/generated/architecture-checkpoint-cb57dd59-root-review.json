@@ -1,0 +1,37 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "cb57dd5900f0e03b7f9c2758e190e6658b2800c1",
+  "source": [],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-scope-final.json",
+    "sha256": "6c4931dd010f551de32b09478ec31c2501d32bf0a4ae24f32dd16a77532c3fae"
+  },
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-cb57dd59.md",
+    "sha256": "56f3f66a9a5f1c913557032836eb3e20118e3c6a4f7e644e8b08dffac3363423"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-evidence.json",
+    "sha256": "64837eaf292ba8d9130767fa81588e26e546e5301001bc16483b9b8af1a7e92a"
+  },
+  "integrity": {
+    "freshSources": 0,
+    "actualGitBefore": 0,
+    "controls": 6,
+    "artifactHashes": 11,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "Root 已实读固定捕获、实际 12714b 终态、完整 pure 输入／分区报告与原 progressive 身份匹配脚本，唯一 gate 0新增、199剩余、1580原 ID清；相对 exact c9adfd31 26清0返回。",
+    "全部3274原Git路径／mode／blob／SHA／文本／顺序和690同Git文档由唯一纯核及非作者直接核；80684321原输入bytes／SHA8c17abef与digest7e020d82保持。",
+    "原1779债／SHA297b、6实际固定工具、strict=false／mappings[]不变，无新增豁免；22角色内部依赖原债清零，余199仅结构注释。",
+    "11冻结附件／MD／scope／evidence与source[]／6tools controls核真，不重复gate／类型／业务或宣称最终P9。"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

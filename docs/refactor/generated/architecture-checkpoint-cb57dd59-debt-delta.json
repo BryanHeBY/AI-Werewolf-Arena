@@ -1,0 +1,308 @@
+{
+  "previousFixedCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c",
+  "currentFixedCommit": "cb57dd5900f0e03b7f9c2758e190e6658b2800c1",
+  "previousReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9adfd31-report.json",
+    "sha256": "4b32bdc680a3c8e7124dacc9c8e45c1a898515d8c103011f434ca7b029d8c565",
+    "counts": {
+      "files": 3259,
+      "violations": 225,
+      "failures": 0,
+      "remainingDebt": 225,
+      "clearedDebt": 1554
+    }
+  },
+  "currentReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-cb57dd59-report.json",
+    "sha256": "0add286884237efc7c650e818f3954e4ef4b215002e1f129dcef878244558d03",
+    "counts": {
+      "files": 3274,
+      "violations": 199,
+      "failures": 0,
+      "remainingDebt": 199,
+      "clearedDebt": 1580
+    }
+  },
+  "newlyClearedOriginalDebtCount": 26,
+  "newlyClearedOriginalDebt": [
+    {
+      "id": "081017cc9f225aa745d7d56c8ce380fc7ea5b3fb7d4d60931d9bb142ae67862a",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "line": 23,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../awakened_hidden_wolf/night_scope",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:captureAwakenedMirrorScope\"]}",
+      "target": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts"
+    },
+    {
+      "id": "0f351d379e0a27ab3e09362c163795788b5d425074833d2d91c0f662c2e731ae",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "line": 24,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../debater/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"type:DebateParticipant\",\"value:captureDebateParticipant\"]}",
+      "target": "backend/src/game/mechanisms/roles/debater/authority.ts"
+    },
+    {
+      "id": "10442ec09b96bd698f6977fcbf16704528acf950e95816e0c83440c26ec85a77",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "line": 2,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../trickster/exile_mapping",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:matchingExchangePairs\"]}",
+      "target": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts"
+    },
+    {
+      "id": "17a6611902c6ed894b6ca242ca2a97e8ccbde64fd72ad72091b648a7597ebce3",
+      "rule": "comment.missing-head",
+      "path": "backend/src/runtime/config/load_board_definition.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    },
+    {
+      "id": "188b83099b5dd8ca05a6fa48525f3539fb9b2ee3ce5943c05144b92ab8e14f86",
+      "rule": "comment.missing-head",
+      "path": "backend/src/runtime/config/load_config.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    },
+    {
+      "id": "30003b1105b27aa8130d72123019bdeb7a74318bb12f21d478f782156b09ce05",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "line": 14,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../magician/night_frame",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:cancelMagicianExchangeIfMatching\"]}",
+      "target": "backend/src/game/mechanisms/roles/magician/night_frame.ts"
+    },
+    {
+      "id": "31faf68a0dd353a4a9e9cfeb740c90ad9ff94eaffe753d94f8490daa5f0b635c",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "line": 10,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../role_inspection/night_scope",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:recordRoleInspectionNightCommit\"]}",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts"
+    },
+    {
+      "id": "37aa7d3ba647e4304ab260cbbd964d13ecc890680dbbb954a58db16a0a7d7c00",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+      "line": 6,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../role_inspection/night_scope",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:completedGargoyleInspection\"]}",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts"
+    },
+    {
+      "id": "40b82000898adf7bafee52bf4e3b5624bb1814ec294fd9ed5e00be1a4f68cf22",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "line": 15,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../animal_dream/facts",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:animalBeautyKnowledge\"]}",
+      "target": "backend/src/game/mechanisms/roles/animal_dream/facts.ts"
+    },
+    {
+      "id": "4f94b7a6323c50ea548ae1ae42dc7ffc976b5d58d87a0403a624ad524eb0167b",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "line": 8,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../animal_dream/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:animalBeautyCharmAllowed\",\"value:isAnimalDreamBoard\"]}",
+      "target": "backend/src/game/mechanisms/roles/animal_dream/authority.ts"
+    },
+    {
+      "id": "62b38d38e0a66bf3f9d5efcbf9c42efd3921464e59b6ff9563ad1961eee79d62",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../radiant_eclipse/night_frame",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:captureRadiantPaidEffect\",\"value:isRadiantEclipseBoard\"]}",
+      "target": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts"
+    },
+    {
+      "id": "780f0e0ff71203d153d0b3c90f39bdbe48830ec0f4924ede9ee878bc580b4c90",
+      "rule": "comment.input",
+      "path": "backend/src/runtime/config/migrate_board.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "7b450d3890b65050c334c5369d25fecc830989a1b369e5d12b92807e69e73449",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../wolf_sorcerer/night_frame",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:isWolfSorcererBoard\",\"value:resolveWolfSorcererNightTarget\"]}",
+      "target": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts"
+    },
+    {
+      "id": "9431ecc3299fd78268f6e129c763fb7b7e9dc24fd9b299b31093ac66c8cedb4d",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "line": 3,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../initial_identity/deal",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"namespace:*\"]}",
+      "target": "backend/src/game/mechanisms/roles/initial_identity/deal.ts"
+    },
+    {
+      "id": "94f80859084a3e1adaa9264a5c71c3d9e6b1d42731d5b309d2648ba178efdf36",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+      "line": 7,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../wolf_beauty/relation",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:bindCharm\"]}",
+      "target": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts"
+    },
+    {
+      "id": "9fdb61cd58a05970bdf4e47f6a4a54bc0346fdf0be733787cfd7ab0cedf38bf9",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+      "line": 7,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../animal_dream/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:animalBeautyLinkBlocked\"]}",
+      "target": "backend/src/game/mechanisms/roles/animal_dream/authority.ts"
+    },
+    {
+      "id": "a148b29e2db897df7e4a1b236d21c041eb1eaa49de271e974edaee25eb69a223",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "line": 14,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../animal_dream/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:animalBeautyCharmAllowed\",\"value:isAnimalDreamBoard\"]}",
+      "target": "backend/src/game/mechanisms/roles/animal_dream/authority.ts"
+    },
+    {
+      "id": "b5b19c593e08b63df58adc3c79dee8528ad533047cf8a3ee505d97a47a8a3796",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "line": 3,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../noble_secret_body/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:assertNobleBodyRosterCurrent\",\"value:checkpointNobleBodyAuthority\",\"value:clearServantFromHunt\",\"value:isNobleBodyBoard\"]}",
+      "target": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts"
+    },
+    {
+      "id": "bcdfd9d864d4a33bff637fc1f8e0fdf8c907922e2ad3ae51b478d9c71ab2c6b7",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "line": 3,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../initial_identity/setup",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"namespace:*\"]}",
+      "target": "backend/src/game/mechanisms/roles/initial_identity/setup.ts"
+    },
+    {
+      "id": "c83dc018aacc69b97640b0d177c5be5131d5bc6f898dcaab3290bcd5e6ce8ef6",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "line": 3,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../initial_identity/deal",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"namespace:*\"]}",
+      "target": "backend/src/game/mechanisms/roles/initial_identity/deal.ts"
+    },
+    {
+      "id": "d6cd4a9cf10107fdf9785d5635b554ce12e7e978ae1300f8e8526885109ba379",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "line": 3,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../initial_identity/setup",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"namespace:*\"]}",
+      "target": "backend/src/game/mechanisms/roles/initial_identity/setup.ts"
+    },
+    {
+      "id": "e0868aa89b7f07002a8768d91cc7bff8a0d469bc04b949fd9eaae703ce91be6c",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "line": 26,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../cursed_fox/inspection_effect",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:captureInspectionIdentity\",\"value:commitFoxInspection\"]}",
+      "target": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts"
+    },
+    {
+      "id": "e1706f9fec4661b811a410c2456612a0ddd692efeec3cd9fc865c5f42d9b7b2d",
+      "rule": "comment.output",
+      "path": "backend/src/runtime/config/migrate_board.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    },
+    {
+      "id": "e3474034201d5be1b80430e28dc6e34208e321278ac152ec82f72e53e07ca2fa",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../noble_secret_body/facts",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:recordNobleContractClosure\"]}",
+      "target": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts"
+    },
+    {
+      "id": "e83570c2f1a9aeb75e27a7611e085ff03794bd0d3c491c3222edec7901a61cf5",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "line": 9,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../animal_dream/facts",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:appendAnimalBeautyNotice\"]}",
+      "target": "backend/src/game/mechanisms/roles/animal_dream/facts.ts"
+    },
+    {
+      "id": "fb0714f4ea1430a2ecd064554b79595961a07a0b47aa3c4a08de92af7bb99006",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "line": 22,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../debater/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"type:DebateParticipant\",\"value:captureDebateParticipant\",\"value:sameDebateParticipant\"]}",
+      "target": "backend/src/game/mechanisms/roles/debater/authority.ts"
+    }
+  ],
+  "returnedOriginalDebtCount": 0,
+  "returnedOriginalDebt": [],
+  "newFailureCount": 0,
+  "previousFailuresRemain": [],
+  "scope": "固定cb57dd59相对固定c9adfd31原债分区；旧报告/分区与原1779全字节不改，不表示玩法或注释内容正确性。"
+}
