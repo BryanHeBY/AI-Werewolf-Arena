@@ -819,3 +819,6 @@
 
 
 - C24 普通狼刀完整路由组合：四源收原67行多数决→雾圈一次随机→原生命→刀口/已付加成/投票者/诊断→魔术师映射/印记/范围至具名同步owner，原stage持全部聊天/等待/逐票复验和末Noble发布。三个Mist查询public同binding，四参传原ctx/array/Set，原RNG双lookup单call与所有callee/lategetter/receiver/已付和setter失败前缀保；重要中文结构与权限界限就地补。Root及非作者实际cdbe整Wolf/五全文edit/五稳定控制/17附件双审批准，完整Wolf2426typed2948叶逆两raw同，真实newbody463typed538叶两raw同，不冒整个新模块等价。new3/28+old精准all-pass1/19四不同47assert；4finite types/head/proof首0，无重绿/fullgate。新增返回API/函数scope和当前1896七根20site有界路由限制明示；完整所有狼刀与P9继续，见 ordinary-wolf-knife-routing.md。
+
+
+- C45 玩家checkpoint重要中文契约：仅一源八处说明原Demon非null短路、动物最初授权审计、婚约／孤女优先、私有状态原次序、原孤女两次查询、可选组件二读、普通全容器clone与胜利来源。Root及非作者完整385原稿／三稳定控制／十三附件批准；独审一条“玩家投影”精度finding以单comment限定原孤女特例和普通克隆，最终源ac9f，末窄桥0c6550完整732typed850叶／两raw／原head保持。首proof27ce00／head d1e694真实0/633Gitdocs保f329原阶段，未重类型、业务、模型或全门禁；初rawreader见Root并发末comment不是产品红，如实登记。注释参与新sourceHash、历史保；不是逐55 codec或全中文／P9完成，见 player-checkpoint-chinese-contracts.md。

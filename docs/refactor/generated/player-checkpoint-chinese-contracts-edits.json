@@ -1,0 +1,42 @@
+[
+  {
+    "before": "export function capturePlayerContributions(",
+    "after": "/** 同一调用按原权威优先级编码；数据可供归档核验，不能替代运行时原体或库存许可。 */\nexport function capturePlayerContributions(",
+    "count": 1
+  },
+  {
+    "before": "    demonHunterCheckpointPlayers(world, complete) ??",
+    "after": "    // 恶魔板的完整原参与者快照优先返回；非 null 时不读取后面的席位名单或其它贡献。\n    demonHunterCheckpointPlayers(world, complete) ??",
+    "count": 1
+  },
+  {
+    "before": "      const original = animal ? animalOriginalAuditPlayer(world, id) : null;",
+    "after": "      // 动物失败审计保留最初授权身体；身份／票权／警徽从捕获数据解码，普通路径才读取当前组件。\n      const original = animal ? animalOriginalAuditPlayer(world, id) : null;",
+    "count": 1
+  },
+  {
+    "before": "      const audit = weddingAudit ?? projectLonelyGirlAuditPlayer(world, id);",
+    "after": "      // 婚约审计优先于孤女审计；此处覆盖的是记录字段，不改角色真实阵营或独立胜利成员。\n      const audit = weddingAudit ?? projectLonelyGirlAuditPlayer(world, id);",
+    "count": 1
+  },
+  {
+    "before": "        privateState:\n",
+    "after": "        // 保原动物→寻香→审计→孤女→普通容器的短路顺序；普通分支克隆整个容器，包括原可接受扩展字段。\n        privateState:\n",
+    "count": 1
+  },
+  {
+    "before": "          (projectLonelyGirl(world, role)\n",
+    "after": "          // 孤女原查询分别用于存在判断和字段值，保留两次调用；不可缓存为一次或拿玩家投影替代私有档案。\n          (projectLonelyGirl(world, role)\n",
+    "count": 1
+  },
+  {
+    "before": "        ...(world.getComponent(id, COMPONENT.DebatePenalty)\n",
+    "after": "        // 可选组件先判断、再现场读取并克隆；getter／克隆失败仍从原表达式传播，不补空记录。\n        ...(world.getComponent(id, COMPONENT.DebatePenalty)\n",
+    "count": 1
+  },
+  {
+    "before": "        victory:\n",
+    "after": "        // 原动物、婚约及孤女胜利记录先于普通组件克隆；失败审计和当前成功记录不可互换来源。\n        victory:\n",
+    "count": 1
+  }
+]

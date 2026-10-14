@@ -1,0 +1,31 @@
+{
+  "proof": {
+    "terminalChunk": "27ce00",
+    "exitCode": 0,
+    "executions": 1,
+    "output": "docs/refactor/generated/player-checkpoint-chinese-contracts-proof-output.txt"
+  },
+  "heads": {
+    "terminalChunk": "d1e694",
+    "exitCode": 0,
+    "executions": 1,
+    "roots": 1,
+    "documentationPaths": 633,
+    "diagnostics": 0,
+    "output": "docs/refactor/generated/player-checkpoint-chinese-contracts-heads-output.txt"
+  },
+  "notRun": [
+    "types",
+    "behavior tests",
+    "full gates",
+    "models"
+  ],
+  "finalCommentBridge": {
+    "terminalChunk": "0c6550",
+    "exitCode": 0,
+    "executions": 1,
+    "changedSources": 1,
+    "commentEdits": 1,
+    "output": "docs/refactor/generated/player-checkpoint-chinese-contracts-peer-comment-bridge-output.txt"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "38534142d75ae372043267e4f3ec4c8d10fbbea1",
+  "source": [
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "ac9f7e366738fbeffbd870d15bc8461b21b3930721785a5ba9dfaa6c71aca8a2",
+      "change": "comments-only"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-scope-final.json",
+    "sha256": "e3a4b7de5a7def07d9dc85ae198b664f978ded7e932ef2b0cf1f88722158dc57"
+  },
+  "document": {
+    "path": "docs/refactor/player-checkpoint-chinese-contracts.md",
+    "sha256": "2aa002ea6ddde1cb4b71688c1e72a79936cc88c895e339b73d7f9d79c4ac6a04"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-evidence.json",
+    "sha256": "355eb00f621c48483badf3baa25f503dfd75e32d096989ec885c3a4ba09cba75"
+  },
+  "integrity": {
+    "freshSources": 1,
+    "actualGitBefore": 1,
+    "controls": 3,
+    "artifactHashes": 13,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "全部authority原优先级/最初审计/current组件及clone接受面原文核",
+    "孤女原专属输出特例保两次查询，普通其它角色完整容器克隆，单comment精度finding已修",
+    "optional二次getter及victory贡献次序、无授权或领域写入",
+    "真实Git/八首comment+单末comment桥/三controls/十三附件，首green阶段哈希保，不复运行"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

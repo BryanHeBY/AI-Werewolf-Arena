@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen",
+  "baseCommit": "38534142d75ae372043267e4f3ec4c8d10fbbea1",
+  "source": [
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "ac9f7e366738fbeffbd870d15bc8461b21b3930721785a5ba9dfaa6c71aca8a2",
+      "change": "comments-only"
+    }
+  ],
+  "deleted": [],
+  "comments": 8,
+  "controls": [
+    {
+      "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+      "sha256": "fc5d546ec93a96ed231d2af2daba25b22872004bcfb52d2e80a7e9295a56f86e"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/animal-audit.ts",
+      "sha256": "e26dc743b0c8ce60ff9a2760edacdff04886f412a4a680355cfbc7c7387fa028"
+    },
+    {
+      "path": "backend/src/core/domain/plain_data.ts",
+      "sha256": "f7d6eadcc86bfe4ca3582c385649b8388911cd78520bc65bedce640039d07517"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/player-checkpoint-chinese-contracts.md",
+    "sha256": "2aa002ea6ddde1cb4b71688c1e72a79936cc88c895e339b73d7f9d79c4ac6a04"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-before.json",
+      "sha256": "10e4ff0f02b7b6b67e6fef9ce3aa350000af3bf3cab1b31b9191fb9a6c412204"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-edits.json",
+      "sha256": "eca9503e179af3996a44487ebb8c319fbfb1243c93f82237fdcb750faf1e9cea"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-proof.cjs",
+      "sha256": "8babb7934dcde592c86fced783329550dc643a7b6487df15b456a0777658119f"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-proof.json",
+      "sha256": "d24234b91c9187a80ff15ccb72e0c9bc378fb0a42de743605fbeca2c2160eea9"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-proof-output.txt",
+      "sha256": "0547e4a116db94e0de55777d8fdbedddab5d79bf98c434b0e0b544374a232a1c"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-heads.ts",
+      "sha256": "79bad2f263789f034ae40ddd07994388a33a0873ac5b52f242925b1913f3f4b9"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-heads.json",
+      "sha256": "d9543df5ef677019febc46b225e09ba3d3392a44fda43c3b8e68c938daaa0df5"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-heads-output.txt",
+      "sha256": "24df902a820e5484d2b1f8c9e7b2b71a456edc910999282c7acc6f3ae17715bc"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-receipts.json",
+      "sha256": "303a13991cbe56a6073e6f96370a3de6fd852c69d9dcf874b79114e2fe3343cd"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-peer-comment-before.json",
+      "sha256": "b0592ce988a29d079dbf288e22f49b751dab28b6af872f3e1bb598fa2b821ce1"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-peer-comment-bridge.cjs",
+      "sha256": "8354109164e04ed46ef99198701b4f3e49feb88a832b0c9ff8e06b86ee376528"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-peer-comment-bridge.json",
+      "sha256": "95da866de7398ee9d6972a2c69744c989111bb0e6458db0f406c4640a450602c"
+    },
+    {
+      "path": "docs/refactor/generated/player-checkpoint-chinese-contracts-peer-comment-bridge-output.txt",
+      "sha256": "2b3445855563be1a9ffb02a4ac0a57f9fd1c1975646292e290d256e8517bd3e5"
+    }
+  ],
+  "before": "docs/refactor/generated/player-checkpoint-chinese-contracts-before.json",
+  "limits": [
+    "只补八项说明，无执行token/type/字段/既有head/产品文本/机器协议改变；运行栈行号自然变化不宣称全外部字节环境等价。",
+    "权威短路、重复查询、全容器克隆与原失败点仍原代码，注释不新增schema、授权、缓存或字段过滤。",
+    "没有运行类型、行为或全门禁；控制场景只核实际Git字节，不把读旧oracle算重新通过。"
+  ],
+  "finalCommentBridge": {
+    "comments": 1,
+    "report": "docs/refactor/generated/player-checkpoint-chinese-contracts-peer-comment-bridge.json"
+  }
+}

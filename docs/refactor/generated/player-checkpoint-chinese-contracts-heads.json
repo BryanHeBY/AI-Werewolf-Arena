@@ -1,0 +1,11 @@
+{
+  "source": [
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "f3290109532e6870d3539c25a3237f4f6f1bddb4d7ab8f2285a6bcdc62171654"
+    }
+  ],
+  "documentationPaths": 633,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

@@ -33,14 +33,17 @@ import {
 } from "../../game/mechanisms/roles/lonely_girl/lifecycle";
 import { projectWallNote } from "../../game/mechanisms/events/wall_notes/authority";
 
+/** 同一调用按原权威优先级编码；数据可供归档核验，不能替代运行时原体或库存许可。 */
 export function capturePlayerContributions(
   world: World,
   complete: boolean,
   animal: ReturnType<typeof prepareAnimalCheckpoint>,
 ): RecordedCheckpoint["players"] {
   return (
+    // 恶魔板的完整原参与者快照优先返回；非 null 时不读取后面的席位名单或其它贡献。
     demonHunterCheckpointPlayers(world, complete) ??
     (animalOriginalAuditIds(world) ?? world.entityIds()).map((id) => {
+      // 动物失败审计保留最初授权身体；身份／票权／警徽从捕获数据解码，普通路径才读取当前组件。
       const original = animal ? animalOriginalAuditPlayer(world, id) : null;
       const identity = original
         ? (JSON.parse(original.identityJson) as IdentityComponent)
@@ -58,6 +61,7 @@ export function capturePlayerContributions(
         ? (auditData(original.audit.vote, ["weight", "canVote"]) as VotingRightComponent)
         : world.getComponent(id, COMPONENT.VotingRight)!;
       const weddingAudit = weddingAuditPlayer(world, id, !complete);
+      // 婚约审计优先于孤女审计；此处覆盖的是记录字段，不改角色真实阵营或独立胜利成员。
       const audit = weddingAudit ?? projectLonelyGirlAuditPlayer(world, id);
       const wall = projectWallNote(world, id);
       const wallNote = wall
@@ -77,6 +81,7 @@ export function capturePlayerContributions(
         alive: original
           ? aliveLifeDescriptor(original.scope.life)!.get!.call(original.scope.life)
           : (audit?.alive ?? world.getComponent(id, COMPONENT.Alive)!.alive),
+        // 保原动物→寻香→审计→孤女→普通容器的短路顺序；普通分支克隆整个容器，包括原可接受扩展字段。
         privateState:
           (animal && original
             ? id === animal.foxId
@@ -89,10 +94,12 @@ export function capturePlayerContributions(
             : null) ??
           fragrantCheckpointPrivateState(world, id, complete) ??
           audit?.privateState ??
+          // 孤女专属输出保留存在判断和值处的两次查询；不缓存为一次，也不以玩家观察字段替换普通分支的完整私有容器。
           (projectLonelyGirl(world, role)
             ? { lonelyGirl: projectLonelyGirl(world, role) }
             : (structuredClone(role.privateState) as Record<string, unknown>)),
         ...(wallNote ? { wallNote } : {}),
+        // 可选组件先判断、再现场读取并克隆；getter／克隆失败仍从原表达式传播，不补空记录。
         ...(world.getComponent(id, COMPONENT.DebatePenalty)
           ? {
               debatePenalty: structuredClone(world.getComponent(id, COMPONENT.DebatePenalty)!),
@@ -103,6 +110,7 @@ export function capturePlayerContributions(
               lovers: structuredClone(world.getComponent(id, COMPONENT.Lovers)!),
             }
           : {}),
+        // 原动物、婚约及孤女胜利记录先于普通组件克隆；失败审计和当前成功记录不可互换来源。
         victory:
           (original ? (JSON.parse(original.victoryJson) as VictoryComponent) : null) ??
           (weddingAudit ? { affiliations: weddingAudit.victory } : null) ??
