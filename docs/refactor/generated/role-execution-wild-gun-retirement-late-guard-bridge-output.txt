@@ -1,0 +1,1 @@
+{"programs":3,"offsetDeltas":7,"cumulativeTypedComparisons":7966,"cumulativeASTLeaves":3992,"inverseWholeRawOutputs":6,"consumeSites":5,"unchangedHeads":3,"preservedPredicateBodies":2,"originalUnitPrefixSame":true,"unchangedProduction":2,"controls":4}

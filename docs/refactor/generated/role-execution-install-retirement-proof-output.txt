@@ -1,0 +1,1 @@
+{"oldWholePrograms":1,"exactEdits":2,"typedNodes":2488,"nodeArrays":306,"noncommentLeaves":2829,"inverseWholeRawOutputs":2}

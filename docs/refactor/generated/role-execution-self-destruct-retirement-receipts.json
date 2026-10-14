@@ -1,0 +1,123 @@
+{
+  "baseCommit": "bd2e04894509f7777d2909632f768a3329e3b57a",
+  "sourceStage": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "sha256": "c8744aca9ab80da9ce11b93b99d889805a0a39c6e7692a64e615f6ceb7ce9de0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "sha256": "835bde69cca6cca4d7cba274ba45b1a0b0bb218c5421be5f5b920bc329acac40"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "c7f649af4aec9042554196d27091e3064ee3b4987a9be2e8855212175d3d6916"
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "sha256": "8ad5e9b0c10721d87450ca4d4d519363ab7724eac240e26f6b314b0a3eaaa52f"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-execution-self-destruct.test.ts",
+      "sha256": "e2490bb36e4589b75e9f76e32d3f0f492b8479fc37e2df868b2d8d955649924d"
+    }
+  ],
+  "jointCohort": {
+    "firstFence": {
+      "path": "docs/refactor/generated/role-execution-install-retirement-cohort-first-fence.json",
+      "sha256": "8c2a4327a7c693b1765085c6ef98d7d4ae3868ddb746881aa03d73d193705ec1"
+    },
+    "updatedFence": {
+      "path": "docs/refactor/generated/role-execution-install-retirement-cohort-fence.json",
+      "sha256": "f5c89b171230e6fdb75518dd882ac363bf589059917dafe26635a3115543793e"
+    },
+    "firstOwnMismatchRead": "aa6ade；仅新unit d522→e249 微任务精度，四生产同first fence，所有本组checks未执行。",
+    "explicitRootAuthorization": "Root允许e249首检查，无须等全fence；其后updated17 fence已同final5。",
+    "notWholeFixedGitClosure": true,
+    "rootPureTypeFixtureRepair": "Root unit的this注解为Root自己的失败根修复，不是本组source或运行重复。"
+  },
+  "runtime": {
+    "command": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/domain/role-execution-self-destruct.test.ts > docs/refactor/generated/role-execution-self-destruct-retirement-runtime-output.txt 2>&1",
+    "terminalChunk": "133931",
+    "exitCode": 0,
+    "executions": 1,
+    "pass": 2,
+    "fail": 0,
+    "assertions": 29,
+    "distinctCases": 2,
+    "oldGreenCasesRun": 0,
+    "output": {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-runtime-output.txt",
+      "sha256": "82c748c1f1baea0981673516345ce7e00a72af4a02f9a0a768f6268042995997"
+    }
+  },
+  "types": {
+    "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc -p docs/refactor/generated/role-execution-self-destruct-retirement-types-config.json > docs/refactor/generated/role-execution-self-destruct-retirement-types-output.txt 2>&1",
+    "launchChunk": "b2a55e",
+    "sessionId": 26589,
+    "terminalChunk": "92ee66",
+    "exitCode": 0,
+    "roots": 5,
+    "executions": 1,
+    "output": {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "emptyLogIsNotExitEvidence": true
+  },
+  "heads": {
+    "command": "bun --no-env-file docs/refactor/generated/role-execution-self-destruct-retirement-heads.ts > docs/refactor/generated/role-execution-self-destruct-retirement-heads-output.txt 2>&1",
+    "terminalChunk": "229ead",
+    "exitCode": 0,
+    "roots": 5,
+    "documentationPaths": 690,
+    "diagnostics": 0,
+    "executions": 1,
+    "output": {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-heads-output.txt",
+      "sha256": "095e90359f4fea19ed7e2ef462770b126eeb4c68736801d6d9032d3cc016c8f1"
+    }
+  },
+  "proof": {
+    "command": "bun --no-env-file docs/refactor/generated/role-execution-self-destruct-retirement-proof.cjs > docs/refactor/generated/role-execution-self-destruct-retirement-proof-output.txt 2>&1",
+    "launchChunk": "08d48e",
+    "sessionId": 40692,
+    "terminalChunk": "37124e",
+    "exitCode": 0,
+    "executions": 1,
+    "summary": {
+      "sourcePaths": 5,
+      "oldCompletePrograms": 4,
+      "exactEdits": 15,
+      "baselineTypedNodes": 2243,
+      "baselineNodeArrays": 296,
+      "baselineNoncommentLeaves": 2619,
+      "inverseWholeRawOutputs": 8,
+      "policyGuardCalls": 6,
+      "sameCoreBindings": 5,
+      "newUnitTypedNodes": 1017,
+      "newCases": 2
+    },
+    "output": {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-proof-output.txt",
+      "sha256": "377e17b937fff4b98a44508806a4684ae7563b20407caedd1a5aa2c78d74c0ca"
+    },
+    "independentBehaviorPolicyNotRuntimeEquivalence": true
+  },
+  "precheckHistory": [
+    "先actual bd2 Git全文捕获；sourceReady659480为首次草稿，尚未checks。",
+    "静态保NO_ACCESS单例精度e9b912，四生产完成15整文本edits；无已绿重复。",
+    "新unit在全组fence消息抵达前a7b759补await Promise.resolve()，真实pending再mark；current e249，四production与首fence同，Root已授权该首次字节。"
+  ],
+  "sourceChangedAfterFirstCheck": false,
+  "firstFailures": [],
+  "greenRepeats": false,
+  "notRun": [
+    "old green scenarios",
+    "full gates",
+    "full suites",
+    "models",
+    "private configs",
+    "stage/commit/progress"
+  ]
+}

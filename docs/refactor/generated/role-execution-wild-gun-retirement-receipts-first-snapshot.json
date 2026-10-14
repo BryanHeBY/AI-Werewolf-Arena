@@ -1,0 +1,139 @@
+{
+  "baseCommit": "bd2e04894509f7777d2909632f768a3329e3b57a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "f01842f3ef4e9a5f28f35e673ba0ea24c9dfa487dcba0f9015fd8aa8f21460c4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "dda929882ccfd106d527166ec6bac58660a799008df9abae74599b22bd4b019d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "sha256": "edf3caf795605d094453818f0a0e65987f9b9762a4399766f5d16f3658c70760"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "sha256": "7a069efa011cfa10c793887d5908f1afc6e1f34e8e3c3df82e1577692429c4f7"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/role-execution-retirement.test.ts",
+      "sha256": "34a995c45b0755bee6b0fab11299f349267f2e60e3cca504cad36662c8ae794f"
+    }
+  ],
+  "firstCheckSource": {
+    "path": "docs/refactor/generated/role-execution-wild-gun-retirement-first-source.json",
+    "sha256": "9775ec928cf99f744b472541abdba343868c1001c63536377c560d7b66f39428"
+  },
+  "cohortFence": {
+    "path": "docs/refactor/generated/role-execution-install-retirement-cohort-fence.json",
+    "sha256": "f5c89b171230e6fdb75518dd882ac363bf589059917dafe26635a3115543793e"
+  },
+  "capture": {
+    "receipt": "dc7a9e",
+    "exitCode": 0,
+    "actualGitBefore": 4,
+    "newAbsent": 1,
+    "stableControls": 4
+  },
+  "sourceReady": {
+    "productionEditReceipt": "476941",
+    "unitFirstDraft": "source-ready-first.json",
+    "staticSupportedBoardFindingRevision": "pre-first-fixture-revision.json",
+    "staticRequestPredicatePrecision": "pre-first-request-predicate-precision.json",
+    "checksBeforeStaticRevisions": false
+  },
+  "fenceVerification": {
+    "receipt": "cb3d7c",
+    "exitCode": 0,
+    "own5Same": true,
+    "cohortPaths": 17
+  },
+  "runtime": {
+    "receipt": "517eaf",
+    "exitCode": 0,
+    "runs": 1,
+    "cases": 4,
+    "fail": 0,
+    "assertions": 55,
+    "log": "docs/refactor/generated/role-execution-wild-gun-retirement-tests-output.txt",
+    "unitStage": "68d25a35ab0136540ad67f2240c0160740ea3bd6207576013d918504032b23f5",
+    "greenRepeat": false
+  },
+  "types": [
+    {
+      "receipt": "5b15a5",
+      "exitCode": 2,
+      "configuredRoots": 5,
+      "enteredSourceRoots": 0,
+      "diagnostics": "5 TS6053; tool files relative to generated directory",
+      "config": "docs/refactor/generated/role-execution-wild-gun-retirement-types-config-first.json",
+      "log": "docs/refactor/generated/role-execution-wild-gun-retirement-types-output-first.txt"
+    },
+    {
+      "launch": "21eeee",
+      "sessionId": 52544,
+      "terminal": "ad2bd5",
+      "exitCode": 2,
+      "roots": 5,
+      "sourceDiagnostics": [
+        {
+          "path": "backend/tests/unit/features/wild-child/role-execution-retirement.test.ts",
+          "code": "TS2322",
+          "message": "Test never-returning getter inferred void, not function."
+        }
+      ],
+      "productionDiagnostics": 0,
+      "config": "docs/refactor/generated/role-execution-wild-gun-retirement-types-config.json",
+      "log": "docs/refactor/generated/role-execution-wild-gun-retirement-types-output.txt"
+    },
+    {
+      "launch": "95ea52",
+      "sessionId": 79206,
+      "terminal": "27e217",
+      "exitCode": 0,
+      "failedOnlyRoots": 1,
+      "sourceChange": "Unit getter explicit function return type only",
+      "config": "docs/refactor/generated/role-execution-wild-gun-retirement-types-unit-failed-config.json",
+      "log": "docs/refactor/generated/role-execution-wild-gun-retirement-types-unit-failed-output.txt"
+    }
+  ],
+  "heads": {
+    "receipt": "b627ce",
+    "exitCode": 0,
+    "roots": 5,
+    "documents": 690,
+    "executions": 1,
+    "unitStage": "68d25a35ab0136540ad67f2240c0160740ea3bd6207576013d918504032b23f5",
+    "log": "docs/refactor/generated/role-execution-wild-gun-retirement-heads-output.txt"
+  },
+  "proof": {
+    "receipt": "f3305d",
+    "exitCode": 0,
+    "executions": 1,
+    "unitStage": "68d25a35ab0136540ad67f2240c0160740ea3bd6207576013d918504032b23f5",
+    "script": "docs/refactor/generated/role-execution-wild-gun-retirement-proof.cjs",
+    "log": "docs/refactor/generated/role-execution-wild-gun-retirement-proof-output.txt"
+  },
+  "unitTypeBridge": {
+    "receipt": "2b2dc2",
+    "exitCode": 0,
+    "wholeOutputs": 2,
+    "report": "docs/refactor/generated/role-execution-wild-gun-retirement-unit-type-bridge.json",
+    "log": "docs/refactor/generated/role-execution-wild-gun-retirement-unit-type-bridge-output.txt",
+    "command": "bun --no-env-file -e <inline exact type annotation inverse and TS ESNext/CommonJS full raw comparison; code in actual tool call; no production loading>"
+  },
+  "diffCheck": {
+    "receipt": "4edad0",
+    "exitCode": 0,
+    "trackedProductionPaths": 4,
+    "untrackedUnitNotGitChecked": true
+  },
+  "notRun": [
+    "Old F04 tests/9c0b47 experiment",
+    "Green runtime/head/mainproof repeat",
+    "Whole gate/model/fullgame",
+    "Camp API/constructor removal"
+  ]
+}

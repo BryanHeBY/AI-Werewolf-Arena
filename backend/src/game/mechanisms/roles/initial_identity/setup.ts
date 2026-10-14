@@ -12,6 +12,7 @@ import type {
 import { RequestLease, type RequestLeaseTurn } from "../../../../core/domain/request-lease";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, Camp, Phase, Role, createVictoryComponent, type ActionProvider, type ActionRequest, type CampComponent, type GameEvent, type RoleComponent, type VictoryComponent, type World } from "../../../../core/domain";
+import { retireRoleExecution } from "../../../../core/domain/role-execution-authority";
 import { createRoleComponent } from "../../../observation/role-presentation";
 import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import { ToolGateway } from "../../../gateway/tool_gateway";
@@ -375,9 +376,15 @@ export class InitialIdentitySetupWindow {
           consumeShapeshifterState(state, slot);
         }
         selectInitialIdentityCard(this.world, actorId, slot);
-        this.world.addComponent(actorId, COMPONENT.Role, newRole);
-        this.world.addComponent(actorId, COMPONENT.Camp, newCamp);
-        this.world.addComponent(actorId, COMPONENT.Victory, newVictory);
+        // 一旦候选身份开始安装，该核心段失败就永久撤销候选的执行授权；不在 catch 查询 World 或退休旧演员。
+        try {
+          this.world.addComponent(actorId, COMPONENT.Role, newRole);
+          this.world.addComponent(actorId, COMPONENT.Camp, newCamp);
+          this.world.addComponent(actorId, COMPONENT.Victory, newVictory);
+        } catch (error) {
+          retireRoleExecution(newRole);
+          throw error;
+        }
       } else {
         consumeRetainedInitialIdentityState(state);
         selectInitialIdentityCard(this.world, actorId, null);

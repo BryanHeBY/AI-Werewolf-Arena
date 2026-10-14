@@ -1,0 +1,12 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+    "before": "import { createRoleComponent } from \"../../../observation/role-presentation\";",
+    "after": "import { retireRoleExecution } from \"../../../../core/domain/role-execution-authority\";\nimport { createRoleComponent } from \"../../../observation/role-presentation\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+    "before": "        this.world.addComponent(actorId, COMPONENT.Role, newRole);\n        this.world.addComponent(actorId, COMPONENT.Camp, newCamp);\n        this.world.addComponent(actorId, COMPONENT.Victory, newVictory);",
+    "after": "        // 一旦候选身份开始安装，该核心段失败就永久撤销候选的执行授权；不在 catch 查询 World 或退休旧演员。\n        try {\n          this.world.addComponent(actorId, COMPONENT.Role, newRole);\n          this.world.addComponent(actorId, COMPONENT.Camp, newCamp);\n          this.world.addComponent(actorId, COMPONENT.Victory, newVictory);\n        } catch (error) {\n          retireRoleExecution(newRole);\n          throw error;\n        }"
+  }
+]

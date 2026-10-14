@@ -4,8 +4,10 @@
  * 不变量：仅在原身份／生命仍当前时提交；关闭、替换或截止别名仍按原政策撤权。
  * 槽所有者执行数据与 expectedState 写入；先发布榜样死亡事实再转换，失败不撤回已发表前缀。
  * 请求记录及别名传播归独立公共实例；观察请求或原领域失配后许可不复活；付款/取消仍由本族执行，别名自身损坏不毒原请求。
- * 转换核心抛错永久撤销本绑定的身份资格；完整核心提交后的事实发表失败不撤销已提交资格。
+ * 转换核心抛错永久撤销本绑定及捕获 Role 的运行行动授权；不删除原数据或撤销已付效果原体谓词。
+ * 完整核心提交后的事实发表失败不撤销已提交资格；墓碑按同对象永久保留，不随字段恢复或跨 World 复用清除。
  */
+import { retireRoleExecution } from "../../../../core/domain/role-execution-authority";
 import { createCampComponent } from "../../../observation/component-presentation";
 import type { WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -286,6 +288,8 @@ export function resolveWildChildDeathWave(
       deadIds: [...ids],
     },
   });
+  // 在原最后 descriptor 参数读取处保存同一 Role；catch 不再读取可被安装回调改写的公开 binding。
+  let executionRole: RoleComponent | undefined;
   if (
     !validWildChildOwner(b) ||
     b.state.status !== "chosen" ||
@@ -293,7 +297,7 @@ export function resolveWildChildDeathWave(
     !["status", "eligibleNight"].every(
       (k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable,
     ) ||
-    !Object.getOwnPropertyDescriptor(b.actor.role, "camp")?.writable
+    !Object.getOwnPropertyDescriptor((executionRole = b.actor.role), "camp")?.writable
   )
     return;
   // 资格与原可写检查通过后才进入转换核心；Role→Camp→Victory→绑定／槽的原写序不变。
@@ -311,6 +315,8 @@ export function resolveWildChildDeathWave(
     transformWildChildState(b, day);
   } catch (error) {
     failedTransformations.add(b);
+    // 资格通过时已在原读取点捕获对象；纯身份墓碑不写冻结字段，也不重读 binding 遮盖原异常。
+    retireRoleExecution(executionRole!);
     throw error;
   }
   // 核心已经全部提交；事实发表晚抛保已付转换与资格，不将错误重新解释为转换失败。

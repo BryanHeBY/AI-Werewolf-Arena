@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/wild-child/role-execution-retirement.test.ts:
+(pass) Wild Camp failure permanently retires old and fresh action captures across World aliases while data stays readable [47.41ms]
+(pass) Wild core preparation failure keeps paid Fox currentness but refuses new action permission [3.55ms]
+(pass) Wild transformed fact failure preserves committed execution and permits fresh action capture [3.28ms]
+(pass) native action retirement preserves stock error priority and already consumed pending shot currentness [1.30ms]
+
+ 4 pass
+ 0 fail
+ 55 expect() calls
+Ran 4 tests across 1 file. [197.00ms]

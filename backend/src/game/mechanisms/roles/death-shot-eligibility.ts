@@ -3,9 +3,13 @@
  * 输入为原 actor／ability／来源、来源阶段、惰性 World／日期和原当前性回调；
  * 输出为缺失赠枪的 null，或原政策及 permissionCurrent／eligible 函数引用。
  * 本模块不打开行动许可、消费弹药、选择目标、标死或发布事件；数据与回调不是 JSON 授权。
- * 原生 Hunter 身份在赠枪路径也保留；Demon→枪→原生政策→canShoot 的短路顺序不变。
+ * 原生 Hunter 身份在赠枪路径也保留；Demon→枪→原生政策的原短路保持。
+ * 新捕获在原 state／policy／cause 读取后拒退休 Role；行动 eligible 晚拒墓碑，再读 canShoot。
+ * permissionCurrent 保原请求许可正文；赠枪仍依赖 active 执行资格，可能被其守卫拒绝。
+ * 真正已消费提案分别保赠枪 capture.isCurrent 与原生 pending 的原当前性，不合并成行动资格。
  */
 import { Role, type EntityId, type DeathSources, type Phase, type DeathActionPolicy } from "@ai-werewolf-arena/game-contract";
+import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { World } from "../../../core/domain/world";
 import { permitsDeathShot } from "../../../core/domain/deaths";
@@ -53,6 +57,8 @@ export function captureDeathShotEligibility(
   const nativeHunter = role?.role === Role.Hunter;
   const nativePolicy = nativeState?.deathActionPolicy ?? "awa_qualified_sources_v1";
   const causeIdentity = JSON.stringify(sources[actorId] ?? []);
+  // 先保原捕获前缀；没有赠枪／nativeState 的原分支也不能为已退休对象建立新行动资格。
+  if (role && isRoleExecutionRetired(role)) return null;
   const nativeCurrent = () =>
     !nativeState ||
     (runtime.world.getComponent(actorId, COMPONENT.Role) === role &&
@@ -76,6 +82,11 @@ export function captureDeathShotEligibility(
     (!nativeHunter || demonNativeCurrent()) &&
     gunCurrent() &&
     nativeCurrent();
-  const eligible = () => permissionCurrent() && (!nativeState || nativeState.canShoot);
+  const eligible = () =>
+    permissionCurrent() &&
+    (!role || !isRoleExecutionRetired(role)) &&
+    (!nativeState || nativeState.canShoot) &&
+    // 保原 canShoot getter 的读取与异常；其回调若退休原 Role，不能返回新的行动资格。
+    (!role || !isRoleExecutionRetired(role));
   return { nativePolicy, permissionCurrent, eligible };
 }

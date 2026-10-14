@@ -1,0 +1,147 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "before": "import type { RoleComponent } from \"../../../core/domain/components/role\";",
+    "after": "import type { RoleComponent } from \"../../../core/domain/components/role\";\nimport { isRoleExecutionRetired } from \"../../../core/domain/role-execution-authority\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "import type { RoleComponent } from \"../../../core/domain/components/role\";",
+    "after": "import type { RoleComponent } from \"../../../core/domain/components/role\";\nimport { isRoleExecutionRetired } from \"../../../core/domain/role-execution-authority\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "import type { RoleComponent } from \"../../../core/domain/components/role\";",
+    "after": "import type { RoleComponent } from \"../../../core/domain/components/role\";\nimport { isRoleExecutionRetired } from \"../../../core/domain/role-execution-authority\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "before": "  return ability && abilityStatus(ability, day) === \"active\" ? ability : undefined;",
+    "after": "  // 原数据查找／status 先完成；永久退休只否决执行，不删除库存或把状态改成 disabled。\n  return ability && abilityStatus(ability, day) === \"active\" && role && !isRoleExecutionRetired(role)\n    ? ability\n    : undefined;"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "before": "  events: GameEvent[],\n): NightAbility {",
+    "after": "  events: GameEvent[],\n  sourceRole: RoleComponent,\n): NightAbility {"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "before": "  // 原字典赋值已发生后才发布；push／时钟／来源克隆失败都保留已安装实例。",
+    "after": "  // 捕获的源／目标角色只提供本次退休读数，不新增 World 换体策略或授予许可。\n  if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))\n    throw new Error(\"ability_actor_execution_retired\");\n  // 原字典赋值已发生后才发布；push／时钟／来源克隆失败都保留已安装实例。"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "before": "  stored[ability.id] = ability;\n  emit(events, actorId, ability, \"granted\");",
+    "after": "  // 容器 getter／空字典初始化后再核；失败保原已写前缀，不安装新实例。\n  if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))\n    throw new Error(\"ability_actor_execution_retired\");\n  stored[ability.id] = ability;\n  emit(events, actorId, ability, \"granted\");"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "before": "  // 删除按已核对的真实 key，而非凭 Object.values 中的实例 id 猜测槽；失败不进入目标安装。",
+    "after": "  // 原政策与完整槽预检之后才否决退休双端；不借数据查询过滤 actor。\n  if (isRoleExecutionRetired(source) || isRoleExecutionRetired(target))\n    throw new Error(\"ability_transfer_owner_revoked\");\n  // 删除按已核对的真实 key，而非凭 Object.values 中的实例 id 猜测槽；失败不进入目标安装。"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "before": "  // 空目标库存的创建也在源退休之后；安装或 granted 发布失败不会重装源槽。",
+    "after": "  // 源已经删除／登记 ID；期间 getter 导致角色授权退休仍拒目标安装，不补回源。\n  if (isRoleExecutionRetired(source) || isRoleExecutionRetired(target))\n    throw new Error(\"ability_transfer_owner_revoked\");\n  // 空目标库存的创建也在源退休之后；安装或 granted 发布失败不会重装源槽。"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "  const role = validateAbilityInstall(world, actorId, ability);\n  return commitGrantedNightAbility(role, actorId, ability, events) as NightAbilityReadView<K>;",
+    "after": "  const { role, sourceRole } = validateAbilityInstall(world, actorId, ability);\n  return commitGrantedNightAbility(role, actorId, ability, events, sourceRole) as NightAbilityReadView<K>;"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "/** 完整原安装预检只返回实际目标 Role；库存提交另有唯一 owner，授予和转移共用原政策。 */",
+    "after": "/** 原安装预检捕获目标及原读取点的源 Role；这两个数据引用只供提交复验永久退休，不是许可或新原体策略。 */"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "): RoleComponent {",
+    "after": "): { role: RoleComponent; sourceRole: RoleComponent } {"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "  roleOf(world, source.actorId);",
+    "after": "  const sourceRole = roleOf(world, source.actorId);"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "  return role;\n}",
+    "after": "  // 原来源／状态／重复编号政策全通过后才查捕获双端，拒绝不写库存或发布事实。\n  if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))\n    throw new Error(\"ability_actor_execution_retired\");\n  return { role, sourceRole };\n}"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": "  const installationTarget = validateAbilityInstall(world, toId, received);",
+    "after": "  const { role: installationTarget } = validateAbilityInstall(world, toId, received);"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "function bind(world: World, actorId: number, gun: DeathGun): void {",
+    "after": "function bind(world: World, actorId: number, gun: DeathGun, sourceRole: RoleComponent): void {"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "  owners.set(gun, {",
+    "after": "  // 这是新赠枪绑定入口；只否决退休演员，原体／已付提案复验仍由不含墓碑的 ownerCurrent 执行。\n  if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))\n    throw new Error(\"death_ability_owner_invalid\");\n  owners.set(gun, {"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "  if (allDeathGuns(to).length) throw new Error(\"death_ability_gun_already_owned\");",
+    "after": "  if (isRoleExecutionRetired(from) || isRoleExecutionRetired(to))\n    throw new Error(\"death_ability_grant_invalid\");\n  if (allDeathGuns(to).length) throw new Error(\"death_ability_gun_already_owned\");"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "  bind(world, toId, gun);",
+    "after": "  bind(world, toId, gun, from);\n  // bind 的原 privateState getter 后再核捕获双端；失败不安装枪、不推进计数，不回滚已建立证明。\n  if (isRoleExecutionRetired(from) || isRoleExecutionRetired(to))\n    throw new Error(\"death_ability_grant_invalid\");"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "  (gun as { armedOnNight: number | null }).armedOnNight = night;",
+    "after": "  // 武装是新执行入口；单独查退休，不污染可供已付 pending 提案使用的纯原体谓词。\n  if (isRoleExecutionRetired(owners.get(gun)!.role)) return;\n  (gun as { armedOnNight: number | null }).armedOnNight = night;"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "    !gun.deathExpired\n    ? gun",
+    "after": "    !gun.deathExpired &&\n    !isRoleExecutionRetired(owners.get(gun)!.role)\n    ? gun"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "  const received: DeathGun = {",
+    "after": "  if (isRoleExecutionRetired(source!) || isRoleExecutionRetired(target))\n    throw new Error(\"death_ability_transfer_invalid\");\n  const received: DeathGun = {"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "  bind(world, toId, received);",
+    "after": "  bind(world, toId, received, source!);\n  // 复制／绑定的原 getter 后才到目标库存写点；退休双端只拒新转移，不否定已消费枪的原体证明。\n  if (isRoleExecutionRetired(source!) || isRoleExecutionRetired(target))\n    throw new Error(\"death_ability_transfer_invalid\");"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "before": "  stored[received.id] = received;",
+    "after": "  if (isRoleExecutionRetired(source) || isRoleExecutionRetired(target))\n    throw new Error(\"ability_transfer_owner_revoked\");\n  stored[received.id] = received;"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "  stored[id] = gun;",
+    "after": "  // 目标库存 getter 仍在原点；它导致双端退休时，保字典前缀但不装入新枪。\n  if (isRoleExecutionRetired(from) || isRoleExecutionRetired(to))\n    throw new Error(\"death_ability_grant_invalid\");\n  stored[id] = gun;"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": "  (\n    ((target.privateState as { deathAbilities?: Record<string, DeathGun> }).deathAbilities ??=\n      {}) as Record<string, DeathGun>\n  )[id] = received;",
+    "after": "  const targetStored = (\n    ((target.privateState as { deathAbilities?: Record<string, DeathGun> }).deathAbilities ??=\n      {}) as Record<string, DeathGun>\n  );\n  // 原目标容器已求值；只在实际实例写入前复验，不回滚此前证明或空字典。\n  if (isRoleExecutionRetired(source!) || isRoleExecutionRetired(target))\n    throw new Error(\"death_ability_transfer_invalid\");\n  targetStored[id] = received;"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/abilities.ts",
+    "before": " * 数据复制不新增严格 live schema、JSON 档案接受或行动许可；readonly 视图仍是同一对象，不是冻结或第二库存。",
+    "after": " * 数据复制不新增严格 live schema、JSON 档案接受或行动许可；readonly 视图仍是同一对象，不是冻结或第二库存。\n * F05a 只在 active／授予／转移执行入口拒永久退休身份，纯库存、状态、原生安装、已付写入与清理不据此过滤。"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+    "before": " * 数据复制仍消费唯一 copyAbilityData，原接受集合不加强；这不是全部角色状态 schema 或严格复盘 codec。",
+    "after": " * 数据复制仍消费唯一 copyAbilityData，原接受集合不加强；这不是全部角色状态 schema 或严格复盘 codec。\n * F05a 晚核本次捕获源／目标 Role 的永久退休；新增 sourceRole 输入是复验数据，不授许可或新增换体策略。"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "before": " * 已付前缀和原 getter／提交顺序保持，替身或复活不能重新获得首次死亡枪权。",
+    "after": " * 已付前缀和原 getter／提交顺序保持，替身或复活不能重新获得首次死亡枪权。\n * F05a 将永久退休拒绝放在新执行入口；已消费提案的纯原体／来源／生命及 capture.isCurrent 不含此判断。"
+  }
+]

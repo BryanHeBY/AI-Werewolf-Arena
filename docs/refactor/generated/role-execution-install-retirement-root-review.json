@@ -1,0 +1,49 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "bd2e04894509f7777d2909632f768a3329e3b57a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "a27cde5e18091c4509e835470d4bf1b246e92bb283e2a9877845ef65acae61b4"
+    },
+    {
+      "path": "backend/src/core/domain/role-execution-authority.ts",
+      "sha256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/role-execution-install-retirement.test.ts",
+      "sha256": "d11bb3b6800501abce08127092e04cd756d31b968c128d34d0ff201b567e8106"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/role-execution-install-retirement-scope-final.json",
+    "sha256": "662b67bd6fd271ee30e1b0367d97490e20216ff8fe4e9bb2a070f0bead8f2992"
+  },
+  "document": {
+    "path": "docs/refactor/role-execution-install-retirement.md",
+    "sha256": "a3a1c8742f29e2b19350b006cedcb9d71cfd10a1a251783ecd27eae6a6253a7f"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/role-execution-install-retirement-evidence.json",
+    "sha256": "848686e546251aeaf4ec22f2ae82a63e1c8ee79ed576238f4e93d18a8ec2cfb4"
+  },
+  "integrity": {
+    "freshSources": 3,
+    "actualGitBefore": 1,
+    "controls": 3,
+    "artifactHashes": 24,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "真实候选安装失败范围与同Error/旧前缀/原finally优先级",
+    "唯一Role对象拒绝状态及数据/已付谓词分离",
+    "中文职责与关键注释、有限实际首红和this-only桥、双阶段fence准确性"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

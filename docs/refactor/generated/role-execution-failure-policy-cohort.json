@@ -1,0 +1,143 @@
+{
+  "baseCommit": "bd2e04894509f7777d2909632f768a3329e3b57a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "a27cde5e18091c4509e835470d4bf1b246e92bb283e2a9877845ef65acae61b4"
+    },
+    {
+      "path": "backend/src/core/domain/role-execution-authority.ts",
+      "sha256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/role-execution-install-retirement.test.ts",
+      "sha256": "d11bb3b6800501abce08127092e04cd756d31b968c128d34d0ff201b567e8106"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "7bfe3fd9dd4d1de31f6111ab7ce8777cd4c5dcd2ee4e13fb24b430b5654ede08"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "92ac91a3df1e5faa7d609f2969b6c5f8b8a30ae1befbb347d655ebe6da58de6c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "sha256": "5b10b423987c58a4eaafb4d65d7266930abf9366c4121220bba9964a674433c3"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/role-execution-resource-retirement.test.ts",
+      "sha256": "3737d2e3b8dd8c1391779761df0ac31f1d8216f4bd819860406be7ce0dad5459"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "f01842f3ef4e9a5f28f35e673ba0ea24c9dfa487dcba0f9015fd8aa8f21460c4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "dda929882ccfd106d527166ec6bac58660a799008df9abae74599b22bd4b019d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "sha256": "92f3514445786bc719e30830603c8ab9d8a76af0ab5f1dd3b16cbf59b5442f35"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "sha256": "1666712544bcca8f5305df6ec1d502ca465cd31245f73e04a2196ed97724125d"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/role-execution-retirement.test.ts",
+      "sha256": "d5c09db08faa3e53a80bd4d7637945bd6e765ef030b99745f419845f644787de"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "sha256": "c8744aca9ab80da9ce11b93b99d889805a0a39c6e7692a64e615f6ceb7ce9de0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "sha256": "835bde69cca6cca4d7cba274ba45b1a0b0bb218c5421be5f5b920bc329acac40"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "c7f649af4aec9042554196d27091e3064ee3b4987a9be2e8855212175d3d6916"
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "sha256": "8ad5e9b0c10721d87450ca4d4d519363ab7724eac240e26f6b314b0a3eaaa52f"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-execution-self-destruct.test.ts",
+      "sha256": "e2490bb36e4589b75e9f76e32d3f0f492b8479fc37e2df868b2d8d955649924d"
+    }
+  ],
+  "scopes": [
+    {
+      "path": "docs/refactor/generated/role-execution-install-retirement-scope-final.json",
+      "sha256": "662b67bd6fd271ee30e1b0367d97490e20216ff8fe4e9bb2a070f0bead8f2992",
+      "reviews": [
+        {
+          "path": "docs/refactor/generated/role-execution-install-retirement-independent-review.json",
+          "sha256": "a92f50d6d3425997eb89ca78c5a50998c64cdda24b501addee0af9b46ff604a9"
+        },
+        {
+          "path": "docs/refactor/generated/role-execution-install-retirement-root-review.json",
+          "sha256": "c5542eee76ad4ac490ac6f3007a924f4183ef9f05f205ab4ac68da44872a33af"
+        }
+      ]
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-resource-retirement-scope-final.json",
+      "sha256": "0baa5b905c5c1d749638cd9b990d78fe990e4e77aedfdc6d960655078a89bf2d",
+      "reviews": [
+        {
+          "path": "docs/refactor/generated/role-execution-resource-retirement-independent-review.json",
+          "sha256": "d5832f6279d506712b0288be35271b033461f10fe3eeb747f8d59b19a066416c"
+        },
+        {
+          "path": "docs/refactor/generated/role-execution-resource-retirement-root-review.json",
+          "sha256": "30c057a28fd7db3bb84041ea7ab3a947854c547c19e222905a4d2513ad9c204c"
+        }
+      ]
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-scope-final.json",
+      "sha256": "ac5d21e0c78b9c7ade9ca40c7a4ffb5e61ac2f3b1183fdc84c6770e71645c286",
+      "reviews": [
+        {
+          "path": "docs/refactor/generated/role-execution-wild-gun-retirement-independent-review.json",
+          "sha256": "266b4e5947c4098c1f86e92ece43637b4038b7cfb2e9c99f098613b344c2e179"
+        },
+        {
+          "path": "docs/refactor/generated/role-execution-wild-gun-retirement-root-review.json",
+          "sha256": "9ff268d210bb81ce16c6bf2c503d4f8a20bbcd7fb98e58c03b74ec166dfceed5"
+        }
+      ]
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-scope-final.json",
+      "sha256": "6d91201b14634da36ea82bac030d47d4624e2bcb5844f4abb94cb4e7538d42f4",
+      "reviews": [
+        {
+          "path": "docs/refactor/generated/role-execution-self-destruct-retirement-independent-review.json",
+          "sha256": "470328700e532ef2004e84af22f3f07c23f40618c0cb1c65c881e930c447a738"
+        },
+        {
+          "path": "docs/refactor/generated/role-execution-self-destruct-retirement-root-review.json",
+          "sha256": "1330476c1b7a0921bb6af2883439cccf9377611eea25dc848622e0cccbddccf6"
+        }
+      ]
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/role-execution-failure-policy.md",
+    "sha256": "8483c0e18e360bc7c524a255bfe19c34404cb1b4c100b346b7c0fe4aed78d9bb"
+  },
+  "atomicCommitReason": "Initial new action-eligibility oracle depends on same-cohort readers; 13 production and 4 unit paths constitute one F05a function. No partial commit pretending independent same-Git green.",
+  "runtime": {
+    "runs": 5,
+    "distinctCases": 16,
+    "assertions": 233,
+    "greenRepeated": false
+  },
+  "checksPolicy": "Each frozen author scope independently reviewed by Root and peer; first/late stages retain exact source and proof/heads/terminal receipts. No fullgate/types/suite rerun."
+}

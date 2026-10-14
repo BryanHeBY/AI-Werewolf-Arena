@@ -1,0 +1,91 @@
+{
+  "approved": true,
+  "baseCommit": "bd2e04894509f7777d2909632f768a3329e3b57a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "a27cde5e18091c4509e835470d4bf1b246e92bb283e2a9877845ef65acae61b4"
+    },
+    {
+      "path": "backend/src/core/domain/role-execution-authority.ts",
+      "sha256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/role-execution-install-retirement.test.ts",
+      "sha256": "18940b29963c0ec38ecc210e8f5b953f27ff244c468a4ca4848fdf5d4b9bb8a5"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/components/role.ts",
+      "sha256": "2ef9aeddcfec6176d2f3010a055476974d6f00004a9c555bd57fb8306e531d35",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "wholeByteSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "sha256": "dc0b3ced09dc93b8c18f5ce87f04ffbe8d4854e8e14de0c152081e3b4bc7a75e",
+      "wholeByteSame": true
+    }
+  ],
+  "program": {
+    "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+    "beforeSha256": "06949a4306bd99d23add6fa99905f4c15303a771af0b8ac6f803741f52d327eb",
+    "afterSha256": "a27cde5e18091c4509e835470d4bf1b246e92bb283e2a9877845ef65acae61b4",
+    "wholeExactForwardInverse": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "inverseWholeRawSame": true,
+        "actualWholeRawSame": false,
+        "beforeSha256": "1df52b84b4f4d3cb8492d189ef172890021b9e3fe1a18459c28259d437307692",
+        "afterSha256": "daec58c4b05015403fb712b58405d293b88ebf84128697f0cbf89918f10d3e2d"
+      },
+      {
+        "module": "CommonJS",
+        "inverseWholeRawSame": true,
+        "actualWholeRawSame": false,
+        "beforeSha256": "1fb94b5546f33cbb9757ab80ff338a638b7c7253ea0441b84624710a18aed702",
+        "afterSha256": "934992105b92e2ff11e6e3cd822012ff18b031177abe8c5efd2b1a6647d5b84b"
+      }
+    ]
+  },
+  "authority": {
+    "typeOnlyImports": true,
+    "weakSetRoleIdentityOnly": true,
+    "noClearOrReset": true,
+    "functions": [
+      "retireRoleExecution",
+      "isRoleExecutionRetired"
+    ]
+  },
+  "installation": {
+    "order": [
+      "Role",
+      "Camp",
+      "Victory"
+    ],
+    "capturedCandidateRetiredOnly": true,
+    "catchDoesNotQueryWorld": true,
+    "sameErrorRethrown": true
+  },
+  "summary": {
+    "oldWholePrograms": 1,
+    "exactEdits": 2,
+    "typedNodes": 2488,
+    "nodeArrays": 306,
+    "noncommentLeaves": 2829,
+    "inverseWholeRawOutputs": 2
+  },
+  "limits": [
+    "F05a是显式失败行为政策，actual代码和JS不同；完整正逆只核原保留正文，不冒行为等价。",
+    "只在已准备候选开始Role安装至Victory安装核心内标记，早期准备和完整安装后的晚事实错误保原范围。",
+    "全组共享实际core/资格reader为当前联合树，不冒固定Git完整运行或全55专属行动闭包。",
+    "不改Role.camp、构造器、DTO、原体谓词、目标数据或已付效果的当前性。"
+  ]
+}

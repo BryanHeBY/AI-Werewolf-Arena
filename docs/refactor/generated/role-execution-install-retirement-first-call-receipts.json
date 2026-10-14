@@ -1,0 +1,53 @@
+[
+  {
+    "name": "types",
+    "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc -p docs/refactor/generated/role-execution-install-retirement-types-config.json > docs/refactor/generated/role-execution-install-retirement-types-output.txt 2>&1",
+    "result": {
+      "chunk_id": "37e88f",
+      "wall_time_seconds": 1.000807769,
+      "session_id": 94527,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "completion": {
+      "chunk_id": "b805e7",
+      "wall_time_seconds": 1.426974263,
+      "exit_code": 2,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "name": "heads",
+    "command": "bun --no-env-file docs/refactor/generated/role-execution-install-retirement-heads.ts > docs/refactor/generated/role-execution-install-retirement-heads-output.txt 2>&1",
+    "result": {
+      "chunk_id": "359d22",
+      "wall_time_seconds": 0.357400585,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "name": "proof",
+    "command": "bun --no-env-file docs/refactor/generated/role-execution-install-retirement-proof.cjs > docs/refactor/generated/role-execution-install-retirement-proof-output.txt 2>&1",
+    "result": {
+      "chunk_id": "7d40ff",
+      "wall_time_seconds": 0.5925013,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "name": "runtime",
+    "command": "bun --no-env-file test backend/tests/unit/features/initial-identity/role-execution-install-retirement.test.ts > docs/refactor/generated/role-execution-install-retirement-runtime-output.txt 2>&1",
+    "result": {
+      "chunk_id": "c4f191",
+      "wall_time_seconds": 0.183653212,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  }
+]

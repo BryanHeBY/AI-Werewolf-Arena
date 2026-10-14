@@ -1,0 +1,102 @@
+{
+  "baseCommit": "bd2e04894509f7777d2909632f768a3329e3b57a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "sha256": "1101191319a3a885eab6c478563bb761e792b66fb29ca14202dba7c84839b293",
+      "mode": "100644",
+      "blob": "56c85483c49a6175fb50db69b2a4cec8cd65ee43",
+      "sameAsCb57dd59": true,
+      "text": "/**\n * 负责分别推导狼队知识、聊天参与和刀权。输入为当前 World 角色及明确运行政策；输出保留队友、狼聊、狼刀名单和事件受众。狼阵营本身不等于拥有全部狼队权限，不据历史知识授予当前刀权。\n */\nimport { scholarMentorPackBlocked } from \"./scholar_mentor/night_frame\";\nimport { animalPackKnifeBlocked } from \"./animal_dream/authority\";\nimport { nightmareKnifeBlocked } from \"./nightmare_shadow/night_frame\";\nimport { weddingMember, ghostBrideReady, weddingSetup } from \"./ghost_bride/authority\";\nimport { initialIdentitySetupReady } from \"./initial_identity/deal\";\nimport { COMPONENT } from \"../../../core/domain/components/names\";\nimport type { RoleComponent } from \"../../../core/domain/components/role\";\nimport {\n  Camp,\n  type EntityId,\n  type GameEvent,\n  type WolfTeamEventType,\n} from \"../../../core/domain/model\";\nimport type { World } from \"../../../core/domain/world\";\nimport type { RoleCatalog } from \"./catalog\";\nimport type { WolfTeamPermissions } from \"./contracts\";\n\nconst NO_ACCESS: WolfTeamPermissions = Object.freeze({\n  recognizedByPack: false,\n  recognizes: \"none\",\n  canChat: false,\n  canVoteForKill: false,\n});\n\n/** 只查询角色当前的明确权限；不依赖全局目录，也不写入角色或库存。 */\nexport function wolfTeamPermissions(\n  role: RoleComponent | undefined,\n  catalog: RoleCatalog,\n  world?: World,\n): WolfTeamPermissions {\n  if (world && !initialIdentitySetupReady(world)) return NO_ACCESS;\n  if (!role || role.camp !== Camp.Wolf) return NO_ACCESS;\n  if (world && weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))\n    return NO_ACCESS;\n  const permissions = catalog.runtime(role.role)?.wolfTeam;\n  const result =\n    typeof permissions === \"function\" ? permissions(role, world) : (permissions ?? NO_ACCESS);\n  return world &&\n    (nightmareKnifeBlocked(world) ||\n      scholarMentorPackBlocked(world) ||\n      animalPackKnifeBlocked(world))\n    ? { ...result, canVoteForKill: false }\n    : result;\n}\n\nexport function knownWolfTeammates(\n  world: World,\n  actorId: EntityId,\n  catalog: RoleCatalog,\n): EntityId[] {\n  const viewer = wolfTeamPermissions(world.getComponent(actorId, COMPONENT.Role), catalog, world);\n  if (viewer === NO_ACCESS) return [];\n  const role = world.getComponent(actorId, COMPONENT.Role);\n  const snapshot = role?.camp === Camp.Wolf && catalog.runtime(role.role)?.knownTeammates;\n  if (snapshot)\n    return [...new Set(snapshot(role!, world))]\n      .filter((id) => id !== actorId && world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf)\n      .sort((a, b) => a - b);\n  if (viewer.recognizes === \"none\") return [];\n  // 身份知识独立于尚未公告的死亡，不能按真实存活状态重写已知队友。\n  return world\n    .entityIds()\n    .filter((id) => {\n      if (id === actorId) return false;\n      const target = world.getComponent(id, COMPONENT.Role);\n      if (target?.camp !== Camp.Wolf) return false;\n      if (viewer.recognizes === \"all\") return true;\n      if (viewer.recognizes === \"pack\")\n        return wolfTeamPermissions(target, catalog, world).recognizedByPack;\n      return viewer.recognizes.includes(target.role);\n    })\n    .sort((a, b) => a - b);\n}\n\nexport function wolfChatParticipants(world: World, catalog: RoleCatalog): EntityId[] {\n  return world\n    .getAliveEntityIds()\n    .filter(\n      (id) => wolfTeamPermissions(world.getComponent(id, COMPONENT.Role), catalog, world).canChat,\n    )\n    .sort((a, b) => a - b);\n}\n\nexport function wolfKnifeHolders(world: World, catalog: RoleCatalog): EntityId[] {\n  return world\n    .getAliveEntityIds()\n    .filter(\n      (id) =>\n        wolfTeamPermissions(world.getComponent(id, COMPONENT.Role), catalog, world).canVoteForKill,\n    )\n    .sort((a, b) => a - b);\n}\n\n/** 在事实发布时捕获一次受众；此受众包只用于引擎／Tape，不随后续阵营变化补发历史。 */\nexport function wolfTeamEvent<K extends WolfTeamEventType>(\n  world: World,\n  catalog: RoleCatalog,\n  event: Omit<Extract<GameEvent, { type: K }>, \"audience\">,\n): Extract<GameEvent, { type: K }> {\n  const recipients = wolfChatParticipants(world, catalog);\n  if (event.type === \"wolf_kill_vote_cast\") recipients.push(...wolfKnifeHolders(world, catalog));\n  return {\n    ...event,\n    audience: Object.freeze([...new Set(recipients)].sort((a, b) => a - b)),\n  } as Extract<GameEvent, { type: K }>;\n}\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "sha256": "e20626684cf06fcfb7911b686a293cad29e8809990981f962cb2060db465f28f",
+      "mode": "100644",
+      "blob": "13583db312ba5b4168c12059ca264031ce15022f",
+      "sameAsCb57dd59": true,
+      "text": "/**\n * 负责在校验和提交时点查询原生自爆资格。输入为当前角色及 Catalog 的运行贡献；输出为原布尔资格，不写状态、开启自爆窗口或授予请求权限。\n */\nimport type { RoleComponent } from \"../../../core/domain/components/role\";\nimport type { RoleCatalog } from \"./catalog\";\n\nexport function canRoleSelfDestruct(role: RoleComponent, catalog: RoleCatalog): boolean {\n  const capability = catalog.runtime(role.role)?.canSelfDestruct;\n  return typeof capability === \"function\" ? capability(role) : capability === true;\n}\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "daf1a131794093c639b12ff2021ea2f1c2f358f222bfd298e2934da7208ee064",
+      "mode": "100644",
+      "blob": "69e61ea69b57334f98c6a41e40cb31734ea85ca8",
+      "sameAsCb57dd59": true,
+      "text": "/**\n * 负责通过配置的角色 hook 提交已选自爆。输入为捕获玩家、已校验选择和当前窗口；输出为原爆炸效果与死亡提案。不复用已撤销玩家，不执行最终阶段／胜负封盘。\n */\nimport { RED_MOON_ROLE } from \"../roles/red_moon_apostle/ports\";\nimport { commitDemonRedMoonBlast } from \"../roles/demon_hunter/authority\";\nimport { canRoleSelfDestruct } from \"../roles/self_destruct_capability\";\nimport {\n  weddingMember,\n  weddingSetup,\n  ghostBrideReady,\n  swallowWeddingBadges,\n} from \"../roles/ghost_bride/authority\";\nimport {\n  ActionWindow,\n  Phase,\n  Role,\n  DeathCause,\n  type SelfDestructSelection,\n  type DeathSources,\n  type GameEvent,\n} from \"../../../core/domain/model\";\nimport { COMPONENT } from \"../../../core/domain/components/names\";\nimport type { RoleComponent } from \"../../../core/domain/components/role\";\nimport type { World } from \"../../../core/domain/world\";\nimport { getWhiteWolfKingState, consumeWhiteWolfDetonation } from \"../roles/white_wolf_king/ports\";\nimport { getDefaultRoleCatalog } from \"../roles/role-catalog-assembly\";\n\n/** 仅提交本自爆能力的资源、事件和事实，返回死亡提案；实际死亡写入由结算器负责。 */\nexport function commitSelfDestructSelection(\n  world: World,\n  choice: SelfDestructSelection,\n  window: ActionWindow,\n  phase: Phase,\n  events: GameEvent[],\n): { deaths: number[]; sources: DeathSources } | null {\n  if (\n    !Object.values(ActionWindow).includes(window) ||\n    phase !== (window === ActionWindow.OnPreVote ? Phase.Voting : Phase.Day)\n  )\n    return null;\n  const role = world.getComponent(choice.actorId, COMPONENT.Role);\n  if (!role || !world.getComponent(choice.actorId, COMPONENT.Alive)?.alive) return null;\n  const ownsWedding = weddingSetup(world) !== null;\n  if (\n    ownsWedding &&\n    (!ghostBrideReady(world) ||\n      role.role !== Role.Wolf ||\n      weddingMember(world, role) ||\n      ![ActionWindow.OnPreElection, ActionWindow.OnPreVote].includes(window))\n  )\n    return null;\n  const deaths = [choice.actorId],\n    sources: DeathSources = { [choice.actorId]: [DeathCause.SelfDestruct] };\n  if (choice.kind === \"ordinary\") {\n    const redMoon = String(role.role) === RED_MOON_ROLE;\n    if (\n      choice.targetId !== null ||\n      (redMoon\n        ? ![ActionWindow.OnPreElection, ActionWindow.OnPreVote].includes(window)\n        : !canRoleSelfDestruct(role, getDefaultRoleCatalog()))\n    )\n      return null;\n    const moon = redMoon ? commitDemonRedMoonBlast(world, choice.actorId) : null;\n    if (redMoon && !moon) return null;\n    if (ownsWedding) swallowWeddingBadges(world, events);\n    events.push({\n      timestamp: Date.now(),\n      type: \"wolf_self_destruct\",\n      payload: { wolfId: choice.actorId, window },\n    });\n    if (moon?.sealsNight)\n      events.push({\n        timestamp: Date.now(),\n        type: \"red_moon_night_sealed\",\n        payload: { actorId: choice.actorId, day: moon.day, night: moon.day + 1 },\n      });\n  } else if (choice.kind === \"white_wolf_king\") {\n    const state = getWhiteWolfKingState(role);\n    if (role.role !== Role.WhiteWolfKing || state?.canDetonate !== true) return null;\n    if (choice.targetId !== null) {\n      if (\n        choice.targetId === choice.actorId ||\n        !world.getComponent(choice.targetId, COMPONENT.Alive)?.alive\n      )\n        return null;\n      deaths.push(choice.targetId);\n      sources[choice.targetId] = [DeathCause.WhiteWolfBlast];\n    }\n    consumeWhiteWolfDetonation(state);\n    events.push({\n      timestamp: Date.now(),\n      type: \"white_wolf_king_self_destruct\",\n      payload: { actorId: choice.actorId, targetId: choice.targetId, window },\n    });\n  } else return null;\n  return { deaths, sources };\n}\n"
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "sha256": "3906b5a4a4d816f97c71901ae0367f727ca5db844f3380408dcf4c1e1960144a",
+      "mode": "100644",
+      "blob": "c2c35cf53aa25cd63b6d5e4f2d9272370ecf78f7",
+      "sameAsCb57dd59": true,
+      "text": "/**\n * 负责白天自爆的有限规则组合：婚礼禁用、红月资格、普通自爆与白狼王库存共同约束选择。\n * 输入为原 World、角色工具表、请求构造端口、Provider、网关及窗口回调；输出为首个未被拒绝的选择或 null。\n * 并发请求保原 Promise.all 顺序；等待后按原体／生命版本／库存与目标复验，再按玩家编号尝试提交。\n * 捕获的存活组件和资源引用仅服务本次窗口；阶段 current、库存付款、死亡与最终判胜各归原 owner。\n * commit 返回 false 只跳过该选择；读取、Provider 或提交失败沿原异常传播，不补提交或回滚已写前缀。\n */\nimport type { ReadonlyBoardConfig } from \"@ai-werewolf-arena/game-contract\";\nimport { RED_MOON_ROLE } from \"../game/mechanisms/roles/red_moon_apostle/ports\";\nimport { demonRedMoonCanBlast } from \"../game/mechanisms/roles/demon_hunter/ports\";\nimport { canRoleSelfDestruct } from \"../game/mechanisms/roles/self_destruct_capability\";\nimport { getDefaultRoleCatalog } from \"../game/mechanisms/roles/role-catalog-assembly\";\nimport {\n  weddingMember,\n  weddingSetup,\n  ghostBrideReady,\n} from \"../game/mechanisms/roles/ghost_bride/ports\";\nimport { AliveComponent, aliveLifeVersion } from \"../core/domain/components/alive\";\nimport { COMPONENT } from \"../core/domain/components/names\";\nimport { RoleComponent } from \"../core/domain/components/role\";\nimport {\n  ActionProvider,\n  ActionWindow,\n  Phase,\n  type SelfDestructSelection,\n} from \"../core/domain/model\";\nimport { RoleRegistry } from \"../core/domain/registries/role_registry\";\nimport { World } from \"../core/domain/world\";\nimport { ToolGateway } from \"../game/gateway/tool_gateway\";\nimport type { ActionRequestConstructionPort } from \"../core/domain/actions\";\nimport { getWhiteWolfKingState } from \"../game/mechanisms/roles/white_wolf_king/ports\";\n\n/** 并发收集选项，按编号升序复验并尝试提交；回调明确返回 false 时跳过该选项，返回首个未被拒绝的选择。 */\nexport class SelfDestructWindow {\n  constructor(\n    private readonly world: World,\n    private readonly roleRegistry: RoleRegistry,\n    private readonly toolGateway: ToolGateway,\n  ) {}\n\n  async execute(\n    requests: ActionRequestConstructionPort,\n    provider: ActionProvider,\n    window: ActionWindow,\n    phase: Phase,\n    isCurrent: () => boolean = () => true,\n    commit?: (choice: SelfDestructSelection) => Promise<void | boolean>,\n  ): Promise<SelfDestructSelection | null> {\n    if (!isCurrent()) return null;\n    // 先捕获所有原存活身体和生命版本；后续目标死后复活或换组件不能复用旧选择。\n    const targets = new Map(\n      this.world.getAliveEntityIds().map((id) => {\n        const alive = this.world.getComponent(id, COMPONENT.Alive)!;\n        return [id, { alive, version: aliveLifeVersion(alive) }] as const;\n      }),\n    );\n    // 各玩家请求并发，结果排列仍由原存活名单决定；不以最早响应决定谁自爆。\n    const picks = await Promise.all(\n      this.world.getAliveEntityIds().map(async (actorId) => {\n        const role = this.world.getComponent(actorId, COMPONENT.Role);\n        if (!role) return null;\n        if (\n          weddingSetup(this.world) &&\n          (!ghostBrideReady(this.world) || weddingMember(this.world, role))\n        )\n          return null;\n        const tools = this.roleRegistry.getAllowedTools(role.role);\n        const tool = tools.includes(\"self_destruct_with_target\")\n          ? \"self_destruct_with_target\"\n          : tools.includes(\"self_destruct\")\n            ? \"self_destruct\"\n            : null;\n        if (!tool) return null;\n        if (\n          tool === \"self_destruct\" &&\n          (String(role.role) === RED_MOON_ROLE\n            ? !demonRedMoonCanBlast(this.world, actorId)\n            : !canRoleSelfDestruct(role, getDefaultRoleCatalog()))\n        )\n          return null;\n        // 白狼王复验同一库存对象；这里不消费，实际消耗仍归提交函数。\n        const resource =\n          tool === \"self_destruct_with_target\" ? getWhiteWolfKingState(role) : undefined;\n        if (tool === \"self_destruct_with_target\" && resource?.canDetonate !== true) return null;\n        const life = targets.get(actorId)!;\n        const request = requests.create({\n          phase,\n          actionWindow: window,\n          actorId,\n          allowedTools: [tool],\n          stage: window,\n          requiresAction: false,\n          summary: {\n            key:\n              phase === Phase.Voting\n                ? \"request.summary.self_destruct_pre_vote\"\n                : \"request.summary.self_destruct\",\n          },\n          context: {},\n        });\n        const action = await provider.getAction(request);\n        if (\n          action?.name !== tool ||\n          (action.name !== \"self_destruct\" && action.name !== \"self_destruct_with_target\")\n        )\n          return null;\n        const choice: SelfDestructSelection =\n          action.name === \"self_destruct\"\n            ? { kind: \"ordinary\", actorId, targetId: null }\n            : { kind: \"white_wolf_king\", actorId, targetId: action.args.target_id };\n        return { choice, action, role, resource, life };\n      }),\n    );\n    if (!isCurrent()) return null;\n    // 提交前重复检查原玩家、目标、生命版本及特殊规则；字段恢复不抹去生命版本变化。\n    const stillCurrent = (pick: NonNullable<(typeof picks)[number]>) => {\n      const { actorId, targetId } = pick.choice;\n      if (\n        !isCurrent() ||\n        (weddingSetup(this.world) &&\n          (!ghostBrideReady(this.world) || weddingMember(this.world, pick.role))) ||\n        this.world.getComponent(actorId, COMPONENT.Role) !== pick.role ||\n        this.world.getComponent(actorId, COMPONENT.Alive) !== pick.life.alive ||\n        !pick.life.alive.alive ||\n        pick.life.version === undefined ||\n        aliveLifeVersion(pick.life.alive) !== pick.life.version\n      )\n        return false;\n      if (String(pick.role.role) === RED_MOON_ROLE && !demonRedMoonCanBlast(this.world, actorId))\n        return false;\n      if (\n        pick.choice.kind === \"white_wolf_king\" &&\n        (getWhiteWolfKingState(pick.role) !== pick.resource || pick.resource?.canDetonate !== true)\n      )\n        return false;\n      if (targetId !== null) {\n        const target = targets.get(targetId);\n        if (\n          !target ||\n          this.world.getComponent(targetId, COMPONENT.Alive) !== target.alive ||\n          !target.alive.alive ||\n          target.version === undefined ||\n          aliveLifeVersion(target.alive) !== target.version\n        )\n          return false;\n      }\n      return true;\n    };\n    // 网关预检前后均复验；预检成功只产生候选，不意味着库存付款或死亡已生效。\n    const valid = picks.filter(\n      (pick): pick is NonNullable<typeof pick> =>\n        pick !== null &&\n        stillCurrent(pick) &&\n        this.toolGateway.validateAndSanitize(this.world, pick.choice.actorId, pick.action, {\n          phase,\n          actionWindow: window,\n          allowSelfDestruct: true,\n        }).ok &&\n        stillCurrent(pick),\n    );\n    // 按玩家编号串行调用可选提交；false 跳过，异常停止并保留此前提交的前缀。\n    for (const pick of valid.sort((a, b) => a.choice.actorId - b.choice.actorId)) {\n      if (!isCurrent()) return null;\n      if (!stillCurrent(pick)) continue;\n      if ((await commit?.(pick.choice)) === false) continue;\n      return pick.choice;\n    }\n    return null;\n  }\n}\n\n/** 显式空窗口列表禁用全部机会；只有未配置列表才回退到原投票前默认窗口。 */\nexport function isSelfDestructWindowEnabled(\n  config: ReadonlyBoardConfig,\n  window: ActionWindow,\n): boolean {\n  return config.selfDestruct?.enabledWindows === undefined\n    ? window === ActionWindow.OnPreVote\n    : config.selfDestruct.enabledWindows.includes(window);\n}\n"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-execution-self-destruct.test.ts",
+      "expectedAbsent": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/rulesets/wolf-tool-admission.ts",
+      "sha256": "7e173c7ac467c3da79eeedc9f02a0d1f52b7831e6d4286a16beedb2085e337f6",
+      "mode": "100644",
+      "blob": "de3872ccb576560406d7e7cb6d8fc2058a38ecd9",
+      "sameAsCb57dd59": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "sha256": "ba8b816e963d88eb672c8f07d268ac66d43b2bd86b4ce804449e1da179bcd1ca",
+      "mode": "100644",
+      "blob": "615e6cdbbe970c5e9f5a0e28d0baf7bcff40dca1",
+      "sameAsCb57dd59": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "087388805ce44780b3985a595dfa59822366cbcdf02ad96527ff8d70a837d8ff",
+      "mode": "100644",
+      "blob": "73e0d0ba25962750e5267f9b07b037c2496230e9",
+      "sameAsCb57dd59": true
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-day-actions.test.ts",
+      "sha256": "1f1f6249c3b98f097592a5390a64cf598c032ea3137a84b723278f53477aa43e",
+      "mode": "100644",
+      "blob": "40444720393498f9ba76a143ff6e775cac27b3a3",
+      "sameAsCb57dd59": true
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+      "sha256": "8fdc1520c8817c89a773fb3a46f97a2b6800030449b49eeaa597fcd4eca2c812",
+      "mode": "100644",
+      "blob": "e7589ed7f56e32e17413fe4c5b16c377698e7e08",
+      "sameAsCb57dd59": true
+    },
+    {
+      "path": "backend/src/core/domain/world.ts",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1",
+      "mode": "100644",
+      "blob": "35ead18d1d431599d1ddab53e16925e73faf853a",
+      "sameAsCb57dd59": true
+    }
+  ],
+  "rootOwnedDependency": {
+    "path": "backend/src/core/domain/role-execution-authority.ts",
+    "expectedAbsentAtBase": true,
+    "owner": "/root",
+    "scope": "Root新WeakSet信号；不作本批源或immutable control。"
+  },
+  "parallelExcluded": [
+    "wild_child/lifecycle.ts",
+    "initial_identity/setup.ts",
+    "ability_scope.ts",
+    "abilities.ts",
+    "night-ability-grants.ts",
+    "death-gun-lifecycle.ts",
+    "native-death-shot-settlement.ts",
+    "death-shot-eligibility.ts"
+  ],
+  "stage": "实际before与方案捕获；尚未编辑生产或新unit，等Root确认guard时点及两case。"
+}

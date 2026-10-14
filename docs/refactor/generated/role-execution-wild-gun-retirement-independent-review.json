@@ -1,0 +1,302 @@
+{
+  "approved": true,
+  "baseCommit": "bd2e04894509f7777d2909632f768a3329e3b57a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "f01842f3ef4e9a5f28f35e673ba0ea24c9dfa487dcba0f9015fd8aa8f21460c4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "dda929882ccfd106d527166ec6bac58660a799008df9abae74599b22bd4b019d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "sha256": "92f3514445786bc719e30830603c8ab9d8a76af0ab5f1dd3b16cbf59b5442f35"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "sha256": "1666712544bcca8f5305df6ec1d502ca465cd31245f73e04a2196ed97724125d"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/role-execution-retirement.test.ts",
+      "sha256": "d5c09db08faa3e53a80bd4d7637945bd6e765ef030b99745f419845f644787de"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/role-execution-wild-gun-retirement-scope-final.json",
+    "sha256": "ac5d21e0c78b9c7ade9ca40c7a4ffb5e61ac2f3b1183fdc84c6770e71645c286"
+  },
+  "document": {
+    "path": "docs/refactor/role-execution-wild-gun-retirement.md",
+    "sha256": "f38ae7dc27eacd87dd2a3ba7d787fd4f51d8da90e5d934bd16fc476a6c170673"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/role-execution-wild-gun-retirement-evidence.json",
+    "sha256": "dae1a3a7fe6da836a067db7756984a41d3e031c3334840ac209d420d254c859d"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-before.json",
+      "sha256": "e7b9e18cf368fe2be1a254cd9e53ef3d45285c7bc0d02a095f0d71e60ae61683"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-edits.json",
+      "sha256": "694af14fc5e7c54f65a91078a0fe509331e4ea2ebee4de7523bca26a0c61ba2a"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-first-source.json",
+      "sha256": "9775ec928cf99f744b472541abdba343868c1001c63536377c560d7b66f39428"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-heads-output.txt",
+      "sha256": "b481afa01b58ff2e71253ed0fee903dea0e0d56a3bf6477ed69a21f1f27fa2e5"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-heads.json",
+      "sha256": "5c399e7f0dd5642059a18e223ff362b008da3db4c2b46fc1af29228dfb30a819"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-heads.ts",
+      "sha256": "d4526e6a646b819f22eef74e1bedfe8620eae663485019e293e361a180d0ba9f"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-paths.json",
+      "sha256": "ca3b0f3475d26f9649bb6a709bdbf0eef0c0cdda54c52111a19a2d5cbaa55a1d"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-pre-first-fixture-revision.json",
+      "sha256": "2dcca7dbf948244c3c117f6f72fcc11a8cdb3fd52fb52684e0176c727583eedd"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-pre-first-fixture-source.json",
+      "sha256": "477402e03a46da71818dab77b1dbb548b496cefb58df6ddd1f85c495a1914ac6"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-pre-first-request-predicate-precision.json",
+      "sha256": "65f7b6c86514c46540f01e9d56d244ffb809816e1d8472488ea7156f9596babf"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-proof-output.txt",
+      "sha256": "98c0cc6df8e860e1563c38580a1e1d1570c613170d14c8c0b85dcc819031db3a"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-proof.cjs",
+      "sha256": "3ff815e1836e24a75a88cf655bf88c08562b22a8728819fe3775e4da0d85d21b"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-proof.json",
+      "sha256": "6a5b801929f16b498850391c4de7cc3f1c9fbd1e3c9dc3c2d583eb88411d9aec"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-receipts.json",
+      "sha256": "658f8fe9d785d3c0f0cf47aee33bf3e17b5d274d2c39dcae07de3db71114a580"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-source-ready-first.json",
+      "sha256": "95a890b5ee6a9ee750f84f9981b4557947c2a34e83486f28df851d68ab231c6e"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-source-ready.json",
+      "sha256": "9775ec928cf99f744b472541abdba343868c1001c63536377c560d7b66f39428"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-tests-output.txt",
+      "sha256": "7488b109bf121e9882770a8450de0d5dfef13157846a74fd02f00907f8da20a2"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-types-config-first.json",
+      "sha256": "8b7cd4ac9d95a3efec76c977bab40f81cad17db8b898bff30b06a6590125763a"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-types-config.json",
+      "sha256": "13ce3cbb4616900b0fdd0871878b4833d238955b5ce17c489f26730089a9a06a"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-types-output-first.txt",
+      "sha256": "238fd68a7e15f09ab446360a32774ab8e7f3a53b8f62ad06cca1eea4f10bbafa"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-types-output.txt",
+      "sha256": "1d127069ff7d2ab03e6b69d07a0c06e3346c5ed5117be952be51920701f52a15"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-types-unit-failed-config.json",
+      "sha256": "9afb4932a4ab4170b2f0ed7d5e94f082dfcb2c16ba2209d6201adc3c485b9188"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-types-unit-failed-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-unit-type-before.json",
+      "sha256": "a0eed4f1049fddf15288a809f1a63bb9f6d74cc2e4cf6241567eff3501e46c84"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-unit-type-bridge-output.txt",
+      "sha256": "3861a4cdf455e97d8750a8060fcf0a7f992bb0f25f984e4ed8d7746c357e5bdf"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-unit-type-bridge.json",
+      "sha256": "dc054c23504d9841143d58c310509deb56525345ce7d050a3b303640e04036bc"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-scope-first-snapshot.json",
+      "sha256": "c43523dce4bdc42561f999b75487b6437512e8b5473adac4f05cb8c58a8a39cb"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-evidence-first-snapshot.json",
+      "sha256": "6f04d2a9dd4e76a670a3a92dfd81f849e5b0332dc8c9fa076813843d52d7b9b7"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-document-first-snapshot.md",
+      "sha256": "f19cd607006dd35fa036bd68c0020095d2f8e92cc111d7159002beb9d755ab40"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-receipts-first-snapshot.json",
+      "sha256": "416062463edcc3e73c125a6f0de66acf6e4648427a2c01fbdb915d8a06845f0d"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-handoff-first-snapshot.json",
+      "sha256": "455c946057abcac5f4c893972edd5e66a917f6d98b691cc986c60bf1b036fc64"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-late-guard-before.json",
+      "sha256": "c37fae23dd429f4bf296f08d6c43fa288edfcbee6d09f5fdaa104ea545d3973c"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-late-guard-edits.json",
+      "sha256": "ac6e9e984386d0d00681ee3339c716117cbdc14f2c5543e1cc75a2584e1b373e"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-types-late-guard-config.json",
+      "sha256": "afebe1fbe6ec7e47526c2a7520068cda9d78e8cc400bb1421dd446294a0073d6"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-types-late-guard-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-late-guard-tests-output.txt",
+      "sha256": "39a5398cea73f3b9a97df203b87cea773b938c8981fcfff2c5ed251a21df7ca7"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-late-guard-bridge.cjs",
+      "sha256": "0f7908c7b271680765ee0bbff93526fdc8d06a696725f12a3885cee9ef71c9ef"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-late-guard-bridge.json",
+      "sha256": "f64e36f9eaa5fee37a402a7dc1234ea11aa5dbbcf83aad90a644b6309e8dc2f5"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-wild-gun-retirement-late-guard-bridge-output.txt",
+      "sha256": "9cff6d27a8f091a7a1dca6f735fa0c4c881e5d84f255e526384f3d951fb47cc5"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "sha256": "2e2c1d665301e62a3f6e487c9a1b9b93213316d267f9a7432fe81abccc5bb2a2",
+      "blob": "6dfad01940f2d479da9ce01e4361e00f02ad810b",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/transform-failure-owner.test.ts",
+      "sha256": "53b6ed682f3763920bb6886b874e26a16e7ba08a0c6dce008889d48d46cb6e47",
+      "blob": "6a74466ba6006d12c0f621683933b2d6f5df6bcb",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "sha256": "c97b94bf0517c5ff84dfea295c282aebee31330e7c18a1b8daa0aba2c9968250",
+      "blob": "609ad7e9bb17e2ecfe8672ee8a01d14f065ccafb",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/core/domain/original-participant.ts",
+      "sha256": "66f03294e2a84d922973e1a0eb932323d0b7632bf19cefc64d09a76433bf8467",
+      "blob": "a1b01054e8e8226ebbf135a1ac4aab602cd4c842",
+      "mode": "100644"
+    }
+  ],
+  "integrity": {
+    "currentSource": 5,
+    "actualGitBefore": 4,
+    "newAbsent": 1,
+    "actualGitAndCurrentControls": 4,
+    "authorArtifacts": 39,
+    "mismatches": 0,
+    "firstWholeProgramsForwardInverse": 4,
+    "firstWholeExactEdits": 16,
+    "finalWholeProgramsForwardInverse": 3,
+    "finalOffsetEdits": 7,
+    "originalUnitTypeDelta": 1,
+    "firstFormalSnapshotsBound": true,
+    "cohortFirstFence": {
+      "path": "docs/refactor/generated/role-execution-install-retirement-cohort-first-fence.json",
+      "sha256": "8c2a4327a7c693b1765085c6ef98d7d4ae3868ddb746881aa03d73d193705ec1"
+    },
+    "laterFenceObservation": {
+      "path": "docs/refactor/generated/role-execution-install-retirement-cohort-fence.json",
+      "sha256": "f5c89b171230e6fdb75518dd882ac363bf589059917dafe26635a3115543793e"
+    }
+  },
+  "sourceReview": [
+    "完整实读四原生产模块及全部新五风险用例；Wild 原九转换核心、捕获 Role holder、family add→core retirement→同Error重抛顺序成立，晚 transformed fact 失败仍在安装 catch 外。",
+    "所有普通数据、World、槽、目标与纯生命读取保原宽度；没有 Role.camp/构造器/CampSource API 删除、第二权限存储或公开binding字段墓碑。",
+    "夜作用域保 radiant→ownerCurrent→行动墓碑→原active查询；原 ownerCurrent 仍服务已付款效果。",
+    "原生结算保原 context→stock 错误优先→原体/生命/死因/政策复验顺序，原五消费点与此前callee/参数/getter位置保持；最终墓碑紧邻每个未付 consume，已消费 pending.isCurrent 整段不变。",
+    "选择捕获保原 state/policy/cause 前缀；eligible 保 permissionCurrent 原正文、早墓碑与原 canShoot getter及异常，再查最终墓碑。赠枪permission的active传递行为受资源组影响，未称全paid。",
+    "新增第五 literal 用合法真实 Hunter permit/target 检查 mapping 回调晚退休，和宽 canShoot accessor 退休；无镜像oracle、没有原四case输入/title/assert变化。",
+    "中文头和新增重要注释准确界定行动资格、已付原体和失败前缀；仅有限 F05a actor 边界，不冒55族或Camp单源完成。"
+  ],
+  "findings": [
+    {
+      "status": "closed",
+      "kind": "static-source-finding-not-runtime-red",
+      "description": "mappingCurrent 可同步退休 Role 后继续付款，及 canShoot getter 可退休后返回过时 eligible true。",
+      "resolution": "五原消费点最后查捕获Role，eligible getter后最后查Role；原paid/pending谓词不改。",
+      "verification": "人工实际三程序差分、七offset完整独立正逆；作者唯一新增case c5fb76 1/0/11，未重四绿。"
+    }
+  ],
+  "receiptsReview": {
+    "firstRuntime": {
+      "receipt": "517eaf",
+      "cases": 4,
+      "assertions": 55,
+      "exitCode": 0
+    },
+    "lateRuntime": {
+      "receipt": "c5fb76",
+      "cases": 1,
+      "assertions": 11,
+      "filtered": 4,
+      "exitCode": 0
+    },
+    "totals": {
+      "distinctCases": 5,
+      "executedAssertions": 66,
+      "runtimeRuns": 2
+    },
+    "types": [
+      "首配置5b15a5五TS6053真实2，未进入source。",
+      "有效5root21eeee/52544→ad2bd5真实2，只unitgetter TS2322。",
+      "getter纯类型2b2dc2双wholeJS桥后仅failedunit95ea52/79206→27e217真实0。",
+      "最终变化3root0b41e0/19479→4d8174真实0；不复未变根。"
+    ],
+    "head": "b627ce首次5root/690docs0；末3head原字节同，不重head。",
+    "proof": "f3305d 首4whole16edits8inverse raw，原9core/2paid/1request正文保持；末f92a0d三whole七offset六inverse raw。实际JS变更明示，非行为等价证明。"
+  },
+  "notExecuted": [
+    "作者主证明或末bridge脚本",
+    "runtime/生产模块加载或新增实验",
+    "类型/头/全门禁/模型/旧绿重复"
+  ],
+  "limits": [
+    "此批准为人工源码、真实Git/摘要/精确文本迁移和实际原始收据阶段的独立审查，未独立执行作者checks。",
+    "计数为原报告累计typed/AST叶范围；逆输出只验证批准的显式政策编辑以外原程序，实际JS不同。",
+    "新单元stock为受控边界，不冒Demon完整私账验收；独立Fox谓词输入不授跨板行动。",
+    "需要Root将四author scope作为统一F05a atomic17source功能提交，不能把新unit依赖的外组reader单独视为已提交基线。"
+  ]
+}

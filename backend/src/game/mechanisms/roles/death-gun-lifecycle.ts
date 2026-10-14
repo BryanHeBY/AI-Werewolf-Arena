@@ -4,10 +4,12 @@
  * 捕获资格和原资源事实。owners/counters 是原唯一状态，不复制为第二份实例仓库。
  * 仅写 deathAbilities、retiredDeathAbilityIds 及本枪资源；不执行死亡、枪目标选择或录制 I/O。
  * 已付前缀和原 getter／提交顺序保持，替身或复活不能重新获得首次死亡枪权。
+ * F05a 将永久退休拒绝放在新执行入口；已消费提案的纯原体／来源／生命及 capture.isCurrent 不含此判断。
  */
 import type { DeathGun, DeathGunReadView } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
+import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
 import { Camp, type EntityId, type GameEvent } from "../../../core/domain/model";
 import { aliveLifeVersion, type AliveComponent } from "../../../core/domain/components/alive";
 import type { World } from "../../../core/domain/world";
@@ -50,11 +52,14 @@ export function findDeathGun(
   return allDeathGuns(role).find((gun) => gun.id === id);
 }
 
-function bind(world: World, actorId: number, gun: DeathGun): void {
+function bind(world: World, actorId: number, gun: DeathGun, sourceRole: RoleComponent): void {
   const role = world.getComponent(actorId, COMPONENT.Role),
     life = world.getComponent(actorId, COMPONENT.Alive),
     version = life && aliveLifeVersion(life);
   if (!role || role.camp !== Camp.Good || !life?.alive || version === undefined)
+    throw new Error("death_ability_owner_invalid");
+  // 这是新赠枪绑定入口；只否决退休演员，原体／已付提案复验仍由不含墓碑的 ownerCurrent 执行。
+  if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))
     throw new Error("death_ability_owner_invalid");
   owners.set(gun, {
     world,
@@ -154,6 +159,8 @@ export function grantDeathGun(
     night < 1
   )
     throw new Error("death_ability_grant_invalid");
+  if (isRoleExecutionRetired(from) || isRoleExecutionRetired(to))
+    throw new Error("death_ability_grant_invalid");
   if (allDeathGuns(to).length) throw new Error("death_ability_gun_already_owned");
   const next = (counters.get(world) ?? 0) + 1,
     id = `gift-gun:${next}`;
@@ -175,10 +182,16 @@ export function grantDeathGun(
     disabled: false,
     deathExpired: false,
   };
-  bind(world, toId, gun);
+  bind(world, toId, gun, from);
+  // bind 的原 privateState getter 后再核捕获双端；失败不安装枪、不推进计数，不回滚已建立证明。
+  if (isRoleExecutionRetired(from) || isRoleExecutionRetired(to))
+    throw new Error("death_ability_grant_invalid");
   const stored = ((
     to.privateState as { deathAbilities?: Record<string, DeathGun> }
   ).deathAbilities ??= {}) as Record<string, DeathGun>;
+  // 目标库存 getter 仍在原点；它导致双端退休时，保字典前缀但不装入新枪。
+  if (isRoleExecutionRetired(from) || isRoleExecutionRetired(to))
+    throw new Error("death_ability_grant_invalid");
   stored[id] = gun;
   counters.set(world, next);
   emit(events, toId, gun, "granted");
@@ -203,6 +216,8 @@ export function armDeathGun(
     gun.remaining === 0
   )
     return;
+  // 武装是新执行入口；单独查退休，不污染可供已付 pending 提案使用的纯原体谓词。
+  if (isRoleExecutionRetired(owners.get(gun)!.role)) return;
   (gun as { armedOnNight: number | null }).armedOnNight = night;
   owners.get(gun)!.armedOnNight = night;
   emit(events, actorId, gun, "armed");
@@ -222,7 +237,8 @@ export function activeDeathGun(
     gun.armedOnNight <= day &&
     gun.remaining === 1 &&
     !gun.disabled &&
-    !gun.deathExpired
+    !gun.deathExpired &&
+    !isRoleExecutionRetired(owners.get(gun)!.role)
     ? gun
     : undefined;
 }
@@ -349,16 +365,25 @@ export function transferDeathGun(
     )?.includes(id)
   )
     throw new Error("death_ability_transfer_invalid");
+  if (isRoleExecutionRetired(source!) || isRoleExecutionRetired(target))
+    throw new Error("death_ability_transfer_invalid");
   const received: DeathGun = {
     ...projectDeathGun(gun),
     source: { kind: "transfer", actorId: fromId, abilityId: id },
   };
   delete (received as DeathGun & { status?: string }).status;
-  bind(world, toId, received);
-  (
+  bind(world, toId, received, source!);
+  // 复制／绑定的原 getter 后才到目标库存写点；退休双端只拒新转移，不否定已消费枪的原体证明。
+  if (isRoleExecutionRetired(source!) || isRoleExecutionRetired(target))
+    throw new Error("death_ability_transfer_invalid");
+  const targetStored = (
     ((target.privateState as { deathAbilities?: Record<string, DeathGun> }).deathAbilities ??=
       {}) as Record<string, DeathGun>
-  )[id] = received;
+  );
+  // 原目标容器已求值；只在实际实例写入前复验，不回滚此前证明或空字典。
+  if (isRoleExecutionRetired(source!) || isRoleExecutionRetired(target))
+    throw new Error("death_ability_transfer_invalid");
+  targetStored[id] = received;
   delete (
     (source!.privateState as { readonly deathAbilities?: unknown }).deathAbilities as Record<
       string,

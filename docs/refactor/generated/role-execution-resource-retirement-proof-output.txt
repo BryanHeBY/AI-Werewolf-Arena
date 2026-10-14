@@ -1,0 +1,1 @@
+{"oldWholePrograms":3,"exactEdits":29,"typedNodes":6010,"noncommentLeaves":6921,"nodeArrays":656,"originalFunctions":36,"changedExecutionFunctions":11,"retainedExactFunctions":25,"inverseWholeRawOutputs":6}

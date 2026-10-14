@@ -1,5 +1,5 @@
 /**
- * 负责通过配置的角色 hook 提交已选自爆。输入为捕获玩家、已校验选择和当前窗口；输出为原爆炸效果与死亡提案。不复用已撤销玩家，不执行最终阶段／胜负封盘。
+ * 负责提交普通狼／赤月和白狼王的已选自爆。输入为捕获玩家、已校验选择和当前窗口；输出为原资源、事件与死亡提案。退休仅拒演员执行，目标和已付前缀仍保原规则；不执行真实标死或阶段／胜负封盘。
  */
 import { RED_MOON_ROLE } from "../roles/red_moon_apostle/ports";
 import { commitDemonRedMoonBlast } from "../roles/demon_hunter/authority";
@@ -21,6 +21,7 @@ import {
 } from "../../../core/domain/model";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
+import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
 import type { World } from "../../../core/domain/world";
 import { getWhiteWolfKingState, consumeWhiteWolfDetonation } from "../roles/white_wolf_king/ports";
 import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
@@ -60,6 +61,8 @@ export function commitSelfDestructSelection(
         : !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
     )
       return null;
+    // 原普通能力／赤月窗口资格已经读取；直接赤月旁路也须在实际权威付款前拒退休演员。
+    if (isRoleExecutionRetired(role)) return null;
     const moon = redMoon ? commitDemonRedMoonBlast(world, choice.actorId) : null;
     if (redMoon && !moon) return null;
     if (ownsWedding) swallowWeddingBadges(world, events);
@@ -86,6 +89,8 @@ export function commitSelfDestructSelection(
       deaths.push(choice.targetId);
       sources[choice.targetId] = [DeathCause.WhiteWolfBlast];
     }
+    // 同一库存和原目标预检在先；退休不消费库存，不取消目标身体或回滚任何已付前缀。
+    if (isRoleExecutionRetired(role)) return null;
     consumeWhiteWolfDetonation(state);
     events.push({
       timestamp: Date.now(),

@@ -3,8 +3,10 @@
  * 输入是原 World、死因、选择回调、具体资源贡献和死亡上下文；输出保原对象的提案／延期事实。
  * await 后先核 current 与捕获 stock，再依原角色、学习、政策、来源及原生命复验，失效不付款。
  * pass／映射 miss／保护阻挡按原规则付款；消费先于保护与事实，后续失败保已付前缀。
- * 本 owner 不开死亡许可、不标死、不推进死亡波或封盘；赠枪使用独立原资源／生命周期。
+ * 已退休 Role 只在未消费行动入口与等待后拒绝；原 stock 异常与完整原体检查先行。
+ * 已消费延期提案保原 isCurrent，不因行动墓碑撤回已付前缀；本 owner 不开许可、标死或封盘。
  */
+import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
 import {
   captureNativeGunStock,
   consumeNativeDeathGun,
@@ -63,11 +65,14 @@ export async function resolveNativeDeathShots(
       world.getComponent(actorId, COMPONENT.Alive)?.alive !== false
     )
       continue;
+    // 原角色／状态／死亡检查已通过，退休只拒未消费行动；不把纯 state 查询变成权限。
+    if (isRoleExecutionRetired(role)) continue;
     // 先捕获原审计 stock 再读死因；普通／学习枪仍只写同一 canShoot，不建立影子库存。
     const stock = captureNativeGunStock(rules.role, rules, world, actorId, state);
     const consume = () => consumeNativeDeathGun(state, stock);
     const sources = deathSources[actorId] ?? [];
     if (sources.includes(DeathCause.Poison)) {
+      if (isRoleExecutionRetired(role)) continue;
       consume();
       if (rules.poisonEvent) events.push(rules.poisonEvent(actorId));
       continue;
@@ -81,6 +86,7 @@ export async function resolveNativeDeathShots(
       !rules.permits(sources) ||
       (policy !== undefined && !permitsDeathShot(sources, policy, deathPhase))
     ) {
+      if (isRoleExecutionRetired(role)) continue;
       consume();
       continue;
     }
@@ -114,12 +120,15 @@ export async function resolveNativeDeathShots(
       aliveLifeVersion(actorLife) !== actorVersion
     )
       continue;
+    // 保原 context→stock 撤权错误→完整原体复验的优先级，然后才拒退休演员，仍未消费。
+    if (isRoleExecutionRetired(role)) continue;
     if (
       selected.kind === "invalid" ||
       !world.isDeathActionOpen(actorId, "shoot", selected.deathActionId)
     )
       continue;
     if (selected.kind === "pass") {
+      if (isRoleExecutionRetired(role)) continue;
       consume();
       continue;
     }
@@ -135,6 +144,7 @@ export async function resolveNativeDeathShots(
         aliveLifeVersion(targetScope.life) !== targetScope.version
       )
         continue;
+      if (isRoleExecutionRetired(role)) continue;
       consume();
       events.push({
         timestamp: Date.now(),
@@ -149,6 +159,8 @@ export async function resolveNativeDeathShots(
       !livingNightLife(world, targetScope)
     )
       continue;
+    // 原映射／目标回调可在复验中同步退休演员；全部原检查完成后、消费前再核同一 Role。
+    if (isRoleExecutionRetired(role)) continue;
     consume();
     if (context?.nightEffect && context.blocksNightShot(selected.targetId)) {
       events.push({

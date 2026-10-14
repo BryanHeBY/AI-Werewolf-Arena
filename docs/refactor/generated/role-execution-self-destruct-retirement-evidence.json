@@ -1,0 +1,170 @@
+{
+  "baseCommit": "bd2e04894509f7777d2909632f768a3329e3b57a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "sha256": "c8744aca9ab80da9ce11b93b99d889805a0a39c6e7692a64e615f6ceb7ce9de0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "sha256": "835bde69cca6cca4d7cba274ba45b1a0b0bb218c5421be5f5b920bc329acac40"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "c7f649af4aec9042554196d27091e3064ee3b4987a9be2e8855212175d3d6916"
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "sha256": "8ad5e9b0c10721d87450ca4d4d519363ab7724eac240e26f6b314b0a3eaaa52f"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-execution-self-destruct.test.ts",
+      "sha256": "e2490bb36e4589b75e9f76e32d3f0f492b8479fc37e2df868b2d8d955649924d"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/rulesets/wolf-tool-admission.ts",
+      "sha256": "7e173c7ac467c3da79eeedc9f02a0d1f52b7831e6d4286a16beedb2085e337f6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "sha256": "ba8b816e963d88eb672c8f07d268ac66d43b2bd86b4ce804449e1da179bcd1ca"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "087388805ce44780b3985a595dfa59822366cbcdf02ad96527ff8d70a837d8ff"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-day-actions.test.ts",
+      "sha256": "1f1f6249c3b98f097592a5390a64cf598c032ea3137a84b723278f53477aa43e"
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+      "sha256": "8fdc1520c8817c89a773fb3a46f97a2b6800030449b49eeaa597fcd4eca2c812"
+    },
+    {
+      "path": "backend/src/core/domain/world.ts",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-before.json",
+      "sha256": "83ee8c61aa886d7a45e42552ce507df855d0b890a5ae3c8e334f78e72a6ce246"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-edits.json",
+      "sha256": "9f35fb8bf18b0f8779e27e1a5de11ab8568ed8526b57e7c0d824587af1d33033"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-heads-output.txt",
+      "sha256": "095e90359f4fea19ed7e2ef462770b126eeb4c68736801d6d9032d3cc016c8f1"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-heads.json",
+      "sha256": "00a97108e69d411082d917ab187c39395feb0e195d795bdff635b6ed30ec1ff1"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-heads.ts",
+      "sha256": "db0f37c5d1eefca489234aff8e9738f66fdea029a42cb152b39c4faa0af94c39"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-paths.json",
+      "sha256": "86652052a550ee78f0e4482a91baf53512173558c6d1accf81458a935d657c0e"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-precheck-unit-microtask.json",
+      "sha256": "e19f6be5972233acb05c1bfe0f40c52268ee5f829a77eb627e47140e5aec00b9"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-proof-output.txt",
+      "sha256": "377e17b937fff4b98a44508806a4684ae7563b20407caedd1a5aa2c78d74c0ca"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-proof.cjs",
+      "sha256": "7c5b11db988d37ad0623ed1aca18764f7f4f64cdeb14e4db4af57972d0cad90e"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-proof.json",
+      "sha256": "2ab426db235c1c39c226199251449fc8ca854c40c562b52557a61b57ec923664"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-receipts.json",
+      "sha256": "979f5f576cd08b03d73210c24255980b74c0d2f30b6bf2a71f66f00ac41875b0"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-runtime-output.txt",
+      "sha256": "82c748c1f1baea0981673516345ce7e00a72af4a02f9a0a768f6268042995997"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-source-ready-first.json",
+      "sha256": "29d1368de9ec4c92f1ee3ce98f4789efb8eba87fee13e6abeb174dff98dbb48b"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-source-ready.json",
+      "sha256": "41a248361221e81ad60f09b378ee6d528022fc16b1b623328b8ace590418328e"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-types-config.json",
+      "sha256": "47797a55b578e6b8197a11b75c27bd1c2a4f0d94ef7a249948dc58e81f8078a1"
+    },
+    {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/role-execution-self-destruct-retirement.md",
+    "sha256": "9757165ea4f05b90f0cd874cad2f7db6d6305cc9f8342dd70ea0203eea8122a3"
+  },
+  "limits": [
+    "独立F05a政策；不称逆向证明意味着runtime等价。",
+    "Root Core/两安装writer/其它资源与枪组不纳五源；其联合source-ready采样另列。",
+    "无旧绿运行或重复、无fullgate/model/private配置。"
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/role-execution-self-destruct-retirement-scope-final.json",
+    "sha256": "6d91201b14634da36ea82bac030d47d4624e2bcb5844f4abb94cb4e7538d42f4"
+  },
+  "proof": {
+    "path": "docs/refactor/generated/role-execution-self-destruct-retirement-proof.json",
+    "sha256": "2ab426db235c1c39c226199251449fc8ca854c40c562b52557a61b57ec923664"
+  },
+  "receipts": {
+    "path": "docs/refactor/generated/role-execution-self-destruct-retirement-receipts.json",
+    "sha256": "979f5f576cd08b03d73210c24255980b74c0d2f30b6bf2a71f66f00ac41875b0"
+  },
+  "summary": {
+    "sourcePaths": 5,
+    "oldCompletePrograms": 4,
+    "exactEdits": 15,
+    "baselineTypedNodes": 2243,
+    "baselineNodeArrays": 296,
+    "baselineNoncommentLeaves": 2619,
+    "inverseWholeRawOutputs": 8,
+    "policyGuardCalls": 6,
+    "sameCoreBindings": 5,
+    "newUnitTypedNodes": 1017,
+    "newCases": 2
+  },
+  "runtime": {
+    "command": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/domain/role-execution-self-destruct.test.ts > docs/refactor/generated/role-execution-self-destruct-retirement-runtime-output.txt 2>&1",
+    "terminalChunk": "133931",
+    "exitCode": 0,
+    "executions": 1,
+    "pass": 2,
+    "fail": 0,
+    "assertions": 29,
+    "distinctCases": 2,
+    "oldGreenCasesRun": 0,
+    "output": {
+      "path": "docs/refactor/generated/role-execution-self-destruct-retirement-runtime-output.txt",
+      "sha256": "82c748c1f1baea0981673516345ce7e00a72af4a02f9a0a768f6268042995997"
+    }
+  },
+  "typeAllGreen": true,
+  "stage": "最终源码与四首检查相同；Root共同fence更新承接首次前微任务输入。",
+  "reviewDigestPolicy": "作者附件不含root/peer review、scope/evidence/handoff，避免摘要循环。"
+}

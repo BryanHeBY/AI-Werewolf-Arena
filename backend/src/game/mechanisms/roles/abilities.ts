@@ -5,6 +5,7 @@
  * 授予／转移的来源与状态政策仍归 night-ability-grants，具体瓶数、梦历史、借用抑制及 Demon 审计另有原权威。
  * 字典创建、退休 ID 修订和逐字段提交保原求值顺序；发表或后续写入失败不回滚已完成前缀。
  * 数据复制不新增严格 live schema、JSON 档案接受或行动许可；readonly 视图仍是同一对象，不是冻结或第二库存。
+ * F05a 只在 active／授予／转移执行入口拒永久退休身份，纯库存、状态、原生安装、已付写入与清理不据此过滤。
  */
 
 import type {
@@ -20,6 +21,7 @@ import { readPairSeerState } from "./fragrant_pair_seer/state";
 import { nativePotionSecondTurn } from "./witch/policies";
 import { Role } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
+import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
 import type { RoleInitializationComponent } from "./contracts";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { EntityId, GameEvent } from "../../../core/domain/model";
@@ -163,7 +165,10 @@ export function activeNightAbility<K extends NightAbilityKind>(
   id?: string,
 ): NightAbilityReadView<K> | undefined {
   const ability = findNightAbility(role, kind, id);
-  return ability && abilityStatus(ability, day) === "active" ? ability : undefined;
+  // 原数据查找／status 先完成；永久退休只否决执行，不删除库存或把状态改成 disabled。
+  return ability && abilityStatus(ability, day) === "active" && role && !isRoleExecutionRetired(role)
+    ? ability
+    : undefined;
 }
 
 /** 读取原退休 ID 列表，不授予库存写权限。 */
@@ -296,10 +301,17 @@ export function commitGrantedNightAbility(
   actorId: EntityId,
   ability: NightAbility,
   events: GameEvent[],
+  sourceRole: RoleComponent,
 ): NightAbility {
+  // 捕获的源／目标角色只提供本次退休读数，不新增 World 换体策略或授予许可。
+  if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))
+    throw new Error("ability_actor_execution_retired");
   // 原字典赋值已发生后才发布；push／时钟／来源克隆失败都保留已安装实例。
   const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
     {}) as Record<string, NightAbility>;
+  // 容器 getter／空字典初始化后再核；失败保原已写前缀，不安装新实例。
+  if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))
+    throw new Error("ability_actor_execution_retired");
   stored[ability.id] = ability;
   emit(events, actorId, ability, "granted");
   return ability;
@@ -382,13 +394,21 @@ export function commitTransferredNightAbility(
     (key) => Object.getOwnPropertyDescriptor(targetStored, key)!.value === ability,
   ))
     throw new Error("ability_transfer_inventory_alias");
+  // 原政策与完整槽预检之后才否决退休双端；不借数据查询过滤 actor。
+  if (isRoleExecutionRetired(source) || isRoleExecutionRetired(target))
+    throw new Error("ability_transfer_owner_revoked");
   // 删除按已核对的真实 key，而非凭 Object.values 中的实例 id 猜测槽；失败不进入目标安装。
   delete sourceStored[id];
   (
     ((sourcePrivate as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]
   ).push(id);
+  // 源已经删除／登记 ID；期间 getter 导致角色授权退休仍拒目标安装，不补回源。
+  if (isRoleExecutionRetired(source) || isRoleExecutionRetired(target))
+    throw new Error("ability_transfer_owner_revoked");
   // 空目标库存的创建也在源退休之后；安装或 granted 发布失败不会重装源槽。
   const stored = targetStored ?? ((targetPrivate as { abilities?: Record<string, NightAbility> }).abilities = {});
+  if (isRoleExecutionRetired(source) || isRoleExecutionRetired(target))
+    throw new Error("ability_transfer_owner_revoked");
   stored[received.id] = received;
   emit(events, toId, received, "granted");
   emit(events, fromId, ability, "transferred_out");

@@ -5,6 +5,7 @@
  * 转移拒绝共享或不稳定库存路径；异常保留已经发生的前缀和原 Error，不退款，记录 sink 不取得库存写权。
  * 字典安装／发布与删除／退休提交交唯一 abilities owner；本模块保完整来源政策，角色 payload、生命／租约和临时抑制仍有原负责人。
  * 数据复制仍消费唯一 copyAbilityData，原接受集合不加强；这不是全部角色状态 schema 或严格复盘 codec。
+ * F05a 晚核本次捕获源／目标 Role 的永久退休；新增 sourceRole 输入是复验数据，不授许可或新增换体策略。
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import type { AbilitySource, NightAbilityKind, NightAbilityStates } from "@ai-werewolf-arena/game-contract";
@@ -14,6 +15,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import { type EntityId, type GameEvent } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
 import type { RoleComponent } from "../../../core/domain/components/role";
+import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { allNightAbilities, copyAbilityData, commitGrantedNightAbility, commitTransferredNightAbility, type NightAbility, type NightAbilityReadView } from "./abilities";
 import { projectNightState } from "../../observation/night-ability-projection";
@@ -49,16 +51,16 @@ export function grantNightAbility<K extends NightAbilityKind>(
     lastUsedDay: null,
     disabled: false,
   }) as unknown as NightAbility<K>;
-  const role = validateAbilityInstall(world, actorId, ability);
-  return commitGrantedNightAbility(role, actorId, ability, events) as NightAbilityReadView<K>;
+  const { role, sourceRole } = validateAbilityInstall(world, actorId, ability);
+  return commitGrantedNightAbility(role, actorId, ability, events, sourceRole) as NightAbilityReadView<K>;
 }
 
-/** 完整原安装预检只返回实际目标 Role；库存提交另有唯一 owner，授予和转移共用原政策。 */
+/** 原安装预检捕获目标及原读取点的源 Role；这两个数据引用只供提交复验永久退休，不是许可或新原体策略。 */
 function validateAbilityInstall(
   world: World,
   actorId: EntityId,
   ability: NightAbility,
-): RoleComponent {
+): { role: RoleComponent; sourceRole: RoleComponent } {
   const input = ability;
   if (input.kind === "pair_check") throw Error("ability_pair_native_only");
   if (input.kind === "role_check") roleInspectionPolicy(input.state);
@@ -100,7 +102,7 @@ function validateAbilityInstall(
     (input.maxUses !== null && (!Number.isSafeInteger(input.maxUses) || input.maxUses < 0))
   )
     throw new Error("ability_grant_invalid");
-  roleOf(world, source.actorId);
+  const sourceRole = roleOf(world, source.actorId);
   if (
     input.activation === "black_market" &&
     (source.kind === "copy" ||
@@ -144,7 +146,10 @@ function validateAbilityInstall(
     )
   )
     throw new Error("ability_source_mismatch");
-  return role;
+  // 原来源／状态／重复编号政策全通过后才查捕获双端，拒绝不写库存或发布事实。
+  if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))
+    throw new Error("ability_actor_execution_retired");
+  return { role, sourceRole };
 }
 
 /** 先完成原复制／资源／来源／目标预检；转移提交保计数和原夜时点，但失败不再留下两份合法有效库存。 */
@@ -292,7 +297,7 @@ export function transferNightAbility<K extends NightAbilityKind>(
     sourceDisclosed: options.sourceDisclosed ?? false,
     source: { kind: "transfer", actorId: fromId, abilityId: id },
   }) as NightAbility;
-  const installationTarget = validateAbilityInstall(world, toId, received);
+  const { role: installationTarget } = validateAbilityInstall(world, toId, received);
   // 预检和复制全通过才交库存写权；F03 的源先退休政策不伪装成旧失败前缀等价。
   commitTransferredNightAbility(world, source, sourcePrivate, installationTarget, fromId, toId, id, ability, received, events);
 }

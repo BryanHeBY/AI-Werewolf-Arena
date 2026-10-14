@@ -2,7 +2,7 @@
  * 负责白天自爆的有限规则组合：婚礼禁用、红月资格、普通自爆与白狼王库存共同约束选择。
  * 输入为原 World、角色工具表、请求构造端口、Provider、网关及窗口回调；输出为首个未被拒绝的选择或 null。
  * 并发请求保原 Promise.all 顺序；等待后按原体／生命版本／库存与目标复验，再按玩家编号尝试提交。
- * 捕获的存活组件和资源引用仅服务本次窗口；阶段 current、库存付款、死亡与最终判胜各归原 owner。
+ * 捕获的存活组件和资源引用仅服务本次窗口；阶段 current、库存付款、死亡与最终判胜各归原 owner。安装失败的退休只拒演员，目标和纯数据仍保原查询。
  * commit 返回 false 只跳过该选择；读取、Provider 或提交失败沿原异常传播，不补提交或回滚已写前缀。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -18,6 +18,7 @@ import {
 import { AliveComponent, aliveLifeVersion } from "../core/domain/components/alive";
 import { COMPONENT } from "../core/domain/components/names";
 import { RoleComponent } from "../core/domain/components/role";
+import { isRoleExecutionRetired } from "../core/domain/role-execution-authority";
 import {
   ActionProvider,
   ActionWindow,
@@ -82,6 +83,8 @@ export class SelfDestructWindow {
         const resource =
           tool === "self_destruct_with_target" ? getWhiteWolfKingState(role) : undefined;
         if (tool === "self_destruct_with_target" && resource?.canDetonate !== true) return null;
+        // 原特殊资格和库存读取先行，保其首错误；已退休演员不再建立新请求。
+        if (isRoleExecutionRetired(role)) return null;
         const life = targets.get(actorId)!;
         const request = requests.create({
           phase,
@@ -144,7 +147,8 @@ export class SelfDestructWindow {
         )
           return false;
       }
-      return true;
+      // 等待后先完成原特殊权威、库存与目标复验；字段恢复不复活这个失败演员。
+      return !isRoleExecutionRetired(pick.role);
     };
     // 网关预检前后均复验；预检成功只产生候选，不意味着库存付款或死亡已生效。
     const valid = picks.filter(

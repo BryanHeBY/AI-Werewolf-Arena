@@ -1,0 +1,1 @@
+{"sourcePaths":5,"oldCompletePrograms":4,"exactEdits":15,"baselineTypedNodes":2243,"baselineNodeArrays":296,"baselineNoncommentLeaves":2619,"inverseWholeRawOutputs":8,"policyGuardCalls":6,"sameCoreBindings":5,"newUnitTypedNodes":1017,"newCases":2}

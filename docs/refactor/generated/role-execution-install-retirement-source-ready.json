@@ -1,0 +1,20 @@
+{
+  "baseCommit": "bd2e04894509f7777d2909632f768a3329e3b57a",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "a27cde5e18091c4509e835470d4bf1b246e92bb283e2a9877845ef65acae61b4"
+    },
+    {
+      "path": "backend/src/core/domain/role-execution-authority.ts",
+      "sha256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/role-execution-install-retirement.test.ts",
+      "sha256": "18940b29963c0ec38ecc210e8f5b953f27ff244c468a4ca4848fdf5d4b9bb8a5"
+    }
+  ],
+  "sourceReady": true,
+  "checksExecuted": false,
+  "scopePolicy": "Root candidate-install writer plus core owner; shared eligibility readers are current cohort, not stable controls."
+}

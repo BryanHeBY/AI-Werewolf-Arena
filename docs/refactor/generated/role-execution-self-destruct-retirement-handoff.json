@@ -1,0 +1,42 @@
+{
+  "frozen": true,
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "sha256": "c8744aca9ab80da9ce11b93b99d889805a0a39c6e7692a64e615f6ceb7ce9de0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "sha256": "835bde69cca6cca4d7cba274ba45b1a0b0bb218c5421be5f5b920bc329acac40"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "c7f649af4aec9042554196d27091e3064ee3b4987a9be2e8855212175d3d6916"
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "sha256": "8ad5e9b0c10721d87450ca4d4d519363ab7724eac240e26f6b314b0a3eaaa52f"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-execution-self-destruct.test.ts",
+      "sha256": "e2490bb36e4589b75e9f76e32d3f0f492b8479fc37e2df868b2d8d955649924d"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/role-execution-self-destruct-retirement-scope-final.json",
+    "sha256": "6d91201b14634da36ea82bac030d47d4624e2bcb5844f4abb94cb4e7538d42f4"
+  },
+  "document": {
+    "path": "docs/refactor/role-execution-self-destruct-retirement.md",
+    "sha256": "9757165ea4f05b90f0cd874cad2f7db6d6305cc9f8342dd70ea0203eea8122a3"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/role-execution-self-destruct-retirement-evidence.json",
+    "sha256": "0043fa9eb19b58d3bb55a801acaf1c584155c9f764258b394b845e1a01acfe20"
+  },
+  "types": "finite5 首92ee66实际0",
+  "heads": "5/690 docs首229ead0",
+  "runtime": "新2/29首1339310；旧绿不跑",
+  "proof": "37124e0；actualJS新政策不同"
+}

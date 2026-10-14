@@ -1,0 +1,40 @@
+{
+  "scope": {
+    "path": "docs/refactor/generated/role-execution-wild-gun-retirement-scope-final.json",
+    "sha256": "ac5d21e0c78b9c7ade9ca40c7a4ffb5e61ac2f3b1183fdc84c6770e71645c286"
+  },
+  "document": {
+    "path": "docs/refactor/role-execution-wild-gun-retirement.md",
+    "sha256": "f38ae7dc27eacd87dd2a3ba7d787fd4f51d8da90e5d934bd16fc476a6c170673"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/role-execution-wild-gun-retirement-evidence.json",
+    "sha256": "dae1a3a7fe6da836a067db7756984a41d3e031c3334840ac209d420d254c859d"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "f01842f3ef4e9a5f28f35e673ba0ea24c9dfa487dcba0f9015fd8aa8f21460c4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "dda929882ccfd106d527166ec6bac58660a799008df9abae74599b22bd4b019d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "sha256": "92f3514445786bc719e30830603c8ab9d8a76af0ab5f1dd3b16cbf59b5442f35"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "sha256": "1666712544bcca8f5305df6ec1d502ca465cd31245f73e04a2196ed97724125d"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/role-execution-retirement.test.ts",
+      "sha256": "d5c09db08faa3e53a80bd4d7637945bd6e765ef030b99745f419845f644787de"
+    }
+  ],
+  "deleted": [],
+  "frozen": true,
+  "artifacts": 39,
+  "checks": "first4/55 preserved; onlynew5th1/11 c5fb760; changed3types4d81740; stage3bridge f92a0d0; head/mainproof unchanged; original config/source type reds preserved."
+}

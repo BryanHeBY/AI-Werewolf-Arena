@@ -1,0 +1,5 @@
+[
+  "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+  "backend/src/core/domain/role-execution-authority.ts",
+  "backend/tests/unit/features/initial-identity/role-execution-install-retirement.test.ts"
+]

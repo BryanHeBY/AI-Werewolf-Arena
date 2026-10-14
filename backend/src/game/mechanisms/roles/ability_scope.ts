@@ -1,12 +1,14 @@
 /**
  * 捕获原角色、生命、状态、来源及政策身份的夜能力 owner。输入为已选择实例与阶段当前性
- * 回调；输出为 owner 当前性和活跃资格检查。替换原槽或政策仍撤销 scope，不写状态或付款。
+ * 回调；输出为原体当前性和行动资格检查。替换原槽或政策仍撤销 scope，不写状态或付款。
+ * isOwnerCurrent 保原已付效果复验，不因运行授权墓碑失效；仅 isEligible 在原复验后拒绝退休演员。
  * 查验政策身份字节由该状态族的唯一 codec 在原表达式位置生成，生命、id、来源及允许
  * 首次死亡的版本判断仍只在此 owner，不因 payload 合法而重新授权。
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
 import { captureRadiantTurn } from "./radiant_eclipse/night_frame";
+import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
 import { COMPONENT } from "../../../core/domain/components/names";
 
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
@@ -105,6 +107,10 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
     state,
     isOwnerCurrent: ownerCurrent,
     isEligible: () =>
-      radiantCurrent() && ownerCurrent() && activeNightAbility(role, kind, day, id) === ability,
+      radiantCurrent() &&
+      ownerCurrent() &&
+      // 原体仍可能服务已付效果；墓碑只阻止新的行动资格，不改 ownerCurrent 或资源数据。
+      !isRoleExecutionRetired(role) &&
+      activeNightAbility(role, kind, day, id) === ability,
   };
 }

@@ -1,5 +1,5 @@
 /**
- * 负责分别推导狼队知识、聊天参与和刀权。输入为当前 World 角色及明确运行政策；输出保留队友、狼聊、狼刀名单和事件受众。狼阵营本身不等于拥有全部狼队权限，不据历史知识授予当前刀权。
+ * 负责分别推导狼队知识、聊天参与和刀权。输入为当前 World 角色及明确运行政策；输出保留队友、狼聊、狼刀名单和事件受众。狼阵营本身不等于拥有全部狼队权限，不据历史知识授予当前刀权。身份安装失败的退休仅关闭狼聊／刀执行，不抹已知队友或改写历史受众。
  */
 import { scholarMentorPackBlocked } from "./scholar_mentor/night_frame";
 import { animalPackKnifeBlocked } from "./animal_dream/authority";
@@ -8,6 +8,7 @@ import { weddingMember, ghostBrideReady, weddingSetup } from "./ghost_bride/auth
 import { initialIdentitySetupReady } from "./initial_identity/deal";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
+import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
 import {
   Camp,
   type EntityId,
@@ -38,12 +39,18 @@ export function wolfTeamPermissions(
   const permissions = catalog.runtime(role.role)?.wolfTeam;
   const result =
     typeof permissions === "function" ? permissions(role, world) : (permissions ?? NO_ACCESS);
-  return world &&
+  const current = world &&
     (nightmareKnifeBlocked(world) ||
       scholarMentorPackBlocked(world) ||
       animalPackKnifeBlocked(world))
     ? { ...result, canVoteForKill: false }
     : result;
+  // 原拒绝单例仍保身份，避免知识查询把它当新权限对象而继续读取。
+  if (current === NO_ACCESS) return current;
+  // 原资格和阻断查询先行；退休只拒演员执行，recognized／recognizes 仍供原知识查询使用。
+  return isRoleExecutionRetired(role)
+    ? { ...current, canChat: false, canVoteForKill: false }
+    : current;
 }
 
 export function knownWolfTeammates(

@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/initial-identity/role-execution-install-retirement.test.ts:
+(pass) same-camp Role install failure retires only the candidate execution and preserves data [69.17ms]
+(pass) same-camp Camp install failure retires only the candidate execution and preserves data [4.59ms]
+(pass) same-camp Victory install failure retires only the candidate execution and preserves data [3.60ms]
+(pass) a late identity fact failure keeps the completely installed candidate execution [3.76ms]
+
+ 4 pass
+ 0 fail
+ 62 expect() calls
+Ran 4 tests across 1 file. [287.00ms]
