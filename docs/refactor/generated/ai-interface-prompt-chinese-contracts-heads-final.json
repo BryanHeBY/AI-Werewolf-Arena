@@ -1,0 +1,11 @@
+{
+  "source": [
+    {
+      "path": "backend/src/ai/integrations/index.ts",
+      "sha256": "cb208041423395c1a18298c8bbac41b934155e5660a60c60d4fe0b9116ddca28"
+    }
+  ],
+  "documentationPathCount": 536,
+  "diagnostics": [],
+  "run": "failed-only"
+}

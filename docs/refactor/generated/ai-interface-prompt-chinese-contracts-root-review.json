@@ -1,0 +1,48 @@
+{
+  "reviewer": "/root",
+  "approved": true,
+  "baseCommit": "d92d0a4033367ad5b3bdb15f44f75a3b352b46c6",
+  "source": [
+    {
+      "path": "backend/src/ai/integrations/index.ts",
+      "beforeSHA256": "97d08009a6696017070bd76116cdf2c0eaeff65cab722740ce7c4678ed4d302e",
+      "sha256": "cb208041423395c1a18298c8bbac41b934155e5660a60c60d4fe0b9116ddca28",
+      "status": "comment-only"
+    },
+    {
+      "path": "backend/src/ai/agents/player/prompt_templates.ts",
+      "beforeSHA256": "1816603120905552e5fc27670f120d3831d345b374f1a3feb4bfd0391361c05d",
+      "sha256": "1692fa0e96b27464ed958df6e7bdbd9e8daa5ade91869ddc0ca70299d8526f15",
+      "status": "comment-only"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+      "beforeSHA256": "e0c6e52fe2d745f8834bff296f09aab4b42191a8ec88b1771ee9e1b914058679",
+      "sha256": "486bc9edc476c8db35985acc574d1fae684005b339c2903919e1e024bce80f87",
+      "status": "comment-only"
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/ai-interface-prompt-chinese-contracts-scope-final.json",
+    "sha256": "55556195e1b1b7875d5ad9042f8e85ddc462b098748aeb8a6c18d6cd584e0ed3"
+  },
+  "documentation": {
+    "path": "docs/refactor/ai-interface-prompt-chinese-contracts.md",
+    "sha256": "acfcb3aac8c3170f2a2a5fd8a3c9b2a85e9a31be07c57ad7c4aa099dbd5617f2"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ai-interface-prompt-chinese-contracts-evidence.json",
+    "sha256": "beef02e7fb8842e7c55ba71b03717e0784da6680f2851e1bcf4781a7e367978d"
+  },
+  "checks": [
+    "三source原全文/完整diff及真实Policy/defaultBridge/loopback绑定执行边界已读；actuald92三Git+25comment精确forward最终整byte同，所有scope/docs/artifacts当前SHA匹配。",
+    "提示Template原gettext/数组Map与callback位置，persona两trim、显式false开关短路、重试1/2/其余与原caller预算分离准确；产品strings/type/fields/导入/RNG/receiver没有改变。",
+    "MCP三接口仅声明原configuration/生命周期/factory，env/args可写而不声明clone/认证/sandbox；实际start/bind/close/force及deadline由真实owner，字符串sessionID不授游戏权。",
+    "index原导出三owner保持，不承诺被导入叶无顶层副作用；所有中文头和关键数据/逻辑说明含真实边界。",
+    "作者1085完整非comment tokens和原三head失败2diagnostics仅index补职责后failed1绿，模板tail scanner首工具红→修工具末0按实际收据归属；没有重AST/emits/type/tests/fullgate/model。"
+  ],
+  "limits": [
+    "局部C45语义维护；不冒所有中文/依赖/生命周期/玩法/P9验收完成。",
+    "源码文字影响当前sourceHash，历史指纹不改；Root没有复跑已绿。"
+  ]
+}

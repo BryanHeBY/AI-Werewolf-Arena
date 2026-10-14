@@ -1,0 +1,128 @@
+[
+  {
+    "path": "backend/src/ai/integrations/index.ts",
+    "before": "/**\n * ai 集成导出：外部模型与平台 SDK 适配层。\n */",
+    "after": "/**\n * 负责按原顺序公开模型 SDK、传输和 ACP 所有者的直接绑定。输入为三个既有模块，\n * 输出同一导出符号，不复制实现、创建替代客户端或重新定义配置／资源写权。\n * 此门面只重导出；被导入叶的原顶层初始化仍按实际模块图执行，不承诺导入无副作用。\n */"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "/** Shared player identity, board and action prompt templates. */",
+    "after": "/**\n * 负责 SDK／ACP 共用的身份、板子、行动与约束重试文本模板。输入为调用方类型化的身份、\n * 工具提示、配比 Map 和角色回调，输出按原语言／排列拼接的提示字符串。\n * locale 缺省仍为 zh-CN；原对象、数组和 Map 在原表达式位置读取，不克隆、冻结或重新统计。\n * getter、数组方法或角色回调失败保持原抛出；模板文本不授资源、当前角色或行动许可。\n * 本模块不提交行动、计算期限或实施重试次数，产品文案和消息 key 仍由原文本 owner 持有。\n */"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "export interface SystemPromptInput {",
+    "after": "/** 调用方提供的身份与人设文本；role 是原显示字符串，不在这里据其重新判断阵营。 */\nexport interface SystemPromptInput {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "  teammateIds: number[];",
+    "after": "  /** 按原数组 join 呈现调用方队友知识，不复验其当前生命、身份或狼队行动权限。 */\n  teammateIds: number[];"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "  personalityPrompt?: string;",
+    "after": "  /** 保留可选原人设；非空判断与正文插入各按原位置读取／trim，不预处理或改变产品文本。 */\n  personalityPrompt?: string;"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "export interface UserPromptInput {",
+    "after": "/** 回合展示输入，不是原 ActionRequest 或租约；阶段、目标和工具内容仍由外层策略准备。 */\nexport interface UserPromptInput {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "  requiresAction: boolean;",
+    "after": "  /** 仅在没有有效 turnConstraintHint 时选择原必需／可选文案，不在这里强制提交或付款。 */\n  requiresAction: boolean;"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "  allowedTools: string[];",
+    "after": "  /** 原可写提示集合；和 effectiveActionTools 的展示不等于网关或回合当前性验证。 */\n  allowedTools: string[];"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "export interface BoardInfoPromptInput {",
+    "after": "/** 配比数据及角色显示回调由调用方持有；模板只使用原 Map，不据 World 再发牌／统计。 */\nexport interface BoardInfoPromptInput {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "export function buildSystemPrompt(input: SystemPromptInput): string {",
+    "after": "/** 身份、名字、队友和人设仍依原顺序拼接；工具说明与报告说明保原开关短路。 */\nexport function buildSystemPrompt(input: SystemPromptInput): string {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "    ...(input.includeToolUseInstructions !== false ?",
+    "after": "    // 仅显式 false 关闭工具说明；报告还要求原 supportsDebugReporting，开关不注册真实工具。\n    ...(input.includeToolUseInstructions !== false ?"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "export function buildUserPrompt(input: UserPromptInput): string {",
+    "after": "/** 原阶段／行动／参数提示逐段读取；现有约束和提交提示优先，空值仍用原缺省文案。 */\nexport function buildUserPrompt(input: UserPromptInput): string {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "export function buildBoardInfoPrompt(input: BoardInfoPromptInput): string {",
+    "after": "/** 按原 Role 枚举值顺序筛正配比，两个 map 各在原位置读取 Map 与 callback，不缓存结果或吞错。 */\nexport function buildBoardInfoPrompt(input: BoardInfoPromptInput): string {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "export function buildConstraintRetryPrompt(",
+    "after": "/** attempt=1／2／其余分别选原三种文案；maxRetries 只插入文本，循环预算由真实编排者执行。 */\nexport function buildConstraintRetryPrompt("
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "/** ACP session 可注入 MCP sidecar 的传输无关描述。 */",
+    "after": "/**\n * 负责 ACP 可注入 MCP sidecar 的启动描述、控制生命周期和工厂类型声明。输入为原命令、\n * 可写参数／环境数组与 registry，输出配置形状和原 start／bindSession／close 运行端口。\n * 类型自身不创建进程、监听器或 token；副作用由实际 control／AcpProcessClient 实现拥有。\n * 请求期限、取消与会话回收仍归具体运行所有者，关闭失败或 force 行为不由此声明保证。\n * 配置不是领域许可、沙箱或认证新策略，本模块不复制、冻结数组或执行工具。\n */"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "  args: string[];",
+    "after": "  /** 原参数数组形状保持；具体 start 可保原引用，此声明不承诺拷贝或隔离。 */\n  args: string[];"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "  env: Array<{ name: string; value: string }>;",
+    "after": "  /** 原按 name/value 传递的环境数组，实际 endpoint／token 仍由控制实现产生，不在此认证。 */\n  env: Array<{ name: string; value: string }>;"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "export interface AcpMcpControlServer {",
+    "after": "/** 控制实现的原运行方法；只声明调用，不创建计时器、自动去重关闭或把完成类型当回收事实。 */\nexport interface AcpMcpControlServer {"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "  start(command: string, args: string[]): Promise<AcpMcpServerConfig>;",
+    "after": "  /** 由实际实现开启原控制面并返回 sidecar 配置；启动期限与失败清理由会话创建 owner 处理。 */\n  start(command: string, args: string[]): Promise<AcpMcpServerConfig>;"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "  bindSession(sessionId: string): void;",
+    "after": "  /** 交出原 sessionId 绑定指令；具体实现仍复验关闭／重复绑定，字符串本身不授权行动。 */\n  bindSession(sessionId: string): void;"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "  close(options?: { force?: boolean }): Promise<void>;",
+    "after": "  /** 原可选 force 指令；具体关闭顺序、失败传播和有界强制回收仍由 control／session 生命周期执行。 */\n  close(options?: { force?: boolean }): Promise<void>;"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "/** 将领域注册表映射为一个只属于当前 ACP session 的 MCP server。 */",
+    "after": "/** 原 registry 与会话控制的工厂接口；游戏／审计 bridge 提供各自实现，不增加另一 registry 或许可表。 */"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "  createControl(registry: TRegistry): AcpMcpControlServer;",
+    "after": "  /** 调用具体 factory 才构造原 control；原 registry 引用、方法 receiver 和副作用保持调用方实现。 */\n  createControl(registry: TRegistry): AcpMcpControlServer;"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+    "before": "  serverEntrypoint(currentFilename: string): string;",
+    "after": "  /** 由实际 factory 在原位置解析入口（默认保原 .ts/.js 选择）；不是在此执行入口文件。 */\n  serverEntrypoint(currentFilename: string): string;"
+  },
+  {
+    "path": "backend/src/ai/integrations/index.ts",
+    "before": " * 此门面只重导出；被导入叶的原顶层初始化仍按实际模块图执行，不承诺导入无副作用。",
+    "after": " * 此门面不计算期限、取消或关闭资源；这些行为仍归原传输／ACP 具体所有者。\n * 此门面只重导出；被导入叶的原顶层初始化仍按实际模块图执行，不承诺导入无副作用。",
+    "reason": "首三头检查仅index缺期限／取消职责；补出口不处理、原具体owner负责，不改生产。"
+  }
+]

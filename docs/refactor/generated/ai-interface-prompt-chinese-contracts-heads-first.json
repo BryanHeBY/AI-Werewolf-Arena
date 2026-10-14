@@ -1,0 +1,36 @@
+{
+  "source": [
+    {
+      "path": "backend/src/ai/integrations/index.ts",
+      "sha256": "0cef1d52b424c173b75132c2d8251e5553d3de77a1e82f57a1bf354014fc7b9e"
+    },
+    {
+      "path": "backend/src/ai/agents/player/prompt_templates.ts",
+      "sha256": "1692fa0e96b27464ed958df6e7bdbd9e8daa5ade91869ddc0ca70299d8526f15"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+      "sha256": "486bc9edc476c8db35985acc574d1fae684005b339c2903919e1e024bce80f87"
+    }
+  ],
+  "documentationPathCount": 536,
+  "diagnostics": [
+    {
+      "id": "fa428583df9801cf55ae190e2324d5620b98552bbca846ac0f3fe7e4b368e721",
+      "rule": "comment.deadline",
+      "path": "backend/src/ai/integrations/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its deadline contract."
+    },
+    {
+      "id": "3cf6c7aaec45d8113aede5142e8c328af204b52d10909606b6c026d7f138436a",
+      "rule": "comment.cancellation",
+      "path": "backend/src/ai/integrations/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its cancellation contract."
+    }
+  ],
+  "run": "first-three"
+}
