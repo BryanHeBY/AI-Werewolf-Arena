@@ -1,0 +1,61 @@
+{
+  "approved": true,
+  "reviewer": "native_presentation_finish",
+  "source": [],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9adfd31-scope-final.json",
+    "sha256": "22b9e83936fa18a6f830e81dd23e78898f0d1ab692b85f5c4e8366b9a0708987"
+  },
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-c9adfd31.md",
+    "sha256": "744099ad2f69c826304be816acf983b799e49c80565459dbb99f8173f42213d5"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9adfd31-evidence.json",
+    "sha256": "12cd1ab608cf5822dd4e6e3fcb0f58b16ab8edeb2229865d72b0687f562fa1a8"
+  },
+  "fixedCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c",
+  "gatePassed": true,
+  "gateReceipt": {
+    "launchChunk": "1a4d34",
+    "session": 86800,
+    "terminalChunk": "492bdf",
+    "exitCode": 0,
+    "executions": 1,
+    "fixedCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c"
+  },
+  "verification": {
+    "actualGitBlobModePathSHAAndUTF8Text": 3259,
+    "sameGitDocumentationPaths": 674,
+    "wholeRawInputBytes": 80638672,
+    "wholeRawInputSHA256": "2dbc37e2a57087b0199d3524e46c92a61a64a3f1f5cc96197cd47d08dff74c90",
+    "sourceDigest": "0050441749f3df007a2d00e837acc6cd45e6c0d87424190a025a08d34eb4fca7",
+    "sixFixedGitAndCurrentToolsSame": true,
+    "originalDebtCount": 1779,
+    "originalDebtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "mutuallyExclusiveCompletePartition": {
+      "remaining": 225,
+      "cleared": 1554,
+      "new": 0
+    },
+    "remainingClasses": {
+      "commentStructure": 203,
+      "featureInternalDependency": 22
+    },
+    "relativeToE0dd": {
+      "newlyClearedOriginalIds": 15,
+      "returned": 0
+    },
+    "authorArtifactsBound": 11,
+    "actualRunnerWholeBytesSameAsPrevious": true,
+    "mismatches": 0
+  },
+  "findings": [],
+  "limitations": [
+    "批准固定Git渐进结构检查的诚实输入、报告和收据，不将原债ID退出称为全职责完成。",
+    "完整raw/blob核对为独立只读纯数据核；不执行作者输入／分区脚本、checker、编译、测试、模型或生产加载。",
+    "仅固定c9adfd31，排除后继三作者WIP；不是完整行为、中文内容质量、55角色schema或P9严格验收。",
+    "原gate与两pure收据来自作者实际执行记录；独立审查未重新运行或poll。"
+  ]
+}

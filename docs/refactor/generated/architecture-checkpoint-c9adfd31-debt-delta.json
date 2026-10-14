@@ -1,0 +1,154 @@
+{
+  "previousFixedCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "currentFixedCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c",
+  "previousReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-e0dd0306-report.json",
+    "sha256": "ca183ea980e652bb582a26edd1e5cdd6d349db6db3cced6c2ec0574edd342585",
+    "counts": {
+      "files": 3257,
+      "violations": 240,
+      "failures": 0,
+      "remainingDebt": 240,
+      "clearedDebt": 1539
+    }
+  },
+  "currentReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9adfd31-report.json",
+    "sha256": "4b32bdc680a3c8e7124dacc9c8e45c1a898515d8c103011f434ca7b029d8c565",
+    "counts": {
+      "files": 3259,
+      "violations": 225,
+      "failures": 0,
+      "remainingDebt": 225,
+      "clearedDebt": 1554
+    }
+  },
+  "newlyClearedOriginalDebtCount": 15,
+  "newlyClearedOriginalDebt": [
+    {
+      "id": "01e30e011f827b5ec3627b1b3a113af5d423e421ec287ace3692e35a317eb001",
+      "rule": "comment.responsibility",
+      "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its responsibility contract."
+    },
+    {
+      "id": "0c46f3222278b20e484735abac4da889c0fbe6eb0e4651377b5d0e6a9fff6f12",
+      "rule": "comment.boundary",
+      "path": "backend/src/audit/deterministic_checks.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its boundary contract."
+    },
+    {
+      "id": "12073612c792c69373cdb729836bf32983a4aff67c88e678f65364a593038464",
+      "rule": "comment.missing-head",
+      "path": "backend/src/recording/replay_document.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    },
+    {
+      "id": "59949009beeb73ed2a6293fdca6880c4232f621ee5527ca81db6a9da860609a3",
+      "rule": "comment.input",
+      "path": "backend/src/audit/deterministic_checks.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "65f9c8b8192477fb8687a9d36752e08206eac3b2867acc227960063a1370c181",
+      "rule": "comment.output",
+      "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    },
+    {
+      "id": "6f624fd48080420be076e2e03f4dc1c7dd8e4683e738ab17b4e1bbf772fed4c4",
+      "rule": "comment.missing-head",
+      "path": "backend/src/ai/integrations/acp/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing adapter responsibility contract before first business statement."
+    },
+    {
+      "id": "75dd0bd2f1047e23ef1ef7a87933fe500da38354c74068e3cfba3362f510fd40",
+      "rule": "comment.missing-head",
+      "path": "backend/src/audit/fallback_summary_renderer.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    },
+    {
+      "id": "b0f4fab79ecb54e9da28b236b046ddf51a24ac9457f04cf44e63e540f94426aa",
+      "rule": "comment.missing-head",
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing adapter responsibility contract before first business statement."
+    },
+    {
+      "id": "bbc1849c9a02c90c6be6ac521f0dcc22694184cfeabdef077ab0e0b18f30fc02",
+      "rule": "comment.missing-head",
+      "path": "backend/src/audit/debug_summary_generator.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    },
+    {
+      "id": "bdebb6ba5c81931831cac6bbd022b871c0b659f5c64f60c062c0a54358657b06",
+      "rule": "comment.missing-head",
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing adapter responsibility contract before first business statement."
+    },
+    {
+      "id": "d9730ab903fd7a94bb383532f1e7f3b60d1f5f6130c8b79e82021dfdd5b8f6f0",
+      "rule": "comment.input",
+      "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "dcecdc109191f49f68fd004f8b8037c803e2a7d434f8bd02228b519850beed7b",
+      "rule": "comment.missing-head",
+      "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing adapter responsibility contract before first business statement."
+    },
+    {
+      "id": "dec80e6d8508810a6e1df5ba2fdd10d1b54573c04d0a17285e3b3ce911cb253a",
+      "rule": "comment.missing-head",
+      "path": "backend/src/ai/runtime/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing exports responsibility contract before first business statement."
+    },
+    {
+      "id": "e75e6a93576bfb70c1abb69f9b8c70149474eb41730001e87c7b3625c4cf681c",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "fdfc9df40efa6d9bcf53b6f74ecf95c9cf1b20977c923cd547b323e18bee3c69",
+      "rule": "comment.output",
+      "path": "backend/src/audit/deterministic_checks.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    }
+  ],
+  "returnedOriginalDebtCount": 0,
+  "returnedOriginalDebt": [],
+  "newFailureCount": 0,
+  "previousFailuresRemain": [],
+  "scope": "固定c9adfd31相对固定e0dd0306原债分区；旧报告/分区与原1779全字节不改，不表示玩法或注释内容正确性。"
+}

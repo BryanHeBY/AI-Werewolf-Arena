@@ -1,0 +1,23 @@
+{
+  "previousPrefix": "e0dd0306",
+  "currentPrefix": "c9adfd31",
+  "runnerFullBytesSame": true,
+  "changes": [
+    "input-verification only fixed prefix e0dd0306→c9adfd31",
+    "partition current prefix→c9adfd31, previous report/partition→e0dd0306 and exact previous commit/scope text"
+  ],
+  "originalTools": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-e0dd0306-run.ts",
+      "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-e0dd0306-input-verification.py",
+      "sha256": "f03eb540173b0ce3c47a27972a19abb15233d9c48d6de258f449472247cc62c0"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-e0dd0306-partition.py",
+      "sha256": "0440b993c0b53efcb617b739496878d0a9baa6d64a260f11c435ccb3cc79d0c0"
+    }
+  ]
+}

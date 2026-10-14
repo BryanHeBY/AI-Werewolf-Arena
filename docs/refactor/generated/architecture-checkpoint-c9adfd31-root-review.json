@@ -1,0 +1,37 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c",
+  "source": [],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9adfd31-scope-final.json",
+    "sha256": "22b9e83936fa18a6f830e81dd23e78898f0d1ab692b85f5c4e8366b9a0708987"
+  },
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-c9adfd31.md",
+    "sha256": "744099ad2f69c826304be816acf983b799e49c80565459dbb99f8173f42213d5"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9adfd31-evidence.json",
+    "sha256": "12cd1ab608cf5822dd4e6e3fcb0f58b16ab8edeb2229865d72b0687f562fa1a8"
+  },
+  "integrity": {
+    "freshSources": 0,
+    "actualGitBefore": 0,
+    "controls": 6,
+    "artifactHashes": 11,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "固定c9adfd31公开Git blob/mode/SHA/原UTF8/order与674同Git文档及80MB完整输入",
+    "六原工具和1779债完整SHA保持、strictfalse/mappings空，sourceDigest与唯一报告同",
+    "225remaining/1554cleared互斥覆盖原债，相对e0dd清15/返回0/新增0",
+    "后台gate和两个pure核真实唯一exit0收据；后继三个作者WIP排除、非有效中文/完整55/P9验收"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}
