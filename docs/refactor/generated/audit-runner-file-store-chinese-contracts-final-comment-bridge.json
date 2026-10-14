@@ -1,0 +1,20 @@
+{
+  "path": "backend/src/recording/file_store.ts",
+  "beforeSha256": "e430f7393e8749d5401a1a80d481087164567bbe1b3d6494f838ad0d6f7e412c",
+  "sha256": "2c34adb36cc5d6abfacc5f95d41bb4d10002c4cc7f37fe8a190915332fa90022",
+  "exactWholeCommentForwardInverse": true,
+  "typedNodes": 247,
+  "noncommentLeaves": 320,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true
+    }
+  ],
+  "headUnchanged": true,
+  "limits": "原proof/head收据保首两源阶段，末只有Store两个同位comment，未重复业务、类型、头或全proof。"
+}

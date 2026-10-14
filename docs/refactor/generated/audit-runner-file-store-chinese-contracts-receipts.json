@@ -1,0 +1,58 @@
+{
+  "proof": {
+    "command": "bun --no-env-file docs/refactor/generated/audit-runner-file-store-chinese-contracts-proof.cjs",
+    "terminalChunk": "b85601",
+    "exitCode": 0,
+    "executions": 1,
+    "summary": {
+      "sources": 2,
+      "typedNodes": 607,
+      "noncommentLeaves": 742,
+      "wholeRawOutputs": 4
+    },
+    "output": "docs/refactor/generated/audit-runner-file-store-chinese-contracts-proof-output.txt"
+  },
+  "heads": {
+    "command": "bun --no-env-file docs/refactor/generated/audit-runner-file-store-chinese-contracts-heads.ts",
+    "terminalChunk": "1a9def",
+    "exitCode": 0,
+    "executions": 1,
+    "sources": 2,
+    "documentationPaths": 618,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "output": "docs/refactor/generated/audit-runner-file-store-chinese-contracts-heads-output.txt"
+  },
+  "notRun": [
+    "types",
+    "business tests",
+    "models",
+    "games",
+    "full gates",
+    "green repeats"
+  ],
+  "sourceAtInitialProofAndHeads": [
+    {
+      "path": "backend/src/audit/task_runner.ts",
+      "sha256": "f242e43a585e29eaa8fac039afa5e45abe87e8aa56c60e1e109c461e24504e3f"
+    },
+    {
+      "path": "backend/src/recording/file_store.ts",
+      "sha256": "e430f7393e8749d5401a1a80d481087164567bbe1b3d6494f838ad0d6f7e412c"
+    }
+  ],
+  "finalCommentBridge": {
+    "command": "bun --no-env-file docs/refactor/generated/audit-runner-file-store-chinese-contracts-final-comment-bridge.cjs",
+    "terminalChunk": "782802",
+    "exitCode": 0,
+    "executions": 1,
+    "report": "docs/refactor/generated/audit-runner-file-store-chinese-contracts-final-comment-bridge.json",
+    "output": "docs/refactor/generated/audit-runner-file-store-chinese-contracts-final-comment-bridge-output.txt",
+    "limits": "原proof/head采样末校准前；只Store两同位comment准确性／缩进桥，无绿色复跑。"
+  },
+  "metadataWriterFirst": {
+    "terminalChunk": "57c8f8",
+    "exitCode": 1,
+    "reason": "证据组装dict重复scope关键字；只修metadata组装，不是源/验证失败。"
+  }
+}

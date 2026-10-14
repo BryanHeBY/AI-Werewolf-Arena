@@ -1,0 +1,82 @@
+[
+  {
+    "path": "backend/src/audit/task_runner.ts",
+    "before": "import type { Locale }",
+    "after": "/**\n * 负责在原并发上限内领取审计任务、按原输入顺序收集结果及逐任务重试。\n * 输入为任务原引用、会话标识、执行器和限制；输出原发现或次数耗尽的失败条目，异常仍可能拒绝整个 run。\n * 本实例只驱动已有 executor，不创建／关闭会话；执行器与关闭责任由审计 pipeline 持有。\n * 超时交给每次 runTurn，任务领取和已完成结果不回滚；审计调用不提交游戏行动或修改录制。\n */\nimport type { Locale }"
+  },
+  {
+    "path": "backend/src/audit/task_runner.ts",
+    "before": "export interface AuditTaskRunnerOptions {",
+    "after": "/** 限制数据由调用方提供；本类保原引用，不校验／归一化次数或并发，也不把 timeout 当成关闭确认。 */\nexport interface AuditTaskRunnerOptions {"
+  },
+  {
+    "path": "backend/src/audit/task_runner.ts",
+    "before": "/** Runs independent audit tasks with bounded concurrency and adaptive payload retries. */",
+    "after": "/** 每次 run 独立持有 cursor／结果；重试只属于当前任务，executor 仍是调用方交付的同一实例。 */"
+  },
+  {
+    "path": "backend/src/audit/task_runner.ts",
+    "before": "    const results: AuditAgentOutput[] = new Array(tasks.length);",
+    "after": "    // 结果槽按原任务 index 分配；并发完成顺序不决定输出顺序，不复制任务数组或发现对象。\n    const results: AuditAgentOutput[] = new Array(tasks.length);"
+  },
+  {
+    "path": "backend/src/audit/task_runner.ts",
+    "before": "        const index = cursor++;",
+    "after": "        // 同步领取时先推进共享 cursor，再读取任务并等待；该 worker 失败不将 index 放回队列。\n        const index = cursor++;"
+  },
+  {
+    "path": "backend/src/audit/task_runner.ts",
+    "before": "    let payload = task.payload;",
+    "after": "    // 首次沿用原 payload 引用；只有未提交 findings 的分支主动缩减，请求错误不在这里更换引用。\n    let payload = task.payload;"
+  },
+  {
+    "path": "backend/src/audit/task_runner.ts",
+    "before": "    for (let attempt = 1; attempt <= this.options.maxAttempts; attempt++) {",
+    "after": "    // 每轮原条件点读取 maxAttempts，每次调用读取 timeout；不提前缓存限制或增加总任务期限。\n    for (let attempt = 1; attempt <= this.options.maxAttempts; attempt++) {"
+  },
+  {
+    "path": "backend/src/audit/task_runner.ts",
+    "before": "        payload = shrinkAuditPayload(payload);",
+    "after": "        // 先告警再缩减并替换；告警或缩减抛错也进入原 catch，已交付执行器的前缀不撤销。\n        payload = shrinkAuditPayload(payload);"
+  },
+  {
+    "path": "backend/src/audit/task_runner.ts",
+    "before": "      } catch (error) {",
+    "after": "      } catch (error) {\n        // 这里的诊断／告警本身不再被本层捕获；若再次失败，不能承诺一定返回耗尽条目。"
+  },
+  {
+    "path": "backend/src/recording/file_store.ts",
+    "before": "import type { Locale }",
+    "after": "/**\n * 负责会话目录的文本／JSON 文件写入。输入为原目录、相对路径和内容；输出原写入 Promise 或严格失败。\n * Store 只执行目录创建与单文件临时写入／rename；初始化时点、文件集合、会话和归档次序仍由录制调用方拥有。\n * 宽写入只捕获编码之后的写入阶段，JSON 编码错误仍传播；严格写入的错误原样交回调用方。\n * 固定同目录 .tmp 不承诺同路径并发隔离或多文件事务，失败不自动删除临时文件，也不补写终档。\n */\nimport type { Locale }"
+  },
+  {
+    "path": "backend/src/recording/file_store.ts",
+    "before": "/** Atomic filesystem adapter for one replay session directory. */",
+    "after": "/** 构造只保存原目录和语言；不创建目录或读取会话，初始化与最终关闭归上层录制生命周期。 */"
+  },
+  {
+    "path": "backend/src/recording/file_store.ts",
+    "before": "  async initialize(): Promise<void> {",
+    "after": "  /** 只在调用方实际调用时递归建立 players 目录；mkdir 错误传播，不在每次写入时隐式初始化。 */\n  async initialize(): Promise<void> {"
+  },
+  {
+    "path": "backend/src/recording/file_store.ts",
+    "before": "    await this.write(relativePath, JSON.stringify(data, null, 2), \"json\");",
+    "after": "    // 先求值 write 方法，再编码参数；stringify 在 write 的 catch 外，循环数据等错误仍拒绝本 Promise。\n    await this.write(relativePath, JSON.stringify(data, null, 2), \"json\");"
+  },
+  {
+    "path": "backend/src/recording/file_store.ts",
+    "before": "  /** 产品消费文件使用严格写入，失败由调用方感知，避免生成残缺复盘。 */",
+    "after": "/** 必需产品文件保原编码与写入错误，不降为可选告警；调用方仍负责聚合失败和终档完整性。 */"
+  },
+  {
+    "path": "backend/src/recording/file_store.ts",
+    "before": "    } catch (error) {",
+    "after": "    } catch (error) {\n      // catch 覆盖原 writeAtomic 查找／调用／等待，不覆盖此前 JSON 编码；日志／诊断再次抛错仍传播。"
+  },
+  {
+    "path": "backend/src/recording/file_store.ts",
+    "before": "    const temporary = `${target}.tmp`;",
+    "after": "    // 单个目标使用固定同目录临时名，先完整 write 再 rename；无唯一临时名、跨文件事务或失败 cleanup。\n    const temporary = `${target}.tmp`;"
+  }
+]
