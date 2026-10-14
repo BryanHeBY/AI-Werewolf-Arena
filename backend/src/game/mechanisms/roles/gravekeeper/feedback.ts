@@ -1,5 +1,9 @@
 /**
- * 负责在守墓人反馈阶段记录已提交的放逐结果。输入为接受的放逐结果及当前守墓人状态；输出为报告与事件。不公开未提交目标的身份或改变放逐结算。普通历史写入在原提交位置交给本地状态所有者；校验、使用记账和发布仍在此流程。
+ * 负责守墓人的放逐标签捕获与下一夜反馈交付。输入是原 World／目标／放逐日和原阶段上下文；
+ * 输出是按当时查验政策形成的反馈副本，或写入原历史后发布的报告事件。
+ * 普通板在标死前捕获已接受目标，动物板在死亡／关单位／事实后按生命门控捕获；真实放逐判定与时点仍归规则组合和经理。
+ * 本阶段只交付前一日反馈，按原存活名单和接收日去重；不把查验标签等同于真实阵营，不改变死亡、付款或行动许可。
+ * 历史成功写入后才发布事件，后续失败不回滚报告；本模块不替代期限、窗口或原体复验。
  */
 import { recordExileFeedback } from "./state";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -12,7 +16,8 @@ import { resolveInspection } from "../inspection";
 import { getGravekeeperState } from "./state";
 import type { NightStageHandler } from "../../stages/night/contracts";
 
-/** The manager calls this only after the voting hook confirms the main target's actual exile. */
+/** 仅捕获此刻的 camp 查验标签，不自行核死亡／放逐资格；普通与动物路径各在原门控点调用。
+ * 省略 catalog 时仍在原参数位置取得默认实例，结果再浅复制；下一夜交付沿用原反馈结果，不重新调用查验。 */
 export function captureExileFeedback(
   world: World,
   targetId: EntityId,
@@ -29,12 +34,15 @@ export const GRAVEKEEPER_FEEDBACK_STAGE: NightStageHandler = {
   async execute(ctx) {
     const fact = ctx.previousExile,
       receivedDay = ctx.currentDay();
+    // 先读取原反馈与日期，再按当前性／前一日短路；过期或无反馈不读取演员名单。
     if (!ctx.isCurrent() || !fact || fact.exileDay !== receivedDay - 1) return;
     for (const actorId of ctx.getAliveByRole(Role.Gravekeeper)) {
       if (!ctx.isCurrent()) return;
       const role = ctx.world.getComponent(actorId, COMPONENT.Role);
       const state = role?.role === Role.Gravekeeper ? getGravekeeperState(role) : undefined;
+      // 每名演员仍先复验当前性与实际角色；原去重只看 receivedDay，不另加目标／放逐日规则。
       if (!state || state.history.some((report) => report.receivedDay === receivedDay)) continue;
+      // 原历史提交先于 Date.now／事件复制与 push；发布失败保留已写报告，不能补交或退回历史。
       recordExileFeedback(state, fact, receivedDay);
       ctx.events.push({
         timestamp: Date.now(),

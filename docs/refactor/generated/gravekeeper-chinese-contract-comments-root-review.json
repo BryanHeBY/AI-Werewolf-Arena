@@ -1,0 +1,45 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "c9e7a3c876a532c880308edb9b8cb71a9773c88b",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "sha256": "13ddaaa239ea463102133afb3d7c1c4ba7d180bd4361943768e9cce1f75288cf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "sha256": "d7270127dc64ae84ef9a06225fd8807e20b3d9d75f40b5cdfcc10fceb9c5dc99"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-scope-final.json",
+    "sha256": "1a0404b8144c5f437c8576256b2ea260bc6ed2fcc2ac0a897d27e660722aad7c"
+  },
+  "document": {
+    "path": "docs/refactor/gravekeeper-chinese-contract-comments.md",
+    "sha256": "3c1ccadf7f84a23857c2268e9f09c5286646f318ac9671c1674093e3055447fd"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-evidence.json",
+    "sha256": "6b055aeaeaef49dbce342f87709e6f2425f2306f5c4c1d1e840d964ad92d4018"
+  },
+  "integrity": {
+    "freshSources": 2,
+    "actualGitBefore": 2,
+    "controls": 0,
+    "artifactHashes": 9,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "完整语义": "两源完整set/get/record/capture/feedback阶段及当前PM/放逐规则已读。直接槽读取不作schema/live授权，capture当时camp查验并复制结果，下一夜不重新查验。",
+    "中文准确性": "修原死后英文限定为普通死亡前/Animal门控后；push receiver/spread、前一日→名单→角色/receivedDay去重→history→event失败前缀就地准确，不新增拒绝/退款。",
+    "静态证据": "实际c9e7两全文、9purecomment和9附件核同，完整416typed/501叶/四emit保持，head2实际0；无tests/type/fullgate或绿色重复。"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

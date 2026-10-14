@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "baseCommit": "c9e7a3c876a532c880308edb9b8cb71a9773c88b",
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+        "sha256": "13ddaaa239ea463102133afb3d7c1c4ba7d180bd4361943768e9cce1f75288cf"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+        "sha256": "d7270127dc64ae84ef9a06225fd8807e20b3d9d75f40b5cdfcc10fceb9c5dc99"
+      }
+    ],
+    "deleted": [],
+    "counts": {
+      "paths": 2,
+      "actualGitBefore": 2,
+      "commentEditRecords": 9
+    },
+    "onlyChange": "守墓人两个完整小模块的有效中文说明；所有字段／函数／类型／导出／i18n／机器文本及运行逻辑不变",
+    "scopeExcludes": [
+      "hooks／ports／profile及其它角色",
+      "PM／NP／DR／规则组合",
+      "生产数据／测试／golden／模型文本",
+      "Git／progress／共享矩阵"
+    ]
+  },
+  "scopeSha256": "1a0404b8144c5f437c8576256b2ea260bc6ed2fcc2ac0a897d27e660722aad7c",
+  "documentation": {
+    "path": "docs/refactor/gravekeeper-chinese-contract-comments.md",
+    "sha256": "3c1ccadf7f84a23857c2268e9f09c5286646f318ac9671c1674093e3055447fd"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-before-verification.json",
+      "sha256": "ec7b558cfe4a0e8146a357b037b421c185f51c550a28594eb49894e224868b91"
+    },
+    {
+      "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-before.json",
+      "sha256": "97c240d8b3d7050837647f8f915e51432b4a99e4f67c38ec74089ee544b1cf06"
+    },
+    {
+      "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-edits.json",
+      "sha256": "4055a54052f066a8769f06212f9d59633dfa4595daaecd04ffa3d9ab396182c7"
+    },
+    {
+      "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-heads.json",
+      "sha256": "4bf088bfcdef5245fea6b20ad76d2b5aa7b4fcd1bd38efe5121aa9dd1af087f0"
+    },
+    {
+      "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-heads.ts",
+      "sha256": "0888ed77201379b23acc48b56e273806f34f077216eaae0a0d6db76f63e0ed5f"
+    },
+    {
+      "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-proof.cjs",
+      "sha256": "4cae391f7eb12e6870df57ae45eb14f1beb6f599b027b81724171a19b5b731eb"
+    },
+    {
+      "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-proof.json",
+      "sha256": "c06ea89ab2e37ae63d056c0902bfaaffffbe2665f0be0243412ad57cb0e90aba"
+    },
+    {
+      "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-receipts.json",
+      "sha256": "1e2ee7d610f9c12b093090838a1b7e8b4f48becf409f663f48f67f8338f56a1a"
+    },
+    {
+      "path": "docs/refactor/generated/gravekeeper-chinese-contract-comments-scope-final.json",
+      "sha256": "1a0404b8144c5f437c8576256b2ea260bc6ed2fcc2ac0a897d27e660722aad7c"
+    }
+  ],
+  "receipts": {
+    "proof": {
+      "chunk_id": "b16e71",
+      "wall_time_seconds": 0.275007004,
+      "exit_code": 0,
+      "original_token_count": 19,
+      "output": "{\"sources\":2,\"typedNodes\":416,\"noncommentLeaves\":501,\"wholeRawOutputs\":4}\n"
+    },
+    "heads": {
+      "chunk_id": "627d15",
+      "wall_time_seconds": 0.183220051,
+      "exit_code": 0,
+      "original_token_count": 92,
+      "output": "{\"source\":[{\"path\":\"backend/src/game/mechanisms/roles/gravekeeper/state.ts\",\"sha256\":\"13ddaaa239ea463102133afb3d7c1c4ba7d180bd4361943768e9cce1f75288cf\"},{\"path\":\"backend/src/game/mechanisms/roles/gravekeeper/feedback.ts\",\"sha256\":\"d7270127dc64ae84ef9a06225fd8807e20b3d9d75f40b5cdfcc10fceb9c5dc99\"}],\"documentationPaths\":586,\"diagnostics\":[],\"chineseHeadFailures\":[]}\n"
+    },
+    "onlyComments": true,
+    "notRun": [
+      "business tests",
+      "types",
+      "full gates",
+      "models",
+      "network"
+    ],
+    "noRepeatedGreen": true
+  },
+  "proofSummary": {
+    "sources": 2,
+    "typedNodes": 416,
+    "noncommentLeaves": 501,
+    "wholeRawOutputs": 4
+  },
+  "beforeVerification": {
+    "chunk": "d4fcfa",
+    "exitCode": 0,
+    "actualGitSources": 2,
+    "allBytesSame": true,
+    "scopedDiffCheck": true
+  },
+  "limits": [
+    "仅两个模块九项纯注释记录；schema／live对象／历史写入／反馈算法和所有非comment代码保持。",
+    "普通与动物路径调用时点不混合，capture本身不检真实死亡；readcast不等于结构校验或行动许可。",
+    "原getters／push／spread／history→event失败前缀只准确说明，不新增校验、回滚、付款或发布。",
+    "只有静态wholeprogram／四wholeemit与有限head，不重business/type/fullgate；独审内容需实际读源码。",
+    "历史档案原文不改，peer/root artifacts不加入以避免循环。"
+  ],
+  "independentReview": "待非作者源码语义／实际Git／SHA审"
+}

@@ -1,0 +1,58 @@
+{
+  "approved": true,
+  "baseCommit": "c9e7a3c876a532c880308edb9b8cb71a9773c88b",
+  "commentEditRecords": 9,
+  "programs": [
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "beforeSha256": "b3a4ab10bb46cbed0adb36490f0d77f19cae21221beda1803d568c1abd53cb6b",
+      "afterSha256": "13ddaaa239ea463102133afb3d7c1c4ba7d180bd4361943768e9cce1f75288cf",
+      "typedNodes": 129,
+      "noncommentLeaves": 155,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "915896a111110594ba708f9db4d0d0a7ff5a67ae76c0aa3a92d43b27194f7f99"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "ce309fd84e6c0245763beb09b561f42556f7938efe4ada15a097ddbc94bf7556"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "beforeSha256": "1ea77d6f316d1ac0fa54bf97a412563482e6ffd51a95b7e57672b1a668aa3563",
+      "afterSha256": "d7270127dc64ae84ef9a06225fd8807e20b3d9d75f40b5cdfcc10fceb9c5dc99",
+      "typedNodes": 287,
+      "noncommentLeaves": 346,
+      "exactCommentForwardAndCompleteTypedTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "a755b5206e5313a6cb210f99cc260f1eb02979ff959675391f36052a22f759bd"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "13c8cded9a071893228f19ef0aaff86f9a1a40e0c957a90ef648f692aac12ec6"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "sources": 2,
+    "typedNodes": 416,
+    "noncommentLeaves": 501,
+    "wholeRawOutputs": 4
+  },
+  "limits": [
+    "只核两个完整模块非注释程序与原运行输出；不执行业务、类型、对局或全门禁。",
+    "职责头形状不等于语义；具体授权、日期、clone失败与绑定顺序由非作者实际源审。",
+    "注释改变真实源码SHA；不修改历史档案身份。"
+  ]
+}
