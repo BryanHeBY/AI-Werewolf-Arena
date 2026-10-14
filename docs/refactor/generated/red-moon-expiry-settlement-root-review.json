@@ -1,0 +1,60 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "033218f2c166a369e795745a431421f17ef58b79",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "9278b7913515607a7b0b7c9455c3ddd8b6a4eb20496247d387f7825714e8ec1f",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/red-moon-expiry-settlement.ts",
+      "sha256": "c5554a91819ba8e91151896ff7a3ebc522691e695fef8f059142eee1ee24135f",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+      "sha256": "803cdd032b423eec80bd097305a0138436915791d4da8359d3ca57d80dcdddd8",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/rulesets/terminal-victory-policy.ts",
+      "sha256": "7120f87637907773afe56703a41eff1a3d15cdc71526f1bb4f9fca9365a66a5b",
+      "change": "modified"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/red-moon-expiry-settlement-scope-final.json",
+    "sha256": "c092e018ed79e8a4961f420dd5d485086aef9f711437e1dd27cb6f77cbefd027"
+  },
+  "document": {
+    "path": "docs/refactor/red-moon-expiry-settlement.md",
+    "sha256": "782b23915e5173d77d1fdd0699099bb0145941426bdd9826f21d6625787fe8be"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/red-moon-expiry-settlement-evidence.json",
+    "sha256": "34cfcdf345def2aaa43451241f337c284540ced5f923de803fd23baa2c35606e"
+  },
+  "integrity": {
+    "freshSources": 4,
+    "actualGitBefore": 2,
+    "controls": 5,
+    "artifactHashes": 19,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整033两Git before与五authority/registry/recording/scenario控制",
+    "完整原40行拆分及实际同步生成器四语句/条件六语句/PM保留三个等待后语句",
+    "候选原引用与registrycallee/World/条件/checkpoint晚读顺序",
+    "原追加死亡await、可读性和当前性失败不恢复，完整夜报/终局/finally仍经理持有",
+    "原Alive复验、expire资源提交、同fact发布和记录首失败前缀",
+    "四源重要中文职责与Terminal仅单句归属、实际type/head采样和19附件边界"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

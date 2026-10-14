@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen",
+  "baseCommit": "033218f2c166a369e795745a431421f17ef58b79",
+  "currentGitAtFreeze": "033218f2c166a369e795745a431421f17ef58b79",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "9278b7913515607a7b0b7c9455c3ddd8b6a4eb20496247d387f7825714e8ec1f",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/red-moon-expiry-settlement.ts",
+      "sha256": "c5554a91819ba8e91151896ff7a3ebc522691e695fef8f059142eee1ee24135f",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+      "sha256": "803cdd032b423eec80bd097305a0138436915791d4da8359d3ca57d80dcdddd8",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/rulesets/terminal-victory-policy.ts",
+      "sha256": "7120f87637907773afe56703a41eff1a3d15cdc71526f1bb4f9fca9365a66a5b",
+      "change": "modified"
+    }
+  ],
+  "deleted": [],
+  "before": "docs/refactor/generated/red-moon-expiry-settlement-before.json",
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9139efec2cd11feee2c087a385b4f67fa92e75ac24f13de5fa9e7849f6485316",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/src/core/domain/registries/condition_registry.ts",
+      "sha256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/src/recording/session_recorder.ts",
+      "sha256": "fe05aedd6aa2324462547124ee2d1bfdde69a38b179b7956bc7f7d5603e59527",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts",
+      "sha256": "c59edba0f81d33bf13653c26a374d2f7fc3361a4e7b205366f2ded8f6b1899b7",
+      "wholeGitCurrentSame": true
+    }
+  ],
+  "limits": [
+    "新生成器、晚读视图及局部变量是实际API/运行布局改变；旧私有方法/namespace任意重绑定不冒全环境等价。",
+    "完整newbody和realawait精确回到原40行；raw因布局可能不同如实记录，只有whole打印映射输出同才作结构保持证据。",
+    "经理仍拥有追加死亡await、assertReadable/current、夜报/终态与finally；DR失败不恢复生成器，没有Promise/新current/二store。",
+    "不执行类型、行为、门禁或全冷启动图。",
+    "原审批3源＋Root授权Terminal现有职责头单句成为真实4源；没有别的胜负政策改动。",
+    "旧首type/head/runtime在newunit literal返回注解前，unit两raw桥保阶段，不伪称重新采样。",
+    "只有限4根类型首诊断与失败1根复查，当前工作树其它并行源不当固定控制或本批交付。"
+  ]
+}

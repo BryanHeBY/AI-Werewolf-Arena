@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts:
+(pass) 没有原生板子不读World，没有到期者不读registry或配置 [0.41ms]
+(pass) 到期前已胜候选保原引用、三参数评估及晚读取，不请求死亡或提交 [67.12ms]
+(pass) 暂停后先核真实死亡，事件失败保已提交到期和原审计且不恢复生命 [5.53ms]
+
+ 3 pass
+ 0 fail
+ 30 expect() calls
+Ran 3 tests across 1 file. [169.00ms]

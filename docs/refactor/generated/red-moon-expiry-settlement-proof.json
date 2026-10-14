@@ -1,0 +1,261 @@
+{
+  "baseCommit": "033218f2c166a369e795745a431421f17ef58b79",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "9278b7913515607a7b0b7c9455c3ddd8b6a4eb20496247d387f7825714e8ec1f"
+    },
+    {
+      "path": "backend/src/rulesets/red-moon-expiry-settlement.ts",
+      "sha256": "c5554a91819ba8e91151896ff7a3ebc522691e695fef8f059142eee1ee24135f"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+      "sha256": "803cdd032b423eec80bd097305a0138436915791d4da8359d3ca57d80dcdddd8"
+    },
+    {
+      "path": "backend/src/rulesets/terminal-victory-policy.ts",
+      "sha256": "7120f87637907773afe56703a41eff1a3d15cdc71526f1bb4f9fca9365a66a5b"
+    }
+  ],
+  "originalRegionLines": 40,
+  "unitTypeBridge": {
+    "path": "backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+    "beforeSha256": "8e5021ad28fb2672a5082bb0a3369ecfdc3253c5381991a7815ed957cec761f6",
+    "sha256": "803cdd032b423eec80bd097305a0138436915791d4da8359d3ca57d80dcdddd8",
+    "wholeSingleTypeInverse": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true
+      }
+    ]
+  },
+  "wholeManager": {
+    "typedNonJSDocNodes": 4991,
+    "nonJSDocLeaves": 6283,
+    "wholeTreeAndLeafSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      }
+    ],
+    "preciseEdits": 5,
+    "wholeRawForwardInverse": true
+  },
+  "completeMovedBody": {
+    "typedNonJSDocNodes": 231,
+    "nonJSDocLeaves": 307,
+    "wholeTreeAndLeafSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      }
+    ],
+    "ownerTopLevelStatements": 4,
+    "conditionalStatements": 6,
+    "originalWaitStatements": 3,
+    "oneYieldAndNoAsync": true,
+    "actualManagerAwaitRetained": true
+  },
+  "callerGetters": [
+    {
+      "name": "world",
+      "text": "get world() { return manager.world; }"
+    },
+    {
+      "name": "events",
+      "text": "get events() { return manager.events; }"
+    },
+    {
+      "name": "registry",
+      "text": "get registry() { return manager.conditionRegistry; }"
+    },
+    {
+      "name": "config",
+      "text": "get config() { return manager.config; }"
+    },
+    {
+      "name": "checkpoint",
+      "text": "get checkpoint() { return manager.#rulePlan.checkpoints.nightSettled; }"
+    }
+  ],
+  "bindings": [
+    {
+      "before": {
+        "name": "COMPONENT",
+        "imported": "COMPONENT",
+        "specifier": "../../core/domain/components/names",
+        "target": "backend/src/core/domain/components/names.ts"
+      },
+      "current": {
+        "name": "COMPONENT",
+        "imported": "COMPONENT",
+        "specifier": "../core/domain/components/names",
+        "target": "backend/src/core/domain/components/names.ts"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "before": {
+        "name": "DeathCause",
+        "imported": "DeathCause",
+        "specifier": "../../core/domain/model",
+        "target": "backend/src/core/domain/model.ts"
+      },
+      "current": {
+        "name": "DeathCause",
+        "imported": "DeathCause",
+        "specifier": "../core/domain/model",
+        "target": "backend/src/core/domain/model.ts"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "before": {
+        "name": "Phase",
+        "imported": "Phase",
+        "specifier": "../../core/domain/model",
+        "target": "backend/src/core/domain/model.ts"
+      },
+      "current": {
+        "name": "Phase",
+        "imported": "Phase",
+        "specifier": "../core/domain/model",
+        "target": "backend/src/core/domain/model.ts"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "before": {
+        "name": "demonRedMoonExpiry",
+        "imported": "demonRedMoonExpiry",
+        "specifier": "../mechanisms/roles/demon_hunter/ports",
+        "target": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts"
+      },
+      "current": {
+        "name": "demonRedMoonExpiry",
+        "imported": "demonRedMoonExpiry",
+        "specifier": "../game/mechanisms/roles/demon_hunter/ports",
+        "target": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "before": {
+        "name": "commitDemonRedMoonTransition",
+        "imported": "commitDemonRedMoonTransition",
+        "specifier": "../mechanisms/roles/demon_hunter/ports",
+        "target": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts"
+      },
+      "current": {
+        "name": "commitDemonRedMoonTransition",
+        "imported": "commitDemonRedMoonTransition",
+        "specifier": "../game/mechanisms/roles/demon_hunter/ports",
+        "target": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "before": {
+        "name": "TERMINAL_VICTORY_POLICY",
+        "imported": "TERMINAL_VICTORY_POLICY",
+        "specifier": "../../rulesets/terminal-victory-policy",
+        "target": "backend/src/rulesets/terminal-victory-policy.ts"
+      },
+      "current": {
+        "name": "TERMINAL_VICTORY_POLICY",
+        "imported": "TERMINAL_VICTORY_POLICY",
+        "specifier": "./terminal-victory-policy",
+        "target": "backend/src/rulesets/terminal-victory-policy.ts"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "before": {
+        "name": "safeRecordLogicOp",
+        "imported": "safeRecordLogicOp",
+        "specifier": "../../recording/session_recorder",
+        "target": "backend/src/recording/session_recorder.ts"
+      },
+      "current": {
+        "name": "safeRecordLogicOp",
+        "imported": "safeRecordLogicOp",
+        "specifier": "../recording/session_recorder",
+        "target": "backend/src/recording/session_recorder.ts"
+      },
+      "samePhysicalEndpoint": true
+    }
+  ],
+  "terminalCommentBridge": {
+    "path": "backend/src/rulesets/terminal-victory-policy.ts",
+    "beforeSha256": "757dccbc1bdd3f67144bcfb6335cffb5d436e3c093a073f8fded859f34d601f7",
+    "sha256": "7120f87637907773afe56703a41eff1a3d15cdc71526f1bb4f9fca9365a66a5b",
+    "typedNonJSDocNodes": 246,
+    "nonJSDocLeaves": 335,
+    "wholeTreeAndLeafSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "wholePrinterMappedSame": true
+      }
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9139efec2cd11feee2c087a385b4f67fa92e75ac24f13de5fa9e7849f6485316",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/src/core/domain/registries/condition_registry.ts",
+      "sha256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/src/recording/session_recorder.ts",
+      "sha256": "fe05aedd6aa2324462547124ee2d1bfdde69a38b179b7956bc7f7d5603e59527",
+      "wholeGitCurrentSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts",
+      "sha256": "c59edba0f81d33bf13653c26a374d2f7fc3361a4e7b205366f2ded8f6b1899b7",
+      "wholeGitCurrentSame": true
+    }
+  ],
+  "limits": [
+    "新生成器、晚读视图及局部变量是实际API/运行布局改变；旧私有方法/namespace任意重绑定不冒全环境等价。",
+    "完整newbody和realawait精确回到原40行；raw因布局可能不同如实记录，只有whole打印映射输出同才作结构保持证据。",
+    "经理仍拥有追加死亡await、assertReadable/current、夜报/终态与finally；DR失败不恢复生成器，没有Promise/新current/二store。",
+    "不执行类型、行为、门禁或全冷启动图。"
+  ]
+}

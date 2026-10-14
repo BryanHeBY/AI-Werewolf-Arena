@@ -1,0 +1,69 @@
+{
+  "newTests": {
+    "command": "bun test backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+    "chunkId": "655914",
+    "exitCode": 0,
+    "cases": 3,
+    "assertions": 30,
+    "log": "docs/refactor/generated/red-moon-expiry-settlement-new-tests-first.log"
+  },
+  "oldPrecise": {
+    "command": "bun test backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts -t 'ends_game: deferred last wolf expires without completing a side'",
+    "chunkId": "9aba08",
+    "exitCode": 0,
+    "cases": 1,
+    "assertions": 7,
+    "filtered": 4,
+    "log": "docs/refactor/generated/red-moon-expiry-settlement-old-test.log"
+  },
+  "distinctTotals": {
+    "cases": 4,
+    "assertions": 37,
+    "executions": 2,
+    "successfulCaseRepeats": 0
+  },
+  "typesFirst": {
+    "roots": 4,
+    "launchChunkId": "ef9f9d",
+    "sessionId": 6280,
+    "terminalChunkId": "f441da",
+    "exitCode": 2,
+    "diagnosticCount": 1,
+    "diagnostic": "新增unit checkpoint getter推断string，不能赋VictoryCheckpoint；无生产诊断",
+    "log": "docs/refactor/generated/red-moon-expiry-settlement-types-first.log"
+  },
+  "typesFailedRoot": {
+    "roots": 1,
+    "launchChunkId": "b3cb6b",
+    "sessionId": 30322,
+    "terminalChunkId": "526d84",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/red-moon-expiry-settlement-types-failed.log",
+    "repair": "仅新增getter返回字面类型注解，完整unit纯type逆＋两whole raw输出同；不复跑runtime或原三无诊断roots"
+  },
+  "heads": {
+    "roots": 4,
+    "docs": 612,
+    "chunkId": "a754f8",
+    "exitCode": 0,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "log": "docs/refactor/generated/red-moon-expiry-settlement-heads-output.txt",
+    "stage": "unit纯type修前采样，四头全文未变；实际docs612，以本原报告为准而非先前消息606"
+  },
+  "proofFirst": {
+    "command": "bun docs/refactor/generated/red-moon-expiry-settlement-proof.cjs",
+    "chunkId": "4bb4b2",
+    "exitCode": 1,
+    "log": "docs/refactor/generated/red-moon-expiry-settlement-proof-first.log",
+    "executedScript": "docs/refactor/generated/red-moon-expiry-settlement-proof-first-executed.cjs",
+    "finding": "harness预期conditional8stmts，实际yield＋5完成stmts为6；工具断言计数错误，不是产品红"
+  },
+  "proofFinal": {
+    "command": "bun docs/refactor/generated/red-moon-expiry-settlement-proof.cjs",
+    "chunkId": "c830ee",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/red-moon-expiry-settlement-proof-final.log",
+    "repair": "只修工具6stmts计数并追加必要unit纯type桥；生产源未为证明改动"
+  }
+}

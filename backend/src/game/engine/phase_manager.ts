@@ -12,6 +12,7 @@
  * 狼美人候选和屠边覆盖归具名组合，原两处捕获／评估点、配置首命中顺序和唯一封盘仍由本经理推进。
  * 熊夜前采样与黎明知识发布归具名同步组合；本经理保原阶段、await／当前性和发布之后的判胜。
  * 动物单元关闭→快照→完成事实归本族发布owner；四原调用点的守卫、死亡await、反馈和判胜仍在这里。
+ * 赤月到期查询、候选和提交发布归具名同步序列；本经理保原追加死亡等待、复验、夜报及唯一封盘。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
@@ -33,10 +34,6 @@ import {
 import { prepareMistDelayedNight, settleMistDelayedNight, type MistPreparedNightDamage } from "../../rulesets/mist-delayed-night-settlement";
 
 import {
-  demonRedMoonExpiry,
-  commitDemonRedMoonTransition,
-} from "../mechanisms/roles/demon_hunter/ports";
-import {
   demonHunterActorId,
   assertDemonOriginalRoster,
   assertDemonNightReadable,
@@ -49,6 +46,7 @@ import { publishInitialIdentityDeal } from "../mechanisms/roles/initial_identity
 import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { TERMINAL_VICTORY_POLICY } from "../../rulesets/terminal-victory-policy";
+import { settleRedMoonExpiry } from "../../rulesets/red-moon-expiry-settlement";
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-contract";
 import { text } from "@ai-werewolf-arena/game-text";
 import { NightFaultPlan, type FaultPlan } from "./fault_plan";
@@ -454,17 +452,17 @@ export class PhaseManager {
         );
         this.assertDemonReadable();
         if (!nightIsCurrent()) return this.getSnapshot();
-        const expiryActor = ownsDemon ? demonRedMoonExpiry(this.world, nightDay) : null;
-        // 延期的最后一狼仍参与本次普通夜的胜负判断。
-        const beforeExpiryResult =
-          expiryActor === null
-            ? null
-            : this.conditionRegistry.evaluateMany(
-                this.world,
-                TERMINAL_VICTORY_POLICY.conditions({ world: () => this.world, config: () => this.config }),
-                this.#rulePlan.checkpoints.nightSettled,
-              );
-        if (expiryActor !== null && !beforeExpiryResult) {
+        const expirySettlement = settleRedMoonExpiry({
+          get world() { return manager.world; },
+          get events() { return manager.events; },
+          get registry() { return manager.conditionRegistry; },
+          get config() { return manager.config; },
+          get checkpoint() { return manager.#rulePlan.checkpoints.nightSettled; },
+        }, ownsDemon, nightDay);
+        const expiryStep = expirySettlement.next();
+        let beforeExpiryResult = expiryStep.done ? expiryStep.value : null;
+        if (!expiryStep.done) {
+          const expiryActor = expiryStep.value;
           await this.deathResolution.resolve(
             [expiryActor],
             { [expiryActor]: [DeathCause.RedMoonExpiry] },
@@ -476,23 +474,8 @@ export class PhaseManager {
           );
           this.assertDemonReadable();
           if (!nightIsCurrent()) return this.getSnapshot();
-          if (this.world.getComponent(expiryActor, COMPONENT.Alive)?.alive !== false)
-            throw new Error("red_moon_expiry_death_unsettled");
-          if (!commitDemonRedMoonTransition(this.world, expiryActor, "expire", nightDay))
-            throw new Error("red_moon_expiry_commit_revoked");
-          const fact = { actorId: expiryActor, day: nightDay };
-          this.events.push({
-            timestamp: Date.now(),
-            type: "red_moon_delay_expired",
-            payload: fact,
-          });
-          safeRecordLogicOp({
-            scope: "resolution",
-            op: "red_moon_expiry_settled",
-            phase: Phase.Night,
-            status: "ok",
-            output: { ...fact, cause: DeathCause.RedMoonExpiry },
-          });
+          // 只有原死亡等待、可读性及当前性均成功，才恢复到期提交和事实发布；失败不补跑。
+          beforeExpiryResult = expirySettlement.next().value as WinDecision | null;
         }
         const completeDeaths = [
           ...deaths,
