@@ -1,0 +1,27 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9139efec2cd11feee2c087a385b4f67fa92e75ac24f13de5fa9e7849f6485316"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "a624a3fd338630b8a5a729436f1c23fe43b6aa262e374b2c1e0e00358f32b575"
+    },
+    {
+      "path": "backend/src/rulesets/night-readability.ts",
+      "sha256": "896af8f46de8810675ab3bcf1e45d8f34f7d8b22a356259363cfae20d562606f"
+    },
+    {
+      "path": "backend/tests/unit/presentation/component-presentation-owner.test.ts",
+      "sha256": "e9f9ce6fb23d19ed97f0642c99cb6ebdf93f569d1fbc6e1c0d6bcd52588f0cb6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "sha256": "a995483692a43a30d8b2ee02533ec2b3b6ba4f26cefd40996c16db86859f6ecb"
+    }
+  ],
+  "documentationPaths": 551,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

@@ -45,6 +45,9 @@ export { readDemonNativeNightTool } from "./native_potion_requests";
 
 export { readDemonPotionTool } from "./native_potion_requests";
 
+/** 同一请求实现中的可信库存查询；保原模块捕获点与逐方法拒绝顺序，不授予库存写权。 */
+export { demonWitchMarksSafe } from "./native_potion_requests";
+
 export { demonHunterRequestScope } from "./authority";
 
 export { canSubmitDemonHunt } from "./authority";

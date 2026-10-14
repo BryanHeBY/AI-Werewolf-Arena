@@ -1,0 +1,77 @@
+{
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "before": "/**\n * 负责原生猎魔板女巫的请求绑定与共享最早截止时间。输入为原 turn／context 引用及\n * 有界别名；输出为原请求绑定，仅在原生 scope 与躯体校验后写局部绑定。过期、替换或非法原请求撤销\n * 交付，完成仍归原 scope。印记信任检查保留原库存方法身份及描述符读取顺序；\n * 退出的展示属性不授予行动，也不能借注入旧名称绕过可信库存检查。\n */",
+      "after": "/**\n * 负责原生猎魔板女巫请求绑定、共享最早截止时间，以及药印记可信读取的唯一实现。\n * 输入保留 World、turn／context、scope 和原库存引用；输出为请求当前性或只读可信查询，不授予用药权限。\n * 请求别名只在原生 scope／躯体和正文检查后绑定，过期、替换或非法原请求撤销交付，完成仍归原 scope。\n * 五个印记方法在本模块原初始化点捕获一次；原库存／原型、实例遮蔽和已退休展示名称按原次序拒绝。\n * 捕获表、请求 WeakMap 和 guard 保持同一所有者；只读查询不冻结实例、不复制库存或写来源／付款。\n */"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "before": "interface Turn {",
+      "after": "/** 同一原请求的运行绑定；别名共享可提前的期限，World／上下文和current闭包不是序列化凭证。 */\ninterface Turn {"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "before": "interface Request {",
+      "after": "/** 每个真实别名保留原上下文与截止字段，记录本身不深复制请求或扩大资源许可。 */\ninterface Request {"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "before": "/** Bound aliases share the earliest deadline; ordinary copies and changed bodies cannot inherit. */",
+      "after": "/** 通过原绑定与正文／同一上下文检查的别名共享最早截止时间；在原位置记录新的更早期限。 */"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "before": "const trustedMarkMethods = Object.fromEntries(",
+      "after": "// 五方法只在原请求 WeakMap 建立之后的模块初始化点捕获；按既定顺序取 descriptor.value，不执行方法。\n// 表是唯一闭包基准，不在每次查询重捕获，也不因公开端口而提前到另一个模块初始化。\nconst trustedMarkMethods = Object.fromEntries("
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "before": "export function demonWitchMarksSafe(world: World, targetId: number): boolean {",
+      "after": "/** 原库存／方法身份的只读检查；无组件仍按原规则返回 true，不表示有药、合法目标或行动已提交。 */\nexport function demonWitchMarksSafe(world: World, targetId: number): boolean {"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "before": "  if (\n    !statusMarkSnapshot(marks, StatusMark.PoisonMark) ||",
+      "after": "  // 先核原工厂私有库存，再查精确原型；不用实例 has 方法读印记，也不执行遮蔽方法。\n  if (\n    !statusMarkSnapshot(marks, StatusMark.PoisonMark) ||"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "before": "  // 仍先检查原五个库存方法，再在原最后位置拒绝实例／原型注入已退休的展示名称。",
+      "after": "  // 原顺序逐个查实例 descriptor 和原型方法身份，首个失败即停止；随后才查实例／原型旧展示名称。"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "before": "export { readDemonPotionTool } from \"./native_potion_requests\";",
+      "after": "export { readDemonPotionTool } from \"./native_potion_requests\";\n\n/** 同一请求实现中的可信库存查询；保原模块捕获点与逐方法拒绝顺序，不授予库存写权。 */\nexport { demonWitchMarksSafe } from \"./native_potion_requests\";"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "before": "import { demonWitchMarksSafe } from \"../mechanisms/roles/demon_hunter/native_potion_requests\";",
+      "after": "import { demonWitchMarksSafe } from \"../mechanisms/roles/demon_hunter/ports\";"
+    },
+    {
+      "path": "backend/src/rulesets/night-readability.ts",
+      "before": "import { demonWitchMarksSafe } from \"../game/mechanisms/roles/demon_hunter/native_potion_requests\";",
+      "after": "import { demonWitchMarksSafe } from \"../game/mechanisms/roles/demon_hunter/ports\";"
+    },
+    {
+      "path": "backend/tests/unit/presentation/component-presentation-owner.test.ts",
+      "before": "import { demonWitchMarksSafe } from \"../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests\";",
+      "after": "import { demonWitchMarksSafe } from \"../../../src/game/mechanisms/roles/demon_hunter/ports\";"
+    }
+  ],
+  "queryOwner": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+  "scope": [
+    "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+    "backend/src/game/engine/phase_manager.ts",
+    "backend/src/rulesets/night-readability.ts",
+    "backend/tests/unit/presentation/component-presentation-owner.test.ts",
+    "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts"
+  ],
+  "capturedRegionLines": 24,
+  "limits": [
+    "原Requests继续真实owner，无新module／初始化／二store／旧实现桥或退出query出口。",
+    "public重导同一已存在依赖，三consumer具名路由改变；当前模块代码／Trusted表捕获位置及所有方法拒绝接受面保持。"
+  ]
+}

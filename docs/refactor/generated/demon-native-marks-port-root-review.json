@@ -1,0 +1,101 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "baseCommit": "751604fd1d5feea8911354fee550b9ad49c262b7",
+  "scope": {
+    "path": "docs/refactor/generated/demon-native-marks-port-scope-final.json",
+    "sha256": "89b917ff9ac20f542d2a9e4ba985d95439ea29ba82b8504a961884d53a8aa056"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9139efec2cd11feee2c087a385b4f67fa92e75ac24f13de5fa9e7849f6485316"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "a624a3fd338630b8a5a729436f1c23fe43b6aa262e374b2c1e0e00358f32b575"
+    },
+    {
+      "path": "backend/src/rulesets/night-readability.ts",
+      "sha256": "896af8f46de8810675ab3bcf1e45d8f34f7d8b22a356259363cfae20d562606f"
+    },
+    {
+      "path": "backend/tests/unit/presentation/component-presentation-owner.test.ts",
+      "sha256": "e9f9ce6fb23d19ed97f0642c99cb6ebdf93f569d1fbc6e1c0d6bcd52588f0cb6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "sha256": "a995483692a43a30d8b2ee02533ec2b3b6ba4f26cefd40996c16db86859f6ecb"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/demon-native-marks-port.md",
+    "sha256": "e117be7ef41b08f61f9b4c62d8152fdb43ca66ac6257d97908c572d946511cef"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/demon-native-marks-port-evidence.json",
+    "sha256": "42e8097c68645c78086eed1d2e1c82096c9b46d5cb584d8ead5b8a949d369090"
+  },
+  "actualGitChecks": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "actualGitSHA256": "103191c33d540c8c40fe545664590a41bb5bb734f1e55cdc773da8d2c791d63e",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "actualGitSHA256": "ecc677dd2b7cdbfe1c5edd7d61dbec07694acf16c9150f381f6165efa13c902e",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/rulesets/night-readability.ts",
+      "actualGitSHA256": "a5e15010e6e808ace09c99895683abd9727d28fa7d30644e974bbb7fea725634",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/tests/unit/presentation/component-presentation-owner.test.ts",
+      "actualGitSHA256": "26f923d6d45871c40709aab3e4b7adbe3633e4af78be485cfc94d83195fddf9f",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "actualGitSHA256": "47e1977f72e765a9e112c23581ee69c176faab9def35da4b2e46d52bddaad2ae",
+      "wholeForward": true
+    }
+  ],
+  "stableControls": [
+    {
+      "path": "backend/src/core/domain/components/status_marks.ts",
+      "sha256": "b7e13388552260b4255c6ea05087eb22549918a5293384d0633eef6f00b7fd2d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "sha256": "68a06f9440216357d3b8508f1134c8d3f3b869a7a6884646086ed72125918a22"
+    }
+  ],
+  "artifactsVerified": 13,
+  "findings": [],
+  "review": [
+    "完整五源diff与原marks恶意测试、trusted表/guard、Turn/Request/current/deadline真实语义已读；12准确编辑全文forward五Git至终态。",
+    "原24行guard及afterWeakMap捕获点不移动，不引入新module/init/重复capture/写库存；无组件true/Poison snapshot/prototype/5method shadow及同identity/renderPrompt首短路不变。",
+    "Poison snapshot只需原库存有效，不要求present；deadline相等仍允许原绑定，没有借中文说明改变运行接受面。",
+    "public同一具名函数，不搬Requests实现owner/退休原实现export；三外部caller改public，Controller直达保持。",
+    "中文头/请求结构/一次capture/拒绝顺序及知识不授权说明有效；真实1/5、有限5根与heads首次通过，无行为或全门禁绿重复。"
+  ],
+  "notRun": [
+    "tests",
+    "types",
+    "proof rerun",
+    "fullgates",
+    "models"
+  ],
+  "limitations": [
+    "公开路由调整不冒任意旧加载/反射图完全等价；原owner及C17全部迁移没有被虚报。",
+    "全角色/中文/C24/P9继续。"
+  ]
+}

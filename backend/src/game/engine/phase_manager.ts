@@ -36,7 +36,7 @@ import {
   assertDemonOriginalRoster,
   assertDemonNightReadable,
 } from "../mechanisms/roles/demon_hunter/ports";
-import { demonWitchMarksSafe } from "../mechanisms/roles/demon_hunter/native_potion_requests";
+import { demonWitchMarksSafe } from "../mechanisms/roles/demon_hunter/ports";
 import {
   weddingSetup,
   weddingAssignment,

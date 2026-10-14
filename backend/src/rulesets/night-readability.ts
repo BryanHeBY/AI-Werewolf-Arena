@@ -23,7 +23,7 @@ import { assertMagicianRosterCurrent } from "../game/mechanisms/roles/magician/p
 import { assertNightmareRosterCurrent } from "../game/mechanisms/roles/nightmare_shadow/ports";
 import { assertEvilKnightRosterCurrent } from "../game/mechanisms/roles/evil_knight/ports";
 import { assertDemonNightReadable } from "../game/mechanisms/roles/demon_hunter/ports";
-import { demonWitchMarksSafe } from "../game/mechanisms/roles/demon_hunter/native_potion_requests";
+import { demonWitchMarksSafe } from "../game/mechanisms/roles/demon_hunter/ports";
 
 /** 只在原位置读取实际 World；不在创建查询对象时启动任何设置或反射玩家组件。 */
 export interface NightSetupRuntime { world(): World; }

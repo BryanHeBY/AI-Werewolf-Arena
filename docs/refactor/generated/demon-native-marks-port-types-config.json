@@ -1,0 +1,19 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_manager.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/night-readability.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/presentation/component-presentation-owner.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts"
+  ],
+  "include": [],
+  "exclude": []
+}
