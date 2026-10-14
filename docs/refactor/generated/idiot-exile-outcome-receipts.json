@@ -1,0 +1,61 @@
+{
+  "newTests": {
+    "command": "bun test backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+    "chunkId": "898d1b",
+    "exitCode": 0,
+    "cases": 3,
+    "assertions": 22,
+    "log": "docs/refactor/generated/idiot-exile-outcome-new-tests.log"
+  },
+  "oldTest": {
+    "command": "bun test backend/tests/unit/features/red-moon-audit.test.ts -t 'Idiot reveal keeps the original-world audit and disables voting without killing'",
+    "chunkId": "1dc0db",
+    "exitCode": 0,
+    "cases": 1,
+    "assertions": 7,
+    "filtered": 12,
+    "log": "docs/refactor/generated/idiot-exile-outcome-old-test.log"
+  },
+  "distinctTotals": {
+    "cases": 4,
+    "assertions": 29,
+    "executions": 2,
+    "repeatedSuccessfulCases": 0
+  },
+  "typesFirst": {
+    "roots": 5,
+    "launchChunkId": "cd188f",
+    "sessionId": 86572,
+    "terminalChunkId": "3a6db7",
+    "exitCode": 2,
+    "diagnostics": "唯一新unit组件名string不满足ComponentName；无生产诊断",
+    "log": "docs/refactor/generated/idiot-exile-outcome-types-first.log"
+  },
+  "typesFailedRoot": {
+    "roots": 1,
+    "launchChunkId": "d2689d",
+    "sessionId": 24988,
+    "terminalChunkId": "d95e07",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/idiot-exile-outcome-types-failed.log",
+    "repair": "仅新增ComponentName类型导入与参数注解，双whole输出与首green测试源码相同；原四roots无诊断不复跑"
+  },
+  "heads": {
+    "roots": 5,
+    "documentationPaths": 606,
+    "chunkId": "8102fd",
+    "exitCode": 0,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "log": "docs/refactor/generated/idiot-exile-outcome-heads-output.txt",
+    "stage": "新unit类型修复前；五头文字从采样至final未变，unit双emit桥连接真实final，不冒头检查重新执行"
+  },
+  "proof": {
+    "launchChunkId": "95a527",
+    "sessionId": 56418,
+    "terminalChunkId": "60f7c7",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/idiot-exile-outcome-proof.log",
+    "scope": "完整43行原hook、两原消费者、实际15绑定/公开函数identity、5controls、新unit纯type桥及当前155字面静态模块；不是全门禁"
+  }
+}

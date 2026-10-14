@@ -20,7 +20,7 @@ import {
   demonHunterCheckpointPlayers,
 } from "../../../src/game/mechanisms/roles/demon_hunter/authority";
 import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
-import { idiotVotedOutHook } from "../../../src/game/mechanisms/roles/idiot/voted_out_hook";
+import { idiotVotedOutHook } from "../../../src/rulesets/idiot-exile-outcome";
 function dayWorld(policy: "ends_game" | "forbidden" = "ends_game") {
   const fixture = redMoonCandidateWorld(policy);
   beginDemonHunterNight(fixture.world, 1, () => true);

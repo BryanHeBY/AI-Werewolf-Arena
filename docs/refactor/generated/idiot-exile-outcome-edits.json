@@ -1,0 +1,35 @@
+{
+  "sourceEdits": {
+    "backend/src/game/mechanisms/roles/idiot/profile.ts": [
+      {
+        "before": "\"./voted_out_hook\"",
+        "after": "\"../../../../rulesets/idiot-exile-outcome\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/red-moon-audit.test.ts": [
+      {
+        "before": "\"../../../src/game/mechanisms/roles/idiot/voted_out_hook\"",
+        "after": "\"../../../src/rulesets/idiot-exile-outcome\"",
+        "count": 1
+      }
+    ]
+  },
+  "ownerImportReplacements": {
+    "../demon_hunter/authority": "../game/mechanisms/roles/demon_hunter/reveal-ports",
+    "../../../../core/": "../core/",
+    "../../hooks/hook_registry": "../game/mechanisms/hooks/hook_registry",
+    "../../sheriff/badge": "../game/mechanisms/sheriff/badge",
+    "./state": "../game/mechanisms/roles/idiot/state",
+    "/** 文件说明：白痴被放逐时翻牌免死的钩子实现。 */\n": "",
+    "/** 白痴放逐钩子实现。 */": "/** 同步决定本次放逐是否免死；原生命、阶段与后续死亡提交仍归引擎。 */",
+    "  if (demonIdiotRevealed": "  // 原生板子的审计查询先行；只有 null/undefined 才回退普通状态，异常不吞。\n  if (demonIdiotRevealed",
+    "  if (!commitDemonIdiotReveal": "  // 原生提交拥有私有库存和审计；普通分支先翻牌，再依次关闭票权、清零票重。\n  if (!commitDemonIdiotReveal",
+    "  const badge =": "  // 后续警徽或事件失败不会退款已写的翻牌和票权；重复调用直接返回已翻牌结果。\n  const badge ="
+  },
+  "ownerHead": "/**\n * 负责白痴放逐的完整免死结果组合。输入为原 World、目标和可写事件数组；输出为免死结果或 null。\n * 规则集先查询猎魔板子的原生审计，原生库存提交仍归猎魔权威；普通分支按翻牌、票权、警徽、事件原序写入。\n * 本模块不标死、推进阶段或授予租约；已写前缀遇后续错误不回滚，重复翻牌不恢复票权。\n */\n",
+  "sourceName": "idiotVotedOutHook",
+  "retiredPath": "backend/src/game/mechanisms/roles/idiot/voted_out_hook.ts",
+  "ownerPath": "backend/src/rulesets/idiot-exile-outcome.ts",
+  "facetPath": "backend/src/game/mechanisms/roles/demon_hunter/reveal-ports.ts"
+}

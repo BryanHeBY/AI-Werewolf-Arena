@@ -1,0 +1,66 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "source": [
+    {
+      "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+      "sha256": "00a96e40a08d68e04d8c90c6026de8cccf474216db8babf22e80166124905509"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/reveal-ports.ts",
+      "sha256": "c099b2404451ebec2fdd089990c354fa8007e20b71da1340a220d9b8ae06be10"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "sha256": "92a24c803a1cb918f6cc782bcfa4a985b027ab340b5d2be35981a2e55d4717de"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "10e84350466ae987d029f34a79a0da3d45118e334194999d1c72e38148468578"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "sha256": "eeb31f748504ae7193cbef68f668eb9434c78cfe97f747ce85e37b4d7352f287"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/voted_out_hook.ts",
+      "sha256": "70d1812aad4050c95609d171842e3bedb8bcd262b10c0c64fd80273f3f2376a3",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/idiot-exile-outcome-scope-final.json",
+    "sha256": "7612d455f899dc231a2832693c8dc65f5ed1b7a8d48c137025781b6441e14d6b"
+  },
+  "document": {
+    "path": "docs/refactor/idiot-exile-outcome.md",
+    "sha256": "309a7c3b4dd5fcf8b35e9b05f9235421093d7bf6077b89ed731496f9bb3946ef"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/idiot-exile-outcome-evidence.json",
+    "sha256": "0c96606a167b8758fb6d682d7145dd138391b1beaab25f3e79f55dc92cab53bd"
+  },
+  "integrity": {
+    "freshSources": 5,
+    "actualGitBefore": 3,
+    "controls": 5,
+    "artifactHashes": 25,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整原Idiot同步hook真实43行/普通与Demon/nullish查询先后/翻牌→票权→badge→event/repeat原失败前缀",
+    "原Demon authority query/commit及Idiot state/Badge/HookRegistry唯一owner，public reveal原同binding",
+    "实际623三Git/两全consumer/旧hook删除与五controls、原proof真实387/255/六mapped输出",
+    "原new3/22+old1/7/type唯一newunit红→failed1actual0、头采样与字面oracle独立",
+    "根R01finding：新ruleset state→现成Idiotports唯一route，以末sameRef/全mapped bridge承接，不重绿",
+    "中文职责和数据/同步提交前缀明确，不冒全角色/全对局/P9"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

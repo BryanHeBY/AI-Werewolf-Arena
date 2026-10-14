@@ -1,0 +1,44 @@
+{
+  "source": {
+    "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+    "beforeSha256": "ee6a441711882f1527453141580629a0a303b22b95ce7a50fb3192063772c7a3",
+    "sha256": "00a96e40a08d68e04d8c90c6026de8cccf474216db8babf22e80166124905509"
+  },
+  "onlyOneWholeTextSpecifierChange": true,
+  "wholeInverseTextSame": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "rawSame": false,
+      "wholeSpecifierInverseOutputSame": true,
+      "beforeOutputSha256": "8e2c7c0d1f0a527f652b5b75cb22c42d82c1d6e870de54cd479f89e0f7f0dc98",
+      "currentOutputSha256": "6e7bcbf613aae184022d9087b3cd1d18828f5e8d2e2ee13953a7c9c43dd4b4c7",
+      "mappedOutputSha256": "8e2c7c0d1f0a527f652b5b75cb22c42d82c1d6e870de54cd479f89e0f7f0dc98"
+    },
+    {
+      "module": "CommonJS",
+      "rawSame": false,
+      "wholeSpecifierInverseOutputSame": true,
+      "beforeOutputSha256": "51e64bb0a029e2475c7798c1fb4a0ef1bd07fe897cfb03f70b28273694e3c284",
+      "currentOutputSha256": "bcf153b69bf9742a39a32a0e079aee4698a3087d346e1fc1b5e56aab130fb380",
+      "mappedOutputSha256": "51e64bb0a029e2475c7798c1fb4a0ef1bd07fe897cfb03f70b28273694e3c284"
+    }
+  ],
+  "publicBinding": {
+    "portPath": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+    "portSha256": "d03e64b73b3de00fae2a8aadac890a48872797e99f3631ea2ca3241c5a716215",
+    "ultimateOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+    "stateSha256": "00fdda67ada8c9e609839faa8ea120e37fa13e31ca0dc6c82da8a95f4ac718f0",
+    "names": [
+      "getIdiotState",
+      "setIdiotState"
+    ],
+    "sameRuntimeFunctionReferences": true,
+    "directExportOnly": true
+  },
+  "limits": [
+    "同一实现与完整运行body不变，两个当前raw模块输出因specifier真实变化而不同；只有精确路由逆后两整输出同。",
+    "ports新增到实际加载路线，只有直接无初始化算法的导出声明；原155静态图是旧采样，不冒本批全图重跑或任意初始化次序恒同。",
+    "没有重复类型、行为、头、原完整证明或门禁。"
+  ]
+}

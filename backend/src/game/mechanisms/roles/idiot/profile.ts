@@ -10,7 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import { NativeRoleContributions } from "../contracts";
 import { getIdiotState, setIdiotState } from "./state";
-import { idiotVotedOutHook } from "./voted_out_hook";
+import { idiotVotedOutHook } from "../../../../rulesets/idiot-exile-outcome";
 
 /** 白痴角色配置。 */
 export const IDIOT_ROLE_PROFILE: NativeRoleContributions = {

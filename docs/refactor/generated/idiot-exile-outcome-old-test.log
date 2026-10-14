@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/red-moon-audit.test.ts:
+(pass) Idiot reveal keeps the original-world audit and disables voting without killing [66.39ms]
+
+ 1 pass
+ 12 filtered out
+ 0 fail
+ 7 expect() calls
+Ran 1 test across 1 file. [156.00ms]

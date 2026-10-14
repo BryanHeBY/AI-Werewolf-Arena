@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen",
+  "baseCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "scope": {
+    "path": "docs/refactor/generated/idiot-exile-outcome-scope-final.json",
+    "sha256": "7612d455f899dc231a2832693c8dc65f5ed1b7a8d48c137025781b6441e14d6b"
+  },
+  "documentation": {
+    "path": "docs/refactor/idiot-exile-outcome.md",
+    "sha256": "309a7c3b4dd5fcf8b35e9b05f9235421093d7bf6077b89ed731496f9bb3946ef"
+  },
+  "source": [
+    {
+      "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+      "sha256": "00a96e40a08d68e04d8c90c6026de8cccf474216db8babf22e80166124905509"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/reveal-ports.ts",
+      "sha256": "c099b2404451ebec2fdd089990c354fa8007e20b71da1340a220d9b8ae06be10"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "sha256": "92a24c803a1cb918f6cc782bcfa4a985b027ab340b5d2be35981a2e55d4717de"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "10e84350466ae987d029f34a79a0da3d45118e334194999d1c72e38148468578"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "sha256": "eeb31f748504ae7193cbef68f668eb9434c78cfe97f747ce85e37b4d7352f287"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/voted_out_hook.ts",
+      "sha256": "70d1812aad4050c95609d171842e3bedb8bcd262b10c0c64fd80273f3f2376a3",
+      "expectedAbsent": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-before.json",
+      "sha256": "770893654787fb0361b27f020953852a4ea9aa3b322e9e583960c42230d1cc4a"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-edits.json",
+      "sha256": "dab4c420d94d36e520ddb5bdedf0779d833d4b42589659586d04c88dbcc59734"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-proof.cjs",
+      "sha256": "736e5ac9e3bb186c67994e415a3225507bc8e0710940a1495bbfb1e12792346a"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-proof.json",
+      "sha256": "f89a03146bf4493b3ba347b2b5b79e83184b08d40b4896c171c5ee34ae2e8945"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-proof.log",
+      "sha256": "d14279c2f7ec83f13a458ad93b8894663e6bea9dca8de117a5c0ee750dd93b99"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-receipts.json",
+      "sha256": "500735375f8c2afe36ef8017a15f9b3862a271e8f8b54bcc7633a4775fb3f746"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-heads.ts",
+      "sha256": "11623e684c594d5c3e178139bb918e6033deda656538b4c51ace0686dde95288"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-heads.json",
+      "sha256": "abc0bd1a2c4c600e239aebf75665eb486fafb49d3cfcecb48e02bde8aa4c04cc"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-heads-output.txt",
+      "sha256": "7ca372779b53a929ccc1cd860b66db96461242f7ded4961e2a6e8015b4f57a91"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-new-tests.log",
+      "sha256": "e9c5b83c652d7dca303e787518d75cd5444050cd614c64c63a6062754fb00098"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-old-test.log",
+      "sha256": "c52d045681366d83af1ea8677e6ece604c91b8b1c747b85bf8dfe9eb4fada36b"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-types-config.json",
+      "sha256": "1840532e44b43dc72c32e8beee74ad23881ba30168bdde431fd5364be2137337"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-types-failed-config.json",
+      "sha256": "1dbb872fd3869559ac1d3116f2997d3b331aa61d52c7e7c14180eecb88039f21"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-types-first.log",
+      "sha256": "bd76592c6694cec3fb8dcdc173ed4d83e0311ecec8e00e2772f0e5da3776339f"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-types-failed.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-unit-type-before.json",
+      "sha256": "ddf593dd7284486580dcb2dc95fb8b9f2cf79693882d54f343e4d2e3ab843ff1"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-handoff.md",
+      "sha256": "76366d969dba191b80b924bef6c60e01f60557abfd4f00b028b71b1f865096a5"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-public-state-route-before.json",
+      "sha256": "734133dbe29e497132ef448309127136f88dc18f92133a20410e211bcaaae990"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-public-state-route-proof.cjs",
+      "sha256": "666653d1ae5cbc0451d9db2464887cc454abdc6d47466afad305cc8222bbee15"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-public-state-route-proof.json",
+      "sha256": "b4b050fc063aa84c2df90797964577fbaa7be960851ab6aed15353e76559f87c"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-public-state-route-proof.log",
+      "sha256": "ddb3546556989dfc7ce4a8ce815cb63b5e713b2c8beeb5114a65d901e8f648e2"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-public-state-route-receipt.json",
+      "sha256": "e892b9c4fd15c39ad61ea151bee1c80ec260bc0e375af541f11137a077565ea2"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-scope-final-before-public-state-route.json",
+      "sha256": "5d8a154c4fea81574acd0493606817401dc12f3d7b971b6a88921e1e2ac5441f"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-evidence-before-public-state-route.json",
+      "sha256": "2c26ab8dbfbe4fe38144b948965e42fa5b746dc473acd7c93b0d3557b77d96b7"
+    },
+    {
+      "path": "docs/refactor/generated/idiot-exile-outcome-documentation-before-public-state-route.json",
+      "sha256": "8af23c2e4af85644103a746ddc32c534b577a14264b205f5dc96681cf5c2548b"
+    }
+  ],
+  "receipts": {
+    "newTests": {
+      "command": "bun test backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "chunkId": "898d1b",
+      "exitCode": 0,
+      "cases": 3,
+      "assertions": 22,
+      "log": "docs/refactor/generated/idiot-exile-outcome-new-tests.log"
+    },
+    "oldTest": {
+      "command": "bun test backend/tests/unit/features/red-moon-audit.test.ts -t 'Idiot reveal keeps the original-world audit and disables voting without killing'",
+      "chunkId": "1dc0db",
+      "exitCode": 0,
+      "cases": 1,
+      "assertions": 7,
+      "filtered": 12,
+      "log": "docs/refactor/generated/idiot-exile-outcome-old-test.log"
+    },
+    "distinctTotals": {
+      "cases": 4,
+      "assertions": 29,
+      "executions": 2,
+      "repeatedSuccessfulCases": 0
+    },
+    "typesFirst": {
+      "roots": 5,
+      "launchChunkId": "cd188f",
+      "sessionId": 86572,
+      "terminalChunkId": "3a6db7",
+      "exitCode": 2,
+      "diagnostics": "唯一新unit组件名string不满足ComponentName；无生产诊断",
+      "log": "docs/refactor/generated/idiot-exile-outcome-types-first.log"
+    },
+    "typesFailedRoot": {
+      "roots": 1,
+      "launchChunkId": "d2689d",
+      "sessionId": 24988,
+      "terminalChunkId": "d95e07",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/idiot-exile-outcome-types-failed.log",
+      "repair": "仅新增ComponentName类型导入与参数注解，双whole输出与首green测试源码相同；原四roots无诊断不复跑"
+    },
+    "heads": {
+      "roots": 5,
+      "documentationPaths": 606,
+      "chunkId": "8102fd",
+      "exitCode": 0,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "log": "docs/refactor/generated/idiot-exile-outcome-heads-output.txt",
+      "stage": "新unit类型修复前；五头文字从采样至final未变，unit双emit桥连接真实final，不冒头检查重新执行"
+    },
+    "proof": {
+      "launchChunkId": "95a527",
+      "sessionId": 56418,
+      "terminalChunkId": "60f7c7",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/idiot-exile-outcome-proof.log",
+      "scope": "完整43行原hook、两原消费者、实际15绑定/公开函数identity、5controls、新unit纯type桥及当前155字面静态模块；不是全门禁"
+    }
+  },
+  "limits": [
+    "旧Idiot私有hook入口真实删除，profile挂载新规则集owner；外部旧specifier不兼容。",
+    "完整同步函数体及两个consumer原程序保持，模块路径／公开facet是实际加载/API布局改变，不承诺任意模块重绑定或私有反射等价。",
+    "Demon库存、票权、警徽预检及审计写算法仍唯一位于原authority；查询先行或提交异常不吞，已写前缀不退款。",
+    "本批5现行＋1删除；不改RedMoon hook、Demon authority、Idiot state、Sheriff badge或引擎。",
+    "旧完整file63行，其中函数43行；不沿用口头59行。",
+    "有限types首5roots仅新unit红，失败1root修后0；runtime/head在该纯type修之前，原收据保留。",
+    "Root架构finding最后只1状态import切到现有Idiot公开ports；原proof/155图和types/heads/runtime阶段不改，新窄路由桥连接当前source。"
+  ],
+  "finalPublicStateRouteBridge": {
+    "path": "docs/refactor/generated/idiot-exile-outcome-public-state-route-proof.json",
+    "sha256": "b4b050fc063aa84c2df90797964577fbaa7be960851ab6aed15353e76559f87c",
+    "receipt": "docs/refactor/generated/idiot-exile-outcome-public-state-route-receipt.json",
+    "beforeScope": "docs/refactor/generated/idiot-exile-outcome-scope-final-before-public-state-route.json",
+    "beforeEvidence": "docs/refactor/generated/idiot-exile-outcome-evidence-before-public-state-route.json"
+  }
+}

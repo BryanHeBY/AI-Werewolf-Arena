@@ -1,0 +1,198 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "mode": "独立只读 source／真实 Git／scope／文档／附件审查；未执行作者 proof/type/head/tests/gate/models。",
+  "baseCommit": "623e8c8ef83c73fdfbef6a53f77154de7f70f02f",
+  "currentGitAtReview": "aa4618f503d4f5494026680633565d06cce7b63e",
+  "scope": {
+    "path": "docs/refactor/generated/idiot-exile-outcome-scope-final.json",
+    "sha256": "7612d455f899dc231a2832693c8dc65f5ed1b7a8d48c137025781b6441e14d6b"
+  },
+  "scopeSHA256": "7612d455f899dc231a2832693c8dc65f5ed1b7a8d48c137025781b6441e14d6b",
+  "source": [
+    {
+      "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+      "sha256": "00a96e40a08d68e04d8c90c6026de8cccf474216db8babf22e80166124905509"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/reveal-ports.ts",
+      "sha256": "c099b2404451ebec2fdd089990c354fa8007e20b71da1340a220d9b8ae06be10"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "sha256": "92a24c803a1cb918f6cc782bcfa4a985b027ab340b5d2be35981a2e55d4717de"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "10e84350466ae987d029f34a79a0da3d45118e334194999d1c72e38148468578"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "sha256": "eeb31f748504ae7193cbef68f668eb9434c78cfe97f747ce85e37b4d7352f287"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/voted_out_hook.ts",
+      "sha256": "70d1812aad4050c95609d171842e3bedb8bcd262b10c0c64fd80273f3f2376a3",
+      "expectedAbsent": true
+    }
+  ],
+  "documentation": {
+    "path": "docs/refactor/idiot-exile-outcome.md",
+    "sha256": "309a7c3b4dd5fcf8b35e9b05f9235421093d7bf6077b89ed731496f9bb3946ef"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/idiot-exile-outcome-evidence.json",
+    "sha256": "0c96606a167b8758fb6d682d7145dd138391b1beaab25f3e79f55dc92cab53bd"
+  },
+  "findings": [],
+  "verification": {
+    "freshSourceSHA256": {
+      "paths": 5,
+      "mismatches": 0
+    },
+    "deletedOldLeaf": {
+      "paths": 1,
+      "expectedAbsent": true,
+      "originalGitSHA256Verified": true
+    },
+    "actualGitBefore": {
+      "paths": 3,
+      "fullTextAndSHA256Matches": true,
+      "stage": "原完整审查保留；本轮仅再次核删除项真实Git SHA"
+    },
+    "controls": {
+      "paths": 5,
+      "wholeGitAndWorkingBytesSame": true
+    },
+    "authorArtifacts": {
+      "paths": 25,
+      "mismatches": 0,
+      "originalUnchangedArtifacts": 16,
+      "originalChangedArtifact": "handoff.md",
+      "addedArtifacts": 8
+    },
+    "exactSourceForwards": {
+      "completeOldOwner": true,
+      "consumerPrograms": 2,
+      "allConsumerBodiesInputsTitlesAssertionsPreserved": true,
+      "unitTypeOnlyEdits": 2,
+      "stage": "原完整owner和consumer正演由已保存审查继承，再以唯一specifier全文精确正逆连接final owner；原输入/断言/body未再改。"
+    },
+    "proofReadOnly": {
+      "originalFullFileLines": 63,
+      "completeFunctionLines": 43,
+      "nonJSDocNodes": 387,
+      "nonJSDocLeaves": 255,
+      "wholeFunctionRawOutputs": 2,
+      "wholeConsumerMappedOutputs": 4,
+      "namedOriginalPhysicalBindings": 15,
+      "schemaCoverage": "读完整脚本/源码与精确forward，未重运行树或emit比较器。"
+    },
+    "publicEndpoint": {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/reveal-ports.ts",
+      "exports": [
+        "commitDemonIdiotReveal",
+        "demonIdiotRevealed"
+      ],
+      "directSameBindingOwner": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "noFunctionWrapperOrNewState": true
+    },
+    "finalPublicStateRoute": {
+      "wholeSourceExactOneSpecifierForwardAndInverse": true,
+      "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+      "beforeSHA256": "ee6a441711882f1527453141580629a0a303b22b95ce7a50fb3192063772c7a3",
+      "afterSHA256": "00a96e40a08d68e04d8c90c6026de8cccf474216db8babf22e80166124905509",
+      "from": "../game/mechanisms/roles/idiot/state",
+      "to": "../game/mechanisms/roles/idiot/ports",
+      "names": [
+        "getIdiotState",
+        "setIdiotState"
+      ],
+      "existingPortsSHA256": "d03e64b73b3de00fae2a8aadac890a48872797e99f3631ea2ca3241c5a716215",
+      "ultimateOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "ultimateOwnerSHA256": "00fdda67ada8c9e609839faa8ea120e37fa13e31ca0dc6c82da8a95f4ac718f0",
+      "directSameNamedBinding": true,
+      "noWrapperOrNewInitializationAlgorithm": true,
+      "otherFourSourceSHA256Unchanged": true,
+      "deletedEntryUnchangedAndAbsent": true,
+      "authorBridgeReadOnly": {
+        "proof": {
+          "path": "docs/refactor/generated/idiot-exile-outcome-public-state-route-proof.json",
+          "sha256": "b4b050fc063aa84c2df90797964577fbaa7be960851ab6aed15353e76559f87c"
+        },
+        "terminalChunkId": "c0919f",
+        "exitCode": 0,
+        "actualCurrentRawOutputsSame": false,
+        "actualCurrentRawOutputs": 2,
+        "exactRouteInverseMappedOutputsSame": true,
+        "mappedOutputs": 2,
+        "reviewerDidNotExecute": true
+      }
+    }
+  },
+  "sourceReview": [
+    "完整原 hook 保 Role→Alive→存活／角色检查，再 Demon 查询；?? 只有 null/undefined 才回退普通 revealed，Demon false 不执行普通 revealed getter，查询异常先于普通写者。",
+    "Demon 两完整原函数仍authority，校验 binding／原体／private audit／原 vote 引用与 JSON；commit 先可写槽／票权及badge预检，再 private replacement→canVote→weight→JSON复核→库存引用／审计刷新。没有新更严格或宽松政策。",
+    "普通分支保 setIdiotState callee及对象参数，然后 VotingRight读取／canVote=false／weight=0，之后才 Badge 查询／原 transferOrDestroySheriffBadge receiver及参数。任一setter、badge或event错误保已写前缀。",
+    "events.push callee 先于 Date.now/payload；普通白痴和已审核原生白痴重复翻牌都原样早返回，不进入其后警徽处理或再次发布，不恢复票权。新owner不标死或推进剩余死亡波。",
+    "profile仅原hook导入路由变化，votedOutHook同名函数挂载位置、participation/read/init、metadata／presentation与顺序全部保；原redMoon audit测试只一个specifier，完整原矩阵／反例／断言保留。",
+    "已实际阅读三个新字面risk和原精准auditcase：unaudited getter前拒绝、普通badge失败写前缀、原生event失败后审计与重复调用；没有把alive真实死亡或库存结果从生产生成成oracle。",
+    "中文职责／结构与关键nullish短路、普通写序／警徽／event失败注释准确；新facet只具名公开原查询/commit，不把写者接入observer，也不把查询数据当授权。",
+    "首类型唯一新unit组件名string诊断来自实际log；只ComponentName type import/annotation两精确编辑，不换非法getter样本或新增运行guard，作者双wholeJS桥承接final。",
+    "末公开状态路由是完整源唯一specifier替换；现有Idiotports同绑定直导原get/set，普通写序与Demon/Badge/event失败前缀原样，profile同族内部state导入保持。"
+  ],
+  "receiptsRead": {
+    "newCases": 3,
+    "newAssertions": 22,
+    "oldCases": 1,
+    "oldAssertions": 7,
+    "oldFiltered": 12,
+    "distinctCases": 4,
+    "distinctAssertions": 29,
+    "runtimeExecutions": 2,
+    "typesFirst": {
+      "roots": 5,
+      "sessionId": 86572,
+      "terminalChunkId": "3a6db7",
+      "exitCode": 2,
+      "source": "newunit only"
+    },
+    "typesFailedOnly": {
+      "roots": 1,
+      "sessionId": 24988,
+      "terminalChunkId": "d95e07",
+      "exitCode": 0,
+      "basis": "作者实际terminal收据；不凭空log推退出"
+    },
+    "heads": {
+      "roots": 5,
+      "gitDocumentationPaths": 606,
+      "diagnostics": 0,
+      "preTypeRepairStageRetained": true
+    }
+  },
+  "limitations": [
+    "旧idiot/voted_out_hook物理入口删除是明确API迁移，未提供compatbridge；new ruleset/facet改变初始化路线及namespace反射边界，不承诺任意模块重绑定同等。",
+    "作者155模块图是修公开状态路由前的实际emit静态import/export值闭包，限定不计非字面/动态或全历史cold；本轮未重跑图或承诺添加既有ports后完整初始化顺序不变。",
+    "原Idiot state、Demon authority、Sheriff badge及其他生命周期全字节controls，本批不代表C17状态槽／全部Sheriff／P9完成。",
+    "新源码与路径正常参与新的sourceHash；档案格式、校验/指纹算法及历史身份未改；不宣称跨构建动作复现豁免。",
+    "头/runtime收据都真实prefinal type阶段；两type-only编辑＋原作者emit桥承接最终unit SHA，未伪称原门禁重跑。",
+    "最终raw ESNext/CJS输出因specifier真实变化均不同；仅作者窄桥精确逆路由后两完整输出相同。原全程序、类型、头、测试及155图收据保留原阶段，不伪称final全重跑。"
+  ],
+  "previousApproval": {
+    "path": "docs/refactor/generated/idiot-exile-outcome-independent-review-before-public-state-route.json",
+    "sha256": "458657d367dd04f0e0f2c393968cfe482053efdc89ac07bcbee47fe339d2a9ac",
+    "scopeSHA256": "5d8a154c4fea81574acd0493606817401dc12f3d7b971b6a88921e1e2ac5441f",
+    "basis": "保留原完整独立审查字节；本轮只新增最终公开状态路由与元数据核对，不重新执行原证明、类型、头、测试或图。"
+  },
+  "closedFindings": [
+    {
+      "origin": "Root架构审查",
+      "finding": "新规则集直接消费Idiot私有state，已有公开ports可用。",
+      "resolution": "只将getIdiotState/setIdiotState这一条specifier切至现有Idiotports；两函数仍原state唯一实现，同名直接重导且无包装/新库存/初始化算法。",
+      "closed": true
+    }
+  ]
+}
