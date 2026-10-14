@@ -1,0 +1,55 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "source": [
+    {
+      "path": "backend/src/ai/runtime/turn_deadline.ts",
+      "sha256": "c3baf10708bd8c26a33dd244f426a89c48d7b13b6589f4bf312adab9b1b49418"
+    },
+    {
+      "path": "backend/src/ai/runtime/request_scheduler.ts",
+      "sha256": "bd0175e4f0703afa7a04a6cace0abed8b2f585bdbf0668887c6c55b5e4116d6a"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+      "sha256": "25edade5217e2dbc106ec060ec3dca332bdbdb488aaea80e0f76ea4fddd563b9"
+    },
+    {
+      "path": "backend/src/ai/agents/acp/session_pool.ts",
+      "sha256": "1d3580bc8a7a3ff7a8ab60c51239a4d4317eaba56428f1b04e707ef030e35d04"
+    },
+    {
+      "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+      "sha256": "ac439ee7db1d221af979f3894772932505a72ce70aff88d675442c9e93965460"
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/ai-runtime-contract-comments-scope-final.json",
+    "sha256": "0b277d8dcf35f64c47f210b088e892ca23a7a3e11db428de8eb5be4d66c11b8b"
+  },
+  "documentation": {
+    "path": "docs/refactor/ai-runtime-contract-chinese-comments.md",
+    "sha256": "e501174de6f71a78788e50c4d2534b6ab2318b6657da14ff75db34bb240f6e6b"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ai-runtime-contract-comments-evidence.json",
+    "sha256": "76acacae572166d062c403c8f734ccce26ad24507896f134109704aa30b38db3"
+  },
+  "checks": [
+    "实际27df完整5源 Git before 与34初注释＋2精度＋1首头精确forward等于当前全文，所有artifact/末source绑定一致。",
+    "全文核 earliest deadline/排队同预算；别名由机制绑定，租约释放/关闭不授予游戏许可。",
+    "close错误顺序、每次独立超时、强制成功仍抛原失败；session对象去重归池，不按协议字符串。",
+    "entry identity防旧创建撤掉新玩家条目；真实created继续迟到回收，不以等待结束宣称资源已回收。",
+    "原checkComments 5源首红1 invariant，经真实契约补齐后仅failed源0；两comment桥和一个末头桥限定诚实，无重复类型/测试/全门禁。"
+  ],
+  "findings": [
+    {
+      "status": "resolved",
+      "detail": "session_lifecycle首头缺不变量门禁形状；作者实际轻量检查复现并按单失败源闭合。"
+    }
+  ],
+  "limits": [
+    "未重跑作者证明器、测试、类型或门禁；完整非comment证明与实际运行收据由作者归属。",
+    "源码指纹变化，历史归档/指纹保持，不声称全C45/行为/P9验收。"
+  ]
+}

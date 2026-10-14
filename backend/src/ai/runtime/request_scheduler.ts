@@ -1,3 +1,9 @@
+/**
+ * 负责按运行时并发 scope 排队和移交请求槽位；输入为请求、角色及可选取消信号，输出为释放函数。
+ * active 记已授予的槽位，waiters 保存尚未授予的等待；每份租约只能有效释放一次。
+ * scope／limit 在申请时解析，排队与移交仍检查原请求期限；租约不授予游戏行动或资源写权限。
+ * close 单向拒绝排队和新申请，已授予槽位仍归调用方，在实际回合收尾后由其释放。
+ */
 import { RoleComponent } from "../../core/domain/components/role";
 import { ActionRequest } from "../../core/domain";
 
@@ -13,6 +19,7 @@ export interface RequestSchedulerOptions {
     limit: number;
   }) => void;
 }
+/** 等待者按对象身份撤队；request／signal 保留原引用，移交时仍读取当时的取消与期限。 */
 interface Waiter {
   request: ActionRequest;
   signal?: AbortSignal;
@@ -21,7 +28,7 @@ interface Waiter {
   cleanup: () => void;
 }
 
-/** Per-runtime provider semaphore. A lease has one owner; queued work is cancellable. */
+/** 同一 scope 内共享并发计数；释放函数是槽位所有权的收尾凭据，不是领域许可。 */
 export class ScopedRequestScheduler {
   private readonly activeByScope = new Map<string, number>();
   private readonly waitersByScope = new Map<string, Waiter[]>();
@@ -64,6 +71,7 @@ export class ScopedRequestScheduler {
         signal?.removeEventListener("abort", abort);
       };
       const waiter: Waiter = { request, signal, grant: resolve, reject, cleanup };
+      // 只移除仍在本队列中的这个 waiter；获授后旧取消回调不能再释放新 owner 的槽位。
       const withdraw = (reason: unknown) => {
         const current = this.waitersByScope.get(scope);
         const index = current?.indexOf(waiter) ?? -1;
@@ -80,6 +88,7 @@ export class ScopedRequestScheduler {
           () => withdraw(new Error("request_deadline_elapsed")),
           Math.max(0, request.deadlineAtMs - Date.now()),
         );
+      // 通知允许执行调用方代码；若通知抛错，仍按同一撤队路径清理，保留该原错误。
       try {
         this.options.onWait?.({ request, scope, queueDepth: queue.length, active, limit });
       } catch (error) {
@@ -98,12 +107,13 @@ export class ScopedRequestScheduler {
         waiter.reject(reason);
       }
     this.waitersByScope.clear();
-    // Active slots remain accounted for until their owners release them.
+    // 关闭不替 active owner 中止模型或释放租约；计数保留到它们各自调用释放函数。
   }
 
   private lease(scope: string): () => void {
     let released = false;
     return () => {
+      // 先封住本租约再移交槽位；重复释放不能减掉下一位等待者已接手的计数。
       if (!released) {
         released = true;
         this.release(scope);
@@ -124,6 +134,7 @@ export class ScopedRequestScheduler {
 
   private release(scope: string): void {
     const queue = this.waitersByScope.get(scope);
+    // 按队列顺序跳过已取消／已过期者；移交沿用同一个 active 槽位，不能先减数让新申请插队。
     while (queue?.length) {
       const next = queue.shift()!;
       next.cleanup();

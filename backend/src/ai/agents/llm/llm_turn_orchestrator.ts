@@ -1,6 +1,7 @@
 /**
  * 负责编排单个原生 SDK 回合；输入为原引擎请求、提示会话与模型客户端，输出为候选工具、重试／回退和玩家记录。
- * 本 owner 持有控制器、截止计时器与待结束任务；期限派生与请求原体由各机制保持原权限检查。
+ * 本 owner 持有控制器、截止计时器与待结束任务；最早期限覆盖排队和各次尝试，请求绑定仍由各机制检查。
+ * 并发租约只在本回合收尾时释放；每轮取消不可逆，关闭单向封住本 owner，任务兑现不等于领域提交。
  * 取消／关闭仅收走本 provider 资源，不代替规则预检或领域 commit，不扩大 fallback 的原预算。
  */
 import { inheritRequestAlias } from "../../../core/domain/request_delivery";
@@ -68,10 +69,12 @@ export class LlmTurnOrchestrator {
   run(request: ActionRequest): Promise<ToolCall | null> {
     if (this.closed) return Promise.reject(new DOMException("llm_provider_closed", "AbortError"));
     const startedAt = Date.now();
+    // 只取引擎原期限与本次启动预算的较早者；排队和重试共用它，不为每次模型调用重新计时。
     const bounded = {
       ...request,
       deadlineAtMs: Math.min(request.deadlineAtMs ?? Infinity, startedAt + this.options.timeoutMs),
     };
+    // bounded 是新请求对象：按原机制路线继承绑定，不凭 actorId 或浅复制字段重建领域许可。
     inheritRequestAlias(request, bounded);
     const controller = new AbortController();
     this.controllers.add(controller);
@@ -84,6 +87,7 @@ export class LlmTurnOrchestrator {
       resolve = done;
       reject = fail;
     });
+    // 在 runTurn 的提示／客户端回调开始前登记任务，让同步重入的 close 也能看到这次回合。
     this.pending.add(task);
     void this.runTurn(bounded, controller.signal, startedAt).then(resolve, reject);
     const cleanup = () => {
@@ -112,9 +116,11 @@ export class LlmTurnOrchestrator {
   async close(): Promise<void> {
     this.closed = true;
     this.closeController.abort(new DOMException("llm_provider_closed", "AbortError"));
+    // 队列先关闭，再中止运行任务；控制器保留首次中止原因，已授予租约仍走各回合 finally。
     this.options.scheduler.close(this.closeController.signal.reason);
     for (const controller of this.controllers) controller.abort(this.closeController.signal.reason);
     const settled = await Promise.allSettled([...this.pending]);
+    // 已知关闭原因按同一对象识别，其它拒绝仍汇总；allSettled 不把传输失败抹成关闭成功。
     const failures = settled.flatMap((result) =>
       result.status === "rejected" && result.reason !== this.closeController.signal.reason
         ? [result.reason]
@@ -178,6 +184,7 @@ export class LlmTurnOrchestrator {
         diagnostic.code === "request_timeout" ? "deadline_skip" : "runtime_error",
       );
     } finally {
+      // 无论成功、记录／回退失败还是取消，都由取得租约的本回合释放；不在模型刚选出动作时提前放槽。
       release?.();
     }
   }
@@ -190,6 +197,7 @@ export class LlmTurnOrchestrator {
     signal: AbortSignal,
   ): Promise<ToolCall | null> {
     const retryTrace: PlayerRetryTraceEntry[] = [];
+    // 每次尝试使用同一 bounded 请求的剩余期限；迟到结果在原检查点复核关闭／错误策略。
     const attempt = async (messages: ChatMessage[]): Promise<NativeAttempt> => {
       const timeoutMs = this.effectiveTimeout(request.deadlineAtMs);
       if (signal.aborted || timeoutMs <= 0) {

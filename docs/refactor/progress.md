@@ -678,3 +678,5 @@
 - C45 请求交付中文契约：两领域源补对象身份弱表、共享completion与Provider/commit分离、结算先消费后通知、有序快照别名及失败前缀，日次转换/空值回退边界明确。真实27df全文、564非注释token/完整AST/四emit同；首头两源一项write真红，精确说明写权后仅failed源0，末comment桥完整连final。Root与独立实际机制/Trace消费者及末两SHA/附件审批准；无类型/测试/全门禁重跑，新指纹变化不改历史，全中文覆盖继续。见 request-delivery-chinese-contracts.md。
 
 - P8 历史方案归档：四份原只读 next-proposal 全文与SHA保留，历史索引绑定实际7d61/3744/874/f524功能提交及原实施文档；eed前置三族独立列明。“下一笔/未修改”仅指捕获时点，当前阅读转向已交付 owner，不制造新待办或伪最终验收。Root与独立文档状态审批准，未运行源码/类型/测试/门禁。见 proposal-history.md。
+
+- C45 AI期限／调度／会话回收中文契约：五源34处有效注释，最早整轮预算、机制别名、租约单 owner释放、entry原引用与session对象身份、迟到真实created回收、每次普通/强制关闭预算及原错误传播就地说明。真实27df五Git/34初edit+2精度+1首头完整forward保持程序；首次4892typed/9119token树/6038含EOF叶及10完整emit同，末两精度与单不变量注释桥限定；首头5源真实1 invariant红，failed1实际0。Root与独立全源/实际ACP/LLM/Audit/Process调用方、末5SHA/附件/中文审批准，无类型/测试/全门禁或模型重跑，完整中文C45继续。见 ai-runtime-contract-chinese-comments.md。

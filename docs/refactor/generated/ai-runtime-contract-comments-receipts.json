@@ -1,0 +1,50 @@
+{
+  "fullProgramProof": {
+    "command": "bun --no-env-file docs/refactor/generated/ai-runtime-contract-comments-proof.cjs",
+    "chunk_id": "501c05",
+    "exit_code": 0,
+    "programs": 5,
+    "typedNodes": 4892,
+    "tokenTreeNodes": 9119,
+    "noncommentLeaves": 6038,
+    "wholeRawOutputs": 10
+  },
+  "finalPrecisionBridge": {
+    "command": "bun --no-env-file docs/refactor/generated/ai-runtime-contract-comments-precision-proof.cjs",
+    "chunk_id": "5e0398",
+    "exit_code": 0,
+    "sources": 2,
+    "preciseComments": 2,
+    "tokenTreeNodes": 4717,
+    "wholeRawOutputs": 4
+  },
+  "testsExecuted": 0,
+  "typeChecksExecuted": 0,
+  "modelsCalled": 0,
+  "fullArchitectureGatesExecuted": 0,
+  "responsibilityHeadsFirst": {
+    "command": "bun --no-env-file docs/refactor/generated/ai-runtime-contract-comments-heads.ts",
+    "chunk_id": "668ef9",
+    "exit_code": 1,
+    "files": 5,
+    "documentationPaths": 513,
+    "diagnostics": 1,
+    "rule": "comment.invariant"
+  },
+  "responsibilityHeadsFailedOnly": {
+    "command": "bun --no-env-file docs/refactor/generated/ai-runtime-contract-comments-heads.ts --failed-only",
+    "chunk_id": "61f0b8",
+    "exit_code": 0,
+    "files": 1,
+    "documentationPaths": 513,
+    "diagnostics": 0
+  },
+  "finalInvariantBridge": {
+    "command": "bun --no-env-file docs/refactor/generated/ai-runtime-contract-comments-invariant-proof.cjs",
+    "chunk_id": "66e77a",
+    "exit_code": 0,
+    "files": 1,
+    "tokenTreeNodes": 272,
+    "wholeRawOutputs": 2
+  }
+}

@@ -1,0 +1,172 @@
+[
+  {
+    "path": "backend/src/ai/runtime/turn_deadline.ts",
+    "before": "export class TurnDeadlineElapsed extends Error {",
+    "after": "/**\n * 负责共享异步等待的绝对期限、中止竞争和有界收尾等待；输入为任务、时间戳和可选取消信号。\n * 输出为原结果、原拒绝或本等待的期限错误，只拥有计时器和监听器，不拥有底层会话／进程。\n * 期限由调用方先合并；中止只终结等待，迟到任务的回收和关闭仍由创建该资源的 owner 负责。\n */\nexport class TurnDeadlineElapsed extends Error {"
+  },
+  {
+    "path": "backend/src/ai/runtime/turn_deadline.ts",
+    "before": "/** Owns only a wait's timer/listener; the caller still owns the underlying resource. */",
+    "after": "/** 只管理这一次等待；调用方传入绝对期限，undefined 表示此 helper 不另设期限。 */"
+  },
+  {
+    "path": "backend/src/ai/runtime/turn_deadline.ts",
+    "before": "  const controller = new AbortController();",
+    "after": "  // 外部中止和期限计时器共用单向控制器；首次 abort 的原因不会被后续中止覆盖。\n  const controller = new AbortController();"
+  },
+  {
+    "path": "backend/src/ai/runtime/turn_deadline.ts",
+    "before": "      Promise.resolve().then(() => {",
+    "after": "      // start 延至微任务执行，并在调用前检查取消；本 helper 不承诺抢占同步 start 的执行。\n      Promise.resolve().then(() => {"
+  },
+  {
+    "path": "backend/src/ai/runtime/turn_deadline.ts",
+    "before": "    controller.signal.throwIfAborted();\n    return result;",
+    "after": "    // 即使任务先兑现，也在返回前复核此等待是否已中止；结果本身不代表资源已被关闭。\n    controller.signal.throwIfAborted();\n    return result;"
+  },
+  {
+    "path": "backend/src/ai/runtime/turn_deadline.ts",
+    "before": "export function awaitWithAbort<T>",
+    "after": "/** 取消只拒绝外层等待；真实 task 仍被接住，迟到拒绝不会成为无人处理的 rejection。 */\nexport function awaitWithAbort<T>"
+  },
+  {
+    "path": "backend/src/ai/runtime/turn_deadline.ts",
+    "before": "export async function settleWithin(",
+    "after": "/** 仅判断任务是否在窗口内成功兑现；拒绝或超时均为 false，不推断进程退出或资源已回收。 */\nexport async function settleWithin("
+  },
+  {
+    "path": "backend/src/ai/runtime/request_scheduler.ts",
+    "before": "import { RoleComponent }",
+    "after": "/**\n * 负责按运行时并发 scope 排队和移交请求槽位；输入为请求、角色及可选取消信号，输出为释放函数。\n * active 记已授予的槽位，waiters 保存尚未授予的等待；每份租约只能有效释放一次。\n * scope／limit 在申请时解析，排队与移交仍检查原请求期限；租约不授予游戏行动或资源写权限。\n * close 单向拒绝排队和新申请，已授予槽位仍归调用方，在实际回合收尾后由其释放。\n */\nimport { RoleComponent }"
+  },
+  {
+    "path": "backend/src/ai/runtime/request_scheduler.ts",
+    "before": "interface Waiter {",
+    "after": "/** 等待者按对象身份撤队；request／signal 保留原引用，移交时仍读取当时的取消与期限。 */\ninterface Waiter {"
+  },
+  {
+    "path": "backend/src/ai/runtime/request_scheduler.ts",
+    "before": "/** Per-runtime provider semaphore. A lease has one owner; queued work is cancellable. */",
+    "after": "/** 同一 scope 内共享并发计数；释放函数是槽位所有权的收尾凭据，不是领域许可。 */"
+  },
+  {
+    "path": "backend/src/ai/runtime/request_scheduler.ts",
+    "before": "      const withdraw = (reason: unknown) => {",
+    "after": "      // 只移除仍在本队列中的这个 waiter；获授后旧取消回调不能再释放新 owner 的槽位。\n      const withdraw = (reason: unknown) => {"
+  },
+  {
+    "path": "backend/src/ai/runtime/request_scheduler.ts",
+    "before": "      try {\n        this.options.onWait?.",
+    "after": "      // 通知允许执行调用方代码；若通知抛错，仍按同一撤队路径清理，保留该原错误。\n      try {\n        this.options.onWait?."
+  },
+  {
+    "path": "backend/src/ai/runtime/request_scheduler.ts",
+    "before": "    // Active slots remain accounted for until their owners release them.",
+    "after": "    // 关闭不替 active owner 中止模型或释放租约；计数保留到它们各自调用释放函数。"
+  },
+  {
+    "path": "backend/src/ai/runtime/request_scheduler.ts",
+    "before": "      if (!released) {",
+    "after": "      // 先封住本租约再移交槽位；重复释放不能减掉下一位等待者已接手的计数。\n      if (!released) {"
+  },
+  {
+    "path": "backend/src/ai/runtime/request_scheduler.ts",
+    "before": "    while (queue?.length) {",
+    "after": "    // 按队列顺序跳过已取消／已过期者；移交沿用同一个 active 槽位，不能先减数让新申请插队。\n    while (queue?.length) {"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+    "before": "import { AcpSession }",
+    "after": "/**\n * 负责 ACP 会话的有界关闭与强制回收重试；输入为原会话、关闭方式和每次尝试的时限。\n * 输出为关闭完成或原失败／聚合失败；优雅关闭失败后强制关闭，即使强制成功仍传播原失败。\n * 同一会话的关闭任务去重归调用方会话池，本 helper 不持复用表，也不把等待超时当成资源已回收。\n */\nimport { AcpSession }"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+    "before": "export class AcpInitializationCleanupError",
+    "after": "/** 初始化主失败与资源清理失败保留原对象，供创建 owner 继续汇总，不重写为单个超时原因。 */\nexport class AcpInitializationCleanupError"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+    "before": "/** A failed graceful close still forces reclamation and preserves every failure. */",
+    "after": "/** force=true 不再重试；普通关闭失败后强制尝试，失败顺序与错误对象身份保持。 */"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+    "before": "  const attempt = (forced: boolean) =>",
+    "after": "  // 每次尝试在调用处独立计算截止；timeoutMs 不是两次尝试合计的总预算。\n  const attempt = (forced: boolean) =>"
+  },
+  {
+    "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+    "before": "      if (forcedError === error) throw error;",
+    "after": "      // 两次若拒绝同一对象就直接保留它；不同失败才按普通、强制的顺序汇总。\n      if (forcedError === error) throw error;"
+  },
+  {
+    "path": "backend/src/ai/agents/acp/session_pool.ts",
+    "before": " * 不变量：会话只回收一次；丢弃先撤销复用入口，关闭后不再创建，超时后迟到的实例仍进入回收。",
+    "after": " * 不变量：已登记的关闭任务按会话对象复用；丢弃先撤销复用入口，关闭后不再创建，迟到实例仍进入回收。"
+  },
+  {
+    "path": "backend/src/ai/agents/acp/session_pool.ts",
+    "before": "    const existing = this.entries.get(actorId);\n    if (existing) return existing.promise;",
+    "after": "    const existing = this.entries.get(actorId);\n    // actorId 只索引池条目；复用同一 promise 不重新设置该次创建期限，各回合等待仍由上层另行约束。\n    if (existing) return existing.promise;"
+  },
+  {
+    "path": "backend/src/ai/agents/acp/session_pool.ts",
+    "before": "        if (controller.signal.aborted || this.closed || this.entries.get(actorId) !== entry)",
+    "after": "        // 比较 entry 原引用而非 actorId／sessionId：同一玩家的新条目不能接收旧创建的迟到结果。\n        if (controller.signal.aborted || this.closed || this.entries.get(actorId) !== entry)"
+  },
+  {
+    "path": "backend/src/ai/agents/acp/session_pool.ts",
+    "before": "      if (this.entries.get(actorId) === entry) this.discard(actorId);",
+    "after": "      // 只丢弃本次创建仍占用的入口，旧等待失败不能撤掉同玩家后来安装的 entry。\n      if (this.entries.get(actorId) === entry) this.discard(actorId);"
+  },
+  {
+    "path": "backend/src/ai/agents/acp/session_pool.ts",
+    "before": "  async close(): Promise<void> {\n    this.closed = true;",
+    "after": "  async close(): Promise<void> {\n    // 先永久封住新创建，再取消已有条目；关闭失败不会把池重新打开。\n    this.closed = true;"
+  },
+  {
+    "path": "backend/src/ai/agents/acp/session_pool.ts",
+    "before": "  private retire(session: AcpSession, force: boolean): Promise<void> {\n    const existing",
+    "after": "  private retire(session: AcpSession, force: boolean): Promise<void> {\n    // 去重键是实际会话对象，不是协议 sessionId；复用首次已登记的关闭 promise 和关闭方式。\n    const existing"
+  },
+  {
+    "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+    "before": " * 本 owner 持有控制器、截止计时器与待结束任务；期限派生与请求原体由各机制保持原权限检查。",
+    "after": " * 本 owner 持有控制器、截止计时器与待结束任务；最早期限覆盖排队和各次尝试，请求绑定仍由各机制检查。\n * 并发租约只在本回合收尾时释放，取消／关闭单向封住本 owner；任务兑现不等于领域动作已付款或提交。"
+  },
+  {
+    "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+    "before": "    const bounded = {\n      ...request,",
+    "after": "    // 只取引擎原期限与本次启动预算的较早者；排队和重试共用它，不为每次模型调用重新计时。\n    const bounded = {\n      ...request,"
+  },
+  {
+    "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+    "before": "    inheritRequestAlias(request, bounded);",
+    "after": "    // bounded 是新请求对象：按原机制路线继承绑定，不凭 actorId 或浅复制字段重建领域许可。\n    inheritRequestAlias(request, bounded);"
+  },
+  {
+    "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+    "before": "    this.pending.add(task);",
+    "after": "    // 在 runTurn 的提示／客户端回调开始前登记任务，让同步重入的 close 也能看到这次回合。\n    this.pending.add(task);"
+  },
+  {
+    "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+    "before": "    this.options.scheduler.close(this.closeController.signal.reason);",
+    "after": "    // 队列先关闭，再中止运行任务；控制器保留首次中止原因，已授予租约仍走各回合 finally。\n    this.options.scheduler.close(this.closeController.signal.reason);"
+  },
+  {
+    "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+    "before": "    const failures = settled.flatMap",
+    "after": "    // 已知关闭原因按同一对象识别，其它拒绝仍汇总；allSettled 不把传输失败抹成关闭成功。\n    const failures = settled.flatMap"
+  },
+  {
+    "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+    "before": "    } finally {\n      release?.();",
+    "after": "    } finally {\n      // 无论成功、记录／回退失败还是取消，都由取得租约的本回合释放；不在模型刚选出动作时提前放槽。\n      release?.();"
+  },
+  {
+    "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+    "before": "    const attempt = async (messages: ChatMessage[]): Promise<NativeAttempt> => {",
+    "after": "    // 每次尝试使用同一 bounded 请求的剩余期限；迟到结果在原检查点复核关闭／错误策略。\n    const attempt = async (messages: ChatMessage[]): Promise<NativeAttempt> => {"
+  }
+]

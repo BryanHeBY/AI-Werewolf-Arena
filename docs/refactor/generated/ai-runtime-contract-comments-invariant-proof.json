@@ -1,0 +1,27 @@
+{
+  "source": [
+    {
+      "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+      "prefinalSHA256": "1206e5328cb829bdd712b42fb03b2b43918eed9d89d9754775da76561b378d60",
+      "sha256": "25edade5217e2dbc106ec060ec3dca332bdbdb488aaea80e0f76ea4fddd563b9",
+      "exactWholeSourceCommentInverseSame": true,
+      "fullNoncommentTokenTreeSame": true,
+      "tokenTreeNodes": 272,
+      "noncommentLeaves": 174,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "991fece7899b043b79ed9c378e97bf792df0f5dbfe4b8cd15350b52ec17bc9ea"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "803f6ad828fade99da85c0377a0ebb9fbcab171b8168f08a05b2210fee7dcb9d"
+        }
+      ]
+    }
+  ],
+  "wholeOutputs": 2,
+  "mismatches": 0
+}

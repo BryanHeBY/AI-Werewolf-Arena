@@ -1,7 +1,7 @@
 /**
  * 管理按玩家复用的 ACP 会话、在途创建和迟到回收，拥有创建中止控制器与关闭任务账本。
  * 输入为玩家、绝对期限及会话工厂；输出为复用或新建会话，关闭时汇总已记录的清理错误。
- * 不变量：会话只回收一次；丢弃先撤销复用入口，关闭后不再创建，超时后迟到的实例仍进入回收。
+ * 不变量：已登记的关闭任务按会话对象复用；丢弃先撤销复用入口，关闭后不再创建，迟到实例仍进入回收。
  * 协议与进程关闭由 session_lifecycle 执行，本池不负责游戏行动授权。
  */
 import {
@@ -66,6 +66,7 @@ export class AcpSessionPool {
     if (this.closed) throw new Error("acp_provider_closed");
     if (deadlineAtMs <= Date.now()) throw new Error("acp_deadline_elapsed");
     const existing = this.entries.get(actorId);
+    // actorId 只索引池条目；复用同一 promise 不重新设置该次创建期限，各回合等待仍由上层另行约束。
     if (existing) return existing.promise;
     // prepare 可执行上层代码，返回后再次检查关闭，避免同步回调在准备期间关闭池。
     const { factory, input } = prepare();
@@ -91,6 +92,7 @@ export class AcpSessionPool {
         this.creations.delete(created);
         entry.session = session;
         // 已取消、已关闭或条目被替换时，真实创建仍可能成功；迟到实例不可重新加入复用池。
+        // 比较 entry 原引用而非 actorId／sessionId：同一玩家的新条目不能接收旧创建的迟到结果。
         if (controller.signal.aborted || this.closed || this.entries.get(actorId) !== entry)
           this.retire(session, true);
       },
@@ -109,6 +111,7 @@ export class AcpSessionPool {
     try {
       return await entry.promise;
     } catch (error) {
+      // 只丢弃本次创建仍占用的入口，旧等待失败不能撤掉同玩家后来安装的 entry。
       if (this.entries.get(actorId) === entry) this.discard(actorId);
       throw error;
     } finally {
@@ -147,6 +150,7 @@ export class AcpSessionPool {
   }
 
   async close(): Promise<void> {
+    // 先永久封住新创建，再取消已有条目；关闭失败不会把池重新打开。
     this.closed = true;
     for (const [actorId, entry] of this.entries) {
       entry.controller.abort(new Error("acp_provider_closed"));
@@ -173,6 +177,7 @@ export class AcpSessionPool {
   }
 
   private retire(session: AcpSession, force: boolean): Promise<void> {
+    // 去重键是实际会话对象，不是协议 sessionId；复用首次已登记的关闭 promise 和关闭方式。
     const existing = this.retired.get(session);
     if (existing) return existing;
     const closing = closeAcpSession(session, force, this.cleanupTimeoutMs).catch((error) => {

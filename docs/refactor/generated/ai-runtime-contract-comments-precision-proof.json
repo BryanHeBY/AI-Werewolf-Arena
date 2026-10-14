@@ -1,0 +1,48 @@
+{
+  "source": [
+    {
+      "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+      "prefinalSHA256": "29bd42275c82283b507f551c4e5275179260dc7c1dcdce4d5a97b506357dc1f5",
+      "sha256": "ac439ee7db1d221af979f3894772932505a72ce70aff88d675442c9e93965460",
+      "exactWholeSourceCommentInverseSame": true,
+      "fullNoncommentTokenTreeSame": true,
+      "tokenTreeNodes": 4445,
+      "noncommentLeaves": 2950,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "f57d7e45e9123c6aefe8dde0fd7546b30f33354d18999e5d765a42e852cfc10a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "b36ec9ea16dcdc228e1329efceea27caeb7d30e75ac28bf87de28a5121fd6003"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+      "prefinalSHA256": "be6d6451f6cbb9cdf2f0047a8886ca7505f8585917cc09772c7c865bff1b461e",
+      "sha256": "1206e5328cb829bdd712b42fb03b2b43918eed9d89d9754775da76561b378d60",
+      "exactWholeSourceCommentInverseSame": true,
+      "fullNoncommentTokenTreeSame": true,
+      "tokenTreeNodes": 272,
+      "noncommentLeaves": 174,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "991fece7899b043b79ed9c378e97bf792df0f5dbfe4b8cd15350b52ec17bc9ea"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "803f6ad828fade99da85c0377a0ebb9fbcab171b8168f08a05b2210fee7dcb9d"
+        }
+      ]
+    }
+  ],
+  "wholeOutputs": 4,
+  "mismatches": 0
+}
