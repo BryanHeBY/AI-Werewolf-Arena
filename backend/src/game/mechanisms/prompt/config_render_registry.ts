@@ -1,13 +1,12 @@
 /**
- * Owns bilingual rendering of configured board rules and policy descriptions.
- * Inputs are readonly complete board data and the requested locale; output is
- * the existing rule prompt text. Rendering never validates finite composition,
- * mutates parameters, advances gameplay or holds mutable language state.
+ * 负责已配置板子规则和政策的两语文案。输入为完整只读板子及请求语言；输出保原规则提示与片段顺序。
+ * 文案在实际调用时读取原字段／默认值，不校验有限牌组、不修改参数、推进阶段或保存可变语言。
+ * 查验文案只从独立政策公开入口读取，不通过显示路径装配夜阶段、领取库存或取得行动许可。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { settlesNightBeforeDay } from "../night_death_timing";
 import { renderDeathActionPolicy } from "../roles/death_action_policy";
-import { renderInspectionPolicy } from "../roles/role_inspection/policies";
+import { renderInspectionPolicy } from "../roles/role_inspection/policy-ports";
 import {
   WinCondition,
   WitchSelfHealRule,

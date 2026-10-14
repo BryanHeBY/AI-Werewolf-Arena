@@ -23,7 +23,7 @@ import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,
   MIRROR_INSPECTION_STAGE,
-} from "../../../src/game/mechanisms/roles/role_inspection/night_stages";
+} from "../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
 import { hasRoleInspectionNightCommit } from "../../../src/game/mechanisms/roles/role_inspection/night_scope";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

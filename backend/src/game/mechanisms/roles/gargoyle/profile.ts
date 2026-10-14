@@ -5,7 +5,7 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 import { nativeRolePresentation } from "../presentation-contribution";
-import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
+import { inspectionConfiguration } from "../role_inspection/contribution-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { Role } from "../../../../core/domain/model";
@@ -15,13 +15,13 @@ import { getRoleInspectionState, setRoleInspectionState } from "../role_inspecti
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { numberOrNull } from "../../llm/helpers";
 import { canGargoyleKnife } from "./inheritance";
-import { ROLE_INSPECTION_STAGE } from "../role_inspection/night_stages";
+import { ROLE_INSPECTION_STAGE } from "../role_inspection/contribution-ports";
 
 import {
   ROLE_INSPECTION_TOOL,
   validateRoleInspection,
   roleInspectionTargets,
-} from "../role_inspection/rules";
+} from "../role_inspection/contribution-ports";
 
 export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
@@ -52,6 +52,7 @@ export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
       canChat: false,
       canVoteForKill: canGargoyleKnife(role, world),
     }),
+    // 此处仍按原时点创建政策配置；共享工具／规则／阶段保同一绑定，不授查验库存或跳过租约复验。
     configuration: inspectionConfiguration("gargoyle", "awa_unique_required_v1"),
     nightStages: [ROLE_INSPECTION_STAGE, ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages!],
     possibleNightAbilities: ["role_check"],

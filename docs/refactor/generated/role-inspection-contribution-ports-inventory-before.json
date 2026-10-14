@@ -1,0 +1,449 @@
+{
+  "scannedRoots": [
+    "backend/src",
+    "backend/tests",
+    "frontend/src",
+    "packages",
+    "tooling"
+  ],
+  "scannedFiles": 1728,
+  "sites": [
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "route": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "route": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_STAGE",
+          "local": "ROLE_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "name": "PSYCHIC_INSPECTION_STAGE",
+          "local": "PSYCHIC_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "route": "../../../src/game/mechanisms/roles/role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_STAGE",
+          "local": "ROLE_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "name": "PSYCHIC_INSPECTION_STAGE",
+          "local": "PSYCHIC_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "name": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "route": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_STAGE",
+          "local": "ROLE_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "route": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+      "route": "../roles/role_inspection/policies",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "names": [
+        {
+          "name": "renderInspectionPolicy",
+          "local": "renderInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan.ts",
+      "route": "../game/mechanisms/roles/role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_STAGE",
+          "local": "ROLE_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "name": "PSYCHIC_INSPECTION_STAGE",
+          "local": "PSYCHIC_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "name": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "route": "../../../src/game/mechanisms/roles/role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_STAGE",
+          "local": "ROLE_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "name": "PSYCHIC_INSPECTION_STAGE",
+          "local": "PSYCHIC_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "name": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "route": "../../../src/game/mechanisms/roles/role_inspection/rules",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "names": [
+        {
+          "name": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "route": "../mechanisms/roles/role_inspection/policies",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "names": [
+        {
+          "name": "renderInspectionPolicy",
+          "local": "renderInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/boards/common/configured-role-policy-tape.test.ts",
+      "route": "../../../../src/game/mechanisms/roles/role_inspection/rules",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "names": [
+        {
+          "name": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+      "route": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "PSYCHIC_INSPECTION_STAGE",
+          "local": "PSYCHIC_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+      "route": "../role_inspection/policies",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "names": [
+        {
+          "name": "inspectionConfiguration",
+          "local": "inspectionConfiguration",
+          "typeOnly": false
+        },
+        {
+          "name": "renderInspectionPolicy",
+          "local": "renderInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+      "route": "../role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "PSYCHIC_INSPECTION_STAGE",
+          "local": "PSYCHIC_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+      "route": "../role_inspection/rules",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_TOOL",
+          "local": "ROLE_INSPECTION_TOOL",
+          "typeOnly": false
+        },
+        {
+          "name": "validateRoleInspection",
+          "local": "validateRoleInspection",
+          "typeOnly": false
+        },
+        {
+          "name": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "route": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_STAGE",
+          "local": "ROLE_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "route": "../role_inspection/rules",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_TOOL",
+          "local": "ROLE_INSPECTION_TOOL",
+          "typeOnly": false
+        },
+        {
+          "name": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        },
+        {
+          "name": "validateRoleInspection",
+          "local": "validateRoleInspection",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "route": "../role_inspection/policies",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "names": [
+        {
+          "name": "inspectionConfiguration",
+          "local": "inspectionConfiguration",
+          "typeOnly": false
+        },
+        {
+          "name": "renderInspectionPolicy",
+          "local": "renderInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "route": "../role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "route": "../role_inspection/rules",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_TOOL",
+          "local": "ROLE_INSPECTION_TOOL",
+          "typeOnly": false
+        },
+        {
+          "name": "validateRoleInspection",
+          "local": "validateRoleInspection",
+          "typeOnly": false
+        },
+        {
+          "name": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "route": "../role_inspection/policies",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "names": [
+        {
+          "name": "inspectionConfiguration",
+          "local": "inspectionConfiguration",
+          "typeOnly": false
+        },
+        {
+          "name": "renderInspectionPolicy",
+          "local": "renderInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "route": "../role_inspection/night_stages",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_STAGE",
+          "local": "ROLE_INSPECTION_STAGE",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "route": "../role_inspection/rules",
+      "form": "import/export",
+      "target": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "names": [
+        {
+          "name": "ROLE_INSPECTION_TOOL",
+          "local": "ROLE_INSPECTION_TOOL",
+          "typeOnly": false
+        },
+        {
+          "name": "validateRoleInspection",
+          "local": "validateRoleInspection",
+          "typeOnly": false
+        },
+        {
+          "name": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        }
+      ]
+    }
+  ],
+  "consumers": [
+    "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+    "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+    "backend/tests/unit/features/role-inspection-scope.test.ts",
+    "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+    "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+    "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+    "backend/src/rulesets/night-stage-plan.ts",
+    "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+    "backend/src/game/observation/player-prompt-directives.ts",
+    "backend/tests/scenarios/boards/common/configured-role-policy-tape.test.ts",
+    "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+    "backend/src/game/mechanisms/roles/psychic/profile.ts",
+    "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+    "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+    "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+    "backend/src/game/mechanisms/roles/gargoyle/profile.ts"
+  ],
+  "routes": 23,
+  "bindings": 41,
+  "staticModules": 415,
+  "profiles": [
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "alreadyReachesStages": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "alreadyReachesStages": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "alreadyReachesStages": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+      "alreadyReachesStages": true
+    }
+  ],
+  "renderOnly": [
+    "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+    "backend/src/game/observation/player-prompt-directives.ts"
+  ],
+  "unusedProfileRenderBindings": [
+    "gargoyle",
+    "mirror_girl",
+    "psychic"
+  ]
+}

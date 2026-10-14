@@ -1,0 +1,555 @@
+{
+  "approved": true,
+  "baseCommit": "751604fd1d5feea8911354fee550b9ad49c262b7",
+  "consumers": [
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "e2ab26269d061069b9ec020d14fea000c7c6c1ef47c5aadc5c317bb722cc58af",
+      "completeTypedNodes": 4195,
+      "completeNoncommentLeaves": 5563,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "d8d5e221133c67fc920bb468467d0614f060e22728c40148ce29cedcca000f15"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "e5e726b07f700f80b0aab1b8d5d2de51f5252193d4367830bcb9f57e9a60b01c"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "75e4e6afec2c8f02ae579fab8cafa7af79671cdab096eabc580790d232719224",
+      "completeTypedNodes": 3267,
+      "completeNoncommentLeaves": 4315,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "b8881d634930b586450e4c2b93932998a7fb46ba0ded1e17832d16d7a5e4d02e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "be74ce595c5c4784effa3f561695c8283629d3bd2d38e17da77b6d935c0c3db3"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6ecf2956933718be9792019ea1e595c9016cf0f954b6090d2ca3e85bad91ed0f",
+      "completeTypedNodes": 2187,
+      "completeNoncommentLeaves": 2723,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "a2a148ae36aa9aba1e3da9695e2ca0bc7fbefd9cab6a999a28bdef756b633ffe"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "c42b86b79f1f786003e1aa9f235fcb10b78fabb164a55015278fd36893872ef5"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "93f6e873dd99637b1fe582164c097f34f5e4572c4c98dc134289530a87dcf88b",
+      "completeTypedNodes": 2501,
+      "completeNoncommentLeaves": 3296,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "159a1e51ab9260abf2af43d34a916177e0367d572a4ea1c2bc84170e2abf72f4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "db4af6f771dd3a2adbf521277b7178412c81324c7757425f0f4ac499337ff5ae"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "sha256": "31947d3eea15dc6e340ffba61f52aef7e7d376f47c262b6989a8c2b6071a2e68",
+      "completeTypedNodes": 3910,
+      "completeNoncommentLeaves": 5037,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "14fbee1d5353ebe09e8b125a2be36609eb68b0a0a42e282563866acc6a88d7b1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "9ef9eda417325d24e743fd899eab0aff7d574cfb20004ad69b31e5cd3c38134a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+      "sha256": "3a5174c691d1cbe3237dc8764fd4ac808b83c1fd77cbb155dc99d92c18e8dd36",
+      "completeTypedNodes": 1457,
+      "completeNoncommentLeaves": 1688,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "57aec48ea1b9c830ab33996568c2bc0b0300fff764730776017dec5b051888d5"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "9e00d7bcf323a30ee7e22ca05d8ed85a715ced987f0416230387469a2454ccc5"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan.ts",
+      "sha256": "9e725d34d8770f352d1c64253a89a170f8a1233e0f39c25ceaecbd08975073d0",
+      "completeTypedNodes": 2050,
+      "completeNoncommentLeaves": 2465,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "3e5eda525260a5e3a8e917cbadc791a739d4d20fbaad7f1fe4b4fc732b22a23e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "a92f34887199485ffe2cb290a344b7bf493b6d6eb63872b2347344a1cd8f0156"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "f1cd448ee9313867e449ba89230daa6216d33e9a32b0f94b8e73b62bb3570bc2",
+      "completeTypedNodes": 3386,
+      "completeNoncommentLeaves": 4222,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "3c67d0e2716d411682d761b0e3694c945a5eb987c39af30cdf95d554a079e636"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "9ab3298a47008d584194f259a22b710fac027cb29e8bdc416fe9059e44b9af15"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "839f243b900e74032f959f5b2f846e5232052df524176bb61e91322ea677a240",
+      "completeTypedNodes": 2511,
+      "completeNoncommentLeaves": 3194,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "99fbe528d5a56fd105e393d8e21b80e3b057d6e90fe8c84ed6ba614a6a632f37"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "7a81d52029e0400fa3decb6f304cbfed99be608d30d21b0694c598258574ce4f"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/boards/common/configured-role-policy-tape.test.ts",
+      "sha256": "40e7966e96c26c0ee349391c10789db9e6ace22a2277c803075c2a1b2e691f7d",
+      "completeTypedNodes": 1081,
+      "completeNoncommentLeaves": 1324,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "288a2e7c8fd2d53b25227e4c8adede51cf247d32a3a3efb7f2e8d544429b9eb8"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "ff349951a8acde2523dc7561f70ca9a73ffcadff0719daafda8f8abed9dc64d7"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+      "sha256": "fb96a61fb91b60107afd046e03a75a61606ead38ce8f0fa5128d90e534b5287b",
+      "completeTypedNodes": 1428,
+      "completeNoncommentLeaves": 1842,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "8153a744a1ba9d1086f524d8ab4868774f6b49cab116b3aca1aba1fd47f6597d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "176315552cc30ca5a0ee29b506aec31182a8b332a73eb2654954c44ab7c5556f"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+      "sha256": "774a9df31a4f5f213db3de93dddbcbb200557ad2123924264be261493eea5ed7",
+      "completeTypedNodes": 327,
+      "completeNoncommentLeaves": 397,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "4f2ac61765cf3ff6799733323f0c52ffee7708da7c26f6f53ffb68ba6f0a1476"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "5dff52c0c212166585603903ab9b0103064e0dd169152c8adfcc34b78b8815ef"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "09139f92cbc5a60ef744bfb4b94c3d5403c8e489947b3447e235e43e95502b71",
+      "completeTypedNodes": 3843,
+      "completeNoncommentLeaves": 4956,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "6ad92dacb7613835ce86125a865bdd60ac1dfbf925ce66c7277aa162e6a44e76"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "82d1579fd50b4293f10384c74a161242f34f2afc698c0ae83d124d5ac89104b3"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "sha256": "2f4efcce82abf784e4272002340f9641aed3fdb3bd19ec174c5245c2b04eee8f",
+      "completeTypedNodes": 756,
+      "completeNoncommentLeaves": 931,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "db982a26d4950a0b5f80d01aed8b4752e2d9548303a38fcca0c77734350eef78"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "f85e2562a0df761e937abc47609ca3cb88ced73fa0fdc0e245e0e7afd71ac24d"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "sha256": "96f42bec2acffde26f405f843f38152e96e8fd698d3b2c42b5644401d610ce01",
+      "completeTypedNodes": 449,
+      "completeNoncommentLeaves": 548,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "817ebbbb9c223ac549a83f6bbc5a001313a219e2d765bcd49ab259e01cd8c79c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "179dd59409e0e92ab900f78a951020ca192c4dea84630b8fe9903e2210419ddb"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "sha256": "9ed28386876da30da31b5836a41a7ec26128027b0baff3be08f9a45f4f2e90f3",
+      "completeTypedNodes": 431,
+      "completeNoncommentLeaves": 525,
+      "wholeExactSourceInverse": true,
+      "actualNonimportWholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "47041c794caa0233acf867624369efdf8211d485b68fd3e7c535e26af32ee549"
+        },
+        {
+          "module": "CommonJS",
+          "wholeMappedRawSame": true,
+          "actualRawSame": false,
+          "sha256": "5af231a28aac74fb03466143ebcd9ceccf45bb1100b16375673f5f21194288c4"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "sha256": "e450ec18616dc471e38669e3fede1882da01f561b259a8fad84f5b91a3ac7b21",
+      "wholeFixedGitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "sha256": "e3831f6a2508aff2e1cadd45bee9dd19f262dfa66c7712c2c58188a6f4ce735b",
+      "wholeFixedGitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "sha256": "fb4661925dae77b7c1f8ede37bcdce763001a5cf05e95cc7a43e71d2656e9820",
+      "wholeFixedGitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "sha256": "21192292e699a7ebf9f71e130ca99aa48c7624f19f57b30fe366359aa93ff5c6",
+      "wholeFixedGitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "sha256": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9",
+      "wholeFixedGitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "sha256": "efdc80e2ffe066c8ef9280a04dceb689ca1f84cafb0ed6141ffb53318e74876c",
+      "wholeFixedGitAndCurrentSame": true
+    }
+  ],
+  "summary": {
+    "originalConsumers": 16,
+    "newFacets": 2,
+    "sourcePaths": 18,
+    "typedNodes": 33779,
+    "wholeMappedOutputs": 32,
+    "originalNamedBindings": 41,
+    "unusedRenderBindingsActuallyErased": 3
+  },
+  "inventory": {
+    "roots": [
+      "backend/src",
+      "backend/tests",
+      "frontend/src",
+      "packages",
+      "tooling"
+    ],
+    "scannedFiles": 1730,
+    "privateCrossSites": [],
+    "publicSites": [
+      {
+        "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+        "route": "../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+        "route": "../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+        "route": "../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/common/configured-role-policy-tape.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+        "route": "../roles/role_inspection/policy-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/policy-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/rulesets/night-stage-plan.ts",
+        "route": "../game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/observation/player-prompt-directives.ts",
+        "route": "../mechanisms/roles/role_inspection/policy-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/policy-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+        "route": "../role_inspection/contribution-ports",
+        "target": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+        "form": "import/export"
+      }
+    ]
+  },
+  "limits": [
+    "所有actual非import业务体/断言保；raw输出因publicroute有意不同，wholeMappedSame只为路由归一化，不冒加载初始化任意等价。",
+    "三个profile renderer真实unused：mapped当前源码不补其import，ES/CJS依旧完整输出同。",
+    "五根字面所有形态盘点，不穷尽computed/仓外/历史generated；新facet无业务body和快照/冻结/注册。"
+  ]
+}

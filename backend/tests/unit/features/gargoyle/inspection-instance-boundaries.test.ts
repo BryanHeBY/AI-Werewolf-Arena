@@ -26,7 +26,7 @@ import {
   allNightAbilities,
 } from "../../../../src/game/mechanisms/roles/abilities";
 import { canGargoyleKnife } from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
-import { ROLE_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
+import { ROLE_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
 import {
   knownWolfTeammates,
   wolfChatParticipants,

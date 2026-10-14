@@ -23,7 +23,7 @@ import { projectNightAbility } from "../../../../src/game/observation/night-abil
 import { setNightAbilityEnabled } from "../../../../src/game/mechanisms/roles/ability_changes";
 import { grantNightAbility, transferNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { freshMirrorInspectionState } from "../../../../src/game/mechanisms/roles/mirror_girl/profile";
-import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
+import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,

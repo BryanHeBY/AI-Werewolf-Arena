@@ -5,19 +5,19 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 import { nativeRolePresentation } from "../presentation-contribution";
-import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
+import { inspectionConfiguration } from "../role_inspection/contribution-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getRoleInspectionState, setRoleInspectionState } from "../role_inspection/ports";
 import { numberOrNull } from "../../llm/helpers";
-import { PSYCHIC_INSPECTION_STAGE } from "../role_inspection/night_stages";
+import { PSYCHIC_INSPECTION_STAGE } from "../role_inspection/contribution-ports";
 import {
   ROLE_INSPECTION_TOOL,
   validateRoleInspection,
   roleInspectionTargets,
-} from "../role_inspection/rules";
+} from "../role_inspection/contribution-ports";
 
 export const PSYCHIC_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
@@ -41,6 +41,7 @@ export const PSYCHIC_ROLE_PROFILE: NativeRoleContributions = {
         history: [],
       });
     },
+    // 此处仍按原时点创建政策配置；共享工具／规则／阶段保同一绑定，不授查验库存或跳过租约复验。
     configuration: inspectionConfiguration("psychic", "awa_repeat_optional_v1"),
     toolSpecs: [ROLE_INSPECTION_TOOL],
     validationRules: { inspect_role: validateRoleInspection },

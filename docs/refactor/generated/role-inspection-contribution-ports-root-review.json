@@ -1,0 +1,241 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "baseCommit": "751604fd1d5feea8911354fee550b9ad49c262b7",
+  "scope": {
+    "path": "docs/refactor/generated/role-inspection-contribution-ports-scope-final.json",
+    "sha256": "fbe08429c42719ca51075b8aaf968aca4601138dbd330a3c4731caa39f1b117f"
+  },
+  "source": [
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "e2ab26269d061069b9ec020d14fea000c7c6c1ef47c5aadc5c317bb722cc58af",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "75e4e6afec2c8f02ae579fab8cafa7af79671cdab096eabc580790d232719224",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "6ecf2956933718be9792019ea1e595c9016cf0f954b6090d2ca3e85bad91ed0f",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "93f6e873dd99637b1fe582164c097f34f5e4572c4c98dc134289530a87dcf88b",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "sha256": "31947d3eea15dc6e340ffba61f52aef7e7d376f47c262b6989a8c2b6071a2e68",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+      "sha256": "3a5174c691d1cbe3237dc8764fd4ac808b83c1fd77cbb155dc99d92c18e8dd36",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan.ts",
+      "sha256": "9e725d34d8770f352d1c64253a89a170f8a1233e0f39c25ceaecbd08975073d0",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "f1cd448ee9313867e449ba89230daa6216d33e9a32b0f94b8e73b62bb3570bc2",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "839f243b900e74032f959f5b2f846e5232052df524176bb61e91322ea677a240",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/common/configured-role-policy-tape.test.ts",
+      "sha256": "40e7966e96c26c0ee349391c10789db9e6ace22a2277c803075c2a1b2e691f7d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+      "sha256": "fb96a61fb91b60107afd046e03a75a61606ead38ce8f0fa5128d90e534b5287b",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+      "sha256": "774a9df31a4f5f213db3de93dddbcbb200557ad2123924264be261493eea5ed7",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "09139f92cbc5a60ef744bfb4b94c3d5403c8e489947b3447e235e43e95502b71",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "sha256": "2f4efcce82abf784e4272002340f9641aed3fdb3bd19ec174c5245c2b04eee8f",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "sha256": "96f42bec2acffde26f405f843f38152e96e8fd698d3b2c42b5644401d610ce01",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "sha256": "9ed28386876da30da31b5836a41a7ec26128027b0baff3be08f9a45f4f2e90f3",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+      "sha256": "fd29fc571151d7e71d2ef9f589fa3b6ddd153edf5f49b9a725d974d189d4c716",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policy-ports.ts",
+      "sha256": "297b6b27f06536ed51a1c8b828236b34ffe60a0fff190f6a342f32fb7d3f47a0",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/role-inspection-contribution-ports.md",
+    "sha256": "20eaca01528f38ce7c2e0eb547639e62ffbbc03c0f7fb3b431eaeea8d9aa287e"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/role-inspection-contribution-ports-evidence.json",
+    "sha256": "32add9a218805556ba3bce5ad2e82fca192c01d3f5ebd975fa36a4e21dd2d2b5"
+  },
+  "actualGitChecks": [
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "actualGitSHA256": "d8922f725e182cbf0b66a4f6fc77fc42e7886da86f917f0b2ec3969146b9ddb4",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "actualGitSHA256": "10be62d0bb75efba88c543df624830746e8cd1724d08dd20c54c9dc5f26d4c94",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "actualGitSHA256": "6d7617d58ee4332d3efe263ce69ef76096b3ec307fc1da1e153843bd3bc032ef",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "actualGitSHA256": "fdac57fa933c38e94c1f6f5d68f671fdc9697269ad82a86ad549712483cbf28b",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "actualGitSHA256": "c55bf4cb2a7c7c3e72b6b021206cad0884d9f60dcfc501eafefb8cb85e0b57f4",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+      "actualGitSHA256": "520257992cfc46ec38996e632773428fec86251c9062f2e31a5396d656fe4bd2",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan.ts",
+      "actualGitSHA256": "a24fae1e9ab4a0bba86cfe766415e0a7dff5e3c904559066b89da27fc2378b06",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "actualGitSHA256": "ad436e97df2f96f4f27e6859f3a575f25096690a70b7715c666bee79c9b6bb96",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "actualGitSHA256": "db4651345f4b8c68a58c6f19cd6e69e748badc45637e130cc773721caac73ec5",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/common/configured-role-policy-tape.test.ts",
+      "actualGitSHA256": "6f4dc2ac1f73e0068585a179b09c5b3360b906f9b5f986b31563abee0549805e",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+      "actualGitSHA256": "a78f9613bd85625490651b84a2588f14e839583301ac302f1b2c91e5f8cc73d3",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+      "actualGitSHA256": "309e6e80d7d4cca220b174c984b84a3fcdaf3a791db35024bb58ae943196ca4e",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "actualGitSHA256": "039ea52eee8536d468ae715e8100efc352a730079b9efe1fd707abf54c24b027",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "actualGitSHA256": "f8cf51e389e2d361ca60721d0f5fb569153e483ec6e48afa888a95a3e0229dfd",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "actualGitSHA256": "818d71a88d452376babb8cd288105dcfad3eac5670668894c52a4a9e950d5a99",
+      "wholeForward": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "actualGitSHA256": "964f13a2e43718e81e26469ddda3f8f8876a02afd5ae6d638cd0452420beb75f",
+      "wholeForward": true
+    }
+  ],
+  "stableControls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "sha256": "e450ec18616dc471e38669e3fede1882da01f561b259a8fad84f5b91a3ac7b21"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "sha256": "e3831f6a2508aff2e1cadd45bee9dd19f262dfa66c7712c2c58188a6f4ce735b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "sha256": "fb4661925dae77b7c1f8ede37bcdce763001a5cf05e95cc7a43e71d2656e9820"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "sha256": "21192292e699a7ebf9f71e130ca99aa48c7624f19f57b30fe366359aa93ff5c6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "sha256": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "sha256": "efdc80e2ffe066c8ef9280a04dceb689ca1f84cafb0ed6141ffb53318e74876c"
+    }
+  ],
+  "artifactsVerified": 25,
+  "findings": [],
+  "review": [
+    "两个完整facet、四profile实际贡献、两显示consumer、夜stageplan与九原tests diff、原政策/规则/阶段优先级、冷导入日志/实际完整程序和绑定脚本已读。",
+    "十六实际751604源码精确全forward至末Source，原six owner全部Git/current同字节；无改业务体/断言/policy/strings/RNG/await/payment。",
+    "贡献facet直接原config/rule/tool/三stage绑定；policyfacet只原renderer，readerports独立，显示无重stage/profile依赖。",
+    "38真实端点保持且3unused renderer原emit确擦除；完整32映射输出不冒当前raw输出/任意初始化反射等价。",
+    "三阶段180/600/600原次序，profiles config创建/read与receiver、实际库存/租约准入由原owner；中文头及四装配点契约有效。",
+    "cold四profile各before/after只证明直接模块求值成功，输出为原导出keys，不冒完整行为/整个固定751图；当次Time传递WIP限制明确。",
+    "十八有限type/heads、Catalog精准1/14首次绿，不再运行九测试或新镜像；25附件末MD/scope/evidence准确绑定。"
+  ],
+  "notRun": [
+    "tests",
+    "types",
+    "coldimports",
+    "proof rerun",
+    "fullgates",
+    "models"
+  ],
+  "limitations": [
+    "当次静态overlay/冷导入共用当前传递依赖；不承诺所有环境完整初始化/协议兼容。",
+    "全角色/中文/R01/P9继续。"
+  ]
+}

@@ -36,8 +36,8 @@ import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,
   MIRROR_INSPECTION_STAGE,
-} from "../../../src/game/mechanisms/roles/role_inspection/night_stages";
-import { roleInspectionTargets } from "../../../src/game/mechanisms/roles/role_inspection/rules";
+} from "../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
+import { roleInspectionTargets } from "../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
 import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 import { getWolfKingState } from "../../../src/game/mechanisms/roles/wolf_king/ports";
 import { hunterDeathHook } from "../../../src/game/mechanisms/roles/hunter/death_hook";

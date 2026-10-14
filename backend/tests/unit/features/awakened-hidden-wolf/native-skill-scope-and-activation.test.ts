@@ -40,7 +40,7 @@ import {
   getDefaultRoleContributions,
   createRoleCatalog,
 } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
+import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
 import { awakenedDeathHook } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/death_hook";
 import {
   canAwakenedKnife,

@@ -34,7 +34,7 @@ import { initialIdentityKind } from "../mechanisms/roles/initial_identity/deal";
 import { projectThiefState } from "../mechanisms/roles/thief/state";
 import { projectThiefChoices } from "../mechanisms/roles/thief/setup";
 import { projectWallNote } from "../mechanisms/events/wall_notes/authority";
-import { renderInspectionPolicy } from "../mechanisms/roles/role_inspection/policies";
+import { renderInspectionPolicy } from "../mechanisms/roles/role_inspection/policy-ports";
 import { text, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { ROLE_INSPECTION_POLICY_ROLES } from "../mechanisms/roles/abilities";
 import { projectNightState } from "./night-ability-projection";

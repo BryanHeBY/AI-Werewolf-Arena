@@ -8,7 +8,7 @@ import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-insp
 
 import { nativeRolePresentation } from "../presentation-contribution";
 import type { RoleInspectionState } from "@ai-werewolf-arena/game-contract";
-import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
+import { inspectionConfiguration } from "../role_inspection/contribution-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { Camp, Role } from "../../../../core/domain/model";
@@ -17,12 +17,12 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import { setRoleInspectionState } from "../role_inspection/ports";
 import { allNightAbilities, findNightAbility, retiredNightAbilityIds } from "../abilities";
 import { numberOrNull } from "../../llm/helpers";
-import { MIRROR_INSPECTION_STAGE } from "../role_inspection/night_stages";
+import { MIRROR_INSPECTION_STAGE } from "../role_inspection/contribution-ports";
 import {
   ROLE_INSPECTION_TOOL,
   validateRoleInspection,
   roleInspectionTargets,
-} from "../role_inspection/rules";
+} from "../role_inspection/contribution-ports";
 
 import { nativeMirror, freshMirrorInspectionState } from "./native-inspection";
 export { freshMirrorInspectionState } from "./native-inspection";
@@ -67,6 +67,7 @@ export const MIRROR_GIRL_ROLE_PROFILE: NativeRoleContributions = {
             : {}),
         });
     },
+    // 此处仍按原时点创建政策配置；共享工具／规则／阶段保同一绑定，不授查验库存或跳过租约复验。
     configuration: inspectionConfiguration("mirrorGirl", "awa_unique_optional_v1"),
     toolSpecs: [ROLE_INSPECTION_TOOL],
     validationRules: { inspect_role: validateRoleInspection },

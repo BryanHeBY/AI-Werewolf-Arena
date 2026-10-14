@@ -4,7 +4,7 @@
  * 默认贡献的成员及潜在能力元数据交给 RulePlan 固定；collector 本身不拥有整局规则。
  * 普通原生密集数组可冻结成员，虚方法、Proxy、访问器或惰性来源保留原晚拉取及失败前缀。
  * 描述器检查不额外执行 getter，原 handler、World 和能力实例均不冻结。
- * 共享注册与鬼新娘替换保留原对象及先后次序，来源信息不授予行动资格。
+ * 共享注册与鬼魂新娘替换保留原对象及先后次序，来源信息不授予行动资格。
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
@@ -29,7 +29,7 @@ import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,
   MIRROR_INSPECTION_STAGE,
-} from "../game/mechanisms/roles/role_inspection/night_stages";
+} from "../game/mechanisms/roles/role_inspection/contribution-ports";
 import { BLACK_MARKET_RECIPIENT_STAGE } from "../game/mechanisms/roles/black_market_merchant/night_stage";
 import { LUCKY_ABILITY_STAGE } from "../game/mechanisms/roles/miracle_merchant/lucky_stage";
 import { allDeathGuns } from "../game/mechanisms/roles/death_abilities";

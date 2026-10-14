@@ -19,7 +19,7 @@ import {
 } from "../../../../src/runtime/config/board_definition";
 import { COMPONENT, type RoleComponent } from "../../../../src/core";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { roleInspectionTargets } from "../../../../src/game/mechanisms/roles/role_inspection/rules";
+import { roleInspectionTargets } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {

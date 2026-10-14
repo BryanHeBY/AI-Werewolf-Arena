@@ -15,7 +15,8 @@ import {
   ROLE_INSPECTION_TOOL,
   roleInspectionTargets,
   validateRoleInspection,
-} from "../role_inspection/rules";
+} from "../role_inspection/contribution-ports";
+// 共用查验贡献仅提供原工具与目标／校验函数；觉醒技能的原实例、学习与夜资格仍由本族 owner 决定。
 import { findNightAbility } from "../abilities";
 import { numberOrNull } from "../../llm/helpers";
 import { canAwakenedKnife } from "./inheritance";

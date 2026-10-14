@@ -28,7 +28,7 @@ import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden
 import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { canGargoyleKnife } from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
-import { ROLE_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
+import { ROLE_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
 import {
   knownWolfTeammates,
   wolfKnifeHolders,

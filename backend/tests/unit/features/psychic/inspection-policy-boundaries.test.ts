@@ -27,7 +27,7 @@ import {
 import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,
-} from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
+} from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
 import { hasRoleInspectionNightCommit } from "../../../../src/game/mechanisms/roles/role_inspection/night_scope";
 import { canGargoyleKnife } from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
 import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
