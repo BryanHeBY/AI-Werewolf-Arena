@@ -109,7 +109,8 @@ test("actual wall binding preserves original request context and its mechanism-o
     expect(wallRequestScope(world, request)).toBe(wall);
     expect(context).not.toBe(input.context);
     expect(alias.context).toBe(context);
-    expect(wallRequestScope(world, alias)).toBe(wall);
+    // 原 12345 输入保留；F02 只拒过去期限 alias，原请求和作者库存仍有效。
+    expect(wallRequestScope(world, alias)).toBeUndefined();
     expect(wallRequestScope(world, structuredClone(request))).toBeUndefined();
     expect(author.note.remaining).toBe(1);
   } finally {

@@ -1,0 +1,21 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/domain/request-lease.test.ts:
+(pass) independent bindings survive a later route failure and inherited routes remain stable [1.05ms]
+(pass) four fixed protocols preserve getter order and recover their original context references [0.52ms]
+(pass) invalid sources skip target enumeration and field exceptions leave the original binding [0.27ms]
+
+backend/tests/unit/rulesets/action-request-bindings.test.ts:
+(pass) actual wall binding preserves original request context and its mechanism-owned deadline alias [1.02ms]
+
+backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts:
+(pass) actual Reception rejects tampered author; only otherwise-identical deadline derivations keep authority [43.26ms]
+
+backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts:
+(pass) opaque factory request is World-bound and only deadline copies inherit it [4.60ms]
+
+ 6 pass
+ 76 filtered out
+ 0 fail
+ 58 expect() calls
+Ran 6 tests across 4 files. [171.00ms]

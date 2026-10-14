@@ -1,7 +1,7 @@
 /**
  * 单元测试核对公共请求传播 owner 的四种固定读取顺序、独立多绑定及异常前缀。
  * 输入为手写晚查询、请求 getter 和别名；输出以原引用、字面 trace、同一 Error 和未读取计数为 oracle。
- * 只写测试自有字段／记录，保原失配后恢复与无期限数值校验；不执行游戏、模型或领域付款。
+ * 只写测试自有字段／记录，显式核 F02 失配永久拒绝与有限期限；不执行游戏、模型或领域付款。
  */
 import { expect, test } from "bun:test";
 import { Phase } from "../../../src/core/domain/identity";
@@ -34,6 +34,7 @@ test("independent bindings survive a later route failure and inherited routes re
       instanceId: (_author: object) => "wall:1:1",
       phase: () => Phase.Voting,
       stage: () => "wall_notes" as const,
+      current: () => true,
     }, 10,
   );
   const initialLease = RequestLease.actorPhaseDayStage(
@@ -43,11 +44,12 @@ test("independent bindings survive a later route failure and inherited routes re
       actorId: (_scope: object) => 1,
       phase: () => Phase.Voting,
       stage: (_scope: object) => "wall_notes" as const,
+      current: () => true,
     }, 20,
   );
   wallLease.bind(owner, original);
   initialLease.bind(owner, original);
-  const alias = { ...original, deadlineAtMs: 100 };
+  const alias = { ...original, deadlineAtMs: Date.now() + 30_000 };
   trace.length = 0;
   fail = true;
   expect(() => inheritRequestAlias(original, alias)).toThrow(failure);
@@ -56,13 +58,13 @@ test("independent bindings survive a later route failure and inherited routes re
   expect(initialLease.scope(owner, alias)).toBeUndefined();
   fail = false;
   inheritRequestAlias(original, alias);
-  expect(initialLease.scope(owner, alias)).toBe(initial);
+  expect(initialLease.scope(owner, alias)).toBeUndefined();
   const descendant = { ...alias, deadlineAtMs: -1 };
   trace.length = 0;
   inheritRequestAlias(alias, descendant);
-  expect(trace).toEqual(["wall:active", "initial:active"]);
-  expect(wallLease.scope(owner, descendant)).toBe(wall);
-  expect(initialLease.scope(owner, descendant)).toBe(initial);
+  expect(trace).toEqual(["wall:active"]);
+  expect(wallLease.scope(owner, descendant)).toBeUndefined();
+  expect(initialLease.scope(owner, descendant)).toBeUndefined();
 });
 
 test("four fixed protocols preserve getter order and recover their original context references", () => {
@@ -97,7 +99,7 @@ test("four fixed protocols preserve getter order and recover their original cont
       : RequestLease.item({
         active: q.active, authors: (_scope: object) => authors,
         token: (_scope: object) => "wall:1", instanceId: (_author: object) => "wall:1:1",
-        phase: q.phase, stage: () => stage,
+        phase: q.phase, stage: () => stage, current: (_owner: object, _scope: object, _author: object) => { trace.push("current"); return true; },
       }, 10);
     // 预期逐项来自四旧绑定正文，不能由新 owner 生成读取名单。
     const bindTrace = {
@@ -113,18 +115,19 @@ test("four fixed protocols preserve getter order and recover their original cont
       wall: ["actor", "context", "context", "context.wall_id", "context", "context.instance", "phase", "context", "context.day", "context", "context.stage"],
     };
     lease.bind(owner, r);
-    expect(trace).toEqual(bindTrace[kind]);
+    // 新 pin 在原登记后额外读顶层原值；四协议内原 getter 次序仍在前缀。
+    expect(trace).toEqual([...bindTrace[kind], "actor", "phase", "context"]);
     trace.length = 0;
     expect(lease.scope(owner, r)).toBe(scope);
-    expect(trace).toEqual(queryTrace[kind]);
+    expect(trace).toEqual([...queryTrace[kind], "actor", "phase", "context", ...((kind === "initial" || kind === "wall") ? ["current"] : [])]);
     context.stage = "literal_bad_stage" as ActionRequest["context"]["stage"];
     expect(lease.scope(owner, r)).toBeUndefined();
     context.stage = stage;
-    expect(lease.scope(owner, r)).toBe(scope);
+    expect(lease.scope(owner, r)).toBeUndefined();
     r.context = { ...context };
     expect(lease.scope(owner, r)).toBeUndefined();
     r.context = context;
-    expect(lease.scope(owner, r)).toBe(scope);
+    expect(lease.scope(owner, r)).toBeUndefined();
   }
 });
 
@@ -132,11 +135,14 @@ test("invalid sources skip target enumeration and field exceptions leave the ori
   const owner = {}, scope = {}, trace: string[] = [], failure = new Error("literal_alias_field_getter"),
     original = request(), lease = RequestLease.actorPhaseDayStage({
       active: (_owner: object) => scope, owner: (_scope: object) => owner,
-      actorId: (_scope: object) => 1, phase: () => Phase.Night, stage: (_scope: object) => "thief" as const,
+      actorId: (_scope: object) => 1, phase: () => Phase.Night, stage: (_scope: object) => "thief" as const, current: () => true,
     }, 20);
   lease.bind(owner, original);
   Object.defineProperty(original, "actorId", { enumerable: true, get: () => { trace.push("source.actor"); return 1; } });
-  const target = new Proxy({ ...original, deadlineAtMs: NaN }, {
+  const fresh = request();
+  lease.bind(owner, fresh);
+  Object.defineProperty(fresh, "actorId", { enumerable: true, get: () => { trace.push("source.actor"); return 1; } });
+  const target = new Proxy({ ...fresh, deadlineAtMs: NaN }, {
     ownKeys(value) { trace.push("target.keys"); return Reflect.ownKeys(value); },
     get(value, key, receiver) {
       if (key === "actorId") { trace.push("target.actor"); throw failure; }
@@ -149,10 +155,12 @@ test("invalid sources skip target enumeration and field exceptions leave the ori
   expect(trace).toEqual(["source.actor"]);
   original.context.stage = "thief";
   trace.length = 0;
-  expect(() => inheritRequestAlias(original, target)).toThrow(failure);
-  expect(trace).toEqual(["source.actor", "target.keys", "source.actor", "target.actor"]);
+  // 已撤原请求不复活；独立有效来源的坏 target 仍保同 Error 且不毒原。
+  expect(lease.scope(owner, original)).toBeUndefined();
+  expect(() => inheritRequestAlias(fresh, target)).toThrow(failure);
+  expect(trace).toEqual(["source.actor", "source.actor", "target.keys", "source.actor", "target.actor"]);
   expect(lease.scope(owner, target)).toBeUndefined();
-  expect(lease.scope(owner, original)).toBe(scope);
+  expect(lease.scope(owner, fresh)).toBe(scope);
   // WeakMap.set 的 callee 在记录对象构造之前取得；该失败不得多读记录里的 context。
   const bindingRequest = request(), context = bindingRequest.context,
     descriptor = Object.getOwnPropertyDescriptor(WeakMap.prototype, "set")!;

@@ -3,7 +3,7 @@
  * 输入为原 World、作者与请求；输出为已接受墙操作，写权只覆盖该作者／窗口的库存及绑定。
  * 不变量：别名必须保留原请求身份和窗口校验。关闭墙或参与者替换撤销本地权限，
  * 失败仍保留原已提交前缀，不以别名跳过 authority 检查。
- * 请求记录及别名传播归独立公共实例；不新增期限检查或永久撤权，原作者与活跃墙仍按原条件查询。
+ * 请求记录及别名传播归独立公共实例；按最早预算永久记录已观察撤权；作者／墙晚复验仍使用本模块的原条件。
  */
 import { RequestLease } from "../../../../core/domain/request-lease";
 import { readWallNoteData } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
@@ -49,7 +49,7 @@ export interface WallAuthority {
 const active = new WeakMap<World, WallAuthority>();
 const commits = new WeakSet<World>();
 const owned = new WeakMap<World, Map<number, WallAuthor>>();
-/** 本实例只登记请求；原 active/author/库存表仍归本 authority，入口不提前核阶段或当前作者。 */
+/** 本实例持有请求及预算／关闭元数据；原 active/author/库存表仍归本 authority，入口不提前核阶段或当前作者。 */
 const requestLease = RequestLease.item<World, WallAuthority, WallAuthor>(
   {
     active: (world) => active.get(world),
@@ -58,6 +58,7 @@ const requestLease = RequestLease.item<World, WallAuthority, WallAuthor>(
     instanceId: (author) => author.instanceId,
     phase: () => Phase.Voting,
     stage: () => "wall_notes",
+    current: (world, scope, author) => sameWallAuthor(world, scope, author),
   },
   10,
 );
@@ -66,6 +67,10 @@ export function bindWallRequest(world: World, request: ActionRequest): void {
 }
 export function wallRequestScope(world: World, request: ActionRequest): WallAuthority | undefined {
   return requestLease.scope(world, request);
+}
+/** 每个作者 request 打开自己的完成身份，不以共享墙 scope 结算其他作者。 */
+export function openWallRequestDelivery(world: World, request: ActionRequest) {
+  return requestLease.openDelivery(world, request);
 }
 export function hasActiveWall(world: World): boolean {
   return active.has(world);

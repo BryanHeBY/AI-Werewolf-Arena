@@ -1,0 +1,99 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "source": [
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "8a0ce088c1a70d61731af9f8a2956304ac8f2acd16573c70ec02d12933980d8a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "8cb90cb502f56bd7fc4af3cc5ee247fc5ed4bb5c922347e3430d7e9789dfdcd4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "d32c7b69ceb92806046f43065734e78513867ad73858c98e944700c0de89f551"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "72a982bdd876732da46b55a6bd2978a206e239759dff6ea220878beb7a8b1b77"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "d7fa95fd1f236b9452290be6977cf0e325d77002cdee81a303d238d16aa2fbba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "c329d4e4f51562c6cd6b176eb7487b3d827c567b1ebf363e5acefa4d45f67f69"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "53f2c07708aaa5b832fe69cfc8aba482cd9b4506f4c274a92aecb0181bd41dc0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/window.ts",
+      "sha256": "cab24757e21b76d7e27e05ef3d11b965321571a61ddbc5b06138422d9062c361"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease.test.ts",
+      "sha256": "c6dd720175f6e2c00b66197efa3df10a1b39177502eb37e84d0116497f2dad84"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "01e87ff45c30ab41f0ef79830deae970531c52488fc9b6a81ff3ccf2028d9ac5"
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "0addc0b254789dbfdc213e33f2b7b55e8b0103ac95cc41eaed83fb2ab2743100"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/action-request-bindings.test.ts",
+      "sha256": "f66cc34dd3965fadab7dca9c5548c316ba139247f44fdd31b937100d939eec41"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease-terminal-boundaries.test.ts",
+      "sha256": "edbbe5c87a45329d0e1f0927b67441a5571a552f23d7b01346fe6b19bb7b74f4"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/request-lease-terminal-revocation-scope-final.json",
+    "sha256": "7fc1ed12ff52af1b35b051280495a15f49c0f0958283f7872523b8a8988b1105"
+  },
+  "document": {
+    "path": "docs/refactor/request-lease-terminal-revocation.md",
+    "sha256": "4f264b5a5ca865c88b9c2036e88518583ad84d425fea15a7fced400dd2466c07"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/request-lease-terminal-revocation-evidence.json",
+    "sha256": "9ca9c4d01c6f7cefb43a7828e84d34e10590125073d1b6baf51d6b56d37eccf3"
+  },
+  "integrity": {
+    "freshSources": 13,
+    "actualGitBefore": 12,
+    "controls": 6,
+    "artifactHashes": 24,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整四协议/顶层pin/独立表/实际guard与completion，只真实窗口付后settle",
+    "永久原体失配与badalias隔离、外来World无原读、最早未来预算与时钟回退不可复活",
+    "Initial/Wild/Lonely/Wall完整提交与原cleanup优先、多作者全关、Trace待付及晚失败前缀",
+    "Root静态signedzero finding已targetpin前置和唯一新case闭，不重复12绿",
+    "真实e0dd十二before与新增absence、六controls、24附件及真实首红/失败only类型/19distinct259断言收据；完整精确逆和actualdomain函数证据，非F02等价声明"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ],
+  "newSourceAbsence": {
+    "path": "backend/tests/unit/domain/request-lease-terminal-boundaries.test.ts",
+    "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+    "absent": true,
+    "actualCatFileExit": 128,
+    "rootCommandChunk": "b250f5",
+    "rootCommandExit": 0
+  }
+}

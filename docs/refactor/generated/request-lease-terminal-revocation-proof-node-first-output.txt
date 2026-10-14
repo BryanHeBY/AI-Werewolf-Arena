@@ -1,0 +1,59 @@
+node:child_process:1027
+    throw err;
+    ^
+
+<ref *1> Error: spawnSync git EPERM
+    at Object.spawnSync (node:internal/child_process:1175:20)
+    at spawnSync (node:child_process:974:24)
+    at Object.execFileSync (node:child_process:1017:15)
+    at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/request-lease-terminal-revocation-proof.cjs:25:18
+    at Array.map (<anonymous>)
+    at Object.<anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/request-lease-terminal-revocation-proof.cjs:24:30)
+    at Module._compile (node:internal/modules/cjs/loader:1968:14)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'spawnSync git',
+  path: 'git',
+  spawnargs: [
+    'show',
+    'e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc:backend/src/core/domain/request-lease.ts'
+  ],
+  error: [Circular *1],
+  status: 0,
+  signal: null,
+  output: [
+    null,
+    Buffer(11835) [Uint8Array] [
+       47,  42,  42,  10,  32,  42,  32, 232, 180, 159, 232, 180,
+      163, 229, 155, 155, 231, 167, 141, 229, 183, 178, 228, 189,
+      191, 231, 148, 168, 231, 154, 132, 230, 156, 137, 229, 186,
+      143, 232, 175, 183, 230, 177, 130, 231, 187, 145, 229, 174,
+      154, 229, 141, 143, 232, 174, 174, 239, 188, 154, 230, 142,
+      165, 231, 186, 179, 229, 142, 159, 232, 175, 183, 230, 177,
+      130, 227, 128, 129, 230, 159, 165, 232, 175, 162, 229, 142,
+      159, 228, 189, 156, 231, 148, 168, 229, 159, 159, 227, 128,
+      129, 230, 175, 148,
+      ... 11735 more items
+    ],
+    Buffer(0) [Uint8Array] []
+  ],
+  pid: 9,
+  stdout: Buffer(11835) [Uint8Array] [
+     47,  42,  42,  10,  32,  42,  32, 232, 180, 159, 232, 180,
+    163, 229, 155, 155, 231, 167, 141, 229, 183, 178, 228, 189,
+    191, 231, 148, 168, 231, 154, 132, 230, 156, 137, 229, 186,
+    143, 232, 175, 183, 230, 177, 130, 231, 187, 145, 229, 174,
+    154, 229, 141, 143, 232, 174, 174, 239, 188, 154, 230, 142,
+    165, 231, 186, 179, 229, 142, 159, 232, 175, 183, 230, 177,
+    130, 227, 128, 129, 230, 159, 165, 232, 175, 162, 229, 142,
+    159, 228, 189, 156, 231, 148, 168, 229, 159, 159, 227, 128,
+    129, 230, 175, 148,
+    ... 11735 more items
+  ],
+  stderr: Buffer(0) [Uint8Array] []
+}
+
+Node.js v26.11.1

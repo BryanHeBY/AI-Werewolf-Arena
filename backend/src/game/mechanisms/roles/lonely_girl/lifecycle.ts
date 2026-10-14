@@ -4,7 +4,7 @@
  * 不变量：仅在原身份／资源仍匹配时提交；关闭或替换参与者使 scope 失效，包括期限别名。
  * 选择不改变演员的 Role／Camp，已选成员关系在双方死亡后仍保留；本模块不新增目标死亡结算。
  * 数据写由槽执行，失败窗口审计保留原授权身份，不读取外来 accessor 或恢复已消耗库存。
- * 请求记录及别名传播归独立公共实例；请求字段失配只拒本次查询，原生命／准备撤权仍由本族决定。
+ * 请求记录及别名传播归独立公共实例；观察请求或原领域失配后许可不复活；付款/取消仍由本族执行，别名自身损坏不毒原请求。
  */
 import type { LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -56,7 +56,7 @@ export interface LonelyGirlBinding {
 const bindings = new WeakMap<World, LonelyGirlBinding>(),
   nights = new WeakMap<World, Set<number>>(),
   activeNights = new WeakSet<World>();
-/** phase 先于 context 身份的原协议独立保留；不复制选择许可或引入请求永久撤权。 */
+/** phase 先于 context 身份的原协议独立保留；不复制选择许可；公共 turn 记录已观察的永久撤权。 */
 const requestLease = RequestLease.actorPhaseStageDay<World, LonelyGirlBinding>(
   {
     active: (world) => bindings.get(world),
@@ -244,6 +244,11 @@ export function lonelyGirlRequestScope(
 ): LonelyGirlBinding | undefined {
   return requestLease.scope(world, request);
 }
+/** 仅本族真实窗口打开交付，原 scope/资源仍由当前生命周期唯一复验。 */
+export function openLonelyGirlRequestDelivery(world: World, request: ActionRequest) {
+  return requestLease.openDelivery(world, request);
+}
+
 export function commitLonelyGirlChoice(b: LonelyGirlBinding, targetId: number): Camp | null {
   const target = b.participants.get(targetId);
   if (!target || targetId === b.actorId || !validLonelyGirlChoice(b)) return null;

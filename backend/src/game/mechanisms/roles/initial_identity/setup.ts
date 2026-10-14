@@ -3,13 +3,13 @@
  * 输出保留原选择结果与请求绑定；setup 仍当前时调用数据所有者写选择，再沿原物理换牌／身份安装顺序提交。
  * 工厂在原 scope 复验之后才 new，固定日次仍为 1；构造／请求异常保留已开准备前缀并由原 finally 关闭。
  * 失败选择与已关闭 setup 保留原终结决定；构造端口和元数据均不携带行动许可。
- * 请求记录及别名传播归独立公共实例；失配只拒本次查询，字段恢复仍按原规则检查，不新增期限校验。
+ * 请求记录及别名传播归独立公共实例；观察原请求或领域失配永久关该 turn；别名自身失配独立退役，期限只能缩短。
  */
 import { createCampComponent } from "../../../observation/component-presentation";
 import type {
   ReadonlyBoardConfig,
 } from "@ai-werewolf-arena/game-contract";
-import { RequestLease } from "../../../../core/domain/request-lease";
+import { RequestLease, type RequestLeaseTurn } from "../../../../core/domain/request-lease";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, Camp, Phase, Role, createVictoryComponent, type ActionProvider, type ActionRequest, type CampComponent, type GameEvent, type RoleComponent, type VictoryComponent, type World } from "../../../../core/domain";
 import { createRoleComponent } from "../../../observation/role-presentation";
@@ -83,6 +83,7 @@ const requestLease = RequestLease.actorPhaseDayStage<World, InitialIdentityScope
     actorId: (scope) => scope.actorId,
     phase: () => Phase.Night,
     stage: (scope) => scope.kind,
+    current: (scope) => sameInitialIdentityScope(scope),
   },
   20,
 );
@@ -222,6 +223,7 @@ export class InitialIdentitySetupWindow {
       throw new Error(`${this.kind}_setup_unavailable`);
     const deal = openInitialIdentitySetup(this.world);
     let status: "complete" | "cancelled" | "failed" = "failed";
+    let delivery: RequestLeaseTurn | undefined, failed = false;
     try {
       if (!pendingInitialIdentityDealValid(this.world)) {
         status = "cancelled";
@@ -318,12 +320,14 @@ export class InitialIdentitySetupWindow {
         },
         context: { allow_fallback: false, action_failure_policy: "error" },
       });
-      if (!sameInitialIdentityScope(scope)) {
+      // 绑定表不抢 guard；真实窗口在完整 create 返回后才打开自己的交付和完成身份。
+      delivery = requestLease.openDelivery(this.world, request);
+      if (!sameInitialIdentityScope(scope) || delivery?.current() !== true) {
         status = "cancelled";
         return false;
       }
       const call = await provider.getAction(request);
-      if (!sameInitialIdentityScope(scope)) {
+      if (!sameInitialIdentityScope(scope) || delivery?.current() !== true) {
         status = "cancelled";
         return false;
       }
@@ -338,7 +342,7 @@ export class InitialIdentitySetupWindow {
           day: 1,
           ...(this.kind === "thief" ? { thiefScope: scope } : { shapeshifterScope: scope }),
         });
-        if (!sameInitialIdentityScope(scope)) {
+        if (!sameInitialIdentityScope(scope) || delivery.current() !== true) {
           status = "cancelled";
           return false;
         }
@@ -361,7 +365,7 @@ export class InitialIdentitySetupWindow {
       const newVictory = newRole
         ? createVictoryComponent([{ kind: "faction", faction: newRole.camp }])
         : null;
-      if (!sameInitialIdentityScope(scope)) {
+      if (!sameInitialIdentityScope(scope) || delivery.current() !== true) {
         status = "cancelled";
         return false;
       }
@@ -381,6 +385,8 @@ export class InitialIdentitySetupWindow {
       status = "complete";
       closeInitialIdentitySetup(this.world, status);
       scopes.delete(this.world);
+      // 物理换牌、全部组件安装与原关闭成功后才落 true；事实／通知晚抛不能再结算 false。
+      delivery.complete();
       const data = {
         actorId,
         day: 1 as const,
@@ -405,7 +411,11 @@ export class InitialIdentitySetupWindow {
             },
       );
       return true;
+    } catch (error) {
+      failed = true;
+      throw error;
     } finally {
+      try {
       if (this.kind === "shapeshifter" && status !== "complete") {
         const original =
           scopes.get(this.world)?.state ??
@@ -419,6 +429,14 @@ export class InitialIdentitySetupWindow {
       }
       scopes.delete(this.world);
       closeInitialIdentitySetup(this.world, status);
+      } catch (error) {
+        // 原 finally 的清理错误仍按旧 JS 优先于 body 错误；新 false 通知不得覆盖它。
+        failed = true;
+        throw error;
+      } finally {
+        if (failed) { try { delivery?.close(); } catch { /* 已有原错误时只完成关闭，保该错误。 */ } }
+        else delivery?.close();
+      }
     }
   }
 }

@@ -657,7 +657,8 @@ test("actual Reception rejects tampered author; only otherwise-identical deadlin
     reception = new ActionReception(g.world),
     timed = { ...request, deadlineAtMs: 100 };
   inheritRequestAlias(request, timed);
-  expect(reception.validate(timed, "write_note", { text: "original" }).ok).toBe(true);
+  // 保原 100 输入，F02 现拒过去期限；原作者不会因非法别名而被关闭。
+  expect(reception.validate(timed, "write_note", { text: "original" }).ok).toBe(false);
   const changed = { ...timed, actorId: 2 };
   inheritRequestAlias(timed, changed);
   expect(reception.validate(changed, "write_note", { text: "forged" }).ok).toBe(false);

@@ -1,0 +1,59 @@
+{
+  "source": [
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "c523dfbdbee7738b7ebc693dd01130051c44205fc9fcd2ecb2c2cca59a6601ae"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "8cb90cb502f56bd7fc4af3cc5ee247fc5ed4bb5c922347e3430d7e9789dfdcd4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "d32c7b69ceb92806046f43065734e78513867ad73858c98e944700c0de89f551"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "72a982bdd876732da46b55a6bd2978a206e239759dff6ea220878beb7a8b1b77"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "d7fa95fd1f236b9452290be6977cf0e325d77002cdee81a303d238d16aa2fbba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "c329d4e4f51562c6cd6b176eb7487b3d827c567b1ebf363e5acefa4d45f67f69"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "a7fbbfe1e42219bc331a11c3f0e8cde087bd4d562382069454ec38163ebeb3b4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/window.ts",
+      "sha256": "3e27a27e86120e3c2bba3a1c66144d899670e9caeb45a6b96f41e10bd743c834"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease.test.ts",
+      "sha256": "c6dd720175f6e2c00b66197efa3df10a1b39177502eb37e84d0116497f2dad84"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "01e87ff45c30ab41f0ef79830deae970531c52488fc9b6a81ff3ccf2028d9ac5"
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "0addc0b254789dbfdc213e33f2b7b55e8b0103ac95cc41eaed83fb2ab2743100"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/action-request-bindings.test.ts",
+      "sha256": "f66cc34dd3965fadab7dca9c5548c316ba139247f44fdd31b937100d939eec41"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease-terminal-boundaries.test.ts",
+      "sha256": "8ef73f85d3babace2d546c8af8c38c190a39335fb5f3b817fbccf9b3ee008d84"
+    }
+  ],
+  "documentationPaths": 665,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

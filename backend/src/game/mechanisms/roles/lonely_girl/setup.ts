@@ -6,6 +6,7 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../core/domain";
+import type { RequestLeaseTurn } from "../../../../core/domain/request-lease";
 import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { LONELY_GIRL_POLICY, readLonelyGirlTool } from "./state-slot";
@@ -17,6 +18,7 @@ import {
   validLonelyGirlChoice,
   commitLonelyGirlChoice,
   closeLonelyGirlChoice,
+  openLonelyGirlRequestDelivery,
 } from "./lifecycle";
 export class LonelyGirlSetupWindow {
   constructor(
@@ -38,6 +40,7 @@ export class LonelyGirlSetupWindow {
     if (!b || b.status !== "pending" || config !== b.config || day !== 1)
       throw new Error("lonely_girl_setup_unavailable");
     let status: "failed" | "cancelled" = "failed";
+    let delivery: RequestLeaseTurn | undefined, failed = false;
     try {
       if (!openLonelyGirlChoice(b, isCurrent)) {
         status = "cancelled";
@@ -53,12 +56,14 @@ export class LonelyGirlSetupWindow {
         summary: { key: "turn.lonely_girl.required" },
         context: { allow_fallback: false, action_failure_policy: "error" },
       });
-      if (!validLonelyGirlChoice(b)) {
+      // create 完成后打开原 turn；域状态先按原时点复验，后读请求／预算许可。
+      delivery = openLonelyGirlRequestDelivery(this.world, request);
+      if (!validLonelyGirlChoice(b) || delivery?.current() !== true) {
         status = "cancelled";
         return false;
       }
       const raw = await provider.getAction(request);
-      if (!validLonelyGirlChoice(b)) {
+      if (!validLonelyGirlChoice(b) || delivery?.current() !== true) {
         status = "cancelled";
         return false;
       }
@@ -69,13 +74,15 @@ export class LonelyGirlSetupWindow {
         day,
         lonelyGirlScope: b,
       });
-      if (!validLonelyGirlChoice(b)) {
+      if (!validLonelyGirlChoice(b) || delivery?.current() !== true) {
         status = "cancelled";
         return false;
       }
       if (!result.ok) throw new Error("lonely_girl_choice_invalid");
       const camp = commitLonelyGirlChoice(b, call.args.target_id);
       if (!camp) throw new Error("lonely_girl_choice_invalid");
+      // 完整领域 commit 已返回成功；通知或事实晚抛仍 true，不重新核已付款的 pending 状态。
+      delivery.complete();
       this.events.push({
         timestamp: Date.now(),
         type: "lonely_girl_admired_chosen",
@@ -88,8 +95,20 @@ export class LonelyGirlSetupWindow {
         },
       });
       return true;
+    } catch (error) {
+      failed = true;
+      throw error;
     } finally {
-      closeLonelyGirlChoice(b, status);
+      try {
+        closeLonelyGirlChoice(b, status);
+      } catch (error) {
+        failed = true;
+        throw error;
+      } finally {
+        // 原 body／cleanup 错误优先；无旧错时新增 false 通知错误正常传播。
+        if (failed) { try { delivery?.close(); } catch { /* 保已在传播的错误。 */ } }
+        else delivery?.close();
+      }
     }
   }
 }

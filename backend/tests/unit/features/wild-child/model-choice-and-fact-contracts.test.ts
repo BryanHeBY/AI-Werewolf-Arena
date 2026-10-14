@@ -211,7 +211,8 @@ test("opaque factory request is World-bound and only deadline copies inherit it"
   await setup({ ...g, config: g.boardConfig }, async (r) => {
     const timed = { ...r, deadlineAtMs: 200 };
     inheritRequestAlias(r, timed);
-    expect(wildChildRequestScope(g.world, timed)).toBeDefined();
+    // F02 独立政策变化：保原 200 输入，但过去期限别名不取得许可，也不关闭有效原请求。
+    expect(wildChildRequestScope(g.world, timed)).toBeUndefined();
     expect(wildChildRequestScope(other.world, timed)).toBeUndefined();
     expect(wildChildRequestScope(g.world, { ...r })).toBeUndefined();
     const altered = { ...r, allowedTools: [] };

@@ -3,7 +3,7 @@
  * 输入为原组件、首夜请求和实际死亡波；输出为原许可结果、阵营／Victory 及有界事实。
  * 不变量：仅在原身份／生命仍当前时提交；关闭、替换或截止别名仍按原政策撤权。
  * 槽所有者执行数据与 expectedState 写入；先发布榜样死亡事实再转换，失败不撤回已发表前缀。
- * 请求记录及别名传播归独立公共实例；请求字段失配只拒本次查询，原生命／准备撤权仍由本族决定。
+ * 请求记录及别名传播归独立公共实例；观察请求或原领域失配后许可不复活；付款/取消仍由本族执行，别名自身损坏不毒原请求。
  */
 import { createCampComponent } from "../../../observation/component-presentation";
 import type { WildChildReadState } from "@ai-werewolf-arena/game-contract";
@@ -211,6 +211,11 @@ export function wildChildRequestScope(
 ): WildChildBinding | undefined {
   return requestLease.scope(world, request);
 }
+/** 仅本族真实窗口打开交付，原 scope/资源仍由当前生命周期唯一复验。 */
+export function openWildChildRequestDelivery(world: World, request: ActionRequest) {
+  return requestLease.openDelivery(world, request);
+}
+
 export function commitWildChildChoice(b: WildChildBinding, targetId: number): boolean {
   const target = windows.get(b.world)?.targets.get(targetId);
   if (!validWildChildChoice(b) || !target || !sameChoiceTarget(b.world, target)) return false;

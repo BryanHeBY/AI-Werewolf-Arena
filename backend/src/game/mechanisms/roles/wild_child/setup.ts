@@ -6,6 +6,7 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../core/domain";
+import type { RequestLeaseTurn } from "../../../../core/domain/request-lease";
 import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { readWildChildTool } from "./state-slot";
@@ -16,6 +17,7 @@ import {
   validWildChildChoice,
   commitWildChildChoice,
   closeWildChildChoice,
+  openWildChildRequestDelivery,
   hasActiveWildChild,
 } from "./lifecycle";
 export class WildChildSetupWindow {
@@ -38,6 +40,7 @@ export class WildChildSetupWindow {
     if (!b || config !== b.config || day !== 1 || !isCurrent())
       throw new Error("wild_child_setup_unavailable");
     let status: "failed" | "cancelled" = "failed";
+    let delivery: RequestLeaseTurn | undefined, failed = false;
     try {
       openWildChildChoice(b, isCurrent);
       // 原选择窗口已开后才取构造器，并用本次 World／事件／day 创建实例；失败仍按原 finally 关闭。
@@ -50,12 +53,14 @@ export class WildChildSetupWindow {
         summary: { key: "turn.wild_child.required" },
         context: { allow_fallback: false, action_failure_policy: "error" },
       });
-      if (!validWildChildChoice(b)) {
+      // create 完成后打开原 turn；域状态先按原时点复验，后读请求／预算许可。
+      delivery = openWildChildRequestDelivery(this.world, request);
+      if (!validWildChildChoice(b) || delivery?.current() !== true) {
         status = "cancelled";
         return false;
       }
       const raw = await provider.getAction(request);
-      if (!validWildChildChoice(b)) {
+      if (!validWildChildChoice(b) || delivery?.current() !== true) {
         status = "cancelled";
         return false;
       }
@@ -66,20 +71,34 @@ export class WildChildSetupWindow {
         day,
         wildChildScope: b,
       });
-      if (!validWildChildChoice(b)) {
+      if (!validWildChildChoice(b) || delivery?.current() !== true) {
         status = "cancelled";
         return false;
       }
       if (!result.ok || !commitWildChildChoice(b, call.args.target_id))
         throw new Error("wild_child_choice_invalid");
+      // 完整领域 commit 已返回成功；通知或事实晚抛仍 true，不重新核已付款的 pending 状态。
+      delivery.complete();
       this.events.push({
         timestamp: Date.now(),
         type: "wild_child_model_chosen",
         payload: { actorId: b.actorId, day: 1, targetId: call.args.target_id },
       });
       return true;
+    } catch (error) {
+      failed = true;
+      throw error;
     } finally {
-      closeWildChildChoice(b, status);
+      try {
+        closeWildChildChoice(b, status);
+      } catch (error) {
+        failed = true;
+        throw error;
+      } finally {
+        // 原 body／cleanup 错误优先；无旧错时新增 false 通知错误正常传播。
+        if (failed) { try { delivery?.close(); } catch { /* 保已在传播的错误。 */ } }
+        else delivery?.close();
+      }
     }
   }
 }

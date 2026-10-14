@@ -1,5 +1,5 @@
 /**
- * 开启已配置的匿名墙机会并收集原作者行动。输入为只读政策、World、Provider 及具名 RNG 工厂；输出为墙事实与窗口完成，库存和请求关闭归 authority，不改规则或取得其他能力。
+ * 开启已配置的匿名墙机会并收集原作者行动。输入为只读政策、World、Provider 及具名 RNG 工厂；输出为墙事实与窗口完成，库存与领域窗口关闭仍归 authority，请求完成由本窗口在付款后驱动；不改规则或取得其他能力。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
@@ -12,10 +12,12 @@ import {
 } from "../../../../core/domain";
 import { shuffled, type RandomSource } from "../../../../core/domain/random";
 import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
+import type { RequestLeaseTurn } from "../../../../core/domain/request-lease";
 import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import {
   openWall,
+  openWallRequestDelivery,
   closeWall,
   grantWallNote,
   sameWallAuthor,
@@ -78,6 +80,8 @@ export class WallNotesWindow {
         },
       });
     const base = { day: 1 as const, eventId: "awa_wall_notes_v1" as const };
+    const deliveries: RequestLeaseTurn[] = [];
+    let failed = false;
     try {
       this.events.push({ timestamp: Date.now(), type: "wall_notes_started", payload: base });
       const authors = this.world
@@ -89,9 +93,8 @@ export class WallNotesWindow {
           change(author, "granted");
           return [author];
         });
-      const calls = authors.map((author) => ({
-        author,
-        request: requests.create({
+      const calls = authors.map((author) => {
+        const request = requests.create({
           actorId: author.id,
           phase: Phase.Voting,
           allowedTools: ["write_note"],
@@ -99,13 +102,17 @@ export class WallNotesWindow {
           requiresAction: false,
           summary: { key: "request.summary.wall_notes" },
           context: { wall_id: a.token, item_instance_id: author.instanceId, allow_fallback: false },
-        }),
-      }));
+        });
+        // 每个原 request 各开完成身份；部分 calls 构造失败时已打开者也须在 finally 关闭。
+        const delivery = openWallRequestDelivery(this.world, request);
+        if (delivery) deliveries.push(delivery);
+        return { author, request, delivery };
+      });
       const results = await Promise.allSettled(
-        calls.map(({ author, request }) =>
-          sameWallAuthor(this.world, a, author)
+        calls.map(({ author, request, delivery }) =>
+          sameWallAuthor(this.world, a, author) && delivery?.current() === true
             ? Promise.resolve().then(() =>
-                sameWallAuthor(this.world, a, author) ? provider.getAction(request) : null,
+                sameWallAuthor(this.world, a, author) && delivery?.current() === true ? provider.getAction(request) : null,
               )
             : Promise.resolve(null),
         ),
@@ -118,9 +125,9 @@ export class WallNotesWindow {
       }
       const accepted: Array<{ author: WallAuthor; text: string }> = [];
       for (let i = 0; i < calls.length; i++) {
-        const { author } = calls[i],
+        const { author, delivery } = calls[i],
           result = results[i];
-        if (!sameWallAuthor(this.world, a, author)) {
+        if (!sameWallAuthor(this.world, a, author) || delivery?.current() !== true) {
           change(author, "revoked");
           continue;
         }
@@ -136,7 +143,7 @@ export class WallNotesWindow {
           wallId: a.token,
           itemInstanceId: author.instanceId,
         });
-        if (!sameWallAuthor(this.world, a, author)) {
+        if (!sameWallAuthor(this.world, a, author) || delivery?.current() !== true) {
           change(author, "revoked");
           continue;
         }
@@ -146,6 +153,8 @@ export class WallNotesWindow {
         }
         author.remaining = 0;
         author.note.remaining = 0;
+        // 两个库存写均成功才付款完成；后续 accepted 事实／收集失败不重记 false。
+        delivery.complete();
         change(author, "accepted", call.args.text);
         accepted.push({ author, text: call.args.text });
       }
@@ -186,9 +195,27 @@ export class WallNotesWindow {
           payload: { ...base, texts: final.map((row) => row.text) },
         },
       );
+    } catch (error) {
+      failed = true;
+      throw error;
     } finally {
-      closeWall(this.world, a);
-      for (const author of a.authors.values()) change(author, "expired");
+      try {
+        closeWall(this.world, a);
+        for (const author of a.authors.values()) change(author, "expired");
+      } catch (error) {
+        failed = true;
+        throw error;
+      } finally {
+        // 局部关闭全体未完成作者；一人的通知抛错不能让其他 turn 继续开放，也不覆盖原 cleanup 错。
+        let notificationFailed = false, notificationError: unknown;
+        for (const delivery of deliveries) {
+          try { delivery.close(); }
+          catch (error) {
+            if (!notificationFailed) { notificationFailed = true; notificationError = error; }
+          }
+        }
+        if (!failed && notificationFailed) throw notificationError;
+      }
     }
   }
 }

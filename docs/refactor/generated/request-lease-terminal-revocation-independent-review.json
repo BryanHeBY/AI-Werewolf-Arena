@@ -1,0 +1,315 @@
+{
+  "approved": true,
+  "reviewer": "native_presentation_finish",
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "source": [
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "8a0ce088c1a70d61731af9f8a2956304ac8f2acd16573c70ec02d12933980d8a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "8cb90cb502f56bd7fc4af3cc5ee247fc5ed4bb5c922347e3430d7e9789dfdcd4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "d32c7b69ceb92806046f43065734e78513867ad73858c98e944700c0de89f551"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "72a982bdd876732da46b55a6bd2978a206e239759dff6ea220878beb7a8b1b77"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "d7fa95fd1f236b9452290be6977cf0e325d77002cdee81a303d238d16aa2fbba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "c329d4e4f51562c6cd6b176eb7487b3d827c567b1ebf363e5acefa4d45f67f69"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "53f2c07708aaa5b832fe69cfc8aba482cd9b4506f4c274a92aecb0181bd41dc0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/window.ts",
+      "sha256": "cab24757e21b76d7e27e05ef3d11b965321571a61ddbc5b06138422d9062c361"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease.test.ts",
+      "sha256": "c6dd720175f6e2c00b66197efa3df10a1b39177502eb37e84d0116497f2dad84"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "01e87ff45c30ab41f0ef79830deae970531c52488fc9b6a81ff3ccf2028d9ac5"
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "0addc0b254789dbfdc213e33f2b7b55e8b0103ac95cc41eaed83fb2ab2743100"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/action-request-bindings.test.ts",
+      "sha256": "f66cc34dd3965fadab7dca9c5548c316ba139247f44fdd31b937100d939eec41"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease-terminal-boundaries.test.ts",
+      "sha256": "edbbe5c87a45329d0e1f0927b67441a5571a552f23d7b01346fe6b19bb7b74f4"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/request-lease-terminal-revocation-scope-final.json",
+    "sha256": "7fc1ed12ff52af1b35b051280495a15f49c0f0958283f7872523b8a8988b1105"
+  },
+  "document": {
+    "path": "docs/refactor/request-lease-terminal-revocation.md",
+    "sha256": "4f264b5a5ca865c88b9c2036e88518583ad84d425fea15a7fced400dd2466c07"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/request-lease-terminal-revocation-evidence.json",
+    "sha256": "9ca9c4d01c6f7cefb43a7828e84d34e10590125073d1b6baf51d6b56d37eccf3"
+  },
+  "controls": [
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748"
+    },
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "sha256": "47ca276d4271630035d3aae3bcde79fbff3c2cbf1ecbedcdaae334f42df8f6d6"
+    },
+    {
+      "path": "backend/src/rulesets/action-request-bindings.ts",
+      "sha256": "50fe966448f546d888df36ee600aa77e0f04c3e7a81069559f70455ae4307549"
+    },
+    {
+      "path": "backend/src/game/gateway/action-reception.ts",
+      "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+    },
+    {
+      "path": "backend/src/recording/reproduction-trace.ts",
+      "sha256": "700f0f7e53c22ba092b123c2674161a5a9b77d379b7b538b6c04003cb0e18203"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "d980c19a108bdbad0bc0ae5bd3b2f44954255d39db4fc5949aea622a3954ceb3"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-alias-pin-before.json",
+      "sha256": "52b182b28cec65de643cbf6efa1c8038e84bc1a65bcdfef8e8a780034040fccf"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-alias-pin-tests-output.txt",
+      "sha256": "994e642b76bdfde78274335b8fb53b1cba6958d22341545af10b0cd0a6bcc5bd"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-alias-pin-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-before.json",
+      "sha256": "6c22415805e415e760d685e0749fb359575380f0bc2867f1a329c9aa577c93b8"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-diff-check-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-edits.json",
+      "sha256": "ae163258b3efc3b46a0dbf8e750e345f7da407b060ddbda685cafce1c47b3be5"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-final-comment-before.json",
+      "sha256": "51b50ac0168eddb303a8b704746661245903ad9c120eeed81d73c61846e82fa7"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-heads-output.txt",
+      "sha256": "48fa3fb4170d29a08930dcdcaa2735eb4542edc37688296ff719de97591fc367"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-heads.json",
+      "sha256": "4e3388f5f0fd10c5b5d97d39b924f19cc7d0ad5369db3d2674d06f9ef40519be"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-heads.ts",
+      "sha256": "758067f75d0622e5d57665b2c31e4479b5fde5e35148024d6921ed600619fa18"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-new-tests-output.txt",
+      "sha256": "7d3b01e5d3d6ac27b310951081b4ed654614244239b96f9dff38d6bb4b07366b"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-paths.json",
+      "sha256": "0c255d9c50e1396c26c7529a01a74c186b3ac10d4300030d73d596fcdd7f1c00"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-policy-tests-output.txt",
+      "sha256": "f98da7434dbc13b22917c590041ef9e408bcb6c309c5d1afc2038d9b4efb4121"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-proof-node-first-output.txt",
+      "sha256": "ac197b9f60aaa35565ff2f0b1400d990e93fdc6cc9d54452ff076791536fb98e"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-proof-node-first.cjs",
+      "sha256": "184fa95fd171cfbe6a3fa07eda920a80893750bf7d745cc277610cb4db2432a4"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-proof-output.txt",
+      "sha256": "4823f21c8168de00abab7f2bbe2dee8e8eb013d2d3e06d8930c63ff5e70bfa41"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-proof.cjs",
+      "sha256": "2ba98fef73111b3d38f95d6eebc3ee6e9e0f3baf0aac5f85c3d5d469968f3141"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-proof.json",
+      "sha256": "7d0409e411dde2253c994c35a560932dc9bb2a6bdfed1df0f1930053b89140a3"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-receipts.json",
+      "sha256": "f5294e5f3ca20de6b53c92da627699cf3f108ac80bd276dbabb9c57cd5b97fe5"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-types-config.json",
+      "sha256": "30b2b2af510145239c673cae4c2e7f7dc3aa12bfe494271685a536a328ed4c57"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-types-failed-config.json",
+      "sha256": "260c40753b3258d016e79c1f505945d0e9ecf8bb1a93dbe84e9d98c42caabeb1"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-types-failed-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-types-output.txt",
+      "sha256": "f03a06b68d5002b1464454b7de9abf42bba04a4de1a9d3e8fecd90120d86b946"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-terminal-revocation-unit-type-before.json",
+      "sha256": "84cc040c661d92873024c52dd6bb35a55469ff5eab1a69e156ca9e79b6b71848"
+    }
+  ],
+  "verification": {
+    "freshSources": 13,
+    "actualWholeGitBeforeSources": 12,
+    "newSourceAbsentAtBase": 1,
+    "actualGitAndCurrentControls": 6,
+    "authorArtifacts": 24,
+    "wholePreciseUTF8ForwardSources": 12,
+    "mismatches": [],
+    "firstPureDataToolChunk": "f8c9f7",
+    "firstPureDataScope": "source13/Git12/preciseforward12/newabsent/control6/artifact24及摘要全通过后，reviewer对新unit过强前缀假设失败，未有产品/类型/测试失败。",
+    "reviewerMetadataCorrection": "8cdd8f独立全文diff识别新增Phase与RequestLease两import及独立signedzero case；精确去这两import和新case之后，首12完整body同纯cast稿。只纠正reviewer文本核，无源码改或作者check重复。"
+  },
+  "sourceReview": {
+    "coverage": "已完整预读四协议/common状态机、八生产接线、四旧政策差分及new12真实风险；末只targetpin／说明桥／unit阶段增量读核。",
+    "owner": "四实例独立WeakMap；每原request一turn，合法aliases共享该turn预算和completion。handle/pin/alias集合只为运行metadata，不写World/生命/库存或进入DTO/归档。",
+    "terminal": "正确owner原envelope/协议/domain-current失配或异常先永久closed，恢复字段／callback不能复活；alias自己的context/顶层ref/deadline先核，坏alias只retired而不读original。foreignWorld/未登记clone先拒不伤原。",
+    "deadline": "capture缺deadline保持无预算，原值有限未来才开放；继承先核来源、原comparator，再target完整Object.is pin，最后deadline，全部合法才set/budget。earliest只不变或缩小，观察到期后closed不随时钟回退复活。",
+    "targetPinFindingClosed": "原=== comparator仍保，新增target pin位于record／预算所有写之前；+0/-0接受不一致不再缩原budget。Root静态finding保真实，未冒称此前运行已失败。",
+    "delivery": "create返回后真实窗口才open guard，pre/post-open alias同completion；paid成功不重新查询已改变的pending predicate，状态先settled/closed再notify，true晚抛不会二次false。",
+    "initial": "保原scope检查→factory→Provider await→gateway→原Role/Camp/Victory构造→末权限→完整换牌/身份或retained→status/close/delete→complete true→fact；finally Shape原补偿/close在先。只Thief作为新运行代表，Shape同owner源码覆盖不冒独立执行。",
+    "wildLonely": "保原life/targets/policy/commit体；await两侧、gateway后及提交前domain先行再turn current，完整数据/关系/关闭提交返回成功后true再fact。partial付款/取消仍旧owner且不回滚。",
+    "wall": "每作者request独立；provider前原sameAuthor两点、allSettled首reject及逐作者复验保；author.remaining→note.remaining双写成功才true，paid后发表沿原sameAuthor而不读closed请求current。finally逐个close所有已开turn，一人通知错不阻断其它作者。",
+    "errors": "body和旧domain cleanup同时抛时旧cleanup优先；新增false通知不得覆盖已在传播的旧错，无旧错则抛新增通知。closed/settled先落不回滚付款或错误身份。",
+    "chineseContracts": "末三说明已准确分数据/许可、authority与window/common完成职责、原协议短路与外围新政策；不将pin称严格schema、深freeze或全JS防御。"
+  },
+  "proofReview": {
+    "scriptsReadOnly": [
+      "proof-node-first.cjs",
+      "proof.cjs",
+      "heads.ts"
+    ],
+    "counts": {
+      "sourceInverse": 12,
+      "inverseOutputs": 24,
+      "comparators": 3,
+      "protocols": 4,
+      "completeUnchangedDomainFunctions": 62,
+      "cumulativeTypedComparisons": 21364,
+      "cumulativeASTLeaves": 11386,
+      "namedImportBindings": 300
+    },
+    "bounds": "12完整inverse/24raw只证明列出差分；新状态机与window实际JS有意不同。三原comparator／四原matches及条件/lookup/字段order/登记点直接比较实际current，62完整原领域函数body保持；不是全行为等价。",
+    "bindings": "300本次named import实际声明端点，common值依赖仅原request_delivery；非全仓cold或任意CJS重绑定证明。",
+    "stageBridges": "原head/首new12/type阶段由纯cast与三comment精确桥承接，后targetpin和独立new1及changedunit type单列，不回填原logSHA。",
+    "nodeFirstFailure": "8832e3 Node Git spawnSync EPERM完整script/log保；改Bun入口后302a1a/21318→22dffa0，未为证明改业务。"
+  },
+  "receiptsReview": {
+    "attribution": "作者持久原日志与明确launch/session/terminal只读核；reviewer未执行任何运行/类型/证明。",
+    "firstNew": {
+      "terminalChunk": "ce19de",
+      "exitCode": 0,
+      "caseCount": 12,
+      "assertions": 198,
+      "runs": 1
+    },
+    "policyDelta": {
+      "terminalChunk": "ff84e7",
+      "exitCode": 0,
+      "caseCount": 6,
+      "assertions": 58,
+      "filtered": 76,
+      "runs": 1
+    },
+    "laterIndependentRisk": {
+      "kind": "Root static finding, not a previously executed product red",
+      "newCaseReceipt": {
+        "terminalChunk": "676124",
+        "exitCode": 0,
+        "caseCount": 1,
+        "assertions": 3,
+        "filtered": 12
+      }
+    },
+    "distinctCases": 19,
+    "assertions": 259,
+    "types": {
+      "first": {
+        "launchChunk": "e44904",
+        "session": 36804,
+        "terminalChunk": "66ca66",
+        "exitCode": 2,
+        "roots": 13,
+        "diagnostics": "only newunit TS2339 at payload after filter"
+      },
+      "failedOnly": {
+        "launchChunk": "fb2e50",
+        "session": 53196,
+        "terminalChunk": "1ec69b",
+        "exitCode": 0,
+        "roots": 1,
+        "pureTypeBridge": true
+      },
+      "newRiskChangedRoot": {
+        "launchChunk": "b0830c",
+        "session": 3186,
+        "terminalChunk": "11f916",
+        "exitCode": 0,
+        "roots": 1,
+        "newInputAfterEarlierTypePass": true
+      }
+    },
+    "heads": {
+      "chunk": "5bb45d",
+      "roots": 13,
+      "docPaths": 665,
+      "diagnostics": 0,
+      "stage": "首sourceSHA，非末targetpin/unit稿"
+    },
+    "allSelectedChecksCompleted": true,
+    "behaviorGreenRepeats": 0,
+    "legacyCharacterizationRerun": false
+  },
+  "findings": [],
+  "limits": [
+    "独立F02行为／API政策，只覆盖四既有机制，不扩大到全部角色或全部C18/55/P9。",
+    "不重复旧12/6绿、新风险、types、heads、proof、gates、模型或生产加载；只做人工源码、实际Git、摘要、precise span和阶段文本核。",
+    "原200/100/12345字面保持、明确新拒绝oracle；旧恢复/期限政策日志/characterization仍原字节，不称旧输入全部等价。",
+    "sourceHash随真实源码变化，历史archive／strict身份政策不改；C45/F03后继传递源非本批whole-fixed controls。"
+  ]
+}
