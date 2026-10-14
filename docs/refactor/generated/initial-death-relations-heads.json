@@ -1,0 +1,20 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "ea0b00c7e2ab15b2bc6f3a1be85e191a9e963db6dbc396ec351c1ce7b7228da2"
+    },
+    {
+      "path": "backend/src/rulesets/initial-death-relations.ts",
+      "sha256": "292e7acf3593613031104d883a577b97851f579e0cdde4d9a44ac330874a2157"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/initial-death-relations.test.ts",
+      "sha256": "cdf3f3553430fdf9cd91ec4a94bfa58d98783cd6a503b8b3dc29ada45c2e061c"
+    }
+  ],
+  "documentationPathCount": 519,
+  "diagnostics": [],
+  "missingChineseHead": [],
+  "limit": "真实职责形状与中文头存在性分开核对；资源所有权和失败语义仍需独立审查。"
+}

@@ -680,3 +680,5 @@
 - P8 历史方案归档：四份原只读 next-proposal 全文与SHA保留，历史索引绑定实际7d61/3744/874/f524功能提交及原实施文档；eed前置三族独立列明。“下一笔/未修改”仅指捕获时点，当前阅读转向已交付 owner，不制造新待办或伪最终验收。Root与独立文档状态审批准，未运行源码/类型/测试/门禁。见 proposal-history.md。
 
 - C45 AI期限／调度／会话回收中文契约：五源34处有效注释，最早整轮预算、机制别名、租约单 owner释放、entry原引用与session对象身份、迟到真实created回收、每次普通/强制关闭预算及原错误传播就地说明。真实27df五Git/34初edit+2精度+1首头完整forward保持程序；首次4892typed/9119token树/6038含EOF叶及10完整emit同，末两精度与单不变量注释桥限定；首头5源真实1 invariant红，failed1实际0。Root与独立全源/实际ACP/LLM/Audit/Process调用方、末5SHA/附件/中文审批准，无类型/测试/全门禁或模型重跑，完整中文C45继续。见 ai-runtime-contract-chinese-comments.md。
+
+- C24/C28 初始死亡关系准备：三源完整43行九语句归rulesets，婚约receiver→恋人/梦→来源阶段→双生预约/覆写→originMap/公开名单保原同步次序与原容器；Night婚约过滤，预约不付款/标死/取消，原try前失败前缀保持。Root与独立完整actual27df/八controls/末3SHA/23附件/中文审批准，实际新body七查询逆468/311及整DR7118/四mapped输出核；新3/41与原取消精准1/5两次46成功，四根type首只unit红、failed1末ff047c真实0，三CN头0，纯type/末头桥限定不重复绿。Root文本核两次工具精度失败只因新增comment及行缩进，产品不改；追加关系/实际生命/原commit-cancel/遗言徽章枪与finally仍DR，整C24/C28/P9继续。见 initial-death-relations.md。

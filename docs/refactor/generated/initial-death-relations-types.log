@@ -1,0 +1,4 @@
+backend/tests/unit/rulesets/initial-death-relations.test.ts(34,38): error TS7006: Parameter 'pending' implicitly has an 'any' type.
+backend/tests/unit/rulesets/initial-death-relations.test.ts(34,47): error TS7006: Parameter 'sources' implicitly has an 'any' type.
+backend/tests/unit/rulesets/initial-death-relations.test.ts(34,56): error TS7006: Parameter 'seen' implicitly has an 'any' type.
+backend/tests/unit/rulesets/initial-death-relations.test.ts(34,62): error TS7006: Parameter 'nightOrigin' implicitly has an 'any' type.

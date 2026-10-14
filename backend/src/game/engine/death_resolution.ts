@@ -3,6 +3,8 @@
  * 原死因与原生命行动权限；输出是按原顺序提交的死亡、事件和内部关联凭证。实际生命修改和唯一已结算
  * 账本委托 DeathCommitter，双生、动物、婚约及狼美人关系事实归具体贡献；已提交整波在梦／遗言前交角色扩展，
  * 野孩子贡献自行核对榜样原生命。参数仍使用同一深只读规则视图，不建立第二份角色状态。
+ * 初始关系扩张／阶段登记／双生准备归具名规则组合；本结算器仍在原标死之后提交／发布双生回执。
+ * 未提交预约只在已进入的原 finally 处取消，已提交回执不因后续发布失败而回滚。
  * 枪的资格归共同所有者，请求、等待与目标复验归规则组合；本结算器持同一许可数组并在原时点关闭。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
@@ -34,6 +36,7 @@ import {
   fragrantAuthoritySnapshot,
 } from "../mechanisms/roles/fragrant_pair_seer/ports";
 import { collectDeathShot, type DeathWaveActions } from "../../rulesets/death-shot-selection";
+import { prepareInitialDeathRelations } from "../../rulesets/initial-death-relations";
 import { WeddingDeathWavePublication } from "../mechanisms/roles/ghost_bride/ports";
 import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
@@ -206,49 +209,18 @@ export class DeathResolution {
     const initialPhases: Record<EntityId, Phase> = structuredClone(deathPhases);
     const nightOrigin = new Set(nightEffects?.nightOriginIds ?? []);
     if (!isCurrent()) return;
-    // 关系闭包先于标死、遗言和枪权判断；恋人／婚约追加的抑制死因不能等死亡 hook 后再补。
-    const weddingInitial = this.weddingDeathWave.expand(pending, allSources, seen, nightOrigin);
-    const linkedInitial = expandLoversWave(
-      this.world,
-      pending,
-      allSources,
-      this.events,
-      nightOrigin,
-      seen,
-      nightEffects?.dreams,
+    const { fragrantInitial, originPhases } = prepareInitialDeathRelations(
+      {
+        wedding: () => this.weddingDeathWave,
+        world: () => this.world,
+        events: () => this.events,
+        phase: () => phase,
+        resolutionDay: () => resolutionDay,
+        ownsFragrant: () => ownsFragrant,
+        dreams: () => nightEffects?.dreams,
+      },
+      pending, allSources, seen, nightOrigin, initialPhases,
     );
-    for (const id of [...linkedInitial, ...weddingInitial]) {
-      seen.add(id);
-      initialPhases[id] = nightOrigin.has(id) ? Phase.Night : phase;
-    }
-    const fragrantInitial = ownsFragrant
-      ? prepareFragrantDeathWave(this.world, resolutionDay, pending)
-      : null;
-    const fragrantRootPhase = fragrantInitial
-      ? (initialPhases[fragrantInitial.rootId] ??
-        (nightOrigin.has(fragrantInitial.rootId) ? Phase.Night : phase))
-      : phase;
-    if (fragrantInitial?.addedTargetId !== null && fragrantInitial?.addedTargetId !== undefined) {
-      const id = fragrantInitial.addedTargetId;
-      pending.push(id);
-      seen.add(id);
-      allSources[id] = [DeathCause.FragrantLink];
-      initialPhases[id] = fragrantRootPhase;
-      if (fragrantRootPhase === Phase.Night) nightOrigin.add(id);
-    }
-    const originPhases = new Map(
-      pending.map((id) => [id, initialPhases[id] ?? (nightOrigin.has(id) ? Phase.Night : phase)]),
-    );
-    const publicLinkedInitial = [
-      ...linkedInitial,
-      ...(phase === Phase.Night ? [] : weddingInitial),
-    ];
-    if (publicLinkedInitial.length && !ownsFragrant)
-      this.events.push({
-        timestamp: Date.now(),
-        type: "additional_deaths",
-        payload: { deaths: publicLinkedInitial },
-      });
     const initialUnit = openDeathWave("initial", resolutionDay, resolutionPhase, deathExecutionContext(nightEffects));
     let pendingUnits: readonly DeathWaveUnit[] = [initialUnit];
     let previousCommits: readonly DeathCommitReceipt[] = [];

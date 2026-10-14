@@ -1,0 +1,10 @@
+# 初始死亡关系准备：冻结
+
+真实base 27df6552992404dbb1783917cbdaeeaa27e45de3。三源停止写；scope 27f4841c4a0c064131c6415de123d821c0446f28c6aa60ec8589c89dfd27f5b5。
+
+MD docs/refactor/initial-death-relations.md d1fccc009f89ba00aac1d09bfbd2d8f7302c7915ed037e3fab39abfea0160184
+evidence 082517e406ce29c65c2850fc251c46fdfaac0de334c3681880caa07f79453461
+
+原43line九语句完整迁具名owner；body468nodes/311leaves、完整DR7118/保留程序、4whole映射输出、9owner实binding/50原binding/8Gitcontrol原字节。前置current、标死、回执实际commit/cancel/finally及许可收尾全留DR，Night婚约公开/来源覆盖明列。新3/0/41＋旧精确1/0/5分两run4distinct46；首4type新unit4implicitany红保存，failed1root81339→ff047c实际0，type-only2whole输出桥不重greens。3head/519docs/CN皆0。
+
+Root与Preflight独立审实际资源、原体/时点/首失败、全部Git/source/artifact以及中文说明；作者不自审，不自行commit或账本登记，不扩大其它文件。

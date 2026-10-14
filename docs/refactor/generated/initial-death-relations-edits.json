@@ -1,0 +1,49 @@
+{
+  "baseCommit": "27df6552992404dbb1783917cbdaeeaa27e45de3",
+  "source": "backend/src/game/engine/death_resolution.ts",
+  "owner": "backend/src/rulesets/initial-death-relations.ts",
+  "edits": [
+    {
+      "from": "    // 关系闭包先于标死、遗言和枪权判断；恋人／婚约追加的抑制死因不能等死亡 hook 后再补。\n    const weddingInitial = this.weddingDeathWave.expand(pending, allSources, seen, nightOrigin);\n    const linkedInitial = expandLoversWave(\n      this.world,\n      pending,\n      allSources,\n      this.events,\n      nightOrigin,\n      seen,\n      nightEffects?.dreams,\n    );\n    for (const id of [...linkedInitial, ...weddingInitial]) {\n      seen.add(id);\n      initialPhases[id] = nightOrigin.has(id) ? Phase.Night : phase;\n    }\n    const fragrantInitial = ownsFragrant\n      ? prepareFragrantDeathWave(this.world, resolutionDay, pending)\n      : null;\n    const fragrantRootPhase = fragrantInitial\n      ? (initialPhases[fragrantInitial.rootId] ??\n        (nightOrigin.has(fragrantInitial.rootId) ? Phase.Night : phase))\n      : phase;\n    if (fragrantInitial?.addedTargetId !== null && fragrantInitial?.addedTargetId !== undefined) {\n      const id = fragrantInitial.addedTargetId;\n      pending.push(id);\n      seen.add(id);\n      allSources[id] = [DeathCause.FragrantLink];\n      initialPhases[id] = fragrantRootPhase;\n      if (fragrantRootPhase === Phase.Night) nightOrigin.add(id);\n    }\n    const originPhases = new Map(\n      pending.map((id) => [id, initialPhases[id] ?? (nightOrigin.has(id) ? Phase.Night : phase)]),\n    );\n    const publicLinkedInitial = [\n      ...linkedInitial,\n      ...(phase === Phase.Night ? [] : weddingInitial),\n    ];\n    if (publicLinkedInitial.length && !ownsFragrant)\n      this.events.push({\n        timestamp: Date.now(),\n        type: \"additional_deaths\",\n        payload: { deaths: publicLinkedInitial },\n      });\n",
+      "to": "    const { fragrantInitial, originPhases } = prepareInitialDeathRelations(\n      {\n        wedding: () => this.weddingDeathWave,\n        world: () => this.world,\n        events: () => this.events,\n        phase: () => phase,\n        resolutionDay: () => resolutionDay,\n        ownsFragrant: () => ownsFragrant,\n        dreams: () => nightEffects?.dreams,\n      },\n      pending, allSources, seen, nightOrigin, initialPhases,\n    );\n"
+    },
+    {
+      "from": "import { collectDeathShot, type DeathWaveActions } from \"../../rulesets/death-shot-selection\";",
+      "to": "import { collectDeathShot, type DeathWaveActions } from \"../../rulesets/death-shot-selection\";\nimport { prepareInitialDeathRelations } from \"../../rulesets/initial-death-relations\";"
+    },
+    {
+      "from": " * 枪的资格归共同所有者，请求、等待与目标复验归规则组合；本结算器持同一许可数组并在原时点关闭。",
+      "to": " * 初始关系扩张／阶段登记／双生准备归具名规则组合；本结算器仍在原标死之后提交／发布双生回执，失败在原 finally 取消。\n * 枪的资格归共同所有者，请求、等待与目标复验归规则组合；本结算器持同一许可数组并在原时点关闭。"
+    }
+  ],
+  "bodySubstitutions": [
+    [
+      "runtime.wedding()",
+      "this.weddingDeathWave"
+    ],
+    [
+      "runtime.world()",
+      "this.world"
+    ],
+    [
+      "runtime.events()",
+      "this.events"
+    ],
+    [
+      "runtime.dreams()",
+      "nightEffects?.dreams"
+    ],
+    [
+      "runtime.ownsFragrant()",
+      "ownsFragrant"
+    ],
+    [
+      "runtime.resolutionDay()",
+      "resolutionDay"
+    ],
+    [
+      "runtime.phase()",
+      "phase"
+    ]
+  ]
+}

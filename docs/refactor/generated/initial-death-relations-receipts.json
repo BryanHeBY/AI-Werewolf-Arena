@@ -1,0 +1,95 @@
+{
+  "finalHeadBridge": {
+    "terminalChunk": "5a07b4",
+    "report": "docs/refactor/generated/initial-death-relations-final-head-bridge.json",
+    "limit": "末仅职责头精度，原head/type/runtime/proof阶段保留不重绿。",
+    "wrapperExitCode": 0,
+    "log": "docs/refactor/generated/initial-death-relations-final-head-bridge.log"
+  },
+  "newTests": {
+    "terminalChunk": "68a8ef",
+    "exitCode": 0,
+    "pass": 3,
+    "fail": 0,
+    "assertions": 41,
+    "executions": 1,
+    "log": "docs/refactor/generated/initial-death-relations-new-tests.log"
+  },
+  "oldTest": {
+    "terminalChunk": "6033d1",
+    "exitCode": 0,
+    "pass": 1,
+    "fail": 0,
+    "assertions": 5,
+    "filtered": 1,
+    "executions": 1,
+    "case": "uncommitted initial death reservation releases on false cancellation without spending",
+    "log": "docs/refactor/generated/initial-death-relations-original-test.log"
+  },
+  "successfulTotal": {
+    "distinctCases": 4,
+    "assertions": 46,
+    "executions": 2,
+    "noGreenRepeated": true
+  },
+  "finiteTypes": {
+    "first": {
+      "roots": 4,
+      "session": 34855,
+      "launchChunk": "0934f2",
+      "terminalChunk": "4c1707",
+      "exitCode": 2,
+      "log": "docs/refactor/generated/initial-death-relations-types.log",
+      "diagnostics": "仅newunit getter返回callback四参数implicitany，原源无诊断。"
+    },
+    "failedOnly": {
+      "roots": 1,
+      "session": 81339,
+      "launchChunk": "6ddf4a",
+      "terminalChunk": "ff047c",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/initial-death-relations-types-failed-only.log"
+    },
+    "bridge": {
+      "terminalChunk": "e1aed5",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/initial-death-relations-unit-type-bridge.json",
+      "limit": "四原参数显式typeannotation，所有运行inputs/body/assert保；双完整运行输出同，不重绿色运行。"
+    }
+  },
+  "wholeProof": {
+    "terminalChunk": "49d997",
+    "exitCode": 0,
+    "actualMovedStatements": 9,
+    "actualMovedLines": 43,
+    "nonCommentNodes": 468,
+    "nonCommentLeaves": 311,
+    "completeDRNodes": 7118,
+    "wholeOutputs": 4,
+    "ownerBindings": 9,
+    "retainedBindings": 50,
+    "controls": 8,
+    "report": "docs/refactor/generated/initial-death-relations-proof.json"
+  },
+  "heads": {
+    "terminalChunk": "3245bb",
+    "exitCode": 0,
+    "files": 3,
+    "documentationPaths": 519,
+    "diagnostics": 0,
+    "CNMissing": 0
+  },
+  "inventory": {
+    "terminalChunk": "3245bb",
+    "exitCode": 0,
+    "files": 1718,
+    "canonicalSites": 2,
+    "nonliteralLoadCount": 1,
+    "report": "docs/refactor/generated/initial-death-relations-inventory.json"
+  },
+  "diffCheck": {
+    "terminalChunk": "80d867",
+    "exitCode": 0,
+    "limit": "tracked差分；新文件另由类型和完整source程序核对。"
+  }
+}
