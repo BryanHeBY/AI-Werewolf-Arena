@@ -1,0 +1,82 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "reviewKind": "独立只读源码／实际窗口及真实基线／冻结证据审查；未运行验证器、类型、测试或门禁",
+  "baseCommit": "751604fd1d5feea8911354fee550b9ad49c262b7",
+  "source": [
+    {
+      "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+      "sha256": "6b123da6e0693c9eb06b2e12a112ebc4d05e60b4aedfc3fcab6da7f788005de2"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/daytime-request-port-scope-final.json",
+    "sha256": "76a4f612f4c640bd8c19c4b1139e48ac3c74ffd70537f7b7c3dbaf3c75818120"
+  },
+  "scopeSHA256": "76a4f612f4c640bd8c19c4b1139e48ac3c74ffd70537f7b7c3dbaf3c75818120",
+  "document": {
+    "path": "docs/refactor/daytime-request-port.md",
+    "sha256": "0e93ae02621951c7a8549c54f469e1ed248498f7ef1eea835a184da9fe0fb3fb"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/daytime-request-port-evidence.json",
+    "sha256": "9fc6994b907c824d56fb2c5ee21354404f0268fcce674422d41c6627187401a3"
+  },
+  "findings": [],
+  "closedFindings": [
+    {
+      "kind": "文档控制源精度",
+      "finding": "原MD首段把六控制源首项写为工厂，实际捕获是core/domain/actions.ts的领域端口。",
+      "resolution": "仅改为领域请求端口，明确单句delta保存；source/scope及既有收据保持，不重检查。"
+    }
+  ],
+  "freshBinding": {
+    "currentSources": 1,
+    "deleted": 0,
+    "actualGitBefore": 1,
+    "stableControls": 6,
+    "exactEdits": 8,
+    "parameterSites": 3,
+    "artifacts": 13,
+    "mismatches": 0
+  },
+  "sourceReview": [
+    "三个execute声明参数迁唯一ActionRequestConstructionPort，只有同步create；原参数顺序、可选性和结果完整保持。静态接受面从带私有成员工厂扩大为结构端口，不等于完整类型树不变或额外运行权限。",
+    "本源只有type-only import和interface，无新方法或运行副作用；完整751604Git→八项精确forward→final以及完整inverse原文均独立核真。",
+    "领域端口原allowedTools仍可写数组、summary/context形状与引用契约不变；本次不声明deep readonly或runtime freeze。",
+    "自爆实际commit false继续下一候选，无回调只返回选择；不把接受结果当死亡链已结束，提交／结算仍原owner。",
+    "骑士实际有效候选才缺commit报原错误，await后的rejected继续下一项，night/terminal才endsDay；没有新增提交后复验或改变部分失败。",
+    "辩论实际skipSpeech为成功后的原发言控制，密封票／处罚／付款归窗口及权威，finally仍原closeDebate。",
+    "组合成员readonly仅限制类型重绑定；composition保原对象，DayPipeline仍以窗口为execute receiver，不绑定方法或复制结果。"
+  ],
+  "proofAndReceiptReview": {
+    "proofSamplingSourceSHA256": "d93adaa1510b221bf633f1e942724186e588d22967910d2eb419462abcbf7810",
+    "finalSourceSHA256": "6b123da6e0693c9eb06b2e12a112ebc4d05e60b4aedfc3fcab6da7f788005de2",
+    "firstExactEdits": 7,
+    "finalExactEdits": 8,
+    "actualFullESCommonJSOutputs": 2,
+    "proofAndHeadChunk": "3ac607",
+    "proofAndHeadExitCode": 0,
+    "commentBridgeChunk": "22e2d7",
+    "commentBridgeTokenCount": 227,
+    "commentBridgeOutputs": 2,
+    "commentBridgeExitCode": 0,
+    "types": {
+      "roots": 7,
+      "launchChunk": "96f268",
+      "sessionId": 32489,
+      "terminalChunk": "92a839",
+      "exitCode": 0,
+      "emptyLogIsNotExitEvidence": true
+    },
+    "testsRun": 0,
+    "newChecksByReviewer": 0
+  },
+  "limitations": [
+    "只统一三个已经实际依赖结构端口的声明，不声称全C20或所有工厂消费者迁完。",
+    "传递依赖按当次编译读取，不冒TimeConsort/查验并行工作区全闭包冻结。",
+    "中文和import声明改变sourceHash，历史指纹保持；未添加跨构建复现豁免。",
+    "没有runtime程序／游戏策略修改，因此没有为此新增镜像测试或重复绿；全P9仍待。"
+  ]
+}

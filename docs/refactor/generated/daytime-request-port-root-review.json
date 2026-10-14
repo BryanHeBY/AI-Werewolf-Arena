@@ -1,0 +1,53 @@
+{
+  "approved": true,
+  "reviewer": "root-author",
+  "scope": {
+    "path": "docs/refactor/generated/daytime-request-port-scope-final.json",
+    "sha256": "76a4f612f4c640bd8c19c4b1139e48ac3c74ffd70537f7b7c3dbaf3c75818120"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+      "sha256": "6b123da6e0693c9eb06b2e12a112ebc4d05e60b4aedfc3fcab6da7f788005de2"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/daytime-request-port.md",
+    "sha256": "0e93ae02621951c7a8549c54f469e1ed248498f7ef1eea835a184da9fe0fb3fb"
+  },
+  "actualGit": true,
+  "wholeFinalForward": true,
+  "controls": [
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "sha256": "523c8774f3cc5d3598871bf45698d9951a61f43aa1bcb0fc0a8ab7be77eeea49"
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "sha256": "3906b5a4a4d816f97c71901ae0367f727ca5db844f3380408dcf4c1e1960144a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "sha256": "6ee51443dfc8645490a2aaff39a7f56a6eba1ff986c64e9c905f05865102b3cf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "a56949065f78079e8ee14dec4aaa9508f571d32719c2c70fbeef50f8faa5d83f"
+    },
+    {
+      "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+      "sha256": "29a5dc5b36a778be68ec565bd170563fdc2bd197406bc4f03dcd0d47fc830402"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "sha256": "4236040b6d47e44017149b30fb61278eeb4e6dd4a2913c143c99d1d0661a0a08"
+    }
+  ],
+  "findings": [],
+  "review": [
+    "三个实际execute已用领域create-only输入，组合类型跟进相同声明；无运行body变化。",
+    "参数/返回/可选性/readonly与receiver原语义保持，接口说明核原三个窗口。",
+    "七根有限类型和一次头检查通过，末一comment精度仅窄桥保原程序；不重绿。"
+  ]
+}

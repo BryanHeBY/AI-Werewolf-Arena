@@ -718,3 +718,5 @@
 - C24/C20 骑士完整选择窗口归属：七路径（六现行／旧 engine 叶删除），原123行完整class／participant结构归骑士本族，ports公开实际class/read，规则组合和三个旧测试只改导入。本族窗口直达state避免自身ports环；create-only参数静态接受面宽化明确，原配置短路、原名单/角色阵营/生命版本捕获、同库存、并发排序、gateway前后valid与missing/rejected/endsDay/异常/await点保持。Root真实7ebd六全文24精准forward／四控制源与独立全源码/中文/实际端点审批准，25附件末绑；原双语迟到2/38＋组合精准1/12两首次执行共三不同50断言，六根类型实际0。Node子Git环境红与两头时点红保留，仅失败源中文窄修/14token四output桥，不重绿。头/数据结构和关键逻辑中文有效，旧入口无桥；全部角色/中文/最终P9仍续，见 knight-duel-window-owner.md。
 
 - 固定005c92e4阶段结构检查：3177实际Git公共raw及550同Gitdocs，原六工具/1779债SHA297b保持；唯一后台7e5309/session32034→a3fbd7真实0，新问题0/旧债300/清1479，较固定5d42净清21且返回0。Root全3177blob/mode/SHA/UTF8与80,162,360字节input/digest、六工具/原债完整分区核真及独立同源/11附件/收据/MD审批准，不重gate/type/test。固定树不含Knight2cc后继和其它WIP；300结构旧债、全中文和玩法/资源/最终P9仍待，本次不冒完整重构完成，见 architecture-checkpoint-005c92e4.md。
+
+- C20 白天中断请求端口：一源三个接口参数统一既有领域create-only端口，与Self/Knight/Debater真实execute一致；静态接受面扩大明确，不引入运行wrapper/授权/冻结。真实751604一Git八精确全文forward/inverse、六实际控制（领域端口/三个窗口/装配/白天pipeline）与独立语义/中文审批准。七根有限类型96f268/session32489→92a839首0，两完整当前JS输出同/head0；末一comment回调所有权精度只227token/两output窄桥不重绿，13附件末绑。MD控制首项误名工厂已改领域端口只doc，不跑游戏tests或全gate/model。全部C20/角色/中文/P9继续，见 daytime-request-port.md。

@@ -1,0 +1,10 @@
+{
+  "path": "docs/refactor/daytime-request-port.md",
+  "beforeSHA256": "5d66754696d0e1e0d8c2eacf747297cec21616892574a346ad928db3941fbb6a",
+  "afterSHA256": "0e93ae02621951c7a8549c54f469e1ed248498f7ef1eea835a184da9fe0fb3fb",
+  "before": "工厂、三个实际窗口、装配与白天流水线六个完整控制源",
+  "after": "领域请求端口、三个实际窗口、装配与白天流水线六个完整控制源",
+  "reason": "只纠正实际六control首项为领域端口，不冒工厂源码wholebyte冻结。",
+  "sourceEdited": false,
+  "checksRun": false
+}

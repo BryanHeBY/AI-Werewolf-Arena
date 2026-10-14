@@ -1,0 +1,26 @@
+{
+  "approved": true,
+  "source": [
+    {
+      "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+      "sha256": "d93adaa1510b221bf633f1e942724186e588d22967910d2eb419462abcbf7810"
+    }
+  ],
+  "wholeForward": true,
+  "wholeInverse": true,
+  "wholeOutputs": [
+    {
+      "module": "ESNext",
+      "wholeSame": true,
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "module": "CommonJS",
+      "wholeSame": true,
+      "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+    }
+  ],
+  "diagnostics": [],
+  "documentationPathCount": 551,
+  "typeChange": "三个接口参数由原名义工厂变现有create-only结构端口，静态接受面扩大；不是完整类型树不变。"
+}
