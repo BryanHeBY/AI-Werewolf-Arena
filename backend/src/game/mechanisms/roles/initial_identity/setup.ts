@@ -1,5 +1,8 @@
 /**
- * 负责盗贼／千面人的初始选择 scope 与请求绑定。输入为原 World 参与者和首夜请求；输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。失败选择与已关闭 setup 保留原终结决定；元数据不携带行动许可。
+ * 负责盗贼／千面人的初始选择 scope 与请求绑定。输入为原 World 参与者、首夜请求及装配端构造依赖；
+ * 输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。
+ * 工厂在原 scope 复验之后才 new，固定日次仍为 1；构造／请求异常保留已开准备前缀并由原 finally 关闭。
+ * 失败选择与已关闭 setup 保留原终结决定；构造端口和元数据均不携带行动许可。
  */
 import { createCampComponent } from "../../../observation/component-presentation";
 import type {
@@ -11,7 +14,7 @@ import { registerRequestAliasPropagation } from "../../../../core/domain/request
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, Camp, Phase, Role, createVictoryComponent, type ActionProvider, type ActionRequest, type CampComponent, type GameEvent, type RoleComponent, type VictoryComponent, type World } from "../../../../core/domain";
 import { createRoleComponent } from "../../../observation/role-presentation";
-import { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import {
@@ -231,6 +234,8 @@ export class InitialIdentitySetupWindow {
     private readonly gateway: ToolGateway,
     private readonly events: GameEvent[],
     private readonly kind: InitialIdentityKind,
+    /** 保存装配端对象；原创建点才读取构造器，不提前捕获类或共享已创建的工厂。 */
+    private readonly construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },
   ) {}
   async execute(
     config: ReadonlyBoardConfig,
@@ -324,7 +329,8 @@ export class InitialIdentitySetupWindow {
         status = "cancelled";
         return false;
       }
-      const request = new GameActionRequestFactory(this.world, this.events, 1).create({
+      // 原 scope 已安装并复验后才读取构造器；构造或 create 失败仍走下方原 finally 关闭。
+      const request = new this.construction.requestFactory(this.world, this.events, 1).create({
         phase: Phase.Night,
         actorId,
         allowedTools: [initialIdentityTool(this.kind)],

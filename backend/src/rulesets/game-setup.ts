@@ -2,13 +2,15 @@
  * 负责首夜开局设置的确定序列：盗贼／千面人、野孩子、孤独少女、鬼魂新娘。
  * 输入为现场读取 World、网关、事件和板子的查询，以及原 provider、日期和唯一当前性回调；
  * 输出为全部准备通过，或在首个未准备完成／失效步骤之后立即返回 false。异常原样向上抛出。
- * 组合只装配原窗口并串行交还原执行 Promise；选择、库存、接受权限和 finally 关闭仍由各机制拥有。
+ * 组合装配原窗口及前三个窗口的惰性请求构造依赖，串行交还原执行 Promise；
+ * 选择、库存、接受权限和 finally 关闭仍由各机制拥有，不把构造器或阶段标签当许可。
  * 不缓存 World 或提前读取构造参数；成功末尾没有额外当前性查询，也不推进阶段或生成快照。
  */
 import type { GameEvent, ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { ActionProvider } from "../core/domain/actions";
 import type { World } from "../core/domain/world";
 import type { ToolGateway } from "../game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../game/engine/action_request_factory";
 import {
   InitialIdentitySetupWindow,
   initialIdentitySetupReady,
@@ -41,6 +43,10 @@ export function* prepareGameSetup(
       runtime.toolGateway(),
       runtime.events(),
       initialIdentityKind(runtime.world())!,
+      {
+        // 装配只交付 getter；共享窗口到原 new 点才读取真实类，不在开局检查时捕获。
+        get requestFactory() { return GameActionRequestFactory; },
+      },
     ).execute(runtime.config(), actionProvider, nightDay, nightIsCurrent);
     // false 先短路，不再查询当前性或推进其它设置；窗口的失败关闭仍由自己的 finally 完成。
     if (!ready || !nightIsCurrent()) return false;
@@ -50,6 +56,7 @@ export function* prepareGameSetup(
       runtime.world(),
       runtime.toolGateway(),
       runtime.events(),
+      { get requestFactory() { return GameActionRequestFactory; } },
     ).execute(runtime.config(), actionProvider, nightDay, nightIsCurrent);
     if (!ready || !nightIsCurrent()) return false;
   }
@@ -58,6 +65,7 @@ export function* prepareGameSetup(
       runtime.world(),
       runtime.toolGateway(),
       runtime.events(),
+      { get requestFactory() { return GameActionRequestFactory; } },
     ).execute(runtime.config(), actionProvider, nightDay, nightIsCurrent);
     if (!ready || !nightIsCurrent()) return false;
   }

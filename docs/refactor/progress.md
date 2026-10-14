@@ -734,3 +734,5 @@
 - C45 运行与事件记录中文契约：两源25处说明补绝对最早期限与重试预算、stopping/closing/inFlight各自责任、关闭等待和核心终档／可选摘要政策、God→玩家局部序号→记录→主游标的失败前缀。Root与独立实际全文审查／两Git before／末SHA及附件批准；原3208非注释token和四完整无注释输出保持，工具首两红真实保；独审decide前置失败反例只细化一行“保留已写决策前缀”，完整exact注释桥校准，原绿证明不重写为新执行、不重types/tests/gates。注释不承诺游标事务或自动去重，新sourceHash随注释变动，历史档案身份保留。全仓中文与P9继续，见 runtime-recording-contract-comments.md。
 
 - C24/C28 枪后追加死亡关系准备：五源把原43行七同步语句归具体ruleset，独立夜梦→婚约→恋人/梦→双生过滤预约和覆盖原序保，Cupid实际death命令通过具名public facet接线。同11别名/六晚查询和唯一originPhase参数点，linked仍DR原分配；标死、shot复验、commit/cancel/publish与全部finally仍原DR。Root与非作者全真实源/Git两全文/五稳定控制/17附件及中文审批准；new3/45+old精准1/3两次四不同48assert，五根type/head闭0，不重绿。MD只校准新sourceHash与算法/历史身份区别。完整关系、效果、narrow领域权限及P9继续，见 additional-death-relations.md。
+
+- C20 首夜选择窗口显式构造：十三源收三原new点、Thief/Shape两透传及三个开局getter，六旧caller只必要依赖接线，准备/复验/库存/动作/finally保原；必填API与实例新字段布局变化明确。Root和非作者完整原体／scope/Git十三全文／四控制／18附件与中文有效说明审批准，两个新真实Wild风险23＋旧取消精准5，共三不同28assert。首13根类型仅新unit3diag真红，纯type修后failed1根实际0；head只有原JSON[]、未留独立exit码诚实限定，无重绿。证明器四→五注释仅工具精度且保真实executed原版，不冒当前new API raw完全相同；所有C20/P9继续，见 first-night-request-construction.md。

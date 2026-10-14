@@ -1,0 +1,62 @@
+{
+  "newTests": {
+    "launchChunk": "d79671",
+    "exitCode": 0,
+    "cases": 2,
+    "assertions": 23,
+    "filtered": 5,
+    "log": "docs/refactor/generated/first-night-request-construction-new-tests.log"
+  },
+  "originalPreciseTest": {
+    "launchChunk": "faf428",
+    "exitCode": 0,
+    "cases": 1,
+    "assertions": 5,
+    "filtered": 6,
+    "log": "docs/refactor/generated/first-night-request-construction-original-test.log"
+  },
+  "distinctSuccessfulCases": 3,
+  "successfulAssertions": 28,
+  "firstTypes": {
+    "launchChunk": "520453",
+    "session": 91517,
+    "terminalChunk": "224ded",
+    "exitCode": 2,
+    "roots": 13,
+    "diagnosticCount": 3,
+    "diagnosticOwner": "new game-setup unit only",
+    "log": "docs/refactor/generated/first-night-request-construction-types-first.log"
+  },
+  "failedOnlyTypes": {
+    "launchChunk": "095ff7",
+    "session": 99069,
+    "terminalChunk": "33a656",
+    "exitCode": 0,
+    "roots": 1,
+    "log": "docs/refactor/generated/first-night-request-construction-types-failed-only.log"
+  },
+  "proof": {
+    "launchChunk": "965206",
+    "session": 67086,
+    "terminalChunk": "d071bd",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/first-night-request-construction-proof.log"
+  },
+  "heads": {
+    "sourceRoots": 13,
+    "gitDocPathsAtCapture": 564,
+    "diagnostics": [],
+    "report": "docs/refactor/generated/first-night-request-construction-heads.json",
+    "log": "docs/refactor/generated/first-night-request-construction-heads.log",
+    "terminalExitCodeCaptured": false,
+    "limitation": "函数编排仅打印原exec输出文本；实际checker日志/JSON诊断为空，未补跑绿色检查。"
+  },
+  "notRun": [
+    "fullgates",
+    "completeGames",
+    "Tapes",
+    "models",
+    "coldProcessMatrix"
+  ],
+  "greenTestsNotRepeatedAfterTypeOnlyFix": true
+}

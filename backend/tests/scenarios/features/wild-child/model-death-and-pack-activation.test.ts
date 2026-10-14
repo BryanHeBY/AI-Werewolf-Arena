@@ -30,6 +30,7 @@ import {
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import {
   getDefaultRoleCatalog,
   getDefaultWinConditionRegistry,
@@ -66,7 +67,7 @@ const setup = (
   getAction: (r: ActionRequest) => Promise<ToolCall | null> = async () => choose(2),
   isCurrent = () => true,
 ) =>
-  new WildChildSetupWindow(g.world, new ToolGateway(), g.events).execute(
+  new WildChildSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
     g.config,
     { getAction },
     1,

@@ -1,0 +1,15 @@
+backend/tests/unit/rulesets/game-setup.test.ts(267,9): error TS2322: Type 'void' is not assignable to type 'ActionRequestFactoryConstructorPort'.
+backend/tests/unit/rulesets/game-setup.test.ts(302,25): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(expected: this): void', gave the following error.
+    Argument of type 'GameActionRequestFactory | undefined' is not assignable to parameter of type 'this'.
+      'this' could be instantiated with an arbitrary type which could be unrelated to 'GameActionRequestFactory | undefined'.
+  Overload 2 of 2, '(expected: NoInfer<this>): void', gave the following error.
+    Argument of type 'GameActionRequestFactory | undefined' is not assignable to parameter of type 'this'.
+      'this' could be instantiated with an arbitrary type which could be unrelated to 'GameActionRequestFactory | undefined'.
+backend/tests/unit/rulesets/game-setup.test.ts(319,28): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(expected: ActionRequest): void', gave the following error.
+    Argument of type 'ActionRequest | undefined' is not assignable to parameter of type 'ActionRequest'.
+      Type 'undefined' is not assignable to type 'ActionRequest'.
+  Overload 2 of 2, '(expected: NoInfer<ActionRequest>): void', gave the following error.
+    Argument of type 'ActionRequest | undefined' is not assignable to parameter of type 'ActionRequest'.
+      Type 'undefined' is not assignable to type 'ActionRequest'.

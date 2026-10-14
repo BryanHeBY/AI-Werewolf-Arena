@@ -20,6 +20,7 @@ import {
   wildChildReady,
 } from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { readWildChildEventFact } from "@ai-werewolf-arena/game-contract/facts/wild-child";
 import {
@@ -48,7 +49,7 @@ const setup = (
   getAction: (r: ActionRequest) => Promise<ToolCall | null> = async () => choose(2),
   isCurrent = () => true,
 ) =>
-  new WildChildSetupWindow(g.world, new ToolGateway(), g.events).execute(
+  new WildChildSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
     g.config,
     { getAction },
     1,

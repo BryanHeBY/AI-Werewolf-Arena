@@ -7,6 +7,8 @@ import { expect, test, spyOn } from "bun:test";
 import { Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import type { ActionRequestConstructionInput, ActionRequest } from "../../../src/core/domain/actions";
 import { prepareGameSetup, type GameSetupRuntime } from "../../../src/rulesets/game-setup";
 import {
   installInitialIdentityDeal,
@@ -254,4 +256,73 @@ test("a yielded original window resumes guards synchronously without an extra co
   } finally {
     spy.mockRestore();
   }
+});
+
+
+test("an explicit setup constructor getter fails only after opening and retains the original failure closure", async () => {
+  const roles = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
+  const game = bootstrapGame(foxBoard(roles), { fixedRoles: roles });
+  const events: GameEvent[] = [], trace: string[] = [], failure = new Error("original_constructor_getter_failure");
+  const window = new WildChildSetupWindow(game.world, new ToolGateway(), events, {
+    get requestFactory(): never {
+      trace.push("factory");
+      expect(hasActiveWildChild(game.world)).toBe(true);
+      throw failure;
+    },
+  });
+  // 保存依赖不读取构造器；原开选择后的读取失败必须进入该窗口自己的 finally。
+  expect(trace).toEqual([]);
+  await expect(window.execute(game.boardConfig, {
+    async getAction() { throw new Error("unexpected_provider"); },
+  }, 1, () => true)).rejects.toBe(failure);
+  expect(trace).toEqual(["factory"]);
+  expect(wildChildBinding(game.world)?.setup).toBe("failed");
+  expect(wildChildBinding(game.world)?.state.remaining).toBe(0);
+  expect(wildChildBinding(game.world)?.state.status).toBe("closed");
+  expect(hasActiveWildChild(game.world)).toBe(false);
+  expect(events).toEqual([]);
+});
+
+test("an explicit setup constructor keeps original arguments and instance create receiver through a real choice", async () => {
+  const roles = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
+  const game = bootstrapGame(foxBoard(roles), { fixedRoles: roles });
+  const events: GameEvent[] = [], trace: string[] = [], gateway = new ToolGateway();
+  let instance: GameActionRequestFactory | undefined, created: ActionRequest | undefined;
+  class Requests extends GameActionRequestFactory {
+    constructor(world: World, actualEvents: readonly GameEvent[], day: number) {
+      trace.push("new");
+      expect(world).toBe(game.world);
+      expect(actualEvents).toBe(events);
+      expect(day).toBe(1);
+      super(world, actualEvents, day);
+      instance = this;
+    }
+    override create(input: ActionRequestConstructionInput): ActionRequest {
+      trace.push("create");
+      expect(this as GameActionRequestFactory).toBe(instance!);
+      expect(input.stage).toBe("wild_child");
+      created = super.create(input);
+      return created;
+    }
+  }
+  const window = new WildChildSetupWindow(game.world, gateway, events, {
+    get requestFactory() {
+      trace.push("factory");
+      expect(hasActiveWildChild(game.world)).toBe(true);
+      return Requests;
+    },
+  });
+  expect(trace).toEqual([]);
+  expect(await window.execute(game.boardConfig, {
+    async getAction(request) {
+      trace.push("provider");
+      expect(request).toBe(created!);
+      return { name: "choose_wild_model", args: { target_id: 2 } };
+    },
+  }, 1, () => true)).toBe(true);
+  expect(trace).toEqual(["factory", "new", "create", "provider"]);
+  expect(wildChildBinding(game.world)?.setup).toBe("complete");
+  expect(wildChildBinding(game.world)?.state.choice).toEqual({ day: 1, targetId: 2 });
+  expect(hasActiveWildChild(game.world)).toBe(false);
+  expect(events.map(event => event.type)).toEqual(["wild_child_model_chosen"]);
 });

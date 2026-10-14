@@ -15,6 +15,7 @@ import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import type { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";
 import { DreamNightFrame } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 
 test("mandatory committed-wave contributions survive a legacy custom hook registry before dream and last words", async () => {
   const roles = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter],
@@ -23,7 +24,7 @@ test("mandatory committed-wave contributions survive a legacy custom hook regist
     trace: string[] = [],
     gateway = new ToolGateway();
   expect(
-    await new WildChildSetupWindow(world, gateway, events).execute(
+    await new WildChildSetupWindow(world, gateway, events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
       config,
       {
         async getAction() {

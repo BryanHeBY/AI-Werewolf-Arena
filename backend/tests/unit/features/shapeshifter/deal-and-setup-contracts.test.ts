@@ -38,6 +38,7 @@ import {
   getShapeshifterState,
 } from "../../../../src/game/mechanisms/roles/shapeshifter/state";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { knownWolfTeammates } from "../../../../src/game/mechanisms/roles/wolf_team";
@@ -93,7 +94,7 @@ const run = (
   body: (r: ActionRequest) => Promise<ToolCall | null>,
   current = () => true,
 ) =>
-  new ShapeshifterSetupWindow(g.world, new ToolGateway(), g.events).execute(
+  new ShapeshifterSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
     g.config,
     { getAction: body },
     1,

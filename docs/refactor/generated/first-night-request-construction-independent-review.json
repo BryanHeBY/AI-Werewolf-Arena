@@ -1,0 +1,127 @@
+{
+  "approved": true,
+  "reviewer": "preflight_final_review",
+  "baseCommit": "a80d5d773c2f49745fe6b6908a6d50a0839358ea",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "a3a75e8ca52fcc8f9ed6a19e40b236e87aa235459be26d6b69a63bbd42ff0f8f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "9729fad5517cd4812c2319ae4abbdbac83f806333915fade8d78e9a773d8716a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "0700546f6382c24452a2b3e934e81b22e234843cb4e392bcfa0fe3d976899322"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "31034848c1e14f7a73da7fb6e72152d8b368a2f549e5186b9e4fc8aa408edda2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "890971484a377f4a2e98094cf3071985ea3ff9f981a25b10dec411bc801481dd"
+    },
+    {
+      "path": "backend/src/rulesets/game-setup.ts",
+      "sha256": "6df9765180dfb3448ef8d4d7e259d12ae979cc51720033c5d5550310c6b74921"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "32639ead018bdffc6d2c19d11e5ea29fd188b01aac0a0803435440c14b6e3b2f"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "ea3270ba78cc674ffa6ee9e9d9c84cdba4fe20b037c45b4c15e68fe2cbf92909"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "7ca164c079856b05bf237ee9d92f7ca83839d25cb7afe2c43c66886058d0d663"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "d9508afc19b9bf2e7d403e74d80df49eab78f98d8961c357866934321d7472dc"
+    },
+    {
+      "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "sha256": "304676494c8d26db2d6e9132bbe9edfda1ec43639f6c98db36611bfb4afbc467"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts",
+      "sha256": "c2eec3c438baee5d57f6fede42967c7314bb4d10a06a57f138d4718e3c5140b3"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/game-setup.test.ts",
+      "sha256": "77ef23abb2d451d0206baaeea12ece48de2906ab262f9816cfac386dd39f819f"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/first-night-request-construction-scope-final.json",
+    "sha256": "8370c2bc7471739bdc29c339ecb2219a95e0ca126e7d1d306352591f98b6e2d8"
+  },
+  "document": {
+    "path": "docs/refactor/first-night-request-construction.md",
+    "sha256": "d0d1cd68aabf09e3cc90d1710e5f57246465bd76e7832847545fdc130e2c1b31"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/first-night-request-construction-evidence.json",
+    "sha256": "60d46f4d22e24233eefe5b5664df73d87aa85631d97b4af9cf045e17294b3846"
+  },
+  "findings": [
+    {
+      "kind": "工具说明数量精度",
+      "severity": "nonblocking",
+      "status": "closed",
+      "detail": "真实三个窗口和两个包装为五叶，执行版工具原写四；只当前工具注释校准，executed原版、原程序输出和收据保留，源码无变、未再执行。",
+      "precision": {
+        "path": "docs/refactor/generated/first-night-request-construction-proof-tool-precision.json",
+        "sha256": "3bab370951a0804b1889e62010ef2ebf117012438aaa12bb28e58ef9cd82d5bc"
+      }
+    }
+  ],
+  "independentRead": {
+    "rulesAndPermissions": [
+      "完整读取InitialIdentity setup原scope、选择、权限／同原体复验、身份安装与finally；只new callee改显式构造依赖，固定day1、选择／字段／资源／gateway次序保持。World与事件仍原引用，构造器不是行动授权或隔离屏障。",
+      "完整WildChild/LonelyGirl execute保准备/reentry/ready、原配置同引用和day、开选择、请求后复验/唯一Provider await/回复后复验、原commit／事件／finally；getter/构造/create抛错保原打开前缀、原错误及既有关闭／资源状态，不假称退款。",
+      "真实newWild风险两例分别核原打开后getter失败／资源关闭、构造World/events/day、实际instance.create receiver与Provider同请求；不是用Mock省略原库存或生命。"
+    ],
+    "architectureAndOrdering": [
+      "读完三窗口和两个包装：Feature仅type construction，Runtime composition三原new窗口点注入惰性实际GameActionRequestFactory；没有默认/global／提前new或共享day实例，包装仅构造时读shared类并透传同dependency对象。",
+      "完整game-setup同步generator四步yield保旧Promise、短路/首错/成功尾部不额外current查询；Ghost步骤无改。六旧直接调用测试完整diff仅增加真实class import/dependency，原fixture/title/action/assert未改。",
+      "新末构造参数/保存字段、getter lookup和模块物理路线是实际API／实例布局变化，旧少参数反射／自定义constructor或全部冷初始化不作等价；core constructor port依赖Sheriff后继dc057真实来源，本13源不编辑该owner。"
+    ],
+    "programAndEvidence": [
+      "完整读作者真实执行proof.ts版本：13whole exact44编辑正逆以实际a80Git为源，29086非JSDoc token/26mapped整输出；另3execute只逆唯一new callee全tokens，未遮callbacks／移除旧失败策略。四原生命/选择control实际Git/current相同。",
+      "具名engine工厂和type端口分别核原物理class/interface声明；运行2个绿色新风险用例d79671/23、旧精准faf428/5两次3distinct28，随后只有新unit never/cast/non-null擦除型修，原两个完整emit证据同，未重绿色。",
+      "类型13首520453/session91517→224ded实际exit2仅newunit3diag；failed-only095ff7/session99069→33a656实际0。Heads13/564docs JSON/log零诊断，但未保存独立shell exitcode，报告/MD如实限定，独审不推断或补跑。",
+      "末proof四→五仅工具注释，原16837a06执行版与当前5419e316实际字节匹配单次替换；原proof/日志/receipts阶段保留，不能将整理后的工具当原执行版。"
+    ]
+  },
+  "metadataVerified": {
+    "present": 13,
+    "deleted": 0,
+    "actualGitBefore": 13,
+    "stableWholeGitControls": 4,
+    "artifacts": 18,
+    "mismatches": 0,
+    "finalToolCommentOnlyExact": true
+  },
+  "receiptAttribution": "所有程序/类型/行为/head报告数字来自作者真实收据；本独审只读源码和完整证明器、核Git原文/当前SHA/附件，没有重运行这些工具。",
+  "limits": [
+    "有限13根/失败only1闭合不代表全仓types或行为／冷进程矩阵。",
+    "Heads仅实际checker输出零诊断，独立shell退出码未采；不凭空补成功收据。",
+    "Readonly类型及构造端口不是深冻结/运行权限或沙箱；原生命周期/原体/资源writer不移到装配器。",
+    "不表示C20、归档兼容、完整游戏机制或P9完成。"
+  ],
+  "checksNotRun": [
+    "tests",
+    "type compiler",
+    "proof harness",
+    "comment/dependency gate",
+    "fullgates",
+    "models/network"
+  ],
+  "repositoryEdits": "仅本独立review JSON，未写13source、作者元数据或Git/Matrix/progress"
+}

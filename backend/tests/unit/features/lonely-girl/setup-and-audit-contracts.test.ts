@@ -69,7 +69,7 @@ const setup = (
   current = () => true,
   gateway = new ToolGateway(),
 ) =>
-  new LonelyGirlSetupWindow(g.world, gateway, g.events).execute(
+  new LonelyGirlSetupWindow(g.world, gateway, g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
     g.config,
     { getAction: body },
     1,

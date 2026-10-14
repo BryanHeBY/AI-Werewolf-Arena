@@ -1,0 +1,208 @@
+{
+  "backend/src/game/mechanisms/roles/initial_identity/setup.ts": [
+    {
+      "old": "import { GameActionRequestFactory } from \"../../../engine/action_request_factory\";",
+      "new": "import type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";"
+    },
+    {
+      "old": "    private readonly kind: InitialIdentityKind,\n  ) {}",
+      "new": "    private readonly kind: InitialIdentityKind,\n    /** 保存装配端对象；原创建点才读取构造器，不提前捕获类或共享已创建的工厂。 */\n    private readonly construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n  ) {}"
+    },
+    {
+      "old": "      const request = new GameActionRequestFactory(this.world, this.events, 1).create({",
+      "new": "      // 原 scope 已安装并复验后才读取构造器；构造或 create 失败仍走下方原 finally 关闭。\n      const request = new this.construction.requestFactory(this.world, this.events, 1).create({"
+    },
+    {
+      "old": " * 负责盗贼／千面人的初始选择 scope 与请求绑定。输入为原 World 参与者和首夜请求；输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。失败选择与已关闭 setup 保留原终结决定；元数据不携带行动许可。",
+      "new": " * 负责盗贼／千面的初始选择 scope 与请求绑定。输入为原 World 参与者、首夜请求及装配端构造依赖；\n * 输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。\n * 工厂在原 scope 复验之后才 new，固定日次仍为 1；构造／请求异常保留已开准备前缀并由原 finally 关闭。\n * 失败选择与已关闭 setup 保留原终结决定；构造端口和元数据均不携带行动许可。"
+    },
+    {
+      "old": " * 负责盗贼／千面的初始选择 scope",
+      "new": " * 负责盗贼／千面人的初始选择 scope"
+    }
+  ],
+  "backend/src/game/mechanisms/roles/wild_child/setup.ts": [
+    {
+      "old": "import { GameActionRequestFactory } from \"../../../engine/action_request_factory\";",
+      "new": "import type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";"
+    },
+    {
+      "old": "    private readonly events: GameEvent[],\n  ) {}",
+      "new": "    private readonly events: GameEvent[],\n    /** 只保存惰性构造依赖；不预建请求，原准备和权限检查仍先执行。 */\n    private readonly construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n  ) {}"
+    },
+    {
+      "old": "      const request = new GameActionRequestFactory(this.world, this.events, day).create({",
+      "new": "      // 原选择窗口已开后才取构造器，并用本次 World／事件／day 创建实例；失败仍按原 finally 关闭。\n      const request = new this.construction.requestFactory(this.world, this.events, day).create({"
+    },
+    {
+      "old": " * 负责野孩子首夜榜样选择窗口，保留原参与者、只读板子和 provider／请求工厂。",
+      "new": " * 负责野孩子首夜榜样选择窗口，保留原参与者、只读板子和 provider；请求工厂由装配端晚提供。"
+    }
+  ],
+  "backend/src/game/mechanisms/roles/lonely_girl/setup.ts": [
+    {
+      "old": "import { GameActionRequestFactory } from \"../../../engine/action_request_factory\";",
+      "new": "import type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";"
+    },
+    {
+      "old": "    private readonly events: GameEvent[],\n  ) {}",
+      "new": "    private readonly events: GameEvent[],\n    /** 只保存惰性构造依赖；不预建请求，原准备和权限检查仍先执行。 */\n    private readonly construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n  ) {}"
+    },
+    {
+      "old": "      const request = new GameActionRequestFactory(this.world, this.events, day).create({",
+      "new": "      // 原选择窗口已开后才取构造器，并用本次 World／事件／day 创建实例；失败仍按原 finally 关闭。\n      const request = new this.construction.requestFactory(this.world, this.events, day).create({"
+    },
+    {
+      "old": " * 输入为只读板子、原参与者与 provider；输出为心仪对象提交成功或准备中断。",
+      "new": " * 输入为只读板子、原参与者、provider 和惰性构造依赖；输出为心仪对象提交成功或准备中断。"
+    }
+  ],
+  "backend/src/game/mechanisms/roles/thief/setup.ts": [
+    {
+      "old": "import type { ToolGateway } from \"../../../gateway/tool_gateway\";",
+      "new": "import type { ToolGateway } from \"../../../gateway/tool_gateway\";\nimport type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";"
+    },
+    {
+      "old": "import type { World, ActionRequest, Phase, GameEvent } from \"../../../../core/domain\";",
+      "new": "/**\n * 负责盗贼对共享初始身份 scope、别名和选择查询的本族接线；输入为原参与者与请求，输出保留原绑定。\n * 只在对应 stage 传播别名；生命周期、库存及选择提交仍由共享所有者复验，不以查询或构造依赖授予许可。\n * 包装类构造时才读取 shared 类，并透传同一惰性依赖；请求工厂仍在共享窗口原执行点创建，异常原样传播。\n */\nimport type { World, ActionRequest, Phase, GameEvent } from \"../../../../core/domain\";"
+    },
+    {
+      "old": "/** Instantiate lazily: catalog imports this module while the shared setup is still evaluating. */",
+      "new": "/** Catalog 可在共享 setup 尚在求值时导入此模块；因此只在实例构造时读取共享类，不在顶层捕获。 */"
+    },
+    {
+      "old": "  constructor(world: World, gateway: ToolGateway, events: GameEvent[]) {",
+      "new": "  constructor(\n    world: World,\n    gateway: ToolGateway,\n    events: GameEvent[],\n    construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n  ) {"
+    },
+    {
+      "old": "    this.window = new shared.InitialIdentitySetupWindow(world, gateway, events, \"thief\");",
+      "new": "    this.window = new shared.InitialIdentitySetupWindow(world, gateway, events, \"thief\", construction);"
+    }
+  ],
+  "backend/src/game/mechanisms/roles/shapeshifter/setup.ts": [
+    {
+      "old": "import type { ToolGateway } from \"../../../gateway/tool_gateway\";",
+      "new": "import type { ToolGateway } from \"../../../gateway/tool_gateway\";\nimport type { ActionRequestFactoryConstructorPort } from \"../../../../core/domain/actions\";"
+    },
+    {
+      "old": "import type { World, ActionRequest, Phase, GameEvent } from \"../../../../core/domain\";",
+      "new": "/**\n * 负责千面人对共享初始身份 scope、别名和选择查询的本族接线；输入为原参与者与请求，输出保留原绑定。\n * 只在对应 stage 传播别名；生命周期、库存及选择提交仍由共享所有者复验，不以查询或构造依赖授予许可。\n * 包装类构造时才读取 shared 类，并透传同一惰性依赖；请求工厂仍在共享窗口原执行点创建，异常原样传播。\n */\nimport type { World, ActionRequest, Phase, GameEvent } from \"../../../../core/domain\";"
+    },
+    {
+      "old": "/** Instantiate lazily: catalog imports this module while the shared setup is still evaluating. */",
+      "new": "/** Catalog 可在共享 setup 尚在求值时导入此模块；因此只在实例构造时读取共享类，不在顶层捕获。 */"
+    },
+    {
+      "old": "  constructor(world: World, gateway: ToolGateway, events: GameEvent[]) {",
+      "new": "  constructor(\n    world: World,\n    gateway: ToolGateway,\n    events: GameEvent[],\n    construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },\n  ) {"
+    },
+    {
+      "old": "    this.window = new shared.InitialIdentitySetupWindow(world, gateway, events, \"shapeshifter\");",
+      "new": "    this.window = new shared.InitialIdentitySetupWindow(world, gateway, events, \"shapeshifter\", construction);"
+    }
+  ],
+  "backend/src/rulesets/game-setup.ts": [
+    {
+      "old": "import type { ToolGateway } from \"../game/gateway/tool_gateway\";",
+      "new": "import type { ToolGateway } from \"../game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../game/engine/action_request_factory\";"
+    },
+    {
+      "old": "      initialIdentityKind(runtime.world())!,\n    ).execute",
+      "new": "      initialIdentityKind(runtime.world())!,\n      {\n        // 装配只交付 getter；共享窗口到原 new 点才读取真实类，不在开局检查时捕获。\n        get requestFactory() { return GameActionRequestFactory; },\n      },\n    ).execute"
+    },
+    {
+      "old": "    const ready = yield new WildChildSetupWindow(\n      runtime.world(),\n      runtime.toolGateway(),\n      runtime.events(),\n    ).execute",
+      "new": "    const ready = yield new WildChildSetupWindow(\n      runtime.world(),\n      runtime.toolGateway(),\n      runtime.events(),\n      { get requestFactory() { return GameActionRequestFactory; } },\n    ).execute"
+    },
+    {
+      "old": "    const ready = yield new LonelyGirlSetupWindow(\n      runtime.world(),\n      runtime.toolGateway(),\n      runtime.events(),\n    ).execute",
+      "new": "    const ready = yield new LonelyGirlSetupWindow(\n      runtime.world(),\n      runtime.toolGateway(),\n      runtime.events(),\n      { get requestFactory() { return GameActionRequestFactory; } },\n    ).execute"
+    },
+    {
+      "old": " * 组合只装配原窗口并串行交还原执行 Promise；选择、库存、接受权限和 finally 关闭仍由各机制拥有。",
+      "new": " * 组合装配原窗口及前三个窗口的惰性请求构造依赖，串行交还原执行 Promise；\n * 选择、库存、接受权限和 finally 关闭仍由各机制拥有，不把构造器或阶段标签当许可。"
+    }
+  ],
+  "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";"
+    },
+    {
+      "old": "new ThiefSetupWindow(g.world, new ToolGateway(), g.events).execute(",
+      "new": "new ThiefSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute("
+    }
+  ],
+  "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";"
+    },
+    {
+      "old": "new ShapeshifterSetupWindow(g.world, new ToolGateway(), g.events).execute(",
+      "new": "new ShapeshifterSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute("
+    }
+  ],
+  "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";"
+    },
+    {
+      "old": "new WildChildSetupWindow(g.world, new ToolGateway(), g.events).execute(",
+      "new": "new WildChildSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute("
+    }
+  ],
+  "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts": [
+    {
+      "old": "new LonelyGirlSetupWindow(g.world, gateway, g.events).execute(",
+      "new": "new LonelyGirlSetupWindow(g.world, gateway, g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute("
+    }
+  ],
+  "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";"
+    },
+    {
+      "old": "new WildChildSetupWindow(g.world, new ToolGateway(), g.events).execute(",
+      "new": "new WildChildSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute("
+    }
+  ],
+  "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../../src/game/engine/action_request_factory\";"
+    },
+    {
+      "old": "new WildChildSetupWindow(world, gateway, events).execute(",
+      "new": "new WildChildSetupWindow(world, gateway, events, { get requestFactory() { return GameActionRequestFactory; } }).execute("
+    }
+  ],
+  "backend/tests/unit/rulesets/game-setup.test.ts": [
+    {
+      "old": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+      "new": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";\nimport { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";\nimport type { ActionRequestConstructionInput, ActionRequest } from \"../../../src/core/domain/actions\";"
+    },
+    {
+      "old": "",
+      "new": "\n\ntest(\"an explicit setup constructor getter fails only after opening and retains the original failure closure\", async () => {\n  const roles = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];\n  const game = bootstrapGame(foxBoard(roles), { fixedRoles: roles });\n  const events: GameEvent[] = [], trace: string[] = [], failure = new Error(\"original_constructor_getter_failure\");\n  const window = new WildChildSetupWindow(game.world, new ToolGateway(), events, {\n    get requestFactory() {\n      trace.push(\"factory\");\n      expect(hasActiveWildChild(game.world)).toBe(true);\n      throw failure;\n    },\n  });\n  // 保存依赖不读取构造器；原开选择后的读取失败必须进入该窗口自己的 finally。\n  expect(trace).toEqual([]);\n  await expect(window.execute(game.boardConfig, {\n    async getAction() { throw new Error(\"unexpected_provider\"); },\n  }, 1, () => true)).rejects.toBe(failure);\n  expect(trace).toEqual([\"factory\"]);\n  expect(wildChildBinding(game.world)?.setup).toBe(\"failed\");\n  expect(wildChildBinding(game.world)?.state.remaining).toBe(0);\n  expect(wildChildBinding(game.world)?.state.status).toBe(\"closed\");\n  expect(hasActiveWildChild(game.world)).toBe(false);\n  expect(events).toEqual([]);\n});\n\ntest(\"an explicit setup constructor keeps original arguments and instance create receiver through a real choice\", async () => {\n  const roles = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];\n  const game = bootstrapGame(foxBoard(roles), { fixedRoles: roles });\n  const events: GameEvent[] = [], trace: string[] = [], gateway = new ToolGateway();\n  let instance: GameActionRequestFactory | undefined, created: ActionRequest | undefined;\n  class Requests extends GameActionRequestFactory {\n    constructor(world: World, actualEvents: readonly GameEvent[], day: number) {\n      trace.push(\"new\");\n      expect(world).toBe(game.world);\n      expect(actualEvents).toBe(events);\n      expect(day).toBe(1);\n      super(world, actualEvents, day);\n      instance = this;\n    }\n    override create(input: ActionRequestConstructionInput): ActionRequest {\n      trace.push(\"create\");\n      expect(this).toBe(instance);\n      expect(input.stage).toBe(\"wild_child\");\n      created = super.create(input);\n      return created;\n    }\n  }\n  const window = new WildChildSetupWindow(game.world, gateway, events, {\n    get requestFactory() {\n      trace.push(\"factory\");\n      expect(hasActiveWildChild(game.world)).toBe(true);\n      return Requests;\n    },\n  });\n  expect(trace).toEqual([]);\n  expect(await window.execute(game.boardConfig, {\n    async getAction(request) {\n      trace.push(\"provider\");\n      expect(request).toBe(created);\n      return { name: \"choose_wild_model\", args: { target_id: 2 } };\n    },\n  }, 1, () => true)).toBe(true);\n  expect(trace).toEqual([\"factory\", \"new\", \"create\", \"provider\"]);\n  expect(wildChildBinding(game.world)?.setup).toBe(\"complete\");\n  expect(wildChildBinding(game.world)?.state.choice).toEqual({ day: 1, targetId: 2 });\n  expect(hasActiveWildChild(game.world)).toBe(false);\n  expect(events.map(event => event.type)).toEqual([\"wild_child_model_chosen\"]);\n});\n",
+      "operation": "append"
+    },
+    {
+      "old": "    get requestFactory() {\n      trace.push(\"factory\");\n      expect(hasActiveWildChild(game.world)).toBe(true);\n      throw failure;",
+      "new": "    get requestFactory(): never {\n      trace.push(\"factory\");\n      expect(hasActiveWildChild(game.world)).toBe(true);\n      throw failure;",
+      "typeOnly": true
+    },
+    {
+      "old": "      expect(this).toBe(instance);",
+      "new": "      expect(this as GameActionRequestFactory).toBe(instance!);",
+      "typeOnly": true
+    },
+    {
+      "old": "      expect(request).toBe(created);",
+      "new": "      expect(request).toBe(created!);",
+      "typeOnly": true
+    }
+  ]
+}
