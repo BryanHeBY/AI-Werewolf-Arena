@@ -5,7 +5,7 @@
  * 角色和队友方法在 actor 参数之前查找；每个 World 读取保原位置，机制知识／权限仍归各原 owner。
  * 结构观察不提交行动、不克隆完整私有库存，也不提前执行自定义人设或角色展示回调；失败前缀保持。
  */
-import { getWhiteWolfKingState } from "../mechanisms/roles/white_wolf_king/ports";
+import { getWhiteWolfKingState, projectWhiteWolfKingState } from "../mechanisms/roles/white_wolf_king/ports";
 import { isAnimalDreamBoard } from "../mechanisms/roles/animal_dream/authority";
 import {
   animalFoxKnowledge,
@@ -43,18 +43,13 @@ import { projectThiefState } from "../mechanisms/roles/thief/state-ports";
 import { projectThiefChoices } from "../mechanisms/roles/thief/setup";
 import { projectWallNote } from "../mechanisms/events/wall_notes/authority";
 import {
-  projectBearState,
   projectDreamerState,
   projectGuardState,
   projectHunterState,
-  projectIdiotState,
-  projectKnightState,
-  projectWhiteWolfKingState,
   projectWolfBeautyState,
   projectWolfKingState,
 } from "../mechanisms/roles/player_state";
-import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
-import { getBearState } from "../mechanisms/roles/bear/ports";
+import { getBearState, projectBearState } from "../mechanisms/roles/bear/ports";
 import { getHiddenWolfState } from "../mechanisms/roles/hidden_wolf/ports";
 import { canHiddenWolfKnife } from "../mechanisms/roles/hidden_wolf/inheritance";
 import {
@@ -93,11 +88,11 @@ import { projectNightAbility } from "./night-ability-projection";
 import { getGuardState } from "../mechanisms/roles/guard/ports";
 import { getHunterState } from "../mechanisms/roles/hunter/ports";
 import { getWolfKingState } from "../mechanisms/roles/wolf_king/ports";
-import { getKnightState } from "../mechanisms/roles/knight/ports";
-import { getGravekeeperState } from "../mechanisms/roles/gravekeeper/ports";
+import { getKnightState, projectKnightState } from "../mechanisms/roles/knight/ports";
+import { projectGravekeeperState } from "../mechanisms/roles/gravekeeper/ports";
 import { getDreamerState } from "../mechanisms/roles/dreamer/ports";
 import { getWolfBeautyState } from "../mechanisms/roles/wolf_beauty/ports";
-import { getIdiotState } from "../mechanisms/roles/idiot/ports";
+import { getIdiotState, projectIdiotState } from "../mechanisms/roles/idiot/ports";
 import { getWitchState } from "../mechanisms/roles/witch/ports";
 import { getSeerState } from "../mechanisms/roles/seer/ports";
 import { freezeObservation, type PlayerObservation } from "./player-observation";
@@ -328,15 +323,7 @@ export function capturePlayerObservation(
     if (state) ownState.knight = projectKnightState(state);
   }
   if (role?.role === Role.Gravekeeper) {
-    const history = getGravekeeperState(role)?.history;
-    ownState.gravekeeper = {
-      history: Array.isArray(history)
-        ? history.flatMap((item) => {
-            const report = readGravekeeperReport(item);
-            return report ? [report] : [];
-          })
-        : [],
-    };
+    ownState.gravekeeper = projectGravekeeperState(role);
   }
   if (role?.role === Role.Idiot) {
     const state = getIdiotState(role);

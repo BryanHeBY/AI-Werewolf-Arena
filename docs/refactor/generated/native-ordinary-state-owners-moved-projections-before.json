@@ -1,0 +1,34 @@
+{
+  "sourceGit": "4e0d25c88e4aa70a0f942b8361d43986ebed8893",
+  "functions": [
+    {
+      "name": "projectKnightState",
+      "from": "backend/src/game/mechanisms/roles/player_state.ts",
+      "to": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "originalText": "export function projectKnightState(state: unknown): PlayerKnightState {\n  return { canDuel: playerDataField(state, \"canDuel\") === true };\n}",
+      "sha256": "dd91056d19b23b47decd0b348134250815659db1ca83ce3e7b55d41e995caf2d"
+    },
+    {
+      "name": "projectWhiteWolfKingState",
+      "from": "backend/src/game/mechanisms/roles/player_state.ts",
+      "to": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "originalText": "export function projectWhiteWolfKingState(state: unknown): PlayerWhiteWolfKingState {\n  return { canDetonate: playerDataField(state, \"canDetonate\") === true };\n}",
+      "sha256": "9ec62ae3f2a72a00246f2e13277cf7719b6893c10789b60a7e8004f0e22e57e7"
+    },
+    {
+      "name": "projectIdiotState",
+      "from": "backend/src/game/mechanisms/roles/player_state.ts",
+      "to": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "originalText": "export function projectIdiotState(state: unknown): PlayerIdiotState {\n  return { revealed: playerDataField(state, \"revealed\") === true };\n}",
+      "sha256": "0622ed06278160262162e48bd1531aa2c141d79830c7fed1cc6043de46f008a0"
+    },
+    {
+      "name": "projectBearState",
+      "from": "backend/src/game/mechanisms/roles/player_state.ts",
+      "to": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "originalText": "export function projectBearState(state: unknown): PlayerBearState {\n  return {\n    history: rows(playerDataField(state, \"history\")).flatMap((row) => {\n      const day = playerDataField(row, \"day\"),\n        roared = playerDataField(row, \"roared\");\n      return positiveInteger(day) && typeof roared === \"boolean\" ? [{ day, roared }] : [];\n    }),\n  };\n}",
+      "sha256": "5a36dcda9f0d970cdd5e801dff492e14cbb270c0fd68e674c4ea508aa8eb22d2"
+    }
+  ],
+  "sharedPhase": "Root将在Cupid提交后保存共享整源真Git before；这些声明另按文本SHA承接，不将foreign routes计入本族。"
+}

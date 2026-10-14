@@ -1,0 +1,8 @@
+{
+  "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+  "text": "/**\n * 负责辩论家原数据槽的描述符读取与玩家选择投影。输入为原角色／选择数据及提交标记；\n * 输出为原槽只读引用，或保留原字段读取顺序的独立选择数据，结构类型归共享契约。\n * 读取排除字段访问器但不新增完整 live schema，也不为任意 Proxy 保证零 trap。\n * 本模块不执行辩论、写选择／库存或结算死亡，玩家投影不能代替许可、真实付款或档案编码。\n */\nimport type { DebaterReadState } from \"@ai-werewolf-arena/game-contract\";\nimport type { RoleComponent } from \"../../../../core/domain/components/role\";\n\nimport { playerDataField } from \"../player-state-data\";\nexport function getDebaterState(role: RoleComponent | undefined): DebaterReadState | undefined {\n  return playerDataField(playerDataField(role, \"privateState\"), \"debater\") as\n    DebaterReadState | undefined;\n}\n/** 提交标记只使玩家视图的 remaining 归零；不写原槽，选择仅在日期与编号为正整数时输出。 */\nexport function projectDebaterState(state: DebaterReadState, committed = false) {\n  const choice = playerDataField(state, \"choice\"),\n    day = playerDataField(choice, \"day\"),\n    targetId = playerDataField(choice, \"targetId\");\n  return {\n    policy: \"awa_melbourne_2026_speech_gap_v1\" as const,\n    remaining:\n      !committed && playerDataField(state, \"remaining\") === 1 ? (1 as const) : (0 as const),\n    choice:\n      typeof day === \"number\" &&\n      Number.isSafeInteger(day) &&\n      day > 0 &&\n      typeof targetId === \"number\" &&\n      Number.isSafeInteger(targetId) &&\n      targetId > 0\n        ? { day, targetId }\n        : null,\n  };\n}\n",
+  "sha256": "ab7cf04bd9027c838e9add9c717969b573e4686373a416f06214fdd828b30379",
+  "before": "负责辩论家原数据槽",
+  "after": "负责杠精原数据槽",
+  "reason": "实际profile/roleName角色名为杠精；只改首头称谓，不改机器id或角色算法。"
+}

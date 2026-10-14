@@ -1,15 +1,14 @@
 /**
- * Owns WhiteWolfKing state data and access to its existing private-state slot.
- * Inputs are the role component and native state; outputs retain the exact stored object, including assignment-before-return behavior.
- * Only the selected blast commit calls the concrete detonation-consumption command.
- * Readers keep a readonly view of that same object. Lifecycle validation, player
- * projection and checkpoint encoding retain their existing responsibilities;
- * consumption neither rechecks a lease nor refunds stock after publication fails.
- * Pure payload/read data structures belong to the neutral role-state data owner;
- * this leaf retains original live references and concrete installation/commit operations.
+ * 负责白狼王普通状态的初始化、同引用安装／读取、玩家投影及已捕获自爆库存消耗。
+ * 输入为原角色／状态或已验证选择的库存，输出为原 live 对象、canDetonate 的实际写入或玩家库存副本。
+ * get／install 不新增 schema、getter／Proxy 拒绝或冻结；readonly 仅约束读方类型。
+ * 原窗口负责阶段、生命和目标资格；所选自爆提交仍先写死亡提案，再消耗本对象，后发表事件。
+ * 写入或发表失败保留原前缀，不退款、不另建租约或镜像，也不负责真正标死。
  */
 import type { WhiteWolfKingState, WhiteWolfKingReadState } from "@ai-werewolf-arena/game-contract";
 
+import type { PlayerWhiteWolfKingState } from "@ai-werewolf-arena/game-contract/player-state-views";
+import { playerDataField } from "../player-state-data";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 
 export function setWhiteWolfKingState(
@@ -25,7 +24,17 @@ export function getWhiteWolfKingState(roleComp: RoleComponent): WhiteWolfKingRea
     WhiteWolfKingReadState | undefined;
 }
 
-/** Caller retains original blast validation, death proposals and publication order. */
+/** caller 保持原自爆校验、死亡提案与发表顺序；此命令仅写捕获的库存。 */
 export function consumeWhiteWolfDetonation(state: WhiteWolfKingReadState): void {
   (state as { canDetonate: boolean }).canDetonate = false;
+}
+
+/** 原初始化完整写体：先形成默认数据，再由原安装函数写同一 privateState 槽；不检查角色或创建许可。 */
+export function initializeWhiteWolfKingState(role: RoleComponent): void {
+  setWhiteWolfKingState(role, { canDetonate: true });
+}
+
+/** 原玩家投影只接受自有数据字段为 true，输出新对象；不消费库存或授予行动资格。 */
+export function projectWhiteWolfKingState(state: unknown): PlayerWhiteWolfKingState {
+  return { canDetonate: playerDataField(state, "canDetonate") === true };
 }

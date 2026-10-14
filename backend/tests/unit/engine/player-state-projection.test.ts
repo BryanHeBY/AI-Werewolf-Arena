@@ -2,6 +2,7 @@
  * 单元测试：验证玩家状态投影的分离白名单及所选能力。输入为原私有历史与恶意字段；精确字段和能力相等断言拒绝未知数据／getter 进入 owner DTO，不复制运行句柄。
  */
 import { expect, test } from "bun:test";
+import { projectBearState } from "../../../src/game/mechanisms/roles/bear/ports";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   COMPONENT,
@@ -34,7 +35,6 @@ import { getWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_
 import { getWolfBeautyState } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import { getWolfKingState } from "../../../src/game/mechanisms/roles/wolf_king/ports";
 import {
-  projectBearState,
   projectDreamerState,
   projectGuardState,
   projectHunterState,

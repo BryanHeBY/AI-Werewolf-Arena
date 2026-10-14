@@ -10,7 +10,7 @@ import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Role, ActionWindow, Phase } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { getWhiteWolfKingState, setWhiteWolfKingState } from "./state";
+import { getWhiteWolfKingState, initializeWhiteWolfKingState } from "./state";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 
@@ -24,9 +24,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
-    init: (role) => {
-      setWhiteWolfKingState(role, { canDetonate: true });
-    },
+    init: initializeWhiteWolfKingState,
     toolSpecs: [
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
       {

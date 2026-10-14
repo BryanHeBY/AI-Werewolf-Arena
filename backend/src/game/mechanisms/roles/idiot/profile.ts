@@ -9,7 +9,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：白痴角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { NativeRoleContributions } from "../contracts";
-import { getIdiotState, setIdiotState } from "./state";
+import { getIdiotState, initializeIdiotState } from "./state";
 import { idiotVotedOutHook } from "../../../../rulesets/idiot-exile-outcome";
 
 /** 白痴角色配置。 */
@@ -26,9 +26,7 @@ export const IDIOT_ROLE_PROFILE: NativeRoleContributions = {
       const enabled = getIdiotState(role)?.revealed !== true;
       return { canVote: enabled, canBeExiled: enabled, canBeSheriff: enabled };
     },
-    init: (roleComp) => {
-      setIdiotState(roleComp, { revealed: false });
-    },
+    init: initializeIdiotState,
     votedOutHook: idiotVotedOutHook,
   },
   presentation: nativeRolePresentation("idiot"),

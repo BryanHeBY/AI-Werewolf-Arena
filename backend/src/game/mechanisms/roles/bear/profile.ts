@@ -10,7 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { BEAR_SIGNAL_POLICIES } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
-import { getBearState, setBearState } from "./state";
+import { initializeBearState } from "./state";
 const parameters = z.strictObject({ signalPolicy: z.enum(BEAR_SIGNAL_POLICIES).optional() });
 
 export const BEAR_ROLE_PROFILE: NativeRoleContributions = {
@@ -23,9 +23,7 @@ export const BEAR_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.bear.brief"),
   },
   runtime: {
-    init: (role) => {
-      setBearState(role, { history: [] });
-    },
+    init: initializeBearState,
     configuration: {
       schema: parameters,
       defaults: {},

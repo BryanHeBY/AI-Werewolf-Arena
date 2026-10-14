@@ -1,0 +1,18 @@
+{
+  "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+  "beforeSha256": "6e6fa4e9ec137412589a0e6b750c3c4ebd28f923fa9af7ba524c2563d526150f",
+  "sha256": "7d7a1a47943f6510de89bddc3c8aacbe3c790359b39faba778419b890abd0597",
+  "preciseComments": 1,
+  "completeNoncommentLeaves": 12,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "completeRawSame": true
+    },
+    {
+      "module": "CommonJS",
+      "completeRawSame": true
+    }
+  ],
+  "phase": "原整批proof/head/type/test均保真实采样SHA；仅此comment桥承接最后源。"
+}

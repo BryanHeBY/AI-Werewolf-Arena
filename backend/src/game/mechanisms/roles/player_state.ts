@@ -4,17 +4,14 @@
  * 赠枪投影同时供原 transfer 制作安装数据，字段／status 求值顺序保持；本模块不授枪或转移资源。
  * 纯字段校验和复制只作用于数据，不读 World、时钟、RNG、文件或模型服务。
  */
+import { playerDataField, positiveInteger, rows } from "./player-state-data";
 import type { DeathGunReadView } from "@ai-werewolf-arena/game-contract";
 import type {
   PlayerGuardState,
   PlayerHunterState,
   PlayerWolfKingState,
-  PlayerWhiteWolfKingState,
-  PlayerKnightState,
-  PlayerIdiotState,
   PlayerDreamerState,
   PlayerWolfBeautyState,
-  PlayerBearState,
   PlayerSeerState,
   PlayerWitchState,
   PlayerRoleInspectionState,
@@ -23,29 +20,11 @@ import type {
 import { WitchSelfHealRule } from "../../../core/domain/model";
 import { readInspectionResult } from "@ai-werewolf-arena/replay-contract";
 
-/** 只读取声明的自身数据属性，不调用该字段访问器；不承诺对任意 Proxy 零反射 trap。 */
-export function playerDataField(value: unknown, key: string): unknown {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
-  const field = Object.getOwnPropertyDescriptor(value, key);
-  return field && Object.hasOwn(field, "value") ? field.value : undefined;
-}
-function positiveInteger(value: unknown): value is number {
-  return typeof value === "number" && Number.isSafeInteger(value) && value > 0;
-}
 function positiveOrNull(value: unknown): number | null {
   return positiveInteger(value) ? value : null;
 }
 function stock(value: unknown): number {
   return typeof value === "number" && Number.isSafeInteger(value) && value >= 0 ? value : 0;
-}
-function rows(value: unknown): unknown[] {
-  if (!Array.isArray(value)) return [];
-  const result: unknown[] = [];
-  for (let index = 0; index < value.length; index++) {
-    const field = Object.getOwnPropertyDescriptor(value, String(index));
-    if (field && Object.hasOwn(field, "value")) result.push(field.value);
-  }
-  return result;
 }
 function nullableTarget(value: unknown): value is number | null {
   return value === null || positiveInteger(value);
@@ -92,15 +71,6 @@ export function projectWolfKingState(state: unknown): PlayerWolfKingState {
       : {}),
   };
 }
-export function projectWhiteWolfKingState(state: unknown): PlayerWhiteWolfKingState {
-  return { canDetonate: playerDataField(state, "canDetonate") === true };
-}
-export function projectKnightState(state: unknown): PlayerKnightState {
-  return { canDuel: playerDataField(state, "canDuel") === true };
-}
-export function projectIdiotState(state: unknown): PlayerIdiotState {
-  return { revealed: playerDataField(state, "revealed") === true };
-}
 export function projectDreamerState(state: unknown): PlayerDreamerState {
   const policy = playerDataField(state, "protectionPolicy");
   return {
@@ -128,15 +98,6 @@ export function projectWolfBeautyState(state: unknown): PlayerWolfBeautyState {
       const day = playerDataField(row, "day"),
         targetId = playerDataField(row, "targetId");
       return positiveInteger(day) && nullableTarget(targetId) ? [{ day, targetId }] : [];
-    }),
-  };
-}
-export function projectBearState(state: unknown): PlayerBearState {
-  return {
-    history: rows(playerDataField(state, "history")).flatMap((row) => {
-      const day = playerDataField(row, "day"),
-        roared = playerDataField(row, "roared");
-      return positiveInteger(day) && typeof roared === "boolean" ? [{ day, roared }] : [];
     }),
   };
 }

@@ -1,11 +1,16 @@
 /**
  * 负责熊的夜间采样 frame 与延迟到天亮的发布。输入为原相邻玩家和采样吼声；只有匹配原 frame 时才产生历史与天亮事件。不重复发布同一夜，不以复活或替换相邻身体继续旧采样；关闭和失败保持原前缀。
  */
-import { recordBearRoar } from "./state";
+import {
+  recordBearRoar,
+  bearDataField as ownData,
+  bearDataArrayAppendable as appendable,
+  bearHistoryUnpublished as unpublishedHistory,
+  recordDawnBearRoar,
+} from "./state";
 
 import type { BearReadState as BearState } from "@ai-werewolf-arena/game-contract";
 
-import { types } from "node:util";
 import {
   AliveComponent,
   aliveLifeVersion,
@@ -26,40 +31,13 @@ import {
   type OriginalPlayerScope,
 } from "../original_player_scope";
 import type { CampComponent } from "../../../../core/domain/components/camp";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+/** 同一 World／夜号的黎明发表状态：checking 只允许当前尝试，重入会撤销它；
+ * 成功后 published，未完成则 finally 置 revoked。清空原 state.history 不恢复这一原发布许可。 */
 const dawnPublications = new WeakMap<
   World,
   Map<number, { status: "checking" | "published" | "revoked" }>
 >();
 const now = Date.now.bind(Date);
-function ownData(value: unknown, key: string): unknown {
-  if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
-  const d = Object.getOwnPropertyDescriptor(value, key);
-  return d && "value" in d ? d.value : undefined;
-}
-function appendable(value: unknown): value is unknown[] {
-  if (
-    !Array.isArray(value) ||
-    types.isProxy(value) ||
-    Object.getPrototypeOf(value) !== Array.prototype
-  )
-    return false;
-  const d = Object.getOwnPropertyDescriptor(value, "length");
-  return (
-    !!d?.writable &&
-    Number.isSafeInteger(d.value) &&
-    d.value < 4294967295 &&
-    Object.isExtensible(value)
-  );
-}
-function unpublishedHistory(value: unknown, day: number): boolean {
-  try {
-    const rows = snapshotPlainData(value, new Set(), 0, 65536);
-    return Array.isArray(rows) && !rows.some((report) => ownData(report, "day") === day);
-  } catch {
-    return false;
-  }
-}
 
 function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): boolean {
   const ring = world
@@ -90,6 +68,8 @@ function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): bool
 
 /** 快照由 manager 持有，不放在玩家 component 或 DTO 中。 */
 export class BearNightFrame {
+  /** 保留原 World、Role、state、Alive／Camp 与名单的实例引用及生命版本，不克隆为玩家 DTO。
+   * 默认政策捕获夜初吼声；显式黎明政策保留原体名单和 catalog，在真正发表时才重新采样并复验。 */
   private constructor(
     private readonly owner: World,
     private readonly day: number,
@@ -238,19 +218,15 @@ export class BearNightFrame {
       if (history === events || !appendable(history) || !appendable(events)) return;
       const report = { day: this.day, roared: this.life.alive && this.wasAlive && sampled },
         event: GameEvent = { timestamp: now(), type: "bear_roared", payload: { ...report } };
-      // 两个 inert 数组均可追加，两次写入间不执行用户回调／setter。
+      // 两个原受控数组按事件→历史写入；原生 defineProperty 不执行数组元素 setter。
+      // 这不是事务：第二次写抛错时第一事件保留，finally 只撤销尚 checking 的发布状态，不回滚数组。
       Object.defineProperty(events, String(events.length), {
         value: event,
         enumerable: true,
         writable: true,
         configurable: true,
       });
-      Object.defineProperty(history, String(history.length), {
-        value: report,
-        enumerable: true,
-        writable: true,
-        configurable: true,
-      });
+      recordDawnBearRoar(history, report);
       lease.status = "published";
     } finally {
       if (lease.status === "checking") lease.status = "revoked";

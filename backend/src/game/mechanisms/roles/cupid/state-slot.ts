@@ -5,7 +5,7 @@
  * 本槽不新增 live schema、深冻结或档案编码；关系、生命、Victory、窗口和许可仍由原夜阶段／关系 owner 持有。
  */
 import type { CupidReadState, CupidState } from "@ai-werewolf-arena/game-contract";
-import { playerDataField } from "../player_state";
+import { playerDataField } from "../player-state-data";
 
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { RoleInitializationComponent, RoleInitContext } from "../contracts";

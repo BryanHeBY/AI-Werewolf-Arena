@@ -11,7 +11,7 @@ import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
-import { getGravekeeperState, setGravekeeperState } from "./state";
+import { initializeGravekeeperState } from "./state";
 import { GRAVEKEEPER_FEEDBACK_STAGE } from "./feedback";
 
 export const GRAVEKEEPER_ROLE_PROFILE: NativeRoleContributions = {
@@ -23,9 +23,7 @@ export const GRAVEKEEPER_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.gravekeeper.brief"),
   },
   runtime: {
-    init: (role) => {
-      setGravekeeperState(role, { history: [] });
-    },
+    init: initializeGravekeeperState,
     configuration: {
       schema: z.strictObject({}),
       defaults: {},

@@ -1,0 +1,378 @@
+{
+  "baseCommit": "bec1f8854fd12c479a1a1098cc08313096c88f08",
+  "firstCaptureBaseCommit": "4e0d25c88e4aa70a0f942b8361d43986ebed8893",
+  "sourceAtNewTests": {
+    "reconstructFrom": "before.json + edits.sourceEdits first36 + unit-type-before.json",
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+        "sha256": "3c4ed60cb074854983190298da47c0ee664c344d57aba244bb60e9cc40167da5"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+        "sha256": "60690e5b13703531af35dd1d12454013790e78150b1563f0a1fcd8d7585da164"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+        "sha256": "aaec6658aee4605701c3ec15324d1e2d87027866464ea486653cf171b5f61e91"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/idiot/state.ts",
+        "sha256": "296548a6647c46059b2441dd6f253e3bdfa095dc831e0b0ac10f68c6ca838f76"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+        "sha256": "9809f2d9cd35cdb80fce36ed5774be0e620cabf742ddc4d99778e55c67004169"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+        "sha256": "d03e64b73b3de00fae2a8aadac890a48872797e99f3631ea2ca3241c5a716215"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+        "sha256": "9bb62c23ebe3e4ca00988df0e4e13611d62913bec6d44a164bba9d670f8ee1bb"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+        "sha256": "22daeebeb9742db0af28d4bb110bd9effd98612cae2977bf577e77c894c8642a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+        "sha256": "6730a72e4326a9c5a3d28fe13b62954fee21be43886d131d8cc96f059555f8a5"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+        "sha256": "29c19a1fc50d46f528ac99a6f6fb64a552439851817770a68942cb471163c905"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+        "sha256": "431863c9841c607dd20ef3ef89cff90862ea150c662164f2b166d826745266c3"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+        "sha256": "fea79c2158ecdd51fcc5cdebec78e6233185e081583d02e38cc8f08f4669a4dd"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+        "sha256": "b2f4c02bb155dae826eef98952822ca7dcc54f96ae8297a6f2760ee443bc9196"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+        "sha256": "d091b5976fddb5a9f9b2f0bea006f0bdf4c411effc0e28f05b3c31d58942e32f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+        "sha256": "b37fcfab9b8c9da82b3a288af1c9f7dd31950c07bcae8e7b9d7a4e717f6b62d2"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+        "sha256": "849630b6e18e5546137bb3f73766622f0f17a785750b6ea7d14d270559a14e78"
+      },
+      {
+        "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+        "sha256": "97588aa4788357ef57596b94fffec810b9762342667ae00e6aba5614350ab77a"
+      }
+    ],
+    "limit": "当时四共同projection尚未附入；真实init与Bear写体已完整，后继类型和comment／同binding接线不重green。"
+  },
+  "sourceAtTypesAndOldTests": [
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "sha256": "2b4a7caf3d50296250c635cc617fa5b2d5070b95b1723766292707956620d368"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "sha256": "60690e5b13703531af35dd1d12454013790e78150b1563f0a1fcd8d7585da164"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "sha256": "bee84cef478a555ecfa941c2dcb34e408d45847b996f283d822827982afd45c6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "sha256": "c8a75c238f2e858912ded291785a9c35597596767bcb8d5ee1c1cf587d162f62"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "sha256": "9809f2d9cd35cdb80fce36ed5774be0e620cabf742ddc4d99778e55c67004169"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+      "sha256": "a7eece7efb69d1cbf2a7e02be08626ebd0e10728f7a5ec8f313ceac38d6df03d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "sha256": "ba8b816e963d88eb672c8f07d268ac66d43b2bd86b4ce804449e1da179bcd1ca"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "sha256": "22daeebeb9742db0af28d4bb110bd9effd98612cae2977bf577e77c894c8642a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "sha256": "6cbc44c7227166d499ba746c59bce4ff1fe8a0662a9de1d4cbccfaac5f7c582d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "sha256": "e1529555dba86ba000dfa362472d647adfed9662fcdce35977321834d7c03fd4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "sha256": "431863c9841c607dd20ef3ef89cff90862ea150c662164f2b166d826745266c3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "sha256": "e799b752def40b796763b0ea5242ac324fc4d4ca44dcbceccf27e27cd547f692"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "sha256": "b2f4c02bb155dae826eef98952822ca7dcc54f96ae8297a6f2760ee443bc9196"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+      "sha256": "d091b5976fddb5a9f9b2f0bea006f0bdf4c411effc0e28f05b3c31d58942e32f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+      "sha256": "af390ec9ae68593dbc9e16d2ac297cf202ebe4d243d1c05f13bf5d282ce57659"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "sha256": "4210f560a9c547e23695c0b86c53819ee684611ffec1131a8cd210596835ecb4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player_state.ts",
+      "sha256": "d21e605204116ceb53af3ed9a6023c2abb8af1e8a1bd08be4670e31d48479c42"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "80f9ba89b8ba5592298de82c625d7bb6bf8edf7ac6e8f3047b191408b988e62f"
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "sha256": "3d380a0cf11e03611e57f94ecb0a340c1d8ebd196f13a7bfe03f8b49f8f92fdc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "sha256": "4cc9f9bfde4053ed9878dd26e2c6fb866aa81c8eb062e6a6db2d3f988456cf75"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "d3570c650addf776dce585a9984bd3dde0ed50b6027b833bf9a50cac4334a681"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "sha256": "a9443e3ebc7c347cfa9e5f1f871303e596c65549a8223aa00ef8e54fabb2f3e2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player-state-data.ts",
+      "sha256": "6ab8ce1c6135ec4b93f7bc3d63e60d53672caf522318b36e8a34316002443c8a"
+    },
+    {
+      "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+      "sha256": "e87989f1249bb83796bdb37ed4416dff3b8e990b0e66e53a41cdfe02053a315f"
+    }
+  ],
+  "newTests": {
+    "chunk": "abc641",
+    "exitCode": 0,
+    "scope": "shell最后Bun命令；前置Python wrongcwd失败另留preparation-history",
+    "passed": 2,
+    "failed": 0,
+    "assertions": 22,
+    "output": "docs/refactor/generated/native-ordinary-state-owners-new-tests-output.txt"
+  },
+  "oldTests": {
+    "chunk": "a48882",
+    "exitCode": 0,
+    "passed": 6,
+    "failed": 0,
+    "assertions": 72,
+    "filtered": 42,
+    "output": "docs/refactor/generated/native-ordinary-state-owners-old-tests-output.txt"
+  },
+  "types": {
+    "launchChunk": "1edddc",
+    "sessionId": 29149,
+    "terminalChunk": "7f5b92",
+    "exitCode": 0,
+    "rootCount": 24,
+    "output": "docs/refactor/generated/native-ordinary-state-owners-types-output.txt"
+  },
+  "proof": {
+    "firstChunk": "9b9ded",
+    "firstExitCode": 1,
+    "reason": "误取Bear profile的首variables parameters，改实际*_ROLE_PROFILE锚点；产品未改。",
+    "terminalChunk": "10cee4",
+    "exitCode": 0,
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+        "sha256": "2b4a7caf3d50296250c635cc617fa5b2d5070b95b1723766292707956620d368"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+        "sha256": "60690e5b13703531af35dd1d12454013790e78150b1563f0a1fcd8d7585da164"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+        "sha256": "bee84cef478a555ecfa941c2dcb34e408d45847b996f283d822827982afd45c6"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/idiot/state.ts",
+        "sha256": "c8a75c238f2e858912ded291785a9c35597596767bcb8d5ee1c1cf587d162f62"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+        "sha256": "9809f2d9cd35cdb80fce36ed5774be0e620cabf742ddc4d99778e55c67004169"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+        "sha256": "a7eece7efb69d1cbf2a7e02be08626ebd0e10728f7a5ec8f313ceac38d6df03d"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+        "sha256": "ba8b816e963d88eb672c8f07d268ac66d43b2bd86b4ce804449e1da179bcd1ca"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+        "sha256": "22daeebeb9742db0af28d4bb110bd9effd98612cae2977bf577e77c894c8642a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+        "sha256": "6e6fa4e9ec137412589a0e6b750c3c4ebd28f923fa9af7ba524c2563d526150f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+        "sha256": "e1529555dba86ba000dfa362472d647adfed9662fcdce35977321834d7c03fd4"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+        "sha256": "431863c9841c607dd20ef3ef89cff90862ea150c662164f2b166d826745266c3"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+        "sha256": "e799b752def40b796763b0ea5242ac324fc4d4ca44dcbceccf27e27cd547f692"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+        "sha256": "b2f4c02bb155dae826eef98952822ca7dcc54f96ae8297a6f2760ee443bc9196"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+        "sha256": "d091b5976fddb5a9f9b2f0bea006f0bdf4c411effc0e28f05b3c31d58942e32f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+        "sha256": "af390ec9ae68593dbc9e16d2ac297cf202ebe4d243d1c05f13bf5d282ce57659"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+        "sha256": "4210f560a9c547e23695c0b86c53819ee684611ffec1131a8cd210596835ecb4"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/player_state.ts",
+        "sha256": "d21e605204116ceb53af3ed9a6023c2abb8af1e8a1bd08be4670e31d48479c42"
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "sha256": "80f9ba89b8ba5592298de82c625d7bb6bf8edf7ac6e8f3047b191408b988e62f"
+      },
+      {
+        "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+        "sha256": "3d380a0cf11e03611e57f94ecb0a340c1d8ebd196f13a7bfe03f8b49f8f92fdc"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+        "sha256": "4cc9f9bfde4053ed9878dd26e2c6fb866aa81c8eb062e6a6db2d3f988456cf75"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+        "sha256": "d3570c650addf776dce585a9984bd3dde0ed50b6027b833bf9a50cac4334a681"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+        "sha256": "a9443e3ebc7c347cfa9e5f1f871303e596c65549a8223aa00ef8e54fabb2f3e2"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/player-state-data.ts",
+        "sha256": "6ab8ce1c6135ec4b93f7bc3d63e60d53672caf522318b36e8a34316002443c8a"
+      },
+      {
+        "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+        "sha256": "e87989f1249bb83796bdb37ed4416dff3b8e990b0e66e53a41cdfe02053a315f"
+      }
+    ],
+    "outputs": "docs/refactor/generated/native-ordinary-state-owners-proof-output.txt",
+    "limit": "主proof为末Debater/WW等义单词comment之前采样；三个单源桥精确承接final。"
+  },
+  "heads": {
+    "firstChunk": "1a72cc",
+    "firstExitCode": 1,
+    "sourceCount": 24,
+    "documentationPaths": 647,
+    "diagnostics": 1,
+    "chineseHeadFailures": 1,
+    "failedTwoChunk": "8f2416",
+    "failedTwoExitCode": 1,
+    "failedTwoDocumentationPaths": 648,
+    "reason": "Debater中文已闭；WW明确提交前仍不含原规则识别的之前词项，等义一词改提交之前。",
+    "failedOneChunk": "a1bcea",
+    "failedOneExitCode": 0,
+    "failedOneDocumentationPaths": 648,
+    "finalDiagnostics": 0,
+    "finalChineseHeadFailures": 0,
+    "limit": "22初绿不重；末杠精正式名只comment桥，不伪重head。"
+  },
+  "bridges": [
+    {
+      "name": "Root Debater两中文comment",
+      "chunk": "3717ec",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/native-ordinary-state-owners-root-comment-bridge.json"
+    },
+    {
+      "name": "WW时点等义词",
+      "chunk": "c235f5",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/native-ordinary-state-owners-head-precision-bridge.json"
+    },
+    {
+      "name": "正式称谓杠精",
+      "chunk": "cbb0a3",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/native-ordinary-state-owners-peer-role-name-bridge.json"
+    }
+  ],
+  "bindings": {
+    "launchChunk": "a8f903",
+    "sessionId": 27790,
+    "terminalChunk": "f7f1b8",
+    "exitCode": 0,
+    "files": 1904,
+    "counts": {
+      "beforeStations": 59,
+      "beforeBindings": 77,
+      "currentStations": 61,
+      "currentBindings": 79,
+      "retained": 61,
+      "moved": 8,
+      "retiredCallerBindings": 8
+    },
+    "newCalleeChunk": "d16549",
+    "newCalleeExitCode": 0,
+    "newDeclarations": 12,
+    "newScopeBindings": 20
+  },
+  "coverage": {
+    "differentSuccessfulTests": 8,
+    "successfulAssertions": 94,
+    "runs": 2,
+    "businessFailures": 0
+  },
+  "limitations": [
+    "没有全门禁／严格零债／模型／完整cold加载验收。",
+    "检查配置与当前传递依赖含后继已提交Cupo，独立Hybrid fixture变化不纳此scope或控制。",
+    "类型、测试、头和主proof真实阶段字节保；不把后继comment当重复采样或声称token类型树完全同。"
+  ]
+}

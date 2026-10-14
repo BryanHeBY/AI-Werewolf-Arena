@@ -1,0 +1,17 @@
+/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/native-ordinary-state-owners-proof.cjs:13
+function init(t){const s=parse(t),v=s.statements.find(ts.isVariableStatement).declarationList.declarations[0].initializer,runtime=v.properties.find(p=>p.name?.getText(s)==='runtime').initializer,n=runtime.properties.find(p=>p.name?.getText(s)==='init').initializer;assert.ok(ts.isArrowFunction(n));return n.body.getText(s);}
+                                                                                                                                               ^
+
+TypeError: Cannot read properties of undefined (reading 'find')
+    at init (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/native-ordinary-state-owners-proof.cjs:13:144)
+    at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/native-ordinary-state-owners-proof.cjs:14:292
+    at Array.map (<anonymous>)
+    at Object.<anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/native-ordinary-state-owners-proof.cjs:14:142)
+    at Module._compile (node:internal/modules/cjs/loader:1968:14)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+
+Node.js v26.11.1

@@ -10,7 +10,7 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Role, Camp, Phase, KnightDuelWindow } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
-import { getKnightState, setKnightState } from "./state";
+import { getKnightState, initializeKnightState } from "./state";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 
@@ -23,9 +23,7 @@ export const KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.knight.brief"),
   },
   runtime: {
-    init: (role) => {
-      setKnightState(role, { canDuel: true });
-    },
+    init: initializeKnightState,
     configuration: {
       schema: z.strictObject({
         enabledWindows: z

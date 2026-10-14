@@ -1,0 +1,2630 @@
+{
+  "baseCommit": "bec1f8854fd12c479a1a1098cc08313096c88f08",
+  "roots": [
+    "backend/src",
+    "backend/tests",
+    "backend/scripts",
+    "frontend/src",
+    "frontend/tests",
+    "packages",
+    "tooling"
+  ],
+  "files": 1904,
+  "before": [
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "line": 4,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "recordBearRoar",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "recordBearRoar",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "line": 21,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "line": 7,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        },
+        {
+          "name": "setBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "setBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        },
+        {
+          "name": "setBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "setBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "line": 8,
+      "form": "named import",
+      "specifier": "../player_state",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player_state.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "line": 9,
+      "form": "named import",
+      "specifier": "../player_state",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player_state.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "line": 8,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "recordExileFeedback",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "recordExileFeedback",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "line": 16,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+      "line": 8,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+      "line": 14,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        },
+        {
+          "name": "setGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "setGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+      "line": 6,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "line": 12,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        },
+        {
+          "name": "consumeKnightDuel",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "consumeKnightDuel",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "line": 23,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "line": 8,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        },
+        {
+          "name": "setKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "setKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "line": 10,
+      "form": "named import",
+      "specifier": "../player_state",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player_state.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "line": 8,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "name": "consumeWhiteWolfDetonation",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "consumeWhiteWolfDetonation",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "name": "setWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "setWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "line": 25,
+      "form": "named import",
+      "specifier": "../roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "name": "consumeWhiteWolfDetonation",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "consumeWhiteWolfDetonation",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "line": 35,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "line": 36,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "line": 37,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/gravekeeper/ports",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "line": 44,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 8,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 45,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/player_state",
+      "bindings": [
+        {
+          "name": "projectBearState",
+          "owner": "backend/src/game/mechanisms/roles/player_state.ts",
+          "local": "projectBearState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/player_state.ts",
+          "local": "projectIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectKnightState",
+          "owner": "backend/src/game/mechanisms/roles/player_state.ts",
+          "local": "projectKnightState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/player_state.ts",
+          "local": "projectWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 57,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 96,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 97,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/gravekeeper/ports",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 100,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "line": 56,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+      "line": 16,
+      "form": "named import",
+      "specifier": "../game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "line": 31,
+      "form": "named import",
+      "specifier": "../game/mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/bear/native-night-announcement.test.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "line": 31,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/gravekeeper/ports",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "line": 25,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/knight/native-day-duel-settlement.test.ts",
+      "line": 17,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/white-wolf-king/detonation-and-death-waves.test.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+      "line": 22,
+      "form": "named import",
+      "specifier": "../../../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "setBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "setBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 27,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 31,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 32,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 33,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 36,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/player_state",
+      "bindings": [
+        {
+          "name": "projectBearState",
+          "owner": "backend/src/game/mechanisms/roles/player_state.ts",
+          "local": "projectBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+      "line": 21,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/bear/state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/bear/dawn-frame.test.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/bear/state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/debater/debater.test.ts",
+      "line": 61,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/gravekeeper/private-feedback-boundaries.test.ts",
+      "line": 21,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/gravekeeper/state",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        },
+        {
+          "name": "setGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "setGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+      "line": 14,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/knight/state",
+      "bindings": [
+        {
+          "name": "setKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "setKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/knight/state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        },
+        {
+          "name": "setKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "setKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "line": 32,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+      "line": 14,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/white_wolf_king/state",
+      "bindings": [
+        {
+          "name": "setWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "setWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/white_wolf_king/state",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "name": "setWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "setWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+      "line": 47,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+      "line": 11,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/idiot/state",
+      "bindings": [
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/knight-day-settlement.test.ts",
+      "line": 12,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/knight/state",
+      "bindings": [
+        {
+          "name": "setKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "setKnightState",
+          "typeOnly": false
+        }
+      ]
+    }
+  ],
+  "current": [
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "line": 4,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "recordBearRoar",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "recordBearRoar",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "line": 26,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "line": 7,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        },
+        {
+          "name": "setBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "setBearState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "projectBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "line": 11,
+      "form": "named import",
+      "specifier": "../player-state-data",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "line": 8,
+      "form": "named import",
+      "specifier": "../player-state-data",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "line": 10,
+      "form": "named import",
+      "specifier": "../player-state-data",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "line": 8,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "recordExileFeedback",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "recordExileFeedback",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "line": 16,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+      "line": 8,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+      "line": 6,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "projectIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "line": 12,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "line": 10,
+      "form": "named import",
+      "specifier": "../player-state-data",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        },
+        {
+          "name": "consumeKnightDuel",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "consumeKnightDuel",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "line": 23,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "line": 8,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "projectKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "line": 11,
+      "form": "named import",
+      "specifier": "../player-state-data",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "line": 10,
+      "form": "named import",
+      "specifier": "../player-state-data",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player_state.ts",
+      "line": 7,
+      "form": "named import",
+      "specifier": "./player-state-data",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "line": 6,
+      "form": "named export",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "name": "consumeWhiteWolfDetonation",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "consumeWhiteWolfDetonation",
+          "typeOnly": false
+        },
+        {
+          "name": "projectWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "projectWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "./state",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "line": 11,
+      "form": "named import",
+      "specifier": "../player-state-data",
+      "bindings": [
+        {
+          "name": "playerDataField",
+          "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+          "local": "playerDataField",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "line": 25,
+      "form": "named import",
+      "specifier": "../roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "name": "consumeWhiteWolfDetonation",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "consumeWhiteWolfDetonation",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "line": 35,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "line": 36,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "line": 37,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/gravekeeper/ports",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "line": 44,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 8,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "projectWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 52,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "projectBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 91,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "projectKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 95,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "projectIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "projectIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "line": 56,
+      "form": "named import",
+      "specifier": "../mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+      "line": 16,
+      "form": "named import",
+      "specifier": "../game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "line": 31,
+      "form": "named import",
+      "specifier": "../game/mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/bear/native-night-announcement.test.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "line": 31,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/gravekeeper/ports",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "line": 25,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/knight/native-day-duel-settlement.test.ts",
+      "line": 17,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/white-wolf-king/detonation-and-death-waves.test.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+      "line": 22,
+      "form": "named import",
+      "specifier": "../../../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "setBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "setBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 5,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "projectBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "projectBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 28,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 32,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 33,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "line": 34,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+      "line": 21,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/bear/state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/bear/dawn-frame.test.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/bear/state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/debater/debater.test.ts",
+      "line": 61,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/gravekeeper/private-feedback-boundaries.test.ts",
+      "line": 21,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/gravekeeper/state",
+      "bindings": [
+        {
+          "name": "getGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        },
+        {
+          "name": "setGravekeeperState",
+          "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "local": "setGravekeeperState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/knight/ports",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+      "line": 14,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/knight/state",
+      "bindings": [
+        {
+          "name": "setKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "setKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/knight/state",
+      "bindings": [
+        {
+          "name": "getKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "getKnightState",
+          "typeOnly": false
+        },
+        {
+          "name": "setKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "setKnightState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "line": 32,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+      "line": 12,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/bear/state",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/white_wolf_king/ports",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+      "line": 14,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/white_wolf_king/state",
+      "bindings": [
+        {
+          "name": "setWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "setWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+      "line": 19,
+      "form": "named import",
+      "specifier": "../../../../src/game/mechanisms/roles/white_wolf_king/state",
+      "bindings": [
+        {
+          "name": "getWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "name": "setWhiteWolfKingState",
+          "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "local": "setWhiteWolfKingState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+      "line": 47,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/idiot/ports",
+      "bindings": [
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+      "line": 11,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/bear/ports",
+      "bindings": [
+        {
+          "name": "getBearState",
+          "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "local": "getBearState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "line": 13,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/idiot/state",
+      "bindings": [
+        {
+          "name": "setIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "setIdiotState",
+          "typeOnly": false
+        },
+        {
+          "name": "getIdiotState",
+          "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/knight-day-settlement.test.ts",
+      "line": 12,
+      "form": "named import",
+      "specifier": "../../../src/game/mechanisms/roles/knight/state",
+      "bindings": [
+        {
+          "name": "setKnightState",
+          "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "local": "setKnightState",
+          "typeOnly": false
+        }
+      ]
+    }
+  ],
+  "bindings": [
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "name": "recordBearRoar",
+      "local": "recordBearRoar",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "name": "setBearState",
+      "local": "setBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "name": "getBearState",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "local": "getBearState",
+      "typeOnly": false,
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "form": "named import",
+      "specifier": "./state",
+      "retiredFromCaller": true
+    },
+    {
+      "name": "setBearState",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "local": "setBearState",
+      "typeOnly": false,
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "form": "named import",
+      "specifier": "./state",
+      "retiredFromCaller": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "name": "playerDataField",
+      "local": "playerDataField",
+      "beforeOwner": "backend/src/game/mechanisms/roles/player_state.ts",
+      "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+      "modeSame": true,
+      "moved": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "name": "playerDataField",
+      "local": "playerDataField",
+      "beforeOwner": "backend/src/game/mechanisms/roles/player_state.ts",
+      "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+      "modeSame": true,
+      "moved": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "name": "recordExileFeedback",
+      "local": "recordExileFeedback",
+      "beforeOwner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "name": "getGravekeeperState",
+      "local": "getGravekeeperState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+      "name": "getGravekeeperState",
+      "local": "getGravekeeperState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "name": "getGravekeeperState",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "local": "getGravekeeperState",
+      "typeOnly": false,
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+      "form": "named import",
+      "specifier": "./state",
+      "retiredFromCaller": true
+    },
+    {
+      "name": "setGravekeeperState",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "local": "setGravekeeperState",
+      "typeOnly": false,
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+      "form": "named import",
+      "specifier": "./state",
+      "retiredFromCaller": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+      "name": "getIdiotState",
+      "local": "getIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+      "name": "setIdiotState",
+      "local": "setIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "name": "getIdiotState",
+      "local": "getIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "name": "setIdiotState",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "local": "setIdiotState",
+      "typeOnly": false,
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "form": "named import",
+      "specifier": "./state",
+      "retiredFromCaller": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "name": "consumeKnightDuel",
+      "local": "consumeKnightDuel",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "name": "setKnightState",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "local": "setKnightState",
+      "typeOnly": false,
+      "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "form": "named import",
+      "specifier": "./state",
+      "retiredFromCaller": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "name": "playerDataField",
+      "local": "playerDataField",
+      "beforeOwner": "backend/src/game/mechanisms/roles/player_state.ts",
+      "owner": "backend/src/game/mechanisms/roles/player-state-data.ts",
+      "modeSame": true,
+      "moved": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "name": "consumeWhiteWolfDetonation",
+      "local": "consumeWhiteWolfDetonation",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "name": "setWhiteWolfKingState",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "local": "setWhiteWolfKingState",
+      "typeOnly": false,
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "form": "named import",
+      "specifier": "./state",
+      "retiredFromCaller": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "name": "consumeWhiteWolfDetonation",
+      "local": "consumeWhiteWolfDetonation",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "name": "getGravekeeperState",
+      "local": "getGravekeeperState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "name": "projectBearState",
+      "local": "projectBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/player_state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "name": "projectIdiotState",
+      "local": "projectIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/player_state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "name": "projectKnightState",
+      "local": "projectKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/player_state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "name": "projectWhiteWolfKingState",
+      "local": "projectWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/player_state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "name": "getGravekeeperState",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "local": "getGravekeeperState",
+      "typeOnly": false,
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "form": "named import",
+      "specifier": "../mechanisms/roles/gravekeeper/ports",
+      "retiredFromCaller": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "name": "getIdiotState",
+      "local": "getIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "name": "getIdiotState",
+      "local": "getIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+      "name": "getIdiotState",
+      "local": "getIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+      "name": "setIdiotState",
+      "local": "setIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/src/rulesets/self-destruct-window.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/bear/native-night-announcement.test.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "name": "getGravekeeperState",
+      "local": "getGravekeeperState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/hidden-wolf/inheritance-and-death-waves.test.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/knight/native-day-duel-settlement.test.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/scenarios/features/white-wolf-king/detonation-and-death-waves.test.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/roster.ts",
+      "name": "setBearState",
+      "local": "setBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "name": "getIdiotState",
+      "local": "getIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "name": "projectBearState",
+      "local": "projectBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/player_state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": true
+    },
+    {
+      "path": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/bear/dawn-frame.test.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/debater/debater.test.ts",
+      "name": "setIdiotState",
+      "local": "setIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/gravekeeper/private-feedback-boundaries.test.ts",
+      "name": "getGravekeeperState",
+      "local": "getGravekeeperState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/gravekeeper/private-feedback-boundaries.test.ts",
+      "name": "setGravekeeperState",
+      "local": "setGravekeeperState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+      "name": "setKnightState",
+      "local": "setKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "name": "getKnightState",
+      "local": "getKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "name": "setKnightState",
+      "local": "setKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "name": "setIdiotState",
+      "local": "setIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+      "name": "setWhiteWolfKingState",
+      "local": "setWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+      "name": "getWhiteWolfKingState",
+      "local": "getWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king/selection-and-prompt-contracts.test.ts",
+      "name": "setWhiteWolfKingState",
+      "local": "setWhiteWolfKingState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+      "name": "getIdiotState",
+      "local": "getIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+      "name": "getBearState",
+      "local": "getBearState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "name": "setIdiotState",
+      "local": "setIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "name": "getIdiotState",
+      "local": "getIdiotState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "modeSame": true,
+      "moved": false
+    },
+    {
+      "path": "backend/tests/unit/rulesets/knight-day-settlement.test.ts",
+      "name": "setKnightState",
+      "local": "setKnightState",
+      "beforeOwner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "modeSame": true,
+      "moved": false
+    }
+  ],
+  "counts": {
+    "beforeStations": 59,
+    "beforeBindings": 77,
+    "currentStations": 61,
+    "currentBindings": 79,
+    "retained": 61,
+    "moved": 8,
+    "retiredCallerBindings": 8
+  },
+  "limits": [
+    "before为22真bec整源码override；不把current新helper/新unit算旧Git原输入。",
+    "所有静态namespace/star/importEquals/type和字面dynamic/require均遍历，不覆盖计算specifier、eval或仓外API。",
+    "实际ultimate声明核对只针对14既有状态函数＋5搬移公开函数，不冒所有仓库symbol。"
+  ]
+}

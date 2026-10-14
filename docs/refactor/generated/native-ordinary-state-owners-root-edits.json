@@ -1,0 +1,171 @@
+{
+  "baseCommit": "bec1f8854fd12c479a1a1098cc08313096c88f08",
+  "source": {
+    "backend/src/game/mechanisms/roles/player_state.ts": [
+      {
+        "before": "/** 只读取声明的自身数据属性，不调用该字段访问器；不承诺对任意 Proxy 零反射 trap。 */\nexport function playerDataField(value: unknown, key: string): unknown {\n  if (!value || typeof value !== \"object\" || Array.isArray(value)) return undefined;\n  const field = Object.getOwnPropertyDescriptor(value, key);\n  return field && Object.hasOwn(field, \"value\") ? field.value : undefined;\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "function positiveInteger(value: unknown): value is number {\n  return typeof value === \"number\" && Number.isSafeInteger(value) && value > 0;\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "function rows(value: unknown): unknown[] {\n  if (!Array.isArray(value)) return [];\n  const result: unknown[] = [];\n  for (let index = 0; index < value.length; index++) {\n    const field = Object.getOwnPropertyDescriptor(value, String(index));\n    if (field && Object.hasOwn(field, \"value\")) result.push(field.value);\n  }\n  return result;\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "export function projectWhiteWolfKingState(state: unknown): PlayerWhiteWolfKingState {\n  return { canDetonate: playerDataField(state, \"canDetonate\") === true };\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "export function projectKnightState(state: unknown): PlayerKnightState {\n  return { canDuel: playerDataField(state, \"canDuel\") === true };\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "export function projectIdiotState(state: unknown): PlayerIdiotState {\n  return { revealed: playerDataField(state, \"revealed\") === true };\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "export function projectBearState(state: unknown): PlayerBearState {\n  return {\n    history: rows(playerDataField(state, \"history\")).flatMap((row) => {\n      const day = playerDataField(row, \"day\"),\n        roared = playerDataField(row, \"roared\");\n      return positiveInteger(day) && typeof roared === \"boolean\" ? [{ day, roared }] : [];\n    }),\n  };\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "  PlayerWhiteWolfKingState,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "  PlayerKnightState,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "  PlayerIdiotState,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "  PlayerBearState,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "import type { DeathGunReadView }",
+        "after": "import { playerDataField, positiveInteger, rows } from \"./player-state-data\";\nimport type { DeathGunReadView }",
+        "count": 1
+      }
+    ],
+    "backend/src/game/observation/player-observation-projector.ts": [
+      {
+        "before": "  projectWhiteWolfKingState,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "  projectKnightState,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "  projectIdiotState,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "  projectBearState,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "import { getWhiteWolfKingState }",
+        "after": "import { getWhiteWolfKingState, projectWhiteWolfKingState }",
+        "count": 1
+      },
+      {
+        "before": "import { getKnightState }",
+        "after": "import { getKnightState, projectKnightState }",
+        "count": 1
+      },
+      {
+        "before": "import { getIdiotState }",
+        "after": "import { getIdiotState, projectIdiotState }",
+        "count": 1
+      },
+      {
+        "before": "import { getBearState }",
+        "after": "import { getBearState, projectBearState }",
+        "count": 1
+      },
+      {
+        "before": "import { getGravekeeperState }",
+        "after": "import { projectGravekeeperState }",
+        "count": 1
+      },
+      {
+        "before": "import { readGravekeeperReport } from \"@ai-werewolf-arena/replay-contract\";\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "    const history = getGravekeeperState(role)?.history;\n    ownState.gravekeeper = {\n      history: Array.isArray(history)\n        ? history.flatMap((item) => {\n            const report = readGravekeeperReport(item);\n            return report ? [report] : [];\n          })\n        : [],\n    };",
+        "after": "    ownState.gravekeeper = projectGravekeeperState(role);",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/engine/player-state-projection.test.ts": [
+      {
+        "before": "  projectBearState,\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "import { expect, test } from \"bun:test\";",
+        "after": "import { expect, test } from \"bun:test\";\nimport { projectBearState } from \"../../../src/game/mechanisms/roles/bear/ports\";",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/cupid/state-slot.ts": [
+      {
+        "before": "from \"../player_state\"",
+        "after": "from \"../player-state-data\"",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/debater/state.ts": [
+      {
+        "before": "from \"../player_state\"",
+        "after": "from \"../player-state-data\"",
+        "count": 1
+      },
+      {
+        "before": "/**\n * Owns Debater live slot reads and inert player-state projection. Inputs are original\n * role/choice fields and committed status; outputs preserve descriptor reads and the\n * existing detached choice data. This boundary never executes a debate or settles a death.\n */",
+        "after": "/**\n * 负责辩论家原数据槽的描述符读取与玩家选择投影。输入为原角色／选择数据及提交标记；\n * 输出为原槽只读引用，或保留原字段读取顺序的独立选择数据，结构类型归共享契约。\n * 读取排除字段访问器但不新增完整 live schema，也不为任意 Proxy 保证零 trap。\n * 本模块不执行辩论、写选择／库存或结算死亡，玩家投影不能代替许可、真实付款或档案编码。\n */",
+        "count": 1
+      },
+      {
+        "before": "export function projectDebaterState(state: DebaterReadState, committed = false) {",
+        "after": "/** 提交标记只使玩家视图的 remaining 归零；不写原槽，选择仅在日期与编号为正整数时输出。 */\nexport function projectDebaterState(state: DebaterReadState, committed = false) {",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts": [
+      {
+        "before": "from \"../player_state\"",
+        "after": "from \"../player-state-data\"",
+        "count": 1
+      }
+    ]
+  },
+  "newHelper": {
+    "path": "backend/src/game/mechanisms/roles/player-state-data.ts",
+    "sha256": "6ab8ce1c6135ec4b93f7bc3d63e60d53672caf522318b36e8a34316002443c8a"
+  }
+}

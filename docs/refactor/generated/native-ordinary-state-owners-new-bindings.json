@@ -1,0 +1,150 @@
+{
+  "sourceScope": 24,
+  "newDeclarations": 12,
+  "bindings": [
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "form": "import",
+      "local": "initializeKnightState",
+      "name": "initializeKnightState",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "form": "import",
+      "local": "initializeIdiotState",
+      "name": "initializeIdiotState",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "form": "import",
+      "local": "initializeWhiteWolfKingState",
+      "name": "initializeWhiteWolfKingState",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "form": "import",
+      "local": "positiveInteger",
+      "name": "positiveInteger",
+      "owner": "backend/src/game/mechanisms/roles/player-state-data.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "form": "import",
+      "local": "rows",
+      "name": "rows",
+      "owner": "backend/src/game/mechanisms/roles/player-state-data.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "form": "import",
+      "local": "initializeBearState",
+      "name": "initializeBearState",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+      "form": "import",
+      "local": "initializeGravekeeperState",
+      "name": "initializeGravekeeperState",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+      "form": "export",
+      "local": "projectGravekeeperState",
+      "name": "projectGravekeeperState",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "form": "import",
+      "local": "ownData",
+      "name": "bearDataField",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "form": "import",
+      "local": "appendable",
+      "name": "bearDataArrayAppendable",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "form": "import",
+      "local": "unpublishedHistory",
+      "name": "bearHistoryUnpublished",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "form": "import",
+      "local": "recordDawnBearRoar",
+      "name": "recordDawnBearRoar",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player_state.ts",
+      "form": "import",
+      "local": "positiveInteger",
+      "name": "positiveInteger",
+      "owner": "backend/src/game/mechanisms/roles/player-state-data.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player_state.ts",
+      "form": "import",
+      "local": "rows",
+      "name": "rows",
+      "owner": "backend/src/game/mechanisms/roles/player-state-data.ts"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "form": "import",
+      "local": "projectGravekeeperState",
+      "name": "projectGravekeeperState",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts"
+    },
+    {
+      "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+      "form": "import",
+      "local": "initializeKnightState",
+      "name": "initializeKnightState",
+      "owner": "backend/src/game/mechanisms/roles/knight/state.ts"
+    },
+    {
+      "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+      "form": "import",
+      "local": "initializeIdiotState",
+      "name": "initializeIdiotState",
+      "owner": "backend/src/game/mechanisms/roles/idiot/state.ts"
+    },
+    {
+      "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+      "form": "import",
+      "local": "initializeWhiteWolfKingState",
+      "name": "initializeWhiteWolfKingState",
+      "owner": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts"
+    },
+    {
+      "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+      "form": "import",
+      "local": "initializeBearState",
+      "name": "initializeBearState",
+      "owner": "backend/src/game/mechanisms/roles/bear/state.ts"
+    },
+    {
+      "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+      "form": "import",
+      "local": "initializeGravekeeperState",
+      "name": "initializeGravekeeperState",
+      "owner": "backend/src/game/mechanisms/roles/gravekeeper/state.ts"
+    }
+  ],
+  "limits": [
+    "只核24源内12新callee及其实际public路由；仓内旧14状态函数和搬移5公开符号全form另由bindings.json核。",
+    "仅实际相对命名module路线，不声称动态计算路径或仓外调用。"
+  ]
+}

@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "preflight_final_review",
+  "approved": true,
+  "status": "approved",
+  "baseCommit": "bec1f8854fd12c479a1a1098cc08313096c88f08",
+  "firstCaptureBaseCommit": "4e0d25c88e4aa70a0f942b8361d43986ebed8893",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "sha256": "2b4a7caf3d50296250c635cc617fa5b2d5070b95b1723766292707956620d368",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "sha256": "60690e5b13703531af35dd1d12454013790e78150b1563f0a1fcd8d7585da164",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "sha256": "bee84cef478a555ecfa941c2dcb34e408d45847b996f283d822827982afd45c6",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "sha256": "c8a75c238f2e858912ded291785a9c35597596767bcb8d5ee1c1cf587d162f62",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "sha256": "9809f2d9cd35cdb80fce36ed5774be0e620cabf742ddc4d99778e55c67004169",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+      "sha256": "a7eece7efb69d1cbf2a7e02be08626ebd0e10728f7a5ec8f313ceac38d6df03d",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "sha256": "ba8b816e963d88eb672c8f07d268ac66d43b2bd86b4ce804449e1da179bcd1ca",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "sha256": "22daeebeb9742db0af28d4bb110bd9effd98612cae2977bf577e77c894c8642a",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "sha256": "7d7a1a47943f6510de89bddc3c8aacbe3c790359b39faba778419b890abd0597",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "sha256": "e1529555dba86ba000dfa362472d647adfed9662fcdce35977321834d7c03fd4",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "sha256": "431863c9841c607dd20ef3ef89cff90862ea150c662164f2b166d826745266c3",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "sha256": "e799b752def40b796763b0ea5242ac324fc4d4ca44dcbceccf27e27cd547f692",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "sha256": "b2f4c02bb155dae826eef98952822ca7dcc54f96ae8297a6f2760ee443bc9196",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+      "sha256": "d091b5976fddb5a9f9b2f0bea006f0bdf4c411effc0e28f05b3c31d58942e32f",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+      "sha256": "af390ec9ae68593dbc9e16d2ac297cf202ebe4d243d1c05f13bf5d282ce57659",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "sha256": "4210f560a9c547e23695c0b86c53819ee684611ffec1131a8cd210596835ecb4",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player_state.ts",
+      "sha256": "d21e605204116ceb53af3ed9a6023c2abb8af1e8a1bd08be4670e31d48479c42",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "80f9ba89b8ba5592298de82c625d7bb6bf8edf7ac6e8f3047b191408b988e62f",
+      "status": "modified"
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "sha256": "3d380a0cf11e03611e57f94ecb0a340c1d8ebd196f13a7bfe03f8b49f8f92fdc",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "sha256": "4cc9f9bfde4053ed9878dd26e2c6fb866aa81c8eb062e6a6db2d3f988456cf75",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "88a8e968ee82fceee7bc03f84f9165e7b62df206e50baba008449060f5fedfe3",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "sha256": "a9443e3ebc7c347cfa9e5f1f871303e596c65549a8223aa00ef8e54fabb2f3e2",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player-state-data.ts",
+      "sha256": "6ab8ce1c6135ec4b93f7bc3d63e60d53672caf522318b36e8a34316002443c8a",
+      "status": "added"
+    },
+    {
+      "path": "backend/tests/unit/features/native-ordinary-state-owners.test.ts",
+      "sha256": "e87989f1249bb83796bdb37ed4416dff3b8e990b0e66e53a41cdfe02053a315f",
+      "status": "added"
+    }
+  ],
+  "deleted": [],
+  "scopeSHA256": "1f86087dd6e45475199f94a46a2effc7356bd2d6ae01121211d4a8bca9c982e4",
+  "scope": {
+    "path": "docs/refactor/generated/native-ordinary-state-owners-scope-final.json",
+    "sha256": "1f86087dd6e45475199f94a46a2effc7356bd2d6ae01121211d4a8bca9c982e4"
+  },
+  "document": {
+    "path": "docs/refactor/native-ordinary-state-owners.md",
+    "sha256": "780d392ceb1b10660e97f8e87c8bb5e68bd5c9cedda9e69cc822a51ae04703bc"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/native-ordinary-state-owners-evidence.json",
+    "sha256": "833cbc642da2f742edaa0cee80d720e90a01e1373d6e929fd2f63f84a6c2233f"
+  },
+  "handoff": {
+    "path": "docs/refactor/generated/native-ordinary-state-owners-handoff.md",
+    "sha256": "8d3b36a513991329dcfe4ff1359ec005b140d1df9dc6fdd2b4bdfbd4ce564760"
+  },
+  "findings": [
+    {
+      "id": "debater-role-name",
+      "status": "closed",
+      "finding": "共享state首头角色名应按真实profile为杠精。",
+      "resolution": "Root仅首称谓一词修正；原完整before／177非注释叶／两raw输出桥承接，另23源未因该finding改变。"
+    },
+    {
+      "id": "initialization-callee-doc-order",
+      "status": "closed",
+      "finding": "MD将默认对象形成写在set callee查找之前，真实完整原init先取callee再参数。",
+      "resolution": "只MD单句改原setcallee→角色参数与默认对象→安装体privateState左值及同引用写入；doc-precision全文正演相同，源／原检查不变。"
+    }
+  ],
+  "remainingBlockingFindings": [],
+  "independentVerification": {
+    "actualFirstGitSources": 16,
+    "actualExpandedGitSources": 22,
+    "firstSourcesWholeSameAtNextGit": true,
+    "freshSources": 24,
+    "completeExactForwardPrograms": 22,
+    "pureCommentPhaseChains": 3,
+    "controls": 4,
+    "artifacts": 51,
+    "mismatches": 0,
+    "newTestPhaseSourcesReconstructed": 17,
+    "typeAndOldTestPhaseSourcesMatched": 24,
+    "performed": "已完整读五族state/profile/ports/Bear frame、Root七共享源、原before和所有actual移入体、两风险与六旧精准oracle、作者proof/bindings/heads及首红/failed-only收据。随后纯字节独核实际Git22、原16同后继Git、精确22整文件正演、末3注释链、全部finalSHA／附件／末doc链；没有运行作者工具或加载生产模块。",
+    "readerCorrection": "首纯字节读器误假设edits未纳两后加comment步骤，随后按真实edits整正演和独立comment链逆至原proof采样核0。仅修审读假设，未改候选或重作者检查。"
+  },
+  "semantics": {
+    "liveState": "五族get/set保原宽cast与同引用，先写槽再return；无新schema/clone/freeze/Proxy拒绝/second get，原捕获Knight/WhiteWolf库存直接消耗。",
+    "initialization": "完整五原profile init归具名函数；callee→角色与默认字面对象→原set内privateState左值→安装顺序保，原运行初始化函数身份/模块API变化明确。",
+    "projection": "四原共享projection归本族，Grave完整原get/history读取后Array.isArray/flatMap/严格报告reader；保live宽读取与descriptor玩家过滤不同接受面，输出知识不授许可。",
+    "bear": "own-data/proxy、appendable数组原型/length/extensibility、unpublished快照catch和受控history defineProperty完整归state。普通history→event与黎明event→history→published两序分别保；history失败保已发事件，finally checking撤销，重入/清历史不恢复许可仍frame权威。",
+    "gravekeeper": "记录保history.push callee/receiver→fact spread→receivedDay→result spread；标签/日期/参与者/去重/事件阶段仍feedback原owner。",
+    "sharedData": "player-state-data真实零import、三完整算法唯一实现，field own descriptor/rows length与hole/accessor过滤原序保持；旧playerDataField及四projection出口退休，无bridge。Cupid/杠精/Mist与观察/原unit直canonical绑定。",
+    "authorizationAndFailures": "原窗口/生命/付款、Native audit／普通翻牌、真实标死与许可不搬；原setter、event、历史、JSON失败保存已完成前缀，未补rollback或扩大行动权。",
+    "chineseComments": "五族/共用读者中文头与关键结构、资源和时点已实核，杠精实际名称及init文案精度闭合；未译机器协议／产品字符串。"
+  },
+  "proofReadReview": {
+    "completeOldPrograms": 22,
+    "typedNodes": 10031,
+    "noncommentLeaves": 12043,
+    "wholeMappedInverseOutputs": 44,
+    "retainedFunctions": 14,
+    "actualInitializers": 5,
+    "actualMovedProjections": 4,
+    "actualBearDataAlgorithms": 3,
+    "sharedHelpers": 3,
+    "dawnWriter": {
+      "typedNodes": 29,
+      "leaves": 41,
+      "outputs": 2
+    },
+    "graveProjection": {
+      "typedNodes": 52,
+      "leaves": 66,
+      "outputs": 2
+    },
+    "unitType": "Extract事件类型视图使typed树不同，两整emit同；不冒类型树原样。",
+    "method": "完整程序precise forward/inverse另对实际移入函数体/init/projection/helper逐体读核；full walker含叶文本与NodeArray，不以恢复整旧body遮盖新owner。",
+    "firstToolRed": "9b9ded比较器误取Bear首parameters而非*_ROLE_PROFILE；首脚本/日志保，onlyharness锚点修后10cee4实际0。主proof为末comment前SHA，3独立桥承接。"
+  },
+  "bindingsReadReview": {
+    "actualSourceFiles": 1904,
+    "oldStations": 59,
+    "oldBindings": 77,
+    "currentStations": 61,
+    "currentBindings": 79,
+    "retained": 61,
+    "moved": 8,
+    "retiredCallerBindings": 8,
+    "newActualDeclarations": 12,
+    "newScopeBindings": 20,
+    "scope": "读实际walker覆盖import/export、namespace/star、ImportType/ImportEquals和字面dynamic/require；相关实际站点均named。只14旧状态函数＋5搬移公开symbol和24源12新callee，未扩计算路径/eval/仓外API或声称全cold图。"
+  },
+  "receiptReadReview": {
+    "source": "原持久日志与作者/Root实际终态收据归属；审查者没有重跑。",
+    "newTests": {
+      "chunk": "abc641",
+      "exitCode": 0,
+      "scope": "shell最后Bun命令；前置Python wrongcwd失败另留preparation-history",
+      "passed": 2,
+      "failed": 0,
+      "assertions": 22,
+      "output": "docs/refactor/generated/native-ordinary-state-owners-new-tests-output.txt"
+    },
+    "oldTests": {
+      "chunk": "a48882",
+      "exitCode": 0,
+      "passed": 6,
+      "failed": 0,
+      "assertions": 72,
+      "filtered": 42,
+      "output": "docs/refactor/generated/native-ordinary-state-owners-old-tests-output.txt"
+    },
+    "coverage": {
+      "differentSuccessfulTests": 8,
+      "successfulAssertions": 94,
+      "runs": 2,
+      "businessFailures": 0
+    },
+    "types": {
+      "launchChunk": "1edddc",
+      "sessionId": 29149,
+      "terminalChunk": "7f5b92",
+      "exitCode": 0,
+      "rootCount": 24,
+      "output": "docs/refactor/generated/native-ordinary-state-owners-types-output.txt"
+    },
+    "heads": {
+      "firstChunk": "1a72cc",
+      "firstExitCode": 1,
+      "sourceCount": 24,
+      "documentationPaths": 647,
+      "diagnostics": 1,
+      "chineseHeadFailures": 1,
+      "failedTwoChunk": "8f2416",
+      "failedTwoExitCode": 1,
+      "failedTwoDocumentationPaths": 648,
+      "reason": "Debater中文已闭；WW明确提交前仍不含原规则识别的之前词项，等义一词改提交之前。",
+      "failedOneChunk": "a1bcea",
+      "failedOneExitCode": 0,
+      "failedOneDocumentationPaths": 648,
+      "finalDiagnostics": 0,
+      "finalChineseHeadFailures": 0,
+      "limit": "22初绿不重；末杠精正式名只comment桥，不伪重head。"
+    },
+    "bridges": [
+      {
+        "name": "Root Debater两中文comment",
+        "chunk": "3717ec",
+        "exitCode": 0,
+        "report": "docs/refactor/generated/native-ordinary-state-owners-root-comment-bridge.json"
+      },
+      {
+        "name": "WW时点等义词",
+        "chunk": "c235f5",
+        "exitCode": 0,
+        "report": "docs/refactor/generated/native-ordinary-state-owners-head-precision-bridge.json"
+      },
+      {
+        "name": "正式称谓杠精",
+        "chunk": "cbb0a3",
+        "exitCode": 0,
+        "report": "docs/refactor/generated/native-ordinary-state-owners-peer-role-name-bridge.json"
+      }
+    ],
+    "phaseAccuracy": "首新2在五init/Bear写体阶段；四projection后同绑定迁移未复跑新green。原24类型/旧6/主proof采样保持原SHA，末三comment桥和单doc精度分别承接。前置Python wrongcwd失败在source写前，abc641只最终Bun成功。"
+  },
+  "limits": [
+    "只批准24源码本批数据职责交付，未据此标完整C17／全55／P9或严格零债。",
+    "get/install仍原宽读取，完整archive codec/schema/生命周期/lease缺项不伪完成；checkpoint整clone不替代实际各族编码策略。",
+    "initializer函数身份/模块API/stack和Bear新增Node/plain_data值依赖、Grave reader归属实际变化；无任意CJS重绑定或整cold初始化不变承诺。",
+    "原控制四源whole Git/current同；独立Hybrid fixture/后继Codec不纳scope或未改全图声称。",
+    "无生产/Git/progress/矩阵修改，无作者proof/compiler/heads/tests/gates/models重复。"
+  ]
+}

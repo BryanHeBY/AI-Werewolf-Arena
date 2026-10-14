@@ -3,9 +3,9 @@
  * 输出为原状态引用，或按原查验政策生成的反馈／结果副本，不冻结 live 库存或授予行动许可。
  * 真正放逐的门控、死亡前后调用时点及下一夜历史交付仍分别由规则组合、经理与本族阶段负责；
  * 两种板子的反馈时点不同，此出口不额外要求目标已死、不打开窗口、不付款、不发布事实。
- * 仅导出原物理函数，保留原读取／默认 catalog，失败仍按原路径传播，不安装第二份状态或改变接受面。
+ * 仅导出本族实际函数，保留原读取／默认 catalog，失败仍按原路径传播，不安装第二份状态或改变接受面。
  */
-export { getGravekeeperState } from "./state";
+export { getGravekeeperState, projectGravekeeperState } from "./state";
 
 /** 公开原放逐时点的查验快照查询；是否真正放逐、调用时点及后续历史交付仍由规则组合／阶段负责。 */
 export { captureExileFeedback } from "./feedback";

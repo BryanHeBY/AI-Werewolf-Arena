@@ -7,7 +7,7 @@
 import { Role } from "../../../../core/domain/identity";
 import { types } from "node:util";
 import type { RoleComponent } from "../../../../core/domain/components/role";
-import { playerDataField } from "../player_state";
+import { playerDataField } from "../player-state-data";
 import { MIST_RAVEN_POLICY, readAlchemistState, readRavenState } from "./state";
 import type {
   PlayerAlchemistState,

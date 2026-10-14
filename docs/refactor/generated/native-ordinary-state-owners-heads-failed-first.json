@@ -1,0 +1,24 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "sha256": "6e6fa4e9ec137412589a0e6b750c3c4ebd28f923fa9af7ba524c2563d526150f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "ab7cf04bd9027c838e9add9c717969b573e4686373a416f06214fdd828b30379"
+    }
+  ],
+  "documentationPaths": 648,
+  "diagnostics": [
+    {
+      "id": "da554fef3230a0f41d8fac96ac86c07515bf9a60a6392303a101e7ded9d70bef",
+      "rule": "comment.timing",
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "hook head lacks its timing contract."
+    }
+  ],
+  "chineseHeadFailures": []
+}
