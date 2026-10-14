@@ -1,10 +1,9 @@
 /**
- * Owns game assembly, absolute deadline budgets, resource shutdown and failure aggregation.
- * Inputs are resolved setup and execution dependencies; outputs are recorded outcomes and
- * optional audit results. The runner delegates local request alias validation to its bound
- * owners and closes only its own resources, preserving cleanup/error order.
- * Agents and trace share the bound board source; persisted maxDays captures at its
- * original metadata read and is reused by cycles without changing clocks or deadlines.
+ * 负责装配一局游戏、收缩绝对期限、关闭运行资源并汇总失败。
+ * 输入为已解析的对局设置与本次执行依赖；输出为记录结果和可选审计摘要。
+ * 请求别名与原体权限仍由机制所有者校验；本模块保留停止、关闭、等待与落盘的顺序，
+ * 后续失败不回滚已提交的动作，也不把可选摘要失败升级为对局失败。
+ * Agent 与复现记录共用本局板子来源；maxDays 在原元数据读取处捕获，循环复用该值。
  */
 import { deriveBoundedRequest } from "../core/domain/request_delivery";
 import {
@@ -16,7 +15,7 @@ import { initialPlayerIdentity } from "../core/domain/initial_roster";
 import { initialIdentityDeal } from "../game/mechanisms/roles/initial_identity/deal";
 import { text } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
-/** Owns one game's resources, deadline, failure policy, and final replay. */
+/** 本局资源、期限、失败汇总与最终复盘由下方 runner 持有；导入不装配对局。 */
 import path from "node:path";
 import { bootstrapGame } from "../app/bootstrap";
 import {
@@ -55,11 +54,15 @@ import {
   currentEngineVersion,
 } from "./simulation/reproduction_context";
 
+/** 仅返回最终运行快照与领域事件总数；完整回放由会话记录器持久化。 */
 export interface GameRunResult {
   snapshot: RuntimeSnapshot;
   eventCount: number;
 }
-/** Per-run execution dependencies; these are never player DTO or JSON configuration fields. */
+/**
+ * 每局独立的执行依赖，不进入玩家 DTO 或 JSON 配置。
+ * 期限选择回调返回绝对时间，只参与取最小值；关闭观察回调接收脱离副本，异常归清理失败。
+ */
 export interface GameRunDependencies {
   selectRequestDeadline?: (
     request: Readonly<{
@@ -78,6 +81,7 @@ export interface GameRunDependencies {
 class DeadlineAwareActionProvider implements ActionProvider {
   private ordinal = 0;
   private readonly actors = new Map<number, number>();
+  // 同一玩家／日期／stage 的重试沿用已记录预算；新尝试仍受全局与原请求期限限制。
   private readonly budgets = new Map<string, number>();
   constructor(
     private readonly delegate: ActionProvider,
@@ -104,6 +108,7 @@ class DeadlineAwareActionProvider implements ActionProvider {
     if (selected !== undefined && !Number.isFinite(selected))
       throw new RangeError("game_request_deadline_invalid");
     const key = `${request.actorId}/${request.context.day}/${request.context.stage}`;
+    // 期限只取最早绝对时间，重试不重置整份超时；运行时授权随原请求一起派生。
     const deadline = Math.min(
       this.deadlineAtMs,
       request.deadlineAtMs ?? Infinity,
@@ -117,7 +122,7 @@ class DeadlineAwareActionProvider implements ActionProvider {
   }
 }
 
-/** The caller supplies a fully resolved setup; no configuration I/O happens here. */
+/** 调用方先完成设置解析；这里装配并执行对局，不读取配置来源文件。 */
 export async function runGame(
   setup: ResolvedGameSetup,
   dependencies: GameRunDependencies = {},
@@ -151,6 +156,7 @@ export async function runGame(
     const log = createConsoleLog(options.color);
     const startedAt = Date.now();
     const deadlineAtMs = startedAt + options.maxRuntimeMs;
+    // 对局／记录失败统一汇总；并发动作和关闭失败暂存，收尾时按原顺序补入。
     const failures: unknown[] = [];
     const eventRecorder = new GameEventRecorder(
       {
@@ -168,6 +174,7 @@ export async function runGame(
     let heartbeat: NodeJS.Timeout | undefined;
     let streamTimer: NodeJS.Timeout | undefined;
     let timedOut = false;
+    // stopping 立即拒绝新动作和迟到回复；closing 合并关闭调用，inFlight 单独负责等待结算。
     let stopping = false;
     let closing: Promise<void> | undefined;
     const stopReason = new DOMException("game_actions_stopped", "AbortError");
@@ -175,6 +182,7 @@ export async function runGame(
     const actionFailures: unknown[] = [];
     const cleanupFailures: unknown[] = [];
     let maxDays: number;
+    // 先撤运行入口，再异步关闭 Agent；关闭异常暂存，不能覆盖触发停止的原始失败。
     const closeRuntime = (): Promise<void> => {
       stopping = true;
       closing ??= Promise.resolve()
@@ -236,8 +244,7 @@ export async function runGame(
             (error) => {
               inFlight.delete(tracked);
               if (error !== stopReason) actionFailures.push(error);
-              // The recorder seals this decision before cancellation starts, keeping
-              // the original error's causal position ahead of cancelled peers.
+              // 保留记录器已写的决策前缀，再开始取消其它动作，保留原异常的因果先后。
               void closeRuntime();
               throw error;
             },
@@ -301,6 +308,7 @@ export async function runGame(
           await closeRuntime();
           await drainActions();
         }
+        // 无论周期成功或失败都保存实际结算前缀；失败周期先关闭并等待已在途动作。
         try {
           reproduction.checkpoint(
             captureCheckpoint(
@@ -329,6 +337,7 @@ export async function runGame(
       failures.push(error);
       replayManager.noteReproductionFailure("initialization", error);
     } finally {
+      // 先停定时任务并补事件，再关闭／等待动作；最终记录只在这些原收尾步骤之后发布。
       if (heartbeat) clearInterval(heartbeat);
       if (streamTimer) clearInterval(streamTimer);
       try {
@@ -346,6 +355,7 @@ export async function runGame(
           cleanupFailures.push(error);
         }
       }
+      // 取消标记不列为独立动作错误；原异常按引用去重，清理失败仍按发生顺序追加。
       for (const error of actionFailures)
         if (!failures.includes(error)) {
           failures.push(error);
@@ -366,6 +376,7 @@ export async function runGame(
             : (snapshot.result?.reason ?? (timedOut ? "runtime_timeout" : "completed")),
           players: replayPlayers(context.world),
         });
+        // 核心终档失败进入汇总；诊断摘要为可选输出，其异常只写日志。
         try {
           await replayManager.writeDebugSummary(
             await buildDebugSummaryMarkdown(
@@ -419,6 +430,10 @@ function selectPlayerProfiles(
   return profiles;
 }
 
+/**
+ * 构造 God 终档的身份记录，不复用玩家观察视图。
+ * 动物梦境读取已捕获的原名单／身份与原生命；初始身份机制保留原发牌，普通局使用当前组件。
+ */
 function replayPlayers(world: World) {
   const originalIds = animalOriginalAuditIds(world);
   if (originalIds)

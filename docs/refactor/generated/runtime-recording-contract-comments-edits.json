@@ -1,0 +1,106 @@
+{
+  "backend/src/runtime/game_runner.ts": [
+    [
+      "/**\n * Owns game assembly, absolute deadline budgets, resource shutdown and failure aggregation.\n * Inputs are resolved setup and execution dependencies; outputs are recorded outcomes and\n * optional audit results. The runner delegates local request alias validation to its bound\n * owners and closes only its own resources, preserving cleanup/error order.\n * Agents and trace share the bound board source; persisted maxDays captures at its\n * original metadata read and is reused by cycles without changing clocks or deadlines.\n */",
+      "/**\n * 负责装配一局游戏、收缩绝对期限、关闭运行资源并汇总失败。\n * 输入为已解析的对局设置与本次执行依赖；输出为记录结果和可选审计摘要。\n * 请求别名与原体权限仍由机制所有者校验；本模块保留停止、关闭、等待与落盘的顺序，\n * 后续失败不回滚已提交的动作，也不把可选摘要失败升级为对局失败。\n * Agent 与复现记录共用本局板子来源；maxDays 在原元数据读取处捕获，循环复用该值。\n */"
+    ],
+    [
+      "/** Owns one game's resources, deadline, failure policy, and final replay. */",
+      "/** 本局资源、期限、失败汇总与最终复盘由下方 runner 持有；导入不装配对局。 */"
+    ],
+    [
+      "export interface GameRunResult {",
+      "/** 仅返回最终运行快照与领域事件总数；完整回放由会话记录器持久化。 */\nexport interface GameRunResult {"
+    ],
+    [
+      "/** Per-run execution dependencies; these are never player DTO or JSON configuration fields. */",
+      "/**\n * 每局独立的执行依赖，不进入玩家 DTO 或 JSON 配置。\n * 期限选择回调返回绝对时间，只参与取最小值；关闭观察回调接收脱离副本，异常归清理失败。\n */"
+    ],
+    [
+      "  private readonly budgets = new Map<string, number>();",
+      "  // 同一玩家／日期／stage 的重试沿用已记录预算；新尝试仍受全局与原请求期限限制。\n  private readonly budgets = new Map<string, number>();"
+    ],
+    [
+      "    const deadline = Math.min(",
+      "    // 期限只取最早绝对时间，重试不重置整份超时；运行时授权随原请求一起派生。\n    const deadline = Math.min("
+    ],
+    [
+      "/** The caller supplies a fully resolved setup; no configuration I/O happens here. */",
+      "/** 调用方先完成设置解析；这里装配并执行对局，不读取配置来源文件。 */"
+    ],
+    [
+      "    const failures: unknown[] = [];",
+      "    // 对局／记录失败统一汇总；并发动作和关闭失败暂存，收尾时按原顺序补入。\n    const failures: unknown[] = [];"
+    ],
+    [
+      "    let stopping = false;",
+      "    // stopping 立即拒绝新动作和迟到回复；closing 合并关闭调用，inFlight 单独负责等待结算。\n    let stopping = false;"
+    ],
+    [
+      "    const closeRuntime = (): Promise<void> => {",
+      "    // 先撤运行入口，再异步关闭 Agent；关闭异常暂存，不能覆盖触发停止的原始失败。\n    const closeRuntime = (): Promise<void> => {"
+    ],
+    [
+      "              // The recorder seals this decision before cancellation starts, keeping\n              // the original error's causal position ahead of cancelled peers.",
+      "              // 记录器先封存这次失败决策，再开始取消其它动作，保留原异常的因果先后。"
+    ],
+    [
+      "        try {\n          reproduction.checkpoint(",
+      "        // 无论周期成功或失败都保存实际结算前缀；失败周期先关闭并等待已在途动作。\n        try {\n          reproduction.checkpoint("
+    ],
+    [
+      "    } finally {\n      if (heartbeat)",
+      "    } finally {\n      // 先停定时任务并补事件，再关闭／等待动作；最终记录只在这些原收尾步骤之后发布。\n      if (heartbeat)"
+    ],
+    [
+      "      for (const error of actionFailures)",
+      "      // 取消标记不列为独立动作错误；原异常按引用去重，清理失败仍按发生顺序追加。\n      for (const error of actionFailures)"
+    ],
+    [
+      "        try {\n          await replayManager.writeDebugSummary(",
+      "        // 核心终档失败进入汇总；诊断摘要为可选输出，其异常只写日志。\n        try {\n          await replayManager.writeDebugSummary("
+    ],
+    [
+      "function replayPlayers(world: World) {",
+      "/**\n * 构造 God 终档的身份记录，不复用玩家观察视图。\n * 动物梦境读取已捕获的原名单／身份与原生命；初始身份机制保留原发牌，普通局使用当前组件。\n */\nfunction replayPlayers(world: World) {"
+    ]
+  ],
+  "backend/src/runtime/game_event_recorder.ts": [
+    [
+      "/**\n * Responsibility: record each committed event and its authorized player view.\n * Input: original World and event deltas; output: persisted God/player evidence\n * and the recorded delta for presentation. This recorder owns its event cursor,\n * replay phase/day cursor and per-player sequence; it never advances game phases\n * or selects actions. Recording failures propagate with already written prefixes,\n * while domain commit and current audience authorization keep their own owners.\n */",
+      "/**\n * 负责把新增领域事件与当时获授权的玩家视图交给会话记录器，返回完成处理的展示增量。\n * 输入为本局原 World 和事件序列；输出为 God／玩家记录，最终落盘归会话记录器。\n * 本模块拥有事件游标、记录日期／阶段和玩家局部序号，不推进游戏阶段或选择行动。\n * 记录失败向调用方传播并保留已追加前缀；领域提交与受众授权仍由各自所有者负责。\n * 游标不是跨失败重放的事务保证，不能把一次中途异常当成整条事件从未记录。\n */"
+    ],
+    [
+      "export interface GameEventRecorderOptions {",
+      "/** 持有同一局的领域读取入口与记录入口，不创建第二份状态或自行管理记录器关闭。 */\nexport interface GameEventRecorderOptions {"
+    ],
+    [
+      "  private readonly playerVisibleEventSeq = new Map<number, number>();",
+      "  // 每位玩家只为可见事件递增序号，不能用 God 事件索引泄漏隐藏行动数量。\n  private readonly playerVisibleEventSeq = new Map<number, number>();"
+    ],
+    [
+      "  private replayDayCursor = 1;",
+      "  // 这是复盘记录的标签游标；只随 phase_changed 更新，不写回领域阶段。\n  private replayDayCursor = 1;"
+    ],
+    [
+      "/** Record each new event once and return the delta for presentation. */",
+      "/** 从事件游标处理新增事实；只有当前事件全部处理完成后才推进该游标。 */"
+    ],
+    [
+      "      this.options.replayManager.recordPublicEvent({",
+      "      // God 记录先追加，随后逐玩家投影；后续失败不撤销先前已追加的记录。\n      this.options.replayManager.recordPublicEvent({"
+    ],
+    [
+      "        this.playerVisibleEventSeq.set(playerId, nextVisibleSeq);",
+      "        // 按原顺序先占用局部序号再追加玩家记录；写入抛错时序号与前缀不会回滚。\n        this.playerVisibleEventSeq.set(playerId, nextVisibleSeq);"
+    ],
+    [
+      "          // Player provenance is view-local; global indexes reveal hidden God event counts.",
+      "          // 玩家来源序号属于自己的视图；全局索引会暴露隐藏 God 事件的数量。"
+    ],
+    [
+      "      this.recordedEventIndex = i + 1;",
+      "      // 全部玩家视图处理完才推进主游标；中途失败不伪造原子提交或自动去重。\n      this.recordedEventIndex = i + 1;"
+    ]
+  ]
+}

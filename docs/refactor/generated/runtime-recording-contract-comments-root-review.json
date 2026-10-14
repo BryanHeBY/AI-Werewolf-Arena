@@ -1,0 +1,48 @@
+{
+  "approved": true,
+  "reviewer": "root-author",
+  "scope": {
+    "path": "docs/refactor/generated/runtime-recording-contract-comments-scope-final.json",
+    "sha256": "81d43ea067e1578a6a6ec829f51d971ca0112d8b8a6121a62ea8df8d6c04c342"
+  },
+  "source": [
+    {
+      "path": "backend/src/runtime/game_runner.ts",
+      "sha256": "cab42be52a574b2f1e53281662a36c88360b4d6b02a9a23e42912788a4a4db71",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/runtime/game_event_recorder.ts",
+      "sha256": "65a472a78a865ef7efb0d1bd35fc4dec87c9a4abee1baa0d381e05644477c8b2",
+      "change": "modified"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/runtime-recording-contract-comments.md",
+    "sha256": "c67dc496720888fe1046d4856978e5d332194c8ee2d73e84ff33557955aa9369"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/runtime-recording-contract-comments-evidence.json",
+    "sha256": "7d264d4a8728e98a15d7b2f207e97a1dac13b579f9e68e56aaabfa3e225366e9"
+  },
+  "findings": [],
+  "review": [
+    "原runner全文与原SessionRecordManager追加/终档位置已读，中文契约准确反映实际顺序和失败政策。",
+    "两个真实Git before完整forward至末源，25编辑限注释、3208 token/four whole emit同；不用头形状代表权限正确性。",
+    "未将recordPublicEvent当玩家可见事实，记录游标和序号先写前缀不虚构事务或去重。",
+    "独审counterexample已按原decide前置failure细化为已写前缀，源码只改单行中文注释；原证明不改写成新运行。"
+  ],
+  "notRun": [
+    "typechecks",
+    "tests",
+    "fullgates",
+    "games",
+    "models"
+  ],
+  "documentationPrecision": "本批不改历史档案身份；新注释会参与新构建sourceHash，不声称新旧来源指纹相同。",
+  "peerPrecisionBridge": {
+    "path": "docs/refactor/generated/runtime-recording-contract-comments-peer-precision-bridge.json",
+    "sha256": "3389dfc42ae61edff1451dea5ff33ca816471cac3ac595321aa63bfd7838bad4"
+  }
+}

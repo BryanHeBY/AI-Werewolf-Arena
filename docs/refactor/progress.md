@@ -730,3 +730,5 @@
 - C17 定序王子与学者／导师状态所有权联合收口：24现行源／测试及两旧state删除，两组实际数据、原引用绑定与写入／JSON前缀归各自槽，学者完整有限板碰撞另归同族纯规则；Authority／frame继续持生命、pending与原阶段窗口。共享Observer三实际route整forward同，按文件去重原子提交，无临时桥。Root及非作者对规则资源、架构原体、失败证据和有效中文说明独立审批准，实核20不同Git before、7控制与64附件；七新风险加两旧精准例分批通过，原红和丢失终态句柄保真实，有限类型／职责头闭合，不重已有绿或全门禁。本批不冒完整C17／全中文／P9完成，见 order-scholar-state-slots.md。
 
 - C20 警长请求构造边界：九源把三原new点改为必填领域constructor端口，由两个Day与一个死亡结算caller晚提供真实工厂，选举一实例／方向独立／警徽许可后构造和原finally均保。Root及非作者完整三机制／新三反例／真实Git八全文forward和26编辑／四控制／18附件同SHA审批准，中文职责、票数据与构造失败前缀就地解释。三新定向例分首两绿及失败单例补查，原精准PK一绿；九根类型首仅并行Observer旧路由红，修复后的失败单根真实闭合，不称首轮绿且不重已有绿。MD仅校准三个同族警长模块；所有C20实体装配与P9继续，见 sheriff-request-construction.md。
+
+- C45 运行与事件记录中文契约：两源25处说明补绝对最早期限与重试预算、stopping/closing/inFlight各自责任、关闭等待和核心终档／可选摘要政策、God→玩家局部序号→记录→主游标的失败前缀。Root与独立实际全文审查／两Git before／末SHA及附件批准；原3208非注释token和四完整无注释输出保持，工具首两红真实保；独审decide前置失败反例只细化一行“保留已写决策前缀”，完整exact注释桥校准，原绿证明不重写为新执行、不重types/tests/gates。注释不承诺游标事务或自动去重，新sourceHash随注释变动，历史档案身份保留。全仓中文与P9继续，见 runtime-recording-contract-comments.md。

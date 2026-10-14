@@ -1,0 +1,22 @@
+{
+  "approved": true,
+  "sourceBefore": {
+    "path": "backend/src/runtime/game_runner.ts",
+    "sha256": "6763f5e64a75fb2af04b00ffa8dcdc88e19fedef6b9589214bb3f50227578dcc"
+  },
+  "sourceAfter": {
+    "path": "backend/src/runtime/game_runner.ts",
+    "sha256": "cab42be52a574b2f1e53281662a36c88360b4d6b02a9a23e42912788a4a4db71"
+  },
+  "beforeSnapshot": {
+    "path": "docs/refactor/generated/runtime-recording-contract-comments-before-peer-precision.json",
+    "sha256": "8680515744de60beb39dcf307876fdc9e418e645c3bbf3aee84c29ebe9a4cf22"
+  },
+  "oldComment": "// 记录器先封存这次失败决策，再开始取消其它动作，保留原异常的因果先后。",
+  "newComment": "// 保留记录器已写的决策前缀，再开始取消其它动作，保留原异常的因果先后。",
+  "wholeExactForwardAndInverse": true,
+  "onlyKnownLineComment": true,
+  "reason": "ReproductionTrace.decide在try前的归一化/决策追加/onChange可先失败，只保已写前缀；不承诺已经error seal。",
+  "previousProofRetained": "docs/refactor/generated/runtime-recording-contract-comments-proof.json",
+  "testsTypesHeadsAndPreviousProofNotRepeated": true
+}
