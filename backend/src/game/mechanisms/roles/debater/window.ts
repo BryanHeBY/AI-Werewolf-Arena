@@ -1,8 +1,8 @@
 /**
- * Opens the Debater speaking opportunity and dispatches the selected debate through its
- * authority. Inputs are the current day participants, provider and gateway; outputs preserve the
- * debate event and window result. It never bypasses participant identity checks after the
- * provider await.
+ * 负责在原预定发言之前开启辩论机会，并通过本族权威结算公开发言、密封投票和处罚。
+ * 输入为当前日次、原参与者、请求构造端口、Provider 与网关；输出辩论事实及是否跳过原发言。
+ * Provider 等待之后仍复验原体、生命、库存与警徽；请求构造不授权行动，付款和关闭保持本族原顺序。
+ * 本窗口不发布局部匿名票统计；最后复验后同步提交结果、生命绑定处罚和需要的警徽移交。
  */
 import type { ReadonlyBoardConfig, DebaterState } from "@ai-werewolf-arena/game-contract";
 import {
@@ -17,7 +17,7 @@ import {
   type VotingRightComponent,
 } from "../../../../core/domain";
 import { ToolGateway } from "../../../gateway/tool_gateway";
-import type { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
 import { commitSheriffBadgeChoice, badgeSuccessorEligible } from "../../sheriff/badge";
 import { getDebaterState } from "./state";
 import {
@@ -32,7 +32,7 @@ import {
   hasActiveDebate,
   type DebateAuthority,
 } from "./authority";
-/** Finite AWA adaptation: before one scheduled speech, two public statements, then a sealed anonymous ballot. */
+/** 有限 AWA 适配：原一次预定发言之前依次进行两次公开陈述，再收集密封匿名票。 */
 export class DebaterWindow {
   constructor(
     private readonly world: World,
@@ -41,7 +41,7 @@ export class DebaterWindow {
   ) {}
   async execute(
     config: ReadonlyBoardConfig,
-    requests: GameActionRequestFactory,
+    requests: ActionRequestConstructionPort,
     provider: ActionProvider,
     targetId: number,
     day: number,
@@ -204,7 +204,7 @@ export class DebaterWindow {
           });
       }
       authority.stage = "ballot";
-      // Construct the entire round before invoking a provider. No partial totals/individual events escape.
+      // 调用任何 Provider 之前构造完整票轮；中间统计或单人票不会提前发布。
       const ballotRequests = [...participants.keys()].map((voterId) => ({
         voterId,
         request: requests.create({
@@ -248,7 +248,7 @@ export class DebaterWindow {
         };
       });
       if (!current()) return canceled();
-      // Revalidate all already collected ballots once more, since another actor's validator can revoke them.
+      // 已收票再次逐人复验，另一位玩家的校验可能撤销其原体资格。
       for (const ballot of ballots)
         if (!sameDebateParticipant(this.world, participants.get(ballot.voterId)!))
           ballot.support = null;
@@ -262,7 +262,7 @@ export class DebaterWindow {
         needsBadge = success && targetBadge?.isSheriff === true && !targetBadge.destroyed;
       if (needsBadge && !badgeSuccessorEligible(this.world, targetId, actorId)) return canceled();
       if (!current()) return canceled();
-      // Commit result, life-scoped penalty and any badge handoff synchronously after the final gate.
+      // 最后复验之后同步提交结果、绑定原生命的处罚以及需要的警徽移交。
       if (needsBadge)
         commitSheriffBadgeChoice(this.world, targetId, "debate", this.events, actorId);
       blockDebateVote(this.world, blockedId, actorId, day);

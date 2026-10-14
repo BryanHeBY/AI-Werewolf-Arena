@@ -5,16 +5,9 @@
  * 本工厂不渲染本地化文案、不序列化运行范围，也不据阶段字符串新增角色权限。
  */
 import { bindRulesetActionRequest } from "../../rulesets/action-request-bindings";
-import type { MessageRef } from "@ai-werewolf-arena/game-contract";
-import type { ActionRequest, ActionRequestExtras } from "@ai-werewolf-arena/game-contract/requests";
+import type { ActionRequestConstructionInput, ActionRequestConstructionPort } from "../../core/domain/actions";
+import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
-import type {
-  ActionStage,
-  ActionWindow,
-  EntityId,
-  Phase,
-  ToolName,
-} from "@ai-werewolf-arena/game-contract";
 import { World } from "../../core/domain/world";
 import { buildAgentVisibleEventFeed } from "./agent_visible_event_feed";
 import { buildTurnConstraintContext } from "./turn_constraints_context";
@@ -25,23 +18,14 @@ import { buildTurnConstraintContext } from "./turn_constraints_context";
  * 该工厂统一填入原生请求的日次、细粒度 stage、玩家可见事件与结构化行动约束；
  * 调用方提供机制附加数据，运行时权限仍由具体机制保存，不混入这些公共字段。
  */
-export class GameActionRequestFactory {
+export class GameActionRequestFactory implements ActionRequestConstructionPort {
   constructor(
     private readonly world: World,
     private readonly events: readonly GameEvent[],
     private readonly day: number,
   ) {}
 
-  create(input: {
-    phase: Phase;
-    actorId: EntityId;
-    allowedTools: ToolName[];
-    stage: ActionStage;
-    requiresAction: boolean;
-    summary: string | MessageRef;
-    actionWindow?: ActionWindow;
-    context?: ActionRequestExtras;
-  }): ActionRequest {
+  create(input: ActionRequestConstructionInput): ActionRequest {
     // 公共事实由工厂生成；调用方只能提供机制特有的信息。
     const request: ActionRequest = {
       phase: input.phase,

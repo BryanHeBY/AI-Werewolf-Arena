@@ -1,0 +1,18 @@
+# ActionRequestConstructionPort 六源交付
+
+正式冻结；actual before 4ddf9ba95468b2550269bdf87f3356947a6469ff。没有新运行实现／schema／权限；完整方法调用、读取、receiver和资源／失败前缀保持。Wall/Debater/Order三处 nominal→structural，Noble原Pick仅唯一owner命名迁移。十二真实实体构造仍列后续，不能宣称feature→engine全部退出。
+
+- MD SHA deab5ba5d90957f95c62b721bf57f949179f47ebfe7e3274e90a08333c54e470
+- scope SHA dda6f44e1425725a568184a6a15ba44a0505bb3754a5e95fd74284b1222b8bb4
+- evidence SHA ada8598b7c7a9e451fac197be2e5f281af932bfe9cab8cd78af3e4cf57a0cef0
+
+- `backend/src/core/domain/actions.ts` 523c8774f3cc5d3598871bf45698d9951a61f43aa1bcb0fc0a8ab7be77eeea49
+- `backend/src/game/engine/action_request_factory.ts` 58479eac40473f20121998d966e71b36b1bc9d47169e4c1af13c2beef5814d84
+- `backend/src/game/mechanisms/events/wall_notes/window.ts` dca10207162ae2dd2f1aaea5bca777d282fbf3a69b8fcce131e5c5640b46c5e1
+- `backend/src/game/mechanisms/roles/debater/window.ts` a56949065f78079e8ee14dec4aaa9508f571d32719c2c70fbeef50f8faa5d83f
+- `backend/src/game/mechanisms/roles/noble_secret_body/exile-reveal.ts` 6a1ea031e947360275be9f4a1ecdbeb36ec30cd55366a94f9b64326841b15774
+- `backend/src/game/mechanisms/roles/order_prince/voting_window.ts` 7f1aac68e47eb2bcfb415c23c978ce6fc1361dc1af592f569baac90540ff7898
+
+有限六根 first实际0（7464/3f43ed），未重 types 或 tests/gates/model。六actual完整程序12rawsame，原八成员/7真实物理typeowner同；两个proof工具红原log保，末78bf9a actual0，不改生产求绿。heads6/531真实0及CN0。同行limit精度只文案改，原执行版SHA与当前未重跑措辞版明确；final全部source已停写，Root另exileports/Voting/Magician15排除。请独立审真实源码/引用/类型接受面和中文，勿重绿。
+
+末正式名校准仅Order职责头一词，精确comment逆SHA连接原proof/types/heads阶段，未重复绿色检查；原当期proof.source的该旧SHA与finalscope按comment桥分层。

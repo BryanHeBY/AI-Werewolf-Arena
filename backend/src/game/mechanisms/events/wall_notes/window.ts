@@ -12,7 +12,7 @@ import {
 } from "../../../../core/domain";
 import { shuffled, type RandomSource } from "../../../../core/domain/random";
 import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
-import type { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import {
   openWall,
@@ -31,7 +31,7 @@ export class WallNotesWindow {
   ) {}
   async execute(
     config: ReadonlyBoardConfig,
-    requests: GameActionRequestFactory,
+    requests: ActionRequestConstructionPort,
     provider: ActionProvider,
     day: number,
     isCurrent: () => boolean,

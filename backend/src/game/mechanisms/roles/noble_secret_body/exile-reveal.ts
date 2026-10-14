@@ -10,7 +10,7 @@ import type { ActionRequest, ToolCall } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
 import type { World } from "../../../../core/domain/world";
-import type { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { checkpointNobleBodyAuthority, consumeSecretBodyExile } from "./authority";
 import {
@@ -27,7 +27,7 @@ export interface SecretBodyExileRevealQueries {
   readonly enabled: ReadonlyBoardConfig["nobleSecretBody"];
   readonly world: World;
   readonly events: GameEvent[];
-  readonly requests: Pick<GameActionRequestFactory, "create">;
+  readonly requests: ActionRequestConstructionPort;
   readonly toolGateway: Pick<ToolGateway, "validateAndSanitize">;
   readonly day: number;
   readonly isCurrent: (() => boolean) | undefined;

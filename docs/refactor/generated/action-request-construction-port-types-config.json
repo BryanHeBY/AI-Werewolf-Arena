@@ -1,0 +1,20 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/actions.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/action_request_factory.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/events/wall_notes/window.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/debater/window.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/noble_secret_body/exile-reveal.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/order_prince/voting_window.ts"
+  ]
+}

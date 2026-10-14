@@ -1,8 +1,14 @@
+/**
+ * 负责定序王子在原首轮票之后的重收票选择与必需发言。输入为原 World、日次、请求构造端口及 Provider；
+ * 输出原是否重收票的结果和事实，放逐目标与 PK 仍由投票流水线拥有。
+ * 每个等待后保留原当前性复验；选择提交先于发言，后续失败不回滚已提交前缀，finally 仍关闭本族窗口。
+ * 构造端口不授予行动或资源权限，也不绕过网关及原体检查。
+ */
 import type { ActionProvider, GameEvent } from "../../../../core/domain/model";
 import { Phase } from "../../../../core/domain/identity";
 import type { World } from "../../../../core/domain/world";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
-import type { GameActionRequestFactory } from "../../../engine/action_request_factory";
+import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
 import {
   openOrderPrinceChoice,
   assertOrderPrinceCurrent,
@@ -10,10 +16,10 @@ import {
   closeOrderPrinceChoice,
 } from "./authority";
 
-/** Only called after the original first ballot, before any exile or PK effects. */
+/** 只在原首轮票之后、任何放逐或 PK 效果之前调用，重收票仍归同一投票流水线。 */
 export async function runOrderPrinceChoice(
   world: World,
-  requests: GameActionRequestFactory,
+  requests: ActionRequestConstructionPort,
   provider: ActionProvider,
   gateway: ToolGateway,
   events: GameEvent[],
