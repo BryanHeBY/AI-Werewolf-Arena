@@ -1,10 +1,10 @@
 /**
- * 负责独立审核诡术师换位、放逐映射与枪击证据。输入为归档配置、决定、事实与 checkpoint；
+ * 负责独立审核诡术师换位、放逐映射、私有可见性与 checkpoint 历史。输入为归档配置、决定与事实；
  * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import { isTricksterPreset } from "../verification/board-support";
+import { isTricksterPreset } from "../../board-support";
 import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
@@ -12,7 +12,7 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/trickster";
 import { readMagicianExchangeFact } from "@ai-werewolf-arena/game-contract/facts/magician";
 import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord } from "./reproduction";
+import type { ReproductionRecord } from "../../../recording/reproduction";
 const exchange = "trickster_exchange_committed",
   skip = "trickster_exchange_skipped",
   mapping = "exile_target_mapped";
@@ -144,6 +144,8 @@ export function validateTricksterRecord(record: ReproductionRecord): void {
             equal([Math.min(a.first_id, a.second_id), Math.max(a.first_id, a.second_id)], f.pair),
           );
         }
+        // 这里只从完整归档重建已消费号码，不写真实库存。后续相同魔术师配对
+        // 抵消的是放逐映射作用，不退还这里已经重建的号码消费。
         if (f.pair)
           for (const id of f.pair) {
             check(candidates.includes(id));
@@ -206,6 +208,8 @@ export function validateTricksterRecord(record: ReproductionRecord): void {
       );
       alive.delete(e.payload.wolfId);
     }
+    // 每处理完一个事件保存一次前缀，零项表示尚未处理事件；后续 checkpoint
+    // 的 eventCount 对应该前缀，不以整个归档尾段历史替代。
     histories.push(structuredClone(history));
     living.push([...alive]);
   }
@@ -234,6 +238,8 @@ export function validateTricksterRecord(record: ReproductionRecord): void {
         d.request.context.trickster_candidates === undefined &&
           d.request.context.trickster_may_pass === undefined,
       );
+    // 请求已见事实只用于核对归档来源和本族私有受众，不成为新的行动许可
+    // 或号码付款依据；号码历史仍由前面的完整提交事实独立重建。
     for (const e of d.request.context.visible_events) {
       if (e.type === exchange || e.type === skip) {
         check(

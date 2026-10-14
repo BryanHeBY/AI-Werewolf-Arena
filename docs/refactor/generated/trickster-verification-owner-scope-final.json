@@ -1,0 +1,28 @@
+{
+  "baseCommit": "173ef9df85b47c7327328d2c135f79294e417e6d",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/trickster/validate.ts",
+      "sha256": "5b067e4db79b74fc867452c8343181485da264f99570680d357a3cb717cc4fa3",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "56d94d7ea983fdc8f9b85588fde2d4acd2b4e2280e8b64757f790fd3cc7c8d57",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+      "sha256": "21a5e8ed611a2332f23e6ec8988dc4a68806ccfc09e9f4a69e0488f500ea4758",
+      "change": "modified"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/trickster_record.ts",
+      "sha256": "7e6752ed70f3be2c852bbf059dc3eae9245cb0607d5ffde9227eaa886adc0065",
+      "expectedAbsent": true
+    }
+  ],
+  "limit": "四实际源码路径含三当前存在候选和一删除原叶；删除SHA为实际Git原字节。并行Night/Demon/Scholar/Evil等source或fixtures不属于本批。"
+}

@@ -1,0 +1,87 @@
+{
+  "baseCommit": "173ef9df85b47c7327328d2c135f79294e417e6d",
+  "status": "source-frozen-pending-independent-review",
+  "scope": {
+    "path": "docs/refactor/generated/trickster-verification-owner-scope-final.json",
+    "sha256": "9da57f87c1232ba9d0f2af3e15e9c6d7f4c01c14aeb320e389aae4107eb161e4",
+    "actualPaths": 4,
+    "currentCandidates": 3,
+    "added": 1,
+    "modified": 2,
+    "deleted": 1
+  },
+  "documentation": {
+    "path": "docs/refactor/trickster-verification-owner.md",
+    "sha256": "dbeaa9deabf7597ce91c45ce0ee25eee07d663dc773d363995198b04b275a2be"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-before.json",
+      "sha256": "3680582c0e29baac56bc201c8f9cca0d528d2153a9d258466319299db7ca9bca"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-edits.json",
+      "sha256": "bf324de2c720a818e59a6187a24c1d78fd943a8ec9266b9c9bba5126f359a486"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-scope-final.json",
+      "sha256": "9da57f87c1232ba9d0f2af3e15e9c6d7f4c01c14aeb320e389aae4107eb161e4"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-proof.cjs",
+      "sha256": "485b4c9079e5e1414d972b5e319029a84a8d388b4db6bdd0961f2bf481623f70"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-proof.json",
+      "sha256": "5ae9900c070fa95d9449e8ab439db61607963d9a51242bbddaa4d347a0f64db5"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-receipts.json",
+      "sha256": "6d5d76e3844ed94aee2e9354d1d767484e8d559081f7190949e35c76fb033dee"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-heads.ts",
+      "sha256": "8fee6f3cd219f2a3cdd3d5a0009d9d825c51b391fb7786a08fed5fb4b21a0daf"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-heads.json",
+      "sha256": "389b7e9a6ad024b1b2e07675977d83d6cd8beb4680edd92898d1b55308e4ab46"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-types-config.json",
+      "sha256": "ef2530ece376e08ad50ee3d07775754a71335c08607bc609a3020527d5601079"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-order-tests.log",
+      "sha256": "8b9b10340ad644f7917669703b316865b5d66fc375cbfd97a8eb7bdcc9f045d6"
+    }
+  ],
+  "scopeClaims": [
+    "一个完整独立 verifier 及其内部 helper 归 verification；四处路径编辑，五项精确中文注释编辑，不改任何代码/规则/原测试字面与输入。",
+    "三个完整 final 程序只逆上述确切编辑即得实际Gitbefore全文；typed AST与所有非注释字面叶/两种全raw输出逐程序比较。",
+    "全部49import modes/names/physicaldecl逐项核；11移后或改路线，38原位；原5controls完整bytes保持。",
+    "旧物理叶无桥且expectedAbsent+Git原SHA单列；历史generated与sourceHash保原。"
+  ],
+  "resultSummary": {
+    "wholePrograms": 3,
+    "typedNodes": 4168,
+    "wholeOutputs": 6,
+    "commentOnlyWholePrograms": 2,
+    "commentOnlyOutputs": 4,
+    "physicalBindings": 49,
+    "boundedUnit": "1/0/2，3 filtered",
+    "finiteTypes": "3 roots / session71529 / terminalfbfeb5 / actual0",
+    "heads": "3 current sources / 481 actualGitdocs captured before newMD / 0 diagnostics / 0 missingChineseHead"
+  },
+  "limits": [
+    "评论精度单独审，代码相同不自动证明注释真实；两commentOnly exactFullSourceInverse=false是实际注释差异不是失败。",
+    "该迁移不声称完整P7/P8验收、所有规则正确或全仓门禁绿。",
+    "模块物理API/URL/load与指纹变化明确；不提供跨构建重放豁免。",
+    "并行Night/Demon/Scholar/Evil源码及fixtures排除scope与wholeGitcontrols，有限类型传递闭包可能包含它们。"
+  ],
+  "independentReview": "pending Root-assigned peer, author proof is not peer review"
+}

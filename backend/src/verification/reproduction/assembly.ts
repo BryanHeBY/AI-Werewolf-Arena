@@ -19,7 +19,7 @@ import { validateMistRavenRecord } from "../../recording/mist_raven_record";
 import { validateRadiantEclipseRecord } from "../../recording/radiant_eclipse_record";
 import { validateTimeConsortRecord } from "../../recording/time_consort_record";
 import { validateWolfSorcererRecord } from "../../recording/wolf_sorcerer_record";
-import { validateTricksterRecord } from "../../recording/trickster_record";
+import { validateTricksterRecord } from "./trickster/validate";
 import { validateMagicianRecord } from "./magician/validate";
 import { validateOrderPrinceRecord } from "../../recording/order_prince_record";
 

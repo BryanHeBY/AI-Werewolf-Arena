@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/verification/reproduction-assembly.test.ts:
+(pass) all actual mechanism auditors execute in the frozen order including the nested RedMoon dependency [10.67ms]
+
+ 1 pass
+ 3 filtered out
+ 0 fail
+ 2 expect() calls
+Ran 1 test across 1 file. [81.00ms]

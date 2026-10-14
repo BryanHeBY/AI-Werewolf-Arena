@@ -1,5 +1,5 @@
 /**
- * 场景测试验证捣蛋鬼录制与独立核验中的放逐目标映射、取消和来源回执。
+ * 场景测试验证诡术师录制与独立核验中的放逐目标映射、取消和来源回执。
  * 输入为固定原生动作的真实对局、两种语言及独立删除的映射／checkpoint 证据。
  * 输出以手写实际放逐／终局结果及缺失或错误映射回执的严格拒绝作为独立预期。
  * 不调用计费模型，不改写 fixture 或 Tape 的预期字节。
@@ -28,7 +28,7 @@ import { tricksterTwelveConfig } from "../../../../src/runtime/scenarios/trickst
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { randomDraws } from "../../../../src/core";
-import { validateTricksterRecord } from "../../../../src/recording/trickster_record";
+import { validateTricksterRecord } from "../../../../src/verification/reproduction/trickster/validate";
 const records = new Map<string, Promise<ReproductionRecord>>();
 let version: ReturnType<typeof currentEngineVersion> | undefined;
 function recording(locale: "en" | "zh-CN", cancel: boolean, seed = 0): Promise<ReproductionRecord> {

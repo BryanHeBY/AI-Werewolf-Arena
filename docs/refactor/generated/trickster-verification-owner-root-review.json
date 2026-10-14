@@ -1,0 +1,171 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "reviewMode": "Root全文读取完整283行owner与原装配、语义注释；实际Git/source/删除/完整精确逆及controls/artifacts校验，不重复编译或既有green。",
+  "baseCommit": "173ef9df85b47c7327328d2c135f79294e417e6d",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/trickster/validate.ts",
+      "sha256": "5b067e4db79b74fc867452c8343181485da264f99570680d357a3cb717cc4fa3",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "56d94d7ea983fdc8f9b85588fde2d4acd2b4e2280e8b64757f790fd3cc7c8d57",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+      "sha256": "21a5e8ed611a2332f23e6ec8988dc4a68806ccfc09e9f4a69e0488f500ea4758",
+      "change": "modified"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/trickster_record.ts",
+      "sha256": "7e6752ed70f3be2c852bbf059dc3eae9245cb0607d5ffde9227eaa886adc0065",
+      "expectedAbsent": true
+    }
+  ],
+  "scopeSha256": "9da57f87c1232ba9d0f2af3e15e9c6d7f4c01c14aeb320e389aae4107eb161e4",
+  "beforeChecks": [
+    {
+      "path": "backend/src/recording/trickster_record.ts",
+      "sha256": "7e6752ed70f3be2c852bbf059dc3eae9245cb0607d5ffde9227eaa886adc0065",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "b7084ab2cb676ccb2b794a12c78ef9fcc930e13b76c721e590d156ccb684c14c",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+      "sha256": "0e539c4c87290faacf37b8939064d2007c1257568bb1d815f5f681c30caf0431",
+      "matches": true
+    }
+  ],
+  "completeSourceInverse": [
+    {
+      "from": "backend/src/recording/trickster_record.ts",
+      "to": "backend/src/verification/reproduction/trickster/validate.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/src/verification/reproduction/assembly.ts",
+      "to": "backend/src/verification/reproduction/assembly.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+      "wholeSourceSame": true
+    }
+  ],
+  "controlChecks": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "d0033b8d423388999eed05aa7f627513be01854016f0db327ef8a114ec5e6c16",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "sha256": "450a6c1f111f3bcd9ae21b630bdbde9699df986fcc47c1c9455635759cee8a6e",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/board-support/trickster-preset.ts",
+      "sha256": "c234e53ae4eef0b33a41ee376df64c08453b631d581efd17a19367fb467d89c8",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/board-support/index.ts",
+      "sha256": "aeeac79dc3aeef4c6794105b0337a20be9b4298052e12f3d10c9aaba6bde02d1",
+      "matches": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/trickster.ts",
+      "sha256": "31577119a33971a42e210f4262c0383beabfcae01b2b008371226f06a498bb14",
+      "matches": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-before.json",
+      "sha256": "3680582c0e29baac56bc201c8f9cca0d528d2153a9d258466319299db7ca9bca",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-edits.json",
+      "sha256": "bf324de2c720a818e59a6187a24c1d78fd943a8ec9266b9c9bba5126f359a486",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-scope-final.json",
+      "sha256": "9da57f87c1232ba9d0f2af3e15e9c6d7f4c01c14aeb320e389aae4107eb161e4",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-proof.cjs",
+      "sha256": "485b4c9079e5e1414d972b5e319029a84a8d388b4db6bdd0961f2bf481623f70",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-proof.json",
+      "sha256": "5ae9900c070fa95d9449e8ab439db61607963d9a51242bbddaa4d347a0f64db5",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-receipts.json",
+      "sha256": "6d5d76e3844ed94aee2e9354d1d767484e8d559081f7190949e35c76fb033dee",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-heads.ts",
+      "sha256": "8fee6f3cd219f2a3cdd3d5a0009d9d825c51b391fb7786a08fed5fb4b21a0daf",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-heads.json",
+      "sha256": "389b7e9a6ad024b1b2e07675977d83d6cd8beb4680edd92898d1b55308e4ab46",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-types-config.json",
+      "sha256": "ef2530ece376e08ad50ee3d07775754a71335c08607bc609a3020527d5601079",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/trickster-verification-owner-order-tests.log",
+      "sha256": "8b9b10340ad644f7917669703b316865b5d66fc375cbfd97a8eb7bdcc9f045d6",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/trickster-verification-owner.md",
+      "sha256": "dbeaa9deabf7597ce91c45ce0ee25eee07d663dc773d363995198b04b275a2be",
+      "matches": true
+    }
+  ],
+  "semanticReview": [
+    "完整算法和所有内部helper同属纯数据验证owner，不加载World或生产结算，不建立新写权。",
+    "f.pair号码消费在归档提交fact处重建，后续相同magician pair仅抵消映射不退已用号；实际代码和新增说明一致。",
+    "history/living每事件append与cp.eventCount对应，visible_events仅归档来源和受众检查不授行动。",
+    "原场景标题/fixtures/断言/错误码保持；原枪击职责表述缺乏程序分支已精准修正，当前role命名与catalog一致。",
+    "旧私有叶删除、唯一type-only归档类型和原16步assembly顺序保持，sourceHash与physicalAPI变更明确。"
+  ],
+  "findings": [],
+  "limits": [
+    "独立peer另由native_presentation_finish完成，本Root审查不冒peer。",
+    "原unit1/2及有限3roots为作者actual回执，未独立重跑；非全当前树/所有板子/P9验收。"
+  ],
+  "independentReview": {
+    "path": "docs/refactor/generated/trickster-verification-owner-review.json",
+    "sha256": "6eb033a088a55e6fd257aeefa4e498740885dde6877b10311ec25e9f6ea41510",
+    "approved": true
+  }
+}
