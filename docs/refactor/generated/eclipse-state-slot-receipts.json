@@ -1,0 +1,144 @@
+{
+  "newRisk": {
+    "chunk_id": "fb1e90",
+    "exit_code": 0,
+    "pass": 3,
+    "fail": 0,
+    "assertions": 22,
+    "log": "docs/refactor/generated/eclipse-state-slot-new-tests.txt",
+    "notRepeated": true
+  },
+  "oldState": {
+    "first": {
+      "chunk_id": "04aade",
+      "exit_code": 1,
+      "pass": 0,
+      "loaderError": "Missing ./state from suppression.ts",
+      "log": "docs/refactor/generated/eclipse-state-slot-old-state-test.txt"
+    },
+    "failedOnly": {
+      "chunk_id": "08c23e",
+      "exit_code": 0,
+      "pass": 1,
+      "assertions": 5,
+      "filtered": 7,
+      "log": "docs/refactor/generated/eclipse-state-slot-old-state-failed-test.txt"
+    }
+  },
+  "oldBorrow": {
+    "first": {
+      "chunk_id": "43ad52",
+      "exit_code": 1,
+      "pass": 0,
+      "loaderError": "Missing ./state from suppression.ts",
+      "log": "docs/refactor/generated/eclipse-state-slot-old-borrow-test.txt"
+    },
+    "failedOnly": {
+      "chunk_id": "5ffc7e",
+      "exit_code": 0,
+      "pass": 1,
+      "assertions": 1,
+      "filtered": 4,
+      "log": "docs/refactor/generated/eclipse-state-slot-old-borrow-failed-test.txt"
+    }
+  },
+  "summary": {
+    "distinctSuccessfulCases": 5,
+    "successfulAssertions": 28,
+    "successfulRuntimeExecutions": 3,
+    "firstTwoLoaderFailuresRetained": true,
+    "greenNotRepeated": true
+  },
+  "types": {
+    "first": {
+      "launchChunk": "3d55ca",
+      "session": 12866,
+      "terminalChunk": "010dd9",
+      "exit_code": 2,
+      "roots": 16,
+      "error": "TS2307 suppression old state import",
+      "log": "docs/refactor/generated/eclipse-state-slot-types.txt"
+    },
+    "failedOnly": {
+      "launchChunk": "c7a592",
+      "session": 36309,
+      "terminalChunk": "1fff8a",
+      "exit_code": 0,
+      "roots": 1,
+      "log": "docs/refactor/generated/eclipse-state-slot-types-failed.txt"
+    },
+    "scope": "原16根全部诊断仅该漏盘consumer，扩源后只Suppression一根必要复查，不声称17根重跑。"
+  },
+  "heads": {
+    "initial": {
+      "chunk_id": "e4df09",
+      "exit_code": 0,
+      "roots": 16,
+      "gitDocumentationPaths": 579,
+      "diagnostics": 0
+    },
+    "addedSuppression": {
+      "chunk_id": "d3e422",
+      "exit_code": 0,
+      "roots": 1,
+      "gitDocumentationPaths": 581,
+      "diagnostics": 0
+    },
+    "greenNotRepeated": true
+  },
+  "mutationHarness": {
+    "chunk_id": "57f2b9",
+    "exit_code": 1,
+    "reason": "仅单个compile fixture原state route实际有positive＋negative两处，初工具要求1处失配；此前13文件已实际改，后精确分别迁public project与新slot私有type反例，完整真实before保留。"
+  },
+  "proof": {
+    "first": {
+      "chunk_id": "78dc60",
+      "exit_code": 1,
+      "reason": "lastChoice比较引入的单行/多行class wrapper原输出布局误判",
+      "script": "docs/refactor/generated/eclipse-state-slot-proof-first.cjs",
+      "log": "docs/refactor/generated/eclipse-state-slot-proof-first.txt"
+    },
+    "second": {
+      "launchChunk": "7cfd1b",
+      "session": 74010,
+      "terminalChunk": "f15efd",
+      "exit_code": 1,
+      "reason": "printer也保持introduced wrapper单行flags；typed完整树相同，额外诊断只末外框布局",
+      "script": "docs/refactor/generated/eclipse-state-slot-proof-second.cjs",
+      "log": "docs/refactor/generated/eclipse-state-slot-proof-second.txt"
+    },
+    "diagnostic": {
+      "launchChunk": "412c4e",
+      "session": 31541,
+      "terminalChunk": "4cf3c6",
+      "exit_code": 1,
+      "reason": "输出diff证实只有introduced step单行/多行外框",
+      "script": "docs/refactor/generated/eclipse-state-slot-proof-diagnostic.cjs",
+      "log": "docs/refactor/generated/eclipse-state-slot-proof-diagnostic.txt"
+    },
+    "final": {
+      "launchChunk": "1aca94",
+      "session": 71221,
+      "terminalChunk": "c5dc53",
+      "exit_code": 0,
+      "repair": "只统一由证明器引入的class／method外框；真实完整body tokens不删，源码不改",
+      "script": "docs/refactor/generated/eclipse-state-slot-proof.cjs",
+      "log": "docs/refactor/generated/eclipse-state-slot-proof.txt"
+    }
+  },
+  "whitespace": {
+    "chunk_id": "bdb46e",
+    "exit_code": 0,
+    "scopeOnly": true
+  },
+  "notRun": [
+    "fullgate",
+    "fullsuite",
+    "fulltypes",
+    "models",
+    "privateconfigs",
+    "golden",
+    "newGameplay"
+  ]
+}

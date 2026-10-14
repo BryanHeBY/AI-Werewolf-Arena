@@ -13,13 +13,13 @@ import type {
 } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import type { PlayerObservation } from "../../../src/game/observation/player-observation";
 import type { WallNoteComponent as WorldWallNote } from "../../../src/core/domain/components/wall_note";
-import type { projectEclipseState } from "../../../src/game/mechanisms/roles/radiant_eclipse/state";
+import type { projectEclipseState } from "../../../src/game/mechanisms/roles/radiant_eclipse/ports";
 import type {
   // @ts-expect-error 原 feature type 出口退休，runtime 规则／投影仍保留。
   EclipseState as RetiredState,
   // @ts-expect-error 纯五角色联合归 GC；原 runtime goodRoles 不迁或开放。
   EclipseSwallowedRole as RetiredRole,
-} from "../../../src/game/mechanisms/roles/radiant_eclipse/state";
+} from "../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";
 export type RetiredFeatureChecks = [RetiredState, RetiredRole];
 
 type OriginalSwallowedRole = "villager" | "seer" | "witch" | "dreamer" | "radiant_count";

@@ -1,8 +1,8 @@
 /**
- * Opens Eclipse suppression over the exact original ability slots. Inputs are captured
- * source/target components and suppression kind; outputs are current suppression leases with read-only marker/ability references and
- * owned state changes. It never reauthorizes a changed slot or policy by restoring an unrelated
- * component.
+ * 负责原生能力实例在本夜的蚀日抑制；输入原 World／能力／日次，输出同一 marker 与原体复验／关闭方法。
+ * marker 只写原实例所属槽，持有运行引用不等于玩家数据或新的行动许可；永久 disabled 仍归原能力所有者。
+ * 角色、生命、能力与政策被替换后不重新授权；close 先消费 closed，再核原资源与 marker，失败不恢复无关组件。
+ * 允许第一次实际死亡的关闭仍只删除同一 marker，不退款、清空库存或改写原永久禁用字段。
  */
 import type { EclipseSuppression } from "@ai-werewolf-arena/game-contract";
 
@@ -17,7 +17,7 @@ import {
 import { captureNightLife } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
 import type { NightAbilityReadView } from "../abilities";
-import { RADIANT_ECLIPSE_POLICY } from "./state";
+import { RADIANT_ECLIPSE_POLICY } from "./state-data";
 
 export type SuppressibleAbility = NightAbilityReadView;
 const invalid = Symbol("invalid_eclipse_binding");
@@ -58,7 +58,7 @@ function canonicalSlot(value: object, key: string, expected: unknown): boolean {
   );
 }
 
-/** One native instance's temporary blocker; persistent disabled belongs to its existing owner. */
+/** 一个原生实例的临时抑制；永久 disabled 继续由现有能力所有者管理，不在这里改写。 */
 export function openEclipseSuppression(
   world: World,
   actorId: number,

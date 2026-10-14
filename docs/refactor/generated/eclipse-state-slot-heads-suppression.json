@@ -1,0 +1,11 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "444167c069020e000e11789df31dc2f7620a2855d96ad12613d54fc381554a6c"
+    }
+  ],
+  "documentationPaths": 581,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

@@ -1,0 +1,409 @@
+{
+  "baseCommit": "de4965f930ea07e20417f1b71f6d3e00bea4ad7f",
+  "scope": {
+    "path": "docs/refactor/generated/eclipse-state-slot-scope-final.json",
+    "sha256": "3a5fd8756fd529ffb88f67bae3c6229c5c00a2d45e0ccff975247ffd5fb94a70"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot.ts",
+      "sha256": "78a0e5c2b597a0587302e3a7ca7462b5ad8222748029e1bd4d87d877b3ae9696",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "sha256": "2799be487108b0e885c8668480695c213a38b8c6371a99350bee8371658a9ce9",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "8a926952c1823deb2a471c9800712f51246540fd5a9fdcaeca6e0bb9f70967dd",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+      "sha256": "28ade9731159177dc5ee2023c778359980e0161d2591018e5ebe30c7ccfb8e18",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "444167c069020e000e11789df31dc2f7620a2855d96ad12613d54fc381554a6c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+      "sha256": "2ad04c320dabc4ddf89b3b581ee3d7ed250b0633672accc82a6f413084a26c7d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+      "sha256": "8acbb9cf6c473a5ba5586cf9609f578c5b62d0abd135f1f21446f9af644c1d27",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+      "sha256": "0690f514d640935d69f7f54981c127842f4c0087c52aa922199ef07783d84742",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+      "sha256": "cd4ec49cddcf888715d3dfa9f99e9952a85de18abf3b5aa2aa2cf2ee88b8d5de",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+      "sha256": "068518f3ec63a4ad03994b3c3b9157c447de00c3c3ac08207652c985b457f62e",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+      "sha256": "3815faf13312b7fb45574561aebcc854b2d4aa42bfb10d445e095138ec9cef38",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "12a493a30180f0390a33ab86a516a47e0b6c398dbf56ab98d8fad7224c1c537b",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+      "sha256": "5ba4681e1a901d7207ff89d16f92d2b0eb01b4778afbfb7349ee57f22680e055",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+      "sha256": "36eee088efb247c61ea0fe9eef0eed781cd7fe7466d186cea47e75e4545e5e63",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "5847a300daa922a4146e38b9d0b711697dcf5272590830811bb94b7349437473",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "sha256": "2880b13268ec30d744831736bbaf6f4a57db69df9e8be44e209625b0600306fc",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/eclipse-state-slot.test.ts",
+      "sha256": "3bddcbe13f8c839cfb4270474aa0255cdc0b405643af4984036d76e9ed681418",
+      "change": "added"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "sha256": "2b3774b98e85808bca3fe1f09ec612c910f10a0685578d16a8e19a315038caba",
+      "expectedAbsent": true
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/eclipse-state-slot.md",
+    "sha256": "612b19977e8ef41c0935bbdb1c4298c1770ff73aad5bd9b76398c69e9eac8736"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-before.json",
+      "sha256": "d304ac75243939df23b52000686763285aeed2849da510b0672dea046ecc5ab4"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-before-expanded.json",
+      "sha256": "fde16fb3c14b7ae087a43068fdfa4709ede2686196b826a7df866900797ce100"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-edits.json",
+      "sha256": "a53d2ac478a32ef878afe8d9ce9ef1ce685ae9fdcaf3ac4c2e458ec661d49877"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-types-config.json",
+      "sha256": "b06a9bb2d7048ff629bb2530531ff7afe18fb0b7d93559f0987dea0ed477eacb"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-types-failed-config.json",
+      "sha256": "204f9a4f0e51c291f1f3c0a94998ea12bd3ee2b09f04a6cf97ea98d4fd47e23b"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-heads.ts",
+      "sha256": "bb5e0780a273af8a08465ec54db0674ee08d8b43a791fdce1732190e03473b83"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-heads.json",
+      "sha256": "8639147949efb9743832e774dfdbb61416a6a4053f0b5c84973f5094091156bd"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-heads.txt",
+      "sha256": "694f63c72da84d558d34ec67ec9cce3830f17b2b101109eb789d781e8c8ae859"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-heads-suppression.ts",
+      "sha256": "6c76ed9cedf555e34a606fe3dbfd9d311868d9fb271b9b5f6bef0cc90c3b75ca"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-heads-suppression.json",
+      "sha256": "d5044f17b2c165412e3c69904d98824a7ca364242fd7bc63c9911952aa3fbe84"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-heads-suppression.txt",
+      "sha256": "048eaba05e99f13500e88a68814866aea86dc83ae32b3bbfc0d2270b9d4878a1"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-new-tests.txt",
+      "sha256": "2f03bfe410125886fa8376a4648859650fcf3e95fc7cd117a0a5e0938e3818b6"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-old-state-test.txt",
+      "sha256": "16040d549d968180a44a6cae81147b5dae6cbe08316ca7a80b036c23e1d3f8bf"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-old-borrow-test.txt",
+      "sha256": "ac0d2961a45a2d81f59ca2df25b947e6b6c9cec96b172c20dcea53ad22e115da"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-old-state-failed-test.txt",
+      "sha256": "ab1a20c11feef9a6dd2725e6726e865f83af850e5fcc2f784e00673983557fb7"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-old-borrow-failed-test.txt",
+      "sha256": "0d6003410ac41573bb79fa7c8951b283e6666371d58777c2659c992f4c59145b"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-types.txt",
+      "sha256": "60d39194b3d0bcb52d5b922cbfc541676963a8cdbb0166611b0f79026e399ac0"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-types-failed.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-proof-first.cjs",
+      "sha256": "bed4649e438cc261446013e20949ffb8fa08518e753a89088cd050fe516211f8"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-proof-first.txt",
+      "sha256": "1b886cf99bef8a2527cbbe5578ac6da29504b29cf489f2de95cea6563aab0bd4"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-proof-second.cjs",
+      "sha256": "44487d4aa21fb1ca561c32b1ebac2a6e14aecb05af18dfd168247a927fd3ec22"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-proof-second.txt",
+      "sha256": "ca5be8dabe766a1d208d44f8cc552c3a0ca8212ef6b2bc0bdf75b703334c41c7"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-proof-diagnostic.cjs",
+      "sha256": "e3d090e76382250b9fe562e7ddd3d08c47dc4c68d26bddfcaa381bfbf22708b9"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-proof-diagnostic.txt",
+      "sha256": "bcabfbeaf76180a7858d927ae038cb2e894ce6cc9a3e42a65c9cff2eca7d4b5e"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-proof.cjs",
+      "sha256": "95aa17eae4e01899f9a6111ce90ba5ece5cfae1cb001abd753fab7e1cc8bc5ab"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-proof.json",
+      "sha256": "328e8a77746eb576172d51d16cd020bc81102228d925fcda1b809120a9823157"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-proof.txt",
+      "sha256": "1c9bec69b12a6ca38ee1ec2df512f473a5e9eb6d758c05fdf91e2eeeab417e9c"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-receipts.json",
+      "sha256": "311b53228ebf7631d125f94ce726737ec8bbf3b6d9e64cbd086863ff42fcab0e"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-scope-final.json",
+      "sha256": "3a5fd8756fd529ffb88f67bae3c6229c5c00a2d45e0ccff975247ffd5fb94a70"
+    },
+    {
+      "path": "docs/refactor/generated/eclipse-state-slot-handoff.md",
+      "sha256": "1a0f089155ffcdc8d4d77328d8c28cd2e63063b6da6d3180ca5ed5139337ed87"
+    }
+  ],
+  "proofSummary": {
+    "retainedPrograms": 15,
+    "retainedMappedOutputs": 30,
+    "oldStateMappedOutputs": 2,
+    "completeOwnerPrograms": 5,
+    "ownerMappedOutputs": 10
+  },
+  "receipts": {
+    "newRisk": {
+      "chunk_id": "fb1e90",
+      "exit_code": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 22,
+      "log": "docs/refactor/generated/eclipse-state-slot-new-tests.txt",
+      "notRepeated": true
+    },
+    "oldState": {
+      "first": {
+        "chunk_id": "04aade",
+        "exit_code": 1,
+        "pass": 0,
+        "loaderError": "Missing ./state from suppression.ts",
+        "log": "docs/refactor/generated/eclipse-state-slot-old-state-test.txt"
+      },
+      "failedOnly": {
+        "chunk_id": "08c23e",
+        "exit_code": 0,
+        "pass": 1,
+        "assertions": 5,
+        "filtered": 7,
+        "log": "docs/refactor/generated/eclipse-state-slot-old-state-failed-test.txt"
+      }
+    },
+    "oldBorrow": {
+      "first": {
+        "chunk_id": "43ad52",
+        "exit_code": 1,
+        "pass": 0,
+        "loaderError": "Missing ./state from suppression.ts",
+        "log": "docs/refactor/generated/eclipse-state-slot-old-borrow-test.txt"
+      },
+      "failedOnly": {
+        "chunk_id": "5ffc7e",
+        "exit_code": 0,
+        "pass": 1,
+        "assertions": 1,
+        "filtered": 4,
+        "log": "docs/refactor/generated/eclipse-state-slot-old-borrow-failed-test.txt"
+      }
+    },
+    "summary": {
+      "distinctSuccessfulCases": 5,
+      "successfulAssertions": 28,
+      "successfulRuntimeExecutions": 3,
+      "firstTwoLoaderFailuresRetained": true,
+      "greenNotRepeated": true
+    },
+    "types": {
+      "first": {
+        "launchChunk": "3d55ca",
+        "session": 12866,
+        "terminalChunk": "010dd9",
+        "exit_code": 2,
+        "roots": 16,
+        "error": "TS2307 suppression old state import",
+        "log": "docs/refactor/generated/eclipse-state-slot-types.txt"
+      },
+      "failedOnly": {
+        "launchChunk": "c7a592",
+        "session": 36309,
+        "terminalChunk": "1fff8a",
+        "exit_code": 0,
+        "roots": 1,
+        "log": "docs/refactor/generated/eclipse-state-slot-types-failed.txt"
+      },
+      "scope": "原16根全部诊断仅该漏盘consumer，扩源后只Suppression一根必要复查，不声称17根重跑。"
+    },
+    "heads": {
+      "initial": {
+        "chunk_id": "e4df09",
+        "exit_code": 0,
+        "roots": 16,
+        "gitDocumentationPaths": 579,
+        "diagnostics": 0
+      },
+      "addedSuppression": {
+        "chunk_id": "d3e422",
+        "exit_code": 0,
+        "roots": 1,
+        "gitDocumentationPaths": 581,
+        "diagnostics": 0
+      },
+      "greenNotRepeated": true
+    },
+    "mutationHarness": {
+      "chunk_id": "57f2b9",
+      "exit_code": 1,
+      "reason": "仅单个compile fixture原state route实际有positive＋negative两处，初工具要求1处失配；此前13文件已实际改，后精确分别迁public project与新slot私有type反例，完整真实before保留。"
+    },
+    "proof": {
+      "first": {
+        "chunk_id": "78dc60",
+        "exit_code": 1,
+        "reason": "lastChoice比较引入的单行/多行class wrapper原输出布局误判",
+        "script": "docs/refactor/generated/eclipse-state-slot-proof-first.cjs",
+        "log": "docs/refactor/generated/eclipse-state-slot-proof-first.txt"
+      },
+      "second": {
+        "launchChunk": "7cfd1b",
+        "session": 74010,
+        "terminalChunk": "f15efd",
+        "exit_code": 1,
+        "reason": "printer也保持introduced wrapper单行flags；typed完整树相同，额外诊断只末外框布局",
+        "script": "docs/refactor/generated/eclipse-state-slot-proof-second.cjs",
+        "log": "docs/refactor/generated/eclipse-state-slot-proof-second.txt"
+      },
+      "diagnostic": {
+        "launchChunk": "412c4e",
+        "session": 31541,
+        "terminalChunk": "4cf3c6",
+        "exit_code": 1,
+        "reason": "输出diff证实只有introduced step单行/多行外框",
+        "script": "docs/refactor/generated/eclipse-state-slot-proof-diagnostic.cjs",
+        "log": "docs/refactor/generated/eclipse-state-slot-proof-diagnostic.txt"
+      },
+      "final": {
+        "launchChunk": "1aca94",
+        "session": 71221,
+        "terminalChunk": "c5dc53",
+        "exit_code": 0,
+        "repair": "只统一由证明器引入的class／method外框；真实完整body tokens不删，源码不改",
+        "script": "docs/refactor/generated/eclipse-state-slot-proof.cjs",
+        "log": "docs/refactor/generated/eclipse-state-slot-proof.txt"
+      }
+    },
+    "whitespace": {
+      "chunk_id": "bdb46e",
+      "exit_code": 0,
+      "scopeOnly": true
+    },
+    "notRun": [
+      "fullgate",
+      "fullsuite",
+      "fulltypes",
+      "models",
+      "privateconfigs",
+      "golden",
+      "newGameplay"
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+      "sha256": "92e2da729935f9826db3ae12afc5e83dc10a3c6daebb7fd55118e5aaff7214da"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+      "sha256": "ebea4ff5cdb5d753877f91f67ea8d1d9ee7ab73ae449d6eec05ec6fcf7d74454"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "sha256": "08a76bca3bf4f4aa42a599007c458c3780dd30d9b8b013b03c41227a79363751"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+      "sha256": "95925bf500a0028cdc883a511b66b3b98fb469efde81c744372af8cdfc57ae01"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night-lifecycle.ts",
+      "sha256": "c753d3239d9299e1246c49920a483df7fe966bc915b11abff37507e4da0f001f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "0e32f853939fdf10f9f53172bad7a5f618ed5ef727d54f324e302ef31efc5940"
+    }
+  ],
+  "limits": [
+    "初17source方案漏Suppression常量consumer，已明确扩18，原capture/control转换保历史。",
+    "不改Observer/PM/NP/共享support/SCHEMA2/Role数据协议或借用许可政策。"
+  ],
+  "peerReviewExcludedToAvoidDigestCycle": true
+}

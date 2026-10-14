@@ -3,7 +3,7 @@
  */
 import type { RoleInitializationComponent } from "../../../../src/game/mechanisms/roles/contracts";
 import { expect, test } from "bun:test";
-import { createEclipseState, readEclipseState, selectEclipse } from "../../../../src/game/mechanisms/roles/radiant_eclipse/state";
+import { createEclipseState, readEclipseState, selectEclipse } from "../../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";
 import { createShelterState, readShelterState, selectShelter } from "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
 import { snapshotBorrowedState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/borrowed_state";
 import { DREAMER_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/dreamer/profile";

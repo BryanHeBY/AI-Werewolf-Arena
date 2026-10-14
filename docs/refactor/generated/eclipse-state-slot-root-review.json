@@ -1,0 +1,129 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "de4965f930ea07e20417f1b71f6d3e00bea4ad7f",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot.ts",
+      "sha256": "78a0e5c2b597a0587302e3a7ca7462b5ad8222748029e1bd4d87d877b3ae9696",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "sha256": "2799be487108b0e885c8668480695c213a38b8c6371a99350bee8371658a9ce9",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "8a926952c1823deb2a471c9800712f51246540fd5a9fdcaeca6e0bb9f70967dd",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+      "sha256": "28ade9731159177dc5ee2023c778359980e0161d2591018e5ebe30c7ccfb8e18",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "444167c069020e000e11789df31dc2f7620a2855d96ad12613d54fc381554a6c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+      "sha256": "2ad04c320dabc4ddf89b3b581ee3d7ed250b0633672accc82a6f413084a26c7d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+      "sha256": "8acbb9cf6c473a5ba5586cf9609f578c5b62d0abd135f1f21446f9af644c1d27",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+      "sha256": "0690f514d640935d69f7f54981c127842f4c0087c52aa922199ef07783d84742",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+      "sha256": "cd4ec49cddcf888715d3dfa9f99e9952a85de18abf3b5aa2aa2cf2ee88b8d5de",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+      "sha256": "068518f3ec63a4ad03994b3c3b9157c447de00c3c3ac08207652c985b457f62e",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+      "sha256": "3815faf13312b7fb45574561aebcc854b2d4aa42bfb10d445e095138ec9cef38",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "12a493a30180f0390a33ab86a516a47e0b6c398dbf56ab98d8fad7224c1c537b",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+      "sha256": "5ba4681e1a901d7207ff89d16f92d2b0eb01b4778afbfb7349ee57f22680e055",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+      "sha256": "36eee088efb247c61ea0fe9eef0eed781cd7fe7466d186cea47e75e4545e5e63",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "5847a300daa922a4146e38b9d0b711697dcf5272590830811bb94b7349437473",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "sha256": "2880b13268ec30d744831736bbaf6f4a57db69df9e8be44e209625b0600306fc",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/eclipse-state-slot.test.ts",
+      "sha256": "3bddcbe13f8c839cfb4270474aa0255cdc0b405643af4984036d76e9ed681418",
+      "change": "added"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "sha256": "2b3774b98e85808bca3fe1f09ec612c910f10a0685578d16a8e19a315038caba",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/eclipse-state-slot-scope-final.json",
+    "sha256": "3a5fd8756fd529ffb88f67bae3c6229c5c00a2d45e0ccff975247ffd5fb94a70"
+  },
+  "document": {
+    "path": "docs/refactor/eclipse-state-slot.md",
+    "sha256": "612b19977e8ef41c0935bbdb1c4298c1770ff73aad5bd9b76398c69e9eac8736"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/eclipse-state-slot-evidence.json",
+    "sha256": "ddd6a43721261403759c44cbffd0789349bb922b20e37cc4439c1ced7762beab"
+  },
+  "integrity": {
+    "freshSources": 17,
+    "actualGitBefore": 16,
+    "controls": 6,
+    "artifactHashes": 30,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "完整所有权": "完整旧state/newslot、Frame/profile/ports/suppression及三risk与十一旧test已人工读；raw与原expectedMaid归唯一binding；首15before与扩源16逐项同、Suppression来自真实原control。",
+    "规则资源": "引用先于严格归一化JSON；goodIds原参数点；grant/suppression/allowed后Object.assign→JSON，失败不回滚，swallowed/lease/events仍Frame。",
+    "接受面与中文": "原Proxy/descriptor/精确键/日期/连续目标和raw/normalizedcopy区别保持，独立Shelter/borrow未迁；重要结构/失败/关闭说明有效中文，不以本地编码为权限。",
+    "证据": "五不同28assert；两旧loader红及首type漏route保真实，扩源只failed复查；十六+一头分别0，比较外框tool红→末0；before16/controls6/artifacts30全核，不重绿或全gate。"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

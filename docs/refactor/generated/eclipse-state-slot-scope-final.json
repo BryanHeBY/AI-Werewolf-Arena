@@ -1,0 +1,136 @@
+{
+  "baseCommit": "de4965f930ea07e20417f1b71f6d3e00bea4ad7f",
+  "currentGitAtFreeze": "814df4bff20856cfb13f168ad9cbe416b869199d",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot.ts",
+      "sha256": "78a0e5c2b597a0587302e3a7ca7462b5ad8222748029e1bd4d87d877b3ae9696",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "sha256": "2799be487108b0e885c8668480695c213a38b8c6371a99350bee8371658a9ce9",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "8a926952c1823deb2a471c9800712f51246540fd5a9fdcaeca6e0bb9f70967dd",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+      "sha256": "28ade9731159177dc5ee2023c778359980e0161d2591018e5ebe30c7ccfb8e18",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "444167c069020e000e11789df31dc2f7620a2855d96ad12613d54fc381554a6c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+      "sha256": "2ad04c320dabc4ddf89b3b581ee3d7ed250b0633672accc82a6f413084a26c7d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+      "sha256": "8acbb9cf6c473a5ba5586cf9609f578c5b62d0abd135f1f21446f9af644c1d27",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+      "sha256": "0690f514d640935d69f7f54981c127842f4c0087c52aa922199ef07783d84742",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+      "sha256": "cd4ec49cddcf888715d3dfa9f99e9952a85de18abf3b5aa2aa2cf2ee88b8d5de",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+      "sha256": "068518f3ec63a4ad03994b3c3b9157c447de00c3c3ac08207652c985b457f62e",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+      "sha256": "3815faf13312b7fb45574561aebcc854b2d4aa42bfb10d445e095138ec9cef38",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "sha256": "12a493a30180f0390a33ab86a516a47e0b6c398dbf56ab98d8fad7224c1c537b",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+      "sha256": "5ba4681e1a901d7207ff89d16f92d2b0eb01b4778afbfb7349ee57f22680e055",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+      "sha256": "36eee088efb247c61ea0fe9eef0eed781cd7fe7466d186cea47e75e4545e5e63",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "5847a300daa922a4146e38b9d0b711697dcf5272590830811bb94b7349437473",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts",
+      "sha256": "2880b13268ec30d744831736bbaf6f4a57db69df9e8be44e209625b0600306fc",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/eclipse-state-slot.test.ts",
+      "sha256": "3bddcbe13f8c839cfb4270474aa0255cdc0b405643af4984036d76e9ed681418",
+      "change": "added"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "sha256": "2b3774b98e85808bca3fe1f09ec612c910f10a0685578d16a8e19a315038caba",
+      "expectedAbsent": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+      "sha256": "92e2da729935f9826db3ae12afc5e83dc10a3c6daebb7fd55118e5aaff7214da"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+      "sha256": "ebea4ff5cdb5d753877f91f67ea8d1d9ee7ab73ae449d6eec05ec6fcf7d74454"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "sha256": "08a76bca3bf4f4aa42a599007c458c3780dd30d9b8b013b03c41227a79363751"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+      "sha256": "95925bf500a0028cdc883a511b66b3b98fb469efde81c744372af8cdfc57ae01"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night-lifecycle.ts",
+      "sha256": "c753d3239d9299e1246c49920a483df7fe966bc915b11abff37507e4da0f001f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "0e32f853939fdf10f9f53172bad7a5f618ed5ef727d54f324e302ef31efc5940"
+    }
+  ],
+  "counts": {
+    "paths": 18,
+    "present": 17,
+    "deleted": 1,
+    "actualGitBefore": 16,
+    "unchangedControls": 6
+  },
+  "frozen": true,
+  "limits": [
+    "初17source方案漏Suppression常量consumer，已明确扩18，原capture/control转换保历史。",
+    "不改Observer/PM/NP/共享support/SCHEMA2/Role数据协议或借用许可政策。"
+  ]
+}

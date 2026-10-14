@@ -28,7 +28,7 @@ import { grantNightAbility } from "../night-ability-grants";
 import { openEclipseSuppression } from "./suppression";
 import { snapshotBorrowedState, type BorrowedKind } from "./borrowed_state";
 import type { EclipseState } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
-import { readEclipseState, selectEclipse } from "./state";
+import { readEclipseState, EclipseStateBinding } from "./eclipse-state-slot";
 import { readShelterState } from "./shelter-state";
 
 const invalid = Symbol("invalid_radiant_binding");
@@ -101,8 +101,8 @@ interface Board {
   maidId: number;
   countId: number;
   knownWolves: readonly number[];
-  maidState: EclipseState;
-  expectedMaid: string;
+  // 原状态与归一化编码唯一归此绑定；名单、借用、付款与关闭仍归本 frame。
+  eclipseState: EclipseStateBinding;
   allowed: Map<number, Map<string, NightAbilityReadView>>;
   night: Night | null;
 }
@@ -198,11 +198,7 @@ function requireBoard(world: World): Board {
     )
       throw new Error("radiant_ability_membership_revoked");
   }
-  if (
-    own(b.players.get(b.maidId)!.privateState, "eclipse") !== b.maidState ||
-    JSON.stringify(readEclipseState(b.maidState)) !== b.expectedMaid
-  )
-    throw new Error("eclipse_state_revoked");
+  b.eclipseState.assertCurrent(() => own(b.players.get(b.maidId)!.privateState, "eclipse"));
   return b;
 }
 function requireNight(world: World, day: number): { b: Board; n: Night } {
@@ -291,8 +287,7 @@ export function installRadiantEclipseBoard(world: World) {
     knownWolves: Object.freeze(
       [...players.values()].filter((p) => p.kind === Role.Wolf).map((p) => p.id),
     ),
-    maidState: state as EclipseState,
-    expectedMaid: JSON.stringify(parsed),
+    eclipseState: new EclipseStateBinding(state as EclipseState, parsed),
     night: null,
     allowed: new Map(
       [...players.values()].map((p) => [
@@ -342,7 +337,7 @@ export function eclipseKnifeEligible(world: World): boolean {
 export function eclipseSwallowTargets(world: World, day: number): number[] {
   const { b, n } = requireNight(world, day);
   if (day < 2 || !n.living.has(b.maidId) || n.swallowed) return [];
-  const last = readEclipseState(b.maidState)!.history.at(-1);
+  const last = b.eclipseState.lastChoice();
   return [...b.players.values()]
     .filter(
       (p) =>
@@ -397,7 +392,7 @@ export function commitEclipseChoice(
   )
     throw new Error("eclipse_choice_source_revoked");
   const roleId = target?.kind ?? null;
-  const next = selectEclipse(b.maidState, day, targetId, eclipseSwallowTargets(world, day), roleId);
+  const next = b.eclipseState.next(day, targetId, () => eclipseSwallowTargets(world, day), roleId);
   let suppression: BorrowLease["suppression"], borrowed: NightAbilityReadView | undefined;
   if (a && target) {
     const kind = a.kind as BorrowedKind;
@@ -427,8 +422,8 @@ export function commitEclipseChoice(
     }
   }
   if (borrowed) b.allowed.get(b.maidId)!.set(borrowed.id, borrowed);
-  Object.assign(b.maidState, next);
-  b.expectedMaid = JSON.stringify(next);
+  // 原借用／allowed已提交；数据部分写失败仍保此前前缀，成功之后才写本夜完成与lease。
+  b.eclipseState.install(next);
   n.swallowed = true;
   n.targetId = targetId;
   n.lease = target

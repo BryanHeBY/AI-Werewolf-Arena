@@ -1,0 +1,1 @@
+backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts(20,40): error TS2307: Cannot find module './state' or its corresponding type declarations.

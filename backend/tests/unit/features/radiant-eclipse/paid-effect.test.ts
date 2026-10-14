@@ -20,7 +20,7 @@ import {
   type NightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
-import { createEclipseState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/state";
+import { createEclipseState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";
 import { createShelterState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
 import {
   installRadiantEclipseBoard,

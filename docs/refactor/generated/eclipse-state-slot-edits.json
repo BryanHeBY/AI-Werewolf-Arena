@@ -1,0 +1,174 @@
+{
+  "baseCommit": "de4965f930ea07e20417f1b71f6d3e00bea4ad7f",
+  "sourceEdits": {
+    "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts": [
+      {
+        "before": "import { createEclipseState, RADIANT_ECLIPSE_POLICY } from \"./state\";",
+        "after": "import { initializeEclipseState, RADIANT_ECLIPSE_POLICY } from \"./eclipse-state-slot\";",
+        "count": 1
+      },
+      {
+        "before": "      role.privateState.eclipse = createEclipseState();",
+        "after": "      initializeEclipseState(role);",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts": [
+      {
+        "before": "import { readEclipseState, selectEclipse } from \"./state\";",
+        "after": "import { readEclipseState, EclipseStateBinding } from \"./eclipse-state-slot\";",
+        "count": 1
+      },
+      {
+        "before": "  maidState: EclipseState;\n  expectedMaid: string;",
+        "after": "  // 原状态与归一化编码唯一归此绑定；名单、借用、付款与关闭仍归本 frame。\n  eclipseState: EclipseStateBinding;",
+        "count": 1
+      },
+      {
+        "before": "  if (\n    own(b.players.get(b.maidId)!.privateState, \"eclipse\") !== b.maidState ||\n    JSON.stringify(readEclipseState(b.maidState)) !== b.expectedMaid\n  )\n    throw new Error(\"eclipse_state_revoked\");",
+        "after": "  b.eclipseState.assertCurrent(() => own(b.players.get(b.maidId)!.privateState, \"eclipse\"));",
+        "count": 1
+      },
+      {
+        "before": "    maidState: state as EclipseState,\n    expectedMaid: JSON.stringify(parsed),",
+        "after": "    eclipseState: new EclipseStateBinding(state as EclipseState, parsed),",
+        "count": 1
+      },
+      {
+        "before": "  const last = readEclipseState(b.maidState)!.history.at(-1);",
+        "after": "  const last = b.eclipseState.lastChoice();",
+        "count": 1
+      },
+      {
+        "before": "  const next = selectEclipse(b.maidState, day, targetId, eclipseSwallowTargets(world, day), roleId);",
+        "after": "  const next = b.eclipseState.next(day, targetId, () => eclipseSwallowTargets(world, day), roleId);",
+        "count": 1
+      },
+      {
+        "before": "  Object.assign(b.maidState, next);\n  b.expectedMaid = JSON.stringify(next);",
+        "after": "  // 原借用／allowed已提交；数据部分写失败仍保此前前缀，成功之后才写本夜完成与lease。\n  b.eclipseState.install(next);",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts": [
+      {
+        "before": "export { projectEclipseState } from \"./state\";",
+        "after": "export { projectEclipseState } from \"./eclipse-state-slot\";",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/radiant-eclipse/await.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/radiant-eclipse/state.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/radiant-eclipse/membership.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts": [
+      {
+        "before": "src/game/mechanisms/roles/radiant_eclipse/state\"",
+        "after": "src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\"",
+        "count": 1
+      }
+    ],
+    "backend/tests/unit/contracts/eclipse-wall-data-types.types.ts": [
+      {
+        "before": "import type { projectEclipseState } from \"../../../src/game/mechanisms/roles/radiant_eclipse/state\";",
+        "after": "import type { projectEclipseState } from \"../../../src/game/mechanisms/roles/radiant_eclipse/ports\";",
+        "count": 1
+      },
+      {
+        "before": "} from \"../../../src/game/mechanisms/roles/radiant_eclipse/state\";",
+        "after": "} from \"../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot\";",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts": [
+      {
+        "before": "/**\n * Opens Eclipse suppression over the exact original ability slots. Inputs are captured\n * source/target components and suppression kind; outputs are current suppression leases with read-only marker/ability references and\n * owned state changes. It never reauthorizes a changed slot or policy by restoring an unrelated\n * component.\n */",
+        "after": "/**\n * 负责原生能力实例在本夜的蚀日抑制；输入原 World／能力／日次，输出同一 marker 与原体复验／关闭方法。\n * marker 只写原实例所属槽，持有运行引用不等于玩家数据或新的行动许可；永久 disabled 仍归原能力所有者。\n * 角色、生命、能力与政策被替换后不重新授权；close 先消费 closed，再核原资源与 marker，失败不恢复无关组件。\n * 允许第一次实际死亡的关闭仍只删除同一 marker，不退款、清空库存或改写原永久禁用字段。\n */",
+        "count": 1
+      },
+      {
+        "before": "import { RADIANT_ECLIPSE_POLICY } from \"./state\";",
+        "after": "import { RADIANT_ECLIPSE_POLICY } from \"./state-data\";",
+        "count": 1
+      },
+      {
+        "before": "/** One native instance's temporary blocker; persistent disabled belongs to its existing owner. */",
+        "after": "/** 一个原生实例的临时抑制；永久 disabled 继续由现有能力所有者管理，不在这里改写。 */",
+        "count": 1
+      }
+    ]
+  },
+  "deleted": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+  "fullStateMoved": "backend/src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot.ts",
+  "firstToolPartialFailure": "57f2b9 指定compile-only unit仅1处旧route但实际2处；生产和10旧tests前缀已写，之后精确分别迁public project和新owner非公开type负例。没有运行类型/测试或宽化production。",
+  "omittedPolicyConsumer": {
+    "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+    "originallyCapturedAsControl": true,
+    "expansionApproved": true,
+    "route": "只将原policy重导入指向state-data唯一实际声明；本族完整抑制算法不迁。",
+    "firstFailures": [
+      "04aade oldState loader",
+      "43ad52 oldBorrow loader",
+      "3d55ca/session12866→010dd9 types16 TS2307"
+    ]
+  }
+}

@@ -17,7 +17,7 @@ export {
   sealRadiantNightEffects,
 } from "./night_frame";
 
-export { projectEclipseState } from "./state";
+export { projectEclipseState } from "./eclipse-state-slot";
 
 export { SHELTER_STATE_SLOT } from "./shelter-state-slot";
 export { createShelterState, readShelterState, selectShelter } from "./shelter-state";

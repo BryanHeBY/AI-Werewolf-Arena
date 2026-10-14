@@ -14,7 +14,7 @@ import { activeNightAbility } from "../abilities";
 import { setNightAbilityStartDay, installNativeAbility } from "../ability_changes";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { RADIANT_SHELTER_STAGE, ECLIPSE_SWALLOW_STAGE } from "./night_stages";
-import { createEclipseState, RADIANT_ECLIPSE_POLICY } from "./state";
+import { initializeEclipseState, RADIANT_ECLIPSE_POLICY } from "./eclipse-state-slot";
 import { createShelterState } from "./shelter-state";
 import {
   isRadiantEclipseBoard,
@@ -133,7 +133,7 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     ...common.runtime,
     init: (role) => {
-      role.privateState.eclipse = createEclipseState();
+      initializeEclipseState(role);
       role.privateState.abilities = {};
     },
     wolfTeam: (_role, world) => ({
