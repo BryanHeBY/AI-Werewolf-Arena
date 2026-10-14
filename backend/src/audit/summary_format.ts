@@ -9,6 +9,7 @@ import {
 } from "@ai-werewolf-arena/game-presentation";
 import type { ReplayDebugReport, ReplayManifest } from "../recording/contracts";
 
+/** 统计全部原报告条目；可行动数量由调用方另传，不在这里去重或重新判断严重度。 */
 export function auditReportStats(reports: readonly ReplayDebugReport[]) {
   return {
     total: reports.length,
@@ -19,7 +20,7 @@ export function auditReportStats(reports: readonly ReplayDebugReport[]) {
   };
 }
 
-/** Encode line breaks so original text cannot introduce new Markdown sections. */
+/** 将换行写为字面转义并处理 HTML 三字符及证据标记，避免字段另起章节或伪造引用；其余 Markdown 字符沿原文保留。 */
 export function auditInline(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -30,6 +31,7 @@ export function auditInline(value: string): string {
     .replace(/evidence=/gi, (marker) => marker.replace("=", "\\="));
 }
 
+/** 仅组织共享标题、会话字段与统计，再交回发现章节起点；发现正文和后续章节归各自 renderer。 */
 export function auditSummaryHeader(
   manifest: ReplayManifest,
   reports: readonly ReplayDebugReport[],
@@ -38,6 +40,7 @@ export function auditSummaryHeader(
 ): string[] {
   const headings = auditHeadings(locale);
   const stats = auditReportStats(reports);
+  // 有完整 game_result 时展示已封盘 outcome，否则沿用旧 winner；只读结果，不再次判胜或翻译原会话数据。
   const fields: Array<[string, string | number]> = [
     [text(locale, "audit.field.board"), manifest.board],
     [

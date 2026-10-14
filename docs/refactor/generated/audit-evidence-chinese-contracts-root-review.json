@@ -1,0 +1,48 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "033218f2c166a369e795745a431421f17ef58b79",
+  "source": [
+    {
+      "path": "backend/src/audit/evidence_policy.ts",
+      "sha256": "f8dd6205f25c3da3b6b198c07d401ec7b943c6238bc839b9ca571dbe3a7f1183"
+    },
+    {
+      "path": "backend/src/audit/summary_format.ts",
+      "sha256": "e2cc9121fcebefc38e22559f40610c666d2b5d61e2f0a6602a92655d0f09a214"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/audit-evidence-chinese-contracts-scope-final.json",
+    "sha256": "a0b3cd6c5122dcc7e72895a9122243c4151fcf950f90d58e3ade9ff71cde985f"
+  },
+  "document": {
+    "path": "docs/refactor/audit-evidence-chinese-contracts.md",
+    "sha256": "bb490ce6f3a0a71807eb63cd81437f7132dcf2640b23bc7f54f23d54586f3c35"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/audit-evidence-chinese-contracts-evidence.json",
+    "sha256": "07b4ca46fdb017505cfda656f4e1b728752026144c3028b8b882ee6cd8b3dfda"
+  },
+  "integrity": {
+    "freshSources": 2,
+    "actualGitBefore": 2,
+    "controls": 2,
+    "artifactHashes": 7,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整原Git两源与两个实际消费者同字节",
+    "16处注释正演与1588typed/1935leaf及四完整emit保持",
+    "合并首条/失败条目/稳定排序与序号成员接受面",
+    "窄Markdown章节/整数证据限制与行内转义实际边界",
+    "中文职责与重要结构逻辑、模型原文及历史身份保留",
+    "原真实一次有限收据与未重复产品门禁边界"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}
