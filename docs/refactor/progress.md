@@ -828,3 +828,6 @@
 
 
 - C17/C24/C28 四族原生／学习枪完整资源与死亡结算：20实际路径（18现行/2旧state删除）收Hunter/WolfKing create/get/install、学习新枪／两完整arm条件／两每hook Map元数据与付款至resources，完整原resolver循环至settlement；旧resolver出口及两旧state不桥，四真实caller全迁。原宽getter/同ref安装、重复配置读取、学习整bundle copy与各政策保，stock原检查后sources前、await后current→stock、付费→保护→提案/pending原前缀保持；Demon轻samebindingfacet避免新增heavy药请求初始化，authority/赠枪/资格/GC/三ports七整control不动。Root与非作者十九actual34239原稿/18fresh/2deleted/30附件双审批准；11真实算法、17全程序逆34输出及28870 typed比较，原Map/readers与完整loop实际helper展开保；proof非独立tokenwalker由同行只doc精度校准。new4/28+oldWolf1/96+oldMechanical1/4共六不同128断言三run，18finite types首7own+2foreign真红→onlyfailed2一type红→onlyfailedunit0、18head三诊断→onlyfailed2头0；纯type/两head和末unit全emit桥承接阶段，无green重跑或伪造桥独立exit。中文结构/原体/晚callee/付后失败及Root两domain指令理由12条补齐；新API/stack/closure/72模块113边有限图界限明示，赠枪／其它learned/C17 codec及完整55/P9继续，见 native-learned-death-guns.md。
+
+
+- C45 SDK适配／共用传输中文契约：两源24初comment记录补首职责头、原英文说明、配置与signal／上层期限、工具名索引、callback→JSON→trace失败前缀、finalAction/null与stop分开、SDK输入拒绝只name/id、具名工具选择catch及provider参数；领域权限仍调用方。Root与非作者两actual133原Git/两游戏审计loop整control/十三附件审批准；初1655typed1988叶及四wholeemit同，proof7731e3/head3fd4c9(634docs)首0。独审指出adapter也接审计消息，末两源三comment仅精度改成调用方原文透传、不自做玩家可见性过滤、tool_call_id仅不带本次provider（不冒其它trace无ID），dc3dd9完整窄桥同原四输出承接首96fc/af29，末30f6/32c4真SHA保，无重types/tests/SDK/model/gates。有效结构与失败注释就地，历史身份保，全部AI中文与完整P9继续，见 sdk-transport-chinese-contracts.md。

@@ -1,0 +1,49 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "1336673185e63562733f720446bd5e8fffe0c317",
+  "source": [
+    {
+      "path": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+      "sha256": "30f6cccd0eb639bd708341f8d9719745a74ae653ba78e1064ba2113190bc1d80",
+      "change": "comments-only"
+    },
+    {
+      "path": "backend/src/ai/integrations/llm/transport.ts",
+      "sha256": "32c4d19d775a761f3277b4783c104e809ae1e89085a0026daef8bbf0e120e002",
+      "change": "comments-only"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/sdk-transport-chinese-contracts-scope-final.json",
+    "sha256": "fcdf9443a19a7bf34ff16cfb226c41af31d9023ee6cbd509b990db75883fce18"
+  },
+  "document": {
+    "path": "docs/refactor/sdk-transport-chinese-contracts.md",
+    "sha256": "c0c3ad3b9a5327c89fd67ed3eb1f02f1cb38dbf68d85a51a012d9e9ccf2c9daf"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/sdk-transport-chinese-contracts-evidence.json",
+    "sha256": "5d3be72b5ae7e83b66727e885d4b67b6de7ee0ad21965eb4b03a4bd899b5e0eb"
+  },
+  "integrity": {
+    "freshSources": 2,
+    "actualGitBefore": 2,
+    "controls": 2,
+    "artifactHashes": 13,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "游戏和审计共享adapter仅透传调用方消息、不做玩家可见性过滤，tool_call_id仅不转本次provider而非全局不持久化",
+    "全部领域callback与signal/maxRetries/maxSteps参数、构造与provider键原读取顺序保",
+    "finalAction原nullsentinel与stopped独立、callback后编码失败保效果、仅具名ToolChoiceViolation catch真实",
+    "24原comment正逆到首阶段，末二源三comment精度桥完整1655typed1988leaf及四raw同，首head绿不重",
+    "实际133两Git/两wholecontrols/13arts/末SHA和头有效中文职责、结构/权限/失败说明"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}
