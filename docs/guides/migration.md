@@ -35,3 +35,7 @@ current链接实际可达，所有真实读点无旧根依赖，history每项原
 `WinConditionSpec.evaluate` 的首参改为 `VictoryQueries`，检查点参数不变。可通过编号／角色／阵营查询、`eliminationCounts()` 和既有关系判胜查询构造条件；`decision(target, reason, additional?)` 按真实 Victory 成员构造候选。候选仍须由阶段经理验证并封盘，查询不能提交死亡或终局。
 
 这两种端口在每次调用时绑定当前世界，构造时不读取组件，也不在默认注册表缓存世界。返回的编号数组是独立数据；状态读取仍是实时查询。旧扩展中的 `world.getComponent(...)` 需要改用对应值查询。需要写入的机制应由实际资源所有者提供具体提交端口，不能恢复通用 `World` 参数。
+
+## 初始身份与野孩子的原句柄
+
+`InitialIdentityScope.world` 和 `WildChildBinding.world` 退出。世界归属由各实际所有者的私有 WeakMap 保存，不随请求 scope、绑定对象或其副本返回；没有公开反查世界的替代方法。原句柄、资源引用与请求绑定继续由原 owner 复核，复制字段或额外补入 `world` 字段不构成授权。需要读取当前数据时使用具体查询端口，需要提交时调用相应窗口或资源所有者。

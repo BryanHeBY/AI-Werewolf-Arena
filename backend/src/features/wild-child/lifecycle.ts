@@ -42,7 +42,6 @@ import {
   projectWildChildData,
 } from "./state-slot";
 export interface WildChildBinding {
-  world: World;
   actorId: number;
   actor: DebateParticipant;
   state: WildChildReadState;
@@ -59,6 +58,8 @@ export interface WildChildBinding {
   modelCommitted: boolean;
 }
 const bindings = new WeakMap<World, WildChildBinding>();
+/** 世界归属只保存在原 owner 的私表，不随公开绑定或其对象副本返回。 */
+const bindingOwners = new WeakMap<WildChildBinding, World>();
 /** 只记录本绑定转换失败后的永久撤权；不写公开绑定、阵营或档案，冻结绑定也不遮盖原错误。 */
 const failedTransformations = new WeakSet<WildChildBinding>();
 const nights = new WeakMap<World, Set<number>>();
@@ -67,7 +68,7 @@ const activeNights = new WeakSet<World>();
 const requestLease = RequestLease.stagePhaseDayActor<World, WildChildBinding>(
   {
     active: (world) => bindings.get(world),
-    owner: (binding) => binding.world,
+    owner: (binding) => bindingOwners.get(binding)!,
     actorId: (binding) => binding.actorId,
     phase: () => Phase.Night,
     stage: () => "wild_child",
@@ -90,8 +91,7 @@ export function installWildChild(world: World, config: ReadonlyBoardConfig): voi
   const state = getWildChildState(actor.role)!;
   const camp = world.getComponent(actorId, COMPONENT.Camp)!;
   const victory = world.getComponent(actorId, COMPONENT.Victory)!;
-  bindings.set(world, {
-    world,
+  const binding: WildChildBinding = {
     actorId,
     actor,
     state,
@@ -106,7 +106,9 @@ export function installWildChild(world: World, config: ReadonlyBoardConfig): voi
     actorDeath: false,
     modelDeath: false,
     modelCommitted: false,
-  });
+  };
+  bindingOwners.set(binding, world);
+  bindings.set(world, binding);
 }
 export function wildChildBinding(world: World): WildChildBinding | undefined {
   return bindings.get(world);
@@ -149,19 +151,20 @@ function sameChoiceTarget(world: World, snapshot: DebateParticipant): boolean {
   );
 }
 function validWildChildIdentity(b: WildChildBinding): boolean {
+  const world = bindingOwners.get(b)!;
   return (
-    bindings.get(b.world) === b &&
+    bindings.get(world) === b &&
     !failedTransformations.has(b) &&
-    b.world.getComponent(b.actorId, COMPONENT.Role) === b.actor.role &&
+    world.getComponent(b.actorId, COMPONENT.Role) === b.actor.role &&
     ownData(b.actor.role, "role") === Role.WildChild &&
     ownData(b.camp, "camp") === b.actor.camp &&
     ownData(b.actor.role, "privateState") === b.actor.state &&
     ownData(b.actor.state, "wildChild") === b.state &&
     safeJson(b.state) !== "invalid" &&
     safeJson(b.state) === b.expectedState &&
-    b.world.getComponent(b.actorId, COMPONENT.Camp) === b.camp &&
+    world.getComponent(b.actorId, COMPONENT.Camp) === b.camp &&
     ownData(b.camp, "camp") === b.actor.camp &&
-    b.world.getComponent(b.actorId, COMPONENT.Victory) === b.victory &&
+    world.getComponent(b.actorId, COMPONENT.Victory) === b.victory &&
     safeJson(b.victory) !== "invalid" &&
     safeJson(b.victory) === b.victoryJson &&
     safeJson(b.config) !== "invalid" &&
@@ -169,7 +172,8 @@ function validWildChildIdentity(b: WildChildBinding): boolean {
   );
 }
 export function validWildChildOwner(b: WildChildBinding): boolean {
-  return validWildChildIdentity(b) && livingNightLife(b.world, b.actor.life);
+  const world = bindingOwners.get(b)!;
+  return validWildChildIdentity(b) && livingNightLife(world, b.actor.life);
 }
 export function projectWildChild(
   world: World,
@@ -190,21 +194,23 @@ export function hasWildChildNightCommit(world: World, day: number): boolean {
   return nights.get(world)?.has(day) ?? false;
 }
 export function openWildChildChoice(b: WildChildBinding, isCurrent: () => boolean): void {
+  const world = bindingOwners.get(b)!;
   if (b.setup !== "pending" || !validWildChildOwner(b))
     throw new Error("wild_child_setup_unavailable");
   b.setup = "active";
-  windows.set(b.world, {
+  windows.set(world, {
     isCurrent,
     targets: new Map(
-      b.world
+      world
         .getAliveEntityIds()
         .filter((id) => id !== b.actorId)
-        .map((id) => [id, captureChoiceTarget(b.world, id)!]),
+        .map((id) => [id, captureChoiceTarget(world, id)!]),
     ),
   });
 }
 export function validWildChildChoice(b: WildChildBinding): boolean {
-  const w = windows.get(b.world);
+  const world = bindingOwners.get(b)!;
+  const w = windows.get(world);
   return (
     !!w &&
     w.isCurrent() &&
@@ -213,7 +219,7 @@ export function validWildChildChoice(b: WildChildBinding): boolean {
     b.state.status === "pending" &&
     b.state.remaining === 1 &&
     b.state.choice === null &&
-    [...w.targets.values()].every((p) => !!p && sameChoiceTarget(b.world, p))
+    [...w.targets.values()].every((p) => !!p && sameChoiceTarget(world, p))
   );
 }
 export function authorizedWildChild(
@@ -248,18 +254,20 @@ export function openWildChildRequestDelivery(world: World, request: ActionReques
 }
 
 export function commitWildChildChoice(b: WildChildBinding, targetId: number): boolean {
-  const target = windows.get(b.world)?.targets.get(targetId);
-  if (!validWildChildChoice(b) || !target || !sameChoiceTarget(b.world, target)) return false;
+  const world = bindingOwners.get(b)!;
+  const target = windows.get(world)?.targets.get(targetId);
+  if (!validWildChildChoice(b) || !target || !sameChoiceTarget(world, target)) return false;
   const choice = { day: 1 as const, targetId };
   if (!commitWildChildState(b, choice, () => target.life)) return false;
   b.setup = "complete";
-  windows.delete(b.world);
+  windows.delete(world);
   return true;
 }
 export function closeWildChildChoice(b: WildChildBinding, status: "failed" | "cancelled"): void {
+  const world = bindingOwners.get(b)!;
   if (b.setup === "complete") return;
   b.setup = status;
-  windows.delete(b.world);
+  windows.delete(world);
   cancelWildChildState(b);
 }
 /** 紧邻实际引擎 Alive 提交之前调用，不由查询或原始拟议目标调用。 */
@@ -357,10 +365,11 @@ export function wildChildPackKnown(role: RoleComponent, world?: World): boolean 
     b.state.status !== "active"
   )
     return false;
+  const ownerWorld = bindingOwners.get(b)!;
   return (
-    livingNightLife(b.world, b.actor.life) ||
+    livingNightLife(ownerWorld, b.actor.life) ||
     (b.actorDeath &&
-      b.world.getComponent(b.actorId, COMPONENT.Alive) === b.actor.life.life &&
+      ownerWorld.getComponent(b.actorId, COMPONENT.Alive) === b.actor.life.life &&
       !b.actor.life.life.alive &&
       aliveLifeVersion(b.actor.life.life) === b.actor.life.version + 1)
   );

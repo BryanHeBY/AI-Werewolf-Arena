@@ -66,7 +66,6 @@ interface CardScope {
   role: Role;
 }
 export interface InitialIdentityScope {
-  world: World;
   kind: InitialIdentityKind;
   actorId: number;
   deal: InitialIdentityDeal;
@@ -87,11 +86,13 @@ export interface InitialIdentityScope {
   allowedSlots: readonly InitialIdentitySlot[];
 }
 const scopes = new WeakMap<World, InitialIdentityScope>();
+/** 原句柄到世界的唯一归属留在所有者内；公开 scope 不提供反向取得 World 的通道。 */
+const scopeOwners = new WeakMap<InitialIdentityScope, World>();
 /** 请求登记由独立公共实例持有；query 仍晚读原 scope，不替代完整选择许可。 */
 const requestLease = RequestLease.actorPhaseDayStage<World, InitialIdentityScope>(
   {
     active: (world) => scopes.get(world),
-    owner: (scope) => scope.world,
+    owner: (scope) => scopeOwners.get(scope)!,
     actorId: (scope) => scope.actorId,
     phase: () => Phase.Night,
     stage: (scope) => scope.kind,
@@ -112,7 +113,8 @@ function validCard(scope: CardScope): boolean {
   return !!card && card.cardId === scope.cardId && card.role === scope.role;
 }
 export function sameInitialIdentityScope(scope: InitialIdentityScope): boolean {
-  const { world, deal } = scope;
+  const world = scopeOwners.get(scope)!;
+  const { deal } = scope;
   const remaining = Object.getOwnPropertyDescriptor(scope.state, "remaining"),
     choice = Object.getOwnPropertyDescriptor(scope.state, "choice");
   const reserve0 = Object.getOwnPropertyDescriptor(scope.reserve, "0"),
@@ -285,7 +287,6 @@ export class InitialIdentitySetupWindow {
         return false;
       }
       const scope: InitialIdentityScope = {
-        world: this.world,
         kind: this.kind,
         actorId,
         deal,
@@ -311,6 +312,7 @@ export class InitialIdentitySetupWindow {
           cards.map((c) => c!.role),
         ).allowedSlots,
       };
+      scopeOwners.set(scope, this.world);
       scopes.set(this.world, scope);
       if (!sameInitialIdentityScope(scope)) {
         status = "cancelled";

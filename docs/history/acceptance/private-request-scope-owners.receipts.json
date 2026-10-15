@@ -1,0 +1,73 @@
+{
+  "baseCommit": "6c48dffc54bc6043dee4689d1834ceeac59b1040",
+  "scope": "InitialIdentityScope/WildChildBinding World back-reference retirement only",
+  "sourceAndDoc": [
+    {
+      "path": "backend/src/features/initial-identity/setup.ts",
+      "sha256": "313e2c741d9dbf3f6419c274cb8bd26c5323a1fbfd363d6ca2bc7d2a20530a88",
+      "bytes": 18139
+    },
+    {
+      "path": "backend/src/features/wild-child/lifecycle.ts",
+      "sha256": "ee142fb03cf8220c68853c08cfbe027375fe7012b4d6a95d04f6d08e9a7cc8ae",
+      "bytes": 15457
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease-terminal-boundaries.test.ts",
+      "sha256": "c0515253d3c359f05066573c717e30dd9e0779c12ca4e05c347ea56c4278418d",
+      "bytes": 18552
+    },
+    {
+      "path": "docs/guides/migration.md",
+      "sha256": "e493175b5a027b7f3ff59228c984ddcb8888692caa8fd4dfbf6a30756a0d1d9f",
+      "bytes": 4787
+    }
+  ],
+  "executionFence": {
+    "sourceAndTestPaths": 3,
+    "docOutsideFence": 1
+  },
+  "executions": [
+    {
+      "task": "tests",
+      "receipt": "execution/tests/receipt.json",
+      "exitCode": 0,
+      "seconds": 0.6681630611419678
+    },
+    {
+      "task": "types",
+      "receipt": "execution/types/receipt.json",
+      "exitCode": 0,
+      "seconds": 42.94575119018555
+    }
+  ],
+  "tests": {
+    "pass": 143,
+    "fail": 0,
+    "expects": 1484,
+    "files": 9,
+    "newRiskCases": 2
+  },
+  "types": {
+    "project": "backend/tsconfig.tests.json",
+    "exitCode": 0,
+    "actualScope": "ran before target-hint source work; not type proof for that later work"
+  },
+  "peer": {
+    "path": "independent/peer.json",
+    "sha256": "fe3bcf65845950999884b09425be2c5645e29bbf986ede45ae26b36dc1211c2d",
+    "reviewerExecution": false
+  },
+  "archive": {
+    "path": "private-request-scope-owners.tar.gz",
+    "bytes": 23798,
+    "sha256": "05d21f75222a3faa4983a1e467ccf43867778af7fc34c6bd9462bb3dc2da3ab2",
+    "members": 14
+  },
+  "limits": [
+    "Private WeakMaps store owner association only; original scope/resource references and authorities remain.",
+    "Public world properties intentionally retire; no arbitrary old reflection/getter equivalence claim.",
+    "Mechanical/Awakened returned handles remain in separate night migration.",
+    "Not full C47 or whole H02 acceptance."
+  ]
+}

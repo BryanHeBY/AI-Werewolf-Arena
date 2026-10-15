@@ -31,9 +31,13 @@ import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import {
   InitialIdentitySetupWindow,
   initialIdentityRequestScope,
+  sameInitialIdentityScope,
 } from "../../../src/features/initial-identity/setup";
 import { WildChildSetupWindow } from "../../../src/features/wild-child/setup";
-import { wildChildRequestScope } from "../../../src/features/wild-child/lifecycle";
+import {
+  wildChildRequestScope,
+  validWildChildOwner,
+} from "../../../src/features/wild-child/lifecycle";
 import { LonelyGirlSetupWindow } from "../../../src/features/lonely-girl/setup";
 import { lonelyGirlRequestScope } from "../../../src/features/lonely-girl/lifecycle";
 import { WallNotesWindow } from "../../../src/features/wall-notes/window";
@@ -459,3 +463,28 @@ test("illegal signed-zero alias never shrinks a valid original budget", () => {
     clock.mockRestore();
   }
 });
+
+for (const kind of ["initial", "wild"] as const)
+  test(`${kind} 请求原句柄不返回世界，复制字段不能伪造所属世界`, async () => {
+    const game = fixture(kind),
+      other = fixture(kind);
+    const result = await game.run(async (request) => {
+      const scope = game.query(request)!;
+      expect(scope).toBeDefined();
+      for (const key of ["world", "getWorld", "runtime"]) expect(key in scope).toBe(false);
+      // 归属只存在实际 owner 私表。保持原字段和值的副本仍不是原句柄。
+      if (kind === "initial") {
+        const initial = initialIdentityRequestScope(game.world, request)!;
+        expect(sameInitialIdentityScope(initial)).toBe(true);
+        expect(sameInitialIdentityScope({ ...initial, ...{ world: other.world } })).toBe(false);
+      } else {
+        const wild = wildChildRequestScope(game.world, request)!;
+        expect(validWildChildOwner(wild)).toBe(true);
+        expect(validWildChildOwner({ ...wild, ...{ world: other.world } })).toBe(false);
+      }
+      expect(game.query(request)).toBe(scope);
+      expect(game.query(request, other.world)).toBeUndefined();
+      return game.action;
+    });
+    expect(result).toBe(true);
+  });
