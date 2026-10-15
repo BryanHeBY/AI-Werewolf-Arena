@@ -1,0 +1,12 @@
+{
+  "board": "awa_netease_demon_hunter_12_side_v1",
+  "agent": "deepseek_v4_flash",
+  "locale": "zh-CN",
+  "displayLocale": "zh-CN",
+  "maxDays": 30,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 45000,
+  "streamEvents": true,
+  "printThinking": true,
+  "printPrivateEvents": true
+}
