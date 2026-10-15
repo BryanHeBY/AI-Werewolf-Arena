@@ -23,6 +23,7 @@ import {
 import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 import { readGhostBrideEventFact } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { text, term, roleName } from "@ai-werewolf-arena/game-text";
+import { deathCauses, factList } from "./fact-details";
 
 export function hybridEventLabel(type: string, payload: unknown, locale: Locale): string | null {
   if (type !== "hybrid_exemplar_chosen" && type !== "hybrid_affiliation_resolved") return null;
@@ -93,14 +94,36 @@ export function wallEventLabel(type: string, payload: unknown, locale: Locale): 
   if (type === "wall_notes_started") return text(locale, "console.wall.start");
   if (type === "wall_notes_canceled") return text(locale, "console.wall.cancel");
   if (type === "wall_notes_published")
-    return text(locale, "console.wall.publish", { notes: JSON.stringify(p.texts) });
+    return text(locale, "console.wall.publish", {
+      notes:
+        p.texts.length === 0
+          ? text(locale, "common.none")
+          : p.texts
+              .map((body: string, index: number) =>
+                text(locale, "console.wall.note", { rank: index + 1, body }),
+              )
+              .join("\n"),
+    });
   if (type === "wall_note_order_recorded")
-    return text(locale, "console.wall.order", { rows: JSON.stringify(p.rows) });
+    return text(locale, "console.wall.order", {
+      rows:
+        p.rows.length === 0
+          ? text(locale, "common.none")
+          : p.rows
+              .map((row: { rank: number; actorId: number; text: string }) =>
+                text(locale, "console.wall.author", {
+                  rank: row.rank + 1,
+                  actor: row.actorId,
+                  body: row.text,
+                }),
+              )
+              .join("\n"),
+    });
   return text(locale, "console.wall.item", {
     actor: p.actorId,
     operation: text(locale, `item.operation.${p.operation}` as MessageKey),
     remaining: p.remaining,
-    expired: String(p.expired),
+    expired: text(locale, p.expired ? "common.yes" : "common.no"),
     body: p.text ?? "",
   });
 }
@@ -110,7 +133,10 @@ export function thiefEventLabel(type: string, payload: unknown, locale: Locale):
   if (!p) return null;
   if (type === "thief_initial_deal")
     return text(locale, "console.thief.deal", {
-      roles: JSON.stringify((p.roles as RoleId[]).map((role) => roleName(role, locale))),
+      roles: factList(
+        (p.roles as RoleId[]).map((role) => roleName(role, locale)),
+        locale,
+      ),
       size: p.boardSize as number,
     });
   if (p.slot === null) return text(locale, "console.thief.keep", { actor: p.actorId as number });
@@ -134,8 +160,7 @@ export function wildChildEventLabel(type: string, payload: unknown, locale: Loca
     return text(locale, "console.wild_child.death", {
       actor: p.actorId as number,
       target: p.targetId as number,
-      causes: JSON.stringify(p.sources),
-      commit: p.deathCommit as string,
+      causes: deathCauses(p.sources as string[], locale),
     });
   if (type === "wild_child_transformed")
     return text(locale, "console.wild_child.transform", {
@@ -157,7 +182,10 @@ export function shapeshifterEventLabel(
   if (!p) return null;
   if (type === "shapeshifter_initial_deal")
     return text(locale, "console.shapeshifter.deal", {
-      roles: JSON.stringify((p.roles as RoleId[]).map((role) => roleName(role, locale))),
+      roles: factList(
+        (p.roles as RoleId[]).map((role) => roleName(role, locale)),
+        locale,
+      ),
       size: p.boardSize as number,
     });
   return text(locale, "console.shapeshifter.choice", {

@@ -53,7 +53,6 @@ import {
   ScriptReplayStageHandlers,
 } from "./contracts";
 import { GUARD_SCRIPT_LIVE_HANDLERS } from "../../features/guard/event-presenters";
-import { animalDreamLiveLabel } from "../../features/animal-dream/event-presenters";
 import { HUNTER_SCRIPT_JUDGE_HANDLERS } from "../../features/hunter/event-presenters";
 import { SEER_SCRIPT_LIVE_HANDLERS } from "../../features/seer/event-presenters";
 import { WITCH_SCRIPT_LIVE_HANDLERS } from "../../features/witch/event-presenters";
@@ -235,7 +234,9 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
             item.abstain || item.targetId == null
               ? text(locale, "console.vote.abstain", { actor: item.actorId })
               : text(locale, "console.vote.target", { actor: item.actorId, target: item.targetId });
-          return item.weight !== 1 ? `${vote}(w=${item.weight})` : vote;
+          return item.weight !== 1
+            ? `${vote}${text(locale, "replay.vote_weight", { weight: item.weight })}`
+            : vote;
         })
         .join(", "),
     }),
@@ -661,12 +662,11 @@ export class ScriptEventRenderRegistry {
     const animal = animalDreamEventLabel(event.type, event.payload, locale);
     if (animal !== null) {
       const visibility = animalDreamFactAudience(event.type as AnimalDreamEventType);
-      // 仅终端使用技能提示；共享裁判与回放标签保留原事实格式，受众边界不变。
-      const label = animalDreamLiveLabel(event.type, event.payload, locale) ?? animal;
+      // 文案与复盘共用；终端只附加分类和私有开关，不扩大事实受众。
       return visibility === "public"
-        ? [{ kind: "system", text: label }]
+        ? [{ kind: "system", text: animal }]
         : printPrivateEvents
-          ? [{ kind: visibility === "actor" ? "private" : "god", text: label }]
+          ? [{ kind: visibility === "actor" ? "private" : "god", text: animal }]
           : [];
     }
     const fragrant = fragrantPairEventLabel(event.type, event.payload, locale);

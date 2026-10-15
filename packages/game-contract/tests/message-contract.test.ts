@@ -1,6 +1,6 @@
 /**
  * 包级单元／类型契约测试验证不绑定语言的消息标识。
- * 独立预期为原有 1513 键顺序摘要及明确追加的终端标签与动物行动文案；输入包括未知键和可序列化消息引用。
+ * 独立预期为原有 1513 键顺序摘要及明确追加的终端标签、动物行动和共享事件细节文案；输入包括未知键和可序列化消息引用。
  * DTO 不按每个键约束参数，运行参数格式归 game-text；本文件不加载词典、展示器、World 或模型。
  */
 import { expect, test } from "bun:test";
@@ -14,9 +14,9 @@ import {
 
 const fixedSequenceHash = "cd750ba72a9b5902562d650125797b2417126bdb82b2aaa199822b05cd22ec78";
 
-test("existing message IDs retain their exact sequence and console messages are appended", () => {
-  expect(MESSAGE_IDS).toHaveLength(1530);
-  expect(new Set(MESSAGE_IDS).size).toBe(1530);
+test("existing message IDs retain their exact sequence and presentation messages are appended", () => {
+  expect(MESSAGE_IDS).toHaveLength(1558);
+  expect(new Set(MESSAGE_IDS).size).toBe(1558);
   expect(
     createHash("sha256")
       .update(JSON.stringify(MESSAGE_IDS.slice(0, 1513)))
@@ -42,6 +42,34 @@ test("existing message IDs retain their exact sequence and console messages are 
     "console.animal.unavailable",
     "console.animal.activate",
     "console.animal.pass",
+    "animal.unit.exile",
+    "animal.unit.skipped_day",
+    "death.wolf_kill",
+    "death.poison",
+    "death.exile",
+    "death.self_destruct",
+    "death.shot",
+    "death.charm",
+    "death.puffer_retaliation",
+    "death.white_cat_expiry",
+    "death.servant_expiry",
+    "death.fragrant_link",
+    "event.death_detail",
+    "event.night_choice",
+    "common.used",
+    "common.unused",
+    "noble.contract.summary",
+    "noble.contract.pending",
+    "noble.contract.cleared",
+    "noble.contract.expired",
+    "noble.contract.target_dead",
+    "noble.contract.closed_on",
+    "secret_body.resource.intact",
+    "secret_body.resource.spent",
+    "secret_body.resource.exile_revealed",
+    "fragrant.knife_notice",
+    "console.wall.note",
+    "console.wall.author",
   ]);
 });
 

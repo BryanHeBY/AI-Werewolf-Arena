@@ -8,7 +8,7 @@ import type {
   AnimalDreamEventType,
   AnimalDreamPayloadMap,
 } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
-import { animalDreamLiveLabel } from "../../../src/features/animal-dream/event-presenters";
+import { animalDreamEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { appendAnimalFact } from "../../../src/features/animal-dream/facts";
 import { buildAgentVisibleEventFeed } from "../../../src/agents/observation/event-feed";
 import { getDefaultScriptEventRenderRegistry } from "../../../src/agents/presentation/event-render-registry";
@@ -20,29 +20,29 @@ const cases = [
   {
     type: "animal_fox_chosen",
     payload: { policy, actorId: 10, day: 2, targetId: 1 },
-    zh: "10号子狐第2夜迷惑目标：1",
-    en: "Fox Cub 10, night 2 distraction target: 1",
+    zh: "10号子狐第2夜迷惑目标：1号。",
+    en: "Fox Cub 10, night 2 distraction target: Player 1.",
     kind: "private",
   },
   {
     type: "animal_fox_chosen",
     payload: { policy, actorId: 10, day: 2, targetId: null },
-    zh: "10号子狐第2夜迷惑目标：无",
-    en: "Fox Cub 10, night 2 distraction target: None",
+    zh: "10号子狐第2夜迷惑目标：无。",
+    en: "Fox Cub 10, night 2 distraction target: None.",
     kind: "private",
   },
   {
     type: "animal_fox_effect",
     payload: { policy, actorId: 10, day: 2, targetId: 1, knifeBlocked: true, beautyBlocked: false },
-    zh: "第2夜：10号子狐迷惑1号，整队狼刀已封锁，狼美人魅惑未封锁",
-    en: "Night 2: Fox Cub 10 distracts player 1; pack knife blocked; Wolf Beauty charm not blocked",
+    zh: "第2夜：10号子狐迷惑1号，整队狼刀已封锁，狼美人魅惑未封锁。",
+    en: "Night 2: Fox Cub 10 distracts player 1; pack knife blocked; Wolf Beauty charm not blocked.",
     kind: "god",
   },
   {
     type: "animal_fox_effect",
     payload: { policy, actorId: 10, day: 2, targetId: 1, knifeBlocked: false, beautyBlocked: true },
-    zh: "第2夜：10号子狐迷惑1号，整队狼刀未封锁，狼美人魅惑已封锁",
-    en: "Night 2: Fox Cub 10 distracts player 1; pack knife not blocked; Wolf Beauty charm blocked",
+    zh: "第2夜：10号子狐迷惑1号，整队狼刀未封锁，狼美人魅惑已封锁。",
+    en: "Night 2: Fox Cub 10 distracts player 1; pack knife not blocked; Wolf Beauty charm blocked.",
     kind: "god",
   },
   {
@@ -71,8 +71,8 @@ const cases = [
       lastActedDay: 1,
       history: [{ day: 1, targetId: 6 }],
     },
-    zh: "1号狼美人第2轮：魅惑可用，牵连不可用，当前魅惑目标：6",
-    en: "Wolf Beauty 1, cycle 2: charm available; death link unavailable; current charm target: 6",
+    zh: "1号狼美人第2轮：魅惑可用，牵连不可用，当前魅惑目标：6号；最近行动夜：1；魅惑记录：第1夜选择6号。",
+    en: "Wolf Beauty 1, cycle 2: charm available; death link unavailable; current charm target: Player 6; last action night: 1; charm history: Night 1: chose Player 6.",
     kind: "private",
   },
   {
@@ -87,29 +87,43 @@ const cases = [
       lastActedDay: null,
       history: [],
     },
-    zh: "1号狼美人第2轮：魅惑不可用，牵连可用，当前魅惑目标：无",
-    en: "Wolf Beauty 1, cycle 2: charm unavailable; death link available; current charm target: None",
+    zh: "1号狼美人第2轮：魅惑不可用，牵连可用，当前魅惑目标：无；最近行动夜：无；魅惑记录：无。",
+    en: "Wolf Beauty 1, cycle 2: charm unavailable; death link available; current charm target: None; last action night: None; charm history: None.",
     kind: "private",
   },
   {
     type: "animal_puffer_decided",
     payload: { policy, actorId: 12, day: 2, activate: true },
-    zh: "12号河豚第2轮选择发动反击",
-    en: "Pufferfish 12, cycle 2: activate retaliation",
+    zh: "12号河豚第2轮选择发动反击。",
+    en: "Pufferfish 12, cycle 2: activate retaliation.",
     kind: "private",
   },
   {
     type: "animal_puffer_decided",
     payload: { policy, actorId: 12, day: 2, activate: false },
-    zh: "12号河豚第2轮选择保留技能",
-    en: "Pufferfish 12, cycle 2: preserve the ability",
+    zh: "12号河豚第2轮选择保留技能。",
+    en: "Pufferfish 12, cycle 2: preserve the ability.",
     kind: "private",
   },
   {
     type: "animal_puffer_targets",
     payload: { policy, actorId: 12, day: 2, targetIds: [1, 3, 5], round: 2 },
-    zh: "12号河豚第2轮反击目标（第2轮票）：1, 3, 5",
-    en: "Pufferfish 12, cycle 2 retaliation targets (ballot round 2): 1, 3, 5",
+    zh: "12号河豚第2轮反击目标（第2轮票）：1号、3号、5号。",
+    en: "Pufferfish 12, cycle 2 retaliation targets (ballot round 2): Player 1, Player 3, Player 5.",
+    kind: "god",
+  },
+  {
+    type: "animal_wave_prepared",
+    payload: { policy, day: 1, phase: "night", proposedIds: [1], blockedCatId: null },
+    zh: "第1天夜晚待结算死亡：1号；白猫延缓死亡：无。",
+    en: "Day 1, Night: proposed deaths: Player 1; White Cat death deferred: None.",
+    kind: "god",
+  },
+  {
+    type: "animal_wave_committed",
+    payload: { policy, day: 1, phase: "night", deaths: [1], deathSources: { 1: ["wolf_kill"] } },
+    zh: "第1天夜晚实际死亡：1号（狼刀）。",
+    en: "Day 1, Night: actual deaths: Player 1 (wolf attack).",
     kind: "god",
   },
 ] as const;
@@ -134,7 +148,7 @@ for (const locale of ["zh-CN", "en"] as const)
       { events } = facts();
     for (const [index, event] of events.entries()) {
       const row = cases[index]!,
-        label = animalDreamLiveLabel(event.type, event.payload, locale);
+        label = animalDreamEventLabel(event.type, event.payload, locale);
       expect(label).not.toBeNull();
       if (label === null) throw new Error("animal_console_label_missing");
       expect(label).toBe(locale === "zh-CN" ? row.zh : row.en);
@@ -151,7 +165,7 @@ for (const locale of ["zh-CN", "en"] as const)
 test("own knife notices reveal neither the Fox identity nor the actual blocking cause", () => {
   for (const locale of ["zh-CN", "en"] as const)
     for (const eligible of [false, true]) {
-      const label = animalDreamLiveLabel(
+      const label = animalDreamEventLabel(
         "animal_knife_notified",
         { policy, day: 2, actorId: 1, eligible },
         locale,
@@ -160,19 +174,26 @@ test("own knife notices reveal neither the Fox identity nor the actual blocking 
     }
 });
 
-test("terminal-only animal helper rejects malformed facts and leaves other event labels to the original renderer", () => {
+test("shared animal renderer rejects malformed or unsupported facts", () => {
   for (const row of cases) {
-    expect(animalDreamLiveLabel(row.type, null, "zh-CN")).toBeNull();
-    expect(animalDreamLiveLabel(row.type, { ...row.payload, day: 0 }, "en")).toBeNull();
-    expect(animalDreamLiveLabel(row.type, { ...row.payload, extra: true }, "en")).toBeNull();
+    expect(animalDreamEventLabel(row.type, null, "zh-CN")).toBeNull();
+    expect(animalDreamEventLabel(row.type, { ...row.payload, day: 0 }, "en")).toBeNull();
+    expect(animalDreamEventLabel(row.type, { ...row.payload, extra: true }, "en")).toBeNull();
   }
-  for (const [type, payload] of [
-    ["animal_night_opened", { policy, day: 2 }],
-    ["animal_cat_revealed", { policy, day: 2, actorId: 9 }],
-    ["animal_puffer_revealed", { policy, day: 2, actorId: 12, reason: "retaliation" }],
-    ["unknown_event", {}],
-  ] as const)
-    expect(animalDreamLiveLabel(type, payload, "zh-CN")).toBeNull();
+  expect(animalDreamEventLabel("unknown_event", {}, "zh-CN")).toBeNull();
+});
+
+test("readable death waves retain the God-private live prefix and leave recorded facts untouched", () => {
+  const { events } = facts(),
+    waves = events.slice(-2),
+    before = structuredClone(waves),
+    lines: string[] = [];
+  presentStreamEvents(waves, true, (line) => lines.push(line), "zh-CN");
+  expect(lines).toEqual([
+    "[live][上帝私有] 第1天夜晚待结算死亡：1号；白猫延缓死亡：无。",
+    "[live][上帝私有] 第1天夜晚实际死亡：1号（狼刀）。",
+  ]);
+  expect(waves).toEqual(before);
 });
 
 test("readable terminal effects do not widen Fox feedback, wolf notices or other player feeds", () => {

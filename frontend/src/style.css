@@ -314,6 +314,8 @@ h2 {
   text-align: right;
 }
 .event p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   margin: 5px 0 0;
   color: #d6dee7;
   font-size: 13px;

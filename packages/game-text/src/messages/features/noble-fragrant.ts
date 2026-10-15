@@ -10,6 +10,16 @@ import type { MessageDefinition } from "../definition";
 export const definition = {
   owner: "features/noble-fragrant",
   parameters: {
+    "fragrant.knife_notice": ["day", "eligible"],
+    "secret_body.resource.exile_revealed": [],
+    "secret_body.resource.spent": [],
+    "secret_body.resource.intact": [],
+    "noble.contract.closed_on": ["day", "status"],
+    "noble.contract.target_dead": [],
+    "noble.contract.expired": [],
+    "noble.contract.cleared": [],
+    "noble.contract.pending": [],
+    "noble.contract.summary": ["created", "expires", "status", "target"],
     "ability.kind.pair_check": [],
     "stage.fragrant_bind": [],
     "prompt.stage.fragrant_pair_candidates": ["ids"],
@@ -21,7 +31,7 @@ export const definition = {
     "event.fragrant_wave_committed": ["actor", "day", "deaths"],
     "replay.stage.fragrant_wave_committed": [],
     "event.fragrant_pair_inspected": ["actor", "day", "first", "result", "second"],
-    "event.fragrant_night_notified": ["actor", "day", "state"],
+    "event.fragrant_night_notified": ["actor", "choice", "day", "notices", "used", "wolf"],
     "event.fragrant_binding_expired": ["actor", "created", "day", "first", "second"],
     "event.fragrant_link_triggered": ["actor", "added", "day", "first", "root", "second"],
     "fragrant.result.true": [],
@@ -46,7 +56,7 @@ export const definition = {
     "event.noble_body_native_damage_committed": ["day"],
     "replay.stage.noble_body_knife_committed": [],
     "replay.stage.noble_body_native_damage_committed": [],
-    "event.noble_body_sources_committed": ["day", "state"],
+    "event.noble_body_sources_committed": ["blocked", "day", "deaths"],
     "event.noble_body_death_committed": ["actor", "causes", "day"],
     "replay.stage.noble_body_night_opened": [],
     "replay.stage.noble_body_sources_committed": [],
@@ -68,7 +78,7 @@ export const definition = {
     "prompt.config.noble_restricted": [],
     "event.noble_servant_chosen": ["actor", "day", "target"],
     "event.secret_body_chosen": ["actor", "day", "target"],
-    "event.noble_contract_closed": ["contract", "day", "status", "target"],
+    "event.noble_contract_closed": ["created", "day", "status", "target"],
     "event.secret_body_blocked": ["actor", "cause", "day", "target"],
     "event.noble_night_notified": ["actor", "day", "state"],
     "event.secret_body_night_notified": ["actor", "day", "resource"],
@@ -86,6 +96,16 @@ export const definition = {
 } as const satisfies MessageDefinition;
 
 export const zhCN = {
+  "fragrant.knife_notice": "第{day}夜{eligible}",
+  "secret_body.resource.exile_revealed": "已抵消放逐并亮明身份",
+  "secret_body.resource.spent": "秘密之身已消耗",
+  "secret_body.resource.intact": "秘密之身完好",
+  "noble.contract.closed_on": "第{day}天{status}",
+  "noble.contract.target_dead": "目标已死亡",
+  "noble.contract.expired": "已到期",
+  "noble.contract.cleared": "已解除",
+  "noble.contract.pending": "待结算",
+  "noble.contract.summary": "{target}（第{created}夜建立，第{expires}夜到期；{status}）",
   "ability.kind.pair_check": "双目标查验",
   "stage.fragrant_bind": "寻香绑定",
   "prompt.stage.fragrant_pair_candidates":
@@ -96,10 +116,11 @@ export const zhCN = {
   "event.fragrant_pair_chosen": "{actor}号第{day}夜绑定选择：{targets}。",
   "event.fragrant_night_opened": "[God] 寻香板第{day}轮实际开夜。",
   "replay.stage.fragrant_night_opened": "实际开夜",
-  "event.fragrant_wave_committed": "[God] {actor}号所在寻香板第{day}轮实际死亡波：{deaths}。",
+  "event.fragrant_wave_committed": "第{day}天，{actor}号所在寻香板本轮实际死亡：{deaths}。",
   "replay.stage.fragrant_wave_committed": "实际死亡波提交",
   "event.fragrant_pair_inspected": "{actor}号第{day}夜查验{first}、{second}号：{result}。",
-  "event.fragrant_night_notified": "{actor}号第{day}夜已知寻香状态：{state}。",
+  "event.fragrant_night_notified":
+    "{actor}号第{day}夜寻香夜报：已知狼人：{wolf}；最近绑定选择：{choice}；牵连技能{used}；历夜狼刀资格：{notices}。",
   "event.fragrant_binding_expired":
     "[God] {actor}号第{created}夜绑定的{first}、{second}号在第{day}夜到期。",
   "event.fragrant_link_triggered":
@@ -133,8 +154,9 @@ export const zhCN = {
   "event.noble_body_native_damage_committed": "[God] 第{day}夜原生伤害已结算，刀药标记已清除。",
   "replay.stage.noble_body_knife_committed": "狼刀标记提交",
   "replay.stage.noble_body_native_damage_committed": "原生伤害结算提交",
-  "event.noble_body_sources_committed": "[God] 第{day}夜有效来源已提交：{state}",
-  "event.noble_body_death_committed": "[God] 第{day}夜／日{actor}号实际死亡：{causes}",
+  "event.noble_body_sources_committed":
+    "第{day}夜伤害结算：有效致死伤害：{deaths}；秘密之身抵消：{blocked}。",
+  "event.noble_body_death_committed": "第{day}天，{actor}号实际死亡，死因：{causes}。",
   "replay.stage.noble_body_night_opened": "夜间所有权提交",
   "replay.stage.noble_body_sources_committed": "有效夜伤提交",
   "replay.stage.noble_body_death_committed": "实际死亡提交",
@@ -158,9 +180,9 @@ export const zhCN = {
   "event.noble_servant_chosen": "{actor}号第{day}夜选择夜仆：{target}。",
   "event.secret_body_chosen": "{actor}号第{day}夜主动保护选择：{target}。",
   "event.noble_contract_closed":
-    "[God] 第{day}夜／日夜仆契约{contract}结束，目标{target}，终态{status}。",
-  "event.secret_body_blocked": "[God] {actor}号第{day}夜消耗秘密之身，对{target}抵消来源{cause}。",
-  "event.noble_night_notified": "{actor}号第{day}夜获知自己的夜仆状态：{state}",
+    "第{day}天，{target}号的夜仆契约（第{created}夜建立）结束：{status}。",
+  "event.secret_body_blocked": "第{day}夜，{actor}号消耗秘密之身，为{target}号抵消{cause}。",
+  "event.noble_night_notified": "{actor}号第{day}夜获知自己的夜仆契约：{state}。",
   "event.secret_body_night_notified": "{actor}号第{day}夜获知身体状态：{resource}。",
   "event.secret_body_revealed":
     "{actor}号翻牌为觉醒愚者，消耗身体免除本次放逐；仍存活，投票与警徽资格保留。",
@@ -176,6 +198,17 @@ export const zhCN = {
 } as const satisfies Record<keyof typeof definition.parameters, string>;
 
 export const en = {
+  "fragrant.knife_notice": "Night {day}: {eligible}",
+  "secret_body.resource.exile_revealed": "exile blocked and role revealed",
+  "secret_body.resource.spent": "Secret Body spent",
+  "secret_body.resource.intact": "Secret Body intact",
+  "noble.contract.closed_on": "{status} on day {day}",
+  "noble.contract.target_dead": "target already dead",
+  "noble.contract.expired": "expired",
+  "noble.contract.cleared": "cleared",
+  "noble.contract.pending": "pending",
+  "noble.contract.summary":
+    "{target} (created on night {created}, expires on night {expires}; {status})",
   "ability.kind.pair_check": "Pair inspection",
   "stage.fragrant_bind": "Fragrant binding",
   "prompt.stage.fragrant_pair_candidates":
@@ -187,12 +220,12 @@ export const en = {
   "event.fragrant_night_opened": "[God] The Fragrant board actually opened night {day}.",
   "replay.stage.fragrant_night_opened": "Actual night opening",
   "event.fragrant_wave_committed":
-    "[God] Player {actor}'s fragrance board, cycle {day} actual death wave: {deaths}.",
+    "Day {day}: actual deaths in this wave on player {actor}'s Fragrant board: {deaths}.",
   "replay.stage.fragrant_wave_committed": "Actual death wave commit",
   "event.fragrant_pair_inspected":
     "Player {actor} checked {first} and {second} on night {day}: {result}.",
   "event.fragrant_night_notified":
-    "Player {actor}, night {day} authorized fragrance state: {state}.",
+    "Player {actor}, night {day} Fragrant report: known wolf: {wolf}; last binding choice: {choice}; link ability: {used}; knife eligibility history: {notices}.",
   "event.fragrant_binding_expired":
     "[God] Player {actor}'s night {created} binding of {first} and {second} expired at night {day}.",
   "event.fragrant_link_triggered":
@@ -229,9 +262,9 @@ export const en = {
     "[God] Night {day} native damage resolved; knife and potion marks cleared.",
   "replay.stage.noble_body_knife_committed": "Wolf knife mark commit",
   "replay.stage.noble_body_native_damage_committed": "Native damage resolution commit",
-  "event.noble_body_sources_committed": "[God] Night {day} effective sources committed: {state}",
-  "event.noble_body_death_committed":
-    "[God] Player {actor} actually died on day/night {day}: {causes}",
+  "event.noble_body_sources_committed":
+    "Night {day} damage resolution: effective lethal damage: {deaths}; Secret Body block: {blocked}.",
+  "event.noble_body_death_committed": "Day {day}: player {actor} actually died; causes: {causes}.",
   "replay.stage.noble_body_night_opened": "Night ownership commit",
   "replay.stage.noble_body_sources_committed": "Effective night damage commit",
   "replay.stage.noble_body_death_committed": "Actual death commit",
@@ -262,10 +295,10 @@ export const en = {
   "event.noble_servant_chosen": "Player {actor} chose a servant on night {day}: {target}.",
   "event.secret_body_chosen": "Player {actor} chose a protection target on night {day}: {target}.",
   "event.noble_contract_closed":
-    "[God] Servant contract {contract} closed on day/night {day}, target {target}, status {status}.",
+    "Day {day}: the servant contract for player {target} (created on night {created}) closed: {status}.",
   "event.secret_body_blocked":
-    "[God] Player {actor} spent Secret Body on night {day}, blocking {cause} against {target}.",
-  "event.noble_night_notified": "Player {actor} received servant state on night {day}: {state}",
+    "Night {day}: player {actor} spent Secret Body to block {cause} against player {target}.",
+  "event.noble_night_notified": "Player {actor}, night {day} known servant contracts: {state}.",
   "event.secret_body_night_notified":
     "Player {actor} received body state on night {day}: {resource}.",
   "event.secret_body_revealed":

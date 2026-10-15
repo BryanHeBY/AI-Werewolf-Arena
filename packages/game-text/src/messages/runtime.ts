@@ -10,6 +10,8 @@ import type { MessageDefinition } from "./definition";
 export const definition = {
   owner: "runtime",
   parameters: {
+    "console.wall.author": ["actor", "body", "rank"],
+    "console.wall.note": ["body", "rank"],
     "console.wall.start": [],
     "console.wall.cancel": [],
     "console.wall.publish": ["notes"],
@@ -222,6 +224,8 @@ export const definition = {
 } as const satisfies MessageDefinition;
 
 export const zhCN = {
+  "console.wall.author": "第{rank}张，{actor}号：{body}",
+  "console.wall.note": "第{rank}张：{body}",
   "console.wall.start": "匿名墙开始收集纸条。",
   "console.wall.cancel": "匿名墙窗口失效，未公布纸条。",
   "console.wall.publish": "匿名墙纸条（随机顺序）：{notes}",
@@ -315,11 +319,11 @@ export const zhCN = {
   "console.judge.over_short": "对局结束",
   "console.judge.peace": "昨夜是平安夜",
   "console.judge.deaths": "昨夜死亡：{deaths}号",
-  "console.vote.abstain": "{actor}号->弃票",
-  "console.vote.target": "{actor}号->{target}号",
+  "console.vote.abstain": "{actor}号弃票",
+  "console.vote.target": "{actor}号投给{target}号",
   "console.judge.votes": "放逐票型：{votes}",
   "console.judge.exile": "{target}号被放逐出局",
-  "console.judge.badge_transfer": "警徽移交：{from}号 -> {to}号",
+  "console.judge.badge_transfer": "{from}号将警徽移交给{to}号",
   "console.judge.badge_destroy": "警徽被撕毁（原持有者{target}号）",
   "console.judge.blast": "{actor}号狼人自爆，流程被中断",
   "console.judge.result": "胜利阵营：{winner}，原因：{reason}",
@@ -349,7 +353,7 @@ export const zhCN = {
   "console.live.wolf_end": "[live][夜聊][结束][{actor}] {reason}",
   "console.live.kill_abstain": "[live][行动][狼刀票] {actor}号弃刀",
   "console.live.kill_vote": "[live][行动][狼刀票] {actor}号投刀{target}号",
-  "console.live.check": "[live][查验结果] {actor}号查验{target}号 => {camp}",
+  "console.live.check": "[live][查验结果] {actor}号查验{target}号，结果：{camp}",
   "console.live.guard_skip": "[live][行动][守卫] {actor}号空守",
   "console.live.guard": "[live][行动][守卫] {actor}号守护{target}号",
   "console.live.potion": "[live][行动][女巫] {actor}号对{target}号使用{potion}",
@@ -447,6 +451,8 @@ export const zhCN = {
 } as const satisfies Record<keyof typeof definition.parameters, string>;
 
 export const en = {
+  "console.wall.author": "Note {rank}, player {actor}: {body}",
+  "console.wall.note": "Note {rank}: {body}",
   "console.wall.start": "The anonymous wall is collecting notes.",
   "console.wall.cancel": "The wall window was revoked; notes were not published.",
   "console.wall.publish": "Anonymous wall notes (random order): {notes}",
@@ -566,11 +572,11 @@ export const en = {
   "console.judge.over_short": "Game over",
   "console.judge.peace": "No deaths last night",
   "console.judge.deaths": "Deaths last night: {deaths}",
-  "console.vote.abstain": "{actor}->Abstain",
-  "console.vote.target": "{actor}->{target}",
+  "console.vote.abstain": "Player {actor} abstains",
+  "console.vote.target": "Player {actor} votes for player {target}",
   "console.judge.votes": "Exile votes: {votes}",
   "console.judge.exile": "Player {target} is exiled",
-  "console.judge.badge_transfer": "Sheriff badge transfer: {from} -> {to}",
+  "console.judge.badge_transfer": "Player {from} transfers the sheriff badge to player {to}",
   "console.judge.badge_destroy": "Sheriff badge destroyed (former holder: {target})",
   "console.judge.blast": "Wolf {actor} self-destructs and interrupts the phase",
   "console.judge.result": "Winner: {winner}; reason: {reason}",
@@ -602,7 +608,7 @@ export const en = {
   "console.live.wolf_end": "[live][Wolf chat][End][{actor}] {reason}",
   "console.live.kill_abstain": "[live][Action][Wolf kill vote] Player {actor} abstains",
   "console.live.kill_vote": "[live][Action][Wolf kill vote] Player {actor} targets {target}",
-  "console.live.check": "[live][Inspection] Player {actor} checks {target} => {camp}",
+  "console.live.check": "[live][Inspection] Player {actor} checks player {target}; result: {camp}",
   "console.live.guard_skip": "[live][Action][Guard] Player {actor} skips protection",
   "console.live.guard": "[live][Action][Guard] Player {actor} protects {target}",
   "console.live.potion": "[live][Action][Witch] Player {actor} uses {potion} on {target}",

@@ -210,7 +210,7 @@ test("localizes weighted vote summaries", () => {
         votes: [{ actorId: 1, targetId: 2, abstain: false, weight: 1.5 }],
       },
     }),
-  ).toBe("放逐票型：1号→2号（票权1.5）");
+  ).toBe("放逐票型：1号投给2号（票权1.5）");
 });
 
 test("localizes the final winner and reason", () => {

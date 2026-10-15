@@ -10,6 +10,8 @@ import type { MessageDefinition } from "../definition";
 export const definition = {
   owner: "features/animal-dream",
   parameters: {
+    "animal.unit.skipped_day": [],
+    "animal.unit.exile": [],
     "replay.stage.animal_night_opened": [],
     "replay.stage.animal_fox_chosen": [],
     "replay.stage.animal_fox_effect": [],
@@ -24,18 +26,18 @@ export const definition = {
     "replay.stage.animal_cat_expiry_prepared": [],
     "replay.stage.animal_unit_completed": [],
     "event.animal_night_opened": ["day"],
-    "event.animal_fox_chosen": ["actor", "day", "state"],
-    "event.animal_fox_effect": ["day", "state"],
+    "event.animal_fox_chosen": ["actor", "day", "target"],
+    "event.animal_fox_effect": ["actor", "beauty", "day", "knife", "target"],
     "event.animal_knife_notified": ["actor", "day", "state"],
-    "event.animal_beauty_notified": ["actor", "day", "state"],
+    "event.animal_beauty_notified": ["actor", "charm", "day", "history", "last", "link", "target"],
     "event.animal_cat_revealed": ["actor"],
     "event.animal_puffer_revealed": ["actor"],
-    "event.animal_puffer_decided": ["actor", "day", "state"],
-    "event.animal_puffer_targets": ["day", "state"],
-    "event.animal_wave_prepared": ["day", "state"],
-    "event.animal_wave_committed": ["day", "state"],
-    "event.animal_cat_expiry_prepared": ["actor", "day", "state"],
-    "event.animal_unit_completed": ["day", "state"],
+    "event.animal_puffer_decided": ["actor", "day", "decision"],
+    "event.animal_puffer_targets": ["actor", "day", "round", "targets"],
+    "event.animal_wave_prepared": ["cat", "day", "phase", "proposed"],
+    "event.animal_wave_committed": ["day", "deaths", "phase"],
+    "event.animal_cat_expiry_prepared": ["actor", "day", "kind", "unit"],
+    "event.animal_unit_completed": ["day", "kind", "unit"],
     "error.animal_action_unavailable": [],
     "role.white_cat.brief": [],
     "role.fox_cub.brief": [],
@@ -78,6 +80,8 @@ export const definition = {
 } as const satisfies MessageDefinition;
 
 export const zhCN = {
+  "animal.unit.skipped_day": "跳过白天",
+  "animal.unit.exile": "实际放逐",
   "replay.stage.animal_night_opened": "实际开夜",
   "replay.stage.animal_fox_chosen": "子狐选择",
   "replay.stage.animal_fox_effect": "子狐实际效果",
@@ -92,18 +96,21 @@ export const zhCN = {
   "replay.stage.animal_cat_expiry_prepared": "白猫到期提案",
   "replay.stage.animal_unit_completed": "实际放逐单位完成",
   "event.animal_night_opened": "第{day}夜动物梦境实际开夜。",
-  "event.animal_fox_chosen": "{actor}号第{day}夜子狐选择：{state}。",
-  "event.animal_fox_effect": "第{day}夜子狐实际效果：{state}。",
-  "event.animal_knife_notified": "{actor}号第{day}夜已授权刀权通知：{state}。",
-  "event.animal_beauty_notified": "{actor}号第{day}轮已知狼美人状态：{state}。",
+  "event.animal_fox_chosen": "{actor}号子狐第{day}夜迷惑目标：{target}。",
+  "event.animal_fox_effect":
+    "第{day}夜：{actor}号子狐迷惑{target}号，整队狼刀{knife}，狼美人魅惑{beauty}。",
+  "event.animal_knife_notified": "{actor}号第{day}夜狼刀资格：{state}。",
+  "event.animal_beauty_notified":
+    "{actor}号狼美人第{day}轮：魅惑{charm}，牵连{link}，当前魅惑目标：{target}；最近行动夜：{last}；魅惑记录：{history}。",
   "event.animal_cat_revealed": "{actor}号公开白猫身份，首次延期后仍存活。",
   "event.animal_puffer_revealed": "{actor}号公开河豚身份。",
-  "event.animal_puffer_decided": "{actor}号第{day}轮河豚反击决定：{state}。",
-  "event.animal_puffer_targets": "第{day}轮河豚实际反击目标全集：{state}。",
-  "event.animal_wave_prepared": "第{day}轮动物梦境致死提案：{state}。",
-  "event.animal_wave_committed": "第{day}轮动物梦境实际死亡波：{state}。",
-  "event.animal_cat_expiry_prepared": "{actor}号白猫第{day}轮到期提案：{state}。",
-  "event.animal_unit_completed": "第{day}轮动物梦境实际放逐单位完成：{state}。",
+  "event.animal_puffer_decided": "{actor}号河豚第{day}轮选择{decision}。",
+  "event.animal_puffer_targets": "{actor}号河豚第{day}轮反击目标（第{round}轮票）：{targets}。",
+  "event.animal_wave_prepared": "第{day}天{phase}待结算死亡：{proposed}；白猫延缓死亡：{cat}。",
+  "event.animal_wave_committed": "第{day}天{phase}实际死亡：{deaths}。",
+  "event.animal_cat_expiry_prepared":
+    "第{day}天第{unit}次白天结算（{kind}）：{actor}号白猫延寿到期，待结算死亡。",
+  "event.animal_unit_completed": "第{day}天第{unit}次白天结算已完成（{kind}）。",
   "error.animal_action_unavailable":
     "本次动物角色行动不可用、已失效或参数不合法；请只在原行动提示有效时提交允许的参数。",
   "role.white_cat.brief":
@@ -159,6 +166,8 @@ export const zhCN = {
 } as const satisfies Record<keyof typeof definition.parameters, string>;
 
 export const en = {
+  "animal.unit.skipped_day": "skipped day",
+  "animal.unit.exile": "exile",
   "replay.stage.animal_night_opened": "Actual night opening",
   "replay.stage.animal_fox_chosen": "Fox choice",
   "replay.stage.animal_fox_effect": "Actual Fox effect",
@@ -173,21 +182,24 @@ export const en = {
   "replay.stage.animal_cat_expiry_prepared": "White Cat expiry proposal",
   "replay.stage.animal_unit_completed": "Actual exile unit completed",
   "event.animal_night_opened": "Animal Dream actually opened night {day}.",
-  "event.animal_fox_chosen": "Player {actor}, night {day} Fox choice: {state}.",
-  "event.animal_fox_effect": "Night {day} actual Fox effect: {state}.",
-  "event.animal_knife_notified": "Player {actor}, night {day} authorized knife notice: {state}.",
-  "event.animal_beauty_notified": "Player {actor}, cycle {day} known Wolf Beauty state: {state}.",
+  "event.animal_fox_chosen": "Fox Cub {actor}, night {day} distraction target: {target}.",
+  "event.animal_fox_effect":
+    "Night {day}: Fox Cub {actor} distracts player {target}; pack knife {knife}; Wolf Beauty charm {beauty}.",
+  "event.animal_knife_notified": "Player {actor}, night {day} knife eligibility: {state}.",
+  "event.animal_beauty_notified":
+    "Wolf Beauty {actor}, cycle {day}: charm {charm}; death link {link}; current charm target: {target}; last action night: {last}; charm history: {history}.",
   "event.animal_cat_revealed":
     "Player {actor} reveals White Cat and remains alive after its first deferral.",
   "event.animal_puffer_revealed": "Player {actor} reveals Pufferfish.",
-  "event.animal_puffer_decided": "Player {actor}, cycle {day} Pufferfish decision: {state}.",
+  "event.animal_puffer_decided": "Pufferfish {actor}, cycle {day}: {decision}.",
   "event.animal_puffer_targets":
-    "Cycle {day} complete actual Pufferfish retaliation targets: {state}.",
-  "event.animal_wave_prepared": "Cycle {day} Animal Dream lethal proposals: {state}.",
-  "event.animal_wave_committed": "Cycle {day} Animal Dream actual death wave: {state}.",
+    "Pufferfish {actor}, cycle {day} retaliation targets (ballot round {round}): {targets}.",
+  "event.animal_wave_prepared":
+    "Day {day}, {phase}: proposed deaths: {proposed}; White Cat death deferred: {cat}.",
+  "event.animal_wave_committed": "Day {day}, {phase}: actual deaths: {deaths}.",
   "event.animal_cat_expiry_prepared":
-    "Player {actor}, cycle {day} White Cat expiry proposal: {state}.",
-  "event.animal_unit_completed": "Cycle {day} Animal Dream actual exile unit completed: {state}.",
+    "Day {day}, daytime resolution {unit} ({kind}): White Cat {actor} reaches the end of its deferral; death awaits resolution.",
+  "event.animal_unit_completed": "Day {day}, daytime resolution {unit} completed ({kind}).",
   "error.animal_action_unavailable":
     "This animal-role action is unavailable, expired, or has invalid arguments. Submit only the permitted arguments while the original action prompt is valid.",
   "role.white_cat.brief":

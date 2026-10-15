@@ -1,9 +1,8 @@
 /**
- * 负责双端夜间机制事件的展示映射。输入是事件类型、契约 reader 接收的纯数据和语言；输出保留原政策名称、原字段次序和原未知回退。Node 入站的 Proxy 拒绝仍属于后端，浏览器 reader 不承诺任意外来对象零 trap；此处不执行夜间规则或发布事实。
+ * 负责双端夜间机制事件的展示映射。输入是事件类型、契约 reader 接收的纯数据和语言；输出为两语自然文案，保持名单／死因顺序与未知回退。Node 入站的 Proxy 拒绝仍属于后端，浏览器 reader 不承诺任意外来对象零 trap；此处不执行夜间规则或发布事实。
  */
 import type { MessageKey } from "@ai-werewolf-arena/game-contract";
 import { readNobleSecretBodyFact } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
-import { readAnimalDreamFact } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import { readFragrantPairFact } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { readRadiantEclipseFact } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
 import { readMistRavenFact } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
@@ -48,6 +47,7 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/magician";
 import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { text } from "@ai-werewolf-arena/game-text";
+import { deathCauses, deathDetails, factList, factPlayer, factPlayers } from "./fact-details";
 
 export function demonHunterEventLabel(
   type: string,
@@ -433,26 +433,65 @@ export function nobleSecretBodyEventLabel(
   if (type === "noble_body_knife_committed" && "targetId" in f)
     return text(locale, key, { day: f.day, target: f.targetId ?? text(locale, "common.none") });
   if ("notifiedActorIds" in f) return text(locale, key, { day: f.day });
+  // 此处只提交最终伤害来源，尚未标死；文案不能提前宣布这些玩家已经死亡。
   if ("deathSources" in f)
-    return text(locale, key, { day: f.day, state: JSON.stringify(f.deathSources) });
+    return text(locale, key, {
+      day: f.day,
+      deaths: deathDetails(f.deaths, f.deathSources, locale),
+      blocked:
+        f.blocked === null
+          ? text(locale, "common.none")
+          : deathDetails([f.blocked.targetId], { [f.blocked.targetId]: [f.blocked.cause] }, locale),
+    });
   if ("causes" in f)
-    return text(locale, key, { actor: f.actorId, day: f.day, causes: f.causes.join(", ") });
+    return text(locale, key, {
+      actor: f.actorId,
+      day: f.day,
+      causes: deathCauses(f.causes, locale),
+    });
 
   if (type === "secret_body_revealed") return text(locale, key, { actor: f.actorId });
   if ("text" in f) return text(locale, key, { actor: f.actorId, text: f.text });
   if ("resource" in f)
-    return text(locale, key, { actor: f.actorId, day: f.day, resource: f.resource });
+    return text(locale, key, {
+      actor: f.actorId,
+      day: f.day,
+      resource: text(locale, `secret_body.resource.${f.resource}`),
+    });
   if ("contracts" in f)
-    return text(locale, key, { actor: f.actorId, day: f.day, state: JSON.stringify(f.contracts) });
+    return text(locale, key, {
+      actor: f.actorId,
+      day: f.day,
+      state: factList(
+        f.contracts.map((contract) => {
+          const status = text(locale, `noble.contract.${contract.status.kind}`);
+          return text(locale, "noble.contract.summary", {
+            target: factPlayer(contract.targetId, locale),
+            created: contract.createdNight,
+            expires: contract.expiresNight,
+            status:
+              contract.status.kind === "pending"
+                ? status
+                : text(locale, "noble.contract.closed_on", { day: contract.status.day, status }),
+          });
+        }),
+        locale,
+      ),
+    });
   if ("status" in f)
     return text(locale, key, {
       day: f.day,
-      contract: f.contractId,
+      created: f.createdNight,
       target: f.targetId,
-      status: f.status,
+      status: text(locale, `noble.contract.${f.status}`),
     });
   if ("cause" in f)
-    return text(locale, key, { actor: f.actorId, day: f.day, target: f.targetId, cause: f.cause });
+    return text(locale, key, {
+      actor: f.actorId,
+      day: f.day,
+      target: f.targetId,
+      cause: deathCauses([f.cause], locale),
+    });
   return text(locale, key, {
     actor: f.actorId,
     day: f.day,
@@ -473,12 +512,35 @@ export function fragrantPairEventLabel(
     return text(locale, "event.fragrant_wave_committed", {
       actor: f.actorId,
       day: f.day,
-      deaths: f.deaths.join(", "),
+      deaths: deathDetails(f.deaths, f.deathSources, locale),
     });
   if ("known" in f)
     return text(locale, "event.fragrant_night_notified", {
       ...base,
-      state: JSON.stringify(f.known),
+      wolf: factPlayer(f.known.knownWolfId, locale),
+      choice:
+        f.known.lastChoice === null
+          ? text(locale, "common.none")
+          : text(locale, "event.night_choice", {
+              day: f.known.lastChoice.day,
+              target:
+                f.known.lastChoice.pairIds === null
+                  ? text(locale, "fragrant.choice.pass")
+                  : factPlayers(f.known.lastChoice.pairIds, locale),
+            }),
+      used: text(locale, f.known.used ? "common.used" : "common.unused"),
+      notices: factList(
+        f.known.knifeNotices.map((notice) =>
+          text(locale, "fragrant.knife_notice", {
+            day: notice.day,
+            eligible: text(
+              locale,
+              notice.eligible ? "console.animal.available" : "console.animal.unavailable",
+            ),
+          }),
+        ),
+        locale,
+      ),
     });
   if ("containsWerewolf" in f)
     return text(locale, "event.fragrant_pair_inspected", {
@@ -505,33 +567,5 @@ export function fragrantPairEventLabel(
   return text(locale, "event.fragrant_pair_chosen", {
     ...base,
     targets: f.pairIds?.join(", ") ?? text(locale, "fragrant.choice.pass"),
-  });
-}
-
-export function animalDreamEventLabel(
-  type: string,
-  payload: unknown,
-  locale: Locale = "zh-CN",
-): string | null {
-  const fact = readAnimalDreamFact(type, payload);
-  if (!fact) return null;
-  const p = fact.payload;
-  if (fact.type === "animal_night_opened")
-    return text(locale, "event.animal_night_opened", { day: p.day });
-  if (fact.type === "animal_cat_revealed" || fact.type === "animal_puffer_revealed")
-    return text(locale, `event.${fact.type}`, { actor: "actorId" in p ? p.actorId : "" });
-  return text(locale, `event.${fact.type}`, {
-    day: p.day,
-    ...("actorId" in p &&
-    [
-      "animal_fox_chosen",
-      "animal_knife_notified",
-      "animal_beauty_notified",
-      "animal_puffer_decided",
-      "animal_cat_expiry_prepared",
-    ].includes(fact.type)
-      ? { actor: p.actorId }
-      : {}),
-    state: JSON.stringify(p),
   });
 }

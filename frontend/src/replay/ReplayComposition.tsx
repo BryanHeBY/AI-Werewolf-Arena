@@ -141,7 +141,13 @@ export function ReplayFrame({ input, frame }: { input: ReplayRenderInput; frame:
         <div
           data-testid="composition-event"
           data-event-seq={view.eventSeq ?? ""}
-          style={{ fontSize: 27, lineHeight: 1.35, fontWeight: 650 }}
+          style={{
+            fontSize: 27,
+            lineHeight: 1.35,
+            fontWeight: 650,
+            whiteSpace: "pre-wrap",
+            overflowWrap: "anywhere",
+          }}
         >
           {view.label}
         </div>

@@ -40,7 +40,9 @@ for (const size of [6, 12])
           locale,
           document.players.map((p) => p.player_id),
         );
-        expect(label).toContain(mode === "write" ? "[God] secret 💌" : "[]");
+        expect(label).toContain(
+          mode === "write" ? "[God] secret 💌" : locale === "en" ? "None" : "无",
+        );
         expect(label).not.toContain("actorId");
         const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
         expect(markup).toContain(locale === "en" ? "Anonymous wall" : "匿名墙");

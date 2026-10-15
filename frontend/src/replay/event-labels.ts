@@ -247,15 +247,7 @@ export function eventLabel(
         : t("replay.guard", { actor, target });
     case "seer_checked": {
       const result = readSeerInspectionResult(p);
-      let label = result ? inspectionLabel(result, locale) : "?";
-      if (!result) {
-        try {
-          const raw = Object.getOwnPropertyDescriptor(p, "result");
-          if (raw && Object.hasOwn(raw, "value")) label = JSON.stringify(raw.value) ?? "?";
-        } catch {
-          /* 非 JSON 的诊断值读取或序列化失败时，仍保留未知标签。 */
-        }
-      }
+      const label = result ? inspectionLabel(result, locale) : t("common.unknown");
       return t("replay.check", { actor, target, camp: label });
     }
     case "witch_potion_used":

@@ -63,7 +63,7 @@ export const definition = {
     "error.wild_child_unavailable": [],
     "error.wild_child_choice": [],
     "console.wild_child.choice": ["actor", "target"],
-    "console.wild_child.death": ["actor", "causes", "commit", "target"],
+    "console.wild_child.death": ["actor", "causes", "target"],
     "console.wild_child.transform": ["actor", "night"],
     "console.wild_child.active": ["actor", "night"],
     "replay.stage.wild_child_model_chosen": [],
@@ -304,8 +304,7 @@ export const zhCN = {
   "error.wild_child_unavailable": "当前没有原生命与首夜授权的野孩子选择窗口。",
   "error.wild_child_choice": "榜样必须是另一名当前授权的活人。",
   "console.wild_child.choice": "野孩子{actor}号选择{target}号为榜样。",
-  "console.wild_child.death":
-    "God：野孩子{actor}号的榜样{target}号已实际淘汰，死因{causes}，提交{commit}。",
+  "console.wild_child.death": "野孩子{actor}号的榜样{target}号已实际死亡，来源：{causes}。",
   "console.wild_child.transform": "野孩子{actor}号现在属于狼阵营，从第{night}夜才能入群。",
   "console.wild_child.active": "野孩子{actor}号已在第{night}夜加入狼群，启用互认、夜聊与投刀。",
   "replay.stage.wild_child_model_chosen": "野孩子私有事实",
@@ -576,7 +575,7 @@ export const en = {
   "error.wild_child_choice": "The model must be another currently authorized living player.",
   "console.wild_child.choice": "Wild Child {actor} chose player {target} as model.",
   "console.wild_child.death":
-    "God: model {target} of Wild Child {actor} was committed eliminated; causes {causes}, commit {commit}.",
+    "Wild Child {actor}'s model, player {target}, actually died; causes: {causes}.",
   "console.wild_child.transform":
     "Wild Child {actor} now belongs to Wolf; pack access is eligible from night {night}.",
   "console.wild_child.active":

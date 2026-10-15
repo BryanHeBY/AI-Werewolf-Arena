@@ -60,7 +60,10 @@ for (const locale of ["zh-CN", "en"] as const)
     test(`${locale} literal ${row[0]} labels across shared/backend/frontend`, () => {
       const e = event(row);
       expect(typeof animalDreamEventLabel(e.type, e.payload, locale)).toBe("string");
-      expect(typeof eventLabel(e, locale, ids)).toBe("string");
+      expect(eventLabel(e, locale, ids)).toBe(animalDreamEventLabel(e.type, e.payload, locale)!);
+      expect(eventLabel(e, locale, ids)).not.toMatch(
+        /[{}]|awa_animal_dream_v1|wolf_kill|blockedCatId|targetId/,
+      );
     });
 test("literal finite facts reject invalid envelope, players and extra private data", () => {
   for (const row of rows) {

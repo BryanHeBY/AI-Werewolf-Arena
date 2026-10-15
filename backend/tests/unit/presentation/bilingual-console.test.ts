@@ -15,6 +15,35 @@ const event = <K extends GameEvent["type"]>(
   payload: Extract<GameEvent, { type: K }>["payload"],
 ): Extract<GameEvent, { type: K }> =>
   ({ timestamp: 1, type, payload }) as Extract<GameEvent, { type: K }>;
+
+for (const locale of ["zh-CN", "en"] as const)
+  test(`${locale}: unknown inspection data uses an unknown label without exposing JSON or changing records`, () => {
+    // 未识别的扩展结果可能来自旧归档，不能退回旧布尔字段而误报验人结果。
+    const row = {
+      timestamp: 1,
+      type: "seer_checked",
+      payload: {
+        actorId: 3,
+        targetId: 1,
+        isWerewolf: false,
+        result: { kind: "future_mode", original: "raw canary" },
+      },
+    } as unknown as GameEvent;
+    const before = structuredClone(row),
+      registry = getDefaultScriptEventRenderRegistry();
+    expect(registry.toLiveRender(row, true, locale)).toEqual([
+      {
+        kind: "private",
+        text:
+          locale === "en"
+            ? "[live][Inspection] Player 3 checks player 1; result: Unknown"
+            : "[live][查验结果] 3号查验1号，结果：未知",
+      },
+    ]);
+    expect(registry.toLiveRender(row, false, locale)).toEqual([]);
+    expect(row).toEqual(before);
+  });
+
 const events: GameEvent[] = [
   event("hidden_wolf_awakened", { actorId: 1, day: 2 }),
   event("bear_roared", { day: 1, roared: true }),
@@ -327,7 +356,7 @@ test("all existing console branches render English without changing event facts,
       events.find((item) => item.type === "vote_summary")!,
       "en",
     ),
-  ).toContain("1->2(w=2)");
+  ).toContain("Player 1 votes for player 2 (weight 2)");
   expect(registry.toLiveRender(events.at(-1)!, true, "en")[0].text).toContain("No winner");
 });
 

@@ -42,7 +42,6 @@ export {
   radiantEclipseEventLabel,
   nobleSecretBodyEventLabel,
   fragrantPairEventLabel,
-  animalDreamEventLabel,
 } from "./events/night-mechanisms";
 
 export { formatNativeRolePart } from "./native-role-state";
@@ -50,3 +49,5 @@ export { formatNativeRolePart } from "./native-role-state";
 export { formatComponentPart } from "./component-state";
 
 export { GAME_PRESENTATION_CONTRACT, supportsGamePresentation } from "./version";
+
+export { animalDreamEventLabel } from "./events/animal-dream";

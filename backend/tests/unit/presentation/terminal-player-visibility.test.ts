@@ -83,14 +83,14 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(privateLines).toEqual(
       locale === "zh-CN"
         ? [
-            "[live][私有] 2号子狐第2夜迷惑目标：4",
-            "[live][上帝私有] 第2夜：2号子狐迷惑4号，整队狼刀已封锁，狼美人魅惑已封锁",
+            "[live][私有] 2号子狐第2夜迷惑目标：4号。",
+            "[live][上帝私有] 第2夜：2号子狐迷惑4号，整队狼刀已封锁，狼美人魅惑已封锁。",
             "[live][私有] 4号第2夜无狼刀资格，本夜跳过狼刀投票",
             "[live][上帝] 第2天：熊咆哮了",
           ]
         : [
-            "[live][Private] Fox Cub 2, night 2 distraction target: 4",
-            "[live][God private] Night 2: Fox Cub 2 distracts player 4; pack knife blocked; Wolf Beauty charm blocked",
+            "[live][Private] Fox Cub 2, night 2 distraction target: Player 4.",
+            "[live][God private] Night 2: Fox Cub 2 distracts player 4; pack knife blocked; Wolf Beauty charm blocked.",
             "[live][Private] Player 4 is ineligible for the knife on night 2; skip tonight's knife vote",
             "[live][God] Day 2: Bear roared",
           ],

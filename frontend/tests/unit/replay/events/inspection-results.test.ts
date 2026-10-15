@@ -46,11 +46,17 @@ for (const locale of ["zh-CN", "en"] as const)
         }),
       );
     const unknown = { kind: "future_mode", original: "原文 content" };
-    expect(eventLabel(event({ result: unknown, isWerewolf: false }), locale)).toContain(
-      JSON.stringify(unknown),
-    );
-    expect(eventLabel(event({ result: null, isWerewolf: false }), locale)).toContain("null");
-    expect(eventLabel(event({}), locale)).toContain("?");
+    for (const payload of [
+      { result: unknown, isWerewolf: false },
+      { result: null, isWerewolf: false },
+      {},
+    ]) {
+      const input = event(payload),
+        before = structuredClone(input);
+      expect(eventLabel(input, locale)).toContain(text(locale, "common.unknown"));
+      expect(eventLabel(input, locale)).not.toMatch(/future_mode|original|[{}]/);
+      expect(input).toEqual(before);
+    }
   });
 
 test("public replay loading keeps the complete typed result and unknown extensions without mutating the source", () => {
