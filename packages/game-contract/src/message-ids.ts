@@ -1,5 +1,5 @@
 /**
- * 负责维护请求、归档与双语词典共用的有限机器消息 ID。输入为从 2d36e4d0d17283e49e922ada1bbad8635a0b7382 固定下来的原一千五百一十三项标识，输出冻结且有序的注册表与 MessageKey 判定。
+ * 负责维护请求、归档与双语词典共用的有限机器消息 ID。保留原一千五百一十三项标识顺序，新增标识只在末尾追加；输出冻结且有序的注册表与 MessageKey 判定。
  * 注册表在此手工维护；翻译与参数校验属于 game-text，不在这里导入字典、渲染用户原文或按语言改写 ID。
  */
 export const MESSAGE_IDS = Object.freeze([
@@ -1516,6 +1516,10 @@ export const MESSAGE_IDS = Object.freeze([
   "request.summary.badge_choice",
   "prompt.config.badge_next",
   "prompt.config.badge_choice",
+  "console.live.chat",
+  "console.live.action",
+  "console.live.private",
+  "console.live.god_private",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

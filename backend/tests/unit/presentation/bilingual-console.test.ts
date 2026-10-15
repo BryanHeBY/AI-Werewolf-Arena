@@ -148,6 +148,75 @@ for (const locale of ["zh-CN", "en"] as const)
   });
 
 for (const locale of ["zh-CN", "en"] as const)
+  for (const privateEvents of [false, true])
+    test(`${locale}/${privateEvents}: terminal Bear announcements have a localized live prefix without exposing identities`, () => {
+      const rows = [
+          event("bear_roared", { day: 1, roared: true }),
+          event("bear_roared", { day: 2, roared: false }),
+        ],
+        original = structuredClone(rows),
+        lines: string[] = [];
+      presentStreamEvents(rows, privateEvents, (line) => lines.push(line), locale);
+      expect(lines).toEqual(
+        locale === "en"
+          ? ["[live][God] Day 1: Bear roared", "[live][God] Day 2: Bear did not roar"]
+          : ["[live][上帝] 第1天：熊咆哮了", "[live][上帝] 第2天：熊没有咆哮"],
+      );
+      expect(rows).toEqual(original);
+    });
+
+for (const locale of ["zh-CN", "en"] as const)
+  test(`${locale}: bare action/private/announcement labels get terminal categories and private filtering remains effective`, () => {
+    const rows = [
+        event("player_shot", { actorId: 7, targetId: 2 }),
+        event("hidden_wolf_awakened", { actorId: 1, day: 2 }),
+        event("sheriff_pk_started", { candidates: [3, 5] }),
+        event("knight_duel", { actorId: 1, targetId: 2, result: "wolf" }),
+        event("additional_deaths", { deaths: [4, 6] }),
+      ],
+      lines: string[] = [];
+    presentStreamEvents(rows, true, (line) => lines.push(line), locale);
+    expect(lines).toEqual(
+      locale === "en"
+        ? [
+            "[live][Action] Player 7 shoots player 2",
+            "[live][Private] Hidden Wolf 1 inherits the knife on day 2",
+            "[live][God] Sheriff PK begins: 3, 5.",
+            "[live][God] Knight 1 duels player 2; the wolf target dies",
+            "[live][God] Additional deaths: 4, 6",
+          ]
+        : [
+            "[live][行动] 7号开枪带走2号",
+            "[live][私有] 1号隐狼在第2天获得刀权",
+            "[live][上帝] 警长PK开始：3, 5。",
+            "[live][上帝] 1号骑士决斗2号，目标为狼并出局",
+            "[live][上帝] 追加死亡：4, 6",
+          ],
+    );
+    const publicLines: string[] = [];
+    presentStreamEvents(rows, false, (line) => publicLines.push(line), locale);
+    expect(publicLines).toEqual(lines.filter((_, index) => index !== 1));
+  });
+
+for (const locale of ["zh-CN", "en"] as const)
+  for (const privateEvents of [false, true])
+    test(`${locale}/${privateEvents}: all covered terminal branches keep exactly one live prefix and preserve rendering kinds`, () => {
+      const registry = getDefaultScriptEventRenderRegistry(),
+        before = structuredClone(events),
+        lines: string[] = [];
+      presentStreamEvents(events, privateEvents, (line) => lines.push(line), locale);
+      expect(lines.length).toBeGreaterThan(0);
+      expect(lines).toHaveLength(
+        events.flatMap((row) => registry.toLiveRender(row, privateEvents, locale)).length,
+      );
+      for (const line of lines) {
+        expect(line.startsWith("[live][")).toBe(true);
+        expect(line.match(/\[live\]/g)).toHaveLength(1);
+      }
+      expect(events).toEqual(before);
+    });
+
+for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: Beauty choice, death and protection remain explicit private terminal diagnostics with stable replay stages`, () => {
     const registry = getDefaultScriptEventRenderRegistry(),
       rows = events.filter((item) => item.type.startsWith("charm_")),

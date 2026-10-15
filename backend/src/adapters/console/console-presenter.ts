@@ -31,6 +31,16 @@ export function createConsoleLog(color: boolean): ConsoleLog {
   return (text, tone = "info") => console.log(colorize(text, tone, enabled));
 }
 
+// 角色与机制可复用不带终端标签的展示文案；按已有输出分类统一补直播前缀。
+const livePrefixKeys = {
+  chat: "console.live.chat",
+  action: "console.live.action",
+  private: "console.live.private",
+  god: "console.live.god",
+  system: "console.live.god",
+  end: "console.live.god",
+} as const;
+
 export function presentStreamEvents(
   events: readonly GameEvent[],
   printPrivateEvents: boolean,
@@ -50,7 +60,16 @@ export function presentStreamEvents(
               : render.kind === "god"
                 ? "god"
                 : "ok";
-      log(render.text, tone);
+      // 旧贡献已含席位、阶段等专用标签，原样保留，避免重复前缀或改写玩家发言。
+      // God 分类还包括公开公告；仅明确的空受众事实使用“上帝私有”，不从分类反推权限。
+      const prefixKey =
+        render.kind === "god" && "audience" in event && event.audience?.length === 0
+          ? "console.live.god_private"
+          : livePrefixKeys[render.kind];
+      const line = render.text.startsWith("[live]")
+        ? render.text
+        : text(locale, prefixKey, { line: render.text });
+      log(line, tone);
     }
   }
 }

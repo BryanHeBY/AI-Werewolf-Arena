@@ -25,3 +25,5 @@ Fallback可在原政策下处理模型失败或预算耗尽；外来TimeoutError
 两种详细开关同时关闭时，不显示提示、模型 message / thought 或工具轨迹；单独开启 IO 不显示 ACP thought 或工具状态。SDK 的 assistant 输出与 ACP message 同时属于 IO 和轨迹，因此任一相关开关开启即可显示。ACP IO 从流式观察器输出一次，逐 token 合并及工具状态去重保持；没有额外复制整份 response。`createAcpConsoleLogger` 三参数 API 仍沿用既有轨迹输出默认值，runner 明确传入本局两个 flags。
 
 显示标签按独立 `displayLocale` 渲染，原提示、模型文本与参数保留原文。开启 `trace` 仍会显示已接受动作的 args，这是既有 SDK 语义；它不是无内容日志。配置认证/env不作为日志输入，失败仅输出安全诊断。日志属于本地运行观察，私有轮次保存也不受详细日志 flags 控制；不要把这些输出当作公开复盘。
+
+直播事件由终端 presenter 统一补齐 `[live]` 及本地化分类标签。已有席位、行动或阶段专用标签原样保留；熊公告等复用展示文案的事件按现有分类补前缀。明确空受众的 God 事实标为“上帝私有”，公开熊公告仍标为“上帝”。该包装只改变终端行，不改共享回放标签、事件字段或私有信息筛选；被 `printPrivateEvents` 隐藏的技能通知仍保持隐藏。

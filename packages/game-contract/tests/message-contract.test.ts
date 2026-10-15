@@ -1,6 +1,6 @@
 /**
  * 包级单元／类型契约测试验证不绑定语言的消息标识。
- * 独立预期为迁移前 Git 2d36e4d 冻结的 1513 键顺序摘要与端点键；输入包括未知键和可序列化消息引用。
+ * 独立预期为原有 1513 键顺序摘要及明确追加的终端标签；输入包括未知键和可序列化消息引用。
  * DTO 不按每个键约束参数，运行参数格式归 game-text；本文件不加载词典、展示器、World 或模型。
  */
 import { expect, test } from "bun:test";
@@ -14,14 +14,22 @@ import {
 
 const fixedSequenceHash = "cd750ba72a9b5902562d650125797b2417126bdb82b2aaa199822b05cd22ec78";
 
-test("the 1513 message IDs retain the exact fixed-commit sequence", () => {
-  expect(MESSAGE_IDS).toHaveLength(1513);
-  expect(new Set(MESSAGE_IDS).size).toBe(1513);
-  expect(createHash("sha256").update(JSON.stringify(MESSAGE_IDS)).digest("hex")).toBe(
-    fixedSequenceHash,
-  );
+test("existing message IDs retain their exact sequence and console messages are appended", () => {
+  expect(MESSAGE_IDS).toHaveLength(1517);
+  expect(new Set(MESSAGE_IDS).size).toBe(1517);
+  expect(
+    createHash("sha256")
+      .update(JSON.stringify(MESSAGE_IDS.slice(0, 1513)))
+      .digest("hex"),
+  ).toBe(fixedSequenceHash);
   expect(MESSAGE_IDS[0]).toBe("replay.stage.animal_night_opened");
-  expect(MESSAGE_IDS.at(-1)).toBe("prompt.config.badge_choice");
+  expect(MESSAGE_IDS[1512]).toBe("prompt.config.badge_choice");
+  expect(MESSAGE_IDS.slice(1513)).toEqual([
+    "console.live.chat",
+    "console.live.action",
+    "console.live.private",
+    "console.live.god_private",
+  ]);
 });
 
 test("the canonical registry is frozen and key validation grants no inherited object names", () => {
@@ -76,14 +84,14 @@ test("closed key typing and optional readonly parameter shape preserve existing 
   const missingParameters: MessageRef = { key: "role.witch.state" };
   const extraParameters: MessageRef = { key: "common.none", parameters: { extra: "literal" } };
   const nonfinite: MessageRef = { key, parameters: { id: NaN } };
-  // @ts-expect-error Unknown machine keys cannot become a MessageKey.
+  // @ts-expect-error 未登记的机器键不能成为 MessageKey。
   const unknownKey: MessageKey = "does.not.exist";
-  // @ts-expect-error References also retain the closed machine key set.
+  // @ts-expect-error 消息引用同样受闭合机器键集合约束。
   const unknownReference: MessageRef = { key: "does.not.exist" };
-  // @ts-expect-error Parameters retain the original string/number value contract.
+  // @ts-expect-error 参数保留原字符串／数字值契约。
   const booleanParameter: MessageRef = { key, parameters: { id: true } };
   if (false) {
-    // @ts-expect-error Existing readonly parameter maps cannot be mutated through a reference.
+    // @ts-expect-error 不得通过引用修改只读参数表。
     numeric.parameters!.id = 13;
   }
   void [unknownKey, unknownReference, booleanParameter, nonfinite];
