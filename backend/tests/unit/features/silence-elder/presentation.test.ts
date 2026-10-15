@@ -1,5 +1,5 @@
 /**
- * 用字面事实验证双语展示、逐玩家受众与观察策略，不从生产输出生成预期。
+ * 单元测试负责用字面事实验证双语展示、逐玩家受众与观察策略，不从生产输出生成预期。
  * 输入是固定原生板及独立动作/译文；原文保留、匿名公告和God隔离是主要反例，未调用模型。
  */
 import { expect, test } from "bun:test";
@@ -243,6 +243,8 @@ test("畸形私有受众拒绝且prepared payload不保家族wrapper", () => {
     ).toEqual([]);
   const e = structuredClone(events[1]!) as InertAgentEvent,
     prepared = prepareInertAgentEvent(e);
+  if (e.type !== "silence_announced" || prepared.projectionEvent.type !== "silence_announced")
+    throw new Error("literal_silence_announced_expected");
   expect(prepared.projectionEvent.payload).toEqual({
     policy,
     day: 1,

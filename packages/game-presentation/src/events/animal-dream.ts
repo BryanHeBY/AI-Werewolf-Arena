@@ -1,6 +1,6 @@
 /**
  * 负责动物梦境事实的双语叙述，供终端、裁判记录和 Web 复盘共用。
- * 输入须通过原事实 reader；候选死亡与实际死亡分别描述，白猫延期不等于死亡。
+ * 输出为共享自然语言标签或拒绝null；输入须通过原事实 reader；候选死亡与实际死亡分别描述，白猫延期不等于死亡。
  * 子狐命中只在 God 事实内描述，个人刀权通知不补充封刀来源；受众筛选仍归调用方。
  */
 import { readAnimalDreamFact } from "@ai-werewolf-arena/game-contract/facts/animal-dream";

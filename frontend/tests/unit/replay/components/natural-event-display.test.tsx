@@ -1,5 +1,5 @@
 /**
- * 用日志中的同一组事实核对 Web 时间线和 Remotion 画面，防止只修终端而遗漏浏览器。
+ * 组件单元测试用日志中的同一组事实核对 Web 时间线和 Remotion 画面，防止只修终端而遗漏浏览器。
  * 展示前后保持原事件和席位状态，公开死亡仍以 night_resolved 等正式结果事件为准。
  */
 import { expect, test } from "bun:test";
