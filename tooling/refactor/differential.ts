@@ -1,9 +1,7 @@
 /**
- * Compare two independently generated strict traces from fixed engine snapshots.
- * Input fingerprints may differ only as explicitly identified build metadata;
- * every request/event/operation/stock/knowledge/result/causal field is compared.
- * No unknown field is suppressed. Each child must replay under its own engine.
- * This verifies mechanical equivalence, not rule correctness or F01/F02 changes.
+ * 负责比较两个固定引擎快照独立产生的严格复现轨迹。输入为两份轨迹及显式构建元数据；
+ * 输出为首个差异或通过，请求、事件、操作、库存、知识、结果和因果字段均参与比较，不忽略未知字段。
+ * 每个子进程必须先在自己的引擎下完成严格复现；该工具验证机械等价，不证明规则正确或 F01／F02 行为修正。
  */
 import { createHash } from "node:crypto";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
@@ -17,12 +15,12 @@ export function comparableTrace(trace: unknown): unknown {
     strictReplay?: Record<string, unknown>;
   };
   if (!copy.record?.metadata || !copy.strictReplay) throw Error("differential_trace_invalid");
-  // Only these version fields differ. Engine ID and unknown fields still compare.
+  // 仅移除这三个构建身份字段；引擎 ID 和未知扩展字段仍须一致。
   const engine = copy.record.metadata.engine;
   if (!engine || typeof engine !== "object") throw Error("differential_engine_missing");
   for (const name of ["sourceHash", "lockHash", "commit"])
     delete (engine as Record<string, unknown>)[name];
-  // Output location is an artifact address, not a field in the recorded protocol.
+  // 只略过复现输出目录这一产物地址，不删录制协议内的路径或其它未知字段。
   delete copy.strictReplay.recordDir;
   return copy;
 }
@@ -119,6 +117,7 @@ export async function compareBuilds(options: {
   const report = [];
   let failure: unknown;
   try {
+    // 每个输入按“旧构建→新构建”执行；场景和驱动文件在比较间隙也必须保持原字节。
     for (const [index, scenario] of options.scenarios.entries()) {
       const input = path.resolve(scenario),
         bytes = await readFile(input);
@@ -151,8 +150,7 @@ export async function compareBuilds(options: {
   } catch (error) {
     failure = error;
   }
-  // Verify large dependency inventories around the complete batch. Per-child
-  // source/metadata byte and membership verification remains immediate.
+  // 较重的依赖树核验放在整批前后；每个子进程的源码／元数据字节与成员集合仍即时核对。
   const verified = await Promise.allSettled([
     assertSnapshotUnchanged(baseline),
     assertSnapshotUnchanged(candidate),

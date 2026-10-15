@@ -114,6 +114,7 @@ export function createAcpConsoleLogger(
   },
 ): AcpConsoleLogger {
   const textLabel = (key: MessageKey) => text(locale, key);
+  // 每个 logger 只服务一个玩家；按文本类别和 messageId 合并增量，工具状态仅用于显示去重。
   let pending: { kind: "message" | "thought"; id: string; text: string } | null = null;
   const toolStates = new Map<string, { label: string; status?: string; error: string }>();
   const emitText = (kind: "message" | "thought", value: string) => {
@@ -189,8 +190,7 @@ export function createAcpConsoleLogger(
         event.error === undefined || event.error === null || event.error === ""
           ? ""
           : formatErrorDiagnostic(event.error, locale);
-      // Partial updates can refine input/content without changing tool status.
-      // Keep their metadata, but only print lifecycle changes or new errors.
+      // 部分更新可只补充输入或内容；保留其显示元数据，仅在状态改变或出现新错误时打印。
       const changed =
         (status !== undefined && status !== previous?.status) ||
         (error !== "" && error !== previous?.error);

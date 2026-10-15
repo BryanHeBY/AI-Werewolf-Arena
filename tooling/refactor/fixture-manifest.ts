@@ -1,11 +1,8 @@
 /**
- * Inventories public fixture bytes and associates recorded archives by literal
- * metadata, actor identities and shared recorded events. The pure reader and
- * selectors accept JSON manifests and return test-only descriptions; explicit
- * generation owns Git/filesystem I/O and never runs a game, adapter or oracle.
- * Frozen origin paths own stable suite identities. Metadata association and byte
- * preservation do not grant acceptance: unknown provenance stays explicit and
- * generated suites remain pending independent review, with no fixture rewrites.
+ * 负责盘点公开 fixture 字节，并按字面元数据、玩家身份与共享录制事件关联档案。
+ * 纯读取器和选择器消费 JSON 清单，输出测试用描述；显式生成入口拥有 Git／文件读取，不运行游戏、适配器或规则预期算法。
+ * 冻结来源路径决定稳定 suite 身份，当前位置只描述迁移落点。字节保持与元数据关联不能授予验收通过；
+ * 未知来源继续显式保留，生成的 suite 等待独立审查，本模块不重写 fixture。
  */
 
 export type FixtureOwner = "backend" | "frontend" | "replay-contract";
@@ -22,6 +19,7 @@ export interface FixtureEvidence {
   detail: string;
 }
 export type FixtureObservation<T> =
+  // observed 必须带字面证据；unknown 保留缺失原因，不能以生产默认值补成已观察结果。
   | { state: "observed"; value: T; evidence: FixtureEvidence[] }
   | { state: "unknown"; reason: string };
 export interface FixtureActor {
@@ -40,6 +38,7 @@ export interface FixtureMetadata {
   formatVersion: FixtureObservation<number>;
 }
 export interface FixtureArtifact {
+  // 来源身份永久绑定冻结样本；current 两字段单独记录迁移后的实际字节，不覆盖原 SHA／长度。
   originPath: string;
   currentPath: string;
   sha256: string;
@@ -52,6 +51,7 @@ export interface FixtureArtifact {
   metadata: FixtureMetadata;
 }
 export interface FixtureAcceptance {
+  // 关联与字节证据只支持盘点；accepted／rejected 还须明确独立审查证据。
   status: "pending-review" | "accepted" | "rejected";
   evidence: {
     kind: "baseline-byte-match" | "metadata-association" | "independent-review";
@@ -87,7 +87,7 @@ export interface FixtureSourceAsset {
   kind: "adapter-script" | "test-support";
   moduleRelocations?: FixtureSourceModuleRelocation[];
 }
-/** Exact imported declarations moved by a reviewed support ownership slice. */
+/** 已审查的 support 归属迁移所移动的精确导入声明；每个绑定保留独立声明摘要。 */
 export interface FixtureSourceModuleRelocation {
   originPath: string;
   currentPath: string;
@@ -252,7 +252,7 @@ function checkMetadata(value: unknown): asserts value is FixtureMetadata {
   }
 }
 
-/** Reads a serialized, detached manifest; accessor-bearing runtime objects are not inputs. */
+/** 只解析序列化清单并返回冻结数据；带访问器的运行对象不属于此入口的输入。 */
 export function parseFixtureManifest(serialized: string): FixtureManifest {
   const value: unknown = JSON.parse(serialized);
   if (!record(value)) fail("document");
@@ -441,6 +441,7 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
     )
       fail("source_asset_support_identity");
   }
+  // JSON 档案必须字节不变；只有登记了独立程序证明的脚本允许机械路径迁移。
   for (const file of artifacts.values())
     if (
       file.kind !== "adapter-script" &&
@@ -566,6 +567,7 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
         canonical(anchor.metadata.source.state === "observed" ? anchor.metadata.source.value : null)
     )
       fail("suite_source_identity");
+    // 文件与 suite 不能联合捏造新元数据；这里只核两层记录一致，实际档案仍需另行重读核对。
     const aggregate = mergeMetadata(
       { file: anchor, value: undefined },
       memberArtifacts.map((file) => ({ file, value: undefined })),
@@ -635,6 +637,7 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
       fail("derived_manifest_membership");
     derivedPaths.add(entry.path);
   }
+  // value 来自本次 JSON.parse，完整校验后递归冻结；不把此逻辑当作任意运行对象的安全读取器。
   const freeze = (entry: unknown): void => {
     if (entry && typeof entry === "object") {
       Object.values(entry).forEach(freeze);
@@ -761,6 +764,7 @@ function literalMetadata(file: FixtureArtifact, value: unknown): FixtureMetadata
     walk(value, "");
     return [...values.values()];
   };
+  // 单值字段只接受唯一字面观察；同名字段冲突保留 unknown，不按文件名或规则默认值猜测。
   const scalar = (name: string): FixtureObservation<string> => {
     const entries = collect(name);
     return entries.length === 1 && nonempty(entries[0]!.value)
@@ -863,7 +867,7 @@ function mergeMetadata(anchor: LoadedFixture, members: LoadedFixture[]): Fixture
   return merged;
 }
 
-/** Associates inert, byte-checked inputs. It never opens a file or computes expected game results. */
+/** 关联调用方提供的纯数据描述；此纯函数不读取文件或核对实际字节，也不计算游戏结果预期。 */
 export function describeFixtureCohorts(
   inputs: { originPath: string; sha256: string; bytes: number; value: unknown; script: boolean }[],
 ): Pick<FixtureManifest, "files" | "suites"> {
@@ -889,6 +893,7 @@ export function describeFixtureCohorts(
     file.metadata = literalMetadata(file, input.value);
     return { file, value: input.value };
   });
+  // 共享事件只作为候选索引；后续还核真实录制的玩家身份与语言，不能由事件命中直接授予归属。
   const gods = loaded.filter((item) => item.file.kind === "god-replay"),
     eventIndex = new Map<string, Set<LoadedFixture>>();
   for (const god of gods) {
@@ -1002,6 +1007,7 @@ export function describeFixtureCohorts(
       detail =
         "Basename only locates candidates; recorded eventCount, complete actor roster and literal terminal result agree, or the explicit cycle_failed/runtime_error nonterminal snapshot and last event day/phase agree. This compares archives and never predicts a rule outcome.";
     }
+    // 只有唯一候选才关联；歧义或无匹配保持独立档案，不任意选首个候选。
     const anchor =
       item.file.kind === "god-replay" ? item : candidates.length === 1 ? candidates[0]! : item;
     item.file.suiteId = suiteIdFor(anchor.file.originPath);
@@ -1076,7 +1082,7 @@ export function describeFixtureCohorts(
   };
 }
 
-/** Derives an exact registered subset; this does not read disk or assign acceptance. */
+/** 仅派生已登记的精确子集，重新校验其清单；不读磁盘或赋予验收状态。 */
 export function deriveLocalFixtureManifest(
   document: FixtureManifest,
   manifestPath: string,
@@ -1109,7 +1115,7 @@ export function deriveLocalFixtureManifest(
   );
 }
 
-/** Compares detached source programs, including RPC/action literals and imported bindings. Only approved source path rebasing and leading trivia are normalized; input scripts are never executed. */
+/** 描述脱离执行的源码程序，包括 RPC／动作字面和导入绑定；只规范化已准许的模块路径与语句前置空白／注释，不执行输入脚本。 */
 export function sourceProgramContract(
   ts: typeof import("typescript"),
   text: string,
@@ -1120,6 +1126,7 @@ export function sourceProgramContract(
 ): { statements: string[]; moduleBindings: string[] } {
   const inverse = new Map(mappings.map((asset) => [asset.currentPath, asset.originPath]));
   const relocated = new Map(relocations.map((entry) => [entry.currentPath, entry]));
+  // 具名导入迁移须精确匹配登记绑定，并且每项只使用一次；不能借路径映射吞掉漏接或新增导入。
   const observedRelocations = new Set<string>();
   const ast = ts.createSourceFile(filename, text, ts.ScriptTarget.Latest, true);
   const changes: { start: number; end: number; replacement: string }[] = [];
@@ -1191,7 +1198,7 @@ export function sourceProgramContract(
   };
 }
 
-/** Complete named declaration syntax, without formatting/comments or executing source. */
+/** 输出完整具名导出声明的规范语法，移除格式／注释，不执行源码。 */
 export function sourceDeclarationContract(
   ts: typeof import("typescript"), text: string, filename: string, name: string,
 ): string {
@@ -1223,7 +1230,7 @@ function normalizeSourceModule(filename: string, specifier: string): string {
   return normalized.join("/");
 }
 
-/** Checks recorded metadata against detached archive inputs; neither side computes game-rule expectations. */
+/** 对照实际档案的纯数据输入重算元数据与关联；两侧都不计算游戏规则预期。 */
 export function assertLiteralFixtureMetadata(
   layout: FixtureManifest,
   actualInputs: Parameters<typeof describeFixtureCohorts>[0],
@@ -1253,7 +1260,7 @@ export function assertLiteralFixtureMetadata(
     fail("literal_archive_metadata_or_association_drift");
 }
 
-/** Reads only allowlisted public fixture roots and verifies immutable Git bytes before describing them. */
+/** 只读取白名单公开 fixture 根，先核固定 Git 字节，再验证当前档案与登记描述。 */
 export async function generateFixtureManifest(repository: string): Promise<FixtureManifest> {
   const fs = await import("node:fs/promises"),
     path = await import("node:path"),
@@ -1301,6 +1308,7 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
     inventory: unknown = JSON.parse(inventoryBytes.toString("utf8"));
   if (!record(inventory) || inventory.commit !== baselineCommit || !Array.isArray(inventory.files))
     fail("frozen_inventory_identity");
+  // 清单不仅要自洽，还须与冻结 Git 的完整路径、大小和 blob 字节逐项一致。
   const rows = inventory.files.map((row: unknown) => {
     if (
       !record(row) ||
@@ -1428,8 +1436,7 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
     else fail("unexpected_fixture_kind");
   }
   for (const directory of fixtureRoots) {
-    // lstat of a whole path can follow an earlier component; verify each public
-    // directory ancestor before recursion is allowed to enumerate any children.
+    // 仅 lstat 完整路径仍可能穿过祖先链接；先逐段核公开目录，再允许递归枚举子项。
     const parts = directory.split("/");
     for (let index = 1; index <= parts.length; index++) {
       const info = await fs.lstat(path.join(root, ...parts.slice(0, index)));

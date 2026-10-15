@@ -1,9 +1,7 @@
 /**
- * Tooling boundary tests for fixed refactor builds. Literal mock package manifests,
- * resolved lock entries and a tiny physical Bun store are the independent inputs;
- * expected bytes, paths and rejection classes are handwritten. Temporary fixtures
- * live under /tmp, never install dependencies or inspect real auth/configuration.
- * This verifies snapshot ownership and integrity, not gameplay or model transport.
+ * 负责固定构建快照的工具边界单元测试。独立输入为字面模拟包清单、锁定解析项和微型物理 Bun 仓库，
+ * 预期字节、路径及拒绝类别均由手写断言给定。样本只建在 /tmp，不安装依赖或读取真实认证／配置。
+ * 此处验证快照所有权与完整性，不代表玩法或模型通信验收。
  */
 import { expect, test } from "bun:test";
 import {
@@ -21,6 +19,7 @@ import { assertSnapshotUnchanged, dependencyDigest, freezeBuild } from "./build-
 import type { BuildLayout } from "./trace-game";
 
 async function fixture() {
+  // 从最小手写包与实际磁盘链接构造输入，原仓库后续变更不应修改快照中已复制的依赖。
   const temporary = await mkdtemp("/tmp/awa-refactor-snapshot-test-");
   const repository = path.join(temporary, "repository");
   const root = path.join(temporary, "build");
@@ -231,6 +230,7 @@ async function withDriverFixture(
     invoke: () => Promise<{ code: number; stderr: string }>;
   }) => Promise<void>,
 ) {
+  // 子进程只加载本临时根下的惰性探针模块，以独立错误／时钟文本核查入口边界。
   const temporary = await mkdtemp("/tmp/awa-refactor-driver-test-");
   const root = path.join(temporary, "root");
   const output = path.join(temporary, "output");

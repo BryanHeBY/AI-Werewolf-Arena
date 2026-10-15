@@ -1,10 +1,7 @@
 /**
- * Inventories public tracked source, test discovery, fixture bytes and package contracts
- * for a fixed Git build. Input is a repository, immutable commit and optional frozen
- * offline gate evidence; output is detached JSON manifests. Git blobs are read without
- * executing application code, private configuration, test callbacks or model adapters.
- * Historical test titles are admitted only when every executable evidence input matches
- * this build; AST declarations remain separate from resolved parameterized cases.
+ * 负责盘点固定 Git 构建的公开源码、测试发现、fixture 字节与包契约。输入为仓库、固定提交及可选冻结离线证据；
+ * 输出为脱离运行对象的 JSON 清单，只读取 Git blob，不执行应用、私有配置、测试回调或模型适配器。
+ * 历史测试标题只有在全部可执行证据输入与本构建逐字节匹配时才接纳；AST 声明与参数展开后的实际案例分别记录。
  */
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -100,6 +97,7 @@ export function verifyFrozenExecutableInputs(
   after: unknown,
   files: readonly PublicBlob[],
 ) {
+  // 双向核对输入成员与字节：前后相同仍不足够，还必须覆盖本构建全部指定可执行输入。
   const isExecutable = (file: string) =>
     /^(backend|frontend|packages|configs\.example)\//.test(file) ||
     ["package.json", "bun.lock", "bunfig.toml"].includes(file);
@@ -214,7 +212,7 @@ export function parseResolvedTestLog(
   let file: string | undefined;
   for (const raw of log.replace(/\x1b\[[0-9;]*m/g, "").split(/[\r\n]+/)) {
     const line = raw.replace(/^ai-werewolf-arena-frontend test: /, "");
-    // Bun repeats skipped/failed titles at the end without their file context.
+    // Bun 尾部会重复跳过／失败标题且没有文件上下文；清空归属，不能把汇总重复算作案例。
     if (/^\d+ tests? (?:skipped|failed):$/.test(line)) {
       file = undefined;
       continue;
@@ -229,6 +227,7 @@ export function parseResolvedTestLog(
     if (!browser && (!test || !file)) continue;
     const target = browser ? `frontend/${browser[2]}` : file!;
     const title = browser ? browser[5]! : test![2]!;
+    // 同名参数案例保留出现次数；浏览器 project 也参与身份，不按标题去重。
     const key = `${runner}\0${target}\0${browser?.[1] ?? ""}\0${title}`;
     const occurrence = (occurrences.get(key) ?? 0) + 1;
     occurrences.set(key, occurrence);
@@ -283,6 +282,7 @@ export function assertResolvedLogSummary(
 }
 
 interface Declaration {
+  // 这是语法位置身份与待展开的表达式，不代表测试已经运行；resolvedCases 才描述日志中的执行项。
   id: string;
   path: string;
   line: number;
@@ -540,6 +540,7 @@ export async function buildInventory(options: {
           { path: sourcePath, literal, resolution: exact ? "exact" : "basename-hint" },
         ]);
     }
+  // 精确字面路径与同名提示分别标记；提示关联不等于发现了所有动态文件消费者。
   const fixtureRows = fixtures.map((file) => ({
     path: file.path,
     sha256: sha(file.bytes),
@@ -589,6 +590,7 @@ export async function buildInventory(options: {
     omittedAfterNonExecutable: number;
   } | null = null;
   if (options.evidenceDirectory) {
+    // 先验证冻结输入，再接纳退出状态、完整标题和汇总；只看到 exit 0 不能证明日志未截断。
     const bytes = await readInertEvidence(options.evidenceDirectory, "inputs.before.json");
     let afterBytes: Buffer;
     try {

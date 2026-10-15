@@ -1,11 +1,8 @@
 /**
- * Freeze public production inputs for the two-build refactor comparison.
- * Input: an explicit Git revision or current source tree; output: immutable-by-
- * verification source/lock manifest and an isolated dependency resolution tree.
- * Workspace packages resolve inside each snapshot. Installed external libraries
- * are copied only when their resolved lock entries match the requested build.
- * Dependency bytes are verified before/after execution; this detects edits and is not
- * filesystem write protection. Local auth/config/records/Git are never copied.
+ * 负责为双构建重构比较冻结公开生产输入。输入为显式 Git 版本或当前源码树；
+ * 输出为可校验的源码／锁文件清单及独立依赖解析目录，不复制本地认证、私有配置、录制档案或 Git。
+ * workspace 包解析到各自快照；外部依赖只有在已安装的锁定解析与目标构建一致时才复制。
+ * 执行前后核对字节可发现修改，但目录本身并非只读沙箱，不能由摘要推断操作系统层面的写保护。
  */
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -24,6 +21,7 @@ import path from "node:path";
 import { isPublicInventoryPath } from "./inventory";
 
 export interface BuildSnapshot {
+  // files／digest 描述选定的源码输入；dependencies 单独覆盖物理依赖树，二者都需要后续核验。
   root: string;
   revision: string | null;
   files: Array<{ path: string; sha256: string }>;
@@ -103,7 +101,7 @@ async function listFiles(root: string, directory: string): Promise<string[]> {
   return result;
 }
 
-/** Hash physical dependency bytes and symlink destinations without following cycles. */
+/** 摘要物理依赖字节与链接目标文本，不沿符号链接递归，避免链接形成遍历环。 */
 export async function dependencyDigest(root: string): Promise<string> {
   const digest = createHash("sha256");
   const walk = async (directory: string) => {
@@ -163,6 +161,7 @@ async function installDependencies(repository: string, root: string): Promise<vo
         .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
     );
   };
+  // 先比较外部依赖的完整解析项，再复用安装；workspace 路径差异不混入外部版本判断。
   if ((await externalLock(repository)) !== (await externalLock(root)))
     throw Error("snapshot_installed_resolved_lock_mismatch");
   const dependencyRoot = path.join(root, "node_modules/.bun");
@@ -202,7 +201,7 @@ async function installDependencies(repository: string, root: string): Promise<vo
             original = await realpath(path.join(repository, fallback, "node_modules", name));
             break;
           } catch {
-            /* Try declared installed owner. */
+            /* 当前安装位置不可解析时，继续尝试后续 owner 的安装目录。 */
           }
         }
         if (!original) throw Error(`snapshot_dependency_not_installed: ${name}`);
@@ -223,7 +222,7 @@ async function installDependencies(repository: string, root: string): Promise<vo
       await symlink(target, path.join(destination, name));
     }
   }
-  // The physical store must not contain links that escape into the current checkout.
+  // 物理仓库与各 owner 的依赖链接必须留在快照内，不能反向解析回当前工作区。
   const check = async (directory: string) => {
     for (const entry of await readdir(directory, { withFileTypes: true })) {
       const file = path.join(directory, entry.name);
@@ -253,6 +252,7 @@ export async function freezeBuild(
   if (root === repository || root.startsWith(`${repository}${path.sep}`))
     throw Error("snapshot_requires_external_directory");
   if ((await readdir(root)).length) throw Error("snapshot_destination_not_empty");
+  // 指定 revision 只解包该 Git 的白名单；null 明确表示捕获工作树，两种来源不混合填补文件。
   let files: string[];
   let commit: string | null = null;
   if (revision) {
@@ -310,6 +310,7 @@ export async function assertSnapshotUnchanged(
   snapshot: BuildSnapshot,
   options: { dependencies?: boolean } = {},
 ): Promise<void> {
+  // 先比成员集合再比每份原字节，既发现修改，也拒绝执行期间新增或删除的生产文件。
   const currentFiles = [
     ...(await existingBuildMetadata(snapshot.root)),
     ...(await listFiles(snapshot.root, "backend/src")),

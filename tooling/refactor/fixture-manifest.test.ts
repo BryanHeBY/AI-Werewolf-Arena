@@ -1,10 +1,7 @@
 /**
- * Unit and filesystem boundary tests for the public fixture manifest inventory.
- * Inputs are literal unrelated archive names, conflicting identities, malformed
- * serialized manifests and isolated temporary paths. Independent literal actor,
- * event and outcome expectations are the oracle; no engine produces an expected
- * result. One byte-inventory check covers the frozen 907 public files without
- * executing games, transport adapters, existing test suites or billed models.
+ * 负责公开 fixture 清单的单元与文件系统边界测试。输入包括名称无关的字面档案、冲突身份、畸形序列化清单和隔离临时路径。
+ * 预期玩家、事件及结果均来自独立手写字面，不由引擎生成；其中一项字节盘点核冻结的 907 个公开文件。
+ * 本文件不执行游戏、通信适配器、既有测试套件或计费模型，清单关联通过不等于场景已验收。
  */
 import { expect, test } from "bun:test";
 import { mkdtemp, mkdir, writeFile, unlink, symlink, rm, readFile, cp } from "node:fs/promises";
@@ -185,6 +182,7 @@ test("file and suite metadata cannot jointly invent a board absent from their ac
     "literal_archive_metadata_or_association_drift",
   );
 });
+// 这里的固定摘要／长度只用于纯关联测试；真实文件字节验证由下方生成器场景单独覆盖。
 const input = (originPath: string, value: unknown, script = false) => ({
   originPath,
   value,
@@ -477,6 +475,7 @@ test("application selectors own adapter and actor selection and reject foreign a
 });
 
 test("generator verifies 904 exact JSON archives and 3 equivalent source fixtures with 258 pending suites", async () => {
+  // 读取真实公开字节与登记清单，不重演录制对局，也不把 pending-review 升格为规则通过。
   const repository = path.resolve(import.meta.dir, "../..");
   const manifest = await generateFixtureManifest(repository);
   expect(manifest.coverage).toEqual({

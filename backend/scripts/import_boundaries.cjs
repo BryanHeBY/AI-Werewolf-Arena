@@ -39,6 +39,7 @@ const boundaries = [
 
 /** @param {string} file @param {string} directory */
 function within(file, directory) {
+  // 必须匹配完整路径段，避免 core-extra 被误当作 core 的子目录。
   return file === directory || file.startsWith(`${directory}/`);
 }
 

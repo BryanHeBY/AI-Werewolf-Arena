@@ -9,7 +9,7 @@ import { readFaultPlan, type FaultPlan, type FaultStep } from "../../core/domain
 export { readFaultPlan, type FaultPlan, type FaultStep } from "../../core/domain/fault_plan";
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 function inputData(value: unknown): unknown {
-  // Decision boundary is equally finite plain data; use the core snapshot helper.
+  // 决策边界同样只接收有限纯数据；复用 core 的快照读取规则，不透传运行句柄。
   return readFaultPlanData(value);
 }
 import { readFaultPlanData } from "../../core/domain/fault_plan";
@@ -25,12 +25,13 @@ export interface FaultDecisionBoundary {
   readonly targetId: number;
 }
 export interface AppliedFault {
+  // 替换前后版本属于两份真实 Alive 组件；玩家序号相同不代表原行动许可仍然有效。
   readonly step: FaultStep;
   readonly originalVersion: number;
   readonly replacementVersion: number;
 }
 
-/** Explicit offline input; cancellation facts are never consulted to execute a fault. */
+/** 显式离线输入驱动故障；不依据取消事实反推或触发故障执行。 */
 export class NightFaultPlan {
   readonly plan: FaultPlan;
   private readonly consumed = new Set<string>();
@@ -49,7 +50,7 @@ export class NightFaultPlan {
         throw new Error("fault_plan_player_unknown");
   }
 
-  /** Caller supplies an actual committed choice, before any source in this wave writes Alive. */
+  /** 调用方在本波任一来源写入 Alive 之前，提供实际已提交的选择。 */
   applyBeforeNightSourceFreeze(
     day: number,
     decision: FaultDecisionBoundary | null,
@@ -59,6 +60,7 @@ export class NightFaultPlan {
     try {
       return this.apply(day, decision, recordApplied);
     } catch (error) {
+      // 任一应用失败后本计划永久终止，防止恢复旧字段或重新调用带来第二次故障。
       this.failed = true;
       throw error;
     }
@@ -123,6 +125,7 @@ export class NightFaultPlan {
       throw new Error("fault_plan_original_life_invalid");
     if (original.alive !== true) throw new Error("fault_plan_original_life_invalid");
     const replacement = createAliveComponent(true, this.world.locale);
+    // 先替换生命组件并消费计划，再调用必需的同步记录器；记录失败不回滚已提交的替换。
     this.world.addComponent(step.mutation.playerId, COMPONENT.Alive, replacement);
     this.consumed.add(step.id);
     this.lastDay = day;
@@ -132,6 +135,7 @@ export class NightFaultPlan {
       replacementVersion: aliveLifeVersion(replacement)!,
     });
     if (result !== undefined) {
+      // 仅对已验证的原生 Promise 附加拒绝处理，避免吞掉记录器协议错误或执行任意 thenable。
       if (
         types.isPromise(result) &&
         !types.isProxy(result) &&

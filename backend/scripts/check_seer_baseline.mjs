@@ -1,3 +1,8 @@
+/**
+ * 负责核对指定历史构建的预言家必选请求。输入为固定 Git 版本、当前已安装依赖与冻结请求样本；
+ * 输出为该历史引擎实际发出的请求或不匹配错误，不重写样本或判断当前角色规则是否正确。
+ * 源码在临时目录解包，workspace 包指向该历史源码，外部依赖仍复用当前安装；finally 回收临时文件。
+ */
 import { mkdtemp, mkdir, readdir, writeFile, symlink, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -16,6 +21,7 @@ try {
   if (extracted.status !== 0) throw new Error(extracted.stderr.toString());
   const deps = path.join(root, "backend/node_modules");
   await mkdir(deps);
+  // 本工具不冻结依赖字节；仅把工作区包切回旧源码，其余链接保留现有安装环境。
   for (const name of await readdir(path.join(repo, "backend/node_modules"))) {
     if (name === "@ai-werewolf-arena") {
       await mkdir(path.join(deps, name));

@@ -1,9 +1,7 @@
 /**
- * Independent literal decision inputs for the refactor two-build comparison.
- * Only issued request DTOs select these old-seat plans; no World, role profile,
- * eligibility implementation or settlement result is consulted. Missing tools
- * fail explicitly. These are equivalence inputs, not independent rule oracles;
- * role acceptance remains covered by handwritten scenario and wire fixtures.
+ * 负责提供双构建比较的独立字面动作输入。仅消费已发出的请求 DTO 来选择固定座位计划，输出动作或 null。
+ * 不查询 World、角色 profile、资格实现或结算结果；未覆盖的工具明确失败，不自动调用生产 fallback。
+ * 这些计划用于等价比较，不是规则正确性的独立预期；角色验收仍依赖手写场景与通信样本。
  */
 export interface TranscriptRequest {
   actorId: number;
@@ -25,6 +23,7 @@ export function literalAction(
   r: TranscriptRequest,
   input: LiteralTranscript,
 ): TranscriptAction | null {
+  // 分支次序属于冻结计划：先处理共享发言／警长动作，再按有限族、日期与座位选取字面回复。
   if (r.context.stage === input.failureStage) throw Error("literal_decision_failure");
   const day = r.context.day;
   const has = (name: string) => r.allowedTools.includes(name);

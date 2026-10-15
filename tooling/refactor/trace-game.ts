@@ -1,10 +1,7 @@
 /**
- * Child-process trace driver for one fixed engine build and literal scenario.
- * Input: build root, literal scenario and layout; output: recorded and replayed traces.
- * Each build creates its own bootstrap, runtime capabilities, recorder and strict
- * replay. A logical Date.now keeps event/deadline values deterministic; real timer
- * and transport lifecycle gates remain separate. Writes only into the supplied
- * scratch directory; source or recorded engine fingerprints are never rewritten.
+ * 负责在子进程中驱动一个固定构建的字面场景。输入为构建根、场景和入口布局；输出为录制及严格复现轨迹。
+ * 每份构建创建自己的装配、运行许可和记录器，并使用自己的严格复现入口，不重写源码或归档引擎指纹。
+ * 固定 Date.now 使逻辑时间可比较，真实定时器和通信生命周期仍需另外验收；产物写入调用方提供的临时目录。
  */
 import { readFile, mkdir, writeFile, realpath } from "node:fs/promises";
 import path from "node:path";
@@ -12,6 +9,7 @@ import { pathToFileURL } from "node:url";
 import { literalAction, type LiteralTranscript, type TranscriptRequest } from "./transcripts";
 
 export interface BuildLayout {
+  // 布局只解决迁移后的模块位置；load 逐项核对相对路径及 realpath，不允许跨出本构建根。
   bootstrap: string;
   core: string;
   recorder: string;
@@ -72,7 +70,7 @@ async function runTrace(
       load("replay"),
     ]);
   const input: TraceScenario = JSON.parse(await readFile(inputPath, "utf8"));
-  // Date.now was patched before importing any captured mechanism clocks; native timers remain unchanged.
+  // 在加载可能捕获时钟的机制前已替换 Date.now；原生定时器本身没有替换。
   await mkdir(output, { recursive: true });
   const game = bootstrap.bootstrapGame(input.board, {
     fixedRoles: input.fixedRoles,
@@ -101,6 +99,7 @@ async function runTrace(
       let failed = false;
       let faultConsumed = 0;
       let literalFailure: unknown;
+      // 失败场景只承认指定字面动作抛出的同一错误；其它异常不能伪装成预期故障。
       for (
         let cycle = 1;
         cycle <= input.maxDays && !game.phaseManager.getSnapshot().gameOver;
@@ -184,6 +183,7 @@ async function runTrace(
       JSON.stringify({ record, strictReplay }, null, 2) + "\n",
     );
   } finally {
+    // 兜底 finalize 不覆盖主异常；这里仅吞其补救失败，正常路径的必需 finalize 仍会向外报错。
     await manager
       .finalize({
         endedAtIso: "2023-11-14T22:13:20.000Z",

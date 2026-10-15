@@ -1,0 +1,269 @@
+{
+  "approved": true,
+  "reviewer": "native_presentation_finish",
+  "role": "independent non-author",
+  "baseCommit": "1b12970738b4135e517ee2ef50a969248ec2b6ab",
+  "scope": {
+    "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-scope-final.json",
+    "sha256": "10c61fd70b50277a251f330ced19f6de5a8a42bdd7160f92fb1faf581e923a26"
+  },
+  "scopeSHA256": "10c61fd70b50277a251f330ced19f6de5a8a42bdd7160f92fb1faf581e923a26",
+  "document": {
+    "path": "docs/refactor/root-infrastructure-chinese-contracts.md",
+    "sha256": "3c009f9af4c3d64444babda104c60a5288ac8e3e128472ce6099e999b9e24737"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-evidence.json",
+    "sha256": "1d1c6ba8a7fe32d36b227dff2c0c32eee0474cd33a874c927728a0264f30a71b"
+  },
+  "source": [
+    {
+      "path": "backend/eslint.config.cjs",
+      "sha256": "cf9d97bfa802d588242ce5d3beeb4d4d09c869181f1149a5a49b891a4e2b6f5b",
+      "bytes": 2474
+    },
+    {
+      "path": "backend/scripts/check_i18n_literals.mjs",
+      "sha256": "18a17a71623646b859f7f572c448441bd24017535f9b578f4e5c6d042042360e",
+      "bytes": 8555
+    },
+    {
+      "path": "backend/scripts/check_import_boundaries.mjs",
+      "sha256": "3d9511366e22514bac74e0b6320b244902ccf4e0fb6515c226b5de7d76a1e813",
+      "bytes": 2864
+    },
+    {
+      "path": "backend/scripts/check_seer_baseline.mjs",
+      "sha256": "a3b06e39d7f36d935c639ca65922726abb6cfa9a56069bc72358a5db3f4a04de",
+      "bytes": 3521
+    },
+    {
+      "path": "backend/scripts/import_boundaries.cjs",
+      "sha256": "87ce28b4d1636f84bc19f151c40ac34a72a80e6d76ee48e547af3b10afa9302f",
+      "bytes": 2549
+    },
+    {
+      "path": "backend/src/game/engine/fault_plan.ts",
+      "sha256": "2368dc0ba4f1609abc43884acf852817b1121bb0c44bdab0fa69d18ffaabbb41",
+      "bytes": 6641
+    },
+    {
+      "path": "backend/src/game/engine/hooks/on_daybreak.ts",
+      "sha256": "bdd8d5f9057381e4612e9f2d4e813af6422f7fe74b710753e01cfc4fd249cbd6",
+      "bytes": 400
+    },
+    {
+      "path": "backend/src/game/engine/hooks/on_per_speech_gap.ts",
+      "sha256": "811ebd600d28fb378566d31b02cda77bf494486548207ce8cdf32a643cee07c8",
+      "bytes": 402
+    },
+    {
+      "path": "backend/src/game/engine/hooks/on_pre_election.ts",
+      "sha256": "78e5c2bc56851de5658fbdbeaeb513e18db371c6bdac4c0f85fe2da5bc3ec5b6",
+      "bytes": 403
+    },
+    {
+      "path": "backend/src/game/engine/hooks/on_pre_vote.ts",
+      "sha256": "5ff26dff8b8bc4ca5fb6ec81f8a9ec3bd302629fe49e7ef9fb6e77c3ab93eefc",
+      "bytes": 398
+    },
+    {
+      "path": "backend/src/game/engine/index.ts",
+      "sha256": "e8dba081224d3a4c61ada9476dcd04e74b27560f81e54e70377987973fea8355",
+      "bytes": 767
+    },
+    {
+      "path": "backend/src/game/gateway/index.ts",
+      "sha256": "f636176fc45a4943a4c722a8895fd2f2eb0e5b75375e9c74c0f8a9edc49c095c",
+      "bytes": 390
+    },
+    {
+      "path": "backend/src/game/index.ts",
+      "sha256": "3e75a3ed08ed815c31788c406b159dc038eb16aa5bd289588153e55943afd6ab",
+      "bytes": 285
+    },
+    {
+      "path": "backend/src/index.ts",
+      "sha256": "da625ea7c6cd2b49c4ce8d5b0a9a8a378939dae0242c4df5745002b3407c48a7",
+      "bytes": 381
+    },
+    {
+      "path": "backend/src/run-game-smoke.ts",
+      "sha256": "0cc0bed3a4e14f8652c4a088072061ace5cc1aae88c395065add3dc733eddfe3",
+      "bytes": 361
+    },
+    {
+      "path": "backend/src/runtime/console_presenter.ts",
+      "sha256": "7282d15605dfa402e592a57ebda81163db59f8bfd4b6fe0c734aefea1fdb5bc5",
+      "bytes": 9118
+    },
+    {
+      "path": "tooling/refactor/build-snapshot.test.ts",
+      "sha256": "05212b12ee82348798151950d4fecb3f52fa00e6b5ab72aa973e53863e4b27e8",
+      "bytes": 12742
+    },
+    {
+      "path": "tooling/refactor/build-snapshot.ts",
+      "sha256": "4708685dbd2de17648e9090e65520a7b042c1481f7bbb7a1035bd51a28755b09",
+      "bytes": 13255
+    },
+    {
+      "path": "tooling/refactor/differential.test.ts",
+      "sha256": "2c3a78af2792190c4608d500eafa0b99d747402b9d82cbfcdcb788a5326f42ac",
+      "bytes": 2981
+    },
+    {
+      "path": "tooling/refactor/differential.ts",
+      "sha256": "4cdec37a73b14a3287552acccf5cc7e9b0c446e26d09a9f0a330993fd2a22da9",
+      "bytes": 7070
+    },
+    {
+      "path": "tooling/refactor/fixture-manifest.test.ts",
+      "sha256": "e3058a8ca1e795d17bab15221af8abb90018800f2c01f4f07be1c0169d89ea86",
+      "bytes": 21059
+    },
+    {
+      "path": "tooling/refactor/fixture-manifest.ts",
+      "sha256": "605b5faf76f236d3fb133082ea77fed1e49755c3479180263f230381c527eb49",
+      "bytes": 59894
+    },
+    {
+      "path": "tooling/refactor/inventory.test.ts",
+      "sha256": "6897eb4075b4547b73d64d05d4d29f19790596a751df0f46aaa3aa916647d008",
+      "bytes": 8451
+    },
+    {
+      "path": "tooling/refactor/inventory.ts",
+      "sha256": "1dd67b0a770aa3fde20c8a26a8057d8a72d01185f94f6f69719e13920936a835",
+      "bytes": 28600
+    },
+    {
+      "path": "tooling/refactor/trace-game.ts",
+      "sha256": "bc4c7cf861fd2d496a4d1b6feb5898021423eca1e539d2c85f923afbdf5a2ae7",
+      "bytes": 7785
+    },
+    {
+      "path": "tooling/refactor/transcripts.ts",
+      "sha256": "a9d7c2f3d250677fa5d0b36cbb9aa1833c8e10d1f245007eeb1d61b1c21089a5",
+      "bytes": 4526
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d"
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db"
+    },
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "8990b10d8a281237c440d3edb3f7e7b07642851cab3a2492397e7155071247ff"
+    },
+    {
+      "path": "backend/src/runtime/game_runner.ts",
+      "sha256": "56e9f4373391aa4fbbf9fcd4a49d54e0bf473de458cb133f2f7685eced36bede"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-before.json",
+      "sha256": "14eee091aade92154fdf276a6f8320aa6c8dc88aec95caa349a6a3548b797e97"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-paths.json",
+      "sha256": "4028f08b1e753a4aaad78d4bc5410ed5c983a2de123f7a55f86b22adb108032c"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-edits.json",
+      "sha256": "78cd13a0e30352696ff64da45d96cdebe83a50d2b8f73cfb6a2352fc81ea0efb"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-source-ready.json",
+      "sha256": "8ed1fef1346306068b68caaa9ad01833eca797c28ac942dd3d278ca3675e36ac"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-checks-prepared.json",
+      "sha256": "83a7476f02a4a027b920d0356587ce2e7aae910c3556c1461752d147e7b78c74"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-proof.cjs",
+      "sha256": "91eb282ef34f2f7a1eac822b5810bfaa0cf902379d75b53de088bcefdd62b71e"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-proof.json",
+      "sha256": "95669f7394a865a200b1d830cd1ac27e0bc9f53663b9803f56299510441b92f4"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-proof-output.txt",
+      "sha256": "3ee9861a3ac4919a02014697387db3c1dc0f07638469932114a419370637efe7"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-heads.ts",
+      "sha256": "654fa7cb5250c4f0dc18ed1591fac623317cac0c247a174d80b2569e7912904b"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-heads.json",
+      "sha256": "42fc4bbb175323fea0d719f5061fbce9e036cab179b9c2b5b34642f8c057a6c5"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-heads-output.txt",
+      "sha256": "0a293494eda6eda2e6d31880a08d84913a1454c496c540ddf53e597799b3716d"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-receipts.json",
+      "sha256": "08940ee8001303efb6b37daac3e885547e84950e7503c69da69370918d5f9270"
+    }
+  ],
+  "reviewDimensions": [
+    "完整读26实际原/当前程序与166差分；源码及测试内字面样本、JSDoc类型tags、工具指令、机器协议不改。",
+    "旧层级/中文扫描有限范围、例外次数、链接处理，预言家历史探针当前依赖限制与公开barrel不自执行的职责均准确。",
+    "故障计划alive替换→consumed/day→同步record与永久失败前缀，四hook原时点/常量与Console ACP文本合并/显示去重符合实际。",
+    "完整读build-snapshot/inventory/fixture-manifest/differential/trace/transcripts与四原测试；冻结不是OS只读、标题发现不是执行、字面输入不是规则oracle、metadata关联不是验收通过、原错误/回收前缀均如实。",
+    "actual1b129全26Git/26fresh/166完整UTF16正逆/4controls/12arts/MD-scope-evidence独立绑定；只读Root两真实首回执，无任何作者checks或生产执行。"
+  ],
+  "integrity": {
+    "actualGitSources": 26,
+    "freshSources": 26,
+    "wholeForwardInverse": 26,
+    "exactTextEdits": 166,
+    "stableGitCurrentControls": 4,
+    "artifacts": 12,
+    "gitModes": [
+      "100644",
+      "100755"
+    ],
+    "mismatches": 0
+  },
+  "checksReviewed": {
+    "proof": {
+      "launch": "85b271",
+      "sessionId": 41621,
+      "terminal": "6c372b",
+      "exitCode": 0,
+      "sources": 26,
+      "typedNodes": 31035,
+      "nodeArrays": 5045,
+      "nonCommentLeaves": 37976,
+      "wholeRawOutputs": 52
+    },
+    "heads": {
+      "receipt": "e5a342",
+      "exitCode": 0,
+      "sources": 26,
+      "documentationPaths": 731,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0
+    }
+  },
+  "independentReaderHistory": "首次纯元数据读器将含bytes的source行与仅path/sha256行整对象相等比较，发生工具断言；实际源码SHA一致。仅修读器按真实字段比较，并独立核bytes，未改作者源/meta或执行产品检查。",
+  "findings": [],
+  "checksExecutedByReviewer": false,
+  "sourceOrAuthorMetadataModifiedByReviewer": false,
+  "limitations": [
+    "独立运行的只是Git/字节/精确差分/元数据绑定核对；未调用编译器、作者工具、测试、生产或门禁。",
+    "逐源中文与既有实现相符，不凭本注释包宣称工具全部输入/任意JS安全、玩法正确、全P9或完整矩阵验收；新源码SHA和语法位置身份可变。"
+  ]
+}

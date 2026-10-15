@@ -25,6 +25,7 @@ const translationOwners = new Set([
   "packages/game-text/src/messages/features/noble-fragrant.ts",
   "packages/game-text/src/messages/features/animal-dream.ts",
 ]);
+// 扫描结果记录源码行；例外按文件／完整字面及精确次数匹配，reason 用于保留人工说明。
 /** @typedef {{ file: string, text: string, line: number }} ChineseLiteral */
 /** @typedef {{ file: string, text: string, count: number, reason: string }} LiteralException */
 /** 检查所给源码的字符串、模板片段和 JSX；注释不作为字面，仓库入口不扫描测试／fixture。 */

@@ -1,8 +1,7 @@
 /**
- * Unit checks for inventory trust and discovery boundaries. Synthetic runner logs and
- * temporary Git blobs are the independent oracle: duplicate resolved titles retain
- * identity, Bun summary repeats do not become cases, and private/symlink inputs never
- * enter public manifests. No game engine, fixture callback or model is executed.
+ * 负责源码／测试盘点可信度与发现边界的单元测试。独立断言来自合成 runner 日志和临时 Git blob：
+ * 同名执行案例保留独立身份，Bun 汇总重复标题不增加案例，私有路径／链接不进入公开清单。
+ * 不执行游戏引擎、fixture 回调或模型，盘点结果不能代替业务验收。
  */
 import { expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
@@ -40,6 +39,7 @@ test("public inventory rejects private and traversal paths before reading blobs"
 });
 
 test("resolved Bun cases keep duplicate occurrences and ignore repeated skip summary", () => {
+  // 两条同名 pass 是两个执行项；尾部重复 skip 仅是汇总，不是第四个案例。
   const log = [
     "tests/runtime/sample.test.ts:",
     "(pass) Matrix > case [1.25ms]",
@@ -155,6 +155,7 @@ test("accepted exit alone cannot cover a truncated title listing", () => {
 });
 
 test("frozen execution requires identical before/after hashes and input membership", () => {
+  // 只用手写公开字节检查前后与本构建三方关系，不执行被盘点的模块。
   const bytes = Buffer.from("export const value=1;\n"),
     hash = createHash("sha256").update(bytes).digest("hex");
   const files = [

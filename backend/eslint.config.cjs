@@ -1,3 +1,8 @@
+/**
+ * 负责将旧层级路径规则接入后端 ESLint。输入为 src 下的导入／导出和字面模块名；
+ * 输出为原路径判定器的违规诊断，不解析动态拼接路径或执行被检查模块。
+ * 本配置只注册扫描入口；角色间依赖、共享包出口等约束另由架构门禁核对。
+ */
 const path = require("node:path");
 const tsParser = require("@typescript-eslint/parser");
 const { importBoundaryViolation } = require("./scripts/import_boundaries.cjs");
@@ -16,6 +21,7 @@ module.exports = [
           imports: {
             meta: { type: "problem", schema: [], messages: { forbidden: "{{violation}}" } },
             create(context) {
+              // 普通字面与无插值模板共用判定器；遇到可执行表达式时不求值猜测模块名。
               function check(node, source) {
                 const specifier =
                   source?.value ??

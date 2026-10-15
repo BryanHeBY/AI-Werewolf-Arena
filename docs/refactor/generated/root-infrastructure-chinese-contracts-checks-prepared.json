@@ -1,0 +1,17 @@
+{
+  "sourceReadySHA256": "8ed1fef1346306068b68caaa9ad01833eca797c28ac942dd3d278ca3675e36ac",
+  "executor": "Root only",
+  "commands": [
+    {
+      "command": "bun --no-env-file docs/refactor/generated/root-infrastructure-chinese-contracts-proof.cjs",
+      "stdoutAndStderr": "docs/refactor/generated/root-infrastructure-chinese-contracts-proof-output.txt",
+      "scriptSHA256": "91eb282ef34f2f7a1eac822b5810bfaa0cf902379d75b53de088bcefdd62b71e"
+    },
+    {
+      "command": "bun --no-env-file docs/refactor/generated/root-infrastructure-chinese-contracts-heads.ts",
+      "stdoutAndStderr": "docs/refactor/generated/root-infrastructure-chinese-contracts-heads-output.txt",
+      "scriptSHA256": "654fa7cb5250c4f0dc18ed1591fac623317cac0c247a174d80b2569e7912904b"
+    }
+  ],
+  "executed": false
+}

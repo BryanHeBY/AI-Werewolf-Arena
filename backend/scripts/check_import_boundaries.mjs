@@ -16,6 +16,7 @@ const errors = [];
 
 /** @param {string} dir */
 function walk(dir) {
+  // 只递归真实目录项和普通 .ts 文件；链接项不会作为目录继续枚举或作为文件读取。
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const abs = path.join(dir, entry.name);
     if (entry.isDirectory()) walk(abs);

@@ -1,13 +1,13 @@
 /**
- * Comparator trust tests: literal traces must expose changed stock, knowledge,
- * causal boundaries, operations, unknown diagnostics and strict replay failures.
- * Only build identity and scratch artifact addresses are intentionally distinct.
- * This is tooling verification and does not claim gameplay rule acceptance.
+ * 负责差分比较器的可信度单元测试。手写字面轨迹与逐字段突变为独立输入／断言来源，
+ * 库存、知识、因果边界、操作、未知诊断与严格复现结果的差异均须被发现。
+ * 仅已声明的构建身份与临时产物地址允许不同；此处不代表玩法规则验收。
  */
 import { expect, test } from "bun:test";
 import { comparableTrace, firstDifference } from "./differential";
 
 function trace() {
+  // 每例创建独立字面输入，避免比较器共享引擎生成结果而掩盖两边相同的实现错误。
   return {
     record: {
       metadata: { engine: { sourceHash: "old", lockHash: "lock", commit: "old" }, seed: "fixed" },
