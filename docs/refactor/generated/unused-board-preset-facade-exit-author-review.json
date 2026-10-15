@@ -1,0 +1,37 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "role": "author-review; non-author review remains separate",
+  "baseCommit": "a8bf71ec6fc26605b2897088bdcf5c2d44ad2868",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+      "change": "deleted",
+      "beforeSHA256": "97e0de4eb0682288a10ec20b97990340869e58771a8b9ee7d96cad6c43cd5298"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+      "sha256": "97e0de4eb0682288a10ec20b97990340869e58771a8b9ee7d96cad6c43cd5298",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/unused-board-preset-facade-exit-scope-final.json",
+    "sha256": "e820b9353f2302e241eff1f038ef50e46160be5a7648cba0964607c656d6dc33"
+  },
+  "document": {
+    "path": "docs/refactor/unused-board-preset-facade-exit.md",
+    "sha256": "f1a8b97db562806c0fff7866afb78f81183699d6be688ba27dc11438c04af79e"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/unused-board-preset-facade-exit-evidence.json",
+    "sha256": "d11e991c18cbf185eb80353f775221c7880f658893d8f3f9aac27e4a4939d3e0"
+  },
+  "findings": [],
+  "limits": [
+    "Source removal is intentional API retirement, not a promise of arbitrary external compatibility.",
+    "Source-ready unchanged; Root first proof only, no author runtime/type/test/gate executions."
+  ]
+}

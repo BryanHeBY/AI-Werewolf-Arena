@@ -1,0 +1,86 @@
+{
+  "baseCommit": "a8bf71ec6fc26605b2897088bdcf5c2d44ad2868",
+  "leaf": "backend/src/game/mechanisms/roles/board_presets.ts",
+  "scope": "only delete the unused compatibility leaf; owners/consumers/barrels unchanged",
+  "actualOwner": "backend/src/rulesets/board-support.ts:boardPresetViolation",
+  "actualConsumers": [
+    "backend/src/runtime/config/board_definition.ts (rulesets barrel)",
+    "backend/src/rulesets/board-parameters.ts (direct owner)",
+    "backend/src/rulesets/supported-role-deck.ts (direct owner)"
+  ],
+  "staticReadSources": [
+    {
+      "path": "/tmp/awa-p9-final-comment-export-audit.md",
+      "sha256": "7036310ba4e7d680d19c81409913c289a6f44ab765b34d3aba9a20b257d40d29"
+    },
+    {
+      "path": "/tmp/awa-p9-final-comment-export-audit.json",
+      "sha256": "d415f86cc00d259f2892fd9d6ed73a9041e73662ef1a0dd36e4f8a14cde8eece"
+    }
+  ],
+  "priorAuditCandidate": {
+    "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+    "sha256": "97e0de4eb0682288a10ec20b97990340869e58771a8b9ee7d96cad6c43cd5298",
+    "currentBody": "export { boardPresetViolation } from \"../../../rulesets\";",
+    "literalIncomingSites": 0,
+    "repositoryNameSearch": "公开 src/tests/support/packages/tooling 中 board_presets/board-presets 无路径文字引用；实际 board_definition 直接 rulesets 获取 boardPresetViolation。",
+    "publicEntryReview": "backend main 指 dist/index.js，无 package exports 通配声明；src/index→game/mechanisms 未重导此叶。",
+    "proposal": "可单独申请删除该零仓内消费者兼容叶，不新建替代 wrapper；公开深路径退休与 sourceHash 变化须明示。",
+    "limit": "未执行加载/冷图；不保证未知外部深导入或任意非字面动态构造。",
+    "allForms": {
+      "import": 13430,
+      "reexport": 507,
+      "dynamic-import": 109,
+      "require": 9,
+      "import-type": 216,
+      "import-equals": 0
+    },
+    "namespaceImportSitesInScope": 48,
+    "incomingToCandidateAllSupportedForms": [],
+    "candidateReachableViaBackendRootReexports": false,
+    "backendRootReexportReachableModules": 123,
+    "actualOwner": "backend/src/rulesets/board-support.ts:boardPresetViolation",
+    "ownerExportChain": [
+      "backend/src/rulesets/board-support.ts",
+      "backend/src/rulesets/index.ts (named reexport)"
+    ],
+    "actualOwnerConsumers": [
+      "backend/src/runtime/config/board_definition.ts (rulesets barrel)",
+      "backend/src/rulesets/board-parameters.ts (direct owner)",
+      "backend/src/rulesets/supported-role-deck.ts (direct owner)"
+    ],
+    "stringAndDocumentPathSearch": {
+      "scope": "backend/frontend/packages/tooling/docs/README; excludes dependencies/generated evidence/frozen history/fixture payload files",
+      "matches": [
+        {
+          "path": "docs/refactor/architecture-baseline.md",
+          "line": 179,
+          "role": "冻结历史架构债表路径，不是运行导入／活跃 API 指南；若批准退休，现行映射另记，不伪覆历史。"
+        }
+      ],
+      "sourceStringPathMatches": []
+    },
+    "entryTree": "backend/src/index.ts → game/index.ts → mechanisms/index.ts 没有此叶出口；全 root reexport AST 可达集合亦不含该叶。backend/package.json 只有 dist/index main，没有此深路径 exports 项。"
+  },
+  "currentTextReview": {
+    "boardPresetViolationRuntimeConsumers": 3,
+    "rootBarrelsRead": [
+      "backend/src/index.ts",
+      "backend/src/game/index.ts",
+      "backend/src/game/mechanisms/index.ts"
+    ],
+    "sourcePathTextMatchesOutsideLeaf": [],
+    "historicalDocPath": [
+      {
+        "path": "docs/refactor/architecture-baseline.md",
+        "line": 179,
+        "classification": "immutable historical debt table; not active import guide"
+      }
+    ]
+  },
+  "checksExecuted": false,
+  "limits": [
+    "Prior AST counts belong to prior audit snapshot; newly prepared proof will read exact current literals before acceptance.",
+    "Unknown external deep imports and nonliteral dynamic construction are explicitly unsupported retirement surfaces."
+  ]
+}

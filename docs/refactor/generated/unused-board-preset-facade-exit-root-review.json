@@ -1,0 +1,49 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "a8bf71ec6fc26605b2897088bdcf5c2d44ad2868",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+      "change": "deleted",
+      "beforeSHA256": "97e0de4eb0682288a10ec20b97990340869e58771a8b9ee7d96cad6c43cd5298"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+      "sha256": "97e0de4eb0682288a10ec20b97990340869e58771a8b9ee7d96cad6c43cd5298",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/unused-board-preset-facade-exit-scope-final.json",
+    "sha256": "e820b9353f2302e241eff1f038ef50e46160be5a7648cba0964607c656d6dc33"
+  },
+  "document": {
+    "path": "docs/refactor/unused-board-preset-facade-exit.md",
+    "sha256": "f1a8b97db562806c0fff7866afb78f81183699d6be688ba27dc11438c04af79e"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/unused-board-preset-facade-exit-evidence.json",
+    "sha256": "d11e991c18cbf185eb80353f775221c7880f658893d8f3f9aac27e4a4939d3e0"
+  },
+  "integrity": {
+    "freshSources": 1,
+    "actualGitBefore": 1,
+    "controls": 9,
+    "artifactHashes": 8,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "只删除旧board_presets单具名重导叶；实际owner和三个生产consumer保持rulesets，公共root/barrel没有导出该叶，不建立替代薄层或删除有真实消费的core概念出口。",
+    "完整实际a8bf原叶及九controls、旧唯一导出绑定、Root一次虚拟含旧叶的全字面AST解析与root重导/字符串/历史文档来源核验0，fixed1960/current1959与123rootmodules/0incoming明确。",
+    "静态解析含import/reexport/namespace/importtype/importequals/require/dynamic字面，但不保证任意非字面动态构造或未知外部深导；物理深路径API与sourceHash成员退休明确，不重写历史档案。",
+    "八附件与候选删除/actualGit/finalscope/MD/ev纯读取核对，未重复check、类型、业务或全门禁；另真实非作者审查待NativeFinal，C47最终统一验证继续。"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "baseCommit": "a8bf71ec6fc26605b2897088bdcf5c2d44ad2868",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+      "change": "deleted",
+      "beforeSHA256": "97e0de4eb0682288a10ec20b97990340869e58771a8b9ee7d96cad6c43cd5298"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+      "sha256": "97e0de4eb0682288a10ec20b97990340869e58771a8b9ee7d96cad6c43cd5298",
+      "expectedAbsent": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/rulesets/board-support.ts",
+      "sha256": "86b4656b1b8cc48c9f4284e917471a51fab1c90a7f56250ed82287b14db07367"
+    },
+    {
+      "path": "backend/src/rulesets/board-parameters.ts",
+      "sha256": "a7ef285ce0fb618adc97f4d2f4b1434fef4aa2cffd4fed971b53a5c894dfb7b6"
+    },
+    {
+      "path": "backend/src/rulesets/supported-role-deck.ts",
+      "sha256": "654b566339443f1d2e44766f878d7e1101543a5edaa59adf871b8b99ab8a6f91"
+    },
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "sha256": "03287c1215eadecc223f8fd6dd245197d83957e0bc80807ae207dec6a5430fbf"
+    },
+    {
+      "path": "backend/src/rulesets/index.ts",
+      "sha256": "188aa851baa69261dcb4dc47c602b5fa45e7455533e4dafa59da30b40a941b07"
+    },
+    {
+      "path": "backend/src/index.ts",
+      "sha256": "da625ea7c6cd2b49c4ce8d5b0a9a8a378939dae0242c4df5745002b3407c48a7"
+    },
+    {
+      "path": "backend/src/game/index.ts",
+      "sha256": "3e75a3ed08ed815c31788c406b159dc038eb16aa5bd289588153e55943afd6ab"
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "a18099d50c962f4c869eef7c753442d35148c0247fc48b8046e5fc82cce197b9"
+    },
+    {
+      "path": "backend/package.json",
+      "sha256": "3e5a263be4ad1b78812a83f61fca7596e152b536f00c6be2537f4266fa406e03"
+    }
+  ],
+  "sourceReady": true,
+  "checksExecuted": false,
+  "sourceFrozen": true
+}

@@ -1,0 +1,36 @@
+{
+  "executor": "/root",
+  "sourceReady": {
+    "path": "docs/refactor/generated/unused-board-preset-facade-exit-source-ready.json",
+    "sha256": "e855da5783ee1294ca6d174c694c59d15244a66f642f4a36fce9091cf2dabc1a"
+  },
+  "proof": {
+    "command": "bun --no-env-file docs/refactor/generated/unused-board-preset-facade-exit-proof.cjs > docs/refactor/generated/unused-board-preset-facade-exit-proof-output.txt 2>&1",
+    "launchChunk": "8ef1f0",
+    "sessionId": 31938,
+    "terminalChunk": "ee1472",
+    "exitCode": 0,
+    "firstExecution": true,
+    "raw": {
+      "path": "docs/refactor/generated/unused-board-preset-facade-exit-proof-output.txt",
+      "sha256": "308b36a9f55af90b03afc164c15abf289bf700029909bdcad5ed40d442b66223"
+    },
+    "script": {
+      "path": "docs/refactor/generated/unused-board-preset-facade-exit-proof.cjs",
+      "sha256": "54fe271c2d9fe16b3e0bc16425735fa87aa33518fd58ce0dd9449f873d17a755"
+    }
+  },
+  "counts": {
+    "fixedGitSources": 1960,
+    "currentSources": 1959,
+    "incomingBefore": 0,
+    "incomingAfter": 0,
+    "rootReexportModules": 123,
+    "stableControls": 9,
+    "actualOwnerConsumers": 3,
+    "historicalDocumentMatches": 1
+  },
+  "productionLoaded": false,
+  "typesTestsHeadOrArchitectureExecuted": false,
+  "greenChecksRepeated": false
+}
