@@ -11,6 +11,7 @@ import { aliveLifeDescriptor, aliveLifeVersion, type AliveComponent } from "./co
 import { COMPONENT } from "./components/names";
 import { isRoleId, type RoleId } from "@ai-werewolf-arena/game-contract";
 import { Camp } from "./identity";
+import { readWorldComponentAtCommit } from "./world";
 export interface OriginalPlayerScope {
   readonly id: number;
   readonly life: AliveComponent;
@@ -74,4 +75,28 @@ export function originalPlayerSameLife(
 }
 export function originalPlayerCurrent(world: World, s: OriginalPlayerScope): boolean {
   return originalPlayerSameLife(world, s);
+}
+
+/**
+ * 新owned付款的末端复核。外部查询/期限回调在调用方前序执行，此处只读同一真实ECS与工厂生命，
+ * 不调用可重入的World.getComponent；scope必须是本模块原捕获，DTO或clone不能借此获得许可。
+ * 此函数只读，不写角色、付款或创建事务；旧查询路径的调用次序保持原样。
+ */
+export function originalPlayerAtCommit(
+  world: World,
+  s: OriginalPlayerScope,
+  allowFirstDeath = false,
+): boolean {
+  return (
+    captured.get(s) === world &&
+    readWorldComponentAtCommit(world, s.id, COMPONENT.Alive) === s.life &&
+    safeAlive(s.life) &&
+    (s.life.alive
+      ? aliveLifeVersion(s.life) === s.version
+      : allowFirstDeath && aliveLifeVersion(s.life) === s.version + 1) &&
+    readWorldComponentAtCommit(world, s.id, COMPONENT.Role) === s.role &&
+    readWorldComponentAtCommit(world, s.id, COMPONENT.Camp) === s.camp &&
+    own(s.role, "role") === s.roleId &&
+    own(s.camp, "camp") === s.campValue
+  );
 }

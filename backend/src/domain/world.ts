@@ -10,6 +10,32 @@ import type { ComponentMap, ComponentWrite } from "./component-map";
 import { AliveComponent, aliveLifeVersion } from "./components/alive";
 import { RoleComponent } from "./components/role";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
+import { types } from "node:util";
+
+const mapGetAtCommit = Map.prototype.get,
+  applyAtCommit = Reflect.apply;
+
+/**
+ * 只读实际 ECS 槽，供已拥有付款权的机制在首写前同步复核原体。它本身不授予任何写入或行动权限。
+ * 拒绝 Proxy／stores 访问器，不调用可重入的 getComponent，也不复制、替换或暴露存储 Map。
+ */
+export function readWorldComponentAtCommit<K extends ComponentName>(
+  world: World,
+  entityId: EntityId,
+  name: K,
+): ComponentMap[K] | undefined {
+  if (types.isProxy(world)) return undefined;
+  const descriptor = Object.getOwnPropertyDescriptor(world, "stores");
+  if (!descriptor || !("value" in descriptor) || types.isProxy(descriptor.value)) return undefined;
+  try {
+    const store = applyAtCommit(mapGetAtCommit, descriptor.value, [name]);
+    if (!store || types.isProxy(store)) return undefined;
+    return applyAtCommit(mapGetAtCommit, store, [entityId]) as ComponentMap[K] | undefined;
+  } catch {
+    // Map 原型方法只接受真实内部槽；同形对象／访问器不作为 World 查询来源。
+    return undefined;
+  }
+}
 
 /**
  * World 是 ECS 内存状态容器。
