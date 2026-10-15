@@ -19,6 +19,10 @@ import type { World } from "../domain/world";
 import type { NightFoxInspectionClaim } from "../domain/night-effects";
 import type { DamageResolutionResult } from "../domain/systems/damage-resolution-system";
 import type { DeathCommitReceipt, DeathOriginalLife } from "../engine/death-wave";
+import { hasAwakenedDeathPrevention } from "./awakened-death-prevention";
+
+// 只沿已有非空候选的World读取识别新owner；旧空夜不增加World／配置查询。
+const awakenedPublications = new WeakSet<OrdinaryNightDeathRuntime>();
 
 /** 只声明真实读取字段；伤害和已付 claim 原引用保留，不冻结回调或提前快照其当前性。 */
 export interface OrdinaryNightDeathInput {
@@ -77,13 +81,21 @@ export function prepareOrdinaryNightDeaths(
     return (
       scope &&
       retainedSources[id]?.length &&
-      runtime.world.getComponent(id, COMPONENT.Alive) === scope.life &&
+      (() => {
+        const world = runtime.world;
+        if (hasAwakenedDeathPrevention(world)) awakenedPublications.add(runtime);
+        return world.getComponent(id, COMPONENT.Alive) === scope.life;
+      })() &&
       scope.life.alive &&
       scope.version !== undefined &&
       aliveLifeVersion(scope.life) === scope.version
     );
   });
-  if (!runtime.config.fragrantPairSeer && !runtime.config.animalDream)
+  if (
+    !runtime.config.fragrantPairSeer &&
+    !runtime.config.animalDream &&
+    !awakenedPublications.has(runtime)
+  )
     runtime.publishNightResolved(() => nightDeaths);
   const sources: DeathSources = Object.fromEntries(
     nightDeaths.map((id) => [id, [...(retainedSources[id] ?? [])]]),
@@ -120,7 +132,9 @@ export function ordinaryNightDeathPublication(
     receipt: DeathCommitReceipt,
   ) => GameEvent;
 } {
-  return runtime.config.fragrantPairSeer || runtime.config.animalDream
+  return runtime.config.fragrantPairSeer ||
+    runtime.config.animalDream ||
+    awakenedPublications.has(runtime)
     ? {
         onInitialWaveCommitted: (
           actualIds: readonly number[],
@@ -128,15 +142,17 @@ export function ordinaryNightDeathPublication(
           receipt: DeathCommitReceipt,
         ) => {
           const event = runtime.publishNightResolved(() =>
-            runtime.config.animalDream
-              ? nightDeaths.filter(
-                  (id) =>
-                    actualIds.includes(id) &&
-                    (retainedSources[id] ?? []).some((c) =>
-                      (actualSources?.[id] ?? []).includes(c),
-                    ),
-                )
-              : nightDeaths,
+            awakenedPublications.has(runtime)
+              ? actualIds.filter((id) => receipt.committed(id)?.originPhase === Phase.Night)
+              : runtime.config.animalDream
+                ? nightDeaths.filter(
+                    (id) =>
+                      actualIds.includes(id) &&
+                      (retainedSources[id] ?? []).some((c) =>
+                        (actualSources?.[id] ?? []).includes(c),
+                      ),
+                  )
+                : nightDeaths,
           );
           // 先写真实公开事件，再关联原完整 actualIds；回执失败不撤销事件，也不改变动物／双生 pending 筛选。
           receipt.recordPublication(event, actualIds);

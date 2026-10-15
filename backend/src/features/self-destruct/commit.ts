@@ -25,6 +25,10 @@ import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import type { World } from "../../domain/world";
 import { getWhiteWolfKingState, consumeWhiteWolfDetonation } from "../white-wolf-king/ports";
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
+import { captureOriginalPlayer, originalPlayerAtCommit } from "../../domain/original-player-scope";
+import { Camp } from "@ai-werewolf-arena/game-contract";
+import { hasAwakenedGuardFrame } from "../awakened-guard/protection-ports";
+import { bindProtectedBlastPublication } from "./protected-publication";
 
 /** 仅提交本自爆能力的资源、事件和事实，返回死亡提案；实际死亡写入由结算器负责。 */
 export function commitSelfDestructSelection(
@@ -33,6 +37,7 @@ export function commitSelfDestructSelection(
   window: ActionWindow,
   phase: Phase,
   events: GameEvent[],
+  protectedPublication?: { readonly day: number; current(): boolean },
 ): { deaths: number[]; sources: DeathSources } | null {
   if (
     !Object.values(ActionWindow).includes(window) ||
@@ -41,6 +46,20 @@ export function commitSelfDestructSelection(
     return null;
   const role = world.getComponent(choice.actorId, COMPONENT.Role);
   if (!role || !world.getComponent(choice.actorId, COMPONENT.Alive)?.alive) return null;
+  const protectedSource =
+    protectedPublication && hasAwakenedGuardFrame(world)
+      ? captureOriginalPlayer(world, choice.actorId)
+      : null;
+  if (
+    protectedPublication &&
+    (!protectedSource ||
+      protectedSource.role !== role ||
+      protectedSource.roleId !== Role.Wolf ||
+      protectedSource.campValue !== Camp.Wolf ||
+      !Number.isSafeInteger(protectedPublication.day) ||
+      protectedPublication.day < 1)
+  )
+    return null;
   const ownsWedding = weddingSetup(world) !== null;
   if (
     ownsWedding &&
@@ -71,11 +90,29 @@ export function commitSelfDestructSelection(
     const moon = redMoon ? commitDemonRedMoonBlast(world, choice.actorId) : null;
     if (redMoon && !moon) return null;
     if (ownsWedding) swallowWeddingBadges(world, events);
-    events.push({
-      timestamp: Date.now(),
-      type: "wolf_self_destruct",
-      payload: { wolfId: choice.actorId, window },
-    });
+    if (protectedSource && protectedPublication) {
+      const publish = events.push,
+        event: GameEvent = {
+          timestamp: Date.now(),
+          type: "awakened_self_destruct_declared",
+          payload: {
+            policy: "awa_awakened_guard_cycle_v1",
+            actorId: choice.actorId,
+            day: protectedPublication.day,
+            window,
+          },
+        },
+        args: [GameEvent] = [event],
+        invoke = Reflect.apply.bind(Reflect);
+      if (!protectedPublication.current() || !originalPlayerAtCommit(world, protectedSource))
+        return null;
+      invoke(publish, events, args);
+    } else
+      events.push({
+        timestamp: Date.now(),
+        type: "wolf_self_destruct",
+        payload: { wolfId: choice.actorId, window },
+      });
     if (moon?.sealsNight)
       events.push({
         timestamp: Date.now(),
@@ -103,5 +140,8 @@ export function commitSelfDestructSelection(
       payload: { actorId: choice.actorId, targetId: choice.targetId, window },
     });
   } else return null;
-  return { deaths, sources };
+  const result = { deaths, sources };
+  if (protectedSource && protectedPublication)
+    bindProtectedBlastPublication(result, protectedSource, protectedPublication.day, window);
+  return result;
 }

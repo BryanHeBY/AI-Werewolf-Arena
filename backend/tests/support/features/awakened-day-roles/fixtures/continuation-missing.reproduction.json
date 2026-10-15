@@ -1,0 +1,2777 @@
+{
+  "schemaVersion": 3,
+  "finalized": true,
+  "metadata": {
+    "engine": {
+      "id": "awa-engine",
+      "sourceHash": "ca40b9327e257ef495455b2171d7963e22155a5948cb1739e6f9f351d0ae32d0",
+      "lockHash": "b08f64f6dc4ef8f8b2c9ba7092cc3556385f07ca3c9e1efc0986f14eb9e9e558"
+    },
+    "random": {
+      "seed": "awakened-knight:delivery",
+      "algorithm": "mulberry32-fnv1a-utf16-v1",
+      "streamPolicy": "named-path-v1",
+      "path": []
+    },
+    "ruleset": { "id": "awa_classic", "version": "1.0.0" },
+    "boardId": "awa_netease_awakened_knight_12_v1",
+    "normalizedBoard": {
+      "awakenedWolfBeauty": { "policy": "awa_awakened_replacement_v1" },
+      "awakenedGuard": { "policy": "awa_awakened_guard_cycle_v1" },
+      "awakenedKnight": { "policy": "awa_awakened_duel_chain_v1" },
+      "disclosure": { "deathRevealPolicy": "awa_hidden_v1" },
+      "lastWords": { "policy": "awa_initial_wave_v1" },
+      "boardSize": 12,
+      "enableSheriff": true,
+      "winConditions": ["slaughter_side"],
+      "hooks": {
+        "onDaybreak": false,
+        "onPreElection": true,
+        "onPreVote": true,
+        "onPerSpeechGap": false
+      },
+      "roleSetups": [
+        { "role": "wolf", "count": 3 },
+        { "role": "awakened_wolf_beauty", "count": 1 },
+        { "role": "villager", "count": 4 },
+        { "role": "seer", "count": 1 },
+        { "role": "witch", "count": 1 },
+        { "role": "awakened_guard", "count": 1 },
+        { "role": "awakened_knight", "count": 1 }
+      ],
+      "selfDestruct": { "enabledWindows": ["on_pre_election", "on_pre_vote"] },
+      "sheriff": {
+        "voteWeight": 1.5,
+        "electionPolicy": "awa_nomination_offstage_pk_v1",
+        "badgePolicy": "awa_holder_choice_v1"
+      },
+      "voting": { "exilePolicy": "awa_one_pk_v1" },
+      "seer": { "targetPolicy": "awa_alive_v1", "actionPolicy": "awa_required_when_legal_v1" },
+      "witch": {
+        "canSelfHeal": "disabled",
+        "knifeVisibility": "awa_with_heal_v1",
+        "potionPolicy": "awa_one_native_v1"
+      },
+      "tieBreaker": {
+        "exileVote": "no_elimination",
+        "wolfKillVote": "min_id",
+        "sheriffVote": "no_elimination"
+      }
+    },
+    "locale": "en",
+    "maxDays": 8,
+    "dealMode": "random",
+    "players": [
+      {
+        "id": 1,
+        "name": "Seat 1",
+        "role": "villager",
+        "camp": "good",
+        "agent": { "kind": "llm", "name": "actor-1", "model": "synthetic-player-1" }
+      },
+      {
+        "id": 2,
+        "name": "Seat 2",
+        "role": "villager",
+        "camp": "good",
+        "agent": { "kind": "llm", "name": "actor-2", "model": "synthetic-player-2" }
+      },
+      {
+        "id": 3,
+        "name": "Seat 3",
+        "role": "witch",
+        "camp": "good",
+        "agent": { "kind": "llm", "name": "actor-3", "model": "synthetic-player-3" }
+      },
+      {
+        "id": 4,
+        "name": "Seat 4",
+        "role": "villager",
+        "camp": "good",
+        "agent": { "kind": "llm", "name": "actor-4", "model": "synthetic-player-4" }
+      },
+      {
+        "id": 5,
+        "name": "Seat 5",
+        "role": "awakened_guard",
+        "camp": "good",
+        "agent": { "kind": "llm", "name": "actor-5", "model": "synthetic-player-5" }
+      },
+      {
+        "id": 6,
+        "name": "Seat 6",
+        "role": "villager",
+        "camp": "good",
+        "agent": { "kind": "llm", "name": "actor-6", "model": "synthetic-player-6" }
+      },
+      {
+        "id": 7,
+        "name": "Seat 7",
+        "role": "awakened_knight",
+        "camp": "good",
+        "agent": { "kind": "llm", "name": "actor-7", "model": "synthetic-player-7" }
+      },
+      {
+        "id": 8,
+        "name": "Seat 8",
+        "role": "wolf",
+        "camp": "wolf",
+        "agent": { "kind": "llm", "name": "actor-8", "model": "synthetic-player-8" }
+      },
+      {
+        "id": 9,
+        "name": "Seat 9",
+        "role": "wolf",
+        "camp": "wolf",
+        "agent": { "kind": "llm", "name": "actor-9", "model": "synthetic-player-9" }
+      },
+      {
+        "id": 10,
+        "name": "Seat 10",
+        "role": "awakened_wolf_beauty",
+        "camp": "wolf",
+        "agent": { "kind": "llm", "name": "actor-10", "model": "synthetic-player-10" }
+      },
+      {
+        "id": 11,
+        "name": "Seat 11",
+        "role": "seer",
+        "camp": "good",
+        "agent": { "kind": "llm", "name": "actor-11", "model": "synthetic-player-11" }
+      },
+      {
+        "id": 12,
+        "name": "Seat 12",
+        "role": "wolf",
+        "camp": "wolf",
+        "agent": { "kind": "llm", "name": "actor-12", "model": "synthetic-player-12" }
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "actorId": 12,
+      "day": 1,
+      "stage": "wolf_discussion",
+      "turn": 1,
+      "request": {
+        "actorId": 12,
+        "phase": "night",
+        "allowedTools": ["speak_to_wolves"],
+        "context": {
+          "day": 1,
+          "stage": "wolf_discussion",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["speak_to_wolves"],
+            "summary_message": { "key": "request.summary.night_action" }
+          },
+          "round": 1,
+          "max_rounds": 3
+        }
+      },
+      "settleOrder": 1,
+      "openedAfterSettlement": 0,
+      "openedAtEventCount": 4,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "speak_to_wolves", "args": { "text": "End", "end_chat": true } }
+      }
+    },
+    {
+      "actorId": 10,
+      "day": 1,
+      "stage": "wolf_discussion",
+      "turn": 1,
+      "request": {
+        "actorId": 10,
+        "phase": "night",
+        "allowedTools": ["speak_to_wolves"],
+        "context": {
+          "day": 1,
+          "stage": "wolf_discussion",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["speak_to_wolves"],
+            "summary_message": { "key": "request.summary.night_action" }
+          },
+          "round": 1,
+          "max_rounds": 3
+        }
+      },
+      "settleOrder": 2,
+      "openedAfterSettlement": 1,
+      "openedAtEventCount": 5,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "speak_to_wolves", "args": { "text": "End", "end_chat": true } }
+      }
+    },
+    {
+      "actorId": 8,
+      "day": 1,
+      "stage": "wolf_discussion",
+      "turn": 1,
+      "request": {
+        "actorId": 8,
+        "phase": "night",
+        "allowedTools": ["speak_to_wolves"],
+        "context": {
+          "day": 1,
+          "stage": "wolf_discussion",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["speak_to_wolves"],
+            "summary_message": { "key": "request.summary.night_action" }
+          },
+          "round": 1,
+          "max_rounds": 3
+        }
+      },
+      "settleOrder": 3,
+      "openedAfterSettlement": 2,
+      "openedAtEventCount": 6,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "speak_to_wolves", "args": { "text": "End", "end_chat": true } }
+      }
+    },
+    {
+      "actorId": 9,
+      "day": 1,
+      "stage": "wolf_discussion",
+      "turn": 1,
+      "request": {
+        "actorId": 9,
+        "phase": "night",
+        "allowedTools": ["speak_to_wolves"],
+        "context": {
+          "day": 1,
+          "stage": "wolf_discussion",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["speak_to_wolves"],
+            "summary_message": { "key": "request.summary.night_action" }
+          },
+          "round": 1,
+          "max_rounds": 3
+        }
+      },
+      "settleOrder": 4,
+      "openedAfterSettlement": 3,
+      "openedAtEventCount": 7,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "speak_to_wolves", "args": { "text": "End", "end_chat": true } }
+      }
+    },
+    {
+      "actorId": 5,
+      "day": 1,
+      "stage": "awakened_protection_night",
+      "turn": 1,
+      "request": {
+        "actorId": 5,
+        "phase": "night",
+        "allowedTools": ["awakened_protect"],
+        "context": {
+          "action_failure_policy": "error",
+          "allow_fallback": false,
+          "day": 1,
+          "stage": "awakened_protection_night",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            {
+              "seq": 2,
+              "type": "awakened_guard_cycle_started",
+              "payload": { "policy": "awa_awakened_guard_cycle_v1", "actorId": 5, "day": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["awakened_protect"],
+            "summary_message": { "key": "request.summary.awakened_protect" }
+          },
+          "awakened_protect_options": {
+            "timing": "night",
+            "last": false,
+            "targetIds": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+          }
+        }
+      },
+      "settleOrder": 5,
+      "openedAfterSettlement": 4,
+      "openedAtEventCount": 8,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "awakened_protect", "args": { "mode": "pass", "target_id": null } }
+      }
+    },
+    {
+      "actorId": 12,
+      "day": 1,
+      "stage": "wolf_vote",
+      "turn": 1,
+      "request": {
+        "actorId": 12,
+        "phase": "night",
+        "allowedTools": ["kill_vote"],
+        "context": {
+          "day": 1,
+          "stage": "wolf_vote",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["kill_vote"],
+            "summary_message": { "key": "request.summary.night_action" }
+          }
+        }
+      },
+      "settleOrder": 6,
+      "openedAfterSettlement": 5,
+      "openedAtEventCount": 9,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "kill_vote", "args": { "target_id": 1, "abstain": false } }
+      }
+    },
+    {
+      "actorId": 10,
+      "day": 1,
+      "stage": "wolf_vote",
+      "turn": 1,
+      "request": {
+        "actorId": 10,
+        "phase": "night",
+        "allowedTools": ["kill_vote"],
+        "context": {
+          "day": 1,
+          "stage": "wolf_vote",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["kill_vote"],
+            "summary_message": { "key": "request.summary.night_action" }
+          }
+        }
+      },
+      "settleOrder": 7,
+      "openedAfterSettlement": 6,
+      "openedAtEventCount": 10,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "kill_vote", "args": { "target_id": 1, "abstain": false } }
+      }
+    },
+    {
+      "actorId": 8,
+      "day": 1,
+      "stage": "wolf_vote",
+      "turn": 1,
+      "request": {
+        "actorId": 8,
+        "phase": "night",
+        "allowedTools": ["kill_vote"],
+        "context": {
+          "day": 1,
+          "stage": "wolf_vote",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["kill_vote"],
+            "summary_message": { "key": "request.summary.night_action" }
+          }
+        }
+      },
+      "settleOrder": 8,
+      "openedAfterSettlement": 7,
+      "openedAtEventCount": 11,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "kill_vote", "args": { "target_id": 1, "abstain": false } }
+      }
+    },
+    {
+      "actorId": 9,
+      "day": 1,
+      "stage": "wolf_vote",
+      "turn": 1,
+      "request": {
+        "actorId": 9,
+        "phase": "night",
+        "allowedTools": ["kill_vote"],
+        "context": {
+          "day": 1,
+          "stage": "wolf_vote",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 8, "abstain": false, "targetId": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["kill_vote"],
+            "summary_message": { "key": "request.summary.night_action" }
+          }
+        }
+      },
+      "settleOrder": 9,
+      "openedAfterSettlement": 8,
+      "openedAtEventCount": 12,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "kill_vote", "args": { "target_id": 1, "abstain": false } }
+      }
+    },
+    {
+      "actorId": 10,
+      "day": 1,
+      "stage": "awakened_charm",
+      "turn": 1,
+      "request": {
+        "actorId": 10,
+        "phase": "night",
+        "allowedTools": ["awakened_charm"],
+        "context": {
+          "action_failure_policy": "error",
+          "allow_fallback": false,
+          "day": 1,
+          "stage": "awakened_charm",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 8, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 10,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 9, "abstain": false, "targetId": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["awakened_charm"],
+            "summary_message": { "key": "request.summary.night_action" }
+          },
+          "awakened_charm_candidates": [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12]
+        }
+      },
+      "settleOrder": 10,
+      "openedAfterSettlement": 9,
+      "openedAtEventCount": 13,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "awakened_charm", "args": { "target_id": 2 } }
+      }
+    },
+    {
+      "actorId": 3,
+      "day": 1,
+      "stage": "witch",
+      "turn": 1,
+      "request": {
+        "actorId": 3,
+        "phase": "night",
+        "allowedTools": ["use_potion"],
+        "context": {
+          "day": 1,
+          "stage": "witch",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["use_potion"],
+            "summary_message": { "key": "request.summary.night_action" }
+          },
+          "ability_id": "native:potion",
+          "wolf_target": 1
+        }
+      },
+      "settleOrder": 11,
+      "openedAfterSettlement": 10,
+      "openedAtEventCount": 14,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "use_potion", "args": { "target_id": 3, "potion_type": "none" } }
+      }
+    },
+    {
+      "actorId": 11,
+      "day": 1,
+      "stage": "seer",
+      "turn": 1,
+      "request": {
+        "actorId": 11,
+        "phase": "night",
+        "allowedTools": ["check_identity"],
+        "context": {
+          "day": 1,
+          "stage": "seer",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["check_identity"],
+            "summary_message": { "key": "request.summary.night_action" }
+          },
+          "ability_id": "native:seer_check"
+        }
+      },
+      "settleOrder": 12,
+      "openedAfterSettlement": 11,
+      "openedAtEventCount": 15,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "check_identity", "args": { "target_id": 8 } }
+      }
+    },
+    {
+      "actorId": 8,
+      "day": 1,
+      "stage": "on_pre_election",
+      "turn": 1,
+      "request": {
+        "actorId": 8,
+        "phase": "day",
+        "actionWindow": "on_pre_election",
+        "allowedTools": ["self_destruct"],
+        "context": {
+          "day": 1,
+          "stage": "on_pre_election",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 8, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 10,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 9, "abstain": false, "targetId": 1 }
+            },
+            { "seq": 11, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 0,
+            "max_valid_actions": 1,
+            "required_any_tools": [],
+            "summary_message": { "key": "request.summary.self_destruct" }
+          }
+        }
+      },
+      "settleOrder": 13,
+      "openedAfterSettlement": 12,
+      "openedAtEventCount": 17,
+      "outcome": { "kind": "action", "action": null }
+    },
+    {
+      "actorId": 9,
+      "day": 1,
+      "stage": "on_pre_election",
+      "turn": 1,
+      "request": {
+        "actorId": 9,
+        "phase": "day",
+        "actionWindow": "on_pre_election",
+        "allowedTools": ["self_destruct"],
+        "context": {
+          "day": 1,
+          "stage": "on_pre_election",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 8, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 10,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 9, "abstain": false, "targetId": 1 }
+            },
+            { "seq": 11, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 0,
+            "max_valid_actions": 1,
+            "required_any_tools": [],
+            "summary_message": { "key": "request.summary.self_destruct" }
+          }
+        }
+      },
+      "settleOrder": 14,
+      "openedAfterSettlement": 12,
+      "openedAtEventCount": 17,
+      "outcome": { "kind": "action", "action": null }
+    },
+    {
+      "actorId": 12,
+      "day": 1,
+      "stage": "on_pre_election",
+      "turn": 1,
+      "request": {
+        "actorId": 12,
+        "phase": "day",
+        "actionWindow": "on_pre_election",
+        "allowedTools": ["self_destruct"],
+        "context": {
+          "day": 1,
+          "stage": "on_pre_election",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 8, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 10,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 9, "abstain": false, "targetId": 1 }
+            },
+            { "seq": 11, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 0,
+            "max_valid_actions": 1,
+            "required_any_tools": [],
+            "summary_message": { "key": "request.summary.self_destruct" }
+          }
+        }
+      },
+      "settleOrder": 15,
+      "openedAfterSettlement": 12,
+      "openedAtEventCount": 17,
+      "outcome": { "kind": "action", "action": null }
+    },
+    {
+      "actorId": 1,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 1,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 17,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 2,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 2,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 16,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 3,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 3,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            {
+              "seq": 2,
+              "type": "witch_potion_skipped",
+              "payload": { "actorId": 3, "targetId": 3, "potionType": "none" }
+            },
+            { "seq": 3, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 18,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 4,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 4,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 19,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 5,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 5,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            {
+              "seq": 2,
+              "type": "awakened_guard_cycle_started",
+              "payload": { "policy": "awa_awakened_guard_cycle_v1", "actorId": 5, "day": 1 }
+            },
+            {
+              "seq": 3,
+              "type": "awakened_protection_chosen",
+              "payload": {
+                "policy": "awa_awakened_guard_cycle_v1",
+                "actorId": 5,
+                "day": 1,
+                "timing": "night",
+                "mode": "pass",
+                "targetId": null,
+                "outcome": "passed"
+              }
+            },
+            { "seq": 4, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 20,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 6,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 6,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 21,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 7,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 7,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 22,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 8,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 8,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 8, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 10,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 9, "abstain": false, "targetId": 1 }
+            },
+            { "seq": 11, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 23,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 9,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 9,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 8, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 10,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 9, "abstain": false, "targetId": 1 }
+            },
+            { "seq": 11, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 24,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 10,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 10,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 8, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 10,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 9, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 11,
+              "type": "awakened_charm_chosen",
+              "payload": {
+                "policy": "awa_awakened_replacement_v1",
+                "day": 1,
+                "actorId": 10,
+                "targetId": 2,
+                "nextAllowedNight": 3
+              }
+            },
+            { "seq": 12, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 25,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 11,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 11,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            {
+              "seq": 2,
+              "type": "seer_checked",
+              "payload": {
+                "actorId": 11,
+                "targetId": 8,
+                "isWerewolf": true,
+                "result": { "kind": "camp", "camp": "wolf" }
+              }
+            },
+            { "seq": 3, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 26,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 12,
+      "day": 1,
+      "stage": "sheriff_nomination",
+      "turn": 1,
+      "request": {
+        "actorId": 12,
+        "phase": "day",
+        "allowedTools": ["run_for_sheriff"],
+        "context": {
+          "day": 1,
+          "stage": "sheriff_nomination",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "wolf_tactical_order", "payload": { "order": [12, 10, 8, 9] } },
+            {
+              "seq": 3,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 12, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 4,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 10, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 5,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 8, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 6,
+              "type": "wolf_discussion_ended",
+              "payload": { "actorId": 9, "reason": "End", "round": 1 }
+            },
+            {
+              "seq": 7,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 12, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 8,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 10, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 8, "abstain": false, "targetId": 1 }
+            },
+            {
+              "seq": 10,
+              "type": "wolf_kill_vote_cast",
+              "payload": { "actorId": 9, "abstain": false, "targetId": 1 }
+            },
+            { "seq": 11, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["run_for_sheriff"],
+            "summary_message": { "key": "request.summary.sheriff_nomination" }
+          }
+        }
+      },
+      "settleOrder": 27,
+      "openedAfterSettlement": 15,
+      "openedAtEventCount": 17,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "run_for_sheriff", "args": { "run": false } }
+      }
+    },
+    {
+      "actorId": 1,
+      "day": 1,
+      "stage": "last_words",
+      "turn": 1,
+      "request": {
+        "actorId": 1,
+        "phase": "day",
+        "allowedTools": ["speak"],
+        "context": {
+          "day": 1,
+          "stage": "last_words",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } },
+            { "seq": 3, "type": "sheriff_nomination_summary", "payload": { "candidates": [] } },
+            { "seq": 4, "type": "sheriff_withdraw_summary", "payload": { "withdrawn": [] } },
+            { "seq": 5, "type": "sheriff_candidates_finalized", "payload": { "candidates": [] } },
+            {
+              "seq": 6,
+              "type": "sheriff_vote_summary",
+              "payload": { "votes": [], "winnerId": null, "round": 1 }
+            },
+            { "seq": 7, "type": "night_resolved", "payload": { "deaths": [1] } },
+            {
+              "seq": 8,
+              "type": "last_words_granted",
+              "payload": { "playerId": 1, "phase": "day", "day": 1 }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["speak"],
+            "summary_message": { "key": "request.summary.last_words" }
+          },
+          "trigger": "last_words",
+          "death_phase": "night",
+          "death_action_id": 1
+        }
+      },
+      "settleOrder": 28,
+      "openedAfterSettlement": 27,
+      "openedAtEventCount": 35,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "speak", "args": { "text": "Initial night words" } }
+      }
+    },
+    {
+      "actorId": 7,
+      "day": 1,
+      "stage": "awakened_duel",
+      "turn": 1,
+      "request": {
+        "actorId": 7,
+        "phase": "day",
+        "allowedTools": ["awakened_duel"],
+        "context": {
+          "action_failure_policy": "error",
+          "allow_fallback": false,
+          "day": 1,
+          "stage": "awakened_duel",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } },
+            { "seq": 3, "type": "sheriff_nomination_summary", "payload": { "candidates": [] } },
+            { "seq": 4, "type": "sheriff_withdraw_summary", "payload": { "withdrawn": [] } },
+            { "seq": 5, "type": "sheriff_candidates_finalized", "payload": { "candidates": [] } },
+            {
+              "seq": 6,
+              "type": "sheriff_vote_summary",
+              "payload": { "votes": [], "winnerId": null, "round": 1 }
+            },
+            { "seq": 7, "type": "night_resolved", "payload": { "deaths": [1] } },
+            {
+              "seq": 8,
+              "type": "last_words_granted",
+              "payload": { "playerId": 1, "phase": "day", "day": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "last_words_spoken",
+              "payload": { "playerId": 1, "phase": "day", "day": 1, "text": "Initial night words" }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["awakened_duel"],
+            "summary_message": { "key": "request.summary.awakened_duel" }
+          },
+          "awakened_duel_options": {
+            "continuing": false,
+            "targetIds": [2, 3, 4, 5, 6, 8, 9, 10, 11, 12]
+          }
+        }
+      },
+      "settleOrder": 29,
+      "openedAfterSettlement": 28,
+      "openedAtEventCount": 36,
+      "outcome": {
+        "kind": "action",
+        "action": { "name": "awakened_duel", "args": { "target_id": 10 } }
+      }
+    },
+    {
+      "actorId": 7,
+      "day": 1,
+      "stage": "awakened_duel_continue",
+      "turn": 1,
+      "request": {
+        "actorId": 7,
+        "phase": "day",
+        "allowedTools": ["awakened_duel"],
+        "context": {
+          "action_failure_policy": "error",
+          "allow_fallback": false,
+          "day": 1,
+          "stage": "awakened_duel_continue",
+          "visible_events": [
+            { "seq": 1, "type": "phase_changed", "payload": { "phase": "night", "day": 1 } },
+            { "seq": 2, "type": "phase_changed", "payload": { "phase": "day", "day": 1 } },
+            { "seq": 3, "type": "sheriff_nomination_summary", "payload": { "candidates": [] } },
+            { "seq": 4, "type": "sheriff_withdraw_summary", "payload": { "withdrawn": [] } },
+            { "seq": 5, "type": "sheriff_candidates_finalized", "payload": { "candidates": [] } },
+            {
+              "seq": 6,
+              "type": "sheriff_vote_summary",
+              "payload": { "votes": [], "winnerId": null, "round": 1 }
+            },
+            { "seq": 7, "type": "night_resolved", "payload": { "deaths": [1] } },
+            {
+              "seq": 8,
+              "type": "last_words_granted",
+              "payload": { "playerId": 1, "phase": "day", "day": 1 }
+            },
+            {
+              "seq": 9,
+              "type": "last_words_spoken",
+              "payload": { "playerId": 1, "phase": "day", "day": 1, "text": "Initial night words" }
+            },
+            {
+              "seq": 10,
+              "type": "awakened_duel_committed",
+              "payload": {
+                "policy": "awa_awakened_duel_chain_v1",
+                "actorId": 7,
+                "day": 1,
+                "chain": 1,
+                "targetId": 10,
+                "branch": "wolf"
+              }
+            },
+            {
+              "seq": 11,
+              "type": "awakened_duel_resolved",
+              "payload": {
+                "policy": "awa_awakened_duel_chain_v1",
+                "day": 1,
+                "actorId": 7,
+                "chain": 1,
+                "targetId": 10,
+                "deaths": [2]
+              }
+            },
+            { "seq": 12, "type": "additional_deaths", "payload": { "deaths": [2] } },
+            {
+              "seq": 13,
+              "type": "awakened_beauty_replaced",
+              "payload": {
+                "policy": "awa_awakened_replacement_v1",
+                "day": 1,
+                "actorId": 10,
+                "targetId": 2,
+                "targetDied": true
+              }
+            }
+          ],
+          "turn_constraints": {
+            "min_valid_actions": 1,
+            "max_valid_actions": 1,
+            "required_any_tools": ["awakened_duel"],
+            "summary_message": { "key": "request.summary.awakened_duel_continue" }
+          },
+          "awakened_duel_options": { "continuing": true, "targetIds": [3, 4, 5, 6, 8, 9, 11, 12] }
+        }
+      },
+      "settleOrder": 30,
+      "openedAfterSettlement": 29,
+      "openedAtEventCount": 41,
+      "outcome": { "kind": "error", "code": "decision_failed", "name": "Error" }
+    }
+  ],
+  "checkpoints": [
+    {
+      "settlementCount": 0,
+      "decisionCount": 0,
+      "cycle": 0,
+      "complete": true,
+      "snapshot": { "day": 1, "phase": "night", "gameOver": false, "result": null },
+      "players": [
+        {
+          "id": 1,
+          "seat": 1,
+          "name": "Seat 1",
+          "role": "villager",
+          "camp": "good",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 2,
+          "seat": 2,
+          "name": "Seat 2",
+          "role": "villager",
+          "camp": "good",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 3,
+          "seat": 3,
+          "name": "Seat 3",
+          "role": "witch",
+          "camp": "good",
+          "alive": true,
+          "privateState": {
+            "abilities": {
+              "native:potion": {
+                "id": "native:potion",
+                "kind": "potion",
+                "state": {
+                  "heal": 1,
+                  "poison": 1,
+                  "selfHealRule": "disabled",
+                  "canSelfHeal": false,
+                  "healUsedThisNight": false,
+                  "poisonUsedThisNight": false
+                },
+                "source": { "kind": "native", "role": "witch" },
+                "sourceDisclosed": true,
+                "startsOnDay": 1,
+                "maxUses": null,
+                "uses": 0,
+                "lastUsedDay": null,
+                "disabled": false
+              }
+            }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 4,
+          "seat": 4,
+          "name": "Seat 4",
+          "role": "villager",
+          "camp": "good",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 5,
+          "seat": 5,
+          "name": "Seat 5",
+          "role": "awakened_guard",
+          "camp": "good",
+          "alive": true,
+          "privateState": {
+            "awakenedGuard": { "policy": "awa_awakened_guard_cycle_v1", "cycles": [] }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 6,
+          "seat": 6,
+          "name": "Seat 6",
+          "role": "villager",
+          "camp": "good",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 7,
+          "seat": 7,
+          "name": "Seat 7",
+          "role": "awakened_knight",
+          "camp": "good",
+          "alive": true,
+          "privateState": {
+            "awakenedKnight": { "policy": "awa_awakened_duel_chain_v1", "attempts": [] }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 8,
+          "seat": 8,
+          "name": "Seat 8",
+          "role": "wolf",
+          "camp": "wolf",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "wolf" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 9,
+          "seat": 9,
+          "name": "Seat 9",
+          "role": "wolf",
+          "camp": "wolf",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "wolf" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 10,
+          "seat": 10,
+          "name": "Seat 10",
+          "role": "awakened_wolf_beauty",
+          "camp": "wolf",
+          "alive": true,
+          "privateState": {
+            "awakenedBeauty": {
+              "policy": "awa_awakened_replacement_v1",
+              "choices": [],
+              "replacement": null
+            }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "wolf" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 11,
+          "seat": 11,
+          "name": "Seat 11",
+          "role": "seer",
+          "camp": "good",
+          "alive": true,
+          "privateState": {
+            "abilities": {
+              "native:seer_check": {
+                "id": "native:seer_check",
+                "kind": "seer_check",
+                "state": {
+                  "lastTarget": null,
+                  "lastIsWerewolf": null,
+                  "lastResult": null,
+                  "history": []
+                },
+                "source": { "kind": "native", "role": "seer" },
+                "sourceDisclosed": true,
+                "startsOnDay": 1,
+                "maxUses": null,
+                "uses": 0,
+                "lastUsedDay": null,
+                "disabled": false
+              }
+            }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 12,
+          "seat": 12,
+          "name": "Seat 12",
+          "role": "wolf",
+          "camp": "wolf",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "wolf" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        }
+      ],
+      "eventCount": 2
+    },
+    {
+      "settlementCount": 30,
+      "decisionCount": 30,
+      "cycle": 1,
+      "complete": false,
+      "snapshot": { "day": 1, "phase": "day", "gameOver": false, "result": null },
+      "players": [
+        {
+          "id": 1,
+          "seat": 1,
+          "name": "Seat 1",
+          "role": "villager",
+          "camp": "good",
+          "alive": false,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 2,
+          "seat": 2,
+          "name": "Seat 2",
+          "role": "villager",
+          "camp": "good",
+          "alive": false,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 3,
+          "seat": 3,
+          "name": "Seat 3",
+          "role": "witch",
+          "camp": "good",
+          "alive": true,
+          "privateState": {
+            "abilities": {
+              "native:potion": {
+                "id": "native:potion",
+                "kind": "potion",
+                "state": {
+                  "heal": 1,
+                  "poison": 1,
+                  "selfHealRule": "disabled",
+                  "canSelfHeal": false,
+                  "healUsedThisNight": false,
+                  "poisonUsedThisNight": false
+                },
+                "source": { "kind": "native", "role": "witch" },
+                "sourceDisclosed": true,
+                "startsOnDay": 1,
+                "maxUses": null,
+                "uses": 0,
+                "lastUsedDay": 1,
+                "disabled": false
+              }
+            }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 4,
+          "seat": 4,
+          "name": "Seat 4",
+          "role": "villager",
+          "camp": "good",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 5,
+          "seat": 5,
+          "name": "Seat 5",
+          "role": "awakened_guard",
+          "camp": "good",
+          "alive": true,
+          "privateState": {
+            "awakenedGuard": {
+              "policy": "awa_awakened_guard_cycle_v1",
+              "cycles": [{ "day": 1, "status": "passed" }]
+            }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 6,
+          "seat": 6,
+          "name": "Seat 6",
+          "role": "villager",
+          "camp": "good",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 7,
+          "seat": 7,
+          "name": "Seat 7",
+          "role": "awakened_knight",
+          "camp": "good",
+          "alive": true,
+          "privateState": {
+            "awakenedKnight": {
+              "policy": "awa_awakened_duel_chain_v1",
+              "attempts": [{ "day": 1, "chain": 1, "targetId": 10, "branch": "wolf" }]
+            }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 8,
+          "seat": 8,
+          "name": "Seat 8",
+          "role": "wolf",
+          "camp": "wolf",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "wolf" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 9,
+          "seat": 9,
+          "name": "Seat 9",
+          "role": "wolf",
+          "camp": "wolf",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "wolf" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 10,
+          "seat": 10,
+          "name": "Seat 10",
+          "role": "awakened_wolf_beauty",
+          "camp": "wolf",
+          "alive": true,
+          "privateState": {
+            "awakenedBeauty": {
+              "policy": "awa_awakened_replacement_v1",
+              "choices": [{ "day": 1, "targetId": 2 }],
+              "replacement": {
+                "day": 1,
+                "phase": "day",
+                "rootPhase": "day",
+                "targetId": 2,
+                "preventedCauses": ["awakened_duel"]
+              }
+            }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "wolf" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 11,
+          "seat": 11,
+          "name": "Seat 11",
+          "role": "seer",
+          "camp": "good",
+          "alive": true,
+          "privateState": {
+            "abilities": {
+              "native:seer_check": {
+                "id": "native:seer_check",
+                "kind": "seer_check",
+                "state": {
+                  "lastTarget": 8,
+                  "lastIsWerewolf": true,
+                  "lastResult": { "kind": "camp", "camp": "wolf" },
+                  "history": [
+                    {
+                      "targetId": 8,
+                      "isWerewolf": true,
+                      "result": { "kind": "camp", "camp": "wolf" }
+                    }
+                  ]
+                },
+                "source": { "kind": "native", "role": "seer" },
+                "sourceDisclosed": true,
+                "startsOnDay": 1,
+                "maxUses": null,
+                "uses": 1,
+                "lastUsedDay": 1,
+                "disabled": false
+              }
+            }
+          },
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        },
+        {
+          "id": 12,
+          "seat": 12,
+          "name": "Seat 12",
+          "role": "wolf",
+          "camp": "wolf",
+          "alive": true,
+          "privateState": {},
+          "victory": { "affiliations": [{ "kind": "faction", "faction": "wolf" }] },
+          "vote": { "weight": 1, "canVote": true },
+          "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+          "marks": []
+        }
+      ],
+      "eventCount": 41,
+      "failure": { "name": "Error", "code": "cycle_failed" }
+    }
+  ],
+  "events": [
+    {
+      "timestamp": 1792089837897,
+      "type": "god_private_game_info",
+      "payload": {
+        "boardSize": 12,
+        "players": [
+          { "id": 1, "seat": 1, "name": "Seat 1", "role": "villager", "camp": "good" },
+          { "id": 2, "seat": 2, "name": "Seat 2", "role": "villager", "camp": "good" },
+          { "id": 3, "seat": 3, "name": "Seat 3", "role": "witch", "camp": "good" },
+          { "id": 4, "seat": 4, "name": "Seat 4", "role": "villager", "camp": "good" },
+          { "id": 5, "seat": 5, "name": "Seat 5", "role": "awakened_guard", "camp": "good" },
+          { "id": 6, "seat": 6, "name": "Seat 6", "role": "villager", "camp": "good" },
+          { "id": 7, "seat": 7, "name": "Seat 7", "role": "awakened_knight", "camp": "good" },
+          { "id": 8, "seat": 8, "name": "Seat 8", "role": "wolf", "camp": "wolf" },
+          { "id": 9, "seat": 9, "name": "Seat 9", "role": "wolf", "camp": "wolf" },
+          {
+            "id": 10,
+            "seat": 10,
+            "name": "Seat 10",
+            "role": "awakened_wolf_beauty",
+            "camp": "wolf"
+          },
+          { "id": 11, "seat": 11, "name": "Seat 11", "role": "seer", "camp": "good" },
+          { "id": 12, "seat": 12, "name": "Seat 12", "role": "wolf", "camp": "wolf" }
+        ]
+      }
+    },
+    {
+      "timestamp": 1792089837897,
+      "type": "phase_changed",
+      "payload": { "phase": "night", "day": 1 }
+    },
+    {
+      "timestamp": 1792089838009,
+      "type": "awakened_guard_cycle_started",
+      "payload": { "policy": "awa_awakened_guard_cycle_v1", "actorId": 5, "day": 1 },
+      "audience": [5]
+    },
+    {
+      "timestamp": 1792089838009,
+      "type": "wolf_tactical_order",
+      "payload": { "order": [12, 10, 8, 9] },
+      "audience": [8, 9, 10, 12]
+    },
+    {
+      "timestamp": 1792089838015,
+      "type": "wolf_discussion_ended",
+      "payload": { "actorId": 12, "reason": "End", "round": 1 },
+      "audience": [8, 9, 10, 12]
+    },
+    {
+      "timestamp": 1792089838018,
+      "type": "wolf_discussion_ended",
+      "payload": { "actorId": 10, "reason": "End", "round": 1 },
+      "audience": [8, 9, 10, 12]
+    },
+    {
+      "timestamp": 1792089838021,
+      "type": "wolf_discussion_ended",
+      "payload": { "actorId": 8, "reason": "End", "round": 1 },
+      "audience": [8, 9, 10, 12]
+    },
+    {
+      "timestamp": 1792089838024,
+      "type": "wolf_discussion_ended",
+      "payload": { "actorId": 9, "reason": "End", "round": 1 },
+      "audience": [8, 9, 10, 12]
+    },
+    {
+      "timestamp": 1792089838027,
+      "type": "awakened_protection_chosen",
+      "payload": {
+        "policy": "awa_awakened_guard_cycle_v1",
+        "actorId": 5,
+        "day": 1,
+        "timing": "night",
+        "mode": "pass",
+        "targetId": null,
+        "outcome": "passed"
+      },
+      "audience": [5]
+    },
+    {
+      "timestamp": 1792089838031,
+      "type": "wolf_kill_vote_cast",
+      "payload": { "actorId": 12, "abstain": false, "targetId": 1 },
+      "audience": [8, 9, 10, 12]
+    },
+    {
+      "timestamp": 1792089838034,
+      "type": "wolf_kill_vote_cast",
+      "payload": { "actorId": 10, "abstain": false, "targetId": 1 },
+      "audience": [8, 9, 10, 12]
+    },
+    {
+      "timestamp": 1792089838037,
+      "type": "wolf_kill_vote_cast",
+      "payload": { "actorId": 8, "abstain": false, "targetId": 1 },
+      "audience": [8, 9, 10, 12]
+    },
+    {
+      "timestamp": 1792089838040,
+      "type": "wolf_kill_vote_cast",
+      "payload": { "actorId": 9, "abstain": false, "targetId": 1 },
+      "audience": [8, 9, 10, 12]
+    },
+    {
+      "timestamp": 1792089838044,
+      "type": "awakened_charm_chosen",
+      "payload": {
+        "policy": "awa_awakened_replacement_v1",
+        "day": 1,
+        "actorId": 10,
+        "targetId": 2,
+        "nextAllowedNight": 3
+      },
+      "audience": [10]
+    },
+    {
+      "timestamp": 1792089838047,
+      "type": "witch_potion_skipped",
+      "payload": { "actorId": 3, "targetId": 3, "potionType": "none" }
+    },
+    {
+      "timestamp": 1792089838051,
+      "type": "seer_checked",
+      "payload": {
+        "actorId": 11,
+        "targetId": 8,
+        "isWerewolf": true,
+        "result": { "kind": "camp", "camp": "wolf" }
+      }
+    },
+    {
+      "timestamp": 1792089838051,
+      "type": "phase_changed",
+      "payload": { "phase": "day", "day": 1 }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 1, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 2, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 3, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 4, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 5, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 6, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 7, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 8, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 9, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 10, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 11, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidate_declared",
+      "payload": { "actorId": 12, "run": false }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_nomination_summary",
+      "payload": { "candidates": [] }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_withdraw_summary",
+      "payload": { "withdrawn": [] }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_candidates_finalized",
+      "payload": { "candidates": [] }
+    },
+    {
+      "timestamp": 1792089838081,
+      "type": "sheriff_vote_summary",
+      "payload": { "votes": [], "winnerId": null, "round": 1 }
+    },
+    { "timestamp": 1792089838081, "type": "night_resolved", "payload": { "deaths": [1] } },
+    {
+      "timestamp": 1792089838081,
+      "type": "last_words_granted",
+      "payload": { "playerId": 1, "phase": "day", "day": 1 }
+    },
+    {
+      "timestamp": 1792089838085,
+      "type": "last_words_spoken",
+      "payload": { "playerId": 1, "phase": "day", "day": 1, "text": "Initial night words" }
+    },
+    {
+      "timestamp": 1792089838089,
+      "type": "awakened_duel_committed",
+      "payload": {
+        "policy": "awa_awakened_duel_chain_v1",
+        "actorId": 7,
+        "day": 1,
+        "chain": 1,
+        "targetId": 10,
+        "branch": "wolf"
+      }
+    },
+    {
+      "timestamp": 1792089838089,
+      "type": "awakened_beauty_replacement_paid",
+      "payload": {
+        "policy": "awa_awakened_replacement_v1",
+        "actorId": 10,
+        "day": 1,
+        "targetId": 2,
+        "phase": "day",
+        "rootPhase": "day",
+        "preventedCauses": ["awakened_duel"]
+      },
+      "audience": []
+    },
+    {
+      "timestamp": 1792089838090,
+      "type": "awakened_duel_resolved",
+      "payload": {
+        "policy": "awa_awakened_duel_chain_v1",
+        "actorId": 7,
+        "day": 1,
+        "chain": 1,
+        "targetId": 10,
+        "deaths": [2]
+      }
+    },
+    { "timestamp": 1792089838090, "type": "additional_deaths", "payload": { "deaths": [2] } },
+    {
+      "timestamp": 1792089838090,
+      "type": "awakened_beauty_replaced",
+      "payload": {
+        "policy": "awa_awakened_replacement_v1",
+        "day": 1,
+        "actorId": 10,
+        "targetId": 2,
+        "targetDied": true
+      }
+    }
+  ],
+  "operations": [
+    {
+      "scope": "phase_pipeline",
+      "op": "night_pipeline_start",
+      "event_count": 2,
+      "phase": "night",
+      "status": "ok",
+      "input": { "board_size": 12 }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 12,
+      "event_count": 4,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "speak_to_wolves", "args": { "text": "End", "end_chat": true } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 10,
+      "event_count": 5,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "speak_to_wolves", "args": { "text": "End", "end_chat": true } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 8,
+      "event_count": 6,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "speak_to_wolves", "args": { "text": "End", "end_chat": true } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 9,
+      "event_count": 7,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "speak_to_wolves", "args": { "text": "End", "end_chat": true } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 5,
+      "event_count": 8,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "awakened_protect", "args": { "mode": "pass", "target_id": null } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 12,
+      "event_count": 9,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "kill_vote", "args": { "target_id": 1, "abstain": false } }
+    },
+    {
+      "scope": "phase_pipeline",
+      "op": "wolf_kill_vote_cast",
+      "actor_id": 12,
+      "event_count": 10,
+      "phase": "night",
+      "status": "ok",
+      "output": { "abstain": false, "target_id": 1 }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 10,
+      "event_count": 10,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "kill_vote", "args": { "target_id": 1, "abstain": false } }
+    },
+    {
+      "scope": "phase_pipeline",
+      "op": "wolf_kill_vote_cast",
+      "actor_id": 10,
+      "event_count": 11,
+      "phase": "night",
+      "status": "ok",
+      "output": { "abstain": false, "target_id": 1 }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 8,
+      "event_count": 11,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "kill_vote", "args": { "target_id": 1, "abstain": false } }
+    },
+    {
+      "scope": "phase_pipeline",
+      "op": "wolf_kill_vote_cast",
+      "actor_id": 8,
+      "event_count": 12,
+      "phase": "night",
+      "status": "ok",
+      "output": { "abstain": false, "target_id": 1 }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 9,
+      "event_count": 12,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "kill_vote", "args": { "target_id": 1, "abstain": false } }
+    },
+    {
+      "scope": "phase_pipeline",
+      "op": "wolf_kill_vote_cast",
+      "actor_id": 9,
+      "event_count": 13,
+      "phase": "night",
+      "status": "ok",
+      "output": { "abstain": false, "target_id": 1 }
+    },
+    {
+      "scope": "phase_pipeline",
+      "op": "wolf_kill_vote_resolved",
+      "event_count": 13,
+      "phase": "night",
+      "status": "ok",
+      "output": { "tally": { "1": 4 }, "wolf_target": 1 }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 10,
+      "event_count": 13,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "awakened_charm", "args": { "target_id": 2 } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 3,
+      "event_count": 14,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "use_potion", "args": { "target_id": 3, "potion_type": "none" } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 11,
+      "event_count": 15,
+      "phase": "night",
+      "status": "ok",
+      "input": { "tool": "check_identity", "args": { "target_id": 8 } }
+    },
+    {
+      "scope": "resolution",
+      "op": "night_damage_resolved",
+      "event_count": 16,
+      "phase": "night",
+      "status": "ok",
+      "output": { "deaths": [1], "death_sources": { "1": ["wolf_kill"] } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 2,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 1,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 3,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 4,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 5,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 6,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 7,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 8,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 9,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 10,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 11,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 12,
+      "event_count": 17,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "run_for_sheriff", "args": { "run": false } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 1,
+      "event_count": 35,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "speak", "args": { "text": "Initial night words" } }
+    },
+    {
+      "scope": "gateway",
+      "op": "validate_tool_call",
+      "actor_id": 7,
+      "event_count": 36,
+      "phase": "day",
+      "status": "ok",
+      "input": { "tool": "awakened_duel", "args": { "target_id": 10 } }
+    }
+  ],
+  "termination": {
+    "reason": "runtime_error",
+    "winner": null,
+    "errors": [{ "scope": "cycle", "name": "Error" }]
+  }
+}

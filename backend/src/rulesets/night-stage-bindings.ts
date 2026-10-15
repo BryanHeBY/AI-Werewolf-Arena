@@ -4,6 +4,8 @@
  * 表仅保存定义和函数引用，World／运行状态只由本次调用的私有输入持有，不建反查 runtime 的 token 或全局 World 缓存。
  * 原 execute getter 在调用方原点只读取一次；若被替换，callback 只收到实际无 World／组件的公开对象。
  */
+import { OWNED_NIGHT_STAGE_PROGRAMS as AwakenedBeautyPrograms } from "../features/awakened-wolf-beauty/night-stage";
+import { OWNED_NIGHT_STAGE_PROGRAMS as AwakenedPatrolPrograms } from "../features/awakened-hunter/night-stage";
 import type {
   NightStageDefinition as NightStageHandler,
   NightStageContext,
@@ -62,6 +64,8 @@ import { OWNED_NIGHT_STAGE_PROGRAMS as CrowPrograms } from "../features/crow/nig
 import { OWNED_NIGHT_STAGE_PROGRAMS as SilencePrograms } from "../features/silence-elder/night-stage";
 import { OWNED_NIGHT_STAGE_PROGRAMS as AwakenedWolfKingPrograms } from "../features/awakened-wolf-king/night-stage";
 import { OWNED_NIGHT_STAGE_PROGRAMS as AwakenedWitchPrograms } from "../features/awakened-witch/night-stage";
+import { OWNED_NIGHT_STAGE_PROGRAMS as AwakenedGuardPrograms } from "../features/awakened-guard/night-stage";
+import { OWNED_NIGHT_STAGE_PROGRAMS as AwakenedKnightPrograms } from "../features/awakened-knight/night-stage";
 const programs: ReadonlyArray<readonly [object, unknown]> = [
   ...AnimalDreamNightStagesPrograms,
   ...CrowPrograms,
@@ -69,6 +73,10 @@ const programs: ReadonlyArray<readonly [object, unknown]> = [
   ...SilencePrograms,
   ...AwakenedWolfKingPrograms,
   ...AwakenedWitchPrograms,
+  ...AwakenedBeautyPrograms,
+  ...AwakenedPatrolPrograms,
+  ...AwakenedGuardPrograms,
+  ...AwakenedKnightPrograms,
   ...AwakenedHiddenWolfNightStagesPrograms,
   ...BlackMarketMerchantNightStagePrograms,
   ...CupidNightStagePrograms,

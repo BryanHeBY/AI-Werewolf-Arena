@@ -30,11 +30,11 @@ const digest = (values: readonly string[]) =>
   createHash("sha256").update(JSON.stringify(values)).digest("hex");
 
 test("原65工具及82阶段保持固定前缀，新交付标识仅明确追加", () => {
-  expect(TOOL_NAMES).toHaveLength(75);
+  expect(TOOL_NAMES).toHaveLength(79);
   expect(digest(TOOL_NAMES.slice(0, 65))).toBe(
     "55594da0f2ee11b46ed5004b26bcaca6bca9d213360e8bf2f1bf96b6a12807e2",
   );
-  expect(ACTION_STAGES).toHaveLength(92);
+  expect(ACTION_STAGES).toHaveLength(98);
   expect(digest(ACTION_STAGES.slice(0, 82))).toBe(
     "470508b488c62e83ad98065268578354f3bf333f68ae6591b57bfc9cec54c317",
   );
@@ -49,6 +49,10 @@ test("原65工具及82阶段保持固定前缀，新交付标识仅明确追加"
     "silence",
     "gesture",
     "translate_silence",
+    "awakened_charm",
+    "patrol",
+    "awakened_protect",
+    "awakened_duel",
   ]);
   expect(ACTION_STAGES.slice(82)).toEqual([
     "awakened_witch",
@@ -61,6 +65,12 @@ test("原65工具及82阶段保持固定前缀，新交付标识仅明确追加"
     "silence_elder",
     "silence_gesture",
     "silence_translation",
+    "awakened_charm",
+    "awakened_patrol",
+    "awakened_protection_night",
+    "awakened_protection_day",
+    "awakened_duel",
+    "awakened_duel_continue",
   ]);
   expect(DEATH_SHOT_STAGES).toEqual(["hunter_shot", "death_shot"]);
   expect(TOOL_NAMES).toBe(rootTools);

@@ -6,6 +6,9 @@ import type { Locale, MessageKey } from "@ai-werewolf-arena/game-contract";
 import { text } from "@ai-werewolf-arena/game-text";
 
 const deathMessages: Readonly<Record<string, MessageKey>> = {
+  awakened_duel: "death.awakened_duel",
+  awakened_beauty_replacement: "death.awakened_beauty_replacement",
+  awakened_patrol: "death.awakened_patrol",
   wolf_kill: "death.wolf_kill",
   poison: "death.poison",
   deal: "death.deal",

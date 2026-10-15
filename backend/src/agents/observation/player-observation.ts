@@ -60,6 +60,10 @@ export interface PlayerObservation {
     magician?: import("@ai-werewolf-arena/game-contract").MagicianState;
     redMoon?: import("@ai-werewolf-arena/game-contract").RedMoonState;
     warden?: import("@ai-werewolf-arena/game-contract/facts/warden").WardenKnowledge;
+    awakenedGuard?: import("@ai-werewolf-arena/game-contract/facts/awakened-guard").AwakenedGuardState;
+    awakenedKnight?: import("@ai-werewolf-arena/game-contract/facts/awakened-duel").AwakenedKnightState;
+    awakenedBeauty?: import("@ai-werewolf-arena/game-contract/facts/awakened-beauty").AwakenedBeautyKnowledge;
+    awakenedPatrol?: import("@ai-werewolf-arena/game-contract/facts/awakened-patrol").AwakenedPatrolState;
     awakenedWitch?: import("@ai-werewolf-arena/game-contract/facts/awakened-witch").AwakenedWitchKnowledge;
     awakenedClaws?: import("@ai-werewolf-arena/game-contract/facts/awakened-claws").AwakenedClawState;
     silenceElder?: import("@ai-werewolf-arena/game-contract/facts/silence-elder").SilenceElderState;

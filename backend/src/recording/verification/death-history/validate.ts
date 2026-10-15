@@ -6,6 +6,10 @@
  * schema2 下新增严格语义拒绝不进入公开 replay／player reader；构建身份和真实重执行仍归 strict replay。
  */
 import { DeathCause, Phase, Role } from "@ai-werewolf-arena/game-contract";
+import { readAwakenedBeautyFact } from "@ai-werewolf-arena/game-contract/facts/awakened-beauty";
+import { readAwakenedDuelFact } from "@ai-werewolf-arena/game-contract/facts/awakened-duel";
+import { readAwakenedGuardFact } from "@ai-werewolf-arena/game-contract/facts/awakened-guard";
+import { readAwakenedPatrolFact } from "@ai-werewolf-arena/game-contract/facts/awakened-patrol";
 import type {
   RecordedCheckpoint,
   RecordedDecision,
@@ -116,6 +120,23 @@ function collectEvidence(record: ReproductionRecord): Evidence {
       if (!prior.sources.some((s) => s.cause === cause)) prior.sources.push({ at: index, cause });
     } else start(id, index, nightOnly ? Phase.Night : root?.origin, root?.wave, [cause], false);
   };
+  const darkStars =
+    !!record.metadata.normalizedBoard.awakenedWolfBeauty &&
+    !!record.metadata.normalizedBoard.awakenedHunter;
+  const awakenedDayRoles =
+    !!record.metadata.normalizedBoard.awakenedWolfBeauty &&
+    !!record.metadata.normalizedBoard.awakenedGuard &&
+    !!record.metadata.normalizedBoard.awakenedKnight &&
+    !record.metadata.normalizedBoard.awakenedHunter;
+  // 这里只为普通词/徽建立实际死亡episode；本族严格账本随后独立核原提案、根来源、方向和付款，不以receipt授予运行权。
+  const replacements: Array<{
+      day: number;
+      target: number;
+      actor: number;
+      root: Phase;
+      source: string[];
+    }> = [],
+    patrols: Array<{ day: number; actor: number; target: number | null; root: Phase }> = [];
   const nightOps = record.operations.filter(
     (o) => o.scope === "resolution" && o.op === "night_damage_resolved",
   );
@@ -128,12 +149,47 @@ function collectEvidence(record: ReproductionRecord): Evidence {
       execution = p.phase;
     }
     points.push({ index, day, execution, event });
+    if ((darkStars || awakenedDayRoles) && event.type === "awakened_beauty_replacement_paid") {
+      const f = readAwakenedBeautyFact(event.type, p);
+      check(f?.type === "awakened_beauty_replacement_paid");
+      replacements.push({
+        day: f.payload.day,
+        target: f.payload.targetId,
+        actor: f.payload.actorId,
+        root: f.payload.rootPhase,
+        source: [...f.payload.preventedCauses],
+      });
+    }
+    if (darkStars && event.type === "awakened_patrol_paid") {
+      const f = readAwakenedPatrolFact(event.type, p);
+      check(f?.type === "awakened_patrol_paid");
+      patrols.push({
+        day: f.payload.day,
+        actor: f.payload.actorId,
+        target: f.payload.targetId,
+        root: f.payload.rootPhase,
+      });
+    }
     if (event.type === "night_resolved") {
       const deaths = numbers(p.deaths);
       check(deaths);
-      const output = nightOps[night++]?.output,
-        sourceMap = data(output?.death_sources),
+      const output = nightOps[night++]?.output;
+      let sourceMap = data(output?.death_sources),
         opDeaths = numbers(output?.deaths);
+      if ((darkStars || awakenedDayRoles) && sourceMap && opDeaths) {
+        const paid = replacements
+          .filter((p) => p.day === day && p.root === Phase.Night && opDeaths!.includes(p.actor))
+          .at(-1);
+        const original = paid && causes(sourceMap[String(paid.actor)]);
+        if (paid && original && equal([...original].sort(), [...paid.source].sort())) {
+          sourceMap = {
+            ...sourceMap,
+            [String(paid.target)]: [DeathCause.AwakenedBeautyReplacement],
+          };
+          delete sourceMap[String(paid.actor)];
+          opDeaths = [...opDeaths.filter((id) => id !== paid.actor), paid.target];
+        }
+      }
       // 匹配的输出提供完整来源；缺少／不同的特殊输出保持未知，不能凭公告名单补死因。
       const matched =
         opDeaths !== undefined &&
@@ -145,6 +201,62 @@ function collectEvidence(record: ReproductionRecord): Evidence {
         const source = matched && sourceMap ? causes(sourceMap[String(id)]) : undefined;
         start(id, index, Phase.Night, 0, source, matched && source !== undefined);
       }
+    } else if ((darkStars || awakenedDayRoles) && event.type === "additional_deaths") {
+      for (const id of numbers(p.deaths) ?? []) {
+        const paid = replacements.filter((p) => p.day === day && p.target === id).at(-1);
+        if (paid && !at(id, day, index)) {
+          const patrol = patrols.filter((p) => p.day === day && p.target === paid.actor).at(-1),
+            wave = paid.source.includes(DeathCause.AwakenedPatrol)
+              ? patrol
+                ? at(patrol.actor, day, index)?.wave
+                : undefined
+              : 0;
+          start(
+            id,
+            index,
+            paid.root,
+            wave === undefined
+              ? undefined
+              : paid.source.includes(DeathCause.AwakenedPatrol)
+                ? wave + 1
+                : wave,
+            [DeathCause.AwakenedBeautyReplacement],
+            true,
+          );
+        } else {
+          const patrol = patrols.filter((p) => p.day === day && p.target === id).at(-1);
+          if (patrol) {
+            const root = at(patrol.actor, day, index);
+            start(
+              id,
+              index,
+              patrol.root,
+              root?.wave === undefined ? undefined : root.wave + 1,
+              [DeathCause.AwakenedPatrol],
+              true,
+            );
+          }
+        }
+      }
+    } else if (awakenedDayRoles && event.type === "awakened_duel_resolved") {
+      const f = readAwakenedDuelFact(event.type, p);
+      check(f?.type === "awakened_duel_resolved");
+      for (const id of f.payload.deaths) {
+        const paid = replacements.filter((p) => p.day === day && p.target === id).at(-1);
+        start(
+          id,
+          index,
+          execution,
+          0,
+          [paid ? DeathCause.AwakenedBeautyReplacement : DeathCause.AwakenedDuel],
+          true,
+        );
+      }
+    } else if (awakenedDayRoles && event.type === "awakened_self_destruct_resolved") {
+      const f = readAwakenedGuardFact(event.type, p);
+      check(f?.type === "awakened_self_destruct_resolved");
+      for (const id of f.payload.deaths)
+        start(id, index, execution, 0, [DeathCause.SelfDestruct], true);
     } else if (event.type === "voted_out" && positive(p.target))
       start(p.target, index, Phase.Voting, 0, [DeathCause.Exile], true);
     else if (event.type === "wolf_self_destruct" && positive(p.wolfId))
@@ -401,6 +513,8 @@ function wordsAllowed(
   policy: string,
   fragrantInitial: boolean,
   mayHaveUnrecordedInitialNightSources = false,
+  darkStarsReplacement = false,
+  awakenedDayRoles = false,
 ): boolean | undefined {
   if (!["awa_initial_wave_v1", "netease_2017_day_and_first_night_v1"].includes(policy))
     return false;
@@ -413,7 +527,22 @@ function wordsAllowed(
     return origin === Phase.Day || origin === Phase.Voting || (origin === Phase.Night && day === 1);
   if (source.includes(DeathCause.SelfDestruct) || source.includes(DeathCause.WhiteWolfBlast))
     return false;
+  if (
+    awakenedDayRoles &&
+    [Phase.Day, Phase.Voting].includes(origin) &&
+    source.length === 1 &&
+    [DeathCause.AwakenedDuel, DeathCause.AwakenedBeautyReplacement].includes(
+      source[0] as DeathCause,
+    )
+  )
+    return true;
   if (origin === Phase.Day && source.every((c) => c === DeathCause.DuelFailure)) return true;
+  if (
+    darkStarsReplacement &&
+    source.length === 1 &&
+    source[0] === DeathCause.AwakenedBeautyReplacement
+  )
+    return origin === Phase.Voting || (origin === Phase.Night && day === 1);
   if (origin === Phase.Voting) return source.includes(DeathCause.Exile);
   if (origin !== Phase.Night || day !== 1) return false;
   const hasPositiveNightCause = source.some(
@@ -435,6 +564,14 @@ function wordsAllowed(
   return hasPositiveNightCause ? true : mayHaveUnrecordedInitialNightSources ? undefined : false;
 }
 function auditLastWords(e: Evidence): void {
+  const darkStars =
+    !!e.record.metadata.normalizedBoard.awakenedWolfBeauty &&
+    !!e.record.metadata.normalizedBoard.awakenedHunter;
+  const awakenedDayRoles =
+    !!e.record.metadata.normalizedBoard.awakenedWolfBeauty &&
+    !!e.record.metadata.normalizedBoard.awakenedGuard &&
+    !!e.record.metadata.normalizedBoard.awakenedKnight &&
+    !e.record.metadata.normalizedBoard.awakenedHunter;
   const policy = e.record.metadata.normalizedBoard.lastWords?.policy ?? "awa_initial_wave_v1";
   const decisions = e.record.decisions.filter((d) => d.stage === "last_words");
   for (const d of decisions) {
@@ -461,6 +598,9 @@ function auditLastWords(e: Evidence): void {
           undefined,
           policy,
           !!e.record.metadata.normalizedBoard.fragrantPairSeer,
+          false,
+          darkStars || awakenedDayRoles,
+          awakenedDayRoles,
         ) !== false,
       );
     const candidates =
@@ -493,6 +633,8 @@ function auditLastWords(e: Evidence): void {
               declared === undefined &&
                 !episode.completeSources &&
                 e.points[episode.start]?.event.type === "night_resolved",
+              darkStars || awakenedDayRoles,
+              awakenedDayRoles,
             ) !== false
           );
         }),
@@ -521,6 +663,8 @@ function auditLastWords(e: Evidence): void {
             !!e.record.metadata.normalizedBoard.fragrantPairSeer &&
               (episode.wave === undefined || episode.wave === 0),
             !episode.completeSources && e.points[episode.start]?.event.type === "night_resolved",
+            darkStars || awakenedDayRoles,
+            awakenedDayRoles,
           ) !== false,
         );
       const bucket = grants.get(key) ?? [];

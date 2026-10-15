@@ -8,6 +8,8 @@ import { ActionWindow, KnightDuelWindow, type EntityId, type PotionType } from "
 import type { MessageRef } from "./message-refs";
 /** 工具名关联其原参数形状；null／abstain／activate 各有原业务意义，不在类型层统一成同一种跳过。 */
 export interface ToolArgMap {
+  awakened_protect: { mode: "protect" | "wait" | "pass"; target_id: EntityId | null };
+  awakened_duel: { target_id: EntityId | null };
   awakened_brew: {
     mode: "heal" | "poison" | "pass";
     target_id: EntityId | null;
@@ -95,6 +97,8 @@ export interface ToolArgMap {
   choose_direction: { direction: "clockwise" | "counter_clockwise" };
   run_for_sheriff: { run: boolean };
   vote_for_sheriff: { target_id: EntityId | null; abstain: boolean };
+  awakened_charm: { target_id: EntityId | null };
+  patrol: { direction: "clockwise" | "counter_clockwise" | null };
 }
 
 export type ToolName = keyof ToolArgMap;
@@ -175,6 +179,10 @@ export const TOOL_NAMES = [
   "silence",
   "gesture",
   "translate_silence",
+  "awakened_charm",
+  "patrol",
+  "awakened_protect",
+  "awakened_duel",
 ] as const satisfies readonly ToolName[];
 /** name 是判别字段，args 随工具一一关联；结构匹配不等于已通过 Gateway 或已付款。 */
 export type ToolCall = { [K in ToolName]: { name: K; args: ToolArgMap[K] } }[ToolName];
@@ -288,6 +296,12 @@ export const ACTION_STAGES = [
   "silence_elder",
   "silence_gesture",
   "silence_translation",
+  "awakened_charm",
+  "awakened_patrol",
+  "awakened_protection_night",
+  "awakened_protection_day",
+  "awakened_duel",
+  "awakened_duel_continue",
 ] as const;
 export type ActionStage = (typeof ACTION_STAGES)[number];
 export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_shot"];

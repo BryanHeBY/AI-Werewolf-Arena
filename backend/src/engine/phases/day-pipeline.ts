@@ -29,6 +29,7 @@ import { findSheriffId } from "../../features/sheriff/badge-ports";
 import { World } from "../../domain/world";
 import { GameActionRequestFactory } from "../actions/action-request-factory";
 import { isSelfDestructWindowEnabled } from "../../rulesets/self-destruct-window";
+import { types } from "node:util";
 
 /**
  * 白天流水线执行结果。
@@ -41,6 +42,8 @@ export interface DayPipelineResult {
 }
 
 export interface DayPipelineOptions {
+  /** 只有真实阶段owner的自有数据回调接入；输出只请求恢复游标或跳夜，不授阶段写权。 */
+  awakenedBoundary?: (identity: object) => Promise<"resumeDay" | "nextNight">;
   /** 当前日次由 PhaseManager 显式传入，不能从事件历史反推。 */
   day: number;
   /** 返回 true 表示已终局，不再请求白天行动。 */
@@ -96,6 +99,13 @@ export class DayPipeline {
     const speeches: DaySummary["speeches"] = [];
     const requests = new GameActionRequestFactory(this.world, this.events, options.day);
     const isCurrent = options.isCurrent ?? (() => true);
+    const ownedBoundary = types.isProxy(options)
+        ? undefined
+        : Object.getOwnPropertyDescriptor(options, "awakenedBoundary"),
+      awaken =
+        ownedBoundary && "value" in ownedBoundary
+          ? (ownedBoundary.value as DayPipelineOptions["awakenedBoundary"])
+          : undefined;
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     if (
       options.day === 1 &&
@@ -201,6 +211,8 @@ export class DayPipeline {
 
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     announceSilenceDay(config, this.world, this.events, options.day, isCurrent);
+    if (awaken && (await awaken(Object.freeze({}))) === "nextNight")
+      return { summary: { speeches, selfDestructBy: null }, interrupted: true };
     for (const actorId of speakers) {
       if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
       if (!this.isAlive(actorId)) {
@@ -309,6 +321,8 @@ export class DayPipeline {
           interrupted: true,
           ...(gapDuel.selection ? { duel: gapDuel.selection } : {}),
         };
+      if (awaken && (await awaken(Object.freeze({}))) === "nextNight")
+        return { summary: { speeches, selfDestructBy: null }, interrupted: true };
     }
 
     const closingDuel = await this.interruptions.duel.execute(
@@ -325,6 +339,8 @@ export class DayPipeline {
         interrupted: true,
         ...(closingDuel.selection ? { duel: closingDuel.selection } : {}),
       };
+    if (awaken && (await awaken(Object.freeze({}))) === "nextNight")
+      return { summary: { speeches, selfDestructBy: null }, interrupted: true };
 
     return {
       summary: {

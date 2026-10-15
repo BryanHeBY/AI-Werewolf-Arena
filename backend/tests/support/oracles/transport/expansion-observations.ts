@@ -3,6 +3,14 @@
  * 原fixture与其已登记声明保持不动，新协议驱动显式选此组合；不改manifest摘要、不重算游戏规则。
  * 新事实先完整核格式及隐私后剔出旧验证输入，仅给旧oracle映射等价基础阵营名，真实计划和档案不改。
  */
+import {
+  readAwakenedBeautyFact,
+  AWAKENED_BEAUTY_EVENT_TYPES,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-beauty";
+import {
+  readAwakenedPatrolFact,
+  AWAKENED_PATROL_EVENT_TYPES,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-patrol";
 import { readCrowFact } from "@ai-werewolf-arena/game-contract/facts/crow";
 import {
   readSilenceElderFact,
@@ -17,6 +25,14 @@ import {
   readAwakenedWitchFact,
   isAwakenedWitchEventType,
 } from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
+import {
+  readAwakenedGuardFact,
+  isAwakenedGuardEventType,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-guard";
+import {
+  readAwakenedDuelFact,
+  isAwakenedDuelEventType,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-duel";
 import { assertTransportEvents } from "./observations";
 import type {
   MistWireExpectations,
@@ -40,7 +56,26 @@ export function assertExpansionTransportEvents(
   groups.set(owner, known);
   for (const event of events) {
     const [, type, payload] = event;
-    if (isAwakenedWitchEventType(type)) {
+    if (isAwakenedGuardEventType(type)) {
+      const f = readAwakenedGuardFact(type, payload);
+      check(
+        f && !["awakened_protection_block_detail", "awakened_protection_expired"].includes(f.type),
+      );
+      if (f.type === "awakened_guard_cycle_started" || f.type === "awakened_protection_chosen")
+        check(role === "awakened_guard" && f.payload.actorId === actorId);
+    } else if (isAwakenedDuelEventType(type)) {
+      check(readAwakenedDuelFact(type, payload));
+    } else if ((AWAKENED_BEAUTY_EVENT_TYPES as readonly string[]).includes(type)) {
+      const f = readAwakenedBeautyFact(type, payload);
+      check(f && f.type !== "awakened_beauty_replacement_paid");
+      if (f.type === "awakened_charm_chosen")
+        check(role === "awakened_wolf_beauty" && f.payload.actorId === actorId);
+    } else if ((AWAKENED_PATROL_EVENT_TYPES as readonly string[]).includes(type)) {
+      const f = readAwakenedPatrolFact(type, payload);
+      check(f);
+      if (f.type === "awakened_patrol_paid")
+        check(role === "awakened_hunter" && f.payload.actorId === actorId);
+    } else if (isAwakenedWitchEventType(type)) {
       const f = readAwakenedWitchFact(type, payload);
       check(f && f.type !== "brew_resolved");
       if (f.type === "awakened_brew_chosen")
@@ -80,6 +115,13 @@ export function assertExpansionTransportEvents(
     if (typeof payload.day === "number" && state?.currentDay !== undefined)
       check(payload.day <= state.currentDay);
   }
-  const aliases: Record<string, string> = { warden: "wolf", awakened_wolf_king: "wolf_king" };
+  const aliases: Record<string, string> = {
+    warden: "wolf",
+    awakened_wolf_king: "wolf_king",
+    awakened_wolf_beauty: "wolf_beauty",
+    awakened_hunter: "hunter",
+    awakened_guard: "guard",
+    awakened_knight: "knight",
+  };
   assertTransportEvents(aliases[role] ?? role, native, actorId, expected, state);
 }

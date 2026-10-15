@@ -328,6 +328,34 @@ export function buildPlayerStageContextHint(
   request: ActionRequest,
   queries: Pick<PlayerPromptDirectiveQueries, "locale" | "boardConfig">,
 ): string | undefined {
+  if (
+    request.allowedTools.includes("awakened_protect") &&
+    request.context.awakened_protect_options
+  ) {
+    const o = request.context.awakened_protect_options;
+    return text(queries.locale(), "prompt.stage.awakened_protect", {
+      targets: o.targetIds.join(", "),
+      last: String(o.last),
+    });
+  }
+  if (request.allowedTools.includes("awakened_duel") && request.context.awakened_duel_options) {
+    const o = request.context.awakened_duel_options;
+    return text(queries.locale(), "prompt.stage.awakened_duel", {
+      targets: o.targetIds.join(", "),
+      continuing: String(o.continuing),
+    });
+  }
+  if (
+    request.allowedTools.includes("awakened_charm") &&
+    request.context.awakened_charm_candidates !== undefined
+  )
+    return text(queries.locale(), "prompt.stage.awakened_charm_candidates", {
+      ids: request.context.awakened_charm_candidates.join(", "),
+    });
+  if (request.allowedTools.includes("patrol") && request.context.patrol_seat_order !== undefined)
+    return text(queries.locale(), "prompt.stage.patrol_seat_order", {
+      ids: request.context.patrol_seat_order.join(" → "),
+    });
   // 新族先用稳定工具数组筛选；不向旧请求增加context/getter查询，保原目标提示的读取顺序。
   if (request.allowedTools.includes("awakened_brew") && request.context.awakened_brew_options) {
     const o = request.context.awakened_brew_options,

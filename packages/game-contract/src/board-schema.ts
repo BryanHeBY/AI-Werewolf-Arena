@@ -1,6 +1,6 @@
 /**
  * 负责共享板子配置的严格结构校验；格式的唯一 schema 在此维护，输入为待解析数据，输出原 Zod 校验结果。
- * 保留可选字段、整数上下界与五十五个运行角色枚举，不补默认值、不验证角色数量总和或有限组合支持。
+ * 保留可选字段、整数上下界与封闭的运行角色枚举，不补默认值、不验证角色数量总和或有限组合支持。
  * 解析并非任意 JS 对象的惰性安全入口；调用方负责输入来源，规则集另行决定组合是否可运行。
  */
 import { z } from "zod";
@@ -90,7 +90,13 @@ export const boardConfigSchema = z.strictObject({
     .optional(),
   silenceElder: z.strictObject({ policy: z.literal("awa_melbourne_gestures_v1") }).optional(),
   awakenedWolfKing: z.strictObject({ policy: z.literal("awa_awakened_wolf_king_v1") }).optional(),
+  awakenedWolfBeauty: z
+    .strictObject({ policy: z.literal("awa_awakened_replacement_v1") })
+    .optional(),
+  awakenedHunter: z.strictObject({ policy: z.literal("awa_directional_patrol_v1") }).optional(),
   awakenedWitch: z.strictObject({ policy: z.literal("awa_awakened_witch_v1") }).optional(),
+  awakenedGuard: z.strictObject({ policy: z.literal("awa_awakened_guard_cycle_v1") }).optional(),
+  awakenedKnight: z.strictObject({ policy: z.literal("awa_awakened_duel_chain_v1") }).optional(),
   orderPrince: z.strictObject({ policy: z.literal("awa_order_prince_first_ballot_v1") }).optional(),
   magician: z
     .strictObject({

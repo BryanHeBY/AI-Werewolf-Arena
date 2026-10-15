@@ -144,6 +144,8 @@ export function beginGameReproduction(
       parameters.board.silenceElder ||
       parameters.board.awakenedWolfKing ||
       parameters.board.awakenedWitch ||
+      parameters.board.awakenedWolfBeauty ||
+      parameters.board.awakenedHunter ||
       parameters.board.radiantEclipse ||
       parameters.board.nobleSecretBody ||
       parameters.board.fragrantPairSeer ||

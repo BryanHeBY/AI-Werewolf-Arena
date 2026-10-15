@@ -35,6 +35,9 @@ export enum DeathCause {
   MerchantBacklash = "merchant_backlash",
   BlackMarketBacklash = "black_market_backlash",
   Deal = "deal",
+  AwakenedPatrol = "awakened_patrol",
+  AwakenedBeautyReplacement = "awakened_beauty_replacement",
+  AwakenedDuel = "awakened_duel",
 }
 /** 按实体编号保存可写来源数组；追加、覆盖、稳定去重与闭包展开由各结算调用方按原顺序执行。 */
 export type DeathSources = Record<number, DeathCause[]>;

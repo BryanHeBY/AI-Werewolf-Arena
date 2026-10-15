@@ -1,5 +1,5 @@
 /**
- * 浏览器集成测试负责E1/E2五族实际教学God档的加载、自然文案、席位帧与逆向跳转。
+ * 浏览器集成测试负责已交付扩展的实际教学God档加载、自然文案、席位帧与逆向跳转。
  * 输入是公开两语真实归档；逐帧视图作UI接线对照，角色规则另由独立引擎判例核验。
  * 本测试不执行模型或读取个人记录；God档含隐藏身份，不能当玩家授权导出。
  */
@@ -13,14 +13,22 @@ const features = [
   ["warden", ["warden_"]],
   ["awakened-wolf-king", ["awakened_claw"]],
   ["awakened-witch", ["awakened_brew_", "brew_"]],
+  ["awakened-dark-stars", ["awakened_charm_", "awakened_beauty_", "awakened_patrol_"]],
+  ["awakened-knight", ["awakened_protection_", "awakened_duel_", "awakened_beauty_"]],
 ] as const;
 for (const [feature, prefixes] of features)
   for (const locale of ["zh-CN", "en"] as const)
     test(`Expansion delivered actual archive ${feature}/${locale}`, async ({ page }, info) => {
+      const filename =
+        feature === "awakened-dark-stars"
+          ? `12-day_replacement-${locale}`
+          : feature === "awakened-knight"
+            ? `body-${locale}`
+            : locale;
       const replay = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(`../../../docs/examples/${feature}/${locale}.replay.json`, import.meta.url),
+              new URL(`../../../docs/examples/${feature}/${filename}.replay.json`, import.meta.url),
               "utf8",
             ),
           ),
@@ -61,7 +69,7 @@ for (const [feature, prefixes] of features)
             p.alive ? "1" : p.isWinner ? "0.75" : "0.35",
           );
       }
-      if (feature === "awakened-witch" || feature === "warden")
+      if (["awakened-witch", "warden", "awakened-dark-stars", "awakened-knight"].includes(feature))
         await page.screenshot({
           path: info.outputPath(`${feature}-${locale}.png`),
           fullPage: true,

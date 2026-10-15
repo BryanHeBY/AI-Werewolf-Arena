@@ -131,7 +131,7 @@ test("旧metadata getter零执行，原政策仍在角色钩子前立即授词�
     Phase.Day,
     { 1: Phase.Voting },
     {
-      get duelLastWords() {
+      get duelLastWords(): never {
         gets++;
         throw new Error("literal_old_getter");
       },

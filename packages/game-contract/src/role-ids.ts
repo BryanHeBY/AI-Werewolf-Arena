@@ -5,12 +5,7 @@
 import { Role } from "./identity";
 
 /** 规划身份只作目录元数据，不属于可执行 Role 枚举。 */
-export const PLANNED_ROLE_IDS = {
-  AwakenedWolfBeauty: "awakened_wolf_beauty",
-  AwakenedHunter: "awakened_hunter",
-  AwakenedGuard: "awakened_guard",
-  AwakenedKnight: "awakened_knight",
-} as const;
+export const PLANNED_ROLE_IDS = {} as const;
 
 const canonicalRoleIds = [
   Role.Wolf,
@@ -72,11 +67,11 @@ const canonicalRoleIds = [
   Role.AwakenedSeer,
   Role.AwakenedWolfKing,
   Role.AwakenedHiddenWolf,
-  PLANNED_ROLE_IDS.AwakenedWolfBeauty,
+  Role.AwakenedWolfBeauty,
   Role.AwakenedWitch,
-  PLANNED_ROLE_IDS.AwakenedHunter,
-  PLANNED_ROLE_IDS.AwakenedGuard,
-  PLANNED_ROLE_IDS.AwakenedKnight,
+  Role.AwakenedHunter,
+  Role.AwakenedGuard,
+  Role.AwakenedKnight,
 ] as const;
 
 export type RoleId = `${(typeof canonicalRoleIds)[number]}`;

@@ -5,6 +5,8 @@
  * 角色和队友方法在 actor 参数之前查找；每个 World 读取保原位置，机制知识／权限仍归各原 owner。
  * 结构观察不提交行动、不克隆完整私有库存，也不提前执行自定义人设或角色展示回调；失败前缀保持。
  */
+import { projectAwakenedGuardKnowledge } from "../../features/awakened-guard/observation-ports";
+import { projectAwakenedKnightKnowledge } from "../../features/awakened-knight/observation-ports";
 import { wardenOwnKnowledge } from "../../features/warden/observation-ports";
 import {
   getWhiteWolfKingState,
@@ -35,6 +37,8 @@ import { projectTricksterState } from "../../features/trickster/ports";
 import { projectOrderPrinceState } from "../../features/order-prince/ports";
 import { projectMagicianState } from "../../features/magician/ports";
 import { projectRedMoonState } from "../../features/red-moon/ports";
+import { projectAwakenedBeautyKnowledge } from "../../features/awakened-wolf-beauty/observation-ports";
+import { projectAwakenedPatrolKnowledge } from "../../features/awakened-hunter/observation-ports";
 import { projectAwakenedWitch } from "../../features/awakened-witch/observation-ports";
 import { projectAwakenedClaws } from "../../features/awakened-wolf-king/observation-ports";
 import { projectSilenceElderState } from "../../features/silence-elder/observation-ports";
@@ -150,7 +154,10 @@ export function capturePlayerObservation(
   const dead = new Set<number>();
   for (const event of request.context.visible_events) {
     if (
-      (event.type === "night_resolved" || event.type === "additional_deaths") &&
+      (event.type === "night_resolved" ||
+        event.type === "additional_deaths" ||
+        event.type === "awakened_duel_resolved" ||
+        event.type === "awakened_self_destruct_resolved") &&
       Array.isArray(event.payload.deaths)
     ) {
       for (const id of event.payload.deaths) if (typeof id === "number") dead.add(id);
@@ -228,6 +235,14 @@ export function capturePlayerObservation(
   if (redMoon) ownState.redMoon = redMoon;
   const warden = wardenOwnKnowledge(role, request.actorId);
   if (warden) ownState.warden = warden;
+  const awakenedGuard = projectAwakenedGuardKnowledge(role);
+  if (awakenedGuard) ownState.awakenedGuard = awakenedGuard;
+  const awakenedKnight = projectAwakenedKnightKnowledge(role);
+  if (awakenedKnight) ownState.awakenedKnight = awakenedKnight;
+  const awakenedBeauty = projectAwakenedBeautyKnowledge(role);
+  if (awakenedBeauty) ownState.awakenedBeauty = awakenedBeauty;
+  const awakenedPatrol = projectAwakenedPatrolKnowledge(role);
+  if (awakenedPatrol) ownState.awakenedPatrol = awakenedPatrol;
   const awakenedWitch = projectAwakenedWitch(role);
   if (awakenedWitch) ownState.awakenedWitch = awakenedWitch;
   const awakenedClaws = projectAwakenedClaws(role);

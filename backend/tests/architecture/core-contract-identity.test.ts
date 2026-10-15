@@ -24,15 +24,15 @@ void rawId;
 test("public core identity is the shared enum instance and preserves the delivered runtime subset", () => {
   expect(CoreRole).toBe(Role);
   expect(CoreCamp).toBe(Camp);
-  expect(Object.values(CoreRole)).toHaveLength(60);
-  expect(Object.values(Role)).not.toContain("awakened_knight");
+  expect(Object.values(CoreRole)).toHaveLength(64);
+  expect(Object.values(Role)).toContain(Role.AwakenedKnight);
   expect(ROLE_IDS).toHaveLength(64);
   expect(ROLE_DEFINITIONS.map((row): RoleId => row.id)).toEqual(ROLE_IDS);
 });
 
-test("planned metadata is not a registered profile or execution capability", () => {
+test("64项均有实际profile，但未知元数据和角色名不授执行资格", () => {
   const catalog = getDefaultRoleCatalog();
   for (const role of Object.values(Role)) expect(catalog.requireMetadata(role).role).toBe(role);
-  expect(() => catalog.requireMetadata("awakened_knight" as Role)).toThrow();
-  expect(ROLE_DEFINITIONS.find((row) => row.id === "awakened_knight")?.status).toBe("planned");
+  expect(() => catalog.requireMetadata("unregistered_role" as Role)).toThrow();
+  expect(ROLE_DEFINITIONS.find((row) => row.id === "awakened_knight")?.status).toBe("implemented");
 });

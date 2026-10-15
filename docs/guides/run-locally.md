@@ -38,6 +38,8 @@ bun run --cwd backend config:migrate --configs-dir ../configs
 
 ## ACP 沙箱中的 MCP 依赖
 
+[公开bwrap模板与合成canary](../../configs.example/acp/README.md)提供独立文件／环境边界；示例provider的裸命令只是占位接入，不自动形成沙箱。不要把整个仓库或record挂进玩家沙箱。
+
 使用本地 bwrap 启动器时，`ACP_READONLY_ROOTS` 必须覆盖 MCP 入口的实际运行依赖，包括 `packages/game-contract`、`packages/game-text` 及其依赖目录。`node_modules` 中的 workspace 符号链接不会把目标目录带入沙箱；新增共享包或调整模块归属后，需要同步更新每个隔离 provider 的只读挂载。
 
 ACP 会话能回复文本，不代表注入的游戏 MCP 已启动成功。若模型提示缺少 `submit_action`，先在相同沙箱内检查 MCP 启动、工具发现与提交。`ENOENT reading .../@ai-werewolf-arena/game-contract` 表示缺少共享包挂载。正常工具列表应包含 `get_game_schema`、`submit_action`、`report_bug`；终端出现回退发言不代表模型完成了工具提交。
@@ -48,7 +50,7 @@ ACP 会话能回复文本，不代表注入的游戏 MCP 已启动成功。若�
 
 ## 觉醒狼王原十／十二人
 
-[觉醒狼王示例](../examples/awakened-wolf-king/README.md)给出两份来源牌池、中文／英文 LLM 与 ACP 入口、亲传／双爪及失败前缀的真实归档说明。仅复制本族 board/game，保留已有 runtime 和隔离认证；角色参数为严格 `{}`，具体死因和梦保护按具名 `awa_awakened_wolf_king_v1`。觉醒女巫来源板在其独立交付前不开放。
+[觉醒狼王示例](../examples/awakened-wolf-king/README.md)给出两份来源牌池、中文／英文 LLM 与 ACP 入口、亲传／双爪及失败前缀的真实归档说明。仅复制本族 board/game，保留已有 runtime 和隔离认证；角色参数为严格 `{}`，具体死因和梦保护按具名 `awa_awakened_wolf_king_v1`。觉醒女巫来源板的独立政策与入口见下一节。
 
 ## 觉醒女巫原十二人板
 
@@ -59,3 +61,13 @@ bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_pla
 ```
 
 当前精确牌池为三普狼、觉醒狼王、四民、预言家、守卫、猎人与觉醒女巫；三次调毒分别消耗1／2／3名新协助者。女巫看不到讨论、隐票或结果；终端私有显示与God回放不代表玩家可以获知这些秘密。其它牌池、复制、复活或任意药数开关仍拒绝。
+
+## 原十／十二人暗夜星辰
+
+[完整两语 LLM／ACP 入口](../examples/awakened-dark-stars/README.md)包含两份原 board、六份 game 和真实 God 教学帧。只复制所选 board／game，保留个人 runtime、模型认证与隔离启动器；`roles.awakened_wolf_beauty`／`roles.awakened_hunter`均严格 `{}`。十人中文 SDK 入口：
+
+```bash
+bun run --cwd backend run --configs-dir ../configs --game-config-name ten_player_dark_stars --locale zh-CN --display-locale zh-CN
+```
+
+魅惑只给本人，原伤害替死付款只给God；巡猎给模型完整座位环和方向，不给隐藏狼候选。公开结果以实际死者为准，God回放不可作为玩家授权档发送。

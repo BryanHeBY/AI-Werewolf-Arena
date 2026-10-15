@@ -102,6 +102,8 @@ const expectedOrder = [
   "validateAwakenedClawRecord",
   "validateAwakenedWitchRecord",
   "validateWardenRecord",
+  "validateAwakenedDayRolesRecord",
+  "validateAwakenedDarkStarsRecord",
 ];
 function observeMetadata(record: ReproductionRecord) {
   const original = record.metadata,

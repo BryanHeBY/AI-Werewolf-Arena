@@ -8,6 +8,9 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 test("every catalog entry has bilingual labels and registered entries have rule cards", async () => {
+  expect(ROLE_DEFINITIONS).toHaveLength(64);
+  expect(ROLE_DEFINITIONS.filter((entry) => entry.status === "verified")).toHaveLength(23);
+  expect(ROLE_DEFINITIONS.filter((entry) => entry.status === "implemented")).toHaveLength(41);
   for (const entry of ROLE_DEFINITIONS) {
     expect(roleName(entry.id, "zh-CN").trim().length).toBeGreaterThan(0);
     expect(roleName(entry.id, "en").trim().length).toBeGreaterThan(0);
@@ -15,7 +18,15 @@ test("every catalog entry has bilingual labels and registered entries have rule 
     expect(entry.ruleCardRef).not.toBeNull();
     const [file, anchor] = entry.ruleCardRef!.split("#");
     const text = await readFile(path.resolve(import.meta.dir, "../../../..", file), "utf8");
-    if (anchor) expect(text).toContain(`## ${anchor}`);
+    // 旧规则以机器ID标题为锚，新具名规则保留可点击的显式HTML锚；两种都必须精确占一行。
+    if (anchor)
+      expect(
+        text
+          .split(/\r?\n/)
+          .some(
+            (line) => line.trim() === `## ${anchor}` || line.trim() === `<a id="${anchor}"></a>`,
+          ),
+      ).toBe(true);
     else expect(text.trimStart().startsWith("# ")).toBe(true);
   }
 });

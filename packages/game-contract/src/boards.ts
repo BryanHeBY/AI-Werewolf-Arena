@@ -140,10 +140,14 @@ export interface SilenceElderConfig {
   policy: "awa_melbourne_gestures_v1";
 }
 export interface BoardConfig {
+  awakenedWolfBeauty?: { policy: "awa_awakened_replacement_v1" };
+  awakenedHunter?: { policy: "awa_directional_patrol_v1" };
   awakenedWolfKing?: { policy: "awa_awakened_wolf_king_v1" };
   crow?: CrowConfig;
   silenceElder?: SilenceElderConfig;
   awakenedWitch?: { policy: "awa_awakened_witch_v1" };
+  awakenedGuard?: { policy: "awa_awakened_guard_cycle_v1" };
+  awakenedKnight?: { policy: "awa_awakened_duel_chain_v1" };
   warden?: { policy: "awa_melbourne_warden_v1"; forcePolicy: "awa_warden_partner_native_v1" };
   animalDream?: { policy: "awa_animal_dream_v1"; eliminationPriority: "awa_wolf_priority_v1" };
   whiteCat?: { skippedVotePolicy: CatSkippedVotePolicy };

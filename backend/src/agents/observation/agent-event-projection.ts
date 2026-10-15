@@ -7,10 +7,17 @@
  * 历史 audience 不按当前阵营重算，未知事件默认拒绝；已有自定义规则和恶魔身份查询只在原分支调用。
  * 这里不提交行动、付款或更新知识。旧直接投影 API 已退出；未知受众或无效家族不得进入字段裁剪。
  */
+import { AWAKENED_BEAUTY_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/awakened-beauty";
+import { AWAKENED_PATROL_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/awakened-patrol";
 import {
   isAwakenedWitchEventType,
   awakenedWitchFactAudience,
 } from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
+import {
+  isAwakenedGuardEventType,
+  awakenedGuardFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-guard";
+import { isAwakenedDuelEventType } from "@ai-werewolf-arena/game-contract/facts/awakened-duel";
 import {
   WARDEN_EVENT_TYPES,
   wardenFactAudience,
@@ -326,6 +333,48 @@ function canViewAgentEventWithFacts(
       fact.actorId === actorId
     );
   }
+  if ((AWAKENED_BEAUTY_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readAwakenedBeautyFact", event.type, event.payload, prepared);
+    if (!fact || fact.type === "awakened_beauty_replacement_paid") return false;
+    if (fact.type === "awakened_beauty_replaced") return !("audience" in event);
+    return (
+      fact.payload.actorId === actorId &&
+      "audience" in event &&
+      Array.isArray(event.audience) &&
+      event.audience.length === 1 &&
+      event.audience[0] === actorId
+    );
+  }
+  if ((AWAKENED_PATROL_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readAwakenedPatrolFact", event.type, event.payload, prepared);
+    if (!fact) return false;
+    if (fact.type === "awakened_patrol_resolved") return !("audience" in event);
+    return (
+      fact.payload.actorId === actorId &&
+      "audience" in event &&
+      Array.isArray(event.audience) &&
+      event.audience.length === 1 &&
+      event.audience[0] === actorId
+    );
+  }
+  if (isAwakenedGuardEventType(event.type)) {
+    const fact = readAgentEventFact("readAwakenedGuardFact", event.type, event.payload, prepared);
+    if (!fact) return false;
+    const expected = awakenedGuardFactAudience(fact);
+    if (expected === undefined) return !("audience" in event);
+    return (
+      expected.includes(actorId) &&
+      "audience" in event &&
+      Array.isArray(event.audience) &&
+      event.audience.length === expected.length &&
+      expected.every((id, i) => event.audience[i] === id)
+    );
+  }
+  if (isAwakenedDuelEventType(event.type))
+    return (
+      !!readAgentEventFact("readAwakenedDuelFact", event.type, event.payload, prepared) &&
+      !("audience" in event)
+    );
   if (isAwakenedWitchEventType(event.type)) {
     const fact = readAgentEventFact("readAwakenedWitchFact", event.type, event.payload, prepared);
     if (!fact || !("audience" in event) || !Array.isArray(event.audience)) return false;
@@ -449,6 +498,22 @@ function projectPayload(
   queries: PreparedAgentEventProjectionQueries,
   prepared: PreparedAgentEvent,
 ): Record<string, unknown> {
+  if ((AWAKENED_BEAUTY_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readAwakenedBeautyFact", event.type, event.payload, prepared);
+    return fact ? structuredClone({ ...fact.payload }) : {};
+  }
+  if ((AWAKENED_PATROL_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readAwakenedPatrolFact", event.type, event.payload, prepared);
+    return fact ? structuredClone({ ...fact.payload }) : {};
+  }
+  if (isAwakenedGuardEventType(event.type)) {
+    const fact = readAgentEventFact("readAwakenedGuardFact", event.type, event.payload, prepared);
+    return fact ? structuredClone({ ...fact.payload }) : {};
+  }
+  if (isAwakenedDuelEventType(event.type)) {
+    const fact = readAgentEventFact("readAwakenedDuelFact", event.type, event.payload, prepared);
+    return fact ? structuredClone({ ...fact.payload }) : {};
+  }
   if (isAwakenedWitchEventType(event.type)) {
     const fact = readAgentEventFact("readAwakenedWitchFact", event.type, event.payload, prepared);
     return fact ? structuredClone({ ...fact.payload }) : {};

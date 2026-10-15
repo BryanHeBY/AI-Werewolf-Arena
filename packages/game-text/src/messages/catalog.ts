@@ -19,6 +19,9 @@ import { messages as mistradiant } from "./features/mist-radiant";
 import { messages as noblefragrant } from "./features/noble-fragrant";
 import { messages as warden } from "./features/warden";
 import { messages as awakenedWolfKing } from "./features/awakened-wolf-king";
+import { messages as awakenedBeauty } from "./features/awakened-wolf-beauty";
+import { messages as awakenedDayRoles } from "./features/awakened-day-roles";
+import { messages as awakenedPatrol } from "./features/awakened-hunter";
 import { messages as awakenedWitch } from "./features/awakened-witch";
 import { messages as silenceElder } from "./features/silence-elder";
 import { messages as crow } from "./features/crow";
@@ -43,6 +46,9 @@ const modules = [
   awakenedWolfKing,
   warden,
   awakenedWitch,
+  awakenedBeauty,
+  awakenedPatrol,
+  awakenedDayRoles,
 ] as const;
 
 // 交集保留各中文片段的 literal 类型；英文公开类型只承诺相同 MessageKey 的 string 值。

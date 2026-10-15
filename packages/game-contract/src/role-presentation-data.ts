@@ -7,10 +7,18 @@
 import type { Role } from "./identity";
 
 /** 支持集合直接取现有运行角色枚举，不另维护角色清单；计划角色不隐式获得 renderer。 */
-/** 原生捕获仅用于既有角色；新增乌鸦通过本族值查询贡献展示，不扩大中央分派。 */
+/** 原生捕获仅用于原55角色；后续新增身份通过本族值查询贡献展示，不扩大中央分派。 */
 export type NativeRolePresentationId = Exclude<
   `${Role}`,
-  "crow" | "silence_elder" | "warden" | "awakened_wolf_king" | "awakened_witch"
+  | "crow"
+  | "silence_elder"
+  | "warden"
+  | "awakened_wolf_king"
+  | "awakened_witch"
+  | "awakened_guard"
+  | "awakened_knight"
+  | "awakened_wolf_beauty"
+  | "awakened_hunter"
 >;
 
 /** 字段限定为实际文案参数；具体 key 与字段集合仍由原文字格式校验器检查。 */

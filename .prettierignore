@@ -24,4 +24,6 @@ frontend/playwright-report/
 /frontend/tests/fixtures/**/all.player-views.json
 /packages/replay-contract/fixtures/**/god.replay.json
 /packages/replay-contract/fixtures/**/players/*.player.json
+# 教学God归档同样保留真实导出字节；仅排除归档payload，指南和其它JSON继续检查。
+/docs/examples/**/*.replay.json
 *.log

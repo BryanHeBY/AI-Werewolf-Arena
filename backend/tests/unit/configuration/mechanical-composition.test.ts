@@ -45,6 +45,10 @@ for (const unsupported of Object.values(Role).filter(
           silence_elder: "silence_elder_preset_invalid",
           awakened_wolf_king: "awakened_wolf_king_preset_invalid",
           awakened_witch: "awakened_witch_preset_invalid",
+          awakened_wolf_beauty: "awakened_dark_stars_preset_invalid",
+          awakened_hunter: "awakened_dark_stars_preset_invalid",
+          awakened_guard: "awakened_day_roles_preset_invalid",
+          awakened_knight: "awakened_day_roles_preset_invalid",
         } as Partial<Record<Role, string>>
       )[unsupported] ??
         ([Role.WhiteCat, Role.FoxCub, Role.Pufferfish].includes(unsupported)

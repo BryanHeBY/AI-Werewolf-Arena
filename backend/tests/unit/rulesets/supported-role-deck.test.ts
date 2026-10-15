@@ -57,7 +57,7 @@ test("supported assembly returns original ordered cards and does not mutate inpu
   expect(supported(config)).toEqual(cards);
   expect(config).toEqual(before);
   expect(catalog.requireMetadata(Role.Wolf)).toBe(profile);
-  expect(getDefaultRoleContributions().length).toBe(60);
+  expect(getDefaultRoleContributions().length).toBe(64);
 });
 
 test("catalog factory and require calls retain both original passes and query receiver", () => {

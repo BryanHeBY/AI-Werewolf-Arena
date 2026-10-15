@@ -18,16 +18,16 @@ import {
 } from "@ai-werewolf-arena/game-contract";
 
 describe("catalog public package contract", () => {
-  test("all 64 IDs are unique while planned metadata stays distinct from delivery", () => {
+  test("all 64 IDs are unique and each catalog entry has been delivered", () => {
     expect(ROLE_DEFINITIONS).toHaveLength(64);
     expect(new Set(ROLE_IDS).size).toBe(64);
     expect(ROLE_DEFINITIONS.filter((role) => role.status === "verified")).toHaveLength(23);
-    expect(ROLE_DEFINITIONS.filter((role) => role.status === "implemented")).toHaveLength(37);
-    expect(ROLE_DEFINITIONS.filter((role) => role.status === "planned")).toHaveLength(4);
+    expect(ROLE_DEFINITIONS.filter((role) => role.status === "implemented")).toHaveLength(41);
+    expect(ROLE_DEFINITIONS.map((role) => role.status)).not.toContain("planned");
     expect(roleDefinition("white_cat")?.status).toBe("implemented");
     expect(roleDefinition("fox_cub")?.status).toBe("implemented");
     expect(roleDefinition("pufferfish")?.status).toBe("implemented");
-    expect(roleDefinition("awakened_knight")?.status).toBe("planned");
+    expect(roleDefinition("awakened_knight")?.status).toBe("implemented");
   });
 
   test("all catalog entries retain metadata and delivered entries cite a rule contract", () => {

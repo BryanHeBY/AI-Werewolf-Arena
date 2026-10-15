@@ -23,7 +23,9 @@ for (const id of ["six_player_dreamer", "twelve_player_dreamer"] as const)
           roles: { ...board.definition.roles, dreamer: params },
         }),
       ).toThrow(`board_config_invalid_field: roles.dreamer.${Object.keys(params)[0]}`);
-    const planned = structuredClone(board.definition);
-    planned.board.roleSetups[0].role = "awakened_knight";
-    expect(() => parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
+    const unregistered = structuredClone(board.definition);
+    unregistered.board.roleSetups[0].role = "unregistered_role";
+    expect(() => parseBoardDefinition(unregistered)).toThrow(
+      "board_config_invalid_field: board.roleSetups.0.role",
+    );
   });

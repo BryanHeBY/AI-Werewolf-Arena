@@ -107,6 +107,7 @@ export class ActionReception {
     const call = { name: tool, args } as ToolCall;
     const deathStage =
       DEATH_SHOT_STAGES.includes(request.context.stage) ||
+      request.context.stage === "awakened_patrol" ||
       request.context.stage === "last_words" ||
       request.context.stage === "sheriff_badge_choice";
     const deathTool =
@@ -115,6 +116,9 @@ export class ActionReception {
         request.context.trigger === "badge_handoff") ||
       (tool === "shoot" &&
         DEATH_SHOT_STAGES.includes(request.context.stage) &&
+        request.context.trigger === "on_death") ||
+      (tool === "patrol" &&
+        request.context.stage === "awakened_patrol" &&
         request.context.trigger === "on_death") ||
       (tool === "speak" &&
         request.context.stage === "last_words" &&

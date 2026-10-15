@@ -54,7 +54,7 @@ export class World {
     EntityId,
     {
       id: number;
-      tool: "shoot" | "speak" | "choose_badge_successor";
+      tool: "shoot" | "speak" | "choose_badge_successor" | "patrol";
       phase: Phase;
       day: number;
       abilityId?: string;
@@ -67,7 +67,7 @@ export class World {
   /** 引擎拥有的临时行动许可；ID 不授予行动。World 复核原生命与传入的当前性回调，带阶段的查询另核许可记录的 phase／day。 */
   openDeathAction(
     actorId: EntityId,
-    tool: "shoot" | "speak" | "choose_badge_successor",
+    tool: "shoot" | "speak" | "choose_badge_successor" | "patrol",
     phase: Phase,
     day: number,
     isCurrent: () => boolean = () => true,
@@ -83,7 +83,7 @@ export class World {
       !this.getComponent(actorId, COMPONENT.Role) ||
       !Number.isSafeInteger(day) ||
       day < 1 ||
-      !["shoot", "speak", "choose_badge_successor"].includes(tool) ||
+      !["shoot", "speak", "choose_badge_successor", "patrol"].includes(tool) ||
       !Object.values(Phase).includes(phase) ||
       phase === Phase.GameOver ||
       (abilityId !== undefined &&

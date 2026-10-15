@@ -1,10 +1,10 @@
 /**
- * 负责六十四个稳定角色 ID 的中文／英文名称词典及公开名称查询；包括五十五个运行身份和九个规划身份。
+ * 负责六十四个稳定角色 ID 的中文／英文名称词典及公开名称查询；运行登记与资料交付状态另归其实际owner。
  * 输入为原角色 ID 与显式语言，输出原名称字面值；未知 ID 原样返回，不将用户文字当 key、占位模板或运行许可。
  * 名称只在本模块维护，资料状态与规则卡仍由 game-catalog 拥有；本模块仅依赖机器契约，不加载 Catalog、World 或规则。
  * 私有表按原目录顺序保存，不公开第二个可写名称入口；查找保严格相等，不通过对象属性索引强制转换未知输入。
  */
-import { Role, PLANNED_ROLE_IDS, isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
+import { Role, isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 
 /** 双语字符串是显示资料，不是阵营、库存或身份转换的权威；规划名称不代表已注册 profile。 */
 const roleNames = [
@@ -74,13 +74,13 @@ const roleNames = [
   },
   { id: `${Role.AwakenedHiddenWolf}`, names: { "zh-CN": "觉醒隐狼", en: "Awakened Hidden Wolf" } },
   {
-    id: PLANNED_ROLE_IDS.AwakenedWolfBeauty,
+    id: Role.AwakenedWolfBeauty,
     names: { "zh-CN": "觉醒狼美人", en: "Awakened Wolf Beauty" },
   },
   { id: Role.AwakenedWitch, names: { "zh-CN": "觉醒女巫", en: "Awakened Witch" } },
-  { id: PLANNED_ROLE_IDS.AwakenedHunter, names: { "zh-CN": "觉醒猎人", en: "Awakened Hunter" } },
-  { id: PLANNED_ROLE_IDS.AwakenedGuard, names: { "zh-CN": "觉醒守卫", en: "Awakened Guard" } },
-  { id: PLANNED_ROLE_IDS.AwakenedKnight, names: { "zh-CN": "觉醒骑士", en: "Awakened Knight" } },
+  { id: Role.AwakenedHunter, names: { "zh-CN": "觉醒猎人", en: "Awakened Hunter" } },
+  { id: Role.AwakenedGuard, names: { "zh-CN": "觉醒守卫", en: "Awakened Guard" } },
+  { id: Role.AwakenedKnight, names: { "zh-CN": "觉醒骑士", en: "Awakened Knight" } },
 ] as const satisfies readonly {
   readonly id: string;
   readonly names: Readonly<Record<Locale, string>>;

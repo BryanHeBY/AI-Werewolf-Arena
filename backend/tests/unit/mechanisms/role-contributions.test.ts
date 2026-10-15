@@ -40,7 +40,7 @@ void denyCrossFacetRead;
 
 test("builtin registrations contain exactly three independently consumed facets", () => {
   const contributions = getDefaultRoleContributions();
-  expect(contributions).toHaveLength(60);
+  expect(contributions).toHaveLength(64);
   expect(contributions.map((entry) => entry.metadata.role).sort()).toEqual(
     Object.values(Role).sort(),
   );
@@ -52,6 +52,10 @@ test("builtin registrations contain exactly three independently consumed facets"
       Role.Warden,
       Role.AwakenedWolfKing,
       Role.AwakenedWitch,
+      Role.AwakenedWolfBeauty,
+      Role.AwakenedHunter,
+      Role.AwakenedGuard,
+      Role.AwakenedKnight,
     ].includes(entry.metadata.role);
     expect(Object.keys(entry.presentation).sort()).toEqual(
       custom ? ["kind", "renderPrompt"] : ["id", "kind"],

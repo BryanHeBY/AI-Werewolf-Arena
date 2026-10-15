@@ -18,6 +18,11 @@
  */
 import { bindVictoryQueries } from "../rulesets/victory/default-specs";
 import { finishSilenceDay } from "../rulesets/silence-expression-plan";
+import {
+  hasAwakenedDayRolePlan,
+  runAwakenedDayRoleBoundary,
+  finishAwakenedDayRoles,
+} from "../rulesets/awakened-day-role-plan";
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../domain/exile-unit";
 import { nightUnitOf } from "../domain/night-unit";
 import { PhaseRevisionClock } from "./phase-revision";
@@ -87,7 +92,10 @@ import { NightPipeline } from "./phases/night-pipeline";
 import { VotingPipeline } from "./phases/voting-pipeline";
 import { RoleRegistry } from "../domain/registries/role-registry";
 import { COMPONENT } from "../domain/components/names";
-import { commitSelfDestructSelection } from "../features/self-destruct/selection-ports";
+import {
+  commitSelfDestructSelection,
+  protectedBlastDeathPublication,
+} from "../features/self-destruct/selection-ports";
 import { settleKnightDay } from "../rulesets/knight-day-settlement";
 import {
   prepareAnimalExileDeaths,
@@ -440,7 +448,9 @@ export class PhaseManager {
     // 只等待原窗口的 execute；四项都已就绪时不让出微任务，阶段当前性也不额外查询。
     while (!setupStep.done) setupStep = setupSequence.next(await setupStep.value);
     if (!setupStep.value) return this.getSnapshot();
-    assertDemonOriginalRoster(this.world);
+    // 复用这个原有World读点，新增具名板的WeakMap准入不再额外读经理World getter。
+    let cycleWorld: World;
+    assertDemonOriginalRoster((cycleWorld = this.world));
     // 夜前只捕获同一熊 frame；原 World／policy 读取保持晚读，不提前发表或授予许可。
     const bearFrame = captureDawnKnowledge(
       {
@@ -715,7 +725,10 @@ export class PhaseManager {
               phaseRevision: dayRevision,
             },
             ...(animalSkip ? { animalUnit: animalSkip } : {}),
-            ...ordinaryNightDeathPublication(ordinaryNightRuntime, nightDeaths, retainedSources),
+            ...protectedBlastDeathPublication(blast, () => this.events, {
+              originalLives,
+              ...ordinaryNightDeathPublication(ordinaryNightRuntime, nightDeaths, retainedSources),
+            }),
           },
         );
         lifecycle.finishDay(cycleDay, dayIsCurrent);
@@ -771,6 +784,7 @@ export class PhaseManager {
           window,
           Phase.Day,
           this.events,
+          hasAwakenedDayRolePlan(cycleWorld) ? { day: cycleDay, current: dayIsCurrent } : undefined,
         );
         if (!blast) return false;
         const animalSkip = this.config.animalDream
@@ -789,6 +803,7 @@ export class PhaseManager {
             {
               isCurrent: dayIsCurrent,
               execution: { exile: skippedUnit, phaseRevision: dayRevision },
+              ...protectedBlastDeathPublication(blast, () => this.events),
             },
           );
           if (dayIsCurrent()) await settleMist(true, true);
@@ -805,6 +820,7 @@ export class PhaseManager {
               isCurrent: dayIsCurrent,
               execution: { exile: skippedUnit, phaseRevision: dayRevision },
               ...(animalSkip ? { animalUnit: animalSkip } : {}),
+              ...protectedBlastDeathPublication(blast, () => this.events),
             },
           );
           if (animalSkip) {
@@ -863,6 +879,19 @@ export class PhaseManager {
         // DR抛错不恢复生成器，不补跑日裁决或退款；当前性、封盘、endsDay按原短路顺序恢复。
         return settlement.next().value as KnightDuelCommit;
       },
+      ...(hasAwakenedDayRolePlan(cycleWorld)
+        ? {
+            awakenedBoundary: (identity: object) =>
+              this.runAwakenedBoundary(
+                identity,
+                actionProvider,
+                cycleDay,
+                Phase.Day,
+                dayRevision,
+                dayIsCurrent,
+              ),
+          }
+        : {}),
     });
 
     if (night.mistDelay && !nightSettled && dayIsCurrent()) await settleMist();
@@ -870,6 +899,11 @@ export class PhaseManager {
     if (this.state.gameOver || !dayIsCurrent()) return this.getSnapshot();
     if (dayResult.interrupted) {
       finishSilenceDay(this.config, this.world, this.events, cycleDay);
+      finishAwakenedDayRoles(
+        cycleWorld,
+        () => this.events,
+        () => cycleDay,
+      );
       // 白天被自爆中断时直接结束当日并切到下一夜。
       if (
         this.state.gameOver ||
@@ -892,6 +926,19 @@ export class PhaseManager {
     const votingResult = await this.votingPipeline.execute(this.config, actionProvider, {
       day: cycleDay,
       isCurrent: votingIsCurrent,
+      ...(hasAwakenedDayRolePlan(cycleWorld)
+        ? {
+            awakenedBoundary: (identity: object) =>
+              this.runAwakenedBoundary(
+                identity,
+                actionProvider,
+                cycleDay,
+                Phase.Voting,
+                votingRevision,
+                votingIsCurrent,
+              ),
+          }
+        : {}),
       commitSelfDestruct: async (choice) => {
         if (!votingIsCurrent()) return false;
         const blast = commitSelfDestructSelection(
@@ -900,6 +947,9 @@ export class PhaseManager {
           ActionWindow.OnPreVote,
           Phase.Voting,
           this.events,
+          hasAwakenedDayRolePlan(cycleWorld)
+            ? { day: cycleDay, current: votingIsCurrent }
+            : undefined,
         );
         if (!blast) return false;
         const animalSkip = this.config.animalDream
@@ -917,6 +967,7 @@ export class PhaseManager {
             isCurrent: votingIsCurrent,
             execution: { exile: skippedUnit, phaseRevision: votingRevision },
             ...(animalSkip ? { animalUnit: animalSkip } : {}),
+            ...protectedBlastDeathPublication(blast, () => this.events),
           },
         );
         if (animalSkip) {
@@ -936,6 +987,11 @@ export class PhaseManager {
     if (!votingIsCurrent()) return this.getSnapshot();
     if (votingResult.interrupted) {
       finishSilenceDay(this.config, this.world, this.events, cycleDay);
+      finishAwakenedDayRoles(
+        cycleWorld,
+        () => this.events,
+        () => cycleDay,
+      );
       // 投票前窗口发生自爆，同样跳过当日剩余流程。
       if (this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)) {
         return this.getSnapshot();
@@ -1004,6 +1060,11 @@ export class PhaseManager {
     // await 后先保原当前性守卫，再核整侧；查询不是封盘，已提交死亡不因失败退款。
     const beautyResult = resolveBeautyExileVictory(this.world, beautyCandidate);
     finishSilenceDay(this.config, this.world, this.events, cycleDay);
+    finishAwakenedDayRoles(
+      cycleWorld,
+      () => this.events,
+      () => cycleDay,
+    );
     if (
       this.checkAndSealResult(
         this.#rulePlan.checkpoints.exileSettled,
@@ -1064,6 +1125,35 @@ export class PhaseManager {
     return true;
   }
 
+  /** 新具名日计划只交恢复／入夜意图；完整链及词结束后才在既有dayInterrupted点唯一判胜。 */
+  private async runAwakenedBoundary(
+    identity: object,
+    provider: ActionProvider,
+    day: number,
+    phase: Phase,
+    phaseRevision: number,
+    current: () => boolean,
+  ): Promise<"resumeDay" | "nextNight"> {
+    const result = await runAwakenedDayRoleBoundary(
+      {
+        world: this.world,
+        events: this.events,
+        requests: new GameActionRequestFactory(this.world, this.events, day),
+        provider,
+        gateway: this.toolGateway,
+        deaths: this.deathResolution,
+        day,
+        phase,
+        phaseRevision,
+        current,
+      },
+      identity,
+    );
+    if (!current()) throw new Error("awakened_day_boundary_revoked");
+    if (this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)) return "nextNight";
+    return result;
+  }
+
   private sealResult(decision: WinDecision, checkpoint: VictoryCheckpoint, phase: Phase): void {
     if (this.state.gameOver) return;
     this.assertFaultPlanConsumed();
@@ -1075,7 +1165,18 @@ export class PhaseManager {
       () => this.world,
       () => this.state.day,
     );
-    finishSilenceDay(this.config, this.world, this.events, this.state.day);
+    let finishedWorld: World, finishedDay: number;
+    finishSilenceDay(
+      this.config,
+      (finishedWorld = this.world),
+      this.events,
+      (finishedDay = this.state.day),
+    );
+    finishAwakenedDayRoles(
+      finishedWorld,
+      () => this.events,
+      () => finishedDay,
+    );
     this.state.result = { winner, reason: decision.reason, outcome, decidedAt };
     this.state.gameOver = true;
     this.setPhase(Phase.GameOver);

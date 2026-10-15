@@ -23,6 +23,8 @@ for (const id of ["six_player_white_wolf_king", "twelve_player_white_wolf_king"]
       }),
     ).toThrow("board_config_role_parameters_not_supported");
     const unsupported = structuredClone(board.definition);
-    unsupported.board.roleSetups[0].role = "awakened_knight";
-    expect(() => parseBoardDefinition(unsupported)).toThrow("board_config_role_not_implemented");
+    unsupported.board.roleSetups[0].role = "unregistered_role";
+    expect(() => parseBoardDefinition(unsupported)).toThrow(
+      "board_config_invalid_field: board.roleSetups.0.role",
+    );
   });

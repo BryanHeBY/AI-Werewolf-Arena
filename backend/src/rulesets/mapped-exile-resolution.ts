@@ -16,6 +16,7 @@ import type { World } from "../domain/world";
 import type { GameEvent } from "../domain/events";
 import type { VotedOutResult } from "../engine/hooks/registry";
 import { resolveTricksterExile } from "../features/trickster/ports";
+import { hasAwakenedDeathPrevention } from "./awakened-death-prevention";
 
 /** 原可写运行输出，不设新品牌或冻结；事件 payload 与后续查询必须仍指向同一对象。 */
 export type MappedExile = ReturnType<typeof resolveTricksterExile>;
@@ -56,12 +57,21 @@ export function resolveMappedExile(
   mapped: MappedExile | null,
   effectiveTarget: EntityId,
 ): EntityId[] {
+  let originalWorld: World | undefined;
   const votedOut = mapped?.missed
     ? { removed: [] }
-    : runtime.eventRegistry.onVotedOut(runtime.world, effectiveTarget, runtime.events);
+    : runtime.eventRegistry.onVotedOut(
+        (originalWorld = runtime.world),
+        effectiveTarget,
+        runtime.events,
+      );
   const removed = [...votedOut.removed];
 
-  if (removed.includes(effectiveTarget) && !runtime.animalUnit) {
+  if (
+    removed.includes(effectiveTarget) &&
+    !runtime.animalUnit &&
+    !(originalWorld && hasAwakenedDeathPrevention(originalWorld))
+  ) {
     // 只有原钩子返回真实移除提案才广播；白痴翻牌仍由原事件钩子单独发表。
     runtime.events.push({
       timestamp: Date.now(),

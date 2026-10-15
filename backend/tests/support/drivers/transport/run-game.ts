@@ -293,7 +293,9 @@ export async function runTransportGame(
         scenario.board.config.silenceElder ||
         scenario.board.config.warden ||
         scenario.board.config.awakenedWolfKing ||
-        scenario.board.config.awakenedWitch
+        scenario.board.config.awakenedWitch ||
+        scenario.board.config.awakenedWolfBeauty ||
+        scenario.board.config.awakenedHunter
           ? fileURLToPath(new URL("../agents/expansion-game-agent.ts", import.meta.url))
           : acpAdapterEntry("game"),
       ],

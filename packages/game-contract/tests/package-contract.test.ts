@@ -139,6 +139,10 @@ const deliveredRoleExtensions = {
   SilenceElder: "silence_elder",
   AwakenedWolfKing: "awakened_wolf_king",
   AwakenedWitch: "awakened_witch",
+  AwakenedWolfBeauty: "awakened_wolf_beauty",
+  AwakenedHunter: "awakened_hunter",
+  AwakenedGuard: "awakened_guard",
+  AwakenedKnight: "awakened_knight",
 } as const;
 const baselineCatalogOrder = [
   "wolf",
@@ -229,19 +233,19 @@ describe("pure identity public package contract", () => {
       expect(Object.keys(actual[name])).toEqual(Object.keys(expected));
       expect<unknown>(Object.values(actual[name])).toEqual(Object.values(expected));
     }
-    expect(Object.values(Role)).toHaveLength(60);
-    expect(Object.values(Role)).not.toContain("awakened_knight" as Role);
+    expect(Object.values(Role)).toHaveLength(64);
+    expect(Object.values(Role)).toContain(Role.AwakenedKnight);
   });
 
-  test("catalog IDs retain their independent 64-entry order without granting planned roles execution", () => {
+  test("目录64项保持原顺序，本轮交付后的规划集合明确为空", () => {
     expect<unknown>(ROLE_IDS).toEqual(baselineCatalogOrder);
     expect(new Set(ROLE_IDS).size).toBe(64);
-    expect(Object.values(PLANNED_ROLE_IDS)).toHaveLength(4);
+    expect(Object.values(PLANNED_ROLE_IDS)).toHaveLength(0);
     for (const role of baselineCatalogOrder) expect(isRoleId(role)).toBe(true);
     for (const value of [null, undefined, 2, {}, [], "Wolf", "not_a_role", ""])
       expect(isRoleId(value)).toBe(false);
     expect(isRoleId("awakened_knight")).toBe(true);
-    expect(Object.keys(Role)).not.toContain("AwakenedKnight");
+    expect(Object.keys(Role)).toContain("AwakenedKnight");
   });
 
   test("the compatibility array remains mutable while exact ID validation keeps its private canonical source", () => {

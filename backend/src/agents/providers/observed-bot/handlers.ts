@@ -4,7 +4,9 @@
  * 顺序是选择优先级和随机消费契约；null 表示结束本次选择，undefined 才继续后续工具。
  * 工具动作不是付款或生效凭据，合法性仍由引擎在提交入口复验。
  */
+import { awakenedProtect, awakenedDuel } from "./awakened-day-roles";
 import { bindFragrantPair, inspectPair } from "./fragrant-pair-seer";
+import { awakenedCharm, awakenedPatrol } from "./awakened-dark-stars";
 import { awakenedBrew, brewDiscuss, brewApprove } from "./awakened-witch";
 import { bequeathClaw } from "./awakened-wolf-king";
 import { castShelter, swallowSkill } from "./radiant-eclipse";
@@ -79,6 +81,10 @@ import {
 
 /** 保持原工具优先级和随机抽取次序，避免相同 seed 的严格 Tape 因装配顺序变化而漂移。 */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "awakened_protect", decide: awakenedProtect },
+  { tool: "awakened_duel", decide: awakenedDuel },
+  { tool: "awakened_charm", decide: awakenedCharm },
+  { tool: "patrol", decide: awakenedPatrol },
   { tool: "awakened_brew", decide: awakenedBrew },
   { tool: "brew_discuss", decide: brewDiscuss },
   { tool: "brew_approve", decide: brewApprove },

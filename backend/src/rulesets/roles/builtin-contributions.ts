@@ -3,8 +3,12 @@
  * 输出为实际组合根使用的同一贡献对象；登记不执行初始化或展示，不调用 World、不复制库存。
  * 角色支持集合仍与既有运行集合一致，顺序不得由名称、文件系统或自动发现重排。
  */
+import { AWAKENED_BEAUTY_PROFILE } from "../../features/awakened-wolf-beauty/profile";
+import { AWAKENED_PATROL_PROFILE } from "../../features/awakened-hunter/profile";
 import { WARDEN_ROLE_PROFILE } from "../../features/warden/profile";
 import { AWAKENED_WITCH_ROLE_PROFILE } from "../../features/awakened-witch/profile";
+import { AWAKENED_GUARD_ROLE_PROFILE } from "../../features/awakened-guard/profile";
+import { AWAKENED_KNIGHT_ROLE_PROFILE } from "../../features/awakened-knight/profile";
 import { CROW_ROLE_PROFILE } from "../../features/crow/profile";
 import { SILENCE_ELDER_ROLE_PROFILE } from "../../features/silence-elder/profile";
 import type { RoleContributions } from "./contracts";
@@ -134,4 +138,8 @@ export const BUILTIN_ROLE_CONTRIBUTIONS: readonly RoleContributions[] = [
   WITCH_ROLE_PROFILE,
   HUNTER_ROLE_PROFILE,
   IDIOT_ROLE_PROFILE,
+  AWAKENED_GUARD_ROLE_PROFILE,
+  AWAKENED_KNIGHT_ROLE_PROFILE,
+  AWAKENED_BEAUTY_PROFILE,
+  AWAKENED_PATROL_PROFILE,
 ];

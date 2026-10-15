@@ -1,7 +1,7 @@
 /**
  * 负责引擎与协议共同消费的稳定机器身份枚举。输入为声明的身份值；输出保留
  * 既有运行枚举名、成员顺序和枚举成员类型，中文注释不改变机器标识或序列化值。
- * Role 仅列出当前交付的 55 个角色；规划角色的元数据不能授予执行资格。
+ * Role 仅列出当前交付的角色；规划角色的元数据不能授予执行资格。
  * 本纯契约不访问 World、规则算法、文案、Node 或 React，不维护第二套角色身份。
  */
 export type EntityId = number;
@@ -75,6 +75,10 @@ export enum Role {
   SilenceElder = "silence_elder",
   AwakenedWolfKing = "awakened_wolf_king",
   AwakenedWitch = "awakened_witch",
+  AwakenedWolfBeauty = "awakened_wolf_beauty",
+  AwakenedHunter = "awakened_hunter",
+  AwakenedGuard = "awakened_guard",
+  AwakenedKnight = "awakened_knight",
 }
 
 /** 原阶段标识及顺序保持；持有该值不推进时钟或打开某个具体窗口。 */

@@ -66,6 +66,10 @@ function eventTypes() {
     WardenPayloadMap: "packages/game-contract/src/facts/warden.ts",
     AwakenedClawPayloadMap: "packages/game-contract/src/facts/awakened-claws.ts",
     AwakenedWitchPayloadMap: "packages/game-contract/src/facts/awakened-witch.ts",
+    AwakenedBeautyPayloadMap: "packages/game-contract/src/facts/awakened-beauty.ts",
+    AwakenedPatrolPayloadMap: "packages/game-contract/src/facts/awakened-patrol.ts",
+    AwakenedGuardPayloadMap: "packages/game-contract/src/facts/awakened-guard.ts",
+    AwakenedDuelPayloadMap: "packages/game-contract/src/facts/awakened-duel.ts",
   };
   const declaration = find(
     source("packages/game-contract/src/events.ts"),

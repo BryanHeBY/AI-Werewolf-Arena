@@ -11,6 +11,7 @@ import {
   type Phase,
   type DeathShotSelection,
 } from "../../domain/model";
+import { types } from "node:util";
 import { World } from "../../domain/world";
 import { COMPONENT } from "../../domain/components/names";
 import {
@@ -26,6 +27,7 @@ import {
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
 import type { NightLifeScope } from "../../domain/night-effects";
 import type { DeathWaveContribution } from "../death-wave-contribution";
+import type { PaidPatrolProposal } from "../../features/awakened-hunter/ports";
 import { giftGunDeathHook } from "../../features/death-actions/gift-hook-ports";
 import { resolveWildChildDeathWave } from "../../features/wild-child/ports";
 import {
@@ -84,6 +86,8 @@ export interface DeathHookResult {
   deathWaveContributions?: DeathWaveContribution[];
   /** 仅内部 owned hook 的单次继续标记；原程序及提交写权都不属于公开结果数据。 */
   deathActionContinuations?: readonly DeathActionContinuation[];
+  /** 只接受本族付款后mint的内存提案；JSON来源不能授予巡猎或夜根抑制。 */
+  pendingPatrols?: readonly PaidPatrolProposal[];
 }
 export interface DeathHookContext {
   readonly deathOriginPhase?: Phase;
@@ -140,6 +144,7 @@ function hookRuntime(
 export interface DeathHookPreparationSource {
   world(): World;
   events(): GameEvent[];
+  chooseDeathPatrol?: OwnedDeathHookBindingSource["chooseDeathPatrol"];
 }
 function bindingSource(
   world: World,
@@ -164,9 +169,15 @@ export function invokeDeathHook(
   context?: DeathHookContext,
   preparation?: DeathHookPreparationSource,
 ): Promise<DeathHookResult> {
+  // 具名新端口只取真实自有data字段；旧扩展的同名访问器不因新增能力被执行。
+  const patrolChooser =
+    preparation && !types.isProxy(preparation)
+      ? Object.getOwnPropertyDescriptor(preparation, "chooseDeathPatrol")?.value
+      : undefined;
   const source: OwnedDeathHookBindingSource = {
     ...bindingSource(world, events, preparation),
     chooseDeathShot: choose,
+    ...(typeof patrolChooser === "function" ? { chooseDeathPatrol: patrolChooser } : {}),
   };
   // 未知扩展实际取得新标量对象，不透传原targetScope/life或mappingCurrent。
   // 内建资源command不调用此adapter，仍私用同一原chooser及其完整原体／映射结果。
@@ -268,6 +279,9 @@ export class HookRegistry {
       );
       // 单次读取并固定继续项；显示 getter 或原数组后续替换不能绕过 owned 身份判断。
       const continuations = result.deathActionContinuations;
+      const patrols = result.pendingPatrols;
+      if (patrols !== undefined && !hasOwnedDeathHookBinding(hook))
+        throw new Error("awakened_patrol_unowned_hook");
       if (continuations !== undefined) {
         if (!hasOwnedDeathHookBinding(hook))
           throw new Error("death_action_continuation_unowned_hook");
@@ -282,6 +296,8 @@ export class HookRegistry {
         (aggregated.nightEffectTargets ??= []).push(...result.nightEffectTargets);
       if (result.pendingShots?.length)
         (aggregated.pendingShots ??= []).push(...result.pendingShots);
+      if (patrols?.length)
+        aggregated.pendingPatrols = [...(aggregated.pendingPatrols ?? []), ...patrols];
       if (result.deathWaveContributions?.length)
         (aggregated.deathWaveContributions ??= []).push(...result.deathWaveContributions);
       if (captured?.length)

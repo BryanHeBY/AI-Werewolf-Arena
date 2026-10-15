@@ -1,6 +1,18 @@
 /**
  * 负责按事件类型装配脚本和终端的展示贡献。输入为事件、私有输出选项与语言；输出为原聊天行和分类文本。保留各贡献的读取、受众与分派顺序，不提交行动、改写事实或重算历史阵营。事件文案消费共享展示 owner，自定义贡献仍保留原接口。
  */
+import {
+  awakenedGuardEventLabel,
+  awakenedDuelEventLabel,
+} from "@ai-werewolf-arena/game-presentation";
+import {
+  readAwakenedGuardFact,
+  awakenedGuardFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-guard";
+import {
+  awakenedBeautyEventLabel,
+  awakenedPatrolEventLabel,
+} from "@ai-werewolf-arena/game-presentation";
 import { wardenEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -619,6 +631,14 @@ export class ScriptEventRenderRegistry {
     if (redMoon !== null) return redMoon;
     const warden = wardenEventLabel(event.type, event.payload, locale);
     if (warden !== null) return warden;
+    const beauty = awakenedBeautyEventLabel(event.type, event.payload, locale);
+    if (beauty !== null) return beauty;
+    const patrol = awakenedPatrolEventLabel(event.type, event.payload, locale);
+    if (patrol !== null) return patrol;
+    const protection = awakenedGuardEventLabel(event.type, event.payload, locale);
+    if (protection !== null) return protection;
+    const duel = awakenedDuelEventLabel(event.type, event.payload, locale);
+    if (duel !== null) return duel;
     const brew = awakenedWitchEventLabel(event.type, event.payload, locale);
     if (brew !== null) return brew;
     const claws = awakenedClawEventLabel(event.type, event.payload, locale);
@@ -748,6 +768,37 @@ export class ScriptEventRenderRegistry {
       return printPrivateEvents
         ? [{ kind: event.type === "warden_resolved" ? "god" : "private", text: warden }]
         : [];
+    const beauty = awakenedBeautyEventLabel(event.type, event.payload, locale);
+    if (beauty !== null)
+      return event.type === "awakened_beauty_replaced"
+        ? [{ kind: "system", text: beauty }]
+        : printPrivateEvents
+          ? [
+              {
+                kind: event.type === "awakened_beauty_replacement_paid" ? "god" : "private",
+                text: beauty,
+              },
+            ]
+          : [];
+    const patrol = awakenedPatrolEventLabel(event.type, event.payload, locale);
+    if (patrol !== null)
+      return event.type === "awakened_patrol_resolved"
+        ? [{ kind: "system", text: patrol }]
+        : printPrivateEvents
+          ? [{ kind: "private", text: patrol }]
+          : [];
+    const protection = awakenedGuardEventLabel(event.type, event.payload, locale);
+    if (protection !== null) {
+      const f = readAwakenedGuardFact(event.type, event.payload)!,
+        audience = awakenedGuardFactAudience(f);
+      return audience === undefined
+        ? [{ kind: "system", text: protection }]
+        : printPrivateEvents
+          ? [{ kind: audience.length ? "private" : "god", text: protection }]
+          : [];
+    }
+    const duel = awakenedDuelEventLabel(event.type, event.payload, locale);
+    if (duel !== null) return [{ kind: "system", text: duel }];
     const brew = awakenedWitchEventLabel(event.type, event.payload, locale);
     if (brew !== null)
       return printPrivateEvents

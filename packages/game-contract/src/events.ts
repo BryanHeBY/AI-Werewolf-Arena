@@ -5,10 +5,14 @@
  * 历史事实不执行规则、不恢复库存或授权行动；类型声明不代替未知数据解析、复制或深冻结。
  */
 import type { WardenPayloadMap } from "./facts/warden";
+import type { AwakenedBeautyPayloadMap } from "./facts/awakened-beauty";
+import type { AwakenedPatrolPayloadMap } from "./facts/awakened-patrol";
 import type { NobleSecretBodyPayloadMap } from "./facts/noble-secret-body";
 import type { SilenceElderPayloadMap } from "./facts/silence-elder";
 import type { AwakenedClawPayloadMap } from "./facts/awakened-claws";
 import type { AwakenedWitchPayloadMap } from "./facts/awakened-witch";
+import type { AwakenedGuardPayloadMap } from "./facts/awakened-guard";
+import type { AwakenedDuelPayloadMap } from "./facts/awakened-duel";
 import type { AnimalDreamPayloadMap } from "./facts/animal-dream";
 import type { FragrantPairPayloadMap } from "./facts/fragrant-pair-seer";
 import type { RedMoonNextNightFact, RedMoonExpiryFact } from "./facts/red-moon";
@@ -70,7 +74,11 @@ export interface EventPayloadMap
     SilenceElderPayloadMap,
     WardenPayloadMap,
     AwakenedWitchPayloadMap,
-    AwakenedClawPayloadMap {
+    AwakenedClawPayloadMap,
+    AwakenedBeautyPayloadMap,
+    AwakenedPatrolPayloadMap,
+    AwakenedGuardPayloadMap,
+    AwakenedDuelPayloadMap {
   eclipse_swallowed: {
     actorId: EntityId;
     day: number;
@@ -604,6 +612,10 @@ export type GameEvent = {
       | "warden_decision"
       | "warden_resolved"
       | keyof AwakenedWitchPayloadMap
+      | "awakened_guard_cycle_started"
+      | "awakened_protection_chosen"
+      | "awakened_protection_block_detail"
+      | "awakened_protection_expired"
       | "crow_curse_chosen"
       | "silence_chosen"
       | "silence_translation_declined"
@@ -611,6 +623,9 @@ export type GameEvent = {
       | "awakened_claw_bequeathed"
       | "awakened_claw_spent"
       | "awakened_claws_expired"
+      | "awakened_charm_chosen"
+      | "awakened_beauty_replacement_paid"
+      | "awakened_patrol_paid"
       | "nightmare_fear_committed"
       | "modifier_choice_committed"
       | "modifier_choice_skipped"

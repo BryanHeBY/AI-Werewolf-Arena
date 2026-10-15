@@ -44,9 +44,13 @@
     "./night-ability-views": "./src/night-ability-views.ts",
     "./facts/crow": "./src/facts/crow.ts",
     "./facts/silence-elder": "./src/facts/silence-elder.ts",
-    "./facts/warden": "./src/facts/warden.ts",
     "./facts/awakened-claws": "./src/facts/awakened-claws.ts",
-    "./facts/awakened-witch": "./src/facts/awakened-witch.ts"
+    "./facts/awakened-guard": "./src/facts/awakened-guard.ts",
+    "./facts/awakened-duel": "./src/facts/awakened-duel.ts",
+    "./facts/warden": "./src/facts/warden.ts",
+    "./facts/awakened-witch": "./src/facts/awakened-witch.ts",
+    "./facts/awakened-beauty": "./src/facts/awakened-beauty.ts",
+    "./facts/awakened-patrol": "./src/facts/awakened-patrol.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -175,14 +179,26 @@
       "facts/silence-elder": [
         "src/facts/silence-elder.ts"
       ],
-      "facts/warden": [
-        "src/facts/warden.ts"
-      ],
       "facts/awakened-claws": [
         "src/facts/awakened-claws.ts"
       ],
+      "facts/awakened-guard": [
+        "src/facts/awakened-guard.ts"
+      ],
+      "facts/awakened-duel": [
+        "src/facts/awakened-duel.ts"
+      ],
+      "facts/warden": [
+        "src/facts/warden.ts"
+      ],
       "facts/awakened-witch": [
         "src/facts/awakened-witch.ts"
+      ],
+      "facts/awakened-beauty": [
+        "src/facts/awakened-beauty.ts"
+      ],
+      "facts/awakened-patrol": [
+        "src/facts/awakened-patrol.ts"
       ]
     }
   }

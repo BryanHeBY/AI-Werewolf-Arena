@@ -11,8 +11,9 @@ import { COMPONENT } from "../../domain/components/names";
 import { EntityId, GameEvent, Phase, DeathCause, type DeathSources } from "../../domain/model";
 import { World } from "../../domain/world";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
+import { AWAKENED_BEAUTY_POLICY } from "@ai-werewolf-arena/game-contract/facts/awakened-beauty";
 export interface LastWordsGrantContext {
-  policy: typeof FRAGRANT_PAIR_POLICY;
+  policy: typeof FRAGRANT_PAIR_POLICY | typeof AWAKENED_BEAUTY_POLICY;
   initialWave: boolean;
 }
 
@@ -45,6 +46,13 @@ export class LastWordsMechanism {
       return false;
     if (deathPhase === Phase.Day && sources.every((source) => source === DeathCause.DuelFailure))
       return true;
+    if (
+      context?.policy === AWAKENED_BEAUTY_POLICY &&
+      context.initialWave &&
+      sources.length === 1 &&
+      sources[0] === DeathCause.AwakenedBeautyReplacement
+    )
+      return deathPhase === Phase.Voting || (deathPhase === Phase.Night && day === 1);
     return (
       (deathPhase === Phase.Night &&
         day === 1 &&

@@ -49,6 +49,7 @@ import {
   isSelfDestructWindowEnabled,
 } from "../../rulesets/self-destruct-window";
 import { canBeExiled, canVoteExile } from "../participation";
+import { types } from "node:util";
 
 /**
  * 投票流水线执行结果。
@@ -63,6 +64,8 @@ export interface VotingPipelineResult {
 }
 
 export interface VotingPipelineOptions {
+  /** 只在真实PK发言边界使用；票据收集中不开放保护或决斗。 */
+  awakenedBoundary?: (identity: object) => Promise<"resumeDay" | "nextNight">;
   strictRequired?: boolean;
   orderPrinceRevote?: boolean;
   /** 当前日次由 PhaseManager 显式传入，不能从事件历史反推。 */
@@ -121,6 +124,13 @@ export class VotingPipeline {
     actionProvider: ActionProvider,
     options: VotingPipelineOptions,
   ): Promise<VotingPipelineResult> {
+    const ownedBoundary = types.isProxy(options)
+        ? undefined
+        : Object.getOwnPropertyDescriptor(options, "awakenedBoundary"),
+      awaken =
+        ownedBoundary && "value" in ownedBoundary
+          ? (ownedBoundary.value as VotingPipelineOptions["awakenedBoundary"])
+          : undefined;
     let unitDay: number;
     const requests = new GameActionRequestFactory(this.world, this.events, (unitDay = options.day));
     safeRecordLogicOp({
@@ -257,6 +267,12 @@ export class VotingPipeline {
         type: "exile_pk_started",
         payload: { candidates: tied },
       });
+      const interruptedPK = () =>
+        attachExileUnit(
+          { summary: { tally: {}, target: null, removed: [] }, interrupted: true, removed: [] },
+          exileUnit,
+        );
+      if (awaken && (await awaken(Object.freeze({}))) === "nextNight") return interruptedPK();
       for (const actorId of tied) {
         if (options.isCurrent?.() === false)
           return attachExileUnit(
@@ -298,6 +314,7 @@ export class VotingPipeline {
               },
               exileUnit,
             );
+          if (awaken && (await awaken(Object.freeze({}))) === "nextNight") return interruptedPK();
           continue;
         }
         const request = requests.create({
@@ -349,7 +366,9 @@ export class VotingPipeline {
             type: "day_speech",
             payload: { actorId, text: result.sanitizedCall.args.text },
           });
+        if (awaken && (await awaken(Object.freeze({}))) === "nextNight") return interruptedPK();
       }
+      if (awaken && (await awaken(Object.freeze({}))) === "nextNight") return interruptedPK();
       const candidates = tied.filter((id) => canBeExiled(this.world, id));
       const revoters = this.world
         .getAliveEntityIds()

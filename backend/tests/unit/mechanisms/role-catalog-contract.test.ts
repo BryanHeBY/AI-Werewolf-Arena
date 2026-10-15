@@ -16,7 +16,7 @@ import { createRoleComponent } from "../../../src/agents/observation/role-presen
 import { Camp } from "../../../src/domain/identity";
 import { createDefaultRoleRegistry } from "../../../src/rulesets/roles/permissions";
 
-test("shared catalog distinguishes planned definitions from registered roles", () => {
+test("shared catalog records all delivered definitions separately from runtime registration", () => {
   expect(ROLE_DEFINITIONS).toHaveLength(64);
   expect(new Set(ROLE_IDS).size).toBe(64);
   expect(
@@ -24,7 +24,7 @@ test("shared catalog distinguishes planned definitions from registered roles", (
       .map((item) => String(item.id))
       .sort(),
   ).toEqual(Object.values(Role).sort());
-  expect(ROLE_DEFINITIONS.filter((item) => item.status !== "planned")).toHaveLength(60);
+  expect(ROLE_DEFINITIONS.map((item) => item.status)).not.toContain("planned");
   for (const role of [Role.WhiteCat, Role.FoxCub, Role.Pufferfish])
     expect(ROLE_DEFINITIONS.find((item) => item.id === role)?.status).toBe("implemented");
   expect(
@@ -40,7 +40,7 @@ test("shared catalog distinguishes planned definitions from registered roles", (
   expect(getDefaultRoleCatalog().requireMetadata(Role.BlackMarketMerchant).role).toBe(
     Role.BlackMarketMerchant,
   );
-  expect(() => getDefaultRoleCatalog().requireMetadata("awakened_knight" as Role)).toThrow(
+  expect(() => getDefaultRoleCatalog().requireMetadata("unregistered_role" as Role)).toThrow(
     "role_profile_not_registered",
   );
   expect(roleName("wolf", "zh-CN")).toBe("狼人");
@@ -56,7 +56,7 @@ test("runtime catalog rejects duplicate or missing profiles", () => {
   const component = createRoleComponent(Role.Wolf);
   const initialCamp = { camp: Camp.Wolf };
   getDefaultRoleCatalog().applyRuntime(component, { initialCamp, currentCamp: () => initialCamp });
-  component.role = "awakened_knight" as Role;
+  component.role = "unregistered_role" as Role;
   expect(() => renderRolePrompt(component)).toThrow("role_profile_not_registered");
 });
 

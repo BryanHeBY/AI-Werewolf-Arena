@@ -59,3 +59,9 @@ export { awakenedClawEventLabel } from "./events/awakened-claws";
 export { silenceElderEventLabel } from "./events/silence-elder";
 
 export { wardenEventLabel } from "./events/warden";
+
+export { awakenedBeautyEventLabel } from "./events/awakened-beauty";
+export { awakenedPatrolEventLabel, patrolDirection } from "./events/awakened-patrol";
+
+export { awakenedGuardEventLabel } from "./events/awakened-guard";
+export { awakenedDuelEventLabel } from "./events/awakened-duel";

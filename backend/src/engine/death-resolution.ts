@@ -19,6 +19,7 @@ import { refreshWolfKnifeInheritanceAtCheckpoint } from "../rulesets/wolf-knife-
 import { AnimalDeathWavePreparation } from "../features/animal-dream/ports";
 import {
   planDeathWave,
+  bindDeathWaveOriginalLives,
   openDeathWave,
   deathExecutionContext,
   type DeathExecutionContext,
@@ -29,9 +30,15 @@ import {
   DeathCommitReceipt,
   type DeathOriginalLife,
 } from "./death-wave";
+import {
+  hasAwakenedDeathPrevention,
+  prepareAwakenedDeaths,
+} from "../rulesets/awakened-death-prevention";
+import { collectDeathPatrol } from "../rulesets/death-patrol-selection";
 import type { NightPoisonRoute } from "../domain/night-effects";
 import { DeathCommitter } from "./death-committer";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import { AWAKENED_BEAUTY_POLICY } from "@ai-werewolf-arena/game-contract/facts/awakened-beauty";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import {
   FragrantDeathWavePublication,
@@ -69,7 +76,6 @@ import { GameActionRequestFactory } from "./actions/action-request-factory";
 import { EventRegistry } from "./events/event-registry";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
 import { firstDeathGuns, finishDeathGuns } from "../features/death-actions/gift-gun-ports";
-
 import {
   openDuelLastWordsScope,
   duelLastWordsMetadata,
@@ -251,11 +257,14 @@ export class DeathResolution {
       assertDuelLastWordsScope(duelWords, this, resolutionDay, resolutionPhase);
     const lastWordsPolicy = this.config?.lastWords?.policy ?? "awa_initial_wave_v1";
     const revealPolicy = this.config?.disclosure?.deathRevealPolicy ?? "awa_hidden_v1";
-    const ownsFragrant = isFragrantPairBoard(this.world);
+    let ownedWorld: World;
+    const ownsFragrant = isFragrantPairBoard((ownedWorld = this.world));
+    const ownsAwakened = hasAwakenedDeathPrevention(ownedWorld);
     const isCurrent = () =>
       this.state.phase === resolutionPhase &&
       this.state.day === resolutionDay &&
       !this.state.gameOver &&
+      (!ownsAwakened || this.world === ownedWorld) &&
       (nightEffects?.isCurrent?.() ?? true) &&
       (!ownsFragrant || !!fragrantAuthoritySnapshot(this.world));
     const revealCurrent = () =>
@@ -313,6 +322,38 @@ export class DeathResolution {
       nightOrigin,
       initialPhases,
     );
+    // 新有限板先准备真实防护／替死，再登记实际名单；旧板没有新owner时不新增World查询。
+    const ownedLives = new Map<EntityId, DeathOriginalLife>();
+    const awakenedInitial = ownsAwakened
+      ? prepareAwakenedDeaths(
+          {
+            world: ownedWorld,
+            day: resolutionDay,
+            phase: resolutionPhase,
+            events: this.events,
+            isCurrent,
+          },
+          pending,
+          allSources,
+          originPhases,
+          deathWaveOriginalLives(nightEffects),
+        )
+      : undefined;
+    if (awakenedInitial) {
+      seen.clear();
+      for (const id of pending) {
+        seen.add(id);
+        initialPhases[id] = originPhases.get(id)!;
+        if (originPhases.get(id) === Phase.Night) nightOrigin.add(id);
+        else nightOrigin.delete(id);
+      }
+      for (const id of [...nightOrigin]) if (!pending.includes(id)) nightOrigin.delete(id);
+      for (const [id, life] of awakenedInitial.lives) ownedLives.set(id, life);
+    }
+    const ownedPlan = (plan: ReturnType<typeof planDeathWave>) => {
+      if (ownsAwakened) bindDeathWaveOriginalLives(plan, ownedWorld, ownedLives);
+      return plan;
+    };
     const initialUnit = openDeathWave(
       "initial",
       resolutionDay,
@@ -342,19 +383,22 @@ export class DeathResolution {
       // 空初始波仍执行原发布回调；空条目凭证只关联这次发布，不证明枪付款或整个死亡链完成。
       if (pending.length === 0 && nightEffects?.onInitialWaveCommitted && isCurrent()) {
         const receipt = new DeathCommitReceipt(
-          planDeathWave(
-            [],
-            {},
-            "initial",
-            originPhases,
-            deathWaveOriginalLives(nightEffects),
-            deathWavePoisonMetadata(nightEffects),
-            pendingUnits,
+          ownedPlan(
+            planDeathWave(
+              [],
+              {},
+              "initial",
+              originPhases,
+              deathWaveOriginalLives(nightEffects),
+              deathWavePoisonMetadata(nightEffects),
+              pendingUnits,
+            ),
           ),
           Object.freeze([]),
         );
         const event = nightEffects.onInitialWaveCommitted([], {}, receipt);
         receipt.recordPublication(event, []);
+        awakenedInitial?.publishAfterCommit(new Set());
       }
       while (pending.length > 0 || continuations.length > 0) {
         if (!isCurrent()) return;
@@ -389,15 +433,17 @@ export class DeathResolution {
           revealPolicy === "netease_2017_open_v1",
           allSources,
           nightEffects?.animalUnit ?? isCurrent,
-          planDeathWave(
-            pending,
-            allSources,
-            firstBatch ? "initial" : "revisit",
-            originPhases,
-            deathWaveOriginalLives(nightEffects),
-            deathWavePoisonMetadata(nightEffects),
-            pendingUnits,
-            previousCommits,
+          ownedPlan(
+            planDeathWave(
+              pending,
+              allSources,
+              firstBatch ? "initial" : "revisit",
+              originPhases,
+              deathWaveOriginalLives(nightEffects),
+              deathWavePoisonMetadata(nightEffects),
+              pendingUnits,
+              previousCommits,
+            ),
           ),
         );
         if (duelWords) appendDuelWordCommit(duelWords, this, receipt, allSources, deathPhase);
@@ -436,6 +482,37 @@ export class DeathResolution {
           receipt.recordPublication(event, [fragrantInitial.addedTargetId]);
           this.fragrantDeathWave.publishVisibleWave(fragrantInitial, event);
         }
+        if (firstBatch && awakenedInitial) {
+          // 原票目标仍在投票摘要；死亡事实只描述实际commit，不把被替死的狼美人说成出局。
+          const replaced: EntityId[] = [];
+          for (const id of pending) {
+            if ((allSources[id] ?? []).includes(DeathCause.Exile)) {
+              const event: GameEvent = {
+                timestamp: Date.now(),
+                type: "voted_out",
+                payload: { target: id },
+              };
+              this.events.push(event);
+              receipt.recordPublication(event, [id]);
+            } else if (
+              (allSources[id] ?? []).includes(DeathCause.AwakenedBeautyReplacement) &&
+              (!nightEffects?.onInitialWaveCommitted || originPhases.get(id) !== Phase.Night)
+            )
+              replaced.push(id);
+          }
+          if (replaced.length) {
+            const event: GameEvent = {
+              timestamp: Date.now(),
+              type: "additional_deaths",
+              payload: { deaths: replaced },
+            };
+            this.events.push(event);
+            receipt.recordPublication(event, replaced);
+          }
+          awakenedInitial.publishAfterCommit(
+            new Set(pending.filter((id) => receipt.committed(id) !== undefined)),
+          );
+        }
         // 整波角色扩展先看到已提交死亡，随后记录梦链，再按政策授予并收集遗言。
         this.eventRegistry.onCommittedDeathWave(
           this.world,
@@ -459,7 +536,9 @@ export class DeathResolution {
               );
           const wordsContext: LastWordsGrantContext | undefined = ownsFragrant
             ? { policy: FRAGRANT_PAIR_POLICY, initialWave: firstBatch }
-            : undefined;
+            : ownsAwakened
+              ? { policy: AWAKENED_BEAUTY_POLICY, initialWave: firstBatch }
+              : undefined;
           this.lastWordsMechanism.recordLastWordsGranted(
             this.world,
             pending,
@@ -674,6 +753,27 @@ export class DeathResolution {
                     sourcePhase,
                   },
                 );
+                const awakenedRoots = ownsAwakened
+                  ? new Map(proposed.map((id) => [id, sourcePhase]))
+                  : undefined;
+                const awakenedAdditional = awakenedRoots
+                  ? prepareAwakenedDeaths(
+                      {
+                        world: ownedWorld,
+                        day: resolutionDay,
+                        phase: resolutionPhase,
+                        events: this.events,
+                        isCurrent,
+                      },
+                      proposed,
+                      proposedSources,
+                      awakenedRoots,
+                      new Map([...shots].map(([id, shot]) => [id, shot.targetScope])),
+                      result.pendingPatrols,
+                    )
+                  : undefined;
+                if (awakenedAdditional)
+                  for (const [id, life] of awakenedAdditional.lives) ownedLives.set(id, life);
                 const { fragrantGun } = additionalRelations;
                 let fragrantGunCommitted = false;
                 try {
@@ -722,7 +822,14 @@ export class DeathResolution {
                     seen.add(id);
                     allSources[id] = [...new Set(proposedSources[id] ?? [])];
                     // 先前 seen／allSources 已原序写入；阶段查询失败仍保该前缀，不提前到关系准备时读取。
-                    originPhases.set(id, additionalRelations.originPhase());
+                    originPhases.set(
+                      id,
+                      awakenedRoots?.get(id) ?? additionalRelations.originPhase(),
+                    );
+                    if (ownsAwakened) {
+                      if (originPhases.get(id) === Phase.Night) nightOrigin.add(id);
+                      else nightOrigin.delete(id);
+                    }
                     const commitIds = [id];
                     const receipt = this.deathCommitter.markPlayersDead(
                       commitIds,
@@ -731,14 +838,16 @@ export class DeathResolution {
                       revealCurrent(),
                       allSources,
                       nightEffects?.animalUnit ?? isCurrent,
-                      planDeathWave(
-                        commitIds,
-                        allSources,
-                        "additional",
-                        originPhases,
-                        shot ? new Map([[id, shot.targetScope]]) : undefined,
-                        [],
-                        [additionalUnit],
+                      ownedPlan(
+                        planDeathWave(
+                          commitIds,
+                          allSources,
+                          "additional",
+                          originPhases,
+                          shot ? new Map([[id, shot.targetScope]]) : undefined,
+                          [],
+                          [additionalUnit],
+                        ),
                       ),
                     );
                     if (duelWords)
@@ -798,6 +907,7 @@ export class DeathResolution {
                       );
                     this.fragrantDeathWave.publishVisibleWave(fragrantGun, event);
                   }
+                  awakenedAdditional?.publishAfterCommit(new Set(marked));
                   // 只在原标死／公开追加事实之后交回本族发布；异常保留前缀并阻止后续 hook。
                   for (const contribution of preparedContributions)
                     contribution.publishAfterDeaths();
@@ -832,7 +942,34 @@ export class DeathResolution {
                 eligibleDead: seen,
                 isCurrent,
               }),
-              { world: () => resolution.world, events: () => resolution.events },
+              {
+                world: () => resolution.world,
+                events: () => resolution.events,
+                chooseDeathPatrol: (actorId, qualification) =>
+                  collectDeathPatrol(
+                    {
+                      get world() {
+                        return resolution.world;
+                      },
+                      get events() {
+                        return resolution.events;
+                      },
+                      get toolGateway() {
+                        return resolution.toolGateway;
+                      },
+                      get state() {
+                        return resolution.state;
+                      },
+                    },
+                    actorId,
+                    qualification,
+                    actionProvider,
+                    actions,
+                    callbackInitialBatch ? (initialPhases[actorId] ?? deathPhase) : deathPhase,
+                    sourcePhase,
+                    allSources[actorId] ?? [],
+                  ),
+              },
             );
           } finally {
             for (const permit of actions.permits) permit.close();

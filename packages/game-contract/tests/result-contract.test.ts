@@ -212,7 +212,13 @@ describe("pure result and failure public contract", () => {
   });
 
   test("DeathCause retains all 30 original keys, values and order without introducing a freeze", () => {
-    const expected = { ...originalEnums.DeathCause, Deal: "deal" };
+    const expected = {
+      ...originalEnums.DeathCause,
+      Deal: "deal",
+      AwakenedPatrol: "awakened_patrol",
+      AwakenedBeautyReplacement: "awakened_beauty_replacement",
+      AwakenedDuel: "awakened_duel",
+    };
     expect<unknown>(DeathCause).toEqual(expected);
     expect(Object.keys(DeathCause)).toEqual(Object.keys(expected));
     expect<unknown>(Object.values(DeathCause)).toEqual(Object.values(expected));

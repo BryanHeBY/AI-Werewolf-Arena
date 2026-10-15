@@ -26,7 +26,9 @@ import { isWardenPreset } from "./support/warden";
 import { isCrowPreset } from "./support/crow";
 import { isSilenceElderPreset } from "./support/silence-elder";
 import { isAwakenedWolfKingPreset } from "./support/awakened-wolf-king";
+import { isAwakenedDarkStarsPreset } from "./support/awakened-dark-stars";
 import { isAwakenedWitchPreset } from "./support/awakened-witch";
+import { isAwakenedDayRolesPreset } from "./support/awakened-day-roles";
 import { Role, WinCondition } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { isDemonHunterPreset } from "./node-board-support";
@@ -188,5 +190,24 @@ export function boardPresetViolation(config: ReadonlyBoardConfig) {
     !isAwakenedWitchPreset(config)
   )
     return "awakened_witch_preset_invalid";
+  if (
+    (config.awakenedWolfBeauty ||
+      config.awakenedHunter ||
+      config.roleSetups.some(
+        (row) => [Role.AwakenedWolfBeauty, Role.AwakenedHunter].includes(row.role) && row.count > 0,
+      )) &&
+    !isAwakenedDarkStarsPreset(config) &&
+    !isAwakenedDayRolesPreset(config)
+  )
+    return "awakened_dark_stars_preset_invalid";
+  if (
+    (config.awakenedGuard ||
+      config.awakenedKnight ||
+      config.roleSetups.some(
+        (row) => [Role.AwakenedGuard, Role.AwakenedKnight].includes(row.role) && row.count > 0,
+      )) &&
+    !isAwakenedDayRolesPreset(config)
+  )
+    return "awakened_day_roles_preset_invalid";
   return null;
 }

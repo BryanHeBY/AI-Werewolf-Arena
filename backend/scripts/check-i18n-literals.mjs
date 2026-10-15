@@ -30,6 +30,9 @@ const translationOwners = new Set([
   "packages/game-text/src/messages/features/warden.ts",
   "packages/game-text/src/messages/features/awakened-wolf-king.ts",
   "packages/game-text/src/messages/features/awakened-witch.ts",
+  "packages/game-text/src/messages/features/awakened-wolf-beauty.ts",
+  "packages/game-text/src/messages/features/awakened-hunter.ts",
+  "packages/game-text/src/messages/features/awakened-day-roles.ts",
 ]);
 // 扫描结果记录源码行；例外按文件／完整字面及精确次数匹配，reason 用于保留人工说明。
 /** @typedef {{ file: string, text: string, line: number }} ChineseLiteral */

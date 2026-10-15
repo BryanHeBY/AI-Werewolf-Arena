@@ -5,6 +5,23 @@
  * 精确 source／lock 检查仍由实际 replay 执行；用户原文不经过展示翻译改写。
  */
 import {
+  isAwakenedGuardEventType,
+  readAwakenedGuardFact,
+  awakenedGuardFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-guard";
+import {
+  isAwakenedDuelEventType,
+  readAwakenedDuelFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-duel";
+import {
+  AWAKENED_BEAUTY_EVENT_TYPES,
+  readAwakenedBeautyFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-beauty";
+import {
+  AWAKENED_PATROL_EVENT_TYPES,
+  readAwakenedPatrolFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-patrol";
+import {
   isAwakenedWitchEventType,
   readAwakenedWitchFact,
   awakenedWitchFactAudience,
@@ -369,6 +386,18 @@ const requestSchema = z.strictObject({
       })
       .strict()
       .optional(),
+    awakened_protect_options: z
+      .strictObject({
+        timing: z.enum(["night", "day"]),
+        last: z.boolean(),
+        targetIds: z.array(positive),
+      })
+      .optional(),
+    awakened_duel_options: z
+      .strictObject({ continuing: z.boolean(), targetIds: z.array(positive) })
+      .optional(),
+    awakened_charm_candidates: z.array(positive).optional(),
+    patrol_seat_order: z.array(positive).optional(),
     claw_bequest_candidates: z.array(positive).optional(),
     warden_candidates: z.array(z.number().int().positive()).optional(),
     warden_partner_id: z.number().int().positive().optional(),
@@ -673,6 +702,54 @@ const schema2 = z.strictObject({
           (!readDeathShotMissFact(event.type, event.payload) || event.audience !== undefined)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_magician_shot_miss_invalid" });
+        if ((AWAKENED_BEAUTY_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const f = readAwakenedBeautyFact(event.type, event.payload);
+          const expected =
+            f?.type === "awakened_beauty_replaced"
+              ? undefined
+              : f?.type === "awakened_charm_chosen"
+                ? [f.payload.actorId]
+                : [];
+          if (
+            !f ||
+            (expected === undefined
+              ? event.audience !== undefined
+              : !Array.isArray(event.audience) ||
+                event.audience.length !== expected.length ||
+                !expected.every((id, i) => event.audience![i] === id))
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_awakened_beauty_fact_invalid" });
+        }
+        if ((AWAKENED_PATROL_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const f = readAwakenedPatrolFact(event.type, event.payload);
+          if (
+            !f ||
+            (f.type === "awakened_patrol_resolved"
+              ? event.audience !== undefined
+              : !Array.isArray(event.audience) ||
+                event.audience.length !== 1 ||
+                event.audience[0] !== f.payload.actorId)
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_awakened_patrol_fact_invalid" });
+        }
+        if (isAwakenedGuardEventType(event.type)) {
+          const f = readAwakenedGuardFact(event.type, event.payload),
+            expected = f ? awakenedGuardFactAudience(f) : undefined;
+          if (
+            !f ||
+            (expected === undefined
+              ? event.audience !== undefined
+              : !Array.isArray(event.audience) ||
+                event.audience.length !== expected.length ||
+                !expected.every((id, i) => event.audience![i] === id))
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_awakened_guard_fact_invalid" });
+        }
+        if (
+          isAwakenedDuelEventType(event.type) &&
+          (!readAwakenedDuelFact(event.type, event.payload) || event.audience !== undefined)
+        )
+          ctx.addIssue({ code: "custom", message: "reproduction_awakened_duel_fact_invalid" });
         if (isAwakenedWitchEventType(event.type)) {
           const f = readAwakenedWitchFact(event.type, event.payload),
             audience = event.audience;
@@ -847,6 +924,10 @@ const schema2 = z.strictObject({
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          !(AWAKENED_BEAUTY_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          !(AWAKENED_PATROL_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          !isAwakenedGuardEventType(event.type) &&
+          !isAwakenedDuelEventType(event.type) &&
           !isAwakenedWitchEventType(event.type) &&
           !(AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(WARDEN_EVENT_TYPES as readonly string[]).includes(event.type) &&

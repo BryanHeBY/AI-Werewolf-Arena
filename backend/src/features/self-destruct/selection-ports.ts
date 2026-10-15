@@ -5,3 +5,4 @@
  * 顶层只加载原模块及其原依赖，不聚合其他 owner；调用方仍在原 callee／参数位置读取，原错误和已写前缀照常传播。
  */
 export { commitSelfDestructSelection } from "./commit";
+export { protectedBlastDeathPublication } from "./protected-publication";

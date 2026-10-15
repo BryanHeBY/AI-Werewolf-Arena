@@ -685,3 +685,66 @@ test("a newly derived Charm-only death cannot borrow the incomplete initial-nigh
   record.checkpoints[1]!.players[1]!.alive = false;
   rejects(record);
 });
+
+// 暗夜星辰只补具名原提案→真实死亡的证据；完整板／付款真实性仍由独立本族账本随后验算。
+function replacementWords(root: Phase, derived = false): ReproductionRecord {
+  const r = literal();
+  r.metadata.normalizedBoard.awakenedWolfBeauty = { policy: "awa_awakened_replacement_v1" };
+  r.metadata.normalizedBoard.awakenedHunter = { policy: "awa_directional_patrol_v1" };
+  event(r, "phase_changed", { day: 1, phase: root === Phase.Night ? Phase.Day : Phase.Voting });
+  if (derived) {
+    event(r, "voted_out", { target: 3 });
+    event(r, "awakened_patrol_paid", {
+      policy: "awa_directional_patrol_v1",
+      day: 1,
+      actorId: 3,
+      rootPhase: root,
+      direction: "counter_clockwise",
+      targetId: 2,
+    });
+  }
+  event(r, "awakened_beauty_replacement_paid", {
+    policy: "awa_awakened_replacement_v1",
+    day: 1,
+    actorId: 2,
+    targetId: 1,
+    phase: root === Phase.Night ? Phase.Day : Phase.Voting,
+    rootPhase: root,
+    preventedCauses: [
+      derived
+        ? DeathCause.AwakenedPatrol
+        : root === Phase.Night
+          ? DeathCause.Poison
+          : DeathCause.Exile,
+    ],
+  });
+  if (root === Phase.Night) {
+    r.operations.push({
+      scope: "resolution",
+      op: "night_damage_resolved",
+      status: "ok",
+      output: { deaths: [2], death_sources: { 2: [DeathCause.Poison] } },
+    });
+    event(r, "night_resolved", { deaths: [1] });
+  } else event(r, "additional_deaths", { deaths: [1] });
+  const d = request(1, "last_words", { name: "speak", args: { text: "替身遗言" } });
+  d.request.context.death_phase = root;
+  d.request.context.death_sources = [DeathCause.AwakenedBeautyReplacement];
+  d.openedAtEventCount = r.events.length;
+  d.request.phase = root === Phase.Night ? Phase.Day : Phase.Voting;
+  r.decisions.push(d);
+  event(r, "last_words_granted", { playerId: 1, phase: d.request.phase, day: 1 });
+  event(r, "last_words_spoken", { playerId: 1, phase: d.request.phase, day: 1, text: "替身遗言" });
+  return r;
+}
+test("具名初始替死保原首夜／放逐遗言，不借此开放旧板同源", () => {
+  for (const root of [Phase.Night, Phase.Voting]) {
+    const r = replacementWords(root);
+    expect(() => validateDeathHistoryRecord(r)).not.toThrow();
+    delete r.metadata.normalizedBoard.awakenedWolfBeauty;
+    delete r.metadata.normalizedBoard.awakenedHunter;
+    expect(() => validateDeathHistoryRecord(r)).toThrow(error);
+  }
+});
+test("日根巡猎后的替死仍为追加波，不能取得初始放逐遗言", () =>
+  expect(() => validateDeathHistoryRecord(replacementWords(Phase.Voting, true))).toThrow(error));

@@ -3,6 +3,22 @@
  * 共享事实契约拥有结构解析，浏览器层只解释复盘，不授予游戏许可；不承诺归档边界外的任意 Proxy 零 trap。
  */
 import {
+  isAwakenedGuardEventType,
+  readAwakenedGuardFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-guard";
+import {
+  isAwakenedDuelEventType,
+  readAwakenedDuelFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-duel";
+import {
+  AWAKENED_BEAUTY_EVENT_TYPES,
+  readAwakenedBeautyFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-beauty";
+import {
+  AWAKENED_PATROL_EVENT_TYPES,
+  readAwakenedPatrolFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-patrol";
+import {
   isAwakenedWitchEventType,
   readAwakenedWitchFact,
 } from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
@@ -131,6 +147,22 @@ export interface ReadReplayEvent {
 
 // 必须的玩家引用按事件类别决定；未知扩展字段不自动成为玩家关联。
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  awakened_self_destruct_declared: ["actorId"],
+  awakened_self_destruct_resolved: ["actorId"],
+  awakened_guard_cycle_started: ["actorId"],
+  awakened_protection_chosen: ["actorId"],
+  awakened_protection_revealed: ["actorId", "targetId"],
+  awakened_protection_blocked: ["targetId"],
+  awakened_protection_block_detail: ["actorId", "targetId"],
+  awakened_protection_expired: ["actorId"],
+  awakened_duel_committed: ["actorId", "targetId"],
+  awakened_duel_resolved: ["actorId", "targetId"],
+  awakened_duel_chain_ended: ["actorId"],
+  awakened_charm_chosen: ["actorId"],
+  awakened_beauty_replacement_paid: ["actorId", "targetId"],
+  awakened_beauty_replaced: ["actorId", "targetId"],
+  awakened_patrol_paid: ["actorId"],
+  awakened_patrol_resolved: ["actorId"],
   awakened_brew_chosen: ["actorId"],
   brew_started: ["targetId"],
   brew_discussion: ["actorId"],
@@ -389,6 +421,12 @@ function validKnownFields(type: string, p: Record<string, unknown>): boolean {
   if (type === "red_moon_night_sealed" || type === "red_moon_exile_delayed")
     return !!readRedMoonNextNightFact(type, p);
   if (type === "red_moon_delay_expired") return !!readRedMoonExpiryFact(type, p);
+  if ((AWAKENED_BEAUTY_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readAwakenedBeautyFact(type, p);
+  if ((AWAKENED_PATROL_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readAwakenedPatrolFact(type, p);
+  if (isAwakenedGuardEventType(type)) return !!readAwakenedGuardFact(type, p);
+  if (isAwakenedDuelEventType(type)) return !!readAwakenedDuelFact(type, p);
   if (isAwakenedWitchEventType(type)) return !!readAwakenedWitchFact(type, p);
   if ((WARDEN_EVENT_TYPES as readonly string[]).includes(type)) return !!readWardenFact(type, p);
   if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(type))
@@ -767,6 +805,43 @@ export function readReplayEvent(
       if (safe.phase !== "voting") return null;
       add(p.actorId);
     }
+    if ((AWAKENED_BEAUTY_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (p.day !== safe.day) return null;
+      if (safe.type === "awakened_charm_chosen" && safe.phase !== "night") return null;
+      if (safe.type === "awakened_beauty_replaced" && !["day", "voting"].includes(safe.phase))
+        return null;
+      if (safe.type === "awakened_beauty_replacement_paid" && safe.phase !== p.phase) return null;
+      if (Object.hasOwn(p, "targetId")) add(p.targetId, true);
+    }
+    if ((AWAKENED_PATROL_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (p.day !== safe.day || !["night", "day", "voting"].includes(safe.phase)) return null;
+      add(p.targetId, true);
+    }
+    if (isAwakenedGuardEventType(safe.type)) {
+      if (p.day !== safe.day) return null;
+      if (safe.type === "awakened_guard_cycle_started" && safe.phase !== "night") return null;
+      if (
+        safe.type === "awakened_protection_chosen" &&
+        (p.timing === "night" ? safe.phase !== "night" : !["day", "voting"].includes(safe.phase))
+      )
+        return null;
+      if (
+        [
+          "awakened_protection_revealed",
+          "awakened_self_destruct_declared",
+          "awakened_self_destruct_resolved",
+        ].includes(safe.type) &&
+        !["day", "voting"].includes(safe.phase)
+      )
+        return null;
+      if (safe.type === "awakened_protection_block_detail" && p.phase !== safe.phase) return null;
+      if (safe.type === "awakened_protection_chosen") add(p.targetId, true);
+      if (safe.type === "awakened_self_destruct_resolved") list(p.deaths);
+    }
+    if (isAwakenedDuelEventType(safe.type)) {
+      if (p.day !== safe.day || !["day", "voting"].includes(safe.phase)) return null;
+      if (safe.type === "awakened_duel_resolved") list(p.deaths);
+    }
     if (isAwakenedWitchEventType(safe.type)) {
       if (p.day !== safe.day || safe.phase !== "night") return null;
       if (Object.hasOwn(p, "targetId")) add(p.targetId, true);
@@ -913,6 +988,21 @@ export function readReplayEvent(
       });
     if (safe.type === "order_prince_revote_started")
       effects.push({ kind: "role_revealed", playerId: p.actorId as number, role: "order_prince" });
+    if (safe.type === "awakened_protection_revealed")
+      effects.push({
+        kind: "role_revealed",
+        playerId: p.actorId as number,
+        role: "awakened_guard",
+      });
+    if (safe.type === "awakened_duel_committed")
+      effects.push({
+        kind: "role_revealed",
+        playerId: p.actorId as number,
+        role: "awakened_knight",
+      });
+    // 声明自爆只确认普通狼身份；被全天盾挡住时仍活着，不能沿旧wolf_self_destruct的死亡语义投影。
+    if (safe.type === "awakened_self_destruct_declared")
+      effects.push({ kind: "role_revealed", playerId: p.actorId as number, role: "wolf" });
     if (safe.type === "debater_revealed")
       effects.push({ kind: "role_revealed", playerId: p.actorId as number, role: "debater" });
     if (safe.type === "player_role_revealed" && isRoleId(p.role)) {
@@ -938,6 +1028,9 @@ export function readReplayEvent(
         role: "red_moon_apostle",
       });
     const dead: number[] = [];
+    // resolved由实际DR提交回调产生；committed/declared的目标与分支不写Alive。
+    if (safe.type === "awakened_duel_resolved" || safe.type === "awakened_self_destruct_resolved")
+      dead.push(...(p.deaths as number[]));
     if (safe.type === "red_moon_delay_expired") dead.push(p.actorId as number);
     if (safe.type === "night_resolved" || safe.type === "additional_deaths")
       dead.push(...(p.deaths as number[]));

@@ -3,7 +3,7 @@
  * 仅取白名单字段，省略 provider 对象及其环境、命令参数、接入 URL 和提示原文；不重新读取文件或校验运行资格。
  */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
-import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
+import { ROLE_DEFINITIONS, type RoleDefinition } from "@ai-werewolf-arena/game-catalog";
 import type { ResolvedGameSetup } from "./resolve-game-setup";
 import type { ResolvedAgentRuntimeProfile } from "./contracts";
 
@@ -73,7 +73,7 @@ export function describeResolvedSetup(
     },
     catalog: {
       total: ROLE_DEFINITIONS.length,
-      planned: ROLE_DEFINITIONS.filter((item) => item.status === "planned").length,
+      planned: ROLE_DEFINITIONS.filter((item: RoleDefinition) => item.status === "planned").length,
     },
     sources: {
       board: setup.boardDefinition?.sourceFile ?? "internal_fixture",
