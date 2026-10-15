@@ -1,0 +1,862 @@
+{
+  "scope": "First static finding and approved successor",
+  "reviews": [
+    {
+      "decision": "requires_successor",
+      "approved": false,
+      "kind": "limited prepared static non-author review",
+      "handoff": {
+        "path": "/tmp/awa-h02-victory-evaluator-query-boundary/HANDOFF.json",
+        "sha256": "3afdb35043266492393afb4e7f9cf23f44c0884b2094a14bc7a7d4b497741bed"
+      },
+      "source": [
+        {
+          "path": "backend/src/domain/registries/condition-registry.ts",
+          "beforeSHA256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772",
+          "beforeBytes": 1701,
+          "sha256": "2e3c5704b6d8d590ae5dab09530509d67f44a1c99fcbcc74fd7362e4a2e2da42",
+          "bytes": 2841,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "0cadb206d744ae4ec4b10ed235a0c1bfb52b5849",
+            "mode": "100644",
+            "sha256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772",
+            "bytes": 1701,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/domain/registries/condition-registry.ts",
+          "before": "before/backend/src/domain/registries/condition-registry.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/victory/contracts.ts",
+          "beforeSHA256": "6be06be0c383b57a3d92583a8a464241a147e3fc759926cb7213f3d386035a61",
+          "beforeBytes": 1734,
+          "sha256": "e417b74995cf4932a976cc3b9ea84a7e473819704a172947a7aa700071d0faa2",
+          "bytes": 859,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "5b388488ffdcb31b6f19e32707808c7f79d23e3f",
+            "mode": "100644",
+            "sha256": "6be06be0c383b57a3d92583a8a464241a147e3fc759926cb7213f3d386035a61",
+            "bytes": 1734,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/engine/victory/contracts.ts",
+          "before": "before/backend/src/engine/victory/contracts.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/victory/condition-registry.ts",
+          "beforeSHA256": "d2126be0dbd40ca8127584f86cf870b676b706a51802bc2ab49f4255a2673d2e",
+          "beforeBytes": 2021,
+          "sha256": "0f8ab24a6a36971a01fe45a52459c7a014ce878d336ab4b167415a72faf58401",
+          "bytes": 2086,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "f2538b8d461d1ef031757823506721867180e1e1",
+            "mode": "100644",
+            "sha256": "d2126be0dbd40ca8127584f86cf870b676b706a51802bc2ab49f4255a2673d2e",
+            "bytes": 2021,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/engine/victory/condition-registry.ts",
+          "before": "before/backend/src/engine/victory/condition-registry.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/phase-manager.ts",
+          "beforeSHA256": "47ccd64371b3c344f437ab89f32df6b291c87ec49e2e7aed255a30f8799d0a05",
+          "beforeBytes": 39499,
+          "sha256": "c2e8b3f8d691e5f777cd2fb61274a42955d1e4b3afdb2b0d006caa8f0f9bd1bc",
+          "bytes": 39591,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "c254743a7311ffac6dce0c64bfb2993152e28ba9",
+            "mode": "100644",
+            "sha256": "47ccd64371b3c344f437ab89f32df6b291c87ec49e2e7aed255a30f8799d0a05",
+            "bytes": 39499,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/engine/phase-manager.ts",
+          "before": "before/backend/src/engine/phase-manager.ts",
+          "apply": "exact-delta-only"
+        },
+        {
+          "path": "backend/src/rulesets/red-moon-expiry-settlement.ts",
+          "beforeSHA256": "db2b33d2fa135648a223071fa8d61754102f7bad171cce093aeca581727c0315",
+          "beforeBytes": 3223,
+          "sha256": "735d0cf1cedfb3cf0444cc6c8f6b21bdd76eff4842bf03d9c1c5ddf74f7daab1",
+          "bytes": 3305,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "f558bbc7e517647189fe70edf02df20f2f146390",
+            "mode": "100644",
+            "sha256": "db2b33d2fa135648a223071fa8d61754102f7bad171cce093aeca581727c0315",
+            "bytes": 3223,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/rulesets/red-moon-expiry-settlement.ts",
+          "before": "before/backend/src/rulesets/red-moon-expiry-settlement.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/engine/bootstrap-and-condition.test.ts",
+          "beforeSHA256": "9cb811e068a2efac45dba662ea5bcbcb675ed0e9f567731d09ddab711cdc11b8",
+          "beforeBytes": 2445,
+          "sha256": "09e5a68f319c8b0cf3928aa6cd7e277cdd5623846f9bea055a8187133c592fbd",
+          "bytes": 2547,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "e59b5b98b68f27db19f525fba82b345f117f9d53",
+            "mode": "100644",
+            "sha256": "9cb811e068a2efac45dba662ea5bcbcb675ed0e9f567731d09ddab711cdc11b8",
+            "bytes": 2445,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/engine/bootstrap-and-condition.test.ts",
+          "before": "before/backend/tests/unit/engine/bootstrap-and-condition.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/engine/elimination-priority.test.ts",
+          "beforeSHA256": "44a551d51b02250a156e407e98161c2914364ba109bcad883c666ff1e36dd1f5",
+          "beforeBytes": 5103,
+          "sha256": "25f103f02e91819f9fe320b25aa482fe205dba346aca4c87a8daa800fd8e5ca5",
+          "bytes": 5245,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "4190fc29b5cbfc11a4d3f15c14478fa59c8608c8",
+            "mode": "100644",
+            "sha256": "44a551d51b02250a156e407e98161c2914364ba109bcad883c666ff1e36dd1f5",
+            "bytes": 5103,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/engine/elimination-priority.test.ts",
+          "before": "before/backend/tests/unit/engine/elimination-priority.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/engine/victory-query-boundary.test.ts",
+          "beforeSHA256": "0e26895039976b68c43736c239125694902368bacea9c0e58e7da0f1243e55d5",
+          "beforeBytes": 4273,
+          "sha256": "003a14cd57c8318a91de117cb7fe79395cbfbd0dbec6e274006643b7104c5864",
+          "bytes": 7494,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "0668f3786aaaf70f6f0bf9ff1aab4818f51c1214",
+            "mode": "100644",
+            "sha256": "0e26895039976b68c43736c239125694902368bacea9c0e58e7da0f1243e55d5",
+            "bytes": 4273,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/engine/victory-query-boundary.test.ts",
+          "before": "before/backend/tests/unit/engine/victory-query-boundary.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+          "beforeSHA256": "e07102a27a0e1ee5de80f8067c8ce17003a6bb53a7d25fa802d95719e2f601d5",
+          "beforeBytes": 7809,
+          "sha256": "ec835c90bf2720bd1ee270cf97aff04a35de730115f94087832709a283f9a664",
+          "bytes": 7991,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "2253195e2ee0c38e2a33971d5ebae78cdb995486",
+            "mode": "100644",
+            "sha256": "e07102a27a0e1ee5de80f8067c8ce17003a6bb53a7d25fa802d95719e2f601d5",
+            "bytes": 7809,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+          "before": "before/backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+          "beforeSHA256": "1eac676941c5442a972589a8f15c107ed44cefa5595785798a36604c190f1faa",
+          "beforeBytes": 20071,
+          "sha256": "319f7ea020ece4fdf19700db8341909568ad3775b9e23d2528c566b0332354f8",
+          "bytes": 20276,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "65141ef1594490af66a9e85956aba72073b54f68",
+            "mode": "100644",
+            "sha256": "1eac676941c5442a972589a8f15c107ed44cefa5595785798a36604c190f1faa",
+            "bytes": 20071,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+          "before": "before/backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+          "beforeSHA256": "8ca676edd5cfddc91de0e6c59f078186a77e21f0b97a9411569c1c8a60fddd05",
+          "beforeBytes": 28479,
+          "sha256": "8637cec495127ae72f5cdeb688ee578ac4962dab9047c54fef21e80b4e392bd5",
+          "bytes": 28624,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "d0cbe55a3a4d5ca25cef349474d0112de4c4b3b8",
+            "mode": "100644",
+            "sha256": "8ca676edd5cfddc91de0e6c59f078186a77e21f0b97a9411569c1c8a60fddd05",
+            "bytes": 28479,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+          "before": "before/backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+          "beforeSHA256": "914b21599ae91224c4127682cf8c15a5de1686b8663bc7eb59d3983dddfb9d25",
+          "beforeBytes": 8266,
+          "sha256": "8750ffe55e7fb78da0290285bce3b594535a553fa5a25180c8bcf315d10b88b2",
+          "bytes": 8390,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "e9123bc8aebe4e698a74cc2d3664ad46659de465",
+            "mode": "100644",
+            "sha256": "914b21599ae91224c4127682cf8c15a5de1686b8663bc7eb59d3983dddfb9d25",
+            "bytes": 8266,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+          "before": "before/backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+          "beforeSHA256": "9054e407a1cc28d06d0155d88aaf2a52c4194b5fde70e295e8bba7186d40d57c",
+          "beforeBytes": 6190,
+          "sha256": "808feb431f8ca187c90a66ac350dc8c24c545db5cfc869e27713ec3f280cdc52",
+          "bytes": 6488,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "cd222cce5f2106fdb229b9c2ff0c294003acee01",
+            "mode": "100644",
+            "sha256": "9054e407a1cc28d06d0155d88aaf2a52c4194b5fde70e295e8bba7186d40d57c",
+            "bytes": 6190,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+          "before": "before/backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/scenarios/features/victory/checkpoints-and-terminal-sealing.test.ts",
+          "beforeSHA256": "9bce576fe7a665d594fb73ba762b144bb3faec0a36c17876d21f788e4ff16a35",
+          "beforeBytes": 7598,
+          "sha256": "6ee7d464d914d228b85a8c4f42504cf154e0041b871234c16a773c5e10a59178",
+          "bytes": 7723,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "c6e3462d57c1da10659a99f8b8f98608c498e03f",
+            "mode": "100644",
+            "sha256": "9bce576fe7a665d594fb73ba762b144bb3faec0a36c17876d21f788e4ff16a35",
+            "bytes": 7598,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/scenarios/features/victory/checkpoints-and-terminal-sealing.test.ts",
+          "before": "before/backend/tests/scenarios/features/victory/checkpoints-and-terminal-sealing.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+          "beforeSHA256": "efa9d92c3fea1e42c21e6cceb829407775d9b676c723aac6aa25295826a92095",
+          "beforeBytes": 17341,
+          "sha256": "6462287bb6d3e551466ce2bf01116d7f6db87db0b86ec66bafabc552f99a25a5",
+          "bytes": 17446,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "01c7b417ef09476412a5a2e61c8e0f6cfa46da0f",
+            "mode": "100644",
+            "sha256": "efa9d92c3fea1e42c21e6cceb829407775d9b676c723aac6aa25295826a92095",
+            "bytes": 17341,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+          "before": "before/backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+          "apply": "whole-after-before-guard"
+        }
+      ],
+      "sourceReadySHA256": "9d501b495a1a2806f92fa2dc113308713d313ff0190b0601aa6aed06a6a0ebf1",
+      "controls": [
+        {
+          "path": "backend/src/domain/world.ts",
+          "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1",
+          "bytes": 7409,
+          "mode": "100644"
+        },
+        {
+          "path": "backend/src/engine/victory/results.ts",
+          "sha256": "9e9d09b6ff493f86ed332f0981f9846627e633ef4b6d20fee420af99e9a66c9e",
+          "bytes": 2405,
+          "mode": "100644"
+        },
+        {
+          "path": "backend/src/rulesets/victory/default-specs.ts",
+          "sha256": "4dfea615cce11ff7d02e26983416664387876910455dce93e7e79babc8b04b3a",
+          "bytes": 6616,
+          "mode": "100644"
+        },
+        {
+          "path": "backend/src/recording/reproduction/format.ts",
+          "sha256": "5139ba631f427055759fd64e0de18590999f8b0463c339f25000b0fce8a70b2d",
+          "bytes": 33290,
+          "mode": "100644"
+        },
+        {
+          "path": "backend/src/domain/night-effects.ts",
+          "sha256": "9214c5ea6d2867e8671c51659e82b48de98e8ee036401a61eb934cb5398f81d3",
+          "bytes": 17824,
+          "mode": "100644"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "README.md",
+          "sha256": "2a4f4ae333abd6c15d308699d88e0f246b8972a4a6516f122410674e895ba44f",
+          "bytes": 3136
+        },
+        {
+          "path": "build.py",
+          "sha256": "d7312f8b7b85a0a6601fbb09e8d3a20a8e83a6c2b93b817c77bc889c055c482f",
+          "bytes": 12772
+        },
+        {
+          "path": "build-first-prepare-error.py",
+          "sha256": "ec17ea549b2771ca469704b595f74087214f1ac9714bcaa3c8e2d924d5e94f11",
+          "bytes": 12590
+        },
+        {
+          "path": "prepare-history.json",
+          "sha256": "d121dfdb486846502a823b194d957c2a3429a8dfabb4498993ad38391067cf55",
+          "bytes": 322
+        },
+        {
+          "path": "source-ready.json",
+          "sha256": "9d501b495a1a2806f92fa2dc113308713d313ff0190b0601aa6aed06a6a0ebf1",
+          "bytes": 14812
+        },
+        {
+          "path": "edits.json",
+          "sha256": "daa47a8e257a9f383ea933e12d9b04729adeed801127b38644d936895e27601c",
+          "bytes": 16535
+        },
+        {
+          "path": "candidate.patch",
+          "sha256": "30a66ebfff4be77beaa0a4690cdd46c60dc11573cf445e3892036be360baf044",
+          "bytes": 29329
+        },
+        {
+          "path": "phase-manager-local-delta.json",
+          "sha256": "8ac4a5466d28e303d687a0d511f48fb08a2c02a693354378ad02335c159e73e6",
+          "bytes": 689
+        },
+        {
+          "path": "types-config.json",
+          "sha256": "5c01f73009a6eb7b8f85818793c6c65329fd8c25c41b16b088709982c8bbc31e",
+          "bytes": 1930
+        },
+        {
+          "path": "execution-plan.json",
+          "sha256": "54ad21a23fb0a9dffee0d312edfb80f1436a768d03fee11ec8fe1633582b0000",
+          "bytes": 852
+        }
+      ],
+      "integrity": {
+        "actualGitBefore": 15,
+        "exactFullForward": 15,
+        "artifactCount": 10,
+        "drift": []
+      },
+      "findings": [
+        {
+          "id": "X06-query-isolation",
+          "severity": "required_behavior_preservation",
+          "status": "Root accepted successor required",
+          "source": "WinConditionRegistry.evaluate / ConditionRegistry.evaluateMany / PM and RedMoon binding",
+          "before": "Each actual spec invocation created a new mutable VictoryQueries object from the original World after checkpoint filtering.",
+          "candidate": "The outer call binds once, then evaluateMany passes the same mutable query object to all specs.",
+          "counterexample": "First custom spec replaces queries.camp or eliminationCounts and returns null; later spec now observes its mutation, while before it received a new owner-bound table. Static inference, not an executed red.",
+          "requirement": "Preserve each spec independent query object and original late reads; do not recover World publicly or eager-copy user getters. New hand-written multi-spec risk required by Root."
+        },
+        {
+          "id": "X06-head-layer",
+          "severity": "maintenance_precision",
+          "status": "suggested pre-first-check",
+          "source": "backend/tests/unit/engine/victory-query-boundary.test.ts",
+          "note": "Existing touched header says only 验证, without 单元测试 layer; suggest accurate smallest Chinese first sentence, no head check executed."
+        }
+      ],
+      "reviewed": [
+        "All five candidate production programs and original registry programs; actual PM sealing caller, RedMoon generator/callee/argument/yield/failure sequence.",
+        "Complete default-specs binding and elimination/cupid/wedding policies, results membership construction; these are unchanged controls, not new generic World bridges.",
+        "Two new literal risks and all old exact API migration fragments; old role/result/resource assertions remain except precise first-argument API expectations and one allocation-related title.",
+        "Queries actual values/arrays/results do not return original components; candidate construction does not itself seal or write World.",
+        "Receiver/callee/override/checkpoint/null paths retain original method bodies; explicit binding lookup/allocation is a new API observation, not universal JS equivalence."
+      ],
+      "checksExecuted": [],
+      "repoWrites": false,
+      "limits": [
+        "No product/parser/type/compiler/test/check/formatter executed.",
+        "Prepared static report only, not C47 or proof of all game outcomes.",
+        "No approval of initial shared-query aliasing; successor remains to be reviewed."
+      ]
+    },
+    {
+      "decision": "approved",
+      "approved": true,
+      "kind": "limited prepared non-author review; no execution",
+      "handoff": {
+        "path": "/tmp/awa-h02-victory-evaluator-query-boundary/HANDOFF.json",
+        "sha256": "fe9470d9e985626ee693487f26c52b8d1b3639c247b91d10c431ac1f968ced17"
+      },
+      "source": [
+        {
+          "path": "backend/src/domain/registries/condition-registry.ts",
+          "beforeSHA256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772",
+          "beforeBytes": 1701,
+          "sha256": "2e3c5704b6d8d590ae5dab09530509d67f44a1c99fcbcc74fd7362e4a2e2da42",
+          "bytes": 2841,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "0cadb206d744ae4ec4b10ed235a0c1bfb52b5849",
+            "mode": "100644",
+            "sha256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772",
+            "bytes": 1701,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/domain/registries/condition-registry.ts",
+          "before": "before/backend/src/domain/registries/condition-registry.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/victory/contracts.ts",
+          "beforeSHA256": "6be06be0c383b57a3d92583a8a464241a147e3fc759926cb7213f3d386035a61",
+          "beforeBytes": 1734,
+          "sha256": "e417b74995cf4932a976cc3b9ea84a7e473819704a172947a7aa700071d0faa2",
+          "bytes": 859,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "5b388488ffdcb31b6f19e32707808c7f79d23e3f",
+            "mode": "100644",
+            "sha256": "6be06be0c383b57a3d92583a8a464241a147e3fc759926cb7213f3d386035a61",
+            "bytes": 1734,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/engine/victory/contracts.ts",
+          "before": "before/backend/src/engine/victory/contracts.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/victory/condition-registry.ts",
+          "beforeSHA256": "d2126be0dbd40ca8127584f86cf870b676b706a51802bc2ab49f4255a2673d2e",
+          "beforeBytes": 2021,
+          "sha256": "1a43a0723f989abb4e51072596225e77fe68248c708394d062b53c83fd8d9ba7",
+          "bytes": 3126,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "f2538b8d461d1ef031757823506721867180e1e1",
+            "mode": "100644",
+            "sha256": "d2126be0dbd40ca8127584f86cf870b676b706a51802bc2ab49f4255a2673d2e",
+            "bytes": 2021,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/engine/victory/condition-registry.ts",
+          "before": "before/backend/src/engine/victory/condition-registry.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/phase-manager.ts",
+          "beforeSHA256": "47ccd64371b3c344f437ab89f32df6b291c87ec49e2e7aed255a30f8799d0a05",
+          "beforeBytes": 39499,
+          "sha256": "c2e8b3f8d691e5f777cd2fb61274a42955d1e4b3afdb2b0d006caa8f0f9bd1bc",
+          "bytes": 39591,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "c254743a7311ffac6dce0c64bfb2993152e28ba9",
+            "mode": "100644",
+            "sha256": "47ccd64371b3c344f437ab89f32df6b291c87ec49e2e7aed255a30f8799d0a05",
+            "bytes": 39499,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/engine/phase-manager.ts",
+          "before": "before/backend/src/engine/phase-manager.ts",
+          "apply": "exact-delta-only"
+        },
+        {
+          "path": "backend/src/rulesets/red-moon-expiry-settlement.ts",
+          "beforeSHA256": "db2b33d2fa135648a223071fa8d61754102f7bad171cce093aeca581727c0315",
+          "beforeBytes": 3223,
+          "sha256": "735d0cf1cedfb3cf0444cc6c8f6b21bdd76eff4842bf03d9c1c5ddf74f7daab1",
+          "bytes": 3305,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "f558bbc7e517647189fe70edf02df20f2f146390",
+            "mode": "100644",
+            "sha256": "db2b33d2fa135648a223071fa8d61754102f7bad171cce093aeca581727c0315",
+            "bytes": 3223,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/src/rulesets/red-moon-expiry-settlement.ts",
+          "before": "before/backend/src/rulesets/red-moon-expiry-settlement.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/engine/bootstrap-and-condition.test.ts",
+          "beforeSHA256": "9cb811e068a2efac45dba662ea5bcbcb675ed0e9f567731d09ddab711cdc11b8",
+          "beforeBytes": 2445,
+          "sha256": "09e5a68f319c8b0cf3928aa6cd7e277cdd5623846f9bea055a8187133c592fbd",
+          "bytes": 2547,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "e59b5b98b68f27db19f525fba82b345f117f9d53",
+            "mode": "100644",
+            "sha256": "9cb811e068a2efac45dba662ea5bcbcb675ed0e9f567731d09ddab711cdc11b8",
+            "bytes": 2445,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/engine/bootstrap-and-condition.test.ts",
+          "before": "before/backend/tests/unit/engine/bootstrap-and-condition.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/engine/elimination-priority.test.ts",
+          "beforeSHA256": "44a551d51b02250a156e407e98161c2914364ba109bcad883c666ff1e36dd1f5",
+          "beforeBytes": 5103,
+          "sha256": "25f103f02e91819f9fe320b25aa482fe205dba346aca4c87a8daa800fd8e5ca5",
+          "bytes": 5245,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "4190fc29b5cbfc11a4d3f15c14478fa59c8608c8",
+            "mode": "100644",
+            "sha256": "44a551d51b02250a156e407e98161c2914364ba109bcad883c666ff1e36dd1f5",
+            "bytes": 5103,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/engine/elimination-priority.test.ts",
+          "before": "before/backend/tests/unit/engine/elimination-priority.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/engine/victory-query-boundary.test.ts",
+          "beforeSHA256": "0e26895039976b68c43736c239125694902368bacea9c0e58e7da0f1243e55d5",
+          "beforeBytes": 4273,
+          "sha256": "60b82528b70c9c112032dacc2fe1b4073b1183cfd57aa467afe2522e86e0f64d",
+          "bytes": 8949,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "0668f3786aaaf70f6f0bf9ff1aab4818f51c1214",
+            "mode": "100644",
+            "sha256": "0e26895039976b68c43736c239125694902368bacea9c0e58e7da0f1243e55d5",
+            "bytes": 4273,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/engine/victory-query-boundary.test.ts",
+          "before": "before/backend/tests/unit/engine/victory-query-boundary.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+          "beforeSHA256": "e07102a27a0e1ee5de80f8067c8ce17003a6bb53a7d25fa802d95719e2f601d5",
+          "beforeBytes": 7809,
+          "sha256": "ec835c90bf2720bd1ee270cf97aff04a35de730115f94087832709a283f9a664",
+          "bytes": 7991,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "2253195e2ee0c38e2a33971d5ebae78cdb995486",
+            "mode": "100644",
+            "sha256": "e07102a27a0e1ee5de80f8067c8ce17003a6bb53a7d25fa802d95719e2f601d5",
+            "bytes": 7809,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+          "before": "before/backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+          "beforeSHA256": "1eac676941c5442a972589a8f15c107ed44cefa5595785798a36604c190f1faa",
+          "beforeBytes": 20071,
+          "sha256": "319f7ea020ece4fdf19700db8341909568ad3775b9e23d2528c566b0332354f8",
+          "bytes": 20276,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "65141ef1594490af66a9e85956aba72073b54f68",
+            "mode": "100644",
+            "sha256": "1eac676941c5442a972589a8f15c107ed44cefa5595785798a36604c190f1faa",
+            "bytes": 20071,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+          "before": "before/backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+          "apply": "exact-delta-only"
+        },
+        {
+          "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+          "beforeSHA256": "8ca676edd5cfddc91de0e6c59f078186a77e21f0b97a9411569c1c8a60fddd05",
+          "beforeBytes": 28479,
+          "sha256": "8637cec495127ae72f5cdeb688ee578ac4962dab9047c54fef21e80b4e392bd5",
+          "bytes": 28624,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "d0cbe55a3a4d5ca25cef349474d0112de4c4b3b8",
+            "mode": "100644",
+            "sha256": "8ca676edd5cfddc91de0e6c59f078186a77e21f0b97a9411569c1c8a60fddd05",
+            "bytes": 28479,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+          "before": "before/backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+          "beforeSHA256": "914b21599ae91224c4127682cf8c15a5de1686b8663bc7eb59d3983dddfb9d25",
+          "beforeBytes": 8266,
+          "sha256": "8750ffe55e7fb78da0290285bce3b594535a553fa5a25180c8bcf315d10b88b2",
+          "bytes": 8390,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "e9123bc8aebe4e698a74cc2d3664ad46659de465",
+            "mode": "100644",
+            "sha256": "914b21599ae91224c4127682cf8c15a5de1686b8663bc7eb59d3983dddfb9d25",
+            "bytes": 8266,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+          "before": "before/backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+          "beforeSHA256": "9054e407a1cc28d06d0155d88aaf2a52c4194b5fde70e295e8bba7186d40d57c",
+          "beforeBytes": 6190,
+          "sha256": "808feb431f8ca187c90a66ac350dc8c24c545db5cfc869e27713ec3f280cdc52",
+          "bytes": 6488,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "cd222cce5f2106fdb229b9c2ff0c294003acee01",
+            "mode": "100644",
+            "sha256": "9054e407a1cc28d06d0155d88aaf2a52c4194b5fde70e295e8bba7186d40d57c",
+            "bytes": 6190,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+          "before": "before/backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/scenarios/features/victory/checkpoints-and-terminal-sealing.test.ts",
+          "beforeSHA256": "9bce576fe7a665d594fb73ba762b144bb3faec0a36c17876d21f788e4ff16a35",
+          "beforeBytes": 7598,
+          "sha256": "6ee7d464d914d228b85a8c4f42504cf154e0041b871234c16a773c5e10a59178",
+          "bytes": 7723,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "c6e3462d57c1da10659a99f8b8f98608c498e03f",
+            "mode": "100644",
+            "sha256": "9bce576fe7a665d594fb73ba762b144bb3faec0a36c17876d21f788e4ff16a35",
+            "bytes": 7598,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/scenarios/features/victory/checkpoints-and-terminal-sealing.test.ts",
+          "before": "before/backend/tests/scenarios/features/victory/checkpoints-and-terminal-sealing.test.ts",
+          "apply": "whole-after-before-guard"
+        },
+        {
+          "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+          "beforeSHA256": "efa9d92c3fea1e42c21e6cceb829407775d9b676c723aac6aa25295826a92095",
+          "beforeBytes": 17341,
+          "sha256": "6462287bb6d3e551466ce2bf01116d7f6db87db0b86ec66bafabc552f99a25a5",
+          "bytes": 17446,
+          "mode": "100644",
+          "gitBefore": {
+            "commit": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+            "blob": "01c7b417ef09476412a5a2e61c8e0f6cfa46da0f",
+            "mode": "100644",
+            "sha256": "efa9d92c3fea1e42c21e6cceb829407775d9b676c723aac6aa25295826a92095",
+            "bytes": 17341,
+            "sameAsActualBefore": true
+          },
+          "candidate": "candidates/backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+          "before": "before/backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+          "apply": "whole-after-before-guard"
+        }
+      ],
+      "deleted": [],
+      "sourceReadySHA256": "8388b4eb35a5ed6a80f96ba04d8ff9200475adc7c8bc35c1560793973575a222",
+      "controls": [
+        {
+          "path": "backend/src/domain/world.ts",
+          "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1",
+          "bytes": 7409,
+          "mode": "100644"
+        },
+        {
+          "path": "backend/src/engine/victory/results.ts",
+          "sha256": "9e9d09b6ff493f86ed332f0981f9846627e633ef4b6d20fee420af99e9a66c9e",
+          "bytes": 2405,
+          "mode": "100644"
+        },
+        {
+          "path": "backend/src/rulesets/victory/default-specs.ts",
+          "sha256": "4dfea615cce11ff7d02e26983416664387876910455dce93e7e79babc8b04b3a",
+          "bytes": 6616,
+          "mode": "100644"
+        },
+        {
+          "path": "backend/src/recording/reproduction/format.ts",
+          "sha256": "5139ba631f427055759fd64e0de18590999f8b0463c339f25000b0fce8a70b2d",
+          "bytes": 33290,
+          "mode": "100644"
+        },
+        {
+          "path": "backend/src/domain/night-effects.ts",
+          "sha256": "9214c5ea6d2867e8671c51659e82b48de98e8ee036401a61eb934cb5398f81d3",
+          "bytes": 17824,
+          "mode": "100644"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "README.md",
+          "sha256": "26d22b47e0c18bc1b46d75bd0472583dfdf648cf46b8d4d0b862308a5305abc0",
+          "bytes": 4456
+        },
+        {
+          "path": "build.py",
+          "sha256": "d7312f8b7b85a0a6601fbb09e8d3a20a8e83a6c2b93b817c77bc889c055c482f",
+          "bytes": 12772
+        },
+        {
+          "path": "build-first-prepare-error.py",
+          "sha256": "ec17ea549b2771ca469704b595f74087214f1ac9714bcaa3c8e2d924d5e94f11",
+          "bytes": 12590
+        },
+        {
+          "path": "prepare-history.json",
+          "sha256": "d121dfdb486846502a823b194d957c2a3429a8dfabb4498993ad38391067cf55",
+          "bytes": 322
+        },
+        {
+          "path": "source-ready.json",
+          "sha256": "8388b4eb35a5ed6a80f96ba04d8ff9200475adc7c8bc35c1560793973575a222",
+          "bytes": 15436
+        },
+        {
+          "path": "edits.json",
+          "sha256": "591a036ddd8c525acd21359bdcbc91b94ba979b7c238189cb8f715039dd3ea6f",
+          "bytes": 20262
+        },
+        {
+          "path": "candidate.patch",
+          "sha256": "8fe940d9e7875e730863a48a03115ea39283b9bcfe168c0ad0ba776a4cbe742f",
+          "bytes": 31985
+        },
+        {
+          "path": "phase-manager-local-delta.json",
+          "sha256": "8ac4a5466d28e303d687a0d511f48fb08a2c02a693354378ad02335c159e73e6",
+          "bytes": 689
+        },
+        {
+          "path": "hybrid-local-delta.json",
+          "sha256": "c2b1176e4a8ff8fbfc5d2fa4bd3521e7c22378b61d86d7112d340cc58c63d5ee",
+          "bytes": 776
+        },
+        {
+          "path": "types-config.json",
+          "sha256": "5c01f73009a6eb7b8f85818793c6c65329fd8c25c41b16b088709982c8bbc31e",
+          "bytes": 1930
+        },
+        {
+          "path": "execution-plan.json",
+          "sha256": "ad99eaa601ecdb1fb7d6ee38360abdec6a7a04a6a96ce0b33344938d95af9b3c",
+          "bytes": 1042
+        },
+        {
+          "path": "successor.py",
+          "sha256": "05735fdd6211f0612431be0cb80333e4f3288709ba55ebcdd64ac73216e96afd",
+          "bytes": 9519
+        },
+        {
+          "path": "successor-delta.json",
+          "sha256": "99d9eb696b0c2edbca5aab72b417595694c02a4fd17c32893f1555423a6467d1",
+          "bytes": 4150
+        }
+      ],
+      "priorFinding": {
+        "path": "/tmp/awa-h02-victory-evaluator-query-boundary-independent/first-prepared-finding.json",
+        "sha256": "122d48edc5bbd16fd65adc157f9601fce2fa217e1b24e8678543e4524c4a7e32"
+      },
+      "integrity": {
+        "initialActualGit15": "bound by preserved first report",
+        "source15Fresh": true,
+        "changedSinceFirst": [
+          "backend/src/engine/victory/condition-registry.ts",
+          "backend/tests/unit/engine/victory-query-boundary.test.ts"
+        ],
+        "other13Same": true,
+        "all51EditsFullForward": true,
+        "drift": []
+      },
+      "closedFindings": [
+        {
+          "id": "X06-query-isolation",
+          "resolution": "Each actual spec call, after original missing/checkpoint checks and after spec.evaluate getter lookup, creates a new explicit eight-method table. Local writes cannot reach the original source or later spec view. Source is not spread or read eagerly. Default full bindVictoryQueries/results programs remain unchanged controls."
+        },
+        {
+          "id": "X06-head-layer",
+          "resolution": "First sentence now explicitly states 单元测试负责. No header check was run by reviewer."
+        }
+      ],
+      "reviewed": [
+        "All five production candidate programs and original/default complete owner control bodies reviewed in initial report.",
+        "Successor explicit eight synchronous delegates preserve source receiver and actual rest argument count; no World lookup/export/private World table/freeze added.",
+        "New multi-spec declaration uses real registry composition and default owner, mutates first view camp/counts then returns null, checks later view identity/real camp/counts and original source unchanged. Two previous new declarations remain textually preserved.",
+        "Existing late World getter/checkpoint and lower callee/override same-Error cases retain original literal traces; new custom-source getter/method identity observations are explicitly documented as lower API surface.",
+        "PhaseManager and Hybrid test remain exact shared import/call deltas; no whole-file overwrite of concurrent Root/Night changes."
+      ],
+      "checksExecuted": [],
+      "repoWrites": false,
+      "limits": [
+        "Prepared static approval only, not test/type/compiler/runtime/AST/emit or C47 success.",
+        "Original World-first lower API is explicitly retired; public query/source allocation and late forwarding have declared new observations.",
+        "Original upper per-spec writable table isolation is preserved; no waiver or shared-query acceptance.",
+        "No malicious arbitrary object graph or reflection sandbox claim."
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 /**
  * 单元测试验证混血儿直接归属阶段、中立目标接收与同步选择所有权。输入为语言／目标／变化矩阵和局部夜间上下文；预期为阵营、身份、胜利、隐私与陈旧选择断言，已提交前缀的重入在阶段运行前被拒绝，不执行完整周期。
  */
+import { bindVictoryQueries } from "../../../../src/rulesets/victory/default-specs";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
@@ -444,24 +445,24 @@ test("a Wolf-affiliated Hybrid still fills the villager side and true Good count
       game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
     });
   dead([6]);
-  expect(registry.evaluate(game.world, WinCondition.SlaughterSide)).toBeNull();
-  expect(registry.evaluate(game.world, WinCondition.WolfReachHalf)).toBeNull();
+  expect(registry.evaluate(bindVictoryQueries(game.world), WinCondition.SlaughterSide)).toBeNull();
+  expect(registry.evaluate(bindVictoryQueries(game.world), WinCondition.WolfReachHalf)).toBeNull();
   dead([1]);
-  const side = registry.evaluate(game.world, WinCondition.SlaughterSide)!;
+  const side = registry.evaluate(bindVictoryQueries(game.world), WinCondition.SlaughterSide)!;
   expect(side.reason).toBe("slaughter_side_completed");
   expect(side.outcome).toMatchObject({ winningPlayerIds: [1, 2, 3] });
-  expect(registry.evaluate(game.world, WinCondition.SlaughterCity)).toBeNull();
+  expect(registry.evaluate(bindVictoryQueries(game.world), WinCondition.SlaughterCity)).toBeNull();
   dead([4, 5]);
-  expect(registry.evaluate(game.world, WinCondition.SlaughterCity)?.reason).toBe(
-    "all_good_eliminated",
-  );
+  expect(
+    registry.evaluate(bindVictoryQueries(game.world), WinCondition.SlaughterCity)?.reason,
+  ).toBe("all_good_eliminated");
   dead([2, 3]);
   for (const mode of [
     WinCondition.SlaughterCity,
     WinCondition.SlaughterSide,
     WinCondition.WolfReachHalf,
   ])
-    expect(registry.evaluate(game.world, mode)).toMatchObject({
+    expect(registry.evaluate(bindVictoryQueries(game.world), mode)).toMatchObject({
       winner: Camp.Good,
       reason: "all_wolves_eliminated",
       outcome: { winningPlayerIds: [4, 5, 6] },

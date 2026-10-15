@@ -1,6 +1,7 @@
 /**
  * 单元测试验证孤独少女准备窗口、必须选择、getter／撤权矩阵和公开板子配置。预期来自字面回执、引用／错误轨迹、阵营账本和 checkpoint 字段。阶段入口只在准备权限未完成时被拒绝，不运行完整夜间或模型。
  */
+import { bindVictoryQueries } from "../../../../src/rulesets/victory/default-specs";
 import {
   createCampComponent,
   createAliveComponent,
@@ -562,11 +563,13 @@ test("Girl membership survives both deaths and target future change; City still 
   expect(victory(g).affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);
   g.world.getComponent(6, COMPONENT.Alive)!.alive = false;
   const judge = new ConditionRegistry(getDefaultWinConditionRegistry());
-  expect(judge.evaluate(g.world, WinCondition.SlaughterCity)).toBeNull();
+  expect(judge.evaluate(bindVictoryQueries(g.world), WinCondition.SlaughterCity)).toBeNull();
   for (const id of [4, 5]) g.world.getComponent(id, COMPONENT.Alive)!.alive = false;
-  expect(judge.evaluate(g.world, WinCondition.SlaughterCity)).toBeNull();
+  expect(judge.evaluate(bindVictoryQueries(g.world), WinCondition.SlaughterCity)).toBeNull();
   g.world.getComponent(1, COMPONENT.Alive)!.alive = false;
-  expect(judge.evaluate(g.world, WinCondition.SlaughterCity)?.winner).toBe(Camp.Wolf);
+  expect(judge.evaluate(bindVictoryQueries(g.world), WinCondition.SlaughterCity)?.winner).toBe(
+    Camp.Wolf,
+  );
   expect(projectLonelyGirl(g.world, role(g))?.choice).toEqual({ day: 1, targetId: 2 });
   expect(victory(g).affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);
 });

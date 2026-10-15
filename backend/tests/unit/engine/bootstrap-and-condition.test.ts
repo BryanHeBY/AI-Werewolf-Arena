@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证启动时上帝信息与狼人半数条件。输入为原公开板子、有限 World 修改或条件注册表查询；初始玩家字段及阵营结果保留精确字面预期，不执行完整阶段、文件或模型。
  */
+import { bindVictoryQueries } from "../../../src/rulesets/victory/default-specs";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { AliveComponent } from "../../../src/domain/components/alive";
@@ -43,7 +44,9 @@ describe("PhaseManager", () => {
       }
     }
     const registry = new ConditionRegistry(getDefaultWinConditionRegistry());
-    const result = registry.evaluateMany(context.world, [WinCondition.WolfReachHalf]);
+    const result = registry.evaluateMany(bindVictoryQueries(context.world), [
+      WinCondition.WolfReachHalf,
+    ]);
     expect(result?.winner).toBe(Camp.Wolf);
     expect(result?.reason).toBe("wolves_reach_half");
   });

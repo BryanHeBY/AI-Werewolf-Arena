@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证判胜条件优先级、阵营／个人／关系成员与严格 outcome reader。输入为原名单和纯结果数据；独立字面预期检查规则次序与读取拒绝，不用被测算法生成预期。
  */
+import { bindVictoryQueries } from "../../../src/rulesets/victory/default-specs";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -40,7 +41,10 @@ for (const locale of ["zh-CN", "en"] as const)
     ]) {
       const { world } = fixture(locale);
       dead(world, [1, 2, 4]);
-      const result = new ConditionRegistry(new WinConditionRegistry()).evaluate(world, mode);
+      const result = new ConditionRegistry(new WinConditionRegistry()).evaluate(
+        bindVictoryQueries(world),
+        mode,
+      );
       expect(result).toEqual({
         winner: Camp.Good,
         reason: "all_wolves_eliminated",
@@ -56,15 +60,21 @@ for (const locale of ["zh-CN", "en"] as const)
     dead(world, [3, 4]);
     const registry = new ConditionRegistry(new WinConditionRegistry());
     expect(
-      registry.evaluateMany(world, [WinCondition.SlaughterSide, WinCondition.WolfReachHalf])!
-        .reason,
+      registry.evaluateMany(bindVictoryQueries(world), [
+        WinCondition.SlaughterSide,
+        WinCondition.WolfReachHalf,
+      ])!.reason,
     ).toBe("slaughter_side_completed");
     expect(
-      registry.evaluateMany(world, [WinCondition.WolfReachHalf, WinCondition.SlaughterSide])!
-        .reason,
+      registry.evaluateMany(bindVictoryQueries(world), [
+        WinCondition.WolfReachHalf,
+        WinCondition.SlaughterSide,
+      ])!.reason,
     ).toBe("wolves_reach_half");
     dead(world, [1, 2, 5, 6]);
-    expect(registry.evaluate(world, WinCondition.SlaughterCity)!.winner).toBe(Camp.Good); // 同时全员死亡的优先级。
+    expect(registry.evaluate(bindVictoryQueries(world), WinCondition.SlaughterCity)!.winner).toBe(
+      Camp.Good,
+    ); // 同时全员死亡的优先级。
   });
 
 for (const locale of ["zh-CN", "en"] as const)
@@ -87,8 +97,10 @@ for (const locale of ["zh-CN", "en"] as const)
     world.getComponent(3, COMPONENT.Camp)!.camp = Camp.ThirdParty;
     dead(world, [4]);
     expect(
-      new ConditionRegistry(new WinConditionRegistry()).evaluate(world, WinCondition.SlaughterSide)!
-        .reason,
+      new ConditionRegistry(new WinConditionRegistry()).evaluate(
+        bindVictoryQueries(world),
+        WinCondition.SlaughterSide,
+      )!.reason,
     ).toBe("slaughter_side_completed");
     const checkpoint = captureCheckpoint(
       world,

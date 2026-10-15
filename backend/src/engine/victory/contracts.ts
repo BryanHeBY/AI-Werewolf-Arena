@@ -4,35 +4,12 @@
  */
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：胜利条件规格契约。 */
-import type { VictoryTarget } from "@ai-werewolf-arena/game-contract";
-import { Camp, type EntityId, type Role, WinDecision, WinCondition } from "../../domain/model";
-
-/** 真实存活阵营统计，不以胜利成员、查验标签或历史知识代替当前 Camp。 */
-export interface AliveVictoryCounts {
-  readonly wolves: number;
-  readonly gods: number;
-  readonly villagers: number;
-  readonly good: number;
-}
-
-/**
- * 判胜专用查询面；方法按调用时点读取，所有返回值都是编号、标量或判定数据。
- * decision 只构造候选，阶段经理仍负责成员复核和唯一封盘。
- */
-export interface VictoryQueries {
-  entityIds(): readonly EntityId[];
-  aliveIds(): readonly EntityId[];
-  role(id: EntityId): Role | undefined;
-  camp(id: EntityId): Camp | undefined;
-  eliminationCounts(): AliveVictoryCounts;
-  cupidCityDecision(): { decision: WinDecision | null } | null;
-  weddingFactionResult(): { faction: Camp | null; winningPlayerIds: number[] } | null;
-  decision(
-    primary: VictoryTarget,
-    reason: string,
-    additional?: readonly VictoryTarget[],
-  ): WinDecision;
-}
+import { WinDecision, WinCondition } from "../../domain/model";
+import type { VictoryQueries } from "../../domain/registries/condition-registry";
+export type {
+  AliveVictoryCounts,
+  VictoryQueries,
+} from "../../domain/registries/condition-registry";
 
 /** 单个胜利条件规格定义。 */
 export interface WinConditionSpec {

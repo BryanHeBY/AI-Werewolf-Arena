@@ -3,6 +3,7 @@
  * 错误轨迹、事实与状态是预期；真实中央死亡结算及完整 PhaseManager 周期驱动转阵营、实际
  * 死亡波和下一夜狼群激活。模型受控，不从生产输出新建 golden。
  */
+import { bindVictoryQueries } from "../../../../src/rulesets/victory/default-specs";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -369,7 +370,7 @@ test("last original Wolf model does not seal Good before Child transformation; P
   expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
   expect(
     new ConditionRegistry(getDefaultWinConditionRegistry()).evaluate(
-      g.world,
+      bindVictoryQueries(g.world),
       WinCondition.SlaughterCity,
     ),
   ).toBeNull();

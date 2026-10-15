@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证清边优先级与非法政策不会改变无关判胜规则。输入为明确存活名单及优先级；手写结果对象检查独立次序，不从生产判胜器反推预期。
  */
+import { bindVictoryQueries } from "../../../src/rulesets/victory/default-specs";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
@@ -93,7 +94,7 @@ for (const locale of ["zh-CN", "en"] as const) {
           [WinCondition.SlaughterSide, scenario.side[index]],
           [WinCondition.SlaughterCity, scenario.city[index]],
         ] as const) {
-          const decision = registry.evaluate(world, condition);
+          const decision = registry.evaluate(bindVictoryQueries(world), condition);
           expect(decision?.winner ?? null).toBe(expected);
           if (expected === null) {
             expect(decision).toBeNull();
@@ -108,12 +109,16 @@ for (const locale of ["zh-CN", "en"] as const) {
         }
         // 配置过的 registry 不能改变共享的旧默认值。
         expect(
-          getDefaultWinConditionRegistry().evaluate(world, WinCondition.SlaughterSide)?.winner ??
-            null,
+          getDefaultWinConditionRegistry().evaluate(
+            bindVictoryQueries(world),
+            WinCondition.SlaughterSide,
+          )?.winner ?? null,
         ).toBe(scenario.side[0]);
         expect(
-          getDefaultWinConditionRegistry().evaluate(world, WinCondition.SlaughterCity)?.winner ??
-            null,
+          getDefaultWinConditionRegistry().evaluate(
+            bindVictoryQueries(world),
+            WinCondition.SlaughterCity,
+          )?.winner ?? null,
         ).toBe(scenario.city[0]);
       });
     }

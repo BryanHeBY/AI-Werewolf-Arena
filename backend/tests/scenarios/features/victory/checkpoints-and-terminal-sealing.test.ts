@@ -2,6 +2,7 @@
  * 完整阶段场景验证声明的判胜检查点、唯一终局事件及伪造成员拒绝。输入为原自定义条件及玩家行动脚本；固定结果／事件副本、最大日数点及终局后无行动预期构成判断依据。
  * 原 World／管理器生命期保留，不运行模型。
  */
+import { bindVictoryQueries } from "../../../../src/rulesets/victory/default-specs";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -73,8 +74,10 @@ for (const locale of ["zh-CN", "en"] as const)
           },
         ]),
       );
-      expect(registry.evaluate(world, WinCondition.SlaughterCity)).toBeNull();
-      expect(registry.evaluate(world, WinCondition.SlaughterCity, "day_interrupted")).toBeNull();
+      expect(registry.evaluate(bindVictoryQueries(world), WinCondition.SlaughterCity)).toBeNull();
+      expect(
+        registry.evaluate(bindVictoryQueries(world), WinCondition.SlaughterCity, "day_interrupted"),
+      ).toBeNull();
       const manager = new PhaseManager(
         world,
         config,

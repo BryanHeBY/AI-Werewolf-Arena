@@ -16,6 +16,7 @@
  * 骑士日结算在原提交与死亡之后恢复具名同步序列，本经理保原死亡等待、判胜回调和阶段写权。
  * 普通黎明原因／原生命提案及动物／双生夜报名单归规则 owner；本经理先写完成标志，保原死亡 await、清理及封盘。
  */
+import { bindVictoryQueries } from "../rulesets/victory/default-specs";
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../domain/exile-unit";
 import { nightUnitOf } from "../domain/night-unit";
 import { PhaseRevisionClock } from "./phase-revision";
@@ -1020,7 +1021,7 @@ export class PhaseManager {
   ): boolean {
     if (this.state.gameOver) return true;
     const result = this.conditionRegistry.evaluateMany(
-      this.world,
+      bindVictoryQueries(this.world),
       TERMINAL_VICTORY_POLICY.conditions({ world: () => this.world, config: () => this.config }),
       checkpoint,
       overrides,

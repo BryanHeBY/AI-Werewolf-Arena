@@ -3,6 +3,7 @@
  * 输入为真实猎魔名单／到期库存和字面查询轨迹，输出为独立写明的读取、yield、生命、审计及事件断言。
  * 不替代原资源权威，不执行完整对局；测试手动标死仅模拟经理已完成的死亡边界。
  */
+import { bindVictoryQueries } from "../../../src/rulesets/victory/default-specs";
 import { expect, test } from "bun:test";
 import { Camp, type GameEvent, type WinDecision } from "../../../src/domain/model";
 import { COMPONENT } from "../../../src/domain/components/names";
@@ -86,7 +87,10 @@ test("到期前已胜候选保原引用、三参数评估及晚读取，不请�
       ) {
         expect(this).toBe(registry);
         expect(args).toHaveLength(3);
-        expect(args[0]).toBe(f.world);
+        // 公开评估参数已退出原World；查询仍绑定同一局，且构造不触发组件读取。
+        expect(args[0]).not.toBe(f.world);
+        expect("world" in args[0]).toBe(false);
+        expect(typeof args[0].camp).toBe("function");
         expect(args[1]).toBe(f.config.winConditions!);
         expect(args[2]).toBe("night_settled");
         return evaluateMany.apply(this, args);

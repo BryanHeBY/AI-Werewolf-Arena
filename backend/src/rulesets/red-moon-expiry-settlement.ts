@@ -4,6 +4,7 @@
  * 原生库存和审计仍归猎魔权威。经理持原追加死亡等待、可读性／当前性复验、夜报、封盘与 finally。
  * 只有经理成功完成死亡及复验后才恢复提交；恢复时先核已死，再提交到期、发布事件、记录操作，后项失败保原前缀不退款。
  */
+import { bindVictoryQueries } from "./victory/default-specs";
 import type {
   ReadonlyBoardConfig,
   VictoryCheckpoint,
@@ -41,7 +42,7 @@ export function* settleRedMoonExpiry(
     expiryActor === null
       ? null
       : runtime.registry.evaluateMany(
-          runtime.world,
+          bindVictoryQueries(runtime.world),
           TERMINAL_VICTORY_POLICY.conditions({
             world: () => runtime.world,
             config: () => runtime.config,

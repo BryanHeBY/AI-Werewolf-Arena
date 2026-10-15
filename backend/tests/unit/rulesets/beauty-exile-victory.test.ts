@@ -4,6 +4,7 @@
  * 候选在死亡波前捕获，applied 和原体复验才支持结果；条件顺序及唯一封盘不由候选代替。
  * 规则依据 docs/rules/awa-wolf-beauty-v1.md；不运行完整阶段、模型或网络，预期不从生产结果生成。
  */
+import { bindVictoryQueries } from "../../../src/rulesets/victory/default-specs";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
@@ -211,7 +212,7 @@ test("side override obeys condition order and resurrection revokes a paid candid
     },
   };
   const registry = new ConditionRegistry({
-    evaluate(_world, condition, checkpoint) {
+    evaluate(_queries, condition, checkpoint) {
       trace.push(`${condition}:${checkpoint}`);
       return ordinary;
     },
@@ -220,7 +221,7 @@ test("side override obeys condition order and resurrection revokes a paid candid
   expect(overrides[WinCondition.SlaughterSide]).toBe(beauty);
   expect(
     registry.evaluateMany(
-      f.world,
+      bindVictoryQueries(f.world),
       [WinCondition.SlaughterCity, WinCondition.SlaughterSide],
       "exile_settled",
       overrides,
@@ -230,7 +231,7 @@ test("side override obeys condition order and resurrection revokes a paid candid
   trace.length = 0;
   expect(
     registry.evaluateMany(
-      f.world,
+      bindVictoryQueries(f.world),
       [WinCondition.SlaughterSide, WinCondition.SlaughterCity],
       "exile_settled",
       overrides,
