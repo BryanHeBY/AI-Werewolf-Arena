@@ -1,0 +1,54 @@
+{
+  "status": "approved_as_bounded_candidate",
+  "role": "peer",
+  "reviewer": "native_final_architecture_review",
+  "proposal": {
+    "path": "/tmp/awa-canonical-lifecycle-head-policy/proposal.json",
+    "sha256": "27eba794335b167fb2a4e82aa2efeb46c185ffaffe6d6132d6e18d2ac3973502"
+  },
+  "sources": [
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "currentBeforeSha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "candidateAfterSha256": "f6d1ae19ccdf27e03f04ba3495593f33beca18b351b7b4444ac1f6b6f1623427",
+      "beforeCurrentByteEqual": true
+    },
+    {
+      "path": "tooling/refactor/architecture.test.ts",
+      "currentBeforeSha256": "2e5a358bb66fed9f9cabbb7ec876bbe02564af74993b24dd2866cde55ba8adb0",
+      "candidateAfterSha256": "e84f77ab9d107d8a757fa2854c7de9e15def0a071ef61f644a40a07c89633e46",
+      "beforeCurrentByteEqual": true
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "toolSources": 2,
+    "newTestDeclarations": 1,
+    "pathInputs": 8,
+    "expectedAssertions": 16,
+    "executedAssertions": 0
+  },
+  "findings": [],
+  "manualReview": [
+    "commentCategory唯一改动是四复合文件名的分隔符由固定underscore改[-_]。authority/lifecycle/requests/lease、扩展名与basename锚点、test优先于lifecycle、lifecycle优先于adapter的原顺序不变。",
+    "全部required字段、concepts、第一有效职责头scanner、nonSubstantive保护、placeholder、firstParagraph和broken-link路径算法原字节不动。lifecycle仍要求responsibility/owner/write/invariant/terminal。",
+    "新声明使用真实checkComments和既有input/digest/TypeScript parser，未调用commentCategory或复制其regex当oracle。四类新旧路径各一对，覆盖domain、features、agents和adapters优先级。",
+    "手写incomplete中文头已含responsibility/owner/write/invariant且无terminal，字面预期严格仅comment.terminal；complete只加关闭/失败/终态，再要求无任何diagnostic。静态逐concept核过，未实际运行。",
+    "每8输入2条expect共16条是计划执行数量，不当成已跑绿色。旧architecture.test.ts完整before作为after前缀保留，只有追加一声明和准确中文维护说明。",
+    "补丁恢复canonical名与旧underscore名的原lifecycle字段政策，不将其它adapter泛改lifecycle；未授予业务许可或声称职责内容已被算法证明。"
+  ],
+  "notExecuted": [
+    "checkComments",
+    "commentCategory",
+    "新test",
+    "旧test",
+    "TypeScript编译/类型",
+    "architecture gate",
+    "产品加载"
+  ],
+  "repositoryWrites": false,
+  "limits": [
+    "这是TMP候选的独立静态审批，不是运行结果、672机械证明或最终全目标验收。",
+    "实际应用后的单新声明/必要工具类型由Root唯一执行，首失败应真实保存。"
+  ]
+}

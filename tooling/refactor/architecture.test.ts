@@ -601,3 +601,24 @@ test("TypeScript moduleSuffixes resolves its actual public owner instead of a ba
   );
   expect(violation?.target).toBe("backend/src/effect.native.ts");
 });
+
+// 实际检查职责头：迁名不能让许可／会话模块漏掉终态说明，旧合成路径仍受同一约束。
+test("canonical lifecycle file names retain the terminal contract requirement", () => {
+  const files = [
+    "backend/src/domain/request-delivery.ts",
+    "backend/src/domain/request_delivery.ts",
+    "backend/src/features/a/request-envelope.ts",
+    "backend/src/features/a/request_envelope.ts",
+    "backend/src/agents/acp/session-pool.ts",
+    "backend/src/agents/acp/session_pool.ts",
+    "backend/src/adapters/acp/session-lifecycle.ts",
+    "backend/src/adapters/acp/session_lifecycle.ts",
+  ];
+  const incomplete = "/** 负责共享许可状态，仅允许所属 owner 提交写入。 */\nexport const value = 1;";
+  const complete = incomplete.replace("提交写入。", "提交写入；关闭与失败后保持终态。");
+  for (const file of files) {
+    expect(checkComments(ts, input({ [file]: incomplete })).map((row) => row.rule))
+      .toEqual(["comment.terminal"]);
+    expect(checkComments(ts, input({ [file]: complete }))).toEqual([]);
+  }
+});

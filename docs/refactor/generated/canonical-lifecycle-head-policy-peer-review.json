@@ -1,0 +1,148 @@
+{
+  "approved": true,
+  "decision": "approved",
+  "role": "peer",
+  "reviewer": "native_final_architecture_review",
+  "baseCommit": "2b6f24c89d68e3ccf369a51568696c12553d6cb0",
+  "source": [
+    {
+      "path": "tooling/refactor/architecture.test.ts",
+      "sha256": "e84f77ab9d107d8a757fa2854c7de9e15def0a071ef61f644a40a07c89633e46"
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "f6d1ae19ccdf27e03f04ba3495593f33beca18b351b7b4444ac1f6b6f1623427"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/canonical-lifecycle-head-policy-scope-final.json",
+    "sha256": "1d398361d83cb293811e9f1e71232f95282fbbdbfa18a5f32b6ab9a76392803f"
+  },
+  "scopeSHA256": "1d398361d83cb293811e9f1e71232f95282fbbdbfa18a5f32b6ab9a76392803f",
+  "document": {
+    "path": "docs/refactor/canonical-lifecycle-head-policy.md",
+    "sha256": "5e6afd30fac0373c3bdba30022b69cc794e196c34e7c11153ab1a391bb62561a"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/canonical-lifecycle-head-policy-evidence.json",
+    "sha256": "cdbdcbf70c7cc6db4b75a647752e5758fc85a775cbc64ca08d420c520e11ec40"
+  },
+  "priorIndependentReview": {
+    "path": "docs/refactor/generated/canonical-lifecycle-head-policy-prepared-peer.json",
+    "sha256": "340795d4e4b879790d97b61ad34291bee468f368c8875b83b538db2dd4a4e0af"
+  },
+  "actualGitAndCurrentBindings": [
+    {
+      "path": "tooling/refactor/architecture.test.ts",
+      "mode": "100644",
+      "blob": "0ed55dd07142c46b2aad48a9c4c3f1c976b2ee8c",
+      "beforeSha256": "2e5a358bb66fed9f9cabbb7ec876bbe02564af74993b24dd2866cde55ba8adb0",
+      "afterSha256": "e84f77ab9d107d8a757fa2854c7de9e15def0a071ef61f644a40a07c89633e46",
+      "fullBeforeGitEqual": true,
+      "fullAfterReviewedCandidateEqual": true
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "mode": "100644",
+      "blob": "b51ae4c42768f4d158d1d5b2e84671d975190c81",
+      "beforeSha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "afterSha256": "f6d1ae19ccdf27e03f04ba3495593f33beca18b351b7b4444ac1f6b6f1623427",
+      "fullBeforeGitEqual": true,
+      "fullAfterReviewedCandidateEqual": true
+    }
+  ],
+  "controlBindings": [
+    {
+      "path": "bun.lock",
+      "sha256": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+      "actualGitEqual": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "11dd0dff1c16be4cb74701840fc270d218669c6228754ef37aa0e7c74e16f40f",
+      "actualGitEqual": true
+    },
+    {
+      "path": "tooling/tsconfig.json",
+      "sha256": "afa4982986b642f66cddd553982912a9fec5c5738d856410664902ef880738a4",
+      "actualGitEqual": true
+    }
+  ],
+  "artifactBindings": [
+    {
+      "path": "docs/refactor/generated/canonical-lifecycle-head-policy-application.json",
+      "sha256": "e34da64dfb40d1aacaba3ea1e385b5b1386a4f01d395f8462abf40c1089433a0",
+      "bytes": 758
+    },
+    {
+      "path": "docs/refactor/generated/canonical-lifecycle-head-policy-apply-output.txt",
+      "sha256": "01cccab8158922bcd22b717f002d345c09df2f6897a492fbefd6098996a2e0a0",
+      "bytes": 73
+    },
+    {
+      "path": "docs/refactor/generated/canonical-lifecycle-head-policy-apply.cjs",
+      "sha256": "08c27cfcc5ddea9892ace80ab4ed73fc9acd105557d5dd88645d5d8072dbc678",
+      "bytes": 2338
+    },
+    {
+      "path": "docs/refactor/generated/canonical-lifecycle-head-policy-before.json",
+      "sha256": "45d4a857cdf2a699ba4a0ab33a9b9aef3ae58f3e205d42be26a33ded1d5ee4ad",
+      "bytes": 37344
+    },
+    {
+      "path": "docs/refactor/generated/canonical-lifecycle-head-policy-prepared-peer.json",
+      "sha256": "340795d4e4b879790d97b61ad34291bee468f368c8875b83b538db2dd4a4e0af",
+      "bytes": 2870
+    },
+    {
+      "path": "docs/refactor/generated/canonical-lifecycle-head-policy-prepared-proposal.json",
+      "sha256": "27eba794335b167fb2a4e82aa2efeb46c185ffaffe6d6132d6e18d2ac3973502",
+      "bytes": 75256
+    },
+    {
+      "path": "docs/refactor/generated/canonical-lifecycle-head-policy-receipts.json",
+      "sha256": "7650809e971c95b6d3409370b989c6116e66970d23fcd62cc245b659a834a8bb",
+      "bytes": 773
+    },
+    {
+      "path": "docs/refactor/generated/canonical-lifecycle-head-policy-unit-output.txt",
+      "sha256": "8de34d132381bdce09780b2cfff8667c193f316341a7709373a5b9ca23be0cfd",
+      "bytes": 247
+    }
+  ],
+  "integrity": {
+    "freshSources": 2,
+    "actualGitBefore": 2,
+    "wholeReviewedCandidatesEqual": 2,
+    "exactClassifierReplacement": 1,
+    "wholeOriginalTestPrefixEqual": true,
+    "newTestDeclarations": 1,
+    "controls": 3,
+    "artifacts": 8,
+    "mismatches": []
+  },
+  "manualReview": [
+    "完整承接340795d4对两候选原/新源与真实checkComments的独立审查；当前两个完整程序逐字同已审候选，真实2b6f24c8前态亦逐字同。",
+    "唯一分类程序差异是四复合词的分隔符扩为[-_]；既有test/lifecycle/adapter等分类优先、required/concepts/scanner/首有效头与查错保持原体。",
+    "新声明实际8个旧/新路径通过真实checkComments验证缺terminal仅报comment.terminal及完整中文头无违规；没有复制regex或绕过真实检查器做oracle。",
+    "Root唯一89aa8d首1pass/16assert/37filtered与raw完全对应；无旧test/type/fullgate重跑。此为命名后检查器准入修正，不冒纯机械等价或完整P9完成。"
+  ],
+  "findings": [],
+  "notExecutedByReviewer": [
+    "apply",
+    "checkComments",
+    "commentCategory",
+    "unit tests",
+    "types",
+    "business/model",
+    "architecture gate",
+    "production imports"
+  ],
+  "repositoryWritesByReviewer": false,
+  "reportLocation": "TMP-only，交Root复制到正式peer路径",
+  "limits": [
+    "仅签本2源及对应冻结文档/证据/收据；不是672整体证明或最终全量验收。",
+    "元数据核对只读取实际公开文件与固定Git；未执行作者任何检查程序。"
+  ]
+}

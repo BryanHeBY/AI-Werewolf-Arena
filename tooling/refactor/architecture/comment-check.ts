@@ -20,7 +20,7 @@ export function commentCategory(file: string): Category {
   if (/\.(?:test|spec)\.[cm]?[jt]sx?$/.test(file) || /\/tests\/(?:support|fixtures)\//.test(file))
     return "test";
   if (
-    /\/(?:authority|lifecycle|requests|lease|request_envelope|request_delivery|session_pool|session_lifecycle)\.[cm]?[jt]s$/.test(
+    /\/(?:authority|lifecycle|requests|lease|request[-_]envelope|request[-_]delivery|session[-_]pool|session[-_]lifecycle)\.[cm]?[jt]s$/.test(
       file,
     )
   )

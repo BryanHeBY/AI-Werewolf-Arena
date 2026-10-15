@@ -1,0 +1,45 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "2b6f24c89d68e3ccf369a51568696c12553d6cb0",
+  "source": [
+    {
+      "path": "tooling/refactor/architecture.test.ts",
+      "sha256": "e84f77ab9d107d8a757fa2854c7de9e15def0a071ef61f644a40a07c89633e46"
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "f6d1ae19ccdf27e03f04ba3495593f33beca18b351b7b4444ac1f6b6f1623427"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/canonical-lifecycle-head-policy-scope-final.json",
+    "sha256": "1d398361d83cb293811e9f1e71232f95282fbbdbfa18a5f32b6ab9a76392803f"
+  },
+  "document": {
+    "path": "docs/refactor/canonical-lifecycle-head-policy.md",
+    "sha256": "5e6afd30fac0373c3bdba30022b69cc794e196c34e7c11153ab1a391bb62561a"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/canonical-lifecycle-head-policy-evidence.json",
+    "sha256": "cdbdcbf70c7cc6db4b75a647752e5758fc85a775cbc64ca08d420c520e11ec40"
+  },
+  "integrity": {
+    "freshSources": 2,
+    "actualGitBefore": 2,
+    "controls": 3,
+    "artifactHashes": 8,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "semantics": "Root仅改四词项分隔符[-_]，保分类优先/required/concepts/scanner全部正文；新增一声明真实欠terminal拒绝与完整头接受，旧测试完整prefix不改。",
+    "execution": "89aa8d首1/16、37filtered通过；不复旧tests或types，非游戏/角色规则变化。",
+    "peer": "NativeFinal340795d4已完整审两候选源，末scope需其实际hash确认。"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

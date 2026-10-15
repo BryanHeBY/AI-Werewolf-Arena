@@ -999,3 +999,5 @@
 - C41/C42 实际运行布局：672物理文件、1475完整路由程序、6317编辑及9988真实绑定核对；37源83运行/工具适配单列。八受影响类型首七绿，前端仅2退休isLocale消费者修复后失败项通过；历史fixture准入显式补两固定包路线，原program/binding不改，末tooling类型与新6声明/34断言通过。Time八payload字节与所有机器ID/种子保留，六份current清单准确后处理；原路径/Time旧包key退休不留wrapper。三方审查及首失败原文见 [运行布局](owned-source-layout.md)。16原recording边留后继五live owner迁app/checkpoint，最后九basename和生命周期类别门槛继续；未冒最终C47或55机制全验收。
 
 - C37/C41 live checkpoint归属：在a55e675b实际Git前态将五完整读取/装配owner迁app/checkpoint，纯schema和审计留recording；原16features边随整owner自然退出recording，无新registry/桥/政策豁免。七完整程序/33字面/52绑定及14逆向输出、7规范ESNext和typed/token/NodeArray首次通过，全后端既有路径边界扫描首次0；原查询/克隆/部分失败顺序完整保。准备三方审查与末实际scope见 [checkpoint装配](app-checkpoint-capture.md)。无业务/模型或重类型，最终汇合检查继续。
+
+- C42/C46生命周期命名门槛：仅四类request/session文件分隔符识别兼容[-_]，canonical新名不再退为普通behavior/adapter，required/concepts/原检查顺序保持。两源与新增真实checkComments独立反例经作者和非作者审查，首新1声明/16断言通过、37原项filtered，无旧绿色/type/业务重跑；见 [命名后的生命周期门槛](canonical-lifecycle-head-policy.md)。九basename纯迁移与后继中文继续。
