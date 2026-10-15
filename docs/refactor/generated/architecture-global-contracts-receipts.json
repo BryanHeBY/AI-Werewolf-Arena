@@ -1,0 +1,33 @@
+{
+  "fixedCommit": "15424a8426ca0e689e039a3b9d9240dc05c21fcf",
+  "gate": {
+    "launchChunk": "af2390",
+    "sessionId": 62558,
+    "terminalChunk": "515fd5",
+    "exitCode": 0,
+    "firstExecution": true,
+    "command": "python reads exact fixedCommit from before.json then os.execvp bun --no-env-file run.ts fixedCommit",
+    "stdout": "actual first stdout plus completion stdout concatenated verbatim; completion also preserved; no redirected rerun"
+  },
+  "pureInputVerification": {
+    "chunk": "3108b7",
+    "exitCode": 0,
+    "command": "python docs/refactor/generated/architecture-checkpoint-15424a84-input-verification.py > docs/refactor/generated/architecture-checkpoint-15424a84-input-verification-output.txt 2>&1"
+  },
+  "purePartition": {
+    "chunk": "522f23",
+    "exitCode": 0,
+    "script": "inline JSON/Git-data reader only; no architecture checker"
+  },
+  "policyProof": {
+    "chunk": "f97d3e",
+    "exitCode": 0,
+    "command": "python /tmp/awa-architecture-global-policy-proof.py > docs/refactor/generated/architecture-global-contracts-policy-proof-output.txt 2>&1",
+    "sameScriptStoredAt": {
+      "path": "docs/refactor/generated/architecture-global-contracts-policy-proof.py",
+      "sha256": "938d46c96967ade87e9396675ce988084ce12e428259ba2c396060c30a7fe59d"
+    }
+  },
+  "greenGateRepeated": false,
+  "typesTestsOrProductionRun": false
+}

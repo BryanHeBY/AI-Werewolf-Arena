@@ -1,0 +1,150 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "baseCommit": "15424a8426ca0e689e039a3b9d9240dc05c21fcf",
+  "source": [
+    {
+      "path": "package.json",
+      "sha256": "11dd0dff1c16be4cb74701840fc270d218669c6228754ef37aa0e7c74e16f40f"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-global-contracts-scope-final.json",
+    "sha256": "6e79057ed021cd39e63a243074339dd4f31a466a054ff3802cc0141c9868e435"
+  },
+  "document": {
+    "path": "docs/refactor/architecture-global-contracts.md",
+    "sha256": "49fc98bc42bc66c5940e465f6110ef173dfc924ad6c5ffd637089a6560b933ab"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-global-contracts-evidence.json",
+    "sha256": "fd20663fccc7c428fecdb01fbcda05fffa17a12fc791e5dd99c81a2c469dc43a"
+  },
+  "controls": [
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394"
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db"
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb"
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-global-contracts-before.json",
+      "sha256": "b2851a4c2883748de7b433d00a221405aab4bcc40a0f232bf15d02b15189ac63"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-global-contracts-source-ready.json",
+      "sha256": "85d33b3189b47ee7dff6a2f57a184c00f2ed201ab95e9456900698d51ccb0810"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-global-contracts-policy-proof.py",
+      "sha256": "938d46c96967ade87e9396675ce988084ce12e428259ba2c396060c30a7fe59d"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-global-contracts-policy-proof.json",
+      "sha256": "a464f9812fb38a6ee4ceedef5f70cd768b3d4934537f75b6fb658b04c44f065c"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-global-contracts-policy-proof-output.txt",
+      "sha256": "45e459e32d46e3b180351f3ef595adb738e3f9cfacad81eff91055e835508294"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-global-contracts-receipts.json",
+      "sha256": "3ec1c4c48ce9a1d11074b1e74c7c01c9e60a5a543af35bb3f55e0d95d4ea05e5"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-before.json",
+      "sha256": "15754913480ff8a1b00a3ee4fd6905dfdc19ef824955a884f6b352a86f701fc3"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-capture.json",
+      "sha256": "764b9321b5e2e15888da1b96a7c2a769c4a6a191b24fd816af17ffdedb1c5a7a"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-completion-stdout.txt",
+      "sha256": "af57e05ddd686a57ab3a422398790ee13f57e66b06c03671183fcd14aaf08046"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-input-verification-output.txt",
+      "sha256": "6e729b4c513ebf6c7326900efa4c82344d1ffdea3c2d59ee6e9b12dc1a2780a0"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-input-verification.json",
+      "sha256": "18eb4779cb3658fb128cdcfad9c72d1db7ec6cc79e53116a8cdd524b77b431b8"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-input-verification.py",
+      "sha256": "bab1eadfe8c9ad1415bc1791ac50c3e05fdd5faebc84b55b06e5799297ab54be"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-output.txt",
+      "sha256": "9bee5cb5fc70eb95483187c2c6297057e62cca44e6232bb43b5ae1bad921d6b3"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-partition.json",
+      "sha256": "fc8bf033398e34d83cc20a19ceb62e8ff15f3fe791ea1137297ce05dbab3c00f"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-report.json",
+      "sha256": "fee344c05ac8fefe0d2b4b2541f684610c96236e446d19cb765b468810bd197d"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-15424a84-run.ts",
+      "sha256": "2806cd135ad71864a8b431d7951b2bf6390f0a142631dae4f2bf30209a906024"
+    }
+  ],
+  "integrity": {
+    "source": 1,
+    "actualGitSourceBefore": 1,
+    "singleExactFlagAddition": "--strict",
+    "controls": 4,
+    "artifacts": 16,
+    "rawInputBytes": 81111182,
+    "rawInputSHA256": "d3a59a2fb7f8b43f8b4c2ace6a81b9e19da9a94e6665b3e39cbecf19265542f0",
+    "fixedGitPublicFiles": 3295,
+    "sameGitDocumentationPaths": 736,
+    "allBlobModeRawSHAUTF8AndOrderSame": true,
+    "fixedCurrentToolBytes": 6,
+    "sourceDigest": "a0ee4f8cc130a0fd82c0e96b895f562590aa99329a8128136c384b1016fb8b34",
+    "originalDebt": 1779,
+    "originalDebtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "remainingDebt": 0,
+    "clearedDebt": 1779,
+    "relativeParent": "b466dbe320122b1462ddfc724360c8b95b577b4b",
+    "relativeCleared": 114,
+    "returned": 0,
+    "mismatches": [],
+    "existingScriptsOrChecksExecuted": false,
+    "reviewReaderFirstFailure": {
+      "chunk": "77274d",
+      "code": "JSONDecodeError",
+      "reason": "独立读取器将带尾逗号的TS字面数组按JSON解析；仅改/tmp读取提取方式，未执行作者脚本或任何checker。"
+    }
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整读取原package JSON与候选：唯一原任务末尾追加--strict；精确全文正逆与JSON对象其余字段相同，根check/lint已引用此任务，未改原工具、基线、路径政策、绑定规则或命名例外。",
+    "完整读取固定阶段执行脚本、原输入核验与policy读取脚本及真实stdout/终态收据；唯一架构执行af2390/session62558至515fd5实际0，未将纯输入/分区核验计为重复架构执行。",
+    "独立只读核81111182字节原raw及SHA，3295完整同Gitblob/mode/SHA/UTF8文本/有序路径、736同Git文档及六工具当前/固定字节一致；capture sourceDigest与report inputHash一致。",
+    "原1779债务SHA297b945b及完整Git/current字节保留；report零违规/零失败/零剩债，1779 cleared ID恰为全部原债务；相对完整b466dbe320122b1462ddfc724360c8b95b577b4b原114剩债全部清除，无返回。",
+    "候选package任务并未混入固定15424输入：固定阶段先于候选接线，C47仍须另选完整固定构建。结构零不证明全部中文语义、玩法、类型、测试、本机通信、浏览器、复现或55机制验收。",
+    "完整读取严格模式与原债匹配/工具装配，strict将所有现存结构违规列失败，不依赖旧债宽免；维护说明准确陈述这一策略变化与独立行为验收边界。"
+  ],
+  "limits": [
+    "本报告仅只读源码/固定Git/已有原始输入、产物、日志与收据；未运行作者脚本、checkArchitecture、纯输入或分区原脚本、类型、测试、生产、模型或浏览器。",
+    "独立读取器首TS数组尾逗号JSON解析失败已在integrity说明；仅改读取方式，无产品或门禁执行红。",
+    "不据此清除机制矩阵或宣布C47/all55/P9完成。"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "15424a8426ca0e689e039a3b9d9240dc05c21fcf",
+  "source": [
+    {
+      "path": "package.json",
+      "sha256": "11dd0dff1c16be4cb74701840fc270d218669c6228754ef37aa0e7c74e16f40f"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-global-contracts-scope-final.json",
+    "sha256": "6e79057ed021cd39e63a243074339dd4f31a466a054ff3802cc0141c9868e435"
+  },
+  "document": {
+    "path": "docs/refactor/architecture-global-contracts.md",
+    "sha256": "49fc98bc42bc66c5940e465f6110ef173dfc924ad6c5ffd637089a6560b933ab"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-global-contracts-evidence.json",
+    "sha256": "fd20663fccc7c428fecdb01fbcda05fffa17a12fc791e5dd99c81a2c469dc43a"
+  },
+  "integrity": {
+    "freshSources": 1,
+    "actualGitBefore": 1,
+    "controls": 4,
+    "artifactHashes": 16,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "Root为本批作者，独立审查由Pref另签；实际15424固定3295输入/736docs严格检查一次0，0violations/0remaining/1779cleared，原债SHA不改。",
+    "同Git所有blob/mode/原文/顺序/文档和六工具、原始81111182字节输入与SHA纯读取核对0；互斥全集及相对b466的114清/0返另核，不重复gate。",
+    "package.json唯一为已存在architecture脚本追加strict参数，其他JSON和原文字节完全保持；根check/lint调用该任务，当前结构算法/规则/路径例外/基线不变。",
+    "实际gate输入为修改root任务前已提交Git，候选只接线既有严格模式；不冒候选同Git已经全量验收，C47另固定commit执行。",
+    "实际首stdout与completion分别原文保存，纯policy f97d3e不加载生产/类型/测试；结构0不代替中文内容/55机制/通信/浏览器/复现验收。"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

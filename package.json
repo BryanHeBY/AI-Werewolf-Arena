@@ -29,7 +29,7 @@
     "test:tooling": "bun --no-env-file test tooling/refactor",
     "check:packages": "bun --filter '@ai-werewolf-arena/*' check",
     "test:packages": "bun --filter '@ai-werewolf-arena/*' test",
-    "lint:architecture": "bun --no-env-file tooling/refactor/architecture/run.ts check",
+    "lint:architecture": "bun --no-env-file tooling/refactor/architecture/run.ts check --strict",
     "check:fixtures": "bun --no-env-file tooling/refactor/fixture-manifest.ts --check"
   },
   "engines": {
