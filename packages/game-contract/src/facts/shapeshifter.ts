@@ -1,10 +1,7 @@
 /**
- * Owns pure Shapeshifter initial deal, identity and choice tool contracts for wire consumers.
- * Inputs are identifiers and proven inert payload data; outputs are detached
- * shapes or null with original keys, limits, defaults and scalar correlations.
- * For these inputs the reader never changes rules, resources, phases or action
- * authority. Proxy reflection safety belongs to Node ingress before calling;
- * browser consumers must supply inert data rather than arbitrary JS objects.
+ * 负责千面人初始牌组、身份选择事实及选择工具的共享格式。输入为事件／工具标识和已确认的惰性数据，输出复制后的合法结构或 null。
+ * 原精确字段、牌组数量及身份／阵营关联保持；读取不重新发牌、消耗保留牌或替代首夜窗口授权。
+ * 复制／校验异常返回 null，Proxy 反射可能执行 trap；Node 入口须独立拒绝危险对象。
  */
 import { copyEventData } from "../inert-event-data";
 import type { RoleId } from "../role-ids";
@@ -67,7 +64,7 @@ export function readShapeshifterEventFact(
   }
 }
 
-/** Shared strict wire tool reader for both the engine and recording layer. */
+/** 引擎与归档共用的精确工具格式读取；只解析原工具名／参数，不消耗牌或授予提交权限。 */
 export function readShapeshifterChoiceTool(
   value: unknown,
 ): { name: "choose_shapeshifter_card"; args: { slot: 0 | 1 } } | null {

@@ -1,15 +1,13 @@
 /**
- * Owns pure animal-dream facts, knowledge shapes and their inert-data readers.
- * Inputs are original event identifiers and JSON.parse/no-reviver or proven
- * inert payloads; outputs preserve exact copied shapes, null rejection, limits
- * and visibility classifications. These facts never authorize actions or write
- * domain resources/state. Node ingress must reject hostile Proxy objects before
- * shared reflection; this browser-compatible module supplies no runtime handles.
+ * 负责白猫／子狐／河豚的共享事实、狼美人通知知识及纯数据读取。输入为原事件名和无 reviver 的 JSON.parse 数据或已确认的惰性值。
+ * 输出为经复制并校验字段、数量和关联条件的事实，拒绝时返回 null；受众函数仅分类事件名，不执行收件人投影。
+ * 这里不提交死亡波、更新单位或授予行动许可；反射仍可触发 Proxy trap，Node 入口须另行拒绝危险对象。
  */
 import { copyEventData } from "../inert-event-data";
 import { ANIMAL_DREAM_POLICY } from "../board-policy-identifiers";
 type Base = { policy: typeof ANIMAL_DREAM_POLICY; day: number };
 type Actor = Base & { actorId: number };
+// 通知知识保留该次限制和历史；这些布尔值不替代提交时的当前魅惑／连带许可。
 export interface AnimalBeautyKnowledge {
   charmAllowed: boolean;
   linkAllowed: boolean;
@@ -191,6 +189,7 @@ export function readAnimalDreamFact(type: string, value: unknown): AnimalDreamFa
     return null;
   }
 }
+// 返回事件类别的受众标签；实际演员身份、收件人筛选与可见事实投影仍由消费者处理。
 export function animalDreamFactAudience(type: AnimalDreamEventType): "public" | "actor" | "god" {
   if (["animal_cat_revealed", "animal_puffer_revealed"].includes(type)) return "public";
   if (

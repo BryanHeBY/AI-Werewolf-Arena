@@ -1,9 +1,7 @@
 /**
- * Responsibility: validate the inert serialized shape of a board configuration.
- * Input: unknown data; output: the original strict Zod BoardConfig schema result.
- * It preserves optional fields, integer bounds and the 55-member runtime Role
- * enum without applying defaults. Shape acceptance does not authorize a finite
- * combination or execute rules; rulesets separately own supported compositions.
+ * 负责共享板子配置的严格结构校验；格式的唯一 schema 在此维护，输入为待解析数据，输出原 Zod 校验结果。
+ * 保留可选字段、整数上下界与五十五个运行角色枚举，不补默认值、不验证角色数量总和或有限组合支持。
+ * 解析并非任意 JS 对象的惰性安全入口；调用方负责输入来源，规则集另行决定组合是否可运行。
  */
 import { z } from "zod";
 import {
@@ -38,7 +36,8 @@ const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 const nonnegative = z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
 const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
 
-/** Internal board shape shared by reverse configuration writing and reproduction. No defaults are added here. */
+/** 反向配置写入与严格复现共用同一内部板子格式；这里只校验结构，不添加默认值。 */
+// strictObject 拒绝未知键；字段形状通过后，默认值应用和组合验证仍由各自调用链完成。
 export const boardConfigSchema = z.strictObject({
   animalDream: z
     .strictObject({

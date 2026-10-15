@@ -1,12 +1,7 @@
 /**
- * Owns the pure Scholar/Mentor fact shapes and defensive readers for wire clients.
- * Inputs are event names and proven inert payload data; outputs are detached
- * choice, skip, conflict or bonus facts, or null for rejected input. Original
- * key sets, numeric limits, nullable targets and inspection disclosure remain
- * exact. This browser reader may reflect a Proxy; Node ingress must reject it
- * before calling. Rules, state writes, authorization and wording stay outside.
- * For these inert inputs, this reader never resolves effects, grants authority,
- * writes domain state or renders messages.
+ * 负责学者／导师的选择、跳过、冲突与额外行动事实格式。输入为事件名和已确认的惰性数据，输出脱离原引用的记录或 null。
+ * 精确键集、数值范围、可空目标与查验结果披露条件由此格式校验，复制／校验异常返回 null；冲突规则、额外资源提交与文案不在此执行。
+ * 这是共享数据读取，不授予行动或修改领域状态；反射仍可执行 Proxy trap，Node 入口须先拒绝危险对象。
  */
 import { copyEventData } from "../inert-event-data";
 export type ModifierFactMode = "enhance" | "weaken";
@@ -89,6 +84,7 @@ export function readModifierConflictFact(
     ? (p as unknown as ModifierConflictFact)
     : null;
 }
+// 仅非空过的查验分支披露 isWerewolf；其他分支保留原精确键集，不补查验结论。
 export function readModifierBonusFact(type: string, value: unknown): ModifierBonusFact | null {
   if (type !== "modifier_bonus_resolved") return null;
   const p = data(value);

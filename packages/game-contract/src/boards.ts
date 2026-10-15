@@ -1,9 +1,6 @@
 /**
- * Responsibility: own serialized board shapes and stable game-policy identifiers.
- * Input: machine identity and policy values; output: unchanged BoardConfig types
- * and original policy arrays/defaults. These data declarations select policies
- * but do not prove finite composition support, deal roles or authorize actions.
- * Rulesets validate combinations; domain features own state and effect execution.
+ * 负责维护序列化板子结构及稳定政策数据。输入为身份与政策机器值，输出 BoardConfig 类型、原政策数组和默认常量。
+ * 可选配置字段表示数据格式，并不证明组合已支持；本模块不发牌、不安装角色或授予行动许可，规则集与领域分别拥有这些行为。
  */
 import { EVENT_PACK_IDS } from "./event-ids";
 import type {
@@ -20,7 +17,7 @@ import type {
   TieBreakerStrategy,
 } from "./identity";
 
-/** Explicit priority only when both faction elimination goals are met. */
+/** 仅当双方淘汰目标同时达成时使用这份显式优先级。 */
 export const ELIMINATION_PRIORITIES = ["awa_good_priority_v1", "awa_wolf_priority_v1"] as const;
 export type EliminationPriority = (typeof ELIMINATION_PRIORITIES)[number];
 
@@ -85,7 +82,7 @@ export const SEER_TARGET_POLICIES = ["awa_alive_v1", "awa_fresh_others_v1"] as c
 export type SeerTargetPolicy = (typeof SEER_TARGET_POLICIES)[number];
 export const SEER_ACTION_POLICIES = ["awa_optional_v1", "awa_required_when_legal_v1"] as const;
 export type SeerActionPolicy = (typeof SEER_ACTION_POLICIES)[number];
-/** Baseline NightPipeline requires a legal Seer action; all normalization paths share this value. */
+/** 基础夜流程要求有合法目标时完成预言家行动；各规范化路径共用这一默认值。 */
 export const DEFAULT_SEER_ACTION_POLICY: SeerActionPolicy = "awa_required_when_legal_v1";
 
 export const DEATH_ACTION_POLICIES = ["awa_qualified_sources_v1", "awa_knife_or_exile_v1"] as const;
@@ -131,6 +128,7 @@ export const DEBATER_POLICIES = ["awa_melbourne_2026_speech_gap_v1"] as const;
 export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "./event-ids";
+// 可选字段保留“未提供”的序列化含义；这里不把省略字段改成有效运行配置。
 export interface BoardConfig {
   animalDream?: { policy: "awa_animal_dream_v1"; eliminationPriority: "awa_wolf_priority_v1" };
   whiteCat?: { skippedVotePolicy: CatSkippedVotePolicy };

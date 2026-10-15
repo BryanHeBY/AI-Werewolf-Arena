@@ -1,8 +1,6 @@
 /**
- * Responsibility: provide the legacy core board-data exit for existing callers.
- * Input/output: contract-owned configuration shapes and identical policy arrays.
- * This facade owns no composition verdict, defaults application, state or rules;
- * consumers migrate to the public contract before its C44 removal.
+ * 负责保留核心层现有板子数据兼容入口。输入来自 game-contract 的配置声明，输出为同一组类型与政策数组绑定。
+ * 这里不拥有默认值应用、组合支持结论或运行规则；配置字段的唯一数据定义仍在共享契约，兼容入口尚未退休。
  */
 export {
   EVENT_PACK_IDS,

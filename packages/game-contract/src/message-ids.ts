@@ -1,10 +1,6 @@
 /**
- * Owns the finite, language-neutral machine message identifiers consumed by
- * request/recording contracts and bilingual text dictionaries. Inputs are the
- * 1513 stable IDs frozen from 2d36e4d0d17283e49e922ada1bbad8635a0b7382;
- * outputs are their immutable ordered registry and a closed MessageKey guard.
- * This registry is hand-maintained from this point forward. Translations and
- * parameter validation belong to game-text; no dictionary or renderer is imported.
+ * 负责维护请求、归档与双语词典共用的有限机器消息 ID。输入为从 2d36e4d0d17283e49e922ada1bbad8635a0b7382 固定下来的原一千五百一十三项标识，输出冻结且有序的注册表与 MessageKey 判定。
+ * 注册表在此手工维护；翻译与参数校验属于 game-text，不在这里导入字典、渲染用户原文或按语言改写 ID。
  */
 export const MESSAGE_IDS = Object.freeze([
   "replay.stage.animal_night_opened",
@@ -1524,7 +1520,7 @@ export const MESSAGE_IDS = Object.freeze([
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];
 
-/** Runtime key validation reads the frozen registry, never a dictionary or user data. */
+/** 运行时只向冻结注册表查询字符串成员，不读取字典或用户内容来扩充消息键。 */
 export function isMessageKey(value: unknown): value is MessageKey {
   return typeof value === "string" && (MESSAGE_IDS as readonly string[]).includes(value);
 }

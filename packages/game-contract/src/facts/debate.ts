@@ -1,10 +1,7 @@
 /**
- * Owns pure Debate speech, ballot and resolved count contracts for wire consumers.
- * Inputs are identifiers and proven inert payload data; outputs are detached
- * shapes or null with original keys, limits, defaults and scalar correlations.
- * For these inputs the reader never changes rules, resources, phases or action
- * authority. Proxy reflection safety belongs to Node ingress before calling;
- * browser consumers must supply inert data rather than arbitrary JS objects.
+ * 负责杠精挑战中的发言、选票与统计结果契约。输入为事件标识和已确认的惰性数据，输出复制后的事实或 null。
+ * 精确键集、参与人数、投票唯一性与统计关联在此校验；用户发言原文保持，不在此重新收票、施加处罚或判断运行许可。
+ * 复制／校验异常返回 null，但反射仍可能执行 Proxy trap，Node 入口须独立拒绝危险对象。
  */
 import { copyEventData } from "../inert-event-data";
 export const DEBATE_EVENT_TYPES = [
@@ -15,6 +12,7 @@ export const DEBATE_EVENT_TYPES = [
   "debate_canceled",
   "debate_ballots_recorded",
 ] as const;
+// 发言文本保留原文；选票唯一性和统计结果按各事件分支校验，不重新运行投票政策。
 export function readDebateEventFact(type: string, value: unknown): Record<string, unknown> | null {
   if (!(DEBATE_EVENT_TYPES as readonly string[]).includes(type)) return null;
   try {

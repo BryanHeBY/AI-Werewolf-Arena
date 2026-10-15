@@ -1,10 +1,7 @@
 /**
- * Owns inert Wolf Sorcerer exchange and skip fact data for shared consumers.
- * Inputs are a machine event type and JSON.parse/no-reviver or proven inert
- * payload; outputs are the original detached fact shapes or null. Field, ID,
- * null and copy limits retain the existing reader policy. This browser reader
- * does not promise hostile Proxy zero-trap safety: Node ingress owns that check.
- * It never authorizes an action, reads a roster or resolves the mechanism effect.
+ * 负责狼术师交换与跳过的共享事实格式。输入为机器事件名和无 reviver 的 JSON.parse 数据或已确认的惰性值，输出原字段的脱离引用副本或 null。
+ * 编号、可空号码对及复制上限按原规则读取，复制／校验异常返回 null；这里不查存活名单、不交换座位或支付号码资源。
+ * 浏览器反射不保证危险 Proxy 零 trap，Node 入口须另行拒绝危险对象。
  */
 import { copyEventData } from "../inert-event-data";
 export interface WolfSorcererExchangeFact {
@@ -31,6 +28,7 @@ function id(v: unknown): v is number {
 function keys(p: Record<string, unknown>, expected: string[]): boolean {
   return Object.keys(p).length === expected.length && expected.every((k) => Object.hasOwn(p, k));
 }
+// null 号码对表示原空过记录；有效号码对保持递增顺序，资源是否已付仍由领域判断。
 export function readWolfSorcererExchangeFact(
   type: string,
   payload: unknown,

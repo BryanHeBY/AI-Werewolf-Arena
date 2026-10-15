@@ -1,13 +1,7 @@
 /**
- * Responsibility: read the existing Merchant label facts without rendering.
- * Input: proven inert payloads and event names; output: selected validated fields
- * or null under the original shallow descriptor and branch conditions. Unused
- * fields and symbols retain their original acceptance and are not copied out.
- * This reader never applies effects, writes state or grants action authority.
- * Browser reflection may throw or trigger Proxy traps; Node ingress must reject
- * hostile objects separately. No recursive copier or stricter schema is added.
- * Resolved candidates deliberately retain an unknown used outcome for a second
- * validation after skill rendering; they are partial reads, not archival DTOs.
+ * 负责读取奇迹商人的现有展示事实。输入为事件名和已确认的惰性数据，输出选出的交易字段或原浅层／分支校验拒绝的 null。
+ * 未使用字段与 symbol 不输出；结算候选保留原 unknown outcome 值，调用方先生成技能文案，再校验该结果字段。
+ * 这是分步展示读取，不是严格归档格式或交易许可，不写库存；反射的 Proxy trap／异常不在此捕获。
  */
 type Trade = {
   actorId: number;
@@ -15,7 +9,7 @@ type Trade = {
   targetId: number;
   skill: "check" | "poison" | "guard";
 };
-/** A resolved prefix has not established a valid outcome and must never authorize or settle a trade. */
+/** 已读出的结算前缀尚未证明 outcome 合法，不得据此授权或结算交易。 */
 export type MerchantRenderableFact =
   | { type: "merchant_trade_skipped"; actorId: number; day: number }
   | ({ type: "merchant_trade_committed" } & Trade)
@@ -53,7 +47,7 @@ export function readMerchantRenderableFact(
   if (type === "merchant_trade_committed") return { type, ...trade };
   return { type: "merchant_trade_resolved", ...trade, outcome: p.outcome };
 }
-/** This second-stage field check runs only after the caller's skill formatter. */
+/** 展示调用方先生成技能文案，再执行这一结果字段校验；保留原读取与失败顺序。 */
 export function readMerchantOutcome(value: unknown): "granted" | "backlash" | null {
   return value === "granted" || value === "backlash" ? value : null;
 }

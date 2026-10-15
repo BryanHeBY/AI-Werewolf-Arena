@@ -1,10 +1,7 @@
 /**
- * Owns pure Thief initial deal and chosen identity contracts for wire consumers.
- * Inputs are identifiers and proven inert payload data; outputs are detached
- * shapes or null with original keys, limits, defaults and scalar correlations.
- * For these inputs the reader never changes rules, resources, phases or action
- * authority. Proxy reflection safety belongs to Node ingress before calling;
- * browser consumers must supply inert data rather than arbitrary JS objects.
+ * 负责盗贼初始牌组及身份选择的共享事实格式。输入为事件标识和已确认的惰性数据，输出按原精确键集和牌组／选择关联校验的复制结构，或 null。
+ * 历史 role／camp 标签记录该次选择，不证明当前 World 已安装同一身份；读取不重新发牌、支付库存或授权首夜提交。
+ * 复制／校验异常返回 null，反射可能执行 Proxy trap，Node 入口须另行拒绝危险对象。
  */
 import { copyEventData } from "../inert-event-data";
 import type { RoleId } from "../role-ids";
@@ -23,6 +20,7 @@ const policy = "lui_meme_thief_two_extra_villagers_v1";
 function keys(p: Record<string, unknown>, required: string[]) {
   return Object.keys(p).length === required.length && required.every((k) => Object.hasOwn(p, k));
 }
+// slot 为 null 的保留身份分支与选取 0／1 号牌分支分别关联 role／camp，不写回真实库存。
 export function readThiefEventFact(type: string, payload: unknown): Record<string, unknown> | null {
   if (!(THIEF_EVENT_TYPES as readonly string[]).includes(type)) return null;
   try {

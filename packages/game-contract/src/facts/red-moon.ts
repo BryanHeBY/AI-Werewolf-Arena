@@ -1,10 +1,7 @@
 /**
- * Owns pure Red Moon delay contracts for wire consumers.
- * Inputs are event names and proven inert payloads; outputs are detached facts
- * or null under the original keys, nullable fields and numeric/history limits.
- * For inert inputs these readers never pay resources, alter phases, authorize
- * actions or render text. Reflection may trigger Proxy traps; Node ingress must
- * reject hostile objects separately before calling this browser-safe module.
+ * 负责赤月使徒封夜、延后放逐与到期的共享事实读取。输入为事件名和已确认的惰性数据，输出复制后的原字段结构或 null。
+ * 延期夜次按 day 加一校验，数据不在此延命、提交死亡或恢复行动许可；复制／校验异常返回 null。
+ * 此浏览器共享模块仍可能触发 Proxy 反射，Node 入口须另行拒绝危险对象。
  */
 import { copyEventData } from "../inert-event-data";
 

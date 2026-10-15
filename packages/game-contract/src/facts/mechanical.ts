@@ -1,11 +1,7 @@
 /**
- * Responsibility: read the existing Mechanical label facts without rendering.
- * Input: proven inert payloads and event names; output: selected validated fields
- * or null under the original shallow descriptor and branch conditions. Unused
- * fields and symbols retain their original acceptance and are not copied out.
- * This reader never applies effects, writes state or grants action authority.
- * Browser reflection may throw or trigger Proxy traps; Node ingress must reject
- * hostile objects separately. No recursive copier or stricter schema is added.
+ * 负责读取机械狼的现有学习、模式与技能展示事实。输入为事件名及已确认的惰性数据，输出原浅层描述符和分支校验后的所需字段或 null。
+ * 未使用字段与 symbol 保持原接受面而不输出；模式、学习夜和技能结果只是历史数据，不据此武装枪、安装技能或授予行动。
+ * 这里不递归复制，Proxy 反射可执行 trap 或传播异常，Node 入口须另行拒绝危险对象。
  */
 import { isRoleId, type RoleId } from "../role-ids";
 export const MECHANICAL_EVENT_TYPES = [
@@ -37,6 +33,7 @@ export type MechanicalEventFact = {
   [K in keyof Payloads]: { type: K } & Payloads[K];
 }[keyof Payloads];
 
+// 学习、模式与各技能分支分别校验所需标量，保留原分支宽度而不追加目标政策。
 export function readMechanicalEventFact(
   type: string,
   payload: unknown,

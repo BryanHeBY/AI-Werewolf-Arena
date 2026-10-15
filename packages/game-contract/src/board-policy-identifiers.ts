@@ -1,9 +1,6 @@
 /**
- * Responsibility: own stable board-policy identifiers and data unions used by facts.
- * Input: declared machine policy IDs; output: original constants/arrays/types.
- * These identifiers select a declared policy but do not prove a board supported
- * or execute its effects. Rulesets own composition validation and domain features
- * own resource/state behavior. Array mutability and insertion order stay unchanged.
+ * 负责维护事实与配置共享的稳定政策标识。输入为既定机器 ID，输出原常量、数组和类型，保留数组顺序及可变性。
+ * 标识只表达选择哪份政策；组合支持由规则集校验，资源与效果执行由领域拥有，不因标识存在就授予行动许可。
  */
 export const ANIMAL_DREAM_POLICY = "awa_animal_dream_v1" as const;
 export const CAT_SKIPPED_VOTE_POLICIES = [

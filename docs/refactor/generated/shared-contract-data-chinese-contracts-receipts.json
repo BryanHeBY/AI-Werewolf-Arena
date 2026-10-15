@@ -1,0 +1,69 @@
+{
+  "executor": "/root",
+  "authorExecutedChecks": false,
+  "sourceReady": {
+    "path": "docs/refactor/generated/shared-contract-data-chinese-contracts-source-ready.json",
+    "sha256": "109f12205c28bcc7980ed4d9eb5fe20b714e77ad3c5b65db949c4cd1cc878a66"
+  },
+  "before": {
+    "path": "docs/refactor/generated/shared-contract-data-chinese-contracts-before.json",
+    "sha256": "f5def5a265cbd5ca36b6ad7de232d9739c02c85a945f7a2a4d921f22705872cd"
+  },
+  "checks": [
+    {
+      "name": "complete-comment-proof",
+      "command": "bun --no-env-file docs/refactor/generated/shared-contract-data-chinese-contracts-proof.cjs > docs/refactor/generated/shared-contract-data-chinese-contracts-proof-output.txt 2>&1",
+      "launchCell": "4a8c7f",
+      "sessionId": 98379,
+      "terminalCell": "00b678",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/shared-contract-data-chinese-contracts-proof-output.txt",
+        "sha256": "dd9cecacd40cdd88c3a36768cec8df50b09db62d79a27597bafb1e7bf99b6291"
+      },
+      "result": {
+        "path": "docs/refactor/generated/shared-contract-data-chinese-contracts-proof.json",
+        "sha256": "9ef398726a9714dc862163d1ccf3dff7e94940ad6dab37344b4c263c6eb0ec9a"
+      },
+      "summary": {
+        "sources": 39,
+        "commentEdits": 80,
+        "typedNodes": 20233,
+        "nodeArrays": 2565,
+        "noncommentLeaves": 24851,
+        "jsdocTags": 0,
+        "protectedComments": 0,
+        "wholeRawOutputs": 78
+      }
+    },
+    {
+      "name": "finite39-chinese-heads",
+      "command": "bun --no-env-file docs/refactor/generated/shared-contract-data-chinese-contracts-heads.ts > docs/refactor/generated/shared-contract-data-chinese-contracts-heads-output.txt 2>&1",
+      "launchAndTerminalCell": "6b2d81",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/shared-contract-data-chinese-contracts-heads-output.txt",
+        "sha256": "e1159811cd2f15474fe2903dc406c28558d1a85f58da6cad6abf4ec7ad5de215"
+      },
+      "result": {
+        "path": "docs/refactor/generated/shared-contract-data-chinese-contracts-heads.json",
+        "sha256": "96796b70993053352c1027b921514f9cc9a0a8368e0e008dd3dc8d29acd00319"
+      },
+      "sourceCount": 39,
+      "trackedDocumentationPaths": 731,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0
+    }
+  ],
+  "capture": "Root执行时stdout/stderr原样重定向到各-output.txt；Root合读回执4b4dfd，作者随后全文读取保存输出。",
+  "sourceStage": "两首检查均使用109f1220的39源；之后没有源码变化。source-ready中的checksRun=false仅描述首次静态捕获时点。",
+  "notRun": [
+    "typecheck",
+    "runtime tests",
+    "production import",
+    "models",
+    "full gates"
+  ]
+}

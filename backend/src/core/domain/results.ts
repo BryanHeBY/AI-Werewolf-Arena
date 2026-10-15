@@ -1,8 +1,6 @@
 /**
- * Provides the named compatibility exit for core result and summary consumers.
- * Inputs come from game-contract's sole data owner; outputs preserve existing
- * public imports and types. This bridge performs no rule calculation, rendering
- * or additional state write and must disappear after its consumers migrate.
+ * 负责为核心层结果与阶段摘要消费者保留现有类型入口。输入为 game-contract 唯一数据定义，输出同源公共类型别名。
+ * 这里不另建结果格式、不计算胜负、不渲染文案或写入状态；这些历史入口仍是兼容引用，不能当成新增裁决事实。
  */
 export type {
   GameResult,

@@ -1,10 +1,7 @@
 /**
- * Owns the pure trickster event payload shapes and inert-data readers used by
- * backend recording/projection and browser replay. Inputs are an event type and
- * JSON.parse data without revivers, or values already proven inert; outputs are
- * detached facts or null with the original field, nullable and ID boundaries.
- * This module never authorizes actions, settles effects, or writes role state.
- * Reflection may trigger Proxy traps; Node ingress owns hostile-object rejection.
+ * 负责诡术师交换、跳过与放逐目标映射的共享事实读取。输入为事件类型及无 reviver 的 JSON.parse 数据或已确认的惰性值，输出复制后的事实或 null。
+ * 精确字段、可空号码对与编号界限保持，复制／校验异常返回 null；映射记录不是收票结果或实际死亡提交，不在此支付号码资源。
+ * 后端归档／投影与浏览器复盘共用格式，危险 Proxy 的入口拒绝另有所有者，反射不保证零 trap。
  */
 import { copyEventData } from "../inert-event-data";
 export interface TricksterExchangeFact {
@@ -67,6 +64,7 @@ export function readTricksterSkipFact(type: string, payload: unknown): Trickster
     return null;
   return p as unknown as TricksterSkipFact;
 }
+// 映射命中与否记录在 missed 中；读取不改变公开票选目标，也不执行后继放逐。
 export function readExileMappingFact(type: string, payload: unknown): ExileMappingFact | null {
   if (type !== "exile_target_mapped") return null;
   const p = data(payload);

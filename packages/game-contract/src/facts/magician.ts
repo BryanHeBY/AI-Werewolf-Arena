@@ -1,10 +1,7 @@
 /**
- * Owns the pure magician event payload shapes and inert-data readers used by
- * backend recording/projection and browser replay. Inputs are an event type and
- * JSON.parse data without revivers, or values already proven inert; outputs are
- * detached facts or null with the original field, nullable and ID boundaries.
- * This module never authorizes actions, settles effects, or writes role state.
- * Reflection may trigger Proxy traps; Node ingress owns hostile-object rejection.
+ * 负责魔术师换位与死亡枪未生效的共享事实读取。输入为事件类型及无 reviver 的 JSON.parse 数据或已确认的惰性值，输出复制后的事实或 null。
+ * 字段、可空号码对与编号界限按原格式校验，复制／校验异常返回 null；不在此交换目标、消耗号码或提交枪效果。
+ * 后端归档／投影与浏览器复盘共用此格式，危险 Proxy 的入口拒绝另有所有者，反射本身不保证零 trap。
  */
 import { copyEventData } from "../inert-event-data";
 export const MAGICIAN_EVENT_TYPE = "magician_exchange_committed" as const;

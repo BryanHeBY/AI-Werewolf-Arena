@@ -1,9 +1,6 @@
 /**
- * Owns stable machine rule failures consumed by validation and archive clients.
- * Inputs are declared codes; outputs are the original frozen enum and optional
- * verbatim custom-message shape. Human explanations belong to text, while rule
- * execution and transport diagnostics remain outside this data contract.
- * This data contract never evaluates rules or formats human messages.
+ * 负责维护规则校验与归档消费者使用的稳定错误代码。输入为已声明机器代码，输出冻结的原枚举及可选原文消息结构。
+ * 人类说明由文案层提供，注入规则可保留自身消息；这里不执行规则、不分析传输错误或自动改写消息。
  */
 export enum RuleError {
   AnimalActionUnavailable = "animal_action_unavailable",
@@ -136,6 +133,6 @@ Object.freeze(RuleError);
 
 export interface RuleViolation {
   code: RuleError;
-  /** Explicit injected rules may preserve their own original message. */
+  /** 显式注入的规则可保留自身原文消息，不由错误代码契约自动翻译。 */
   message?: string;
 }

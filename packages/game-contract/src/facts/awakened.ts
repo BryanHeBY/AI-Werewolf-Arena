@@ -1,11 +1,7 @@
 /**
- * Responsibility: read the existing Awakened label facts without rendering.
- * Input: proven inert payloads and event names; output: selected validated fields
- * or null under the original shallow descriptor and branch conditions. Unused
- * fields and symbols retain their original acceptance and are not copied out.
- * This reader never applies effects, writes state or grants action authority.
- * Browser reflection may throw or trigger Proxy traps; Node ingress must reject
- * hostile objects separately. No recursive copier or stricter schema is added.
+ * 负责读取觉醒隐狼的现有展示事实。输入为事件名和已确认的惰性数据，输出通过原浅层描述符及分支校验的所需字段，或 null。
+ * 未使用的字符串字段与 symbol 保持原接受面而不输出；读取不递归复制嵌套数据，也不安装学习技能、消耗资源或授予行动。
+ * 反射异常仍可传播或执行 Proxy trap，Node 入口的危险对象拒绝不属于这个浏览器共享 reader。
  */
 import { isRoleId, type RoleId } from "../role-ids";
 export const AWAKENED_EVENT_TYPES = [
@@ -38,6 +34,7 @@ export type AwakenedEventFact = {
   [K in keyof Payloads]: { type: K } & Payloads[K];
 }[keyof Payloads];
 
+// 从浅层数据描述符挑选展示字段，未用扩展不进入输出；不以历史 ready 记录恢复当前技能。
 export function readAwakenedEventFact(type: string, payload: unknown): AwakenedEventFact | null {
   if (!(AWAKENED_EVENT_TYPES as readonly string[]).includes(type)) return null;
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) return null;

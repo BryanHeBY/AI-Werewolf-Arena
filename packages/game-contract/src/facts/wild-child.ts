@@ -1,12 +1,7 @@
 /**
- * Owns pure Wild Child source death and player transformation contracts for wire consumers.
- * Inputs are identifiers and proven inert payload data; outputs are detached
- * shapes or null with original keys, limits, defaults and scalar correlations.
- * Player facts retain their original exclusion of God commit IDs and sources;
- * parsing transformation data does not convert a player or activate wolf rights.
- * For these inputs the reader never changes rules, resources, phases or action
- * authority. Proxy reflection safety belongs to Node ingress before calling;
- * browser consumers must supply inert data rather than arbitrary JS objects.
+ * 负责野孩子榜样死亡来源与玩家转变通知的共享事实格式。输入为事件标识和已确认的惰性数据，输出复制后的精确结构或 null。
+ * 上帝事实保留死亡提交、波次与来源，玩家事实仍剔除这些隐藏数据；解析转狼通知不转换角色或开放狼队权限。
+ * 复制／校验异常返回 null，反射可能执行 Proxy trap；Node 入口须先拒绝危险对象，浏览器调用方应提供惰性数据。
  */
 import { copyEventData } from "../inert-event-data";
 export const WILD_CHILD_EVENT_TYPES = [
@@ -82,7 +77,7 @@ export function readWildChildEventFact(
   }
 }
 
-/** Exact actor DTO; deliberately excludes God commit IDs, batch IDs and hidden causes. */
+/** 精确的演员通知格式：排除上帝视角的提交 ID、波次 ID 与隐藏死因，不据通知重新执行转变。 */
 export function readWildChildPlayerFact(
   type: string,
   payload: unknown,

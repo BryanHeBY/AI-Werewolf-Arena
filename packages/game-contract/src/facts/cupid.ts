@@ -1,19 +1,17 @@
 /**
- * Owns pure Cupid pair, recognition and relation outcome contracts for wire consumers.
- * Inputs are identifiers and proven inert payload data; outputs are detached
- * shapes or null with original keys, limits, defaults and scalar correlations.
- * For these inputs the reader never changes rules, resources, phases or action
- * authority. Proxy reflection safety belongs to Node ingress before calling;
- * browser consumers must supply inert data rather than arbitrary JS objects.
+ * 负责丘比特配对、相认及关系结果的共享事实格式。输入为事件标识和已确认的惰性数据，输出脱离原引用的字段副本或 null。
+ * 复制及精确键集／数值关联校验失败均返回 null；格式记录配对与政策结果，不创建 Lovers 组件、不修改 Victory 或授予玩家可见性。
+ * 反射可执行 Proxy trap，Node 入口须先拒绝危险对象；浏览器消费者应提供无 reviver 的 JSON 数据。
  */
 import { copyEventData } from "../inert-event-data";
-/** Strict inert source facts shared by engine text and replay association. */
+/** 引擎文案与复盘关联共用这份精确字段事实读取；关系授权及可见投影仍归领域。 */
 export const CUPID_EVENT_TYPES = [
   "cupid_lovers_chosen",
   "lover_recognized",
   "cupid_relation_resolved",
   "lovers_death",
 ] as const;
+// 号码对只要求两人不同，保留输入顺序；格式校验不在此重新排序或建立关系。
 export function readCupidEventFact(type: string, value: unknown): Record<string, unknown> | null {
   if (!(CUPID_EVENT_TYPES as readonly string[]).includes(type)) return null;
   try {

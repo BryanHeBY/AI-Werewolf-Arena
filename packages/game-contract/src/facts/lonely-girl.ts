@@ -1,14 +1,12 @@
 /**
- * Owns pure Lonely Girl choice, optional camp and tool contracts for wire consumers.
- * Inputs are identifiers and proven inert payload data; outputs are detached
- * shapes or null with original keys, limits, defaults and scalar correlations.
- * For these inputs the reader never changes rules, resources, phases or action
- * authority. Proxy reflection safety belongs to Node ingress before calling;
- * browser consumers must supply inert data rather than arbitrary JS objects.
+ * 负责孤独少女的选择事实、历史可选阵营字段及工具输入格式。输入为标识和已确认的惰性数据，输出脱离引用的合法结构或 null。
+ * 精确键集与标量关联在此校验，camp 缺省仍是原允许格式；数据读取不复制真实阵营、不授予目标资格或建立胜利关系。
+ * 复制／校验异常返回 null，反射可能执行 Proxy trap；调用方入口须约束对象来源。
  */
 import { copyEventData } from "../inert-event-data";
 export const LONELY_GIRL_POLICY = "awa_netease_lonely_girl_v1" as const;
 export const LONELY_GIRL_EVENT_TYPES = ["lonely_girl_admired_chosen"] as const;
+// camp 是历史事实的可选披露字段，省略仍合法；存在时只接受原 good／wolf 值。
 export interface LonelyGirlChoiceFact {
   policy: typeof LONELY_GIRL_POLICY;
   actorId: number;

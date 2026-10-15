@@ -1,0 +1,195 @@
+{
+  "baseCommit": "4f775d49f85eccc8eeb4da9c67517048879cadc4",
+  "source": [
+    {
+      "path": "backend/src/core/domain/board.ts",
+      "sha256": "f023c2848b9eabae01bcf39fdbb78f148c080eedf073df6fe91020ab2f8b8b77"
+    },
+    {
+      "path": "backend/src/core/domain/board_schema.ts",
+      "sha256": "140ab24b8f00977c009a0e8b0cd9f2112b5009e5c3aeef04c3e73a774f18b43d"
+    },
+    {
+      "path": "backend/src/core/domain/components/lovers.ts",
+      "sha256": "cd9d320e1ec12cc68380a9d548e9c6c229d68ad8c03579fc6937fdd2c78c7953"
+    },
+    {
+      "path": "backend/src/core/domain/components/names.ts",
+      "sha256": "adb15a86d3776a3e80e229e9923b51e8b48f1464aac9732e652968186ebf37db"
+    },
+    {
+      "path": "backend/src/core/domain/events.ts",
+      "sha256": "3ec689488b33476babcdcd7ddbf8889fc6a8c9a32dd2c7f6a690a08f1361aef5"
+    },
+    {
+      "path": "backend/src/core/domain/results.ts",
+      "sha256": "3040cce5c2a31842bbeb500d2c7f7b3f1bdb76eab35405dfc8899aac8ed28acd"
+    },
+    {
+      "path": "frontend/src/replay/event-labels.ts",
+      "sha256": "23d4d127674688bfdb9b01c40872b4e597dd635c335747128fafb555ec9a4c51"
+    },
+    {
+      "path": "packages/game-contract/src/board-parameters.ts",
+      "sha256": "b0e5771d015965fd84e709d0b0030808b53fe29e766661ed1d337192bad7f606"
+    },
+    {
+      "path": "packages/game-contract/src/board-policy-identifiers.ts",
+      "sha256": "e680656b5e20344a8d24c6a527ec9814f45d0fdccd6e6ce915600f41227c0d77"
+    },
+    {
+      "path": "packages/game-contract/src/board-schema.ts",
+      "sha256": "973052562991767a24109546cd87a43e5e90fb9f84a223f286b16998f0654828"
+    },
+    {
+      "path": "packages/game-contract/src/boards.ts",
+      "sha256": "4cac318aaba8793e2d6c966a9e5e7ae1b6cb69056268c8d4c0f13bad86b45b3e"
+    },
+    {
+      "path": "packages/game-contract/src/errors.ts",
+      "sha256": "8ce2bb90bd27826b3d8d934b5980c4baa96073c4121596f85544c08d0afce8d5"
+    },
+    {
+      "path": "packages/game-contract/src/event-ids.ts",
+      "sha256": "b6c5aebe3e730ed676fbf11499786705cb7fccc08460d868e98bb3954b092575"
+    },
+    {
+      "path": "packages/game-contract/src/facts/animal-dream.ts",
+      "sha256": "580606b02bd6415333a480973541563ff35b2761847ea03ab2defae3f4476c1f"
+    },
+    {
+      "path": "packages/game-contract/src/facts/awakened.ts",
+      "sha256": "10bd30a5f2c47335ff5d5abcfe73a81c0cff3d35070df28b01dd1e6449e29ac5"
+    },
+    {
+      "path": "packages/game-contract/src/facts/black-market.ts",
+      "sha256": "49112a907b2536ee46d7306dd904aec42d8dd83ec2d3b5c4a9926449ab40839d"
+    },
+    {
+      "path": "packages/game-contract/src/facts/cupid.ts",
+      "sha256": "6180b9f0fda8087e2da308258651342dd97d3327d3a2349d71a7205cf392ca89"
+    },
+    {
+      "path": "packages/game-contract/src/facts/death-ability.ts",
+      "sha256": "ffff3b7b2a9b0b4c77929ce25373c0faa56c49bd363178101d2c5bb5f71f92ba"
+    },
+    {
+      "path": "packages/game-contract/src/facts/debate.ts",
+      "sha256": "9c40efcf715bf6a1e45b83af1c729f4d6ff332f0fe7cbc467929a1b853c02ce3"
+    },
+    {
+      "path": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+      "sha256": "e8634801da965a7466b2e38cadce8659d95d57c2f24b0eb6dc81d441f71770d7"
+    },
+    {
+      "path": "packages/game-contract/src/facts/hybrid.ts",
+      "sha256": "3a5d21fb1525f133e7f7b80d02d5ae43a6fc5722a133f1ecf358392dabf4a5bb"
+    },
+    {
+      "path": "packages/game-contract/src/facts/lonely-girl.ts",
+      "sha256": "d82f40c42c567c9f0686dbedd3aafb489c1aad180969d42d1a0f0992d8d057ed"
+    },
+    {
+      "path": "packages/game-contract/src/facts/magician.ts",
+      "sha256": "36f5d24104bf156efc4c0cdd032fd1968d16779adc26010b5fd506b938e35fef"
+    },
+    {
+      "path": "packages/game-contract/src/facts/mechanical.ts",
+      "sha256": "ca703d3feda192320afe23f899cad4cd86fc24a733784f21c670323c254eb4d5"
+    },
+    {
+      "path": "packages/game-contract/src/facts/merchant.ts",
+      "sha256": "4b4a2c020b792af1f0e4c3fc4aec4afd53ab70de47f270fce0f46c9652725cff"
+    },
+    {
+      "path": "packages/game-contract/src/facts/nightmare.ts",
+      "sha256": "5e465327ea5192eeadd6c7abf51db8d85b990878c5c957935886dccc742248c1"
+    },
+    {
+      "path": "packages/game-contract/src/facts/red-moon.ts",
+      "sha256": "de56f0712b3996635be8f3d381c57a018ba7a9493a80f0f9623d93893847ea86"
+    },
+    {
+      "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+      "sha256": "28b5eaafde23a592b0a9759a33751406379069bda485aa398bd274210d234a2e"
+    },
+    {
+      "path": "packages/game-contract/src/facts/shapeshifter.ts",
+      "sha256": "944c81206c6183a091bc627053af7a289d97aee6d5a5731bb563e23ed15f0bd5"
+    },
+    {
+      "path": "packages/game-contract/src/facts/thief.ts",
+      "sha256": "870d63f85d8aa37da476755e435989589bb0c3749e655aa2b329ef069b1dc01f"
+    },
+    {
+      "path": "packages/game-contract/src/facts/trickster.ts",
+      "sha256": "8a71621125788073014613f9971d5cc082457a01ed457008c8222f44a8539c8c"
+    },
+    {
+      "path": "packages/game-contract/src/facts/wild-child.ts",
+      "sha256": "7dad6718189e0396a0927a3569148f5f7aec19fefd52ddc6bfe83ce077b47d9c"
+    },
+    {
+      "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+      "sha256": "0948d287d59fce982b64dd295c6854aedb3bf4a85764323ac21fbd6e23fde3cc"
+    },
+    {
+      "path": "packages/game-contract/src/inert-event-data.ts",
+      "sha256": "68de25bbf514a55dd7d6aaa57fb502190c6f0be1345bbc4babc62b69b456e0bb"
+    },
+    {
+      "path": "packages/game-contract/src/locale.ts",
+      "sha256": "a13a37e23b0eebd040d3cadd985a1d3ca5a0a80629992d1dfefc860cec1756e9"
+    },
+    {
+      "path": "packages/game-contract/src/message-ids.ts",
+      "sha256": "725f99b620e35d8bcddf6f27225458f51fdac04d2323da19f981d1835f1a1636"
+    },
+    {
+      "path": "packages/game-contract/src/outcomes.ts",
+      "sha256": "a4cc7620786c12d298f321c1bf5072cf7d37feb8301f6232c335eb656448b9ea"
+    },
+    {
+      "path": "packages/game-contract/src/results.ts",
+      "sha256": "0713b25cbffdcc77c31f20cebe0f02f88328a4e43fc890f01073b30c8a2e6925"
+    },
+    {
+      "path": "packages/game-contract/src/role-ids.ts",
+      "sha256": "dbb77e824c260a54d418397755b88d776253d4574cf1e3f69f35f532aab93c74"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "packages/game-contract/src/index.ts",
+      "sha256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "380c73bac804b4e0d2eba81c0a61e841a6f752b89c00df5e8a883f811f03ed99"
+    },
+    {
+      "path": "frontend/src/replay/replay-event-reader.ts",
+      "sha256": "ea1689ef8b41ec5486df1db00a2d4bf427b374a446a86b22fd19a627775655cb"
+    },
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "sha256": "47ca276d4271630035d3aae3bcde79fbff3c2cbf1ecbedcdaae334f42df8f6d6"
+    }
+  ],
+  "before": {
+    "path": "docs/refactor/generated/shared-contract-data-chinese-contracts-before.json",
+    "sha256": "f5def5a265cbd5ca36b6ad7de232d9739c02c85a945f7a2a4d921f22705872cd"
+  },
+  "edits": {
+    "path": "docs/refactor/generated/shared-contract-data-chinese-contracts-edits.json",
+    "sha256": "2cd5a85aa3fd5a68807bcbc1ec151f62ea79d57776ddf400a953263d4a1bbe4c"
+  },
+  "commentEditRecords": 80,
+  "checksRun": false,
+  "limits": [
+    "首次静态源冻结；未运行证明、职责头、类型、业务测试或全门禁。",
+    "39源只有维护注释变化；机器字符串、类型／导出／原消息、许可证及指令不改。",
+    "源码哈希将改变；不修改历史strict身份、sourceHash或任何豁免。"
+  ]
+}

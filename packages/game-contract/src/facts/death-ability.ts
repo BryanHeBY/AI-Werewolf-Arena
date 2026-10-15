@@ -1,11 +1,7 @@
 /**
- * Responsibility: read the existing Death Ability label facts without rendering.
- * Input: proven inert payloads and event names; output: selected validated fields
- * or null under the original shallow descriptor and branch conditions. Unused
- * fields and symbols retain their original acceptance and are not copied out.
- * This reader never applies effects, writes state or grants action authority.
- * Browser reflection may throw or trigger Proxy traps; Node ingress must reject
- * hostile objects separately. No recursive copier or stricter schema is added.
+ * 负责读取死亡能力变更的现有展示事实。输入为事件名和已确认的惰性数据，输出经过原浅层字段及操作关联校验的记录或 null。
+ * 未使用字段与 symbol 保持原接受面且不输出；能力 ID、时点和剩余次数只是事件元数据，不等于当前枪库存、待发提案或开枪许可。
+ * 这里不递归复制或提交效果，反射的 Proxy trap／异常仍由调用方入口处理。
  */
 export interface DeathAbilityEventFact {
   type: "death_ability_changed";
@@ -18,6 +14,7 @@ export interface DeathAbilityEventFact {
   deathExpired: boolean;
   operation: "granted" | "armed" | "disabled" | "enabled" | "transferred_out";
 }
+// 只输出非 native: 前缀的能力变更字段；disabled／remaining／armedOnNight 的关联不等于实时可开枪。
 export function readDeathAbilityEventFact(
   type: string,
   payload: unknown,

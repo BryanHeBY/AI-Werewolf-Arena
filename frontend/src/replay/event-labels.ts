@@ -253,7 +253,7 @@ export function eventLabel(
           const raw = Object.getOwnPropertyDescriptor(p, "result");
           if (raw && Object.hasOwn(raw, "value")) label = JSON.stringify(raw.value) ?? "?";
         } catch {
-          /* Invalid non-JSON diagnostic values remain unknown. */
+          /* 非 JSON 的诊断值读取或序列化失败时，仍保留未知标签。 */
         }
       }
       return t("replay.check", { actor, target, camp: label });
