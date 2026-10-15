@@ -10,5 +10,8 @@
 - [会话录制、checkpoint与独立复现](recording-and-reproduction.md)
 - [公开档案与精确构建身份](archive-compatibility.md)
 - [运行回合、取消与资源](agent-runtime.md)
+- [机制支持与证据边界](mechanism-support-boundaries.md)
+
+职责与证据可经[覆盖摘要](../architecture/mechanism-coverage-summary.md)、[行索引](../architecture/row-index.md)及[完整矩阵](../architecture/migration-matrix.json)交叉定位；它们不扩大本目录的运行承诺。最终检查结果见[验收入口](../history/acceptance/refactor-final-acceptance.md)，不把候选动作或文档登记当成领域付款。
 
 这些页面不能授予动作权限；数据schema、提示或同名字段从不替代World／lease／库存当前性。相关设计理由见[决策](../decisions/README.md)。

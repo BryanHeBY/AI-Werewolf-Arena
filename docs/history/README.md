@@ -7,6 +7,12 @@
 - [原路径→现落点](origin-paths.json)：每项保originCommit／Git blob／mode；只有定位，不执行任何脚本。
 - 当前规则回到[rules](../rules/README.md)，当前契约回到[contracts](../contracts/README.md)，维护方法回到[guides](../guides/README.md)。
 
+## 本轮最终来源
+
+[最终验收入口](acceptance/refactor-final-acceptance.md)定位本轮固定输入与实际执行材料；受测源码为 `60fdbfbc57122eeb1d4e9204b66d4daec1eb0157`。后继 C48 矩阵／指南只发布对这些材料的解释和导航，元数据提交不冒充受测源码，旧轮或局部后继绿色也不拼入同源全绿。
+
+当前职责仍回到[覆盖摘要](../architecture/mechanism-coverage-summary.md)、[行索引](../architecture/row-index.md)、[完整矩阵](../architecture/migration-matrix.json)及[支持边界](../contracts/mechanism-support-boundaries.md)。acceptance 的包摘要、成员和执行收据由各次独立审查绑定；下述 origin 守卫只保护两棵原始历史根，不替代这项验收审查。
+
 ## 如何引用与复查
 
 引用来源时同时给原path、commit、输入／结果范围。旧文中相对链接和嵌入的artifact path以originPath为基准，经origin表定位currentPath；原正文、sourceSHA、工具脚本、stderr和停止条件不因搬目录被重写。

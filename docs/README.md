@@ -20,6 +20,12 @@
 3. [交付状态](architecture/delivery-status.md)只登记已知实现与尚需同源验收的边界；旧矩阵的 pending／partial 不能自动触发重复提取，历史通过也不自动变成 current complete。
 4. `history` 中的“下一步、暂停、完成、不得继续”均描述对应原 commit 的阶段事实。它们不是现行工作指令；原错误与未完成项也不得被删去制造全绿。
 
+## 迁移结果与验收定位
+
+迁移职责和证据从[机制覆盖摘要](architecture/mechanism-coverage-summary.md)进入，经[行索引](architecture/row-index.md)定位[完整矩阵](architecture/migration-matrix.json)；支持声明以[机制支持边界](contracts/mechanism-support-boundaries.md)为准。91 项职责的十个维度共 910 个位置，其中 843 个适用位置与 67 个业务性 N/A 是分类口径，不是测试或已通过数量。
+
+本轮固定受测源码为 `60fdbfbc57122eeb1d4e9204b66d4daec1eb0157`；[最终验收入口](history/acceptance/refactor-final-acceptance.md)登记真实同源结果。后继 C48 文档与矩阵提交是元数据发布，不能倒称其新 HEAD 已运行全部 42 项；当前结果以[验证指南的最终登记](guides/validation.md#本轮最终验收登记)为准。
+
 ## 版本与隐私
 
 稳定 RoleId、boardId、工具／错误／消息 key、原始用户／模型文本和历史归档身份不随组织文件名改变。公开复盘是 God 视角，不能作为对局 Agent 的输入；reproduction 与 manifest 可能含底牌／seed／完整请求，不应作为玩家公开资料。
