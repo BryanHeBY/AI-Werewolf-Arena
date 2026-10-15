@@ -800,7 +800,7 @@ const schema3 = schema2.extend({
 
 /** 先保版本／严格 envelope 准入，再按固定独立装配审核角色与板子；审核不执行游戏规则。 */
 export function parseReproductionRecord(value: unknown): ReproductionRecord {
-  // 新封装先按显式格式解包，历史裸 Tape 仍走下面原 schema 2／第一失败顺序。
+  // 封装先按显式格式解包；裸 Tape 按捕获版本选严格 schema，历史 Tape2 保原形状与预检读取顺序。
   value = unwrapRecordingEnvelope(value, "strict_reproduction").payload;
   let version: unknown;
   if (value && typeof value === "object" && "schemaVersion" in value) {
