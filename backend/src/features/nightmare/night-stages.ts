@@ -6,7 +6,7 @@
 import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import { Phase } from "../../domain/identity";
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { getNightmareShadowState } from "./state-slot";
 import {
   assertNightmareRosterCurrent,
@@ -63,3 +63,8 @@ export const NIGHTMARE_FEAR_STAGE: NightStageHandler = {
     });
   },
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [NIGHTMARE_FEAR_STAGE].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

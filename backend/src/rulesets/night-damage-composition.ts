@@ -11,7 +11,8 @@ import { Role, type EntityId, type ReadonlyBoardConfig } from "@ai-werewolf-aren
 import type { World } from "../domain/world";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
 import type { DamageResolutionSystem } from "../domain/systems/damage-resolution-system";
-import type { NightStageContext, NightStageState } from "../engine/night/contracts";
+import type { NightStageState } from "../engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../engine/night/trusted-runtime";
 import { DreamNightFrame } from "../features/dreamer/night-frame";
 import { readDreamNightLinks } from "../features/dreamer/night-ports";
 import { sealRadiantNightEffects } from "../features/radiant-eclipse/ports";

@@ -17,7 +17,10 @@ import { RoleComponent } from "../../domain/components/role";
 import { Phase, PotionType, Role, StatusMark, WitchSelfHealRule } from "../../domain/model";
 import { type NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { nativePotionsCanCombine, witchKnifeVisible } from "./policies";
-import { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
+import type {
+  TrustedNightStageRuntime as NightStageContext,
+  TrustedNightStageHandler as NightStageHandler,
+} from "../../engine/night/trusted-runtime";
 import { getWitchState } from "./ports";
 import { activeNightAbility, allNightAbilities } from "../night-abilities/inventory-ports";
 import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
@@ -297,3 +300,8 @@ async function executePotionTurn(
   );
   return potion !== PotionType.None;
 }
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [...WITCH_NIGHT_STAGES].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

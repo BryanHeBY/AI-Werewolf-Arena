@@ -4,7 +4,7 @@
  * 板子检查与 resolver 参数仍在原时点求值；绑定时不选择 actor、快照库存或调用这些 getter。
  * 请求提示不授予权限，已付回执的消费仍归独立原生效果端口。
  */
-import type { NightStageContext } from "../engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../engine/night/trusted-runtime";
 import type { NightLifeScope } from "../domain/night-effects";
 import type { AliveComponent } from "../domain/components/alive";
 import {

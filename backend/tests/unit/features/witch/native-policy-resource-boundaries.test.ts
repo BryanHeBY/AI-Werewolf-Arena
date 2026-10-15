@@ -33,7 +33,10 @@ import {
   parseBoardDefinition,
 } from "../../../../src/app/config/board-definition";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 
 const potionOrders: Array<Array<PotionType.Heal | PotionType.Poison>> = [
   [PotionType.Heal, PotionType.Poison],
@@ -76,7 +79,7 @@ function setup(
   ) => {
     const factory = new GameActionRequestFactory(game.world, events, 1);
     let index = 0;
-    await WITCH_NIGHT_STAGES[1].execute(
+    await executeNightStage(WITCH_NIGHT_STAGES[1])(
       nightStageContext({
         world: game.world,
         events,

@@ -12,7 +12,6 @@
  * 明辉／梦及增益伤害与猎魔来源交付各归具名规则组合；本流水线保封存、伤害结算及死亡生命捕获的原检查点。
  * 运行梦句柄、猎魔 token 与晚保护闭包不进入玩家摘要或归档。
  */
-import { bindDreamLifeQueries } from "../../domain/dream-night-effects";
 import { attachNightUnit } from "../../domain/night-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
@@ -74,8 +73,7 @@ import {
 } from "../../domain/systems/damage-resolution-system";
 import { World } from "../../domain/world";
 import { ToolGateway } from "../actions/tool-gateway";
-import { NightStageState } from "../../rulesets/mechanism-api";
-import type { NightStageContext } from "../night/contracts";
+import type { TrustedNightStageRuntime } from "../night/trusted-runtime";
 import { getDefaultNightStageRegistry, NightStageRegistry } from "../../rulesets/night-stage-plan";
 import { getSessionRecorder } from "../../recording/session/context";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
@@ -245,22 +243,10 @@ export class NightPipeline {
       });
 
       // 摄梦关系由本族按此对象身份首次使用时建立；通用状态不保存私有数组或其镜像。
-      const stageState: NightStageState = {
-        wolfChatOrder: [],
-        endedWolves: new Set<EntityId>(),
-        wolfVotes: {},
-        wolfTarget: null,
-        seerChecks: [],
-        poisonClaims: [],
-        guardClaims: [],
-        merchantBacklashes: [],
-        blackMarketBacklashes: [],
-        mechanicalEffects: { shields: [], attacks: [], failures: [] },
-        awakenedEffects: { shields: [], attacks: [] },
-      };
+      const stageState = createNightStageState();
 
       const requests = new GameActionRequestFactory(this.world, this.events, day);
-      const stageCtx: NightStageContext = {
+      const stageCtx: TrustedNightStageRuntime = {
         isCurrent,
         previousExile: options.previousExile ? structuredClone(options.previousExile) : null,
         world: this.world,
@@ -322,7 +308,9 @@ export class NightPipeline {
         assertReadable();
         discardStaleNightKnives(knifeAdmission);
         assertNightModifierBonusEffects({ config: () => config, stageContext: () => stageCtx });
-        await stage.execute(stageCtx);
+        // 真实 callee 保原晚读取；只原完整内建程序可取得私有 runtime，替换 callback 没有 World 回门。
+        const execute = stage.execute;
+        await executePreparedNightStage(stage, execute, stageCtx);
         assertNightModifierBonusEffects({ config: () => config, stageContext: () => stageCtx });
         assertEvilKnightRosterCurrent(this.world);
         assertReadable();
@@ -529,3 +517,7 @@ export class NightPipeline {
     return Number(entries[0][0]);
   }
 }
+
+import { createNightStageState } from "../night/trusted-runtime";
+import { executePreparedNightStage } from "../../rulesets/night-stage-bindings";
+import { bindDreamLifeQueries } from "../../domain/dream-night-effects";

@@ -1,0 +1,1126 @@
+{
+  "kind": "H02 night actual boundary and source limited independent review",
+  "role": "peer",
+  "decision": "approved",
+  "approved": true,
+  "preparedBase": "3437745ee457d30b1eddfb472c51bfa4d8cfbf93",
+  "actualApplyBase": "6201f1279fdc7c9af7cb220fe69e78003ad1271b",
+  "sourceReadySHA256": "77e8379f8fe4c23351f909bdbf8c48de76d5b37d099179b368a0d89148491cfd",
+  "source": [
+    {
+      "path": "backend/src/engine/night/contracts.ts",
+      "beforeSHA256": "d11be1725d231970d994f70397a6548f46d34670d85d6fa4b04a2e62daac7635",
+      "preparedSHA256": "bf10475ae84b8d776c2a49bcdd055948962e6c8a83522bd86daba239317c9585",
+      "appliedSHA256": "bf10475ae84b8d776c2a49bcdd055948962e6c8a83522bd86daba239317c9585",
+      "mode": "full-candidate",
+      "finalSHA256": "8f859b1f6fe51f3752d4906b4107a25925a63bfc5aa81245fe715d673a077732"
+    },
+    {
+      "path": "backend/src/engine/night/trusted-runtime.ts",
+      "beforeSHA256": null,
+      "preparedSHA256": "87db2bed37b5008fe99f72671def9d89308996ebc48524c223b527949c570087",
+      "appliedSHA256": "87db2bed37b5008fe99f72671def9d89308996ebc48524c223b527949c570087",
+      "mode": "full-candidate",
+      "finalSHA256": "52950a97bc2124d281c891b231e5c95bfb2f1affcdfab194b21c8510339ff455"
+    },
+    {
+      "path": "backend/src/engine/phases/night-pipeline.ts",
+      "beforeSHA256": "fad9c90b76538cdc037d0de470e7d19c76a2002341dfc77ef4b3654c0a9a5e31",
+      "preparedSHA256": "9e23941b702f9455429a8e7e4547bcbd86a6942fb52d6b60d337881d3f63c4e2",
+      "appliedSHA256": "9e23941b702f9455429a8e7e4547bcbd86a6942fb52d6b60d337881d3f63c4e2",
+      "mode": "full-candidate",
+      "finalSHA256": "9235e4debb52417a573dc4b7b5d92bf6e2dd72bd6db0028fd80278abb01de137"
+    },
+    {
+      "path": "backend/src/features/animal-dream/night-stages.ts",
+      "beforeSHA256": "444feff888ccbb1dabf0a2249c84d832d6d1aec5de00776444bed75473bd8b29",
+      "preparedSHA256": "fadcaf0ce90cd1851e2b22337ac2048f3923993d70c82d96843399a2b8dca596",
+      "appliedSHA256": "fadcaf0ce90cd1851e2b22337ac2048f3923993d70c82d96843399a2b8dca596",
+      "mode": "full-candidate",
+      "finalSHA256": "c50aab3b346755400fa3601f7da7d1137d3887ef887cc1ed228ee31c1cf120be"
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/night-scope.ts",
+      "beforeSHA256": "62bd40e90e7565d1c7e0b16272b132ff79190d88c18166fd2e14e7b534b21fe4",
+      "preparedSHA256": "2f26469338b23c19f9176b5cc0b99997e4fa7fbe96125ae58639b83195f9dc86",
+      "appliedSHA256": "2f26469338b23c19f9176b5cc0b99997e4fa7fbe96125ae58639b83195f9dc86",
+      "mode": "full-candidate",
+      "finalSHA256": "6e2481942545214fb291d073bc392616521886a4163f1500e8f43c6af67497ef"
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/night-stages.ts",
+      "beforeSHA256": "2531d0826f499b885b7e28277b64bfc6bf122a96b7d436c3ec5a090130e83582",
+      "preparedSHA256": "feb2eaadbc29654be0ac3992efe18cfee994aec9c8d7abe040cc75d13220d595",
+      "appliedSHA256": "feb2eaadbc29654be0ac3992efe18cfee994aec9c8d7abe040cc75d13220d595",
+      "mode": "full-candidate",
+      "finalSHA256": "2daf4a34f22bdf7b1c3ec2b9ded99528b258ba431668beea02dab15bbc6075d6"
+    },
+    {
+      "path": "backend/src/features/black-market-merchant/night-stage.ts",
+      "beforeSHA256": "028a11d15618f3a4760c9e87b1963830968ca4d08b37e6f4a94f11701e08859e",
+      "preparedSHA256": "47051f995e9df158bdc77d8699c218e3002b9507e219b89b9d815789d333433a",
+      "appliedSHA256": "47051f995e9df158bdc77d8699c218e3002b9507e219b89b9d815789d333433a",
+      "mode": "full-candidate",
+      "finalSHA256": "1ea494ab10fe0b2d5a04e305abe85ac4e9f0ee0f0451cd1c823ba5ca63b2f5e8"
+    },
+    {
+      "path": "backend/src/features/cupid/night-stage.ts",
+      "beforeSHA256": "ebbfa19777907e046fa070b4f66c790806c53b7ced5f071fb0d0362d773bb3f4",
+      "preparedSHA256": "98b74f142924084d2525e0eb8bd3ae5b9d92c1bcb0187c8be5946ee983e154e7",
+      "appliedSHA256": "98b74f142924084d2525e0eb8bd3ae5b9d92c1bcb0187c8be5946ee983e154e7",
+      "mode": "full-candidate",
+      "finalSHA256": "d11a78465e025e97417317a55a76ac03fc7abbd3c47ca383f348e01c38c96c5e"
+    },
+    {
+      "path": "backend/src/features/death-actions/death-ability-activation.ts",
+      "beforeSHA256": "cb72009cd10d1fd752b5b60936b0e562edbf624200b469504f74759ffa6f1805",
+      "preparedSHA256": "2d71cdb51bb4441ebaa93b2ae2ab2b1d3850d6987db209a921dc2d1420ba5e22",
+      "appliedSHA256": "2d71cdb51bb4441ebaa93b2ae2ab2b1d3850d6987db209a921dc2d1420ba5e22",
+      "mode": "full-candidate",
+      "finalSHA256": "59ba18aaa39c3df11e3f914caa4e2b641a2c3f7d960e880c7e09f91e1ce4b0c9"
+    },
+    {
+      "path": "backend/src/features/demon-hunter/native-night-controller.ts",
+      "beforeSHA256": "25244aa44ec0621ce20e5485e16aeeab643d3f772897665d4a0390f6bb3b2f32",
+      "preparedSHA256": "a5ec715913e3c8651832dbc1e33473acf714baa61ec22dc2e6fd9fb62e9210f2",
+      "appliedSHA256": "a5ec715913e3c8651832dbc1e33473acf714baa61ec22dc2e6fd9fb62e9210f2",
+      "mode": "full-candidate",
+      "finalSHA256": "a5ec715913e3c8651832dbc1e33473acf714baa61ec22dc2e6fd9fb62e9210f2"
+    },
+    {
+      "path": "backend/src/features/demon-hunter/night-stages.ts",
+      "beforeSHA256": "5b0153cb876c64f6843fb6234f0caa63717a1ff2a2283082db3025136cb39d80",
+      "preparedSHA256": "ce0dffd66782a2f79935785982edbc6558ffafba93ae388afb85412f86b1518c",
+      "appliedSHA256": "ce0dffd66782a2f79935785982edbc6558ffafba93ae388afb85412f86b1518c",
+      "mode": "full-candidate",
+      "finalSHA256": "97f78593048b0b58db62640029b4ac2da65d956fc35489a193efeb0aaca67e86"
+    },
+    {
+      "path": "backend/src/features/dreamer/night-links.ts",
+      "beforeSHA256": "28ffa4dce4ffc0887568121b32d9bbc2b458863d4bf1e8e5a09629fea6c922ac",
+      "preparedSHA256": "39a383fea3aec6f3c835cf5fdeaad4cbcaf79ed086bd125da551060a1f1ee1f9",
+      "appliedSHA256": "39a383fea3aec6f3c835cf5fdeaad4cbcaf79ed086bd125da551060a1f1ee1f9",
+      "mode": "full-candidate",
+      "finalSHA256": "ba354dffeabc68d77956cefb12369f18afb1fa10ba7829700b4144a78ff5bf3b"
+    },
+    {
+      "path": "backend/src/features/dreamer/night-stages.ts",
+      "beforeSHA256": "a8a82f339ca7d976f206b55b649bd34a314f01fda8cf4048364f985cfc2c6cec",
+      "preparedSHA256": "bbba85bb0813dc586303ebb28a7fbf148999225226a8005733bf4dc2ce112c95",
+      "appliedSHA256": "bbba85bb0813dc586303ebb28a7fbf148999225226a8005733bf4dc2ce112c95",
+      "mode": "full-candidate",
+      "finalSHA256": "a711ff1db3aa3caca25f0f028bdace5762a50453f883fe15060661928a63dd38"
+    },
+    {
+      "path": "backend/src/features/evil-knight/night-frame.ts",
+      "beforeSHA256": "dccf77a062a94d8d02ab5a9ec62cd0ac3fcaaf3147d9a0e9eb51f10999355f4c",
+      "preparedSHA256": "420af774bc98bb9157f35b0c3b9a8eb7202173854fc709e17a0e7e34991389cb",
+      "appliedSHA256": "420af774bc98bb9157f35b0c3b9a8eb7202173854fc709e17a0e7e34991389cb",
+      "mode": "full-candidate",
+      "finalSHA256": "fa448e253f9106864eeb9386c240257f207a0fb190f62392c7e942f8d4f0c863"
+    },
+    {
+      "path": "backend/src/features/fragrant-pair-seer/night-stages.ts",
+      "beforeSHA256": "722d3f6e775a765062737e4f0362002e0d4c802ea525cdf47eada936056d92e9",
+      "preparedSHA256": "70df842dcccd5acf904968eb00f2fbda366d274f4d0046da727b8b646cfa6cf4",
+      "appliedSHA256": "70df842dcccd5acf904968eb00f2fbda366d274f4d0046da727b8b646cfa6cf4",
+      "mode": "full-candidate",
+      "finalSHA256": "b5679c596b192e71bf464afa66d50e614ee254129a6a409e2ca51127da39d698"
+    },
+    {
+      "path": "backend/src/features/ghost-bride/night-stages.ts",
+      "beforeSHA256": "65cd4b8b19174a7fc2c358ebb77fede85641fdb77bbed3f4681efceddaad53a5",
+      "preparedSHA256": "b140669f99f02a5cf325dd52ac7cd1cdbe54a450b22f0c9ae0df7b5a2c331f59",
+      "appliedSHA256": "b140669f99f02a5cf325dd52ac7cd1cdbe54a450b22f0c9ae0df7b5a2c331f59",
+      "mode": "full-candidate",
+      "finalSHA256": "f7862b26c6858955a2e86fd2911e4de36eeada824248d466126a06dc9b223f6f"
+    },
+    {
+      "path": "backend/src/features/gravekeeper/feedback.ts",
+      "beforeSHA256": "55a1eec139fecb72463ee02e8370f4b11c77d3441ea8302dfe4c88082f41b0b1",
+      "preparedSHA256": "182c4b39ad8b6efe288fbc3769c04035e549765ca5921ec055932af11fdae0a3",
+      "appliedSHA256": "182c4b39ad8b6efe288fbc3769c04035e549765ca5921ec055932af11fdae0a3",
+      "mode": "full-candidate",
+      "finalSHA256": "cf5190d33b85faba576d5930ccdd53b8ff8e6ec87e5154d4add9ae0a1e2af53c"
+    },
+    {
+      "path": "backend/src/features/guard/night-stages.ts",
+      "beforeSHA256": "e73bb802c09428d6c505a93949c81c3fbf76b19a06805bf66be20bca2ae8530e",
+      "preparedSHA256": "b169d5f559b69bde032daee51033ccf5c0154e3f64825e4dbc07c5298e29b4e2",
+      "appliedSHA256": "b169d5f559b69bde032daee51033ccf5c0154e3f64825e4dbc07c5298e29b4e2",
+      "mode": "full-candidate",
+      "finalSHA256": "3549c45074cb5978cff2ae7cedb09340b5893872b945afeb67b6aedf5d210a75"
+    },
+    {
+      "path": "backend/src/features/hybrid/night-stage.ts",
+      "beforeSHA256": "6005c1ebcef90dc7fe56ebc54872996464abee56ea571c039c7a7416ffde5feb",
+      "preparedSHA256": "12a7e3f94ab7f4cc0f7be708bf7e030e1d2316380623cc3802e404c4802e4cd8",
+      "appliedSHA256": "12a7e3f94ab7f4cc0f7be708bf7e030e1d2316380623cc3802e404c4802e4cd8",
+      "mode": "full-candidate",
+      "finalSHA256": "98f7952adf100f67819b9d25656d097b0027df4ffe817d62c2ef0d763ec71aec"
+    },
+    {
+      "path": "backend/src/features/magician/night-stages.ts",
+      "beforeSHA256": "710abe3a1910f518e7ff2da53dae3af1d968d3d8191a75acad1b02ecc780746d",
+      "preparedSHA256": "58bf3ac9b28c3e4f04b45681f18f537c2dd5ff029a7b2def58b54a367ed0ba26",
+      "appliedSHA256": "58bf3ac9b28c3e4f04b45681f18f537c2dd5ff029a7b2def58b54a367ed0ba26",
+      "mode": "full-candidate",
+      "finalSHA256": "0d08d760a4744052ade7fa0144bbc5db830dd476abb57044eca26c94d3ce5ca1"
+    },
+    {
+      "path": "backend/src/features/mechanical-wolf/night-scope.ts",
+      "beforeSHA256": "d20b9a3be09c05235a37f3daeffd080f1ca57f6b64a2b41c94e272ccf8f3eae4",
+      "preparedSHA256": "aae89aafd79509cddf48811b6f169dcafb9f5a11474fea53cb787171b6949208",
+      "appliedSHA256": "aae89aafd79509cddf48811b6f169dcafb9f5a11474fea53cb787171b6949208",
+      "mode": "full-candidate",
+      "finalSHA256": "be451d504de61589440801b68cc50d8d4e45d486517d81f25c363c64abd660ee"
+    },
+    {
+      "path": "backend/src/features/mechanical-wolf/night-stages.ts",
+      "beforeSHA256": "e92cc083f450c1274b68aac944fc8f41550f2c17b599ee7a16623bc16fc07733",
+      "preparedSHA256": "9f527aed8e020f4e2264a61adc9658ac6c92bbc91285b4e786657b4c4e9ac6b3",
+      "appliedSHA256": "9f527aed8e020f4e2264a61adc9658ac6c92bbc91285b4e786657b4c4e9ac6b3",
+      "mode": "full-candidate",
+      "finalSHA256": "fb8f834ab6484607bea099e7695f22fb04f074347daded2c00167566e96b49ae"
+    },
+    {
+      "path": "backend/src/features/miracle-merchant/night-stage.ts",
+      "beforeSHA256": "9a83909523a703eebaaf37454a3b370f1d9c7a6900fbac4be5bcf3438c7fe9a7",
+      "preparedSHA256": "46a74559fb8d37c99163e33f721b7b3bd467578834ccc87de0696433cddb406b",
+      "appliedSHA256": "46a74559fb8d37c99163e33f721b7b3bd467578834ccc87de0696433cddb406b",
+      "mode": "full-candidate",
+      "finalSHA256": "4f4c66ab9a0d3a909bf6deedcf3f30041cb1d511dacfa62b9de1134628903482"
+    },
+    {
+      "path": "backend/src/features/mist-raven/night-stages.ts",
+      "beforeSHA256": "44af2d010dc83a6fe43f7bb77c80a61b323bf1ef0e3d8cd100bd58724d8962d6",
+      "preparedSHA256": "236269dd7cfb8870c42d808f7d2448ebb2898befec895ac17dfdac3a451f7840",
+      "appliedSHA256": "236269dd7cfb8870c42d808f7d2448ebb2898befec895ac17dfdac3a451f7840",
+      "mode": "full-candidate",
+      "finalSHA256": "ba8684b32867d913c100daa67985df7e243452b29e395192ef077032a2e5d07c"
+    },
+    {
+      "path": "backend/src/features/night-abilities/recipient-ability-stage.ts",
+      "beforeSHA256": "8e6505ced0cc8fc91a9e194f55b8902fb0de431236f32c5f45dbde1c22962597",
+      "preparedSHA256": "fdf44a3931a82ff4fa6c09778cff858332dfd4b641b5fdeaea0322d00a2a2182",
+      "appliedSHA256": "fdf44a3931a82ff4fa6c09778cff858332dfd4b641b5fdeaea0322d00a2a2182",
+      "mode": "full-candidate",
+      "finalSHA256": "9b19f25909f1f4733b474817340a6bd4395e69bbb80e7e9b4ec9717ae2bdc8ae"
+    },
+    {
+      "path": "backend/src/features/nightmare/night-stages.ts",
+      "beforeSHA256": "bfcb701ba9a821c8a517987a1d8a55ffbb8d13e82d76aa7f98e03cf3e27b822e",
+      "preparedSHA256": "168631048d600d6543394290c56f2fe5656b8655c2c3059af3e5b7765c3176ea",
+      "appliedSHA256": "168631048d600d6543394290c56f2fe5656b8655c2c3059af3e5b7765c3176ea",
+      "mode": "full-candidate",
+      "finalSHA256": "d988fa02cae10661f3ca07f3861e505804cfaf8e299eee4beaa767d9213f701c"
+    },
+    {
+      "path": "backend/src/features/noble-secret-body/night-stages.ts",
+      "beforeSHA256": "6203dcd7ed8f9070fe36f0fd7232690d4e6a601a1ddce4f5adc2848031cc40a6",
+      "preparedSHA256": "36791e49a6be261dbd20a133696a5b1ad573ac7eb02a70dd17934ccfb0997463",
+      "appliedSHA256": "36791e49a6be261dbd20a133696a5b1ad573ac7eb02a70dd17934ccfb0997463",
+      "mode": "full-candidate",
+      "finalSHA256": "9ed708c95c89f0f852c8ba414fe6ca867f31cee07ed70e512c03a34169e35148"
+    },
+    {
+      "path": "backend/src/features/pure-white/night-stages.ts",
+      "beforeSHA256": "d82da51ab11546888d465fe32b2b74f7b3d19dc5c27ac35066a67da1bcee041e",
+      "preparedSHA256": "b36bc28fe757d57e39ef39c474d41200af2d760e657ea616b59b12c500884778",
+      "appliedSHA256": "b36bc28fe757d57e39ef39c474d41200af2d760e657ea616b59b12c500884778",
+      "mode": "full-candidate",
+      "finalSHA256": "166d7f01ca8542c3c29899664b7d10ebb500aeed769f0ea2cc6b2c28156f1003"
+    },
+    {
+      "path": "backend/src/features/radiant-eclipse/night-stages.ts",
+      "beforeSHA256": "eca23e3d364ba74537d9f2c1b2b6dac302a4ea500e1387c22e0a3c7474121768",
+      "preparedSHA256": "3083820552779f64ec8d047b7c76a57f3816d1b7b2558fb27ba39865b916c33f",
+      "appliedSHA256": "3083820552779f64ec8d047b7c76a57f3816d1b7b2558fb27ba39865b916c33f",
+      "mode": "full-candidate",
+      "finalSHA256": "14e66eae94eb78c8af778f524cda0068a4713d8b15d5db260aab5d2523946770"
+    },
+    {
+      "path": "backend/src/features/role-inspection/night-stages.ts",
+      "beforeSHA256": "8d056f508765b95261c3ae2b469e631fbe0c26d3b2eeb3c3f1a2b617d31fee1b",
+      "preparedSHA256": "eda4d245615c6e7ecaddfd99e6df2c579bce72c8b72b541f307a223e66a24d40",
+      "appliedSHA256": "eda4d245615c6e7ecaddfd99e6df2c579bce72c8b72b541f307a223e66a24d40",
+      "mode": "full-candidate",
+      "finalSHA256": "32e01e4f7362e0bb215a5594a77f3dc1e230daeefa3a51a186dcf3bc83ed5b43"
+    },
+    {
+      "path": "backend/src/features/scholar-mentor/bonus-effect-validation.ts",
+      "beforeSHA256": "0ddf3ad583edb7e8611f732050eaa76d678935bd79fa83a869d07eb878459fe6",
+      "preparedSHA256": "cd48137215eff3f0053a009dc2574f56a6c271837bc6721d0c74e18560fc6fc6",
+      "appliedSHA256": "cd48137215eff3f0053a009dc2574f56a6c271837bc6721d0c74e18560fc6fc6",
+      "mode": "full-candidate",
+      "finalSHA256": "cd48137215eff3f0053a009dc2574f56a6c271837bc6721d0c74e18560fc6fc6"
+    },
+    {
+      "path": "backend/src/features/scholar-mentor/night-stages.ts",
+      "beforeSHA256": "ec4916b329a40d8dfcbbf93bbe58a8543b2997f6918888fce6d157fac38c8a23",
+      "preparedSHA256": "359f65760c24a6bedcf2d9c7b392d28295a3acb68f1fb02fed70a7599f2ed5b3",
+      "appliedSHA256": "359f65760c24a6bedcf2d9c7b392d28295a3acb68f1fb02fed70a7599f2ed5b3",
+      "mode": "full-candidate",
+      "finalSHA256": "5af0df466afe737e2ad5d0dc68e4ce4397eab6edba6fc5fdf5b9ab8d4f6e44fc"
+    },
+    {
+      "path": "backend/src/features/seer/night-stages.ts",
+      "beforeSHA256": "47da2d345e225833090909dbc265c3e450778eb6acd0c3ab14050cd6ac78a912",
+      "preparedSHA256": "795f5557f87966c963e09cffba7276e5104b21028ed8b5f6dd00652388cceaf1",
+      "appliedSHA256": "795f5557f87966c963e09cffba7276e5104b21028ed8b5f6dd00652388cceaf1",
+      "mode": "full-candidate",
+      "finalSHA256": "6f9952ae7f3c335936b2f29eadea8dad6ebce89d0256f3f20ecaed09af0361ab"
+    },
+    {
+      "path": "backend/src/features/time-wolf-consort/effects.ts",
+      "beforeSHA256": "fca7be8f06adfa282fb13dd2240fbf06e7e12d794d38cb8e3b8558ae92919b44",
+      "preparedSHA256": "bb685c2c61f9aa42baf3ca18c82b12323cc853edc49ef87c9a2f85116dc97435",
+      "appliedSHA256": "bb685c2c61f9aa42baf3ca18c82b12323cc853edc49ef87c9a2f85116dc97435",
+      "mode": "full-candidate",
+      "finalSHA256": "bb685c2c61f9aa42baf3ca18c82b12323cc853edc49ef87c9a2f85116dc97435"
+    },
+    {
+      "path": "backend/src/features/time-wolf-consort/night-stages.ts",
+      "beforeSHA256": "9f643b05e2f6fe68f2bc1639038156cb47230bce2dfd650e2a6d644b643c1a3a",
+      "preparedSHA256": "a5aee376352012633ce1adb6a7eacf48385a5b883510db154dc82a3af336b8ca",
+      "appliedSHA256": "a5aee376352012633ce1adb6a7eacf48385a5b883510db154dc82a3af336b8ca",
+      "mode": "full-candidate",
+      "finalSHA256": "7e871f31aa28c58322bdb861dc842f99d6a09759f7442f2ee132efd36fb8aeb9"
+    },
+    {
+      "path": "backend/src/features/trickster/night-stages.ts",
+      "beforeSHA256": "d3cb4ff919b804f7f831b447c191a7b49fe8d25ea0e08a964265489ebaa35e55",
+      "preparedSHA256": "5a8a3d02ad0707240624cfddeaf2de63d0c6eab6cb874ed8d9598a12b036421c",
+      "appliedSHA256": "5a8a3d02ad0707240624cfddeaf2de63d0c6eab6cb874ed8d9598a12b036421c",
+      "mode": "full-candidate",
+      "finalSHA256": "c3645d14c7ccd65fc65d01655d310cdff283112eaa162c059dca722c851f5c1c"
+    },
+    {
+      "path": "backend/src/features/witch/night-stages.ts",
+      "beforeSHA256": "4fe68a49c50c1045bfbfccf1925f83253d8cda7402438e74c0f5746a1b473462",
+      "preparedSHA256": "c74adcd359881b1714af0a8995bf316cc5997ccca8f4a3a97614d9f506068f8f",
+      "appliedSHA256": "c74adcd359881b1714af0a8995bf316cc5997ccca8f4a3a97614d9f506068f8f",
+      "mode": "full-candidate",
+      "finalSHA256": "7ad4eb8cb61e1c518a71b4b367eb44b106a6463b94516b3219fe309d7cbd8997"
+    },
+    {
+      "path": "backend/src/features/wolf/night-stages.ts",
+      "beforeSHA256": "e2cc4587d58d052dd7ed1df3fd5f43aff9d0e4418d48db2eadd4afd3be54b18b",
+      "preparedSHA256": "18bef77692dfc3e5bdea082580a79f3cd7f6e9ca8bd14591da86af40889a8325",
+      "appliedSHA256": "18bef77692dfc3e5bdea082580a79f3cd7f6e9ca8bd14591da86af40889a8325",
+      "mode": "full-candidate",
+      "finalSHA256": "431bde90ca03f50d5149c76d603b4eb872d283feb8f0451b26bf155387e1274e"
+    },
+    {
+      "path": "backend/src/features/wolf-beauty/night-stages.ts",
+      "beforeSHA256": "cae0d945b526b27e383bee3c5b80b3cf86e1159a90f4861de8f2f893b97d6dee",
+      "preparedSHA256": "81ab47750a7c940373c1471987b6ffdc5ebd47a4e49364216bffd4a94474861a",
+      "appliedSHA256": "81ab47750a7c940373c1471987b6ffdc5ebd47a4e49364216bffd4a94474861a",
+      "mode": "full-candidate",
+      "finalSHA256": "35eb0b3e081a8c6c9b7e9f494b57908d59dcc233dbc70ecce136e3b0d36f3489"
+    },
+    {
+      "path": "backend/src/features/wolf-sorcerer/night-stages.ts",
+      "beforeSHA256": "5c31a08d64980003106348aa31d6601acdfb4de019716144e6643ae85c61e34c",
+      "preparedSHA256": "b17f033156be3b91f1f1e154b7fbc9ac93c27bb9e50e273d42885b3ad5dc8721",
+      "appliedSHA256": "b17f033156be3b91f1f1e154b7fbc9ac93c27bb9e50e273d42885b3ad5dc8721",
+      "mode": "full-candidate",
+      "finalSHA256": "c7c3e5f2e0306f0b3d888012af7ec29c3e47adf9b0c7a157a4a8fa209954279e"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-effects.ts",
+      "beforeSHA256": "db53a5f2038961311497571c86a7318fcd5f03a6b54407f32071666ded8760b4",
+      "preparedSHA256": "65d9cf3ea43857e926d10ea6a367734d736924e686734b8132f32d9d7823ae06",
+      "appliedSHA256": "65d9cf3ea43857e926d10ea6a367734d736924e686734b8132f32d9d7823ae06",
+      "mode": "full-candidate",
+      "finalSHA256": "65d9cf3ea43857e926d10ea6a367734d736924e686734b8132f32d9d7823ae06"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "beforeSHA256": "e29e12a334934e5b145b88cf3254f5eaff11a1efe439df34359807f07fd91b24",
+      "preparedSHA256": "bbf2990001e5abb378757da4f43250021c0995fb907d36fa2f17cde0de369d75",
+      "appliedSHA256": "bbf2990001e5abb378757da4f43250021c0995fb907d36fa2f17cde0de369d75",
+      "mode": "full-candidate",
+      "finalSHA256": "bbf2990001e5abb378757da4f43250021c0995fb907d36fa2f17cde0de369d75"
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "beforeSHA256": "62a0ed80180e5b7653a6309029f5056b240df195b23d3ac87b099a86b76d101b",
+      "preparedSHA256": "8690e93792ca9ae7b90d96347447c42be00c75ccfc9adcc924ed36bc04b4c780",
+      "appliedSHA256": "8690e93792ca9ae7b90d96347447c42be00c75ccfc9adcc924ed36bc04b4c780",
+      "mode": "full-candidate",
+      "finalSHA256": "8690e93792ca9ae7b90d96347447c42be00c75ccfc9adcc924ed36bc04b4c780"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-bindings.ts",
+      "beforeSHA256": null,
+      "preparedSHA256": "c3eb73de6d9597c32a8c65e252a82c282fc7ba2d80bfa280316b60c7f9b6afe4",
+      "appliedSHA256": "c3eb73de6d9597c32a8c65e252a82c282fc7ba2d80bfa280316b60c7f9b6afe4",
+      "mode": "full-candidate",
+      "finalSHA256": "5a50151c4607ab8d56241c7b33ab4ea2935f83bf84b4faaca47306a97689a8a3"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan-contracts.ts",
+      "beforeSHA256": "6e46e31746df659d4a5c882dce597c9a6f041110383d49f6a8d8d20b84dcccf8",
+      "preparedSHA256": "bb33b5f1b078893e4347cf61d96f891538e82b3baab2ef5b1cbbb5e5e96257aa",
+      "appliedSHA256": "bb33b5f1b078893e4347cf61d96f891538e82b3baab2ef5b1cbbb5e5e96257aa",
+      "mode": "full-candidate",
+      "finalSHA256": "bb33b5f1b078893e4347cf61d96f891538e82b3baab2ef5b1cbbb5e5e96257aa"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan.ts",
+      "beforeSHA256": "33fcbf239100e8832f37983643ab371f95a5f416a3828e0520dfdd4ec79ca30e",
+      "preparedSHA256": "56205c6c659db8efe3c25886851f55b7fd7b33cdc32335ca4070d02b1cfc5923",
+      "appliedSHA256": "56205c6c659db8efe3c25886851f55b7fd7b33cdc32335ca4070d02b1cfc5923",
+      "mode": "full-candidate",
+      "finalSHA256": "8ff3904246a94ec1a85194f8ef52bb697816a4073dc02da11fe6e7716495d099"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-registration.ts",
+      "beforeSHA256": "ea669aa59a453e3d31094e2889b52e434469fac35140a9b407efa7b30f53f5eb",
+      "preparedSHA256": "4bbac594a78a1be4c88d5d73ea49795130872fee114d098c4b43b20057d62c79",
+      "appliedSHA256": "4bbac594a78a1be4c88d5d73ea49795130872fee114d098c4b43b20057d62c79",
+      "mode": "full-candidate",
+      "finalSHA256": "e47a2f57bd8f8acb65c955b7b5b9bf60ef35b9893d81517a27184cea44b48cde"
+    },
+    {
+      "path": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+      "beforeSHA256": "3778f7c7f8e873b4a9c0beeef2ff46da56409ae82bdaae623316c124c950be74",
+      "preparedSHA256": "523114205b47cbc022678a87ef10bb31b56c90832c5c135d2af0003179f21a78",
+      "appliedSHA256": "523114205b47cbc022678a87ef10bb31b56c90832c5c135d2af0003179f21a78",
+      "mode": "full-candidate",
+      "finalSHA256": "523114205b47cbc022678a87ef10bb31b56c90832c5c135d2af0003179f21a78"
+    },
+    {
+      "path": "backend/src/rulesets/roles/contracts.ts",
+      "beforeSHA256": "0911bb87e920f8e5e0c16017a060f855ce7a616b4304b749725bcb8e04fe0fe2",
+      "preparedSHA256": "cc2a973b0f49bf869ef49c3b36c2bf30da36b2289969ce9dff2c3fb0d3524d8d",
+      "appliedSHA256": "cc2a973b0f49bf869ef49c3b36c2bf30da36b2289969ce9dff2c3fb0d3524d8d",
+      "mode": "root-merge-exact-only",
+      "finalSHA256": "cc2a973b0f49bf869ef49c3b36c2bf30da36b2289969ce9dff2c3fb0d3524d8d"
+    },
+    {
+      "path": "backend/src/rulesets/rule-plan.ts",
+      "beforeSHA256": "89c884c953cf041a6cfd1554d5af73b3dd8b026c988a7e44d705f4043a0f2616",
+      "preparedSHA256": "1d35289e73e88313eb0ccff298f902bb9911a54f72843cb6d1d424907ff29d57",
+      "appliedSHA256": "1d35289e73e88313eb0ccff298f902bb9911a54f72843cb6d1d424907ff29d57",
+      "mode": "root-merge-exact-only",
+      "finalSHA256": "1d35289e73e88313eb0ccff298f902bb9911a54f72843cb6d1d424907ff29d57"
+    },
+    {
+      "path": "backend/tests/scenarios/engine/awakened-proposal-settlement.test.ts",
+      "beforeSHA256": "86a7257ad04bf4ee9049e0f7e6337f737bf42302246d6ae08fc9e67d5eef33d0",
+      "preparedSHA256": "541a10a093a9722440b44644fd5cea7e10b920558af20a15f56c9fb4f947d3ce",
+      "appliedSHA256": "541a10a093a9722440b44644fd5cea7e10b920558af20a15f56c9fb4f947d3ce",
+      "mode": "full-candidate",
+      "finalSHA256": "30e5c5ef4241de794b952165945803ec5965bc6cf7cef1d16dc328a57fb282ee"
+    },
+    {
+      "path": "backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+      "beforeSHA256": "45bcfd44cfc73b113f2c4970e70213f25b21fef21014b0c7677bf478108b9d2a",
+      "preparedSHA256": "19b69356bc2be234974d5d10279568af6f828c6d0558540bc29d755f040339ee",
+      "appliedSHA256": "19b69356bc2be234974d5d10279568af6f828c6d0558540bc29d755f040339ee",
+      "mode": "full-candidate",
+      "finalSHA256": "19b69356bc2be234974d5d10279568af6f828c6d0558540bc29d755f040339ee"
+    },
+    {
+      "path": "backend/tests/scenarios/features/cupid/ordered-lovers-death-waves.test.ts",
+      "beforeSHA256": "6eaf8eb87a05b816fce2aef9ed3a861ddc6fe6c61de78a01e933c052cea4afe8",
+      "preparedSHA256": "c5fa18daf15a6fde3e0a34823fe5656aa96ef15c5eb79d8e03e5701b3487702d",
+      "appliedSHA256": "c5fa18daf15a6fde3e0a34823fe5656aa96ef15c5eb79d8e03e5701b3487702d",
+      "mode": "full-candidate",
+      "finalSHA256": "bbc1ce8dd8118b2836f6b69706d550f213fc53da0658364eebd4786a01cb2d63"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "beforeSHA256": "798766fe20f283f5dfb0cca1106bc323b1769c9672347b5039d3da08aa62368b",
+      "preparedSHA256": "f7ab3daf0da2e5f0cdd103e885392d2b3b175c94b7dd472d4b8b49ed96093a71",
+      "appliedSHA256": "f7ab3daf0da2e5f0cdd103e885392d2b3b175c94b7dd472d4b8b49ed96093a71",
+      "mode": "full-candidate",
+      "finalSHA256": "db77bdcbbe8df7fcd8a224ced54b8521a58933fe0e3b55377358f0debb0b5c6b"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "beforeSHA256": "2752dc3bf3b15509e416129d79c441446005608598e66644d7ee21925c7aecb3",
+      "preparedSHA256": "2918c65e7806f443f8f7686c9a6a5e3f95c75e254c2bdf38d33e617f01dfd13a",
+      "appliedSHA256": "2918c65e7806f443f8f7686c9a6a5e3f95c75e254c2bdf38d33e617f01dfd13a",
+      "mode": "full-candidate",
+      "finalSHA256": "d256bc6322bef8ab4f26694ea5b033783631e3ae9d039662c2820b270277e64b"
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "beforeSHA256": "80d969863c55c9bdf4080d29ca9f2f3142e44344fe7f578ed7d9c6615bc2a764",
+      "preparedSHA256": "048965d5de8ea27d080d2bb8cf7465b4af20024ecab19035e06b4f6fbd611bd0",
+      "appliedSHA256": "048965d5de8ea27d080d2bb8cf7465b4af20024ecab19035e06b4f6fbd611bd0",
+      "mode": "full-candidate",
+      "finalSHA256": "99dc3aa950252980f93131d3a5c060fae1cb524196bf485e5311e8735a7bf37e"
+    },
+    {
+      "path": "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+      "beforeSHA256": "b2d3047c8a72a491889999a88d23656e32608ed0e60fe243832d3632b100bf4d",
+      "preparedSHA256": "1d039c117fe89bf28c526e59706e221988edce042e25496991d7d231ee66c6e0",
+      "appliedSHA256": "1d039c117fe89bf28c526e59706e221988edce042e25496991d7d231ee66c6e0",
+      "mode": "full-candidate",
+      "finalSHA256": "8458a7722951778be11f8293bb21f6ce6d18d08a0e3b94050f92b4a0ef9f25c3"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/native-shelter-and-borrowed-stock-matrices.test.ts",
+      "beforeSHA256": "754aed2cfd9e34a847a2a1e6d44779620a2d821cf570a712b396b936b29d3eae",
+      "preparedSHA256": "009db03660dfec32cd94b5e3c3d013c2f6476498b239018d32b821bc6963433f",
+      "appliedSHA256": "009db03660dfec32cd94b5e3c3d013c2f6476498b239018d32b821bc6963433f",
+      "mode": "full-candidate",
+      "finalSHA256": "009db03660dfec32cd94b5e3c3d013c2f6476498b239018d32b821bc6963433f"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "beforeSHA256": "2d22845b16d55c8e61fc475fd2c069c942eaad2b7ca14bd3e6f871f4e9184042",
+      "preparedSHA256": "a474d0371b618668e41a3d0db63eb82803d45c2ce999133f4fc08c957be7cd16",
+      "appliedSHA256": "a474d0371b618668e41a3d0db63eb82803d45c2ce999133f4fc08c957be7cd16",
+      "mode": "full-candidate",
+      "finalSHA256": "2760c9c429dd380176e5c94e9fcafe1065e7bf47427a345aa4e30f38b9028b6e"
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/two-potion-native-night.test.ts",
+      "beforeSHA256": "b785712e7a6c011bf4153f41c0334413b342f9f2737fc72364037d8e8d5b60e1",
+      "preparedSHA256": "9b3b56270c86c07fe643dcbf270abbe004015e84e52d43ffd4cafb3bb5f8beb2",
+      "appliedSHA256": "9b3b56270c86c07fe643dcbf270abbe004015e84e52d43ffd4cafb3bb5f8beb2",
+      "mode": "full-candidate",
+      "finalSHA256": "b0c02ed3ad2ad6fbd7a528a88a52f60a5aee7565f4e7f32077aa05ea7c016a27"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/noble-secret-body/night-handoff-prefix.test.ts",
+      "beforeSHA256": "c647307112a8fc85f2fd92c172d8b055a22331d8599e6a98db8e9a8546f420dc",
+      "preparedSHA256": "66c869edb1e81f2ed494e9e417027a30e975fab29e30761bad051628036fa306",
+      "appliedSHA256": "66c869edb1e81f2ed494e9e417027a30e975fab29e30761bad051628036fa306",
+      "mode": "full-candidate",
+      "finalSHA256": "061c22c7ac0bccbdab2f1b81f2319b76e1c878e57dac5953a17e5111b73f15c4"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/gifted-gun-native-night.test.ts",
+      "beforeSHA256": "e74a05e0c7503edbc3ec410668233df67c0cf400848664b1d9a29e54a135c7b0",
+      "preparedSHA256": "18ed9ae8d52d6326a548bd3ece39334216d31189912ef7ac59bf9d4631be4db9",
+      "appliedSHA256": "18ed9ae8d52d6326a548bd3ece39334216d31189912ef7ac59bf9d4631be4db9",
+      "mode": "full-candidate",
+      "finalSHA256": "18ed9ae8d52d6326a548bd3ece39334216d31189912ef7ac59bf9d4631be4db9"
+    },
+    {
+      "path": "backend/tests/support/builders/night-stage-context.ts",
+      "beforeSHA256": "9cc15bb55cfbc1dfb0586fd580b0a0dee500cdad34f4b69c0b2c3a7de35068df",
+      "preparedSHA256": "1678d0e4dcf4decc66bc4914f403456e7f7ad6d0a6241d7790c23cc7ad7b559a",
+      "appliedSHA256": "1678d0e4dcf4decc66bc4914f403456e7f7ad6d0a6241d7790c23cc7ad7b559a",
+      "mode": "full-candidate",
+      "finalSHA256": "01e28d15125319e8a0e9655b5bb1638eee5ce714e126f24d34b4ed9e8b87b0ef"
+    },
+    {
+      "path": "backend/tests/unit/agents/strict-optional-turn.test.ts",
+      "beforeSHA256": "d6a33894f15acf0850215378d9543fdf4047d546326afe7b4d3fa7eb601111b2",
+      "preparedSHA256": "36e575f4a450bda23eea6a24b986fe2890e429355f40a1a17eeafc336c57c482",
+      "appliedSHA256": "36e575f4a450bda23eea6a24b986fe2890e429355f40a1a17eeafc336c57c482",
+      "mode": "full-candidate",
+      "finalSHA256": "81ffd7b75a41800c50c6cfa3f60f912fbf8544ff86f1c65140785cfa9e490022"
+    },
+    {
+      "path": "backend/tests/unit/configuration/radiant-eclipse-roundtrip.test.ts",
+      "beforeSHA256": "d61e9bb1f012eacc96d2ced3ed735e096b342cefe3e0c47aae6535a9ddfc7b53",
+      "preparedSHA256": "8ba5b1e9bc3485dfce140dd1ba6dbbbd028c662177c8d68b21c7f38f9ee396b7",
+      "appliedSHA256": "8ba5b1e9bc3485dfce140dd1ba6dbbbd028c662177c8d68b21c7f38f9ee396b7",
+      "mode": "full-candidate",
+      "finalSHA256": "8ba5b1e9bc3485dfce140dd1ba6dbbbd028c662177c8d68b21c7f38f9ee396b7"
+    },
+    {
+      "path": "backend/tests/unit/domain/relationship-unpaid-role-admission.test.ts",
+      "beforeSHA256": "aab44b13c4b6f39d1634a7b84c0b73868285ba549834023fc2aff8156c67067e",
+      "preparedSHA256": "9897613d9f800c250f59e60cf67c586a8a437677ede0909b8c68bb779074277c",
+      "appliedSHA256": "9897613d9f800c250f59e60cf67c586a8a437677ede0909b8c68bb779074277c",
+      "mode": "full-candidate",
+      "finalSHA256": "9897613d9f800c250f59e60cf67c586a8a437677ede0909b8c68bb779074277c"
+    },
+    {
+      "path": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+      "beforeSHA256": "c3313259ec7e1bb7d00b4ccec570c97377482be805e20ae2d4d3abf4d237586e",
+      "preparedSHA256": "f58b7df046f06e936a7817ca3efbac7dbb2ce43033609fa6a961e68154f2edb2",
+      "appliedSHA256": "f58b7df046f06e936a7817ca3efbac7dbb2ce43033609fa6a961e68154f2edb2",
+      "mode": "full-candidate",
+      "finalSHA256": "f58b7df046f06e936a7817ca3efbac7dbb2ce43033609fa6a961e68154f2edb2"
+    },
+    {
+      "path": "backend/tests/unit/engine/night-stage-query-command-boundary.test.ts",
+      "beforeSHA256": null,
+      "preparedSHA256": "892f02132b253bfb3c04d4b5a608bd2c2bc2ed0b815a67424e0f1907e9dc4f9d",
+      "appliedSHA256": "892f02132b253bfb3c04d4b5a608bd2c2bc2ed0b815a67424e0f1907e9dc4f9d",
+      "mode": "full-candidate",
+      "finalSHA256": "f2876786dfe9f892befa18234b57acc7ca847c90d53f2dfdb416e5ad03ad92d2"
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "beforeSHA256": "54dd55e324f77a7ecee4100a15b3b37f8685367a40f89856648ef68ce52e8a8b",
+      "preparedSHA256": "9a112eeb8813714245b56dec1e86e35bfee6016e13dbb8f6fbc0e1715cf060df",
+      "appliedSHA256": "9a112eeb8813714245b56dec1e86e35bfee6016e13dbb8f6fbc0e1715cf060df",
+      "mode": "full-candidate",
+      "finalSHA256": "9a112eeb8813714245b56dec1e86e35bfee6016e13dbb8f6fbc0e1715cf060df"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "beforeSHA256": "4a4c0965909aa60b0cb46d0899ef122bdfeeb386293b0929fabcf1e41e16b3c7",
+      "preparedSHA256": "ae9f152bfc5ca1e41be81ef314c551c25d737439a1435116a898850349f2a530",
+      "appliedSHA256": "ae9f152bfc5ca1e41be81ef314c551c25d737439a1435116a898850349f2a530",
+      "mode": "full-candidate",
+      "finalSHA256": "ae9f152bfc5ca1e41be81ef314c551c25d737439a1435116a898850349f2a530"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+      "beforeSHA256": "6109a82ed23be567cf4fc4f2585dfb0069a74f772bc242bc7d29281cc444da8e",
+      "preparedSHA256": "1d94f0ee0294e9ca677c433225173343d0458bdbdfd2550fb537b636830fd0a3",
+      "appliedSHA256": "1d94f0ee0294e9ca677c433225173343d0458bdbdfd2550fb537b636830fd0a3",
+      "mode": "full-candidate",
+      "finalSHA256": "6088af71b383db1845dbcda23e7acce7cf4594455e548011a956d5606d585c32"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid-hybrid/request-lease-completion.test.ts",
+      "beforeSHA256": "d89ce62f79dd54d4c235ca1856785a9be8c924fd6ed290edba9b58b5d06603b7",
+      "preparedSHA256": "78d35c9460f536f29aebe89b27e6568ab297db2db6174e1bd937c2be6fe1efc4",
+      "appliedSHA256": "78d35c9460f536f29aebe89b27e6568ab297db2db6174e1bd937c2be6fe1efc4",
+      "mode": "full-candidate",
+      "finalSHA256": "b1fccc73bef63d775c41c821153b5d78d20a01cd40eecfaaddbac335a19116e1"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid-hybrid-state-slots.test.ts",
+      "beforeSHA256": "ac5f0911255374ae19b6d9464cf1575edda579af6e846d30689b74f237819d65",
+      "preparedSHA256": "64ad6839fcd2a3e8ea8f5ff37c2214ee7ca62217063357541671a7d2ae4f1ce2",
+      "appliedSHA256": "64ad6839fcd2a3e8ea8f5ff37c2214ee7ca62217063357541671a7d2ae4f1ce2",
+      "mode": "full-candidate",
+      "finalSHA256": "64ad6839fcd2a3e8ea8f5ff37c2214ee7ca62217063357541671a7d2ae4f1ce2"
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "beforeSHA256": "e703286e1362cd865ecf18728c3f7d0a8e8f499b886289a0773fa6e98c3693a3",
+      "preparedSHA256": "4488cf7c03bb1f58dbf9568b3ec5adcdf4b39c0f4916471004110e86879a3608",
+      "appliedSHA256": "4488cf7c03bb1f58dbf9568b3ec5adcdf4b39c0f4916471004110e86879a3608",
+      "mode": "full-candidate",
+      "finalSHA256": "255140fd946607bc24647fd3463cf07b973d4d945eb8d57cb03a1d855d950d32"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/request-terminal-revocation.test.ts",
+      "beforeSHA256": "fe58eb914446c795df9082ed8a4416fdd1ba5dc9c2cc2e9434dde60f6df9321c",
+      "preparedSHA256": "776e570586ebaf54318d5a4d1d26f634f43a076e6d89d0c7d9a2a23dfea0b9ae",
+      "appliedSHA256": "776e570586ebaf54318d5a4d1d26f634f43a076e6d89d0c7d9a2a23dfea0b9ae",
+      "mode": "full-candidate",
+      "finalSHA256": "776e570586ebaf54318d5a4d1d26f634f43a076e6d89d0c7d9a2a23dfea0b9ae"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "beforeSHA256": "d4d2b43ea6b112a7526c4f410a1712da3d20d8d2286df3cdcd0cfa519a509a1b",
+      "preparedSHA256": "bc4d6ad266f067f59d6dae85fa5fd317da862d90d9483d0ddfccd7516c028f49",
+      "appliedSHA256": "bc4d6ad266f067f59d6dae85fa5fd317da862d90d9483d0ddfccd7516c028f49",
+      "mode": "full-candidate",
+      "finalSHA256": "bc4d6ad266f067f59d6dae85fa5fd317da862d90d9483d0ddfccd7516c028f49"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+      "beforeSHA256": "db4b0445f4e23b70811e63f361d0ced5b2e374de5ec64a1b3c38fa42998bc7e5",
+      "preparedSHA256": "2ecd9c3489115c597f3e8406187ea6f87b8b4c11481945cea62131f07c9b9e2b",
+      "appliedSHA256": "2ecd9c3489115c597f3e8406187ea6f87b8b4c11481945cea62131f07c9b9e2b",
+      "mode": "full-candidate",
+      "finalSHA256": "a4ad60750556ee5c12cc799920e1cac7639b32898e39c077d27e157d55715c8e"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+      "beforeSHA256": "18c04f622d9f2bf0bf832d4c560671c38a9645f12213e1ec33c3d5f503428006",
+      "preparedSHA256": "2b3f403b1c1242e23d45e1d94542f81126700b8ee4d1138292e157e00e65f842",
+      "appliedSHA256": "2b3f403b1c1242e23d45e1d94542f81126700b8ee4d1138292e157e00e65f842",
+      "mode": "full-candidate",
+      "finalSHA256": "2b3f403b1c1242e23d45e1d94542f81126700b8ee4d1138292e157e00e65f842"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "beforeSHA256": "a074ac330e01d49bd3329b2d1e6e280737f86119f2522e677265a9cea43fc792",
+      "preparedSHA256": "3cb1fe524738a89bd483d39219e4a180d7ec1a4a533798fd9bbee5314aaec753",
+      "appliedSHA256": "3cb1fe524738a89bd483d39219e4a180d7ec1a4a533798fd9bbee5314aaec753",
+      "mode": "full-candidate",
+      "finalSHA256": "1a7208161cc23ebaee9f5231fc7eb5f5b184ff18b4059d25364d40a3e2e2b774"
+    },
+    {
+      "path": "backend/tests/unit/features/gravekeeper/private-feedback-boundaries.test.ts",
+      "beforeSHA256": "3d85e024506c20d6565bae10de2ecd1f2ce932b54fb80aa39e471d46cdc84715",
+      "preparedSHA256": "90239515fd5fd35893be21957eac73dc9ca10331aa19be6953742673e4693671",
+      "appliedSHA256": "90239515fd5fd35893be21957eac73dc9ca10331aa19be6953742673e4693671",
+      "mode": "full-candidate",
+      "finalSHA256": "1fd3fd878b3d5c61e6ea98c2146498f335c04bfde9253b5580c1a16327ac199f"
+    },
+    {
+      "path": "backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+      "beforeSHA256": "7a0fde53aac919aaa3472b1595b69b4fe1a1d4d2b4bb0186c3919eaf138b2b52",
+      "preparedSHA256": "7884afa806afe675a0d6082224cc3b905cb4c8ea9eb7d31eaf924c3a1fc54353",
+      "appliedSHA256": "7884afa806afe675a0d6082224cc3b905cb4c8ea9eb7d31eaf924c3a1fc54353",
+      "mode": "full-candidate",
+      "finalSHA256": "ceccade5355f3e35358fb80571329d6379e1b57a9a075071e48fd7bb015952f5"
+    },
+    {
+      "path": "backend/tests/unit/features/hidden-wolf/pack-permission-contracts.test.ts",
+      "beforeSHA256": "eec2b89cce834ac11790c0b164ec3c91677abc120497988378f94f19a98a49ae",
+      "preparedSHA256": "af7e03b377560e90e902a45c56e743641eafaf2d2fb5cf9ca79a228e822c91d1",
+      "appliedSHA256": "af7e03b377560e90e902a45c56e743641eafaf2d2fb5cf9ca79a228e822c91d1",
+      "mode": "full-candidate",
+      "finalSHA256": "ebb4c1bbd5d13564af390c348bb80a40bad56cc1e03c6c64e4756bf868c0a280"
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "beforeSHA256": "1eac676941c5442a972589a8f15c107ed44cefa5595785798a36604c190f1faa",
+      "preparedSHA256": "f7f3fe1765fc9fbecc7fd1186607d6df2588de7917fa9db4f7b17ea50c44e20b",
+      "appliedSHA256": "f7f3fe1765fc9fbecc7fd1186607d6df2588de7917fa9db4f7b17ea50c44e20b",
+      "mode": "full-candidate",
+      "finalSHA256": "238a9669db12278415daa0719ebe3b8b0551659389a4b00fa5f038038b02355a"
+    },
+    {
+      "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "beforeSHA256": "5c5bf6f3408a6d166583b123c78d5a2afa2e8ec8d30a5be440a5fb6a769557b9",
+      "preparedSHA256": "53bf20e837360ee271e55b9f88705308f50be326fbc461f1a1d2b2e7e481a778",
+      "appliedSHA256": "53bf20e837360ee271e55b9f88705308f50be326fbc461f1a1d2b2e7e481a778",
+      "mode": "full-candidate",
+      "finalSHA256": "ee347aac4eec9803b24e7b72b7f4ed72d895b9cabbae3a3a36a210c53deaec8a"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "beforeSHA256": "bfdef8aa2df9b536ef2e86ee612c0ca36c2c045c3a62c8c626eed977b94e0ac9",
+      "preparedSHA256": "c863f16aa9a353dbbd0c97b46f889395083fedda11427e7b19de084ed16bdd27",
+      "appliedSHA256": "c863f16aa9a353dbbd0c97b46f889395083fedda11427e7b19de084ed16bdd27",
+      "mode": "full-candidate",
+      "finalSHA256": "ed50730652a97c4871204d059e9b2f9961e213bf711dd48a27dc13da64fa93e5"
+    },
+    {
+      "path": "backend/tests/unit/features/night-request-preflight.test.ts",
+      "beforeSHA256": "6c550433878baf9f72c7605e6cbb893a569fce7679da513417dada240e19f914",
+      "preparedSHA256": "bf89d26d94105e4ccb768bc59304ba9690de72060e73eb0b49b85c17c8a37c7b",
+      "appliedSHA256": "bf89d26d94105e4ccb768bc59304ba9690de72060e73eb0b49b85c17c8a37c7b",
+      "mode": "full-candidate",
+      "finalSHA256": "bf89d26d94105e4ccb768bc59304ba9690de72060e73eb0b49b85c17c8a37c7b"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "beforeSHA256": "5c4951e9028a13f784f0b2eb2e498b187e567db360ec46670845d68fd5f966af",
+      "preparedSHA256": "638a9b03a1b8188602c6b7c2bbcf3bd3e0d3a68ba98ef67ca8e691313a8a8096",
+      "appliedSHA256": "638a9b03a1b8188602c6b7c2bbcf3bd3e0d3a68ba98ef67ca8e691313a8a8096",
+      "mode": "full-candidate",
+      "finalSHA256": "8fd7c7be2bc3ead971805e8ab0cf89f1d7f05f4792e2499633eb9d1e526a1bbb"
+    },
+    {
+      "path": "backend/tests/unit/features/pure-white/pure-white-stage.test.ts",
+      "beforeSHA256": "26f4c96422409230b03c62ef7b1608609c8748fa47c658171cf658e4464db612",
+      "preparedSHA256": "06eb5d844d2eecd03674b7080b97de3ee5f4f5076867eef603a6e95e51970a62",
+      "appliedSHA256": "06eb5d844d2eecd03674b7080b97de3ee5f4f5076867eef603a6e95e51970a62",
+      "mode": "full-candidate",
+      "finalSHA256": "06eb5d844d2eecd03674b7080b97de3ee5f4f5076867eef603a6e95e51970a62"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-seal.test.ts",
+      "beforeSHA256": "24fba9a651cb22422b84c46ec4b01005fc59795b8595d48420bba50bfc2f61be",
+      "preparedSHA256": "47b76d6f9d49e8702dbc9a963c595ff97bec1808e387ea0ac06814b28295bdee",
+      "appliedSHA256": "47b76d6f9d49e8702dbc9a963c595ff97bec1808e387ea0ac06814b28295bdee",
+      "mode": "full-candidate",
+      "finalSHA256": "47b76d6f9d49e8702dbc9a963c595ff97bec1808e387ea0ac06814b28295bdee"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "beforeSHA256": "b68bb3910e6567a2752a0ff2043d1be306e7b8628b21c6eb888c7d7bad886318",
+      "preparedSHA256": "86ecff8db09f6f8ba886231959ccc885f45545575f170a0a6f22a8b7a1f64873",
+      "appliedSHA256": "86ecff8db09f6f8ba886231959ccc885f45545575f170a0a6f22a8b7a1f64873",
+      "mode": "full-candidate",
+      "finalSHA256": "86ecff8db09f6f8ba886231959ccc885f45545575f170a0a6f22a8b7a1f64873"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "beforeSHA256": "900b589b9bfeb61de3c7779949c40df753efee8eee0aa53d89ccf465f1a59e9d",
+      "preparedSHA256": "c8b6f2a137771009d818e6dc96c7d745bb6a1d5148115c28e94f21f32715b11a",
+      "appliedSHA256": "c8b6f2a137771009d818e6dc96c7d745bb6a1d5148115c28e94f21f32715b11a",
+      "mode": "full-candidate",
+      "finalSHA256": "c8b6f2a137771009d818e6dc96c7d745bb6a1d5148115c28e94f21f32715b11a"
+    },
+    {
+      "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+      "beforeSHA256": "d12287f68b50dba2249550d753c58b5d59d6949855448bd45f0133fd3ec2202b",
+      "preparedSHA256": "67bf67fc608bc07b45abe0460e0e38ac1c621c78ac2002bcfda853f60a662f5c",
+      "appliedSHA256": "67bf67fc608bc07b45abe0460e0e38ac1c621c78ac2002bcfda853f60a662f5c",
+      "mode": "full-candidate",
+      "finalSHA256": "07d78aede9bb8851140be2136c7fa0abc3c2cb0a5c91b0a9b50ea043a1f9bdb1"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "beforeSHA256": "de0cde1062a0c8772483e28fc440bdf3154bf1594edf2a0a8a2a1e3be02bb139",
+      "preparedSHA256": "dd149a196de447813a91fad1887592f7c0abca39ad56fbb950fcf340d11d5b40",
+      "appliedSHA256": "dd149a196de447813a91fad1887592f7c0abca39ad56fbb950fcf340d11d5b40",
+      "mode": "full-candidate",
+      "finalSHA256": "8a72542637efe6a5ec4d9e806b57e0641f06cb6fd81fcf7d5743b450a8ec949a"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/poison-life-scope.test.ts",
+      "beforeSHA256": "677f264bd5fd1a1faaf09998e92bdb8c568663686f76fdd87273d2ce74708873",
+      "preparedSHA256": "d3e8dec984175390445a3f1b310e7b75ab2e1736c922e59416e59c0c57f7ff5e",
+      "appliedSHA256": "d3e8dec984175390445a3f1b310e7b75ab2e1736c922e59416e59c0c57f7ff5e",
+      "mode": "full-candidate",
+      "finalSHA256": "f530ec14eac0c80eb8824e9c70ecbe957a15429094eeabaa519416b543469f59"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/charm-scope-and-permission-contracts.test.ts",
+      "beforeSHA256": "1cb4b8400f9c565cd81ebf6b568a3d8cfe43158812b34e67b8cfe329dbf460f3",
+      "preparedSHA256": "e9b7bba27ae98ae7e9edeedc64f979f210230e1adb1b64bac8e42aaff2786e21",
+      "appliedSHA256": "e9b7bba27ae98ae7e9edeedc64f979f210230e1adb1b64bac8e42aaff2786e21",
+      "mode": "full-candidate",
+      "finalSHA256": "91aa13ad70e1cdfd0d1f10ecf2aaba709d3df7bae7086df85f355b8498c2c41a"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "beforeSHA256": "3e6cd0e8060938201b43d809ccb4f2267285ba168d4fd80e4658f41fbe287b2e",
+      "preparedSHA256": "dab094d056dc765677efa55af2f331008d64670e46fe447d5a1728f37fbf600b",
+      "appliedSHA256": "dab094d056dc765677efa55af2f331008d64670e46fe447d5a1728f37fbf600b",
+      "mode": "full-candidate",
+      "finalSHA256": "3bed8572b55217f60262440e458253927e7502320ed1755f50f97fccc987a71e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/learned-wolf-execution-retirement.test.ts",
+      "beforeSHA256": "ef49d67785d46be71da3f1958c67b9502a273789266e692ceac23a18c473f3cd",
+      "preparedSHA256": "bbf25ee8eca22835e21020701bd94716e91fd9c43a2a9b93965698d54df13a10",
+      "appliedSHA256": "bbf25ee8eca22835e21020701bd94716e91fd9c43a2a9b93965698d54df13a10",
+      "mode": "full-candidate",
+      "finalSHA256": "703bcab42070b68c0bf1859a4f123c368d774920b06f01042d9db597d6ba1acb"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "beforeSHA256": "82cc954f98b9dff48b8cb644ac2403c2ace300fa434b6969a7ced5261e27fe62",
+      "preparedSHA256": "8b6e13a49e936069932a6e4264a4cddbf9f00433c405ded01963b32275030dfe",
+      "appliedSHA256": "8b6e13a49e936069932a6e4264a4cddbf9f00433c405ded01963b32275030dfe",
+      "mode": "full-candidate",
+      "finalSHA256": "3c16dcb65f71b35e88e505aa55fecdf1753121bacffd8347dc47787f2fa75f5d"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-actors.test.ts",
+      "beforeSHA256": "545e30863e1325fc0f48a7b76ade0fe2992d7734b612f8d614224509624c37fd",
+      "preparedSHA256": "b09be67214d4c880ea0ce54fe46d208496aa8dce348880fd266476f4f7081147",
+      "appliedSHA256": "b09be67214d4c880ea0ce54fe46d208496aa8dce348880fd266476f4f7081147",
+      "mode": "full-candidate",
+      "finalSHA256": "b09be67214d4c880ea0ce54fe46d208496aa8dce348880fd266476f4f7081147"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-ballot-life-binding.test.ts",
+      "beforeSHA256": "3b9820ce9b4ce6a7eef685738ba1fea75354a52b7bbf66de186eb574bc660d47",
+      "preparedSHA256": "57ef07e1958640318d5d075bb627de7e89a78abc4c73776222713116bfaa56c6",
+      "appliedSHA256": "57ef07e1958640318d5d075bb627de7e89a78abc4c73776222713116bfaa56c6",
+      "mode": "full-candidate",
+      "finalSHA256": "57ef07e1958640318d5d075bb627de7e89a78abc4c73776222713116bfaa56c6"
+    },
+    {
+      "path": "backend/tests/unit/recording/live-event-snapshot.test.ts",
+      "beforeSHA256": "26ae28cce6b5d28ba16f6792247aaead37338e5c9bf989ab07918b5fa36daed4",
+      "preparedSHA256": "5b0e2bdbb28bcf4e34a9f89b93d7574201d2a4d8f127a8225acacfa350ff5781",
+      "appliedSHA256": "5b0e2bdbb28bcf4e34a9f89b93d7574201d2a4d8f127a8225acacfa350ff5781",
+      "mode": "full-candidate",
+      "finalSHA256": "5b0e2bdbb28bcf4e34a9f89b93d7574201d2a4d8f127a8225acacfa350ff5781"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+      "beforeSHA256": "5f53e93c50ff7eed7209c3bfcc1366762905b079577c15de1a0cd66b2514e53e",
+      "preparedSHA256": "8be1a62a0a723c0bf6ab664a42838cc4643c63af88a202c083a28bf69056f39b",
+      "appliedSHA256": "8be1a62a0a723c0bf6ab664a42838cc4643c63af88a202c083a28bf69056f39b",
+      "mode": "full-candidate",
+      "finalSHA256": "8be1a62a0a723c0bf6ab664a42838cc4643c63af88a202c083a28bf69056f39b"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-plan.test.ts",
+      "beforeSHA256": "af41d3a33aed47e3bcf2f0953167e7ea7101c6ee24212c1f84832143b5d403cc",
+      "preparedSHA256": "892c298e4f15b243c672f2293ba5517fc1eb32f34c10c25084c3e3223c7ae6af",
+      "appliedSHA256": "892c298e4f15b243c672f2293ba5517fc1eb32f34c10c25084c3e3223c7ae6af",
+      "mode": "full-candidate",
+      "finalSHA256": "ce71da6a818b1cdd1e98e1541ea2821308e2bd8dccc7a2f582fe81eb55b677af"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-provenance.test.ts",
+      "beforeSHA256": "fadb9158cefd255cb76d44487a19ccddfcae439214a191e586459985201e2df3",
+      "preparedSHA256": "01a775c79c788b30fbe77961e1d8340cf0c556d0682f1a5f8da702e12bcf7ea9",
+      "appliedSHA256": "01a775c79c788b30fbe77961e1d8340cf0c556d0682f1a5f8da702e12bcf7ea9",
+      "mode": "full-candidate",
+      "finalSHA256": "01a775c79c788b30fbe77961e1d8340cf0c556d0682f1a5f8da702e12bcf7ea9"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+      "beforeSHA256": "a8e398be6b6497e0155b9358b4d2a201a844101924f16eca953747fe69cdbbff",
+      "preparedSHA256": "11dffed8ad9c955b8c08e95b4d4c753214e9b9c6f2a1cd2c2cd307f483d401e6",
+      "appliedSHA256": "11dffed8ad9c955b8c08e95b4d4c753214e9b9c6f2a1cd2c2cd307f483d401e6",
+      "mode": "full-candidate",
+      "finalSHA256": "11dffed8ad9c955b8c08e95b4d4c753214e9b9c6f2a1cd2c2cd307f483d401e6"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/rule-plan.test.ts",
+      "beforeSHA256": "8928a5b1f45b581767edb67070836ecf5cc7262c82be677736366bc464bea5c8",
+      "preparedSHA256": "c4b9ce6ec45e120fa2245c369939257d6013eb2e88ac7037e7428381f5893f46",
+      "appliedSHA256": "c4b9ce6ec45e120fa2245c369939257d6013eb2e88ac7037e7428381f5893f46",
+      "mode": "full-candidate",
+      "finalSHA256": "32d87c51c5b91786d2e237a04386fc452aa35f3983f705a3cce8cdecfdde8d12"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/scholar-bonus-effect-validation.test.ts",
+      "beforeSHA256": "5756894876f076cced2d6d40d508feb4b92569ef51c7d480f8459dce7908a848",
+      "preparedSHA256": "82655e322055bc14d64dea40cbed6ad64d8307f2c8c0454eb164f4ca5fe28548",
+      "appliedSHA256": "82655e322055bc14d64dea40cbed6ad64d8307f2c8c0454eb164f4ca5fe28548",
+      "mode": "full-candidate",
+      "finalSHA256": "82655e322055bc14d64dea40cbed6ad64d8307f2c8c0454eb164f4ca5fe28548"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/domain/request-lease.ts",
+      "sha256": "a7481a811368c59b82a4deb36bf101248d01aada0004efca12bf1966adf169ef",
+      "bytes": 22313,
+      "sameGit": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/trace.ts",
+      "sha256": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+      "bytes": 9383,
+      "sameGit": true
+    },
+    {
+      "path": "backend/src/features/dreamer/state-slot.ts",
+      "sha256": "110c42ba490495c5aada71ed911ee2593491cb65b8c9ce8d70bb0072cf2a4ff1",
+      "bytes": 2574,
+      "sameGit": true
+    },
+    {
+      "path": "backend/src/features/mechanical-wolf/state.ts",
+      "sha256": "dff7e4c1f1fa44dd5e049815ef5177c52a0182dde792b1da0aaf08a2b36f6dad",
+      "bytes": 13141,
+      "sameGit": true
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/state.ts",
+      "sha256": "de3da028bf5b6edb26aa20368ae1fda67095d33e293a0a4503e32d9720e865e5",
+      "bytes": 12339,
+      "sameGit": true
+    },
+    {
+      "path": "backend/src/domain/role-execution-authority.ts",
+      "sha256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756",
+      "bytes": 1313,
+      "sameGit": true
+    }
+  ],
+  "sourceBinding": {
+    "actualGitBefore": 104,
+    "newAbsent": 3,
+    "preparedExactTextOperations": 485,
+    "completeForwardInverse": 107,
+    "currentFinalSHA": 107,
+    "controls": 6,
+    "failures": []
+  },
+  "reviewedBoundaries": [
+    "Public NightStageContext has an actual new scalar/query/specific-command object; no World/state/events/Catalog/requestFactory/nightActors/component instance or raw runtime token. Provider is also a real getAction-only facade.",
+    "Original 34 mechanism programs retain their full resource algorithms; trusted program selection uses handler/source plus definition-time original execute reference. Replacement getter or foreign same-id/original-function handler receives public context.",
+    "execute getter is read once at old call point; Reflect invocation preserves original handler receiver. New Reflect preparation/allocation/dispatch/load edges are explicit API observations, not blanket equivalence.",
+    "Registry second World argument retires into actual roster query with ID arrays, booleans and late kind closures; role/ability/gun instance is not returned.",
+    "Dream paid probe, explicit synthetic poison command, old Awakened append commands and Gravekeeper complete feedback delegation return IDs/bools/void or count; original refs remain in trusted owner closures.",
+    "Mechanical/Awakened World is a real class-private field. Old hand-constructed scope-with-World acceptance intentionally retires; actual captured role/life/state and paid-current bodies are retained.",
+    "Root-shared roles/contracts and rule-plan are local snippets only. Other 57 fixture adaptations were reviewed as source deltas; stock/privacy/expected errors remain, with explicit API-input changes only."
+  ],
+  "recordedFindings": [
+    {
+      "id": "NIGHT-FOREIGN-DEATH-ROUTE-REGRESSION",
+      "status": "closed in actual Root successor",
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "finding": "prepared candidate removed existing invokeDeathHook import and two invocations, reverting an already migrated death contract; this is not a legitimate night route change.",
+      "resolution": "Root restores these three exact snippets while retaining all seven night execution adaptations; current actual source and successor receipts bound."
+    },
+    {
+      "id": "NIGHT-PREPARED-TYPE-FIXTURES",
+      "status": "closed in actual Root successor",
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "resolution": "Root removes duplicate DREAMER import and annotates base Stages.getStages as NightStageDefinition[]; existing literal paid-current and failure assertions remain."
+    }
+  ],
+  "otherNonNightRegressionFinding": null,
+  "rootActualResults": {
+    "firstUnit": "647pass/5fail, 4867 expect; original raw retained",
+    "firstScenarios": "113pass/0fail/792 expect",
+    "firstTypes": "exit2, six diagnostics in the two listed test sources",
+    "successorUnit": "652pass/0fail/5446 expect/44 files",
+    "successorScenarios": "113pass/0fail/792 expect/12 files",
+    "successorTypes": "full backend tsconfig.tests --noEmit exit0, empty stdout/stderr",
+    "preparedProof": "Root actual 107 exact forward/inverse, 231 original owner bodies matched, 428 complete ESNext/CJS outputs archived; no whole new dispatch/registry equality claim"
+  },
+  "stages": [
+    {
+      "stage": "awa-night-stage-ports-execution",
+      "task": "unit",
+      "receipt": "/tmp/awa-night-stage-ports-execution/unit/receipt.json",
+      "sha256": "8cfed84caaf58fc848d7dad6719aaaafd98ecd8f190975880453a7cb7df3afeb",
+      "exitCode": 1,
+      "prePostSame": true,
+      "raw": [
+        {
+          "path": "/tmp/awa-night-stage-ports-execution/unit/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28
+        },
+        {
+          "path": "/tmp/awa-night-stage-ports-execution/unit/stderr.raw",
+          "sha256": "870900959a7a13f5b936b9c2664b7b57ce3d9ba36ef3f34375adbb06617454ab",
+          "bytes": 77335
+        }
+      ],
+      "resultTail": "e and compound death cause follows native policy; poison, empty and unknown remain blocked [1.05ms]\n(fail) wolf_king/awa_knife_or_exile_v1: every single and compound death cause follows native policy; poison, empty and unknown remain blocked [0.76ms]\n(fail) a native death proposal is revoked by a policy edit before central commit [2.74ms]\n\n 647 pass\n 5 fail\n 4867 expect() calls\nRan 652 tests across 44 files. [2.38s]\n"
+    },
+    {
+      "stage": "awa-night-stage-ports-execution",
+      "task": "scenarios",
+      "receipt": "/tmp/awa-night-stage-ports-execution/scenarios/receipt.json",
+      "sha256": "add5e50aad27611de2a6edf2c347d1f9fdfbfb574b010500d1a8d28ccbba914a",
+      "exitCode": 0,
+      "prePostSame": true,
+      "raw": [
+        {
+          "path": "/tmp/awa-night-stage-ports-execution/scenarios/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28
+        },
+        {
+          "path": "/tmp/awa-night-stage-ports-execution/scenarios/stderr.raw",
+          "sha256": "47e57349a3bfb5c3bec155739fe6f36a99819882348d39b61ed2e74f84b3b155",
+          "bytes": 13626
+        }
+      ],
+      "resultTail": "sts/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts:\n(pass) paid borrowed Dream after committed close follows actual caster 1 [3.54ms]\n(pass) paid borrowed Dream after committed close follows actual caster 5 [2.23ms]\n(pass) actual later-stage failure retains paid Dream fact and stock but revokes handed-out effect [2.49ms]\n\n 113 pass\n 0 fail\n 792 expect() calls\nRan 113 tests across 12 files. [1455.00ms]\n"
+    },
+    {
+      "stage": "awa-night-stage-ports-execution",
+      "task": "types",
+      "receipt": "/tmp/awa-night-stage-ports-execution/types/receipt.json",
+      "sha256": "8b85836e3c0e232b0fee876e6872cd099a3e964cffa419b78d83976fc8488c4e",
+      "exitCode": 2,
+      "prePostSame": true,
+      "raw": [
+        {
+          "path": "/tmp/awa-night-stage-ports-execution/types/stdout.raw",
+          "sha256": "944155816f3a145f80cb1c6ed2d09b9d675f55c216f9c929aa7a9d5d9950dc5b",
+          "bytes": 4307
+        },
+        {
+          "path": "/tmp/awa-night-stage-ports-execution/types/stderr.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ],
+      "resultTail": "see original exact type raw; first exit2 / successor exit0"
+    },
+    {
+      "stage": "awa-night-stage-ports-execution-successor",
+      "task": "unit",
+      "receipt": "/tmp/awa-night-stage-ports-execution-successor/unit/receipt.json",
+      "sha256": "8b01e1bebcf98f912199c593fbff7f611a468287d784b9e2d4b997d2902d1c34",
+      "exitCode": 0,
+      "prePostSame": true,
+      "raw": [
+        {
+          "path": "/tmp/awa-night-stage-ports-execution-successor/unit/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28
+        },
+        {
+          "path": "/tmp/awa-night-stage-ports-execution-successor/unit/stderr.raw",
+          "sha256": "e02052d9899b732deadbb8d7025cc39fb929f575c66310d24de5f4e6c4a4c995",
+          "bytes": 73158
+        }
+      ],
+      "resultTail": "ted-observation final gun with no living targets deliberately passes instead of failing the required turn [0.62ms]\n(pass) strict source fact readers and DTO projection reject extra secrets/getters without evaluating them [0.99ms]\n(pass) Cupid own DTO and bilingual role prompt preserve the committed choice without opponent secrets [6.68ms]\n\n 652 pass\n 0 fail\n 5446 expect() calls\nRan 652 tests across 44 files. [2.04s]\n"
+    },
+    {
+      "stage": "awa-night-stage-ports-execution-successor",
+      "task": "scenarios",
+      "receipt": "/tmp/awa-night-stage-ports-execution-successor/scenarios/receipt.json",
+      "sha256": "52f7e02cc8947d175cf9540c836c9b316ccd23cade8056669376deb2f5f438b9",
+      "exitCode": 0,
+      "prePostSame": true,
+      "raw": [
+        {
+          "path": "/tmp/awa-night-stage-ports-execution-successor/scenarios/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28
+        },
+        {
+          "path": "/tmp/awa-night-stage-ports-execution-successor/scenarios/stderr.raw",
+          "sha256": "4f95f317e5ce2b852d6bd5ba7b2c4ad68dfd26967de355f5840d1c1622c21596",
+          "bytes": 13624
+        }
+      ],
+      "resultTail": "sts/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts:\n(pass) paid borrowed Dream after committed close follows actual caster 1 [3.08ms]\n(pass) paid borrowed Dream after committed close follows actual caster 5 [1.71ms]\n(pass) actual later-stage failure retains paid Dream fact and stock but revokes handed-out effect [2.26ms]\n\n 113 pass\n 0 fail\n 792 expect() calls\nRan 113 tests across 12 files. [1266.00ms]\n"
+    },
+    {
+      "stage": "awa-night-stage-ports-execution-successor",
+      "task": "types",
+      "receipt": "/tmp/awa-night-stage-ports-execution-successor/types/receipt.json",
+      "sha256": "55dc07e1780920ea448765268decb98683a7a3a02f7cc046cf9e9bc7d0480755",
+      "exitCode": 0,
+      "prePostSame": true,
+      "raw": [
+        {
+          "path": "/tmp/awa-night-stage-ports-execution-successor/types/stdout.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/tmp/awa-night-stage-ports-execution-successor/types/stderr.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ],
+      "resultTail": "see original exact type raw; first exit2 / successor exit0"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/tmp/awa-night-stage-ports-final-source.json",
+      "sha256": "5b1851fbfdbbf7bbc728e66430e6e55dd14ae4ff69194a2cd5983915d2fb671b",
+      "bytes": 52894
+    },
+    {
+      "path": "/tmp/awa-h02-night-stage-owner-independent/prepared-binding.json",
+      "sha256": "09f032246318bc57794d76cc60a40d201649b1c970dbf4207406bdc9d4586a4e",
+      "bytes": 36139
+    },
+    {
+      "path": "/tmp/awa-h02-night-stage-owner-implementation/HANDOFF.json",
+      "sha256": "39b1a8d0c161c382721e7728577e1838fdc09b7dd96a669e4f208aecca6f3ec8",
+      "bytes": 1776
+    },
+    {
+      "path": "/tmp/awa-h02-night-stage-owner-implementation/source-ready.json",
+      "sha256": "77e8379f8fe4c23351f909bdbf8c48de76d5b37d099179b368a0d89148491cfd",
+      "bytes": 78116
+    },
+    {
+      "path": "/tmp/awa-h02-night-stage-owner-implementation/proof.json",
+      "sha256": "14692f272343e03301b2df58b3da9583ebc71028906b67126886fe75e5956667",
+      "bytes": 877
+    },
+    {
+      "path": "/tmp/awa-night-stage-ports-formatted.json",
+      "sha256": "86d8a089ea5719eb9d7edfb0b743468c6c3cce663a673d5dcc8f18a6e1b2e1bc",
+      "bytes": 52894
+    }
+  ],
+  "remainingFindings": [],
+  "limits": [
+    "Prepared candidate proof is not a same-raw or full-program equivalence proof of all new dispatch/registry/query code or Root formatter.",
+    "This review accepts the bounded H02 night API exit and actual Root successor. It does not sign C47/C48 or arbitrary JavaScript sandboxing.",
+    "First failures and Root repeated invocation stages are kept as actually executed; no reviewer green rerun."
+  ],
+  "reviewerExecution": {
+    "product": false,
+    "parser": false,
+    "compiler": false,
+    "type": false,
+    "tests": false,
+    "formatter": false,
+    "checks": false,
+    "network": false,
+    "repositoryWrites": false
+  }
+}

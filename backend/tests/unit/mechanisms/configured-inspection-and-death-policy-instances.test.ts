@@ -48,7 +48,7 @@ import { getDefaultConfigRenderRegistry } from "../../../src/agents/prompt/confi
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { ObservedBot } from "../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../src/app/observed-players-action-provider";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 
 const inspectionPolicies = [
   "awa_unique_required_v1",
@@ -136,7 +136,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
           events: GameEvent[] = [];
         const act = async (day: number, target: number | null) => {
           const factory = new GameActionRequestFactory(game.world, events, day);
-          await stage.execute(
+          await executeNightStage(stage)(
             nightStageContext({
               world: game.world,
               events,
@@ -284,7 +284,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
           return result;
         };
       }
-      await stage.execute(
+      await executeNightStage(stage)(
         nightStageContext({
           world: game.world,
           events,
@@ -456,7 +456,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
         },
       });
       if (policy === "awa_unique_required_v1") {
-        await expect(stage.execute(context)).rejects.toThrow(
+        await expect(executeNightStage(stage)(context)).rejects.toThrow(
           kind === Role.Gargoyle
             ? "role_inspection_required_action_missing"
             : "role_inspection_valid_action_missing",
@@ -464,7 +464,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
         expect(asks).toBe(3);
         expect(ability.lastUsedDay).toBeNull();
       } else {
-        await stage.execute(context);
+        await executeNightStage(stage)(context);
         expect(asks).toBe(1);
         expect(ability.lastUsedDay).toBe(1);
       }
@@ -492,7 +492,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
             result: { kind: "role", role: Role.Villager },
           });
       }
-      await stage.execute(
+      await executeNightStage(stage)(
         nightStageContext({
           world: exhausted.world,
           actionProvider: {
@@ -521,7 +521,7 @@ test("optional Gargoyle pass completes only its native current-policy knife gate
     false,
   );
   const factory = new GameActionRequestFactory(game.world, events, 1);
-  await ROLE_INSPECTION_STAGE.execute(
+  await executeNightStage(ROLE_INSPECTION_STAGE)(
     nightStageContext({
       world: game.world,
       events,

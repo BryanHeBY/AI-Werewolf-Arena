@@ -26,7 +26,10 @@ import {
   livingOriginalLovers,
 } from "../../../../src/features/cupid/relation";
 import { cupidCityDecision } from "../../../../src/features/cupid/victory";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DeathResolution } from "../../../../src/engine/death-resolution";
@@ -88,7 +91,7 @@ async function connect(
   b: number,
   events: GameEvent[] = [],
 ) {
-  await CUPID_STAGE.execute(context(game, events, async () => choose(a, b)));
+  await executeNightStage(CUPID_STAGE)(context(game, events, async () => choose(a, b)));
   return events;
 }
 

@@ -35,7 +35,7 @@ import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { ActionReception } from "../../../../src/engine/actions/action-reception";
 import { MECHANICAL_NIGHT_STAGES } from "../../../../src/features/mechanical-wolf/night-stages";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 
 import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { DeathCause } from "../../../../src/domain/deaths";
@@ -194,7 +194,10 @@ for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: independent true-Wolf identity and strict stages with next-night learning`, async () => {
     const game = fixture(locale),
       provider = play(game, { learn: 5, exile: 2 });
-    const stages = new NightStageRegistry().getStages(game.config, game.world);
+    const stages = new NightStageRegistry().getStages(
+      game.config,
+      bindNightStageRosterQueries(game.world),
+    );
     expect(
       stages.filter((s) => s.id.startsWith("mechanical_")).map((s) => [s.id, s.priority]),
     ).toEqual([
@@ -436,7 +439,7 @@ for (const forge of ["serialized", "revive", "switch_mode"] as const)
           };
         },
       };
-      await mechanicalStage("mechanical_mode").execute(ctx);
+      await executeNightStage(mechanicalStage("mechanical_mode"))(ctx);
       if (forge === "switch_mode")
         (
           game.state.mode! as { kind: import("@ai-werewolf-arena/game-contract").MechanicalMode }
@@ -452,7 +455,7 @@ for (const forge of ["serialized", "revive", "switch_mode"] as const)
         throw new Error("revoked_mode_no_skill_request");
       },
     };
-    await mechanicalStage("mechanical_skill").execute(ctx);
+    await executeNightStage(mechanicalStage("mechanical_skill"))(ctx);
     expect(ctx.state.mechanicalEffects!.shields).toEqual([]);
     expect(
       new ToolGateway().validateAndSanitize(
@@ -486,7 +489,7 @@ for (const revoke of [
       async () => ({ name: "mechanical_mode", args: { mode: "skill" } }),
       () => current,
     );
-    await mechanicalStage("mechanical_mode").execute(ctx);
+    await executeNightStage(mechanicalStage("mechanical_mode"))(ctx);
     const original = game.state.learned!.skill;
     const replaceTarget = () => game.world.addComponent(3, COMPONENT.Alive, createAliveComponent());
     const gateway = ctx.toolGateway,
@@ -535,10 +538,10 @@ for (const revoke of [
       },
     };
     if (revoke.endsWith("target") || revoke === "target_life")
-      await expect(mechanicalStage("mechanical_skill").execute(ctx)).rejects.toThrow(
+      await expect(executeNightStage(mechanicalStage("mechanical_skill"))(ctx)).rejects.toThrow(
         "mechanical_skill_valid_action_missing",
       );
-    else await mechanicalStage("mechanical_skill").execute(ctx);
+    else await executeNightStage(mechanicalStage("mechanical_skill"))(ctx);
     expect(attempts).toBe(revoke === "target_life" || revoke === "gateway_target" ? 3 : 1);
     expect(original).toEqual({ kind: "poison", remaining: revoke.endsWith("spent") ? 0 : 1 });
     expect(ctx.state.poisonClaims).toEqual([]);
@@ -552,7 +555,7 @@ test("new integer gameplay schemas retain numeric-string repair and read-only pr
     name: "mechanical_mode",
     args: { mode: "skill" },
   }));
-  await mechanicalStage("mechanical_mode").execute(ctx);
+  await executeNightStage(mechanicalStage("mechanical_mode"))(ctx);
   const request = ctx.makeRequest(1, ["mechanical_guard"], {
       stage: "mechanical_skill",
       requiresAction: false,
@@ -673,3 +676,7 @@ test("external ordinary G02 guard follows its own instance while mechanical nigh
     "External ordinary G02 abilities follow this turn's bound instance rules independently",
   );
 });
+
+import { bindNightStageRosterQueries } from "../../../../src/rulesets/night-stage-plan";
+
+import { executeNightStage } from "../../../support/builders/night-stage-context";

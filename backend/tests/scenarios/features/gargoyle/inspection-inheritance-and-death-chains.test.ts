@@ -1,7 +1,10 @@
 /**
  * 石像鬼场景验证真实阶段的查验／继承、死亡连锁和查验后撤权。输入为固定底牌与受控行动；手写仅本人报告、存活名单和事件序列是预期。原生产观察断言仅保留既有范围，不声称新增独立整局覆盖。
  */
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -33,7 +36,7 @@ import {
 import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import {
   grantNightAbility,
@@ -313,7 +316,7 @@ test("Gargoyle and Hidden Wolf cannot have simultaneous knives; independent role
   expect(wolfKnifeHolders(game.world, catalog)).toEqual([]);
   expect(knownWolfTeammates(game.world, 1, catalog)).toEqual([]);
   expect(knownWolfTeammates(game.world, 2, catalog)).toEqual([1]);
-  await ROLE_INSPECTION_STAGE.execute(
+  await executeNightStage(ROLE_INSPECTION_STAGE)(
     stageContext(game, events, async () => ({ name: "inspect_role", args: { target_id: 2 } })),
   );
   expect(getRoleInspectionState(role(game, 1))!.history[0].result).toEqual({
@@ -337,7 +340,7 @@ test("Gargoyle and Hidden Wolf cannot have simultaneous knives; independent role
     Phase.Voting,
   );
   expect(getHiddenWolfState(role(game, 2))!.hasInheritedKnife).toBe(true);
-  await ROLE_INSPECTION_STAGE.execute(
+  await executeNightStage(ROLE_INSPECTION_STAGE)(
     stageContext(
       game,
       events,

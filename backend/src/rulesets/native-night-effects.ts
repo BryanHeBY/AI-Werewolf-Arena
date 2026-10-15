@@ -6,7 +6,7 @@
  */
 import { Role } from "../domain/identity";
 import type { NightLifeScope } from "../domain/night-effects";
-import type { NightStageContext } from "../engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../engine/night/trusted-runtime";
 import type { NightAbilityReadView } from "../features/night-abilities/abilities";
 import {
   isScholarMentorBoard,

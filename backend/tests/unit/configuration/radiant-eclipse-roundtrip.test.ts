@@ -22,7 +22,7 @@ test("public example actually parses, roundtrips and bootstraps the exact source
   const { world } = bootstrapGame(parsed.config);
   expect(world.entityIds()).toHaveLength(12);
   const stages = getDefaultNightStageRegistry()
-    .getStages(parsed.config, world)
+    .getStages(parsed.config, bindNightStageRosterQueries(world))
     .map((s) => [s.id, s.priority]);
   expect(
     stages.filter(([id]) =>
@@ -67,3 +67,5 @@ test("both role policy inputs are strict; a typo cannot be overwritten by the ot
     );
   }
 });
+
+import { bindNightStageRosterQueries } from "../../../src/rulesets/night-stage-plan";

@@ -11,7 +11,7 @@ import type { NightStageHandler } from "../../../src/engine/night/contracts";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { applyGhostBrideStageRegistration } from "../../../src/rulesets/night-stage-registration";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
@@ -64,7 +64,7 @@ test("same handler records every observed role source without new ID or priority
   expect(plan.entries[0]!.sources.every(Object.isFrozen)).toBe(true);
   expect(Object.isFrozen(shared)).toBe(false);
   for (const entry of plan.entries)
-    await entry.handler.execute(nightStageContext({ world: new World("en") }));
+    await executeNightStage(entry.handler)(nightStageContext({ world: new World("en") }));
   expect(receivers).toEqual([true]);
 });
 
@@ -148,7 +148,7 @@ test("a native virtual override has explicit unknown source and original handler
   expect(calls).toBe(1);
   if (plan.mode !== "snapshot") throw new Error("expected_owned_snapshot");
   expect(plan.entries[0]!.sources).toEqual([{ kind: "unknown", reason: "override" }]);
-  await plan.entries[0]!.handler.execute(nightStageContext({ world: new World("en") }));
+  await executeNightStage(plan.entries[0]!.handler)(nightStageContext({ world: new World("en") }));
   expect(correctReceiver).toBe(true);
 });
 
@@ -196,7 +196,7 @@ for (const mode of ["throw-after-first", "depends-on-first"] as const)
     try {
       for (const entry of plan.entries) {
         expect(entry.sources).toEqual([{ kind: "unknown", reason: "override" }]);
-        await entry.handler.execute(nightStageContext({ world: new World("en") }));
+        await executeNightStage(entry.handler)(nightStageContext({ world: new World("en") }));
       }
     } catch (error) {
       thrown = error;

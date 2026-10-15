@@ -1,5 +1,5 @@
 /**
- * 负责测试中构造内存夜间上下文和提取已完成摘要。输入为明确 World／Provider 覆盖；输出保留 typed 阶段端口和原 World getter 时点，未配置依赖直接抛错。本 builder 不拥有规则预期、不改 fixture、不运行完整对局。
+ * 负责测试可信装配输入与已完成摘要。fixture 可持原 World／状态，但执行可替换 handler 必须走实际程序身份绑定；未配置依赖原样抛错。此对象不是公开 NightStageContext，不拥有规则预期或运行整局。
  */
 import { bindNightAbilityActorQuery } from "../../../src/features/night-abilities/night-ability-actors";
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
@@ -8,7 +8,9 @@ import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effec
 import { COMPONENT, type World } from "../../../src/domain";
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
-import type { NightStageContext } from "../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
+import type { NightStageDefinition as NightStageHandler } from "../../../src/engine/night/contracts";
+import { executePreparedNightStage } from "../../../src/rulesets/night-stage-bindings";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import type { NightPipelineResult } from "../../../src/engine/phases/night-pipeline";
@@ -74,4 +76,12 @@ export function completedNight(
 ): Extract<NightPipelineResult, { interrupted: false }> {
   if (result.interrupted) throw new Error("expected_completed_night_fixture");
   return result;
+}
+
+/** 原 .execute 点先准备同一函数，fixture 参数后求值；实际 receiver 和可信程序／公开 callback 分界走生产 owner。 */
+export function executeNightStage(
+  handler: NightStageHandler,
+): (runtime: NightStageContext) => Promise<void> {
+  const callee = handler.execute;
+  return (runtime) => executePreparedNightStage(handler, callee, runtime);
 }

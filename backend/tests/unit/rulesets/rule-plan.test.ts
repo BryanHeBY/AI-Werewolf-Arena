@@ -15,7 +15,7 @@ import {
   getDefaultNightStageRegistry,
 } from "../../../src/rulesets/night-stage-plan";
 import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
-import type { NightStageHandler, NightStageContext } from "../../../src/engine/night/contracts";
+import type { NightStageHandler } from "../../../src/engine/night/contracts";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { merchantScenario } from "../../support/features/miracle-merchant/builders/scenario";
 import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
@@ -43,7 +43,7 @@ test("standard handler order changes remain observable to the legacy collector b
   const priority = handler.priority;
   try {
     handler.priority = 1;
-    const legacy = registry.getPlan(plan.parameters.board, world);
+    const legacy = registry.getPlan(plan.parameters.board, bindNightStageRosterQueries(world));
     expect(
       legacy.metadata.find((item) => item.kind === "data" && item.id === handler.id),
     ).toMatchObject({ priority: 1 });
@@ -70,7 +70,9 @@ test("standard profile membership growth requires a revision and never silently 
   };
   try {
     profile.nightStages = [...original, late];
-    expect(registry.getPlan(plan.parameters.board, world).stages).toContain(late);
+    expect(
+      registry.getPlan(plan.parameters.board, bindNightStageRosterQueries(world)).stages,
+    ).toContain(late);
     expect(() => plan.nightPlan(registry, () => world)).toThrow("rule_plan_revision_not_supported");
   } finally {
     profile.nightStages = original;
@@ -110,7 +112,8 @@ test("injected opaque iterators retain next-after-commit and iterator-close pref
   expect(schedule.mode).toBe("opaque");
   let caught: unknown;
   try {
-    for (const entry of schedule.entries) await entry.handler.execute({} as NightStageContext);
+    for (const entry of schedule.entries)
+      await executeNightStage(entry.handler)(nightStageContext({ world }));
   } catch (failure) {
     caught = failure;
   }
@@ -141,7 +144,8 @@ test("an injected ordinary array keeps late execute getter and receiver instead 
   const schedule = plan.nightPlan(new Injected(), () => world);
   expect(trace).toEqual([]);
   expect(schedule.definition).toBeNull();
-  for (const entry of schedule.entries) await entry.handler.execute({} as NightStageContext);
+  for (const entry of schedule.entries)
+    await executeNightStage(entry.handler)(nightStageContext({ world }));
   expect(trace).toEqual(["get execute", "execute"]);
 });
 
@@ -292,3 +296,9 @@ test("getPlan method lookup retains its receiver and precedes the World argument
   });
   expect(trace).toEqual(["method", "world", "call"]);
 });
+
+import { bindNightStageRosterQueries } from "../../../src/rulesets/night-stage-plan";
+
+import { executeNightStage } from "../../support/builders/night-stage-context";
+
+import { nightStageContext } from "../../support/builders/night-stage-context";

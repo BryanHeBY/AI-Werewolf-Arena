@@ -28,7 +28,7 @@ import { type AliveComponent } from "../../../../src/domain/components/alive";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import {
   allNightAbilities,
@@ -161,7 +161,7 @@ test("registered finite stages put immediate role masking before native Mirror a
     });
   expect(
     new NightStageRegistry()
-      .getStages(game.config, game.world)
+      .getStages(game.config, bindNightStageRosterQueries(game.world))
       .filter((s) => s.id.startsWith("awakened_"))
       .map((s) => [s.id, s.priority]),
   ).toEqual([
@@ -171,12 +171,12 @@ test("registered finite stages put immediate role masking before native Mirror a
     ["awakened_attack", 660],
     ["awakened_activation", 900],
   ]);
-  await stage("awakened_opening").execute(ctx);
+  await executeNightStage(stage("awakened_opening"))(ctx);
   expect(resolveInspection(game.world, 1, "role", getDefaultRoleCatalog())).toEqual({
     kind: "role",
     role: "awakened_hidden_wolf",
   });
-  await stage("awakened_mimic").execute(ctx);
+  await executeNightStage(stage("awakened_mimic"))(ctx);
   expect(resolveInspection(game.world, 1, "role", getDefaultRoleCatalog())).toEqual({
     kind: "role",
     role: "mirror_girl",
@@ -191,7 +191,7 @@ test("registered finite stages put immediate role masking before native Mirror a
     skill: { kind: "inspection", abilityId: null },
   });
   expect(allNightAbilities(role(game))).toEqual([]);
-  await stage("awakened_activation").execute(ctx);
+  await executeNightStage(stage("awakened_activation"))(ctx);
   expect(state(game).learned).toMatchObject({
     activationNight: 1,
     activeFromNight: 2,
@@ -213,16 +213,16 @@ test("Mirror template whose own capability was removed is still learnable; own a
   (role(game, 3).privateState as Record<string, unknown>).abilities = {};
   (role(game, 3).privateState as Record<string, unknown>).retiredAbilityIds = ["native:role_check"];
   const ctx = context(game, 1, async () => ({ name: "awakened_mimic", args: { target_id: 3 } }));
-  await stage("awakened_opening").execute(ctx);
-  await stage("awakened_mimic").execute(ctx);
-  await stage("awakened_activation").execute(ctx);
+  await executeNightStage(stage("awakened_opening"))(ctx);
+  await executeNightStage(stage("awakened_mimic"))(ctx);
+  await executeNightStage(stage("awakened_activation"))(ctx);
   (role(game).privateState as Record<string, unknown>).abilities = {};
   (role(game).privateState as Record<string, unknown>).retiredAbilityIds = ["native:role_check"];
   const next = context(game, 2, async () => {
     throw new Error("unexpected_action");
   });
-  await stage("awakened_opening").execute(next);
-  await stage("awakened_activation").execute(next);
+  await executeNightStage(stage("awakened_opening"))(next);
+  await executeNightStage(stage("awakened_activation"))(next);
   expect(allNightAbilities(role(game))).toEqual([]);
   expect(state(game).learned!.skill).toEqual({
     kind: "inspection",
@@ -246,9 +246,9 @@ for (const boundary of ["await", "gateway", "label"] as const)
     test(`${boundary}/${mutation}: copied native Mirror remains bound to its original Aw learning owner`, async () => {
       const game = fixture(Role.MirrorGirl),
         first = context(game, 1, async () => ({ name: "awakened_mimic", args: { target_id: 3 } }));
-      await stage("awakened_opening").execute(first);
-      await stage("awakened_mimic").execute(first);
-      await stage("awakened_activation").execute(first);
+      await executeNightStage(stage("awakened_opening"))(first);
+      await executeNightStage(stage("awakened_mimic"))(first);
+      await executeNightStage(stage("awakened_activation"))(first);
       const original = state(game),
         learned = original.learned!,
         skill = learned.skill,
@@ -301,8 +301,8 @@ for (const boundary of ["await", "gateway", "label"] as const)
               : profile,
           ),
         });
-      await stage("awakened_opening").execute(next);
-      await MIRROR_INSPECTION_STAGE.execute(next);
+      await executeNightStage(stage("awakened_opening"))(next);
+      await executeNightStage(MIRROR_INSPECTION_STAGE)(next);
       expect(ability.uses).toBe(0);
       expect(ability.lastUsedDay).toBeNull();
       expect(ability.state.history).toEqual([]);
@@ -332,7 +332,7 @@ test("an independent gifted Mirror instance on Aw does not depend on its native 
     setAwakenedState(role(game), freshAwakenedState());
     return { name: "inspect_role", args: { target_id: 6 } };
   });
-  await MIRROR_INSPECTION_STAGE.execute(ctx);
+  await executeNightStage(MIRROR_INSPECTION_STAGE)(ctx);
   expect(ctx.events.filter((e) => e.type === "role_inspected").map((e) => e.payload)).toEqual([
     {
       actorId: 1,
@@ -349,10 +349,10 @@ test("interruption before 900 preserves learning but later activation uses the l
   const game = fixture(),
     clock = { day: 1, open: true },
     ctx = context(game, 1, async () => ({ name: "awakened_mimic", args: { target_id: 3 } }), clock);
-  await stage("awakened_opening").execute(ctx);
-  await stage("awakened_mimic").execute(ctx);
+  await executeNightStage(stage("awakened_opening"))(ctx);
+  await executeNightStage(stage("awakened_mimic"))(ctx);
   clock.open = false;
-  await stage("awakened_activation").execute(ctx);
+  await executeNightStage(stage("awakened_activation"))(ctx);
   expect(state(game).learned).toMatchObject({
     activationNight: null,
     skill: { kind: "hunter", armed: false },
@@ -360,8 +360,8 @@ test("interruption before 900 preserves learning but later activation uses the l
   const next = context(game, 3, async () => {
     throw new Error("unexpected_action");
   });
-  await stage("awakened_opening").execute(next);
-  await stage("awakened_activation").execute(next);
+  await executeNightStage(stage("awakened_opening"))(next);
+  await executeNightStage(stage("awakened_activation"))(next);
   expect(state(game).learned).toMatchObject({
     activationNight: 3,
     activeFromNight: 4,
@@ -375,8 +375,8 @@ test("no other living target closes mimic without a request or spending the once
   const ctx = context(game, 1, async () => {
     throw new Error("must_not_request");
   });
-  await stage("awakened_opening").execute(ctx);
-  await stage("awakened_mimic").execute(ctx);
+  await executeNightStage(stage("awakened_opening"))(ctx);
+  await executeNightStage(stage("awakened_mimic"))(ctx);
   expect(state(game).learned).toBeNull();
   expect(state(game).mimicClosedDay).toBe(1);
   expect(ctx.events.map((e) => e.type)).toEqual(["awakened_mimic_skipped"]);
@@ -389,8 +389,8 @@ test("three invalid mimic actions with living candidates fail explicitly instead
     requests++;
     return { name: "awakened_mimic", args: { target_id: 1 } };
   });
-  await stage("awakened_opening").execute(ctx);
-  await expect(stage("awakened_mimic").execute(ctx)).rejects.toThrow(
+  await executeNightStage(stage("awakened_opening"))(ctx);
+  await expect(executeNightStage(stage("awakened_mimic"))(ctx)).rejects.toThrow(
     "awakened_mimic_valid_action_missing",
   );
   expect(requests).toBe(3);
@@ -409,8 +409,8 @@ test("last candidate disappearing during the third attempt becomes a legal wait 
     game.world.getComponent(3, COMPONENT.Alive)!.alive = false;
     return { name: "awakened_mimic", args: { target_id: 3 } };
   });
-  await stage("awakened_opening").execute(ctx);
-  await stage("awakened_mimic").execute(ctx);
+  await executeNightStage(stage("awakened_opening"))(ctx);
+  await executeNightStage(stage("awakened_mimic"))(ctx);
   expect(requests).toBe(3);
   expect(state(game).learned).toBeNull();
   expect(state(game).mimicClosedDay).toBe(1);
@@ -458,8 +458,8 @@ for (const mutation of [
         },
         clock,
       );
-    await stage("awakened_opening").execute(ctx);
-    await stage("awakened_mimic").execute(ctx);
+    await executeNightStage(stage("awakened_opening"))(ctx);
+    await executeNightStage(stage("awakened_mimic"))(ctx);
     expect(original.learned).toBeNull();
     expect(original.mimicClosedDay).toBeNull();
     expect(ctx.events).toEqual([]);
@@ -487,8 +487,8 @@ for (const boundary of ["spent", "await", "gateway"] as const)
         return result;
       };
     }
-    await stage("awakened_opening").execute(ctx);
-    await stage("awakened_skill").execute(ctx);
+    await executeNightStage(stage("awakened_opening"))(ctx);
+    await executeNightStage(stage("awakened_skill"))(ctx);
     expect(requests).toBe(boundary === "spent" ? 0 : 1);
     expect(ctx.state.poisonClaims).toEqual([]);
     expect(ctx.events).toEqual([]);
@@ -504,8 +504,8 @@ for (const skillKind of ["poison", "guard"] as const)
         ? { name: "awakened_poison", args: { target_id: 6 } }
         : { name: "awakened_guard", args: { target_id: 6 } };
     const ctx = context(game, 2, async () => call);
-    await stage("awakened_opening").execute(ctx);
-    await stage("awakened_skill").execute(ctx);
+    await executeNightStage(stage("awakened_opening"))(ctx);
+    await executeNightStage(stage("awakened_skill"))(ctx);
     const effect =
       skillKind === "poison" ? ctx.state.poisonClaims![0] : ctx.state.awakenedEffects!.shields[0];
     expect(effect.isCurrent!()).toBe(true);
@@ -560,7 +560,7 @@ test("same-night opening cannot replace a revoked original-body knife permission
   const ctx = context(game, 2, async () => {
     throw new Error("must_not_request");
   });
-  await stage("awakened_opening").execute(ctx);
+  await executeNightStage(stage("awakened_opening"))(ctx);
   expect(
     canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
   ).toBe(true);
@@ -570,7 +570,7 @@ test("same-night opening cannot replace a revoked original-body knife permission
   expect(
     canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
   ).toBe(false);
-  await expect(stage("awakened_opening").execute(ctx)).rejects.toThrow(
+  await expect(executeNightStage(stage("awakened_opening"))(ctx)).rejects.toThrow(
     "awakened_night_reentry_after_commit",
   );
   expect(
@@ -587,7 +587,7 @@ test("another Wolf revival temporarily removes a current knife without resetting
   const ctx = context(game, 2, async () => {
     throw new Error("unexpected_request");
   });
-  await stage("awakened_opening").execute(ctx);
+  await executeNightStage(stage("awakened_opening"))(ctx);
   expect(
     canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
   ).toBe(true);
@@ -603,3 +603,7 @@ test("another Wolf revival temporarily removes a current knife without resetting
   expect(state(game).firstKnifeNight).toBe(2);
   expect(state(game).learned!.skill).toEqual({ kind: "wolf", extraKnife: "available" });
 });
+
+import { bindNightStageRosterQueries } from "../../../../src/rulesets/night-stage-plan";
+
+import { executeNightStage } from "../../../support/builders/night-stage-context";

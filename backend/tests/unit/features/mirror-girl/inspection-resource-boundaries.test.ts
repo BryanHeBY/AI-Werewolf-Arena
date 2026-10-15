@@ -3,7 +3,10 @@
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -42,7 +45,7 @@ import {
 } from "../../../../src/features/gargoyle/inheritance";
 import { refreshHiddenWolfInheritance } from "../../../../src/features/hidden-wolf/inheritance";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { ActionReception } from "../../../../src/engine/actions/action-reception";
@@ -144,7 +147,7 @@ for (const locale of ["zh-CN", "en"] as const)
     });
     expect(ability.state).toEqual(freshMirrorInspectionState());
     const requests: ActionRequest[] = [];
-    await MIRROR_INSPECTION_STAGE.execute(
+    await executeNightStage(MIRROR_INSPECTION_STAGE)(
       context(game, events, async (request) => {
         requests.push(request);
         expect(request.context.turn_constraints.min_valid_actions).toBe(0);
@@ -175,7 +178,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(
       receive.validate({ ...request, phase: Phase.Day }, "inspect_role", { target_id: 4 }),
     ).toMatchObject({ ok: false, error: "ability_phase" });
-    await MIRROR_INSPECTION_STAGE.execute(
+    await executeNightStage(MIRROR_INSPECTION_STAGE)(
       context(game, events, async () => ({ name: "inspect_role", args: { target_id: 4 } }), 2),
     );
     expect(ability.state.history.map((r) => r.result.role)).toEqual([Role.Wolf, Role.Witch]);
@@ -203,7 +206,7 @@ test("Hidden role labels change after inheritance but a previous Mirror report i
   const game = fixture(),
     events: GameEvent[] = [],
     ability = native(game);
-  await MIRROR_INSPECTION_STAGE.execute(
+  await executeNightStage(MIRROR_INSPECTION_STAGE)(
     context(game, events, async () => ({ name: "inspect_role", args: { target_id: 3 } })),
   );
   expect(ability.state.history[0].result).toEqual({ kind: "role", role: Role.Villager });
@@ -229,7 +232,7 @@ test("Mirror pass and later exhausted target set close the night without consumi
     ability = native(game);
   let calls = 0;
   await expect(
-    MIRROR_INSPECTION_STAGE.execute(
+    executeNightStage(MIRROR_INSPECTION_STAGE)(
       context(game, events, async () => {
         calls++;
         return { name: "inspect_role", args: { target_id: 1 } };
@@ -240,15 +243,15 @@ test("Mirror pass and later exhausted target set close the night without consumi
   expect(ability.uses).toBe(0);
   expect(ability.lastUsedDay).toBeNull();
   expect(events).toEqual([]);
-  await MIRROR_INSPECTION_STAGE.execute(context(game, events, async () => null));
+  await executeNightStage(MIRROR_INSPECTION_STAGE)(context(game, events, async () => null));
   expect(ability.lastUsedDay).toBe(1);
   expect(ability.uses).toBe(0);
   for (const day of [2, 3, 4, 5, 6])
-    await MIRROR_INSPECTION_STAGE.execute(
+    await executeNightStage(MIRROR_INSPECTION_STAGE)(
       context(game, events, async () => ({ name: "inspect_role", args: { target_id: day } }), day),
     );
   const before = structuredClone(ability.state);
-  await MIRROR_INSPECTION_STAGE.execute(
+  await executeNightStage(MIRROR_INSPECTION_STAGE)(
     context(
       game,
       events,
@@ -305,7 +308,7 @@ test("three policy instances on one Villager use distinct slots, counters and hi
     [],
   );
   const stages = new NightStageRegistry()
-    .getStages(game.config, game.world)
+    .getStages(game.config, bindNightStageRosterQueries(game.world))
     .filter((s) => ["role_inspection", "mirror_inspection", "psychic_inspection"].includes(s.id));
   expect(stages.map((s) => [s.id, s.priority])).toEqual([
     ["role_inspection", 180],
@@ -316,7 +319,7 @@ test("three policy instances on one Villager use distinct slots, counters and hi
     calls.push([request.actorId, request.context.stage]);
     return { name: "inspect_role", args: { target_id: 2 } };
   });
-  for (const stage of stages) await stage.execute(ctx);
+  for (const stage of stages) await executeNightStage(stage)(ctx);
   expect(calls).toEqual([
     [6, "role_inspection"],
     [6, "mirror_girl"],
@@ -343,7 +346,7 @@ test("fresh Mirror copy/gift reject inherited or private state, while transfer p
   const game = fixture(),
     events: GameEvent[] = [],
     original = native(game);
-  await MIRROR_INSPECTION_STAGE.execute(
+  await executeNightStage(MIRROR_INSPECTION_STAGE)(
     context(game, events, async () => ({ name: "inspect_role", args: { target_id: 2 } })),
   );
   const common = {
@@ -389,7 +392,7 @@ test("fresh Mirror copy/gift reject inherited or private state, while transfer p
   expect(
     new ActionReception(game.world).validate(request, "inspect_role", { target_id: 2 }).ok,
   ).toBe(true);
-  await MIRROR_INSPECTION_STAGE.execute(
+  await executeNightStage(MIRROR_INSPECTION_STAGE)(
     context(game, events, async () => ({ name: "inspect_role", args: { target_id: 2 } })),
   );
   transferNightAbility(game.world, 6, 5, copied.id, "transfer:mirror", events, {
@@ -405,7 +408,7 @@ test("fresh Mirror copy/gift reject inherited or private state, while transfer p
       history: [{ day: 1, targetId: 2, result: { kind: "role", role: Role.Wolf } }],
     },
   });
-  await MIRROR_INSPECTION_STAGE.execute(
+  await executeNightStage(MIRROR_INSPECTION_STAGE)(
     context(game, events, async () => {
       throw new Error("same_night_closed");
     }),
@@ -434,7 +437,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const game = fixture(locale),
       ability = native(game),
       events: GameEvent[] = [];
-    await MIRROR_INSPECTION_STAGE.execute(
+    await executeNightStage(MIRROR_INSPECTION_STAGE)(
       context(game, events, async () => ({ name: "inspect_role", args: { target_id: 2 } })),
     );
     const copied = grantNightAbility(
@@ -527,10 +530,10 @@ test("a gifted Mirror instance runs without a Mirror entity and cannot replace n
   );
   expect(
     new NightStageRegistry()
-      .getStages(game.config, game.world)
+      .getStages(game.config, bindNightStageRosterQueries(game.world))
       .filter((s) => s.id === "mirror_inspection"),
   ).toHaveLength(1);
-  await MIRROR_INSPECTION_STAGE.execute(
+  await executeNightStage(MIRROR_INSPECTION_STAGE)(
     context(game, events, async (request) => {
       expect(request.actorId).toBe(2);
       expect(request.context.ability_id).toBe(gift.id);
@@ -554,7 +557,7 @@ test("actual role-check capabilities collect all policy handlers even when an in
   });
   expect(
     new NightStageRegistry(minimal)
-      .getStages(game.config, game.world)
+      .getStages(game.config, bindNightStageRosterQueries(game.world))
       .filter((s) => ["role_inspection", "mirror_inspection", "psychic_inspection"].includes(s.id))
       .map((s) => s.id),
   ).toEqual(["role_inspection", "mirror_inspection", "psychic_inspection"]);
@@ -563,7 +566,7 @@ test("actual role-check capabilities collect all policy handlers even when an in
 test("Mirror legal closure registers the shared commit and prevents full night reentry", async () => {
   const game = fixture(),
     events: GameEvent[] = [];
-  await MIRROR_INSPECTION_STAGE.execute(context(game, events, async () => null));
+  await executeNightStage(MIRROR_INSPECTION_STAGE)(context(game, events, async () => null));
   const pipeline = new NightPipeline({
     world: game.world,
     events,
@@ -651,7 +654,7 @@ for (const point of ["gateway", "label"] as const)
         ),
       });
     }
-    await MIRROR_INSPECTION_STAGE.execute(ctx);
+    await executeNightStage(MIRROR_INSPECTION_STAGE)(ctx);
     expect(calls).toBe(1);
     expect(ability.state.history.map((r) => r.targetId)).toEqual([3, 4, 5, 6, 2]);
     expect(ability.uses).toBe(0);
@@ -701,13 +704,15 @@ for (const change of ["cancel_null", "actor_revive", "target_revive", "state", "
       () => current,
     );
     if (change === "target_revive")
-      await expect(MIRROR_INSPECTION_STAGE.execute(ctx)).rejects.toThrow(
+      await expect(executeNightStage(MIRROR_INSPECTION_STAGE)(ctx)).rejects.toThrow(
         "role_inspection_valid_action_missing",
       );
-    else await MIRROR_INSPECTION_STAGE.execute(ctx);
+    else await executeNightStage(MIRROR_INSPECTION_STAGE)(ctx);
     expect(calls).toBe(change === "target_revive" ? 3 : 1);
     expect(ability.uses).toBe(0);
     expect(ability.lastUsedDay).toBeNull();
     expect(ability.state.history).toEqual([]);
     expect(events).toEqual([]);
   });
+
+import { bindNightStageRosterQueries } from "../../../../src/rulesets/night-stage-plan";

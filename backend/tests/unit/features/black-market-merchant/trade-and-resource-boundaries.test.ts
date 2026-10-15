@@ -36,7 +36,7 @@ import { projectNightAbility } from "../../../../src/agents/observation/night-ab
 import { transferNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
 import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 
 const deck = [Role.Wolf, Role.Wolf, Role.BlackMarketMerchant, Role.Seer, Role.Witch, Role.Villager];
@@ -124,7 +124,7 @@ for (const skill of ["check", "poison", "gun"] as const)
         expect(request.context.allow_fallback).toBe(false);
         return { name: "black_market_trade", args: { target_id: 6, skill } };
       });
-    await BLACK_MARKET_TRADE_STAGE.execute(ctx);
+    await executeNightStage(BLACK_MARKET_TRADE_STAGE)(ctx);
     expect(getBlackMarketState(role(game))).toEqual({
       remaining: 0,
       closedDay: 1,
@@ -154,21 +154,21 @@ for (const skill of ["check", "poison", "gun"] as const)
         return null;
       },
     };
-    await BLACK_MARKET_RECIPIENT_STAGE.execute(ctx);
+    await executeNightStage(BLACK_MARKET_RECIPIENT_STAGE)(ctx);
     expect(calls).toBe(0);
   });
 
 test("clean optional wait closes only that night, does not expose success and allows a later-night trade", async () => {
   const game = fixture();
   const first = context(game, async () => null);
-  await BLACK_MARKET_TRADE_STAGE.execute(first);
+  await executeNightStage(BLACK_MARKET_TRADE_STAGE)(first);
   expect(getBlackMarketState(role(game))).toEqual({ remaining: 1, closedDay: 1, choice: null });
   const second = context(
     game,
     async () => ({ name: "black_market_trade", args: { target_id: 6, skill: "check" } }),
     2,
   );
-  await BLACK_MARKET_TRADE_STAGE.execute(second);
+  await executeNightStage(BLACK_MARKET_TRADE_STAGE)(second);
   expect(allNightAbilities(role(game, 6))[0].startsOnDay).toBe(3);
 });
 
@@ -201,10 +201,10 @@ for (const change of [
       if (change === "target_camp") game.world.getComponent(6, COMPONENT.Camp)!.camp = Camp.Wolf;
       return { name: "black_market_trade", args: { target_id: 6, skill: "check" } };
     });
-    if (change.startsWith("actor_")) await BLACK_MARKET_TRADE_STAGE.execute(ctx);
+    if (change.startsWith("actor_")) await executeNightStage(BLACK_MARKET_TRADE_STAGE)(ctx);
     else {
       ctx.isCurrent = () => calls <= 1;
-      await BLACK_MARKET_TRADE_STAGE.execute(ctx);
+      await executeNightStage(BLACK_MARKET_TRADE_STAGE)(ctx);
     }
     expect(ctx.events).toEqual([]);
     expect(allNightAbilities(role(game, 6))).toEqual([]);
@@ -216,7 +216,7 @@ test("three invalid choices while targets remain throw instead of becoming a wai
       name: "black_market_trade",
       args: { target_id: 3, skill: "gun" },
     }));
-  await expect(BLACK_MARKET_TRADE_STAGE.execute(ctx)).rejects.toThrow(
+  await expect(executeNightStage(BLACK_MARKET_TRADE_STAGE)(ctx)).rejects.toThrow(
     "black_market_valid_action_missing",
   );
   expect(getBlackMarketState(role(game))!.remaining).toBe(1);
@@ -229,7 +229,7 @@ test("true Wolf gets no gift/notification and Black backlash is not stopped by h
       name: "black_market_trade",
       args: { target_id: 1, skill: "check" },
     }));
-  await BLACK_MARKET_TRADE_STAGE.execute(ctx);
+  await executeNightStage(BLACK_MARKET_TRADE_STAGE)(ctx);
   const marks = ctx.ensureMarks(3);
   marks.add(StatusMark.HealMark);
   marks.add(StatusMark.GuardMark);
@@ -251,7 +251,7 @@ test("paid Black backlash ignores consumption/closure but revokes on changed sta
         name: "black_market_trade",
         args: { target_id: 1, skill: "poison" },
       }));
-    await BLACK_MARKET_TRADE_STAGE.execute(ctx);
+    await executeNightStage(BLACK_MARKET_TRADE_STAGE)(ctx);
     if (change === "private")
       (role(game) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
     if (change === "revive") {
@@ -272,7 +272,7 @@ test("the final check target disappearing during the third rejected reply closes
       name: "black_market_trade",
       args: { target_id: 6, skill: "check" },
     }));
-  await BLACK_MARKET_TRADE_STAGE.execute(trade);
+  await executeNightStage(BLACK_MARKET_TRADE_STAGE)(trade);
   for (const id of [2, 3, 4, 5]) life(game, id).alive = false;
   let calls = 0;
   const recipient = context(
@@ -283,7 +283,7 @@ test("the final check target disappearing during the third rejected reply closes
     },
     2,
   );
-  await BLACK_MARKET_RECIPIENT_STAGE.execute(recipient);
+  await executeNightStage(BLACK_MARKET_RECIPIENT_STAGE)(recipient);
   const ability = allNightAbilities(role(game, 6))[0];
   expect(calls).toBe(3);
   expect(ability).toMatchObject({ uses: 0, lastUsedDay: 2 });
@@ -304,7 +304,7 @@ for (const change of [
         name: "black_market_trade",
         args: { target_id: 6, skill: "check" },
       }));
-    await BLACK_MARKET_TRADE_STAGE.execute(trade);
+    await executeNightStage(BLACK_MARKET_TRADE_STAGE)(trade);
     const ability = allNightAbilities(role(game, 6))[0];
     (ability as { uses: number }).uses = 1;
     (ability as { lastUsedDay: number | null }).lastUsedDay = 2;
@@ -349,7 +349,7 @@ test("Black seer state and nested reports select declared fields without reading
       name: "black_market_trade",
       args: { target_id: 6, skill: "check" },
     }));
-  await BLACK_MARKET_TRADE_STAGE.execute(trade);
+  await executeNightStage(BLACK_MARKET_TRADE_STAGE)(trade);
   const ability = allNightAbilities(role(game, 6))[0];
   if (ability.kind !== "seer_check") throw new Error("wrong_fixture");
   Object.assign(ability.state, { internalDonor: "SECRET_SENTINEL" });
@@ -378,3 +378,5 @@ test("Black seer state and nested reports select declared fields without reading
   expect((projected.state as any).history[0].result).toEqual({ kind: "camp", camp: Camp.Wolf });
   expect(reads).toBe(0);
 });
+
+import { executeNightStage } from "../../../support/builders/night-stage-context";

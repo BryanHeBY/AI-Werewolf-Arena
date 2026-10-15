@@ -3,7 +3,7 @@
  * 输出为原提交及带来源刀口。请求前后、gateway 后保持原阵容与阶段复验，提交先于本人事实。
  * 这里不结算已交接伤害，也不接管较晚蛇窗；晚事实抛错保留已经消费／记录的选择。
  */
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { COMPONENT } from "../../domain/components/names";
 import { Phase } from "../../domain/identity";
 import type { RoleComponent } from "../../domain/components/role";
@@ -137,3 +137,10 @@ export const RAVEN_KNIFE_STAGE: NightStageHandler = {
     });
   },
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [ALCHEMIST_MIST_STAGE, RAVEN_KNIFE_STAGE].map((handler) =>
+    Object.freeze([handler, handler.execute] as const),
+  ),
+);

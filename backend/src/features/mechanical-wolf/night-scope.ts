@@ -1,6 +1,7 @@
 /**
  * 负责机械狼原体、复制技能与已选模式范围，输入保原生命／槽／来源，输出为复验和实际本夜提交记录。
  * 原阵营表达式晚查当前值，不新增 Camp 引用撤权；替换模式／槽仍不能复用原学习或刀权。
+ * 句柄只由可信完整资源程序持有；World 绑定留类私有字段，不经公开夜 context 返回原组件。
  * 已付技能谓词保原资源独立性，不将行动退休混入原体复验或删除知识数据。
  */
 import type {
@@ -18,7 +19,6 @@ import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { getMechanicalState } from "./state";
 
 export interface MechanicalOwnerScope {
-  readonly world: World;
   readonly actorId: EntityId;
   readonly role: RoleComponent;
   readonly state: MechanicalState;
@@ -29,6 +29,34 @@ export interface MechanicalOwnerScope {
 }
 
 /** 仅运行引用，不序列化进玩家 DTO 或 Tape，也不是状态副本的授权。 */
+/** 捕获句柄不再公开 World；私有字段只供本 owner 在原比较点核对绑定身份，不新增许可表或查询。 */
+class CapturedMechanicalOwner implements MechanicalOwnerScope {
+  #world: World;
+  readonly actorId: EntityId;
+  readonly role: RoleComponent;
+  readonly state: MechanicalState;
+  readonly life: NightLifeScope;
+  readonly canAct: MechanicalOwnerScope["canAct"];
+  readonly isCurrent: MechanicalOwnerScope["isCurrent"];
+  constructor(world: World, record: MechanicalOwnerScope) {
+    this.#world = world;
+    this.actorId = record.actorId;
+    this.role = record.role;
+    this.state = record.state;
+    this.life = record.life;
+    this.canAct = record.canAct;
+    this.isCurrent = record.isCurrent;
+  }
+  static belongsTo(scope: MechanicalOwnerScope, world: World): boolean {
+    return scope instanceof CapturedMechanicalOwner && scope.#world === world;
+  }
+  static modeCurrent(scope: MechanicalOwnerScope, kind: MechanicalMode): boolean {
+    return (
+      scope instanceof CapturedMechanicalOwner &&
+      hasCurrentMechanicalMode(scope.#world, scope.role, kind)
+    );
+  }
+}
 export function captureMechanicalOwner(
   world: World,
   actorId: EntityId,
@@ -47,8 +75,7 @@ export function captureMechanicalOwner(
   )
     return null;
   const privateState = role.privateState;
-  return {
-    world,
+  return new CapturedMechanicalOwner(world, {
     actorId,
     role,
     state,
@@ -63,7 +90,7 @@ export function captureMechanicalOwner(
       role.privateState === privateState &&
       getMechanicalState(role) === state &&
       livingNightLife(world, life),
-  };
+  });
 }
 
 /** 已提交效果绑定原学习和所选模式；不按已经消费的库存取消效果。 */
@@ -79,7 +106,7 @@ export function bindMechanicalSkill(
   if (
     day < 2 ||
     !scope.isCurrent() ||
-    !hasCurrentMechanicalMode(scope.world, scope.role, "skill") ||
+    !CapturedMechanicalOwner.modeCurrent(scope, "skill") ||
     !learned ||
     learned.readyOnNight > day ||
     !mode ||
@@ -93,7 +120,7 @@ export function bindMechanicalSkill(
     skill,
     isCurrent: () =>
       scope.isCurrent() &&
-      hasCurrentMechanicalMode(scope.world, scope.role, "skill") &&
+      CapturedMechanicalOwner.modeCurrent(scope, "skill") &&
       scope.state.learned === learned &&
       learned.skill === skill &&
       skill.kind === kind &&
@@ -130,7 +157,13 @@ export function recordMechanicalModeScope(
   day: number,
 ): boolean {
   const mode = scope.state.mode;
-  if (scope.world !== world || day < 2 || !scope.isCurrent() || !mode || mode.day !== day)
+  if (
+    !CapturedMechanicalOwner.belongsTo(scope, world) ||
+    day < 2 ||
+    !scope.isCurrent() ||
+    !mode ||
+    mode.day !== day
+  )
     return false;
   let night = modes.get(world);
   if (night && night.day > day) return false;

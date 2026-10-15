@@ -15,7 +15,8 @@ import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import type { RoleProfile } from "../../../src/rulesets/roles/contracts";
-import type { NightStageContext, NightStageHandler } from "../../../src/engine/night/contracts";
+import type { NightStageHandler } from "../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
@@ -67,6 +68,7 @@ function context(world = new World("en")): NightStageContext {
 test("virtual getStages is called once and safe native membership freezes without freezing external handlers", async () => {
   let calls = 0;
   const world = new World("en"),
+    queries = bindNightStageRosterQueries(world),
     receivers: boolean[] = [],
     stage: NightStageHandler = {
       id: "custom",
@@ -77,14 +79,17 @@ test("virtual getStages is called once and safe native membership freezes withou
     },
     source = [stage];
   class Custom extends NightStageRegistry {
-    override getStages(receivedConfig: typeof config, receivedWorld?: World) {
+    override getStages(
+      receivedConfig: typeof config,
+      receivedQueries?: import("../../../src/rulesets/night-stage-plan").NightStageRosterQueries,
+    ) {
       calls++;
       expect(receivedConfig).toBe(config);
-      expect(receivedWorld).toBe(world);
+      expect(receivedQueries).toBe(queries);
       return source;
     }
   }
-  const plan = new Custom(createRoleCatalog([])).getPlan(config, world);
+  const plan = new Custom(createRoleCatalog([])).getPlan(config, queries);
   if (plan.mode !== "snapshot") throw new Error("expected_snapshot_plan");
   expect(calls).toBe(1);
   expect(plan.stages).not.toBe(source);
@@ -102,7 +107,7 @@ test("virtual getStages is called once and safe native membership freezes withou
   expect(plan.stages).toHaveLength(1);
   expect(plan.metadata).toEqual([{ ordinal: 0, kind: "data", id: "custom", priority: 7 }]);
   expect(() => Object.defineProperty(plan.stages, "0", { value: source[1] })).toThrow();
-  for (const handler of plan.stages) await handler.execute(context(world));
+  for (const handler of plan.stages) await executeNightStage(handler)(context(world));
   expect(receivers).toEqual([true]);
 });
 
@@ -201,14 +206,14 @@ test("plan execution keeps current World lookup after an earlier stage creates a
       id: "first",
       priority: 1,
       async execute(current) {
-        current.world.createEntity();
+        ctx.world.createEntity();
       },
     },
     second: NightStageHandler = {
       id: "second",
       priority: 2,
       async execute(current) {
-        seen.push(current.world.entityIds());
+        seen.push(current.entityIds());
       },
     };
   class Custom extends NightStageRegistry {
@@ -216,8 +221,11 @@ test("plan execution keeps current World lookup after an earlier stage creates a
       return [first, second];
     }
   }
-  const plan = new Custom(createRoleCatalog([])).getPlan(config, ctx.world);
-  for (const handler of plan.stages) await handler.execute(ctx);
+  const plan = new Custom(createRoleCatalog([])).getPlan(
+    config,
+    bindNightStageRosterQueries(ctx.world),
+  );
+  for (const handler of plan.stages) await executeNightStage(handler)(ctx);
   expect(seen).toEqual([[1]]);
   expect(plan.metadata).toEqual([
     { ordinal: 0, kind: "data", id: "first", priority: 1 },
@@ -269,7 +277,7 @@ for (const condition of ["throw-after-first", "requires-first-commit"] as const)
     expect(iteratorCalls).toBe(0);
     let caught: unknown;
     try {
-      for (const handler of plan.stages) await handler.execute(context());
+      for (const handler of plan.stages) await executeNightStage(handler)(context());
     } catch (error) {
       caught = error;
     }
@@ -318,7 +326,7 @@ test("opaque source index getter is pulled only after the preceding stage commit
   expect(plan.stages).toBe(source);
   expect(events).toEqual([]);
   expect(plan.metadata).toEqual([]);
-  for (const handler of plan.stages) await handler.execute(context());
+  for (const handler of plan.stages) await executeNightStage(handler)(context());
   expect(events).toEqual(["first_commit", "index_1", "second_commit"]);
 });
 
@@ -396,9 +404,13 @@ test("native array snapshot intentionally excludes stages appended during await 
     }
     const registry = new Custom(createRoleCatalog([]));
     const selected = snapshot ? registry.getPlan(config).stages : registry.getStages();
-    for (const handler of selected) await handler.execute(context());
+    for (const handler of selected) await executeNightStage(handler)(context());
     return effects;
   };
   expect(await run(false)).toEqual(["first_commit", "second_commit"]);
   expect(await run(true)).toEqual(["first_commit"]);
 });
+
+import { bindNightStageRosterQueries } from "../../../src/rulesets/night-stage-plan";
+
+import { executeNightStage } from "../../support/builders/night-stage-context";

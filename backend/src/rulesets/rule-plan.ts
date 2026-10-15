@@ -100,7 +100,7 @@ export class RulePlan {
   /** 在原时点采集；不透明 iterator 不预先耗尽，下一项仍在前一 handler 提交后拉取。 */
   nightPlan(registry: NightStageRegistry, world: () => World): NightStagePlan {
     // 原调用先读取 getPlan 方法，再求值 World 参数；不能在跨 owner 时倒置 getter 前缀。
-    const plan = registry.getPlan(this.parameters.board, world());
+    const plan = registry.getPlan(this.parameters.board, bindNightStageRosterQueries(world()));
     if (plan.mode !== "snapshot") {
       if (registry === this.#standardRegistry) throw new Error("rule_plan_revision_not_supported");
       return plan;
@@ -161,3 +161,5 @@ export class RulePlan {
 }
 Object.freeze(RulePlan.prototype);
 Object.freeze(RulePlan);
+
+import { bindNightStageRosterQueries } from "./night-stage-plan";

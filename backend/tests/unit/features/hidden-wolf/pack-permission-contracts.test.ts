@@ -2,7 +2,10 @@
  * 单元测试验证隐狼方向性知识、生命／许可变化和有序死亡提议。单个狼聊阶段、只读交付／查验／提示及继承查询检查独立权利；原回执、引用、getter、错误、事实和状态为预期，不运行完整阶段或付费模型。
  */
 import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -93,7 +96,7 @@ for (const change of ["camp", "permission"] as const)
       else chat = false;
       return result;
     };
-    await WOLF_NIGHT_STAGES[0]!.execute(
+    await executeNightStage(WOLF_NIGHT_STAGES[0]!)(
       nightStageContext({
         world: game.world,
         roleCatalog: custom,

@@ -1,6 +1,7 @@
 /**
  * 负责觉醒隐狼本夜原体、学习与镜像范围捕获；输入保原能力／Role／生命引用，输出为复验与本夜记录。
  * 原阵营表达式晚查当前值，不新增 Camp 引用撤权；槽／来源／生命替换仍按原规则失效。
+ * 句柄只由可信完整资源程序持有；World 绑定留类私有字段，不经公开夜 context 返回原组件。
  * 已付 skill／mirror 原谓词不因行动墓碑失效；不以合法数据副本授予原捕获权限。
  */
 import type {
@@ -19,7 +20,6 @@ import { awakenedSkillForNight, getAwakenedState } from "./state";
 import { findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
 
 export interface AwakenedOwnerScope {
-  readonly world: World;
   readonly actorId: EntityId;
   readonly role: RoleComponent;
   readonly state: AwakenedState;
@@ -27,6 +27,28 @@ export interface AwakenedOwnerScope {
   isCurrent(allowFirstDeath?: boolean): boolean;
   /** 仅未付执行的拒绝条件；调用方仍按原序检查当前性、阶段、资源和目标。 */
   canAct(): boolean;
+}
+/** 捕获句柄不再公开 World；私有字段只供本 owner 在原比较点核对绑定身份，不新增许可表或查询。 */
+class CapturedAwakenedOwner implements AwakenedOwnerScope {
+  #world: World;
+  readonly actorId: EntityId;
+  readonly role: RoleComponent;
+  readonly state: AwakenedState;
+  readonly life: NightLifeScope;
+  readonly canAct: AwakenedOwnerScope["canAct"];
+  readonly isCurrent: AwakenedOwnerScope["isCurrent"];
+  constructor(world: World, record: AwakenedOwnerScope) {
+    this.#world = world;
+    this.actorId = record.actorId;
+    this.role = record.role;
+    this.state = record.state;
+    this.life = record.life;
+    this.canAct = record.canAct;
+    this.isCurrent = record.isCurrent;
+  }
+  static belongsTo(scope: AwakenedOwnerScope, world: World): boolean {
+    return scope instanceof CapturedAwakenedOwner && scope.#world === world;
+  }
 }
 export function captureAwakenedOwner(
   world: World,
@@ -46,8 +68,7 @@ export function captureAwakenedOwner(
   )
     return null;
   const privateState = role.privateState;
-  return {
-    world,
+  return new CapturedAwakenedOwner(world, {
     actorId,
     role,
     state,
@@ -70,7 +91,7 @@ export function captureAwakenedOwner(
         (allowFirstDeath || life.life.alive)
       );
     },
-  };
+  });
 }
 /** 绑定已付事实，复验原学习引用，不读已关闭槽或已消费瓶／刀来取消效果。 */
 export function bindAwakenedSkill(
@@ -157,7 +178,7 @@ export function beginAwakenedNight(
   if ((nights.get(world)?.day ?? day) > day) throw new Error("awakened_night_clock_regressed");
   // 开夜建立新执行范围；原原体复验之后拒绝退休者，历史提交与已付查询仍不附加此条件。
   const currentOwners = owners.filter(
-    (owner) => owner.world === world && owner.isCurrent() && owner.canAct(),
+    (owner) => CapturedAwakenedOwner.belongsTo(owner, world) && owner.isCurrent() && owner.canAct(),
   );
   nights.set(world, { day, owners: new Map(currentOwners.map((owner) => [owner.role, owner])) });
   // 建立本夜原体 authority 本身就是已提交前缀；仅继承刀或没有复制主动技能的夜也保此记录。

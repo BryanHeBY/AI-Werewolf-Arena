@@ -2,7 +2,10 @@
  * 单元测试：验证守墓人私密反馈字段及前次放逐的直接交付，不泄漏待结算或精确角色。输入为语言矩阵、字面畸形反馈与直接阶段上下文；原 null／接受、零 accessor 读及资格／历史为预期，不运行完整夜或 PhaseManager 周期。
  */
 import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -169,11 +172,11 @@ for (const locale of ["zh-CN", "en"] as const)
       getAliveByRole: (wanted: Role) =>
         game.world.getAliveEntityIds().filter((id) => role(game.world, id).role === wanted),
     });
-    await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);
+    await executeNightStage(GRAVEKEEPER_FEEDBACK_STAGE)(ctx);
     expect(events).toEqual([]);
     day = 2;
-    await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);
-    await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);
+    await executeNightStage(GRAVEKEEPER_FEEDBACK_STAGE)(ctx);
+    await executeNightStage(GRAVEKEEPER_FEEDBACK_STAGE)(ctx);
     expect(
       events
         .filter((event) => event.type === "gravekeeper_reported")
@@ -183,12 +186,12 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(state(game.world, 4).history).toHaveLength(1);
     expect(state(game.world, 3).history[0]).not.toBe(state(game.world, 4).history[0]);
     day = 3;
-    await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);
+    await executeNightStage(GRAVEKEEPER_FEEDBACK_STAGE)(ctx);
     expect(events).toHaveLength(2);
     fact = { ...fact, exileDay: 2 };
     game.world.getComponent(3, COMPONENT.Alive)!.alive = false;
     role(game.world, 4).role = Role.Villager;
-    await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);
+    await executeNightStage(GRAVEKEEPER_FEEDBACK_STAGE)(ctx);
     expect(events).toHaveLength(2);
     expect(state(game.world, 3).history).toHaveLength(1);
   });

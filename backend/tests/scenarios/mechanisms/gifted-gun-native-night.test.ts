@@ -229,7 +229,7 @@ test("a declared death capability collects final activation before a gift is pro
                     async execute(
                       ctx: import("../../../src/engine/night/contracts").NightStageContext,
                     ) {
-                      grantDeathGun(ctx.world, 3, 5, ctx.currentDay(), ctx.events);
+                      grantDeathGun(game.world, 3, 5, ctx.currentDay(), events);
                     },
                   },
                 ],
@@ -242,7 +242,7 @@ test("a declared death capability collects final activation before a gift is pro
   expect(allDeathGuns(game.world.getComponent(5, COMPONENT.Role))).toHaveLength(0);
   expect(
     stageRegistry
-      .getStages(config, game.world)
+      .getStages(config, bindNightStageRosterQueries(game.world))
       .some((stage) => stage.id === "death_ability_activation"),
   ).toBe(true);
   const pipeline = new NightPipeline({
@@ -270,3 +270,5 @@ test("a declared death capability collects final activation before a gift is pro
   expect(result.interrupted).toBe(false);
   expect(allDeathGuns(game.world.getComponent(5, COMPONENT.Role))[0].armedOnNight).toBe(1);
 });
+
+import { bindNightStageRosterQueries } from "../../../src/rulesets/night-stage-plan";

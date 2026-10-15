@@ -10,7 +10,7 @@ import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import { Camp, Role } from "../../domain/identity";
 import { captureNightLife } from "../../domain/night-effects";
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { captureEvilKnight } from "./reflection";
 import { hasEvilKnightNightBindings, installEvilKnightNightBindings } from "./night-bindings";
 import type { NightAbilityReadView } from "../night-abilities/inventory-ports";
@@ -141,3 +141,8 @@ export const EVIL_KNIGHT_FRAME_STAGE: NightStageHandler = {
     ctx.state.nightImmunities = [...bindings.values()];
   },
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [EVIL_KNIGHT_FRAME_STAGE].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

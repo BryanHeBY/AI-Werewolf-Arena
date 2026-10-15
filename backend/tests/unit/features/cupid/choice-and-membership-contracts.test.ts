@@ -29,7 +29,10 @@ import {
   hasCupidNightCommit,
 } from "../../../../src/features/cupid/relation";
 import { cupidCityDecision } from "../../../../src/features/cupid/victory";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
@@ -100,7 +103,7 @@ async function connect(
   b: number,
   events: GameEvent[] = [],
 ) {
-  await CUPID_STAGE.execute(context(game, events, async () => choose(a, b)));
+  await executeNightStage(CUPID_STAGE)(context(game, events, async () => choose(a, b)));
   return events;
 }
 
@@ -141,7 +144,7 @@ for (const policy of ["netease_2017_cupid_follows_lovers_v1", "lui_meme_lovers_o
     const game = fixture(deck, policy),
       events: GameEvent[] = [],
       requests: ActionRequest[] = [];
-    await CUPID_STAGE.execute(
+    await executeNightStage(CUPID_STAGE)(
       context(game, events, async (request) => {
         requests.push(request);
         return choose(1, 3);
@@ -191,7 +194,7 @@ for (const bad of [null, choose(2, 2), choose(2, 99), choose(2.5, 3)])
       events: GameEvent[] = [];
     let calls = 0;
     await expect(
-      CUPID_STAGE.execute(
+      executeNightStage(CUPID_STAGE)(
         context(game, events, async () => {
           calls++;
           return bad;
@@ -225,7 +228,7 @@ for (const mutation of [
       oldState = getCupidState(role(game, 1))!;
     let current = true,
       calls = 0;
-    const operation = CUPID_STAGE.execute(
+    const operation = executeNightStage(CUPID_STAGE)(
       context(
         game,
         events,
@@ -298,7 +301,7 @@ test("request construction revocation never reaches provider; committed reentry 
     current = false;
     return request;
   };
-  await CUPID_STAGE.execute(ctx);
+  await executeNightStage(CUPID_STAGE)(ctx);
   expect(calls).toBe(0);
   expect(events).toEqual([]);
   await connect(game, 2, 3, events);

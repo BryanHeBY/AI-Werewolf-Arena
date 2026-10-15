@@ -16,12 +16,12 @@ import { bindWolfKnifeTargetQuery } from "./ports";
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
 import { EntityId, Phase } from "../../domain/model";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
-import { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { wolfChatParticipants, wolfKnifeHolders, wolfTeamEvent } from "../wolf-team/action-ports";
 import { COMPONENT } from "../../domain/components/names";
 import { AliveComponent, aliveLifeVersion } from "../../domain/components/alive";
 import type { RoleComponent } from "../../domain/components/role";
-import type { NightStageContext } from "../../engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../engine/night/trusted-runtime";
 
 const WOLF_DISCUSSION_MAX_ROUNDS = 3;
 const WOLF_KILL_VOTE_MAX_RETRIES = 3;
@@ -357,3 +357,8 @@ const wolfKillVoteStage: NightStageHandler = {
 
 /** 狼人夜间阶段列表。 */
 export const WOLF_NIGHT_STAGES: NightStageHandler[] = [wolfDiscussionStage, wolfKillVoteStage];
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [...WOLF_NIGHT_STAGES].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

@@ -2,7 +2,10 @@
  * 单元测试验证石像鬼查验许可、阶段捕获作用域与独立原生／gift／copy 历史。输入为字面角色组、受控单阶段回调及撤权修改；字面报告、次数和原引用是预期。完整阶段及死亡交互链由场景测试拥有。
  */
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -33,7 +36,7 @@ import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catal
 import { ActionReception } from "../../../../src/engine/actions/action-reception";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import {
   grantNightAbility,
@@ -138,8 +141,8 @@ test("repeat is per instance, including revived same-ID targets; completed same-
       name: "inspect_role",
       args: { target_id: 3 },
     }));
-  await ROLE_INSPECTION_STAGE.execute(ctx);
-  await ROLE_INSPECTION_STAGE.execute(ctx);
+  await executeNightStage(ROLE_INSPECTION_STAGE)(ctx);
+  await executeNightStage(ROLE_INSPECTION_STAGE)(ctx);
   const ability = findNightAbility(role(game, 1), "role_check")!;
   expect(ability.uses).toBe(1);
   expect(events.filter((e) => e.type === "role_inspected")).toHaveLength(1);
@@ -214,10 +217,10 @@ for (const mutation of [
       () => current,
     );
     if (mutation.startsWith("target"))
-      await expect(ROLE_INSPECTION_STAGE.execute(ctx)).rejects.toThrow(
+      await expect(executeNightStage(ROLE_INSPECTION_STAGE)(ctx)).rejects.toThrow(
         "role_inspection_required_action_missing",
       );
-    else await ROLE_INSPECTION_STAGE.execute(ctx);
+    else await executeNightStage(ROLE_INSPECTION_STAGE)(ctx);
     expect(events.filter((e) => e.type === "role_inspected")).toEqual([]);
     expect(old.history).toEqual([]);
     expect(ability.uses).toBe(0);
@@ -240,7 +243,7 @@ test("mandatory exhausted invalid responses throw, preserving no false result/co
     calls++;
     return null;
   });
-  await expect(ROLE_INSPECTION_STAGE.execute(ctx)).rejects.toThrow(
+  await expect(executeNightStage(ROLE_INSPECTION_STAGE)(ctx)).rejects.toThrow(
     "role_inspection_required_action_missing",
   );
   expect(calls).toBe(3);
@@ -263,7 +266,7 @@ test("mandatory exhausted invalid responses throw, preserving no false result/co
     .entityIds()
     .filter((id) => id !== 1)
     .map((targetId) => ({ day: 0, targetId, result: { kind: "role", role: Role.Villager } }));
-  await ROLE_INSPECTION_STAGE.execute(
+  await executeNightStage(ROLE_INSPECTION_STAGE)(
     stageContext(game, events, async () => {
       throw new Error("no_fake_empty_request");
     }),
@@ -292,7 +295,7 @@ test("a gifted role check keeps its real Villager identity and a controlled tran
     },
     events,
   );
-  await ROLE_INSPECTION_STAGE.execute(
+  await executeNightStage(ROLE_INSPECTION_STAGE)(
     stageContext(game, events, async (request) => ({
       name: "inspect_role",
       args: { target_id: request.actorId === 1 ? 3 : 2 },
@@ -349,7 +352,7 @@ for (const exhaustedOn of [2, 3])
       }
     ).history = [{ day: 0, targetId: 3, result: { kind: "role", role: Role.Villager } }];
     let calls = 0;
-    await ROLE_INSPECTION_STAGE.execute(
+    await executeNightStage(ROLE_INSPECTION_STAGE)(
       stageContext(game, events, async () => {
         if (++calls === exhaustedOn) game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
         return null;
@@ -395,7 +398,7 @@ test("native, gift and copy instances each inspect the same target once with sep
       },
       events,
     );
-  await ROLE_INSPECTION_STAGE.execute(
+  await executeNightStage(ROLE_INSPECTION_STAGE)(
     stageContext(game, events, async () => ({ name: "inspect_role", args: { target_id: 2 } })),
   );
   for (const ability of [native, gift, copy]) {

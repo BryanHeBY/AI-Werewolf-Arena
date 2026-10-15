@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type { NightStageContext } from "../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 import { assertNightModifierBonusEffects } from "../../../src/rulesets/night-damage-composition";
 
 test("未命中增益配置不读取阶段上下文，也不提前拍摄效果状态", () => {

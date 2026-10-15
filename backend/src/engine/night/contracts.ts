@@ -1,5 +1,5 @@
 /**
- * 负责流水线与 handler 共享的夜间状态及执行端口契约。
+ * 负责夜间提案数据与公开扩展契约；完整内建 owner 的私有输入单独归 trusted-runtime。
  * 输入为捕获的阶段操作、已付效果和 actor 查询；输出为有类型的贡献及原状态引用。
  * 机械、觉醒和原毒的内建生产者提交 sourced intent，源原体/因果信息只供运行时消费。
  * 旧原毒／机械／觉醒注入 effect/claim 保留接受宽度；其额外 kind/origin/getter 不被当作新协议读取。
@@ -14,20 +14,11 @@ import {
   ActionRequestExtras,
   ActionStage,
   EntityId,
-  GameEvent,
   ExileFeedback,
   NightSummary,
   Role,
 } from "../../domain/model";
-import { World } from "../../domain/world";
-import { ToolGateway } from "../actions/tool-gateway";
-import type { RoleCatalog } from "../../rulesets/roles/catalog";
-import type { ActionRequestFactoryConstructorPort } from "../../domain/actions";
-import type { NightAbilityActorQuery } from "../../features/night-abilities/actor-query-ports";
 import type { AliveComponent } from "../../domain/components/alive";
-import type { NativeNightFailurePolicy } from "../../rulesets/native-night-failure-policy";
-import type { NativeNightTargetPolicy } from "../../rulesets/native-night-target-policy";
-import type { NativeNightEffects } from "../../rulesets/native-night-effects";
 
 import type {
   NightPoisonClaim,
@@ -52,7 +43,7 @@ export interface WolfKnifeTargetScope {
 }
 
 /**
- * 同一夜按阶段顺序累积的运行状态，流水线创建，具体 handler 写入所属效果。
+ * 同一夜按阶段顺序累积的运行状态，流水线创建，完整内建 owner 或具体提案命令写入所属效果。
  * 包含原组件、回执和当前性查询，不能直接序列化为玩家观察或录制格式。
  * 效果条目是运行提案或捕获记录；空容器存在不表示已付、有效或已标死，这些由各所有者分别核对。
  */
@@ -91,41 +82,43 @@ export interface NightStageState {
 }
 
 /**
- * 阶段 handler 使用的运行端口：请求、候选查询和效果写入均在当前阶段执行。
- * 异步行动返回后仍需检查 isCurrent 及具体原体许可；持有此上下文不自动获得领域提交权限。
+ * 可替换夜阶段实际取得的对象：请求与校验、编号查询和显式授予的具体操作。
+ * 不提供 World、组件、整夜状态、事件数组、Catalog、请求构造器或能反查私有 runtime 的 token。
+ * Provider 也为只含 getAction 的真实对象；候选不是付款，原资格、部分写入与已付效果仍由具体 owner 负责。
  */
-export interface NightStageContext {
+export interface NightStageContext<Ports extends object = object> {
   isCurrent(): boolean;
   readonly previousExile: Readonly<ExileFeedback> | null;
-  world: World;
-  roleCatalog: RoleCatalog;
-  readonly nightActors: NightAbilityActorQuery;
-  readonly nativeNightFailure: NativeNightFailurePolicy;
-  readonly nativeNightTargets: NativeNightTargetPolicy;
-  readonly nativeNightEffects: NativeNightEffects;
-  toolGateway: ToolGateway;
-  events: GameEvent[];
-  actionProvider: ActionProvider;
+  readonly actions: import("../actions/tool-gateway").BoundToolGateway;
+  readonly actionProvider: ActionProvider;
   currentDay(): number;
-  /** 装配端惰性构造器；各机制原点新建实例，不复用 makeRequest，也不进入请求 context／录制 DTO。 */
-  readonly requestFactory: ActionRequestFactoryConstructorPort;
   makeRequest(
     actorId: EntityId,
     allowedTools: ActionRequest["allowedTools"],
     context: ActionRequestExtras & { stage: ActionStage; requiresAction?: boolean },
   ): ActionRequest;
   getAliveByRole(role: Role): EntityId[];
-  ensureMarks(entityId: EntityId): StatusMarksComponent;
+  entityIds(): EntityId[];
   pickMajorityTarget(votes: Record<number, number>): EntityId | null;
-  /** 迷雾有限板在所有投票者明确放弃后使用的回退，随机流具名且可复现。 */
   pickMistKnife?(ids: readonly EntityId[]): EntityId | null;
   shuffleWolves(ids: EntityId[]): EntityId[];
-  state: NightStageState;
+  /** 未绑定本族操作的扩展没有此能力；不填入空函数或根据机器 id 推断权限。 */
+  readonly ports?: Ports;
 }
 
-/** 默认收集器按原 priority 装配，流水线按计划原顺序执行；处理器返回不等于效果已造成实际死亡。 */
-export interface NightStageHandler {
+/** handler 引用及 execute 仍可替换；流水线在原点只读一次实际 callee，并保原 receiver。 */
+export interface NightStageHandler<Ports extends object = object> {
   id: string;
   priority: number;
-  execute(ctx: NightStageContext): Promise<void>;
+  execute(ctx: NightStageContext<Ports>): Promise<void>;
+}
+
+/**
+ * 计划只持执行定义的原引用。此面不宣称 raw owner 可用公开 callback 输入直接调用；真实执行交组合根双引用分派。
+ * never 只擦除计划不应读写的参数类型，不提供 World 或可调用的伪运行上下文。
+ */
+export interface NightStageDefinition {
+  id: string;
+  priority: number;
+  execute: (...args: never[]) => Promise<void>;
 }

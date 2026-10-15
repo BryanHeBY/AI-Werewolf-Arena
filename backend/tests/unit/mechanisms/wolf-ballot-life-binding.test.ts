@@ -5,7 +5,7 @@
  */
 import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import type { NightStageState } from "../../../src/engine/night/contracts";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -47,7 +47,7 @@ for (const mutation of ["revive", "replace_life"] as const)
       wolfTarget: null,
       seerChecks: [],
     };
-    await WOLF_NIGHT_STAGES[1]!.execute(
+    await executeNightStage(WOLF_NIGHT_STAGES[1]!)(
       nightStageContext({
         world: game.world,
         roleCatalog: getDefaultRoleCatalog(),
@@ -113,7 +113,7 @@ for (const mutation of ["revive", "replace_life"] as const)
         wolfTarget: null,
         seerChecks: [],
       };
-    await WOLF_NIGHT_STAGES[1]!.execute(
+    await executeNightStage(WOLF_NIGHT_STAGES[1]!)(
       nightStageContext({
         world: game.world,
         roleCatalog: getDefaultRoleCatalog(),

@@ -33,3 +33,29 @@ export function readDreamNightLinks(state: object): readonly DreamNightLink[] {
 export function installDreamNightLinks(state: object, links: DreamNightLink[]): void {
   linksByState.set(state, links);
 }
+
+/**
+ * 可信扩展的已付关系探针：在原关系读取点捕获同一数组，之后按调用点建立 Frame；不把生命组件交给 callback。
+ * 返回的方法只产生编号，World 与 Frame 留在闭包；本探针不改变 paid-current 或原关系撤权。
+ */
+export function bindPaidDreamNightProbe(runtime: {
+  state(): object;
+  world(): import("../../domain/world").World;
+}) {
+  return {
+    get captureProbe() {
+      const links = readDreamNightLinks(runtime.state());
+      return () => {
+        const frame = new ProbeDreamNightFrame(links);
+        return {
+          protectedTargets: () =>
+            frame.protectedTargets(bindProbeDreamLifeQueries(runtime.world())),
+          linkedDeaths: (deaths: readonly number[]) =>
+            frame.linkedDeaths(bindProbeDreamLifeQueries(runtime.world()), deaths),
+        };
+      };
+    },
+  };
+}
+import { DreamNightFrame as ProbeDreamNightFrame } from "./night-frame";
+import { bindDreamLifeQueries as bindProbeDreamLifeQueries } from "../../domain/dream-night-effects";

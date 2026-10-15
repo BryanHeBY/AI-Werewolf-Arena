@@ -4,7 +4,7 @@
  * 实际开启／复验／付款／关闭仍归本族 controller 和 authority。
  * 需求未命中不导入控制器，执行失败不伪造完成事实或回滚先前提交。
  */
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { demonHunterNeedsTurn } from "./authority";
 /** 只处理已安装且本夜需要选择的猎魔人；原动态导入／await点保持，不在这里注册角色或授予许可。 */
 export const DEMON_HUNTER_NIGHT_STAGE: NightStageHandler = {
@@ -30,3 +30,8 @@ export const DEMON_HUNTER_NIGHT_STAGE: NightStageHandler = {
     });
   },
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [DEMON_HUNTER_NIGHT_STAGE].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

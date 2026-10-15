@@ -10,7 +10,8 @@ import { COMPONENT } from "../../../../src/domain/components/names";
 import { createRoleComponent } from "../../../../src/domain/components/role";
 import { createAliveComponent } from "../../../../src/domain/components/alive";
 import { captureNightLife } from "../../../../src/domain/night-effects";
-import type { NightStageState, NightStageContext } from "../../../../src/engine/night/contracts";
+import type { NightStageState } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import type { NightPipelineResult } from "../../../../src/engine/phases/night-pipeline";
 import { captureEvilKnight } from "../../../../src/features/evil-knight/reflection";
 import { freshEvilKnightState } from "../../../../src/features/evil-knight/state-slot";
@@ -149,12 +150,16 @@ test("frame keeps three state reads and installed bindings when immune-array ass
       return s;
     },
   } as unknown as NightStageContext;
-  await expect(EVIL_KNIGHT_FRAME_STAGE.execute(ctx)).rejects.toBe(error);
+  await expect(executeNightStage(EVIL_KNIGHT_FRAME_STAGE)(ctx)).rejects.toBe(error);
   expect(reads).toBe(3);
   expect(hasEvilKnightNightBindings(s)).toBe(true);
   const binding = evilKnightNightBinding(s, f.actorId);
   expect(binding?.state).toBe(f.binding.state);
   expect(assigned).toEqual([binding]);
-  await expect(EVIL_KNIGHT_FRAME_STAGE.execute(ctx)).rejects.toThrow("evil_knight_night_reentry");
+  await expect(executeNightStage(EVIL_KNIGHT_FRAME_STAGE)(ctx)).rejects.toThrow(
+    "evil_knight_night_reentry",
+  );
   expect(reads).toBe(4);
 });
+
+import { executeNightStage } from "../../../support/builders/night-stage-context";

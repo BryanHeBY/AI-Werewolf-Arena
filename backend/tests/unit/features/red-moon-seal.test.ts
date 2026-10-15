@@ -27,7 +27,7 @@ import { SEER_NIGHT_STAGES } from "../../../src/features/seer/night-stages";
 import { WITCH_NIGHT_STAGES } from "../../../src/features/witch/night-stages";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
-import type { NightStageContext } from "../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 function sealedWorld() {
   const fixture = redMoonCandidateWorld();
   beginDemonHunterNight(fixture.world, 1, () => true);
@@ -90,7 +90,7 @@ test("Red Moon sealed night runs all good native stages without requests or inve
     },
   };
   for (const stage of [...WITCH_NIGHT_STAGES, ...SEER_NIGHT_STAGES, DEMON_HUNTER_NIGHT_STAGE])
-    await stage.execute(ctx);
+    await executeNightStage(stage)(ctx);
   expect(requests).toBe(0);
   expect(ctx.events).toEqual([]);
   expect(ctx.state.seerChecks).toEqual([]);
@@ -145,3 +145,5 @@ for (const mutation of ["replace", "in_place"] as const)
     else red.role = wolf.role;
     expect(() => demonRedMoonNightSealed(world, 2)).toThrow("red_moon_original_state_revoked");
   });
+
+import { executeNightStage } from "../../support/builders/night-stage-context";

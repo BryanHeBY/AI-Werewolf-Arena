@@ -1,7 +1,10 @@
 /**
  * 单元测试验证狼美人关系作用域和许可。输入保留魅惑／死因／locale／胜利条件及受控迟到提案；原字面回执、引用／getter／错误轨迹、事实和状态是预期。有界 permitsCharm、单魅惑阶段／scope 与只读狼队回执不推进完整中心死亡链或完整阶段，不调用付费模型。
  */
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -107,7 +110,7 @@ for (const mutation of ["phase", "actor_life", "target_life", "state"] as const)
         },
       },
     });
-    await WOLF_BEAUTY_CHARM_STAGE.execute(ctx);
+    await executeNightStage(WOLF_BEAUTY_CHARM_STAGE)(ctx);
     expect(old).toEqual({ targetId: null, lastActedDay: null, history: [] });
     expect(events).toEqual([]);
     expect(activeCharm(game.world, 1)).toBeNull();

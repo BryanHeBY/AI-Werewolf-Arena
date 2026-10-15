@@ -20,7 +20,7 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { retireRoleExecution } from "../../../src/domain/role-execution-authority";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
-import type { NightStageContext } from "../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 import { bindNightAbilityActorQuery } from "../../../src/features/night-abilities/night-ability-actors";
 import { findNightAbility } from "../../../src/features/night-abilities/abilities";
 import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
@@ -155,7 +155,7 @@ async function prepare(f: Fixture, ctx: NightStageContext, template: "witch" | "
   } else {
     expect(learnAwakenedRole(f.state, template === "witch" ? 3 : 4, template, 1)).toBe(true);
     expect(activateAwakenedLearning(f.state, 1)).toBe(true);
-    await stage("awakened", "awakened_opening").execute(ctx);
+    await executeNightStage(stage("awakened", "awakened_opening"))(ctx);
   }
 }
 
@@ -172,12 +172,12 @@ test("两族退休原体仍满足纯当前性，但不能开出新请求或写�
     retireRoleExecution(f.role);
     expect(scope.isCurrent()).toBe(true);
     expect(scope.canAct()).toBe(false);
-    if (family === "mechanical") await stage(family, "mechanical_mode").execute(ctx);
+    if (family === "mechanical") await executeNightStage(stage(family, "mechanical_mode"))(ctx);
     else {
-      await stage(family, "awakened_opening").execute(ctx);
+      await executeNightStage(stage(family, "awakened_opening"))(ctx);
       expect(currentAwakenedNight(f.game.world, f.role)).toBeNull();
     }
-    await stage(family, `${family}_mimic`).execute(ctx);
+    await executeNightStage(stage(family, `${family}_mimic`))(ctx);
     expect(requests).toBe(0);
     expect(JSON.stringify(f.state)).toBe(before);
     expect(ctx.events).toEqual([]);
@@ -192,7 +192,7 @@ test("机械 Provider 返回后退休不写默认模式，原当前性不被改�
     retireRoleExecution(f.role);
     return null;
   });
-  await stage("mechanical", "mechanical_mode").execute(ctx);
+  await executeNightStage(stage("mechanical", "mechanical_mode"))(ctx);
   expect(trace).toEqual(["provider"]);
   expect(f.state.learned).toBeNull();
   if (f.family !== "mechanical") throw new Error("fixture_family_mismatch");
@@ -229,8 +229,11 @@ test("晚目标 getter 退休后两族拒绝首付款，getter 原异常仍优�
       });
       return result;
     };
-    if (family === "mechanical") await stage(family, "mechanical_skill").execute(ctx);
-    else await expect(stage(family, "awakened_skill").execute(ctx)).rejects.toBe(originalError);
+    if (family === "mechanical") await executeNightStage(stage(family, "mechanical_skill"))(ctx);
+    else
+      await expect(executeNightStage(stage(family, "awakened_skill"))(ctx)).rejects.toBe(
+        originalError,
+      );
     expect(trace).toEqual(["target"]);
     expect(owner(f).isCurrent()).toBe(true);
     expect(f.state.learned!.skill).toEqual({ kind: "poison", remaining: 1 });
@@ -288,7 +291,9 @@ test("两族付款后事实失败保库存与效果，晚退休不取消已付�
       retireRoleExecution(f.role);
       throw originalError;
     };
-    await expect(stage(family, `${family}_skill`).execute(ctx)).rejects.toBe(originalError);
+    await expect(executeNightStage(stage(family, `${family}_skill`))(ctx)).rejects.toBe(
+      originalError,
+    );
     expect(trace).toEqual(["provider", "fact"]);
     expect(f.state.learned!.skill).toEqual({ kind: "guard", lastTarget: 6, lastGuardDay: 2 });
     expect(f.state.skillClosedDay).toBe(family === "mechanical" ? null : 2);
@@ -303,7 +308,7 @@ test("两族付款后事实失败保库存与效果，晚退休不取消已付�
     expect(scope.canAct()).toBe(false);
     // 原绑定 reader 不读行动墓碑；它不是重新开启技能请求的入口。
     expect(bound.isCurrent()).toBe(true);
-    await stage(family, `${family}_skill`).execute(ctx);
+    await executeNightStage(stage(family, `${family}_skill`))(ctx);
     expect(trace).toEqual(["provider", "fact"]);
     f.game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
     expect(effect.isCurrent!()).toBe(family === "awakened");
@@ -322,7 +327,7 @@ test("觉醒镜像已安装后晚退休仍完成原激活前缀，不撤回已�
     },
     1,
   );
-  await stage("awakened", "awakened_opening").execute(ctx);
+  await executeNightStage(stage("awakened", "awakened_opening"))(ctx);
   const read = f.game.world.getComponent.bind(f.game.world),
     trace: string[] = [];
   // 局部 World 查询保持原结果；只在真实实例已安装后的原 Camp 读取点退休该 Role。
@@ -334,7 +339,7 @@ test("觉醒镜像已安装后晚退休仍完成原激活前缀，不撤回已�
     }
     return result;
   }) as typeof f.game.world.getComponent;
-  await stage("awakened", "awakened_activation").execute(ctx);
+  await executeNightStage(stage("awakened", "awakened_activation"))(ctx);
   expect(trace).toEqual(["installed-camp"]);
   expect(findNightAbility(f.role, "role_check")).toBeDefined();
   expect(f.state.learned!.activationNight).toBe(1);
@@ -363,7 +368,7 @@ test("机械模式 helper 内最后资格 getter 退休，不产生首次模式�
     });
     return null;
   });
-  await stage("mechanical", "mechanical_mode").execute(ctx);
+  await executeNightStage(stage("mechanical", "mechanical_mode"))(ctx);
   expect(reads).toBe(3);
   expect(writes).toBe(0);
   expect(ctx.events).toEqual([]);
@@ -400,7 +405,7 @@ test("两族守护 helper 内历史 getter 退休，不付款也不添加盾或�
       });
       return result;
     };
-    await stage(family, `${family}_skill`).execute(ctx);
+    await executeNightStage(stage(family, `${family}_skill`))(ctx);
     expect(trace).toEqual(["history"]);
     expect(skill.lastGuardDay).toBeNull();
     expect(f.state.skillClosedDay).toBeNull();
@@ -448,7 +453,7 @@ test("镜像字典已创建但原身份 getter 退休，保空字典而不安装
     },
     1,
   );
-  await stage("awakened", "awakened_opening").execute(ctx);
+  await executeNightStage(stage("awakened", "awakened_opening"))(ctx);
   const trace: string[] = [];
   expect(findNightAbility(f.role, "role_check")).toBeUndefined();
   Object.defineProperty(f.role, "role", {
@@ -463,7 +468,7 @@ test("镜像字典已创建但原身份 getter 退休，保空字典而不安装
       return Role.AwakenedHiddenWolf;
     },
   });
-  await stage("awakened", "awakened_activation").execute(ctx);
+  await executeNightStage(stage("awakened", "awakened_activation"))(ctx);
   expect(trace).toEqual(["dictionary-before-install"]);
   expect((f.role.privateState as { abilities?: object }).abilities).toEqual({});
   expect(f.state.learned!.activationNight).toBeNull();
@@ -481,7 +486,7 @@ test("机械已学习枪的开夜武装仍完成，退休只拒绝新的模式�
     return null;
   });
   retireRoleExecution(f.role);
-  await stage("mechanical", "mechanical_mode").execute(ctx);
+  await executeNightStage(stage("mechanical", "mechanical_mode"))(ctx);
   expect(f.state.learned!.skill).toEqual({ kind: "hunter", canShoot: true, armed: true });
   expect(f.state.mode).toBeNull();
   expect(requests).toBe(0);
@@ -600,3 +605,5 @@ test("受控查验 Reflect callee getter 退休后不追加历史", () => {
   expect(scope.isCurrent()).toBe(true);
   expect(scope.canAct()).toBe(false);
 });
+
+import { executeNightStage } from "../../support/builders/night-stage-context";

@@ -46,7 +46,8 @@ import {
 } from "../../../../src/features/demon-hunter/native-potion-controller";
 import { executeDemonNativeNight } from "../../../../src/features/demon-hunter/native-night-controller";
 import { demonWitchRequestCurrent } from "../../../../src/features/demon-hunter/native-potion-requests";
-import type { NightStageContext, NightStageState } from "../../../../src/engine/night/contracts";
+import type { NightStageState } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 
 type Family = "hunt" | "potion";
 function fixture(label: string, twelve = false) {

@@ -33,7 +33,10 @@ import { getHybridState } from "../../../../src/features/hybrid/ports";
 import { loversRecord } from "../../../../src/features/cupid/relation";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 
 type Family = "cupid" | "hybrid";
 function fixture(family: Family) {
@@ -120,7 +123,7 @@ function fixture(family: Family) {
       current = true;
     },
     execute(ctx: ReturnType<typeof context>) {
-      return (family === "cupid" ? CUPID_STAGE : HYBRID_STAGE).execute(ctx);
+      return executeNightStage(family === "cupid" ? CUPID_STAGE : HYBRID_STAGE)(ctx);
     },
   };
 }

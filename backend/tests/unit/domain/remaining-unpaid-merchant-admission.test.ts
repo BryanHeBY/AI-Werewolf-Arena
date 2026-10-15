@@ -20,8 +20,8 @@ import {
 } from "../../../src/domain/role-execution-authority";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
-import { nightStageContext } from "../../support/builders/night-stage-context";
-import type { NightStageContext } from "../../../src/engine/night/contracts";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 import {
   MIRACLE_MERCHANT_STAGE,
   hasMerchantNightCommit,
@@ -115,7 +115,7 @@ for (const family of ["miracle", "black"] as const) {
     });
     expect(result.ok).toBe(false);
     expect(result.error).toBe("merchant_unavailable");
-    await stage(family).execute(f.ctx);
+    await executeNightStage(stage(family))(f.ctx);
     expect(providers).toBe(0);
     expect(f.stock).toEqual({ remaining: 1, closedDay: null, choice: null });
     expect(f.events).toEqual([]);
@@ -125,7 +125,7 @@ for (const family of ["miracle", "black"] as const) {
     const fresh = { ...f.actor };
     f.game.world.addComponent(1, COMPONENT.Role, fresh);
     retireRoleExecution(f.game.world.getComponent(2, COMPONENT.Role)!);
-    await stage(family).execute(f.ctx);
+    await executeNightStage(stage(family))(f.ctx);
     expect(isRoleExecutionRetired(f.actor)).toBe(true);
     expect(isRoleExecutionRetired(fresh)).toBe(false);
     expect(providers).toBe(1);
@@ -148,7 +148,7 @@ for (const family of ["miracle", "black"] as const) {
         finish = resolve;
       });
     };
-    const pending = stage(family).execute(f.ctx);
+    const pending = executeNightStage(stage(family))(f.ctx);
     expect(providers).toBe(1);
     retireRoleExecution(f.actor);
     finish(null);
@@ -166,7 +166,7 @@ for (const family of ["miracle", "black"] as const) {
     noTargets.ctx.actionProvider.getAction = async () => {
       throw new Error("no_target_provider_must_not_open");
     };
-    await stage(family).execute(noTargets.ctx);
+    await executeNightStage(stage(family))(noTargets.ctx);
     expect(noTargets.stock).toEqual({ remaining: 1, closedDay: null, choice: null });
     expect(committed(family, noTargets)).toBe(false);
     expect(noTargets.events).toEqual([]);
@@ -221,7 +221,7 @@ for (const family of ["miracle", "black"] as const) {
             },
           });
       }
-      await stage(family).execute(f.ctx);
+      await executeNightStage(stage(family))(f.ctx);
       expect(requests).toBe(point === "builder_body" ? 1 : 0);
       expect(providers).toBe(0);
       expect(f.stock).toEqual({ remaining: 1, closedDay: null, choice: null });
@@ -259,7 +259,7 @@ for (const family of ["miracle", "black"] as const) {
           return choose(family, 2);
         };
       }
-      await stage(family).execute(f.ctx);
+      await executeNightStage(stage(family))(f.ctx);
       expect(f.stock).toEqual({ remaining: 1, closedDay: null, choice: null });
       expect(committed(family, f)).toBe(false);
       expect(f.ctx.state.merchantBacklashes).toEqual([]);
@@ -300,7 +300,7 @@ for (const family of ["miracle", "black"] as const) {
       });
       return choose(family, 2);
     };
-    await expect(stage(family).execute(f.ctx)).rejects.toBe(failure);
+    await expect(executeNightStage(stage(family))(f.ctx)).rejects.toBe(failure);
     expect(f.stock).toEqual({ remaining: 1, closedDay: null, choice: null });
     expect(committed(family, f)).toBe(false);
     expect(f.events).toEqual([]);
@@ -321,7 +321,7 @@ for (const family of ["miracle", "black"] as const) {
         retireRoleExecution(f.actor);
       return result;
     };
-    await stage(family).execute(f.ctx);
+    await executeNightStage(stage(family))(f.ctx);
     expect(isRoleExecutionRetired(f.actor)).toBe(true);
     expect(f.stock).toEqual({
       remaining: 0,
@@ -384,7 +384,7 @@ for (const family of ["miracle", "black"] as const) {
           });
         return choose(family, 6, family === "black");
       };
-      await stage(family).execute(f.ctx);
+      await executeNightStage(stage(family))(f.ctx);
       expect(argumentReads).toBeGreaterThan(0);
       expect(isRoleExecutionRetired(f.actor)).toBe(true);
       expect(f.stock).toEqual({ remaining: 1, closedDay: null, choice: null });
@@ -413,7 +413,7 @@ for (const family of ["miracle", "black"] as const) {
         retireRoleExecution(f.actor);
       },
     });
-    await stage(family).execute(f.ctx);
+    await executeNightStage(stage(family))(f.ctx);
     expect(isRoleExecutionRetired(f.actor)).toBe(true);
     expect(f.stock).toEqual({
       remaining: 0,
@@ -456,7 +456,7 @@ for (const family of ["miracle", "black"] as const) {
       }
       return append(...rows);
     };
-    await expect(stage(family).execute(f.ctx)).rejects.toBe(failure);
+    await expect(executeNightStage(stage(family))(f.ctx)).rejects.toBe(failure);
     expect(f.stock).toEqual({
       remaining: 0,
       closedDay: 1,
@@ -486,7 +486,7 @@ test("black: final no-target fallback may retire the source and must not close a
     providers++;
     return { name: "speak", args: { text: "literal_wrong_trade_tool" } };
   };
-  await BLACK_MARKET_TRADE_STAGE.execute(f.ctx);
+  await executeNightStage(BLACK_MARKET_TRADE_STAGE)(f.ctx);
   expect(providers).toBe(3);
   expect(scans).toBe(4);
   expect(f.stock).toEqual({ remaining: 1, closedDay: null, choice: null });

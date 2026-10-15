@@ -20,7 +20,7 @@ import { GameActionRequestFactory } from "../../../../src/engine/actions/action-
 import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { getRoleInspectionState } from "../../../../src/features/role-inspection/ports";
 import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import {
   PURE_WHITE_INSPECTION_STAGE,
   WOLF_WITCH_INSPECTION_STAGE,
@@ -101,8 +101,8 @@ for (const locale of ["zh-CN", "en"] as const) {
   for (const day of [1, 2]) {
     test(`paired inspections ${locale} night ${day} preserve simultaneous life and exact private reports`, async () => {
       const f = fixture(day, locale);
-      await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
-      await WOLF_WITCH_INSPECTION_STAGE.execute(f.ctx);
+      await executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx);
+      await executeNightStage(WOLF_WITCH_INSPECTION_STAGE)(f.ctx);
       expect(f.calls()).toBe(2);
       expect(f.ctx.events.filter((event) => event.type === "role_inspected")).toHaveLength(2);
       expect(
@@ -120,8 +120,8 @@ for (const locale of ["zh-CN", "en"] as const) {
       }
       expect(f.world.getComponent(f.pure, COMPONENT.Alive)?.alive).toBe(true);
       expect(f.world.getComponent(f.wolf, COMPONENT.Alive)?.alive).toBe(true);
-      await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
-      await WOLF_WITCH_INSPECTION_STAGE.execute(f.ctx);
+      await executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx);
+      await executeNightStage(WOLF_WITCH_INSPECTION_STAGE)(f.ctx);
       expect(f.calls()).toBe(2);
     });
   }
@@ -133,7 +133,7 @@ for (const locale of ["zh-CN", "en"] as const) {
         args: { target_id: null, abstain: true },
       }),
     };
-    await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
+    await executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx);
     const ability = findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")!;
     expect(ability.lastUsedDay).toBe(2);
     expect(ability.uses).toBe(0);
@@ -143,7 +143,7 @@ for (const locale of ["zh-CN", "en"] as const) {
   test(`missing submission fails instead of becoming a pass ${locale}`, async () => {
     const f = fixture(2, locale);
     f.ctx.actionProvider = { getAction: async () => null };
-    await expect(PURE_WHITE_INSPECTION_STAGE.execute(f.ctx)).rejects.toThrow(
+    await expect(executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx)).rejects.toThrow(
       "pure_white_inspection_action_missing",
     );
     expect(f.ctx.events).toEqual([]);
@@ -156,7 +156,7 @@ for (const locale of ["zh-CN", "en"] as const) {
         args: { target_id: f.id(Role.Wolf), abstain: false },
       }),
     };
-    await expect(WOLF_WITCH_INSPECTION_STAGE.execute(f.ctx)).rejects.toThrow(
+    await expect(executeNightStage(WOLF_WITCH_INSPECTION_STAGE)(f.ctx)).rejects.toThrow(
       "pure_white_inspection_action_invalid",
     );
     expect(f.ctx.events).toEqual([]);
@@ -169,7 +169,7 @@ for (const locale of ["zh-CN", "en"] as const) {
         return { name: "inspect_night_identity", args: { target_id: f.wolf, abstain: false } };
       },
     };
-    await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
+    await executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx);
     expect(f.ctx.events).toEqual([]);
     expect(findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")?.uses).toBe(
       0,
@@ -180,10 +180,10 @@ for (const locale of ["zh-CN", "en"] as const) {
 for (const locale of ["zh-CN", "en"] as const) {
   test(`repeat target across nights preserves both reports ${locale}`, async () => {
     const f = fixture(1, locale);
-    await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
+    await executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx);
     expect(f.ctx.state.inspectionAttacks ?? []).toEqual([]);
     f.ctx.currentDay = () => 2;
-    await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
+    await executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx);
     const ability = findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")!;
     expect(ability.state.history.map((r) => [r.day, r.targetId])).toEqual([
       [1, f.wolf],
@@ -206,7 +206,7 @@ for (const locale of ["zh-CN", "en"] as const) {
         return { name: "inspect_night_identity", args: { target_id: f.wolf, abstain: false } };
       },
     };
-    await expect(PURE_WHITE_INSPECTION_STAGE.execute(f.ctx)).rejects.toThrow(
+    await expect(executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx)).rejects.toThrow(
       "pure_white_inspection_target_stale",
     );
     expect(f.ctx.events).toEqual([]);
@@ -216,7 +216,7 @@ for (const locale of ["zh-CN", "en"] as const) {
   });
   test(`late ability revocation cancels damage but retains the paid private report ${locale}`, async () => {
     const f = fixture(2, locale);
-    await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
+    await executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx);
     const ability = findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")!;
     (ability as { disabled: boolean }).disabled = true;
     expect(
@@ -230,7 +230,7 @@ for (const locale of ["zh-CN", "en"] as const) {
   });
   test(`late target identity change cancels damage without rewriting history ${locale}`, async () => {
     const f = fixture(2, locale);
-    await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
+    await executeNightStage(PURE_WHITE_INSPECTION_STAGE)(f.ctx);
     f.world.getComponent(f.wolf, COMPONENT.Role)!.role = Role.Villager;
     expect(
       new DamageResolutionSystem().resolve(f.world, {
@@ -242,3 +242,5 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(report.result).toMatchObject({ kind: "role", role: Role.WolfWitch });
   });
 }
+
+import { executeNightStage } from "../../../support/builders/night-stage-context";

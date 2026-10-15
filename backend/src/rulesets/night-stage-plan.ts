@@ -1,9 +1,9 @@
 /**
  * 负责：按原算法收集、去重和排序有限夜间阶段，并标记观察到的来源。
- * 输入：只读板子、角色目录与可选当前 World；输出：原 handler 和快照或不透明模式。
+ * 输入：只读板子、角色目录与可选名单查询；输出：原 handler 定义和快照或不透明模式。
  * 默认贡献的成员及潜在能力元数据交给 RulePlan 固定；collector 本身不拥有整局规则。
  * 普通原生密集数组可冻结成员，虚方法、Proxy、访问器或惰性来源保留原晚拉取及失败前缀。
- * 描述器检查不额外执行 getter，原 handler、World 和能力实例均不冻结。
+ * 描述器检查不额外执行 getter；原 handler 和 owner 内的 World／能力引用均不复制或冻结。
  * 共享注册与鬼魂新娘替换保留原对象及先后次序，来源信息不授予行动资格。
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
@@ -17,7 +17,7 @@ import { WEDDING_CHAT_STAGE, WEDDING_KNIFE_STAGE } from "../features/ghost-bride
 import { Role } from "../domain/model";
 import { RoleCatalog } from "./roles/catalog";
 import { getDefaultRoleCatalog } from "./roles/role-catalog-assembly";
-import { NightStageHandler } from "../engine/night/contracts";
+import type { NightStageDefinition as NightStageHandler } from "../engine/night/contracts";
 import type { World } from "../domain/world";
 import { COMPONENT } from "../domain/components/names";
 import { allNightAbilities } from "../features/night-abilities/abilities";
@@ -188,8 +188,8 @@ export class NightStageRegistry {
   }
 
   /** 快照仅用于安全原生成员；虚方法覆盖和不透明惰性来源保留原时点。 */
-  getPlan(config: ReadonlyBoardConfig, world?: World): NightStagePlan {
-    const source = this.getStages(config, world),
+  getPlan(config: ReadonlyBoardConfig, queries?: NightStageRosterQueries): NightStagePlan {
+    const source = this.getStages(config, queries),
       members = snapshotMembers(source);
     if (members === null)
       return Object.freeze({
@@ -225,7 +225,7 @@ export class NightStageRegistry {
     });
   }
 
-  getStages(config: ReadonlyBoardConfig, world?: World): NightStageHandler[] {
+  getStages(config: ReadonlyBoardConfig, queries?: NightStageRosterQueries): NightStageHandler[] {
     const roleSet = new Set<Role>(config.roleSetups.map((item) => item.role));
     let hasRoleChecks = false;
     for (const role of [...roleSet])
@@ -233,17 +233,17 @@ export class NightStageRegistry {
         roleSet.add(abilityRole[kind]);
         if (kind === "role_check") hasRoleChecks = true;
       }
-    for (const id of world?.entityIds() ?? [])
-      for (const ability of allNightAbilities(world!.getComponent(id, COMPONENT.Role))) {
-        roleSet.add(abilityRole[ability.kind]);
-        if (ability.kind === "role_check") hasRoleChecks = true;
+    for (const id of queries?.entityIds() ?? [])
+      for (const ability of queries!.abilityKinds(id)) {
+        roleSet.add(abilityRole[ability.kind()]);
+        if (ability.kind() === "role_check") hasRoleChecks = true;
       }
     const collected: NightStageHandler[] = [];
     const sources = new Map<NightStageHandler, NightStageContributionSource[]>();
     // 在原 pack 读取及 spread 之后记录声明，不能为固定计划提前读取目录或玩家状态。
     const declarations: SupportedNightDefinition["roles"][number][] = [];
     let standardDefinition = this === defaultRegistry;
-    if (world && demonHunterActorId(world) !== null) {
+    if (queries && queries.hasDemonHunter()) {
       const start = collected.length;
       collected.push(DEMON_HUNTER_NIGHT_STAGE);
       rememberAppendedSources(
@@ -257,13 +257,7 @@ export class NightStageRegistry {
       [...roleSet].some((role) =>
         this.roleCatalog.runtime(role)?.possibleDeathAbilities?.includes("gun"),
       ) ||
-      world
-        ?.getAliveEntityIds()
-        .some((id) =>
-          allDeathGuns(world.getComponent(id, COMPONENT.Role)).some(
-            (gun) => gun.armedOnNight === null && !gun.disabled && !gun.deathExpired,
-          ),
-        )
+      queries?.aliveIds().some((id) => queries.hasUnarmedGiftGun(id))
     ) {
       const start = collected.length;
       collected.push(DEATH_ABILITY_ACTIVATION_STAGE);
@@ -305,15 +299,7 @@ export class NightStageRegistry {
         sources,
       );
     }
-    if (
-      world
-        ?.entityIds()
-        .some((id) =>
-          allNightAbilities(world.getComponent(id, COMPONENT.Role)).some(
-            (ability) => ability.activation === "lucky",
-          ),
-        )
-    ) {
+    if (queries?.entityIds().some((id) => queries.hasLuckyAbility(id))) {
       const start = collected.length;
       collected.push(LUCKY_ABILITY_STAGE);
       rememberAppendedSources(
@@ -323,15 +309,7 @@ export class NightStageRegistry {
         sources,
       );
     }
-    if (
-      world
-        ?.entityIds()
-        .some((id) =>
-          allNightAbilities(world.getComponent(id, COMPONENT.Role)).some(
-            (ability) => ability.activation === "black_market",
-          ),
-        )
-    ) {
+    if (queries?.entityIds().some((id) => queries.hasBlackMarketAbility(id))) {
       const start = collected.length;
       collected.push(BLACK_MARKET_RECIPIENT_STAGE);
       rememberAppendedSources(
@@ -400,4 +378,40 @@ export function getDefaultNightStageRegistry(): NightStageRegistry {
     defaultRegistry = new NightStageRegistry();
   }
   return defaultRegistry;
+}
+
+/** 可覆写 collector 的真实只读查询输入；不返回 World、组件、能力实例或持有资源的数组。 */
+export interface NightStageRosterQueries {
+  entityIds(): number[];
+  aliveIds(): number[];
+  abilityKinds(id: number): ReadonlyArray<{ kind(): NightAbilityKind }>;
+  hasDemonHunter(): boolean;
+  hasUnarmedGiftGun(id: number): boolean;
+  hasLuckyAbility(id: number): boolean;
+  hasBlackMarketAbility(id: number): boolean;
+}
+/** 原 World 参数点捕获同一对象，构造不查询；kind 的两次原读取仍在 collector 的两个语义位置。 */
+export function bindNightStageRosterQueries(world: World): NightStageRosterQueries {
+  return {
+    entityIds: () => world.entityIds(),
+    aliveIds: () => world.getAliveEntityIds(),
+    abilityKinds(id) {
+      return allNightAbilities(world.getComponent(id, COMPONENT.Role)).map((ability) => ({
+        kind: () => ability.kind,
+      }));
+    },
+    hasDemonHunter: () => demonHunterActorId(world) !== null,
+    hasUnarmedGiftGun: (id) =>
+      allDeathGuns(world.getComponent(id, COMPONENT.Role)).some(
+        (gun) => gun.armedOnNight === null && !gun.disabled && !gun.deathExpired,
+      ),
+    hasLuckyAbility: (id) =>
+      allNightAbilities(world.getComponent(id, COMPONENT.Role)).some(
+        (ability) => ability.activation === "lucky",
+      ),
+    hasBlackMarketAbility: (id) =>
+      allNightAbilities(world.getComponent(id, COMPONENT.Role)).some(
+        (ability) => ability.activation === "black_market",
+      ),
+  };
 }

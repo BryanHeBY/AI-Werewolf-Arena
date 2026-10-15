@@ -25,7 +25,7 @@ import { CUPID_STAGE } from "../../../src/features/cupid/night-stage";
 import { HYBRID_STAGE, hasHybridNightCommit } from "../../../src/features/hybrid/night-stage";
 import { hasCupidNightCommit, loversRecord } from "../../../src/features/cupid/relation";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 import { foxBoard } from "../../support/features/cursed-fox/builders/scenario";
 
 function fixture(kind: Role.Cupid | Role.Hybrid) {
@@ -139,7 +139,7 @@ test("Cupid choice setter failure preserves the committed relation and debit bef
     configurable: true,
   });
   await expect(
-    CUPID_STAGE.execute(
+    executeNightStage(CUPID_STAGE)(
       context(game, events, {
         name: "choose_lovers",
         args: { first_id: 1, second_id: 3 },
@@ -199,7 +199,7 @@ test("Hybrid membership install failure preserves both owned writes before the n
     configurable: true,
   });
   await expect(
-    HYBRID_STAGE.execute(
+    executeNightStage(HYBRID_STAGE)(
       context(game, events, {
         name: "choose_exemplar",
         args: { target_id: 3 },

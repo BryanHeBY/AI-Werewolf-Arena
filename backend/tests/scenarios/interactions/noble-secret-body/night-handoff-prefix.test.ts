@@ -1,10 +1,10 @@
 /**
  * 交互场景验证真实原生夜晚后的 Noble 输出失败前缀。输入保原固定玩家、合法行动与同一错误；
- * 末阶段只捕获状态，在真实 native_damage 事件已进入测试数组后才安装晚输出字段 getter。
+ * 可信装配捕获实际新状态，末阶段不收原容器；在真实 native_damage 事件已进入测试数组后才安装晚输出字段 getter。
  * 一次读取／同错误、仍 open 的 authority 与已发布末事实是原独立字面预期；原事件 push 接收方和返回值保留。
- * 旧 evilKnightBindings 输出字段已退休，探针渠道／安装时点的迁移明确记录，不用生产 hook、模型或整局替代原结果。
+ * 旧 evilKnightBindings 输出字段已退休，探针渠道／安装时点的迁移明确记录，不用公开状态回门、模型或整局替代原结果。
  */
-import { expect, test } from "bun:test";
+import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
@@ -17,7 +17,8 @@ import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { checkpointNobleBodyAuthority } from "../../../../src/features/noble-secret-body/authority";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { NightStageContext, NightStageState } from "../../../../src/engine/night/contracts";
+import * as nightStateOwner from "../../../../src/engine/night/trusted-runtime";
 
 test("a later result getter failure preserves the already-transferred sender prefix", async () => {
   const config = nobleSecretBodyTwelveConfig(),
@@ -26,17 +27,24 @@ test("a later result getter failure preserves the already-transferred sender pre
     }),
     error = new Error("noble_return_getter_rejected");
   let reads = 0;
-  let capturedState: NightStageContext["state"] | undefined;
+  let capturedState: NightStageState | undefined;
+  // 可信 fixture 在实际唯一容器创建点观察引用；公开扩展不取得 state，也不加生产 getter 后门。
+  const createState = nightStateOwner.createNightStageState;
+  const stateFixture = spyOn(nightStateOwner, "createNightStageState").mockImplementation(() => {
+    capturedState = createState();
+    return capturedState;
+  });
   class Stages extends NightStageRegistry {
-    override getStages(config: BoardConfig, world?: World) {
+    override getStages(
+      config: BoardConfig,
+      queries?: import("../../../../src/rulesets/night-stage-plan").NightStageRosterQueries,
+    ) {
       return [
-        ...super.getStages(config, world),
+        ...super.getStages(config, queries),
         {
           id: "return-getter-probe",
           priority: 1,
-          async execute(ctx: NightStageContext) {
-            capturedState = ctx.state;
-          },
+          async execute(_ctx: NightStageContext) {},
         },
       ];
     }
@@ -82,6 +90,7 @@ test("a later result getter failure preserves the already-transferred sender pre
       ),
     ).rejects.toBe(error);
   } finally {
+    stateFixture.mockRestore();
     if (originalDescriptor) Object.defineProperty(events, "push", originalDescriptor);
     else Reflect.deleteProperty(events, "push");
   }

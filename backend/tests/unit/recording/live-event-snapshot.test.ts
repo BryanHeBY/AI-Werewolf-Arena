@@ -21,7 +21,7 @@ import { GameActionRequestFactory } from "../../../src/engine/actions/action-req
 import { HYBRID_STAGE } from "../../../src/features/hybrid/night-stage";
 import { CUPID_STAGE } from "../../../src/features/cupid/night-stage";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 import { validateHybridRecord } from "../../../src/recording/verification/hybrid/validate";
 import { validateCupidRecord } from "../../../src/recording/verification/cupid/validate";
 async function fixture() {
@@ -142,7 +142,7 @@ test("Hybrid beginGame wiring includes pre-checkpoint facts without relaxing pri
   const { trace, liveEvents } = recordingEntry(context),
     initial = trace.build(),
     factory = new GameActionRequestFactory(context.world, events, 1);
-  await HYBRID_STAGE.execute(
+  await executeNightStage(HYBRID_STAGE)(
     nightStageContext({
       world: context.world,
       events,
@@ -263,7 +263,7 @@ test("Cupid beginGame wiring includes pre-checkpoint private facts without expos
   const { trace, liveEvents } = recordingEntry(context),
     initial = trace.build(),
     factory = new GameActionRequestFactory(context.world, events, 1);
-  await CUPID_STAGE.execute(
+  await executeNightStage(CUPID_STAGE)(
     nightStageContext({
       world: context.world,
       events,

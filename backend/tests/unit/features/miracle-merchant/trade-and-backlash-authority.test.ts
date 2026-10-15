@@ -33,7 +33,7 @@ import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 
@@ -127,7 +127,7 @@ for (const locale of ["zh-CN", "en"] as const)
           name: "bestow_ability",
           args: { target_id: 6, skill },
         }));
-      await MIRACLE_MERCHANT_STAGE.execute(ctx);
+      await executeNightStage(MIRACLE_MERCHANT_STAGE)(ctx);
       const own = getMerchantState(role(game))!;
       expect(projectMerchantState(own)).toEqual({
         remaining: 0,
@@ -164,7 +164,10 @@ for (const locale of ["zh-CN", "en"] as const)
       }
       if (locale === "en")
         expect(renderRolePrompt(role(game), locale)).not.toMatch(/[\u4e00-\u9fff]/);
-      const stages = new NightStageRegistry().getStages(game.config, game.world);
+      const stages = new NightStageRegistry().getStages(
+        game.config,
+        bindNightStageRosterQueries(game.world),
+      );
       expect(stages.find((s) => s.id === "miracle_merchant")!.priority).toBe(125);
       expect(stages.find((s) => s.id === "lucky_ability")!.priority).toBe(700);
     });
@@ -181,16 +184,18 @@ test("merchant may hold on night one, but a committed trade is once per game and
     game = fixture(roles),
     events: GameEvent[] = [],
     state = getMerchantState(role(game))!;
-  const order = new NightStageRegistry().getStages(game.config, game.world).map((s) => s.id);
+  const order = new NightStageRegistry()
+    .getStages(game.config, bindNightStageRosterQueries(game.world))
+    .map((s) => s.id);
   expect(order.indexOf("miracle_merchant")).toBeLessThan(order.indexOf("dreamer_action"));
-  await MIRACLE_MERCHANT_STAGE.execute(context(game, events, async () => null));
+  await executeNightStage(MIRACLE_MERCHANT_STAGE)(context(game, events, async () => null));
   expect(state).toEqual({ remaining: 1, closedDay: 1, choice: null });
-  await MIRACLE_MERCHANT_STAGE.execute(
+  await executeNightStage(MIRACLE_MERCHANT_STAGE)(
     context(game, events, async () => {
       throw new Error("same_night_no_second_wait");
     }),
   );
-  await MIRACLE_MERCHANT_STAGE.execute(
+  await executeNightStage(MIRACLE_MERCHANT_STAGE)(
     context(
       game,
       events,
@@ -199,7 +204,7 @@ test("merchant may hold on night one, but a committed trade is once per game and
     ),
   );
   expect(state.remaining).toBe(0);
-  await MIRACLE_MERCHANT_STAGE.execute(
+  await executeNightStage(MIRACLE_MERCHANT_STAGE)(
     context(
       game,
       events,
@@ -219,7 +224,7 @@ for (const dream of [false, true])
         name: "bestow_ability",
         args: { target_id: 2, skill: "poison" },
       }));
-    await MIRACLE_MERCHANT_STAGE.execute(ctx);
+    await executeNightStage(MIRACLE_MERCHANT_STAGE)(ctx);
     expect(allNightAbilities(role(game, 2))).toEqual([]);
     expect(getMerchantState(role(game))!.remaining).toBe(0);
     expect(JSON.stringify(getMerchantState(role(game)))).not.toContain("backlash");
@@ -268,7 +273,7 @@ test("a disguised Hidden Wolf is a true Wolf for trade, while all alive target p
       ).ok,
     ).toBe(true);
   expect(state).toEqual(before);
-  await MIRACLE_MERCHANT_STAGE.execute(
+  await executeNightStage(MIRACLE_MERCHANT_STAGE)(
     context(game, events, async () => ({
       name: "bestow_ability",
       args: { target_id: 2, skill: "guard" },
@@ -324,12 +329,16 @@ for (const revoke of [
       };
     }
     if (["target_life", "target_role", "gateway_target"].includes(revoke))
-      await expect(MIRACLE_MERCHANT_STAGE.execute(ctx)).rejects.toThrow(
+      await expect(executeNightStage(MIRACLE_MERCHANT_STAGE)(ctx)).rejects.toThrow(
         "merchant_valid_action_missing",
       );
-    else await MIRACLE_MERCHANT_STAGE.execute(ctx);
+    else await executeNightStage(MIRACLE_MERCHANT_STAGE)(ctx);
     expect(calls).toBe(["target_life", "target_role", "gateway_target"].includes(revoke) ? 3 : 1);
     expect(allNightAbilities(role(game, 6))).toEqual([]);
     expect(events).toEqual([]);
     expect(state.remaining).toBe(revoke === "resource" ? 0 : 1);
   });
+
+import { bindNightStageRosterQueries } from "../../../../src/rulesets/night-stage-plan";
+
+import { executeNightStage } from "../../../support/builders/night-stage-context";

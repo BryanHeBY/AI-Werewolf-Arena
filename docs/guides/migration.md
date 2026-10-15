@@ -61,3 +61,11 @@ current链接实际可达，所有真实读点无旧根依赖，history每项原
 死亡、放逐和已提交死亡波的公开钩子首参使用 `HookRuntime`：当前角色、阵营和存活值由 `queries` 查询，具体提交权只由已装配的本族命令提供。世界、事件容器与延迟准备源留在原资源所有者内部。未知自定义钩子不能通过同名函数或复制编号继承内建绑定。
 
 公开 `DeathHookChooser` 返回 `DeathHookChoice`，只包含选择种类、目标编号、死亡动作编号及可选的映射落空标记。旧 `targetScope`、原生命组件和 `mappingCurrent` 不再返回给扩展；选择本身也不是消耗库存或提交死亡的回执。内建资源程序仍使用私有原选择结果，保留原目标身份、映射校验、付款顺序和失败前缀，不在公开数据上重建授权。
+
+## 夜间阶段扩展
+
+`NightStageHandler.execute` 的公开 `NightStageContext` 退出 `world`、原组件、整夜 `state`、事件数组、Catalog、请求构造器和内部能力查询器。使用请求方法、绑定的 `actions`、编号查询及显式装配的具体 `ports`；`actionProvider` 实际只提供 `getAction`。需要额外写操作时，由相应资源所有者提供具体命令，不能重新加入通用存储接口。
+
+计划持有 `NightStageDefinition` 的原引用。完整内建算法留在各机制模块，组合根同时核对真实 handler 和定义时的原 execute；执行方法被替换或同名定义来自外部时，只传公开上下文。内建直接 `.execute(rawContext)` 的旧调用方式退出；可信测试通过 `executeNightStage(handler)(runtime)` 走与流水线相同的分派。该边界不以角色编号或阶段名称授予权限。
+
+`NightStageRegistry.getPlan/getStages` 的世界参数改为 `NightStageRosterQueries`，只查询收集阶段所需的编号、种类及布尔值。原收集、预约、去重和排序仍由注册器负责。机械狼与觉醒隐狼的捕获句柄退出公开 `world`，由各自私有字段核对当局归属；已付效果仍按原生命、学习和来源约束复验。

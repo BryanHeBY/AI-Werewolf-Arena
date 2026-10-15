@@ -39,9 +39,9 @@ import { getHybridState } from "../../../src/features/hybrid/state-slot";
 import { WOLF_BEAUTY_CHARM_STAGE } from "../../../src/features/wolf-beauty/night-stages";
 import { getWolfBeautyState } from "../../../src/features/wolf-beauty/state";
 import { activeCharm, isCharmBindingCurrent } from "../../../src/features/wolf-beauty/relation";
-import type { NightStageContext } from "../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 
 const families = ["cupid", "hybrid", "wolf_beauty"] as const;
 type Family = (typeof families)[number];
@@ -124,7 +124,7 @@ function fixture(family: Family, reply?: (request: ActionRequest) => Promise<Too
 }
 type Fixture = ReturnType<typeof fixture>;
 const run = async (f: Fixture) => {
-  await stages[f.family].execute(f.ctx);
+  await executeNightStage(stages[f.family])(f.ctx);
 };
 
 function unpaid(f: Fixture) {

@@ -3,7 +3,10 @@
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -40,7 +43,7 @@ import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { ActionReception } from "../../../../src/engine/actions/action-reception";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 
 const deck = [Role.Psychic, Role.Wolf, Role.Witch, Role.Guard, Role.Villager, Role.Villager],
   catalog = getDefaultRoleCatalog();
@@ -160,7 +163,10 @@ test("two policies on one Villager run at separate priorities, keep their real i
     },
     events,
   );
-  const stages = new NightStageRegistry().getStages(board(), game.world);
+  const stages = new NightStageRegistry().getStages(
+    board(),
+    bindNightStageRosterQueries(game.world),
+  );
   expect(stages.find((s) => s.id === "role_inspection")!.priority).toBe(180);
   expect(stages.find((s) => s.id === "psychic_inspection")!.priority).toBe(600);
   expect(stages.find((s) => s.id === "witch_action")!.priority).toBeLessThan(600);
@@ -171,10 +177,10 @@ test("two policies on one Villager run at separate priorities, keep their real i
     );
     return { name: "inspect_role", args: { target_id: 2 } };
   };
-  await ROLE_INSPECTION_STAGE.execute(context(game, events, action));
+  await executeNightStage(ROLE_INSPECTION_STAGE)(context(game, events, action));
   expect(calls).toEqual([[5, "role_inspection", garg.id]]);
   expect(psychic.uses).toBe(0);
-  await PSYCHIC_INSPECTION_STAGE.execute(context(game, events, action));
+  await executeNightStage(PSYCHIC_INSPECTION_STAGE)(context(game, events, action));
   expect(calls.slice(1).map((c) => c.slice(0, 2))).toEqual([
     [1, "psychic"],
     [5, "psychic"],
@@ -205,7 +211,7 @@ test("two policies on one Villager run at separate priorities, keep their real i
       { target_id: 2 },
     ),
   ).toMatchObject({ ok: false, error: "role_inspection_repeat" });
-  await PSYCHIC_INSPECTION_STAGE.execute(context(game, events, action, 2));
+  await executeNightStage(PSYCHIC_INSPECTION_STAGE)(context(game, events, action, 2));
   expect(psychic.state.history).toEqual([
     { day: 1, targetId: 2, result: { kind: "role", role: Role.Wolf } },
     { day: 2, targetId: 2, result: { kind: "role", role: Role.Wolf } },
@@ -223,10 +229,10 @@ test("a genuine optional pass closes and transfers this night without consuming 
   const game = bootstrapGame(board(), { fixedRoles: deck }),
     events: GameEvent[] = [],
     ability = findNightAbility(role(game, 1), "role_check")!;
-  await PSYCHIC_INSPECTION_STAGE.execute(
+  await executeNightStage(PSYCHIC_INSPECTION_STAGE)(
     context(game, events, async () => ({ name: "inspect_role", args: { target_id: 2 } })),
   );
-  await PSYCHIC_INSPECTION_STAGE.execute(
+  await executeNightStage(PSYCHIC_INSPECTION_STAGE)(
     context(
       game,
       events,
@@ -257,7 +263,7 @@ test("a genuine optional pass closes and transfers this night without consuming 
   const moved = findNightAbility(role(game, 5), "role_check", "transfer:closed-psychic")!;
   expect(moved.lastUsedDay).toBe(2);
   expect(moved.uses).toBe(1);
-  await PSYCHIC_INSPECTION_STAGE.execute(
+  await executeNightStage(PSYCHIC_INSPECTION_STAGE)(
     context(
       game,
       events,
@@ -283,7 +289,7 @@ test("no living targets closes without a request/use/result, whereas three illeg
     ability = findNightAbility(role(game, 1), "role_check")!;
   let calls = 0;
   await expect(
-    PSYCHIC_INSPECTION_STAGE.execute(
+    executeNightStage(PSYCHIC_INSPECTION_STAGE)(
       context(game, events, async () => {
         calls++;
         return { name: "inspect_role", args: { target_id: 1 } };
@@ -296,7 +302,7 @@ test("no living targets closes without a request/use/result, whereas three illeg
   expect(events).toEqual([]);
   for (const id of game.world.getAliveEntityIds().filter((id) => id !== 1))
     game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
-  await PSYCHIC_INSPECTION_STAGE.execute(
+  await executeNightStage(PSYCHIC_INSPECTION_STAGE)(
     context(game, events, async () => {
       throw new Error("no_empty_request");
     }),
@@ -359,10 +365,10 @@ for (const change of [
       () => current,
     );
     if (change.startsWith("target"))
-      await expect(PSYCHIC_INSPECTION_STAGE.execute(ctx)).rejects.toThrow(
+      await expect(executeNightStage(PSYCHIC_INSPECTION_STAGE)(ctx)).rejects.toThrow(
         "role_inspection_valid_action_missing",
       );
-    else await PSYCHIC_INSPECTION_STAGE.execute(ctx);
+    else await executeNightStage(PSYCHIC_INSPECTION_STAGE)(ctx);
     expect(old.history).toEqual([]);
     expect(ability.uses).toBe(0);
     expect(ability.lastUsedDay).toBeNull();
@@ -406,12 +412,12 @@ test("invalid policy is rejected before installing an instance, and gifted Psych
     },
     events,
   );
-  await ROLE_INSPECTION_STAGE.execute(
+  await executeNightStage(ROLE_INSPECTION_STAGE)(
     context(game, events, async () => {
       throw new Error("disabled_native_no_request");
     }),
   );
-  await PSYCHIC_INSPECTION_STAGE.execute(
+  await executeNightStage(PSYCHIC_INSPECTION_STAGE)(
     context(game, events, async () => ({ name: "inspect_role", args: { target_id: 2 } })),
   );
   expect(getGargoyleState(role(game, 1))!.hasInheritedKnife).toBe(true);
@@ -454,7 +460,7 @@ for (const mutation of ["disabled", "policy", "transfer", "clock"] as const)
       () => current,
     );
     ctx.toolGateway = gateway;
-    await PSYCHIC_INSPECTION_STAGE.execute(ctx);
+    await executeNightStage(PSYCHIC_INSPECTION_STAGE)(ctx);
     expect(ability.uses).toBe(0);
     expect(ability.lastUsedDay).toBeNull();
     expect(ability.state.history).toEqual([]);
@@ -469,7 +475,7 @@ test("cancelled null is not a legal pass and copied Psychic policy keeps indepen
     events: GameEvent[] = [],
     native = findNightAbility(role(game, 1), "role_check")!;
   let current = true;
-  await PSYCHIC_INSPECTION_STAGE.execute(
+  await executeNightStage(PSYCHIC_INSPECTION_STAGE)(
     context(
       game,
       events,
@@ -502,9 +508,9 @@ test("cancelled null is not a legal pass and copied Psychic policy keeps indepen
     calls.push(request.actorId);
     return { name: "inspect_role", args: { target_id: 2 } };
   };
-  await ROLE_INSPECTION_STAGE.execute(context(game, events, act));
+  await executeNightStage(ROLE_INSPECTION_STAGE)(context(game, events, act));
   expect(calls).toEqual([]);
-  await PSYCHIC_INSPECTION_STAGE.execute(context(game, events, act));
+  await executeNightStage(PSYCHIC_INSPECTION_STAGE)(context(game, events, act));
   expect(calls).toEqual([1, 5]);
   expect(copy.uses).toBe(1);
   expect(native.uses).toBe(1);
@@ -544,3 +550,5 @@ test("legacy omitted Gargoyle policy remains equivalent to optional undefined in
   expect(Object.hasOwn(moved.state, "policy")).toBe(false);
   expect(roleInspectionPolicy(moved.state)).toBe("gargoyle");
 });
+
+import { bindNightStageRosterQueries } from "../../../../src/rulesets/night-stage-plan";

@@ -5,7 +5,7 @@
  */
 import { COMPONENT, type RoleComponent, type AliveComponent } from "../../domain";
 import { Phase } from "../../domain/identity";
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { getTricksterState } from "./state-slot";
 import {
   assertTricksterRosterCurrent,
@@ -75,3 +75,8 @@ export const TRICKSTER_EXCHANGE_STAGE: NightStageHandler = {
       cancelTricksterExchange(ctx.world, day);
   },
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [TRICKSTER_EXCHANGE_STAGE].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

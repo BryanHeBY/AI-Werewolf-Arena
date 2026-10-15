@@ -3,7 +3,10 @@
  * 输出为领域回执、本人可见事实和安全录制。await 后及 gateway 后复验本地 scope，
  * 领域提交先于事件和录制；finally 关闭请求，晚发布失败不撤销已写选择，不接管关系／查验算法。
  */
-import type { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
+import type {
+  TrustedNightStageRuntime as NightStageContext,
+  TrustedNightStageHandler as NightStageHandler,
+} from "../../engine/night/trusted-runtime";
 import { Phase } from "../../domain/identity";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { fragrantChoiceActor, fragrantChoiceCandidates } from "./authority";
@@ -92,3 +95,10 @@ export const PAIR_INSPECTION_STAGE: NightStageHandler = {
   priority: 600,
   execute: (ctx) => execute(ctx, "pair"),
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [FRAGRANT_BIND_STAGE, PAIR_INSPECTION_STAGE].map((handler) =>
+    Object.freeze([handler, handler.execute] as const),
+  ),
+);

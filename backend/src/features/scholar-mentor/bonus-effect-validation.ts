@@ -7,7 +7,7 @@
  */
 import { COMPONENT } from "../../domain/components/names";
 import { aliveLifeVersion } from "../../domain/components/alive";
-import type { NightStageContext } from "../../engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../engine/night/trusted-runtime";
 import { assertScholarMentorRosterCurrent } from "./night-frame";
 import { readScholarMentorBonusEffectRecords } from "./bonus-effect-records";
 

@@ -14,7 +14,7 @@ import { RoleCatalog } from "../../rulesets/roles/catalog";
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
 import { resolveInspection } from "../../engine/inspection";
 import { getGravekeeperState } from "./state";
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 
 /** 仅捕获此刻的 camp 查验标签，不自行核死亡／放逐资格；普通与动物路径各在原门控点调用。
  * 省略 catalog 时仍在原参数位置取得默认实例，结果再浅复制；下一夜交付沿用原反馈结果，不重新调用查验。 */
@@ -52,3 +52,8 @@ export const GRAVEKEEPER_FEEDBACK_STAGE: NightStageHandler = {
     }
   },
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [GRAVEKEEPER_FEEDBACK_STAGE].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

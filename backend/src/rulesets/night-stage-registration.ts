@@ -1,10 +1,10 @@
 /**
  * 负责夜间阶段的显式同引用兼容与鬼魂新娘替换登记。输入为已收集的 handler 引用和编译器婚约 handler，
- * 输出为登记 Map、替换引用记录或具名冲突；登记不查询 actor 或授予执行权限。
+ * 输出为登记 Map、替换引用记录或具名冲突；登记不查询 World，actor／库存资格仍由完整 owner 复验。
  * 同一已观察 ID 只允许原 handler 同引用共享，不读取 priority／execute 做额外等价推断。
  * 婚约替换按原四步顺序执行；克隆引用在原参数位置捕获，set 成功后才加入变更记录。
  */
-import type { NightStageHandler } from "../engine/night/contracts";
+import type { NightStageDefinition as NightStageHandler } from "../engine/night/contracts";
 import type { GhostStageRegistrationChange } from "./night-stage-plan-contracts";
 
 export const NIGHT_STAGE_SHARING = Object.freeze({
@@ -68,6 +68,7 @@ export function applyGhostBrideStageRegistration(
         if (chat) {
           let replacement: NightStageHandler = chat;
           registered.set(chat.id, (replacement = { ...chat, priority: operation.priority }));
+          bindNightStageAlias(replacement, chat);
           changes.push(
             Object.freeze({
               handler: replacement,
@@ -81,4 +82,23 @@ export function applyGhostBrideStageRegistration(
     }
   }
   return Object.freeze(changes);
+}
+
+// 替换的来源关系只持 handler 引用；成功登记之后才关联，不缓存 World 或 actor 许可。
+const stageAliases = new WeakMap<object, object>();
+/** 可信组合明确关联 wrapper 与原完整程序；不按 id、priority 或函数形状继承能力。 */
+export function bindNightStageAlias<T extends object>(handler: T, source: object): T {
+  stageAliases.set(handler, source);
+  return handler;
+}
+/** 仅组合根查来源；没有公开 runtime／World 的反查出口。 */
+export function sourceNightStageHandler(handler: object): object {
+  const seen = new Set<object>();
+  let source = handler;
+  while (stageAliases.has(source)) {
+    if (seen.has(source)) throw new Error("night_stage_binding_cycle");
+    seen.add(source);
+    source = stageAliases.get(source)!;
+  }
+  return source;
 }

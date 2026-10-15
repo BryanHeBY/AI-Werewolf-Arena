@@ -15,7 +15,7 @@ import { StatusMarksComponent as Marks } from "../../domain/components/status-ma
 import { captureNightLife } from "../../domain/night-effects";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import type { ActionRequestFactoryConstructorPort } from "../../domain/actions";
-import type { NightStageContext } from "../../engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../engine/night/trusted-runtime";
 import { resolveInspection } from "../../engine/inspection";
 import { recordOwnNightAction } from "../night-abilities/history-ports";
 import { demonNativeNightActor, openDemonNativeNightFrame } from "./authority";

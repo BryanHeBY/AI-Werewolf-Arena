@@ -7,7 +7,7 @@
  */
 import { COMPONENT, Camp, Phase, StatusMark, type RoleComponent } from "../../domain";
 import { originalPoisonIntent, type NightLifeScope } from "../../domain/night-effects";
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { resolveInspection } from "../../engine/inspection";
 import { scholarMentorStateForRole } from "./state-slot";
 import { scholarMentorBonusEffectRecordsForAppend } from "./bonus-effect-records";
@@ -208,3 +208,10 @@ export const SCHOLAR_MENTOR_NIGHT_STAGES: NightStageHandler[] = [
   bonus("poison", 550),
   bonus("check", 650),
 ];
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [...SCHOLAR_MENTOR_NIGHT_STAGES].map((handler) =>
+    Object.freeze([handler, handler.execute] as const),
+  ),
+);

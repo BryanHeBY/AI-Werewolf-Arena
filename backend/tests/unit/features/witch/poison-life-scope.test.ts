@@ -3,7 +3,10 @@
  * 提交断言验证 gateway 校验后的最终施加；输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -26,7 +29,7 @@ import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 
 import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 const roles = [Role.Wolf, Role.Witch, Role.Seer, Role.Guard, Role.Villager, Role.Villager],
   config: BoardConfig = {
     ...sixPlayerMvpConfig,
@@ -119,7 +122,7 @@ for (const change of [
       },
       () => current,
     );
-    await stage.execute(ctx);
+    await executeNightStage(stage)(ctx);
     expect(old.poison).toBe(1);
     expect(ability.uses).toBe(0);
     expect(ability.lastUsedDay).toBeNull();
@@ -143,7 +146,7 @@ test("even a successful gateway cannot put poison on a target life replaced insi
     game.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
     return result;
   };
-  await stage.execute(ctx);
+  await executeNightStage(stage)(ctx);
   expect(ability.state.poison).toBe(1);
   expect(ability.uses).toBe(0);
   expect(ctx.state.poisonClaims).toEqual([]);
@@ -164,7 +167,7 @@ for (const change of [
         name: "use_potion",
         args: { target_id: 5, potion_type: PotionType.Poison },
       }));
-    await stage.execute(ctx);
+    await executeNightStage(stage)(ctx);
     expect(ctx.state.poisonClaims).toHaveLength(1);
     expect(ctx.state.poisonClaims![0].source.id).toBe(2);
     expect(ctx.state.poisonClaims![0].target.id).toBe(5);
@@ -215,7 +218,7 @@ test("unmanaged legacy marks remain compatible, and multiple accepted toxin sour
       name: "use_potion",
       args: { target_id: 5, potion_type: PotionType.Poison },
     }));
-  await stage.execute(ctx);
+  await executeNightStage(stage)(ctx);
   expect(ctx.state.poisonClaims!.map((claim) => [claim.source.id, claim.target.id])).toEqual([
     [2, 5],
     [3, 5],
@@ -288,7 +291,7 @@ for (const change of [
           return result;
         };
       }
-      await stage.execute(ctx);
+      await executeNightStage(stage)(ctx);
       expect(calls).toBe(boundary === "request" ? 0 : 1);
       expect(oldState.poison).toBe(1);
       expect(ability.uses).toBe(0);

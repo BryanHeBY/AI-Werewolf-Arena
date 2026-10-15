@@ -25,7 +25,7 @@ import { getEvilKnightState } from "../../../src/features/evil-knight/ports";
 import { EVIL_KNIGHT_FRAME_STAGE } from "../../../src/features/evil-knight/night-frame";
 import { WITCH_NIGHT_STAGES } from "../../../src/features/witch/night-stages";
 import { SEER_NIGHT_STAGES } from "../../../src/features/seer/night-stages";
-import type { NightStageContext } from "../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 function fixture(locale: "zh-CN" | "en") {
   const { world } = bootstrapGame(structuredClone(evilKnightTwelveConfig), { locale });
   const id = (kind: Role) =>
@@ -103,9 +103,9 @@ function fixture(locale: "zh-CN" | "en") {
     },
   };
   const run = async () => {
-    await EVIL_KNIGHT_FRAME_STAGE.execute(ctx);
-    for (const stage of WITCH_NIGHT_STAGES) await stage.execute(ctx);
-    for (const stage of SEER_NIGHT_STAGES) await stage.execute(ctx);
+    await executeNightStage(EVIL_KNIGHT_FRAME_STAGE)(ctx);
+    for (const stage of WITCH_NIGHT_STAGES) await executeNightStage(stage)(ctx);
+    for (const stage of SEER_NIGHT_STAGES) await executeNightStage(stage)(ctx);
     return new DamageResolutionSystem().resolve(world, {
       poisonClaims: ctx.state.poisonClaims,
       retaliationAttacks: ctx.state.retaliationAttacks,
@@ -217,3 +217,5 @@ for (const locale of ["zh-CN", "en"] as const) {
     ).toBe(false);
   });
 }
+
+import { executeNightStage } from "../../support/builders/night-stage-context";

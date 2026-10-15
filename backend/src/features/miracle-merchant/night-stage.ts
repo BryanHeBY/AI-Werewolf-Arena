@@ -14,7 +14,7 @@ import type { RoleComponent } from "../../domain/components/role";
 import { Camp, Role, Phase, WitchSelfHealRule, type ToolCall } from "../../domain/model";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
 import type { World } from "../../domain/world";
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { grantNightAbility } from "../night-abilities/grant-ports";
 import { canMerchantTrade, getMerchantState } from "./state";
 
@@ -231,3 +231,8 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
     }
   },
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [MIRACLE_MERCHANT_STAGE].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

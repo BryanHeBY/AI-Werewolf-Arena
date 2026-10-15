@@ -27,7 +27,7 @@ import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-re
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import {
   canAwakenedKnife,
@@ -173,8 +173,8 @@ test("revoked paid copied poison does not fall through its old PoisonMark or era
     const game = fixture();
     ready(game, "witch");
     const ctx = context(game, 2, async () => ({ name: "awakened_poison", args: { target_id: 6 } }));
-    await stage("awakened_opening").execute(ctx);
-    await stage("awakened_skill").execute(ctx);
+    await executeNightStage(stage("awakened_opening"))(ctx);
+    await executeNightStage(stage("awakened_skill"))(ctx);
     (role(game).privateState as Record<string, unknown>).awakened_hidden_wolf = structuredClone(
       state(game),
     );
@@ -199,11 +199,11 @@ test("an extra knife remains current after its stock is spent and the slot close
   game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   refreshAwakenedInheritance(game.world, 1, []);
   const ctx = context(game, 2, async () => ({ name: "awakened_attack", args: { target_id: 6 } }));
-  await stage("awakened_opening").execute(ctx);
+  await executeNightStage(stage("awakened_opening"))(ctx);
   expect(
     canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
   ).toBe(true);
-  await stage("awakened_attack").execute(ctx);
+  await executeNightStage(stage("awakened_attack"))(ctx);
   expect(state(game).learned!.skill).toEqual({ kind: "wolf", extraKnife: "spent" });
   expect(ctx.state.awakenedEffects!.attacks[0].isCurrent()).toBe(true);
   ctx.ensureMarks(5).add(StatusMark.WolfKillMark);
@@ -220,8 +220,8 @@ test("an extra knife remains current after its stock is spent and the slot close
 test("whole night reentry after a paid mimic is explicit and preserves the learned prefix", async () => {
   const game = fixture(),
     ctx = context(game, 1, async () => ({ name: "awakened_mimic", args: { target_id: 3 } }));
-  await stage("awakened_opening").execute(ctx);
-  await stage("awakened_mimic").execute(ctx);
+  await executeNightStage(stage("awakened_opening"))(ctx);
+  await executeNightStage(stage("awakened_mimic"))(ctx);
   const prefix = structuredClone(state(game));
   const pipeline = new NightPipeline({
     world: game.world,
@@ -384,3 +384,5 @@ for (const knife of [null, 1])
     expect(events.some((e) => e.type === "awakened_inherited")).toBe(false);
     expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
   });
+
+import { executeNightStage } from "../../../support/builders/night-stage-context";

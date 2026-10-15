@@ -266,13 +266,20 @@ for (const locale of ["zh-CN", "en"] as const)
               runtime: {
                 ...profile.runtime,
                 nightStages: [
-                  {
-                    ...GRAVEKEEPER_FEEDBACK_STAGE,
-                    async execute(ctx) {
-                      executionOrder.push("feedback");
-                      await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);
+                  bindNightStageAlias(
+                    {
+                      ...GRAVEKEEPER_FEEDBACK_STAGE,
+                      async execute(
+                        ctx: import("../../../../src/engine/night/contracts").NightStageContext<
+                          import("../../../../src/rulesets/night-stage-bindings").GravekeeperStagePorts
+                        >,
+                      ) {
+                        executionOrder.push("feedback");
+                        await ctx.ports!.runFeedback();
+                      },
                     },
-                  },
+                    GRAVEKEEPER_FEEDBACK_STAGE,
+                  ),
                 ],
               },
             },
@@ -551,3 +558,5 @@ for (const mode of ["idiot", "abstain", "keeper_dead", "pending_knife", "pending
       expect(game.world.getAliveEntityIds()).not.toContain(3);
     }
   });
+
+import { bindNightStageAlias } from "../../../../src/rulesets/night-stage-registration";

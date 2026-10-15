@@ -3,7 +3,10 @@
  * 输出为领域回执、本人事实和安全录制。await 后及 gateway 后复验请求 scope，提交先于事实和录制；
  * finally 关闭请求，晚发布失败保留已付前缀。不接管契约、秘密之身或资源算法，这些写权仍由本族 authority 持有。
  */
-import type { NightStageHandler, NightStageContext } from "../../engine/night/contracts";
+import type {
+  TrustedNightStageHandler as NightStageHandler,
+  TrustedNightStageRuntime as NightStageContext,
+} from "../../engine/night/trusted-runtime";
 import { Phase } from "../../domain/identity";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { nobleBodyChoiceActor, nobleBodyChoiceTargets } from "./authority";
@@ -98,3 +101,10 @@ export const NOBLE_CHOICE_STAGE: NightStageHandler = {
   priority: 450,
   execute: (ctx) => execute(ctx, "noble"),
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [SECRET_BODY_STAGE, NOBLE_CHOICE_STAGE].map((handler) =>
+    Object.freeze([handler, handler.execute] as const),
+  ),
+);

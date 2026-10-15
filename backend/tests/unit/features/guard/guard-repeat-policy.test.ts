@@ -26,7 +26,10 @@ import {
   parseBoardDefinition,
 } from "../../../../src/app/config/board-definition";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 
 const roles = [Role.Wolf, Role.Guard, Role.Seer, Role.Villager, Role.Villager, Role.Villager];
 const guard = GUARD_NIGHT_STAGES.find((stage) => stage.id === "guard_action")!;
@@ -53,7 +56,7 @@ function setup(policy?: GuardRepeatPolicy, locale: "zh-CN" | "en" = "en") {
   const events: GameEvent[] = [];
   const act = async (day: number, action: Extract<ToolCall, { name: "guard" }> | null) => {
     const factory = new GameActionRequestFactory(game.world, events, day);
-    await guard.execute(
+    await executeNightStage(guard)(
       nightStageContext({
         world: game.world,
         events,

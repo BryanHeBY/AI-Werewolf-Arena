@@ -12,7 +12,7 @@ import { AWAKENED_NIGHT_STAGES } from "../../../src/features/awakened-hidden-wol
 import { getAwakenedState } from "../../../src/features/awakened-hidden-wolf/state";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 
 const modes = [
   "clean_wait",
@@ -137,9 +137,13 @@ for (const transport of ["sdk", "acp"] as const)
             });
           },
         });
-        await AWAKENED_NIGHT_STAGES.find((stage) => stage.id === "awakened_opening")!.execute(ctx);
+        await executeNightStage(
+          AWAKENED_NIGHT_STAGES.find((stage) => stage.id === "awakened_opening")!,
+        )(ctx);
         const action = () =>
-          AWAKENED_NIGHT_STAGES.find((stage) => stage.id === "awakened_mimic")!.execute(ctx);
+          executeNightStage(AWAKENED_NIGHT_STAGES.find((stage) => stage.id === "awakened_mimic")!)(
+            ctx,
+          );
         try {
           const success = ["clean_wait", "correct_after_one", "correct_after_two"].includes(mode);
           if (success) await action();

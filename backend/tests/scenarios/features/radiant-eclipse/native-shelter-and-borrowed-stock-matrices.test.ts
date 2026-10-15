@@ -116,7 +116,7 @@ test("exact public board runs first night without Count or Maid new requests", a
   expect(knownWolfTeammates(f.world, 10, c)).not.toContain(1);
   expect(wolfChatParticipants(f.world, c)).toEqual([10, 11, 12]);
   const stages = getDefaultNightStageRegistry()
-    .getStages(f.board.config, f.world)
+    .getStages(f.board.config, bindNightStageRosterQueries(f.world))
     .map((s) => [s.id, s.priority]);
   expect(
     stages.filter(([s]) =>
@@ -228,3 +228,5 @@ test("night-start last wolf gets one knife together with borrowed skill and neve
   );
   expect(f.requests.filter((r) => r.context.stage === "seer").map((r) => r.actorId)).toEqual([1]);
 });
+
+import { bindNightStageRosterQueries } from "../../../../src/rulesets/night-stage-plan";

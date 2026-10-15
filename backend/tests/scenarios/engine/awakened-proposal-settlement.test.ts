@@ -41,15 +41,22 @@ test("NightPipeline delivers typed awakened proposals to Damage without exposing
   class ControlledStages extends NightStageRegistry {
     override getStages(): NightStageHandler[] {
       return [
-        {
-          id: "controlled_damage",
-          priority: 900,
-          async execute(ctx) {
-            ctx.state.awakenedEffects!.shields.push(effect(game, 5));
-            ctx.state.awakenedEffects!.attacks.push(effect(game, 6));
-            ctx.ensureMarks(5).add(StatusMark.WolfKillMark);
+        bindNightStageAlias(
+          {
+            id: "controlled_damage",
+            priority: 900,
+            async execute(
+              ctx: import("../../../src/engine/night/contracts").NightStageContext<
+                import("../../../src/rulesets/night-stage-bindings").LegacyAwakenedStagePorts
+              >,
+            ) {
+              ctx.ports!.appendShield(effect(game, 5));
+              ctx.ports!.appendAttack(effect(game, 6));
+              ctx.ports!.addWolfKillMark(5);
+            },
           },
-        },
+          AWAKENED_NIGHT_STAGES[0]!,
+        ),
       ];
     }
   }
@@ -83,3 +90,6 @@ test("NightPipeline delivers typed awakened proposals to Damage without exposing
   expect(JSON.stringify(result.summary)).not.toContain('"life"');
   expect(game.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);
 });
+
+import { bindNightStageAlias } from "../../../src/rulesets/night-stage-registration";
+import { AWAKENED_NIGHT_STAGES } from "../../../src/features/awakened-hidden-wolf/night-stages";

@@ -15,7 +15,7 @@ import type { CampComponent, CurrentCampSource } from "../../domain/components/c
 import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../domain/model";
 import type { ToolSpec, StageDirectiveRule } from "../../engine/actions/tool-contracts";
 import type { ToolRepairPack } from "../../agents/tool-repair/contracts";
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { NightStageDefinition as NightStageHandler } from "../../engine/night/contracts";
 import type { ToolRuleMap } from "../../engine/actions/validation-contracts";
 import type { DeathHook, VotedOutHook } from "../../engine/hooks/registry";
 import type { z } from "zod";

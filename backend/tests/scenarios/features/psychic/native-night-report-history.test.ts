@@ -1,7 +1,10 @@
 /**
  * 通灵师场景验证完整夜重入及梦／魅惑死亡链保留判胜前私有历史。输入为原 pass 矩阵、固定角色与受控 Pipeline／经理；手写报告、库存、死亡隐私和事实结果是预期。Catalog 查询仍返回原缓存贡献引用，不复制 authority。
  */
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -25,7 +28,7 @@ import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catal
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 
 const deck = [Role.Psychic, Role.Wolf, Role.Witch, Role.Guard, Role.Villager, Role.Villager],
   catalog = getDefaultRoleCatalog();
@@ -115,7 +118,7 @@ for (const pass of [false, true])
     expect({ events, state: role(game, 1).privateState }).toEqual(before);
     const other = bootstrapGame(board(), { fixedRoles: deck });
     expect(hasRoleInspectionNightCommit(other.world, 1)).toBe(false);
-    await PSYCHIC_INSPECTION_STAGE.execute(context(other, [], async () => null));
+    await executeNightStage(PSYCHIC_INSPECTION_STAGE)(context(other, [], async () => null));
     expect(findNightAbility(role(other, 1), "role_check")!.lastUsedDay).toBe(1);
   });
 

@@ -3,7 +3,7 @@
  * 输出为 receipt.commit 的原写入及 God 事实。无回执即返回；有回执先核阶段和演员，再 commit，反射时才发布。
  * 事实失败不撤回已提交回执，本模块不重算映射、重选目标或授予库存。
  */
-import type { NightStageContext } from "../../engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../engine/night/trusted-runtime";
 import type { TimeConsortReceipt } from "./night-frame";
 import { timeConsortActorId } from "./night-frame";
 export function commitTimeConsortEffect(

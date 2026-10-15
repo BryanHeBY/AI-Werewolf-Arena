@@ -39,7 +39,7 @@ import {
   wolfKnifeHolders,
 } from "../../../../src/features/wolf-team/permissions";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
@@ -167,7 +167,7 @@ for (const locale of ["zh-CN", "en"] as const)
           { kind: "faction", faction: faction === "wolf" ? "good" : "wolf" },
         ]),
       );
-      await HYBRID_STAGE.execute(
+      await executeNightStage(HYBRID_STAGE)(
         context(game, events, async (request) => {
           expect(request.context.turn_constraints.min_valid_actions).toBe(1);
           expect(request.context.stage).toBe("hybrid");
@@ -238,7 +238,10 @@ for (const locale of ["zh-CN", "en"] as const)
         targetId: target,
         faction,
       });
-      const order = new NightStageRegistry().getStages(game.config, game.world);
+      const order = new NightStageRegistry().getStages(
+        game.config,
+        bindNightStageRosterQueries(game.world),
+      );
       expect(order.find((s) => s.id === "hybrid")!.priority).toBe(110);
       expect(order.findIndex((s) => s.id === "hybrid")).toBeLessThan(
         order.findIndex((s) => s.id === "wolf_kill_vote"),
@@ -250,7 +253,7 @@ for (const locale of ["zh-CN", "en"] as const)
       game.world.getComponent(target, COMPONENT.Alive)!.alive = false;
       game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
       expect(victory(game).affiliations).toEqual([{ kind: "faction", faction }]);
-      await HYBRID_STAGE.execute(
+      await executeNightStage(HYBRID_STAGE)(
         context(
           game,
           events,
@@ -284,7 +287,7 @@ test("invalid preflights are read-only and camp-neutral; a later valid retry spe
   ).toBe(false);
   expect(state).toEqual({ remaining: 1, choice: null });
   expect(victory(game).affiliations).toEqual([]);
-  await HYBRID_STAGE.execute(
+  await executeNightStage(HYBRID_STAGE)(
     context(game, events, async (request) => {
       asks.push(request);
       return asks.length === 1 ? choose(1) : asks.length === 2 ? null : choose(2);
@@ -295,7 +298,7 @@ test("invalid preflights are read-only and camp-neutral; a later valid retry spe
   expect(
     gateway.validateAndSanitize(game.world, 1, choose(4), { phase: Phase.Night, day: 1 }).error,
   ).toBe("hybrid_unavailable");
-  await HYBRID_STAGE.execute(
+  await executeNightStage(HYBRID_STAGE)(
     context(game, events, async () => {
       throw new Error("spent");
     }),
@@ -312,7 +315,7 @@ for (const invalid of ["pass", "dead", "no_targets"] as const)
     if (invalid === "no_targets")
       for (const id of [3, 4, 5, 6]) game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
     await expect(
-      HYBRID_STAGE.execute(
+      executeNightStage(HYBRID_STAGE)(
         context(game, events, async () => {
           calls++;
           return invalid === "dead" ? choose(2) : null;
@@ -387,8 +390,10 @@ for (const point of ["await", "gateway"] as const)
         };
       }
       if (change.startsWith("target"))
-        await expect(HYBRID_STAGE.execute(ctx)).rejects.toThrow("hybrid_valid_action_missing");
-      else await HYBRID_STAGE.execute(ctx);
+        await expect(executeNightStage(HYBRID_STAGE)(ctx)).rejects.toThrow(
+          "hybrid_valid_action_missing",
+        );
+      else await executeNightStage(HYBRID_STAGE)(ctx);
       expect(calls).toBe(change.startsWith("target") ? 3 : 1);
       expect(state).toEqual({ remaining: 1, choice: null });
       expect(events).toEqual([]);
@@ -399,8 +404,8 @@ test("two pending Hybrid replies have one synchronous winner, and a committed fu
     events: GameEvent[] = [],
     replies: Array<(action: ToolCall) => void> = [];
   const ctx = context(game, events, () => new Promise((resolve) => replies.push(resolve)));
-  const first = HYBRID_STAGE.execute(ctx),
-    second = HYBRID_STAGE.execute(ctx);
+  const first = executeNightStage(HYBRID_STAGE)(ctx),
+    second = executeNightStage(HYBRID_STAGE)(ctx);
   expect(replies).toHaveLength(2);
   replies[0](choose(2));
   await first;
@@ -433,7 +438,7 @@ test("a Wolf-affiliated Hybrid still fills the villager side and true Good count
   const game = fixture(),
     events: GameEvent[] = [],
     registry = new ConditionRegistry(new WinConditionRegistry());
-  await HYBRID_STAGE.execute(context(game, events, async () => choose(2)));
+  await executeNightStage(HYBRID_STAGE)(context(game, events, async () => choose(2)));
   const dead = (ids: number[]) =>
     ids.forEach((id) => {
       game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
@@ -494,3 +499,7 @@ test("Hybrid labels are closed, bilingual and private-console gated; choice neve
     expect(reads).toBe(0);
   }
 });
+
+import { bindNightStageRosterQueries } from "../../../../src/rulesets/night-stage-plan";
+
+import { executeNightStage } from "../../../support/builders/night-stage-context";

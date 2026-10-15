@@ -34,7 +34,7 @@ import {
 } from "../../../../src/features/dreamer/night-links";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
-import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../../src/engine/night/trusted-runtime";
 
 function fixture() {
   const roles = [Role.Dreamer, Role.Dreamer, Role.Wolf, Role.Hunter, Role.Villager, Role.Villager];
@@ -131,7 +131,7 @@ for (const change of ["disabled", "spent", "transferred"] as const)
       }
       return { name: "dream", args: { target_id: 5 } };
     });
-    await DREAMER_NIGHT_STAGE.execute(ctx);
+    await executeNightStage(DREAMER_NIGHT_STAGE)(ctx);
     expect(calls).toEqual([1]);
     expect(game.ability(1).state.history).toEqual([{ day: 1, targetId: 5 }]);
     expect(game.ability(1).uses).toBe(1);
@@ -207,7 +207,7 @@ for (const point of ["await", "gateway"] as const)
           return result;
         };
       }
-      await DREAMER_NIGHT_STAGE.execute(ctx);
+      await executeNightStage(DREAMER_NIGHT_STAGE)(ctx);
       expect(calls).toBe(1);
       expect(originalState).toEqual({ lastTarget: null, lastDay: null, history: [] });
       expect(ability.uses).toBe(0);
@@ -279,7 +279,7 @@ test("owned dream links: push lookup failure keeps paid history and night commit
       throw failure;
     },
   });
-  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);
+  await expect(executeNightStage(DREAMER_NIGHT_STAGE)(ctx)).rejects.toBe(failure);
   expect(ability.state.history).toEqual([{ day: 1, targetId: 5 }]);
   expect(ability.uses).toBe(1);
   expect(ability.lastUsedDay).toBe(1);
@@ -315,7 +315,7 @@ test("owned dream links: link field failure follows push lookup and preserves th
       };
     },
   });
-  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);
+  await expect(executeNightStage(DREAMER_NIGHT_STAGE)(ctx)).rejects.toBe(failure);
   expect(trace).toEqual(["push:get", "policy:get"]);
   expect(ability.state.history).toEqual([{ day: 1, targetId: 5 }]);
   expect(ability.uses).toBe(1);
@@ -324,3 +324,5 @@ test("owned dream links: link field failure follows push lookup and preserves th
   expect(links).toEqual([]);
   expect(events).toEqual([]);
 });
+
+import { executeNightStage } from "../../../support/builders/night-stage-context";

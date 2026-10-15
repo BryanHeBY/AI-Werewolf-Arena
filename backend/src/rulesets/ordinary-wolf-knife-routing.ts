@@ -15,7 +15,8 @@ import {
   mistKnifeTargets,
   originalMistTarget,
 } from "../features/mist-raven/knife-ports";
-import type { NightStageContext, WolfKnifeTargetScope } from "../engine/night/contracts";
+import type { WolfKnifeTargetScope } from "../engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../engine/night/trusted-runtime";
 
 /** 已接受的票只携带原目标身体与生命版本，不是新的付款凭据或 JSON 快照。 */
 export type AcceptedWolfKnifeTarget = Pick<

@@ -11,7 +11,7 @@ import { GUARD_NIGHT_STAGES } from "../../../src/features/guard/night-stages";
 import { DREAMER_NIGHT_STAGE } from "../../../src/features/dreamer/night-stages";
 import { WITCH_NIGHT_STAGES } from "../../../src/features/witch/night-stages";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 
 const cases = [
   { role: Role.Seer, kind: "seer_check", stage: SEER_NIGHT_STAGES[0]! },
@@ -81,7 +81,7 @@ for (const item of cases)
           return request;
         },
       });
-      await item.stage.execute(ctx);
+      await executeNightStage(item.stage)(ctx);
       expect(requests).toBe(1);
       expect(calls).toBe(0);
       expect(ability.state).toEqual(state);
@@ -114,7 +114,7 @@ for (const item of cases.filter((item) => item.kind !== "dream"))
     const events: GameEvent[] = [];
     let calls = 0;
     const factory = new GameActionRequestFactory(game.world, events, 1);
-    await item.stage.execute(
+    await executeNightStage(item.stage)(
       nightStageContext({
         world: game.world,
         events,

@@ -30,7 +30,10 @@ import {
   parseBoardDefinition,
 } from "../../../../src/app/config/board-definition";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 
@@ -51,7 +54,7 @@ function setup(parameters?: BoardConfig["seer"], locale: "zh-CN" | "en" = "en") 
   const requests: ActionRequest[] = [];
   const act = async (day: number, target: number | null, mutate?: () => void) => {
     const factory = new GameActionRequestFactory(game.world, events, day);
-    await SEER_NIGHT_STAGES[0].execute(
+    await executeNightStage(SEER_NIGHT_STAGES[0])(
       nightStageContext({
         world: game.world,
         events,

@@ -10,7 +10,7 @@ import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
 import { Phase, Role, StatusMark } from "../../domain/model";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
-import { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { getGuardState } from "./ports";
 import { activeNightAbility } from "../night-abilities/inventory-ports";
 import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
@@ -149,3 +149,8 @@ const guardActionStage: NightStageHandler = {
 
 /** 守卫夜间阶段列表。 */
 export const GUARD_NIGHT_STAGES: NightStageHandler[] = [guardActionStage];
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [...GUARD_NIGHT_STAGES].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

@@ -14,7 +14,7 @@ import {
   type NightLifeScope,
 } from "../../domain/night-effects";
 import type { World } from "../../domain/world";
-import type { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "./abilities";
 import { recordNightAbilityUse } from "./abilities";
 import { captureNightAbilityScope } from "./ability-scope";
@@ -61,11 +61,16 @@ function isRecipient(
   );
 }
 
+const recipientPrograms = new WeakMap<object, unknown>();
+/** 只识别本工厂完整原程序的真实引用；不登记 World，也不以 id／同形函数授权。 */
+export function isOwnedRecipientAbilityProgram(handler: object, execute: unknown): boolean {
+  return recipientPrograms.get(handler) === execute && recipientPrograms.has(handler);
+}
 export function recipientAbilityStage(
   policy: RecipientPolicy,
   priority: number,
 ): NightStageHandler {
-  return {
+  const handler: NightStageHandler = {
     id: policy === "lucky" ? "lucky_ability" : "black_market_recipient",
     priority,
     async execute(ctx) {
@@ -281,4 +286,6 @@ export function recipientAbilityStage(
       }
     },
   };
+  recipientPrograms.set(handler, handler.execute);
+  return handler;
 }

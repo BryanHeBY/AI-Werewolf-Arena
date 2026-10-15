@@ -32,8 +32,6 @@ import { DREAMER_NIGHT_STAGE } from "../../../../src/features/dreamer/night-stag
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import type { ActionProvider } from "../../../../src/domain/model";
-import { DreamNightFrame, type DreamNightLink } from "../../../../src/features/dreamer/night-frame";
-import { readDreamNightLinks } from "../../../../src/features/dreamer/night-ports";
 import { StatusMark, DeathCause } from "../../../../src/domain/model";
 
 function fixture() {
@@ -105,7 +103,7 @@ function fixture() {
 }
 
 class Stages extends NightStageRegistry {
-  override getStages() {
+  override getStages(): import("../../../../src/engine/night/contracts").NightStageDefinition[] {
     return [ECLIPSE_SWALLOW_STAGE, DREAMER_NIGHT_STAGE];
   }
 }
@@ -140,13 +138,17 @@ for (const dead of [1, 5])
       override getStages() {
         return [
           ...super.getStages(),
-          {
+          bindSyntheticNightDamageStage({
             id: "synthetic_attack",
             priority: 999,
-            async execute(ctx: any) {
-              ctx.ensureMarks(dead).add(StatusMark.PoisonMark);
+            async execute(
+              ctx: import("../../../../src/engine/night/contracts").NightStageContext<
+                import("../../../../src/rulesets/night-stage-bindings").SyntheticNightDamagePorts
+              >,
+            ) {
+              ctx.ports!.addPoisonMark(dead);
             },
-          },
+          }),
         ];
       }
     }
@@ -189,19 +191,28 @@ for (const dead of [1, 5])
 
 test("actual later-stage failure retains paid Dream fact and stock but revokes handed-out effect", async () => {
   const f = fixture();
-  let links: readonly DreamNightLink[] = [];
+  let captureProbe:
+    | import("../../../../src/rulesets/night-stage-bindings").PaidDreamStagePorts["captureProbe"]
+    | undefined;
   class FailStages extends Stages {
     override getStages() {
       return [
         ...super.getStages(),
-        {
-          id: "synthetic_failure",
-          priority: 999,
-          async execute(ctx: any) {
-            links = readDreamNightLinks(ctx.state);
-            throw new Error("synthetic_after_payment");
+        bindNightStageAlias(
+          {
+            id: "synthetic_failure",
+            priority: 999,
+            async execute(
+              ctx: import("../../../../src/engine/night/contracts").NightStageContext<
+                import("../../../../src/rulesets/night-stage-bindings").PaidDreamStagePorts
+              >,
+            ) {
+              captureProbe = ctx.ports!.captureProbe;
+              throw new Error("synthetic_after_payment");
+            },
           },
-        },
+          DREAMER_NIGHT_STAGE,
+        ),
       ];
     }
   }
@@ -216,13 +227,13 @@ test("actual later-stage failure retains paid Dream fact and stock but revokes h
   ).rejects.toThrow("synthetic_after_payment");
   const borrowed = findNightAbility(f.role(1), "dream")!,
     native = findNightAbility(f.role(5), "dream")!,
-    frame = new DreamNightFrame(links);
+    frame = captureProbe!();
   expect(borrowed.disabled).toBe(true);
   expect(native.nightSuppression).toBeUndefined();
   expect(borrowed.uses).toBe(1);
   expect(borrowed.state.history).toEqual([{ day: 2, targetId: 7 }]);
-  expect(frame.protectedTargets(bindDreamLifeQueries(f.world))).toEqual([]);
-  expect(frame.linkedDeaths(bindDreamLifeQueries(f.world), [1])).toEqual([]);
+  expect(frame.protectedTargets()).toEqual([]);
+  expect(frame.linkedDeaths([1])).toEqual([]);
   expect(f.events.filter((e) => e.type === "dream_applied").map((e) => e.payload)).toEqual([
     { actorId: 1, targetId: 7, day: 2, consecutive: false, abilityId: borrowed.id },
   ]);
@@ -235,3 +246,6 @@ test("actual later-stage failure retains paid Dream fact and stock but revokes h
     ),
   ).toEqual([]);
 });
+
+import { bindSyntheticNightDamageStage } from "../../../../src/rulesets/night-stage-bindings";
+import { bindNightStageAlias } from "../../../../src/rulesets/night-stage-registration";

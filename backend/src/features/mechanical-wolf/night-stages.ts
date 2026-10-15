@@ -19,7 +19,10 @@ import {
   mechanicalNightIntent,
   originalPoisonIntent,
 } from "../../domain/night-effects";
-import type { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
+import type {
+  TrustedNightStageRuntime as NightStageContext,
+  TrustedNightStageHandler as NightStageHandler,
+} from "../../engine/night/trusted-runtime";
 import { resolveInspection } from "../../engine/inspection";
 import { canMechanicalKnife } from "./inheritance";
 import {
@@ -445,3 +448,8 @@ const attackStage: NightStageHandler = {
 };
 
 export const MECHANICAL_NIGHT_STAGES = [modeStage, mimicStage, skillStage, attackStage];
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [...MECHANICAL_NIGHT_STAGES].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

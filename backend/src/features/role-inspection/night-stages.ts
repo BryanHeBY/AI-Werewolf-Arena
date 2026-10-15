@@ -11,7 +11,10 @@ import { ROLE_INSPECTION_STATE_SLOT } from "./state-slot";
 import { AliveComponent, aliveLifeVersion } from "../../domain/components/alive";
 import { COMPONENT } from "../../domain/components/names";
 import { Phase, Role } from "../../domain/model";
-import type { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
+import type {
+  TrustedNightStageRuntime as NightStageContext,
+  TrustedNightStageHandler as NightStageHandler,
+} from "../../engine/night/trusted-runtime";
 import { type NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
 import { getGargoyleState } from "../gargoyle/ports";
@@ -221,3 +224,10 @@ export const MIRROR_INSPECTION_STAGE: NightStageHandler = {
   priority: 600,
   execute: (ctx) => executeInspections(ctx, "mirror"),
 };
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [ROLE_INSPECTION_STAGE, PSYCHIC_INSPECTION_STAGE, MIRROR_INSPECTION_STAGE].map((handler) =>
+    Object.freeze([handler, handler.execute] as const),
+  ),
+);

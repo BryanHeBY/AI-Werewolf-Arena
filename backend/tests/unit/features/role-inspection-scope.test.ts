@@ -1,7 +1,7 @@
 /**
  * 单元测试验证查验 scope 的能力 ID 变更、持有回复与注入历史。原所有者、结果唯一性和期限断言是最终授权重检预期；保留原字面输入及样本，不调用模型或完整对局 driver。
  */
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -27,7 +27,7 @@ import {
 import { hasRoleInspectionNightCommit } from "../../../src/features/role-inspection/night-scope";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
-import type { NightStageContext } from "../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 import {
   canGargoyleKnife,
   refreshGargoyleInheritance,
@@ -112,7 +112,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
           return result;
         };
       }
-      await game.stage.execute(ctx);
+      await executeNightStage(game.stage)(ctx);
       expect(calls).toBe(1);
       expect(game.ability.state.history).toEqual([]);
       expect(game.ability.uses).toBe(0);
@@ -149,7 +149,7 @@ test("Gargoyle final application rechecks unique history after gateway, preserve
     }
     return result;
   };
-  await game.stage.execute(ctx);
+  await executeNightStage(game.stage)(ctx);
   expect(calls).toBe(2);
   expect(game.ability.state.history).toEqual([
     prefix,
@@ -198,7 +198,7 @@ test("Gargoyle final report rechecks unique history after an inspection-label ca
   );
   const { RoleCatalog } = await import("../../../src/rulesets/roles/catalog");
   ctx.roleCatalog = createRoleCatalog({ contributions: profiles });
-  await game.stage.execute(ctx);
+  await executeNightStage(game.stage)(ctx);
   expect(calls).toBe(2);
   expect(game.ability.state.history.map((row) => row.targetId)).toEqual([2, 3]);
   expect(game.ability.uses).toBe(1);
@@ -214,7 +214,7 @@ for (const change of ["id", "source", "private_owner", "activation", "actor_tran
       role = game.world.getComponent(1, COMPONENT.Role)!;
     game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     refreshGargoyleInheritance(game.world, events, 1);
-    await game.stage.execute(
+    await executeNightStage(game.stage)(
       context(game, events, async () => ({ name: "inspect_role", args: { target_id: 3 } })),
     );
     expect(
@@ -313,7 +313,7 @@ for (const point of ["await", "gateway", "label"] as const)
         ),
       });
     }
-    await game.stage.execute(ctx);
+    await executeNightStage(game.stage)(ctx);
     expect(calls).toBe(1);
     expect(gift.uses).toBe(0);
     expect(gift.lastUsedDay).toBeNull();
@@ -330,7 +330,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
     const game = fixture(kind),
       events: GameEvent[] = [];
     let calls = 0;
-    await game.stage.execute(
+    await executeNightStage(game.stage)(
       context(game, events, async () => {
         calls++;
         if (game.ability.source.kind === "native")

@@ -29,7 +29,7 @@ import {
   getBlackMarketState,
 } from "../../../src/features/black-market-merchant/state";
 import type { NightStageState } from "../../../src/engine/night/contracts";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 
 test("an uncommitted night reads World then day at every one of the twelve original predicate sites", () => {
   const world = new World(),
@@ -125,7 +125,7 @@ test("Black Market trade and recipient commits keep their separate short-circuit
     getAliveByRole: (kind) => (kind === Role.BlackMarketMerchant ? [merchant] : []),
   });
   // 原机制对无目标交易执行 skip，实际关闭当天并写提交证据，不请求模型或构造假 marker。
-  await BLACK_MARKET_TRADE_STAGE.execute(context);
+  await executeNightStage(BLACK_MARKET_TRADE_STAGE)(context);
   const tradeTrace: string[] = [];
   let tradeReads = 0;
   expect(() =>

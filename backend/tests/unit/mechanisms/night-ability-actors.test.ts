@@ -22,7 +22,7 @@ import { bindScholarMentorNightEligibility } from "../../../src/features/scholar
 import { SEER_NIGHT_STAGES } from "../../../src/features/seer/night-stages";
 import { GUARD_NIGHT_STAGES } from "../../../src/features/guard/night-stages";
 import { WITCH_NIGHT_STAGES } from "../../../src/features/witch/night-stages";
-import { nightStageContext } from "../../support/builders/night-stage-context";
+import { nightStageContext, executeNightStage } from "../../support/builders/night-stage-context";
 
 const ability = (id: string): NightAbility<"seer_check"> => ({
   id,
@@ -202,7 +202,7 @@ test("actual base stages keep a custom World getter before currentDay without bi
         return world;
       },
     });
-    await expect(stage.execute(ctx)).rejects.toThrow("stop_at_original_day_boundary");
+    await expect(executeNightStage(stage)(ctx)).rejects.toThrow("stop_at_original_day_boundary");
     expect(trace).toEqual(["world", "world", "day"]);
   }
 });

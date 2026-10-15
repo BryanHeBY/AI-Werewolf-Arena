@@ -13,7 +13,7 @@ import { seerTargetAllowed } from "./ports";
 import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
 import { Camp, Phase, Role } from "../../domain/model";
-import { NightStageHandler } from "../../engine/night/contracts";
+import type { TrustedNightStageHandler as NightStageHandler } from "../../engine/night/trusted-runtime";
 import { getSeerState } from "./ports";
 import { resolveInspection } from "../../engine/inspection";
 import { activeNightAbility } from "../night-abilities/inventory-ports";
@@ -246,3 +246,8 @@ const seerCheckStage: NightStageHandler = {
 
 /** 预言家夜间阶段列表。 */
 export const SEER_NIGHT_STAGES: NightStageHandler[] = [seerCheckStage];
+
+/** 模块定义完成时固定完整原程序引用；后来替换 execute 不能借原 handler 对象取得私有输入。这里不持有运行 World。 */
+export const OWNED_NIGHT_STAGE_PROGRAMS = Object.freeze(
+  [...SEER_NIGHT_STAGES].map((handler) => Object.freeze([handler, handler.execute] as const)),
+);

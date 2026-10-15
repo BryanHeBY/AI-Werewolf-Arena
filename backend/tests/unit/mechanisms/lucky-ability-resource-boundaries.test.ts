@@ -45,7 +45,7 @@ import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
-import type { NightStageContext } from "../../../src/engine/night/contracts";
+import type { TrustedNightStageRuntime as NightStageContext } from "../../../src/engine/night/trusted-runtime";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
@@ -171,7 +171,7 @@ test("Lucky check acts only in late slot, shares actor target limits with native
     name: "check_identity",
     args: { target_id: 1 },
   }));
-  await ordinary("seer_check").execute(ctx);
+  await executeNightStage(ordinary("seer_check"))(ctx);
   expect(native.uses).toBe(1);
   expect(gift.uses).toBe(0);
   expect(ownNightActions(game.world, 3, 1)).toEqual([
@@ -185,7 +185,7 @@ test("Lucky check acts only in late slot, shares actor target limits with native
       return { name: "check_identity", args: { target_id: attempts === 1 ? 1 : 2 } };
     },
   };
-  await LUCKY_ABILITY_STAGE.execute(ctx);
+  await executeNightStage(LUCKY_ABILITY_STAGE)(ctx);
   expect(attempts).toBe(2);
   expect(gift.uses).toBe(1);
   expect(gift.state.history).toEqual([
@@ -223,7 +223,7 @@ test("native Witch heal and Lucky poison have independent bottles; Lucky waits t
     args: { target_id: 6, potion_type: PotionType.Heal },
   }));
   ctx.state.wolfTarget = 6;
-  await ordinary("witch_action").execute(ctx);
+  await executeNightStage(ordinary("witch_action"))(ctx);
   expect(findNightAbility(role(game, 4), "potion")!.state).toMatchObject({ heal: 0, poison: 1 });
   ctx.actionProvider = {
     async getAction(request) {
@@ -231,14 +231,14 @@ test("native Witch heal and Lucky poison have independent bottles; Lucky waits t
       return null;
     },
   };
-  await LUCKY_ABILITY_STAGE.execute(ctx);
+  await executeNightStage(LUCKY_ABILITY_STAGE)(ctx);
   expect(gift.uses).toBe(0);
   expect(gift.lastUsedDay).toBe(1);
   const next = context(game, 2, events, async () => ({
     name: "use_potion",
     args: { target_id: 1, potion_type: PotionType.Poison },
   }));
-  await LUCKY_ABILITY_STAGE.execute(next);
+  await executeNightStage(LUCKY_ABILITY_STAGE)(next);
   expect(gift.state.poison).toBe(0);
   expect(gift.uses).toBe(1);
   expect(next.state.poisonClaims).toHaveLength(1);
@@ -248,7 +248,7 @@ test("native Witch heal and Lucky poison have independent bottles; Lucky waits t
   const later = context(game, 3, events, async () => {
     throw new Error("spent_no_request");
   });
-  await LUCKY_ABILITY_STAGE.execute(later);
+  await executeNightStage(LUCKY_ABILITY_STAGE)(later);
 });
 
 test("Guard's next native turn rejects both its own prior native and Lucky targets, even after the Lucky instance transfers away", async () => {
@@ -272,13 +272,13 @@ test("Guard's next native turn rejects both its own prior native and Lucky targe
     name: "guard",
     args: { target_id: 6, abstain: false },
   }));
-  await ordinary("guard_action").execute(ctx);
+  await executeNightStage(ordinary("guard_action"))(ctx);
   ctx.actionProvider = {
     async getAction() {
       return { name: "guard", args: { target_id: 4, abstain: false } };
     },
   };
-  await LUCKY_ABILITY_STAGE.execute(ctx);
+  await executeNightStage(LUCKY_ABILITY_STAGE)(ctx);
   expect(ownNightActions(game.world, 5, 2).map((r) => r.targetId)).toEqual([6, 4]);
   transferNightAbility(game.world, 5, 6, gift.id, "transfer:spent-guard", events, {
     kind: "guard",
@@ -419,7 +419,7 @@ for (const kind of ["seer_check", "guard"] as const)
           return result;
         };
       }
-      await ordinary(kind === "guard" ? "guard_action" : "seer_check").execute(ctx);
+      await executeNightStage(ordinary(kind === "guard" ? "guard_action" : "seer_check"))(ctx);
       expect(ability.uses).toBe(0);
       expect(ownNightActions(game.world, actor, 1)).toEqual([]);
       expect(events).toEqual([]);
@@ -454,7 +454,9 @@ test("a successful gateway cannot bypass a new same-actor target constraint at a
     recordOwnNightAction(game.world, 6, 1, "check", 1, false);
     return result;
   };
-  await expect(LUCKY_ABILITY_STAGE.execute(ctx)).rejects.toThrow("lucky_valid_action_missing");
+  await expect(executeNightStage(LUCKY_ABILITY_STAGE)(ctx)).rejects.toThrow(
+    "lucky_valid_action_missing",
+  );
   expect(gift.uses).toBe(0);
   expect(gift.state.history).toEqual([]);
   expect(events).toEqual([]);
@@ -467,7 +469,7 @@ test("an already committed ordinary guard protects its original target after cas
       name: "guard",
       args: { target_id: 6, abstain: false },
     }));
-  await ordinary("guard_action").execute(ctx);
+  await executeNightStage(ordinary("guard_action"))(ctx);
   game.world.getComponent(5, COMPONENT.Alive)!.alive = false;
   game.world.getComponent(6, COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
   expect(
@@ -478,7 +480,7 @@ test("an already committed ordinary guard protects its original target after cas
       name: "guard",
       args: { target_id: 6, abstain: false },
     }));
-  await ordinary("guard_action").execute(next);
+  await executeNightStage(ordinary("guard_action"))(next);
   other.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
   other.world.getComponent(6, COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
   expect(
@@ -543,3 +545,5 @@ for (const locale of ["zh-CN", "en"] as const)
       ).ok,
     ).toBe(true);
   });
+
+import { executeNightStage } from "../../support/builders/night-stage-context";

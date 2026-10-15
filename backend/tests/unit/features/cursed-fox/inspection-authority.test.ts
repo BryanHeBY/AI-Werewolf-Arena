@@ -37,7 +37,10 @@ import {
   createRoleCatalog,
 } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { permitsDeathShot } from "../../../../src/domain/deaths";
-import { nightStageContext } from "../../../support/builders/night-stage-context";
+import {
+  nightStageContext,
+  executeNightStage,
+} from "../../../support/builders/night-stage-context";
 import { SEER_NIGHT_STAGES } from "../../../../src/features/seer/night-stages";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
@@ -201,7 +204,7 @@ for (const changed of ["role", "life", "owner", "phase", "invalid"] as const)
         },
       },
     });
-    await SEER_NIGHT_STAGES[0]!.execute(ctx);
+    await executeNightStage(SEER_NIGHT_STAGES[0]!)(ctx);
     expect(ctx.state.foxInspections ?? []).toEqual([]);
     expect(ctx.state.seerChecks).toEqual([]);
     expect(events).toEqual([]);
@@ -240,7 +243,7 @@ for (const stage of ["native", "lucky"] as const) {
       },
       catalog,
     );
-    await (stage === "native" ? SEER_NIGHT_STAGES[0]! : LUCKY_ABILITY_STAGE).execute(ctx);
+    await executeNightStage(stage === "native" ? SEER_NIGHT_STAGES[0]! : LUCKY_ABILITY_STAGE)(ctx);
     expect(ctx.state.foxInspections ?? []).toEqual([]);
     expect(ctx.state.seerChecks).toEqual([]);
     expect(ctx.events.filter((e) => e.type === "seer_checked")).toEqual([]);
@@ -254,7 +257,7 @@ for (const stage of ["native", "lucky"] as const) {
         return { name: "check_identity", args: { target_id: 1 } };
       },
     });
-    await (stage === "native" ? SEER_NIGHT_STAGES[0]! : LUCKY_ABILITY_STAGE).execute(ctx);
+    await executeNightStage(stage === "native" ? SEER_NIGHT_STAGES[0]! : LUCKY_ABILITY_STAGE)(ctx);
     const life = world.getComponent(stage === "native" ? 2 : 6, COMPONENT.Alive)!;
     life.alive = false;
     world.removeComponent(1, COMPONENT.StatusMarks);
