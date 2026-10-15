@@ -44,16 +44,28 @@ export interface OwnedRoleCallbacks {
     role: RoleComponent,
     ctx: OwnedRoleInitContext,
   ) => readonly VictoryAffiliation[];
-  participation: (role: RoleComponent) => Participation;
+  participation: (
+    role: RoleComponent,
+    world?: World,
+    currentCamp?: CurrentCampSource,
+  ) => Participation;
   wolfTeam: (
     role: RoleComponent,
     world: World | undefined,
     currentCamp: CurrentCampSource,
   ) => WolfTeamPermissions;
-  knownTeammates: (role: RoleComponent, world: World) => readonly number[];
-  detectableByBear: (world: World, role: RoleComponent) => boolean;
-  canSelfDestruct: (role: RoleComponent, currentCamp: CurrentCampSource) => boolean;
-  inspectionLabels: (role: RoleComponent) => InspectionLabels;
+  knownTeammates: (
+    role: RoleComponent,
+    world: World,
+    currentCamp: CurrentCampSource,
+  ) => readonly number[];
+  detectableByBear: (world: World, role: RoleComponent, currentCamp: CurrentCampSource) => boolean;
+  canSelfDestruct: (role: RoleComponent, currentCamp: CurrentCampSource, world?: World) => boolean;
+  inspectionLabels: (
+    role: RoleComponent,
+    world?: World,
+    currentCamp?: CurrentCampSource,
+  ) => InspectionLabels;
   baselineAction: (
     role: RoleComponent,
     request: ActionRequest,
@@ -180,17 +192,17 @@ export function invokeRoleCallback<K extends Kind>(
             publicValueContext(context),
           ];
   } else if (kind === "detectableByBear") {
-    const [world, role] = args as Parameters<OwnedRoleCallbacks["detectableByBear"]>;
-    input = [roleQueries(role, () => world)];
+    const [world, role, source] = args as Parameters<OwnedRoleCallbacks["detectableByBear"]>;
+    input = [roleQueries(role, () => world, source)];
   } else if (kind === "wolfTeam") {
     const [role, world, source] = args as Parameters<OwnedRoleCallbacks["wolfTeam"]>;
     input = [roleQueries(role, () => world, source)];
   } else if (kind === "knownTeammates") {
-    const [role, world] = args as Parameters<OwnedRoleCallbacks["knownTeammates"]>;
-    input = [roleQueries(role, () => world)];
+    const [role, world, source] = args as Parameters<OwnedRoleCallbacks["knownTeammates"]>;
+    input = [roleQueries(role, () => world, source)];
   } else if (kind === "canSelfDestruct") {
-    const [role, source] = args as Parameters<OwnedRoleCallbacks["canSelfDestruct"]>;
-    input = [roleQueries(role, undefined, source)];
+    const [role, source, world] = args as Parameters<OwnedRoleCallbacks["canSelfDestruct"]>;
+    input = [roleQueries(role, () => world, source)];
   } else if (kind === "baselineAction") {
     const [role, request, pick, pickCamp, locale, world, source] = args as Parameters<
       OwnedRoleCallbacks["baselineAction"]
@@ -205,8 +217,9 @@ export function invokeRoleCallback<K extends Kind>(
     >;
     input = [id, roleQueries(role, () => world, source), locale];
   } else {
-    const [role] = args as Parameters<OwnedRoleCallbacks["participation"]>;
-    input = [roleQueries(role)];
+    // 参与资格与查验标签同样消费调用点的晚查询，不能因回调种类而丢弃已知 World／Camp。
+    const [role, world, source] = args as Parameters<OwnedRoleCallbacks["participation"]>;
+    input = [roleQueries(role, () => world, source)];
   }
   return Reflect.apply(callback, receiver, input);
 }

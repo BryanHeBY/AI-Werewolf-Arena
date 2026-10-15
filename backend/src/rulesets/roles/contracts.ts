@@ -20,7 +20,10 @@ import type { ToolRuleMap } from "../../engine/actions/validation-contracts";
 import type { DeathHook, VotedOutHook } from "../../engine/hooks/registry";
 import type { z } from "zod";
 
-/** 公开运行查询只返回枚举、编号和脱离的 JSON 数据；不返回 World、原组件或新的许可。 */
+/**
+ * 公开运行查询只返回枚举、编号和脱离的 JSON 数据，不返回 World、原组件或新的许可。
+ * 查询读取调用点提供的实际 World／当前阵营来源，组件替换后仍读新值；独立的无 World 调用保留空查询。
+ */
 export interface RoleQueries {
   actorRole(): Role;
   stateData(): unknown;

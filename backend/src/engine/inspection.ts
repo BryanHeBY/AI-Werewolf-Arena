@@ -21,7 +21,9 @@ export function resolveInspection<K extends InspectionKind>(
   const definition = catalog.runtime(target.role)?.inspectionLabels;
   const labels =
     typeof definition === "function"
-      ? invokeRoleCallback("inspectionLabels", definition, undefined, target)
+      ? invokeRoleCallback("inspectionLabels", definition, undefined, target, world, () =>
+          world.getComponent(targetId, COMPONENT.Camp),
+        )
       : definition;
   const camp = labels?.camp ?? world.getComponent(targetId, COMPONENT.Camp)?.camp,
     role = labels?.role ?? target.role;

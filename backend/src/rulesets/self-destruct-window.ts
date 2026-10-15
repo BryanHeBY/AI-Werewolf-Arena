@@ -67,8 +67,11 @@ export class SelfDestructWindow {
           tool === "self_destruct" &&
           (String(role.role) === RED_MOON_ROLE
             ? !demonRedMoonCanBlast(this.world, actorId)
-            : !canRoleSelfDestruct(role, getDefaultRoleCatalog(), () =>
-                this.world.getComponent(actorId, COMPONENT.Camp),
+            : !canRoleSelfDestruct(
+                role,
+                getDefaultRoleCatalog(),
+                () => this.world.getComponent(actorId, COMPONENT.Camp),
+                this.world,
               ))
         )
           return null;

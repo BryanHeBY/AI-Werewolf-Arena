@@ -72,7 +72,13 @@ export function knownWolfTeammates(
     world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Wolf &&
     catalog.runtime(role.role)?.knownTeammates;
   if (snapshot)
-    return [...new Set(invokeRoleCallback("knownTeammates", snapshot, undefined, role!, world))]
+    return [
+      ...new Set(
+        invokeRoleCallback("knownTeammates", snapshot, undefined, role!, world, () =>
+          world.getComponent(actorId, COMPONENT.Camp),
+        ),
+      ),
+    ]
       .filter(
         (id) =>
           id !== actorId &&

@@ -27,7 +27,7 @@ export function canBeExiled(
   return (
     world.getComponent(id, COMPONENT.Alive)?.alive === true &&
     role !== undefined &&
-    catalog.participation(role).canBeExiled
+    catalog.participation(role, world, () => world.getComponent(id, COMPONENT.Camp)).canBeExiled
   );
 }
 
@@ -40,7 +40,7 @@ export function canVote(
   return (
     world.getComponent(id, COMPONENT.Alive)?.alive === true &&
     role !== undefined &&
-    catalog.participation(role).canVote &&
+    catalog.participation(role, world, () => world.getComponent(id, COMPONENT.Camp)).canVote &&
     world.getComponent(id, COMPONENT.VotingRight)?.canVote === true
   );
 }
@@ -52,6 +52,8 @@ export function canBeSheriff(
 ): boolean {
   const role = world.getComponent(id, COMPONENT.Role);
   return (
-    canVote(world, id, catalog) && role !== undefined && catalog.participation(role).canBeSheriff
+    canVote(world, id, catalog) &&
+    role !== undefined &&
+    catalog.participation(role, world, () => world.getComponent(id, COMPONENT.Camp)).canBeSheriff
   );
 }

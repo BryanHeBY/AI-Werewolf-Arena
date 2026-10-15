@@ -9,6 +9,8 @@ import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { Camp, type Role, type NativeRolePresentationId } from "@ai-werewolf-arena/game-contract";
 import { roleName, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import type { RoleComponent } from "../../domain/components/role";
+import type { CurrentCampSource } from "../../domain/components/camp";
+import type { World } from "../../domain/world";
 import { bindRolePresentation } from "../../agents/observation/role-presentation";
 import type {
   RoleContributions,
@@ -96,7 +98,11 @@ export class RoleCatalog {
     return entry.kind === "custom-profile" ? entry.profile : entry.contributions.runtime;
   }
 
-  participation(role: RoleComponent): {
+  participation(
+    role: RoleComponent,
+    world?: World,
+    currentCamp?: CurrentCampSource,
+  ): {
     canVote: boolean;
     canBeExiled: boolean;
     canBeSheriff: boolean;
@@ -104,7 +110,7 @@ export class RoleCatalog {
     const runtime = this.runtime(role.role);
     if (!runtime) return { canVote: false, canBeExiled: false, canBeSheriff: false };
     return typeof runtime.participation === "function"
-      ? { ...roleMethod(runtime, "participation")!(role) }
+      ? { ...roleMethod(runtime, "participation")!(role, world, currentCamp) }
       : { ...(runtime.participation ?? { canVote: true, canBeExiled: true, canBeSheriff: true }) };
   }
 

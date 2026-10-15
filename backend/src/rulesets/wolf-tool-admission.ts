@@ -87,8 +87,11 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = ownedToolRules(
       if (weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))
         return { code: RuleError.WolfBlastOnly };
       if (
-        !canRoleSelfDestruct(role, roleCatalog, () =>
-          world.getComponent(ctx.actorId, COMPONENT.Camp),
+        !canRoleSelfDestruct(
+          role,
+          roleCatalog,
+          () => world.getComponent(ctx.actorId, COMPONENT.Camp),
+          world,
         )
       ) {
         return { code: RuleError.WolfBlastOnly };

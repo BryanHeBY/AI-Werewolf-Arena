@@ -6,17 +6,19 @@ import type { RoleComponent } from "../../domain/components/role";
 import type { CurrentCampSource } from "../../domain/components/camp";
 import type { RoleCatalog } from "../../rulesets/roles/catalog";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
+import type { World } from "../../domain/world";
 
 export function canRoleSelfDestruct(
   role: RoleComponent,
   catalog: RoleCatalog,
   currentCamp: CurrentCampSource,
+  world?: World,
 ): boolean {
   const capability = catalog.runtime(role.role)?.canSelfDestruct;
   // 保原 callback 裸调用及其异常；能力读取成功之后才叠加不可恢复的演员退休拒绝。
   const allowed =
     typeof capability === "function"
-      ? invokeRoleCallback("canSelfDestruct", capability, undefined, role, currentCamp)
+      ? invokeRoleCallback("canSelfDestruct", capability, undefined, role, currentCamp, world)
       : capability === true;
   if (allowed && isRoleExecutionRetired(role)) return false;
   return allowed;

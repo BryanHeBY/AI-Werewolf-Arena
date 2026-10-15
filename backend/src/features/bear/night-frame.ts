@@ -63,7 +63,10 @@ function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): bool
     return (
       !!target &&
       world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf &&
-      (roleMethod(catalog.runtime(target.role), "detectableByBear", true)?.(world, target) ?? true)
+      (roleMethod(catalog.runtime(target.role), "detectableByBear", true)?.(world, target, () =>
+        world.getComponent(id, COMPONENT.Camp),
+      ) ??
+        true)
     );
   });
 }

@@ -58,8 +58,11 @@ export function commitSelfDestructSelection(
       choice.targetId !== null ||
       (redMoon
         ? ![ActionWindow.OnPreElection, ActionWindow.OnPreVote].includes(window)
-        : !canRoleSelfDestruct(role, getDefaultRoleCatalog(), () =>
-            world.getComponent(choice.actorId, COMPONENT.Camp),
+        : !canRoleSelfDestruct(
+            role,
+            getDefaultRoleCatalog(),
+            () => world.getComponent(choice.actorId, COMPONENT.Camp),
+            world,
           ))
     )
       return null;
