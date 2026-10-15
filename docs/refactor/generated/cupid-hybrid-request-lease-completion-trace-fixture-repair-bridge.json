@@ -1,0 +1,37 @@
+{
+  "approved": true,
+  "before": "730a82ad87dacce79c297a5aa34d958c3a62605a473d4a4e038e62344aa9b827",
+  "source": {
+    "path": "backend/tests/unit/features/cupid-hybrid/request-lease-completion.test.ts",
+    "sha256": "0f49d12c40b4ea89b7ee2a0b135f2b90aac2c78d977af7a88d2aeb02d286d643"
+  },
+  "wholeForwardInverse": true,
+  "production3Same": true,
+  "retainedSourceTestCalls": 10,
+  "retainedRuntimeDeclarations": 13,
+  "allExpectCallsPreserved": 69,
+  "typedNodesBothSides": 4684,
+  "nodeArraysBothSides": 1096,
+  "noncommentLeafVisitsBothSides": 45908,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "actualWholeRawSame": false,
+      "inverseWholeRawSame": true,
+      "beforeSHA256": "8e0ed2931f490bc99af0c32b74f57262b391b7a6667d88b83d0d85a628f8a4fd",
+      "afterSHA256": "f8434a6e22d973b70dc4b3f3e36d3ecf9bb61fd095e17013a96a530d31a5ef71"
+    },
+    {
+      "module": "CommonJS",
+      "actualWholeRawSame": false,
+      "inverseWholeRawSame": true,
+      "beforeSHA256": "634c36c332b8bb38065b2a3ed2a7ed950c9d863d9b2fff838cc8f8b9ccaf7d1a",
+      "afterSHA256": "e5a211d1467bdd02a3a4c3335862a57a54bf9b626899ce22dff0e344a88f1e6e"
+    }
+  ],
+  "limits": [
+    "AST比较前10个语法test call，循环展开为原13运行声明；第14声明仅新增构造输入适配。",
+    "完整expect调用和原断言保，actual JS输入有意不同；两份逆还原整输出same不叫实际JS相同。",
+    "只读parser/转换，不类型、head、业务或完整主证明复跑。"
+  ]
+}

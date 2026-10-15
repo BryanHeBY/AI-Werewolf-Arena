@@ -1,0 +1,23 @@
+backend/src/verification/reproduction/cupid.ts(97,100): error TS18047: 'fact' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(178,16): error TS18048: 'current' is possibly 'undefined'.
+backend/src/verification/reproduction/cupid.ts(179,9): error TS18047: 'state' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(179,59): error TS18047: 'state' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(226,63): error TS18047: 'relation' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(227,14): error TS18047: 'relation' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(227,35): error TS18047: 'relation' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(227,53): error TS18047: 'relation' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(228,21): error TS18047: 'relation' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(228,39): error TS18047: 'relation' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(236,5): error TS18047: 'target' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(236,71): error TS18047: 'target' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(237,52): error TS18047: 'target' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(238,54): error TS18047: 'target' is possibly 'null'.
+backend/src/verification/reproduction/cupid.ts(238,82): error TS18047: 'target' is possibly 'null'.
+backend/src/verification/reproduction/hybrid.ts(72,5): error TS2322: Type 'unknown' is not assignable to type 'number | null'.
+backend/src/verification/reproduction/hybrid.ts(78,14): error TS18047: 'fact' is possibly 'null'.
+backend/src/verification/reproduction/hybrid.ts(126,11): error TS18047: 'state' is possibly 'null'.
+backend/src/verification/reproduction/hybrid.ts(126,61): error TS18047: 'state' is possibly 'null'.
+backend/src/verification/reproduction/hybrid.ts(174,117): error TS18047: 'chosen' is possibly 'null'.
+backend/src/verification/reproduction/hybrid.ts(176,25): error TS18047: 'chosen' is possibly 'null'.
+backend/src/verification/reproduction/hybrid.ts(176,61): error TS18047: 'chosen' is possibly 'null'.
+backend/src/verification/reproduction/hybrid.ts(177,59): error TS18047: 'chosen' is possibly 'null'.

@@ -1,0 +1,23 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "bun-types",
+      "bun-types/test-globals"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/request-lease.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/cupid-hybrid/request-lease-completion.test.ts"
+  ]
+}

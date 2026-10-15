@@ -5,9 +5,12 @@
  * 先构造归属，再在首次数写前拒退休；已消费后按原顺序安装组件和事实，晚退休不退款。
  * 目标阵营按原点捕获并复验真实 Camp 值，安装的是独立Victory归属，不写当前阵营。
  * 同步字段与组件提交失败保留已写前缀；夜提交账本和事件仍在原安装之后，不以玩家知识恢复许可。
+ * 请求另有动态交付租约：观察原 envelope／领域失配或到期即共闭，别名自身坏只退自己，期限只缩短。
+ * Provider 返回不等于领域提交；全部付款成功才在事实前 complete，退出的通知异常不得盖原正文错误。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
+import { RequestLease } from "../../../../core/domain/request-lease";
 
 import {
   createVictoryComponent,
@@ -23,6 +26,16 @@ const committed = new WeakMap<World, Set<number>>();
 export function hasHybridNightCommit(world: World, day: number): boolean {
   return committed.get(world)?.has(day) ?? false;
 }
+
+/** 每个真实请求单独持有本次行动者与日次；领域闭包仍晚查原体，不由 context 重建权限。 */
+interface ChoiceRequestScope { actorId: number; day: number; current(): boolean }
+const requestLease = RequestLease.window<ChoiceRequestScope>({
+  actorId: (scope) => scope.actorId,
+  phase: () => Phase.Night,
+  day: (scope) => scope.day,
+  stage: () => "hybrid",
+  current: (scope) => scope.current(),
+}, 120);
 
 export const HYBRID_STAGE: NightStageHandler = {
   id: "hybrid",
@@ -92,51 +105,67 @@ export const HYBRID_STAGE: NightStageHandler = {
         const invokeRequest = Reflect.apply.bind(Reflect);
         if (!canAct()) break;
         const request: ReturnType<typeof makeRequest> = invokeRequest(makeRequest, ctx, requestArgs);
-        const actionArgs = [request];
-        const invokeAction = Reflect.apply.bind(Reflect);
-        if (!canAct()) break;
-        const action: Awaited<ReturnType<typeof getAction>> = await invokeAction(getAction, provider, actionArgs);
-        if (!current() || !canAct()) break;
-        if (action?.name !== "choose_exemplar") continue;
-        const valid = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, action, {
-          phase: Phase.Night,
-          day,
-        });
-        if (!current() || !valid.ok || valid.sanitizedCall?.name !== "choose_exemplar" || !canAct()) continue;
-        const targetId = valid.sanitizedCall.args.target_id,
-          target = targets.get(targetId);
-        if (
-          !target ||
-          !livingNightLife(ctx.world, target.life) ||
-          ctx.world.getComponent(targetId, COMPONENT.Role) !== target.role ||
-          target.role.role !== target.kind ||
-          ctx.world.getComponent(targetId, COMPONENT.Camp)?.camp !== target.camp ||
-          target.role.privateState !== target.privateState ||
-          (target.camp !== Camp.Good && target.camp !== Camp.Wolf)
-        )
-          continue;
-        const membership = createVictoryComponent([{ kind: "faction", faction: target.camp! }]);
-        // 原目标 getter 和归属构造先完成，再准备原提交 callee；参数均是已求值局部。
-        // 拒绝尾只在首次库存写前生效；次数已写后的组件／事实失败保原前缀，不退款。
-        const commitChoice = commitHybridChoice;
-        if (!canAct()) continue;
-        commitChoice(state, day, targetId);
-        ctx.world.addComponent(actorId, COMPONENT.Victory, membership);
-        const days = committed.get(ctx.world) ?? new Set<number>();
-        days.add(day);
-        committed.set(ctx.world, days);
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "hybrid_exemplar_chosen",
-          payload: { actorId, day, targetId },
-        });
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "hybrid_affiliation_resolved",
-          payload: { actorId, day, targetId, faction: target.camp },
-        });
-        completed = true;
-        break;
+        const requestScope: ChoiceRequestScope = { actorId, day, current: () => current() && canAct() };
+        requestLease.bind(requestScope, request);
+        const turn = requestLease.openDelivery(requestScope, request);
+        let bodyFailed = false;
+        try {
+          if (!turn) break;
+          const actionArgs = [request];
+          const invokeAction = Reflect.apply.bind(Reflect);
+          if (!canAct() || !turn.current()) break;
+          const action: Awaited<ReturnType<typeof getAction>> = await invokeAction(getAction, provider, actionArgs);
+          if (!current() || !canAct() || !turn.current()) break;
+          if (action?.name !== "choose_exemplar") continue;
+          const valid = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, action, {
+            phase: Phase.Night,
+            day,
+          });
+          if (!current() || !valid.ok || valid.sanitizedCall?.name !== "choose_exemplar" || !canAct() || !turn.current()) continue;
+          const targetId = valid.sanitizedCall.args.target_id,
+            target = targets.get(targetId);
+          if (
+            !target ||
+            !livingNightLife(ctx.world, target.life) ||
+            ctx.world.getComponent(targetId, COMPONENT.Role) !== target.role ||
+            target.role.role !== target.kind ||
+            ctx.world.getComponent(targetId, COMPONENT.Camp)?.camp !== target.camp ||
+            target.role.privateState !== target.privateState ||
+            (target.camp !== Camp.Good && target.camp !== Camp.Wolf)
+          )
+            continue;
+          const membership = createVictoryComponent([{ kind: "faction", faction: target.camp! }]);
+          // 原目标 getter 和归属构造先完成，再准备原提交 callee；参数均是已求值局部。
+          // 拒绝尾只在首次库存写前生效；次数已写后的组件／事实失败保原前缀，不退款。
+          const commitChoice = commitHybridChoice;
+          if (!canAct() || !turn.current()) continue;
+          commitChoice(state, day, targetId);
+          ctx.world.addComponent(actorId, COMPONENT.Victory, membership);
+          const days = committed.get(ctx.world) ?? new Set<number>();
+          days.add(day);
+          committed.set(ctx.world, days);
+          // 全部领域付款正常返回才落 true；原事实随后发表，晚抛不能把同一次交付反结算为 false。
+          turn.complete();
+          ctx.events.push({
+            timestamp: Date.now(),
+            type: "hybrid_exemplar_chosen",
+            payload: { actorId, day, targetId },
+          });
+          ctx.events.push({
+            timestamp: Date.now(),
+            type: "hybrid_affiliation_resolved",
+            payload: { actorId, day, targetId, faction: target.camp },
+          });
+          completed = true;
+          break;
+        } catch (error) {
+          bodyFailed = true;
+          throw error;
+        } finally {
+          // 取消、无效回复及部分付款均 false-close；原正文错误优先，新通知错误不遮盖它。
+          // complete 已先落终态，事实或通知晚抛后 close 不会二次通知，也不回滚已写前缀。
+          try { turn?.close(); } catch (error) { if (!bodyFailed) throw error; }
+        }
       }
       if (!completed && current() && canAct()) throw new Error("hybrid_valid_action_missing");
     }

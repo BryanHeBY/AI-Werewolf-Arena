@@ -1,0 +1,83 @@
+{
+  "executor": "/root",
+  "firstFence": {
+    "path": "docs/refactor/generated/relationship-last-words-joint-source-fence.json",
+    "sha256": "10fb017cbe944a752a8f65d4383c756a927f766514171993ada9330c232d20b6"
+  },
+  "repairFence": {
+    "path": "docs/refactor/generated/relationship-last-words-joint-repair-source-fence.json",
+    "sha256": "8e9f1d0929bffd008f223ab613ced4bb037afb98b04c6f16328508dd792d439f"
+  },
+  "firstRun": {
+    "launchChunk": "2ced09",
+    "sessionId": 88699,
+    "completionChunk": "dc5601",
+    "actualExitCode": 2,
+    "config": {
+      "path": "docs/refactor/generated/relationship-last-words-joint-types-config.json",
+      "sha256": "80fcefcdae387b2c45297c129e63a9acd9e337e83ea643b5ec53026ec2101b53"
+    },
+    "raw": {
+      "path": "docs/refactor/generated/relationship-last-words-joint-types-output.txt",
+      "sha256": "a11e8e244905baa3716927e640cd167ce6206f8d65fb94e65351a0fb28c0b91c"
+    },
+    "roots": 10,
+    "diagnostics": 23,
+    "failedSourceRoots": [
+      "backend/src/verification/reproduction/cupid.ts",
+      "backend/src/verification/reproduction/hybrid.ts"
+    ],
+    "otherEightRootsNoDiagnostics": true
+  },
+  "firstReadyPathHistory": [
+    {
+      "originalPath": "docs/refactor/generated/cupid-hybrid-request-lease-completion-source-ready.json",
+      "sampledSHA256": "4a8b66d2320375685a24983f57499012db4092722ed8df9cd88e6c7e74532f5e",
+      "preservedFirstExecutedSnapshot": {
+        "path": "docs/refactor/generated/cupid-hybrid-request-lease-completion-source-ready-first-executed.json",
+        "sha256": "4a8b66d2320375685a24983f57499012db4092722ed8df9cd88e6c7e74532f5e"
+      },
+      "note": "原path后被作者更新为repair；首fence不改写，同内容已留独立snapshot。"
+    }
+  ],
+  "successorRun": {
+    "launchChunk": "04b7aa",
+    "sessionId": 75119,
+    "completionChunk": "aecef4",
+    "actualExitCode": 0,
+    "config": {
+      "path": "docs/refactor/generated/relationship-last-words-joint-failed-and-changed-types-config.json",
+      "sha256": "32d642a6fe0b255f1e6fc8814c0998c294ff26004094b4bbfcca57ff1b8b4825"
+    },
+    "raw": {
+      "path": "docs/refactor/generated/relationship-last-words-joint-failed-and-changed-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "roots": 3,
+    "reason": "两failed verifier仅补可擦除fail函数类型＋唯一failed Trace案例真实fixture context输入修复",
+    "changedSources": [
+      {
+        "path": "backend/tests/unit/features/cupid-hybrid/request-lease-completion.test.ts",
+        "sha256": "0f49d12c40b4ea89b7ee2a0b135f2b90aac2c78d977af7a88d2aeb02d286d643"
+      },
+      {
+        "path": "backend/src/verification/reproduction/cupid.ts",
+        "sha256": "ebf06eb37b899a86067626a2bc96325e7bf9aa8b3a73fb4aca63c8e25130f287",
+        "bytes": 16848
+      },
+      {
+        "path": "backend/src/verification/reproduction/hybrid.ts",
+        "sha256": "9b4852849f9ea940a956f4811203870a36950f15ba51d217dd51bfe68e94877e",
+        "bytes": 13152
+      }
+    ],
+    "otherSevenFirstSourcesSame": true
+  },
+  "finalTenRootRerun": false,
+  "businessTestsRepeatedByTypes": false,
+  "limits": [
+    "首10根失败真实保留；后继只三failed/changed根，不称末10根重新全绿或全仓check。",
+    "固定本批10个直接源码的先后阶段；类型传递闭包会读取当前其它源码，不冒整个传递树为原Git。",
+    "业务首绿色、中文头和主proof均未因类型失败重跑；纯类型桥/失败单元输入桥另有实际收据。"
+  ]
+}

@@ -1,0 +1,370 @@
+{
+  "approved": true,
+  "baseCommit": "f5ee25e1dc9a04a047c9a063aca4ec27f295e08f",
+  "sampledSourceReadySHA256": "4a8b66d2320375685a24983f57499012db4092722ed8df9cd88e6c7e74532f5e",
+  "programs": [
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "beforeSha256": "8a0ce088c1a70d61731af9f8a2956304ac8f2acd16573c70ec02d12933980d8a",
+      "afterSha256": "8990b10d8a281237c440d3edb3f7e7b07642851cab3a2492397e7155071247ff",
+      "exactEdits": 9,
+      "wholeForwardInverse": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualOldAndNewRawSame": false,
+          "beforeSha256": "30636527decc6338fa4f78f1d2f7b031e6094c5467b31a5f7a36e69ebbc6fb87",
+          "afterSha256": "3f132154f52bd73a889bf907acb41a2b4280f5184bde6089a674412eaf82f207"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualOldAndNewRawSame": false,
+          "beforeSha256": "967fdde203232d7335fa8a9ad621f3675eadb1d54e643303a3346d656ab25adc",
+          "afterSha256": "42dca5bbcfcbd0b1813eb82482f0600200fe757e181d2ab905e071aa89762e51"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "beforeSha256": "c7fa37197b1f9d405eadcb48c910aca323365ac74996a8055d334c9303b6e486",
+      "afterSha256": "b51df5932d20bc77e083366ece57cd3d88074cde25a92af5980416f55b060808",
+      "exactEdits": 4,
+      "wholeForwardInverse": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualOldAndNewRawSame": false,
+          "beforeSha256": "0a7fba78f64a23b9aa2714f9adb2f4f118f527a895bd18aa169285f64c0b516e",
+          "afterSha256": "9040561a338b0effc7184ee9f907a5e820a7828aa2f8d208259803e1ace610bf"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualOldAndNewRawSame": false,
+          "beforeSha256": "a4efc032987979adc99bf28a9e39866fc279e0cfc8d5fca2aa1955a07f70dfb3",
+          "afterSha256": "57fcd3eab22ddf363df8702c0cdbe42125b72a725c07cc770ba5e2d54d418c52"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "beforeSha256": "bbfd6c2fceaaad7e9b43ba5932a2365c9303fea24dbd2d9c3331ceba6b488125",
+      "afterSha256": "f05aa4d2fed2cc8c735b3ea51fb1c21ba6d5cf731bf1823eafde459933538305",
+      "exactEdits": 4,
+      "wholeForwardInverse": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "inverseWholeRawSame": true,
+          "actualOldAndNewRawSame": false,
+          "beforeSha256": "61f6d6cb9e04628905ffb51594bdbdf7e159e298b40211278b7df297e486dc7b",
+          "afterSha256": "a16b169c130a2d83372d647d8ceed3bcbf48b64c6e12c47510f974f1a01a4b9c"
+        },
+        {
+          "module": "CommonJS",
+          "inverseWholeRawSame": true,
+          "actualOldAndNewRawSame": false,
+          "beforeSha256": "1448bddad6b091bfaac30e3b1a616c2743957af276b07211699bcca97ed8ba62",
+          "afterSha256": "8ab59b9a5523f753f9aee5e58500130f84ba48cad2b0191e6b3ac013e02eaa5a"
+        }
+      ]
+    }
+  ],
+  "retained": [
+    {
+      "label": "RequestLease.actorPhaseDayStage",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.stagePhaseDayActor",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.actorPhaseStageDay",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.item",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.bind",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.entry",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.capture",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.scope",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.openDelivery",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.bindDelivery",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.finish",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.inherit",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.records",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.propagate",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "RequestLease.constructor",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:current",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:canAct",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:targets",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:requestActor",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:requestTools",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:requestExtras",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:requestArgs",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:invokeRequest",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:request",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:actionArgs",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:invokeAction",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:action",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:valid",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:pairIds",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:selected",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:record",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:memberIds",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:complete_fact0",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:complete_fact1",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:complete_fact2",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:choice_payment",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "cupid:Victory_install",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:current",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:canAct",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:targets",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:requestActor",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:requestTools",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:requestExtras",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:requestArgs",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:invokeRequest",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:request",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:actionArgs",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:invokeAction",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:action",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:valid",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:targetId",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:target",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:membership",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:commitChoice",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:days",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:complete_fact0",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:complete_fact1",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:choice_payment",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:Victory_install",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:days.add",
+      "completeTypedNodeArrayAndLeavesSame": true
+    },
+    {
+      "label": "hybrid:committed.set",
+      "completeTypedNodeArrayAndLeavesSame": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/recording/reproduction-trace.ts",
+      "sha256": "700f0f7e53c22ba092b123c2674161a5a9b77d379b7b538b6c04003cb0e18203",
+      "currentSame": true
+    },
+    {
+      "path": "backend/tests/support/builders/night-stage-context.ts",
+      "sha256": "d4d6d457218939df94f480ac1ea36d0932e1043ac0118209077654ebcf5b07d4",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "sha256": "47ca276d4271630035d3aae3bcde79fbff3c2cbf1ecbedcdaae334f42df8f6d6",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "sha256": "ae278c531a16f94f5a3a892a3ffcd450791770617af00cbf9f6cfa1facd84353",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/state-slot.ts",
+      "sha256": "a0fac5d164c1f9182e8a43469e64e1006ab4f3518a58340ffde31ae0d5e6671b",
+      "currentSame": true
+    }
+  ],
+  "summary": {
+    "existingPrograms": 3,
+    "newUnit": 1,
+    "exactEdits": 17,
+    "inverseWholeOutputs": 6,
+    "retainedCompleteNodes": 61,
+    "typedNodesBothSides": 6290,
+    "nodeArraysBothSides": 772,
+    "noncommentLeavesBothSides": 7252
+  },
+  "limits": [
+    "完整精确整程序正逆是本批编辑来源证明；新旧实际JS有意不同，不代表F02行为等价。",
+    "原四协议、lease元数据／alias／finish、两族纯current／canAct、请求与Provider表达式及付款／事实完整节点按真实AST保留；新增guard、动态窗口和错误通知边界由新字面单元验收。",
+    "typed/NodeArray/非注释叶计数是多项两侧累计，不是distinct完整仓库节点；没有whole新旧AST等同、全consumer或冷执行声明。",
+    "只解析和转译选中源码，不运行类型／职责头／业务／产品／全量门禁；新selected-context捕获API及窗口行为变化单独公开。"
+  ]
+}

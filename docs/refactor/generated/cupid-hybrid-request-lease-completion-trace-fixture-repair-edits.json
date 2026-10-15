@@ -1,0 +1,14 @@
+{
+  "edits": [
+    {
+      "path": "backend/tests/unit/features/cupid-hybrid/request-lease-completion.test.ts",
+      "old": "    const ctx = f.context(async () => f.action);\n    // 此输入只让真实 Trace 登记 completion；不叠加前面局部通知 oracle 的另一 pending 回调。",
+      "new": "    const ctx = f.context(async () => f.action);\n    const requests = new GameActionRequestFactory(f.game.world, f.events, 1);\n    // 与真实 NightPipeline 相同：构造选项不是 context 字段；只把其余机制数据交给工厂复制。\n    // 旧13个声明的局部输入保持，只有此归档用例改为实际生产请求形状，不放宽严格 schema。\n    ctx.makeRequest = (actorId, allowedTools, extra) => {\n      const { stage, requiresAction = true, ...context } = extra;\n      return requests.create({ actorId, allowedTools, phase: Phase.Night, stage, requiresAction,\n        summary: \"Offline\", context });\n    };\n    // 此输入只让真实 Trace 登记 completion；不叠加前面局部通知 oracle 的另一 pending 回调。"
+    }
+  ],
+  "actualJSInputChanged": true,
+  "production3Same": true,
+  "original13TestsAndHelperSame": true,
+  "schemaUnchanged": true,
+  "preciseSource": "backend/src/game/engine/phase_pipeline/night_pipeline.ts:419"
+}

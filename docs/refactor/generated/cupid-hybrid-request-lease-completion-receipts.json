@@ -1,0 +1,132 @@
+{
+  "executor": "/root",
+  "sourceBefore": {
+    "path": "docs/refactor/generated/cupid-hybrid-request-lease-completion-before.json",
+    "sha256": "9b7aeadc5f4c5c161963865efc92b0a7de156749ca26818d7a1901c32aebb17a"
+  },
+  "baseline": {
+    "executor": "Root",
+    "rootToolCall": "bc96a2",
+    "command": [
+      "bun",
+      "--no-env-file",
+      "test",
+      "--preload",
+      "./backend/tests/setup.ts",
+      "/tmp/awa-cupid-hybrid-window-lease-baseline/characterization.test.ts"
+    ],
+    "actualExitCode": 0,
+    "exitSource": "Root actual tool result reported to author; raw Bun summary preserved",
+    "tests": 2,
+    "expectCalls": 47,
+    "realWindowInvocations": 6,
+    "rerun": false,
+    "script": {
+      "path": "docs/refactor/generated/cupid-hybrid-request-lease-completion-baseline-program.txt",
+      "sha256": "4e11b20d2561eb23173c1f8016a83ce14eb6cbdce4e7370964813a40b9edf6b9"
+    },
+    "raw": {
+      "path": "docs/refactor/generated/cupid-hybrid-request-lease-completion-baseline-output.txt",
+      "sha256": "f3d06ae0a571f24dd0421548a67d75d9d701228ba438a3c612cca228cc1251c9"
+    },
+    "results": {
+      "path": "docs/refactor/generated/cupid-hybrid-request-lease-completion-baseline-results.json",
+      "sha256": "af921922ae4f44d441115b54df49666e5c44406c497f2f151e1a6245bc2772bd"
+    },
+    "limits": [
+      "Only Cupid/Hybrid original windows; not earlier four-protocol characterization",
+      "2 declarations each 3 fixture windows, not six distinct tests",
+      "No deadline expiry or Guard policy behavior measured",
+      "Trace accepted before domain payment is baseline fact, not permission or new desired policy"
+    ]
+  },
+  "firstExecutedReady": {
+    "path": "docs/refactor/generated/cupid-hybrid-request-lease-completion-source-ready-first-executed.json",
+    "sha256": "4a8b66d2320375685a24983f57499012db4092722ed8df9cd88e6c7e74532f5e"
+  },
+  "finalSourceReady": {
+    "path": "docs/refactor/generated/cupid-hybrid-request-lease-completion-source-ready.json",
+    "sha256": "184b6ef2a0b9490df27938494d220b8dedfda5364898f0ba2d92f28045688281"
+  },
+  "runs": [
+    {
+      "kind": "new-unit-first",
+      "chunk": "3d2253",
+      "actualExitCode": 1,
+      "raw": "docs/refactor/generated/cupid-hybrid-request-lease-completion-unit-output.txt",
+      "pass": 13,
+      "fail": 1,
+      "rawExpectCalls": 158,
+      "limit": "158 covers entire failed round; not attributed to green13 or distinct success count"
+    },
+    {
+      "kind": "heads-first",
+      "chunk": "7f9a20",
+      "actualExitCode": 0,
+      "raw": "docs/refactor/generated/cupid-hybrid-request-lease-completion-heads-output.txt",
+      "sources": 4,
+      "documentationPaths": 727,
+      "diagnostics": 0
+    },
+    {
+      "kind": "proof-first",
+      "chunk": "67284f",
+      "actualExitCode": 0,
+      "raw": "docs/refactor/generated/cupid-hybrid-request-lease-completion-proof-output.txt"
+    },
+    {
+      "kind": "only-failed-trace",
+      "chunk": "0e7ef1",
+      "actualExitCode": 0,
+      "raw": "docs/refactor/generated/cupid-hybrid-request-lease-completion-failed-trace-output.txt",
+      "pass": 1,
+      "filtered": 13,
+      "expectCalls": 24,
+      "twoFamiliesActuallyExecuted": true,
+      "command": [
+        "bun",
+        "--no-env-file",
+        "test",
+        "--preload",
+        "./backend/tests/setup.ts",
+        "backend/tests/unit/features/cupid-hybrid/request-lease-completion.test.ts",
+        "--test-name-pattern",
+        "real Trace records one deferred error"
+      ]
+    },
+    {
+      "kind": "failed-fixture-input-bridge",
+      "chunk": "47e30b",
+      "actualExitCode": 0,
+      "raw": "docs/refactor/generated/cupid-hybrid-request-lease-completion-trace-fixture-repair-bridge-output.txt",
+      "production3Same": true,
+      "allOriginal13RuntimeDeclarationsAnd69ExpectSitesSame": true,
+      "actualJSInputChanged": true
+    }
+  ],
+  "jointTypes": {
+    "path": "docs/refactor/generated/relationship-last-words-joint-type-receipts.json",
+    "sha256": "05646964ea108fdc339073bdb4eedabe9e32ea782a09fea3d88ad26f07646d19",
+    "firstExitCode": 2,
+    "firstRoots": 10,
+    "firstForeignDiagnostics": 23,
+    "ownFourNoDiagnostics": true,
+    "successorExitCode": 0,
+    "successorRoots": 3,
+    "finalTenRootsRerun": false
+  },
+  "coverageLimits": [
+    "14 different declarations across first13 green plus failed-only14 successor; not14 repeated or one final full run",
+    "First baseline two declarations/47 separate from new-policy suite",
+    "No fullgate/model/whole runtime tree validation",
+    "First unexecuted ready be92, precheck unit shape/Trace successor4a, first executed730a, failed-input repair0f49 all retained"
+  ],
+  "sourceReadyFieldHistory": {
+    "inheritedFields": [
+      "newPolicyChecksExecuted:false",
+      "successor.limits: Actual first type/runtime/head/proof have not run"
+    ],
+    "meaning": "Inherited first static preparation facts only; repair was captured after first checks, which are explicitly recorded above; not a final no-checks claim",
+    "frozenOriginalReadyNotRewritten": true
+  }
+}

@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+../../../../tmp/awa-cupid-hybrid-window-lease-baseline/characterization.test.ts:
+(pass) cupid: original delivery observation, payment failure and late fact prefixes [46.49ms]
+(pass) hybrid: original delivery observation, payment failure and late fact prefixes [4.38ms]
+
+ 2 pass
+ 0 fail
+ 47 expect() calls
+Ran 2 tests across 1 file. [170.00ms]

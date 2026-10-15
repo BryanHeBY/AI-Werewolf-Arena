@@ -1,0 +1,24 @@
+{
+  "source": [
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "8990b10d8a281237c440d3edb3f7e7b07642851cab3a2492397e7155071247ff"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "b51df5932d20bc77e083366ece57cd3d88074cde25a92af5980416f55b060808"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "f05aa4d2fed2cc8c735b3ea51fb1c21ba6d5cf731bf1823eafde459933538305"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid-hybrid/request-lease-completion.test.ts",
+      "sha256": "730a82ad87dacce79c297a5aa34d958c3a62605a473d4a4e038e62344aa9b827"
+    }
+  ],
+  "sourceReadySHA256": "4a8b66d2320375685a24983f57499012db4092722ed8df9cd88e6c7e74532f5e",
+  "documentationPaths": 727,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

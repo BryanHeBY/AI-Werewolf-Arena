@@ -1,0 +1,55 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "f5ee25e1dc9a04a047c9a063aca4ec27f295e08f",
+  "source": [
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "8990b10d8a281237c440d3edb3f7e7b07642851cab3a2492397e7155071247ff"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "b51df5932d20bc77e083366ece57cd3d88074cde25a92af5980416f55b060808"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "f05aa4d2fed2cc8c735b3ea51fb1c21ba6d5cf731bf1823eafde459933538305"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid-hybrid/request-lease-completion.test.ts",
+      "sha256": "0f49d12c40b4ea89b7ee2a0b135f2b90aac2c78d977af7a88d2aeb02d286d643"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/cupid-hybrid-request-lease-completion-scope-final.json",
+    "sha256": "6c46e9692534437c216f82b56a0da9a5829b8db6467774d16a6f58864537db1a"
+  },
+  "document": {
+    "path": "docs/refactor/cupid-hybrid-request-lease-completion.md",
+    "sha256": "9ea84b5db72b45d607bbf5a3f978cae80686746f1c59f62b07c6700506f26426"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/cupid-hybrid-request-lease-completion-evidence.json",
+    "sha256": "bbffa2b0ee5f8f72394a913a40f5c2f534023bf0a828f5acc81c738c2abbc8c8"
+  },
+  "integrity": {
+    "freshSources": 4,
+    "actualGitBefore": 3,
+    "controls": 6,
+    "artifactHashes": 35,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "Root完整阅读新增dynamic协议、两原窗口与14新风险及真实Trace接线；旧四协议/元数据/alias/finish与pure current、原受控首关系写和Hybrid首付款尾保持",
+    "新政策晚domain/actor/envelope/day/stage/finite deadline与独立scope仅运行弱表，selected context pins不复制World许可，字段失配终态/坏alias隔离/未知owner不毒化。全部付款后true在facts前，partial false保前缀，新增通知不盖原body",
+    "Root旧baseline2/47、首新13pass1fail raw158包含失败，14th真实builder多requiresAction schema早红精准修为原Pipeline拆分，保原13声明和69expectsites，onlyfailed14th后继1/24两family通过；未删parser或弱化oracle",
+    "61完整保留节点、17exact编辑与六逆输出首67284f及四头7f9a20成功保；实际JS/API新政策有意不同，测试输入桥47e30b继承首sourceReady阶段，不复绿",
+    "actualf5ee三原Git/newunit absence/六控制与末35附件当前字节匹配；共同首10有限类型23foreign真实红与3failed/changed根后继成功另记，不称全仓/末10复查或完整P9完成"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

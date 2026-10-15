@@ -1,7 +1,7 @@
 /**
- * 负责四种有序请求绑定协议及其有限运行租约。输入为原请求、机制晚查询和期限别名；
+ * 负责四种原有序协议及动态窗口协议的请求绑定与有限运行租约。输入为原请求、机制晚查询和期限别名；
  * 输出为同一 scope 引用和一次完成通知，只写本实例的请求／租约元数据，不写 World、生命或库存。
- * 四实例保独立表及稳定传播回调；同请求可多绑定，但真实窗口只打开对应一个交付 turn。
+ * 各实例保独立表及稳定传播回调；同请求可多绑定，但真实窗口只打开对应一个交付 turn。
  * 原 envelope 或领域当前性观察失配永久关闭共同许可；别名自己的字段失配只退役该别名。
  * 合法期限别名共享最早绝对预算，观察到期后时钟回退也不复活。字段 pin 只保顶层原值引用，
  * 不深复制／冻结提示或 feed，不把相同 JSON、readonly 或请求字段当成领域许可。
@@ -17,6 +17,17 @@ export interface RequestLeaseScopeQueries<Owner, Scope> {
   actorId(scope: Scope): number;
   phase(): ActionRequest["phase"];
   stage(scope: Scope): ActionRequest["context"]["stage"];
+}
+
+/** 动态窗口只给出捕获值和晚领域查询；scope 是每个原请求独立的不透明对象，不由请求重建。
+ * 日次／阶段不固定为首夜，明确声明的 context 字段只 pin 原值引用，不创建 World 或死亡许可。
+ */
+export interface RequestLeaseWindowQueries<Scope extends object> {
+  actorId(scope: Scope): number;
+  phase(scope: Scope): ActionRequest["phase"];
+  day(scope: Scope): number;
+  stage(scope: Scope): ActionRequest["context"]["stage"];
+  current(scope: Scope): boolean;
 }
 
 /** current 仍调用原机制规则；不能据请求字段相同代替原体、生命和库存复验。 */
@@ -39,6 +50,10 @@ export interface RequestLeaseItemQueries<Owner, Scope, Author> {
 interface ScopeBinding<Scope> {
   scope: Scope;
   context: ActionRequest["context"];
+}
+/** context 身份和声明字段由本 owner 捕获；只保存值／引用，不序列化或深冻结整个 context。 */
+interface WindowBinding<Scope> extends ScopeBinding<Scope> {
+  fields: Array<{ key: string; value: unknown }>;
 }
 interface CurrentBinding<Scope> {
   binding: Scope;
@@ -118,9 +133,9 @@ function samePinnedFields(request: ActionRequest, pin: FieldPin): boolean {
 }
 
 /**
- * 每实例唯一持有请求登记；类型入口只开放固定协议，实际机制接线不传完整 request callback。
+ * 每实例唯一持有请求登记；类型入口开放明确协议，实际机制接线不传完整 request callback。
  * 私有构造签名限制 typed 调用，不是运行时权限屏障；接纳算法在本 owner 内完整执行。
- * 四个协议正文保原字段短路，外围另执行 F02 租约政策；不建立 Role 分派、注册表或通用规则框架。
+ * 四个旧协议保原字段短路；动态窗口显式增加字段／日次查询，外围复用 F02 政策，不建立 Role 分派或第二租约。
  */
 export class RequestLease<Owner, Scope, Binding> {
   private readonly records = new WeakMap<ActionRequest, LeaseEntry<Owner, Binding>>();
@@ -137,6 +152,47 @@ export class RequestLease<Owner, Scope, Binding> {
     private readonly sameFields: (source: ActionRequest, target: ActionRequest) => boolean,
     private readonly domainCurrent: (owner: Owner, binding: Binding) => boolean,
   ) {}
+
+  /**
+   * 动态窗口按 actor→phase→context 身份→day→stage→声明字段核验，末位才调用领域 current。
+   * bind 在条件通过后先登记关闭记录，再捕获声明字段和顶层 pin；getter 抛错保该记录关闭，不能重新 bind 复活。
+   * contextKeys 的列表副本属于本实例；它不校验深层提示、JSON 或字段类型，也不把这些字段当真实许可。
+   */
+  static window<Scope extends object>(
+    queries: RequestLeaseWindowQueries<Scope>,
+    order: number,
+    contextKeys: readonly string[] = [],
+  ): RequestLease<Scope, Scope, WindowBinding<Scope>> {
+    const keys = [...contextKeys];
+    return new RequestLease<Scope, Scope, WindowBinding<Scope>>(
+      order,
+      (scope, request, lease) => {
+        if (
+          request.actorId === queries.actorId(scope) &&
+          request.phase === queries.phase(scope) &&
+          request.context.day === queries.day(scope) &&
+          request.context.stage === queries.stage(scope)
+        ) {
+          lease.records.set(request, lease.entry(scope, request, { scope, context: request.context, fields: [] }));
+          registerRequestAliasPropagation(request, lease.order, lease.propagate);
+          const binding = lease.records.get(request)!.turn.binding;
+          for (const key of keys) binding.fields.push({ key, value: Reflect.get(binding.context, key) });
+          lease.capture(request);
+        }
+      },
+      (scope, request, binding) =>
+        request.actorId === queries.actorId(scope) &&
+        request.phase === queries.phase(scope) &&
+        request.context === binding.context &&
+        request.context.day === queries.day(scope) &&
+        request.context.stage === queries.stage(scope) &&
+        binding.fields.every(({ key, value }) => Object.is(Reflect.get(request.context, key), value)),
+      (binding) => binding.scope,
+      (binding) => binding.scope,
+      sameIndexedFields,
+      (_scope, binding) => queries.current(binding.scope),
+    );
+  }
 
   /** actor→phase→day→stage；查询还先核同一活跃 scope，末位晚核机制当前性。 */
   static actorPhaseDayStage<Owner, Scope>(
@@ -334,7 +390,7 @@ export class RequestLease<Owner, Scope, Binding> {
       }
     }
     try {
-      // 四协议仍按各原 ordered matches 查询 original；共同 context.stage 变坏会关共同 turn。
+      // 各协议仍按其声明的 ordered matches 查询 original；共同 context.stage 变坏会关共同 turn。
       if (!this.matches(owner, turn.original, turn.binding) ||
           !samePinnedFields(turn.original, turn.pin!) ||
           !Object.is(turn.original.deadlineAtMs, turn.originalDeadline) ||
@@ -351,7 +407,7 @@ export class RequestLease<Owner, Scope, Binding> {
   }
 
   /**
-   * 真正窗口在 create 后打开交付：四绑定实例不争写 guard。前后登记的 alias 同 guard／completion，
+   * 真正窗口在 create 后打开交付：各绑定实例不争写 guard。前后登记的 alias 同 guard／completion，
    * 这些引用只留本 owner 的运行集合，不挂 context。每个 Wall request 的 turn 独立于整个墙。
    */
   openDelivery(owner: Owner, request: ActionRequest): RequestLeaseTurn | undefined {

@@ -5,9 +5,12 @@
  * 首关系提交后依次消费选择、安装归属再发布；晚退休不撤销已付关系或截断原完成前缀。
  * 目标阵营按原点捕获并复验当前值，pairCamps仍是提交历史；不将关系／Victory当真实阵营。
  * 同步段不是事务：字段、组件或事件失败保留先完成的前缀，不退款或重新使用旧请求，殉情与判胜另有 owner。
+ * 请求另有动态交付租约：观察原 envelope／领域失配或到期即共闭，别名自身坏只退自己，期限只缩短。
+ * Provider 返回不等于领域提交；全部付款成功才在事实前 complete，退出的通知异常不得盖原正文错误。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
+import { RequestLease } from "../../../../core/domain/request-lease";
 
 import {
   createVictoryComponent,
@@ -19,6 +22,16 @@ import { captureNightLife, livingNightLife } from "../../../../core/domain/night
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { getCupidState, commitCupidChoice } from "./state-slot";
 import { bindLovers, hasCupidNightCommit } from "./relation";
+
+/** 每个真实请求单独持有本次行动者与日次；领域闭包仍晚查原体，不由 context 重建权限。 */
+interface ChoiceRequestScope { actorId: number; day: number; current(): boolean }
+const requestLease = RequestLease.window<ChoiceRequestScope>({
+  actorId: (scope) => scope.actorId,
+  phase: () => Phase.Night,
+  day: (scope) => scope.day,
+  stage: () => "cupid",
+  current: (scope) => scope.current(),
+}, 110);
 
 export const CUPID_STAGE: NightStageHandler = {
   id: "cupid",
@@ -94,88 +107,104 @@ export const CUPID_STAGE: NightStageHandler = {
         const invokeRequest = Reflect.apply.bind(Reflect);
         if (!canAct()) break;
         const request: ReturnType<typeof makeRequest> = invokeRequest(makeRequest, ctx, requestArgs);
-        if (!current() || !canAct()) break;
-        // provider receiver／callee 保原晚读取；新增 Reflect／bind 的读取也在末旗前，非可调用 callee 留在实际 invoke 点失败。
-        const provider = ctx.actionProvider,
-          getAction = provider.getAction;
-        const actionArgs = [request];
-        const invokeAction = Reflect.apply.bind(Reflect);
-        if (!canAct()) break;
-        const action: Awaited<ReturnType<typeof getAction>> = await invokeAction(getAction, provider, actionArgs);
-        if (!current() || !canAct()) break;
-        if (action?.name !== "choose_lovers") continue;
-        const valid = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, action, {
-          phase: Phase.Night,
-          day,
-        });
-        if (!current() || !valid.ok || valid.sanitizedCall?.name !== "choose_lovers" || !canAct()) continue;
-        const pairIds: [number, number] = [
-          valid.sanitizedCall.args.first_id,
-          valid.sanitizedCall.args.second_id,
-        ];
-        const selected = pairIds.map((id) => targets.get(id));
-        if (
-          selected.some(
-            (target, index) =>
-              !target ||
-              !livingNightLife(ctx.world, target.life) ||
-              ctx.world.getComponent(pairIds[index]!, COMPONENT.Role) !== target.role ||
-              target.role.role !== target.kind ||
-              ctx.world.getComponent(pairIds[index]!, COMPONENT.Camp)?.camp !== target.camp ||
-              target.role.privateState !== target.privateState ||
-              (target.camp !== Camp.Good && target.camp !== Camp.Wolf) ||
-              ctx.world.getComponent(pairIds[index]!, COMPONENT.Victory) !== target.victory ||
-              target.victory.affiliations !== target.affiliations ||
-              JSON.stringify(target.affiliations) !== target.membership,
+        const requestScope: ChoiceRequestScope = { actorId, day, current: () => current() && canAct() };
+        requestLease.bind(requestScope, request);
+        const turn = requestLease.openDelivery(requestScope, request);
+        let bodyFailed = false;
+        try {
+          if (!turn) break;
+          if (!current() || !canAct() || !turn.current()) break;
+          // provider receiver／callee 保原晚读取；新增 Reflect／bind 的读取也在末旗前，非可调用 callee 留在实际 invoke 点失败。
+          const provider = ctx.actionProvider,
+            getAction = provider.getAction;
+          const actionArgs = [request];
+          const invokeAction = Reflect.apply.bind(Reflect);
+          if (!canAct() || !turn.current()) break;
+          const action: Awaited<ReturnType<typeof getAction>> = await invokeAction(getAction, provider, actionArgs);
+          if (!current() || !canAct() || !turn.current()) break;
+          if (action?.name !== "choose_lovers") continue;
+          const valid = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, action, {
+            phase: Phase.Night,
+            day,
+          });
+          if (!current() || !valid.ok || valid.sanitizedCall?.name !== "choose_lovers" || !canAct() || !turn.current()) continue;
+          const pairIds: [number, number] = [
+            valid.sanitizedCall.args.first_id,
+            valid.sanitizedCall.args.second_id,
+          ];
+          const selected = pairIds.map((id) => targets.get(id));
+          if (
+            selected.some(
+              (target, index) =>
+                !target ||
+                !livingNightLife(ctx.world, target.life) ||
+                ctx.world.getComponent(pairIds[index]!, COMPONENT.Role) !== target.role ||
+                target.role.role !== target.kind ||
+                ctx.world.getComponent(pairIds[index]!, COMPONENT.Camp)?.camp !== target.camp ||
+                target.role.privateState !== target.privateState ||
+                (target.camp !== Camp.Good && target.camp !== Camp.Wolf) ||
+                ctx.world.getComponent(pairIds[index]!, COMPONENT.Victory) !== target.victory ||
+                target.victory.affiliations !== target.affiliations ||
+                JSON.stringify(target.affiliations) !== target.membership,
+            )
           )
-        )
-          continue;
-        const first = selected[0]!,
-          second = selected[1]!,
-          mixed = first.camp !== second.camp;
-        const record: LoversComponent = Object.freeze({
-          actorId,
-          day: 1,
-          policy,
-          pairIds: Object.freeze(pairIds),
-          pairCamps: Object.freeze([first.camp, second.camp]) as LoversComponent["pairCamps"],
-          groupId: "cupid_lovers",
-          mixed,
-        });
-        const memberIds = new Set(pairIds);
-        if (policy === "netease_2017_cupid_follows_lovers_v1") memberIds.add(actorId);
-        // 目标／记录 getter 仍先读取；关系 owner 在原 callee／参数求值后、首组件写前检查拒绝尾。
-        // 首关系已写后不再消费墓碑：选择付款、归属和事实照原顺序继续，失败保已完成前缀。
-        if (!bindLovers(ctx.world, record, [first.life, second.life], canAct)) continue;
-        commitCupidChoice(state, pairIds);
-        for (const id of memberIds)
-          ctx.world.addComponent(
-            id,
-            COMPONENT.Victory,
-            createVictoryComponent([
-              mixed
-                ? { kind: "relationship", groupId: record.groupId }
-                : { kind: "faction", faction: first.camp! },
-            ]),
-          );
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "cupid_lovers_chosen",
-          payload: { actorId, day: 1, pairIds: [...pairIds] },
-        });
-        for (const id of pairIds)
+            continue;
+          const first = selected[0]!,
+            second = selected[1]!,
+            mixed = first.camp !== second.camp;
+          const record: LoversComponent = Object.freeze({
+            actorId,
+            day: 1,
+            policy,
+            pairIds: Object.freeze(pairIds),
+            pairCamps: Object.freeze([first.camp, second.camp]) as LoversComponent["pairCamps"],
+            groupId: "cupid_lovers",
+            mixed,
+          });
+          const memberIds = new Set(pairIds);
+          if (policy === "netease_2017_cupid_follows_lovers_v1") memberIds.add(actorId);
+          // 目标／记录 getter 仍先读取；关系 owner 在原 callee／参数求值后、首组件写前检查拒绝尾。
+          // 首关系已写后不再消费墓碑：选择付款、归属和事实照原顺序继续，失败保已完成前缀。
+          if (!bindLovers(ctx.world, record, [first.life, second.life], () => canAct() && turn.current())) continue;
+          commitCupidChoice(state, pairIds);
+          for (const id of memberIds)
+            ctx.world.addComponent(
+              id,
+              COMPONENT.Victory,
+              createVictoryComponent([
+                mixed
+                  ? { kind: "relationship", groupId: record.groupId }
+                  : { kind: "faction", faction: first.camp! },
+              ]),
+            );
+          // 全部领域付款正常返回才落 true；原事实随后发表，晚抛不能把同一次交付反结算为 false。
+          turn.complete();
           ctx.events.push({
             timestamp: Date.now(),
-            type: "lover_recognized",
-            payload: { actorId: id, partnerId: pairIds.find((target) => target !== id)! },
+            type: "cupid_lovers_chosen",
+            payload: { actorId, day: 1, pairIds: [...pairIds] },
           });
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "cupid_relation_resolved",
-          payload: record,
-        });
-        completed = true;
-        break;
+          for (const id of pairIds)
+            ctx.events.push({
+              timestamp: Date.now(),
+              type: "lover_recognized",
+              payload: { actorId: id, partnerId: pairIds.find((target) => target !== id)! },
+            });
+          ctx.events.push({
+            timestamp: Date.now(),
+            type: "cupid_relation_resolved",
+            payload: record,
+          });
+          completed = true;
+          break;
+        } catch (error) {
+          bodyFailed = true;
+          throw error;
+        } finally {
+          // 取消、无效回复及部分付款均 false-close；原正文错误优先，新通知错误不遮盖它。
+          // complete 已先落终态，事实或通知晚抛后 close 不会二次通知，也不回滚已写前缀。
+          try { turn?.close(); } catch (error) { if (!bodyFailed) throw error; }
+        }
       }
       if (!completed && current() && canAct()) throw new Error("cupid_valid_action_missing");
     }
