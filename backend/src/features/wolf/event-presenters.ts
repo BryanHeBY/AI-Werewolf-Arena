@@ -1,7 +1,8 @@
 /**
- * 负责狼人战术顺序、私聊和刀票事实的脚本展示贡献。输入为原事件与语言；
+ * 负责狼人战术顺序、私聊和刀票事实的脚本展示贡献。输入为原事件、终端私有输出开关与语言；
  * 输出为原聊天／God／行动分类文本，按原 join、String 与 abstain 分支读取 payload。
- * 这些 handler 不自行依据 _private 过滤输入；上游分派拥有受众，不在展示层组织讨论、计票或消费刀权。
+ * 终端消费全量事件，直播 handler 须在读取狼队秘密前检查开关；脚本聊天入口保留本地调试用途。
+ * 玩家受众仍由独立投影负责，不在展示层组织讨论、计票或消费刀权。
  */
 import { text } from "@ai-werewolf-arena/game-text";
 import type {
@@ -21,39 +22,53 @@ export const WOLF_SCRIPT_CHAT_HANDLERS: ScriptChatLineHandlers = {
     }),
 };
 export const WOLF_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
-  wolf_tactical_order: (event, _private, locale = "zh-CN") => [
-    {
-      kind: "god",
-      text: text(locale, "console.live.wolf_order", { order: event.payload.order.join("->") }),
-    },
-  ],
-  wolf_discussion: (event, _private, locale = "zh-CN") => [
-    {
-      kind: "chat",
-      text: text(locale, "console.live.wolf", {
-        actor: event.payload.actorId,
-        speech: event.payload.text,
-      }),
-    },
-  ],
-  wolf_discussion_ended: (event, _private, locale = "zh-CN") => [
-    {
-      kind: "chat",
-      text: text(locale, "console.live.wolf_end", {
-        actor: event.payload.actorId,
-        reason: event.payload.reason,
-      }),
-    },
-  ],
-  wolf_kill_vote_cast: (event, _private, locale = "zh-CN") => [
-    {
-      kind: "chat",
-      text: event.payload.abstain
-        ? text(locale, "console.live.kill_abstain", { actor: event.payload.actorId })
-        : text(locale, "console.live.kill_vote", {
-            actor: event.payload.actorId,
-            target: String(event.payload.targetId),
-          }),
-    },
-  ],
+  wolf_tactical_order: (event, printPrivateEvents, locale = "zh-CN") =>
+    printPrivateEvents
+      ? [
+          {
+            kind: "god",
+            text: text(locale, "console.live.wolf_order", {
+              order: event.payload.order.join("->"),
+            }),
+          },
+        ]
+      : [],
+  wolf_discussion: (event, printPrivateEvents, locale = "zh-CN") =>
+    printPrivateEvents
+      ? [
+          {
+            kind: "chat",
+            text: text(locale, "console.live.wolf", {
+              actor: event.payload.actorId,
+              speech: event.payload.text,
+            }),
+          },
+        ]
+      : [],
+  wolf_discussion_ended: (event, printPrivateEvents, locale = "zh-CN") =>
+    printPrivateEvents
+      ? [
+          {
+            kind: "chat",
+            text: text(locale, "console.live.wolf_end", {
+              actor: event.payload.actorId,
+              reason: event.payload.reason,
+            }),
+          },
+        ]
+      : [],
+  wolf_kill_vote_cast: (event, printPrivateEvents, locale = "zh-CN") =>
+    printPrivateEvents
+      ? [
+          {
+            kind: "chat",
+            text: event.payload.abstain
+              ? text(locale, "console.live.kill_abstain", { actor: event.payload.actorId })
+              : text(locale, "console.live.kill_vote", {
+                  actor: event.payload.actorId,
+                  target: String(event.payload.targetId),
+                }),
+          },
+        ]
+      : [],
 };

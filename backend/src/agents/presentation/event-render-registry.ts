@@ -505,19 +505,22 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
           },
         ]
       : [],
-  god_private_game_info: (event, _private, locale = "zh-CN") => [
-    {
-      kind: "god",
-      text: text(locale, "console.live.initial", {
-        roles: event.payload.players
-          .map(
-            (item) =>
-              `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`,
-          )
-          .join(", "),
-      }),
-    },
-  ],
+  god_private_game_info: (event, printPrivateEvents, locale = "zh-CN") =>
+    printPrivateEvents
+      ? [
+          {
+            kind: "god",
+            text: text(locale, "console.live.initial", {
+              roles: event.payload.players
+                .map(
+                  (item) =>
+                    `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`,
+                )
+                .join(", "),
+            }),
+          },
+        ]
+      : [],
   day_speech: (event, _private, locale = "zh-CN") => [
     {
       kind: "system",
@@ -689,11 +692,19 @@ export class ScriptEventRenderRegistry {
     const modifier = scholarMentorEventLabel(event.type, event.payload, locale);
     if (modifier !== null) return printPrivateEvents ? [{ kind: "god", text: modifier }] : [];
     const consort = timeConsortEventLabel(event.type, event.payload, locale);
-    if (consort !== null) return [{ kind: "system", text: consort }];
+    if (consort !== null)
+      return printPrivateEvents
+        ? [{ kind: event.type === "time_consort_reflected" ? "god" : "private", text: consort }]
+        : [];
     const sorcerer = wolfSorcererEventLabel(event.type, event.payload, locale);
-    if (sorcerer !== null) return [{ kind: "system", text: sorcerer }];
+    if (sorcerer !== null) return printPrivateEvents ? [{ kind: "private", text: sorcerer }] : [];
     const trickster = tricksterEventLabel(event.type, event.payload, locale);
-    if (trickster !== null) return [{ kind: "system", text: trickster }];
+    if (trickster !== null)
+      return event.type === "exile_target_mapped"
+        ? [{ kind: "system", text: trickster }]
+        : printPrivateEvents
+          ? [{ kind: "private", text: trickster }]
+          : [];
     const prince = orderPrinceEventLabel(event.type, event.payload, locale);
     if (prince !== null)
       return event.type === "order_prince_choice_committed"
