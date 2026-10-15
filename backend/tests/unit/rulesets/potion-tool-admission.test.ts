@@ -3,6 +3,10 @@
  * 输入为真实内存组件、明确能力元数据和手写访问器；预期是字面拒绝码与未付款库存。
  * 不运行对局或模型，不用生产准入程序生成 oracle；魔术师 frame 仅建立原内存映射状态。
  */
+import {
+  createValidationQueries,
+  type ValidationHostContext as ValidationRuleContext,
+} from "../../../src/engine/actions/validation-queries";
 import { expect, test } from "bun:test";
 import {
   Camp,
@@ -27,10 +31,7 @@ import {
 } from "../../../src/features/night-abilities/abilities";
 import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import { ToolValidationRuleRegistry } from "../../../src/engine/actions/tool-validation-rule-registry";
-import type {
-  ToolRule,
-  ValidationRuleContext,
-} from "../../../src/engine/actions/validation-contracts";
+import type { ToolRule } from "../../../src/engine/actions/validation-contracts";
 import { createMagicianState } from "../../../src/features/magician/state-slot";
 import {
   installMagicianBoard,
@@ -70,6 +71,7 @@ function fixture(actorRole: Role = Role.Villager) {
   const catalog = new RoleCatalog([], []);
   function context(target: number, potion: PotionType = PotionType.None): ValidationRuleContext {
     return {
+      queries: createValidationQueries(world),
       world,
       actorId: actor.id,
       role: actor.role,
@@ -101,7 +103,8 @@ test("profile keeps canonical writable table and registry reads its current rule
   const registry = new ToolValidationRuleRegistry(undefined, catalog);
   const original = Object.getOwnPropertyDescriptor(WITCH_VALIDATION_RULES, "use_potion")!;
   let chosen: ToolRule = (ctx) => {
-    expect(ctx.roleCatalog).toBe(catalog);
+    expect(Object.hasOwn(ctx, "roleCatalog")).toBe(false);
+    expect(ctx.queries.hasRole(1)).toBe(true);
     trace.push("first");
     return { code: RuleError.ModifierUnavailable };
   };
@@ -160,6 +163,7 @@ test("parameter getters retain order and missing day stays zero for the mapped h
   const base = f.context(3, PotionType.Heal),
     context: ValidationRuleContext = {
       roleCatalog: f.catalog,
+      queries: createValidationQueries(f.world),
       get world() {
         trace.push("world");
         return base.world;

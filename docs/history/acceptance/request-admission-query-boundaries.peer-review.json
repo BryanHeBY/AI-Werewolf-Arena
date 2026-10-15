@@ -1,0 +1,1024 @@
+{
+  "scope": "H03 prepared candidate and actual Root test-only successor",
+  "reviews": [
+    {
+      "kind": "H03 independent prepared static review",
+      "role": "peer",
+      "decision": "approved",
+      "baseCommit": "5e26b88ae5208d927bcc28d408292a2cfeb43922",
+      "sourceReadySHA256": "239acb81cde2b3944784967c30b94963bca39b41483e3946640d99a35edf0459",
+      "handoffSHA256": "f87b01e8d2cb8a27293bb9e826a8c3f50a6c13d2e29e2e1d02fda64906a42d6f",
+      "source": [
+        "backend/src/agents/player/action-turn.ts",
+        "backend/src/engine/actions/action-reception.ts",
+        "backend/src/engine/actions/action-validator.ts",
+        "backend/src/engine/actions/common-validation-rules.ts",
+        "backend/src/engine/actions/tool-gateway.ts",
+        "backend/src/engine/actions/tool-validation-rule-registry.ts",
+        "backend/src/engine/actions/validation-contracts.ts",
+        "backend/src/engine/actions/validation-queries.ts",
+        "backend/src/features/animal-dream/night-stages.ts",
+        "backend/src/features/animal-dream/profile.ts",
+        "backend/src/features/animal-dream/puffer-window.ts",
+        "backend/src/features/animal-dream/validation-rules.ts",
+        "backend/src/features/awakened-hidden-wolf/profile.ts",
+        "backend/src/features/awakened-hidden-wolf/rules.ts",
+        "backend/src/features/black-market-merchant/profile.ts",
+        "backend/src/features/cupid/profile.ts",
+        "backend/src/features/death-actions/death-abilities.ts",
+        "backend/src/features/death-actions/death-shot.ts",
+        "backend/src/features/debater/profile.ts",
+        "backend/src/features/demon-hunter/controller.ts",
+        "backend/src/features/demon-hunter/validation-rules.ts",
+        "backend/src/features/dreamer/profile.ts",
+        "backend/src/features/fragrant-pair-seer/night-stages.ts",
+        "backend/src/features/fragrant-pair-seer/profile.ts",
+        "backend/src/features/fragrant-pair-seer/validation-rules.ts",
+        "backend/src/features/ghost-bride/profile.ts",
+        "backend/src/features/ghost-bride/setup.ts",
+        "backend/src/features/ghost-bride/validation-rules.ts",
+        "backend/src/features/hunter/profile.ts",
+        "backend/src/features/hybrid/profile.ts",
+        "backend/src/features/initial-identity/setup.ts",
+        "backend/src/features/initial-identity/validation-rules.ts",
+        "backend/src/features/knight/profile.ts",
+        "backend/src/features/lonely-girl/profile.ts",
+        "backend/src/features/lonely-girl/setup.ts",
+        "backend/src/features/lonely-girl/validation-rules.ts",
+        "backend/src/features/magician/profile.ts",
+        "backend/src/features/mechanical-wolf/profile.ts",
+        "backend/src/features/mechanical-wolf/rules.ts",
+        "backend/src/features/miracle-merchant/profile.ts",
+        "backend/src/features/mist-raven/profile.ts",
+        "backend/src/features/nightmare/profile.ts",
+        "backend/src/features/noble-secret-body/night-stages.ts",
+        "backend/src/features/noble-secret-body/profile.ts",
+        "backend/src/features/noble-secret-body/validation-rules.ts",
+        "backend/src/features/order-prince/profile.ts",
+        "backend/src/features/pure-white/profile.ts",
+        "backend/src/features/pure-white/rules.ts",
+        "backend/src/features/radiant-eclipse/profile.ts",
+        "backend/src/features/role-inspection/rules.ts",
+        "backend/src/features/scholar-mentor/profile.ts",
+        "backend/src/features/shapeshifter/profile.ts",
+        "backend/src/features/sheriff/validation-rules.ts",
+        "backend/src/features/thief/profile.ts",
+        "backend/src/features/time-wolf-consort/profile.ts",
+        "backend/src/features/trickster/profile.ts",
+        "backend/src/features/wall-notes/validation-rules.ts",
+        "backend/src/features/wall-notes/window.ts",
+        "backend/src/features/white-wolf-king/profile.ts",
+        "backend/src/features/wild-child/profile.ts",
+        "backend/src/features/wild-child/setup.ts",
+        "backend/src/features/wild-child/validation-rules.ts",
+        "backend/src/features/wolf-beauty/profile.ts",
+        "backend/src/features/wolf-king/profile.ts",
+        "backend/src/features/wolf-sorcerer/profile.ts",
+        "backend/src/rulesets/action-validation-assembly.ts",
+        "backend/src/rulesets/guard-tool-admission.ts",
+        "backend/src/rulesets/potion-tool-admission.ts",
+        "backend/src/rulesets/seer-tool-admission.ts",
+        "backend/src/rulesets/wolf-tool-admission.ts",
+        "backend/tests/unit/engine/actions/registered-request-admission.test.ts",
+        "backend/tests/unit/engine/actions/validation-query-boundary.test.ts",
+        "backend/tests/unit/rulesets/guard-tool-admission.test.ts",
+        "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+        "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+        "backend/tests/unit/rulesets/wolf-tool-admission.test.ts"
+      ],
+      "deleted": [],
+      "findings": [
+        {
+          "id": "H03-PUB-ROLE",
+          "status": "closed by 5981435d successor",
+          "scope": "Public ValidationRuleContext/custom actual context",
+          "finding": "Original RoleComponent was exposed to ordinary custom callback; readonly label was not an actual write boundary.",
+          "resolution": "custom actual context omits role; queries.roleValue returns enum; trusted builtin host alone retains original Role object."
+        },
+        {
+          "id": "H03-PARTIAL-UNDEFINED",
+          "status": "closed by f87b01e8 successor",
+          "scope": "ownedToolRules Partial-map registration",
+          "finding": "A declared valid own undefined value reaches WeakMap.set(undefined), causing TypeError and narrowing the Partial table accepted shape.",
+          "requested": "Preserve own undefined key/value without registration; do not remove key or widen nonfunction inputs.",
+          "resolution": "Only own undefined keeps its original key/value without registration. Other nonfunctions are not accepted. Same risk declaration now asserts own key and real Registry UnknownTool."
+        }
+      ],
+      "staticReview": {
+        "rawOrder": [
+          "wall",
+          "initial choice",
+          "lonely girl",
+          "wild child",
+          "wedding",
+          "Demon hunt/native/potion"
+        ],
+        "scopeObservationOrder": [
+          "thief",
+          "shapeshifter",
+          "lonely girl",
+          "ghost bride",
+          "demon hunter",
+          "noble body",
+          "fragrant pair",
+          "animal",
+          "wild child",
+          "wall"
+        ],
+        "trustedBoundary": "only original concrete builtin function identity in internal WeakMap receives original host; custom gets actual separate scalar/query object, never host spread then deletion",
+        "ruleSelection": "current profile lookup and construction-time fallback retained; original callback references and inherited spread remain at profile field construction",
+        "lateForward": "Beauty ordinary-wolf lookup stays late and receives original rule table receiver; unknown replacement is passed new public context",
+        "sourceApplication": "31 profile and 5 shared paths exact deltas; no overwrite of concurrent WolfKing deathHook",
+        "ownerPrograms": "six complete family validation programs moved with original qualification bodies, scope alias at destructure; stock/paid/facts remain original owners",
+        "apiRetirement": "custom raw World/Catalog/Role/scope contexts intentionally retired, actual query facade not raw World token",
+        "limits": [
+          "No runtime/AST/type/gate execution by reviewer",
+          "No arbitrary monkeypatch/global Reflect/CJS reflection equivalence claimed",
+          "Readonly type alone is not treated as runtime encapsulation",
+          "No P9/C47 completion approval"
+        ]
+      },
+      "sourceBindingReport": {
+        "path": "/tmp/awa-h03-request-admission-independent/source-binding.json",
+        "sha256": "34a2829fd29ce47b37111b4e3cd1255d03da75835cccb6b8dbdde9b0bdd57430"
+      },
+      "reviewerMetadataReaderHistory": {
+        "firstAttempt": "first reader incorrectly applied fixed-before coordinates sequentially; original report/script preserved",
+        "repair": "read exact step definitions and applied fixed-before offsets in reverse order; all source/artifact/Git byte bindings then zero mismatch",
+        "notProductFailure": true
+      },
+      "reviewerExecutions": {
+        "product": [],
+        "parser": [],
+        "type": [],
+        "tests": [],
+        "gates": [],
+        "network": [],
+        "repositoryWrites": false
+      },
+      "approved": true,
+      "scope": "prepared source/API/risk and public-byte identity only; Root actual checks pending",
+      "remainingFindings": [],
+      "finalDelta": {
+        "fromHandoffSHA256": "5981435d176b08048334f919d39c55545b92497bc63814931e5fc3537e779297",
+        "paths": [
+          "backend/src/engine/actions/validation-queries.ts",
+          "backend/tests/unit/engine/actions/validation-query-boundary.test.ts"
+        ],
+        "otherSourceSame": 74,
+        "allWholeCandidatesFreshSHAAndMode": 71,
+        "sharedExactPaths": 5,
+        "actualGitHistoricalBinding": "64old/12absence/4controls carried from source-binding report; fixed before bytes exactly unchanged",
+        "old59ProgramTextReconstruction": "172 fixed-before edits unchanged byte-for-byte; not re-executed",
+        "artifactsFresh": 11
+      },
+      "candidateSourceBindings": [
+        {
+          "path": "backend/src/agents/player/action-turn.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "73f743e2741dc00a8a1580982dca2afcc33533d16fab7aef998bbc79f9c2a040",
+          "bytes": 4769,
+          "beforeSHA256": "91267d95cdba149da46544b95d1e803308005a02fe086f557ee01d7c404abf26",
+          "candidate": "candidates/backend/src/agents/player/action-turn.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/actions/action-reception.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "a2bc085711952c40af3ed8e5cf3462a8025314e787c01a69e24ec91dbe47fd5c",
+          "bytes": 8003,
+          "beforeSHA256": "1e03d4661d009cdc39c791919916b8c90f98f68e664916b9a72845ab649ced13",
+          "candidate": "candidates/backend/src/engine/actions/action-reception.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/actions/action-validator.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "88081ac6760f8d1d32744a18e03dd28cff8c92772072da3cab67a540709125ab",
+          "bytes": 5291,
+          "beforeSHA256": "95917c5ca4ba2d004a68cce3f47877c0e71e69d50e80553494358a65c51b7722",
+          "candidate": "candidates/backend/src/engine/actions/action-validator.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/actions/common-validation-rules.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "1ff3f37e44e1b3dba425cd5a1bff6a9d2a37bdd1ac93f78425a804c6eaab8fe8",
+          "bytes": 3389,
+          "beforeSHA256": "f4ce2fd36276932126b078c8c02974e48ab679b10199e8ef20eb27ac73390ab2",
+          "candidate": "candidates/backend/src/engine/actions/common-validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/actions/tool-gateway.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "a14079e75629cc960381cda6d91c944a0a43e3eadb8f4e43e149259d786e9951",
+          "bytes": 3822,
+          "beforeSHA256": "791cb3e6a91ab3a479e5a9cfc402ec0f42b3e5aa8e86e0e759c56843c117b5ff",
+          "candidate": "candidates/backend/src/engine/actions/tool-gateway.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/actions/tool-validation-rule-registry.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "79b8405638608a4a258b02a8ba3b2f0978757fee6156b73aa80683a62f185f9d",
+          "bytes": 4561,
+          "beforeSHA256": "7c5fc4705dfcd6fc8c750f75e380c26be752e292d1c4a7c608edf86f9e3cd22c",
+          "candidate": "candidates/backend/src/engine/actions/tool-validation-rule-registry.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/actions/validation-contracts.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "3daa15abd48c375efa68cf7701fece8c77034433c90b1ef6a2242872fd84ad30",
+          "bytes": 1690,
+          "beforeSHA256": "42cac9b16cc54ab8ae0c4c2334ee0e8ec229251886442d6d25331baa3d45142c",
+          "candidate": "candidates/backend/src/engine/actions/validation-contracts.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/engine/actions/validation-queries.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "e26f6b0c74684f512ef95a8e4303cfdfaafe1473e1a029b3887cbca6bfa58d44",
+          "bytes": 5637,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/engine/actions/validation-queries.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/animal-dream/night-stages.ts",
+          "apply": "shared-exact-delta-only",
+          "beforeSHA256": "9b4f9d67da9633f8194f6b08dbc0c5b9b66d58aa3e50eb572e56d2f475129c11",
+          "candidateWhole": null,
+          "currentMayContainRootOwnedDelta": false
+        },
+        {
+          "path": "backend/src/features/animal-dream/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "0565e04847202170720ec2fabe6815bfa0c98c4642c4f398a0006271306b6c11",
+          "bytes": 6012,
+          "beforeSHA256": "a843804d29f7dc80e8a0bdb0ffe962eff4e8a543cdd65b662aab3ef9f1418862",
+          "candidate": "candidates/backend/src/features/animal-dream/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/animal-dream/puffer-window.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "feb940fdae4274d4247433df442e6c6e68572e7dae05b4bb1f29a3b9578d0843",
+          "bytes": 3680,
+          "beforeSHA256": "aa0c79e99ff977c25ce164527f122d119d1d56b57710aaf0d85522269de746f7",
+          "candidate": "candidates/backend/src/features/animal-dream/puffer-window.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/animal-dream/validation-rules.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "bc159310983bd892ee0bb5db8e5693d65d892132fe0cc2595f175f51db4a45e1",
+          "bytes": 1729,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/features/animal-dream/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/awakened-hidden-wolf/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "ee9d25ff1b478ecf5c7e71343cecf4bf22d0481e60fa615e4a207af067021242",
+          "bytes": 6462,
+          "beforeSHA256": "997058d3e435fe93a54cb06d620ae137c125aa17f71c1bda97677a775a6fce30",
+          "candidate": "candidates/backend/src/features/awakened-hidden-wolf/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/awakened-hidden-wolf/rules.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "258f03ba0746b322596137ba440d072893a55292f1d2bd4dc26b40d1b2001856",
+          "bytes": 3384,
+          "beforeSHA256": "a84a1910e8587b12b0951a51b375966f392e6e326ba38cb551ac6abd1caa72d7",
+          "candidate": "candidates/backend/src/features/awakened-hidden-wolf/rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/black-market-merchant/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "f8cf0538d9b27ca6ed6dbe8d8cbc1bbb921f7dfdfa7395994193e274b7518fd7",
+          "bytes": 4943,
+          "beforeSHA256": "860aaa39ca72ff92867e0963412f12865c42a42ccbb8386da4122707188717c9",
+          "candidate": "candidates/backend/src/features/black-market-merchant/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/cupid/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "1baa98fcbe4edae4f1cd4d0e0ef1aae3238a00ab8ae67a30f7abb8a002878cf0",
+          "bytes": 5009,
+          "beforeSHA256": "d551c1ad516b0af57abf5560b9c17915030dcdb8a2f4b9fe40d725694ccfee72",
+          "candidate": "candidates/backend/src/features/cupid/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/death-actions/death-abilities.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "7e5d44ceff3282ec416ec514159fb4f05a9762f01b71b3ef782da7c8be5fc83a",
+          "bytes": 1687,
+          "beforeSHA256": "5f437c0e5e07e13b10069e8c5821684a5cc87a268b91a3d47b27fb6241e1e4ad",
+          "candidate": "candidates/backend/src/features/death-actions/death-abilities.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/death-actions/death-shot.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "c07943e035417ba3e6936857eeee5c93b8c755ee77ec31b61d1f4993fe81ed21",
+          "bytes": 1886,
+          "beforeSHA256": "47b599941367f634dd7fe3fb2395d84aa2b6004294678c52ae1d3f60634c26c1",
+          "candidate": "candidates/backend/src/features/death-actions/death-shot.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/debater/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "d62ce54cae452b83e138f166559de866304db057edf0ed138ac17b724500416b",
+          "bytes": 4457,
+          "beforeSHA256": "ef072e7c15484ba090b81b5e6d79dd79afac738a54bd4686b3c74b95cd752018",
+          "candidate": "candidates/backend/src/features/debater/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/demon-hunter/controller.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "0dd45c94c5e18539cc49b0cf36f396a7d1999a41c5ec19ac4e420959dedf2f40",
+          "bytes": 3784,
+          "beforeSHA256": "c4fb9885456246efbd16a29374ed1f75ebcd7d1b83f28c530e438e6591c51a63",
+          "candidate": "candidates/backend/src/features/demon-hunter/controller.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/demon-hunter/validation-rules.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "ef51f8c44e5163978771afc313966884d40eb55a9cee49d6b4bbcf2f305a0bff",
+          "bytes": 2895,
+          "beforeSHA256": "aca1ae8e7eb3cdb29500f7c170b010de0221495e2ead9d95c6d69c2f104390f0",
+          "candidate": "candidates/backend/src/features/demon-hunter/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/dreamer/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "6604441909e264ea90ac90743f1e1007364b21596014e1a51027508261da7f76",
+          "bytes": 4107,
+          "beforeSHA256": "10223dcc8951fc44f589d25bf07548ff24d51fb6ed5a92e262ce997265a03cdd",
+          "candidate": "candidates/backend/src/features/dreamer/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/fragrant-pair-seer/night-stages.ts",
+          "apply": "shared-exact-delta-only",
+          "beforeSHA256": "1ccfb5ebd41636fb8802bbb222ab82b304c0127c040cf8c973de83b308009a45",
+          "candidateWhole": null,
+          "currentMayContainRootOwnedDelta": false
+        },
+        {
+          "path": "backend/src/features/fragrant-pair-seer/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "0ee6afd43cb9d447cb8c8faad0747db148569eef2216e66e2d5a8cc801d9f8c0",
+          "bytes": 6038,
+          "beforeSHA256": "028a8b4eb80bbabd0c8eb20b0e36573f288c25b6e011e6c5ec539e4b704d3d9e",
+          "candidate": "candidates/backend/src/features/fragrant-pair-seer/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/fragrant-pair-seer/validation-rules.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "f0ff9b34ab393940ee94a7a805cac66b26b79db177e006ff3016513305ddf797",
+          "bytes": 1958,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/features/fragrant-pair-seer/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/ghost-bride/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "170df50bea861d4cff1063a39e47f6e424e4d8637fec0a965df7f1d1e3bcc004",
+          "bytes": 3636,
+          "beforeSHA256": "9bb6ceb5c4a7fa36bec2b0e08c3ae63e6005ffdb34bee5e8268207a1deec22ef",
+          "candidate": "candidates/backend/src/features/ghost-bride/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/ghost-bride/setup.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "8fa01f63632cc56a81c2e08183c7269e963f4ccf876dd207be3cf186dbb53108",
+          "bytes": 9365,
+          "beforeSHA256": "905b2315705bd579b7ef9da2af69a20a8f1540ee2e10f78b01b2f12e69dcdc78",
+          "candidate": "candidates/backend/src/features/ghost-bride/setup.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/ghost-bride/validation-rules.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "3c75a9a5f6415da31265832296d4796437b051419506c82d30e351492c76d5a9",
+          "bytes": 2210,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/features/ghost-bride/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/hunter/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "63953e3057bf18a88107f42d8aa7fe5bd5a8e18d80166065c00f5a455024a670",
+          "bytes": 2518,
+          "beforeSHA256": "554d5176daf395da96810e5c06e589d9f65e9445df65b6456e24d1d8c7375be4",
+          "candidate": "candidates/backend/src/features/hunter/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/hybrid/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "d48fa38454ba8cfac3d55fe7b2087f183073bffaa9c26fd77e6a23e470b4b673",
+          "bytes": 4072,
+          "beforeSHA256": "6980691ca4aeab256c6764e886f162e9c2c286ba0c7c58173764e843dc92156b",
+          "candidate": "candidates/backend/src/features/hybrid/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/initial-identity/setup.ts",
+          "apply": "shared-exact-delta-only",
+          "beforeSHA256": "313e2c741d9dbf3f6419c274cb8bd26c5323a1fbfd363d6ca2bc7d2a20530a88",
+          "candidateWhole": null,
+          "currentMayContainRootOwnedDelta": false
+        },
+        {
+          "path": "backend/src/features/initial-identity/validation-rules.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "32680235cf3e44590b322166266d9d54fd84c4f6d0a4a5241830f276fb3aa711",
+          "bytes": 1483,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/features/initial-identity/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/knight/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "da9fbf54fc882ea1317f33dc394d4324d6718d7957fc92a978e6b7277ce3b745",
+          "bytes": 3929,
+          "beforeSHA256": "6ff6fcee4e41e37a25f6150748a98104b002d80629f8503277e35c8aa299397f",
+          "candidate": "candidates/backend/src/features/knight/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/lonely-girl/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "ac386a73f6b52c8af22841b74013f55083586608fd9956299d2b79cdd34bfb0f",
+          "bytes": 2968,
+          "beforeSHA256": "df38b5acc366f3356ee042876fe8df0c9e20b6aac88b09802c7dd02b9a092a23",
+          "candidate": "candidates/backend/src/features/lonely-girl/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/lonely-girl/setup.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "ba589cb4db2d16e5c03f0009715aedb6df3ae5463dd4adc9355817b19c66ef7a",
+          "bytes": 4817,
+          "beforeSHA256": "3d0cbef8ad5c3738ed1938617d4aa6cf5dbbba248b119eef71258998d68d27e5",
+          "candidate": "candidates/backend/src/features/lonely-girl/setup.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/lonely-girl/validation-rules.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "667842e3928a561b12b2a8186c8960a4cad4fc4b40904319cee9e8a789d931f9",
+          "bytes": 1941,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/features/lonely-girl/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/magician/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "ccf577ab3db0eb1ead1ef596e28d7563b4f4811b6ada2fce79d2a9fde5508219",
+          "bytes": 5349,
+          "beforeSHA256": "850e176bb8a4a1977ff1ea86a22c5240475adbd58ae6bc0843ed5b8ed8fcb506",
+          "candidate": "candidates/backend/src/features/magician/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/mechanical-wolf/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "0ec4d2514631b5af6f66fbc50568e64261680e7015262f868d253c72f0bf5902",
+          "bytes": 6132,
+          "beforeSHA256": "4e6c77587c44ca82fb32323f0a42b180563f43447efd08a1450a2689737a8a63",
+          "candidate": "candidates/backend/src/features/mechanical-wolf/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/mechanical-wolf/rules.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "3d23388a709a419ddbd4aa7b8e1e035857f4375e914a77ef59673a87d5c84bb4",
+          "bytes": 3871,
+          "beforeSHA256": "97671680dff5949c70f14b79baa5baf14e3bf8d77dfd993eb635e9bea65327c7",
+          "candidate": "candidates/backend/src/features/mechanical-wolf/rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/miracle-merchant/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "971c2c60291222968a05f0ed0bca1c644711f010129c9cadb94948002c82e0bb",
+          "bytes": 4755,
+          "beforeSHA256": "a4f70554ee16b744613715ae1fe8a6fc1c0a841d460bc300b0aa606dae6d2ff8",
+          "candidate": "candidates/backend/src/features/miracle-merchant/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/mist-raven/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "95a1bf6b8d2ea1d72f1119887c79824a94686a92b959e0ef7d7624bd8719cd52",
+          "bytes": 9427,
+          "beforeSHA256": "cfa5b19cddb87b9d9cec3b9a4143c98e64525acba53bec58fb01fdc15bc88462",
+          "candidate": "candidates/backend/src/features/mist-raven/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/nightmare/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "26716daa79475e2e86cab9ddd510c5532aa734120a2edf80ffb6e63f10081d17",
+          "bytes": 6051,
+          "beforeSHA256": "e33149088aca5aaf5ec28a0cee4f193db79f0b9dd9849ec3489a539db7f2c925",
+          "candidate": "candidates/backend/src/features/nightmare/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/noble-secret-body/night-stages.ts",
+          "apply": "shared-exact-delta-only",
+          "beforeSHA256": "ea1c240a05997d59f6d80c706cf1319a51a38e6a9752d513264586c0549389e1",
+          "candidateWhole": null,
+          "currentMayContainRootOwnedDelta": false
+        },
+        {
+          "path": "backend/src/features/noble-secret-body/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "111b7a69c01557b6dcca1653bd07461eb83dedc752d73da602d628e8455025aa",
+          "bytes": 6061,
+          "beforeSHA256": "7b24ef27cc0f92dacfe439420f4bfbc016b7ab0e146d5b4f9c0ef028b15016ab",
+          "candidate": "candidates/backend/src/features/noble-secret-body/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/noble-secret-body/validation-rules.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "62cf88ef2037bb75cf8b84cba206a8888cd3afb054a43e83baa99a196d57a2a2",
+          "bytes": 1918,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/features/noble-secret-body/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/order-prince/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "74363889f6999ea9de238aa0b42b9a796319dc67033eac53d393d83af67e64dd",
+          "bytes": 3990,
+          "beforeSHA256": "5927ba21317fc9e9c4446b56dd34ae1d0038f9534ea65d16a8b2e00432bca8c8",
+          "candidate": "candidates/backend/src/features/order-prince/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/pure-white/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "1e870ae56a9d9d6f8d73e1de234b75f2b93e84d23990918d8dfa9c50c5db47b2",
+          "bytes": 5325,
+          "beforeSHA256": "20d9ed0335002e88bdbb48947a75361fc2a839d3dc7fbb9985ca2ac93f4c9a30",
+          "candidate": "candidates/backend/src/features/pure-white/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/pure-white/rules.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "894b3157fe2a244ee6cda3948e2a66020b66f6be8373a015682547a592a398e4",
+          "bytes": 3125,
+          "beforeSHA256": "94df429f50bff7425e8d7c8fe337508d2d578e69ec64cc05a8ebe4d9402486bf",
+          "candidate": "candidates/backend/src/features/pure-white/rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/radiant-eclipse/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "49963a741ae7093615519caeed40e03d3d883f772f7a4681b97fd4e0efa6f270",
+          "bytes": 7597,
+          "beforeSHA256": "b65cfa4b80ca2c7da7d77d05804daf57574ee1e523456317908a4dc701ebb4e4",
+          "candidate": "candidates/backend/src/features/radiant-eclipse/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/role-inspection/rules.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "4ea739f86d9b38293ff7229dbe1e9c1909353b6713bd5f44bc2c0602aabe1560",
+          "bytes": 2409,
+          "beforeSHA256": "48225b42323a9caa7174d0dfd394e0b4e2a7f849dd09a6ebf944b75d64783f5f",
+          "candidate": "candidates/backend/src/features/role-inspection/rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/scholar-mentor/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "c2e729645fc9adebfc333b25a73d41113daf19aa45a02aeea82a7c7d92ff6651",
+          "bytes": 9051,
+          "beforeSHA256": "64584cc87caa87196457194c26a52730d5b4661fcbad42e3dad42a922a610736",
+          "candidate": "candidates/backend/src/features/scholar-mentor/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/shapeshifter/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "873314508fdfc4bc678d778bc3be280eac862546bc88f92086543fceb4e22cbc",
+          "bytes": 3443,
+          "beforeSHA256": "c7fe83116f63af7579072b749e2d563a3e05010dfb5ee59585ec09fb17422f35",
+          "candidate": "candidates/backend/src/features/shapeshifter/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/sheriff/validation-rules.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "307be98c0fd571eb8d6f76bac68aac72ea17df1b886a38c517df127465b8e2c3",
+          "bytes": 3366,
+          "beforeSHA256": "7e82be173e79efafc6497e902ddde0dd5b6b582082e48b9d17f904613c6be01c",
+          "candidate": "candidates/backend/src/features/sheriff/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/thief/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "07045723e22180135461d77899a9f4ebafb9d4b63b8b50c2c80088fe640f1781",
+          "bytes": 3275,
+          "beforeSHA256": "c8d2b03ba0398c09782d8bc70ca410ccd68dfccde40b3c3f69cff29f31ef1a98",
+          "candidate": "candidates/backend/src/features/thief/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/time-wolf-consort/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "e22abda4196f68c5e4600dea0c707161f2200ba89bf6c6688a447e2e70e4113b",
+          "bytes": 5541,
+          "beforeSHA256": "e7aa6274332b4e552fcba4d045006852c5035a5853e0934ce0383b795391fb87",
+          "candidate": "candidates/backend/src/features/time-wolf-consort/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/trickster/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "b69be729d7b63beb4219b37352d87668dcafca5aaa63b416be066945cfed20a6",
+          "bytes": 6070,
+          "beforeSHA256": "00e842f896a1c79d457d709834732261143365bc1bfe2bde52f9087a1c2d1a90",
+          "candidate": "candidates/backend/src/features/trickster/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/wall-notes/validation-rules.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "bec2220d8f31bb7d20d7dd10efa818da97e96d4dfe39ce188fd15bcbf405ad8e",
+          "bytes": 1540,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/features/wall-notes/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/wall-notes/window.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "2d0c7f3011e529a9d1e2af947e4c4aa71272184ae35c869e3b87ecefcbd72861",
+          "bytes": 8598,
+          "beforeSHA256": "3805f342abaef9a66c2e29edfe4a8e0ba6c458b52de6a807b12810bc27b02a2a",
+          "candidate": "candidates/backend/src/features/wall-notes/window.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/white-wolf-king/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "2e0b36e71ca6241deceecac3c69b87355b53a21295ae0bbafdc4fdff4f3c21ae",
+          "bytes": 5068,
+          "beforeSHA256": "c57dd940e38d948ba349fa5c8a10909b31b0532409b224b579c3789dbe2c23c0",
+          "candidate": "candidates/backend/src/features/white-wolf-king/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/wild-child/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "a8680f60e62efb0a20d5f285a52d8fd784bcda6aa0acda3f1165a9c5cd94ce7e",
+          "bytes": 3891,
+          "beforeSHA256": "837596e26c922fc876f31998df0ee3b2a53d2c6eeaa323c6ab5869ab68d83115",
+          "candidate": "candidates/backend/src/features/wild-child/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/wild-child/setup.ts",
+          "apply": "shared-exact-delta-only",
+          "beforeSHA256": "2a159fb8d49efa82459695192bb17d81c01a8b6b46f7a15d8f1e8ac1d0ad4e68",
+          "candidateWhole": null,
+          "currentMayContainRootOwnedDelta": false
+        },
+        {
+          "path": "backend/src/features/wild-child/validation-rules.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "a4864fa95ae12469ca7194bfde1c1628e0995a1bf88ef75138f2524f1fa8ac86",
+          "bytes": 2137,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/features/wild-child/validation-rules.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/features/wolf-beauty/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "96a3f0fbb4cb70ee3b0df1434f307322f07952ff94ff7e5aa4878cf74dcf502a",
+          "bytes": 6767,
+          "beforeSHA256": "e4c71aa74f6d3640e25cda3d35fcf34d056c30fbf285485b73893d5bb517604b",
+          "candidate": "candidates/backend/src/features/wolf-beauty/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/wolf-king/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "651c89ffd99c513f0bb5bb74a8a34481741381aa83449392eef0a9a81441d6d6",
+          "bytes": 3797,
+          "beforeSHA256": "75b8a618c7eb85a1b181762df9978db1c11785851db27324366b0c22791f1232",
+          "candidate": "candidates/backend/src/features/wolf-king/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/features/wolf-sorcerer/profile.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "60450ec6f5f71d7f6514ecfcde9106db58e71708177eed70e7094a69e1664ec0",
+          "bytes": 6257,
+          "beforeSHA256": "50463c57ae27661877c05ab8b71efe0aca6b4a88c3b6a0f4aa1d365217abbbfb",
+          "candidate": "candidates/backend/src/features/wolf-sorcerer/profile.ts",
+          "apply": "exact-validation-deltas-only"
+        },
+        {
+          "path": "backend/src/rulesets/action-validation-assembly.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "05bb56fde0b5a551612e055ea16b4b11dd67a1397c256e540e42426e95a43d6f",
+          "bytes": 3212,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/src/rulesets/action-validation-assembly.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/rulesets/guard-tool-admission.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "6d822893b324b3d73470e610f7fcf8fab7f0e765da53b168037c43b800137a0a",
+          "bytes": 2462,
+          "beforeSHA256": "4eaea51a74b59f470e7221042b48f73aacc3061493af715eaba494540610d86f",
+          "candidate": "candidates/backend/src/rulesets/guard-tool-admission.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/rulesets/potion-tool-admission.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "d3766aac68d2931a6e4ec12bbfa95acc8639e74ea5b84ce68d2c56a1734824ad",
+          "bytes": 4851,
+          "beforeSHA256": "1f8aa6b0435a5e3e7403a0078310efbeabddb14a27e281a15516ed0c2e41ff8e",
+          "candidate": "candidates/backend/src/rulesets/potion-tool-admission.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/rulesets/seer-tool-admission.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "6d65c5bb646063fdf531a16a533bf891665a1ff8d6f3e474fadf348a1b0b8dbc",
+          "bytes": 2426,
+          "beforeSHA256": "0f4247e8b4626f8b43bc6e52e3d1a0346e61d3736749b58f8c66043f6dd0a741",
+          "candidate": "candidates/backend/src/rulesets/seer-tool-admission.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/src/rulesets/wolf-tool-admission.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "8fd4c788503744869587b5602a39b9416dec9bfd2de3bed17c0bfd1f89104f89",
+          "bytes": 4405,
+          "beforeSHA256": "f220d3312e3533958769e34e90801bd32a29d2727440a2453e76f6bb309624bb",
+          "candidate": "candidates/backend/src/rulesets/wolf-tool-admission.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/engine/actions/registered-request-admission.test.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "0fda78f150c974dd72a81655676546c8b1a283c4db64a7d19a31a7864ba677e8",
+          "bytes": 3436,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/tests/unit/engine/actions/registered-request-admission.test.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/engine/actions/validation-query-boundary.test.ts",
+          "change": "added",
+          "mode": "100644",
+          "sha256": "d9e4b226677b81b9b1af1b0bf7d597b8864416aff82ad1f737b8a8eb2bdd2d46",
+          "bytes": 5615,
+          "beforeSHA256": null,
+          "candidate": "candidates/backend/tests/unit/engine/actions/validation-query-boundary.test.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/rulesets/guard-tool-admission.test.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "70315c215c788b4178c100e12e7ca1de9f4806f8bced86d8f70d2c1a497a977f",
+          "bytes": 8946,
+          "beforeSHA256": "a3103246572f6b1747cc90358d351af3ef0b039aabf52169e2758f5eef13f52d",
+          "candidate": "candidates/backend/tests/unit/rulesets/guard-tool-admission.test.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "4fcdb2a5ed52009d36030440758d46dbe11866a005ad7d9f084006281b368dd4",
+          "bytes": 7490,
+          "beforeSHA256": "2371d0449da48a63d85a48ec738e1b73937f2df91fbd3e5d5b143c7b22bc2ab0",
+          "candidate": "candidates/backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "2284f6b83736d137fd194a8f2347adfc163a15c2bdf50c63844ebad64b33755e",
+          "bytes": 9458,
+          "beforeSHA256": "bb6727b033a1d954c45caeb745b3d528e4998fc47db34125bc2dfb2f453f22b4",
+          "candidate": "candidates/backend/tests/unit/rulesets/seer-tool-admission.test.ts",
+          "apply": "whole-file-after-before-guard"
+        },
+        {
+          "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+          "change": "modified",
+          "mode": "100644",
+          "sha256": "55a86cb845684ad734bc1e997d055f1c4d950efbcca5afbffeb1dea063a9a716",
+          "bytes": 11728,
+          "beforeSHA256": "8fe02572f467386f7bd962b2b2c0cd16256bc297c68007c49b3e4bde0231ceb6",
+          "candidate": "candidates/backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+          "apply": "whole-file-after-before-guard"
+        }
+      ],
+      "receiptLimits": [
+        "No author product/parser/type/test/gate checks executed in prepared cohort.",
+        "Reviewer ran only pure byte/Git/text metadata readers; first reader coordinate error preserved and explicitly distinguished from production.",
+        "Approval does not predeclare H03 runtime/types or C47 completion."
+      ]
+    },
+    {
+      "kind": "H03 Root actual successor limited independent binding",
+      "role": "peer",
+      "decision": "approved",
+      "approved": true,
+      "preparedReview": {
+        "path": "/tmp/awa-h03-request-admission-independent/prepared-review.json",
+        "sha256": "48d5302adc8d606bab7dffff41b50d053cf59244be14a04f5874358a9c96f4c5"
+      },
+      "scope": "承接已完成的全部静态审查，仅核Root后继三测试接线、真实收据与当前字节；不重新执行检查",
+      "actualRootBase": "d19114fb7203056ec6552b77f96933dff6439881",
+      "receipts": [
+        {
+          "task": "tests",
+          "path": "/tmp/awa-request-admission-execution-successor/tests/receipt.json",
+          "sha256": "16430b2e064c731cdcb0d94577e76cabca24d1aadb557f8a15d66ac9ab6aeb04",
+          "exitCode": 0,
+          "sourceCount": 78,
+          "prePostSame": true
+        },
+        {
+          "task": "types",
+          "path": "/tmp/awa-request-admission-execution-successor/types/receipt.json",
+          "sha256": "8312f4b3677668c83110193046b570fb8a9be048c00f26224be6425df8548720",
+          "exitCode": 0,
+          "sourceCount": 78,
+          "prePostSame": true
+        }
+      ],
+      "actualResults": {
+        "tests": "31 declarations / 8 files / 352 expect / 0 fail",
+        "types": "Root完整tsconfig.tests --noEmit，exit0且stdout/stderr均空"
+      },
+      "successorDeltas": [
+        {
+          "path": "backend/tests/unit/engine/actions/registered-request-admission.test.ts",
+          "meaning": "真实Camp仍Good；选择Wolf仅安装Victory faction Wolf，原资源/事件预期保留。"
+        },
+        {
+          "path": "backend/tests/unit/features/mist-raven/mist-raven-profile.test.ts",
+          "meaning": "旧直接规则调用通过invokeValidationRule传原host与原规则表receiver；原case/oracle保留。"
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/learned-wolf-execution-retirement.test.ts",
+          "meaning": "旧直接规则调用通过invokeValidationRule；原退休/写前/已付断言保留。"
+        }
+      ],
+      "productionComparedToRootFormatted": 70,
+      "productionDrift": [],
+      "artifacts": [
+        {
+          "path": "/tmp/awa-request-admission-execution-successor/tests/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28
+        },
+        {
+          "path": "/tmp/awa-request-admission-execution-successor/tests/stderr.raw",
+          "sha256": "80d51b462a2525749aeb7a8804d4ec9728fb59587c52e48b1e5f3e5e54796d1b",
+          "bytes": 3717
+        },
+        {
+          "path": "/tmp/awa-request-admission-execution-successor/tests/receipt.json",
+          "sha256": "16430b2e064c731cdcb0d94577e76cabca24d1aadb557f8a15d66ac9ab6aeb04",
+          "bytes": 11268
+        },
+        {
+          "path": "/tmp/awa-request-admission-execution-successor/types/stdout.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/tmp/awa-request-admission-execution-successor/types/stderr.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/tmp/awa-request-admission-execution-successor/types/receipt.json",
+          "sha256": "8312f4b3677668c83110193046b570fb8a9be048c00f26224be6425df8548720",
+          "bytes": 10805
+        }
+      ],
+      "failures": [],
+      "reviewerExecution": {
+        "product": false,
+        "parser": false,
+        "tests": false,
+        "type": false,
+        "gate": false,
+        "repositoryWrites": false
+      },
+      "limits": [
+        "此签不覆盖H02夜/RoleQ在途实现，也不宣称C47/C48完成。",
+        "本次为已有prepared审查的实际后继绑定，不伪称重跑或另一次完整算法证明。"
+      ]
+    }
+  ]
+}

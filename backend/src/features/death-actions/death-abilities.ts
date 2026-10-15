@@ -5,7 +5,7 @@
  * 本入口仅在原参数位置查询枪权；不修改库存、标记死亡、复制运行时授权或执行录制 I/O。
  */
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import type { ValidationRuleContext } from "../../engine/actions/validation-contracts";
+import type { ValidationHostInput } from "../../engine/actions/validation-queries";
 import { validateDeathShot } from "./death-shot";
 import { activeDeathGun } from "./death-gun-lifecycle";
 export {
@@ -28,7 +28,7 @@ export function copyDeathGun(): never {
   throw new Error("death_ability_copy_not_supported");
 }
 
-export function validateGiftGun(ctx: ValidationRuleContext) {
+export function validateGiftGun(ctx: ValidationHostInput) {
   if (!ctx.abilityId || ctx.day === undefined) return { code: RuleError.ShootUnavailable };
   return validateDeathShot(
     ctx,

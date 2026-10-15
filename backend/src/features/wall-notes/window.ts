@@ -144,7 +144,7 @@ export class WallNotesWindow {
         const valid = this.gateway.validateAndSanitize(this.world, author.id, call, {
           phase: Phase.Voting,
           day: 1,
-          wallScope: a,
+          scope: a,
           wallId: a.token,
           itemInstanceId: author.instanceId,
         });

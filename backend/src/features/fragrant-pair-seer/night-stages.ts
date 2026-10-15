@@ -40,7 +40,7 @@ async function execute(ctx: NightStageContext, kind: "bind" | "pair") {
     const valid = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, call, {
       phase: Phase.Night,
       day,
-      fragrantPairScope: scope,
+      scope: scope,
       deferOperation: true,
     });
     if (!valid.ok || !valid.sanitizedCall || fragrantPairRequestScope(ctx.world, request) !== scope)

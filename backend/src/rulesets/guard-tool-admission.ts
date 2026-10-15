@@ -4,6 +4,8 @@
  * 削弱查询早于空守和目标，四次 target_id 读取保原时点；本模块不提交印记、历史或付款，也不授予请求租约。
  * 规则表保持原可写形态，Registry 的当前角色查询和构造时回退捕获仍归原注册器。
  */
+import { ownedToolRules } from "../engine/actions/validation-queries";
+
 import { scholarMentorBlocks } from "../features/scholar-mentor/ports";
 import { guardTargetRepeated } from "../features/guard/ports";
 import { Phase, RuleError } from "@ai-werewolf-arena/game-contract";
@@ -12,7 +14,7 @@ import { activeNightAbility } from "../features/night-abilities/abilities";
 import { luckyTargetAllowed } from "../features/night-abilities/night-action-history";
 
 /** 原表只由 profile 装配，不冻结或重新绑定其中 callback；准入成功仍须阶段在付款前复验。 */
-export const GUARD_VALIDATION_RULES: ToolRuleMap = {
+export const GUARD_VALIDATION_RULES: ToolRuleMap = ownedToolRules({
   guard: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
     const ability = activeNightAbility(role, "guard", day ?? 1, abilityId);
     if (!ability) return { code: RuleError.GuardOnly };
@@ -31,4 +33,4 @@ export const GUARD_VALIDATION_RULES: ToolRuleMap = {
       return { code: RuleError.LuckyTargetRepeat };
     return null;
   },
-};
+});

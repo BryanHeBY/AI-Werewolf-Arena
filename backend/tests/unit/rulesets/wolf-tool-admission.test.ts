@@ -26,7 +26,10 @@ import {
 } from "../../../src/features/wolf/ability-ports";
 import { WOLF_BEAUTY_ROLE_PROFILE } from "../../../src/features/wolf-beauty/profile";
 import { WILD_CHILD_ROLE_PROFILE } from "../../../src/features/wild-child/profile";
-import type { ValidationRuleContext } from "../../../src/engine/actions/validation-contracts";
+import {
+  createValidationQueries,
+  type ValidationHostContext as ValidationRuleContext,
+} from "../../../src/engine/actions/validation-queries";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   ghostBrideBoard,
@@ -78,6 +81,7 @@ function fixture(trace: string[] = []) {
   };
   const roleCatalog = new RoleCatalog([profile], []);
   const context: ValidationRuleContext = {
+    queries: createValidationQueries(world),
     world,
     actorId: 1,
     role: players[0]!.role,
@@ -102,9 +106,16 @@ test("canonical writable table preserves shared identity and derived capture ver
       configurable: true,
       get() {
         trace.push("rule");
-        return function (this: unknown, ctx: ValidationRuleContext) {
+        return function (
+          this: unknown,
+          ctx: import("../../../src/engine/actions/validation-contracts").ValidationRuleContext,
+        ) {
           expect(this).toBe(WOLF_VALIDATION_RULES);
-          expect(ctx).toBe(f.context);
+          // H03 明确退休公开 raw host；原表 receiver／晚 callee 保留，替换函数得到实际窄对象。
+          expect(Object.hasOwn(ctx, "world")).toBe(false);
+          expect(Object.hasOwn(ctx, "role")).toBe(false);
+          expect(ctx.queries.roleValue(1)).toBe(Role.Wolf);
+          expect(ctx.queries.isAlive(1)).toBe(true);
           trace.push("call");
           return { code: RuleError.GhostBrideUnavailable };
         };
@@ -155,6 +166,7 @@ test("knife keeps three args reads, two late targets and the first thrown prefix
     },
   };
   const context: ValidationRuleContext = {
+    queries: createValidationQueries(f.world),
     get world() {
       trace.push("world");
       return f.world;
@@ -167,7 +179,7 @@ test("knife keeps three args reads, two late targets and the first thrown prefix
       trace.push("day");
       return 1;
     },
-    get ghostBrideScope() {
+    get scope() {
       trace.push("scope");
       return undefined;
     },
@@ -266,6 +278,7 @@ test("wedding takes precedence while self destruct retains phase-window and conf
     [],
   );
   const married: ValidationRuleContext = {
+    queries: createValidationQueries(world),
     world,
     actorId: 2,
     role,
@@ -288,6 +301,7 @@ test("wedding takes precedence while self destruct retains phase-window and conf
     },
   });
   const context: ValidationRuleContext = {
+    queries: createValidationQueries(f.world),
     world: f.world,
     role: f.players[0]!.role,
     roleCatalog: f.context.roleCatalog,

@@ -4,14 +4,15 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { createLonelyGirlValidationRules } from "./validation-rules";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition } from "../../domain";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
-import { LONELY_GIRL_POLICY, initializeLonelyGirlState, readLonelyGirlTool } from "./state-slot";
-import { authorizedLonelyGirl, projectLonelyGirl } from "./lifecycle";
+import { LONELY_GIRL_POLICY, initializeLonelyGirlState } from "./state-slot";
+import { projectLonelyGirl } from "./lifecycle";
 const parameters = z.strictObject({
   policy: z.literal(LONELY_GIRL_POLICY).default(LONELY_GIRL_POLICY),
 });
@@ -60,17 +61,7 @@ export const LONELY_GIRL_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.choose_admired_player.hint",
       },
     ],
-    validationRules: {
-      choose_admired_player: ({ world, actorId, day, phase, toolCall, lonelyGirlScope }) =>
-        !authorizedLonelyGirl(world, actorId, day, phase, lonelyGirlScope)
-          ? { code: RuleError.LonelyGirlUnavailable }
-          : readLonelyGirlTool(toolCall) &&
-              toolCall.name === "choose_admired_player" &&
-              toolCall.args.target_id !== actorId &&
-              world.getAliveEntityIds().includes(toolCall.args.target_id)
-            ? null
-            : { code: RuleError.LonelyGirlChoice },
-    },
+    validationRules: createLonelyGirlValidationRules(),
     baselineAction: (_role, request, pickAliveNotSelf) => {
       if (!request.allowedTools.includes("choose_admired_player")) return null;
       const target = pickAliveNotSelf();

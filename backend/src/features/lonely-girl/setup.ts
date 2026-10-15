@@ -73,7 +73,7 @@ export class LonelyGirlSetupWindow {
       const result = this.gateway.validateAndSanitize(this.world, b.actorId, call, {
         phase: Phase.Night,
         day,
-        lonelyGirlScope: b,
+        scope: b,
       });
       if (!validLonelyGirlChoice(b) || delivery?.current() !== true) {
         status = "cancelled";

@@ -4,9 +4,10 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { createFragrantValidationRules, createPairValidationRules } from "./validation-rules";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
-import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, WinCondition } from "../../domain/identity";
 import type {
@@ -18,7 +19,6 @@ import { FRAGRANT_PAIR_POLICY } from "./state";
 import { installFragrantStateSlot } from "./fragrant-state-slot";
 import { installPairStateSlot } from "./pair-state-slot";
 import { fragrantKnownWolfIds, fragrantRoleKnifeEligible } from "./authority";
-import { canSubmitFragrantPairChoice } from "./requests";
 import { FRAGRANT_BIND_STAGE, PAIR_INSPECTION_STAGE } from "./night-stages";
 const policy = z.strictObject({
   policy: z.literal(FRAGRANT_PAIR_POLICY).default(FRAGRANT_PAIR_POLICY),
@@ -105,13 +105,7 @@ export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.bind_fragrant_pair.directive"),
       },
     ],
-    validationRules: {
-      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
-      bind_fragrant_pair: ({ world, actorId, phase, day, fragrantPairScope, toolCall }) =>
-        canSubmitFragrantPairChoice(world, actorId, phase, day ?? 0, fragrantPairScope, toolCall)
-          ? null
-          : { code: RuleError.FragrantPairUnavailable },
-    },
+    validationRules: createFragrantValidationRules(),
     nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), FRAGRANT_BIND_STAGE],
     baselineAction: (role, request, ...rest) =>
       request.allowedTools.includes("bind_fragrant_pair")
@@ -155,12 +149,7 @@ export const AWAKENED_SEER_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.check_pair.directive"),
       },
     ],
-    validationRules: {
-      check_pair: ({ world, actorId, phase, day, fragrantPairScope, toolCall }) =>
-        canSubmitFragrantPairChoice(world, actorId, phase, day ?? 0, fragrantPairScope, toolCall)
-          ? null
-          : { code: RuleError.FragrantPairUnavailable },
-    },
+    validationRules: createPairValidationRules(),
     nightStages: [PAIR_INSPECTION_STAGE],
     baselineAction: (_role, request) => {
       const ids = request.context.pair_check_candidates;

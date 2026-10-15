@@ -70,7 +70,7 @@ export class WildChildSetupWindow {
       const result = this.gateway.validateAndSanitize(this.world, b.actorId, call, {
         phase: Phase.Night,
         day,
-        wildChildScope: b,
+        scope: b,
       });
       if (!validWildChildChoice(b) || delivery?.current() !== true) {
         status = "cancelled";

@@ -5,6 +5,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { COMPONENT } from "../../domain/components/names";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
@@ -70,7 +72,7 @@ export const ORDER_PRINCE_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.reset_exile_vote.directive"),
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       reset_exile_vote: ({ world, role, actorId, day, phase, toolCall }) => {
         if (
           !getOrderPrinceState(role, () => world.getComponent(actorId, COMPONENT.Camp)) ||
@@ -82,7 +84,7 @@ export const ORDER_PRINCE_ROLE_PROFILE: NativeRoleContributions = {
           return { code: RuleError.OrderPrinceUnavailable };
         return null;
       },
-    },
+    }),
     baselineAction: (role, request, _pick, _pickCamp, _locale, _world, currentCamp) =>
       request.allowedTools.includes("reset_exile_vote") && getOrderPrinceState(role, currentCamp)
         ? { name: "reset_exile_vote", args: { activate: true } }

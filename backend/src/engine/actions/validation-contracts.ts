@@ -1,36 +1,23 @@
 /**
- * 负责角色工具校验契约和存活目标查询。输入为可信 World／上下文与候选 ID，输出描述规则结果及生命资格。
+ * 负责角色工具校验契约和存活目标查询。公开规则输入为窄值查询与候选；可信宿主的生命查询辅助保原 World 输入，输出规则结果及生命资格。
  * 这些结构不保存第二份运行授权，也不执行提交的工具或付款。
  */
 import type { RuleViolation } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：工具校验规则契约定义。 */
 import { COMPONENT } from "../../domain/components/names";
-import { RoleComponent } from "../../domain/components/role";
 import { ActionWindow, EntityId, Phase, ToolCall, ToolName } from "../../domain/model";
 import { World } from "../../domain/world";
-import type { RoleCatalog } from "../../rulesets/roles/catalog";
+import type { ValidationQueries } from "./validation-queries";
 
 /** 单次工具校验上下文。 */
 export interface ValidationRuleContext {
   day?: number;
-  thiefScope?: object;
-  shapeshifterScope?: object;
-  wildChildScope?: object;
-  lonelyGirlScope?: object;
-  ghostBrideScope?: object;
-  demonHunterScope?: object;
-  nobleBodyScope?: object;
-  fragrantPairScope?: object;
-  animalScope?: object;
-  wallScope?: object;
   wallId?: string;
   itemInstanceId?: string;
   debateId?: string;
   abilityId?: string;
-  roleCatalog: RoleCatalog;
-  world: World;
+  readonly queries: ValidationQueries;
   actorId: EntityId;
-  role: RoleComponent;
   toolCall: ToolCall;
   phase: Phase;
   actionWindow?: ActionWindow;

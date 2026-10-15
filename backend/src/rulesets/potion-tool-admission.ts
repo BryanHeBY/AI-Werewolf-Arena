@@ -4,6 +4,8 @@
  * 读取同一实例和当前 settled frame，不因角色标签限定受赠／复制／转移能力，不建立库存快照。
  * 参数、短路及 getter 失败顺序保持；预检通过不替代实际提交时的原体、生命和来源复验。
  */
+import { ownedToolRules } from "../engine/actions/validation-queries";
+
 import { scholarMentorBlocks } from "../features/scholar-mentor/ports";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../features/magician/ports";
 import { nativePotionsCanCombine } from "../features/witch/ports";
@@ -15,7 +17,7 @@ import { activeNightAbility } from "../features/night-abilities/abilities";
 import { luckyTargetAllowed } from "../features/night-abilities/night-action-history";
 
 /** 保留原可写规则表；Catalog 仍晚读当前 callback，不把准入冻结为登记时的授权快照。 */
-export const WITCH_VALIDATION_RULES: ToolRuleMap = {
+export const WITCH_VALIDATION_RULES: ToolRuleMap = ownedToolRules({
   use_potion: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
     // 原库存选择也适用于受赠／复制／转移药剂；不新增 Witch 角色标签门槛。
     const ability = activeNightAbility(role, "potion", day ?? 1, abilityId);
@@ -92,4 +94,4 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
     }
     return null;
   },
-};
+});

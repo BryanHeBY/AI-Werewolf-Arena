@@ -85,7 +85,7 @@ export async function executeWeddingTurn(input: {
     const valid = gateway.validateAndSanitize(world, actorId, call, {
       phase: Phase.Night,
       day,
-      ghostBrideScope: scope,
+      scope: scope,
       deferOperation: true,
     });
     if (!valid.ok || !valid.sanitizedCall) throw new Error("ghost_bride_action_invalid");

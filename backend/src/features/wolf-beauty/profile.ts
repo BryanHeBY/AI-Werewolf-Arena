@@ -5,6 +5,8 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  * 行动规则在原资格／目标读取后的成功尾拒执行退休；初始化、baseline 与玩家知识不按该标记过滤。
  */
+import { ownedToolRules, invokeValidationRule } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { BEAUTY_DEATH_LINK_POLICIES } from "../../domain/board";
@@ -73,10 +75,15 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.charm.hint",
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       ...WOLF_VALIDATION_RULES,
       kill_vote: (ctx) => {
-        const inherited = WOLF_VALIDATION_RULES.kill_vote!(ctx);
+        // 原表和 callee 仍在此处晚读；转发只按原 owner 关联 scope，未知替换规则只得到公开查询。
+        const inherited = invokeValidationRule(
+          WOLF_VALIDATION_RULES.kill_vote!,
+          ctx,
+          WOLF_VALIDATION_RULES,
+        );
         if (inherited) return inherited;
         return ctx.toolCall.name === "kill_vote" &&
           !ctx.toolCall.args.abstain &&
@@ -108,7 +115,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
             ? { code: RuleError.CharmUnavailable }
             : null;
       },
-    },
+    }),
     llmRepair: {
       coerce: {
         ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce,

@@ -4,24 +4,19 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { createWildChildValidationRules } from "./validation-rules";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role, WinCondition } from "../../domain";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { WOLF_NIGHT_STAGES } from "../wolf/ability-ports";
 import { WOLF_TOOL_SPECS, WOLF_STAGE_DIRECTIVES } from "../wolf/ability-ports";
-import { WOLF_VALIDATION_RULES } from "../wolf/ability-ports";
 import { WOLF_LLM_REPAIR_PACK } from "../wolf/ability-ports";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { WILD_CHILD_POLICY, initializeWildChildState, readWildChildTool } from "./state-slot";
-import {
-  authorizedWildChild,
-  projectWildChild,
-  wildChildPackActive,
-  wildChildPackKnown,
-} from "./lifecycle";
+import { WILD_CHILD_POLICY, initializeWildChildState } from "./state-slot";
+import { projectWildChild, wildChildPackActive, wildChildPackKnown } from "./lifecycle";
 const parameters = z.strictObject({
   policy: z.literal(WILD_CHILD_POLICY).default(WILD_CHILD_POLICY),
 });
@@ -78,18 +73,7 @@ export const WILD_CHILD_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.choose_wild_model.hint",
       },
     ],
-    validationRules: {
-      ...WOLF_VALIDATION_RULES,
-      choose_wild_model: ({ world, actorId, day, phase, toolCall, wildChildScope }) =>
-        !authorizedWildChild(world, actorId, day, phase, wildChildScope)
-          ? { code: RuleError.WildChildUnavailable }
-          : readWildChildTool(toolCall) &&
-              toolCall.name === "choose_wild_model" &&
-              toolCall.args.target_id !== actorId &&
-              world.getAliveEntityIds().includes(toolCall.args.target_id)
-            ? null
-            : { code: RuleError.WildChildChoice },
-    },
+    validationRules: createWildChildValidationRules(),
     llmRepair: WOLF_LLM_REPAIR_PACK,
     baselineAction: (
       role,

@@ -4,6 +4,10 @@
  * 库存、生命与历史仍由原 owner 持有，本层只验证准入，不执行查验、付款、完整对局或模型。
  * 预期不由生产 callback 生成，临时修改的规则／状态 descriptor 在 finally 恢复。
  */
+import {
+  createValidationQueries,
+  type ValidationHostContext as ValidationRuleContext,
+} from "../../../src/engine/actions/validation-queries";
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase, RuleError, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
@@ -18,10 +22,7 @@ import { grantNightAbility } from "../../../src/features/night-abilities/night-a
 import { recordOwnNightAction } from "../../../src/features/night-abilities/night-action-history";
 import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import { ToolValidationRuleRegistry } from "../../../src/engine/actions/tool-validation-rule-registry";
-import type {
-  ToolRule,
-  ValidationRuleContext,
-} from "../../../src/engine/actions/validation-contracts";
+import type { ToolRule } from "../../../src/engine/actions/validation-contracts";
 
 function fixture() {
   const world = new World();
@@ -40,6 +41,7 @@ function fixture() {
   const catalog = new RoleCatalog([], []);
   function context(actorId: number, targetId: number, abilityId?: string): ValidationRuleContext {
     return {
+      queries: createValidationQueries(world),
       world,
       actorId,
       role: players[actorId - 1]!.role,
@@ -96,7 +98,8 @@ test("profile keeps one writable table while registry distinguishes late role ru
     original = Object.getOwnPropertyDescriptor(SEER_VALIDATION_RULES, "check_identity")!;
   let chosen: ToolRule = function (this: unknown, ctx) {
     expect(this).toBeUndefined();
-    expect(ctx.roleCatalog).toBe(catalog);
+    expect(Object.hasOwn(ctx, "roleCatalog")).toBe(false);
+    expect(ctx.queries.hasRole(1)).toBe(true);
     trace.push("first");
     return { code: RuleError.ModifierUnavailable };
   };
@@ -156,6 +159,7 @@ test("parameter getters and three target reads preserve phase short circuit and 
     failOnRead = 0;
   const context: ValidationRuleContext = {
     roleCatalog: f.catalog,
+    queries: createValidationQueries(f.world),
     get world() {
       trace.push("world");
       return f.world;

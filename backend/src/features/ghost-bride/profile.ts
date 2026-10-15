@@ -4,23 +4,18 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { createGhostBrideValidationRules } from "./validation-rules";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, COMPONENT } from "../../domain";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
-import { canSubmitWeddingTool } from "./authority";
 import { initializeGhostBrideState } from "./state";
-import type { ToolRule } from "../../engine/actions/validation-contracts";
 const parameters = z.strictObject({
   policy: z.literal(GHOST_BRIDE_POLICY).default(GHOST_BRIDE_POLICY),
 });
-const validate: ToolRule = ({ world, actorId, phase, day, ghostBrideScope, toolCall }) =>
-  canSubmitWeddingTool(world, actorId, phase, day ?? 0, ghostBrideScope, toolCall)
-    ? null
-    : { code: RuleError.GhostBrideUnavailable };
 const target = {
   type: "object",
   properties: { target_id: { type: "integer", minimum: 1 } },
@@ -93,12 +88,7 @@ export const GHOST_BRIDE_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.wedding_kill_vote.hint",
       },
     ],
-    validationRules: {
-      choose_bridegroom: validate,
-      choose_wedding_witness: validate,
-      speak_to_partner: validate,
-      wedding_kill_vote: validate,
-    },
+    validationRules: createGhostBrideValidationRules(),
   },
   presentation: nativeRolePresentation("ghost_bride"),
 };

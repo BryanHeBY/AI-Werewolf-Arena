@@ -4,6 +4,7 @@
  * 覆盖已退休原体、Provider 返回、晚目标 getter，以及已提交效果／镜像安装的失败前缀。
  * 两族使用各自合法六人板；只执行具体夜阶段，不运行完整周期、模型、传输或复现。
  */
+import { invokeValidationRule } from "../../../src/engine/actions/validation-queries";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
@@ -239,15 +240,19 @@ test("晚目标 getter 退休后两族拒绝首付款，getter 原异常仍优�
     const validateRules =
       family === "mechanical" ? MECHANICAL_VALIDATION_RULES : AWAKENED_VALIDATION_RULES;
     expect(
-      validateRules[call.name]!({
-        world: ctx.world,
-        roleCatalog: ctx.roleCatalog,
-        actorId: 1,
-        role: f.role,
-        day: 2,
-        phase: Phase.Night,
-        toolCall: call,
-      }),
+      invokeValidationRule(
+        validateRules[call.name]!,
+        {
+          world: ctx.world,
+          roleCatalog: ctx.roleCatalog,
+          actorId: 1,
+          role: f.role,
+          day: 2,
+          phase: Phase.Night,
+          toolCall: call,
+        },
+        validateRules,
+      ),
     ).toEqual({
       code:
         family === "mechanical" ? RuleError.MechanicalUnavailable : RuleError.AwakenedUnavailable,

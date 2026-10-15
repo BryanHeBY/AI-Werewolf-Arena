@@ -2,12 +2,15 @@
  * 负责机械狼工具的本夜模式与行动资格校验。输入为原工具参数、角色状态及可信上下文，输出原规则拒绝或通过。
  * 预检不等于复制、付款或落效果，原体与能力资源仍由机械机制持有并在提交时复验。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+import type { ToolRuleMap as PublicToolRuleMap } from "../../engine/actions/validation-contracts";
+
 import { MECHANICAL_TOOL_NAMES } from "./tool-names";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../domain/components/names";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { Camp, Role, Phase } from "../../domain/model";
-import type { ToolRule, ToolRuleMap } from "../../engine/actions/validation-contracts";
+import type { OwnedToolRule as ToolRule } from "../../engine/actions/validation-queries";
 import { isAliveTarget } from "../../engine/actions/validation-contracts";
 import { canMechanicalKnife } from "./inheritance";
 import { hasCurrentMechanicalMode } from "./night-scope";
@@ -75,6 +78,6 @@ const validateMechanical: ToolRule = ({ world, actorId, role, day, phase, toolCa
 };
 
 export { MECHANICAL_TOOL_NAMES } from "./tool-names";
-export const MECHANICAL_VALIDATION_RULES: ToolRuleMap = Object.fromEntries(
-  MECHANICAL_TOOL_NAMES.map((name) => [name, validateMechanical]),
+export const MECHANICAL_VALIDATION_RULES: PublicToolRuleMap = ownedToolRules(
+  Object.fromEntries(MECHANICAL_TOOL_NAMES.map((name) => [name, validateMechanical])),
 );

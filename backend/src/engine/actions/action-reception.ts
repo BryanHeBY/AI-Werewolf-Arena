@@ -4,35 +4,9 @@
  * 每实例只持有原 schema 缓存和不写第二 Tape 校验的 Gateway；schema 与具体 scope 仍按原时点晚读。
  * 本 owner 不消耗库存、提交领域动作或 settle 完成责任；选择／截止窗口由 AI ActionTurn 独立拥有。
  */
-import { nobleBodyRequestScope } from "../../features/noble-secret-body/ports";
-import { animalRequestScope } from "../../features/animal-dream/ports";
-import { fragrantPairRequestScope } from "../../features/fragrant-pair-seer/ports";
-import {
-  demonWitchRequestTargetCurrent,
-  demonWitchRequestCurrent,
-  readDemonNativeNightTool,
-  readDemonPotionTool,
-} from "../../features/demon-hunter/ports";
-import {
-  demonHunterRequestScope,
-  canSubmitDemonHunt,
-  demonHunterActorId,
-} from "../../features/demon-hunter/ports";
-import { readDemonHuntTool } from "../../features/demon-hunter/ports";
-import { ghostBrideRequestScope, weddingSetup } from "../../features/ghost-bride/ports";
-import { readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { lonelyGirlRequestScope } from "../../features/lonely-girl/ports";
-import { readLonelyGirlTool } from "../../features/lonely-girl/ports";
-import { wildChildRequestScope } from "../../features/wild-child/ports";
-import { readWildChildTool } from "../../features/wild-child/ports";
-import { shapeshifterRequestScope } from "../../features/shapeshifter/ports";
-import { thiefRequestScope } from "../../features/thief/ports";
-import { readThiefChoice } from "../../features/thief/ports";
-import { wallRequestScope } from "../../features/wall-notes/ports";
 import { z, type ZodType } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { toolFailure } from "@ai-werewolf-arena/game-text";
-import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import { DEATH_SHOT_STAGES, type ActionRequest, type ToolCall, type ToolName } from "../../domain";
 import { World } from "../../domain/world";
 import { ActionValidator } from "./action-validator";
@@ -61,10 +35,11 @@ export type GameActionValidation =
 
 /**
  * 选择窗口的类型接口只声明原 locale 与预检函数，不提供写方法或领域完成接口。
- * 运行对象仍是原接收器和 World；这是消费契约，不是新的进程隔离或运行权限屏障。
+ * 实际接收器不公开 World；语言在原调用点晚读，领域写入仍不属于此接口。
  */
 export interface ActionPreflightPort {
-  readonly world: { readonly locale: Locale };
+  readonly locale: Locale;
+
   validate(request: ActionRequest, name: string, rawArgs: unknown): GameActionValidation;
 }
 type Validation = GameActionValidation;
@@ -73,19 +48,27 @@ type Validation = GameActionValidation;
 export class ActionReception {
   private readonly schemas = new Map<ToolName, ZodType>();
   private readonly gateway: ToolGateway;
+  readonly #world: World;
+  private readonly rules: ToolValidationRuleRegistry;
 
   constructor(
-    readonly world: World,
+    world: World,
     private readonly repair: ToolCallRepairRegistry = getDefaultToolCallRepairRegistry(),
     private readonly specs: ToolSpecRegistry = getDefaultToolSpecRegistry(),
     rules: ToolValidationRuleRegistry = getDefaultToolValidationRuleRegistry(),
   ) {
+    this.#world = world;
+    this.rules = rules;
     // 这里仍关闭领域校验的 Tape 记录，避免接收预检制造第二次 validation 操作。
     this.gateway = new ToolGateway(new ActionValidator(rules, false));
   }
 
+  get locale(): Locale {
+    return this.#world.locale;
+  }
+
   validate(request: ActionRequest, name: string, rawArgs: unknown): Validation {
-    const fail = (code: string) => toolFailure(this.world.locale, code);
+    const fail = (code: string) => toolFailure(this.#world.locale, code);
     if (!request.allowedTools.includes(name as ToolName) || name === "report_bug") {
       return fail("tool_not_allowed_in_this_turn");
     }
@@ -101,78 +84,10 @@ export class ActionReception {
       this.schemas.set(tool, schema);
     }
     // 保留原数字字符串修复；不把布尔／文本按 truthiness 或 String() 宽转，也不补缺少的必填参数。
-    const wallCall = tool === "write_note" ? readWallTool({ name: tool, args: rawArgs }) : null;
-    if (tool === "write_note" && !wallCall) return fail(RuleError.WallNoteText);
-    const initialChoice = tool === "choose_thief_card" || tool === "choose_shapeshifter_card";
-    const thiefSlot = initialChoice ? readThiefChoice(rawArgs) : undefined;
-    if (initialChoice && thiefSlot === undefined)
-      return fail(
-        tool === "choose_thief_card" ? RuleError.ThiefChoice : RuleError.ShapeshifterChoice,
-      );
-    if (tool === "choose_admired_player" && !readLonelyGirlTool({ name: tool, args: rawArgs }))
-      return fail(RuleError.LonelyGirlChoice);
-    const wildCall =
-      tool === "choose_wild_model" ? readWildChildTool({ name: tool, args: rawArgs }) : null;
-    if (tool === "choose_wild_model" && !wildCall) return fail(RuleError.WildChildChoice);
-    const weddingTool =
-      [
-        "choose_bridegroom",
-        "choose_wedding_witness",
-        "speak_to_partner",
-        "wedding_kill_vote",
-      ].includes(tool) ||
-      (tool === "kill_vote" && weddingSetup(this.world) !== null);
-    const weddingCall = weddingTool ? readWeddingTool({ name: tool, args: rawArgs }) : null;
-    if (weddingTool && !weddingCall) return fail(RuleError.GhostBrideChoice);
-    const demonCall =
-      name === "demon_hunt" ? readDemonHuntTool({ name: tool, args: rawArgs }) : null;
-    if (
-      name === "demon_hunt" &&
-      (!demonCall ||
-        !canSubmitDemonHunt(
-          this.world,
-          request.actorId,
-          request.phase,
-          request.context.day,
-          demonHunterRequestScope(this.world, request),
-          demonCall,
-        ))
-    )
-      return fail(RuleError.ToolMismatch);
-    const demonNative =
-      (tool === "check_identity" || tool === "guard") && demonHunterActorId(this.world) !== null;
-    const nativeCall = demonNative ? readDemonNativeNightTool({ name: tool, args: rawArgs }) : null;
-    if (
-      demonNative &&
-      (!nativeCall ||
-        !demonWitchRequestCurrent(this.world, request) ||
-        (nativeCall.args.target_id !== null &&
-          !demonWitchRequestTargetCurrent(this.world, request, nativeCall.args.target_id)))
-    )
-      return fail(RuleError.ToolMismatch);
-    const demonWitch = tool === "use_potion" && demonHunterActorId(this.world) !== null;
-    const potionCall = demonWitch ? readDemonPotionTool({ name: tool, args: rawArgs }) : null;
-    if (
-      demonWitch &&
-      (!potionCall ||
-        !demonWitchRequestTargetCurrent(this.world, request, potionCall.args.target_id))
-    )
-      return fail(RuleError.ToolMismatch);
-    const input = (
-      potionCall
-        ? potionCall.args
-        : demonCall
-          ? demonCall.args
-          : weddingCall
-            ? weddingCall.args
-            : wildCall
-              ? wildCall.args
-              : initialChoice
-                ? { slot: thiefSlot }
-                : wallCall
-                  ? wallCall.args
-                  : { ...rawArgs }
-    ) as Record<string, unknown>;
+    const admission = this.rules.prepareRawArgs(this.#world, request, tool, rawArgs);
+    if (!admission.ok) return fail(admission.error);
+    // 仅各原 reader 明确规范化的参数取其原对象；一般工具仍在全部 raw 预检后做原 spread。
+    const input = (admission.args ?? { ...rawArgs }) as Record<string, unknown>;
     const properties = spec.parameters.properties as
       Record<string, { type?: string | string[] }> | undefined;
     for (const [key, value] of Object.entries(input)) {
@@ -207,7 +122,7 @@ export class ActionReception {
     if (
       deathStage &&
       (!deathTool ||
-        !this.world.hasDeathAction(
+        !this.#world.hasDeathAction(
           request.actorId,
           tool,
           request.phase,
@@ -218,20 +133,11 @@ export class ActionReception {
     ) {
       return fail(RuleError.DeathActionUnavailable);
     }
-    // 机制 scope 按下面原字段顺序逐个读取；不提前缓存请求许可或绕过 Gateway 的提交前规则。
-    const checked = this.gateway.validateAndSanitize(this.world, request.actorId, call, {
+    // 贡献装配保原证明观察顺序；核心不持角色清单，也不提前缓存许可或绕过提交前规则。
+    const checked = this.gateway.validateAndSanitize(this.#world, request.actorId, call, {
       phase: request.phase,
       day: request.context.day,
-      thiefScope: thiefRequestScope(this.world, request),
-      shapeshifterScope: shapeshifterRequestScope(this.world, request),
-      lonelyGirlScope: lonelyGirlRequestScope(this.world, request),
-      ghostBrideScope: ghostBrideRequestScope(this.world, request),
-      demonHunterScope: demonHunterRequestScope(this.world, request),
-      nobleBodyScope: nobleBodyRequestScope(this.world, request),
-      fragrantPairScope: fragrantPairRequestScope(this.world, request),
-      animalScope: animalRequestScope(this.world, request),
-      wildChildScope: wildChildRequestScope(this.world, request),
-      wallScope: wallRequestScope(this.world, request),
+      requestScopes: this.rules.captureRequestScopes(this.#world, request),
       wallId: request.context.wall_id,
       itemInstanceId: request.context.item_instance_id,
       debateId: request.context.debate_id,
@@ -251,7 +157,7 @@ export class ActionReception {
     });
     if (!checked.ok || !checked.sanitizedCall) {
       return toolFailure(
-        this.world.locale,
+        this.#world.locale,
         checked.error ?? "invalid_tool_arguments",
         checked.message,
       );
@@ -259,7 +165,7 @@ export class ActionReception {
     const evaluation = evaluateTurnConstraints(
       { validActions: [checked.sanitizedCall] },
       resolveTurnConstraints(request),
-      this.world.locale,
+      this.#world.locale,
     );
     if (!evaluation.ok) {
       return { ...fail("turn_constraints_not_satisfied"), details: evaluation.errors };

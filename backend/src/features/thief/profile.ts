@@ -4,6 +4,9 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { THIEF_VALIDATION_SCOPE } from "../../rulesets/action-validation-assembly";
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
@@ -56,15 +59,19 @@ export const THIEF_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.choose_thief_card.hint",
       },
     ],
-    validationRules: {
-      choose_thief_card: ({ world, actorId, day, phase, toolCall, thiefScope }) => {
-        if (!authorizedThiefScope(world, actorId, day, phase, thiefScope))
-          return { code: RuleError.ThiefUnavailable };
-        return toolCall.name === "choose_thief_card" && readThiefChoice(toolCall.args) !== undefined
-          ? null
-          : { code: RuleError.ThiefChoice };
+    validationRules: ownedToolRules(
+      {
+        choose_thief_card: ({ world, actorId, day, phase, toolCall, scope: thiefScope }) => {
+          if (!authorizedThiefScope(world, actorId, day, phase, thiefScope))
+            return { code: RuleError.ThiefUnavailable };
+          return toolCall.name === "choose_thief_card" &&
+            readThiefChoice(toolCall.args) !== undefined
+            ? null
+            : { code: RuleError.ThiefChoice };
+        },
       },
-    },
+      THIEF_VALIDATION_SCOPE,
+    ),
     baselineAction: (_role, request) =>
       request.allowedTools.includes("choose_thief_card")
         ? { name: "choose_thief_card", args: { slot: 0 } }

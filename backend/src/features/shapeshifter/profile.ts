@@ -4,6 +4,9 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { SHAPESHIFTER_VALIDATION_SCOPE } from "../../rulesets/action-validation-assembly";
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
@@ -65,16 +68,26 @@ export const SHAPESHIFTER_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.choose_shapeshifter_card.hint",
       },
     ],
-    validationRules: {
-      choose_shapeshifter_card: ({ world, actorId, day, phase, toolCall, shapeshifterScope }) => {
-        const scope = authorizedShapeshifterScope(world, actorId, day, phase, shapeshifterScope);
-        if (!scope) return { code: RuleError.ShapeshifterUnavailable };
-        return toolCall.name === "choose_shapeshifter_card" &&
-          scope.allowedSlots.includes(readShapeshifterChoice(toolCall.args) as 0 | 1)
-          ? null
-          : { code: RuleError.ShapeshifterChoice };
+    validationRules: ownedToolRules(
+      {
+        choose_shapeshifter_card: ({
+          world,
+          actorId,
+          day,
+          phase,
+          toolCall,
+          scope: shapeshifterScope,
+        }) => {
+          const scope = authorizedShapeshifterScope(world, actorId, day, phase, shapeshifterScope);
+          if (!scope) return { code: RuleError.ShapeshifterUnavailable };
+          return toolCall.name === "choose_shapeshifter_card" &&
+            scope.allowedSlots.includes(readShapeshifterChoice(toolCall.args) as 0 | 1)
+            ? null
+            : { code: RuleError.ShapeshifterChoice };
+        },
       },
-    },
+      SHAPESHIFTER_VALIDATION_SCOPE,
+    ),
     baselineAction: () => null,
   },
   presentation: nativeRolePresentation("shapeshifter"),

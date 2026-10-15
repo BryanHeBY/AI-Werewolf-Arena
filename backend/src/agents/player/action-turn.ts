@@ -54,7 +54,7 @@ export class ActionTurn {
 
   // locale→closed/selected/期限→严格失败上限→turnId 按原顺序读取；没有计时器或新增期限数值校验。
   authorize(turnId: unknown, tool = "submit_action"): Extract<ActionReceipt, { ok: false }> | null {
-    const locale = this.reception.world.locale;
+    const locale = this.reception.locale;
     if (this.closed || this.selected || (this.request.deadlineAtMs ?? Infinity) <= Date.now()) {
       return toolFailure(locale, "turn_not_open_or_session_invalid");
     }
@@ -80,7 +80,7 @@ export class ActionTurn {
       Array.isArray(args)
     ) {
       this.rejectedActions++;
-      return toolFailure(this.reception.world.locale, "invalid_submit_action_arguments");
+      return toolFailure(this.reception.locale, "invalid_submit_action_arguments");
     }
     // 预检返回拒绝才计数；预检直接抛错不在这里 catch 或换成拒绝，原异常留给实际传输调用方。
     const result = this.reception.validate(this.request, name, args);
@@ -97,7 +97,7 @@ export class ActionTurn {
     const refusal = this.authorize(turnId);
     if (refusal) return refusal;
     this.rejectedActions++;
-    return toolFailure(this.reception.world.locale, "invalid_submit_action_arguments");
+    return toolFailure(this.reception.locale, "invalid_submit_action_arguments");
   }
 
   /** 只写本窗口 closed；不取消模型、关闭会话、清理候选或通知领域完成，这些仍归原调用链。 */

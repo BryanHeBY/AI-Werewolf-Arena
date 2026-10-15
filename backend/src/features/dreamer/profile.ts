@@ -4,6 +4,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { DREAM_PROTECTION_POLICIES } from "../../domain/board";
@@ -61,7 +63,7 @@ export const DREAMER_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.dream.hint",
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       dream: ({ world, actorId, role, toolCall, phase, day, abilityId }) => {
         if (!activeNightAbility(role, "dream", day ?? 1, abilityId))
           return { code: RuleError.DreamUnavailable };
@@ -74,7 +76,7 @@ export const DREAMER_ROLE_PROFILE: NativeRoleContributions = {
           return { code: RuleError.DreamTarget };
         return null;
       },
-    },
+    }),
     stageDirectives: [
       {
         match: (tools) => tools.length === 1 && tools[0] === "dream",

@@ -5,6 +5,8 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  * 行动规则在原资格／目标读取后的成功尾拒执行退休；初始化、baseline 与玩家知识不按该标记过滤。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
@@ -68,7 +70,7 @@ export const HYBRID_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.choose_exemplar.hint",
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       choose_exemplar: ({ world, actorId, role, day, phase, toolCall }) => {
         const state = getHybridState(role),
           victory = world.getComponent(actorId, COMPONENT.Victory);
@@ -88,7 +90,7 @@ export const HYBRID_ROLE_PROFILE: NativeRoleContributions = {
           return { code: RuleError.HybridTarget };
         return isRoleExecutionRetired(role) ? { code: RuleError.HybridUnavailable } : null;
       },
-    },
+    }),
     llmRepair: {
       coerce: {
         choose_exemplar: (args) => {

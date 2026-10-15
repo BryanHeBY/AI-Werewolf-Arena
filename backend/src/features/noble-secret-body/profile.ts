@@ -4,15 +4,15 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { createNobleValidationRules, createSecretBodyValidationRules } from "./validation-rules";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
-import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { Camp, Phase, Role, WinCondition } from "../../domain/identity";
+import { Camp, Role, WinCondition } from "../../domain/identity";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { installNobleState, installSecretBodyState, readNobleState } from "./state";
-import { canSubmitNobleBodyChoice } from "./requests";
 import { NOBLE_CHOICE_STAGE, SECRET_BODY_STAGE } from "./night-stages";
 const noble = z.strictObject({
   wolfActionPolicy: z.enum(["standard", "no_blast_no_self_knife"]).default("standard"),
@@ -98,13 +98,7 @@ export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.choose_servant.directive"),
       },
     ],
-    validationRules: {
-      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
-      choose_servant: ({ world, actorId, phase, day, nobleBodyScope, toolCall }) =>
-        canSubmitNobleBodyChoice(world, actorId, phase, day ?? 0, nobleBodyScope, toolCall)
-          ? null
-          : { code: RuleError.NobleBodyUnavailable },
-    },
+    validationRules: createNobleValidationRules(),
     nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), NOBLE_CHOICE_STAGE],
     baselineAction: (role, request, ...rest) =>
       request.allowedTools.includes("choose_servant")
@@ -157,12 +151,7 @@ export const AWAKENED_IDIOT_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.protect_secret_body.directive"),
       },
     ],
-    validationRules: {
-      protect_secret_body: ({ world, actorId, phase, day, nobleBodyScope, toolCall }) =>
-        canSubmitNobleBodyChoice(world, actorId, phase, day ?? 0, nobleBodyScope, toolCall)
-          ? null
-          : { code: RuleError.NobleBodyUnavailable },
-    },
+    validationRules: createSecretBodyValidationRules(),
     nightStages: [SECRET_BODY_STAGE],
     baselineAction: (_role, request) =>
       request.allowedTools.includes("protect_secret_body")

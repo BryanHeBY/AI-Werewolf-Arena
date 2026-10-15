@@ -4,6 +4,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
@@ -97,7 +99,7 @@ export const RADIANT_COUNT_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.cast_shelter.directive"),
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       cast_shelter: ({ world, actorId, role, day, phase, abilityId, toolCall }) => {
         if (
           phase !== Phase.Night ||
@@ -119,7 +121,7 @@ export const RADIANT_COUNT_ROLE_PROFILE: NativeRoleContributions = {
           ? null
           : { code: RuleError.RadiantShelterTarget };
       },
-    },
+    }),
     baselineAction: (_role, request) =>
       request.allowedTools.includes("cast_shelter")
         ? { name: "cast_shelter", args: { target_id: null } }
@@ -172,7 +174,7 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.swallow_skill.directive"),
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       swallow_skill: ({ world, actorId, day, phase, toolCall }) => {
         if (
@@ -189,7 +191,7 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
           ? null
           : { code: RuleError.EclipseSwallowTarget };
       },
-    },
+    }),
     baselineAction: (role, request, ...rest) =>
       request.allowedTools.includes("swallow_skill")
         ? { name: "swallow_skill", args: { target_id: null } }

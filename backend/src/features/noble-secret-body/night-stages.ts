@@ -40,7 +40,7 @@ async function execute(ctx: NightStageContext, kind: "body" | "noble") {
     const valid = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, call, {
       phase: Phase.Night,
       day,
-      nobleBodyScope: scope,
+      scope: scope,
       deferOperation: true,
     });
     if (!valid.ok || !valid.sanitizedCall || nobleBodyRequestScope(ctx.world, request) !== scope)

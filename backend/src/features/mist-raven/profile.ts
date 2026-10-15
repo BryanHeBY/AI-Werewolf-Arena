@@ -4,6 +4,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
@@ -115,7 +117,7 @@ export const ALCHEMIST_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.use_snake.directive"),
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       cast_mist: ({ world, role, actorId, day, phase, toolCall }) => {
         if (
           phase !== Phase.Night ||
@@ -159,7 +161,7 @@ export const ALCHEMIST_ROLE_PROFILE: NativeRoleContributions = {
           return { code: RuleError.SnakeUnavailable };
         }
       },
-    },
+    }),
     baselineAction: (_role, request) => {
       if (request.allowedTools.includes("cast_mist"))
         return { name: "cast_mist", args: { target_ids: null } };
@@ -220,7 +222,7 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.raven_knife.directive"),
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       raven_knife: ({ world, role, actorId, day, phase, toolCall }) => {
         if (
@@ -247,7 +249,7 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
           return { code: RuleError.RavenKnifeTarget };
         }
       },
-    },
+    }),
     baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) =>
       request.allowedTools.includes("raven_knife")
         ? { name: "raven_knife", args: { target_id: null } }

@@ -39,7 +39,7 @@ export const ANIMAL_FOX_STAGE: NightStageHandler = {
         const valid = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, call, {
           phase: Phase.Night,
           day,
-          animalScope: scope,
+          scope: scope,
           deferOperation: true,
         });
         if (!valid.ok || !valid.sanitizedCall) throw Error("animal_required_action_invalid");

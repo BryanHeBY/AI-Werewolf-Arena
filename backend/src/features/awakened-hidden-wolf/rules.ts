@@ -2,16 +2,17 @@
  * 负责觉醒隐狼的工具资格校验贡献。输入为原工具参数、角色状态及可信窗口，输出原规则拒绝或通过。
  * 当前原体、学习／盾／刀资格仍归实际机制，本校验不执行学习、消费库存或提交死亡。
  */
+
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+import type { ToolRuleMap as PublicToolRuleMap } from "../../engine/actions/validation-contracts";
+import { isAliveTarget } from "../../engine/actions/validation-contracts";
+
 import { AWAKENED_TOOL_NAMES } from "./tool-names";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../domain/components/names";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { Camp, Phase, Role } from "../../domain/model";
-import {
-  isAliveTarget,
-  type ToolRule,
-  type ToolRuleMap,
-} from "../../engine/actions/validation-contracts";
+import { type OwnedToolRule as ToolRule } from "../../engine/actions/validation-queries";
 import { canAwakenedKnife } from "./inheritance";
 import { currentAwakenedNight } from "./night-scope";
 import {
@@ -69,6 +70,6 @@ const validateAwakened: ToolRule = ({ world, actorId, role, phase, day, toolCall
   return { code: RuleError.AwakenedUnavailable };
 };
 export { AWAKENED_TOOL_NAMES } from "./tool-names";
-export const AWAKENED_VALIDATION_RULES: ToolRuleMap = Object.fromEntries(
-  AWAKENED_TOOL_NAMES.map((name) => [name, validateAwakened]),
+export const AWAKENED_VALIDATION_RULES: PublicToolRuleMap = ownedToolRules(
+  Object.fromEntries(AWAKENED_TOOL_NAMES.map((name) => [name, validateAwakened])),
 );

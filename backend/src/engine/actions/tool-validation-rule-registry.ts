@@ -8,11 +8,25 @@ import { COMMON_VALIDATION_RULES } from "./common-validation-rules";
 import { RoleCatalog } from "../../rulesets/roles/catalog";
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
 import { SHERIFF_VALIDATION_RULES } from "../../features/sheriff/validation-ports";
-import { ToolRuleMap, ValidationRuleContext } from "./validation-contracts";
+import type { ToolRuleMap } from "./validation-contracts";
+import {
+  invokeValidationRule,
+  type ValidationHostInput,
+  type RawAdmissionResult,
+  type ValidationScopeInput,
+} from "./validation-queries";
+import { createDefaultActionValidationAssembly } from "../../rulesets/action-validation-assembly";
+import type { World } from "../../domain/world";
+import type { ActionRequest } from "../../domain/actions";
+import type { ToolName as ContractToolName } from "@ai-werewolf-arena/game-contract";
 import { validateGiftGun } from "../../features/death-actions/gift-gun-ports";
 
-function buildDefaultRules(roleProfileRegistry: RoleCatalog): ToolRuleMap {
+function buildDefaultRules(
+  roleProfileRegistry: RoleCatalog,
+  commonRules: ToolRuleMap,
+): ToolRuleMap {
   const rules: ToolRuleMap = {
+    ...commonRules,
     ...COMMON_VALIDATION_RULES,
     ...SHERIFF_VALIDATION_RULES,
   };
@@ -28,16 +42,46 @@ function buildDefaultRules(roleProfileRegistry: RoleCatalog): ToolRuleMap {
 export class ToolValidationRuleRegistry {
   private readonly rules: ToolRuleMap;
   private readonly useProfileRules: boolean;
+  private readonly admission: ReturnType<typeof createDefaultActionValidationAssembly>;
 
   constructor(
     rules?: ToolRuleMap,
     private readonly roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog(),
   ) {
-    this.rules = { ...(rules ?? buildDefaultRules(roleProfileRegistry)) };
+    this.admission = createDefaultActionValidationAssembly();
+    this.rules = {
+      ...(rules ?? buildDefaultRules(roleProfileRegistry, this.admission.commonRules)),
+    };
     this.useProfileRules = rules === undefined;
   }
 
-  validate(ctx: Omit<ValidationRuleContext, "roleCatalog">): RuleViolation | null {
+  /** 原 raw 程序按可信装配顺序执行；首拒绝立即返回，参数读取和 getter 异常不吞掉。 */
+  prepareRawArgs(
+    world: World,
+    request: ActionRequest,
+    tool: ContractToolName,
+    rawArgs: unknown,
+  ): RawAdmissionResult {
+    let args: Record<string, unknown> | undefined;
+    for (const contribution of this.admission.raw) {
+      const raw = contribution.raw;
+      if (!raw) continue;
+      const result = raw(world, request, tool, rawArgs);
+      if (!result.ok) return result;
+      if (result.args !== undefined) args = result.args;
+    }
+    return { ok: true, ...(args !== undefined ? { args } : {}) };
+  }
+
+  /** 每次接收都观察原全部证明；只用静态 owner 身份路由，不缓存许可、不向扩展返回证明。 */
+  captureRequestScopes(world: World, request: ActionRequest): readonly ValidationScopeInput[] {
+    return this.admission.scopes.map((contribution) => {
+      const capture = contribution.capture;
+      return { owner: contribution.owner, scope: capture(world, request) };
+    });
+  }
+
+  validate(ctx: Omit<ValidationHostInput, "roleCatalog">): RuleViolation | null {
     if (this.useProfileRules && ctx.toolCall.name === "shoot" && ctx.abilityId !== undefined)
       return validateGiftGun({ ...ctx, roleCatalog: this.roleProfileRegistry });
     // 同名工具可以归不同角色库存；在原调用点按当前角色读取规则，不能只靠全局索引授权。
@@ -48,7 +92,7 @@ export class ToolValidationRuleRegistry {
     if (!rule) {
       return { code: RuleError.UnknownTool };
     }
-    const result = rule({ ...ctx, roleCatalog: this.roleProfileRegistry });
+    const result = invokeValidationRule(rule, { ...ctx, roleCatalog: this.roleProfileRegistry });
     return !result
       ? null
       : typeof result === "string"

@@ -355,7 +355,7 @@ export class InitialIdentitySetupWindow {
         const valid = this.gateway.validateAndSanitize(this.world, actorId, choiceCall, {
           phase: Phase.Night,
           day: 1,
-          ...(this.kind === "thief" ? { thiefScope: scope } : { shapeshifterScope: scope }),
+          scope: this.kind === "thief" ? scope : scope,
         });
         if (!sameInitialIdentityScope(scope) || delivery.current() !== true) {
           status = "cancelled";

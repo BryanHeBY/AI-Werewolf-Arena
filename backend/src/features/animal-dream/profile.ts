@@ -4,9 +4,10 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { createFoxValidationRules, createPufferValidationRules } from "./validation-rules";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
-import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import {
   CAT_SKIPPED_VOTE_POLICIES,
@@ -16,7 +17,6 @@ import { Role, Camp, WinCondition } from "../../domain/identity";
 import type { BoardConfig } from "../../domain/board";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { freshFoxCubState, freshWhiteCatState, freshPufferfishState } from "./state";
-import { canSubmitAnimalTool } from "./requests";
 import { ANIMAL_FOX_STAGE } from "./night-stages";
 const supported = [
   Role.Wolf,
@@ -114,12 +114,7 @@ export const FOX_CUB_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.fox_distract.directive"),
       },
     ],
-    validationRules: {
-      fox_distract: ({ world, actorId, phase, day, animalScope, toolCall }) =>
-        canSubmitAnimalTool(world, actorId, phase, day ?? 0, animalScope, toolCall)
-          ? null
-          : { code: RuleError.AnimalActionUnavailable },
-    },
+    validationRules: createFoxValidationRules(),
     nightStages: [ANIMAL_FOX_STAGE],
     baselineAction: (_role, request) =>
       request.allowedTools.includes("fox_distract")
@@ -166,12 +161,7 @@ export const PUFFERFISH_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.puffer_retaliate.directive"),
       },
     ],
-    validationRules: {
-      puffer_retaliate: ({ world, actorId, phase, day, animalScope, toolCall }) =>
-        canSubmitAnimalTool(world, actorId, phase, day ?? 0, animalScope, toolCall)
-          ? null
-          : { code: RuleError.AnimalActionUnavailable },
-    },
+    validationRules: createPufferValidationRules(),
     baselineAction: (_role, request) =>
       request.allowedTools.includes("puffer_retaliate")
         ? { name: "puffer_retaliate", args: { activate: false } }

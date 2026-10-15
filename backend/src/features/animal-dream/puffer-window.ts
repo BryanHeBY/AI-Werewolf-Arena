@@ -54,7 +54,7 @@ export async function runAnimalPufferChoice(
     const valid = gateway.validateAndSanitize(world, actorId, call, {
       phase: Phase.Voting,
       day,
-      animalScope: scope,
+      scope: scope,
       deferOperation: true,
     });
     if (!valid.ok || !valid.sanitizedCall) throw Error("animal_required_action_invalid");

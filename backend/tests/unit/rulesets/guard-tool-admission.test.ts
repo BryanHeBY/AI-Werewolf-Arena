@@ -16,7 +16,10 @@ import { findNightAbility } from "../../../src/features/night-abilities/abilitie
 import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
 import { recordOwnNightAction } from "../../../src/features/night-abilities/night-action-history";
 import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
-import type { ValidationRuleContext } from "../../../src/engine/actions/validation-contracts";
+import {
+  createValidationQueries,
+  type ValidationHostContext as ValidationRuleContext,
+} from "../../../src/engine/actions/validation-queries";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import {
@@ -44,6 +47,7 @@ function fixture() {
     targetId: number,
     abilityId?: string,
   ): ValidationRuleContext => ({
+    queries: createValidationQueries(world),
     world,
     actorId,
     role: players[actorId - 1]!.role,
@@ -71,6 +75,7 @@ test("同一可写表保四处晚目标读取与首失败轨迹，阶段拒绝�
     failOnRead = 0;
   const ctx: ValidationRuleContext = {
     roleCatalog: f.catalog,
+    queries: createValidationQueries(f.world),
     get world() {
       trace.push("world");
       return f.world;
@@ -243,6 +248,7 @@ test("真实学者未结算错误和已结算削弱均先于空守参数读取",
     role = game.world.getComponent(4, COMPONENT.Role)!;
   let reads = 0;
   const ctx: ValidationRuleContext = {
+    queries: createValidationQueries(game.world),
     world: game.world,
     role,
     actorId: 4,

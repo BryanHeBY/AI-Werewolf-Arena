@@ -1,8 +1,8 @@
 /**
- * 提供通用工具的原校验集合：匿名墙检查作者／窗口，辩论检查参与者／阶段，放逐票检查票权与候选。输入为网关上下文和工具参数；返回既有 RuleError 或 null，不在校验中提交资源或阶段。
+ * 提供通用工具的原校验集合：辩论检查参与者／阶段，放逐票检查票权与候选；匿名墙完整准入归该机制贡献。输入为网关上下文和工具参数；返回既有 RuleError 或 null，不在校验中提交资源或阶段。
  */
-import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
-import { authorizedWallAuthor } from "../../features/wall-notes/author-ports";
+import { ownedToolRules } from "./validation-queries";
+
 import { prohibitsLoversVote } from "../../features/cupid/vote-ports";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：定义通用工具的校验规则。 */
@@ -13,16 +13,7 @@ import { Phase } from "../../domain";
 import { canBeExiled, canVoteExile } from "../participation";
 
 /** 通用工具校验规则集合。 */
-export const COMMON_VALIDATION_RULES: ToolRuleMap = {
-  write_note: ({ world, actorId, day, phase, toolCall, wallScope, wallId, itemInstanceId }) => {
-    if (
-      day !== 1 ||
-      phase !== Phase.Voting ||
-      !authorizedWallAuthor(world, actorId, wallId, itemInstanceId, wallScope)
-    )
-      return { code: RuleError.WallNoteUnavailable };
-    return readWallTool(toolCall) ? null : { code: RuleError.WallNoteText };
-  },
+export const COMMON_VALIDATION_RULES: ToolRuleMap = ownedToolRules({
   debate_vote: ({ world, actorId, day, phase, toolCall, debateId }) => {
     const a = debateAuthority(world, debateId),
       actor = a?.participants.get(actorId);
@@ -93,4 +84,4 @@ export const COMMON_VALIDATION_RULES: ToolRuleMap = {
     }
     return null;
   },
-};
+});

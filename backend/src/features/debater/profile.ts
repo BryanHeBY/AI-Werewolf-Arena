@@ -4,6 +4,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
@@ -60,7 +62,7 @@ export const DEBATER_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.challenge.hint",
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       challenge: ({ world, actorId, day, phase, toolCall, debateId }) => {
         const a = debateAuthority(world, debateId),
           role = world.getComponent(actorId, COMPONENT.Role),
@@ -91,7 +93,7 @@ export const DEBATER_ROLE_PROFILE: NativeRoleContributions = {
           return { code: RuleError.DebateTarget };
         return null;
       },
-    },
+    }),
     baselineAction: (_role, request) =>
       request.allowedTools.includes("challenge") && request.context.debate_target_id !== undefined
         ? { name: "challenge", args: { target_id: request.context.debate_target_id } }

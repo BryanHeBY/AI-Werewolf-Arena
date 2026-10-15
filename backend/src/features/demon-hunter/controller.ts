@@ -68,7 +68,7 @@ export async function executeDemonHunterTurn(input: {
     const valid = gateway.validateAndSanitize(world, actorId, call as unknown as ToolCall, {
       phase: Phase.Night,
       day,
-      demonHunterScope: scope,
+      scope: scope,
       deferOperation: true,
     });
     if (!valid.ok || !valid.sanitizedCall) throw new Error("demon_hunter_action_invalid");

@@ -4,6 +4,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
@@ -46,7 +48,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.white_wolf_king.hint",
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       self_destruct_with_target: ({
         world,
@@ -74,7 +76,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
           return { code: RuleError.WhiteWolfBlastTarget };
         return null;
       },
-    },
+    }),
     stageDirectives: [
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.stageDirectives!,
       {

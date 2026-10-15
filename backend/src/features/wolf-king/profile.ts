@@ -4,6 +4,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { ownDeathHook, type OwnedDeathCommands } from "../../engine/hooks/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { deathActionConfiguration, renderDeathActionPolicy } from "../death-actions/policy-ports";
@@ -39,14 +41,14 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
       setWolfKingState(role, createWolfKingState(ctx));
     },
     toolSpecs: [...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!, ...DEATH_SHOT_TOOL_SPECS],
-    validationRules: {
+    validationRules: ownedToolRules({
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       shoot: (ctx) =>
         validateDeathShot(
           ctx,
           ctx.role.role === Role.WolfKing && getWolfKingState(ctx.role)?.canShoot === true,
         ),
-    },
+    }),
     llmRepair: {
       coerce: {
         ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce,

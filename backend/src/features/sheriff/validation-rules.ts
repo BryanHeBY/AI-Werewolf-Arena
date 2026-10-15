@@ -2,6 +2,8 @@
  * 负责按当前警徽和候选资格校验方向及接徽选择。输入为已清洗工具和可信警徽上下文，输出原规则拒绝或通过。
  * 本校验不转移、销毁或重新生成警徽，实际写入仍归警徽所有者。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：警长机制工具校验规则。 */
 import { Phase } from "../../domain/model";
@@ -10,7 +12,7 @@ import { ToolRuleMap } from "../../engine/actions/validation-contracts";
 import { canBeSheriff, canVote } from "../../engine/participation";
 
 /** 警长机制工具校验规则集合。 */
-export const SHERIFF_VALIDATION_RULES: ToolRuleMap = {
+export const SHERIFF_VALIDATION_RULES: ToolRuleMap = ownedToolRules({
   choose_badge_successor: ({ world, actorId, toolCall, badgeCandidates, roleCatalog }) => {
     const badge = world.getComponent(actorId, COMPONENT.Badge);
     if (!badge?.isSheriff || badge.destroyed || badge.handoffPolicy !== "awa_holder_choice_v1")
@@ -74,4 +76,4 @@ export const SHERIFF_VALIDATION_RULES: ToolRuleMap = {
     }
     return null;
   },
-};
+});

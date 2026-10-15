@@ -22,16 +22,10 @@ export interface ValidationContext {
   /** 有事务归属的 controller 只在实际提交后记录校验。 */
   deferOperation?: boolean;
   day?: number;
-  thiefScope?: object;
-  shapeshifterScope?: object;
-  wildChildScope?: object;
-  lonelyGirlScope?: object;
-  ghostBrideScope?: object;
-  demonHunterScope?: object;
-  nobleBodyScope?: object;
-  fragrantPairScope?: object;
-  animalScope?: object;
-  wallScope?: object;
+  /** 原 owner 捕获的证明；并非任意 callback 或 true 能生成的授权。 */
+  scope?: object;
+  /** 接收器内部按贡献身份关联，公开 ToolRule 不收到此集合。 */
+  requestScopes?: readonly import("./validation-queries").ValidationScopeInput[];
   wallId?: string;
   itemInstanceId?: string;
   debateId?: string;
@@ -49,7 +43,7 @@ export interface ValidationContext {
 
 /**
  * ActionValidator 是“规则防线”。
- * 所有模型工具调用在落地前都必须通过这里，非法动作统一返回错误并要求重试。
+ * 领域调用经过原生命／死亡窗口和已注册规则；结构化拒绝与抛错各保原前缀，不把候选接受当作已提交。
  */
 export class ActionValidator {
   constructor(
@@ -134,16 +128,8 @@ export class ActionValidator {
       toolCall,
       phase: context.phase,
       day: context.day,
-      thiefScope: context.thiefScope,
-      shapeshifterScope: context.shapeshifterScope,
-      wildChildScope: context.wildChildScope,
-      lonelyGirlScope: context.lonelyGirlScope,
-      ghostBrideScope: context.ghostBrideScope,
-      demonHunterScope: context.demonHunterScope,
-      nobleBodyScope: context.nobleBodyScope,
-      fragrantPairScope: context.fragrantPairScope,
-      animalScope: context.animalScope,
-      wallScope: context.wallScope,
+      scope: context.scope,
+      requestScopes: context.requestScopes,
       wallId: context.wallId,
       itemInstanceId: context.itemInstanceId,
       debateId: context.debateId,

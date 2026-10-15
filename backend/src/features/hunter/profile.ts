@@ -4,6 +4,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { deathActionConfiguration, renderDeathActionPolicy } from "../death-actions/policy-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -35,13 +37,13 @@ export const HUNTER_ROLE_PROFILE: NativeRoleContributions = {
       setHunterState(roleComp, createHunterState(ctx));
     },
     toolSpecs: HUNTER_TOOL_SPECS,
-    validationRules: {
+    validationRules: ownedToolRules({
       shoot: (ctx) =>
         validateDeathShot(
           ctx,
           ctx.role.role === Role.Hunter && getHunterState(ctx.role)?.canShoot === true,
         ),
-    },
+    }),
     llmRepair: DEATH_SHOT_REPAIR,
     deathHook: hunterDeathHook,
     baselineAction: (_roleComp, request, pickAliveNotSelf) => {

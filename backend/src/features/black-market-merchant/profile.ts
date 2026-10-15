@@ -4,6 +4,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { COMPONENT } from "../../domain/components/names";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -72,7 +74,7 @@ export const BLACK_MARKET_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
         userPromptHintKey: "action.black_market_trade.hint",
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       black_market_trade: ({ world, actorId, role, day, phase, toolCall }) => {
         const state = getBlackMarketState(role);
         if (
@@ -97,7 +99,7 @@ export const BLACK_MARKET_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
         if (isRoleExecutionRetired(role)) return { code: RuleError.MerchantUnavailable };
         return null;
       },
-    },
+    }),
     llmRepair: {
       coerce: {
         black_market_trade: (args) => {

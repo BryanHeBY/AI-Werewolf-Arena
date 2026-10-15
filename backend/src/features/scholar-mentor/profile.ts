@@ -5,6 +5,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { COMPONENT } from "../../domain/components/names";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
@@ -125,7 +127,7 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
           text: text("zh-CN", "action.bonus_action.directive"),
         },
       ],
-      validationRules: {
+      validationRules: ownedToolRules({
         ...base?.runtime.validationRules,
         modify_skill: ({ world, role, actorId, day, phase, toolCall }) => {
           const state = scholarMentorStateForRole(role, () =>
@@ -171,7 +173,7 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
             return { code: RuleError.ModifierTarget };
           }
         },
-      },
+      }),
       nightStages: [...SCHOLAR_MENTOR_NIGHT_STAGES, ...(base?.runtime.nightStages ?? [])],
       baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
         if (request.allowedTools.includes("modify_skill") && world) {

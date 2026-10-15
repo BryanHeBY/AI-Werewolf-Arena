@@ -5,6 +5,8 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownedToolRules } from "../../engine/actions/validation-queries";
+
 import { COMPONENT } from "../../domain/components/names";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
@@ -94,7 +96,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
         text: text("zh-CN", "action.fear.directive"),
       },
     ],
-    validationRules: {
+    validationRules: ownedToolRules({
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       fear: ({ world, role, actorId, day, phase, toolCall }) => {
         const state = getNightmareShadowState(role, () =>
@@ -119,7 +121,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
           ? null
           : { code: RuleError.NightmareTarget };
       },
-    },
+    }),
     nightStages: [NIGHTMARE_FEAR_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
     baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
       if (!request.allowedTools.includes("fear"))

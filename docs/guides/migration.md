@@ -45,3 +45,13 @@ current链接实际可达，所有真实读点无旧根依赖，history每项原
 `TargetHintContext.world` 和 `roleCatalog` 退出。调用端先用 `bindTargetHintContext(runtimeInput)` 绑定当次可信输入，再交给 `TargetHintRegistry.buildActionableIdsHint`。扩展通过 `queries` 取得候选编号、语言和具体目标判断；行动者能力及查验历史只由查询闭包捕获，不返回原组件或能力对象。
 
 绑定不提前读取世界或上下文字段，数据字段保持晚读；默认提示仍沿原工具、角色和政策顺序筛选。查询得到的候选不授予提交权限，实际网关、请求与资源所有者继续复验。需要自定义目标规则时组合具体查询，不能重新传入可写 World。
+
+## 请求准入与工具校验
+
+`ToolRule` 的公开上下文退出 `world`、`roleCatalog`、原 `RoleComponent` 和各角色请求 scope 字段。自定义规则通过 `queries.isAlive(id)`、`aliveIds()`、`currentCampValue(id)`、`hasRole(id)`、`roleValue(id)` 读取当前值；工具候选、行动者编号和原窗口字段继续传入。查询结果不授予执行或消耗库存的权限。
+
+十类原请求证明由可信准入装配按原顺序捕获，具体规则按静态 owner 身份选取自己的证明。原参数政策和完整角色校验留在各自业务模块；通用接收器不再分支选择角色 scope。私有绑定只连接原程序与原证明，不保存世界、许可或运行结果，也不替代领域复验。
+
+需要直接验证内建规则的可信测试或宿主，改用 `invokeValidationRule(rule, host, receiver?)`，保持原表的调用接收者。自定义规则直接接受公开窄上下文，不能用同名工具、角色编号或复制 scope 字段取得原资源。旧扩展直接读取可写组件或请求证明的代码有意退出。
+
+`ActionPreflightPort` 通过 `locale` 暴露语言，退出公开 `world`；夜间动作入口取得绑定到当局的 `BoundToolGateway`，调用者不再额外传入世界。接收、校验与真正提交仍由各自原 owner 负责。

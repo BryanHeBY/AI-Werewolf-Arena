@@ -62,3 +62,34 @@ export class ToolGateway {
     return call;
   }
 }
+
+/** 夜上下文实际只交这个绑定对象；调用方不取得 World 或宿主校验器。 */
+export interface BoundToolGateway {
+  validateAndSanitize<T extends ToolCall>(
+    actorId: EntityId,
+    toolCall: T,
+    context: ValidationContext,
+  ): ToolValidationResult<T>;
+}
+/**
+ * 两个惰性来源均由可信装配捕获。属性读取保 gateway → 原 callee → World，随后才求演员／调用／选项；
+ * 原方法实际调用时才判断可调用性，且 receiver 仍是原 gateway。Reflect 准备是新增的有界观察面。
+ */
+export function createBoundToolGateway(
+  gatewaySource: () => ToolGateway,
+  worldSource: () => World,
+): BoundToolGateway {
+  return {
+    get validateAndSanitize() {
+      const gateway = gatewaySource();
+      const callee = gateway.validateAndSanitize;
+      const world = worldSource();
+      const invoke = Reflect.apply.bind(Reflect);
+      return <T extends ToolCall>(
+        actorId: EntityId,
+        toolCall: T,
+        context: ValidationContext,
+      ): ToolValidationResult<T> => invoke(callee, gateway, [world, actorId, toolCall, context]);
+    },
+  };
+}

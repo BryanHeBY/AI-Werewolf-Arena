@@ -4,6 +4,8 @@
  * 状态仍归实际技能库存和历史 owner；受赠／复制／转移实例不因角色标签被重新裁决。
  * 保留参数、目标 getter 与短路失败的原顺序，真实效果提交仍由阶段重新核对生命与 scope。
  */
+import { ownedToolRules } from "../engine/actions/validation-queries";
+
 import { scholarMentorBlocks } from "../features/scholar-mentor/ports";
 import { seerTargetAllowed } from "../features/seer/ports";
 import { Phase, RuleError } from "@ai-werewolf-arena/game-contract";
@@ -12,7 +14,7 @@ import { activeNightAbility } from "../features/night-abilities/abilities";
 import { luckyTargetAllowed } from "../features/night-abilities/night-action-history";
 
 /** 同一可写表交给 profile；当前角色晚读 callback，全局回退仍保留 Registry 构造时的原捕获。 */
-export const SEER_VALIDATION_RULES: ToolRuleMap = {
+export const SEER_VALIDATION_RULES: ToolRuleMap = ownedToolRules({
   check_identity: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
     // 按真实库存选择实例，不新增 Seer 角色标签或 native 来源限制。
     const ability = activeNightAbility(role, "seer_check", day ?? 1, abilityId);
@@ -30,4 +32,4 @@ export const SEER_VALIDATION_RULES: ToolRuleMap = {
       return { code: RuleError.LuckyTargetRepeat };
     return null;
   },
-};
+});

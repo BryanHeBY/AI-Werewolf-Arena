@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证雾鸦 profile 的默认配置、语言与狼群政策。原双语文案、分离的知识能力和历史 audience 为字面预期；只调用有界模块，不运行模型或完整对局驱动。
  */
+import { invokeValidationRule } from "../../../../src/engine/actions/validation-queries";
 import {
   createAliveComponent,
   createCampComponent,
@@ -102,18 +103,27 @@ function fixture() {
     "netease_2026_night_immunity_v1",
   );
   installMistRavenBoard(world);
-  const rule = (id: number, call: ToolCall, phase = Phase.Night, day = 1) =>
-    catalog
-      .requireRuntime(world.getComponent(id, COMPONENT.Role)!.role)
-      .validationRules?.[call.name]?.({
-        world,
-        actorId: id,
-        role: world.getComponent(id, COMPONENT.Role)!,
-        roleCatalog: catalog,
-        toolCall: call,
-        phase,
-        day,
-      });
+  const rule = (id: number, call: ToolCall, phase = Phase.Night, day = 1) => {
+    const rules = catalog.requireRuntime(
+      world.getComponent(id, COMPONENT.Role)!.role,
+    ).validationRules;
+    const selected = rules?.[call.name];
+    return selected == null
+      ? undefined
+      : invokeValidationRule(
+          selected,
+          {
+            world,
+            actorId: id,
+            role: world.getComponent(id, COMPONENT.Role)!,
+            roleCatalog: catalog,
+            toolCall: call,
+            phase,
+            day,
+          },
+          rules,
+        );
+  };
   const kill = (id: number) => {
     world.getComponent(id, COMPONENT.Alive)!.alive = false;
   };
