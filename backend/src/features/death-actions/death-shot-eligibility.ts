@@ -13,7 +13,6 @@ import {
   type EntityId,
   type DeathSources,
   type Phase,
-  type DeathActionPolicy,
 } from "@ai-werewolf-arena/game-contract";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { COMPONENT } from "../../domain/components/names";
@@ -23,6 +22,7 @@ import { activeDeathGun, captureDeathGun } from "./death-gun-lifecycle";
 import { getHunterState } from "../hunter/ports";
 import { getWolfKingState } from "../wolf-king/ports";
 import type { demonHunterNativeGunCurrent } from "../demon-hunter/ports";
+import type { OwnedDeathShotQualification } from "../../engine/hooks/owned-bindings";
 
 /** 只读运行查询；生产 getter 晚读原字段及原命令，不冻结 World 或复制生命／枪权。 */
 interface DeathShotEligibilityRuntime {
@@ -32,11 +32,7 @@ interface DeathShotEligibilityRuntime {
 }
 
 /** 只捕获原比较基准与函数，后续请求／await 前后仍在原调用点复验；不是新的许可或库存。 */
-export interface DeathShotEligibility {
-  readonly nativePolicy: DeathActionPolicy;
-  readonly permissionCurrent: () => boolean;
-  readonly eligible: () => boolean;
-}
+export type DeathShotEligibility = OwnedDeathShotQualification;
 
 export function captureDeathShotEligibility(
   runtime: DeathShotEligibilityRuntime,

@@ -8,7 +8,14 @@
 import type { EntityId, GameEvent, Role, Camp, DeathShotSelection } from "../../domain/model";
 import type { World } from "../../domain/world";
 import type { DeathHook, VotedOutHook, CommittedDeathWaveHook } from "./registry";
-import type { DeathShotEligibility } from "../../features/death-actions/death-shot-eligibility";
+import type { DeathActionPolicy } from "@ai-werewolf-arena/game-contract";
+
+/** 可信死亡资源向选择端提供的窄资格查询；引擎只转交原函数，不实现角色库存政策或创建许可。 */
+export interface OwnedDeathShotQualification {
+  readonly nativePolicy: DeathActionPolicy;
+  readonly permissionCurrent: () => boolean;
+  readonly eligible: () => boolean;
+}
 
 /** 仅引擎与可信资源owner间的私有构造输入，不进入hook运行上下文。 */
 export interface OwnedHookBindingSource {
@@ -21,7 +28,7 @@ export interface OwnedHookBindingSource {
 export type OwnedDeathShotChooser = (
   actorId: EntityId,
   abilityId?: string,
-  qualification?: DeathShotEligibility,
+  qualification?: OwnedDeathShotQualification,
 ) => Promise<DeathShotSelection>;
 export interface OwnedDeathHookBindingSource extends OwnedHookBindingSource {
   readonly chooseDeathShot: OwnedDeathShotChooser;
