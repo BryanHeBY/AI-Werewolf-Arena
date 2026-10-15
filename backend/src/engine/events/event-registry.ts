@@ -6,13 +6,7 @@
 import { AliveComponent } from "../../domain/components/alive";
 import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
-import {
-  EntityId,
-  GameEvent,
-  type DeathSources,
-  type DeathShotSelection,
-  type Phase,
-} from "../../domain/model";
+import { EntityId, GameEvent, type DeathSources, type Phase } from "../../domain/model";
 import { getDefaultHookRegistry, HookRegistry } from "../../rulesets/mechanism-api";
 import { World } from "../../domain/world";
 import {
@@ -21,6 +15,8 @@ import {
   invokeCommittedDeathWaveHook,
   type DeathHookPreparationSource,
 } from "../hooks/registry";
+import type { OwnedDeathShotChooser } from "../hooks/owned-bindings";
+import type { DeathActionContinuation } from "../hooks/death-action-continuation";
 
 /**
  * 放逐阶段处理结果。
@@ -84,9 +80,12 @@ export class EventRegistry {
     world: World,
     deadIds: EntityId[],
     deathSources: DeathSources,
-    chooseDeathShot: (actorId: EntityId, abilityId?: string) => Promise<DeathShotSelection>,
+    chooseDeathShot: OwnedDeathShotChooser,
     events: GameEvent[],
-    commitAdditionalDeaths?: (result: DeathHookResult) => void,
+    commitAdditionalDeaths?: (
+      result: DeathHookResult,
+      capturedContinuations?: readonly DeathActionContinuation[] | null,
+    ) => void,
     context?: import("../hooks/registry").DeathHookContext,
     preparation?: DeathHookPreparationSource,
   ): Promise<DeathHookResult> {

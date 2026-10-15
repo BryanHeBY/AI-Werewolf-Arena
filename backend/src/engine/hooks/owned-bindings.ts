@@ -8,6 +8,7 @@
 import type { EntityId, GameEvent, Role, Camp, DeathShotSelection } from "../../domain/model";
 import type { World } from "../../domain/world";
 import type { DeathHook, VotedOutHook, CommittedDeathWaveHook } from "./registry";
+import type { DeathShotEligibility } from "../../features/death-actions/death-shot-eligibility";
 
 /** 仅引擎与可信资源owner间的私有构造输入，不进入hook运行上下文。 */
 export interface OwnedHookBindingSource {
@@ -20,6 +21,7 @@ export interface OwnedHookBindingSource {
 export type OwnedDeathShotChooser = (
   actorId: EntityId,
   abilityId?: string,
+  qualification?: DeathShotEligibility,
 ) => Promise<DeathShotSelection>;
 export interface OwnedDeathHookBindingSource extends OwnedHookBindingSource {
   readonly chooseDeathShot: OwnedDeathShotChooser;
@@ -38,6 +40,10 @@ type Binder = (source: OwnedHookBindingSource) => object;
 const deathBindings = new WeakMap<object, (source: OwnedDeathHookBindingSource) => object>();
 const votedBindings = new WeakMap<object, Binder>();
 const committedBindings = new WeakMap<object, Binder>();
+/** 只有真实内部绑定可把本族继续点交给引擎；相同函数源码或返回形状不继承该身份。 */
+export function hasOwnedDeathHookBinding(hook: object): boolean {
+  return deathBindings.has(hook);
+}
 /** 内部静态登记不执行binder；默认Registry仍只持同一函数名单。 */
 export function ownDeathHook<Ports extends object>(
   hook: DeathHook<Ports>,

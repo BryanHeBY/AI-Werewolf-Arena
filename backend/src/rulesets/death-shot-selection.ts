@@ -21,6 +21,7 @@ import { captureNightLife, livingNightLife } from "../domain/night-effects";
 import type { ToolGateway } from "../engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../engine/actions/action-request-factory";
 import { captureDeathShotEligibility } from "../features/death-actions/death-abilities";
+import type { DeathShotEligibility } from "../features/death-actions/death-shot-eligibility";
 import {
   assertMagicianRosterCurrent,
   isMagicianBoard,
@@ -57,6 +58,7 @@ export async function collectDeathShot(
   actions: DeathWaveActions,
   abilityId?: string,
   nightExchange: boolean = false,
+  ownedQualification?: DeathShotEligibility,
 ): Promise<DeathShotSelection> {
   if (deathPhase === Phase.Night && nightmareFearBlocks(runtime.world, actorId, actions.day, true))
     return { kind: "invalid" };
@@ -67,24 +69,26 @@ export async function collectDeathShot(
     !runtime.state.gameOver;
   // 只装配延迟查询，不提前读取 World／日期；资格所有者 在原 callee 和参数时点捕获。
   const resolution = runtime;
-  const qualification = captureDeathShotEligibility(
-    {
-      get world() {
-        return resolution.world;
+  const qualification =
+    ownedQualification ??
+    captureDeathShotEligibility(
+      {
+        get world() {
+          return resolution.world;
+        },
+        get day() {
+          return actions.day;
+        },
+        get demonHunterNativeGunCurrent() {
+          return demonHunterNativeGunCurrent;
+        },
       },
-      get day() {
-        return actions.day;
-      },
-      get demonHunterNativeGunCurrent() {
-        return demonHunterNativeGunCurrent;
-      },
-    },
-    actorId,
-    abilityId,
-    sources,
-    deathOriginPhase,
-    isCurrent,
-  );
+      actorId,
+      abilityId,
+      sources,
+      deathOriginPhase,
+      isCurrent,
+    );
   if (!qualification) return { kind: "invalid" };
   const { nativePolicy, permissionCurrent, eligible } = qualification;
   if (!eligible()) return { kind: "invalid" };
@@ -116,7 +120,8 @@ export async function collectDeathShot(
       requiresAction: true,
       summary: { key: "request.summary.death_shot" },
       context: {
-        ...(runtime.config?.magician ||
+        ...(ownedQualification ||
+        runtime.config?.magician ||
         runtime.config?.evilKnight ||
         abilityId !== undefined ||
         runtime.world.getComponent(actorId, COMPONENT.Role)?.role === Role.AwakenedHiddenWolf
@@ -198,6 +203,7 @@ export async function collectDeathShot(
     }
     return { kind: "shot", targetId, deathActionId: permit.id, targetScope };
   }
+  if (ownedQualification && eligible()) throw new Error("death_action_valid_action_missing");
   if (abilityId !== undefined && eligible()) throw new Error("gift_gun_valid_action_missing");
   return { kind: "invalid" };
 }

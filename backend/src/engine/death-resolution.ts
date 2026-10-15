@@ -8,6 +8,12 @@
  * 枪的资格归共同所有者，请求、等待与目标复验归规则组合；本结算器持同一许可数组并在原时点关闭。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
+import {
+  resumeDeathActionContinuation,
+  queueDeathActionContinuations,
+  type DeathActionContinuation,
+} from "./hooks/death-action-continuation";
+import type { DeathHookResult } from "./hooks/registry";
 import { bindDreamLifeQueries } from "../domain/dream-night-effects";
 import { refreshWolfKnifeInheritanceAtCheckpoint } from "../rulesets/wolf-knife-inheritance-plan";
 import { AnimalDeathWavePreparation } from "../features/animal-dream/ports";
@@ -260,6 +266,17 @@ export class DeathResolution {
     // 只收集原实例，在原 finally 位置尝试过期；先取消未提交双生波凭据，取消失败时过期尚未执行。
     // 已付款和死亡不回滚，不为统一清理吞掉原取消异常。
     const gunsToExpire: ReturnType<typeof firstDeathGuns> = [];
+    type QueuedDeathAction = {
+      token: DeathActionContinuation;
+      commit(result: DeathHookResult): void;
+      actions: DeathWaveActions;
+    };
+    // 栈只保存原动作的继续点，不保存第二份生命或库存。兄弟按原 actor/hook/标记顺序；新后代先于父继续。
+    const continuations: QueuedDeathAction[] = [];
+    let next = new Set<EntityId>();
+    let nextCommits: DeathCommitReceipt[] = [];
+    let nextUnits: DeathWaveUnit[] = [];
+    let nextContinuations: QueuedDeathAction[] = [];
 
     try {
       // 空初始波仍执行原发布回调；空条目凭证只关联这次发布，不证明枪付款或整个死亡链完成。
@@ -279,8 +296,30 @@ export class DeathResolution {
         const event = nightEffects.onInitialWaveCommitted([], {}, receipt);
         receipt.recordPublication(event, []);
       }
-      while (pending.length > 0) {
+      while (pending.length > 0 || continuations.length > 0) {
         if (!isCurrent()) return;
+        if (pending.length === 0) {
+          // 当前目标的全部追加波已经完成，才恢复原动作。下一份提案使用新的工作容器，不重访旧死者。
+          next = new Set<EntityId>();
+          nextCommits = [];
+          nextUnits = [];
+          nextContinuations = [];
+          const continuation = continuations.pop()!;
+          try {
+            const result = await resumeDeathActionContinuation(continuation.token);
+            if (!isCurrent()) return;
+            continuation.commit(result);
+          } finally {
+            // 原 callback 的首次 finally 已关闭首枪；继续期间重新登记的许可同样只由结算器关闭。
+            for (const permit of continuation.actions.permits.splice(0)) permit.close();
+          }
+          continuations.push(...nextContinuations.reverse());
+          pending = [...next];
+          pendingUnits = nextUnits;
+          previousCommits = nextCommits;
+          firstBatch = false;
+          continue;
+        }
         const deathPhase = firstBatch ? phase : this.state.phase;
         // 初始波整批标死；追加目标已在前一角色回调标死，再访仍执行原收尾，但不重复首次生命事实。
         const receipt = this.deathCommitter.markPlayersDead(
@@ -414,9 +453,10 @@ export class DeathResolution {
           if (!isCurrent()) return;
         }
 
-        const next = new Set<EntityId>();
-        const nextCommits: DeathCommitReceipt[] = [];
-        const nextUnits: DeathWaveUnit[] = [];
+        next = new Set<EntityId>();
+        nextCommits = [];
+        nextUnits = [];
+        nextContinuations = [];
         for (const deadId of pending) {
           if (!isCurrent()) return;
           // 来源阶段属于这次死亡；黎明后处理夜间死亡仍必须保留夜间枪权／关系保护规则。
@@ -428,12 +468,17 @@ export class DeathResolution {
             permits: [],
             isCurrent,
           };
+          const callbackInitialBatch = firstBatch;
+          let commitAdditionalDeaths!: (
+            result: DeathHookResult,
+            capturedContinuations?: readonly DeathActionContinuation[] | null,
+          ) => void;
           try {
             await this.eventRegistry.onDeath(
               this.world,
               [deadId],
               allSources,
-              (actorId, abilityId) =>
+              (actorId, abilityId, qualification) =>
                 collectDeathShot(
                   {
                     // 只创建闭包；每次成员读取仍在原选择表达式处，不提前取得 World／规则／状态。
@@ -454,18 +499,26 @@ export class DeathResolution {
                     },
                   },
                   actorId,
-                  firstBatch ? (initialPhases[actorId] ?? deathPhase) : deathPhase,
+                  callbackInitialBatch ? (initialPhases[actorId] ?? deathPhase) : deathPhase,
                   sourcePhase,
                   allSources,
                   actionProvider,
                   actions,
                   abilityId,
-                  nightOrigin.has(actorId) && !(firstBatch && initialPhases[actorId] === Phase.Day),
+                  nightOrigin.has(actorId) &&
+                    !(callbackInitialBatch && initialPhases[actorId] === Phase.Day),
+                  qualification,
                 ),
               this.events,
               // 每个成功钩子提案同步进入这里；后面的钩子可见已标死目标，失败不丢弃先前提交。
-              (result) => {
+              (commitAdditionalDeaths = (result, capturedContinuations) => {
                 if (!isCurrent()) return;
+                // 继续结果同样经过此入口；先捕获一次并验证标记，不能先真标死再发现下一步伪造。
+                const continuedActions = queueDeathActionContinuations(
+                  capturedContinuations === undefined
+                    ? result.deathActionContinuations
+                    : (capturedContinuations ?? undefined),
+                );
                 const proposed = [...result.extraDeaths],
                   proposedSources = structuredClone(result.extraDeathSources),
                   nightTargets = [...(result.nightEffectTargets ?? [])];
@@ -686,11 +739,13 @@ export class DeathResolution {
                     contribution.publishAfterDeaths();
                   nightEffects?.dreams?.recordDeaths([...next, ...linked], this.events);
                   for (const permit of actions.permits.splice(0)) permit.close();
+                  for (const token of continuedActions)
+                    nextContinuations.push({ token, commit: commitAdditionalDeaths, actions });
                 } finally {
                   if (fragrantGun && !fragrantGunCommitted)
                     cancelFragrantDeathWave(this.world, fragrantGun);
                 }
-              },
+              }),
               Object.freeze({
                 day: resolutionDay,
                 nativeHunterShotTargets,
@@ -720,6 +775,8 @@ export class DeathResolution {
           }
         }
 
+        // 同波的多个继续项保原 actor/hook 顺序；后续波新增的项压在旧父项之上，先完成后代链。
+        continuations.push(...nextContinuations.reverse());
         // Set 保留追加目标首次加入顺序；再访沿用真实提案单位及成功凭证，不重新制造波次来源。
         pending = [...next];
         pendingUnits = nextUnits;

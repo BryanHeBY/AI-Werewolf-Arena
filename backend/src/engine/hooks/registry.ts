@@ -15,10 +15,12 @@ import { World } from "../../domain/world";
 import { COMPONENT } from "../../domain/components/names";
 import {
   ownedHookPorts,
+  hasOwnedDeathHookBinding,
   ownCommittedDeathHook,
   type HookRuntime,
   type OwnedHookBindingSource,
   type OwnedDeathHookBindingSource,
+  type OwnedDeathShotChooser,
   type OwnedCommittedCommands,
 } from "./owned-bindings";
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
@@ -26,6 +28,10 @@ import type { NightLifeScope } from "../../domain/night-effects";
 import type { DeathWaveContribution } from "../death-wave-contribution";
 import { giftGunDeathHook } from "../../features/death-actions/gift-hook-ports";
 import { resolveWildChildDeathWave } from "../../features/wild-child/ports";
+import {
+  hasDeathActionContinuation,
+  type DeathActionContinuation,
+} from "./death-action-continuation";
 
 /** 已完成本批 Alive 提交后的具名扩展时点；不是可追加死亡或选择枪的晚 deathHook。 */
 export type CommittedDeathWaveHook<Ports extends object = Record<never, never>> = {
@@ -76,6 +82,8 @@ export interface DeathHookResult {
   }>;
   /** 每 hook 同步消费的本族运行贡献；具体绑定／回执不属于通用结果。 */
   deathWaveContributions?: DeathWaveContribution[];
+  /** 仅内部 owned hook 的单次继续标记；原程序及提交写权都不属于公开结果数据。 */
+  deathActionContinuations?: readonly DeathActionContinuation[];
 }
 export interface DeathHookContext {
   readonly deathOriginPhase?: Phase;
@@ -151,7 +159,7 @@ export function invokeDeathHook(
   world: World,
   ids: EntityId[],
   sources: DeathSources,
-  choose: (actorId: EntityId, abilityId?: string) => Promise<DeathShotSelection>,
+  choose: OwnedDeathShotChooser,
   events: GameEvent[],
   context?: DeathHookContext,
   preparation?: DeathHookPreparationSource,
@@ -162,8 +170,9 @@ export function invokeDeathHook(
   };
   // 未知扩展实际取得新标量对象，不透传原targetScope/life或mappingCurrent。
   // 内建资源command不调用此adapter，仍私用同一原chooser及其完整原体／映射结果。
-  const publicChoose: DeathHookChooser = async (...args) => {
-    const selection = await choose(...args);
+  const publicChoose: DeathHookChooser = async (actorId, abilityId) => {
+    // 显式只传公共两个标量，JS 的额外实参也不能注入可信 owner 的资格闭包。
+    const selection = await choose(actorId, abilityId);
     if (selection.kind === "shot")
       return {
         kind: "shot",
@@ -232,9 +241,12 @@ export class HookRegistry {
     world: World,
     deadIds: EntityId[],
     deathSources: DeathSources,
-    chooseDeathShot: (actorId: EntityId, abilityId?: string) => Promise<DeathShotSelection>,
+    chooseDeathShot: OwnedDeathShotChooser,
     events: GameEvent[],
-    commitAdditionalDeaths?: (result: DeathHookResult) => void,
+    commitAdditionalDeaths?: (
+      result: DeathHookResult,
+      capturedContinuations?: readonly DeathActionContinuation[] | null,
+    ) => void,
     context?: DeathHookContext,
     preparation?: DeathHookPreparationSource,
   ): Promise<DeathHookResult> {
@@ -254,7 +266,17 @@ export class HookRegistry {
         context,
         preparation,
       );
-      commitAdditionalDeaths?.(result);
+      // 单次读取并固定继续项；显示 getter 或原数组后续替换不能绕过 owned 身份判断。
+      const continuations = result.deathActionContinuations;
+      if (continuations !== undefined) {
+        if (!hasOwnedDeathHookBinding(hook))
+          throw new Error("death_action_continuation_unowned_hook");
+        if (!Array.isArray(continuations) || !continuations.every(hasDeathActionContinuation))
+          throw new Error("death_action_continuation_invalid");
+      }
+      // 不展开原结果：合法原型 getter、不可枚举字段、receiver 与原回调对象身份都保持。
+      const captured = continuations === undefined ? null : [...continuations];
+      commitAdditionalDeaths?.(result, captured);
       aggregated.extraDeaths.push(...result.extraDeaths);
       if (result.nightEffectTargets?.length)
         (aggregated.nightEffectTargets ??= []).push(...result.nightEffectTargets);
@@ -262,6 +284,11 @@ export class HookRegistry {
         (aggregated.pendingShots ??= []).push(...result.pendingShots);
       if (result.deathWaveContributions?.length)
         (aggregated.deathWaveContributions ??= []).push(...result.deathWaveContributions);
+      if (captured?.length)
+        aggregated.deathActionContinuations = [
+          ...(aggregated.deathActionContinuations ?? []),
+          ...captured,
+        ];
       for (const [id, marks] of Object.entries(result.extraDeathSources)) {
         aggregated.extraDeathSources[Number(id)] = [
           ...new Set([...(aggregated.extraDeathSources[Number(id)] ?? []), ...marks]),
