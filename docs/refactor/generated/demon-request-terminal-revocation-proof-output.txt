@@ -1,0 +1,1 @@
+{"productionPrograms":2,"exactEdits":63,"protectedWholeFunctions":18,"wholeInverseRawOutputs":4,"wholeActualDifferentRawOutputs":4}

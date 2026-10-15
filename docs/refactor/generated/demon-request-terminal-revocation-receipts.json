@@ -1,0 +1,150 @@
+{
+  "executor": "/root",
+  "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+  "runtime": {
+    "commandName": "bun",
+    "versionObservedInUnitRaw": "1.4.3 (c6da4a4d3)",
+    "absoluteExecutableNotClaimed": true
+  },
+  "firstSourceReady": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-source-ready-first-snapshot.json",
+    "sha256": "f739d72dc151b5686f43f1199a700dbe6e65fdfa99bc7895a1ecde36a1b8c653"
+  },
+  "finalSourceReady": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-source-ready.json",
+    "sha256": "b260617f3d547ed258dd52f7552469b57f5a35ea428965e2a1829743238c53cc"
+  },
+  "legacy": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-legacy-receipts.json",
+    "sha256": "773647c1b85714f871912eb352c9e09d1913ee3f297ace2cc0e34f755bdb5b0a"
+  },
+  "newUnit": {
+    "command": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/features/demon-hunter/request-terminal-revocation.test.ts > docs/refactor/generated/demon-request-terminal-revocation-unit-output.txt 2>&1",
+    "chunk": "377ccc",
+    "exitCode": 0,
+    "firstExecution": true,
+    "sourceReady": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-source-ready-first-snapshot.json",
+      "sha256": "f739d72dc151b5686f43f1199a700dbe6e65fdfa99bc7895a1ecde36a1b8c653"
+    },
+    "executedUnitSHA256": "a5c28b0aa46b8b9fb4b2b23282719b11827f07da903da8bb57112a262600decf",
+    "differentCases": 16,
+    "passedCases": 16,
+    "failedCases": 0,
+    "expectCalls": 201,
+    "raw": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-unit-output.txt",
+      "sha256": "15ace25bfc327efe55c1baace56dc3a1e3b433d9cc024dcbcba6424c1994f15d"
+    }
+  },
+  "firstTypes": {
+    "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --project docs/refactor/generated/demon-request-terminal-revocation-types-config.json --noEmit > docs/refactor/generated/demon-request-terminal-revocation-types-output.txt 2>&1",
+    "launchChunk": "2c08cd",
+    "sessionId": 5466,
+    "terminalChunk": "9574f0",
+    "exitCode": 2,
+    "roots": 3,
+    "diagnostics": [
+      {
+        "path": "backend/tests/unit/features/demon-hunter/request-terminal-revocation.test.ts",
+        "line": 247,
+        "code": "TS2352",
+        "classification": "new test erased cast boundary lacks full handler ports; production had no diagnostics"
+      }
+    ],
+    "config": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-types-first-config.json",
+      "sha256": "a3b940ffc13d1b8ac2316ce416274396c0e6a39f0633357ee75d3ce3fc054f32"
+    },
+    "raw": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-types-first-output.txt",
+      "sha256": "0ac2439ebb744d618de0d605481cda7416597e54a2e265fd24d080960b87ca29"
+    }
+  },
+  "firstProof": {
+    "command": "bun --no-env-file docs/refactor/generated/demon-request-terminal-revocation-proof.cjs > docs/refactor/generated/demon-request-terminal-revocation-proof-output.txt 2>&1",
+    "chunk": "71a28c",
+    "exitCode": 0,
+    "sourceReady": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-source-ready-first-snapshot.json",
+      "sha256": "f739d72dc151b5686f43f1199a700dbe6e65fdfa99bc7895a1ecde36a1b8c653"
+    },
+    "raw": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-proof-output.txt",
+      "sha256": "4a80472f4e5d838858d9291863ae11156b6f2fcf5f1948631d687e269d39b2ad"
+    },
+    "report": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-proof.json",
+      "sha256": "dec4c59bcf9e5f8612740a7623b98b1ae4ca6e81bb2092bc85e4aaf5a0e136de"
+    },
+    "summary": {
+      "productionPrograms": 2,
+      "exactEdits": 63,
+      "protectedWholeFunctions": 18,
+      "wholeInverseRawOutputs": 4,
+      "wholeActualDifferentRawOutputs": 4
+    }
+  },
+  "firstHeads": {
+    "command": "bun --no-env-file docs/refactor/generated/demon-request-terminal-revocation-heads.cjs > docs/refactor/generated/demon-request-terminal-revocation-heads-output.txt 2>&1",
+    "chunk": "467fb3",
+    "exitCode": 0,
+    "sourceReady": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-source-ready-first-snapshot.json",
+      "sha256": "f739d72dc151b5686f43f1199a700dbe6e65fdfa99bc7895a1ecde36a1b8c653"
+    },
+    "roots": 3,
+    "sameGitDocumentationPaths": 739,
+    "diagnostics": 0,
+    "raw": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-heads-output.txt",
+      "sha256": "f4922af7b45c439522c201c5f45a45b608c24d2295c259d4d918025969de8e15"
+    }
+  },
+  "failedUnitTypes": {
+    "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --project docs/refactor/generated/demon-request-terminal-revocation-types-failed-unit-config.json --noEmit > docs/refactor/generated/demon-request-terminal-revocation-types-failed-unit-output.txt 2>&1",
+    "launchChunk": "f77821",
+    "sessionId": 4531,
+    "terminalChunk": "d3be8d",
+    "exitCode": 0,
+    "roots": 1,
+    "config": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-types-failed-unit-config.json",
+      "sha256": "9a348f59bfa8b3ea258bb1b9ba0406fbffc3a41b62c44c94454758e3f55765db"
+    },
+    "raw": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-types-failed-unit-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "scope": "only prior failed/changed unit root; not a second whole three-root or complete repository type run"
+  },
+  "unitTypeBridge": {
+    "command": "bun --no-env-file docs/refactor/generated/demon-request-terminal-revocation-unit-type-bridge.cjs > docs/refactor/generated/demon-request-terminal-revocation-unit-type-bridge-output.txt 2>&1",
+    "chunk": "f0aaf3",
+    "exitCode": 0,
+    "raw": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-unit-type-bridge-output.txt",
+      "sha256": "353bb22d4ecc8545a2f04ecf6edcb961426c6e089035a2f0b27a1c129addeeec"
+    },
+    "report": {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-unit-type-bridge.json",
+      "sha256": "960b736a25937171d8e3ca1016a7fc9fc8b5ccdfbd4634e16f9a98651781b212"
+    },
+    "summary": {
+      "exactErasedCastDelta": 1,
+      "addedSyntaxKinds": {
+        "AsExpression": 1,
+        "UnknownKeyword": 1
+      },
+      "wholeActualRawOutputsSame": 2,
+      "otherTwoProductionSame": true
+    }
+  },
+  "authorExecutedChecks": false,
+  "oldCasesOrLegacyProbeRepeated": false,
+  "newGreenUnitRepeated": false,
+  "greenHeadsOrMainProofRepeated": false,
+  "firstWholeTypesGreen": false,
+  "finiteTypesClosedByFailedOnlyRepair": true,
+  "fullGatesOrModelsExecuted": false
+}

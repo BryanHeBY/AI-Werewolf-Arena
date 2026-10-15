@@ -1,0 +1,63 @@
+{
+  "purpose": "Prepare original-only Demon hunt/native-potion recovery characterization; Root executes once; no future policy or permanent test oracle",
+  "baseCommit": "7dd49c9942eed59897def06ec36b8af23ee83518",
+  "before": {
+    "path": "/tmp/awa-demon-request-recovery-characterization-before.json",
+    "sha256": "ff563aa8f20c2b56466e663a41af800ea3134ef2a67505e9f9a4a3a6f58d239c",
+    "criticalCompleteSources": 20,
+    "linkedPublicSources": 855,
+    "linkedCurrentDifferences": []
+  },
+  "script": {
+    "path": "/tmp/awa-demon-request-recovery-characterization.mjs",
+    "sha256": "b59dc51479dc851333a5858d01cc0979743911036d49f71cf60282108eb36a9c"
+  },
+  "preparedCommand": "bun --no-env-file /tmp/awa-demon-request-recovery-characterization.mjs > /tmp/awa-demon-request-recovery-characterization-output.txt 2>&1",
+  "families": [
+    "hunt actual executeDemonHunterTurn + GameActionRequestFactory + ToolGateway",
+    "native_potion actual executeDemonWitchTurn + GameActionRequestFactory + ToolGateway"
+  ],
+  "boundedInputsPerFamily": [
+    "original context.stage bad -> owner/delivery query -> restored stage query",
+    "original equal-context replacement -> owner/delivery query -> original context-ref restored query",
+    "original Night.isCurrent callback false -> query -> true query",
+    "actual deriveBoundedRequest earliest deadline -> forward fake clock observe -> rollback query",
+    "wrong World and unregistered copied request early queries -> original still-queryable measurement",
+    "registered alias equal-context replacement -> alias/original separate queries -> alias reference restore"
+  ],
+  "freshFixtures": 12,
+  "canonicalBoard": {
+    "fixedRoles": [
+      "wolf",
+      "wolf",
+      "villager",
+      "seer",
+      "witch",
+      "demon_hunter"
+    ],
+    "bootstrap": true,
+    "canonicalBoardConfigSameOwner": true,
+    "actualCampComponents": true,
+    "noPrivateConfigLoader": true
+  },
+  "recordedPrefixes": [
+    "original factory request and context data; original scope identity",
+    "deferRequestDelivery and actual once-only callback values",
+    "real gateway delegated results",
+    "Demon history and committed participant audit",
+    "Witch native metadata/state counters and poison mark",
+    "controller result/original Error name/message/same provider Error flag",
+    "actual native potion event; hunt controller itself has no chosen event publication",
+    "after-controller original request currentness versus actual paid native poison currentness"
+  ],
+  "checksExecuted": false,
+  "productionLoadedByPreparation": false,
+  "policyOrProductionChanged": false,
+  "existingCasesRerun": false,
+  "limits": [
+    "No full NightPipeline, end-to-end session Tape, arbitrary alias policy or whole lease closure claim.",
+    "Known false/true recovery remains observation; this probe never asserts a future nonrevival policy.",
+    "If genuine fixture preparation fails, preserve raw and select only that family/mode for a repair successor; do not rerun other completed inputs.",
+    "Root may use --family/--mode/--out for a necessary failed-only successor; first full execution pending."
+  ]
+}

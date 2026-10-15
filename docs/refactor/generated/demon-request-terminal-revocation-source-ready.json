@@ -1,0 +1,60 @@
+{
+  "baseCommit": "7dd49c9942eed59897def06ec36b8af23ee83518",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "3209b328d64742ef8f0e674f83ce17841fee4e4f1241970013f9b9e88a28e330"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "sha256": "97213d3e17ab4042b72580c3283f6ea7f2c634a3dd226550ca54fc8fabf9e3ec"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/request-terminal-revocation.test.ts",
+      "sha256": "373c964b65e4cca53ce4a064b1bd6fb1c581bd4b97b2ca704f77ba7d4e8da326"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+      "sha256": "3e3610bb75defe8f0fabf16c758977707e15242708ec65da4e321d77169f49c6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "2d91efc17dbd98b3f5b14cf5bf4007262bc209cf73f7f41b2f7c1d41b3c64ed9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+      "sha256": "1f2936b5d3da10748e445c231c8ea4154c1668ed3032d766a43cc6d3aa21620d"
+    },
+    {
+      "path": "backend/src/game/gateway/action-reception.ts",
+      "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+    },
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748"
+    },
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "8990b10d8a281237c440d3edb3f7e7b07642851cab3a2492397e7155071247ff"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/participant-state-data.ts",
+      "sha256": "3d31915430bfbfc93de81d6242afb7212ef657493ee690d2b556ec422226a482"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "sha256": "061a792b1f5bb898cbf8a8162e9754012581b1007990af4a363179c20315eaf4"
+    }
+  ],
+  "frozen": true,
+  "checksExecuted": false,
+  "policy": "Original/shared observed failure permanently revokes the unpaid request turn; alias-only failure retires that alias; no refunds or paid-effect revocation.",
+  "phase": "post-first-unit-type-only-repair",
+  "firstSourceReady": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-source-ready-first-snapshot.json",
+    "sha256": "f739d72dc151b5686f43f1199a700dbe6e65fdfa99bc7895a1ecde36a1b8c653"
+  }
+}

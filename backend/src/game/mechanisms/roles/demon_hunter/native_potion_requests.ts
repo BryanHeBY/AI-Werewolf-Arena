@@ -1,7 +1,8 @@
 /**
  * 负责原生猎魔板女巫请求绑定、共享最早截止时间，以及药印记可信读取的唯一实现。
  * 输入保留 World、turn／context、scope 和原库存引用；输出为请求当前性或只读可信查询，不授予用药权限。
- * 请求别名只在原生 scope／躯体和正文检查后绑定，过期、替换或非法原请求撤销交付，完成仍归原 scope。
+ * 请求别名只在原生 scope／躯体和正文检查后绑定；原正文／领域及期限一经观察失效，共同 turn 永久撤权。
+ * 别名自身失配仅永久退休该别名，未知对象／错误 World 不毒化原请求；完成仍归原 scope。
  * 五个印记方法在本模块原初始化点捕获一次；原库存／原型、实例遮蔽和已退休展示名称按原次序拒绝。
  * 捕获表、请求 WeakMap 和 guard 保持同一所有者；只读查询不冻结实例、不复制库存或写来源／付款。
  */
@@ -31,12 +32,14 @@ interface Turn {
   current: () => boolean;
   json: string;
   deadline: number | null;
+  revoked: boolean;
 }
 /** 每个真实别名保留原上下文与截止字段，记录本身不深复制请求或扩大资源许可。 */
 interface Request {
   turn: Turn;
   context: object;
   deadline: unknown;
+  retired: boolean;
 }
 const requests = new WeakMap<object, Request>();
 function body(request: object): string | null {
@@ -50,16 +53,39 @@ function body(request: object): string | null {
   }
 }
 function current(request: object, r: Request): boolean {
-  return (
-    r.turn.current() &&
-    body(r.turn.original) === r.turn.json &&
-    ownDemonData(r.turn.original, "context") === r.turn.originalContext &&
-    ownDemonData(r.turn.original, "deadlineAtMs") === r.turn.originalDeadline &&
-    body(request) === r.turn.json &&
-    ownDemonData(request, "context") === r.context &&
-    ownDemonData(request, "deadlineAtMs") === r.deadline &&
-    (r.turn.deadline === null || r.turn.deadline > Date.now())
-  );
+  const turn = r.turn;
+  if (turn.revoked || r.retired) return false;
+  let shared = true;
+  try {
+    // 保原领域→原正文／身份→当前请求正文的读取次序；共同证据坏后不能靠恢复字段重开。
+    if (!(
+      turn.current() &&
+      body(turn.original) === turn.json &&
+      ownDemonData(turn.original, "context") === turn.originalContext &&
+      ownDemonData(turn.original, "deadlineAtMs") === turn.originalDeadline
+    )) {
+      turn.revoked = true;
+      return false;
+    }
+    shared = false;
+    if (!(
+      body(request) === turn.json &&
+      ownDemonData(request, "context") === r.context &&
+      ownDemonData(request, "deadlineAtMs") === r.deadline
+    )) {
+      if (request === turn.original) turn.revoked = true;
+      else r.retired = true;
+      return false;
+    }
+    shared = true;
+    if (turn.deadline === null || turn.deadline > Date.now()) return true;
+    turn.revoked = true;
+    return false;
+  } catch (error) {
+    if (shared || request === turn.original) turn.revoked = true;
+    else r.retired = true;
+    throw error;
+  }
 }
 function bindDemonNativeRequest(
   world: World,
@@ -96,8 +122,9 @@ function bindDemonNativeRequest(
       current: isCurrent,
       json,
       deadline: deadline === undefined ? null : (deadline as number),
+      revoked: false,
     },
-    r = { turn, context, deadline };
+    r = { turn, context, deadline, retired: false };
   bindRequestDeliveryGuard(request, () => current(request, r), scope);
   requests.set(request, r);
   registerRequestAliasPropagation(request, 70, inheritDemonWitchDeadlineRequest);
@@ -187,7 +214,7 @@ export function inheritDemonWitchDeadlineRequest(
     (r.turn.deadline !== null && deadline > r.turn.deadline)
   )
     return;
-  const copied: Request = { turn: r.turn, context: r.context, deadline };
+  const copied: Request = { turn: r.turn, context: r.context, deadline, retired: false };
   bindRequestDeliveryGuard(clone, () => current(clone, copied), r.turn.scope);
   r.turn.deadline = deadline;
   requests.set(clone, copied);

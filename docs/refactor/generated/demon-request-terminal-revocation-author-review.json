@@ -1,0 +1,47 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "role": "author; separate non-author review required",
+  "baseCommit": "7dd49c9942eed59897def06ec36b8af23ee83518",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "3209b328d64742ef8f0e674f83ce17841fee4e4f1241970013f9b9e88a28e330"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "sha256": "97213d3e17ab4042b72580c3283f6ea7f2c634a3dd226550ca54fc8fabf9e3ec"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/request-terminal-revocation.test.ts",
+      "sha256": "373c964b65e4cca53ce4a064b1bd6fb1c581bd4b97b2ca704f77ba7d4e8da326"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-scope-final.json",
+    "sha256": "a2e82032c0a7bfde734d3ae40932bfd1572087e81be13247f7288ea003f325be"
+  },
+  "document": {
+    "path": "docs/refactor/demon-request-terminal-revocation.md",
+    "sha256": "8d58a9d568f09b03e2ce5a88bf7550437456fee25ccd9feaa0824333f6b2575c"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-evidence.json",
+    "sha256": "e794be4d1acdedb5e25f2d1c8fc9889ef2a4e1dcbb1b0f4dc8af01857179db55"
+  },
+  "integrity": {
+    "productionSources": 2,
+    "newUnit": 1,
+    "controls": 8,
+    "artifactHashes": 29,
+    "preciseProductionEdits": 63,
+    "unitErasedTypeDelta": 1,
+    "sourceReadyFirstAndFinalPreserved": true
+  },
+  "findings": [],
+  "limits": [
+    "No author runtime/type/proof/head executions; actual Root receipts retain first red and failed-only repair.",
+    "All original payment/frame/freeze bodies protected; policy changes only the recorded unpaid authorization terminal state."
+  ]
+}

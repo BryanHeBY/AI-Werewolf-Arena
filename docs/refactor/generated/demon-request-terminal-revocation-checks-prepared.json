@@ -1,0 +1,38 @@
+{
+  "executor": "/root only; author did not execute",
+  "sourceReady": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-source-ready.json",
+    "sha256": "f739d72dc151b5686f43f1199a700dbe6e65fdfa99bc7895a1ecde36a1b8c653"
+  },
+  "preparedCommands": {
+    "unit": "cd backend && bun --no-env-file test --preload ./tests/setup.ts tests/unit/features/demon-hunter/request-terminal-revocation.test.ts",
+    "types": "bun --no-env-file backend/node_modules/typescript/bin/tsc -p docs/refactor/generated/demon-request-terminal-revocation-types-config.json --noEmit",
+    "proof": "bun --no-env-file docs/refactor/generated/demon-request-terminal-revocation-proof.cjs",
+    "heads": "bun --no-env-file docs/refactor/generated/demon-request-terminal-revocation-heads.cjs"
+  },
+  "preparedScripts": [
+    {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-types-config.json",
+      "sha256": "a3b940ffc13d1b8ac2316ce416274396c0e6a39f0633357ee75d3ce3fc054f32"
+    },
+    {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-proof.cjs",
+      "sha256": "74c23dff2f7f9431b5ccfe58b5d78bea791f606b81f6324472881ab3ed746950"
+    },
+    {
+      "path": "docs/refactor/generated/demon-request-terminal-revocation-heads.cjs",
+      "sha256": "0383377d3dca900b44f0055fd6b4cc4cc2b1591d8ea2ee003cf4b690a2c7e5e2"
+    }
+  ],
+  "checksExecuted": false,
+  "legacyCharacterizationAlreadyExecutedOnce": {
+    "chunk": "90fafa",
+    "exitCode": 0,
+    "freshFixtures": 12,
+    "fixtureFailures": 0
+  },
+  "limits": [
+    "New policy unit is distinct from unchanged old probes/cases; no old green is requested again.",
+    "Only Root may first run checks; save actual first failure and retry only failed/changed roots."
+  ]
+}

@@ -5,6 +5,8 @@
  * 失效或失败保持部分写入与结算顺序，别名不增加能力；受保护白痴替换只恢复 idiot 槽，
  * 阵营来自已捕获的真实 Camp，保原组件引用／own-data／审计归属检查；不复制回 Role。
  * 原参与者数据证据／审计编码归 participant-state-data；权限与成功标记继续在这里按原点提交。
+ * 已绑定的未付请求一旦观察到原正文、领域或最早期限失效，永久撤销该 turn；别名自身失配仅退休该别名。
+ * 撤权不关闭整夜、不撤回已付选择／来源；完成通知仍由原提交和 finally 持有。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
@@ -145,6 +147,7 @@ const requests = new WeakMap<
     json: string;
     fields: PropertyDescriptorMap;
     deadline: number | null;
+    retired: boolean;
   }
 >();
 function originalLife(p: Participant, world: World, live = false, version?: number): boolean {
@@ -419,24 +422,49 @@ function requestData(request: DemonHunterRequest): string | null {
 }
 function requestCurrent(t: Turn, request: DemonHunterRequest): boolean {
   const a = requests.get(request);
-  return (
-    !!a &&
-    a.turn === t &&
-    ownDemonData(request, "context") === a.context &&
-    requestData(request) === a.json &&
-    (ownDemonData(request, "deadlineAtMs") ?? null) === a.deadline &&
-    (a.deadline === null || a.deadline > Date.now()) &&
-    (t.deadline === null || t.deadline > Date.now())
-  );
+  if (!a || a.turn !== t || a.retired) return false;
+  let envelope = true;
+  try {
+    if (!(
+      ownDemonData(request, "context") === a.context &&
+      requestData(request) === a.json &&
+      (ownDemonData(request, "deadlineAtMs") ?? null) === a.deadline
+    )) {
+      // 原请求是共同许可的锚；只改别名自己的字段则不伤仍有效的原请求。
+      if (request === t.request) t.night.turn = null;
+      else a.retired = true;
+      return false;
+    }
+    envelope = false;
+    if (
+      (a.deadline === null || a.deadline > Date.now()) &&
+      (t.deadline === null || t.deadline > Date.now())
+    ) return true;
+    // 共享最早期限一经观察到期，回拨时钟不重新安装原 turn；这里不发送完成通知。
+    t.night.turn = null;
+    return false;
+  } catch (error) {
+    if (envelope && request !== t.request) a.retired = true;
+    else t.night.turn = null;
+    throw error;
+  }
 }
 function turnCurrent(t: Turn): boolean {
-  return (
-    t.night.turn === t &&
-    !t.night.choice &&
-    liveNight(t.night) &&
-    !!t.request &&
-    requestCurrent(t, t.request)
-  );
+  try {
+    const current = (
+      t.night.turn === t &&
+      !t.night.choice &&
+      liveNight(t.night) &&
+      !!t.request &&
+      requestCurrent(t, t.request)
+    );
+    // 尚未绑定不能毒化将来的绑定；已付 choice 的独立来源也不受这个请求终态影响。
+    if (!current && t.request && !t.night.choice && t.night.turn === t) t.night.turn = null;
+    return current;
+  } catch (error) {
+    if (t.request && !t.night.choice && t.night.turn === t) t.night.turn = null;
+    throw error;
+  }
 }
 export function bindDemonHunterRequest(world: World, request: DemonHunterRequest): void {
   const t = bindings.get(world)?.active?.turn;
@@ -477,6 +505,7 @@ export function bindDemonHunterRequest(world: World, request: DemonHunterRequest
       json: encoded,
       fields: Object.getOwnPropertyDescriptors(request),
       deadline: t.deadline,
+      retired: false,
     });
     registerRequestAliasPropagation(request, 60, inheritDemonHunterDeadlineRequest);
   } catch {

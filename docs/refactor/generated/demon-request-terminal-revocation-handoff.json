@@ -1,0 +1,48 @@
+{
+  "frozen": true,
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "3209b328d64742ef8f0e674f83ce17841fee4e4f1241970013f9b9e88a28e330"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "sha256": "97213d3e17ab4042b72580c3283f6ea7f2c634a3dd226550ca54fc8fabf9e3ec"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/request-terminal-revocation.test.ts",
+      "sha256": "373c964b65e4cca53ce4a064b1bd6fb1c581bd4b97b2ca704f77ba7d4e8da326"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-scope-final.json",
+    "sha256": "a2e82032c0a7bfde734d3ae40932bfd1572087e81be13247f7288ea003f325be"
+  },
+  "document": {
+    "path": "docs/refactor/demon-request-terminal-revocation.md",
+    "sha256": "8d58a9d568f09b03e2ce5a88bf7550437456fee25ccd9feaa0824333f6b2575c"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-evidence.json",
+    "sha256": "e794be4d1acdedb5e25f2d1c8fc9889ef2a4e1dcbb1b0f4dc8af01857179db55"
+  },
+  "authorReview": {
+    "path": "docs/refactor/generated/demon-request-terminal-revocation-author-review.json",
+    "sha256": "5eba465539fb5a7bee794579b3689b198e86732fe5d3f01708b403a968159e03"
+  },
+  "nonAuthorReviewPending": true,
+  "checkSummary": {
+    "legacyNewFixtures": 12,
+    "legacyFixtureFailures": 0,
+    "newPolicyCases": 16,
+    "newPolicyExpectCalls": 201,
+    "firstTypesExitCode": 2,
+    "failedUnitTypeExitCode": 0,
+    "protectedWholeFunctions": 18,
+    "wholeInverseRawOutputs": 4,
+    "actualDifferentPolicyRawOutputs": 4,
+    "unitTypeOnlyRawOutputsSame": 2,
+    "greenRepeated": false
+  }
+}
