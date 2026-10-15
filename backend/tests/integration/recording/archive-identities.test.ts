@@ -85,7 +85,7 @@ test("actual initial prefix final and export write envelope identities without e
     const prefix = JSON.parse(
       await readFile(path.join(f.manager.sessionDir, "reproduction.json"), "utf8"),
     );
-    expect(prefix.payload.schemaVersion).toBe(2);
+    expect(prefix.payload.schemaVersion).toBe(3);
     expect(prefix.payload.finalized).toBe(false);
     expect(prefix.identities.build.engine).toEqual(f.engine);
     await f.manager.finalize(f.meta);

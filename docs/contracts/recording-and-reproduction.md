@@ -12,7 +12,7 @@ JSON.stringify在宽写入catch外的既有位置，编码失败仍传播；宽c
 
 捕获按既有特殊 authority 优先和实际选择链取数据，保原引用／getter／JSON 时点；Demon 整 players 特殊贡献保外层优先，ordinary 完整 private 容器 clone 不按角色删扩展字段。玩家 DTO 的裁剪白名单不能用作 God checkpoint codec。
 
-Trace记录issued request、selection／operation／完成及真实失败CP。新completion只在真正全部领域付款后true；partial false仍保存已经发生的世界前缀。deferredfalse可将outcome写error而没有action，独立verifier不能假设所有失败decision仍带旧选择。
+Trace记录issued request、selection／operation／完成及真实失败CP。completion只在真正全部领域付款后true；partial false仍保存已经发生的世界前缀。当前Tape3在实际false结算时保存已安全复制的`returnedCandidate`，outcome仍为error；真Provider抛错或交付检查早拒不保存该字段。历史Tape2保持原shape，不补候选；字段缺席不能推成null。候选与付款分别核对，具体版本见[档案兼容](archive-compatibility.md)。
 
 ## 三层不同保证
 
@@ -20,7 +20,7 @@ Trace记录issued request、selection／operation／完成及真实失败CP。�
 2. 独立verifier：以档案可见字段做有限算术、写序和因果拒绝，不导生产owner、World或伪造life／lease精确证据。
 3. exact replay：使用同一真实source／lock／RNG／ruleset原生执行，逐请求／事实／CP对比。
 
-Cupid／Hybrid独立校验以同族最后decision约束末CP；末known动作要匹配目标，末error／pending可在明确范围内承载unknown partial，不能取任意早known候选解释后来的null或invalid。单有God事实不证明对象已死或合法资格。普通死亡历史校验同样不能替exact运行提供完整生命证明。
+Cupid／Hybrid独立校验以同族最后decision约束末CP；已知回复必须匹配目标，只有未记录候选的末error／pending才可在明确范围内承载unknown partial。Tape3显式null、错工具或目标冲突不能由CP、更早选择遮蔽；合法候选也不证明付款。单有God事实不证明对象已死或合法资格。普通死亡历史校验同样不能替exact运行提供完整生命证明。
 
 verifier按实际assembly原顺序追加贡献；board support保持独立的有限预设，不import生产支持算法充oracle。`recording/verification/<feature>`与生产features故意独立。
 

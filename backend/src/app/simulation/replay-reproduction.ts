@@ -149,9 +149,16 @@ class RecordedActions implements ActionProvider {
         const { decision, resolve, reject } = this.pending.get(this.nextSettlement)!;
         this.pending.delete(this.nextSettlement++);
         if (decision.outcome.kind === "error") {
-          const error = new Error("reproduction_recorded_decision_failed");
-          error.name = decision.outcome.name;
-          reject(error);
+          // 只有 Tape3 明确保存的已返回候选才能重交；缺席不能猜成 null 或伪造接受。
+          // 真正的领域检查和付款仍在原 stage 执行，外部安装故障不因此保证可以 exact 重现。
+          const candidate = decision.returnedCandidate;
+          if (Object.hasOwn(decision, "returnedCandidate") && candidate !== undefined)
+            resolve(structuredClone(candidate));
+          else {
+            const error = new Error("reproduction_recorded_decision_failed");
+            error.name = decision.outcome.name;
+            reject(error);
+          }
         } else if (decision.outcome.kind === "action")
           resolve(structuredClone(decision.outcome.action));
         else reject(new ReproductionMismatchError("reproduction_decision_pending"));

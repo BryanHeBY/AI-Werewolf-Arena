@@ -1,7 +1,7 @@
 /**
- * 负责公开新封装与旧裸档的包级兼容测试；输入为手写 v0／v1／v2 数据、版本变体与属性描述符。
+ * 负责录制封装与旧裸档的包级兼容测试；输入为手写公开 v0／v1／v2、严格 Tape 2／3、版本变体与属性描述符。
  * 输出由字面机器 ID、原用户文本、缺席身份和拒绝路径核对，不调用后端或 renderer 生成预期。
- * 新版本只封装原 schema 2，声明不证明构建兼容；不读写历史 golden 或真实文件。
+ * 严格新内层 3 不能扩成公开／玩家 3，显式版本不提前执行 payload getter；声明不证明构建兼容，不读写历史 golden。
  */
 import { expect, test } from "bun:test";
 import {
@@ -100,5 +100,57 @@ test("legacy custom format stays raw while accessor declaration is never execute
     },
   });
   expect(() => readReplayArchive(accessor)).toThrow("document");
+  expect(calls).toBe(0);
+});
+
+// 只测试封装版本配对；这里的最小 payload 不是完整 Tape，也不代替后端严格格式审计。
+test("strict envelope v1 pairs explicit inner versions 2 and 3 while the writer default stays 2", () => {
+  for (const version of [2, 3] as const) {
+    const payload = { schemaVersion: version, marker: "literal strict payload" };
+    const archive = createRecordingEnvelope("strict_reproduction", payload, identities, version);
+    expect(archive.envelopeVersion).toBe(1);
+    expect(archive.payloadSchemaVersion).toBe(version);
+    expect(unwrapRecordingEnvelope(archive, "strict_reproduction").payload).toEqual(payload);
+  }
+  expect(
+    createRecordingEnvelope("strict_reproduction", { schemaVersion: 2 }, identities)
+      .payloadSchemaVersion,
+  ).toBe(2);
+  // 缺少显式第 4 参不会从 payload 猜 3；外 2／内 3 必须仍拒绝。
+  expect(() =>
+    createRecordingEnvelope("strict_reproduction", { schemaVersion: 3 }, identities),
+  ).toThrow("archive.payload.schemaVersion");
+});
+
+test("strict envelope versions must match and public or player inner version 3 remains unsupported", () => {
+  const two = createRecordingEnvelope("strict_reproduction", { schemaVersion: 2 }, identities);
+  const three = createRecordingEnvelope("strict_reproduction", { schemaVersion: 3 }, identities, 3);
+  expect(() =>
+    unwrapRecordingEnvelope({ ...two, payload: { schemaVersion: 3 } }, "strict_reproduction"),
+  ).toThrow("archive.payload.schemaVersion");
+  expect(() =>
+    unwrapRecordingEnvelope({ ...three, payload: { schemaVersion: 2 } }, "strict_reproduction"),
+  ).toThrow("archive.payload.schemaVersion");
+  for (const kind of ["public_replay", "player_view"] as const)
+    expect(() => createRecordingEnvelope(kind, { schemaVersion: 3 }, identities, 3)).toThrow(
+      "archive.version",
+    );
+});
+
+test("explicit or default writer versions never evaluate a payload schema accessor", () => {
+  let calls = 0;
+  const payload = Object.defineProperty({}, "schemaVersion", {
+    enumerable: true,
+    get() {
+      calls++;
+      return 3;
+    },
+  });
+  expect(() => createRecordingEnvelope("strict_reproduction", payload, identities)).toThrow(
+    "archive",
+  );
+  expect(() => createRecordingEnvelope("strict_reproduction", payload, identities, 3)).toThrow(
+    "archive",
+  );
   expect(calls).toBe(0);
 });

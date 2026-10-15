@@ -4,7 +4,7 @@
  * 不加载 renderer／文案聚合。
  * 真实 engine／RNG 只复制实际 metadata，不推测或伪造来源。
  * 未建立 Trace 的公开初始档把 build／ruleset 标为 null。规则执行、资源付款和精确当前构建校验仍归执行器。
- * 同名文件的身份声明是显式格式迁移；三种封装的内层仍为 schema 2，manifest 独立使用内联 schema 1。
+ * 同名文件的身份声明是显式格式迁移；公开／玩家内层仍为 2，严格 Tape 按自身数据版本声明 2／3，manifest 为内联 1。
  * 历史 sourceHash 和用户原文保持，不增加持久化文件。
  */
 import {
@@ -47,11 +47,17 @@ export function createPublicReplayArchive(
 ) {
   return createRecordingEnvelope("public_replay", document, identities);
 }
+/** 严格版本只从自身 data descriptor 选择；完整结构与真正构建身份仍由各自 reader／执行器核对。 */
 export function createReproductionArchive(record: ReproductionRecord) {
+  // 原 metadata 身份准备先完成；新增 descriptor 反射可能触发 Proxy trap，不宣称任意反射顺序等价。
+  // 访问器不执行，缺席／非 3 仍声明 2，交统一纯数据与版本检查拒绝坏 payload，不补造或改写版本。
+  const identities = currentRecordingIdentities(record.metadata);
+  const schemaVersion = Object.getOwnPropertyDescriptor(record, "schemaVersion");
   return createRecordingEnvelope(
     "strict_reproduction",
     record,
-    currentRecordingIdentities(record.metadata),
+    identities,
+    schemaVersion && "value" in schemaVersion && schemaVersion.value === 3 ? 3 : 2,
   );
 }
 /**

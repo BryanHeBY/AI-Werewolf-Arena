@@ -1,6 +1,6 @@
 /**
  * 负责一局复现请求的开启、结算、事件快照与终结记录；本实例唯一拥有对应轨迹状态。
- * 输入为元数据、原请求、实际 provider 和事件读取回调；输出为经原 schema 2 准入的 Tape 与游标。
+ * 输入为元数据、原请求、实际 provider 和事件读取回调；输出为本构建 schema 3 Tape 与游标，历史读取另由格式 owner 保留。
  * 结果复制并核对原请求后，在其 delivery scope 登记结算；返回行动可以先于回调，结算回执不表示资源付款。
  * 状态先写入再通知录制器，通知失败不回滚已写前缀；终结保留不完整与 pending 的原拒绝顺序。
  * Node 对象检查仅处理 provider 数据，不进入共享浏览器契约；不控制阶段、持久化文件或复盘版本。
@@ -136,6 +136,9 @@ export class ReproductionTrace {
       assertRequestDelivery(request);
       // 请求原体的 delivery scope 决定何时结算；正常返回 action 仍可能留下 pending。
       const settle = (accepted: boolean) => {
+        // 只在实际 false-close 保留此前 copyDecisionData 已成功返回的候选，包括 null。
+        // 这份事实不把 error 改成接受；真 Provider 抛错和交付检查早抛仍不产生该字段。
+        if (!accepted) entry.returnedCandidate = recordedAction;
         entry.outcome = accepted
           ? { kind: "action", action: recordedAction }
           : { kind: "error", code: "decision_failed", name: "Error" };

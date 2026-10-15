@@ -1,0 +1,1463 @@
+{
+  "decision": "approved",
+  "scope": "本批19个发布路径；实际功能检查按18源fence，中央合同第4文档单独静态核对",
+  "reviews": [
+    {
+      "file": "/tmp/awa-returned-candidate-replay-independent/final-limited-review.json",
+      "sha256": "f38127d3d431fbb71d34d7772c1a9936194525cd75159f2ff4c4851196af085a",
+      "report": {
+        "decision": "approved",
+        "reviewer": "/root/native_presentation_finish",
+        "kind": "final_limited_execution_binding_and_incremental_non_author_core_review",
+        "baseCommit": "e8837e9f0df5a5c8553ff622c3ec083f01b79f10",
+        "source": [
+          {
+            "path": "backend/src/recording/reproduction/format.ts",
+            "sha256": "f8d6d9f181db668adcbec3247362311fc91fceef4b37ca97880dfb9483af76ec",
+            "bytes": 33264,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/src/recording/reproduction/format.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "eb55f1366929952b3cde0b46e606f52f9a402a1d5761d308d9d944f68c3f8e94",
+            "beforeBytes": 31365,
+            "beforeMode": "100644",
+            "beforeBlob": "8d8a7847b22bdc41fc119b3710dc8a6eb4522d4f"
+          },
+          {
+            "path": "backend/src/recording/reproduction/trace.ts",
+            "sha256": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+            "bytes": 9383,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/src/recording/reproduction/trace.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "34d122b03a7bfa3945a12a81c63fc652c4366c8039132c27e63ef793fc43ce08",
+            "beforeBytes": 9061,
+            "beforeMode": "100644",
+            "beforeBlob": "147e891d16e05357aa34d261eaf26d0943395b35"
+          },
+          {
+            "path": "backend/src/app/simulation/replay-reproduction.ts",
+            "sha256": "f2fe5b7109ce53ccb92253486c5d987702a97a4d669b3ff651a60878c66f3479",
+            "bytes": 19702,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/src/app/simulation/replay-reproduction.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "c5e2b83b8b62bae72a8dd1db038727c0edcb37cd7d7c38a8d5d17d072df1ba82",
+            "beforeBytes": 19237,
+            "beforeMode": "100644",
+            "beforeBlob": "4666417e969d2a53e0055071908dc8de13f2e724"
+          },
+          {
+            "path": "backend/src/recording/verification/cupid/validate.ts",
+            "sha256": "3e7bcaeb1a688e270edfbf53c8e2f80bdaac282e700b05656874c22de0a6d977",
+            "bytes": 18785,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/src/recording/verification/cupid/validate.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "781670af99bbe551bae6ddfb1f95074587863ae0669aec67331f5321f283e0e6",
+            "beforeBytes": 18473,
+            "beforeMode": "100644",
+            "beforeBlob": "e46316fd9dc497460205442f49bb5550e9ae460b"
+          },
+          {
+            "path": "backend/src/recording/verification/hybrid/validate.ts",
+            "sha256": "e4a93cf1d34b0e0135b85a5091b0b505201326f32a22b684234c4cb61599e4f6",
+            "bytes": 14672,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/src/recording/verification/hybrid/validate.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "80e44e162f3fbeec22a60f4f9d7fdfbbf6ede1660b49179226f9e9aad9e911ce",
+            "beforeBytes": 14364,
+            "beforeMode": "100644",
+            "beforeBlob": "ea97b958c641ee7f2fe67618799eac8bd273edc6"
+          },
+          {
+            "path": "backend/tests/unit/recording/request-delivery.test.ts",
+            "sha256": "0673cd67acb249a0028ecb72f1eeb51ce726f94c05e0abbe2171efa20fc78dcb",
+            "bytes": 13528,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/final/backend/tests/unit/recording/request-delivery.test.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "424335ce3b96c8bec5de1520c9fda6936fcc05cd59d69fc94478b94d2a4830cb",
+            "beforeBytes": 7142,
+            "beforeMode": "100644",
+            "beforeBlob": "4db00bd6ab3f05ee921ec8e59084d27eef997de7"
+          },
+          {
+            "path": "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts",
+            "sha256": "f992a6d551e11274ddb5b802c9a1911decd25d6e58d7f963f85dc9ac150c46f0",
+            "bytes": 31815,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "82413d7795753a5c139ea0b81ee1c4043d72528a797ad76c2b76ea244cfd0467",
+            "beforeBytes": 29747,
+            "beforeMode": "100644",
+            "beforeBlob": "1e7a1bef1d3fcc0ac60f8fa01461f437f9e95de0"
+          },
+          {
+            "path": "backend/tests/unit/recording/board-config-recording.test.ts",
+            "sha256": "aa12e1ff4e71be69d4bcc02c353b1ef9377f63811e2799c69c255bd1e4b50bde",
+            "bytes": 6548,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/tests/unit/recording/board-config-recording.test.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "46172f4f0da34c2e78f28d642faaa2e7d7eb03be5eb69813e272b5d760dc585c",
+            "beforeBytes": 6548,
+            "beforeMode": "100644",
+            "beforeBlob": "28793ccb78c62db5f71b4868b5fdd62be1a8e911"
+          },
+          {
+            "path": "backend/tests/integration/recording/archive-identities.test.ts",
+            "sha256": "40d83f75d9f23eeb94ef2a31ad2b3f13c6a2f9f564f59b03ac061e991b0073e8",
+            "bytes": 8837,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/tests/integration/recording/archive-identities.test.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "908f9b28f4180431ca6e59afdc1b5b4c0c1ceecd85ce593097cc8a93d0e4f549",
+            "beforeBytes": 8837,
+            "beforeMode": "100644",
+            "beforeBlob": "e99b0e68fd65b7c1ffbdccc846a21a6790f7a7cf"
+          },
+          {
+            "path": "docs/contracts/action-requests.md",
+            "sha256": "aac8d5c66f931c3442a86d820e3d77424e1ecddf2266010cb0492600db804592",
+            "bytes": 5279,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/docs/contracts/action-requests.md",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "e727d77561ae641036c9caf5b694fd46faaf998b03ab7a9c19cb7316e8488f1b",
+            "beforeBytes": 4467,
+            "beforeMode": "100644",
+            "beforeBlob": "632850c6603f9b6230b7a098fc5d1f9455964058"
+          },
+          {
+            "path": "docs/contracts/archive-compatibility.md",
+            "sha256": "25ab0e0ad214c9b1a06fde1b2408f7e21fb4d94b396b7e6d4d0dbf4381234248",
+            "bytes": 3288,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/docs/contracts/archive-compatibility.md",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "a04b9e28a624a82224d664ef50e35777f54372ec6ceec703ed88d67d61d2e9cf",
+            "beforeBytes": 2160,
+            "beforeMode": "100644",
+            "beforeBlob": "526d73926eca62eb25c741f557adf915edfe6378"
+          },
+          {
+            "path": "docs/decisions/0003-request-policy-and-completion.md",
+            "sha256": "0b8337da7114a2f1d1a1df813c859f127f8c06d3a05c5e1b65b455c77ebca93e",
+            "bytes": 4326,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/docs/decisions/0003-request-policy-and-completion.md",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "70373be5355f9e5189f3255fbb22d807b30b9a14308227e7e7deeb1933dcf6ca",
+            "beforeBytes": 2571,
+            "beforeMode": "100644",
+            "beforeBlob": "c82fbc8b68808a971bd6930ac4a07de2cabb67c5"
+          },
+          {
+            "path": "backend/tests/integration/recording/returned-candidate-replay.test.ts",
+            "sha256": "51af5857aa301a8b451dc8e2fa5ae26c342f2cebacb661e1a7e0bc648fb138a4",
+            "bytes": 5876,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/final/backend/tests/integration/recording/returned-candidate-replay.test.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "absentInBase": true
+          },
+          {
+            "path": "packages/replay-contract/src/archive-envelope.ts",
+            "sha256": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+            "bytes": 7679,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/packages/replay-contract/src/archive-envelope.ts",
+            "reviewBoundary": "reviewer-authored shared path: identity binding only; Pref reviews semantics",
+            "beforeSha256": "c0fa944cef68d617d3bb2f317ebf2858792d8530a0f7cb33a1d11361a08abc27",
+            "beforeBytes": 7178,
+            "beforeMode": "100644",
+            "beforeBlob": "62d0eb6d66a34c08b7547075f23c118e84f80e87"
+          },
+          {
+            "path": "backend/src/recording/archive-identity.ts",
+            "sha256": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+            "bytes": 4715,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/src/recording/archive-identity.ts",
+            "reviewBoundary": "reviewer-authored shared path: identity binding only; Pref reviews semantics",
+            "beforeSha256": "ba4857ed86ed24277150324a4d68b96429cafc5c9f6789862ffab2960d7af4f1",
+            "beforeBytes": 4095,
+            "beforeMode": "100644",
+            "beforeBlob": "bdf8a7e07ba477696fd37bc61b5401ffa17851b4"
+          },
+          {
+            "path": "packages/replay-contract/tests/archive-envelope.test.ts",
+            "sha256": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+            "bytes": 6541,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/packages/replay-contract/tests/archive-envelope.test.ts",
+            "reviewBoundary": "reviewer-authored shared path: identity binding only; Pref reviews semantics",
+            "beforeSha256": "1397c9ebd31c88727ad1350880a9410d9d19a70477e9c7aa6b3d9945a46a6649",
+            "beforeBytes": 4135,
+            "beforeMode": "100644",
+            "beforeBlob": "2b0a02d92e5ef425c0d39a35271144babd65f951"
+          },
+          {
+            "path": "backend/tests/unit/recording/strict-archive-version-wrapper.test.ts",
+            "sha256": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be",
+            "bytes": 2602,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/formatted/backend/tests/unit/recording/strict-archive-version-wrapper.test.ts",
+            "reviewBoundary": "reviewer-authored shared path: identity binding only; Pref reviews semantics",
+            "absentInBase": true
+          },
+          {
+            "path": "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+            "sha256": "7261395798e878b678d37de6e3e39079092c0cc6b7742f3a6fe0f3f5baaabf82",
+            "bytes": 10339,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/final/backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+            "reviewBoundary": "non-author semantic review inherited from bd55 plus final delta",
+            "beforeSha256": "853be7462ceb2f8a12c528e46b036e7310617ac8c23d11a30973000a9c3fbecd",
+            "beforeBytes": 10221,
+            "beforeMode": "100644",
+            "beforeBlob": "0d9cede220a73f23607a7489bb1852e48e586d2e"
+          },
+          {
+            "path": "docs/contracts/recording-and-reproduction.md",
+            "sha256": "3551442d808e62b2c391c4be3dede0cfa5fa79aab1d036bac889bacfc69ca999",
+            "bytes": 3332,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/final/docs/contracts/recording-and-reproduction.md",
+            "reviewBoundary": "Root-authored doc-only two-paragraph semantic clarification; non-author static review",
+            "beforeSha256": "63e9fc1f6690d40b6d37cfb7b56a2e2e3bdfbe2dfb4bc52d601b88643bd9aff0",
+            "beforeBytes": 3052,
+            "beforeMode": "100644",
+            "beforeBlob": "c661323ba693c7325945617ad913b051175d3b88"
+          }
+        ],
+        "deleted": [],
+        "identitySummary": {
+          "gitBefore": 17,
+          "newAbsence": 2,
+          "nonAuthorReviewedPaths": 15,
+          "reviewerAuthoredSharedPathsExcludedFromSemanticApproval": 4,
+          "productionUnchangedAfterFirstFormattedFence": 7,
+          "mismatches": [],
+          "publicationPaths": 19,
+          "executedFinalSourceFencePaths": 18
+        },
+        "preparedReview": {
+          "path": "/tmp/awa-returned-candidate-replay-independent/prepared-review.json",
+          "sha256": "bd55b7280c319f2337cf274a2eff39d39dbe8b99397123c762a45d8fdf5b5d16",
+          "bytes": 14565
+        },
+        "independentSharedReview": {
+          "path": "/tmp/awa-tape3-shared-envelope-independent/prepared-review.json",
+          "sha256": "0edd9ae616095274a0b15c885c63ccb1a0510d7a9bf4b4d9e257ead095d3c9c6",
+          "bytes": 14874
+        },
+        "independentNegativeLayerReview": {
+          "path": "/tmp/awa-tape3-hybrid-negative-layer-independent/prepared-review.json",
+          "sha256": "3534a4ed367c0d7ac97b9b60fda7acd5a6062a6dfbcd5f75d20a8d70b435f6ee",
+          "bytes": 8376
+        },
+        "finalDeltaReview": [
+          "Original thirteen-path prepared review bd55 is retained byte-for-byte and provides the full five-core/three-doc semantic review; current formatting changes were read as precise text differences, not rerun.",
+          "Two new tests changed at three exact sites to use existing getHybridState and a kill_vote discriminant before copy mutation. These are intentional JavaScript changes, not type erasure; literals, titles and following detachment checks are preserved.",
+          "The original eight positive exact snapshot assertions and gameplay/resource/refusal mutations remain unchanged. The scenario file intentionally changes one negative expected error to the existing early reproduction_hybrid_state_invalid and adds its Chinese explanation; do not claim the entire original eight file is byte-identical.",
+          "The early allow_fallback !== false Hybrid verifier predicate already existed in e883; the previous causal failure prevented the old assertions from reaching this negative. Root first17 raw reached the positive equality then failed at the inaccurate expected error layer.",
+          "Seven production programs are byte-identical between first formatted17 fence and final18 fence; only the two test refinements and one scenario negative-layer correction follow. No new permission, paid-current, raw-candidate or partial rollback policy is introduced after prepared approval.",
+          "Root adds one current central recording contract with exactly two paragraphs: Tape3 copied false-return fact vs payment, and known final reply vs absent unknown. It aligns the already reviewed code and three version docs; no producer, assertion, verifier predicate or archive bytes change."
+        ],
+        "executionEvidence": {
+          "testsOnlyOldProduction": {
+            "backend": {
+              "pass": 4,
+              "fail": 5,
+              "filtered": 26,
+              "expects": 31
+            },
+            "shared": {
+              "pass": 1,
+              "fail": 2,
+              "filtered": 10,
+              "expects": 6
+            },
+            "meaning": "new versions/field assertions tested against old production; actual first reds retained, not load-block or final acceptance"
+          },
+          "firstNewImplementation": {
+            "backend": {
+              "pass": 9,
+              "fail": 0,
+              "filtered": 26,
+              "expects": 69
+            },
+            "shared": {
+              "pass": 3,
+              "fail": 0,
+              "filtered": 10,
+              "expects": 15
+            },
+            "meaning": "backend9 comprises NativeFinal7 new declarations and reviewer-authored wrapper2; shared3 is separately authored/reviewed"
+          },
+          "focusedProcesses": [
+            {
+              "name": "writer-contracts",
+              "stage": "firstFormatted17",
+              "launch": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/writer-contracts/launch.json",
+                "sha256": "1ff9ff22527a1f021be285ff0f521522dfe7a414ece89b036b8ab389265012eb",
+                "bytes": 3482
+              },
+              "receipt": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/writer-contracts/receipt.json",
+                "sha256": "e6478c56795461bc1e68ede088b5865d001c482ceb46b55793acfebdaaa87a00",
+                "bytes": 2291
+              },
+              "stdout": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/writer-contracts/stdout.raw",
+                "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+                "bytes": 28
+              },
+              "stderr": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/writer-contracts/stderr.raw",
+                "sha256": "b0b7d9a5f7d17a138c8010283d2b4f064c9a3e80c53218cae1664af76f9c7b29",
+                "bytes": 1571
+              },
+              "exitCode": 0,
+              "elapsedSeconds": 0.8165709972381592,
+              "sourceFence": true,
+              "sourceCount": 17,
+              "counts": {
+                "pass": 11,
+                "filtered": 17,
+                "fail": 0,
+                "expects": 59
+              },
+              "argv": [
+                "/usr/bin/bun",
+                "--no-env-file",
+                "test",
+                "--preload",
+                "./tests/setup.ts",
+                "tests/unit/recording/board-config-recording.test.ts",
+                "tests/integration/recording/archive-identities.test.ts",
+                "--test-name-pattern",
+                "JSON Tape retains the normalized contribution|^actual initial prefix final and export write|^current explicit strict envelope performs"
+              ],
+              "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend"
+            },
+            {
+              "name": "late-prefixes",
+              "stage": "firstFormatted17",
+              "launch": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/late-prefixes/launch.json",
+                "sha256": "290bdc7608ab8507c3c1227fe11d7314b3a4e490c6ae7ed12190adaf32b798d5",
+                "bytes": 3488
+              },
+              "receipt": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/late-prefixes/receipt.json",
+                "sha256": "7831fb5ee8924c1e374dd0ef0e428a4e117dda20943f57843ee0248b51371c2e",
+                "bytes": 2291
+              },
+              "stdout": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/late-prefixes/stdout.raw",
+                "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+                "bytes": 28
+              },
+              "stderr": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/late-prefixes/stderr.raw",
+                "sha256": "3e2769cb05db174c32524b704b1a86a62c200b6d57ec8f55ebb29abd212f150b",
+                "bytes": 668
+              },
+              "exitCode": 0,
+              "elapsedSeconds": 21.823596477508545,
+              "sourceFence": true,
+              "sourceCount": 17,
+              "counts": {
+                "pass": 4,
+                "filtered": 14,
+                "fail": 0,
+                "expects": 1770
+              },
+              "argv": [
+                "/usr/bin/bun",
+                "--no-env-file",
+                "test",
+                "--preload",
+                "./tests/setup.ts",
+                "tests/scenarios/failures/pure-white/required-inspection-response.test.ts",
+                "tests/scenarios/failures/order-prince/late-committed-prefix.test.ts",
+                "--test-name-pattern",
+                "^(pure_white_girl/late/llm:|wolf_witch/late/acp:|Order Prince late order_prince_choice/(llm|acp) preserves committed state$)"
+              ],
+              "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend"
+            },
+            {
+              "name": "hybrid-eight",
+              "stage": "firstFormatted17",
+              "launch": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight/launch.json",
+                "sha256": "80d2fbfca1f4e35be8689ead75b848dc5cbdec5971321349630fe444a0afd599",
+                "bytes": 3243
+              },
+              "receipt": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight/receipt.json",
+                "sha256": "40faef8e10d27c9e765c97cdd381a9eea64eb090c04d50776412eb28900bc866",
+                "bytes": 2290
+              },
+              "stdout": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight/stdout.raw",
+                "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+                "bytes": 28
+              },
+              "stderr": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight/stderr.raw",
+                "sha256": "71921c6a0901394d25088e83a3944dad854bb48c9d8c1c38805f25626ed014e0",
+                "bytes": 7090
+              },
+              "exitCode": 1,
+              "elapsedSeconds": 3.222391128540039,
+              "sourceFence": true,
+              "sourceCount": 17,
+              "counts": {
+                "pass": 0,
+                "filtered": 0,
+                "fail": 8,
+                "expects": 247
+              },
+              "argv": [
+                "/usr/bin/bun",
+                "--no-env-file",
+                "test",
+                "--preload",
+                "./tests/setup.ts",
+                "tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts"
+              ],
+              "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend"
+            },
+            {
+              "name": "hybrid-eight",
+              "stage": "final18",
+              "launch": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight/launch.json",
+                "sha256": "fb2d82a03b85e921973b5b70e3834bebd7951d1dc7748b6fe46f629e65082a17",
+                "bytes": 3424
+              },
+              "receipt": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight/receipt.json",
+                "sha256": "6e13d2168eb6620940fcf3e3593dbdef9f8fad6b6c52ddfda87ad98188101ec0",
+                "bytes": 2442
+              },
+              "stdout": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight/stdout.raw",
+                "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+                "bytes": 28
+              },
+              "stderr": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight/stderr.raw",
+                "sha256": "ffda859f875c69982f4a68df4fdcbf98adc4298c905f1ccd57d390c17f3bccec",
+                "bytes": 1082
+              },
+              "exitCode": 0,
+              "elapsedSeconds": 3.2226295471191406,
+              "sourceFence": true,
+              "sourceCount": 18,
+              "counts": {
+                "pass": 8,
+                "filtered": 0,
+                "fail": 0,
+                "expects": 249
+              },
+              "argv": [
+                "/usr/bin/bun",
+                "--no-env-file",
+                "test",
+                "--preload",
+                "./tests/setup.ts",
+                "tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts"
+              ],
+              "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend"
+            },
+            {
+              "name": "changed-tests",
+              "stage": "final18",
+              "launch": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/changed-tests/launch.json",
+                "sha256": "de47453e2330de1d00e561da3dc8782d389086327d46c264027a87e91f0a3451",
+                "bytes": 3592
+              },
+              "receipt": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/changed-tests/receipt.json",
+                "sha256": "2ec27938b2e00e00329f48430047b547c7777c730d005a24eb83bb7fbd9103cf",
+                "bytes": 2442
+              },
+              "stdout": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/changed-tests/stdout.raw",
+                "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+                "bytes": 28
+              },
+              "stderr": {
+                "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/changed-tests/stderr.raw",
+                "sha256": "b5e50269fd3853ffdb7241647ddc9b1d34620afd45a1c93be855be254342c873",
+                "bytes": 443
+              },
+              "exitCode": 0,
+              "elapsedSeconds": 0.6663825511932373,
+              "sourceFence": true,
+              "sourceCount": 18,
+              "counts": {
+                "pass": 2,
+                "filtered": 16,
+                "fail": 0,
+                "expects": 16
+              },
+              "argv": [
+                "/usr/bin/bun",
+                "--no-env-file",
+                "test",
+                "--preload",
+                "./tests/setup.ts",
+                "tests/unit/recording/request-delivery.test.ts",
+                "tests/integration/recording/returned-candidate-replay.test.ts",
+                "--test-name-pattern",
+                "^returned candidate: (false completion preserves|three real Hybrid null returns)"
+              ],
+              "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend"
+            }
+          ],
+          "types": {
+            "first": {
+              "diagnostics": 2,
+              "roots": 14,
+              "graph": 1074,
+              "report": {
+                "path": "/tmp/awa-tape3-execution/affected-types.json",
+                "sha256": "20b358b93df2e4f88460ee2088b3a43c456498ebd748dc4a7e0058845cce0c05",
+                "bytes": 217088
+              },
+              "raw": {
+                "path": "/tmp/awa-tape3-execution/affected-types.diagnostics.raw",
+                "sha256": "a0b6df907fb6211be14fc5556c410274e27cd9643c74f39585ea1e74ac2e68c8",
+                "bytes": 1061
+              },
+              "meaning": "both TS2339 are in new tests; no production diagnostic"
+            },
+            "successor": {
+              "diagnostics": 0,
+              "roots": 15,
+              "graph": 1156,
+              "report": {
+                "path": "/tmp/awa-tape3-execution/type-successor/affected-types.json",
+                "sha256": "59ada90e039103eea92f83a4ecb5287c11070da918ea8b058c03d58a2b3d0e59",
+                "bytes": 234392
+              },
+              "raw": {
+                "path": "/tmp/awa-tape3-execution/type-successor/affected-types.diagnostics.raw",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              },
+              "actualTerminalReportedByRoot": {
+                "session": 19445,
+                "chunk": "e89bc2",
+                "exitCode": 0
+              },
+              "meaning": "fifteen explicit changed roots with actual resolved transitive graph, not entire backend/test project and not C47"
+            }
+          },
+          "countsPolicy": "Each source-stage run is listed separately; repeated changed tests and all-eight rerun are not added as distinct coverage. Hybrid first0/8/247 is preserved, final8/0/249 is a separate honest run."
+        },
+        "artifacts": [
+          {
+            "path": "/tmp/awa-tape3-execution/formatted-candidates.json",
+            "sha256": "0837a6984961522286b7b4d08a2487b586174e98441b25abd6c119966341a509",
+            "bytes": 11450
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/final-candidates.json",
+            "sha256": "c496f7e9bff056a8a96610c71ac4d0675d65c1e584263bf9582977a28dbeb48b",
+            "bytes": 13285
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/source-applied.json",
+            "sha256": "ad65762dbbe6688f92a6863eb37ebea37ff17e3f604533791913427ca52e7c98",
+            "bytes": 803
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/test-successors-applied.json",
+            "sha256": "7fb62c49db2a69941740867a0463208172ffea7f2bc84736fa528410d21d0190",
+            "bytes": 724
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/first-backend.stdout",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/first-backend.stderr",
+            "sha256": "d1edcd799a23021c6d9327ab268b12f1a9916556e7e397cc5a372c5305dfc9aa",
+            "bytes": 5275
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/successor-backend.stdout",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/successor-backend.stderr",
+            "sha256": "c7266099337c8f40d5eddb57dbd24bd637efcaf6180fd27895bf1cc7e443b95d",
+            "bytes": 1384
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/first-shared.stdout",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/first-shared.stderr",
+            "sha256": "d4198bf671d3ae18788d8decb2bb63c239c2584428f1b81cf6016fd06ceeb125",
+            "bytes": 2174
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/successor-shared.stdout",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/successor-shared.stderr",
+            "sha256": "0499be27e501116270ee7573b25c542be3e5ad4008fef812a40f76f62cffa18e",
+            "bytes": 431
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/affected-types.json",
+            "sha256": "20b358b93df2e4f88460ee2088b3a43c456498ebd748dc4a7e0058845cce0c05",
+            "bytes": 217088
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/affected-types.diagnostics.raw",
+            "sha256": "a0b6df907fb6211be14fc5556c410274e27cd9643c74f39585ea1e74ac2e68c8",
+            "bytes": 1061
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/affected-types.stdout",
+            "sha256": "eaa36e2c3a93d5809e991105e0930b84b28abb2dc6b5b660f1d3c037e95a26a2",
+            "bytes": 37
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/affected-types.stderr",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/type-successor/affected-types.json",
+            "sha256": "59ada90e039103eea92f83a4ecb5287c11070da918ea8b058c03d58a2b3d0e59",
+            "bytes": 234392
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/type-successor/affected-types.diagnostics.raw",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/type-successor/stdout.raw",
+            "sha256": "6593159a1bee7bb4fe56822935d5665b2ab561bfc1a847aa88185978f893d0d9",
+            "bytes": 37
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/type-successor/stderr.raw",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/tmp/awa-tape3-test-types-repair/HANDOFF.json",
+            "sha256": "fd9c070c7b36e436b59044c487d31c99d6e1a2210750ead052f151166cda49fb",
+            "bytes": 2596
+          },
+          {
+            "path": "/tmp/awa-tape3-test-types-repair/patch.diff",
+            "sha256": "fe3aef46c1c5ff2935cf3d319418687bb83a5d4fb64cd557be2b5aecabd8a398",
+            "bytes": 1620
+          },
+          {
+            "path": "/tmp/awa-tape3-test-types-repair/edits.json",
+            "sha256": "57329e09cb0acd45db215d2727343ec29c24e08bd07263611f31f43be215d2e3",
+            "bytes": 1061
+          },
+          {
+            "path": "/tmp/awa-tape3-hybrid-negative-layer-repair/HANDOFF.json",
+            "sha256": "14d162bbd01ac715b207dc54b525e4467f565f0566b49440982b2dbe132a194e",
+            "bytes": 1639
+          },
+          {
+            "path": "/tmp/awa-tape3-hybrid-negative-layer-repair/patch.diff",
+            "sha256": "989e86e8e931c13a505ff9854aa1594d0b5afb483976cb043a6cdb803df58913",
+            "bytes": 692
+          },
+          {
+            "path": "/tmp/awa-tape3-hybrid-negative-layer-independent/prepared-review.json",
+            "sha256": "3534a4ed367c0d7ac97b9b60fda7acd5a6062a6dfbcd5f75d20a8d70b435f6ee",
+            "bytes": 8376
+          },
+          {
+            "path": "/tmp/awa-tape3-shared-envelope-independent/prepared-review.json",
+            "sha256": "0edd9ae616095274a0b15c885c63ccb1a0510d7a9bf4b4d9e257ead095d3c9c6",
+            "bytes": 14874
+          },
+          {
+            "path": "/tmp/awa-returned-candidate-replay-independent/prepared-review.json",
+            "sha256": "bd55b7280c319f2337cf274a2eff39d39dbe8b99397123c762a45d8fdf5b5d16",
+            "bytes": 14565
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/publication-candidates.json",
+            "sha256": "03cdb2ee9ee9d0ff0ec14864c3d409cec008e54a11c907a257a3fe653875a9c0",
+            "bytes": 14052
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/recording-contract-delta.json",
+            "sha256": "b95b060a84cb7712697032ea4bca769b5211de609811ec5e64aa2aadb8e597f4",
+            "bytes": 1969
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/recording-contract.before.md",
+            "sha256": "63e9fc1f6690d40b6d37cfb7b56a2e2e3bdfbe2dfb4bc52d601b88643bd9aff0",
+            "bytes": 3052
+          },
+          {
+            "path": "/tmp/awa-tape3-shared-negative-final-independent/limited-final-review.json",
+            "sha256": "d1ac63cece17de078addb6e8f965400f2cf28386a935da04307e46f3ca02a67b",
+            "bytes": 37874
+          },
+          {
+            "path": "/tmp/awa-returned-candidate-replay-independent/final-limited-18-source-snapshot.json",
+            "sha256": "4d3b98d5e3006acb686c58120384ea3c892ac23a2e7c9fa9bf312a3f9ed04a76",
+            "bytes": 31156
+          }
+        ],
+        "limits": [
+          "Bounded final review of the returnedCandidate batch and its real focused evidence; no complete C47/final42/all-role acceptance claim.",
+          "Reviewer authored four shared-envelope paths; only their current identity and process binding are included here. Pref independently approves their semantics and the negative-oracle successor.",
+          "Candidate evidence is a copied return fact, not payment or false-close reason. Arbitrary revoked/expired/partial external failures are not guaranteed exact replay.",
+          "Tape3 and legacy2 shape/source-lock/refusal order conclusions remain the original prepared semantic conclusions, with only observed Root executions appended.",
+          "No parser, compiler, product, formatter, tests or gates were run by this reviewer; no repository source/metadata/Git writes. Only public file/Git and existing JSON/raw receipt reads plus TMP report writing.",
+          "Source modes and all eighteen final bytes bind this observation. Root owns any later packaging, format of evidence or commits; this report does not pretend a later metadata HEAD was executed.",
+          "Published candidate now has19 paths (7production/8tests/4docs). All actual final focused runs remain the recorded18-source fence; added central doc is static reviewed only. Fifteen-root type0/1156 does not become a nineteen-root run or full C47 acceptance."
+        ],
+        "findings": [],
+        "executionByReviewer": {
+          "product": 0,
+          "parser": 0,
+          "compiler": 0,
+          "formatter": 0,
+          "tests": 0,
+          "check": 0,
+          "repositoryWrites": 0
+        },
+        "centralDocOnlySupplement": {
+          "source": {
+            "path": "docs/contracts/recording-and-reproduction.md",
+            "sha256": "3551442d808e62b2c391c4be3dede0cfa5fa79aab1d036bac889bacfc69ca999",
+            "bytes": 3332,
+            "mode": "100644",
+            "savedFinal": "/tmp/awa-tape3-execution/final/docs/contracts/recording-and-reproduction.md",
+            "reviewBoundary": "Root-authored doc-only two-paragraph semantic clarification; non-author static review",
+            "beforeSha256": "63e9fc1f6690d40b6d37cfb7b56a2e2e3bdfbe2dfb4bc52d601b88643bd9aff0",
+            "beforeBytes": 3052,
+            "beforeMode": "100644",
+            "beforeBlob": "c661323ba693c7325945617ad913b051175d3b88"
+          },
+          "delta": {
+            "path": "/tmp/awa-tape3-execution/recording-contract-delta.json",
+            "sha256": "b95b060a84cb7712697032ea4bca769b5211de609811ec5e64aa2aadb8e597f4",
+            "bytes": 1969
+          },
+          "before": {
+            "path": "/tmp/awa-tape3-execution/recording-contract.before.md",
+            "sha256": "63e9fc1f6690d40b6d37cfb7b56a2e2e3bdfbe2dfb4bc52d601b88643bd9aff0",
+            "bytes": 3052
+          },
+          "exactParagraphEdits": 2,
+          "semanticDecision": "approved",
+          "format": "Root publication metadata reports stableOnSecondFormat; reviewer did not run formatter",
+          "testsBoundary": "post-test static doc publication; not an executed19-source fence",
+          "first18FinalReportPreserved": {
+            "path": "/tmp/awa-returned-candidate-replay-independent/final-limited-18-source-snapshot.json",
+            "sha256": "4d3b98d5e3006acb686c58120384ea3c892ac23a2e7c9fa9bf312a3f9ed04a76",
+            "bytes": 31156
+          }
+        },
+        "independentSharedAndNegativeLimitedFinalReview": {
+          "path": "/tmp/awa-tape3-shared-negative-final-independent/limited-final-review.json",
+          "sha256": "d1ac63cece17de078addb6e8f965400f2cf28386a935da04307e46f3ca02a67b",
+          "bytes": 37874
+        },
+        "reportPreparationNote": "First metadata writer stopped on a shorthand before filename; actual saved filename is recording-contract.before.md. It wrote only the preserved18-source report snapshot, no report/source/receipt rewrite or candidate execution.",
+        "approved": true
+      }
+    },
+    {
+      "file": "/tmp/awa-tape3-shared-negative-final-independent/limited-final-review.json",
+      "sha256": "d1ac63cece17de078addb6e8f965400f2cf28386a935da04307e46f3ca02a67b",
+      "report": {
+        "kind": "limited-final-source-and-runtime-receipt-independent-review",
+        "decision": "approved",
+        "reviewer": "/root/preflight_final_review",
+        "approvedSource": [
+          {
+            "path": "packages/replay-contract/src/archive-envelope.ts",
+            "sha256": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+            "bytes": 7679,
+            "change": "modified"
+          },
+          {
+            "path": "backend/src/recording/archive-identity.ts",
+            "sha256": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+            "bytes": 4715,
+            "change": "modified"
+          },
+          {
+            "path": "packages/replay-contract/tests/archive-envelope.test.ts",
+            "sha256": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+            "bytes": 6541,
+            "change": "modified"
+          },
+          {
+            "path": "backend/tests/unit/recording/strict-archive-version-wrapper.test.ts",
+            "sha256": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be",
+            "bytes": 2602,
+            "change": "added"
+          },
+          {
+            "path": "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+            "sha256": "7261395798e878b678d37de6e3e39079092c0cc6b7742f3a6fe0f3f5baaabf82",
+            "bytes": 10339,
+            "change": "modified"
+          }
+        ],
+        "deleted": [],
+        "approvalScope": "Only prepared-reviewed shared four and Hybrid one-source negative-layer expectation, plus limited existing Root receipt/fence binding. NativeFinal core remains separately peer-reviewed.",
+        "baseCommit": "e8837e9f0df5a5c8553ff622c3ec083f01b79f10",
+        "preparedReportsPreserved": [
+          {
+            "path": "/tmp/awa-tape3-shared-envelope-independent/prepared-review.json",
+            "sha256": "0edd9ae616095274a0b15c885c63ccb1a0510d7a9bf4b4d9e257ead095d3c9c6"
+          },
+          {
+            "path": "/tmp/awa-tape3-hybrid-negative-layer-independent/prepared-review.json",
+            "sha256": "3534a4ed367c0d7ac97b9b60fda7acd5a6062a6dfbcd5f75d20a8d70b435f6ee"
+          }
+        ],
+        "finalCandidates": {
+          "path": "/tmp/awa-tape3-execution/final-candidates.json",
+          "sha256": "c496f7e9bff056a8a96610c71ac4d0675d65c1e584263bf9582977a28dbeb48b",
+          "count": 18
+        },
+        "current18ByteBindings": [
+          {
+            "path": "backend/src/recording/reproduction/format.ts",
+            "sha256": "f8d6d9f181db668adcbec3247362311fc91fceef4b37ca97880dfb9483af76ec",
+            "expectedSHA256": "f8d6d9f181db668adcbec3247362311fc91fceef4b37ca97880dfb9483af76ec",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/src/recording/reproduction/trace.ts",
+            "sha256": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+            "expectedSHA256": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/src/app/simulation/replay-reproduction.ts",
+            "sha256": "f2fe5b7109ce53ccb92253486c5d987702a97a4d669b3ff651a60878c66f3479",
+            "expectedSHA256": "f2fe5b7109ce53ccb92253486c5d987702a97a4d669b3ff651a60878c66f3479",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/src/recording/verification/cupid/validate.ts",
+            "sha256": "3e7bcaeb1a688e270edfbf53c8e2f80bdaac282e700b05656874c22de0a6d977",
+            "expectedSHA256": "3e7bcaeb1a688e270edfbf53c8e2f80bdaac282e700b05656874c22de0a6d977",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/src/recording/verification/hybrid/validate.ts",
+            "sha256": "e4a93cf1d34b0e0135b85a5091b0b505201326f32a22b684234c4cb61599e4f6",
+            "expectedSHA256": "e4a93cf1d34b0e0135b85a5091b0b505201326f32a22b684234c4cb61599e4f6",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/tests/unit/recording/request-delivery.test.ts",
+            "sha256": "0673cd67acb249a0028ecb72f1eeb51ce726f94c05e0abbe2171efa20fc78dcb",
+            "expectedSHA256": "0673cd67acb249a0028ecb72f1eeb51ce726f94c05e0abbe2171efa20fc78dcb",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts",
+            "sha256": "f992a6d551e11274ddb5b802c9a1911decd25d6e58d7f963f85dc9ac150c46f0",
+            "expectedSHA256": "f992a6d551e11274ddb5b802c9a1911decd25d6e58d7f963f85dc9ac150c46f0",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/tests/unit/recording/board-config-recording.test.ts",
+            "sha256": "aa12e1ff4e71be69d4bcc02c353b1ef9377f63811e2799c69c255bd1e4b50bde",
+            "expectedSHA256": "aa12e1ff4e71be69d4bcc02c353b1ef9377f63811e2799c69c255bd1e4b50bde",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/tests/integration/recording/archive-identities.test.ts",
+            "sha256": "40d83f75d9f23eeb94ef2a31ad2b3f13c6a2f9f564f59b03ac061e991b0073e8",
+            "expectedSHA256": "40d83f75d9f23eeb94ef2a31ad2b3f13c6a2f9f564f59b03ac061e991b0073e8",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "docs/contracts/action-requests.md",
+            "sha256": "aac8d5c66f931c3442a86d820e3d77424e1ecddf2266010cb0492600db804592",
+            "expectedSHA256": "aac8d5c66f931c3442a86d820e3d77424e1ecddf2266010cb0492600db804592",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "docs/contracts/archive-compatibility.md",
+            "sha256": "25ab0e0ad214c9b1a06fde1b2408f7e21fb4d94b396b7e6d4d0dbf4381234248",
+            "expectedSHA256": "25ab0e0ad214c9b1a06fde1b2408f7e21fb4d94b396b7e6d4d0dbf4381234248",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "docs/decisions/0003-request-policy-and-completion.md",
+            "sha256": "0b8337da7114a2f1d1a1df813c859f127f8c06d3a05c5e1b65b455c77ebca93e",
+            "expectedSHA256": "0b8337da7114a2f1d1a1df813c859f127f8c06d3a05c5e1b65b455c77ebca93e",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/tests/integration/recording/returned-candidate-replay.test.ts",
+            "sha256": "51af5857aa301a8b451dc8e2fa5ae26c342f2cebacb661e1a7e0bc648fb138a4",
+            "expectedSHA256": "51af5857aa301a8b451dc8e2fa5ae26c342f2cebacb661e1a7e0bc648fb138a4",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "packages/replay-contract/src/archive-envelope.ts",
+            "sha256": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+            "expectedSHA256": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/src/recording/archive-identity.ts",
+            "sha256": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+            "expectedSHA256": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "packages/replay-contract/tests/archive-envelope.test.ts",
+            "sha256": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+            "expectedSHA256": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/tests/unit/recording/strict-archive-version-wrapper.test.ts",
+            "sha256": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be",
+            "expectedSHA256": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          },
+          {
+            "path": "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+            "sha256": "7261395798e878b678d37de6e3e39079092c0cc6b7742f3a6fe0f3f5baaabf82",
+            "expectedSHA256": "7261395798e878b678d37de6e3e39079092c0cc6b7742f3a6fe0f3f5baaabf82",
+            "matchesExpected": true,
+            "matchesSavedFinal": true
+          }
+        ],
+        "sharedControls": [
+          {
+            "path": "packages/replay-contract/src/validation.ts",
+            "beforeSHA256": "7af1e9e94d3926b1844e2305e93b9eb1da81cfe0ad86bcf3fb61a80d8900f820",
+            "currentSHA256": "7af1e9e94d3926b1844e2305e93b9eb1da81cfe0ad86bcf3fb61a80d8900f820",
+            "same": true
+          },
+          {
+            "path": "packages/replay-contract/src/manifest.ts",
+            "beforeSHA256": "625687af73d1d91e7d766e095fe0731f77c1a1362e7ee1f23b29bc6ceebbf9ae",
+            "currentSHA256": "625687af73d1d91e7d766e095fe0731f77c1a1362e7ee1f23b29bc6ceebbf9ae",
+            "same": true
+          },
+          {
+            "path": "packages/replay-contract/src/player-record.ts",
+            "beforeSHA256": "0fca15532062ba70391ae0e3e15e8ee9c60795cc39aaf8574c330a8449d6b45a",
+            "currentSHA256": "0fca15532062ba70391ae0e3e15e8ee9c60795cc39aaf8574c330a8449d6b45a",
+            "same": true
+          },
+          {
+            "path": "packages/replay-contract/src/index.ts",
+            "beforeSHA256": "86f7f6d9fbd27b803d7db9fb339091f404392745f764fbf7586f366eb66152d5",
+            "currentSHA256": "86f7f6d9fbd27b803d7db9fb339091f404392745f764fbf7586f366eb66152d5",
+            "same": true
+          }
+        ],
+        "sourceDeltas": [
+          "Shared envelope1854876b and backend wrapper0f46ba2a exactly equal independently approved TMP candidates.",
+          "New wrapper65428711 exactly equals prepared handwritten unit.",
+          "Shared test d52abdc5 -> c4fc2ec3 was completely diff-read: blank line removal and formatting/trailing commas only in appended declarations; original body unchanged and no literal/title/expect/input change. No new parser or formatter was run by reviewer.",
+          "Hybrid853be746 ->72613957 equals already approved whole exact inverse: one expected error literal plus Chinese explanation; no positive exact or failure-input change."
+        ],
+        "actualPhases": {
+          "firstShared": {
+            "raw": "/tmp/awa-tape3-execution/first-shared.stderr",
+            "pass": 1,
+            "fail": 2,
+            "filtered": 10,
+            "expectCalls": 6,
+            "meaning": "New tests on original old production before source-applied stage; keep actual red, do not call new implementation regression."
+          },
+          "sharedAfterImplementation": {
+            "raw": "/tmp/awa-tape3-execution/successor-shared.stderr",
+            "pass": 3,
+            "fail": 0,
+            "filtered": 10,
+            "expectCalls": 15
+          },
+          "wrapperWithinBackend": {
+            "raw": "/tmp/awa-tape3-execution/successor-backend.stderr",
+            "wholeRunPass": 9,
+            "wholeRunExpectCalls": 69,
+            "wrapperPassTitles": [
+              "strict archive wrapper declares its own data version without changing public envelope v1",
+              "strict archive wrapper rejects schema accessors without executing them and preserves metadata failure priority"
+            ],
+            "limits": "Two wrapper declarations are included in this9; no separate execution or allocation of the69 expects to wrappers is claimed. Original backend baseline4pass5fail31expects retained."
+          },
+          "hybridBeforeNegativeRepair": {
+            "raw": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight/stderr.raw",
+            "pass": 0,
+            "fail": 8,
+            "expectCalls": 247,
+            "meaning": "Positive exact snapshot already reached in all8, but complete declarations failed at inaccurate negative rejection layer."
+          },
+          "hybridAfterNegativeRepair": {
+            "raw": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight/stderr.raw",
+            "pass": 8,
+            "fail": 0,
+            "expectCalls": 249,
+            "rootReportedSession": 9929,
+            "rootReportedTerminal": "667fb2",
+            "fence18": true
+          },
+          "typeFirst": {
+            "roots": 14,
+            "closureSources": 1074,
+            "diagnostics": 2,
+            "files": [
+              "backend/tests/integration/recording/returned-candidate-replay.test.ts",
+              "backend/tests/unit/recording/request-delivery.test.ts"
+            ],
+            "code": "TS2339",
+            "meaning": "Only new test input/accessor discriminant errors, no production diagnostics in this finite run. Raw kept."
+          },
+          "typeSuccessor": {
+            "roots": 15,
+            "closureSources": 1156,
+            "diagnostics": 0,
+            "rootReportedSession": 19445,
+            "rootReportedTerminal": "e89bc2",
+            "emptyDiagnosticRaw": true,
+            "meaning": "Finite changed-root closure only, not whole backend or final42 C47."
+          }
+        },
+        "sourceFencedExistingExecutions": [
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight",
+            "exitCode": 1,
+            "argv": [
+              "/usr/bin/bun",
+              "--no-env-file",
+              "test",
+              "--preload",
+              "./tests/setup.ts",
+              "tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts"
+            ],
+            "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+            "scope": "hybrid-eight",
+            "beforeAfterMatch": true,
+            "sourceCount": 17,
+            "sameFinal18": false,
+            "passedDeclarations": [],
+            "failedDeclarations": [
+              "zh-CN/sdk/empty: actual failed required Hybrid path never invokes even an injected action fallback [573.31ms]",
+              "zh-CN/sdk/transport: actual failed required Hybrid path never invokes even an injected action fallback [370.90ms]",
+              "zh-CN/acp/empty: actual failed required Hybrid path never invokes even an injected action fallback [338.26ms]",
+              "zh-CN/acp/transport: actual failed required Hybrid path never invokes even an injected action fallback [344.07ms]",
+              "en/sdk/empty: actual failed required Hybrid path never invokes even an injected action fallback [417.95ms]",
+              "en/sdk/transport: actual failed required Hybrid path never invokes even an injected action fallback [357.32ms]",
+              "en/acp/empty: actual failed required Hybrid path never invokes even an injected action fallback [313.35ms]",
+              "en/acp/transport: actual failed required Hybrid path never invokes even an injected action fallback [304.42ms]"
+            ],
+            "rawSummary": "0 pass\n 8 fail\n 247 expect() calls\nRan 8 tests across 1 file. [3.21s]",
+            "sourceFence": {
+              "backend/src/recording/reproduction/format.ts": "f8d6d9f181db668adcbec3247362311fc91fceef4b37ca97880dfb9483af76ec",
+              "backend/src/recording/reproduction/trace.ts": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+              "backend/src/app/simulation/replay-reproduction.ts": "f2fe5b7109ce53ccb92253486c5d987702a97a4d669b3ff651a60878c66f3479",
+              "backend/src/recording/verification/cupid/validate.ts": "3e7bcaeb1a688e270edfbf53c8e2f80bdaac282e700b05656874c22de0a6d977",
+              "backend/src/recording/verification/hybrid/validate.ts": "e4a93cf1d34b0e0135b85a5091b0b505201326f32a22b684234c4cb61599e4f6",
+              "backend/tests/unit/recording/request-delivery.test.ts": "53eaec060a62c7c7868c4d8e71eba8532ccac1066057831388d5a2c2ffa15845",
+              "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts": "f992a6d551e11274ddb5b802c9a1911decd25d6e58d7f963f85dc9ac150c46f0",
+              "backend/tests/unit/recording/board-config-recording.test.ts": "aa12e1ff4e71be69d4bcc02c353b1ef9377f63811e2799c69c255bd1e4b50bde",
+              "backend/tests/integration/recording/archive-identities.test.ts": "40d83f75d9f23eeb94ef2a31ad2b3f13c6a2f9f564f59b03ac061e991b0073e8",
+              "docs/contracts/action-requests.md": "aac8d5c66f931c3442a86d820e3d77424e1ecddf2266010cb0492600db804592",
+              "docs/contracts/archive-compatibility.md": "25ab0e0ad214c9b1a06fde1b2408f7e21fb4d94b396b7e6d4d0dbf4381234248",
+              "docs/decisions/0003-request-policy-and-completion.md": "0b8337da7114a2f1d1a1df813c859f127f8c06d3a05c5e1b65b455c77ebca93e",
+              "backend/tests/integration/recording/returned-candidate-replay.test.ts": "bcdea64e6bf5bd1deb8033709b974602005e78bb13a07896388eca1701b16f3a",
+              "packages/replay-contract/src/archive-envelope.ts": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+              "backend/src/recording/archive-identity.ts": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+              "packages/replay-contract/tests/archive-envelope.test.ts": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+              "backend/tests/unit/recording/strict-archive-version-wrapper.test.ts": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be"
+            },
+            "after": {
+              "backend/src/recording/reproduction/format.ts": "f8d6d9f181db668adcbec3247362311fc91fceef4b37ca97880dfb9483af76ec",
+              "backend/src/recording/reproduction/trace.ts": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+              "backend/src/app/simulation/replay-reproduction.ts": "f2fe5b7109ce53ccb92253486c5d987702a97a4d669b3ff651a60878c66f3479",
+              "backend/src/recording/verification/cupid/validate.ts": "3e7bcaeb1a688e270edfbf53c8e2f80bdaac282e700b05656874c22de0a6d977",
+              "backend/src/recording/verification/hybrid/validate.ts": "e4a93cf1d34b0e0135b85a5091b0b505201326f32a22b684234c4cb61599e4f6",
+              "backend/tests/unit/recording/request-delivery.test.ts": "53eaec060a62c7c7868c4d8e71eba8532ccac1066057831388d5a2c2ffa15845",
+              "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts": "f992a6d551e11274ddb5b802c9a1911decd25d6e58d7f963f85dc9ac150c46f0",
+              "backend/tests/unit/recording/board-config-recording.test.ts": "aa12e1ff4e71be69d4bcc02c353b1ef9377f63811e2799c69c255bd1e4b50bde",
+              "backend/tests/integration/recording/archive-identities.test.ts": "40d83f75d9f23eeb94ef2a31ad2b3f13c6a2f9f564f59b03ac061e991b0073e8",
+              "docs/contracts/action-requests.md": "aac8d5c66f931c3442a86d820e3d77424e1ecddf2266010cb0492600db804592",
+              "docs/contracts/archive-compatibility.md": "25ab0e0ad214c9b1a06fde1b2408f7e21fb4d94b396b7e6d4d0dbf4381234248",
+              "docs/decisions/0003-request-policy-and-completion.md": "0b8337da7114a2f1d1a1df813c859f127f8c06d3a05c5e1b65b455c77ebca93e",
+              "backend/tests/integration/recording/returned-candidate-replay.test.ts": "bcdea64e6bf5bd1deb8033709b974602005e78bb13a07896388eca1701b16f3a",
+              "packages/replay-contract/src/archive-envelope.ts": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+              "backend/src/recording/archive-identity.ts": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+              "packages/replay-contract/tests/archive-envelope.test.ts": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+              "backend/tests/unit/recording/strict-archive-version-wrapper.test.ts": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be"
+            }
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight",
+            "exitCode": 0,
+            "argv": [
+              "/usr/bin/bun",
+              "--no-env-file",
+              "test",
+              "--preload",
+              "./tests/setup.ts",
+              "tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts"
+            ],
+            "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+            "scope": "hybrid-eight",
+            "beforeAfterMatch": true,
+            "sourceCount": 18,
+            "sameFinal18": true,
+            "passedDeclarations": [
+              "zh-CN/sdk/empty: actual failed required Hybrid path never invokes even an injected action fallback [595.94ms]",
+              "zh-CN/sdk/transport: actual failed required Hybrid path never invokes even an injected action fallback [368.21ms]",
+              "zh-CN/acp/empty: actual failed required Hybrid path never invokes even an injected action fallback [325.96ms]",
+              "zh-CN/acp/transport: actual failed required Hybrid path never invokes even an injected action fallback [308.73ms]",
+              "en/sdk/empty: actual failed required Hybrid path never invokes even an injected action fallback [349.74ms]",
+              "en/sdk/transport: actual failed required Hybrid path never invokes even an injected action fallback [359.22ms]",
+              "en/acp/empty: actual failed required Hybrid path never invokes even an injected action fallback [343.22ms]",
+              "en/acp/transport: actual failed required Hybrid path never invokes even an injected action fallback [313.95ms]"
+            ],
+            "failedDeclarations": [],
+            "rawSummary": "8 pass\n 0 fail\n 249 expect() calls\nRan 8 tests across 1 file. [3.17s]",
+            "sourceFence": {
+              "backend/src/recording/reproduction/format.ts": "f8d6d9f181db668adcbec3247362311fc91fceef4b37ca97880dfb9483af76ec",
+              "backend/src/recording/reproduction/trace.ts": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+              "backend/src/app/simulation/replay-reproduction.ts": "f2fe5b7109ce53ccb92253486c5d987702a97a4d669b3ff651a60878c66f3479",
+              "backend/src/recording/verification/cupid/validate.ts": "3e7bcaeb1a688e270edfbf53c8e2f80bdaac282e700b05656874c22de0a6d977",
+              "backend/src/recording/verification/hybrid/validate.ts": "e4a93cf1d34b0e0135b85a5091b0b505201326f32a22b684234c4cb61599e4f6",
+              "backend/tests/unit/recording/request-delivery.test.ts": "0673cd67acb249a0028ecb72f1eeb51ce726f94c05e0abbe2171efa20fc78dcb",
+              "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts": "f992a6d551e11274ddb5b802c9a1911decd25d6e58d7f963f85dc9ac150c46f0",
+              "backend/tests/unit/recording/board-config-recording.test.ts": "aa12e1ff4e71be69d4bcc02c353b1ef9377f63811e2799c69c255bd1e4b50bde",
+              "backend/tests/integration/recording/archive-identities.test.ts": "40d83f75d9f23eeb94ef2a31ad2b3f13c6a2f9f564f59b03ac061e991b0073e8",
+              "docs/contracts/action-requests.md": "aac8d5c66f931c3442a86d820e3d77424e1ecddf2266010cb0492600db804592",
+              "docs/contracts/archive-compatibility.md": "25ab0e0ad214c9b1a06fde1b2408f7e21fb4d94b396b7e6d4d0dbf4381234248",
+              "docs/decisions/0003-request-policy-and-completion.md": "0b8337da7114a2f1d1a1df813c859f127f8c06d3a05c5e1b65b455c77ebca93e",
+              "backend/tests/integration/recording/returned-candidate-replay.test.ts": "51af5857aa301a8b451dc8e2fa5ae26c342f2cebacb661e1a7e0bc648fb138a4",
+              "packages/replay-contract/src/archive-envelope.ts": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+              "backend/src/recording/archive-identity.ts": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+              "packages/replay-contract/tests/archive-envelope.test.ts": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+              "backend/tests/unit/recording/strict-archive-version-wrapper.test.ts": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be",
+              "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts": "7261395798e878b678d37de6e3e39079092c0cc6b7742f3a6fe0f3f5baaabf82"
+            },
+            "after": {
+              "backend/src/recording/reproduction/format.ts": "f8d6d9f181db668adcbec3247362311fc91fceef4b37ca97880dfb9483af76ec",
+              "backend/src/recording/reproduction/trace.ts": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+              "backend/src/app/simulation/replay-reproduction.ts": "f2fe5b7109ce53ccb92253486c5d987702a97a4d669b3ff651a60878c66f3479",
+              "backend/src/recording/verification/cupid/validate.ts": "3e7bcaeb1a688e270edfbf53c8e2f80bdaac282e700b05656874c22de0a6d977",
+              "backend/src/recording/verification/hybrid/validate.ts": "e4a93cf1d34b0e0135b85a5091b0b505201326f32a22b684234c4cb61599e4f6",
+              "backend/tests/unit/recording/request-delivery.test.ts": "0673cd67acb249a0028ecb72f1eeb51ce726f94c05e0abbe2171efa20fc78dcb",
+              "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts": "f992a6d551e11274ddb5b802c9a1911decd25d6e58d7f963f85dc9ac150c46f0",
+              "backend/tests/unit/recording/board-config-recording.test.ts": "aa12e1ff4e71be69d4bcc02c353b1ef9377f63811e2799c69c255bd1e4b50bde",
+              "backend/tests/integration/recording/archive-identities.test.ts": "40d83f75d9f23eeb94ef2a31ad2b3f13c6a2f9f564f59b03ac061e991b0073e8",
+              "docs/contracts/action-requests.md": "aac8d5c66f931c3442a86d820e3d77424e1ecddf2266010cb0492600db804592",
+              "docs/contracts/archive-compatibility.md": "25ab0e0ad214c9b1a06fde1b2408f7e21fb4d94b396b7e6d4d0dbf4381234248",
+              "docs/decisions/0003-request-policy-and-completion.md": "0b8337da7114a2f1d1a1df813c859f127f8c06d3a05c5e1b65b455c77ebca93e",
+              "backend/tests/integration/recording/returned-candidate-replay.test.ts": "51af5857aa301a8b451dc8e2fa5ae26c342f2cebacb661e1a7e0bc648fb138a4",
+              "packages/replay-contract/src/archive-envelope.ts": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+              "backend/src/recording/archive-identity.ts": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+              "packages/replay-contract/tests/archive-envelope.test.ts": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+              "backend/tests/unit/recording/strict-archive-version-wrapper.test.ts": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be",
+              "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts": "7261395798e878b678d37de6e3e39079092c0cc6b7742f3a6fe0f3f5baaabf82"
+            }
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/changed-tests",
+            "exitCode": 0,
+            "argv": [
+              "/usr/bin/bun",
+              "--no-env-file",
+              "test",
+              "--preload",
+              "./tests/setup.ts",
+              "tests/unit/recording/request-delivery.test.ts",
+              "tests/integration/recording/returned-candidate-replay.test.ts",
+              "--test-name-pattern",
+              "^returned candidate: (false completion preserves|three real Hybrid null returns)"
+            ],
+            "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+            "scope": "changed-tests",
+            "beforeAfterMatch": true,
+            "sourceCount": 18,
+            "sameFinal18": true,
+            "passedDeclarations": [
+              "returned candidate: three real Hybrid null returns replay all retries and preserve the unpaid failure [440.15ms]",
+              "returned candidate: false completion preserves copied action or explicit null without accepting either [5.51ms]"
+            ],
+            "failedDeclarations": [],
+            "rawSummary": "2 pass\n 16 filtered out\n 0 fail\n 16 expect() calls\nRan 2 tests across 2 files. [623.00ms]",
+            "sourceFence": {
+              "backend/src/recording/reproduction/format.ts": "f8d6d9f181db668adcbec3247362311fc91fceef4b37ca97880dfb9483af76ec",
+              "backend/src/recording/reproduction/trace.ts": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+              "backend/src/app/simulation/replay-reproduction.ts": "f2fe5b7109ce53ccb92253486c5d987702a97a4d669b3ff651a60878c66f3479",
+              "backend/src/recording/verification/cupid/validate.ts": "3e7bcaeb1a688e270edfbf53c8e2f80bdaac282e700b05656874c22de0a6d977",
+              "backend/src/recording/verification/hybrid/validate.ts": "e4a93cf1d34b0e0135b85a5091b0b505201326f32a22b684234c4cb61599e4f6",
+              "backend/tests/unit/recording/request-delivery.test.ts": "0673cd67acb249a0028ecb72f1eeb51ce726f94c05e0abbe2171efa20fc78dcb",
+              "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts": "f992a6d551e11274ddb5b802c9a1911decd25d6e58d7f963f85dc9ac150c46f0",
+              "backend/tests/unit/recording/board-config-recording.test.ts": "aa12e1ff4e71be69d4bcc02c353b1ef9377f63811e2799c69c255bd1e4b50bde",
+              "backend/tests/integration/recording/archive-identities.test.ts": "40d83f75d9f23eeb94ef2a31ad2b3f13c6a2f9f564f59b03ac061e991b0073e8",
+              "docs/contracts/action-requests.md": "aac8d5c66f931c3442a86d820e3d77424e1ecddf2266010cb0492600db804592",
+              "docs/contracts/archive-compatibility.md": "25ab0e0ad214c9b1a06fde1b2408f7e21fb4d94b396b7e6d4d0dbf4381234248",
+              "docs/decisions/0003-request-policy-and-completion.md": "0b8337da7114a2f1d1a1df813c859f127f8c06d3a05c5e1b65b455c77ebca93e",
+              "backend/tests/integration/recording/returned-candidate-replay.test.ts": "51af5857aa301a8b451dc8e2fa5ae26c342f2cebacb661e1a7e0bc648fb138a4",
+              "packages/replay-contract/src/archive-envelope.ts": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+              "backend/src/recording/archive-identity.ts": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+              "packages/replay-contract/tests/archive-envelope.test.ts": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+              "backend/tests/unit/recording/strict-archive-version-wrapper.test.ts": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be",
+              "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts": "7261395798e878b678d37de6e3e39079092c0cc6b7742f3a6fe0f3f5baaabf82"
+            },
+            "after": {
+              "backend/src/recording/reproduction/format.ts": "f8d6d9f181db668adcbec3247362311fc91fceef4b37ca97880dfb9483af76ec",
+              "backend/src/recording/reproduction/trace.ts": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+              "backend/src/app/simulation/replay-reproduction.ts": "f2fe5b7109ce53ccb92253486c5d987702a97a4d669b3ff651a60878c66f3479",
+              "backend/src/recording/verification/cupid/validate.ts": "3e7bcaeb1a688e270edfbf53c8e2f80bdaac282e700b05656874c22de0a6d977",
+              "backend/src/recording/verification/hybrid/validate.ts": "e4a93cf1d34b0e0135b85a5091b0b505201326f32a22b684234c4cb61599e4f6",
+              "backend/tests/unit/recording/request-delivery.test.ts": "0673cd67acb249a0028ecb72f1eeb51ce726f94c05e0abbe2171efa20fc78dcb",
+              "backend/tests/unit/recording/relationship-reproduction-ledgers.test.ts": "f992a6d551e11274ddb5b802c9a1911decd25d6e58d7f963f85dc9ac150c46f0",
+              "backend/tests/unit/recording/board-config-recording.test.ts": "aa12e1ff4e71be69d4bcc02c353b1ef9377f63811e2799c69c255bd1e4b50bde",
+              "backend/tests/integration/recording/archive-identities.test.ts": "40d83f75d9f23eeb94ef2a31ad2b3f13c6a2f9f564f59b03ac061e991b0073e8",
+              "docs/contracts/action-requests.md": "aac8d5c66f931c3442a86d820e3d77424e1ecddf2266010cb0492600db804592",
+              "docs/contracts/archive-compatibility.md": "25ab0e0ad214c9b1a06fde1b2408f7e21fb4d94b396b7e6d4d0dbf4381234248",
+              "docs/decisions/0003-request-policy-and-completion.md": "0b8337da7114a2f1d1a1df813c859f127f8c06d3a05c5e1b65b455c77ebca93e",
+              "backend/tests/integration/recording/returned-candidate-replay.test.ts": "51af5857aa301a8b451dc8e2fa5ae26c342f2cebacb661e1a7e0bc648fb138a4",
+              "packages/replay-contract/src/archive-envelope.ts": "1854876b959150ad9090aa0771464ec1c2ad9a52f9c1df9a3fdfddec8b7f99d7",
+              "backend/src/recording/archive-identity.ts": "0f46ba2a7ac010736ea82bcd3cb0d82108d4632c311ec51887e93246fb651fe2",
+              "packages/replay-contract/tests/archive-envelope.test.ts": "c4fc2ec3ebafb6a2e88c29d366f096624cb8384c1226eb3a7f215ff3e1854df1",
+              "backend/tests/unit/recording/strict-archive-version-wrapper.test.ts": "65428711801f7a662f13128b210a57ac9ff4dfbdb6805599af173ca3fad018be",
+              "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts": "7261395798e878b678d37de6e3e39079092c0cc6b7742f3a6fe0f3f5baaabf82"
+            }
+          }
+        ],
+        "artifacts": [
+          {
+            "path": "/tmp/awa-tape3-execution/final-candidates.json",
+            "sha256": "c496f7e9bff056a8a96610c71ac4d0675d65c1e584263bf9582977a28dbeb48b",
+            "bytes": 13285
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/source-applied.json",
+            "sha256": "ad65762dbbe6688f92a6863eb37ebea37ff17e3f604533791913427ca52e7c98",
+            "bytes": 803
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/test-successors-applied.json",
+            "sha256": "7fb62c49db2a69941740867a0463208172ffea7f2bc84736fa528410d21d0190",
+            "bytes": 724
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/first-shared.stdout",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/first-shared.stderr",
+            "sha256": "d4198bf671d3ae18788d8decb2bb63c239c2584428f1b81cf6016fd06ceeb125",
+            "bytes": 2174
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/successor-shared.stdout",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/successor-shared.stderr",
+            "sha256": "0499be27e501116270ee7573b25c542be3e5ad4008fef812a40f76f62cffa18e",
+            "bytes": 431
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/first-backend.stdout",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/first-backend.stderr",
+            "sha256": "d1edcd799a23021c6d9327ab268b12f1a9916556e7e397cc5a372c5305dfc9aa",
+            "bytes": 5275
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/successor-backend.stdout",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/successor-backend.stderr",
+            "sha256": "c7266099337c8f40d5eddb57dbd24bd637efcaf6180fd27895bf1cc7e443b95d",
+            "bytes": 1384
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/affected-types.json",
+            "sha256": "20b358b93df2e4f88460ee2088b3a43c456498ebd748dc4a7e0058845cce0c05",
+            "bytes": 217088
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/affected-types.stdout",
+            "sha256": "eaa36e2c3a93d5809e991105e0930b84b28abb2dc6b5b660f1d3c037e95a26a2",
+            "bytes": 37
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/affected-types.stderr",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/affected-types.diagnostics.raw",
+            "sha256": "a0b6df907fb6211be14fc5556c410274e27cd9643c74f39585ea1e74ac2e68c8",
+            "bytes": 1061
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/type-successor/affected-types.json",
+            "sha256": "59ada90e039103eea92f83a4ecb5287c11070da918ea8b058c03d58a2b3d0e59",
+            "bytes": 234392
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/type-successor/stdout.raw",
+            "sha256": "6593159a1bee7bb4fe56822935d5665b2ab561bfc1a847aa88185978f893d0d9",
+            "bytes": 37
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/type-successor/stderr.raw",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/tmp/awa-tape3-execution/type-successor/affected-types.diagnostics.raw",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight/launch.json",
+            "sha256": "80d2fbfca1f4e35be8689ead75b848dc5cbdec5971321349630fe444a0afd599",
+            "bytes": 3243
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight/receipt.json",
+            "sha256": "40faef8e10d27c9e765c97cdd381a9eea64eb090c04d50776412eb28900bc866",
+            "bytes": 2290
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight/stdout.raw",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-execution/hybrid-eight/stderr.raw",
+            "sha256": "71921c6a0901394d25088e83a3944dad854bb48c9d8c1c38805f25626ed014e0",
+            "bytes": 7090
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight/launch.json",
+            "sha256": "fb2d82a03b85e921973b5b70e3834bebd7951d1dc7748b6fe46f629e65082a17",
+            "bytes": 3424
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight/receipt.json",
+            "sha256": "6e13d2168eb6620940fcf3e3593dbdef9f8fad6b6c52ddfda87ad98188101ec0",
+            "bytes": 2442
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight/stdout.raw",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/hybrid-eight/stderr.raw",
+            "sha256": "ffda859f875c69982f4a68df4fdcbf98adc4298c905f1ccd57d390c17f3bccec",
+            "bytes": 1082
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/changed-tests/launch.json",
+            "sha256": "de47453e2330de1d00e561da3dc8782d389086327d46c264027a87e91f0a3451",
+            "bytes": 3592
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/changed-tests/receipt.json",
+            "sha256": "2ec27938b2e00e00329f48430047b547c7777c730d005a24eb83bb7fbd9103cf",
+            "bytes": 2442
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/changed-tests/stdout.raw",
+            "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+            "bytes": 28
+          },
+          {
+            "path": "/var/tmp/awa-refactor-20261015/tape3-final-execution/changed-tests/stderr.raw",
+            "sha256": "b5e50269fd3853ffdb7241647ddc9b1d34620afd45a1c93be855be254342c873",
+            "bytes": 443
+          }
+        ],
+        "findings": [],
+        "reviewerExecution": {
+          "product": false,
+          "parser": false,
+          "compiler": false,
+          "tests": false,
+          "checks": false,
+          "formatter": false,
+          "repositoryWrites": false,
+          "onlyExistingMetadataRawGitAndTextReads": true
+        },
+        "limits": [
+          "Parent owns all real execution. This report reads and hashes existing logs/receipts; it does not rerun them.",
+          "Before/after18 fence protects this changed scope, not every public input or dependency in a final C47 snapshot.",
+          "Writer11 and late4 greens are context evidence handled by the core peer, not additional independent shared-wrapper cases.",
+          "Do not sum overlapping pass totals or call the first8 failing declarations passed because their positive prefix completed.",
+          "No C47 all42, all910 inputs, allrules or allarchives acceptance claim. Final fixed snapshot has not yet run in this slice."
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "两位独审均未执行产品或检查；实际执行者为Root",
+    "不代表C47全42完成或任意partial前缀可精确重放"
+  ]
+}

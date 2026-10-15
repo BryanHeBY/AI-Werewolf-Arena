@@ -1,5 +1,5 @@
 /**
- * 负责严格复现归档的版本、schema 与原错误名称准入；输入为未知归档数据，输出为已审核的 schema 2 Tape。
+ * 负责严格复现归档的版本、schema 与原错误名称准入；输入为未知归档数据，输出为已审核的 schema 2／3 Tape。
  * 机制审核交给固定独立 verifier 装配，版本准入、字段形状和第一失败顺序保持。
  * 请求轨迹及其可变游标由 reproduction-trace 单独拥有；此模块不创建 Trace、不执行行动或修改游戏。
  * 精确 source／lock 检查仍由实际 replay 执行；用户原文不经过展示翻译改写。
@@ -100,7 +100,7 @@ import { WOLF_TEAM_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/events";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
 import type { RandomMetadata } from "../../domain/random";
 
-export const REPRODUCTION_SCHEMA_VERSION = 2 as const;
+export const REPRODUCTION_SCHEMA_VERSION = 3 as const;
 const ERROR_NAMES = [
   "Error",
   "TypeError",
@@ -209,6 +209,8 @@ export interface RecordedDecision {
   settleOrder?: number;
   openedAfterSettlement: number;
   openedAtEventCount?: number;
+  /** 仅 Tape3 的 deferred false-close 保存已返回且安全复制的候选；缺席不是 null，也不是付款许可。 */
+  returnedCandidate?: ToolCall | null;
   outcome:
     | { kind: "pending" }
     | { kind: "action"; action: ToolCall | null }
@@ -222,7 +224,7 @@ export interface RecordedGameEvent {
   audience?: readonly number[];
 }
 export interface ReproductionRecord {
-  schemaVersion: typeof REPRODUCTION_SCHEMA_VERSION;
+  schemaVersion: 2 | typeof REPRODUCTION_SCHEMA_VERSION;
   finalized: boolean;
   metadata: ReproductionMetadata;
   decisions: RecordedDecision[];
@@ -406,8 +408,9 @@ const shapeshifterSetupSchema = thiefSetupSchema.extend({
     })
     .nullable(),
 });
-const schema = z.strictObject({
-  schemaVersion: z.literal(REPRODUCTION_SCHEMA_VERSION),
+// Tape2 保原严格字段：不接受 returnedCandidate，也不为历史 error 补造候选。
+const schema2 = z.strictObject({
+  schemaVersion: z.literal(2),
   finalized: z.boolean(),
   metadata: z.strictObject({
     engine: z.strictObject({
@@ -758,18 +761,56 @@ const schema = z.strictObject({
     .nullable(),
 });
 
-/** 先保原版本／严格 envelope 准入，再按固定独立装配审核角色与板子；审核不执行游戏规则。 */
+/** Tape3 只扩充明确的返回候选事实；旧字段与 outcome 仍复用原严格结构。 */
+const schema3 = schema2.extend({
+  schemaVersion: z.literal(REPRODUCTION_SCHEMA_VERSION),
+  decisions: z.array(
+    z.preprocess(
+      (value, ctx) => {
+        if (value && typeof value === "object") {
+          const field = Object.getOwnPropertyDescriptor(value, "returnedCandidate");
+          // 新字段只接纳自身可枚举数据。继承值、accessor、undefined 不能伪装成显式 null。
+          if (
+            (field && (!field.enumerable || !("value" in field) || field.value === undefined)) ||
+            (!field && "returnedCandidate" in value)
+          ) {
+            ctx.addIssue({ code: "custom", message: "reproduction_returned_candidate_invalid" });
+            return z.NEVER;
+          }
+        }
+        return value;
+      },
+      schema2.shape.decisions.element
+        .extend({
+          returnedCandidate: z
+            .strictObject({ name: z.enum(TOOL_NAMES), args: jsonObject })
+            .nullable()
+            .optional(),
+        })
+        .superRefine((decision, ctx) => {
+          if (
+            Object.hasOwn(decision, "returnedCandidate") &&
+            (decision.outcome.kind !== "error" || decision.outcome.name !== "Error")
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_returned_candidate_invalid" });
+        }),
+    ),
+  ),
+});
+
+/** 先保版本／严格 envelope 准入，再按固定独立装配审核角色与板子；审核不执行游戏规则。 */
 export function parseReproductionRecord(value: unknown): ReproductionRecord {
   // 新封装先按显式格式解包，历史裸 Tape 仍走下面原 schema 2／第一失败顺序。
   value = unwrapRecordingEnvelope(value, "strict_reproduction").payload;
-  if (
-    value &&
-    typeof value === "object" &&
-    "schemaVersion" in value &&
-    value.schemaVersion !== REPRODUCTION_SCHEMA_VERSION
-  )
-    throw new Error("reproduction_schema_not_supported");
-  const parsed = schema.safeParse(value);
+  let version: unknown;
+  if (value && typeof value === "object" && "schemaVersion" in value) {
+    // 保历史裸 Tape2 的一次 in／一次预检读取；schema 选择不再次触发 caller getter。
+    version = value.schemaVersion;
+    if (version !== 2 && version !== REPRODUCTION_SCHEMA_VERSION)
+      throw new Error("reproduction_schema_not_supported");
+  }
+  const selected = version === 2 ? schema2 : schema3;
+  const parsed = selected.safeParse(value);
   if (!parsed.success) throw new Error("reproduction_record_invalid");
   const result = parsed.data as unknown as ReproductionRecord;
   verifyReproductionMechanisms(result);

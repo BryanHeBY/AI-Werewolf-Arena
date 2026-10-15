@@ -59,10 +59,17 @@ function pair(value: unknown): [number, number] | null {
     ? [value[0], value[1]]
     : null;
 }
+/** 候选是回复事实，不是付款；只有旧缺席的 error／pending 仍为 unknown。 */
+function recordedCandidate(decision: RecordedDecision) {
+  if (decision.outcome.kind === "action") return decision.outcome.action;
+  if (decision.outcome.kind === "error" && Object.hasOwn(decision, "returnedCandidate"))
+    return decision.returnedCandidate;
+  return undefined;
+}
 function actionPair(decision: RecordedDecision): [number, number] | null {
-  if (decision.outcome.kind !== "action" || decision.outcome.action?.name !== "choose_lovers")
-    return null;
-  const args = decision.outcome.action.args;
+  const action = recordedCandidate(decision);
+  if (action?.name !== "choose_lovers") return null;
+  const args = action.args;
   return pair([args.first_id, args.second_id]);
 }
 function requestIsCupid(decision: RecordedDecision): boolean {
@@ -70,7 +77,7 @@ function requestIsCupid(decision: RecordedDecision): boolean {
     decision.stage === "cupid" ||
     decision.request.context.stage === "cupid" ||
     decision.request.allowedTools.includes("choose_lovers") ||
-    (decision.outcome.kind === "action" && decision.outcome.action?.name === "choose_lovers")
+    recordedCandidate(decision)?.name === "choose_lovers"
   );
 }
 
@@ -192,9 +199,10 @@ export function validateCupidRecord(record: ReproductionRecord): void {
     }
   const selectedPair = selected as [number, number] | null;
   // 首付款后阶段退出，只有最后一次同族请求可能解释已写配对；更早匹配不能遮住后继 known／null／无效回复。
-  // 延后结算的末 error／pending 未保存候选，可由 CP／事实确定合法配对，但不能据它证明回复内容或许可。
+  // 只有未保存候选的末 error／pending 可由 CP／事实约束；显式 null／无效候选不能绕过已知证据。
   const lastDecision = decisions.at(-1);
-  const opaqueDecision = lastDecision !== undefined && lastDecision.outcome.kind !== "action";
+  const opaqueDecision =
+    lastDecision !== undefined && recordedCandidate(lastDecision) === undefined;
   if (
     selectedPair &&
     (!lastDecision || (!opaqueDecision && !same(actionPair(lastDecision), selectedPair)))

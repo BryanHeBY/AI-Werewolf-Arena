@@ -51,13 +51,20 @@ function requestIsHybrid(decision: RecordedDecision): boolean {
     decision.stage === "hybrid" ||
     decision.request.context.stage === "hybrid" ||
     decision.request.allowedTools.includes("choose_exemplar") ||
-    (decision.outcome.kind === "action" && decision.outcome.action?.name === "choose_exemplar")
+    recordedCandidate(decision)?.name === "choose_exemplar"
   );
 }
+/** 候选是回复事实，不是付款；只有旧缺席的 error／pending 仍为 unknown。 */
+function recordedCandidate(decision: RecordedDecision) {
+  if (decision.outcome.kind === "action") return decision.outcome.action;
+  if (decision.outcome.kind === "error" && Object.hasOwn(decision, "returnedCandidate"))
+    return decision.returnedCandidate;
+  return undefined;
+}
 function actionTarget(decision: RecordedDecision): number | null {
-  if (decision.outcome.kind !== "action" || decision.outcome.action?.name !== "choose_exemplar")
-    return null;
-  const target = decision.outcome.action.args.target_id;
+  const action = recordedCandidate(decision);
+  if (action?.name !== "choose_exemplar") return null;
+  const target = action.args.target_id;
   return positive(target) ? target : null;
 }
 
@@ -183,10 +190,11 @@ export function validateHybridRecord(record: ReproductionRecord): void {
       if (choice) remember(choice.targetId);
     }
   // 首付款后阶段退出，最后一次同族决定才可承载选择；known／null／无效回复不能由更早匹配绕过。
-  // 末 error／pending 没有序列化候选，不等于未付款；只允许 CP／事实提供合法数据，不补造权限。
+  // 仅缺候选的末 error／pending 仍为 unknown；显式 null／无效目标不能用 CP／事实遮掉。
   const lastDecision = decisions.at(-1);
   const lastTarget = lastDecision ? actionTarget(lastDecision) : null;
-  const opaqueDecision = lastDecision !== undefined && lastDecision.outcome.kind !== "action";
+  const opaqueDecision =
+    lastDecision !== undefined && recordedCandidate(lastDecision) === undefined;
   if (targetId !== null && lastTarget !== targetId && !opaqueDecision) fail();
   const selectedTarget = targetId as number | null;
   const faction = selectedTarget === null ? null : byId.get(selectedTarget)!.camp;

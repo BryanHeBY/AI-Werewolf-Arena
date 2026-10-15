@@ -1,6 +1,6 @@
 /**
  * 负责显式录制封装的版本、纯数据身份与 payload 边界；输入为未知封装或历史裸档，输出为解包结果。
- * 本契约唯一拥有 envelope v1 结构；公开 ReplayDocument、严格 Tape 与玩家视角内层各自仍为 schema 2。
+ * 本契约唯一拥有 envelope v1 结构；公开 ReplayDocument／玩家视角仍为 schema 2，严格 Tape 显式接收 2／3。
  * manifest 使用独立的内联 schema 1，仅共用身份字段校验，不由本 envelope 包裹。
  * 不解释游戏规则、执行请求或验证真实构建；声明相同不是签名，执行方仍核对实际 source／lock／RNG。
  * 未声明历史数据保持原输入并标记 identity 缺席，不补造来源、语义版本或展示版本。
@@ -38,7 +38,8 @@ export interface RecordingEnvelope<T> {
   format: typeof RECORDING_ENVELOPE_FORMAT;
   envelopeVersion: typeof RECORDING_ENVELOPE_VERSION;
   kind: RecordingArchiveKind;
-  payloadSchemaVersion: 2;
+  /** 只有 strict_reproduction 可声明 3；种类与内层版本的配对由统一 reader 核对。 */
+  payloadSchemaVersion: 2 | 3;
   identities: RecordingIdentities;
   payload: T;
 }
@@ -99,18 +100,20 @@ export function unwrapRecordingEnvelope(
     Object.hasOwn(value, "envelopeVersion");
   if (!declared) return { payload: value, identities: null };
   assertSerializedData(value, "archive");
+  // 只扩严格 Tape 的内层版本；公开／玩家仍限 2，外声明先于原身份与 payload 检查。
   if (
     value.format !== RECORDING_ENVELOPE_FORMAT ||
     value.envelopeVersion !== RECORDING_ENVELOPE_VERSION ||
     value.kind !== kind ||
-    value.payloadSchemaVersion !== 2
+    (value.payloadSchemaVersion !== 2 &&
+      (kind !== "strict_reproduction" || value.payloadSchemaVersion !== 3))
   )
     throw new ReplayDocumentValidationError("unsupported_version", "archive.version");
   assertField(isRecord(value.identities), "identities");
   const identities = value.identities;
   assertRecordingIdentityFields(identities);
   assertField(
-    isRecord(value.payload) && value.payload.schemaVersion === 2,
+    isRecord(value.payload) && value.payload.schemaVersion === value.payloadSchemaVersion,
     "archive.payload.schemaVersion",
   );
   return {
@@ -119,17 +122,21 @@ export function unwrapRecordingEnvelope(
     identities: structuredClone(identities) as unknown as RecordingIdentities,
   };
 }
-/** Writer 使用声明的内层 schema 2，不升级或改写历史 payload；返回独立的封装快照。 */
+/**
+ * Writer 默认声明原内层 2，严格新 Tape 由调用方显式传 3；不从未知 payload 提前读取版本。
+ * 统一 reader 仍先拒绝非纯数据，再核 kind／外内版本；失败不改输入，成功返回脱离封装副本。
+ */
 export function createRecordingEnvelope<T>(
   kind: RecordingArchiveKind,
   payload: T,
   identities: RecordingIdentities,
+  payloadSchemaVersion: 2 | 3 = 2,
 ): RecordingEnvelope<T> {
   const result = {
     format: RECORDING_ENVELOPE_FORMAT,
     envelopeVersion: RECORDING_ENVELOPE_VERSION,
     kind,
-    payloadSchemaVersion: 2 as const,
+    payloadSchemaVersion,
     identities,
     payload,
   };

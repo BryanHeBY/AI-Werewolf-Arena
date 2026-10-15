@@ -6,6 +6,7 @@ import { expect, test } from "bun:test";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
+import { parseReproductionRecord } from "../../../src/recording/reproduction/format";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 import {
@@ -185,3 +186,155 @@ for (const invalid of [0, -1, 1.5, Number.MAX_SAFE_INTEGER + 1])
     await trace.decide(request, { getAction: async () => action });
     expect(() => trace.build()).toThrow("reproduction_record_invalid");
   });
+
+test("returned candidate: false completion preserves copied action or explicit null without accepting either", async () => {
+  for (const isNull of [true, false]) {
+    const { trace, request } = fixture(),
+      scope = {};
+    const supplied: ToolCall | null = isNull
+      ? null
+      : { name: "kill_vote", args: { target_id: 3, abstain: false } };
+    bindRequestDeliveryGuard(request, () => true, scope);
+    await trace.decide(request, { getAction: async () => supplied });
+    if (supplied) supplied.args.target_id = 6;
+    settleRequestDelivery(scope, false);
+    settleRequestDelivery(scope, false);
+    const recorded = trace.build().decisions[0]!;
+    expect(Object.hasOwn(recorded, "returnedCandidate")).toBe(true);
+    expect(recorded.returnedCandidate).toEqual(
+      isNull ? null : { name: "kill_vote", args: { target_id: 3, abstain: false } },
+    );
+    expect(recorded.outcome).toEqual({ kind: "error", code: "decision_failed", name: "Error" });
+    expect(trace.settlementCount).toBe(1);
+    if (recorded.returnedCandidate?.name === "kill_vote")
+      recorded.returnedCandidate.args.target_id = 5;
+    expect(trace.build().decisions[0]!.returnedCandidate).toEqual(
+      isNull ? null : { name: "kill_vote", args: { target_id: 3, abstain: false } },
+    );
+  }
+});
+
+test("returned candidate: true completion, real provider throw and early delivery refusal keep the field absent", async () => {
+  const accepted = fixture(),
+    scope = {};
+  bindRequestDeliveryGuard(accepted.request, () => true, scope);
+  await accepted.trace.decide(accepted.request, { getAction: async () => action });
+  settleRequestDelivery(scope, true);
+  expect(Object.hasOwn(accepted.trace.build().decisions[0]!, "returnedCandidate")).toBe(false);
+  expect(accepted.trace.build().decisions[0]!.outcome).toEqual({ kind: "action", action });
+  const thrown = fixture(),
+    original = new TypeError("literal provider failure");
+  await expect(
+    thrown.trace.decide(thrown.request, {
+      getAction: async () => {
+        throw original;
+      },
+    }),
+  ).rejects.toBe(original);
+  expect(Object.hasOwn(thrown.trace.build().decisions[0]!, "returnedCandidate")).toBe(false);
+  expect(thrown.trace.build().decisions[0]!.outcome).toEqual({
+    kind: "error",
+    code: "decision_failed",
+    name: "TypeError",
+  });
+  const refused = fixture();
+  bindRequestDeliveryGuard(refused.request, () => false, {});
+  await expect(
+    refused.trace.decide(refused.request, { getAction: async () => action }),
+  ).rejects.toThrow("action_request_delivery_authority_revoked");
+  expect(Object.hasOwn(refused.trace.build().decisions[0]!, "returnedCandidate")).toBe(false);
+});
+
+test("returned candidate: Tape3 owns the optional fact while Tape2 and malformed presence remain strict", async () => {
+  const { trace, request } = fixture();
+  await trace.decide(request, { getAction: async () => null });
+  const current = trace.build();
+  expect(current.schemaVersion).toBe(3);
+  const legacy = structuredClone(current);
+  legacy.schemaVersion = 2;
+  expect(parseReproductionRecord(legacy).schemaVersion).toBe(2);
+  const rejected = structuredClone(current);
+  rejected.decisions[0]!.outcome = { kind: "error", code: "decision_failed", name: "Error" };
+  rejected.decisions[0]!.returnedCandidate = null;
+  expect(parseReproductionRecord(rejected).decisions[0]!.returnedCandidate).toBeNull();
+  const known = structuredClone(rejected);
+  known.decisions[0]!.returnedCandidate = {
+    name: "kill_vote",
+    args: { target_id: 3, abstain: false },
+  };
+  expect(parseReproductionRecord(known).decisions[0]!.returnedCandidate).toEqual({
+    name: "kill_vote",
+    args: { target_id: 3, abstain: false },
+  });
+  const oldWithNew = structuredClone(rejected);
+  oldWithNew.schemaVersion = 2;
+  expect(() => parseReproductionRecord(oldWithNew)).toThrow("reproduction_record_invalid");
+  for (const outcome of [
+    { kind: "pending" },
+    { kind: "action", action: null },
+    { kind: "error", code: "decision_failed", name: "TypeError" },
+  ] as const) {
+    const bad = structuredClone(rejected);
+    bad.decisions[0]!.outcome = outcome;
+    expect(() => parseReproductionRecord(bad)).toThrow("reproduction_record_invalid");
+  }
+  for (const value of [
+    undefined,
+    { name: "unknown_tool", args: {} },
+    { name: "kill_vote", args: { target_id: () => 3 } },
+  ]) {
+    const bad = structuredClone(rejected);
+    Object.defineProperty(bad.decisions[0]!, "returnedCandidate", {
+      value,
+      enumerable: true,
+      configurable: true,
+    });
+    expect(() => parseReproductionRecord(bad)).toThrow("reproduction_record_invalid");
+  }
+  const inherited = structuredClone(rejected);
+  delete inherited.decisions[0]!.returnedCandidate;
+  Object.setPrototypeOf(inherited.decisions[0]!, { returnedCandidate: null });
+  expect(() => parseReproductionRecord(inherited)).toThrow("reproduction_record_invalid");
+  const accessor = structuredClone(rejected);
+  let calls = 0;
+  Object.defineProperty(accessor.decisions[0]!, "returnedCandidate", {
+    enumerable: true,
+    get() {
+      calls++;
+      return null;
+    },
+  });
+  expect(() => parseReproductionRecord(accessor)).toThrow("reproduction_record_invalid");
+  expect(calls).toBe(0);
+  const future = structuredClone(rejected) as unknown as { schemaVersion: number };
+  future.schemaVersion = 4;
+  expect(() => parseReproductionRecord(future)).toThrow("reproduction_schema_not_supported");
+});
+
+test("returned candidate: legacy Tape2 keeps one version precheck read and the original schema read", async () => {
+  const { trace, request } = fixture();
+  await trace.decide(request, { getAction: async () => null });
+  const legacy = trace.build();
+  legacy.schemaVersion = 2;
+  let reads = 0;
+  Object.defineProperty(legacy, "schemaVersion", {
+    enumerable: true,
+    configurable: true,
+    get() {
+      reads++;
+      return 2;
+    },
+  });
+  expect(parseReproductionRecord(legacy).schemaVersion).toBe(2);
+  expect(reads).toBe(2);
+  const changesVersion = trace.build();
+  reads = 0;
+  Object.defineProperty(changesVersion, "schemaVersion", {
+    enumerable: true,
+    get() {
+      return ++reads === 1 ? 2 : 3;
+    },
+  });
+  expect(() => parseReproductionRecord(changesVersion)).toThrow("reproduction_record_invalid");
+  expect(reads).toBe(2);
+});

@@ -75,7 +75,7 @@ for (const rule of Object.values(WitchSelfHealRule))
       const record = parseReproductionRecord(JSON.parse(JSON.stringify(trace(config))));
       expect(record.metadata.normalizedBoard).toEqual(config);
       expect(record.metadata.ruleset).toEqual(RULESET);
-      expect(record.schemaVersion).toBe(2);
+      expect(record.schemaVersion).toBe(3);
       expect(boardDefinitionFromConfig("closure_test", record.metadata.normalizedBoard)).toEqual(
         boardDefinitionFromConfig("closure_test", config),
       );

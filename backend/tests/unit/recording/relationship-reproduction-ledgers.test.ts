@@ -752,3 +752,46 @@ test("last family decision alone can explain payment; early matching candidates 
   last.outcome = { kind: "error", code: "decision_failed", name: "Error" };
   expect(() => validateHybridRecord(debit)).not.toThrow();
 });
+
+test("returned candidate: the last known reply constrains both ledgers without manufacturing payment", () => {
+  for (const family of ["cupid", "hybrid"] as const) {
+    const record = family === "cupid" ? cupidMixed() : hybridWolf();
+    failure(record, 0);
+    record.schemaVersion = 3;
+    record.decisions[0]!.outcome = { kind: "error", code: "decision_failed", name: "Error" };
+    record.decisions[0]!.returnedCandidate =
+      family === "cupid"
+        ? { name: "choose_lovers", args: { first_id: 2, second_id: 4 } }
+        : { name: "choose_exemplar", args: { target_id: 2 } };
+    // 两份手写 fixture 已给完整安装但尚无事实的失败前缀；候选只限制输入，不把 false 改成 true。
+    expect(() => parseReproductionRecord(record)).not.toThrow();
+    const nullReply = structuredClone(record);
+    nullReply.decisions[0]!.returnedCandidate = null;
+    expect(() => parseReproductionRecord(nullReply)).toThrow(
+      family === "cupid" ? cupidError : hybridError,
+    );
+    const invalid = structuredClone(record);
+    invalid.decisions[0]!.returnedCandidate = {
+      name: "speak",
+      args: { text: "not the requested choice" },
+    };
+    expect(() => parseReproductionRecord(invalid)).toThrow(
+      family === "cupid" ? cupidError : hybridError,
+    );
+    const conflict = structuredClone(record);
+    conflict.decisions[0]!.returnedCandidate =
+      family === "cupid"
+        ? { name: "choose_lovers", args: { first_id: 2, second_id: 5 } }
+        : { name: "choose_exemplar", args: { target_id: 4 } };
+    expect(() => parseReproductionRecord(conflict)).toThrow(
+      family === "cupid" ? cupidError : hybridError,
+    );
+    const unpaid = structuredClone(record);
+    unpaid.checkpoints[1]!.players = structuredClone(unpaid.checkpoints[0]!.players);
+    expect(() => parseReproductionRecord(unpaid)).not.toThrow();
+    const legacy = structuredClone(record);
+    legacy.schemaVersion = 2;
+    delete legacy.decisions[0]!.returnedCandidate;
+    expect(() => parseReproductionRecord(legacy)).not.toThrow();
+  }
+});

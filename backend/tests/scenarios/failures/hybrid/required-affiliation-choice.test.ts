@@ -218,8 +218,9 @@ for (const locale of ["zh-CN", "en"] as const)
           );
           const altered = structuredClone(record);
           altered.decisions[0].request.context.allow_fallback = true;
+          // 伪造的回退许可先被独立 Hybrid 归档核验拒绝，尚未进入重放的请求观察比较。
           await expect(replayReproduction(altered, replayRoot)).rejects.toThrow(
-            "reproduction_observation_mismatch",
+            "reproduction_hybrid_state_invalid",
           );
         } finally {
           await provider.close();

@@ -25,8 +25,10 @@ Animal／Fragrant／Noble等已有复杂协议按自己的正式同意／alias�
 
 ## 错误优先与记录
 
-原body与原finally都抛时，保原JS cleanup优先；新增false通知不能盖已有原错，无旧错才传播新通知错。true先落后通知，晚失败不可再发false。Trace等待真实完成通知：defer=false即时结算和deferred领域结算必须区分；settle(false)可能使decision outcome为error，不能假设returned action仍在档案中。
+原body与原finally都抛时，保原JS cleanup优先；新增false通知不能盖已有原错，无旧错才传播新通知错。true先落后通知，晚失败不可再发false。Trace等待真实完成通知：defer=false即时结算和deferred领域结算必须区分。严格Tape3只在实际settle(false)时，保留已安全复制且正常返回的`returnedCandidate`（ToolCall或显式null）；`outcome`仍为error，不代表接受、付款或回滚。false-close也可能来自当前性／期限失效或部分提交；候选只证明正常返回，不记录拒绝原因。真Provider抛错／交付检查早抛没有该字段，缺席不能推断为null。Tape2保持原严格shape，不接这个字段。
 
 未登记 completion 的原请求仍使用候选交付合同：Tape 的 `action` 表示 Provider 返回了该候选，不表示库存已消费或领域成功。领域结果还须核对事件、操作及 checkpoint。流光／蚀日同工具缺目标的失败复现正依赖这一区别：归档保留 `args: {}`，重放后由原领域路径失败，不能提前伪造成 Provider 错误。缺少通用 helper 本身不构成漏接事务的证据；新增领域完成合同必须先说明真实消费者和失败前缀，不把普通候选批量改成 deferred。
+
+Tape3重放只在error且自身明确带候选时重交该事实，让原stage继续校验、重试和付款；旧缺字段仍在Provider点抛原记录错误。Cupid／Hybrid独立核验从最后一次决定读取已知候选，显式null／错工具／坏目标不能被CP或更早选择遮蔽；候选与合法部分付款前缀分别审核。此修补针对已存在的Hybrid三次未付重试消费者，不保证任意外部安装故障的exact replay。
 
 实际owner：`domain/request-lease.ts`、`domain/request-delivery.ts`及每族真实window；SDK／ACP只消费完成端口，不夹入另一套付款判定。
