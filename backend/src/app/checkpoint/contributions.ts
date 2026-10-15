@@ -5,7 +5,7 @@
  * 快照的 cycle／failure／eventCount 仍由原运行入口决定；seq 由原轨迹所有者推进。
  * 贡献不读取 seq、不提前查询玩家，也不改变失败前缀。
  */
-import type { World } from "../../../domain/world";
+import type { World } from "../../domain/world";
 import { prepareAnimalCheckpoint, captureAuthorityContributions } from "./authority-snapshots";
 import { prepareIdentityCheckpoint, captureIdentityContributions } from "./identity-setups";
 export { capturePlayerContributions } from "./player-snapshots";

@@ -13,23 +13,23 @@ import {
   type VotingRightComponent,
   type VictoryComponent,
   type World,
-} from "../../../domain";
-import type { RecordedCheckpoint } from "../format";
+} from "../../domain";
+import type { RecordedCheckpoint } from "../../recording/reproduction/format";
 import type { prepareAnimalCheckpoint } from "./authority-snapshots";
-import { auditData } from "./animal-audit";
+import { auditData } from "../../recording/reproduction/checkpoint/animal-audit";
 import { encodeCheckpointPrivateState } from "./private-state-codec";
-import { aliveLifeDescriptor } from "../../../domain/components/alive";
+import { aliveLifeDescriptor } from "../../domain/components/alive";
 import {
   animalOriginalAuditPlayer,
   animalOriginalAuditIds,
-} from "../../../features/animal-dream/roster";
-import { demonHunterCheckpointPlayers } from "../../../features/demon-hunter/authority";
-import { weddingAuditPlayer } from "../../../features/ghost-bride/authority";
+} from "../../features/animal-dream/roster";
+import { demonHunterCheckpointPlayers } from "../../features/demon-hunter/authority";
+import { weddingAuditPlayer } from "../../features/ghost-bride/authority";
 import {
   projectLonelyGirlVictory,
   projectLonelyGirlAuditPlayer,
-} from "../../../features/lonely-girl/lifecycle";
-import { projectWallNote } from "../../../features/wall-notes/authority";
+} from "../../features/lonely-girl/lifecycle";
+import { projectWallNote } from "../../features/wall-notes/authority";
 
 /** 同一调用按原权威优先级编码；数据可供归档核验，不能替代运行时原体或库存许可。 */
 export function capturePlayerContributions(

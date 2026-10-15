@@ -4,17 +4,17 @@
  * 本 owner 只编码，不写 live 状态、收窄 getter／扩展字段接受面或授予原体、库存与行动权限。
  * 普通 structuredClone 的接受宽度与稍后的归档 JSON 校验分开；失败仍在原查询／克隆点传播。
  */
-import type { World } from "../../../domain/world";
-import type { RoleComponent } from "../../../domain/components/role";
+import type { World } from "../../domain/world";
+import type { RoleComponent } from "../../domain/components/role";
 import type { prepareAnimalCheckpoint } from "./authority-snapshots";
-import type { animalOriginalAuditPlayer } from "../../../features/animal-dream/roster";
-import type { weddingAuditPlayer } from "../../../features/ghost-bride/authority";
-import { snapshotPlainData } from "../../../domain/plain-data";
-import { fragrantCheckpointPrivateState } from "../../../features/fragrant-pair-seer/authority";
+import type { animalOriginalAuditPlayer } from "../../features/animal-dream/roster";
+import type { weddingAuditPlayer } from "../../features/ghost-bride/authority";
+import { snapshotPlainData } from "../../domain/plain-data";
+import { fragrantCheckpointPrivateState } from "../../features/fragrant-pair-seer/authority";
 import {
   projectLonelyGirl,
   type projectLonelyGirlAuditPlayer,
-} from "../../../features/lonely-girl/lifecycle";
+} from "../../features/lonely-girl/lifecycle";
 
 /** 只传既有引用，不提前读取 role.privateState 或审计字段；调用时点仍是玩家记录的 privateState 字段。 */
 export function encodeCheckpointPrivateState(

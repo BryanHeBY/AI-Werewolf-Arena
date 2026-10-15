@@ -12,7 +12,7 @@
 | P5 效果、死亡与判胜    | 进行中 | 来源intent、DeathWave／Receipt、关系与普通黎明、阶段终局检查点已交；普通死亡后果独审已接线并明确证据限界；同源组合与剩余独立覆盖验收待闭合 |
 | P6 能力、观察与展示    | 进行中 | 资源授予／转移、原生与学习枪、F01受限观察、五包和三类展示贡献已交；保留各族付款前缀并作最终消费验收 |
 | P7 记录与独立复现      | 进行中 | 完整checkpoint、18机制族与普通死亡后果独立审核、录制生命周期和四类身份已交；三类读取保证与剩余N12组合需同源验收 |
-| P8 目录、命名与文档    | 进行中 | 领域42模块及其后672文件实际布局已迁；CLI/sidecar/Trace/包/fixture路径适配和有限类型已验，checkpoint五live归属与最后九basename继续；C43当前/历史知识与C44清单待合流 |
+| P8 目录、命名与文档    | 进行中 | 领域42模块及其后672文件实际布局已迁；CLI/sidecar/Trace/包/fixture路径适配和有限类型已验，checkpoint五live已归app、最后九basename继续；C43当前/历史知识与C44清单待合流 |
 | P9 全仓收敛与验收      | 进行中 | C46固定15424a84严格检查1779旧债全清，根任务已强制strict；C45中文内容覆盖、C47最终同源全套及C48逐格登记尚未完成 |
 
 每个切片记录 commit、实现者、独立审查、命令 / 输入指纹及剩余风险。编译与发现范围在每笔提交保持有效。阶段跨越不代表跳过未完成的切片。
@@ -997,3 +997,5 @@
 - C37／Q3普通死亡后果：追加中立独立审核owner，原18调用顺序与首错保持，公开reader/schema2形状不改；新增严格拒绝政策明确独立。9不同纯Tape声明分阶段通过，gift/native挡枪与免投票／活人赋徽失败前缀经过真实源审修正，末2变根类型0；新policy最终三源前后SHA固定的7历史数据直接验证3接受/4拒绝0。Root与两代理交叉审查，见 [死亡后果独审](ordinary-death-history.md)。不冒初始伤害全oracle、原生命资源引用版本或55全矩阵已证明，最终C47另行固定。Q2普通事务已提交24dad9f7。
 
 - C41/C42 实际运行布局：672物理文件、1475完整路由程序、6317编辑及9988真实绑定核对；37源83运行/工具适配单列。八受影响类型首七绿，前端仅2退休isLocale消费者修复后失败项通过；历史fixture准入显式补两固定包路线，原program/binding不改，末tooling类型与新6声明/34断言通过。Time八payload字节与所有机器ID/种子保留，六份current清单准确后处理；原路径/Time旧包key退休不留wrapper。三方审查及首失败原文见 [运行布局](owned-source-layout.md)。16原recording边留后继五live owner迁app/checkpoint，最后九basename和生命周期类别门槛继续；未冒最终C47或55机制全验收。
+
+- C37/C41 live checkpoint归属：在a55e675b实际Git前态将五完整读取/装配owner迁app/checkpoint，纯schema和审计留recording；原16features边随整owner自然退出recording，无新registry/桥/政策豁免。七完整程序/33字面/52绑定及14逆向输出、7规范ESNext和typed/token/NodeArray首次通过，全后端既有路径边界扫描首次0；原查询/克隆/部分失败顺序完整保。准备三方审查与末实际scope见 [checkpoint装配](app-checkpoint-capture.md)。无业务/模型或重类型，最终汇合检查继续。

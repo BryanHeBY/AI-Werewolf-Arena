@@ -1,0 +1,118 @@
+{
+  "baseCommit": "a55e675be1d607825188038ae737c4b90a0e6113",
+  "source": [
+    {
+      "path": "backend/src/app/checkpoint/authority-snapshots.ts",
+      "sha256": "954ec1a21840a9011d2830499d0589ed953bf0f9ed0654809bc28e84c30c72cd"
+    },
+    {
+      "path": "backend/src/app/checkpoint/contributions.ts",
+      "sha256": "dbbcebf9f7326c5f26b737f7902e47f80edc2985dc1b8a0b0f622639603898fe"
+    },
+    {
+      "path": "backend/src/app/checkpoint/identity-setups.ts",
+      "sha256": "38c1191bd00f5a09e3d178191dc9407192a71b90c89c0d7341affe35f2e8981d"
+    },
+    {
+      "path": "backend/src/app/checkpoint/player-snapshots.ts",
+      "sha256": "974f3cc26cd13771a815bc4b73e318f17965485b2ac4ccae09672a670223fe72"
+    },
+    {
+      "path": "backend/src/app/checkpoint/private-state-codec.ts",
+      "sha256": "aeb1c76382a6b335a0afda7e321a64097ca001d5385e900f65c2d8ebd005c6b4"
+    },
+    {
+      "path": "backend/src/app/simulation/reproduction-context.ts",
+      "sha256": "067aa08beaaf5a0ac67a8836ca934d9c805835bdc342f42cdd03bd4d18b78ada"
+    },
+    {
+      "path": "backend/tests/unit/recording/private-state-codec.test.ts",
+      "sha256": "324c9a90f2c1f1758fdacb03705eccffc30fc892a76b651288c7c13e163e0f17"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/authority-snapshots.ts",
+      "sha256": "d20fbb95f7f59b69a675f4fa98772b55bf850ad64c5879b29f37086617ba9322",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/contributions.ts",
+      "sha256": "496d43426c5c61e492ab9a9a5ba3e36d7a0b8595013686a240b9e21a1043760a",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/identity-setups.ts",
+      "sha256": "d0a6f802f0ac0d809193e515c4912ace6f835c6960e927cd5815d6e02ff97395",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/player-snapshots.ts",
+      "sha256": "df85277f8858d12a08215dc477a80fe4bc9e35a50b6fd47090492b9177f63d1d",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/private-state-codec.ts",
+      "sha256": "4d8604039c5d981a0ecf5d3ecfda9307c17b553dc489a585c1be296548149313",
+      "expectedAbsent": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/app-checkpoint-capture-apply-proof.cjs",
+      "sha256": "798e71bae97bce5a58ae24d21a30a563564fff4246dd8d1be5d7448c096746a0",
+      "bytes": 7078
+    },
+    {
+      "path": "docs/refactor/generated/app-checkpoint-capture-before.json",
+      "sha256": "9466ce7cc3434db66df65754cf5842927791d921cd0089b1834f40850ff0a343",
+      "bytes": 26247
+    },
+    {
+      "path": "docs/refactor/generated/app-checkpoint-capture-boundaries-output.txt",
+      "sha256": "e1d849d1ce0b80b41c07e0ee0db541d9baf3de259f5d5e0b2a14a58b20c4aaad",
+      "bytes": 21
+    },
+    {
+      "path": "docs/refactor/generated/app-checkpoint-capture-prepared-peer.json",
+      "sha256": "e31a1151566dd1a123ff980803c94987671c6d8e8a36a9ba20cfb281b3653080",
+      "bytes": 7650
+    },
+    {
+      "path": "docs/refactor/generated/app-checkpoint-capture-prepared-proposal.json",
+      "sha256": "feb64293332721644f42a80c4c510d8e4aab4b2625f049a3bb1cb8125ee05cc6",
+      "bytes": 65264
+    },
+    {
+      "path": "docs/refactor/generated/app-checkpoint-capture-proof-output.txt",
+      "sha256": "9c9b43e96d9f60ee0a5c39eccbb70757ff0fc0cb9d3b552796d9bb4a47ef9d84",
+      "bytes": 104
+    },
+    {
+      "path": "docs/refactor/generated/app-checkpoint-capture-proof.json",
+      "sha256": "bb56f8eab5f37cb8e1f410f091eea6fe7806769b7493109cfef40be95bfe36f4",
+      "bytes": 10965
+    },
+    {
+      "path": "docs/refactor/generated/app-checkpoint-capture-receipts.json",
+      "sha256": "1bd0d020446922bc50e1695d017c90c2760251048e7a9a4db5131783977e84ea",
+      "bytes": 750
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/app-checkpoint-capture.md",
+    "sha256": "613663d69c3a301d9970951dcc343b1d36bfccca1645d5cf1e08c12638353d3b"
+  },
+  "summary": {
+    "moved": 5,
+    "programs": 7,
+    "edits": 33,
+    "bindings": 52,
+    "wholeInverseOutputs": 14,
+    "normalizedESNextOutputs": 7
+  },
+  "limits": [
+    "无付款/撤权/信息/规则/复现接受面改动，不执行业务用例/模型。",
+    "没有重复1475主迁移证明或已绿类型；剩余命名与中文说明后汇合重门禁。"
+  ]
+}

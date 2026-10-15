@@ -1,0 +1,91 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "a55e675be1d607825188038ae737c4b90a0e6113",
+  "source": [
+    {
+      "path": "backend/src/app/checkpoint/authority-snapshots.ts",
+      "sha256": "954ec1a21840a9011d2830499d0589ed953bf0f9ed0654809bc28e84c30c72cd"
+    },
+    {
+      "path": "backend/src/app/checkpoint/contributions.ts",
+      "sha256": "dbbcebf9f7326c5f26b737f7902e47f80edc2985dc1b8a0b0f622639603898fe"
+    },
+    {
+      "path": "backend/src/app/checkpoint/identity-setups.ts",
+      "sha256": "38c1191bd00f5a09e3d178191dc9407192a71b90c89c0d7341affe35f2e8981d"
+    },
+    {
+      "path": "backend/src/app/checkpoint/player-snapshots.ts",
+      "sha256": "974f3cc26cd13771a815bc4b73e318f17965485b2ac4ccae09672a670223fe72"
+    },
+    {
+      "path": "backend/src/app/checkpoint/private-state-codec.ts",
+      "sha256": "aeb1c76382a6b335a0afda7e321a64097ca001d5385e900f65c2d8ebd005c6b4"
+    },
+    {
+      "path": "backend/src/app/simulation/reproduction-context.ts",
+      "sha256": "067aa08beaaf5a0ac67a8836ca934d9c805835bdc342f42cdd03bd4d18b78ada"
+    },
+    {
+      "path": "backend/tests/unit/recording/private-state-codec.test.ts",
+      "sha256": "324c9a90f2c1f1758fdacb03705eccffc30fc892a76b651288c7c13e163e0f17"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/authority-snapshots.ts",
+      "sha256": "d20fbb95f7f59b69a675f4fa98772b55bf850ad64c5879b29f37086617ba9322",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/contributions.ts",
+      "sha256": "496d43426c5c61e492ab9a9a5ba3e36d7a0b8595013686a240b9e21a1043760a",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/identity-setups.ts",
+      "sha256": "d0a6f802f0ac0d809193e515c4912ace6f835c6960e927cd5815d6e02ff97395",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/player-snapshots.ts",
+      "sha256": "df85277f8858d12a08215dc477a80fe4bc9e35a50b6fd47090492b9177f63d1d",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/checkpoint/private-state-codec.ts",
+      "sha256": "4d8604039c5d981a0ecf5d3ecfda9307c17b553dc489a585c1be296548149313",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/app-checkpoint-capture-scope-final.json",
+    "sha256": "cf391ed0334faa4e145cc9dfc3f86b3d6da452c13f2db0049a993cc1bf850d48"
+  },
+  "document": {
+    "path": "docs/refactor/app-checkpoint-capture.md",
+    "sha256": "613663d69c3a301d9970951dcc343b1d36bfccca1645d5cf1e08c12638353d3b"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/app-checkpoint-capture-evidence.json",
+    "sha256": "cfa6ebc738718a5a265067a22fbf17afaa763687000802c99dd62506dd95ce86"
+  },
+  "integrity": {
+    "freshSources": 7,
+    "actualGitBefore": 7,
+    "controls": 4,
+    "artifactHashes": 8,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "semantics": "Root完整读五live快照读取器及两个caller，按33精确module-only编辑与52绑定核对保原getter重复、clone/callee与失败prefix；纯格式留recording，16旧features边自然随owner移出，不加豁免。",
+    "execution": "Root3ba8bb首次7整程序/14逆输出和7normESNext通过，23f659全后端现有路径边界首次0；无类型/业务/模型重跑，汇合重门禁后置。",
+    "independent": "Pref原e31完整提案逐程序审查保为prepared-peer；本末真实scope由另外非作者复核。"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

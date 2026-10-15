@@ -17,7 +17,7 @@ import {
   prepareCheckpointContributions,
   captureCheckpointContributions,
   capturePlayerContributions,
-} from "../../recording/reproduction/checkpoint/contributions";
+} from "../checkpoint/contributions";
 import { initialIdentityDeal } from "../../features/initial-identity/deal";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { type Locale } from "@ai-werewolf-arena/game-contract";

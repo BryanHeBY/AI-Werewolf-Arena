@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import { Role, Camp } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
 import { createRoleComponent } from "../../../src/domain/components/role";
-import { encodeCheckpointPrivateState } from "../../../src/recording/reproduction/checkpoint/private-state-codec";
+import { encodeCheckpointPrivateState } from "../../../src/app/checkpoint/private-state-codec";
 
 test("ordinary codec keeps full-container aliases, cycles, undefined and legal getter values", () => {
   const world = new World("en"),
