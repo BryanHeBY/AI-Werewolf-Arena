@@ -65,6 +65,19 @@
 | `awakened_seer`         | 觉醒预言家 | [awa-fragrant-pair-seer-twelve-v1.md](awa-fragrant-pair-seer-twelve-v1.md)                                     |
 | `awakened_hidden_wolf`  | 觉醒隐狼   | [awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf](awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)     |
 
+## 尚未启用的觉醒角色规格
+
+以下规格已经核对第一方来源，并明确列出 AWA 工程补全；角色的实际支持仍须通过完整实现与交叉审查。
+
+| 稳定 RoleId            | 名称       | 规则规格                                             |
+| ---------------------- | ---------- | ---------------------------------------------------- |
+| `awakened_wolf_king`   | 觉醒狼王   | [双爪与亲传](awa-awakened-wolf-king-v1.md)           |
+| `awakened_witch`       | 觉醒女巫   | [三类药剂](awa-awakened-witch-v1.md)                 |
+| `awakened_wolf_beauty` | 觉醒狼美人 | [隔夜魅惑与一次替死](awa-awakened-wolf-beauty-v1.md) |
+| `awakened_hunter`      | 觉醒猎人   | [定向巡猎](awa-awakened-hunter-v1.md)                |
+| `awakened_guard`       | 觉醒守卫   | [昼夜保护单位](awa-awakened-guard-v1.md)             |
+| `awakened_knight`      | 觉醒骑士   | [连续决斗](awa-awakened-knight-v1.md)                |
+
 ## 共同规则与维护
 
 - [具名规则变体](policy-variants.md)：守卫、隐狼、查验、死亡枪、摄梦、狼美人、女巫及公共策略。
