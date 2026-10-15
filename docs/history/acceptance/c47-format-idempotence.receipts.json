@@ -1,0 +1,30 @@
+{
+  "schema": "awa-single-format-successor-v1",
+  "baseCommit": "e93a825faf54d7128416440c77722fc70d6ff5b2",
+  "source": {
+    "path": "backend/tests/unit/recording/reproduction-trace-causality.test.ts",
+    "beforeSha256": "db4f96ce2b2ab2f1ecdc27b59580711e3e40d54f0b6adcc846907fadfa479105",
+    "afterSha256": "519770ccaa7cb0f254142adcd71338c40db92630ebb8feedf94105d9e3110386",
+    "onlyChange": "two method-chain layouts; complete forward/inverse independently reviewed"
+  },
+  "firstFormat": {
+    "exitCode": 1,
+    "warnedSourceFiles": 1,
+    "originalRawArchived": true
+  },
+  "successor": {
+    "singleFileFormatCheckExitCode": 0,
+    "secondApiFormatStable": true,
+    "wholeTypedAstAndCommentsSame": true,
+    "esnextAndCommonjs": "raw different; complete emitted JS structures same"
+  },
+  "wholeCandidatePolicy": "e93 first round retains 26 green receipts, one format red, one externally interrupted scenario; do not merge its greens into new final candidate input",
+  "peerArchiveMember": "awa-c47-format-single-idempotence-independent/independent-review.json",
+  "peerSha256": "a2818c37eab18bef5b622ce82eea7084840adc2f34e11e27a3069028b9e4823c",
+  "archive": {
+    "path": "docs/history/acceptance/c47-format-idempotence.tar.gz",
+    "sha256": "4b0f481eb5d04d3eba708f6bf4ca221f3732c4179986f8a8ae43ff3443d5ed94",
+    "bytes": 12686,
+    "members": 20
+  }
+}

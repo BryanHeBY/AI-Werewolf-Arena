@@ -101,13 +101,11 @@ test("opening notification failure commits pending and turn before any provider 
   await expect(trace.decide(request, provider)).rejects.toBe(original);
   expect(calls).toBe(0);
   expect(
-    trace
-      .build()
-      .decisions.map(({ turn, openedAfterSettlement, outcome }) => ({
-        turn,
-        openedAfterSettlement,
-        outcome,
-      })),
+    trace.build().decisions.map(({ turn, openedAfterSettlement, outcome }) => ({
+      turn,
+      openedAfterSettlement,
+      outcome,
+    })),
   ).toEqual([{ turn: 1, openedAfterSettlement: 0, outcome: { kind: "pending" } }]);
   fail = false;
   await trace.decide(request, provider);
@@ -157,13 +155,11 @@ test("parallel openings keep opening cursor separate from completion order", asy
   await first;
   await trace.decide(request, { getAction: async () => action });
   expect(
-    trace
-      .build()
-      .decisions.map(({ turn, openedAfterSettlement, settleOrder }) => ({
-        turn,
-        openedAfterSettlement,
-        settleOrder,
-      })),
+    trace.build().decisions.map(({ turn, openedAfterSettlement, settleOrder }) => ({
+      turn,
+      openedAfterSettlement,
+      settleOrder,
+    })),
   ).toEqual([
     { turn: 1, openedAfterSettlement: 0, settleOrder: 2 },
     { turn: 2, openedAfterSettlement: 0, settleOrder: 1 },
