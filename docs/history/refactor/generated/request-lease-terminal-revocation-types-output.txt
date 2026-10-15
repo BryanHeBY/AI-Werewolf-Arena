@@ -1,2 +1,0 @@
-backend/tests/unit/domain/request-lease-terminal-boundaries.test.ts(218,147): error TS2339: Property 'actorId' does not exist on type 'GameResult | Base | NobleContractClosedFact | (Base & { targetId: number | null; }) | (Base & { notifiedActorIds: number[]; }) | ... 173 more ... | { ...; }'.
-  Property 'actorId' does not exist on type 'GameResult'.

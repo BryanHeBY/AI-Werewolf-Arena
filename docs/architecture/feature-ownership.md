@@ -62,4 +62,4 @@
 - `rulesets/roles/`：Catalog、契约、默认装配和presentation声明；不改加载图。
 - `domain/original-player-scope.ts`与`domain/original-participant.ts`：不同严格度的原体约束，保持独立。
 
-没有专属 verifier 不等于无需验收；必须以业务理由、真实 producer→consumer 与共享证据登记。普通死亡后果的 `recording/verification/death-history/validate.ts` 是跨族独立审核，现位于原 18 个 verifier 之后，不是第 50 个角色机制，也不回写任何旧固定源码映射快照。
+没有专属 verifier 不等于无需验收；必须以业务理由、真实 producer→consumer 与共享证据登记。普通死亡后果的 `recording/verification/death-history/validate.ts` 是跨族独立审核，在机制校验之后装配，不属于角色机制。

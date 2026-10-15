@@ -27,13 +27,13 @@ World、枚举、class、WeakMap、默认 Catalog 和 RequestDelivery 都必须�
 
 Catalog／contracts／assembly／builtin 同在 `rulesets/roles`，保原 lazy require 和默认实例。其真实 Catalog→observation late binding 是已知存在的边，不因改目录便宣称中立或结构完美；若新结构检查指出具体问题，再单独修真实 owner，不搭转发壳。
 
-## 依赖检查与路径迁移
+## 依赖检查
 
 检查器必须识别 engine／features／agents／recording/verification 的真实位置，保原禁止依赖，不能让旧 game 目录退休后检查空跑。旧 synthetic 输入和历史路径仍有明确测试作用。旧 deep import 退休、模块名／缓存／堆栈及 sourceHash 改变应明示；不承诺未知外部消费者无影响。
 
 ## 现场 checkpoint 的实际归属
 
-`2b6f24c89d68e3ccf369a51568696c12553d6cb0` 已把五个完整现场捕获模块从 `recording/reproduction/checkpoint` 迁到 `app/checkpoint`。以下是实际 owner；旧路径只在历史来源中解释：
+现场 World 和机制状态的捕获由 `app/checkpoint` 拥有，实际入口如下：
 
 | 完整 owner               | 当前落点                                                                                                       |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------- |
@@ -43,4 +43,4 @@ Catalog／contracts／assembly／builtin 同在 `rulesets/roles`，保原 lazy r
 | `player-snapshots.ts`    | [`backend/src/app/checkpoint/player-snapshots.ts`](../../backend/src/app/checkpoint/player-snapshots.ts)       |
 | `private-state-codec.ts` | [`backend/src/app/checkpoint/private-state-codec.ts`](../../backend/src/app/checkpoint/private-state-codec.ts) |
 
-纯 animal-format、player-format、animal-audit、noble-body-format、fragrant-pair-format 五叶仍在 `recording/reproduction/checkpoint`，独立 verifier 仍在录制校验层。现场读取与纯格式的职责已分开；目录移动不自行证明整个模块图或最终验收完成。
+纯 animal-format、player-format、animal-audit、noble-body-format、fragrant-pair-format 五叶仍在 `recording/reproduction/checkpoint`，独立 verifier 仍在录制校验层。现场读取与纯格式的职责已分开；纯格式模块不反向取得现场状态写权。

@@ -1,7 +1,0 @@
-# World 输入分组最终冻结
-
-165 actual source（13生产＋152测试）、stable5候选，actual4ff原165before linked新5。488精确步骤，peer8源10必要step／原formal源码和文件全文保存。首proof165＋delta22＋实体名单comment1＋peer8＋唯一Lonely配置1的各阶段窄桥均真实0，原绿不重复。
-
-行为累计15不同case最终pass，16case执行保1首红（原配置身份早于provider）；成功348assert。类型／head沿Root首红/配置TS2688红及必要40／14根后继真实0，作者未重复。其它rawfixture／seed／model／fullsuite不冒绿。
-
-Scope aaaab51a4fb7134aa5a0f711c14cb4466d024f18b27bf97562a23643a70b07ee；MD 611e2a4df431bdece0654df78bae4ba9dc88862182af89d3ccb4f1cc4468911f；evidence 77bd4c82f0d73ff6d139c62066c994c660d11492d16c83b869c685660aa882e8。作者artifact排peer/root报告防cycle，源与元数据停止写。

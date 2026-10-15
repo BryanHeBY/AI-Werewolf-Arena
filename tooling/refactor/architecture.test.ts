@@ -1,6 +1,6 @@
 /**
  * 单元架构测试用手写源码图和字面错误作为独立预期，核对导入、导出与别名边界。
- * 输入为合成源码、公开包配置及临时目录；输出验证职责头位置、冻结债务、新增／修改文件和机械路径映射。
+ * 输入为合成源码、公开包配置及临时目录；输出验证职责头位置、当前严格检查及新增／修改文件发现。
  * 不执行生产模块、角色 resolver、私有配置或模型来生成预期，不用安装目录内容推断公开权限。
  */
 import { expect, test } from "bun:test";
@@ -8,22 +8,11 @@ import { execFileSync } from "node:child_process";
 import { mkdtempSync, mkdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import {
-  compiler,
-  digest,
-  sourceDigest,
-  type ArchitectureDebt,
-  type ArchitectureInput,
-} from "./architecture/contracts";
+import { compiler, digest, type ArchitectureInput } from "./architecture/contracts";
 import { checkDependencies } from "./architecture/dependency-check";
 import { checkComments } from "./architecture/comment-check";
 import { checkNaming } from "./architecture/naming-check";
-import {
-  allViolations,
-  BASELINE_COMMIT,
-  checkArchitecture,
-  readCurrentPublicInput,
-} from "./architecture/run";
+import { checkArchitecture, readCurrentPublicInput } from "./architecture/run";
 
 const ts = compiler(process.cwd());
 const input = (
@@ -38,15 +27,6 @@ const pkg = (name: string, exports: unknown = { ".": "./src/index.ts" }, depende
 const header =
   "/** Owns a pure transformation. Inputs are detached values; outputs are returned data. Only this module writes its result; no external side effects. */\n";
 const rules = (value: ArchitectureInput) => checkDependencies(ts, value).map((row) => row.rule);
-const debt = (value: ArchitectureInput): ArchitectureDebt => ({
-  schema: "awa-architecture-debt-v1",
-  generatedBy: "tooling/refactor/architecture/run.ts",
-  baselineCommit: BASELINE_COMMIT,
-  baselineInputHash: sourceDigest(value.files),
-  files: value.files.map(({ path, sha256 }) => ({ path, sha256 })),
-  violations: allViolations(process.cwd(), value),
-  policy: "unit fixture, not a production debt replacement",
-});
 
 test("feature internals reject while its explicit public contract is allowed", () => {
   const privateGraph = input({
@@ -316,59 +296,6 @@ test("development names reject production paths and leave historical test names 
   ]);
 });
 
-test("baseline legacy debt is reported, new files and modified heads fail immediately", () => {
-  const base = input({ "backend/src/a.ts": "export const x=1;" }),
-    frozen = debt(base);
-  const same = checkArchitecture(process.cwd(), base, frozen);
-  expect(same.failures).toEqual([]);
-  expect(same.remainingDebt).toHaveLength(1);
-  const changed = input({
-    "backend/src/a.ts": "export const x=2;",
-    "backend/src/new.ts": "export const y=1;",
-  });
-  expect(checkArchitecture(process.cwd(), changed, frozen).failures.map((row) => row.path)).toEqual(
-    ["backend/src/a.ts", "backend/src/new.ts"],
-  );
-  const fixed = input({ "backend/src/a.ts": header + "export const x=1;" });
-  expect(checkArchitecture(process.cwd(), fixed, frozen).counts).toMatchObject({
-    failures: 0,
-    remainingDebt: 0,
-    clearedDebt: 1,
-  });
-  expect(checkArchitecture(process.cwd(), base, frozen, { strict: true }).failures).toHaveLength(1);
-  expect(frozen.violations).toHaveLength(1);
-});
-
-test("approved mechanical mapping preserves bytes; changed bytes cannot carry debt", () => {
-  const base = input({ "backend/src/old.ts": "export const x=1;" }),
-    frozen = debt(base);
-  const mappings = [
-    {
-      from: "backend/src/old.ts",
-      to: "backend/src/new.ts",
-      reason: "approved public path migration",
-    },
-  ];
-  const pure = input({ "backend/src/new.ts": "export const x=1;" });
-  expect(checkArchitecture(process.cwd(), pure, frozen, { mappings }).counts).toMatchObject({
-    failures: 0,
-    remainingDebt: 1,
-  });
-  const changed = input({ "backend/src/new.ts": "export const x=2;" });
-  expect(
-    checkArchitecture(process.cwd(), changed, frozen, { mappings }).failures.map((row) => row.rule),
-  ).toContain("mapping.not-mechanical");
-});
-
-test("baseline file digest cannot be edited without detection", () => {
-  const base = input({ "backend/src/a.ts": "export const x=1;" }),
-    frozen = debt(base);
-  frozen.files[0]!.sha256 = "0".repeat(64);
-  expect(() => checkArchitecture(process.cwd(), base, frozen)).toThrow(
-    "architecture_debt_input_mismatch",
-  );
-});
-
 test("current discovery includes untracked public source and excludes private configuration", async () => {
   const root = mkdtempSync(path.join(tmpdir(), "awa-architecture-input-"));
   try {
@@ -405,10 +332,9 @@ test("public ancestor symlink is rejected before reading the external source byt
   }
 });
 
-// 独立 C04/C05 审查留下的原字面反例：不把旧 debt 放宽成新的导入权限。
+// 手写边界反例独立于实现：导入形式和符号扩展都不能绕过模块权限。
 const reviewInput = input;
 const reviewDependencies = (rows: Record<string, string>) => checkDependencies(ts, input(rows));
-const reviewDebt = debt;
 test("import equals require form must not hide a cross-feature internal dependency", () => {
   expect(
     reviewDependencies({
@@ -442,34 +368,20 @@ test("independent verifier cannot import production rule algorithm", () => {
     }).length,
   ).toBeGreaterThan(0);
 });
-test("unbounded export star cannot widen another feature implementation debt", () => {
-  const base = reviewInput({
-    "backend/src/features/a/effect.ts":
-      header + "import {x} from '../b/effect'; export const value=x;",
-    "backend/src/features/b/effect.ts": header + "export const x=1; export const hidden=2;",
-  });
+test("unbounded export star cannot expose another feature implementation", () => {
   const next = reviewInput({
     "backend/src/features/a/effect.ts": header + "export * from '../b/effect';",
     "backend/src/features/b/effect.ts": header + "export const x=1; export const hidden=2;",
   });
-  expect(checkArchitecture(process.cwd(), next, reviewDebt(base)).failures.length).toBeGreaterThan(
-    0,
-  );
+  expect(checkArchitecture(process.cwd(), next).failures.length).toBeGreaterThan(0);
 });
-test("extra imported symbol on a historical forbidden edge is new debt", () => {
-  const base = reviewInput({
-    "backend/src/features/a/effect.ts":
-      header + "import {x} from '../b/effect'; export const value=x;",
-    "backend/src/features/b/effect.ts": header + "export const x=1; export const hidden=2;",
-  });
+test("extra imported symbol on a forbidden edge remains rejected", () => {
   const next = reviewInput({
     "backend/src/features/a/effect.ts":
       header + "import {x,hidden} from '../b/effect'; export const value=hidden;",
     "backend/src/features/b/effect.ts": header + "export const x=1; export const hidden=2;",
   });
-  expect(checkArchitecture(process.cwd(), next, reviewDebt(base)).failures.length).toBeGreaterThan(
-    0,
-  );
+  expect(checkArchitecture(process.cwd(), next).failures.length).toBeGreaterThan(0);
 });
 test("declared backend workspace name is not an external package for frontend", () => {
   expect(
@@ -638,4 +550,17 @@ test("中文测试职责说明与英文测试保持同等约束", () => {
     "comment.first-paragraph",
     "comment.responsibility",
   ]);
+});
+
+test("current files require valid contracts without historical grace", () => {
+  expect(
+    checkArchitecture(
+      process.cwd(),
+      input({ "backend/src/a.ts": "export const x=1;" }),
+    ).failures.map((row) => row.rule),
+  ).toContain("comment.missing-head");
+  expect(
+    checkArchitecture(process.cwd(), input({ "backend/src/a.ts": header + "export const x=1;" }))
+      .failures,
+  ).toEqual([]);
 });

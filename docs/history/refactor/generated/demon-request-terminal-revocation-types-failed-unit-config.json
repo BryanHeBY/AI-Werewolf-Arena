@@ -1,7 +1,0 @@
-{
-  "extends": "./demon-request-terminal-revocation-types-config.json",
-  "files": [
-    "../../../backend/tests/unit/features/demon-hunter/request-terminal-revocation.test.ts"
-  ],
-  "include": []
-}

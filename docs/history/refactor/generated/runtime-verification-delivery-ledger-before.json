@@ -1,6 +1,0 @@
-{
-  "baseCommit": "874030190c7b26980c1f82fe9a638caad3be99c6",
-  "path": "docs/refactor/generated/current-mechanism-migration.json",
-  "sha256": "c1cd2fc3277ff1f178580dcf97ccad965e2a9689a77481950176d0b74480c3d0",
-  "policy": "后续只登记已实际提交的职责子项，原全部格/part/remaining要求保持；真实Git blob为before，不复制改写历史基线。"
-}

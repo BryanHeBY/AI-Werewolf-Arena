@@ -1,1 +1,0 @@
-{"approved":false,"original":24,"current":21,"retained":20,"owned":7,"graph":{"old":148,"current":151,"owner":108,"new":["backend/src/rulesets/seer-tool-admission.ts","backend/src/game/mechanisms/roles/scholar_mentor/ports.ts","backend/src/game/mechanisms/roles/scholar_mentor/night-lifecycle.ts"],"ownerReturn":false,"profileReturn":false}}

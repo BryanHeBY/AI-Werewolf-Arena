@@ -1,4 +1,0 @@
-SyntaxError: Cannot declare a const variable twice: 'exports'.
-      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/terminal-victory-policy-proof.cjs:99
-
-Bun v1.4.3 (Linux x64)

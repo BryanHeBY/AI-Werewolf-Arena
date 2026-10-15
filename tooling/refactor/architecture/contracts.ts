@@ -1,8 +1,8 @@
 /**
- * 负责定义结构门禁的输入、诊断、债务与报告数据，并提供摘要和源码解析辅助。
+ * 负责定义结构门禁的输入、诊断与报告数据，并提供摘要和源码解析辅助。
  * 输入为调用方捕获的公共源码文本、路径和 SHA；输出保留原记录结构、摘要与解析结果。
  * 这些契约由本模块拥有，不包含游戏状态、资源写权或行动许可；字段声明不复制或冻结输入。
- * 原债务只由固定基线生成入口产生，检查不更新基线；调用方仍须验证捕获字节与 SHA 的对应关系。
+ * 调用方须验证捕获字节与 SHA 的对应关系，任何当前违规都不能通过历史豁免。
  * AST 与词项检查不能证明职责说明真实，实际所有权、异常和时序仍需人工审查。
  */
 import { createHash } from "node:crypto";
@@ -31,32 +31,14 @@ export interface ArchitectureViolation {
   specifier?: string;
   binding?: string;
 }
-export interface ArchitectureDebt {
-  schema: "awa-architecture-debt-v1";
-  generatedBy: "tooling/refactor/architecture/run.ts";
-  baselineCommit: string;
-  baselineInputHash: string;
-  files: { path: string; sha256: string }[];
-  violations: ArchitectureViolation[];
-  policy: string;
-}
-export interface PathMapping {
-  from: string;
-  to: string;
-  reason: string;
-}
 export interface ArchitectureReport {
   schema: "awa-architecture-report-v1";
   inputHash: string;
   failures: ArchitectureViolation[];
-  remainingDebt: ArchitectureViolation[];
-  clearedDebt: string[];
   counts: {
     files: number;
     violations: number;
     failures: number;
-    remainingDebt: number;
-    clearedDebt: number;
   };
   policy: string;
 }
@@ -71,7 +53,7 @@ export const sourceDigest = (files: ArchitectureFile[]) =>
         .map(({ path, sha256 }) => ({ path, sha256 })),
     ),
   );
-// 诊断身份由规则、路径和业务身份组成；行列仅用于定位，位置移动不自动制造一项新债务。
+// 诊断身份由规则、路径和业务身份组成；行列仅用于定位，位置移动不改变同一项诊断的身份。
 export function violation(
   rule: string,
   file: string,

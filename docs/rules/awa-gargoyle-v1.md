@@ -19,7 +19,7 @@ role_check沿G02实例保存id/资源/lastDay/history，支持受控gift/copy/tr
 
 DeathResolution唯一提交死亡，装配及真实死亡整批后更新native继承事实，PM最后judge。基础狼刀沿已接入的每票原life、有效tally、临时刀scope、首日pending NightDamage生命复验，不旧刀伤新life；历史记录保留。
 
-本卡描述兼容默认；`roles.gargoyle.inspectionPolicy`现可显式选有限AWA目标/行动策略，见[配置契约](../history/expansion/contracts/role-policy-configuration.md)，未知自爆/相认/self/固定刀位等参数拒绝；公开6/12只用注册角色，12为3Wolf+Garg／Seer Witch Hunter Gravekeeper／4Villager。范围由交互／完整矩阵证据说明，不宣布其它同名规则或觉醒支持。
+本卡描述兼容默认；`roles.gargoyle.inspectionPolicy`现可显式选有限AWA目标/行动策略，见[配置契约](policy-variants.md#原生死亡枪与身份查验)，未知自爆/相认/self/固定刀位等参数拒绝；公开6/12只用注册角色，12为3Wolf+Garg／Seer Witch Hunter Gravekeeper／4Villager。范围由交互／完整矩阵证据说明，不宣布其它同名规则或觉醒支持。
 
 ## 来源
 
@@ -29,6 +29,6 @@ DeathResolution唯一提交死亡，装配及真实死亡整批后更新native�
 
 ## 必验
 
-单向皆无互认/聊/刀口、自爆禁；合法具体role/原有seer camp区分、self/repeat/dead/nullable/非法不耗、每实例每夜/无目标/mandatory失败；原role/ability/state/目标life/gateway/phase撤销、gift真实身份与history不变、转移资源；开局/Day/Night/同批/追加继承、查后刀/无目标刀/禁用撤权不旧授权；Keeper反馈/Seer/熊/Knight真阵营、王枪/白狼/Beauty/梦/隐狼核心交互与全链judge；actor-only/目标无通知/不回溯历史/Mask标签/中英/DTO/记录/终端/前端；公开6/12参数/count、SDK/ACP/混合两语字面完整局及每局Tape、20seed每板真实查验+继承/刀分支与重放，三路审查；P6结束完整支持回归。
+单向皆无互认/聊/刀口、自爆禁；合法具体role/原有seer camp区分、self/repeat/dead/nullable/非法不耗、每实例每夜/无目标/mandatory失败；原role/ability/state/目标life/gateway/phase撤销、gift真实身份与history不变、转移资源；开局/Day/Night/同批/追加继承、查后刀/无目标刀/禁用撤权不旧授权；Keeper反馈/Seer/熊/Knight真阵营、王枪/白狼/Beauty/梦/隐狼核心交互与全链judge；actor-only/目标无通知/不回溯历史/Mask标签/中英/DTO/记录/终端/前端；公开6/12参数/count、SDK/ACP/混合两语字面完整局及每局Tape、20seed每板真实查验+继承/刀分支与重放，三路审查。
 
-P7已新增同role_check的[通灵policy](awa-psychic-v1.md)，其晚阶段/可repeat/skip独立；本卡禁重/必须与查后刀完成专属gargoyle policy，旧缺省仍gargoyle。
+同 role_check 的[通灵policy](awa-psychic-v1.md)，其晚阶段/可repeat/skip独立；本卡禁重/必须与查后刀完成专属gargoyle policy，旧缺省仍gargoyle。

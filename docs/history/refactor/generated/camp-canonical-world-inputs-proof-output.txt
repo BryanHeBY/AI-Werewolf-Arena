@@ -1,1 +1,0 @@
-{"candidatePrograms":165,"production":13,"testInputCandidates":152,"actualChanged":156,"recordedEdits":446,"typedNodes":264854,"nodeArrays":50613,"noncommentLeaves":344326,"inverseWholeOutputs":330}

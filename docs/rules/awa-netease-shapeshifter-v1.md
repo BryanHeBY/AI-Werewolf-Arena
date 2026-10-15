@@ -1,6 +1,6 @@
-# P9a 千面人：首夜必选身份与一狼强制
+# 千面人：首夜必选身份与一狼强制
 
-状态：有限策略已实现并登记 implemented，三组来源/规则与源码复验已闭合；最终离线证据见[验收记录](../history/expansion/reviews/p9-shapeshifter.md)。唯一有限AWA策略 `awa_netease_shapeshifter_two_extra_villagers_v1`，机器角色ID `shapeshifter` 保留与 `thief` 分别登记。
+状态：有限策略已实现并登记 implemented，三组来源/规则与源码复验已闭合；最终离线证据见[支持边界](../contracts/mechanism-support-boundaries.md)。唯一有限AWA策略 `awa_netease_shapeshifter_two_extra_villagers_v1`，机器角色ID `shapeshifter` 保留与 `thief` 分别登记。
 
 ## 原始来源与差异
 
@@ -40,6 +40,6 @@ metadata保完整原N+2与不可变原N玩家roster，初始回放Shapeshifter/G
 
 6人实际剧本：0Wolf底牌必选God/Villager、1Wolf在slot0/slot1仅能选狼、两Wolf两个slot、其它每种基础新身份的首夜实际请求/原生资源/被动死亡枪、Shapeshifter落底；12人含0/1/2Wolf底牌与新神职/缺席。手写计划不从生产World生成预期。
 
-核心覆盖一次真实N+2、1Wolf误选/null/required失败、0Wolf null不保留、late组件/底牌原主/slot/getter/配置/阶段撤权、两World/原请求/仅deadline、Night及Day/Voting重入、私有受众、原roster和坏档。实际SDK HTTP/ACP子进程MCP/mixed双语完整局逐Tape；200受限ObservedBot自然局逐Tape；1000独立World自然局。至少两组独立审查，高风险三个原审查者复验，静态/完整backend/frontend/浏览器与实际PNG/shared frame。未授权真实商业模型，T6不声明完成；总体P9/P10继续待用户最终验收。
+核心覆盖一次真实N+2、1Wolf误选/null/required失败、0Wolf null不保留、late组件/底牌原主/slot/getter/配置/阶段撤权、两World/原请求/仅deadline、Night及Day/Voting重入、私有受众、原roster和坏档。实际SDK HTTP/ACP子进程MCP/mixed双语完整局逐Tape；200受限ObservedBot自然局逐Tape；1000独立World自然局。至少两组独立审查，高风险三个原审查者复验，静态/完整backend/frontend/浏览器与实际PNG/shared frame。离线模拟不代表真实商业模型已验证。
 
 三组复审已闭合：≥2配置Wolf排除无actor/零Wolf空方、独立mustChoose/allowedSlots、共享原物理牌/opaque权限/generic PM与狼知识门禁、分别序列化原Thief与Shape、选择因果交叉原decision/slot/库存、God/本人实际前端归档。三项共享架构边界保留为实际源码审查门禁，规则冻结与最终功能验收分别记录；最终功能证据以验收记录为准。

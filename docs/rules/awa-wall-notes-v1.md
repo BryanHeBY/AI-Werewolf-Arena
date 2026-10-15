@@ -18,7 +18,7 @@
 
 ## 初批支持与判例
 
-首批有限AWA组合为Wolf/Villager/Seer/Witch/Hunter/Guard/Idiot七基础角色，随后分别核验与已启用P8角色组合；未核验组合明确拒绝。配置/反向serialize、实例DTO/提示、动作接收/晚校验、God记录/严格Tape、旧公共档兼容和前端生命周期必须闭环后才称支持。
+首批有限AWA组合为Wolf/Villager/Seer/Witch/Hunter/Guard/Idiot七基础角色，与其他已启用角色组合分别核验；未核验组合明确拒绝。配置/反向serialize、实例DTO/提示、动作接收/晚校验、God记录/严格Tape、旧公共档兼容和前端生命周期必须闭环后才称支持。
 
 - 默认关闭：无draw、实例、请求、额外事件，旧玩法RNG路径不改变。
 - 正常首日放逐后剩5活人：5份本人实例和请求，收齐后1个公共随机文本数组，再第二夜。

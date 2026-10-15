@@ -1,1 +1,0 @@
-{"programs":11,"edits":95,"typedTreeNodes":24852,"allSyntaxLeaves":16406,"nodeArrays":1781,"inverseWholeOutputs":22,"actualOutputChanges":22,"protectedPrograms":54}

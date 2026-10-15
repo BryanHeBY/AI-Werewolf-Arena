@@ -1,7 +1,0 @@
-[
-  "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
-  "backend/src/game/mechanisms/roles/ability_scope.ts",
-  "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
-  "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
-  "backend/tests/unit/features/wild-child/role-execution-retirement.test.ts"
-]

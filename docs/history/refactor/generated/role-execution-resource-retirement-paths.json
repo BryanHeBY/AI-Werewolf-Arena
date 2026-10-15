@@ -1,6 +1,0 @@
-[
-  "backend/src/game/mechanisms/roles/abilities.ts",
-  "backend/src/game/mechanisms/roles/night-ability-grants.ts",
-  "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
-  "backend/tests/unit/mechanisms/role-execution-resource-retirement.test.ts"
-]

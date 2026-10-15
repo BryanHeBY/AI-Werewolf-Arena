@@ -1,1 +1,0 @@
-{"typedNodes":5833,"noncommentLeaves":3938,"tests":8,"expects":42,"constructors":16,"wholeInverseOutputs":2,"actualOutputsDiffer":true,"controls":2}

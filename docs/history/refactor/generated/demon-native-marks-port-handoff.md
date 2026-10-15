@@ -1,5 +1,0 @@
-# 猎魔印记公开查询五源冻结
-
-实际 base `751604fd1d5feea8911354fee550b9ad49c262b7`；MD `e117be7ef41b08f61f9b4c62d8152fdb43ca66ac6257d97908c572d946511cef`，scope `89b917ff9ac20f542d2a9e4ba985d95439ea29ba82b8504a961884d53a8aa056`，evidence `42e8097c68645c78086eed1d2e1c82096c9b46d5cb584d8ead5b8a949d369090`。
-
-五源／12精确编辑，原Requests全算法/方法表/capture原位；无新模块／初始化API／store／oldowner出口退休。public ports直接同函数binding；Controller完整未动。一次原恶意覆盖1/5，finite5真实session78143→72ecc7/0，10wholemapped输出＋1581 Requests tokens＋24query行同，五heads/551docs0，三控制真同。Root/同行仅读源、actualGit/最后SHA及收据，无须重绿或全门禁。禁止stage／提交由Root收。

@@ -1,6 +1,6 @@
 # AWA 动物梦境原生十二人规则卡
 
-版本 `1.0.0`，联合规则 `awa_animal_dream_v1`。白猫、子狐、河豚已在本卡限定组合登记 implemented；四政策、真实执行／记录／双语接入／前端及全支持门禁见[完整验收](../history/expansion/reviews/p9e-animal-dream-acceptance.md)。其它同名平台细则与混搭不受此登记承诺。
+版本 `1.0.0`，联合规则 `awa_animal_dream_v1`。白猫、子狐、河豚已在本卡限定组合登记 implemented；四政策、真实执行／记录／双语接入／前端及全支持门禁见[支持边界](../contracts/mechanism-support-boundaries.md)。其它同名平台细则与混搭不受此登记承诺。
 
 ## 来源与裁定归属
 
@@ -79,9 +79,9 @@ Fox 及有合法对象的 Puffer 是必需决定，null／false 与 missing／in
 
 独立字面场景覆盖四配置、Fox 真禁整队／清旧魅惑、Cat 真实活邻／警徽／同单位和跳票差分、Puffer 原票／PK／自票／被动独立、末狼末民全链优先及正确全体 winningPlayerIds。失败前缀含付款前撤权、付款后记录错误、真正提交后公告失败；原决定／事实／CP 共删必须拒绝。独立账本从原 seed／动作／接受票／单位与真实生命推导，不用生产 owner、投票器、伤害器或投影函数做期望。
 
-SDK／ACP／mixed × 两语完整局；两个主动工具 schema／域拒绝后原 turn 更正、missing／late、实际保留 MCP 迟到／旧 ID／关闭及物理回收。白猫无主动工具。四份配置各至少20–50固定受限 seed、逐局严格 Tape；约1000 seed／支持板由 P10 收口。
+SDK／ACP／mixed × 两语完整局；两个主动工具 schema／域拒绝后原 turn 更正、missing／late、实际保留 MCP 迟到／旧 ID／关闭及物理回收。白猫无主动工具。四份配置各至少20–50固定受限 seed、逐局严格 Tape。
 
-真实 God 与最小授权玩家档、失败前缀、字面中间帧／逆 seek、Chromium 和双语 PNG；翻牌 Alive 不变、到期才死、God 私有无死亡 effect。全支持门禁和 R／A／T+L+D 原意见复核闭环后登记三角色；工作台玩家档直接加载与 P10 编辑器另按其实际支持说明。
+真实 God 与最小授权玩家档、失败前缀、字面中间帧／逆 seek、Chromium 和双语 PNG；翻牌 Alive 不变、到期才死、God 私有无死亡 effect。全支持门禁和 R／A／T+L+D 原意见复核闭环后登记三角色；玩家档直接加载和编辑功能按各入口实际支持范围判断。
 
 功能提交依次为：规则／纯状态与原体底座 → Fox 许可／Bear 策略 → Cat 真延期与单位 → Puffer 原票与全链 → 独立录制／Tape → 公共四配置／双语／实际通信／前端／阶段验收。文件迁移与规则变化分开；每一边界有对应交叉审查。
 

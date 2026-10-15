@@ -1,6 +1,6 @@
 # AWA Classic 1.0.0 基础规则卡
 
-规则集标识 `awa_classic`，规则版本 `1.0.0`。这些规则是已选择的规范；资料登记与运行 profile 分开，只有实际注册的角色才能开始对局。基础七角色的差异已关闭；验证登记及支持范围见[P4整阶段验收](../history/expansion/reviews/p4-activation.md)。资料登记不代表所有同名赛事版本或任意牌组均已验证。
+规则集标识 `awa_classic`，规则版本 `1.0.0`。这些规则是已选择的规范；资料登记与运行 profile 分开，只有实际注册的角色才能开始对局。基础七角色的差异已关闭；验证登记及支持范围见[支持边界](../contracts/mechanism-support-boundaries.md)。资料登记不代表所有同名赛事版本或任意牌组均已验证。
 
 ## 通用规则
 
@@ -14,7 +14,7 @@
 
 ## wolf
 
-狼人 / Werewolf：普通狼双向互认，身份知识不随未公开死亡消失；夜聊与刀权是独立的profile权限，必须存活且在夜间才能行动。历史狼队事件按发生时的存活受众保存，后续身份/生存变化不追溯改写。最多三轮夜聊，与普通狼刀票使用同一随机顺序。可弃刀、自刀或刀队友；平票按本板参数处理。默认自爆窗口为放逐前，空列表明确关闭；四种离散窗口已实现，准确时点见[四窗口契约](../history/expansion/self-destruct-windows.md)。首日竞选前自爆不自动在次日补选，待夜死仍按完整链结算。多个同时提交以最小稳定玩家ID选一人，普通自爆中断白天并入夜，警徽必须进入死亡处理，不能留下死亡警长。
+狼人 / Werewolf：普通狼双向互认，身份知识不随未公开死亡消失；夜聊与刀权是独立的profile权限，必须存活且在夜间才能行动。历史狼队事件按发生时的存活受众保存，后续身份/生存变化不追溯改写。最多三轮夜聊，与普通狼刀票使用同一随机顺序。可弃刀、自刀或刀队友；平票按本板参数处理。默认自爆窗口为放逐前，空列表明确关闭；四种离散窗口已实现，准确时点见[四窗口契约](../contracts/common-gameplay.md#自爆窗口)。首日竞选前自爆不自动在次日补选，待夜死仍按完整链结算。多个同时提交以最小稳定玩家ID选一人，普通自爆中断白天并入夜，警徽必须进入死亡处理，不能留下死亡警长。
 
 ## villager
 
@@ -40,7 +40,7 @@
 
 白痴／愚者 / Village Idiot：首次被放逐翻牌免死并失去投票权，仍可发言；翻牌后不可再次被选为放逐目标，也不可投票、竞选或继承警徽。若持有警徽，则按本AWA自动转移规则选择最小存活座位的合格玩家，没有合格玩家则销毁；权重沿用本板配置。其他死因正常处理。
 
-## 公共流程的冻结选择
+## 公共流程
 
 - 没有人上警、全部退水或没有有效警长票时无警长，不擅自恢复已退出候选。平票按本板选定策略裁决。
 - 放逐时警徽处理、遗言、死亡动作顺序必须一致地记录；基本规范使用初批遗言、警徽处理、死亡技能与追加波次，再检查胜负。翻牌免死不是死亡。
@@ -48,25 +48,18 @@
 - 同时达到“全狼出局”与对立胜利时，基础规则优先好人胜；其他个人/第三方目标必须显式规定优先级。
 - 屠边板子起局必须同时含狼、神和平民；人数优势不默认替代屠边，只有在板子明确列入条件时启用。
 
-## 基础差异修复状态
+## 共同机制与判例
 
-末神/枪来源、自爆窗口与收尾、配置票权、白痴与选举的基础差异已随P1/P4修正关闭；角色目录的验证登记随P4整体结果与组合门槛完成，不把修正子批当成64角色或22机制全面完成。
-
-## 当前实现与验收证据
-
-| 规则边界                                   | 契约与独立判例                                                                                                                                          |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 狼队知识、夜聊、刀权与历史受众             | [狼队权限](../history/expansion/wolf-team-access.md)、[人工判例](../../backend/tests/unit/mechanisms/wolf-team-permission-and-prompt-contracts.test.ts) |
-| 查验标签、身份与真实阵营分离               | [类型化查验](../history/expansion/inspection-results.md)、[人工判例](../../backend/tests/unit/engine/visibility/inspection-result-contract.test.ts)     |
-| 用药刀口、资源、耗尽视角、16保护组合       | [女巫结算](../history/expansion/witch-resolution.md)、[人工判例](../../backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts)     |
-| 末神、空枪、死因与最终消费授权             | [死因](../history/expansion/death-causes.md)、[World窗口](../history/expansion/death-action-authority.md)                                               |
-| 遗言、警徽、技能、追加死亡与最终判胜       | [死亡链](../history/expansion/death-chain.md)、[四个自爆窗口](../history/expansion/self-destruct-windows.md)                                            |
-| 白痴永久资格与警长空候选／零票／票权       | [公共参与](../history/expansion/public-participation.md)                                                                                                |
-| 获胜归属、完整封盘、记录及双语呈现         | [胜利核心](../history/expansion/victory-outcomes.md)、[主档与展示](../history/expansion/victory-record-display.md)                                      |
-| 六／十二人完整人工流程及真实接入／严格重放 | [场景oracle](../history/expansion/foundation-scenarios.md)、[整阶段验收](../history/expansion/reviews/p4-activation.md)                                 |
-
-所有旧基础差异已在相应专项和交叉审查中关闭；历史审查记录保留当时边界，不构成当前待修清单。基础规则卡是规范来源，功能契约记录实现和兼容方式。
+| 规则边界                             | 契约与独立判例                                                                                                                                            |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 狼队知识、夜聊、刀权与历史受众       | [狼队权限](../contracts/common-gameplay.md#狼队权限)、[人工判例](../../backend/tests/unit/mechanisms/wolf-team-permission-and-prompt-contracts.test.ts)   |
+| 查验标签、身份与真实阵营分离         | [类型化查验](../contracts/common-gameplay.md#查验结果)、[人工判例](../../backend/tests/unit/engine/visibility/inspection-result-contract.test.ts)         |
+| 用药刀口、资源、耗尽视角、16保护组合 | [女巫结算](../contracts/common-gameplay.md#女巫与伤害保护)、[人工判例](../../backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts) |
+| 末神、空枪、死因与最终消费授权       | [死因](../contracts/common-gameplay.md#死亡与动作授权)、[World窗口](../contracts/common-gameplay.md#死亡与动作授权)                                       |
+| 遗言、警徽、技能、追加死亡与最终判胜 | [死亡链](../contracts/common-gameplay.md#死亡与动作授权)、[四个自爆窗口](../contracts/common-gameplay.md#自爆窗口)                                        |
+| 白痴永久资格与警长空候选／零票／票权 | [公共参与](../contracts/common-gameplay.md#公共参与)                                                                                                      |
+| 获胜归属、完整封盘、记录及双语呈现   | [胜利核心](../contracts/common-gameplay.md#胜利与展示)、[主档与展示](../contracts/common-gameplay.md#胜利与展示)                                          |
 
 依据：现有AWA代码与人工测试、[官方基础规则](https://langrensha.com/wanfa/guize/2017/10/18/26899_719311.html)、[网易角色资料](https://langrensha.res.netease.com/pc/gw/20190509150909/js/kapaiData_02806e2.js)。未由来源完整规定的首日流程、自动警徽、离散公开窗口、末神枪和多判胜条件优先级已明确声明AWA改编。后续角色沿独立规则卡／版本扩充，不因本基础验证而提前开放。
 
-P5白狼王扩展使用独立WhiteWolfBlast死因；本AWA版本允许猎人/狼王对此追枪，含毒等禁因仍禁止。具体窗口、合并死亡及来源歧义见[白狼王卡](awa-white-wolf-king-v1.md)。
+白狼王扩展使用独立WhiteWolfBlast死因；本AWA版本允许猎人/狼王对此追枪，含毒等禁因仍禁止。具体窗口、合并死亡及来源歧义见[白狼王卡](awa-white-wolf-king-v1.md)。

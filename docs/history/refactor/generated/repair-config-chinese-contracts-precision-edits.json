@@ -1,8 +1,0 @@
-[
-  {
-    "path": "backend/src/game/mechanisms/llm/contracts.ts",
-    "before": "/** 工具到处理器的可写稀疏表；缺项由 registry 保原参数副本，同名注册按原顺序取最后函数。 */",
-    "after": "/** 工具到处理器的可写稀疏表；同名注册保最后处理器值，无有效处理器时保原参数副本。 */",
-    "kind": "comment"
-  }
-]

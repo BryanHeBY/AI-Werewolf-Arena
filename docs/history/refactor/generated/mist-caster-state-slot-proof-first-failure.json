@@ -1,8 +1,0 @@
-{
-  "chunk": "653405",
-  "exitCode": 1,
-  "message": "program_mismatch:实际完整caller commitRavenKnife 非调用body保持",
-  "reason": "精准caller逆未保留原单参数调用的签名末逗号，harness遗漏格式token；仅修映射，不改生产。",
-  "correctedChunk": "48ebb9",
-  "correctedApproved": true
-}

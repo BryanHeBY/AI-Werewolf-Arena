@@ -1,7 +1,0 @@
-[
-  {
-    "path": "backend/src/runtime/config/load_board_definition.ts",
-    "before": " * 读取指定目录 boards 下的具名版本化板子，输出解析后的配置及 sourceFile 追踪路径。",
-    "after": " * 输入为配置目录与板子 id；读取 boards 下的具名版本化板子，输出解析配置及 sourceFile 追踪路径。"
-  }
-]

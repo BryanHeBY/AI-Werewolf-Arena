@@ -1,1 +1,0 @@
-{"source":1,"deleted":2,"exactEdits":3,"fullForward":true,"fullInverse":true,"treeNodes":112,"nodeArrays":6,"treeLeaves":54,"retainedClauses":21,"entryActualRawSame":[false,false],"entryInverseEmitSame":[true,true],"oldLeafTranspiles":4,"controls":5}

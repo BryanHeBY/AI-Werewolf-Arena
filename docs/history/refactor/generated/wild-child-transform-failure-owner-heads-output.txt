@@ -1,1 +1,0 @@
-{"source":[{"path":"backend/src/game/mechanisms/roles/wild_child/lifecycle.ts","sha256":"15f026fda603f72ec3a1be89cc13af0a14ab83a488cf1490f680142f690d5e1d"},{"path":"backend/tests/unit/features/wild-child/transform-failure-owner.test.ts","sha256":"bee3f228b41645e77b4019b0bb149e485beb19c82b440764fdec8df2dcd46fcc"}],"documentationPaths":673,"diagnostics":[],"chineseHeadFailures":[]}

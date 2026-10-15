@@ -14,4 +14,4 @@
 
 Catalog→observation原late binding仍是实际已知依赖，不能凭新目录宣称消失。checker必须覆盖新目录，不通过分类漏检使gate变绿。
 
-本决策所述主体目录已在 `a55e675b` 实际提交，五个现场 checkpoint owner 后继在 `2b6f24c8` 交付；生命周期头分类修正在 `d993b9c7` 独立提交。旧 528 路径快照、672 主映射、五 owner 后继与 `d7b5f51b` 已交付的九 basename 是不同范围和采样，不合并成一个证明数量；5282 历史文件数也只属于旧观察。任何一次目录映射不自行证明 P8／P9 或最终 C47 通过。
+实际目录和公共面见[模块归属](../architecture/module-ownership.md)。

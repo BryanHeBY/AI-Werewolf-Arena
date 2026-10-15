@@ -1,6 +1,0 @@
-[
-  "backend/src/game/mechanisms/roles/debater/state.ts",
-  "backend/src/game/mechanisms/roles/debater/profile.ts",
-  "backend/src/game/mechanisms/roles/debater/window.ts",
-  "backend/tests/unit/features/debater-state-owner.test.ts"
-]

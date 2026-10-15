@@ -1,6 +1,6 @@
 # AWA Hybrid 1.0.0 规则卡
 
-规则集 `awa_classic` 1.0.0；ID `hybrid`，混血儿／Hybrid；核验日期 2026-10-09。本卡对应 P7 混血儿角色实现；有限组合、双语与完整通路验收见[角色审查](../history/expansion/reviews/p7-hybrid.md)。不代表其它同名版本均受支持。
+规则集 `awa_classic` 1.0.0；ID `hybrid`，混血儿／Hybrid；核验日期 2026-10-09。本卡仅声明下述有限组合。不代表其它同名版本均受支持。
 
 ## 来源与版本边界
 
@@ -36,4 +36,3 @@
 - PlayerObservation/SDK/ACP/MCP 真实输入与反馈没有隐藏 camp、目标身份、他人私有选择；中英提示与工具行为一致；God/Tape 保存真实归属，玩家档及普通公开游戏事件只保存该受众允许的信息。
 - 六/十二板各不少于 20 受限观察 seed，自然终局、零非法回退，选择与两方获胜分支有正覆盖；字面独立 oracle 的两语 SDK/ACP/混合完整局及每局严格 Tape。
 - 前端 God 时间线正确显示私有选择而不误改身份/阵营/存活；终局显示 Good 身份的狼方获胜者及已死获胜成员，普通公开事件不带私有选择；unit/type/build、实际 Chromium、双语实际 PNG；R/A/T/L/D 三路审查与修正复查。
-- 启用提交才把目录标记 verified；P7 整阶段、P8–P10、长局及 T6 目标保持。

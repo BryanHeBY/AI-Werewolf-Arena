@@ -1,6 +1,8 @@
 # AWA Wolf Beauty 1.0.0 规则卡
 
-awa_classic 1.0.0角色扩展，ID `wolf_beauty`，狼美人／Wolf Beauty；核验2026-10-08。普通与P9觉醒狼美人分别登记，不采用设计大赛投稿的双人互殉情。
+<a id="wolf_beauty"></a>
+
+awa_classic 1.0.0角色扩展，ID `wolf_beauty`，狼美人／Wolf Beauty；核验2026-10-08。普通与觉醒狼美人规则版本分别说明，不采用设计大赛投稿的双人互殉情。
 
 ## wolf_beauty
 
@@ -22,12 +24,12 @@ awa_classic 1.0.0角色扩展，ID `wolf_beauty`，狼美人／Wolf Beauty；核
 
 [组织者狼美骑士板](https://melbournemasters.org/setups/lang-mei-qi-shi)明确狼队见面、刀后魅惑、放逐/毒触发、不能自刀/爆、骑士使魅惑失效及末狼连最后一侧判狼胜。该网页不是各平台统一规格；相邻夜禁止重复、可skip/null、本人自刀解释、复合Dream禁技能、生命绑定/夜梦保护与候选时点为AWA明确细则，必须各有判例。
 
-[官方动物梦境说明](https://langrensha.com/news/official/20211025/26904_981415.html)确有子狐/河豚使魅惑失效的交互；对应角色未到阶段，不能本批声明已支持。[2023设计赛稿](https://langrensha.com/news/official/20230221/26904_1074195.html)不是本普通版或P9正式觉醒版的替代规则来源。
+[官方动物梦境说明](https://langrensha.com/news/official/20211025/26904_981415.html)确有子狐/河豚使魅惑失效的交互；对应交互仅在[动物梦境有限板](awa-animal-dream-twelve-v1.md)的明确规则内支持，不外推任意混板。[2023设计赛稿](https://langrensha.com/news/official/20230221/26904_1074195.html)不是本普通版或觉醒版本的替代规则来源。
 
 ## 参数与验收
 
-当前增加有限 `roles.wolf_beauty.deathLinkPolicy`，默认 awa_exile_poison_v1，历史 heroes_s7_2017_exile_hunter_v1；见[历史策略契约](../history/expansion/contracts/historical-night-role-policies.md)。本卡上文描述 AWA 默认，未声明双目标/自爆/全天无条件牵连参数拒绝。6/12公开板子必须完整配置并含已注册角色；支持范围由契约/实际矩阵列明，不凭目录开放未实现角色。
+当前增加有限 `roles.wolf_beauty.deathLinkPolicy`，默认 awa_exile_poison_v1，历史 heroes_s7_2017_exile_hunter_v1；见[历史策略契约](policy-variants.md#摄梦与狼美人)。本卡上文描述 AWA 默认，未声明双目标/自爆/全天无条件牵连参数拒绝。6/12公开板子必须完整配置并含已注册角色；支持范围由契约/实际矩阵列明，不凭目录开放未实现角色。
 
 必验：互认/狼聊/刀权与无自爆、自刀；charm合法/self/null/重复/撤权/目标生命更换/换目标和过期；放逐/毒与其余死因矩阵、Duel/Dream复合禁技能、Guard/Heal/梦Night交互、多Charm/循环/同波；遗言/徽章/末狼特殊候选/普通Good胜与全部追加后judge；无目标通知/本人状态和隐藏狼数量不泄露、中英工具/错误/状态/结果；6/12字面完整局、SDK/ACP/混合/Tape、每板固定seed受限观察与分支、终端/前端/browser/实际frame、三路交叉审查。
 
-P8情侣补充：所有deathLinkPolicy的Lovers死因均抑制魅惑发动，按殉情禁死亡能力作有限工程补全；这是新增跨角色交互，旧无情侣板子保持兼容。见[丘比特来源策略](sourced-cupid-v1.md)。
+情侣交互：所有deathLinkPolicy的Lovers死因均抑制魅惑发动，按殉情禁死亡能力作有限工程补全；这是新增跨角色交互，旧无情侣板子保持兼容。见[丘比特来源策略](sourced-cupid-v1.md)。

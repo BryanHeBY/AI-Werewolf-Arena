@@ -1,8 +1,0 @@
-{
-  "terminal": {
-    "chunk": "0edbcc",
-    "exitCode": 1
-  },
-  "reason": "Harness parsed an isolated object initializer as a SourceFile block instead of wrapping it in its constant declaration; no product change. Complete caller source inverse already ran before separate map-literal parser reached this shape.",
-  "fix": "Use the same explicit const wrapper for both actual map literals, preserving every original property and callback."
-}

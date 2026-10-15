@@ -1,8 +1,0 @@
-backend/tests/unit/rulesets/beauty-exile-victory.test.ts(72,36): error TS2345: Argument of type 'CharmProtectionReceipt' is not assignable to parameter of type 'Readonly<{ kind: "claimed"; [RECEIPT_BRAND]: true; }>'.
-  Type 'Readonly<{ kind: "blocked"; [RECEIPT_BRAND]: true; }>' is not assignable to type 'Readonly<{ kind: "claimed"; [RECEIPT_BRAND]: true; }>'.
-    Types of property 'kind' are incompatible.
-      Type '"blocked"' is not assignable to type '"claimed"'.
-backend/tests/unit/rulesets/beauty-exile-victory.test.ts(92,29): error TS2345: Argument of type 'CharmProtectionReceipt' is not assignable to parameter of type 'Readonly<{ kind: "claimed"; [RECEIPT_BRAND]: true; }>'.
-  Type 'Readonly<{ kind: "blocked"; [RECEIPT_BRAND]: true; }>' is not assignable to type 'Readonly<{ kind: "claimed"; [RECEIPT_BRAND]: true; }>'.
-    Types of property 'kind' are incompatible.
-      Type '"blocked"' is not assignable to type '"claimed"'.

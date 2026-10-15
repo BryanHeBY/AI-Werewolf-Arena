@@ -1,6 +1,8 @@
 # AWA Hidden Wolf 1.0.0 规则卡
 
-awa_classic 1.0.0角色扩展，ID `hidden_wolf`，隐狼／Hidden Wolf；核验2026-10-08。本版选择熊隐狼的普通潜伏／接刀版本，与“迷雾生还者”的互不相认、固定带刀顺位、永久角色伪装分别处理；觉醒隐狼仍P7另一项。
+<a id="hidden_wolf"></a>
+
+awa_classic 1.0.0角色扩展，ID `hidden_wolf`，隐狼／Hidden Wolf；核验2026-10-08。本版选择熊隐狼的普通潜伏／接刀版本，与“迷雾生还者”的互不相认、固定带刀顺位、永久角色伪装分别处理；觉醒隐狼采用独立规则卡。
 
 ## hidden_wolf
 
@@ -21,7 +23,7 @@ awa_classic 1.0.0角色扩展，ID `hidden_wolf`，隐狼／Hidden Wolf；核验
 
 有效票历史保留，但每张票绑定原目标生命，计票不把旧生命票转给同ID的新生命。选中狼刀范围只在Night内部保存生命／标记引用，在后续阶段与Damage前复验；首日延后夜死到竞选后时，实际死亡前也复验NightDamage原生命。复活／组件替换使旧伤害失效，实际NightResolved名单不含新生命；不撤其它毒／守护或合法新生命票，临时引用不落盘。
 
-`roles.hidden_wolf`接受`campInspection`有限具名策略（本卡描述默认AWA行为，见[规则证据](../history/expansion/contracts/rule-evidence.md)），不开放夜聊、永久平民、额外复制或固定刀顺位等未冻结参数。公开6/12使用当前已注册角色的AWA组合；来源白神不冒充白痴。与熊／seer／gravekeeper／Knight和狼枪／白狼／狼美人的核心交互需人工判例；石像鬼已见[冻结卡](awa-gargoyle-v1.md)，两者均需自己唯一活Wolf，不产生双刀；通灵师、觉醒隐狼及迷雾板的其它版本在对应批次另冻／另验，不凭同名自动授予许可。
+`roles.hidden_wolf`接受`campInspection`有限具名策略（本卡描述默认AWA行为，见[规则证据](policy-variants.md#守卫与隐狼)），不开放夜聊、永久平民、额外复制或固定刀顺位等未冻结参数。公开6/12使用当前已注册角色的AWA组合；来源白神不冒充白痴。与熊／seer／gravekeeper／Knight和狼枪／白狼／狼美人的核心交互需人工判例；石像鬼已见[冻结卡](awa-gargoyle-v1.md)，两者均需自己唯一活Wolf，不产生双刀；通灵师、觉醒隐狼及迷雾板的其它版本在对应批次另冻／另验，不凭同名自动授予许可。
 
 ## 来源与AWA细则
 

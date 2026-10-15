@@ -1,5 +1,0 @@
-{
-  "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
-  "sha256": "706ff92bbc541dbcb5208a15fb56b6430669809371559b73d7dab243c082199e",
-  "text": "/**\n * 提供赤月使徒的具名数据端口。输入为原角色或已捕获的审计字符串／候选数据，\n * 输出保留原状态引用、原浅副本及 JSON；写命令只提交本族三字段，不重读角色或存储副本。\n * 具体原体、末狼、夜窗口、请求权限及完整私有容器审计仍由原权威负责；编码函数不授予行动许可。\n * 后项写入或后续发布失败保持已付前缀，不恢复自爆／放逐窗口。本入口不推进阶段或渲染文案。\n */\nexport {\n  RED_MOON_ROLE,\n  getRedMoonState,\n  projectRedMoonState,\n  readRedMoonShadow,\n  copyRedMoonPayload,\n  encodeRedMoonShadow,\n  writeRedMoonTransition,\n} from \"./state-slot\";\n"
-}

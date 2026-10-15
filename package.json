@@ -19,7 +19,7 @@
     "test": "bun run test:tooling && bun run test:packages && bun run test:backend && bun run test:frontend",
     "test:backend": "bun --filter ai-werewolf-arena-backend test",
     "test:frontend": "bun --filter ai-werewolf-arena-frontend test",
-    "check": "bun run lint:architecture && bun --no-env-file run check:history && bun run check:fixtures && bun run check:tooling && bun run check:packages && bun run check:backend && bun run check:frontend",
+    "check": "bun run lint:architecture && bun run check:fixtures && bun run check:tooling && bun run check:packages && bun run check:backend && bun run check:frontend",
     "lint:backend": "bun run --cwd backend lint:deps && bun run --cwd backend lint:boundaries && bun run --cwd backend lint:i18n",
     "lint:frontend": "bun run --cwd frontend lint",
     "lint": "bun run lint:architecture && bun run lint:backend && bun run lint:frontend",
@@ -30,8 +30,7 @@
     "check:packages": "bun --filter '@ai-werewolf-arena/*' check",
     "test:packages": "bun --filter '@ai-werewolf-arena/*' test",
     "lint:architecture": "bun --no-env-file tooling/refactor/architecture/run.ts check --strict",
-    "check:fixtures": "bun --no-env-file tooling/refactor/fixture-manifest.ts --check",
-    "check:history": "python3 tooling/refactor/history-integrity.py --repo . --base 14e7951787f4464573407a7bcc270303a3975856 --manifest docs/history/origin-paths.json"
+    "check:fixtures": "bun --no-env-file tooling/refactor/fixture-manifest.ts --check"
   },
   "engines": {
     "bun": ">=1.4.2"

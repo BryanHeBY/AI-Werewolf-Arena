@@ -1,5 +1,7 @@
 # AWA Mechanical Wolf 1.0.0 规则卡
 
+<a id="mechanical_wolf"></a>
+
 awa_classic 1.0.0，ID `mechanical_wolf`，机械狼／Mechanical Wolf；核验2026-10-09。选赛事机械狼技能版本并明确下述AWA细则，不与经典版同目标穿解药双刀或觉醒隐狼混用。
 
 ## mechanical_wolf
@@ -45,6 +47,6 @@ mode选择/skip、580/650、模仿真role、所有技能次夜、唯一真Wolf/�
 
 ## 验收要求
 
-配置集合/count/错参数；晚学/学前后label/次夜生效/真实身份；六结果／五技能（包括民无技能）、mode排他/skip/机会关闭（外部普通gift技能由自身冻结规则，不冒认机械原生模式规则）；真死亡继承/同批不假接/首窗口过期、双刀同/异目标/Guard/Heal/女巫可见/原生命；毒源多施放者/反射零递归/反射原caster生命/机械盾/连守/skip/kill打断；枪资格/毒/梦/魅惑/徽/最后judge与target新生命撤销；查询只读、actor-only、不狼聊历史/不泄露毒手、所有新提示/拒绝/终端/记录/前端两语；6/12与八类字面真实SDK/ACP/混合两语完整局+全部Tape，20seed每板及技能/跳过/继承正分支，browser/实际PNG/三路审查，P7结束全支持release。
+配置集合/count/错参数；晚学/学前后label/次夜生效/真实身份；六结果／五技能（包括民无技能）、mode排他/skip/机会关闭（外部普通gift技能由自身冻结规则，不冒认机械原生模式规则）；真死亡继承/同批不假接/首窗口过期、双刀同/异目标/Guard/Heal/女巫可见/原生命；毒源多施放者/反射零递归/反射原caster生命/机械盾/连守/skip/kill打断；枪资格/毒/梦/魅惑/徽/最后judge与target新生命撤销；查询只读、actor-only、不狼聊历史/不泄露毒手、所有新提示/拒绝/终端/记录/前端两语；6/12与八类字面真实SDK/ACP/混合两语完整局+全部Tape，20seed每板及技能/跳过/继承正分支，browser/实际PNG/三路审查。
 
 白名单外Dream/Charm/White/Duel等保护与枪资格当前只做受控伤害／死亡策略专项，不宣称这些联合board已开放；未来学习映射/支持矩阵扩展后另做合法完整局。

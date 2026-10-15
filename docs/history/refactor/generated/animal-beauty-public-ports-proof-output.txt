@@ -1,1 +1,0 @@
-{"existingPrograms":4,"newFacets":3,"preciseEdits":10,"typedNodes":7705,"nodeArrays":901,"noncommentLeaves":8770,"completeInverseRawOutputs":8,"directFunctionBindings":15,"oldStaticModules":184,"newStaticModules":187}

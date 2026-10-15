@@ -1,9 +1,0 @@
-bun test v1.4.3 (c6da4a4d3)
-
-../../../../tmp/awa-last-words-lease-policy/baseline.test.ts:
-(pass) legacy last words have no envelope alias completion binding and preserve publication close failure prefixes [43.11ms]
-
- 1 pass
- 0 fail
- 24 expect() calls
-Ran 1 test across 1 file. [157.00ms]

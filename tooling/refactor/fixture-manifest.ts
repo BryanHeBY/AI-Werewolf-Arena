@@ -118,8 +118,8 @@ export interface FixtureManifest {
 
 const baselineCommit = "27a97cb66e8f30fceb7cb20130154291559dd14a";
 const inventoryPath = "docs/refactor/generated/baseline-fixtures.json";
-// 协议 origin 保原身份；实际冻结文件只从精确归档落点读取。
-const inventoryFilePath = "docs/history/refactor/generated/baseline-fixtures.json";
+// 清单内的来源路径保留原身份；生成器从夹具工具目录读取同一份原始登记字节。
+const inventoryFilePath = "tooling/refactor/fixtures/source-inventory.json";
 export const fixtureManifestPath = "tooling/refactor/fixtures/manifest.json";
 const fixtureRoots = [
   "backend/tests/fixtures",

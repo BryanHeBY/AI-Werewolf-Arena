@@ -1,7 +1,0 @@
-backend/tests/unit/engine/feature-player-state-projections.test.ts(126,50): error TS2345: Argument of type '{ world: () => World; role: () => RoleComponent; wolfTeammates: () => never[]; }' is not assignable to parameter of type 'PlayerObservationQueries'.
-  Property 'catalog' is missing in type '{ world: () => World; role: () => RoleComponent; wolfTeammates: () => never[]; }' but required in type 'PlayerObservationQueries'.
-backend/tests/unit/features/red-moon/state-slot.test.ts(174,22): error TS2769: No overload matches this call.
-  Overload 1 of 2, '(expected: null): void', gave the following error.
-    Argument of type '3' is not assignable to parameter of type 'null'.
-  Overload 2 of 2, '(expected: null): void', gave the following error.
-    Argument of type '3' is not assignable to parameter of type 'null'.

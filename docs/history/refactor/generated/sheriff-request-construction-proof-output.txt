@@ -1,1 +1,0 @@
-{"originalWholePrograms":8,"mappedWholeOutputs":16,"actualFactoryNewPoints":3,"actualInjectedSites":11,"originalTestSites":8,"constructionLifetime":"三实例寿命不合并；选举一次并保全部轮次、方向另一次、警徽每次有效许可后独立new。"}

@@ -1,6 +1,6 @@
-# P9a 野孩子：榜样死亡后的阵营变化
+# 野孩子：榜样死亡后的阵营变化
 
-状态：有限策略已implemented，三组审查/原报告复验与最终离线完整门禁见[角色验收](../history/expansion/reviews/p9-wild-child.md)。唯一首批AWA适配 `awa_lui_meme_wild_child_v1`，不称网易完整预设。
+状态：implemented；唯一有限 AWA 策略为 `awa_lui_meme_wild_child_v1`，不宣称完整网易预设。
 
 ## 来源
 
@@ -37,6 +37,6 @@ runner/manifest/Tape共享不可变原始N玩家roster(role+camp)，不能仅在
 - WildChild先死、两者同波次死、死亡链晚枪、后续榜样变化/复活与actor外部复活、再次Night/死亡重入不刷新；徽/票/原始身份及公共明牌保持。
 - 6/12字面完整局 ×SDK/ACP子进程注入MCP/mixed×双语及逐Tape；20–50受限种子、World独立oracle、坏录制与实际God前端/浏览器/video frame，以及静态/完整门禁。
 
-所有工程补全绑定这个明确AWA版本；无额外可配置无来源布尔组合。整体P9/P10仍待用户最终验收。
+所有工程补全绑定这个明确AWA版本；无额外可配置无来源布尔组合。
 
 三组只读方案审查已闭合来源、自爆主体、完整波次/晚枪、原生命绑定、同步阵营/胜利提交、双向权限、实际Night入口及原始roster回放边界；功能已在真实实现与最终门禁后登记implemented；总体仍待用户最终验收。

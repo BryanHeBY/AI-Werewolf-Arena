@@ -15,4 +15,4 @@ game-contract拥有稳定ID／惰性数据；World及明确authority持真实对
 - state slot用原存储，不增加镜像；projection不取得写权。
 - verifier独立消费档案能证明的字段，不能导生产算法或把缺少life证据当有效body。
 
-来源：历史[总体决策](../history/refactor/decisions.md)、[计划](../guides/refactoring-plan.md)。这些选择已采用，全部consumer最终同源覆盖仍需实际矩阵证明。
+相关约束见[身份与资源契约](../contracts/identity-and-resources.md)。

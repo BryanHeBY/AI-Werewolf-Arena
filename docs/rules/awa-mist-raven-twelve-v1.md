@@ -1,6 +1,6 @@
 # AWA 迷雾鸦影十二人板（有限实现）
 
-状态：implemented；仅支持本卡的精确十二人板，角色 ID 为 `alchemist`、`raven_claw_wolf`，联合规则版本为 `awa_mist_raven_v1`。工程交互已完成 R/A/T 交叉审查与实际验收；不足以独立推导的混合规则明确采用 AWA 裁定。完整技术门禁与限制见[验收](../history/expansion/reviews/p9-mist-raven-stage-acceptance.md)，不表示任意混搭已支持。
+状态：implemented；仅支持本卡的精确十二人板，角色 ID 为 `alchemist`、`raven_claw_wolf`，联合规则版本为 `awa_mist_raven_v1`。工程交互已完成 R/A/T 交叉审查与实际验收；不足以独立推导的混合规则明确采用 AWA 裁定。完整技术门禁与限制见[支持边界](../contracts/mechanism-support-boundaries.md)，不表示任意混搭已支持。
 
 ## 来源与支持范围
 
@@ -101,5 +101,3 @@ D 为摄梦人，M 为本夜梦游者；“救”只消除普通刀来源，不�
 - R：补空刀与已自爆刀口、首夜夜序、独立资源可同夜消费、解封时存活队友快照、继承预设；收窄帧断言中的合法自爆例外。
 - A/T：明确实际自爆死亡和警徽先于救治，梦境原因与名单同步，严格失败范围、唯一授权状态和阶段转换；选择夜末不提前展开 linked 的最小接入方式。
 - T/L/D：冻结狼鸦解封私有事件字段与受众，待定事实不得提前驱动死亡；补真实通信、中间窗口状态、独立 Tape 篡改和播放器回退要求。
-
-以上保留实施前审查的范围；前文判例已通过实际 World、通信、记录、帧和全支持范围门禁，见[完整技术验收](../history/expansion/reviews/p9-mist-raven-stage-acceptance.md)。其余未交付角色、未核混搭与P10仍继续；上述验收对应当时冻结输入，不代表当前重构源码全量通过。

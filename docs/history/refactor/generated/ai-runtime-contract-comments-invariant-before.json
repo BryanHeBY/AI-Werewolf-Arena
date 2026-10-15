@@ -1,9 +1,0 @@
-[
-  {
-    "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
-    "text": "/**\n * 负责 ACP 会话的有界关闭与强制回收重试；输入为原会话、关闭方式和每次尝试的时限。\n * 输出为关闭完成或原失败／聚合失败；优雅关闭失败后强制关闭，即使强制成功仍传播原失败。\n * 同一会话的关闭任务去重归调用方（如会话池），本 helper 不持复用表，不把超时当成资源已回收。\n */\nimport { AcpSession } from \"./session\";\nimport { awaitBeforeDeadline } from \"../../runtime/turn_deadline\";\n\nexport const ACP_CLOSE_TIMEOUT_MS = 6_000;\n/** 初始化主失败与资源清理失败保留原对象，供创建 owner 继续汇总，不重写为单个超时原因。 */\nexport class AcpInitializationCleanupError extends AggregateError {\n  constructor(primary: unknown, cleanup: unknown) {\n    super([primary, cleanup], \"acp_initialization_cleanup_failed\");\n  }\n}\n\n/** force=true 不再重试；普通关闭失败后强制尝试，失败顺序与错误对象身份保持。 */\nexport async function closeAcpSession(\n  session: AcpSession,\n  force = false,\n  timeoutMs = ACP_CLOSE_TIMEOUT_MS,\n): Promise<void> {\n  // 每次尝试在调用处独立计算截止；timeoutMs 不是两次尝试合计的总预算。\n  const attempt = (forced: boolean) =>\n    awaitBeforeDeadline(() => session.close({ force: forced }), Date.now() + timeoutMs);\n  try {\n    await attempt(force);\n  } catch (error) {\n    if (force) throw error;\n    try {\n      await attempt(true);\n    } catch (forcedError) {\n      // 两次若拒绝同一对象就直接保留它；不同失败才按普通、强制的顺序汇总。\n      if (forcedError === error) throw error;\n      throw new AggregateError([error, forcedError], \"acp_session_close_failed\");\n    }\n    throw error;\n  }\n}\n",
-    "sha256": "1206e5328cb829bdd712b42fb03b2b43918eed9d89d9754775da76561b378d60",
-    "before": " * 输出为关闭完成或原失败／聚合失败；优雅关闭失败后强制关闭，即使强制成功仍传播原失败。",
-    "after": " * 输出为关闭完成或原失败／聚合失败。\n * 不变量：普通关闭失败后必须强制尝试，即使强制成功仍传播原失败；调用方负责关闭去重。"
-  }
-]

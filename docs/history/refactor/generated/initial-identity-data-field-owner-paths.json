@@ -1,6 +1,0 @@
-[
-  "backend/src/game/mechanisms/roles/thief/state.ts",
-  "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
-  "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
-  "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts"
-]

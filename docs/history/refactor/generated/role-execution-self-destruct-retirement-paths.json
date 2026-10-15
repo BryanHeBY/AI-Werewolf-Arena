@@ -1,7 +1,0 @@
-[
-  "backend/src/game/mechanisms/roles/wolf_team.ts",
-  "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
-  "backend/src/game/mechanisms/self_destruct/commit.ts",
-  "backend/src/rulesets/self-destruct-window.ts",
-  "backend/tests/unit/domain/role-execution-self-destruct.test.ts"
-]

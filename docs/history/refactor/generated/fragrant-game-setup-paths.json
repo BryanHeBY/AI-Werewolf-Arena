@@ -1,6 +1,0 @@
-[
-  "backend/src/game/engine/phase_manager.ts",
-  "backend/src/rulesets/game-setup.ts",
-  "backend/src/game/mechanisms/roles/fragrant_pair_seer/setup-ports.ts",
-  "backend/tests/unit/rulesets/fragrant-game-setup.test.ts"
-]

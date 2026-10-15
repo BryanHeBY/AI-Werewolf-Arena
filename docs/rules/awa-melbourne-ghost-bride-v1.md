@@ -62,5 +62,3 @@ God见完整pair/group/双票/每夜owner/伤害来源/Goal。情侣本人见原
 ## 人工预期与实施门槛
 
 三方各独胜/清一方仍继续/全灭draw；Groom与Witness同为原Wolf、神职×神职原库存实际扣付；双同意、分歧、缺一票、第一票后目标/票者/阶段晚撤权和半pair失败partialTape；三刀owner有刀/弃刀/保护、晚撤权不降级/不补刀、末singleWolf白天死次夜继承；两条chat及Witness0可见；全部独立根/双根/复合源/枪链与吞徽；opaque/deadline/跨World/getter0；God/两情侣/Witness/普通Wolf四scope双语真实档、strict private读档、Studio/sharedframe及坏档。
-
-实施贯通schema→原生实例→窗口/阶段→权限/晚撤权→伤害/完整胜利→DTO/受限bot/双语→God/本人record→strict Tape→前端。实际SDK HTTP/ACP子进程MCP/mixed双语整局逐Tape、严格失败partialTape、受限Observed、1000World分别产生证据；三组源码复核与所有离线门禁闭合后才登记implemented。规则及实际通路已贯通，技术门禁与三组只读复核见[完整功能验收](../history/expansion/reviews/p9-ghost-bride.md)。本角色交付时的目录快照与门禁冻结输入见上述验收，不代表当前重构源码全量通过；P9a五角色已技术交付，P9其余/P10及用户总体最终验收继续。

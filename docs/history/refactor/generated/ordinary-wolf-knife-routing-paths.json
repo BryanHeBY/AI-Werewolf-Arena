@@ -1,6 +1,0 @@
-[
-  "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
-  "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
-  "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
-  "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts"
-]

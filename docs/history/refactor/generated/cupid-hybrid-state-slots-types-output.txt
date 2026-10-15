@@ -1,1 +1,0 @@
-backend/tests/unit/features/hybrid/affiliation-authority.test.ts(96,3): error TS2741: Property 'requestFactory' is missing in type '{ world: World; readonly nightActors: NightAbilityActorQuery; readonly nativeNightFailure: NativeNightFailurePolicy; ... 14 more ...; state: { ...; }; }' but required in type 'NightStageContext'.

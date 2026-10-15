@@ -1,7 +1,0 @@
-frontend/scripts/render-replay.ts(13,10): error TS2305: Module '"@ai-werewolf-arena/game-catalog"' has no exported member 'isLocale'.
-frontend/scripts/render-replay.ts(38,43): error TS2322: Type 'string | undefined' is not assignable to type '"zh-CN" | "en"'.
-  Type 'undefined' is not assignable to type '"zh-CN" | "en"'.
-frontend/scripts/render-replay.ts(53,16): error TS2322: Type 'string' is not assignable to type '"zh-CN" | "en"'.
-frontend/scripts/render-replay.ts(56,7): error TS2322: Type 'string' is not assignable to type '"zh-CN" | "en"'.
-frontend/scripts/replay-dev.ts(5,10): error TS2305: Module '"@ai-werewolf-arena/game-catalog"' has no exported member 'isLocale'.
-frontend/scripts/replay-dev.ts(37,9): error TS2322: Type 'string' is not assignable to type '"zh-CN" | "en"'.

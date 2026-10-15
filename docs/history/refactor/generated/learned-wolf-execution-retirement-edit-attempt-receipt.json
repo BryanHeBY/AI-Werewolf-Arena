@@ -1,7 +1,0 @@
-{
-  "kind": "source-edit-tool-assertion",
-  "chunk": "5992c0",
-  "exitCode": 1,
-  "rawOutput": "Traceback (most recent call last):\n  File \"<stdin>\", line 13, in <module>\n  File \"<stdin>\", line 7, in edit\nAssertionError: ('backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts', '  isCurrent(): boolean;', 2)\n",
-  "actualEffect": "Only Mechanical scope retirement import had been written before the uniqueness assertion. Following source edit 973a9f rebuilt each changed file from its saved actual Git text. No product check or test was run."
-}

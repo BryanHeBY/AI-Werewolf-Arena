@@ -1,6 +1,6 @@
 # AWA 白昼学者与寂夜导师有限十二人板
 
-状态：implemented，有限板已通过[完整技术门禁与独立交叉审查](../history/expansion/reviews/p9-scholar-mentor.md)。目标板：3 普通狼、寂夜导师、4 村民、预言家、女巫、守卫、白昼学者。禁止复制、转移、换位、第三方和复活组合。
+状态：implemented，有限板已通过[支持边界](../contracts/mechanism-support-boundaries.md)。目标板：3 普通狼、寂夜导师、4 村民、预言家、女巫、守卫、白昼学者。禁止复制、转移、换位、第三方和复活组合。
 
 ## 官方事实
 

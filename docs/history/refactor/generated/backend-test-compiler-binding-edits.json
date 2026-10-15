@@ -1,8 +1,0 @@
-[
-  {
-    "path": "backend/tsconfig.tests.json",
-    "before": "{\n  \"extends\": \"./tsconfig.json\",\n  \"compilerOptions\": {\n    \"rootDir\": \"..\",\n    \"module\": \"ESNext\",\n    \"moduleResolution\": \"bundler\",\n    \"lib\": [\"ES2024\", \"DOM\"],\n    \"allowJs\": true,\n    \"checkJs\": true,\n    \"noEmit\": true,\n    \"types\": [\"node\", \"bun-types\", \"bun-types/test-globals\"]\n  },\n  \"include\": [\"src/**/*\", \"tests/**/*\", \"scripts/**/*\"]\n}\n",
-    "after": "{\n  \"extends\": \"./tsconfig.json\",\n  \"compilerOptions\": {\n    \"rootDir\": \"..\",\n    \"module\": \"ESNext\",\n    \"moduleResolution\": \"bundler\",\n    \"lib\": [\n      \"ES2024\",\n      \"DOM\"\n    ],\n    \"allowJs\": true,\n    \"checkJs\": true,\n    \"noEmit\": true,\n    \"types\": [\n      \"node\",\n      \"bun-types\",\n      \"bun-types/test-globals\"\n    ],\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"typescript\": [\n        \"./node_modules/typescript\"\n      ]\n    }\n  },\n  \"include\": [\n    \"src/**/*\",\n    \"tests/**/*\",\n    \"scripts/**/*\"\n  ]\n}\n",
-    "note": "Explicit type-only module binding to already installed backend compiler; all original options/includes retained."
-  }
-]

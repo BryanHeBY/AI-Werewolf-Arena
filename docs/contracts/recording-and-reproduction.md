@@ -8,7 +8,7 @@ JSON.stringify在宽写入catch外的既有位置，编码失败仍传播；宽c
 
 ## checkpoint与Trace
 
-现场 checkpoint 捕获与装配已在 `2b6f24c8` 归 `app/checkpoint` 的 contributions、authority-snapshots、identity-setups、player-snapshots、private-state-codec 五个完整 owner；纯 animal-format、player-format、animal-audit、noble-body-format、fragrant-pair-format 留在 `recording/reproduction/checkpoint`。
+现场 checkpoint 捕获与装配归 `app/checkpoint` 的 contributions、authority-snapshots、identity-setups、player-snapshots、private-state-codec 五个完整 owner；纯 animal-format、player-format、animal-audit、noble-body-format、fragrant-pair-format 留在 `recording/reproduction/checkpoint`。
 
 捕获按既有特殊 authority 优先和实际选择链取数据，保原引用／getter／JSON 时点；Demon 整 players 特殊贡献保外层优先，ordinary 完整 private 容器 clone 不按角色删扩展字段。玩家 DTO 的裁剪白名单不能用作 God checkpoint codec。
 
@@ -34,4 +34,4 @@ verifier按实际assembly原顺序追加贡献；board support保持独立的有
 
 God公开replay、私有manifest／reproduction及逐玩家档案的字段与身份分开。[档案兼容](archive-compatibility.md)列四类当前格式；完整原字段与原始prompt／thinking／tool内容不由文档整理或显示层再编码清洗。
 
-普通死亡后果独立审核的已提交来源见[Q3 范围与失败前缀](../history/refactor/ordinary-death-history.md)；具体消费者为 `recording/verification/assembly.ts` → `death-history/validate.ts`，不是运行许可或完整生命重演。
+普通死亡后果由 `recording/verification/assembly.ts` 调用 `death-history/validate.ts` 独立审核；它不是运行许可或完整生命重演。

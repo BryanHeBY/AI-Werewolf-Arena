@@ -1,1 +1,0 @@
-{"files":1,"diagnostics":[{"id":"f6ada1e6276f835e6fc1f5d2e1c362e50f787e241202a11ab914e32b521a63a8","rule":"comment.timing","path":"backend/src/game/mechanisms/roles/knight/ports.ts","line":1,"column":1,"detail":"hook head lacks its timing contract."}]}

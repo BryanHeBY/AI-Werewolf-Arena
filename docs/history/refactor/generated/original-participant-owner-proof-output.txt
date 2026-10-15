@@ -1,1 +1,0 @@
-{"whole":7,"owned":3,"rawOutputs":14,"bindings":15,"nodes":19416,"leaves":10106}

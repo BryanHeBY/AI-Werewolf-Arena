@@ -1,5 +1,0 @@
-backend/tests/unit/features/first-night-choice-state-slots.test.ts(62,27): error TS2769: No overload matches this call.
-  Overload 1 of 2, '(expected: null): void', gave the following error.
-    Argument of type 'NightLifeScope' is not assignable to parameter of type 'null'.
-  Overload 2 of 2, '(expected: null): void', gave the following error.
-    Argument of type 'NightLifeScope' is not assignable to parameter of type 'null'.

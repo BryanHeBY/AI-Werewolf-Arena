@@ -1,1 +1,0 @@
-backend/tests/unit/features/noble-secret-body/state-slot.test.ts(148,40): error TS2339: Property 'secretBody' does not exist on type 'object'.

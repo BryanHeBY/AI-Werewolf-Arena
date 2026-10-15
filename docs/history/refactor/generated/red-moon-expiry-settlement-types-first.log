@@ -1,1 +1,0 @@
-backend/tests/unit/rulesets/red-moon-expiry-settlement.test.ts(76,9): error TS2322: Type 'string' is not assignable to type '"night_settled" | "day_interrupted" | "exile_settled" | "max_days_reached"'.

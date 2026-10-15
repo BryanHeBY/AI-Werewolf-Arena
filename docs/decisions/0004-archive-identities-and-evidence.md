@@ -1,17 +1,19 @@
-# ADR 0004：档案兼容、构建身份与真实证据
+# ADR 0004：档案兼容与构建身份
 
 ## 选择
 
-公开reader与内部严格复现分开；四类新写入档案显式声明身份，旧裸格式按各reader支持政策处理。严格source／lock／RNG／ruleset不因语义版本相同或目录纯迁移而豁免。
+公开 reader 与内部严格复现分开。新档案显式声明格式和身份，旧裸格式按各 reader 的支持政策处理。严格复现检查实际 source、lock、RNG 和 ruleset，不因语义版本相同而豁免。
 
 ## 理由
 
-路径、注释、词典、未执行schema与package resolver都是实际构建输入。只hash某些“业务函数”会漏掉影响加载、语言和接受面的变化；回写旧hash会把不同构建冒成同一来源。
+路径、注释、词典、schema 和 package resolver 都可能影响实际构建。只摘要部分业务函数会漏掉加载、语言和输入接受面的变化；回写旧摘要会把不同构建冒成同一来源。
 
 ## 后果
 
-历史归档、原fixture和首失败输出保字节与origin；currentPath／新input／后继source阶段另登记。原绿采样不因晚类型／comment桥被说成末源重跑；不同test声明／fixture调用／expect执行分开计数。独立审查核真实算法／prefix，不只签哈希。
+- 历史运行档和测试夹具保留原始字节与来源；来源路径和当前文件位置分别记录。
+- 读取旧格式不意味着能够跨构建执行旧动作；未知版本和不兼容来源明确拒绝。
+- 结构解析、独立机制审计、精确执行分别说明保证，不能互相代替。
+- 测试报告记录实际命令、失败和跳过，不以声明数、夹具调用数或断言数代替用例数。
+- 阶段过程材料由 Git 历史追溯，工作区只维护当前契约及仍由测试消费的夹具元数据。
 
-历史脚本物理归档后原字串不重写；要复跑取原Git。origin索引是定位数据，不是执行包装器。当前I/O读取冻结baseline改落点，基线内的origin字段仍原样。
-
-来源：[显式身份](../history/refactor/explicit-archive-identities.md)、[清单／玩家身份](../history/refactor/manifest-player-archive-identities.md)、[双构建方法](../history/refactor/differential.md)。最终同源全套及兼容矩阵仍单独验收。
+格式详见[归档兼容契约](../contracts/archive-compatibility.md)，执行边界见[录制与复现](../contracts/recording-and-reproduction.md)。

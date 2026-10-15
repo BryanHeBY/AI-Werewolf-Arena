@@ -1,7 +1,0 @@
-{
-  "launchChunk": "cd0090",
-  "actualExitCode": 1,
-  "command": "bun --no-env-file docs/refactor/generated/architecture-checkpoint-b466dbe3-run.ts b466dbe3b6938aeaa872a2546d7bcf77cce50000",
-  "cause": "Root误填不存在的完整Git SHA；发生于真实工具Git读取前，尚未捕获输入或调用checkArchitecture。",
-  "raw": "docs/refactor/generated/architecture-checkpoint-b466dbe3-first-launch-error-output.txt"
-}

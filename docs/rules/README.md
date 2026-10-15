@@ -2,7 +2,7 @@
 
 本目录是完整角色规则的唯一维护位置。来源／采纳版本、有限板子、身份与阵营、胜利、能力库存、时点、死亡／到期、信息、交互及不支持变体由对应卡维护。内部模块只说明自身职责与链接，不复制第二份全文。
 
-资料中的verified／implemented是目录状态，不等于本轮所有组合或P9已验收；实际支持由schema、ruleset与真实测试决定。9个planned资料没有因本索引变成可执行角色。
+资料中的verified／implemented是目录状态，不等于所有角色组合均受支持；实际支持由schema、ruleset与真实测试决定。9个planned资料没有因本索引变成可执行角色。
 
 ## 当前55个实际Role与规则来源
 
@@ -64,10 +64,10 @@
 | `awakened_seer`         | 觉醒预言家 | [awa-fragrant-pair-seer-twelve-v1.md](awa-fragrant-pair-seer-twelve-v1.md)                                     |
 | `awakened_hidden_wolf`  | 觉醒隐狼   | [awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf](awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)     |
 
-## 维护与历史
+## 共同规则与维护
 
+- [具名规则变体](policy-variants.md)：守卫、隐狼、查验、死亡枪、摄梦、狼美人、女巫及公共策略。
+- [共同游戏机制](../contracts/common-gameplay.md)：权限、查验、死亡、自爆、公共参与和胜利。
 - [新增机制指南](../guides/add-mechanism.md)与[当前契约](../contracts/README.md)。
-- [64项原扩充目录](../history/expansion/roles.md)保存未实现目标与来源；不是当前支持清单。
-- [历史入口](../history/README.md)保存验收引用。卡中的历史source／review链接按原范围理解，不将旧green扩成当前全局通过。
 
-`time-wolf-consort`组织名和`time_wolf_consort`机器身份分开；已有版本卡`awa-time-consort-reflection-v1.md`作为公开source链接保留，不为改组织名伪造新规则版本。
+规划中的角色不因资料登记而具有运行支持；稳定机器 ID、外部来源和版本限制分别保留。

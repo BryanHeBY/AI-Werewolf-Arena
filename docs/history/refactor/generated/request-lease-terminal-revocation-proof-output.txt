@@ -1,1 +1,0 @@
-{"sourceInverse":12,"inverseOutputs":24,"comparators":3,"protocols":4,"completeUnchangedDomainFunctions":62,"cumulativeTypedComparisons":21364,"cumulativeASTLeaves":11386,"namedImportBindings":300}

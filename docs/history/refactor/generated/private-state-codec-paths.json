@@ -1,5 +1,0 @@
-[
-  "backend/src/recording/checkpoint/player-snapshots.ts",
-  "backend/src/recording/checkpoint/private-state-codec.ts",
-  "backend/tests/unit/recording/private-state-codec.test.ts"
-]

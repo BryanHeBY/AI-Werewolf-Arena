@@ -1,12 +1,14 @@
 # AWA Miracle Merchant 1.0.0 规则卡
 
+<a id="miracle_merchant"></a>
+
 规则集 awa_classic 1.0.0；ID `miracle_merchant`，奇迹商人／Miracle Merchant；核验 2026-10-09。采用奇迹商人的验／毒／守赠予版本，与黑市商人验／毒／枪及次夜生效版本分别实现。
 
 ## 第一方依据
 
 [2020-06-10 官方发布帖](https://www.taptap.cn/moment/19875502311345790)作者显示“狼人杀丘比酱／官方版主／《狼人杀》官方小助手”。正文规定一局一次、先于其它角色选择另一玩家，赠验/毒/守；给狼人不授能力、次日商人出局。Q&A 允许幸运儿当夜或后夜任选一次使用，并明确同一持有者的原生与幸运技能：同夜不重复验/毒/守同目标；守护还需避开自己前夜两种操作守过的目标；幸运守护与解药仍适用同守同救，不能读取其它原生神职的行动。
 
-[2020-06-11 官方上线稿](https://langrensha.com/news/official/20200611/26904_885985.html)核三种能力及 10/12 人角色组成；[2020-06-18 官方表演赛](https://langrensha.com/news/official/20200618/26904_887512.html)实际展示首夜不赠、后夜赠毒并当夜使用。[2026-03-06 官方沙龙说明](https://langrensha.com/news/official/20260306/26904_1289873.html)明确梦保护可挡商人给狼造成的反噬，咒狐可收附加幸运技能；摄梦人及咒狐已有各自有限实现，具体赠予与保护交互见[摄梦人卡](awa-dreamer-v1.md)、[咒狐卡](netease-cursed-fox-v1.md)及[咒狐验收](../history/expansion/reviews/p8-cursed-fox.md)；来源说明不因此开放整个沙龙板。
+[2020-06-11 官方上线稿](https://langrensha.com/news/official/20200611/26904_885985.html)核三种能力及 10/12 人角色组成；[2020-06-18 官方表演赛](https://langrensha.com/news/official/20200618/26904_887512.html)实际展示首夜不赠、后夜赠毒并当夜使用。[2026-03-06 官方沙龙说明](https://langrensha.com/news/official/20260306/26904_1289873.html)明确梦保护可挡商人给狼造成的反噬，咒狐可收附加幸运技能；摄梦人及咒狐已有各自有限实现，具体赠予与保护交互见[摄梦人卡](awa-dreamer-v1.md)、[咒狐卡](netease-cursed-fox-v1.md)及[支持边界](../contracts/mechanism-support-boundaries.md)；来源说明不因此开放整个沙龙板。
 
 以上未明确受赠者获商人 ID、商人即时获成功结果、复活/转移与全部精确阶段、错误/撤权等细则。下面明确标为 AWA 选择；百科、个人攻略或小说不作为这些规则的来源证明。
 
@@ -29,5 +31,3 @@
 13. actor/target 原生命、角色/阵营/私有库存、phase 与赠予提交/能力消费在 await/gateway/实际应用处复验。撤权不花新 owner 的资源；已花库存与记录前缀保留。完整夜流程提交后同 World/day 重入拒绝，不丢已付交易或保护。
 
 ## 验收
-
-三种幸运效果当夜、延后/等待/用尽；原生 Seer/Witch/Guard 重叠库存与目标联合约束、两守前夜联合禁、不同 actor 同目标允许；商人/受赠者变生命或状态与 gateway 后撤权；真 Wolf／伪装 Wolf 无赠予/无即时泄露；反噬 Guard/Heal/Dream、首夜遗言/警徽/最终判胜与资源保留；赠予后实际死亡永久失效、转移不返用；动态夜间调度、完整两语规则/工具/拒绝/观察 DTO；6/12 字面 SDK/ACP/MCP/混合完整局与严格 Tape，两板各 20 seed 及正分支、前端/browser/实际 PNG，R/A/T/L/D 独立审查。P7 结束仍做全已支持 release，T6/P10 完整目标不缩小。

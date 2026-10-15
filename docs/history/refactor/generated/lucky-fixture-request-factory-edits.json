@@ -1,9 +1,0 @@
-{
-  "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts": [
-    {
-      "before": "  const factory = new GameActionRequestFactory(game.world, events, day);\n  return {\n    world: game.world,\n",
-      "after": "  const factory = new GameActionRequestFactory(game.world, events, day);\n  return {\n    world: game.world,\n    // 构造端口使用已有 Ctor；原 makeRequest 仍复用上方实例，不额外创建请求工厂。\n    get requestFactory() { return GameActionRequestFactory; },\n",
-      "count": 1
-    }
-  ]
-}

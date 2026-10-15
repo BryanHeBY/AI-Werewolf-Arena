@@ -1,8 +1,0 @@
-{
-  "toolChunk": "4a55c7",
-  "stage": "new-tests command preceding Python preparation",
-  "error": "FileNotFoundError: backend/src/game/mechanisms/roles/ghost_bride/authority.ts; command cwd was backend",
-  "sourceWritten": false,
-  "followingBun": "3 pass / 0 fail / 15 assertions; exit 0 belongs to final Bun command after captured status",
-  "correction": "Run the same comment-only source preparation from repository root; no behavior or oracle changed."
-}

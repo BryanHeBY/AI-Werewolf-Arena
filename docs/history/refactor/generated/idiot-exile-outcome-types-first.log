@@ -1,1 +1,0 @@
-backend/tests/unit/rulesets/idiot-exile-outcome.test.ts(69,45): error TS2345: Argument of type 'string' is not assignable to parameter of type 'ComponentName'.

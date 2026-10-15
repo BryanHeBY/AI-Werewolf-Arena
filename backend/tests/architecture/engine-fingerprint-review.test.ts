@@ -198,34 +198,14 @@ test("private canary and generated dependency directory never join fingerprint m
   });
 });
 
-/** 读取固定27a构建的真实旧身份；旧目录已退，不在当前树重算历史六根算法。 */
-async function historicalSourceHash(root: string): Promise<string> {
-  const historical = JSON.parse(
-    await readFile(
-      path.join(root, "docs/history/refactor/generated/baseline-source-hash.json"),
-      "utf8",
-    ),
-  ) as { commit: string; roots: string[]; sourceHash: string };
-  expect(historical.commit).toBe("27a97cb66e8f30fceb7cb20130154291559dd14a");
-  expect(historical.roots).toEqual([
-    "backend/src/core",
-    "backend/src/game",
-    "backend/src/app",
-    "packages/game-catalog/src",
-    "packages/game-text/src",
-    "packages/replay-contract/src",
-  ]);
-  expect(historical.sourceHash).toBe(
-    "b603ece35929ad44b8dae7caf3738d8e2ca41e9f5ffd3020c3b105d1db55c8e0",
-  );
-  return historical.sourceHash;
-}
+/** 旧构建的真实指纹只作拒绝反例；不依赖迁移报告或在当前布局重算旧构建。 */
+const HISTORICAL_SOURCE_HASH = "b603ece35929ad44b8dae7caf3738d8e2ca41e9f5ffd3020c3b105d1db55c8e0";
 
 test("strict replay rejects a finalized initial archive with the historical narrower fingerprint without rewriting it", async () => {
   const temporary = await mkdtemp("/tmp/awa-old-fingerprint-rejection-");
   try {
     const repository = path.resolve(import.meta.dir, "../../..");
-    const oldSourceHash = await historicalSourceHash(repository);
+    const oldSourceHash = HISTORICAL_SOURCE_HASH;
     const lockHash = createHash("sha256")
       .update(await readFile(path.join(repository, "bun.lock")))
       .digest("hex");

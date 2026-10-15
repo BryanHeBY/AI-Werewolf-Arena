@@ -1,1 +1,0 @@
-{"programs":8,"exactSteps":9,"typedNodes":19227,"nodeArrays":3913,"noncommentLeaves":25394,"inverseWholeOutputs":16}

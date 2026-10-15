@@ -1,1 +1,0 @@
-{"actualModifiedPrograms":57,"ownedCandidates":69,"unchangedCandidates":12,"exactEdits":245,"completeInverseWholeOutputs":114,"cumulativeTypedComparisons":159484,"cumulativeNonCommentASTLeaves":83398,"cumulativeNodeArrays":19976,"actualNativeStateMemberCalls":3,"actualReturnedGunReaders":2,"retirementCallSitesUnchanged":true}

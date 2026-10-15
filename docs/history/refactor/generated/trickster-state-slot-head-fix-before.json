@@ -1,7 +1,0 @@
-{
-  "path": "backend/src/game/mechanisms/roles/trickster/ports.ts",
-  "sha256": "3b01940d1c23be4d58243245690c9129bf40367c82c21b0f7b63ff57121a2054",
-  "text": "/**\n * 负责公开诡术师状态读／脱离副本与原共享清理、名单查询端口。输入为原角色或 World／day；\n * 输出为本族唯一 reader／project、清理单位和原名单复验。方法与状态实现仍归同族唯一 owner。\n * 阶段 priority=100、finished 当日放逐映射和原体生命校验仍归 frame；公开知识读不授库存／放逐写权。\n * 不另存魔术师移交标志、不推进阶段、记录或渲染；初始化／历史 writer 不作为跨族公开许可。\n */\nexport { TricksterNightUnit, tricksterNightTerminal } from \"./night-lifecycle\";\nexport type { TricksterNightRuntime } from \"./night-lifecycle\";\nexport { assertTricksterRosterCurrent } from \"./night_frame\";\nexport { getTricksterState, projectTricksterState } from \"./state-slot\";\n",
-  "before": " * 阶段 priority=100、finished 当日放逐映射和原体生命校验仍归 frame；公开知识读不授库存／放逐写权。",
-  "after": " * 时点保留阶段 priority=100 的开夜和经理放逐前终结；正常完成／中止、finished 当日映射与原体生命仍归 frame。\n * 公开知识读不授库存／放逐写权，异常沿原调用栈传播，不增加关闭去重或许可。"
-}

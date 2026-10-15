@@ -1,5 +1,0 @@
-backend/tests/unit/features/demon-hunter/participant-state-data.test.ts(30,75): error TS2339: Property 'state' does not exist on type 'Readonly<GuardState>'.
-backend/tests/unit/features/demon-hunter/participant-state-data.test.ts(47,18): error TS2339: Property 'uses' does not exist on type 'Readonly<GuardState>'.
-backend/tests/unit/features/demon-hunter/participant-state-data.test.ts(48,18): error TS2339: Property 'lastUsedDay' does not exist on type 'Readonly<GuardState>'.
-backend/tests/unit/features/demon-hunter/participant-state-data.test.ts(49,18): error TS2339: Property 'state' does not exist on type 'Readonly<GuardState>'.
-backend/tests/unit/features/noble-secret-body/state-installation.test.ts(19,65): error TS2322: Type 'import("/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/identity").Camp' is not assignable to type 'CampComponent'.

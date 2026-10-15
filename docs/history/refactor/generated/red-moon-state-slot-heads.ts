@@ -1,9 +1,0 @@
-import fs from "node:fs";
-import path from "node:path";
-import crypto from "node:crypto";
-import ts from "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/typescript";
-import { checkComments } from "/home/hby/dev/AI-Werewolf-Arena/tooling/refactor/architecture/comment-check";
-const root="/home/hby/dev/AI-Werewolf-Arena",g=root+"/docs/refactor/generated",b=JSON.parse(fs.readFileSync(g+"/red-moon-state-slot-before.json","utf8"));
-function markdown(dir:string):string[]{return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>{const p=path.join(dir,e.name);return e.isDirectory()?markdown(p):e.isFile()&&p.endsWith(".md")?[p.slice(root.length+1)]:[]});}
-const docs=[...markdown(root+"/docs"),"README.md"].filter(p=>fs.existsSync(root+"/"+p));const files=b.scope.filter((p:string)=>fs.existsSync(root+"/"+p)).map((p:string)=>({path:p,text:fs.readFileSync(root+"/"+p,"utf8"),sha256:crypto.createHash("sha256").update(fs.readFileSync(root+"/"+p)).digest("hex")}));
-const failures=checkComments(ts,{files,documentationPaths:docs});const cn=files.filter((f:{text:string})=>!/[\u3400-\u9fff]/.test(f.text.match(/^\s*\/\*\*([\s\S]*?)\*\//)?.[1]??"")).map((f:{path:string})=>f.path);const proof={scopeFiles:files.length,documentationPaths:docs.length,actualCommentFailures:failures,chineseHeadFailures:cn,dependencyReview:{notRun:true,reason:"First 15-source dependency invocation lacked target files/package metadata/tsconfigs; it is not a valid complete dependency gate. Focused canonical role endpoint proof is separate."},scope:b.scope.map((p:string)=>({path:p,sha256:fs.existsSync(root+"/"+p)?crypto.createHash("sha256").update(fs.readFileSync(root+"/"+p)).digest("hex"):null}))};fs.writeFileSync(g+"/red-moon-state-slot-heads.json",JSON.stringify(proof,null,2)+"\n");console.log(JSON.stringify(proof));

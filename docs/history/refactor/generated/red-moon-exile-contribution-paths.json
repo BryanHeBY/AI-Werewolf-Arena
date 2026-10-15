@@ -1,5 +1,0 @@
-[
-  "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
-  "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
-  "backend/tests/unit/features/red-moon/exile-contribution.test.ts"
-]

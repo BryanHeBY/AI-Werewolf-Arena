@@ -1,3 +1,0 @@
-error: Cannot find module './backend/src/game/mechanisms/roles/wild_child/setup-ports.ts' from '/home/hby/dev/AI-Werewolf-Arena/[eval]'
-
-Bun v1.4.3 (Linux x64)

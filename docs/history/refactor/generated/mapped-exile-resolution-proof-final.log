@@ -1,1 +1,0 @@
-{"summary":{"wholeOriginalPrograms":2,"completeOwnerPrograms":3,"typedNodes":3546,"noncommentLeaves":4462,"wholeMappedOutputs":10,"rawSame":10,"testTypeOnlyOutputs":2},"graph":{"root":"backend/src/rulesets/mapped-exile-resolution.ts","backendModules":40,"relativeDeclaredValueEdges":67,"backEdges":[],"limits":"保守相对字面声明值边，不计外部包/importEquals/非字面入口/完整cold，也不排除未标type但实际擦除的导入。"}}

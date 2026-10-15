@@ -12,4 +12,4 @@ Role不持camp镜像；实际Camp组件是现场来源。初始化显式initialC
 
 正常Camp变化不mark；value-only与严格ref族仍不同。字段恢复／同对象跨World不恢复已退休执行，但pure state／target／knowledge／paid current不因此统一拒绝。转换核心之后facts错误保已经提交资格；核心失败保原Error与Role→Camp→Victory的实际前缀。
 
-来源：[单一输入政策](../history/refactor/camp-canonical-input-policy.md)、[失败执行政策](../history/refactor/role-execution-failure-policy.md)、[野孩子失败边界](../history/refactor/wild-child-transform-failure-owner.md)。记录是政策依据，不是所有55专属动作最终验收结论。
+相关约束见[身份与资源契约](../contracts/identity-and-resources.md)。

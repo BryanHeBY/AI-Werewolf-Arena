@@ -1,2 +1,0 @@
-backend/tests/unit/rulesets/wolf-tool-admission.test.ts(162,97): error TS2322: Type '{ readonly confirm: true; }' is not assignable to type '{ target_id: number | null; } | { activate: boolean; } | { target_ids: readonly [number, number] | null; } | { target_ids: readonly [number, number]; } | { target_id: number | null; } | { target_id: number | null; } | ... 58 more ... | { ...; }'.
-  Property 'target_id' is missing in type '{ readonly confirm: true; }' but required in type '{ target_id: number; confirm: boolean; }'.

@@ -1,1 +1,0 @@
-backend/tests/unit/rulesets/guard-tool-admission.test.ts(123,60): error TS2339: Property 'roleCatalog' does not exist on type 'BootstrapResult'.

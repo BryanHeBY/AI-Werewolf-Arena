@@ -239,7 +239,7 @@ test("production fixture type relocation refuses Git symlink mode and a current 
     );
     if (!typeRoute) throw Error("production_type_route_fixture_not_applied");
     const inputs = new Set([
-      "docs/history/refactor/generated/baseline-fixtures.json",
+      "tooling/refactor/fixtures/source-inventory.json",
       "tooling/refactor/fixtures/manifest.json",
       "backend/package.json",
       ...document.sourceAssets.map((asset) => asset.currentPath),

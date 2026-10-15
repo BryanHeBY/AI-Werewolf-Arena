@@ -1,9 +1,0 @@
-bun test v1.4.3 (c6da4a4d3)
-
-backend/tests/integration/recording/night-ability-json-checkpoint.test.ts:
-(pass) explicit undefined optional fields normalize into a serializable CP/Tape without weakening strict JSON parsing [177.00ms]
-
- 1 pass
- 0 fail
- 4 expect() calls
-Ran 1 test across 1 file. [300.00ms]

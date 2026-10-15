@@ -1,6 +1,0 @@
-{
-  "terminalChunk": "ac3eb7",
-  "exitCode": 1,
-  "failure": "Root工具错误预期multiline readGravekeeperReport specifier，实际整行import；所有source写在末尾所以本次没有修改源码。",
-  "productFailure": false
-}

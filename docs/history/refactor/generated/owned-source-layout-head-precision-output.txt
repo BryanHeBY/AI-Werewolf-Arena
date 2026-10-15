@@ -1,1 +1,0 @@
-{"path":"backend/tests/architecture/identity-import-initialization.test.ts","wholeOutputsSame":2,"onlyChineseComment":true}

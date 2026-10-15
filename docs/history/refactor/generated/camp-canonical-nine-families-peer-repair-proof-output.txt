@@ -1,1 +1,0 @@
-{"programs":6,"actualLogicPrograms":1,"commentOnlyPrograms":5,"exactEditRecords":10,"completeInverseRawOutputs":12,"commentOnlyRawOutputsSame":10}

@@ -1,1 +1,0 @@
-{"wholeNodes":11833,"wholeLeaves":6264,"completeKernels":20,"controls":6,"sameInverseWholeOutputs":2}

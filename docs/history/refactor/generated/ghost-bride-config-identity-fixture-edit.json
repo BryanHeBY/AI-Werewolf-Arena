@@ -1,8 +1,0 @@
-{
-  "path": "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
-  "before": "      g.config,\n      {\n        getAction: async (request) => {",
-  "after": "      g.boardConfig,\n      {\n        getAction: async (request) => {",
-  "onlyChangedInput": "GhostBrideSetupWindow.execute第一实参由raw config改同一已安装boardConfig",
-  "beforeSha256": "8f12d589365a3139364f255953d4f4dc8fb92e3f1dfe7d071bbee092c9489d6f",
-  "afterSha256": "3269d99e355bd001eb5d7f66e618325520bbe159a012e710df98c16fce357bf4"
-}

@@ -2,7 +2,7 @@
 
 ## 准备
 
-使用根package.json声明的Bun版本安装依赖，先查看[配置契约](../contracts/configuration.md)。公开模板是configs.example，本地configs、认证、ACP workspace及record不参加目录批迁。
+使用根package.json声明的Bun版本安装依赖，先查看[配置契约](../contracts/configuration.md)。公开模板是configs.example，本地 configs、认证、ACP workspace 及 record 独立保存。
 
 ```bash
 bun install
@@ -21,7 +21,7 @@ bun run --cwd backend run:twelve
 bun run --cwd backend run:twelve:acp
 ```
 
-这三条会按本地配置启动真实Agent，可能有网络／模型费用或外部进程。它们是使用指南，不是本次文档准备实际执行记录。先确认provider、并发／初始化预算、Agent命令和输出根，再由操作者主动运行。
+这三条会按本地配置启动真实Agent，可能有网络／模型费用或外部进程。运行前需确认本地配置及预算。先确认provider、并发／初始化预算、Agent命令和输出根，再由操作者主动运行。
 
 名字／人格与模型选择分开。选择优先级是席位→角色→默认；显式null清除人格，缺席继承，原字符串不翻译。不同玩家即使同provider也各有信息与工具权限，provider key不是整个机器的全局配额。
 

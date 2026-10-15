@@ -1,1 +1,0 @@
-{"summary":{"sources":4,"preciseEdits":21,"wholeInverseTypedNodes":1619,"wholeInverseNoncommentLeaves":1919,"actualRetainedTypedNodes":1491,"actualRetainedNoncommentLeaves":1785,"wholeInverseRawOutputs":8,"retainedMappedRawOutputs":8,"headPrecisionRawOutputs":2},"zeroStaticConsumers":true,"controls":6}

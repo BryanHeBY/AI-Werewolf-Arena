@@ -1,6 +1,0 @@
-{
-  "chunkId": "5dff08",
-  "exitCode": 1,
-  "failure": "physical endpoint NightmareShadowReadState: role-state-data.ts versus package index.ts",
-  "cause": "binding comparator recursively resolved only current side; fix resolves original and current equally, no source change"
-}

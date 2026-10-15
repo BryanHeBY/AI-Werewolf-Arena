@@ -1,6 +1,8 @@
 # AWA Black Market Merchant 1.0.0 规则卡
 
-规则集 `awa_classic` 1.0.0；ID `black_market_merchant`，黑市商人／Black Market Merchant。核验2026-10-09。当前 `verified`；规则经过R/A/L交叉审查及修正复查冻结，见[规则审查](../history/expansion/reviews/p7-black-market-rules.md)；完整功能证据见[交付验收](../history/expansion/reviews/p7-black-market-merchant.md)。支持范围为本卡限定的AWA版本与板子。
+<a id="black_market_merchant"></a>
+
+规则集 `awa_classic` 1.0.0；ID `black_market_merchant`，黑市商人／Black Market Merchant。核验2026-10-09。当前 `verified`；支持范围为本卡限定的AWA版本与板子。
 
 ## 第一方来源与版本选择
 
@@ -33,24 +35,16 @@
 
 原猎人第一枪合法null后仍应有礼物枪机会。第一枪已造成末Wolf或末神死亡时，仍先完成该actor另一可用枪及应有死亡连锁、警徽，再统一judge；不得在两库存之间提前结束对局。pending死亡不能用首次死亡过期逻辑抢先撤掉当次仍可发射的礼物枪。
 
-本板没有玩家主动copy/transfer工具。低层授权transfer如用于G02回归，只允许另一存活Good持有人，完整保留库存、closed/disabled、starts/实际armed、报告与永久deathExpired，不变成新native、不重置窗口/日次；原实例转出后退休，重apply不补。死亡持有人不能趁pending gun转走、过期实例不能被enable救回。copy黑市礼物不支持，显式拒绝；不复制资源/报告或为新实例补一份枪。转移source仍不披露actor号码，实例ID保持不编码donor。公开板子不因低层API存在就宣称P9转移玩法已交付。
-
-上述未在第一方简述中写完的skip、实际夜末/首次死亡、双枪次序、反噬保护与compound判例是明确AWA裁决，审查须分别核对，不能说全部均有来源逐项证明。
+本板没有玩家主动copy/transfer工具。低层授权transfer如用于能力实例回归，只允许另一存活Good持有人，完整保留库存、closed/disabled、starts/实际armed、报告与永久deathExpired，不变成新native、不重置窗口/日次；原实例转出后退休，重apply不补。死亡持有人不能趁pending gun转走、过期实例不能被enable救回。copy黑市礼物不支持，显式拒绝；不复制资源/报告或为新实例补一份枪。转移source仍不披露actor号码，实例ID保持不编码donor。公开板子不因低层API存在就宣称支持玩家主动转移玩法。
 
 ## 结构与信息约束
 
-沿已有G02实例与独立资源组合。被动礼物枪建立具名死亡能力契约/实例，不塞入NightAbility伪造夜间动作，也不修改每个接收角色的原生state以表示枪。DeathResolution拥有death permit和逐次真实提交；gift枪的验证/请求携带明确实例ID，不能用native shoot授权替代礼物库存。
+沿能力实例与独立资源组合。被动礼物枪建立具名死亡能力契约/实例，不塞入NightAbility伪造夜间动作，也不修改每个接收角色的原生state以表示枪。DeathResolution拥有death permit和逐次真实提交；gift枪的验证/请求携带明确实例ID，不能用native shoot授权替代礼物库存。
 
 商人选择/skip本人可见，礼物及资源只给获赠本人；God outcome独立。私人投影必须裁剪状态/source/event未知字段；通用中立 `player_shot` / `death_shot`不能泄露原枪来源。zh-CN/en覆盖规则、状态、目标提示、工具schema描述、拒绝、事件、终端/前端/视频；玩家原文不改译。
 
-## 本笔支持范围和交付
+## 支持组合
 
 已开放组合白名单：Black Market Merchant、普通Wolf、Wolf King、Hidden Wolf、Seer、Witch、Hunter、Guard、Dreamer、Villager。需每个受限Profile共同通过组合检查；未核组合不得因角色都存在就通过随机组牌。
 
 已交付公开示例：六人AWA缩编（2Wolf+Black Merchant+Seer+Witch+Villager）；十二人AWA单枪改编（3Wolf+Wolf King+Seer/Witch/Black Merchant/Dreamer各1+4Villager）。明确注明与社区双枪版、节目狼兄弟版不同，不承诺未实现狼兄弟或双枪狼王。
-
-按功能拆提交：先被动赠枪实例/授权/逐枪提交底座与原生枪回归，再完整Black角色/延期主动槽/例子/双语，最后P7阶段全已支持验收。不要将半角色注册为implemented/verified。
-
-至少手写成功check/毒/gun、skip后晚赠、赠Wolf/Hidden失败不泄露、原Hunter双枪（含首枪null及首枪命中末Wolf/末神后仍完成另一枪）、原生与礼物同kind去重/跨actor独立、首夜knife/poison/compound、Dream保护/死亡、死亡与owner撤换、原12改编警徽/遗言/临界胜利的整局预期。角色正常及失败Tape、SDK/ACP（实际MCP）/混合×两语完整局、每板20受限seed、资源与私有信息、前端God档与玩家中立枪、实际browser/PNG全部过；R规则/人工oracle、A实例/授权/时序/清理、L/D双语/投影/呈现分别审查复查后启用。
-
-本卡规则及完整实现已验证，P7交付与当时交接见[历史阶段验收](../history/expansion/reviews/p7-activation.md)；该验收只证明其冻结输入，不代表当前源码全量通过。当前交付状态由[角色资料目录](../../packages/game-catalog/src/index.ts)维护，未完成的总体要求见[重构进度](../history/refactor/progress.md)，不以本角色登记关闭其它阶段、组合矩阵、长局或T6。

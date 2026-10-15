@@ -1,6 +1,6 @@
-# P9b 噩梦之影：有限噩梦摄梦板契约
+# 噩梦之影：有限噩梦摄梦板契约
 
-日期：2026-10-10。状态：implemented，本批技术门禁通过；有限支持范围及证据见[验收记录](../history/expansion/reviews/p9-nightmare.md)，不表示 P9/P10 或用户总体验收通过。目录 ID 沿用 nightmare；nightmare_shadow 仅是内部代码模块；文案键统一为 role.nightmare，不新增目录角色。
+状态：implemented；仅支持本卡的有限噩梦摄梦板。目录 ID 为 `nightmare`；文案键统一为 `role.nightmare`，不注册同义新角色。
 
 ## 来源与边界
 

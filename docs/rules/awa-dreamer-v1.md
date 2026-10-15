@@ -22,7 +22,7 @@ NightPipeline统一生成夜间基础死亡与连续/关系梦亡提案。DeathR
 
 被保护的夜间枪不能产生虚假的hunter_shot/wolf_king_shot击杀事件；记录已经用枪及落空的明确事实，公开只说夜间保护，不公开摄梦人的身份或具体能力实例。梦亡详情保上帝/受众边界，玩家以night_resolved等允许事件获知死亡，不额外公开未揭露的身份/夜死原因。
 
-初始夜间死亡（含Dream）首夜可遗言；任何追加死亡波次不额外授予遗言，按AWA基础链顺序。整个死亡链/所有警徽后才judge，末神/末狼不能跳过关系效果。夜间来源期间的取消/phase revision继续沿P5撤权规则。
+初始夜间死亡（含Dream）首夜可遗言；任何追加死亡波次不额外授予遗言，按AWA基础链顺序。整个死亡链/所有警徽后才judge，末神/末狼不能跳过关系效果。夜间来源期间的取消/phase revision继续沿既定撤权规则。
 
 ## 配置与来源
 
@@ -30,15 +30,15 @@ NightPipeline统一生成夜间基础死亡与连续/关系梦亡提案。DeathR
 
 夜枪触发后续梦亡时，补公共匿名 `additional_deaths` IDs（只有实际标死后），其他玩家与前端同步存活，详情 `dream_death`只上帝可见，不提前向首日竞选演员泄漏待夜死信息。
 
-本世界本日已有梦提交后，取消/跳转或重复低层执行不支持同夜重跑，明确抛dream_night_reentry_after_commit，不能消耗资源却丢已提交保护；正常次夜可执行。失败世界终止并保存前缀，可从完整录制/新世界重建，不允许在未恢复关系快照的旧世界伪装继续。未施梦的P5低层取消重入保持原能力。
+本世界本日已有梦提交后，取消/跳转或重复低层执行不支持同夜重跑，明确抛dream_night_reentry_after_commit，不能消耗资源却丢已提交保护；正常次夜可执行。失败世界终止并保存前缀，可从完整录制/新世界重建，不允许在未恢复关系快照的旧世界伪装继续。未施梦的低层取消重入保持原能力。
 
 低层grant/copy必须显式提供状态政策；同一新能力实例独立连续计数。transfer保lastTarget/lastDay、使用次数与本夜标记，不能清空连续记录换取保护；已经生效本夜关系归原提交者且不会因transfer改成新持有者的关系。赠予、复制或借用的具体来源与组合分别遵守[奇迹商人](awa-miracle-merchant-v1.md)、[机械狼](awa-mechanical-wolf-v1.md)、[猎日逐光](awa-radiant-eclipse-twelve-v1.md)等独立卡；商人不赠梦，机械狼仍不与摄梦人同板或获得梦技能，侍女借梦只在其精确有限板内。低层grant/copy/transfer不声明产品组合支持。
 
-当前增加有限 `roles.dreamer.protectionPolicy`，默认 awa_night_damage_v1，网易具名 netease_2026_night_immunity_v1；见[历史策略契约](../history/expansion/contracts/historical-night-role-policies.md)。本卡上文描述兼容 AWA 默认；不得填写“免毒关闭/全天牵连”等未声明字段。支持的6/12示例与每项组合验收在接入契约登记；其它尚未注册角色不得据目录名先行组合。
+当前增加有限 `roles.dreamer.protectionPolicy`，默认 awa_night_damage_v1，网易具名 netease_2026_night_immunity_v1；见[历史策略契约](policy-variants.md#摄梦与狼美人)。本卡上文描述兼容 AWA 默认；不得填写“免毒关闭/全天牵连”等未声明字段。支持的6/12示例与每项组合验收在接入契约登记；其它尚未注册角色不得据目录名先行组合。
 
 [官方2026-04-02普通能力回顾](https://langrensha.com/news/update/20260402/26905_1294456.html)明确每夜必须、隐藏梦游、夜间免伤/夜死牵连、连续两夜梦亡。[官方2017规则介绍的12人摄梦人段](https://langrensha.com/wanfa/guize/2017/10/18/26899_719311.html)补夜间药/枪落空、梦亡禁死亡技能；采用现有AWA暗牌、遗言与死亡链基础，不照搬该旧页所有白天死亡遗言等其它差异。
 
-[组织者角色图鉴](https://melbournemasters.org/setups/roles/摄梦人)混列多个板子，含只免刀不免毒等变体；本AWA明确不采用该狭窄免疫变体。觉醒摄梦人在[长期候选](../history/expansion/roadmap.md#12-长期候选不计入本次-64-项)，没有静默计入64目标。夜间枪来源传播、不同梦能力连续独立、关系去重/公开保护落空消息和新增能力的低层授予属于本版本明确工程规则，需人工/真实通路证据。
+[组织者角色图鉴](https://melbournemasters.org/setups/roles/摄梦人)混列多个板子，含只免刀不免毒等变体；本AWA明确不采用该狭窄免疫变体。觉醒摄梦人在[支持边界](../contracts/mechanism-support-boundaries.md)，没有静默计入64目标。夜间枪来源传播、不同梦能力连续独立、关系去重/公开保护落空消息和新增能力的低层授予属于本版本明确工程规则，需人工/真实通路证据。
 
 ## 必须验收
 

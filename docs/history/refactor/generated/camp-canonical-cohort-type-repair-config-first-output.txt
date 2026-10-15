@@ -1,9 +1,0 @@
-error TS2688: Cannot find type definition file for 'bun-types'.
-  The file is in the program because:
-    Entry point of type library 'bun-types' specified in compilerOptions
-error TS2688: Cannot find type definition file for 'bun-types/test-globals'.
-  The file is in the program because:
-    Entry point of type library 'bun-types/test-globals' specified in compilerOptions
-error TS2688: Cannot find type definition file for 'node'.
-  The file is in the program because:
-    Entry point of type library 'node' specified in compilerOptions

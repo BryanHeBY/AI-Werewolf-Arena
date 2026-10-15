@@ -19,12 +19,11 @@ bun run --cwd frontend typecheck
 bun run --cwd frontend build
 ```
 
-## 迁移状态
+## 模块分工
 
 - 当前入口：`src/main.tsx` → `src/App.tsx`（加载状态）→ `src/replay/ReplayWorkspace.tsx`（工作台）。播放控制集中在 `useReplayPlayback.ts`，舞台、席位、时间线分别由 `ReplayStage`、`PlayerSeats`、`EventTimeline` 呈现。
 - 当前数据源：`@ai-werewolf-arena/replay-contract` 的 `ReplayDocument`，当前为完整的 `god`（上帝）离线复盘视角。
 - 文件加载与校验在 `offline-replay.ts`，事件文案在 `event-labels.ts`，状态投影在 `replay-projection.ts`；Remotion 画面仍按 frame 推导事件，不依赖工作台的筛选状态。
-- 已删除旧 Vue、Pinia、Socket 和 mock 实现；后续如恢复在线观战，应从 React 入口与后端正式协议重新设计。
 - 角色视角、公开脱敏、在线观战和 MP4 任务队列均不属于这一版范围。
 
 ## 双语图片/视频

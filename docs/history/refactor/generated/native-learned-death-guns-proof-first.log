@@ -1,1 +1,0 @@
-{"owned":11,"wholePrograms":17,"wholeOutputs":34,"typedNodesCompared":28870,"typeBridge":4,"graph":{"modules":72,"edges":113,"newOwnerReturnCycles":[],"scope":"当前有限静态值图/含字面dynamic；外部node_modules停止，不是冷执行/不声明完整传递图恒定"}}

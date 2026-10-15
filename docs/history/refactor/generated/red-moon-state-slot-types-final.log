@@ -1,4 +1,0 @@
-backend/src/game/observation/player-observation.ts(47,84): error TS2694: Namespace '"/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/noble_secret_body/player_projection"' has no exported member 'NoblePlayerState'.
-backend/src/game/observation/player-observation.ts(48,84): error TS2694: Namespace '"/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/noble_secret_body/player_projection"' has no exported member 'SecretBodyPlayerState'.
-backend/src/game/observation/player-observation.ts(50,76): error TS2694: Namespace '"/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/mist_raven/player_projection"' has no exported member 'PlayerAlchemistState'.
-backend/src/game/observation/player-observation.ts(51,76): error TS2694: Namespace '"/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/mist_raven/player_projection"' has no exported member 'PlayerRavenState'.

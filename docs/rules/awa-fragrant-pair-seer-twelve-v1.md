@@ -1,6 +1,6 @@
 # AWA 寻香识命十二人板
 
-状态：implemented；[完整技术验收](../history/expansion/reviews/p9-fragrant-pair-stage-acceptance.md)及三路复核通过；交付时目录快照与门禁冻结输入见该记录，不代表当前重构源码全量通过。`fragrant_phantom` 与从 P9f 前置的 `awakened_seer` 使用联合政策 `awa_fragrant_pair_seer_v1`。只开放本卡的原生有限组合。
+状态：implemented；`fragrant_phantom` 与 `awakened_seer` 使用联合政策 `awa_fragrant_pair_seer_v1`。只开放本卡的原生有限组合。
 
 ## 来源与配置
 
@@ -70,5 +70,3 @@ AWA 初始波政策在本板增加首夜牵连来源：N1 刀死 A 并牵连 B�
 11. 独立账本必须拒绝成功 decision 与 event 双删后同时回退 checkpoint；以 resolved night 的应请求角色机会核验完整性。固定 seed 手写已知狼号码及抽取次数，禁止复用生产抽取器生成预期。
 12. 首夜刀 A→牵连 B 两人遗言，第二夜同路径均无遗言；放逐 A→B 只有 A 遗言；枪 A→B 均无遗言。末狼与末神同链死亡，精确断言 good / all_wolves_eliminated 与全体好人 winningPlayerIds，仅一个 game_over。
 13. 前端／终端／Remotion 在选择、双查返回、夜公布、白天链、下一夜到期各帧一致；私有事实不提前公开身份或改变存活，回退／刷新及最终 checkpoint 一致。
-
-提交顺序：规则冻结 → 双目标能力及独立 DTO → 有限绑定/到期与夜初刀权 → 死亡链／撤权 → 严格录制与双语 → 公开配置、受限模拟、实际传输和界面验收。R、A、T/L/D 三组审查；三组文档预审及原意见复核已完成，修正了不可达枪链例、死亡波／遗言、判胜优先级和严格失败边界；运行、录制／Tape、双语实际通信、受限观察、前端与同源全支持门禁已通过，范围见[完整技术验收](../history/expansion/reviews/p9-fragrant-pair-stage-acceptance.md)。

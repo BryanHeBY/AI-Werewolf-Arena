@@ -1,9 +1,0 @@
-[
-  {
-    "path": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
-    "text": "/**\n * 负责迷雾、灵蛇和鸦爪的观察选择；输入为本次请求的明确候选、日次、风格及原随机选择器。\n * 输出为原具名动作及可空目标，不从 World 补候选、推断未告知身份或消费机制资源。\n * 迷雾三人组在本地副本内去重，灵蛇保留名单首项；真实圈域、生命和付款由原机制复验。\n */\nimport type { ObservedToolHandler } from \"./context\";\n\nexport const castMist: ObservedToolHandler = ({ request, pick, style, random }) => {\n  if (\n    (style === \"conservative\" && request.context.day === 1) ||\n    (style === \"random\" && random.next() < 0.5)\n  )\n    return { name: \"cast_mist\", args: { target_ids: null } };\n  const pool = [...(request.context.mist_candidates ?? [])],\n    targets: number[] = [];\n  // 只从本地候选副本移走已抽编号，保留原逐次抽取；不足三人时整个三人组为空，不补外部目标。\n  while (pool.length && targets.length < 3) {\n    const id = pick(pool)!;\n    targets.push(id);\n    pool.splice(pool.indexOf(id), 1);\n  }\n  return { name: \"cast_mist\", args: { target_ids: targets.length === 3 ? targets : null } };\n};\n/** 灵蛇只取已发名单首项；风格／首日短路不引入新的目标抽签或改读真实毒目标。 */\nexport const useSnake: ObservedToolHandler = ({ request, style, random }) => ({\n  name: \"use_snake\",\n  args: {\n    target_id:\n      style === \"conservative\" ||\n      (style === \"competitive\" && request.context.day === 1) ||\n      (style === \"random\" && random.next() < 0.5)\n        ? null\n        : (request.context.snake_candidates?.[0] ?? null),\n  },\n});\n/** 鸦爪在原风格概率判断之后才抽请求名单；空名单仍返回具名的空目标动作。 */\nexport const ravenKnife: ObservedToolHandler = ({ request, pick, style, random }) => ({\n  name: \"raven_knife\",\n  args: {\n    target_id:\n      style === \"conservative\" || (style === \"random\" && random.next() < 0.5)\n        ? null\n        : (pick([...(request.context.raven_candidates ?? [])]) ?? null),\n  },\n});\n",
-    "sha256": "c783bdcd8833fc323d2600adaaceb26cb1cab3644d2009d4c9030e4d12d7965c",
-    "before": " * 迷雾三人组在本地副本内去重，灵蛇保留名单首项；真实圈域、生命和付款由原机制复验。",
-    "after": " * 迷雾三人组逐次抽取并移走已抽项，灵蛇保留名单首项；真实圈域、生命和付款由原机制复验。"
-  }
-]

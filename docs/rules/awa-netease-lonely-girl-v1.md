@@ -1,6 +1,6 @@
-# P9a 孤独少女：首夜崇拜与独立胜利归属
+# 孤独少女：首夜崇拜与独立胜利归属
 
-状态：implemented；本卡有限策略已交付，来源／规则与运行审查及最终离线证据见[验收记录](../history/expansion/reviews/p9-lonely-girl.md)。该记录对应当时冻结输入，不表示当前重构源码全量通过或其它组合已支持。唯一有限策略 `awa_netease_lonely_girl_v1`；机器ID `lonely_girl`，不改名或复用 `hybrid` 的状态/工具/事实身份。
+状态：implemented；唯一有限策略为 `awa_netease_lonely_girl_v1`，机器 ID 为 `lonely_girl`，不复用 `hybrid` 的状态、工具或事实身份。只支持本卡明确的组合。
 
 ## 原始来源与适配边界
 
@@ -32,4 +32,4 @@
 
 schema→init/原实例→PM/window→gateway晚验证→DTO/ObservedBot→中英提示/错误/工具→God/本人record→strict Tape→terminal/frontend/sharedframe完整交付，6/12 public样例只写configs.example。God与本人实际档验证关系不改角色/阵营/存活/警徽，终局展示实际Good身份的Wolf侧或死者获胜；本人关系事实不直接显示目标阵营，终局胜负名单遵守上述推断边界。
 
-手写6/12 Good/Wolf对象、双方分别死亡与同波死亡、最后原Wolf死Good封盘、Wolf必须清Girl、未知初始membership、self/dead/null/缺目标/后夜/重选、15类late组件/生命/配置/gateway撤权、Victory同引用非空、getter0/opaque跨World与deadline、PM各阶段重入、坏档。实际SDK HTTP/ACP子进程MCP/mixed双语完整局逐Tape、8严格失败partial Tape、200受限Observed逐Tape、1000独立World、三组原审查者及所有离线门禁。未授权商业真实模型，T6不声明完成；总体P9/P10待用户最终验收。
+手写6/12 Good/Wolf对象、双方分别死亡与同波死亡、最后原Wolf死Good封盘、Wolf必须清Girl、未知初始membership、self/dead/null/缺目标/后夜/重选、15类late组件/生命/配置/gateway撤权、Victory同引用非空、getter0/opaque跨World与deadline、PM各阶段重入、坏档。回归还需覆盖双语实际通路、失败前缀、受限观察和严格重放；离线测试不代表真实商业模型已验证。

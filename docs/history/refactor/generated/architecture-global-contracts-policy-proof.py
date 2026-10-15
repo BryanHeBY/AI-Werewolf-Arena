@@ -1,9 +1,0 @@
-"""只读核根任务严格选项与已执行固定阶段收据，不再运行架构、测试或类型。"""
-from pathlib import Path
-import json,hashlib,subprocess
-p='docs/refactor/generated/architecture-global-contracts-';c='docs/refactor/generated/architecture-checkpoint-15424a84-';before=json.loads(Path(p+'before.json').read_text());original=before['source'][0];old=json.loads(original['text']);new=json.loads(Path(original['path']).read_text());expected='bun --no-env-file tooling/refactor/architecture/run.ts check';assert old['scripts']['lint:architecture']==expected;assert new['scripts']['lint:architecture']==expected+' --strict';inverse=json.loads(json.dumps(new));inverse['scripts']['lint:architecture']=expected;assert inverse==old;assert Path(original['path']).read_text()==original['text'].replace(expected+'"',expected+' --strict"',1)
-for row in [original,*before['controls']]:
- b=subprocess.check_output(['git','show',before['baseCommit']+':'+row['path']]);assert b.decode()==row['text'];assert hashlib.sha256(b).hexdigest()==row['sha256']
- if row!=original:assert b==Path(row['path']).read_bytes()
-cap=json.loads(Path(c+'capture.json').read_text());assert cap['options']=={'strict':True,'mappings':[]};report=json.loads(Path(c+'report.json').read_text());assert report['counts']=={'files':3295,'violations':0,'failures':0,'remainingDebt':0,'clearedDebt':1779};assert report['inputHash']==cap['sourceDigest'];assert json.loads(Path(c+'input-verification.json').read_text())['mismatches']==0
-result={'approved':True,'baseCommit':before['baseCommit'],'path':'package.json','singleExactScriptArgumentAddition':'--strict','allOtherJSONAndTextSame':True,'actualGitBefore':1,'controls':4,'fixedStageStrictReportObserved':report['counts'],'executedArchitectureAgain':False,'typesTestsOrProductionExecuted':False};Path(p+'policy-proof.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps(result,ensure_ascii=False))

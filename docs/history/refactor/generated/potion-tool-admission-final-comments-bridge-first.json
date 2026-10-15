@@ -1,7 +1,0 @@
-{
-  "terminal": {
-    "chunk": "9ed393",
-    "exitCode": 1
-  },
-  "reason": "Bridge output callback shadowed outer before-record b in its const list and hit TDZ. Subsequent metadata update could not read absent bridge and did not change final metadata. Only tool variable names corrected, product untouched."
-}

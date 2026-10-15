@@ -1,6 +1,0 @@
-backend/tests/unit/features/ghost-bride/request-terminal-revocation.test.ts(57,35): error TS2769: No overload matches this call.
-  Overload 1 of 2, '(expected: { remaining: number; groomId: number | null; }): void', gave the following error.
-    Object literal may only specify known properties, and 'policy' does not exist in type '{ remaining: number; groomId: number | null; }'.
-  Overload 2 of 2, '(expected: NoInfer<{ remaining: number; groomId: number | null; }>): void', gave the following error.
-    Object literal may only specify known properties, and 'policy' does not exist in type '{ remaining: number; groomId: number | null; }'.
-backend/tests/unit/features/ghost-bride/request-terminal-revocation.test.ts(241,39): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.

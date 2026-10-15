@@ -1,6 +1,0 @@
-backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts(57,9): error TS2540: Cannot assign to 'version' because it is a read-only property.
-backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts(64,68): error TS2322: Type '{ deathLives: Map<number, { readonly life: AliveComponent; readonly version: number | undefined; }>; readonly summary: void; readonly damage: void; readonly dreamFrame: void; }' is not assignable to type 'MistDelayedNightInput'.
-  Types of property 'summary' are incompatible.
-    Type 'void' is not assignable to type 'Pick<NightSummary, "wolfTarget">'.
-backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts(106,84): error TS2339: Property 'alchemist' does not exist on type 'object'.
-backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts(113,84): error TS2339: Property 'alchemist' does not exist on type 'object'.

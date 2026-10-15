@@ -1,1 +1,0 @@
-{"source":[{"path":"backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts","sha256":"c6fee3f0674e2ea096d02f23725e2b1ad8bab68be5ee54636517e0bc260b356e"}],"documentationPaths":628,"diagnostics":[],"chineseHeadFailures":[]}
