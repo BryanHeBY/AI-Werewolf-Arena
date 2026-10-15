@@ -45,6 +45,10 @@
 | 17  | `validateCupidRecord`           | `backend/src/recording/verification/cupid/validate.ts`              |
 | 18  | `validateHybridRecord`          | `backend/src/recording/verification/hybrid/validate.ts`             |
 | 19  | `validateDeathHistoryRecord`    | `backend/src/recording/verification/death-history/validate.ts`      |
+| 20 | `validateCrowRecord` | `backend/src/recording/verification/crow/validate.ts` |
+| 21 | `validateSilenceElderRecord` | `backend/src/recording/verification/silence-elder/validate.ts` |
+| 22 | `validateAwakenedClawRecord` | `backend/src/recording/verification/awakened-wolf-king/validate.ts` |
+| 23 | `validateWardenRecord` | `backend/src/recording/verification/warden/validate.ts` |
 
 没有专属校验器的机制仍受共同格式、身份及实际执行检查约束；专属校验器的数量不表示全部角色规则都已独立覆盖。普通死亡历史审计不能提供完整生命引用证明。
 
@@ -78,3 +82,11 @@ Tape3 仅在自身明确保存返回候选时重交原值；旧 Tape2 或字段�
 [典狱长规则](../rules/awa-melbourne-warden-v1.md)只开放三普狼＋典狱长＋四民＋预女猎梦原十二人板，见[完整示例](../examples/warden/README.md)。运行 `features/warden` 拥有唯一不可变历史、每人一次参与资格、pair／独立decide窗口及已付原体效果；`rulesets/warden-native-target-validation.ts` 仅为原生个人技能增加partner限制，不更改团队刀票。
 
 夜伤将保护与 `Deal` 分开：交易保护晚查原体及已付predicate，仅免普通刀／毒／梦；Deal保留独立死因且纯Deal不授枪。摄梦Frame复用其既有夜源连锁保护端口，不把交易保护加入Shot免疫。`recording/verification/warden/validate.ts` 在实际assembly登记，独立验一次参与、秘密受众、四格表、原生目标与按真实settleOrder的完整／失败CP；它不读取生产窗口作oracle。God archive含完整决定，玩家导出逐人只含自己的pair或通知／决定。
+
+## 觉醒狼王有限组合
+
+[双爪与亲传规则](../rules/awa-awakened-wolf-king-v1.md)只开放原十／十二人牌池及显式女巫自救／十二人梦保护。[完整示例](../examples/awakened-wolf-king/README.md)给出对应公开入口，未实现的觉醒女巫合板另批启用。
+
+`features/awakened-wolf-king/` 持唯一原生／受传库存和亲传夜窗，普通狼受传不改变原身份、不建立赠枪镜像。`engine/hooks/death-action-continuation.ts` 只持一次不透明继续程序；DeathResolution 在首枪真实死亡及全部后代／词徽完成后执行下一爪，仍独占阶段与判胜。付款末端只读真实 ECS 同步核两端原体，不调用可重入的 World 查询或执行未知范围 getter。
+
+`recording/verification/awakened-wolf-king/validate.ts` 只读档案独立重建单位／转出／消费／失效，严格核私有受众、开窗日次、真实夜伤与梦保护、完整后代顺序及精确已知候选的失败CP。它不导入生产库存、死亡写者或恢复许可。两个原板分别以两语各20seed完成受限自然局／严格重放，双爪／亲传的LLM、ACP、mixed完整传输及第二枪missing／late独立反例不外推为其它混搭支持。

@@ -111,6 +111,7 @@ const stages: Record<string, [string, string]> = {
   silence_gesture: ["禁言动作表达", "Silenced gesture"],
   silence_translation: ["动作翻译", "Gesture interpretation"],
   crow_curse: ["乌鸦诅咒", "Crow curse"],
+  awakened_claw_bequest: ["狼爪亲传", "Claw bequest"],
   nightmare_fear: ["噩梦之影恐惧", "Nightmare fear"],
   wolf_beauty: ["狼美人魅惑", "Wolf Beauty charm"],
   sheriff_nomination: ["上警报名", "Sheriff nomination"],
@@ -603,7 +604,12 @@ export function assertTransportEvents(
       throw new Error("fixture_girl_god_membership_exposed");
     if (type.startsWith("mechanical_") && type !== "mechanical_shot" && payload.actorId !== actorId)
       throw new Error("fixture_other_private_skill_exposed");
-    if (type.startsWith("awakened_") && payload.actorId !== actorId)
+    // 亲传是具名双方私有事实；受传者只能收到自己的这一条，不可借前缀放开其它觉醒信息。
+    if (
+      type.startsWith("awakened_") &&
+      payload.actorId !== actorId &&
+      !(type === "awakened_claw_bequeathed" && payload.targetId === actorId)
+    )
       throw new Error("fixture_other_private_skill_exposed");
     if (["dream_death", "charm_death", "charm_blocked"].includes(type))
       throw new Error("fixture_private_death_information_exposed");
@@ -651,6 +657,7 @@ export function assertTransportEvents(
       ![
         "wolf",
         "wolf_king",
+        "awakened_wolf_king",
         "warden",
         "white_wolf_king",
         "wolf_beauty",

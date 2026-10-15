@@ -5,6 +5,8 @@
  * 每次 World／语言／Catalog／板子读取保留位置，不建立新状态镜像；角色 renderer 晚调用，
  * 失败保留原回调和读取前缀。模板、人设、传输提示及实际行动提交由各自所有者负责。
  */
+import { projectAwakenedClaws } from "../../features/awakened-wolf-king/observation-ports";
+import { awakenedClawPromptState } from "../../features/awakened-wolf-king/presentation";
 import { COMPONENT } from "../../domain/components/names";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { rolePresentationRenderer } from "./role-presentation";
@@ -118,6 +120,11 @@ export function buildPlayerStatusDirective(
   queries: Pick<PlayerPromptDirectiveQueries, "world" | "locale" | "catalog" | "wolfTeammates">,
 ): string | undefined {
   const lines: string[] = [];
+  // 受传者保持原身份；只渲染本人的已付爪槽，不通过狼王或别人的库存补全。
+  if (role?.role !== Role.AwakenedWolfKing) {
+    const claws = projectAwakenedClaws(role);
+    if (claws) lines.push(awakenedClawPromptState(claws, queries.locale()));
+  }
   // 动物与专属板子读取已发表的玩家知识；不能用当前真实库存补造尚未通知的结果。
   if (isAnimalDreamBoard(queries.world())) {
     const state =
@@ -334,6 +341,10 @@ export function buildPlayerStageContextHint(
       target: request.context.warden_forced_target,
     });
   // 按原字段优先级展示请求已带来的候选，不据这些文字重新授权目标。
+  if (request.context.claw_bequest_candidates !== undefined)
+    return text(queries.locale(), "prompt.stage.claw_bequest_candidates", {
+      ids: request.context.claw_bequest_candidates.join(", "),
+    });
   if (request.context.silence_candidates !== undefined)
     return text(queries.locale(), "prompt.stage.silence_candidates", {
       ids: request.context.silence_candidates.join(", "),

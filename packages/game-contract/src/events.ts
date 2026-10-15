@@ -8,6 +8,7 @@ import type { WardenPayloadMap } from "./facts/warden";
 
 import type { NobleSecretBodyPayloadMap } from "./facts/noble-secret-body";
 import type { SilenceElderPayloadMap } from "./facts/silence-elder";
+import type { AwakenedClawPayloadMap } from "./facts/awakened-claws";
 import type { AnimalDreamPayloadMap } from "./facts/animal-dream";
 import type { FragrantPairPayloadMap } from "./facts/fragrant-pair-seer";
 import type { RedMoonNextNightFact, RedMoonExpiryFact } from "./facts/red-moon";
@@ -67,7 +68,8 @@ export interface EventPayloadMap
     FragrantPairPayloadMap,
     AnimalDreamPayloadMap,
     SilenceElderPayloadMap,
-    WardenPayloadMap {
+    WardenPayloadMap,
+    AwakenedClawPayloadMap {
   eclipse_swallowed: {
     actorId: EntityId;
     day: number;
@@ -604,6 +606,9 @@ export type GameEvent = {
       | "silence_chosen"
       | "silence_translation_declined"
       | "silence_expired"
+      | "awakened_claw_bequeathed"
+      | "awakened_claw_spent"
+      | "awakened_claws_expired"
       | "nightmare_fear_committed"
       | "modifier_choice_committed"
       | "modifier_choice_skipped"

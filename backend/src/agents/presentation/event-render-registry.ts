@@ -21,6 +21,7 @@ import { tricksterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { magicianEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { redMoonEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { awakenedClawEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { silenceElderEventLabel } from "@ai-werewolf-arena/game-presentation";
 import {
   SILENCE_ELDER_EVENT_TYPES,
@@ -618,6 +619,8 @@ export class ScriptEventRenderRegistry {
     if (redMoon !== null) return redMoon;
     const warden = wardenEventLabel(event.type, event.payload, locale);
     if (warden !== null) return warden;
+    const claws = awakenedClawEventLabel(event.type, event.payload, locale);
+    if (claws !== null) return claws;
     const silence = silenceElderEventLabel(event.type, event.payload, locale);
     if (silence !== null) return silence;
     const crow = crowEventLabel(event.type, event.payload, locale);
@@ -742,6 +745,11 @@ export class ScriptEventRenderRegistry {
     if (warden !== null)
       return printPrivateEvents
         ? [{ kind: event.type === "warden_resolved" ? "god" : "private", text: warden }]
+        : [];
+    const claws = awakenedClawEventLabel(event.type, event.payload, locale);
+    if (claws !== null)
+      return printPrivateEvents
+        ? [{ kind: event.type === "awakened_claws_expired" ? "god" : "private", text: claws }]
         : [];
     const silence = silenceElderEventLabel(event.type, event.payload, locale);
     if (silence !== null) {

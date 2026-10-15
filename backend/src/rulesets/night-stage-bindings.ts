@@ -60,11 +60,13 @@ import { OWNED_NIGHT_STAGE_PROGRAMS as WolfNightStagesPrograms } from "../featur
 import { OWNED_NIGHT_STAGE_PROGRAMS as WardenPrograms } from "../features/warden/night-stage";
 import { OWNED_NIGHT_STAGE_PROGRAMS as CrowPrograms } from "../features/crow/night-stage";
 import { OWNED_NIGHT_STAGE_PROGRAMS as SilencePrograms } from "../features/silence-elder/night-stage";
+import { OWNED_NIGHT_STAGE_PROGRAMS as AwakenedWolfKingPrograms } from "../features/awakened-wolf-king/night-stage";
 const programs: ReadonlyArray<readonly [object, unknown]> = [
   ...AnimalDreamNightStagesPrograms,
   ...CrowPrograms,
   ...WardenPrograms,
   ...SilencePrograms,
+  ...AwakenedWolfKingPrograms,
   ...AwakenedHiddenWolfNightStagesPrograms,
   ...BlackMarketMerchantNightStagePrograms,
   ...CupidNightStagePrograms,

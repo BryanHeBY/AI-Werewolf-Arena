@@ -1,15 +1,17 @@
 # 机制与共同服务索引
 
-下表按实际49个机制目录导航，不按55Role一一拆文件。initial-identity／role-inspection是共同机制，Animal／Fragrant／Noble／Radiant／Mist／PureWhite等可覆盖多个角色。具体规则从[rules](../rules/README.md)查来源，不从目录名猜玩法。
+下表按完整机制所有者导航，不按 Role 一一拆文件。initial-identity／role-inspection是共同机制，Animal／Fragrant／Noble／Radiant／Mist／PureWhite等可覆盖多个角色。具体规则从[rules](../rules/README.md)查来源，不从目录名猜玩法。
 
 | 完整机制owner         | 目标源                                        | 独立归档校验（存在时）                                         |
 | --------------------- | --------------------------------------------- | -------------------------------------------------------------- |
 | animal-dream          | `backend/src/features/animal-dream/`          | `recording/verification/animal-dream/`                         |
 | awakened-hidden-wolf  | `backend/src/features/awakened-hidden-wolf/`  | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
+| awakened-wolf-king | `backend/src/features/awakened-wolf-king/` | `recording/verification/awakened-wolf-king/` |
 | bear                  | `backend/src/features/bear/`                  | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
 | black-market-merchant | `backend/src/features/black-market-merchant/` | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
 | cupid                 | `backend/src/features/cupid/`                 | `recording/verification/cupid/`                                |
 | cursed-fox            | `backend/src/features/cursed-fox/`            | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
+| crow | `backend/src/features/crow/` | `recording/verification/crow/` |
 | debater               | `backend/src/features/debater/`               | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
 | demon-hunter          | `backend/src/features/demon-hunter/`          | `recording/verification/demon-hunter/`                         |
 | dreamer               | `backend/src/features/dreamer/`               | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
@@ -41,6 +43,7 @@
 | role-inspection       | `backend/src/features/role-inspection/`       | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
 | scholar-mentor        | `backend/src/features/scholar-mentor/`        | `recording/verification/scholar-mentor/`                       |
 | seer                  | `backend/src/features/seer/`                  | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
+| silence-elder | `backend/src/features/silence-elder/` | `recording/verification/silence-elder/` |
 | shapeshifter          | `backend/src/features/shapeshifter/`          | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
 | thief                 | `backend/src/features/thief/`                 | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
 | time-wolf-consort     | `backend/src/features/time-wolf-consort/`     | `recording/verification/time-wolf-consort/`                    |

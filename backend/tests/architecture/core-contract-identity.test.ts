@@ -24,7 +24,7 @@ void rawId;
 test("public core identity is the shared enum instance and preserves the delivered runtime subset", () => {
   expect(CoreRole).toBe(Role);
   expect(CoreCamp).toBe(Camp);
-  expect(Object.values(CoreRole)).toHaveLength(58);
+  expect(Object.values(CoreRole)).toHaveLength(59);
   expect(Object.values(Role)).not.toContain("awakened_knight");
   expect(ROLE_IDS).toHaveLength(64);
   expect(ROLE_DEFINITIONS.map((row): RoleId => row.id)).toEqual(ROLE_IDS);

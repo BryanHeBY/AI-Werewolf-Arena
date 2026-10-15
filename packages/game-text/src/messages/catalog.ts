@@ -18,6 +18,7 @@ import { messages as nightmodifiers } from "./features/night-modifiers";
 import { messages as mistradiant } from "./features/mist-radiant";
 import { messages as noblefragrant } from "./features/noble-fragrant";
 import { messages as warden } from "./features/warden";
+import { messages as awakenedWolfKing } from "./features/awakened-wolf-king";
 import { messages as silenceElder } from "./features/silence-elder";
 import { messages as crow } from "./features/crow";
 import { messages as animaldream } from "./features/animal-dream";
@@ -38,6 +39,7 @@ const modules = [
   animaldream,
   crow,
   silenceElder,
+  awakenedWolfKing,
   warden,
 ] as const;
 

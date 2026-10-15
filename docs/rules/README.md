@@ -66,6 +66,7 @@
 | `awakened_idiot`        | 觉醒愚者   | [awa-noble-secret-body-twelve-v1.md](awa-noble-secret-body-twelve-v1.md)                                       |
 | `awakened_seer`         | 觉醒预言家 | [awa-fragrant-pair-seer-twelve-v1.md](awa-fragrant-pair-seer-twelve-v1.md)                                     |
 | `awakened_hidden_wolf`  | 觉醒隐狼   | [awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf](awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)     |
+| `awakened_wolf_king` | 觉醒狼王 | [双爪与亲传](awa-awakened-wolf-king-v1.md)；[两语完整示例](../examples/awakened-wolf-king/README.md) |
 
 ## 尚未启用的觉醒角色规格
 
@@ -73,7 +74,6 @@
 
 | 稳定 RoleId            | 名称       | 规则规格                                             |
 | ---------------------- | ---------- | ---------------------------------------------------- |
-| `awakened_wolf_king`   | 觉醒狼王   | [双爪与亲传](awa-awakened-wolf-king-v1.md)           |
 | `awakened_witch`       | 觉醒女巫   | [三类药剂](awa-awakened-witch-v1.md)                 |
 | `awakened_wolf_beauty` | 觉醒狼美人 | [隔夜魅惑与一次替死](awa-awakened-wolf-beauty-v1.md) |
 | `awakened_hunter`      | 觉醒猎人   | [定向巡猎](awa-awakened-hunter-v1.md)                |

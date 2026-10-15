@@ -6,7 +6,6 @@ import { Role } from "./identity";
 
 /** 规划身份只作目录元数据，不属于可执行 Role 枚举。 */
 export const PLANNED_ROLE_IDS = {
-  AwakenedWolfKing: "awakened_wolf_king",
   AwakenedWolfBeauty: "awakened_wolf_beauty",
   AwakenedWitch: "awakened_witch",
   AwakenedHunter: "awakened_hunter",
@@ -72,7 +71,7 @@ const canonicalRoleIds = [
   Role.Warden,
   Role.AwakenedIdiot,
   Role.AwakenedSeer,
-  PLANNED_ROLE_IDS.AwakenedWolfKing,
+  Role.AwakenedWolfKing,
   Role.AwakenedHiddenWolf,
   PLANNED_ROLE_IDS.AwakenedWolfBeauty,
   PLANNED_ROLE_IDS.AwakenedWitch,

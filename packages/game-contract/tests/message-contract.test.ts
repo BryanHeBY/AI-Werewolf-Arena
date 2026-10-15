@@ -15,8 +15,8 @@ import {
 const fixedSequenceHash = "cd750ba72a9b5902562d650125797b2417126bdb82b2aaa199822b05cd22ec78";
 
 test("existing message IDs retain their exact sequence and presentation messages are appended", () => {
-  expect(MESSAGE_IDS).toHaveLength(1638);
-  expect(new Set(MESSAGE_IDS).size).toBe(1638);
+  expect(MESSAGE_IDS).toHaveLength(1661);
+  expect(new Set(MESSAGE_IDS).size).toBe(1661);
   expect(
     createHash("sha256")
       .update(JSON.stringify(MESSAGE_IDS.slice(0, 1513)))
@@ -150,6 +150,29 @@ test("existing message IDs retain their exact sequence and presentation messages
     "replay.stage.warden_partner_notified",
     "replay.stage.warden_decision",
     "replay.stage.warden_resolved",
+    "role.awakened_wolf_king.brief",
+    "role.awakened_wolf_king.state",
+    "action.bequeath_claw.hint",
+    "action.bequeath_claw.directive",
+    "stage.awakened_claw_bequest",
+    "request.summary.awakened_claw_bequest",
+    "prompt.config.awakened_wolf_king",
+    "prompt.stage.claw_bequest_candidates",
+    "awakened_claw.received.brief",
+    "awakened_claw.unit.native",
+    "awakened_claw.unit.bequest",
+    "awakened_claw.status.ready",
+    "awakened_claw.status.spent",
+    "awakened_claw.status.transferred",
+    "awakened_claw.status.expired",
+    "awakened_claw.bequest",
+    "event.awakened_claw_bequeathed",
+    "event.awakened_claw_spent",
+    "event.awakened_claw_passed",
+    "event.awakened_claws_expired",
+    "replay.stage.awakened_claw_bequeathed",
+    "replay.stage.awakened_claw_spent",
+    "replay.stage.awakened_claws_expired",
   ]);
 });
 

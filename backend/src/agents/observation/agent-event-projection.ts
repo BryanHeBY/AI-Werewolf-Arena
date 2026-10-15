@@ -43,6 +43,7 @@ import {
   SILENCE_ELDER_EVENT_TYPES,
   silenceElderFactAudience,
 } from "@ai-werewolf-arena/game-contract/facts/silence-elder";
+import { AWAKENED_CLAW_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/awakened-claws";
 import { readAgentEventFact, type PreparedAgentEvent } from "./agent-event-facts";
 
 /** 仅在命中原分支时执行的身份查询和显式自定义规则；不是行动许可或 World 通道。 */
@@ -332,6 +333,21 @@ function canViewAgentEventWithFacts(
       event.audience[0] === actorId
     );
   }
+  if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readAwakenedClawFact", event.type, event.payload, prepared);
+    if (!fact || fact.type === "awakened_claws_expired") return false;
+    const expected =
+      fact.type === "awakened_claw_bequeathed"
+        ? [fact.payload.actorId, fact.payload.targetId].sort((a, b) => a - b)
+        : [fact.payload.actorId];
+    return (
+      expected.includes(actorId) &&
+      "audience" in event &&
+      Array.isArray(event.audience) &&
+      event.audience.length === expected.length &&
+      expected.every((id, i) => event.audience[i] === id)
+    );
+  }
   if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type)) {
     const fact = readAgentEventFact("readSilenceElderFact", event.type, event.payload, prepared);
     if (!fact) return false;
@@ -404,6 +420,10 @@ function projectPayload(
 ): Record<string, unknown> {
   if ((WARDEN_EVENT_TYPES as readonly string[]).includes(event.type)) {
     const fact = readAgentEventFact("readWardenFact", event.type, event.payload, prepared);
+    return fact ? structuredClone(fact.payload) : {};
+  }
+  if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readAwakenedClawFact", event.type, event.payload, prepared);
     return fact ? structuredClone(fact.payload) : {};
   }
   if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type)) {

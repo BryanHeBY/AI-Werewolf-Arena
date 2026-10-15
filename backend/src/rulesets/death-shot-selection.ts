@@ -29,6 +29,40 @@ import {
 } from "../features/magician/ports";
 import { nightmareFearBlocks } from "../features/nightmare/ports";
 import { demonHunterNativeGunCurrent } from "../features/demon-hunter/ports";
+import { RequestLease, type RequestLeaseTurn } from "../domain/request-lease";
+import type { ActionRequest } from "../domain/actions";
+
+/** 新可信来源保自己的交付记录，旧 native／赠枪路径不接入该租约或增加领域查询。 */
+interface OwnedShotRequestScope {
+  actorId: number;
+  day: number;
+  phase: Phase;
+  stage: ActionRequest["context"]["stage"];
+  eligible(): boolean;
+}
+const ownedRequests = RequestLease.window<OwnedShotRequestScope>(
+  {
+    actorId: (s) => s.actorId,
+    day: (s) => s.day,
+    phase: (s) => s.phase,
+    stage: (s) => s.stage,
+    current: (s) => s.eligible(),
+  },
+  163,
+  [
+    "trigger",
+    "death_phase",
+    "death_sources",
+    "death_action_id",
+    "shoot_candidates",
+    "ability_id",
+    "action_failure_policy",
+    "allow_fallback",
+    "requiresAction",
+    "retry_attempt",
+    "retry_max",
+  ],
+);
 
 /** 延迟读取原结算器；类型只声明所需成员，不是进程隔离或额外的运行权限屏障。 */
 export interface DeathShotSelectionRuntime {
@@ -102,108 +136,152 @@ export async function collectDeathShot(
   );
   actions.permits.push(permit);
   const requests = new GameActionRequestFactory(runtime.world, runtime.events, actions.day);
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    // 每次重试重新捕获候选生命；同一编号复活或替换组件后，上一轮回复不能命中新生命。
-    const targets = new Map(
-      runtime.world.getAliveEntityIds().map((id) => [id, captureNightLife(runtime.world, id)]),
-    );
-    if (!eligible()) return { kind: "invalid" };
-    const request = requests.create({
-      phase: actions.phase,
-      actorId: actorId,
-      allowedTools: ["shoot"],
-      stage:
-        abilityId === undefined &&
-        runtime.world.getComponent(actorId, COMPONENT.Role)?.role === Role.Hunter
-          ? "hunter_shot"
-          : "death_shot",
-      requiresAction: true,
-      summary: { key: "request.summary.death_shot" },
-      context: {
-        ...(ownedQualification ||
-        runtime.config?.magician ||
-        runtime.config?.evilKnight ||
-        abilityId !== undefined ||
-        runtime.world.getComponent(actorId, COMPONENT.Role)?.role === Role.AwakenedHiddenWolf
-          ? { action_failure_policy: "error" as const, allow_fallback: false }
-          : {}),
-        ...(abilityId === undefined ? {} : { ability_id: abilityId }),
-        trigger: "on_death",
-        death_phase: deathPhase,
-        ...(nativePolicy === "awa_day_deaths_v1" ? { death_origin_phase: deathOriginPhase } : {}),
-        death_sources: [...(sources[actorId] ?? [])],
-        death_action_id: permit.id,
-        shoot_candidates: [...targets.keys()].filter((id) => id !== actorId),
-        ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
-      },
-    });
-    if (!eligible()) return { kind: "invalid" };
-    if (runtime.config?.magician) assertMagicianRosterCurrent(runtime.world);
-    const action = await actionProvider.getAction(request);
-    if (runtime.config?.magician) assertMagicianRosterCurrent(runtime.world);
-    if (
-      !eligible() ||
-      !runtime.world.hasDeathAction(
-        actorId,
-        "shoot",
-        actions.phase,
-        actions.day,
-        permit.id,
-        abilityId,
+  let delivery: RequestLeaseTurn | undefined,
+    transferred = false,
+    failed = false;
+  const selected = (value: DeathShotSelection): DeathShotSelection => {
+    if (!delivery || value.kind === "invalid") return value;
+    transferred = true;
+    return { ...value, requestDelivery: delivery };
+  };
+  try {
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      if (delivery) {
+        delivery.close();
+        delivery = undefined;
+      }
+      // 每次重试重新捕获候选生命；同一编号复活或替换组件后，上一轮回复不能命中新生命。
+      const targets = new Map(
+        runtime.world.getAliveEntityIds().map((id) => [id, captureNightLife(runtime.world, id)]),
+      );
+      if (!eligible()) return { kind: "invalid" };
+      const request = requests.create({
+        phase: actions.phase,
+        actorId: actorId,
+        allowedTools: ["shoot"],
+        stage:
+          abilityId === undefined &&
+          runtime.world.getComponent(actorId, COMPONENT.Role)?.role === Role.Hunter
+            ? "hunter_shot"
+            : "death_shot",
+        requiresAction: true,
+        summary: { key: "request.summary.death_shot" },
+        context: {
+          ...(ownedQualification ||
+          runtime.config?.magician ||
+          runtime.config?.evilKnight ||
+          abilityId !== undefined ||
+          runtime.world.getComponent(actorId, COMPONENT.Role)?.role === Role.AwakenedHiddenWolf
+            ? { action_failure_policy: "error" as const, allow_fallback: false }
+            : {}),
+          ...(abilityId === undefined ? {} : { ability_id: abilityId }),
+          trigger: "on_death",
+          death_phase: deathPhase,
+          ...(nativePolicy === "awa_day_deaths_v1" ? { death_origin_phase: deathOriginPhase } : {}),
+          death_sources: [...(sources[actorId] ?? [])],
+          death_action_id: permit.id,
+          shoot_candidates: [...targets.keys()].filter((id) => id !== actorId),
+          ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
+        },
+      });
+      if (ownedQualification) {
+        const scope: OwnedShotRequestScope = {
+          actorId,
+          day: actions.day,
+          phase: actions.phase,
+          stage: request.context.stage,
+          eligible,
+        };
+        ownedRequests.bind(scope, request);
+        delivery = ownedRequests.openDelivery(scope, request);
+        if (!delivery?.current()) throw new Error("death_action_request_revoked");
+      }
+      if (!eligible()) return { kind: "invalid" };
+      if (runtime.config?.magician) assertMagicianRosterCurrent(runtime.world);
+      const action = await actionProvider.getAction(request);
+      if (runtime.config?.magician) assertMagicianRosterCurrent(runtime.world);
+      if (
+        !eligible() ||
+        (delivery !== undefined && !delivery.current()) ||
+        !runtime.world.hasDeathAction(
+          actorId,
+          "shoot",
+          actions.phase,
+          actions.day,
+          permit.id,
+          abilityId,
+        )
       )
-    )
-      return { kind: "invalid" };
-    if (action?.name !== "shoot") {
-      if (runtime.config?.magician) throw new Error("magician_shot_action_missing");
-      if (runtime.config?.evilKnight) throw new Error("evil_knight_hunter_action_missing");
-      continue;
-    }
-    const validated = runtime.toolGateway.validateAndSanitize(runtime.world, actorId, action, {
-      phase: actions.phase,
-      day: actions.day,
-      deathActionId: permit.id,
-      abilityId,
-    });
-    if (
-      !eligible() ||
-      !runtime.world.hasDeathAction(
-        actorId,
-        "shoot",
-        actions.phase,
-        actions.day,
-        permit.id,
-        abilityId,
-      )
-    )
-      return { kind: "invalid" };
-    if (!validated.ok || !validated.sanitizedCall) {
-      if (runtime.config?.magician) throw new Error("magician_shot_action_invalid");
-      if (runtime.config?.evilKnight) throw new Error("evil_knight_hunter_action_invalid");
-      continue;
-    }
-    const targetId = validated.sanitizedCall.args.target_id;
-    // 空枪也只是已授权选择，真正消耗留给随后处理该选择的角色钩子。
-    if (targetId === null) return { kind: "pass", deathActionId: permit.id };
-    const targetScope = targets.get(targetId);
-    if (!targetScope || !livingNightLife(runtime.world, targetScope)) {
-      if (runtime.config?.magician) throw new Error("magician_shot_target_stale");
-      continue;
-    }
-    if (nightExchange && isMagicianBoard(runtime.world)) {
-      const mapped = resolveMagicianNightTarget(runtime.world, actions.day, targetId, "death_shot");
-      if (!mapped.isCurrent()) throw new Error("magician_shot_target_stale");
-      return {
-        kind: "shot",
-        targetId: mapped.effectiveId,
+        return { kind: "invalid" };
+      if (action?.name !== "shoot") {
+        if (runtime.config?.magician) throw new Error("magician_shot_action_missing");
+        if (runtime.config?.evilKnight) throw new Error("evil_knight_hunter_action_missing");
+        continue;
+      }
+      const validated = runtime.toolGateway.validateAndSanitize(runtime.world, actorId, action, {
+        phase: actions.phase,
+        day: actions.day,
         deathActionId: permit.id,
-        targetScope: mapped.scope,
-        mappingCurrent: mapped.isCurrent,
-        ...(!mapped.scope.life.alive ? { mappedMiss: true as const } : {}),
-      };
+        abilityId,
+      });
+      if (
+        !eligible() ||
+        (delivery !== undefined && !delivery.current()) ||
+        !runtime.world.hasDeathAction(
+          actorId,
+          "shoot",
+          actions.phase,
+          actions.day,
+          permit.id,
+          abilityId,
+        )
+      )
+        return { kind: "invalid" };
+      if (!validated.ok || !validated.sanitizedCall) {
+        if (runtime.config?.magician) throw new Error("magician_shot_action_invalid");
+        if (runtime.config?.evilKnight) throw new Error("evil_knight_hunter_action_invalid");
+        continue;
+      }
+      const targetId = validated.sanitizedCall.args.target_id;
+      // 空枪也只是已授权选择，真正消耗留给随后处理该选择的角色钩子。
+      if (targetId === null) return selected({ kind: "pass", deathActionId: permit.id });
+      const targetScope = targets.get(targetId);
+      if (!targetScope || !livingNightLife(runtime.world, targetScope)) {
+        if (runtime.config?.magician) throw new Error("magician_shot_target_stale");
+        continue;
+      }
+      if (nightExchange && isMagicianBoard(runtime.world)) {
+        const mapped = resolveMagicianNightTarget(
+          runtime.world,
+          actions.day,
+          targetId,
+          "death_shot",
+        );
+        if (!mapped.isCurrent()) throw new Error("magician_shot_target_stale");
+        return selected({
+          kind: "shot",
+          targetId: mapped.effectiveId,
+          deathActionId: permit.id,
+          targetScope: mapped.scope,
+          mappingCurrent: mapped.isCurrent,
+          ...(!mapped.scope.life.alive ? { mappedMiss: true as const } : {}),
+        });
+      }
+      return selected({ kind: "shot", targetId, deathActionId: permit.id, targetScope });
     }
-    return { kind: "shot", targetId, deathActionId: permit.id, targetScope };
+    if (ownedQualification && eligible()) throw new Error("death_action_valid_action_missing");
+    if (abilityId !== undefined && eligible()) throw new Error("gift_gun_valid_action_missing");
+    return { kind: "invalid" };
+  } catch (error) {
+    failed = true;
+    throw error;
+  } finally {
+    if (!transferred) {
+      try {
+        delivery?.close();
+      } catch (error) {
+        if (!failed) throw error;
+      }
+    }
   }
-  if (ownedQualification && eligible()) throw new Error("death_action_valid_action_missing");
-  if (abilityId !== undefined && eligible()) throw new Error("gift_gun_valid_action_missing");
-  return { kind: "invalid" };
 }

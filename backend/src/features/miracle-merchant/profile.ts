@@ -40,6 +40,7 @@ export const MIRACLE_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
       Role.MiracleMerchant,
       Role.Wolf,
       Role.WolfKing,
+      Role.AwakenedWolfKing,
       Role.HiddenWolf,
       Role.Seer,
       Role.Witch,

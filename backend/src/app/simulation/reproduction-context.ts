@@ -142,6 +142,7 @@ export function beginGameReproduction(
     // 不提前推进 checkpoint、公开隐藏归属或改变普通板子原有的回调选择。
     parameters.board.warden ||
     parameters.board.silenceElder ||
+      parameters.board.awakenedWolfKing ||
       parameters.board.radiantEclipse ||
       parameters.board.nobleSecretBody ||
       parameters.board.fragrantPairSeer ||

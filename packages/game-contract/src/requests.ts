@@ -15,6 +15,7 @@ export interface ActionRequestExtras {
   warden_candidates?: readonly EntityId[];
   warden_partner_id?: EntityId;
   warden_forced_target?: EntityId;
+  claw_bequest_candidates?: readonly EntityId[];
   silence_candidates?: readonly EntityId[];
   silence_target_id?: EntityId;
   silence_translator_id?: EntityId | null;

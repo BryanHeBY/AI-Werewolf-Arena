@@ -73,6 +73,10 @@ import {
   readSilenceElderFact,
   silenceElderFactAudience,
 } from "@ai-werewolf-arena/game-contract/facts/silence-elder";
+import {
+  AWAKENED_CLAW_EVENT_TYPES,
+  readAwakenedClawFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-claws";
 import { readCrowFact } from "@ai-werewolf-arena/game-contract";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
 import {
@@ -339,6 +343,7 @@ const requestSchema = z.strictObject({
     trickster_may_pass: z.boolean().optional(),
     swap_candidates: z.array(positive).optional(),
     shoot_candidates: z.array(positive).optional(),
+    claw_bequest_candidates: z.array(positive).optional(),
     warden_candidates: z.array(z.number().int().positive()).optional(),
     warden_partner_id: z.number().int().positive().optional(),
     warden_forced_target: z.number().int().positive().optional(),
@@ -652,6 +657,22 @@ const schema2 = z.strictObject({
           )
             ctx.addIssue({ code: "custom", message: "reproduction_warden_fact_invalid" });
         }
+        if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const fact = readAwakenedClawFact(event.type, event.payload);
+          const expected =
+            fact?.type === "awakened_claw_bequeathed"
+              ? [fact.payload.actorId, fact.payload.targetId].sort((a, b) => a - b)
+              : fact?.type === "awakened_claw_spent"
+                ? [fact.payload.actorId]
+                : [];
+          if (
+            !fact ||
+            !Array.isArray(event.audience) ||
+            event.audience.length !== expected.length ||
+            !expected.every((id, i) => event.audience![i] === id)
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_awakened_claw_fact_invalid" });
+        }
         if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type)) {
           const f = readSilenceElderFact(event.type, event.payload);
           const visibility = f && silenceElderFactAudience(f.type);
@@ -776,6 +797,7 @@ const schema2 = z.strictObject({
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          !(AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(WARDEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type) &&
           event.type !== "crow_curse_chosen" &&

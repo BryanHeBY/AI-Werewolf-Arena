@@ -48,6 +48,7 @@ import { VILLAGER_ROLE_PROFILE } from "../../features/villager/profile";
 import { WITCH_ROLE_PROFILE } from "../../features/witch/profile";
 import { WOLF_ROLE_PROFILE } from "../../features/wolf/profile";
 import { WOLF_KING_ROLE_PROFILE } from "../../features/wolf-king/profile";
+import { AWAKENED_WOLF_KING_PROFILE } from "../../features/awakened-wolf-king/profile";
 import { WHITE_WOLF_KING_ROLE_PROFILE } from "../../features/white-wolf-king/profile";
 import { KNIGHT_ROLE_PROFILE } from "../../features/knight/profile";
 import { GRAVEKEEPER_ROLE_PROFILE } from "../../features/gravekeeper/profile";
@@ -106,6 +107,7 @@ export const BUILTIN_ROLE_CONTRIBUTIONS: readonly RoleContributions[] = [
   SHAPESHIFTER_ROLE_PROFILE,
   WOLF_ROLE_PROFILE,
   WOLF_KING_ROLE_PROFILE,
+  AWAKENED_WOLF_KING_PROFILE,
   WHITE_WOLF_KING_ROLE_PROFILE,
   KNIGHT_ROLE_PROFILE,
   GRAVEKEEPER_ROLE_PROFILE,

@@ -44,7 +44,8 @@
     "./night-ability-views": "./src/night-ability-views.ts",
     "./facts/crow": "./src/facts/crow.ts",
     "./facts/silence-elder": "./src/facts/silence-elder.ts",
-    "./facts/warden": "./src/facts/warden.ts"
+    "./facts/warden": "./src/facts/warden.ts",
+    "./facts/awakened-claws": "./src/facts/awakened-claws.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -175,6 +176,9 @@
       ],
       "facts/warden": [
         "src/facts/warden.ts"
+      ],
+      "facts/awakened-claws": [
+        "src/facts/awakened-claws.ts"
       ]
     }
   }

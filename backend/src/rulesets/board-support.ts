@@ -25,6 +25,7 @@ import {
 import { isWardenPreset } from "./support/warden";
 import { isCrowPreset } from "./support/crow";
 import { isSilenceElderPreset } from "./support/silence-elder";
+import { isAwakenedWolfKingPreset } from "./support/awakened-wolf-king";
 import { Role, WinCondition } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { isDemonHunterPreset } from "./node-board-support";
@@ -173,5 +174,11 @@ export function boardPresetViolation(config: ReadonlyBoardConfig) {
     !isWardenPreset(config)
   )
     return "warden_preset_invalid";
+  if (
+    (config.awakenedWolfKing ||
+      config.roleSetups.some((row) => row.role === Role.AwakenedWolfKing && row.count > 0)) &&
+    !isAwakenedWolfKingPreset(config)
+  )
+    return "awakened_wolf_king_preset_invalid";
   return null;
 }

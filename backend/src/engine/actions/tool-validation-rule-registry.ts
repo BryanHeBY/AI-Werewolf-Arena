@@ -20,7 +20,7 @@ import type { World } from "../../domain/world";
 import type { ActionRequest } from "../../domain/actions";
 import type { ToolName as ContractToolName } from "@ai-werewolf-arena/game-contract";
 import { validateWardenNativeTarget } from "../../rulesets/warden-native-target-validation";
-import { validateGiftGun } from "../../features/death-actions/gift-gun-ports";
+import { validateDeathShotSource } from "../../rulesets/death-shot-source-validation";
 
 function buildDefaultRules(
   roleProfileRegistry: RoleCatalog,
@@ -85,7 +85,7 @@ export class ToolValidationRuleRegistry {
   validate(ctx: Omit<ValidationHostInput, "roleCatalog">): RuleViolation | null {
     if(this.useProfileRules){const warden=validateWardenNativeTarget({...ctx,roleCatalog:this.roleProfileRegistry});if(warden)return warden;}
     if (this.useProfileRules && ctx.toolCall.name === "shoot" && ctx.abilityId !== undefined)
-      return validateGiftGun({ ...ctx, roleCatalog: this.roleProfileRegistry });
+      return validateDeathShotSource({ ...ctx, roleCatalog: this.roleProfileRegistry });
     // 同名工具可以归不同角色库存；在原调用点按当前角色读取规则，不能只靠全局索引授权。
     const rule =
       (this.useProfileRules

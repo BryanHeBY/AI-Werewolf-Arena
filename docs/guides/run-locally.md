@@ -45,3 +45,7 @@ ACP 会话能回复文本，不代表注入的游戏 MCP 已启动成功。若�
 ## 典狱长原十二人
 
 [典狱长示例](../examples/warden/README.md)给出仅复制本族 board/game 的步骤、两语 LLM／ACP 命令、秘密双方选择与完整 God 教学档。原十二人仅支持具名 `awa_melbourne_warden_v1`＋`awa_warden_partner_native_v1`；保留操作者已有 runtime 和隔离认证配置。
+
+## 觉醒狼王原十／十二人
+
+[觉醒狼王示例](../examples/awakened-wolf-king/README.md)给出两份来源牌池、中文／英文 LLM 与 ACP 入口、亲传／双爪及失败前缀的真实归档说明。仅复制本族 board/game，保留已有 runtime 和隔离认证；角色参数为严格 `{}`，具体死因和梦保护按具名 `awa_awakened_wolf_king_v1`。觉醒女巫来源板在其独立交付前不开放。

@@ -91,6 +91,10 @@ import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,
 } from "@ai-werewolf-arena/game-contract/facts/time-wolf-consort";
+import {
+  AWAKENED_CLAW_EVENT_TYPES,
+  readAwakenedClawFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-claws";
 import { readCrowFact } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 
@@ -103,6 +107,7 @@ import {
   readSilenceElderFact,
 } from "@ai-werewolf-arena/game-contract/facts/silence-elder";
 const FACT_READERS = {
+  readAwakenedClawFact,
   readWardenFact,
   readSilenceElderFact,
   readCrowFact,
@@ -157,6 +162,8 @@ export interface PreparedAgentEvent {
 /** 家族分派集中在这里；选择唯一实际读器，不先后试读同一个 payload。 */
 function factReader(type: GameEvent["type"]): AgentEventFactReader | null {
   if ((WARDEN_EVENT_TYPES as readonly string[]).includes(type)) return "readWardenFact";
+  if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(type))
+    return "readAwakenedClawFact";
   if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(type))
     return "readSilenceElderFact";
   if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(type)) return "readAnimalDreamFact";
@@ -237,7 +244,8 @@ export function prepareInertAgentEvent(event: InertAgentEvent): PreparedAgentEve
   const payload =
     fact.reader === "readWardenFact" ||
     fact.reader === "readAnimalDreamFact" ||
-    fact.reader === "readSilenceElderFact"
+    fact.reader === "readSilenceElderFact" ||
+    fact.reader === "readAwakenedClawFact"
       ? fact.value.payload
       : fact.value;
   // 原家族读器已经深复制 payload；这里只复制元信息（尤其是历史 audience），不重复复制事实。

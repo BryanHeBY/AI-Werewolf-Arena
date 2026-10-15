@@ -5,6 +5,7 @@
  * 工具动作不是付款或生效凭据，合法性仍由引擎在提交入口复验。
  */
 import { bindFragrantPair, inspectPair } from "./fragrant-pair-seer";
+import { bequeathClaw } from "./awakened-wolf-king";
 import { castShelter, swallowSkill } from "./radiant-eclipse";
 import { chooseServant, protectSecretBody } from "./noble-secret-body";
 import { modifySkill, bonusAction } from "./native";
@@ -79,6 +80,7 @@ import {
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
   {tool:"warden_pair",decide:wardenPair},
   {tool:"warden_decide",decide:wardenDecide},
+  { tool: "bequeath_claw", decide: bequeathClaw },
   {
     tool: "fox_distract",
     decide: ({ request, pick, style, random }) => ({

@@ -28,6 +28,7 @@ const translationOwners = new Set([
   "packages/game-text/src/messages/features/crow.ts",
   "packages/game-text/src/messages/features/silence-elder.ts",
   "packages/game-text/src/messages/features/warden.ts",
+  "packages/game-text/src/messages/features/awakened-wolf-king.ts",
 ]);
 // 扫描结果记录源码行；例外按文件／完整字面及精确次数匹配，reason 用于保留人工说明。
 /** @typedef {{ file: string, text: string, line: number }} ChineseLiteral */

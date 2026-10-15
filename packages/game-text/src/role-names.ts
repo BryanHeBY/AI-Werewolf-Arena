@@ -69,7 +69,7 @@ const roleNames = [
   { id: `${Role.AwakenedIdiot}`, names: { "zh-CN": "觉醒愚者", en: "Awakened Village Idiot" } },
   { id: `${Role.AwakenedSeer}`, names: { "zh-CN": "觉醒预言家", en: "Awakened Seer" } },
   {
-    id: PLANNED_ROLE_IDS.AwakenedWolfKing,
+    id: Role.AwakenedWolfKing,
     names: { "zh-CN": "觉醒狼王", en: "Awakened Wolf King" },
   },
   { id: `${Role.AwakenedHiddenWolf}`, names: { "zh-CN": "觉醒隐狼", en: "Awakened Hidden Wolf" } },

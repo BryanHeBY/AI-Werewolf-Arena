@@ -1,0 +1,89 @@
+{
+  "version": 2,
+  "id": "awa_awakened_wolf_king_10_v1",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 10,
+    "roleSetups": [
+      {
+        "role": "wolf",
+        "count": 2
+      },
+      {
+        "role": "awakened_wolf_king",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 4
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "miracle_merchant",
+        "count": 1
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_side"
+    ],
+    "hooks": {
+      "onDaybreak": false,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": false
+    }
+  },
+  "mechanisms": {
+    "disclosure": {
+      "deathRevealPolicy": "awa_hidden_v1"
+    },
+    "lastWords": {
+      "policy": "awa_initial_wave_v1"
+    },
+    "sheriff": {
+      "enabled": true,
+      "electionPolicy": "awa_nomination_offstage_pk_v1",
+      "badgePolicy": "awa_holder_choice_v1",
+      "voteWeight": 1.5,
+      "tieBreaker": "no_elimination"
+    },
+    "voting": {
+      "exilePolicy": "awa_one_pk_v1"
+    },
+    "selfDestruct": {
+      "enabledWindows": [
+        "on_pre_election",
+        "on_pre_vote"
+      ]
+    },
+    "tieBreaker": {
+      "exileVote": "no_elimination",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "seer": {
+      "targetPolicy": "awa_alive_v1",
+      "actionPolicy": "awa_required_when_legal_v1"
+    },
+    "witch": {
+      "selfHeal": "first_night_only",
+      "knifeVisibility": "awa_with_heal_v1",
+      "potionPolicy": "awa_one_native_v1"
+    },
+    "miracle_merchant": {},
+    "awakened_wolf_king": {}
+  }
+}

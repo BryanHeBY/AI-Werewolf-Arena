@@ -5,6 +5,7 @@
  * 无模型、网络或独立随机源；候选按原查询时点读取，异常保留已完成的读取与脚本前缀。
  */
 import { roleMethod } from "../../rulesets/roles/owned-bindings";
+import { awakenedClawBaseline } from "../../features/awakened-wolf-king/baseline-action";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { scholarMentorBonusTargets } from "../../features/scholar-mentor/night-frame";
 import { prohibitsLoversVote } from "../../features/cupid/relation";
@@ -138,6 +139,11 @@ export class BaselineBotActionProvider implements ActionProvider {
         : { name: "vote", args: { target_id: null, abstain: true } };
     }
 
+    // 死亡爪是独立具名来源，不借夜间赠礼库存；旧夜能力的原拒绝路径与查询次序保持。
+    const claw = awakenedClawBaseline(this.world, request, () =>
+      this.pickAliveByCamp(request.actorId, Camp.Good),
+    );
+    if (claw !== undefined) return claw;
     // 绑定动作使用原能力实例；没有实例、不是夜间或本夜未激活时不退回持有者原生技能。
     const bound = request.context.ability_id
       ? allNightAbilities(role).find((ability) => ability.id === request.context.ability_id)

@@ -15,6 +15,7 @@ import { tricksterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { magicianEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { redMoonEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { awakenedClawEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { silenceElderEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { crowEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { nightmareEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -60,6 +61,8 @@ export function eventLabel(
   const p = event.payload;
   const warden = wardenEventLabel(event.type, p, locale);
   if (warden !== null) return warden;
+  const claws = awakenedClawEventLabel(event.type, p, locale);
+  if (claws !== null) return claws;
   const silence = silenceElderEventLabel(event.type, p, locale);
   if (silence !== null) return silence;
   const crow = crowEventLabel(event.type, p, locale);

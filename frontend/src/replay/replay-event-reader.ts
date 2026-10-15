@@ -104,6 +104,10 @@ import {
   SILENCE_ELDER_EVENT_TYPES,
   readSilenceElderFact,
 } from "@ai-werewolf-arena/game-contract/facts/silence-elder";
+import {
+  AWAKENED_CLAW_EVENT_TYPES,
+  readAwakenedClawFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-claws";
 import { readCrowFact } from "@ai-werewolf-arena/game-contract";
 import { isRoleId, type RoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 
@@ -131,6 +135,9 @@ const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
   warden_partner_notified: ["actorId", "partnerId"],
   warden_decision: ["actorId"],
   warden_resolved: ["actorId"],
+  awakened_claw_bequeathed: ["actorId", "targetId"],
+  awakened_claw_spent: ["actorId"],
+  awakened_claws_expired: ["actorId"],
   silence_chosen: ["actorId", "targetId"],
   silence_announced: ["targetId"],
   silence_gesture: ["actorId"],
@@ -375,6 +382,8 @@ function validKnownFields(type: string, p: Record<string, unknown>): boolean {
     return !!readRedMoonNextNightFact(type, p);
   if (type === "red_moon_delay_expired") return !!readRedMoonExpiryFact(type, p);
   if ((WARDEN_EVENT_TYPES as readonly string[]).includes(type)) return !!readWardenFact(type, p);
+  if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readAwakenedClawFact(type, p);
   if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(type))
     return !!readSilenceElderFact(type, p);
   if (type === "crow_curse_chosen" || type === "crow_curse_applied") return !!readCrowFact(type, p);
@@ -754,6 +763,11 @@ export function readReplayEvent(
       add(p.actorId);
       if (Object.hasOwn(p, "partnerId")) add(p.partnerId);
       if (Array.isArray(p.pair)) for (const id of p.pair) add(id);
+    }
+    if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (safe.payload.day !== safe.day) return null;
+      if (safe.type === "awakened_claw_bequeathed" && safe.phase !== "night") return null;
+      if ("targetId" in p) add(p.targetId, true);
     }
     if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       if (p.day !== safe.day) return null;

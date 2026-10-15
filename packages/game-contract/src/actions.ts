@@ -10,6 +10,7 @@ import type { MessageRef } from "./message-refs";
 export interface ToolArgMap {
   warden_pair: { target_ids: readonly [EntityId, EntityId] | null };
   warden_decide: { choice: "trade" | "betray" };
+  bequeath_claw: { target_id: EntityId | null };
   silence: { target_id: EntityId; translator_id: EntityId | null };
   gesture: { description: string };
   translate_silence: { text: string | null };
@@ -94,6 +95,7 @@ export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
   "warden_pair",
   "warden_decide",
+  "bequeath_claw",
   "curse_exile",
   "silence",
   "gesture",
@@ -214,6 +216,7 @@ export const ACTION_STAGES = [
   "magician_exchange",
   "nightmare_fear",
   "crow_curse",
+  "awakened_claw_bequest",
   "silence_elder",
   "silence_gesture",
   "silence_translation",

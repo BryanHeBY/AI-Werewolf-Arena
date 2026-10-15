@@ -8,6 +8,7 @@ import { Phase } from "./identity";
 import type { DeathActionPolicy } from "./board";
 import type { NightLifeScope } from "./night-effects";
 import { DeathCause } from "@ai-werewolf-arena/game-contract";
+import type { RequestLeaseTurn } from "./request-lease";
 export { DeathCause } from "@ai-werewolf-arena/game-contract";
 export type { DeathSources } from "@ai-werewolf-arena/game-contract";
 
@@ -20,8 +21,10 @@ export type DeathShotSelection =
       targetScope?: NightLifeScope;
       mappedMiss?: true;
       mappingCurrent?: () => boolean;
+      /** 仅可信新资源路径持内存交付句柄；公开 hook 与玩家事件不会获得它。 */
+      requestDelivery?: RequestLeaseTurn;
     }
-  | { kind: "pass"; deathActionId: number }
+  | { kind: "pass"; deathActionId: number; requestDelivery?: RequestLeaseTurn }
   | { kind: "invalid" };
 
 export function permitsDeathShot(

@@ -416,10 +416,10 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "双目标信息",
   },
   {
-    id: PLANNED_ROLE_IDS.AwakenedWolfKing,
-    status: "planned",
+    id: Role.AwakenedWolfKing,
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/rules/awa-awakened-wolf-king-v1.md#awakened_wolf_king",
     mechanismSummary: "多次死亡技能、能力转移",
   },
   {

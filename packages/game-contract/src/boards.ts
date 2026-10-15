@@ -140,6 +140,7 @@ export interface SilenceElderConfig {
   policy: "awa_melbourne_gestures_v1";
 }
 export interface BoardConfig {
+  awakenedWolfKing?: { policy: "awa_awakened_wolf_king_v1" };
   crow?: CrowConfig;
   silenceElder?: SilenceElderConfig;
   warden?: { policy: "awa_melbourne_warden_v1"; forcePolicy: "awa_warden_partner_native_v1" };
