@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "scope": "docs/refactor/generated/format-evidence-boundary-scope-final.json",
+  "scopeSHA256": "d4e57bdde09fb0ba36644d209577bdc49d84827a4c31198461ebba062d97575d",
+  "source": [
+    {
+      "path": ".prettierignore",
+      "sha256": "1cd8c920aa89971588831f0bd72cd2abde03ab6d904fb435386f499fdc12ff6f"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/format-evidence-boundary-before.json",
+      "sha256": "e58940f78a5e0f69843d206d0ac87f9317f1bf5bb446a0ace2252a0b7ce96fb4"
+    },
+    {
+      "path": "docs/refactor/generated/format-evidence-boundary-preflight-output.txt",
+      "sha256": "aa981ca28584057548727679a4ab957e36699b6f3592a9546aeb93b6c99bb2e5"
+    },
+    {
+      "path": "docs/refactor/generated/format-evidence-boundary-receipts.json",
+      "sha256": "7834da2d3736de514f03ff06c041be75147d7307fa2b4f2c57e6da1a7f44d421"
+    }
+  ],
+  "limitations": [
+    "No full formatting run; no broad production/test ignore; no architecture or fixture exceptions."
+  ]
+}

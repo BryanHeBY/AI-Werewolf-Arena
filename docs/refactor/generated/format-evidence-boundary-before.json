@@ -1,0 +1,6 @@
+{
+  "baseCommit": "7dd49c9942eed59897def06ec36b8af23ee83518",
+  "path": ".prettierignore",
+  "sha256": "495cf5e855564801d3f882a4864ddebbca1440973b075d954eaf5d5767e3513b",
+  "text": "node_modules/\n**/node_modules/\n.git/\n.codex/\n.agents/\n.aws/\n.env*\nconfigs/\nbun.lock\ndist/\n**/dist/\ncoverage/\n**/coverage/\nrecord/\ndata/records/\nbackend/data/records/\nfrontend/test-results/\nfrontend/playwright-report/\n# Recorded fixtures are historical evidence, including hashes and original bytes.\nfrontend/tests/fixtures/*.json\nfrontend/tests/fixtures/player-views/*.json\npackages/replay-contract/fixtures/*.json\n*.log\n"
+}

@@ -979,3 +979,5 @@
 - C45 前端测试中文维护说明：81源/101精确记录，按真实e2e、unit、support、CLI与render管线区分断言来源和覆盖边界。作者完整阅读，Root真正非作者逐条复核全部注释变更及关键实际消费者；原数据、断言、类型指令和机器字符串保。首81完整程序/162实际整输出0；职责头首11诊断/6根（旧口头12误记由原raw/JSON纠正），仅6失败头与6源桥后0；末官方角色名定序王子一词窄修单源2输出0，其余80同SHA，首formal全文保留。末81当前/4controls/26附件及scope/MD/ev双审批准，无类型/业务/E2E/render/全门禁或旧绿复跑；只注释变更会改变未来sourceHash，完整P9继续。见frontend-test-chinese-contracts.md。
 
 - C45 共享包测试中文维护说明：39源/45精确变换，说明事实parser、类型负例、公共双语词典及历史reader的实际验证对象，保声明数据与运行授权、库存、真实roster边界。作者完整阅读，Root非作者逐条审45差分与关键真实断言/调用方；4稳定生产controls及原59工具指令保。Root首6355bf/session14782→a199dc完整22486typed/4809arrays/31239叶和78实际整输出0；1610b6头39/738docs/0，两项各一次；末39/sourceReady/10附件/MD/ev双审批准，不重复类型、业务或全门禁，不将历史catalog64当runtime55。见shared-package-test-chinese-contracts.md。
+
+- C47 格式化证据边界：原Prettier预检2a5e46实际exit1保存原输出；仅.prettierignore精确新增docs/refactor/generated/保护历史原字节/SHA交叉引用，接触到的夹具说明同步中文。Root作者与真正非作者核actual7dd原全文/完整逆/3controls/3附件/当前scope批准。后file-info3a339e实际0仅证明证据ignored、后端生产及前端测试仍选TypeScript parser，不冒全仓format已绿；架构strict/fixture/生产测试格式范围保原，完整固定输入检查待C47。见format-evidence-boundary.md。

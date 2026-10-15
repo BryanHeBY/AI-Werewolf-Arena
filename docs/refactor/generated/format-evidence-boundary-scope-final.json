@@ -1,0 +1,43 @@
+{
+  "baseCommit": "7dd49c9942eed59897def06ec36b8af23ee83518",
+  "source": [
+    {
+      "path": ".prettierignore",
+      "sha256": "1cd8c920aa89971588831f0bd72cd2abde03ab6d904fb435386f499fdc12ff6f"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394"
+    },
+    {
+      "path": "package.json",
+      "sha256": "11dd0dff1c16be4cb74701840fc270d218669c6228754ef37aa0e7c74e16f40f"
+    },
+    {
+      "path": "docs/refactor/generated/root-infrastructure-chinese-contracts-proof.cjs",
+      "sha256": "91eb282ef34f2f7a1eac822b5810bfaa0cf902379d75b53de088bcefdd62b71e"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/format-evidence-boundary-before.json",
+      "sha256": "e58940f78a5e0f69843d206d0ac87f9317f1bf5bb446a0ace2252a0b7ce96fb4"
+    },
+    {
+      "path": "docs/refactor/generated/format-evidence-boundary-preflight-output.txt",
+      "sha256": "aa981ca28584057548727679a4ab957e36699b6f3592a9546aeb93b6c99bb2e5"
+    },
+    {
+      "path": "docs/refactor/generated/format-evidence-boundary-receipts.json",
+      "sha256": "7834da2d3736de514f03ff06c041be75147d7307fa2b4f2c57e6da1a7f44d421"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/format-evidence-boundary.md",
+    "sha256": "d9d6457e732176dfa581d08970a7be17859515b4291dc6b9f0cbba5a3f0f6119"
+  },
+  "frozen": true
+}

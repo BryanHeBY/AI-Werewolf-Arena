@@ -1,0 +1,42 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "7dd49c9942eed59897def06ec36b8af23ee83518",
+  "source": [
+    {
+      "path": ".prettierignore",
+      "sha256": "1cd8c920aa89971588831f0bd72cd2abde03ab6d904fb435386f499fdc12ff6f"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/format-evidence-boundary-scope-final.json",
+    "sha256": "d4e57bdde09fb0ba36644d209577bdc49d84827a4c31198461ebba062d97575d"
+  },
+  "document": {
+    "path": "docs/refactor/format-evidence-boundary.md",
+    "sha256": "d9d6457e732176dfa581d08970a7be17859515b4291dc6b9f0cbba5a3f0f6119"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/format-evidence-boundary-evidence.json",
+    "sha256": "58d7e87fd9715826a6babc5f8ada7de5da570917837132ec42f8ed7ef1fd8555"
+  },
+  "integrity": {
+    "freshSources": 1,
+    "actualGitBefore": 1,
+    "controls": 3,
+    "artifactHashes": 3,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "role": "Root作者自审；必须另有真正非作者独审",
+    "boundary": "仅.prettierignore新增精确generated证据目录并翻译既有夹具说明，不添加生产测试或架构豁免",
+    "actualEvidence": "原Prettier具体文件预检退出1原raw保留；后仅file-info选择检查验证证据忽略、生产测试继续进入，不冒全仓format绿色",
+    "immutability": "原有generated证据脚本整字节及所有SHA链、版本、arch及fixture规则保原；最终format待固定输入统一执行"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}
