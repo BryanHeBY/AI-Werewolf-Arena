@@ -18,6 +18,7 @@ import {
   ownCommittedDeathHook,
   type HookRuntime,
   type OwnedHookBindingSource,
+  type OwnedDeathHookBindingSource,
   type OwnedCommittedCommands,
 } from "./owned-bindings";
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
@@ -93,13 +94,20 @@ export type VotedOutHook<Ports extends object = Record<never, never>> = {
   invoke(runtime: HookRuntime<Ports>, targetId: EntityId): VotedOutResult | null;
 }["invoke"];
 
+/** 公共扩展只能观察选择标量；该副本不是目标生命、映射回调、许可或付款回执。 */
+export type DeathHookChoice =
+  | { kind: "shot"; targetId: EntityId; deathActionId: number; mappedMiss?: true }
+  | { kind: "pass"; deathActionId: number }
+  | { kind: "invalid" };
+export type DeathHookChooser = (actorId: EntityId, abilityId?: string) => Promise<DeathHookChoice>;
+
 /** 死亡钩子函数签名。 */
 export type DeathHook<Ports extends object = Record<never, never>> = {
   invoke(
     runtime: HookRuntime<Ports>,
     deadIds: EntityId[],
     deathSources: DeathSources,
-    chooseDeathShot: (actorId: EntityId, abilityId?: string) => Promise<DeathShotSelection>,
+    chooseDeathShot: DeathHookChooser,
     context?: DeathHookContext,
   ): Promise<DeathHookResult>;
 }["invoke"];
@@ -148,13 +156,25 @@ export function invokeDeathHook(
   context?: DeathHookContext,
   preparation?: DeathHookPreparationSource,
 ): Promise<DeathHookResult> {
-  return hook(
-    hookRuntime("death", hook, bindingSource(world, events, preparation)),
-    ids,
-    sources,
-    choose,
-    context,
-  );
+  const source: OwnedDeathHookBindingSource = {
+    ...bindingSource(world, events, preparation),
+    chooseDeathShot: choose,
+  };
+  // 未知扩展实际取得新标量对象，不透传原targetScope/life或mappingCurrent。
+  // 内建资源command不调用此adapter，仍私用同一原chooser及其完整原体／映射结果。
+  const publicChoose: DeathHookChooser = async (...args) => {
+    const selection = await choose(...args);
+    if (selection.kind === "shot")
+      return {
+        kind: "shot",
+        targetId: selection.targetId,
+        deathActionId: selection.deathActionId,
+        ...(selection.mappedMiss ? { mappedMiss: true as const } : {}),
+      };
+    if (selection.kind === "pass") return { kind: "pass", deathActionId: selection.deathActionId };
+    return { kind: "invalid" };
+  };
+  return hook(hookRuntime("death", hook, source), ids, sources, publicChoose, context);
 }
 export function invokeVotedOutHook(
   hook: VotedOutHook,

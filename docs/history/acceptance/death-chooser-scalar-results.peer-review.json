@@ -1,0 +1,161 @@
+{
+  "decision": "approved",
+  "approved": true,
+  "kind": "limited TMP prepared non-author successor review, no execution",
+  "handoff": {
+    "path": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/HANDOFF.json",
+    "sha256": "6e8269a354993d206886affc8280dcd36eb91120225ce6dca0c48da356980b99"
+  },
+  "source": [
+    {
+      "path": "backend/src/engine/hooks/owned-bindings.ts",
+      "mode": "100644",
+      "beforeSHA256": "b5132fa045ea4de7725975233a7fd1722fb2a468c867dda0ac2c363937c078d2",
+      "afterSHA256": "dc195c79c9060b0315cbdc8846177720c8b256e38b9814f5451c771726591ded",
+      "bytes": 3733,
+      "candidate": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidates/backend/src/engine/hooks/owned-bindings.ts",
+      "apply": "whole file only if exact WIP beforeSHA matches"
+    },
+    {
+      "path": "backend/src/engine/hooks/registry.ts",
+      "mode": "100644",
+      "beforeSHA256": "a0fc5b9903574a54c98f1031e768199e562f6d0e67f7dc1facf71df5d044fcf2",
+      "afterSHA256": "9864a1a28b4172268e148bdfcc81c16e91955e9301eb1f7fdf3611e04229a252",
+      "bytes": 10244,
+      "candidate": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidates/backend/src/engine/hooks/registry.ts",
+      "apply": "whole file only if exact WIP beforeSHA matches"
+    },
+    {
+      "path": "backend/src/features/hunter/death-hook.ts",
+      "mode": "100644",
+      "beforeSHA256": "14d37b0942f9276a225c6639b49a272c88c002e6471d24818b9c1ef91f8beec3",
+      "afterSHA256": "bb1be60cc400e02249c259f9f5776087af06572b58137954d830945bb0f29517",
+      "bytes": 2682,
+      "candidate": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidates/backend/src/features/hunter/death-hook.ts",
+      "apply": "whole file only if exact WIP beforeSHA matches"
+    },
+    {
+      "path": "backend/src/features/mechanical-wolf/death-hook.ts",
+      "mode": "100644",
+      "beforeSHA256": "4dd635b9f0562097aaf7cc29f15a38be33b7cd9c596404fcfd1fa41620bfa272",
+      "afterSHA256": "b155e4ff14cb8bbb1f8a9fa5123a592c91ee6ee008ea19a7f0120b5f1190160d",
+      "bytes": 2324,
+      "candidate": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidates/backend/src/features/mechanical-wolf/death-hook.ts",
+      "apply": "whole file only if exact WIP beforeSHA matches"
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/death-hook.ts",
+      "mode": "100644",
+      "beforeSHA256": "2cffeff4a3f2f8340b1d32f7627ec6c8eeeaa0cda40b821cfd3497d70f72a085",
+      "afterSHA256": "7b3fe55ffed8150685eaa9c3189608a725c561065258ad7442b89fd8fac97526",
+      "bytes": 2325,
+      "candidate": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidates/backend/src/features/awakened-hidden-wolf/death-hook.ts",
+      "apply": "whole file only if exact WIP beforeSHA matches"
+    },
+    {
+      "path": "backend/src/features/death-actions/gift-gun-death-hook.ts",
+      "mode": "100644",
+      "beforeSHA256": "152ef05eb31d788e5350283b476863e908f243e27b8fd86bffbd2a4cbfaedb86",
+      "afterSHA256": "352aac2070cc41a782f7700b815f87b0a231794cef64d2e49d1716834c9e63f8",
+      "bytes": 4382,
+      "candidate": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidates/backend/src/features/death-actions/gift-gun-death-hook.ts",
+      "apply": "whole file only if exact WIP beforeSHA matches"
+    },
+    {
+      "path": "backend/src/features/wolf-beauty/death-hook.ts",
+      "mode": "100644",
+      "beforeSHA256": "870eed997179848c6b51653e670028384106df3186e430421e82755703e7b7eb",
+      "afterSHA256": "984de9a95dbb0700d147e462c5571ffcb74e17a630ee05ec8770ba9c43a4cbfe",
+      "bytes": 3379,
+      "candidate": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidates/backend/src/features/wolf-beauty/death-hook.ts",
+      "apply": "whole file only if exact WIP beforeSHA matches"
+    },
+    {
+      "path": "backend/src/features/wolf-king/profile.ts",
+      "mode": "100644",
+      "beforeSHA256": "41ca0920ea64a5335309770a5327607475bcf6842f3ee2b89479b7c225325912",
+      "afterSHA256": "bd580e27a53f7232f48c1405762478b5b4940ebcad821794848e5d165d8f5f6d",
+      "bytes": 4403,
+      "candidate": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidates/backend/src/features/wolf-king/profile.ts",
+      "apply": "exact chooser local deltas only"
+    },
+    {
+      "path": "backend/tests/unit/engine/death/narrow-hook-capabilities.test.ts",
+      "mode": "100644",
+      "beforeSHA256": "baac11d5bdb765c311e254a49bd3a2d816c89744914627252e6b1a666b06c976",
+      "afterSHA256": "792e2ce324728b046461398592a87945442319c1f5d90d9e2348d7f59da6d714",
+      "bytes": 10569,
+      "candidate": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidates/backend/tests/unit/engine/death/narrow-hook-capabilities.test.ts",
+      "apply": "whole file only if exact WIP beforeSHA matches"
+    }
+  ],
+  "sourceReadySHA256": "c5f089d60a00476097326043312808ddca40e1f3299caae9006ba6edf1f6d623",
+  "priorReview": {
+    "path": "/tmp/awa-death-query-ports-peer.json",
+    "sha256": "6a09a38f5363800b022e14e411decffb67f74bc953e4ccec8d57e19980f9b7fe"
+  },
+  "findings": [],
+  "closedFinding": "Public chooser now creates scalar-only DTO; original full chooser retained only per actual native binding. Unknown hook no longer receives targetScope.life/mappingCurrent via legitimate collect result.",
+  "readReview": [
+    "Registry actual invoke constructs private source with original chooser; custom adapter returns explicit kind/id/mappedMiss scalars only.",
+    "Native exact identity binder consumes source.chooseDeathShot directly; original full selection/scope/ref/current and body await path are unchanged.",
+    "Six concrete resource programs including WolfKing use original chooser; own public chooser parameter ignored, not used as native authority.",
+    "New declaration exercises real DeathResolution/factory/collection to custom plus native original pendingShot scope ref; hand-written expectations, not yet executed.",
+    "WolfKing must use exact local chooser fragments against H03 current profile; no whole-file overwrite."
+  ],
+  "integrity": {
+    "sourceCount": 9,
+    "wholeExactForwardCount": 9,
+    "artifactCount": 8,
+    "drift": []
+  },
+  "artifacts": [
+    {
+      "path": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/prepare.py",
+      "sha256": "6747a955a2ad89b2a046c82923aec4b5bcffa2b548dad653173c150e238e1eba",
+      "bytes": 17250
+    },
+    {
+      "path": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/before.json",
+      "sha256": "9afa31445718f824efd9dfea30eae630c1a70d9fe06ccab4619c01813a325d00",
+      "bytes": 45419
+    },
+    {
+      "path": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/edits.json",
+      "sha256": "d2b5265856480d1884ef2fd5b24aa329628aa2c43d290958d7dc9ede8dcca2f1",
+      "bytes": 16951
+    },
+    {
+      "path": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/candidate.patch",
+      "sha256": "052d75697f976910f83d698b99115b7a8470f0f93f54f080a70a31cbf224c0a0",
+      "bytes": 19189
+    },
+    {
+      "path": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/wolf-king-local-delta.json",
+      "sha256": "68d01e893aab9a9ae3e2cd93e40ec28317ed82616a7278a73c2a156979064653",
+      "bytes": 1032
+    },
+    {
+      "path": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/source-ready.json",
+      "sha256": "c5f089d60a00476097326043312808ddca40e1f3299caae9006ba6edf1f6d623",
+      "bytes": 5170
+    },
+    {
+      "path": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/README.md",
+      "sha256": "49f3027c6487e3c508a0109e73a20e35d4ba60fd1a7fc7e3f6ee546df75fd2b7",
+      "bytes": 2086
+    },
+    {
+      "path": "/tmp/awa-h02-death-effect-implementation/successor-scalar-death-chooser/prepared-checks.json",
+      "sha256": "b20337d33297c455ea735e76d1c11da2f82a8b8165a9070568597e4f6443bbda",
+      "bytes": 624
+    }
+  ],
+  "limitations": [
+    "Prepared static review only; no test/type/parser/compiler/check execution.",
+    "Initial 50-source actual receipt review remains as documented; this report does not rerun its checks or imply all algorithms independently proved.",
+    "Public custom adapter adds explicit await/scalar field reads as API retirement; native does not use that adapter."
+  ],
+  "checksExecuted": [],
+  "repoWrites": false
+}

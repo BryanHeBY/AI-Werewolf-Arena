@@ -56,13 +56,11 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
       },
     },
     deathHook: ownDeathHook<OwnedDeathCommands>(
-      (runtime, ids, sources, choose, context) =>
-        runtime.ports.resolve(ids, sources, choose, context),
+      (runtime, ids, sources, _choose, context) => runtime.ports.resolve(ids, sources, context),
       (source) => ({
         resolve: (
           ids: number[],
           sources: import("../../domain/model").DeathSources,
-          choose: Parameters<import("../../engine/hooks/registry").DeathHook>[3],
           context: Parameters<import("../../engine/hooks/registry").DeathHook>[4],
         ) => {
           const world = source.world,
@@ -71,7 +69,7 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
             world,
             ids,
             sources,
-            choose,
+            source.chooseDeathShot,
             events,
             {
               role: Role.WolfKing,

@@ -4,7 +4,7 @@
  * 引擎在实际调用时给binder原参数及晚prepare读取源，扩展只收到新建query/具体command对象。
  * 本内部装配叶不经公共barrel导出；自定义扩展可在闭包显式持有调用方本来拥有的窄command，不隐式继承内建绑定。
  */
-import type { EntityId, GameEvent, Role, Camp } from "../../domain/model";
+import type { EntityId, GameEvent, Role, Camp, DeathShotSelection } from "../../domain/model";
 import type { World } from "../../domain/world";
 import type { DeathHook, VotedOutHook, CommittedDeathWaveHook } from "./registry";
 
@@ -14,6 +14,14 @@ export interface OwnedHookBindingSource {
   readonly events: GameEvent[];
   prepareWorld(): World;
   prepareEvents(): GameEvent[];
+}
+/** 完整选择只在本次可信资源绑定中传递；不进入公开callback参数。 */
+export type OwnedDeathShotChooser = (
+  actorId: EntityId,
+  abilityId?: string,
+) => Promise<DeathShotSelection>;
+export interface OwnedDeathHookBindingSource extends OwnedHookBindingSource {
+  readonly chooseDeathShot: OwnedDeathShotChooser;
 }
 export interface HookQueries {
   role(id: EntityId): Role | undefined;
@@ -26,13 +34,13 @@ export interface HookRuntime<Ports extends object = Record<never, never>> {
   readonly ports: Ports;
 }
 type Binder = (source: OwnedHookBindingSource) => object;
-const deathBindings = new WeakMap<object, Binder>();
+const deathBindings = new WeakMap<object, (source: OwnedDeathHookBindingSource) => object>();
 const votedBindings = new WeakMap<object, Binder>();
 const committedBindings = new WeakMap<object, Binder>();
 /** 内部静态登记不执行binder；默认Registry仍只持同一函数名单。 */
 export function ownDeathHook<Ports extends object>(
   hook: DeathHook<Ports>,
-  binder: (source: OwnedHookBindingSource) => Ports,
+  binder: (source: OwnedDeathHookBindingSource) => Ports,
 ): DeathHook<Ports> {
   deathBindings.set(hook, binder);
   return hook;
@@ -56,9 +64,12 @@ export function ownedHookPorts(
   hook: object,
   source: OwnedHookBindingSource,
 ): object {
-  const binder = (
-    kind === "death" ? deathBindings : kind === "voted" ? votedBindings : committedBindings
-  ).get(hook);
+  if (kind === "death") {
+    const binder = deathBindings.get(hook);
+    // 仅invokeDeathHook的可信装配进入此分支，完整chooser在该处作为必填字段构造。
+    return binder ? binder(source as OwnedDeathHookBindingSource) : {};
+  }
+  const binder = (kind === "voted" ? votedBindings : committedBindings).get(hook);
   return binder ? binder(source) : {};
 }
 
@@ -67,7 +78,6 @@ export interface OwnedDeathCommands {
   resolve(
     ids: Parameters<DeathHook>[1],
     sources: Parameters<DeathHook>[2],
-    choose: Parameters<DeathHook>[3],
     context: Parameters<DeathHook>[4],
   ): ReturnType<DeathHook>;
 }

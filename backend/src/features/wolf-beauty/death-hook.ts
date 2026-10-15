@@ -12,6 +12,7 @@ import type { DeathHook } from "../../engine/hooks/registry";
 import {
   ownDeathHook,
   type OwnedHookBindingSource,
+  type OwnedDeathShotChooser,
   type OwnedDeathCommands,
 } from "../../engine/hooks/owned-bindings";
 import { activeCharm, permitsCharm } from "./relation";
@@ -25,7 +26,7 @@ async function resolveOwnedBeauty(
   source: OwnedHookBindingSource,
   ids: Parameters<DeathHook>[1],
   sources: Parameters<DeathHook>[2],
-  choose: Parameters<DeathHook>[3],
+  choose: OwnedDeathShotChooser,
   context: Parameters<DeathHook>[4],
 ): ReturnType<DeathHook> {
   const world = source.world,
@@ -65,13 +66,12 @@ async function resolveOwnedBeauty(
 
 /** 运行扩展只持本族collect命令，真实World和晚prepare读取源只在resource binder闭包内。 */
 export const wolfBeautyDeathHook: DeathHook = ownDeathHook<OwnedDeathCommands>(
-  (runtime, ids, sources, choose, context) => runtime.ports.resolve(ids, sources, choose, context),
+  (runtime, ids, sources, _choose, context) => runtime.ports.resolve(ids, sources, context),
   (source) => ({
     resolve: (
       ids: Parameters<DeathHook>[1],
       sources: Parameters<DeathHook>[2],
-      choose: Parameters<DeathHook>[3],
       context: Parameters<DeathHook>[4],
-    ) => resolveOwnedBeauty(source, ids, sources, choose, context),
+    ) => resolveOwnedBeauty(source, ids, sources, source.chooseDeathShot, context),
   }),
 );

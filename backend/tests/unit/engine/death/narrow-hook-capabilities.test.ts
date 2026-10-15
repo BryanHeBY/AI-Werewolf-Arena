@@ -17,6 +17,10 @@ import {
 } from "../../../../src/engine/hooks/registry";
 import { hunterDeathHook } from "../../../../src/features/hunter/death-hook";
 import { setHunterState } from "../../../../src/features/hunter/ports";
+import { captureNightLife } from "../../../../src/domain/night-effects";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 
 function fixture() {
   const world = new World("en"),
@@ -181,4 +185,96 @@ test("narrow Dream query: boolean identity preserves callee-before-id, original 
   expect(referenceReads).toBe(0);
   const other = fixture();
   expect(bindDreamLifeQueries(other.world).matchesAlive(other.target, () => original)).toBe(false);
+});
+
+// 真实死亡结算提供chooser；custom只观察候选，不借观察结果消费枪或改写目标生命。
+test("narrow death chooser: actual collection returns scalar DTO to custom while native keeps original mapped scope", async () => {
+  const f = fixture(),
+    events: GameEvent[] = [];
+  f.world.getComponent(f.actor, COMPONENT.Alive)!.alive = true;
+  const targetLife = f.world.getComponent(f.target, COMPONENT.Alive)!;
+  let asks = 0,
+    customCalls = 0;
+  const custom: DeathHook = async (_runtime, ids, _sources, choose) => {
+    customCalls++;
+    expect(ids).toEqual([1]);
+    const selected = await choose(f.actor);
+    expect(selected.kind).toBe("shot");
+    expect(Object.keys(selected).sort()).toEqual(["deathActionId", "kind", "targetId"]);
+    expect("targetScope" in selected).toBe(false);
+    expect("mappingCurrent" in selected).toBe(false);
+    expect("life" in selected).toBe(false);
+    if (selected.kind !== "shot") throw new Error("literal_expected_shot");
+    expect(selected.targetId).toBe(2);
+    expect(Number.isSafeInteger(selected.deathActionId)).toBe(true);
+    selected.targetId = 999;
+    expect(f.world.getComponent(f.target, COMPONENT.Alive)).toBe(targetLife);
+    expect(targetLife.alive).toBe(true);
+    return { extraDeaths: [], extraDeathSources: {} };
+  };
+  await new DeathResolution(
+    f.world,
+    events,
+    new ToolGateway(),
+    new EventRegistry(new HookRegistry([], [custom])),
+    { day: 1, phase: Phase.Day, gameOver: false, result: null },
+  ).resolve(
+    [f.actor],
+    { [f.actor]: [DeathCause.Shot] },
+    {
+      async getAction(request) {
+        asks++;
+        expect(request.allowedTools).toEqual(["shoot"]);
+        return { name: "shoot", args: { target_id: f.target } };
+      },
+    },
+    Phase.Day,
+    Phase.Day,
+  );
+  expect(asks).toBe(1);
+  expect(customCalls).toBe(1);
+  expect(f.stock.canShoot).toBe(true);
+  expect(targetLife.alive).toBe(true);
+  expect(events.some((event) => event.type === "hunter_shot")).toBe(false);
+  expect(f.world.activeDeathActionCount).toBe(0);
+
+  // 内建command必须继续消费同一完整selection，不能由公共DTO重捕目标或丢失映射当前性。
+  const native = fixture(),
+    originalScope = captureNightLife(native.world, native.target)!;
+  const permit = native.world.openDeathAction(native.actor, "shoot", Phase.Day, 1);
+  let mappingChecks = 0;
+  try {
+    const result = await invokeDeathHook(
+      hunterDeathHook,
+      native.world,
+      [native.actor],
+      { [native.actor]: [DeathCause.Exile] },
+      async () => ({
+        kind: "shot",
+        targetId: native.target,
+        deathActionId: permit.id,
+        targetScope: originalScope,
+        mappingCurrent: () => {
+          mappingChecks++;
+          return true;
+        },
+      }),
+      [],
+      {
+        day: 1,
+        deathOriginPhase: Phase.Day,
+        deferShotCommit: true,
+        nightEffect: false,
+        blocksNightShot: () => false,
+      },
+    );
+    expect(mappingChecks).toBe(1);
+    expect(result.pendingShots).toHaveLength(1);
+    expect(result.pendingShots![0]!.targetScope).toBe(originalScope);
+    expect(native.stock.canShoot).toBe(false);
+    expect(native.world.getComponent(native.target, COMPONENT.Alive)).toBe(originalScope.life);
+    expect(originalScope.life.alive).toBe(true);
+  } finally {
+    permit.close();
+  }
 });

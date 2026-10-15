@@ -9,6 +9,7 @@ import type { DeathHook } from "../../engine/hooks/registry";
 import {
   ownDeathHook,
   type OwnedHookBindingSource,
+  type OwnedDeathShotChooser,
   type OwnedDeathCommands,
 } from "../../engine/hooks/owned-bindings";
 import { resolveNativeDeathShots } from "../death-actions/settlement-ports";
@@ -19,7 +20,7 @@ function resolveOwnedDeath(
   source: OwnedHookBindingSource,
   ids: Parameters<DeathHook>[1],
   sources: Parameters<DeathHook>[2],
-  choose: Parameters<DeathHook>[3],
+  choose: OwnedDeathShotChooser,
   context: Parameters<DeathHook>[4],
 ): ReturnType<DeathHook> {
   const world = source.world,
@@ -51,13 +52,12 @@ function resolveOwnedDeath(
 
 /** 本族运行hook只得到具体结算命令；cold绑定不查询名单、库存或World。 */
 export const mechanicalDeathHook: DeathHook = ownDeathHook<OwnedDeathCommands>(
-  (runtime, ids, sources, choose, context) => runtime.ports.resolve(ids, sources, choose, context),
+  (runtime, ids, sources, _choose, context) => runtime.ports.resolve(ids, sources, context),
   (source) => ({
     resolve: (
       ids: Parameters<DeathHook>[1],
       sources: Parameters<DeathHook>[2],
-      choose: Parameters<DeathHook>[3],
       context: Parameters<DeathHook>[4],
-    ) => resolveOwnedDeath(source, ids, sources, choose, context),
+    ) => resolveOwnedDeath(source, ids, sources, source.chooseDeathShot, context),
   }),
 );
