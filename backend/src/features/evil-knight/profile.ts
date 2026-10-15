@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -40,13 +41,15 @@ export const EVIL_KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
     toolSpecs: (ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []).filter(
       (spec) => spec.name !== "self_destruct" && spec.name !== "self_destruct_with_target",
     ),
-    init: (role, ctx) => {
-      // 左值容器先读，原参数解析仍在 creator 的参数位置晚执行；失败不提前安装状态。
-      EVIL_KNIGHT_STATE_SLOT.install(
-        () => role.privateState,
-        () => parameters.parse(ctx.boardConfig?.evilKnight ?? {}).shotPolicy,
-      );
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        // 左值容器先读，原参数解析仍在 creator 的参数位置晚执行；失败不提前安装状态。
+        EVIL_KNIGHT_STATE_SLOT.install(
+          () => role.privateState,
+          () => parameters.parse(ctx.boardConfig?.evilKnight ?? {}).shotPolicy,
+        );
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: parameters.parse({}),

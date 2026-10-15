@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { inspectionConfiguration } from "../role-inspection/contribution-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -29,18 +30,20 @@ export const PSYCHIC_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.psychic.brief"),
   },
   runtime: {
-    init: (role, ctx) => {
-      setRoleInspectionState(role, {
-        policy: "psychic",
-        ...(ctx.boardConfig?.psychic?.inspectionPolicy &&
-        ctx.boardConfig.psychic.inspectionPolicy !== "awa_repeat_optional_v1"
-          ? { inspectionPolicy: ctx.boardConfig.psychic.inspectionPolicy }
-          : {}),
-        lastTarget: null,
-        lastDay: null,
-        history: [],
-      });
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        setRoleInspectionState(role, {
+          policy: "psychic",
+          ...(ctx.boardConfig?.psychic?.inspectionPolicy &&
+          ctx.boardConfig.psychic.inspectionPolicy !== "awa_repeat_optional_v1"
+            ? { inspectionPolicy: ctx.boardConfig.psychic.inspectionPolicy }
+            : {}),
+          lastTarget: null,
+          lastDay: null,
+          history: [],
+        });
+      },
+    }),
     // 此处仍按原时点创建政策配置；共享工具／规则／阶段保同一绑定，不授查验库存或跳过租约复验。
     configuration: inspectionConfiguration("psychic", "awa_repeat_optional_v1"),
     toolSpecs: [ROLE_INSPECTION_TOOL],
@@ -55,15 +58,17 @@ export const PSYCHIC_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (role, request, pickAliveNotSelf, _camp, _locale, world) => {
-      if (!request.allowedTools.includes("inspect_role")) return null;
-      const state = getRoleInspectionState(role, request.context.ability_id);
-      const target =
-        world && state
-          ? (roleInspectionTargets(world, request.actorId, state)[0] ?? null)
-          : pickAliveNotSelf();
-      return target === null ? null : { name: "inspect_role", args: { target_id: target } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, pickAliveNotSelf, _camp, _locale, world) => {
+        if (!request.allowedTools.includes("inspect_role")) return null;
+        const state = getRoleInspectionState(role, request.context.ability_id);
+        const target =
+          world && state
+            ? (roleInspectionTargets(world, request.actorId, state)[0] ?? null)
+            : pickAliveNotSelf();
+        return target === null ? null : { name: "inspect_role", args: { target_id: target } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("psychic"),
 };

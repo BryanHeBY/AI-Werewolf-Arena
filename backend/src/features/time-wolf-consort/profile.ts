@@ -5,6 +5,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -43,11 +44,13 @@ export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
-    init: (role, ctx) => {
-      const value = parameters.parse(ctx.boardConfig?.timeConsort ?? {});
-      // 原参数解析之后，仍先读左值 privateState，再读 reflectionScope 并创建／赋值。
-      TIME_CONSORT_STATE_SLOT.install(() => role.privateState, value);
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        const value = parameters.parse(ctx.boardConfig?.timeConsort ?? {});
+        // 原参数解析之后，仍先读左值 privateState，再读 reflectionScope 并创建／赋值。
+        TIME_CONSORT_STATE_SLOT.install(() => role.privateState, value);
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: parameters.parse({}),
@@ -101,31 +104,33 @@ export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
       TIME_CONSORT_LOCK_STAGE,
       ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []),
     ],
-    baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
-      if (
-        !request.allowedTools.includes("lock_time") ||
-        !world ||
-        !getTimeConsortState(role, currentCamp)
-      )
-        return (
-          ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
-            role,
-            request,
-            pick,
-            pickCamp,
-            locale,
-            world,
-            currentCamp,
-          ) ?? null
-        );
-      const targets = timeConsortChoiceTargets(world, request.context.day);
-      return targets.length >= 1
-        ? {
-            name: "lock_time",
-            args: { target_id: targets[0]!, abstain: false },
-          }
-        : { name: "lock_time", args: { target_id: null, abstain: true } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
+        if (
+          !request.allowedTools.includes("lock_time") ||
+          !world ||
+          !getTimeConsortState(role, currentCamp)
+        )
+          return (
+            roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")?.(
+              role,
+              request,
+              pick,
+              pickCamp,
+              locale,
+              world,
+              currentCamp,
+            ) ?? null
+          );
+        const targets = timeConsortChoiceTargets(world, request.context.day);
+        return targets.length >= 1
+          ? {
+              name: "lock_time",
+              args: { target_id: targets[0]!, abstain: false },
+            }
+          : { name: "lock_time", args: { target_id: null, abstain: true } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("time_wolf_consort"),
 };

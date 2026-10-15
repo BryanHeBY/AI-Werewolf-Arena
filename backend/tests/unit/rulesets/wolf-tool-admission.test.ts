@@ -69,10 +69,15 @@ function fixture(trace: string[] = []) {
     skillBrief: "literal",
     get wolfTeam() {
       trace.push("wolfTeam");
-      return function (this: unknown, role: (typeof players)[0]["role"], currentWorld?: World) {
+      return function (
+        this: unknown,
+        queries: import("../../../src/rulesets/roles/contracts").RoleQueries,
+      ) {
         expect(this).toBeUndefined();
-        expect(role).toBe(players[0]!.role);
-        expect(currentWorld).toBe(world);
+        // 自定义角色贡献只取得当前值查询；原表接收者和准入时点仍按原顺序检查。
+        expect(queries.actorRole()).toBe(Role.Wolf);
+        expect(Object.hasOwn(queries, "world")).toBe(false);
+        expect(Object.hasOwn(queries, "privateState")).toBe(false);
         trace.push("permission");
         return permissions;
       };

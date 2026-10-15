@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证辉夜状态的独立契约与原 owner／frame／reader。输入为内存 fixture、受控回调和畸形修改；原字段、身份快照和拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
+import { roleMethod } from "../../../../src/rulesets/roles/owned-bindings";
 import type { RoleInitializationComponent } from "../../../../src/rulesets/roles/contracts";
 import { expect, test } from "bun:test";
 import {
@@ -189,7 +190,7 @@ test("shelter repeat is inherited per ability, not globally from the borrower's 
 test("a real default Dream ability cannot silently gain the finite board's stronger protection", () => {
   const role = createRoleComponent(Role.Dreamer);
   const initialCamp = { camp: Camp.Good };
-  DREAMER_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, {
+  roleMethod(DREAMER_ROLE_PROFILE.runtime, "init")!(role as RoleInitializationComponent, {
     initialCamp,
     currentCamp: () => initialCamp,
   });
@@ -198,7 +199,7 @@ test("a real default Dream ability cannot silently gain the finite board's stron
   expect(() => snapshotBorrowedState("dream", original, 2)).toThrow(
     "eclipse_borrow_policy_invalid",
   );
-  DREAMER_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, {
+  roleMethod(DREAMER_ROLE_PROFILE.runtime, "init")!(role as RoleInitializationComponent, {
     initialCamp,
     currentCamp: () => initialCamp,
     boardConfig: {
@@ -234,7 +235,7 @@ test("all four native potion stocks are copied exactly without historical or lif
     for (const poison of [0, 1]) {
       const role = createRoleComponent(Role.Witch);
       const initialCamp = { camp: Camp.Good };
-      WITCH_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, {
+      roleMethod(WITCH_ROLE_PROFILE.runtime, "init")!(role as RoleInitializationComponent, {
         initialCamp,
         currentCamp: () => initialCamp,
         boardConfig: { ...sixPlayerMvpConfig, witch: { canSelfHeal: WitchSelfHealRule.Disabled } },

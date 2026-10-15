@@ -5,6 +5,7 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  * 行动规则在原资格／目标读取后的成功尾拒执行退休；初始化、baseline 与玩家知识不按该标记过滤。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -50,7 +51,7 @@ export const CUPID_ROLE_PROFILE: NativeRoleContributions = {
     ],
   },
   runtime: {
-    init: installCupidState,
+    init: ownRoleCallback("init", { init: installCupidState }),
     configuration: {
       schema: parameters,
       defaults: { policy: "netease_2017_cupid_follows_lovers_v1" },
@@ -99,13 +100,15 @@ export const CUPID_ROLE_PROFILE: NativeRoleContributions = {
         return isRoleExecutionRetired(role) ? { code: RuleError.CupidUnavailable } : null;
       },
     }),
-    baselineAction: (_role, request, _other, _camp, _locale, world) => {
-      if (!request.allowedTools.includes("choose_lovers") || !world) return null;
-      const ids = world.getAliveEntityIds();
-      return ids.length < 2
-        ? null
-        : { name: "choose_lovers", args: { first_id: ids[0]!, second_id: ids[1]! } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request, _other, _camp, _locale, world) => {
+        if (!request.allowedTools.includes("choose_lovers") || !world) return null;
+        const ids = world.getAliveEntityIds();
+        return ids.length < 2
+          ? null
+          : { name: "choose_lovers", args: { first_id: ids[0]!, second_id: ids[1]! } };
+      },
+    }),
     llmRepair: {
       coerce: {
         choose_lovers: (args) => {

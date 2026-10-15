@@ -5,6 +5,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -42,10 +43,12 @@ export const ORDER_PRINCE_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.order_prince.brief"),
   },
   runtime: {
-    init: (role) => {
-      // 保原赋值左值先读，create仍无参数；初始化不安装authority或授予pending。
-      ORDER_PRINCE_STATE_SLOT.install(() => role.privateState);
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        // 保原赋值左值先读，create仍无参数；初始化不安装authority或授予pending。
+        ORDER_PRINCE_STATE_SLOT.install(() => role.privateState);
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: parameters.parse({}),
@@ -85,10 +88,12 @@ export const ORDER_PRINCE_ROLE_PROFILE: NativeRoleContributions = {
         return null;
       },
     }),
-    baselineAction: (role, request, _pick, _pickCamp, _locale, _world, currentCamp) =>
-      request.allowedTools.includes("reset_exile_vote") && getOrderPrinceState(role, currentCamp)
-        ? { name: "reset_exile_vote", args: { activate: true } }
-        : null,
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, _pick, _pickCamp, _locale, _world, currentCamp) =>
+        request.allowedTools.includes("reset_exile_vote") && getOrderPrinceState(role, currentCamp)
+          ? { name: "reset_exile_vote", args: { activate: true } }
+          : null,
+    }),
   },
   presentation: nativeRolePresentation("order_prince"),
 };

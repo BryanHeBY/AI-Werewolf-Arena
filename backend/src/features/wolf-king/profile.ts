@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { ownDeathHook, type OwnedDeathCommands } from "../../engine/hooks/owned-bindings";
@@ -36,10 +37,12 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     configuration: deathActionConfiguration("wolfKing"),
-    init: (role, ctx) => {
-      // 保原安装 callee／角色参数先于配置读取；状态由资源 owner 创建并同引用安装。
-      setWolfKingState(role, createWolfKingState(ctx));
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        // 保原安装 callee／角色参数先于配置读取；状态由资源 owner 创建并同引用安装。
+        setWolfKingState(role, createWolfKingState(ctx));
+      },
+    }),
     toolSpecs: [...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!, ...DEATH_SHOT_TOOL_SPECS],
     validationRules: ownedToolRules({
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
@@ -87,26 +90,28 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         },
       }),
     ),
-    baselineAction: (
-      role,
-      request,
-      pickAliveNotSelf,
-      pickAliveByCamp,
-      locale,
-      _world,
-      currentCamp,
-    ) =>
-      request.allowedTools.includes("shoot")
-        ? { name: "shoot", args: { target_id: pickAliveByCamp("good") ?? pickAliveNotSelf() } }
-        : ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
-            role,
-            request,
-            pickAliveNotSelf,
-            pickAliveByCamp,
-            locale,
-            undefined,
-            currentCamp,
-          ),
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (
+        role,
+        request,
+        pickAliveNotSelf,
+        pickAliveByCamp,
+        locale,
+        _world,
+        currentCamp,
+      ) =>
+        request.allowedTools.includes("shoot")
+          ? { name: "shoot", args: { target_id: pickAliveByCamp("good") ?? pickAliveNotSelf() } }
+          : roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")!(
+              role,
+              request,
+              pickAliveNotSelf,
+              pickAliveByCamp,
+              locale,
+              undefined,
+              currentCamp,
+            ),
+    }),
   },
   presentation: nativeRolePresentation("wolf_king"),
 };

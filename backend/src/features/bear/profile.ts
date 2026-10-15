@@ -4,6 +4,7 @@
  * 展示只登记 bear 标识，实际玩家知识投影归共同观察所有者；本模块不读取动物板知识、授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -23,7 +24,7 @@ export const BEAR_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.bear.brief"),
   },
   runtime: {
-    init: initializeBearState,
+    init: ownRoleCallback("init", { init: initializeBearState }),
     configuration: {
       schema: parameters,
       defaults: {},

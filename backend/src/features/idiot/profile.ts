@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：白痴角色 profile。 */
@@ -22,11 +23,13 @@ export const IDIOT_ROLE_PROFILE: NativeRoleContributions = {
     goodSide: "god",
   },
   runtime: {
-    participation: (role) => {
-      const enabled = getIdiotState(role)?.revealed !== true;
-      return { canVote: enabled, canBeExiled: enabled, canBeSheriff: enabled };
-    },
-    init: initializeIdiotState,
+    participation: ownRoleCallback("participation", {
+      participation: (role) => {
+        const enabled = getIdiotState(role)?.revealed !== true;
+        return { canVote: enabled, canBeExiled: enabled, canBeSheriff: enabled };
+      },
+    }),
+    init: ownRoleCallback("init", { init: initializeIdiotState }),
     votedOutHook: idiotVotedOutHook,
   },
   presentation: nativeRolePresentation("idiot"),

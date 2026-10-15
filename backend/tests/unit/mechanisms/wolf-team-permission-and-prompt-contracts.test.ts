@@ -1,6 +1,7 @@
 /**
  * 单元测试验证狼队访问、方向性聊天／刀政策、在途回复与事件时点受众。原字面回执、引用／getter／错误轨迹、事实和状态是预期；有界知识／接收／gateway／提示与 SDK／ACP 回退客户端是 inert 控制，不启动 MCP／HTTP，不推进完整阶段或调用付费模型。
  */
+import type { RoleQueries } from "../../../src/rulesets/roles/contracts";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -69,11 +70,11 @@ function fixture(locale: "zh-CN" | "en") {
         runtime: {
           ...profile.runtime,
           nightStages: [],
-          wolfTeam: (state: RoleComponent) => ({
+          wolfTeam: (queries: RoleQueries) => ({
             recognizedByPack: false,
             recognizes: "all" as const,
             canChat: false,
-            canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
+            canVoteForKill: (queries.stateData() as { readonly knife?: unknown }).knife === true,
           }),
         },
       };

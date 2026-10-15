@@ -4,13 +4,14 @@
  * JSON 方法只在同步用例内临时替换并在 finally 恢复；不生成生产 oracle、不执行模型或完整对局。
  * 写入用例直接检查数据命令，不把它当原体／夜／请求租约或资源付款的授权测试。
  */
+import {
+  roleMethod,
+  type OwnedRoleInitContext,
+} from "../../../../src/rulesets/roles/owned-bindings";
 import { expect, test } from "bun:test";
 import { Camp, Role, type RedMoonState } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../src/domain/components/role";
-import type {
-  RoleInitContext,
-  RoleInitializationComponent,
-} from "../../../../src/rulesets/roles/contracts";
+import type { RoleInitializationComponent } from "../../../../src/rulesets/roles/contracts";
 import { RED_MOON_ROLE_PROFILE } from "../../../../src/features/red-moon/profile";
 import {
   RED_MOON_STATE_SLOT,
@@ -76,7 +77,7 @@ test("the real profile reads the installation left side before policy and retain
     },
   };
   const initialCamp = { camp: Camp.Wolf };
-  const context: RoleInitContext = {
+  const context: OwnedRoleInitContext = {
     initialCamp,
     currentCamp: () => initialCamp,
     get boardConfig() {
@@ -84,7 +85,7 @@ test("the real profile reads the installation left side before policy and retain
       return undefined;
     },
   };
-  RED_MOON_ROLE_PROFILE.runtime.init!(role, context);
+  roleMethod(RED_MOON_ROLE_PROFILE.runtime, "init")!(role, context);
   expect(trace).toEqual(["left:privateState", "right:boardConfig"]);
   expect(privateState.redMoon).toEqual({
     policy: "awa_red_moon_demon_v1",
@@ -101,7 +102,7 @@ test("the real profile reads the installation left side before policy and retain
     },
   });
   trace.length = 0;
-  expect(() => RED_MOON_ROLE_PROFILE.runtime.init!(role, context)).toThrow(failure);
+  expect(() => roleMethod(RED_MOON_ROLE_PROFILE.runtime, "init")!(role, context)).toThrow(failure);
   expect(trace).toEqual(["left:failure"]);
 });
 

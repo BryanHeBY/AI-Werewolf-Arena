@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -49,9 +50,11 @@ export const MIRACLE_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
     ],
   },
   runtime: {
-    init: (role) => {
-      if (!getMerchantState(role)) setMerchantState(role, freshMerchantState());
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        if (!getMerchantState(role)) setMerchantState(role, freshMerchantState());
+      },
+    }),
     configuration: {
       schema: z.strictObject({}),
       defaults: {},
@@ -106,13 +109,15 @@ export const MIRACLE_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (_role, request, pick) => {
-      if (!request.allowedTools.includes("bestow_ability")) return null;
-      const target = pick();
-      return target === null
-        ? null
-        : { name: "bestow_ability", args: { target_id: target, skill: "check" } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request, pick) => {
+        if (!request.allowedTools.includes("bestow_ability")) return null;
+        const target = pick();
+        return target === null
+          ? null
+          : { name: "bestow_ability", args: { target_id: target, skill: "check" } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("miracle_merchant"),
 };

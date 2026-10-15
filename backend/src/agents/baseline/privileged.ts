@@ -4,6 +4,7 @@
  * 本模块拥有启发式选择，行动许可、付款、事实发布和最终规则结算仍由引擎及具体机制重检。
  * 无模型、网络或独立随机源；候选按原查询时点读取，异常保留已完成的读取与脚本前缀。
  */
+import { roleMethod } from "../../rulesets/roles/owned-bindings";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { scholarMentorBonusTargets } from "../../features/scholar-mentor/night-frame";
 import { prohibitsLoversVote } from "../../features/cupid/relation";
@@ -169,10 +170,10 @@ export class BaselineBotActionProvider implements ActionProvider {
           null;
       return { name: "bonus_action", args: { kind, target_id: target, abstain: target === null } };
     }
-    // 角色基线钩子可使用真实 World。这是显式特权驱动，不能复用为玩家受限观察回退。
+    // 完整内建基线私用原 World；未知贡献只得值查询和原 picker，选择不授予狼聊／刀权。
     const roleProfile = this.roleCatalog.runtime(abilityRole);
     if (roleProfile?.baselineAction) {
-      const action = roleProfile.baselineAction(
+      const action = roleMethod(roleProfile, "baselineAction")!(
         role,
         request,
         () => this.pickAliveNotSelf(request.actorId),

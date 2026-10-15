@@ -4,6 +4,7 @@
  * 只调用实际 owner 与真实初始化贡献，不运行对局、模型或归档；库存数据不等于行动许可。
  * 旧 use／借用／转移反例另按精准用例验证，不在这里复制实现或改变 F03 的已知失败政策。
  */
+import { roleMethod } from "../../../src/rulesets/roles/owned-bindings";
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../src/domain/components/role";
@@ -127,7 +128,10 @@ test("Eclipse initialization retains its preceding state installation when dicti
   let caught: unknown;
   try {
     const initialCamp = { camp: Camp.Wolf };
-    ECLIPSE_MAID_ROLE_PROFILE.runtime.init!(role, { initialCamp, currentCamp: () => initialCamp });
+    roleMethod(ECLIPSE_MAID_ROLE_PROFILE.runtime, "init")!(role, {
+      initialCamp,
+      currentCamp: () => initialCamp,
+    });
   } catch (error) {
     caught = error;
   }

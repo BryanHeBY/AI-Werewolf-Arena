@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { createLonelyGirlValidationRules } from "./validation-rules";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -39,9 +40,11 @@ export const LONELY_GIRL_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     initialVictoryAffiliations: [],
     canSelfDestruct: false,
-    init: (role) => {
-      initializeLonelyGirlState(role);
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        initializeLonelyGirlState(role);
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: { policy: LONELY_GIRL_POLICY },
@@ -62,13 +65,15 @@ export const LONELY_GIRL_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: createLonelyGirlValidationRules(),
-    baselineAction: (_role, request, pickAliveNotSelf) => {
-      if (!request.allowedTools.includes("choose_admired_player")) return null;
-      const target = pickAliveNotSelf();
-      return target === null || target === undefined
-        ? null
-        : { name: "choose_admired_player", args: { target_id: target } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request, pickAliveNotSelf) => {
+        if (!request.allowedTools.includes("choose_admired_player")) return null;
+        const target = pickAliveNotSelf();
+        return target === null || target === undefined
+          ? null
+          : { name: "choose_admired_player", args: { target_id: target } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("lonely_girl"),
 };

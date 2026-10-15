@@ -1,6 +1,7 @@
 /**
  * 负责按当前目标角色和运行查验标签形成披露结果。输入为目标编号及阵营／身份／组合查验类型；输出为对应结果或 null。结果不授予行动权限，披露标签可以不同于真实角色和阵营。
  */
+import { invokeRoleCallback } from "../rulesets/roles/owned-bindings";
 import type { InspectionKind, InspectionResult } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../domain/components/names";
 import type { RoleComponent } from "../domain/components/role";
@@ -18,7 +19,10 @@ export function resolveInspection<K extends InspectionKind>(
   const target = world.getComponent(targetId, COMPONENT.Role);
   if (!target) return null;
   const definition = catalog.runtime(target.role)?.inspectionLabels;
-  const labels = typeof definition === "function" ? definition(target) : definition;
+  const labels =
+    typeof definition === "function"
+      ? invokeRoleCallback("inspectionLabels", definition, undefined, target)
+      : definition;
   const camp = labels?.camp ?? world.getComponent(targetId, COMPONENT.Camp)?.camp,
     role = labels?.role ?? target.role;
   // 两个原字段已按原序读取；身份结果不要求阵营，阵营／组合结果缺当前来源时明确返回 null。

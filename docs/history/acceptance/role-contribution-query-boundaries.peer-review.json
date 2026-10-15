@@ -1,0 +1,843 @@
+{
+  "scope": "Prepared76 and deep-state two-source successor",
+  "reviews": [
+    {
+      "decision": "approved_as_prepared_bounded_candidate",
+      "reviewer": "/root/native_presentation_finish",
+      "author": "/root/preflight_final_review",
+      "handoff": {
+        "path": "/tmp/awa-role-contribution-query-boundary-draft/HANDOFF.json",
+        "sha256": "d50e7bd2989ab7877dba0de14b4fb8a75c89b5fb86078c618a647e3246bf9830",
+        "bytes": 4090
+      },
+      "sourceReady": {
+        "path": "/tmp/awa-role-contribution-query-boundary-draft/source-ready.json",
+        "sha256": "3af08c9edcb6f8ddc498aa86e4af1d54e6b8294521983230c0f197b15e046d0a",
+        "bytes": 41612
+      },
+      "orderedSource": [
+        {
+          "path": "backend/src/rulesets/roles/contracts.ts",
+          "sha256": "88c9582fa5d1ab5ee61e7b1057e64a0d80a3a4433b582792c5b34af2c74b8663",
+          "bytes": 6925,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/rulesets/roles/catalog.ts",
+          "sha256": "bb6ee79e3fdab705bb4abf119090af20dc1d9a4d02659b1a95546472b0db3401",
+          "bytes": 7201,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/rulesets/roles/role-catalog-assembly.ts",
+          "sha256": "178bf0a5b9ac001228e1bb491b1b68cceb87f91abef729ac1145e437a64018a8",
+          "bytes": 2455,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/wolf-team/permissions.ts",
+          "sha256": "0cd0e4f7ab90f57f29c206d87d605c07c6364e1cb9080227521ee7dd2ad5b5ea",
+          "bytes": 5929,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/self-destruct/capability.ts",
+          "sha256": "135220bd160b2381ffb4ad2a46d24f4205a89c8f0dd47a44176730f599cbd2e2",
+          "bytes": 1252,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/bear/night-frame.ts",
+          "sha256": "70e2133177ef5e36df088de2472d85ad51616753a3771125206be66511608183",
+          "bytes": 10049,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/engine/inspection.ts",
+          "sha256": "187d348ffc93f50b42549b3e786f46aa771538987810adea650e53e8c2d05dd2",
+          "bytes": 1785,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/agents/baseline/privileged.ts",
+          "sha256": "c2e6f57df316fe15f98c735d13f80fbac2deb76201f49d15f0b6cddd79fc9ee4",
+          "bytes": 9339,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/app/bootstrap.ts",
+          "sha256": "140a76bfac39ef0be8e0def5062cee89f0c9f7ab64020bf7d4749a67c8423e9d",
+          "bytes": 11163,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/animal-dream/profile.ts",
+          "sha256": "cde4825681b8a854dd2538ba3f18ff53f49695bf9e9f13babb5559204bed457a",
+          "bytes": 6296,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/awakened-hidden-wolf/profile.ts",
+          "sha256": "4866c35e012462bddcd9e90d9e5172de0e880087154891d6368ba896d7ab1142",
+          "bytes": 6752,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/bear/profile.ts",
+          "sha256": "e44098f03e5cde5e14b65fd80a64846bb5cdf844210742d7d70af7f0422e499a",
+          "bytes": 1822,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/black-market-merchant/profile.ts",
+          "sha256": "f8d7590433e03b4beb22cee0699fdbf5cfd541b00e327521b82090caf18a4df1",
+          "bytes": 5104,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/cupid/profile.ts",
+          "sha256": "a18b14f6b2dc5268603fb224ded91ac43e48e99376bc23a952c68ffb1a5e2f6a",
+          "bytes": 5170,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/debater/profile.ts",
+          "sha256": "0528430d16860af33bc541ee0eb816706b91187fbe28d52b53a8ab0ec4306c0f",
+          "bytes": 4618,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/demon-hunter/profile.ts",
+          "sha256": "e1c7a74f805ed65dca71afbcc2e1c283e6332a38a3d388229265baacac0ccef0",
+          "bytes": 3357,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/dreamer/profile.ts",
+          "sha256": "78add061318bbe033378b470d0f736af67960ef92416b2dba1557b07a7a79c87",
+          "bytes": 4268,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/evil-knight/profile.ts",
+          "sha256": "730ef888698c09b24770414516fbe9426c72fea72ed5a0ed406264803729a841",
+          "bytes": 2925,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/fragrant-pair-seer/profile.ts",
+          "sha256": "ec43d4be2f03801e6579adf0488537cb50c966f2d8d2a31325c7e069861c958b",
+          "bytes": 6412,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/gargoyle/profile.ts",
+          "sha256": "78807ebbc8ed7fa03b740dd5cc64cfdf251a4771c67641c11bc2e936c84456f6",
+          "bytes": 4418,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/ghost-bride/profile.ts",
+          "sha256": "55c3be7e50f65fb192438f6d7a40d11ffd87bf9a2bf43452adcdcab238735b8d",
+          "bytes": 3739,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/gravekeeper/profile.ts",
+          "sha256": "a2afcb7984a57a5dcd798d3a5c0406b6068249ea4d74e9c289e6f002cda13358",
+          "bytes": 1797,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/guard/profile.ts",
+          "sha256": "1940e0e4e930322e6003edde29c3bfb8d139befeeebf6f630efb5a8ef5bd3668",
+          "bytes": 4304,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/hidden-wolf/profile.ts",
+          "sha256": "4e5233e307e4d4f1c7ce4075a4f8c2be4143b83ce3fd62b9943ec91da91bd021",
+          "bytes": 3324,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/hunter/profile.ts",
+          "sha256": "f5a14ad2e239dc1429e617bc781c73e1d2e70e59c3e2e7634eec53afa371ed30",
+          "bytes": 2679,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/hybrid/profile.ts",
+          "sha256": "92e78612e4ad2ba0dd9588ba7c6320f3e73f1fa0f299d948105e2df4b177b62e",
+          "bytes": 4178,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/idiot/profile.ts",
+          "sha256": "1c7a52f62b87016d649bdd74cb173222c9044cb75e6c02320433e18b537e1dfb",
+          "bytes": 1758,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/knight/profile.ts",
+          "sha256": "69d05374b267e6e3ee2a88d76d2b41d8ab71ea5c4af9ea8aaa5c225b1969c6b2",
+          "bytes": 4090,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/lonely-girl/profile.ts",
+          "sha256": "5a2113591019d62240ea5ed707faa356d7fbf1fcd503d61ed2ce5657845d46ca",
+          "bytes": 3127,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/magician/profile.ts",
+          "sha256": "b7ebb8120606d01f99180e09003077e737060a694a8e7a96e9c91e3ff39b8022",
+          "bytes": 5510,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/mechanical-wolf/profile.ts",
+          "sha256": "612c9fde186d189adb93043c7e88520293b90ecc09fc98aefcf0a472326c2344",
+          "bytes": 6422,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/miracle-merchant/profile.ts",
+          "sha256": "e7d451432657547557ee4e177383f37a81bf54587f161ca06c85c503eb438478",
+          "bytes": 4916,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/mirror-girl/profile.ts",
+          "sha256": "7e46f7552333e42363dac77fd1e65d6d2c5705a61bfaa663a41d91de62daa4f1",
+          "bytes": 4566,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/mist-raven/profile.ts",
+          "sha256": "5d3c8e870fc6c118162a9ddae363d092c868e554bc2f374a7afc47e6b6ccf257",
+          "bytes": 9803,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/nightmare/profile.ts",
+          "sha256": "4244123cca2ecd2b5b9bd8790b2677c8b25de68b225ad7530ba0720109238c53",
+          "bytes": 6339,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/noble-secret-body/profile.ts",
+          "sha256": "cdde30f12e4deab4890eabfe17ea9ac3a74173e71c754ad4b7ace92a6a8a24a7",
+          "bytes": 6394,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/order-prince/profile.ts",
+          "sha256": "99394ec77a2c8089e5a4357b14300755506ef47a7f27c228ee673ace992203f8",
+          "bytes": 4151,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/psychic/profile.ts",
+          "sha256": "cd95ff55ce83da8dddfc32e48ee173f41192a7080944ded623503d4c3999021e",
+          "bytes": 3376,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/pure-white/profile.ts",
+          "sha256": "a142f2148b4e0c83532f6ed4be532c623de23f2d2bdba3d8000a6707fae6dd29",
+          "bytes": 5604,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/radiant-eclipse/profile.ts",
+          "sha256": "0821728ad8f4b556ec09b1c924b4511640eabe0e6d10476fa0836d5e99284602",
+          "bytes": 7973,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/red-moon/profile.ts",
+          "sha256": "72cbc9a4ab76bcadda0e54c66fe005beffb12316d22faf4ef54c61159ffaf1a4",
+          "bytes": 2678,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/scholar-mentor/profile.ts",
+          "sha256": "ffeb4d3c0edd0f84f03b9d12768f46480f6047e98dcff96b45357613ec7b246d",
+          "bytes": 9296,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/seer/profile.ts",
+          "sha256": "e86ab2287be11715bade13428f40d41c498d5bd8c5b971a7115206c4a73a9a24",
+          "bytes": 4376,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/shapeshifter/profile.ts",
+          "sha256": "44402fdb2f7548d0987bf41a70411c0bf2ca974485cb29587152ca3844f01e27",
+          "bytes": 3710,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/thief/profile.ts",
+          "sha256": "ade715ed15d7e0e8ce9204e407291d8e5fe3071f640a04670dcf0850810d4bef",
+          "bytes": 3483,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/time-wolf-consort/profile.ts",
+          "sha256": "d1a0b08e725b16f9d4ab1433517a2ac9f246bc0b6e1aa724092c74d2bd03f2fb",
+          "bytes": 5729,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/trickster/profile.ts",
+          "sha256": "0040128872b9c9ec085378b43acf953f798ba634509ed32b3e6a231a68699b3c",
+          "bytes": 6301,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/white-wolf-king/profile.ts",
+          "sha256": "828cb691f77385752762fdda4e12cdfc9c4531e44a0a119d39d520041fc00969",
+          "bytes": 5256,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/wild-child/profile.ts",
+          "sha256": "c7d0fd85de160cf763e36edd72ef57a19c4520df0fee8be58004f3c8d16580eb",
+          "bytes": 4113,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/witch/profile.ts",
+          "sha256": "1a2733c9df238d4bb936bc6e47fdd2044e2236abc39d729e9165d318f9c3a744",
+          "bytes": 4254,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/wolf-beauty/profile.ts",
+          "sha256": "6cc0f471993b7da9bf0476a9cff9224556af0a87f51b06ede440244f843d32ea",
+          "bytes": 6996,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/wolf-king/profile.ts",
+          "sha256": "a07964a6397052823718f74c366c9abb49ca200f62865a20a1ffe0684f419950",
+          "bytes": 4664,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/wolf-sorcerer/profile.ts",
+          "sha256": "d0bd68f4fe96de6e5491c03edc711f844bca4a41200eec28117af117af9900d1",
+          "bytes": 6488,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/features/wolf/ability-assembly.ts",
+          "sha256": "9830aafaac8d988edaabf259dcac61a6c5f23bef7191a2b5eef2d9a972adc757",
+          "bytes": 3398,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+          "sha256": "4b4cc57f076628023f359fa2a33da0b47e7aa085fb474fd6db32553b547476e2",
+          "bytes": 10312,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/features/evil-knight/state-slot.test.ts",
+          "sha256": "7806268d0020fd4150e6398a8bcaa1994c5b2bec1e6f86a5a7f6a07feca55ad8",
+          "bytes": 4651,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/features/red-moon/state-slot.test.ts",
+          "sha256": "60664a6b7ecd52b1114e43f623584a1a8f5f976432452c8cf65d3f1648b47672",
+          "bytes": 6277,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/features/fragrant-pair-seer/pair-state-slot.test.ts",
+          "sha256": "f78233d41f89bc6ea314c73b04a9a85a27e82c3f1c1fba97831eb1f2acd409f5",
+          "bytes": 6728,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+          "sha256": "90834ac0799d8467edd5b99f4870ea6b84fb13e720c7d2346504d31c17bf6832",
+          "bytes": 9143,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/features/noble-secret-body/state-installation.test.ts",
+          "sha256": "d834a73e7874bfbac0d151cacc8cfd4a5efef30394e1f3ab4a9bc500b18f643c",
+          "bytes": 5077,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/night-ability-inventory-owner.test.ts",
+          "sha256": "e2441b14c7ac0bae77d57da9f2f74cdeeeb7ff59d26de3b5557811e45cb79825",
+          "bytes": 6080,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/features/wolf/ability-assembly.test.ts",
+          "sha256": "efa98e504a5f38e5bdd99c267adddf768c7d249b1afa0124a0566e69a023e724",
+          "bytes": 7452,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+          "sha256": "dbf5ece92ccfbe20b4c316298adca520195b19225a07a54a714f7a19084d115d",
+          "bytes": 24317,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/features/wolf-sorcerer-frame.test.ts",
+          "sha256": "5fa70198942c8b56cfc6242c319fb1f1904470e009e962f4f81bcc47522aa2c5",
+          "bytes": 9103,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/domain/role-private-container.test.ts",
+          "sha256": "e30f1217ab1e61e1c808a27a2dfd06f4b4674d8ff605bf838f813e627ff6f2d1",
+          "bytes": 4816,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/role-contributions.test.ts",
+          "sha256": "2287b205611ee164656a18abad9dd377a0d85ef6f407558515cc88362939561b",
+          "bytes": 8430,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/presentation/native-role-presentation.test.ts",
+          "sha256": "2ee532bcf613cfd12c9b3ecee58993219490b1d563686c533387e2fd3f387b05",
+          "bytes": 11074,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/engine/camp-canonical-bootstrap.test.ts",
+          "sha256": "f76b4d4981e04b59bb18e939e92cbc4ab7df9581f50f603bf9615b916118a583",
+          "bytes": 9589,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/scenarios/mechanisms/wolf-team-dynamic-night-scheduling.test.ts",
+          "sha256": "1aed7e74f4bc472621b7320e72556e4600229922afa9af15d91f6a29fd07977d",
+          "bytes": 7701,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/integration/recording/wolf-team-event-audience-provenance.test.ts",
+          "sha256": "9a9bb2c2f8c1dd8b45d889288016e297992012fe6f05b1021c82161f1d9be8d3",
+          "bytes": 8568,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/wolf-team-permission-and-prompt-contracts.test.ts",
+          "sha256": "a908bf2ade45e012c6e008c38ed0e91fd535c89ed53f108aa1958442472e1658",
+          "bytes": 12110,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/engine/visibility/inspection-result-contract.test.ts",
+          "sha256": "95d1e770c94b1e775c84ad240989c531da90e5ab8ebb193dc13cf97d508e5ae4",
+          "bytes": 8227,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/integration/agents/protocol/action-reception-sdk-mcp-parity.test.ts",
+          "sha256": "0c10981cc2d216b5a9ab5c102373be46d8b5324a2955867c770d0cc5bde602fd",
+          "bytes": 54071,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/tests/unit/agents/fallback-current-wolf-actions.test.ts",
+          "sha256": "9d3ba58028a1b9505328189fe34089bffa39b8a029cc02aadedeea4aba8e22c1",
+          "bytes": 8911,
+          "mode": "100644",
+          "change": "modified"
+        },
+        {
+          "path": "backend/src/rulesets/roles/owned-bindings.ts",
+          "sha256": "a8b8b69f6dd77d69d7b561433ed19f67c4ffcfe39de6aa3ed9898efb1cc10a59",
+          "bytes": 8534,
+          "mode": "100644",
+          "change": "added"
+        },
+        {
+          "path": "backend/tests/unit/rulesets/narrow-role-contribution-boundaries.test.ts",
+          "sha256": "19005916786c0bedc9dc4bdccac86ec4f98c6113d6ca867b84e3f19a2a7df4de",
+          "bytes": 10331,
+          "mode": "100644",
+          "change": "added"
+        }
+      ],
+      "deleted": [],
+      "controls": [
+        {
+          "path": "backend/src/domain/world.ts",
+          "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1",
+          "bytes": 7409,
+          "gitModeBlob": "100644 blob 35ead18d1d431599d1ddab53e16925e73faf853a\tbackend/src/domain/world.ts"
+        },
+        {
+          "path": "backend/src/domain/components/role.ts",
+          "sha256": "ced0523d070ccd57f0d4e5183545fb28507a33090372e57d91307f7eeda2998a",
+          "bytes": 728,
+          "gitModeBlob": "100644 blob e805e385a1c53de24a9cda80e2d8978dc8d8a5d6\tbackend/src/domain/components/role.ts"
+        },
+        {
+          "path": "backend/src/domain/components/camp.ts",
+          "sha256": "3742a1b51688ba076e097889e494990ffe75a2c0ae106e2425fb57778ea06801",
+          "bytes": 840,
+          "gitModeBlob": "100644 blob 3e0558fac7dc1fe8f5329a38263e8e29125711f9\tbackend/src/domain/components/camp.ts"
+        },
+        {
+          "path": "backend/src/agents/observation/native-role-presentation-capture.ts",
+          "sha256": "c5ae0cb2d33dd40ec25bc277146aa4a4d501a39dddae21b507bfb88905b7f67f",
+          "bytes": 31278,
+          "gitModeBlob": "100644 blob 59f6e01847c19436f5b8a25d2066ee1403c8ce43\tbackend/src/agents/observation/native-role-presentation-capture.ts"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/before.json",
+          "sha256": "c7f060d5f0c7ecb0db2a5ebfa2fde1a62f0513b304af6165fde03c035fcd63bc",
+          "bytes": 1041133
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/source-edits.json",
+          "sha256": "aa82a5d221ead60fe8f16446388e2171ce5176d4079c454e0bc64ed3260e6de5",
+          "bytes": 344993
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/shared-exact-deltas.json",
+          "sha256": "df55e7e8ad86342bf210d36f9986fb1c96687181e837b2f5c7718dd5222b8ed3",
+          "bytes": 155053
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/controls.json",
+          "sha256": "b2f0a7a39dd3eae68d19e2724dd308c8ae17267f0007e379dd489b726e012cb6",
+          "bytes": 43634
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/candidate.patch",
+          "sha256": "ba3dac2ec76e7983e086930f20ec8b0f6ef654f7b0c4af3a853bb9f85182e2d4",
+          "bytes": 157251
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/source-ready.json",
+          "sha256": "3af08c9edcb6f8ddc498aa86e4af1d54e6b8294521983230c0f197b15e046d0a",
+          "bytes": 41612
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/prepared-checks.json",
+          "sha256": "6403d6c0a4105d78ecf9f826d6158e5f75365e75aed32bd639631e4d341f8074",
+          "bytes": 6670
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/README.md",
+          "sha256": "0fa917fc11782b46dfa9718c6c1fda31655fb73544ae0e985f7d1026579fbd7b",
+          "bytes": 5436
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/prepare.py",
+          "sha256": "f078e07bb971f5a7aca063d47189c7e3d395c6ee34c0e353c1d50381eca90e5f",
+          "bytes": 13439
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/adapt-tests.py",
+          "sha256": "fa2453d34e3c2a22af906d33d9d2f1e8d54a93c28b9cbb31b698958b156ba684",
+          "bytes": 10067
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/finish-working.py",
+          "sha256": "84b0ec5fced77c6a54d4d9661334bb1e2b288e199fa59814dcc9725ec2eb009a",
+          "bytes": 3695
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/freeze.py",
+          "sha256": "24c0c31342db6e20cf97ab4b758ae10c522070a7437140131d5cf6f1fcf72018",
+          "bytes": 7304
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/prepare-first-authoring.py.txt",
+          "sha256": "e3ecce7543b1baa8c774d97266f8f6041f4d8b75ccec5e7a2f1f4080aff94de4",
+          "bytes": 13372
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/prepare-first-authoring-error.txt",
+          "sha256": "226a0ecfae77ecd60d7b751053980a51bbca94fefbd1a0753f5607f6bdc2c96e",
+          "bytes": 385
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/owned-bindings-initial-unpublished.ts.txt",
+          "sha256": "b0e092cbf1ab99941b9e40cf70e307aeb8e98ef367077346b6f6fa89edacf2ec",
+          "bytes": 7792
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/named-declarations.py",
+          "sha256": "8a1da4d285fc0e911473ad15ef657dc3af740a8d8a857b28607947f0943c1767",
+          "bytes": 3738
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/named-declaration-precision.json",
+          "sha256": "962f6330829e3d40a85990ef5e23f45dca7a0e655265498df89c421d504dd6b7",
+          "bytes": 5225
+        }
+      ],
+      "identitySummary": {
+        "candidateCount": 76,
+        "actualFixedGitBefore": 74,
+        "newAbsence": 2,
+        "capturedPhysicalDifferentFromFixedGit": [
+          "backend/src/features/animal-dream/profile.ts",
+          "backend/src/features/awakened-hidden-wolf/profile.ts",
+          "backend/src/features/black-market-merchant/profile.ts",
+          "backend/src/features/cupid/profile.ts",
+          "backend/src/features/debater/profile.ts",
+          "backend/src/features/dreamer/profile.ts",
+          "backend/src/features/fragrant-pair-seer/profile.ts",
+          "backend/src/features/ghost-bride/profile.ts",
+          "backend/src/features/hunter/profile.ts",
+          "backend/src/features/hybrid/profile.ts",
+          "backend/src/features/knight/profile.ts",
+          "backend/src/features/lonely-girl/profile.ts",
+          "backend/src/features/magician/profile.ts",
+          "backend/src/features/mechanical-wolf/profile.ts",
+          "backend/src/features/miracle-merchant/profile.ts",
+          "backend/src/features/mist-raven/profile.ts",
+          "backend/src/features/nightmare/profile.ts",
+          "backend/src/features/noble-secret-body/profile.ts",
+          "backend/src/features/order-prince/profile.ts",
+          "backend/src/features/pure-white/profile.ts",
+          "backend/src/features/radiant-eclipse/profile.ts",
+          "backend/src/features/scholar-mentor/profile.ts",
+          "backend/src/features/shapeshifter/profile.ts",
+          "backend/src/features/thief/profile.ts",
+          "backend/src/features/time-wolf-consort/profile.ts",
+          "backend/src/features/trickster/profile.ts",
+          "backend/src/features/white-wolf-king/profile.ts",
+          "backend/src/features/wild-child/profile.ts",
+          "backend/src/features/wolf-beauty/profile.ts",
+          "backend/src/features/wolf-king/profile.ts",
+          "backend/src/features/wolf-sorcerer/profile.ts"
+        ],
+        "wholeExactForwardFiles": 76
+      },
+      "staticReview": {
+        "readScope": "Complete boundary contracts/catalog/binding/assembly and actual consumers; all 44 profile diff routes and delegated original getter/receiver bodies; all existing test API deltas and both new full literal risk declarations.",
+        "publicBoundary": "Unknown callbacks get actual scalar/ID/boolean queries and call-time detached stateData, no World or original Role/Camp. Init alone receives original ownRole and actual initialCamp; membership is independent value context without initialCamp. Original source functions are not presented as permission.",
+        "nativeOwnership": "Static weak definitions hold original function+contribution kind only, no World or per-game cache. Named cold declaration program[kind] returns the original function, preserving inferred names/defaults/closure. Original full callback bodies retain private references.",
+        "order": "Catalog init precedes locale fallback; custom render first and second getters and receiver are retained; native presentation uses original active receiver. Baseline keeps original argument/picker/locale/World/currentSource sequence; explicit undefined World in Beauty/two kings remains. Scholar null base versus undefined runtime semantics retained. Bear queries actual Role/Camp before optional callback.",
+        "policies": "No new retirement in knowledge/paid queries, no global Role/Camp identity policy; JSON copying occurs only when new public stateData query is requested. Query object allocation/Reflect dispatch and custom API shape retirement are intentional new boundaries, not arbitrary JavaScript observational equivalence.",
+        "testMeaning": "Existing native-owner tests use trusted dispatch; custom tests explicitly adapt retired raw component/host identity acceptance. Both new declarations have handwritten literal boundaries, refs, trace and sameError; no execution result inferred."
+      },
+      "integrationRequirements": [
+        "44 profiles and bootstrap are exact-fragment merge only. Preserve actual Root H03/night/chooser successors; never whole overwrite those 45 paths.",
+        "Other whole candidates require matching actual before identity or an explicit authorized rebase. Current Night may concurrently change roles/contracts import; Root must compose its NightStageDefinition import with this independent RoleQueries contract.",
+        "This approval covers prepared candidate only. Root must run authorized focused cases/types/heads against actual integrated source; no C47/global completion claim."
+      ],
+      "findings": [],
+      "checksExecuted": [],
+      "repoWrites": false
+    },
+    {
+      "decision": "approved_as_prepared_bounded_successor",
+      "reviewer": "/root/native_presentation_finish",
+      "author": "/root/preflight_final_review",
+      "handoff": {
+        "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/HANDOFF.json",
+        "sha256": "07e75681c542e4aada0ee1431dbd11121ea7eed4d10340a2b26c10eb53d583e0",
+        "bytes": 4724
+      },
+      "priorPreparedReview": {
+        "path": "/tmp/awa-role-query-independent/prepared-review.json",
+        "sha256": "fd5aa4797a04c06d09573e30deeeba3d2add0e0899557dec7db3a776856b387d",
+        "bytes": 27641
+      },
+      "orderedSource": [
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/candidates/backend/src/rulesets/roles/owned-bindings.ts",
+          "beforeSHA256": "b86d35e6297173ca48b9cfd6321e8e0c01fb1d30df2e19018f2b7f3a7b831cc7",
+          "sha256": "c3c9de31e25de0693a28dc5818bbaddf8ee0475fecd6d1dc30dfb1c19713644b",
+          "bytes": 9564
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/candidates/backend/tests/unit/rulesets/narrow-role-contribution-boundaries.test.ts",
+          "beforeSHA256": "dae3e3fa13874bca23845637bdca721ec1ae94336235ee8b96294a98e44486e8",
+          "sha256": "a6b2ab2c13ffff029dceb3c517cad689613318fc880935d1052f10dd0249a374",
+          "bytes": 13007
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/before.json",
+          "sha256": "a7c9c7cc31f291afc64e9a2c1b5e4631d79226fb25d1d538d439abeda7118552",
+          "bytes": 21422
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/edits.json",
+          "sha256": "318e2fd1514fee9b5a821a3404f84a8a17bd429c2f6c89319ceb03cc8fa4dfa6",
+          "bytes": 6655
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/candidate.patch",
+          "sha256": "015b65c4983a7740ac6c60fa76f6c583ea08dcc1aa61299933fe4bdba247d003",
+          "bytes": 6717
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-receipts.json",
+          "sha256": "24152b127a9289d702b10880274dee5c6244b627a5e7ec760245fe880276da9a",
+          "bytes": 2674
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/source-ready.json",
+          "sha256": "9ef257a2a573c2bb26e8a8cae66a9de54e53b1105a5387e2c279006767c51db4",
+          "bytes": 2155
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/README.md",
+          "sha256": "d3e7bf9f011c6381506b708031ecadcc5cd633b1f024f2ed7b1ee73211645061",
+          "bytes": 2111
+        }
+      ],
+      "firstActualReceiptCopies": [
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-executed/unit/receipt.json",
+          "sha256": "22e158d6851de571810dd5a998516c8f2aff5518a88d07e17a97cc7556d19092",
+          "bytes": 12173
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-executed/unit/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-executed/unit/stderr.raw",
+          "sha256": "3db4be9c70118fefd76540bcadfe59805628d9fa511c9b5274742b129ee9bc08",
+          "bytes": 25361
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-executed/types/receipt.json",
+          "sha256": "5d60bf17acf4d8c38a2997a4ae36ed95cb81d644902a29bdfa4d69f10ff9fe30",
+          "bytes": 11065
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-executed/types/stdout.raw",
+          "sha256": "cfc682097cd2c97f86b375284a7a5db969068eb323dd49d52fc38411ce02bca5",
+          "bytes": 4252
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-executed/types/stderr.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-executed/interactions/receipt.json",
+          "sha256": "c97e9e7c50d4fa5de004d368deaa49732ad1d11b2812158cba587200e4f34c2b",
+          "bytes": 11291
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-executed/interactions/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28
+        },
+        {
+          "path": "/tmp/awa-role-contribution-query-boundary-draft/successor-deep-state/first-executed/interactions/stderr.raw",
+          "sha256": "f5872a9110a1465d53f6630f9eb44fadb0a975e709fed7dc451d8d8965415cbc",
+          "bytes": 15418
+        }
+      ],
+      "reviewedDelta": [
+        "stateData invokes existing snapshotPlainData only when queried; limits depth16/array65536, rejects Proxy/accessor/cycle/nonplain input; structuredClone makes only that already detached data writable. No original component/World returned, no native callback routed through copying.",
+        "Generic roleMethod return signature changes only its TypeScript mapping; actual callback getter, optional-owner branch, original receiver and dispatcher remain. Three test annotation changes are erased.",
+        "New third risk installs real Seer state through Catalog and queries it through actual inspection callback, then mutates detached uses/history and checks original stock/history/ref unchanged. It is prepared expected evidence, not a claimed run."
+      ],
+      "findings": [],
+      "checksExecuted": [],
+      "repoWrites": false,
+      "limits": [
+        "No 76-source semantic rereview or product/parser/compiler/test/check executed. First actual red/raw preserved; this is only successor preparedness approval.",
+        "Root must retain its separately owned wolf-tool fixture and apply against recorded first formatted before identity."
+      ]
+    }
+  ]
+}

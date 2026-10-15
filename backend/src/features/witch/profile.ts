@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：女巫角色 profile。 */
@@ -58,43 +59,47 @@ export const WITCH_ROLE_PROFILE: NativeRoleContributions = {
           potionPolicy: config.witch?.potionPolicy,
         }),
     },
-    init: (roleComp, ctx) => {
-      const selfHealRule = ctx.boardConfig?.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;
-      setWitchState(roleComp, {
-        heal: 1,
-        poison: 1,
-        selfHealRule,
-        canSelfHeal:
-          selfHealRule === WitchSelfHealRule.Always ||
-          selfHealRule === WitchSelfHealRule.FirstNightOnly,
-        ...(ctx.boardConfig?.witch?.knifeVisibility &&
-        ctx.boardConfig.witch.knifeVisibility !== "awa_with_heal_v1"
-          ? { knifeVisibility: ctx.boardConfig.witch.knifeVisibility }
-          : {}),
-        ...(ctx.boardConfig?.witch?.potionPolicy === "awa_both_native_experimental_v1"
-          ? { potionPolicy: ctx.boardConfig.witch.potionPolicy }
-          : {}),
-        healUsedThisNight: false,
-        poisonUsedThisNight: false,
-      });
-    },
+    init: ownRoleCallback("init", {
+      init: (roleComp, ctx) => {
+        const selfHealRule = ctx.boardConfig?.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;
+        setWitchState(roleComp, {
+          heal: 1,
+          poison: 1,
+          selfHealRule,
+          canSelfHeal:
+            selfHealRule === WitchSelfHealRule.Always ||
+            selfHealRule === WitchSelfHealRule.FirstNightOnly,
+          ...(ctx.boardConfig?.witch?.knifeVisibility &&
+          ctx.boardConfig.witch.knifeVisibility !== "awa_with_heal_v1"
+            ? { knifeVisibility: ctx.boardConfig.witch.knifeVisibility }
+            : {}),
+          ...(ctx.boardConfig?.witch?.potionPolicy === "awa_both_native_experimental_v1"
+            ? { potionPolicy: ctx.boardConfig.witch.potionPolicy }
+            : {}),
+          healUsedThisNight: false,
+          poisonUsedThisNight: false,
+        });
+      },
+    }),
     toolSpecs: WITCH_TOOL_SPECS,
     stageDirectives: WITCH_STAGE_DIRECTIVES,
     validationRules: WITCH_VALIDATION_RULES,
     nightStages: WITCH_NIGHT_STAGES,
     llmRepair: WITCH_LLM_REPAIR_PACK,
-    baselineAction: (roleComp, request) => {
-      if (!request.allowedTools.includes("use_potion")) {
-        return null;
-      }
-      return {
-        name: "use_potion",
-        args: {
-          target_id: request.actorId,
-          potion_type: PotionType.None,
-        },
-      };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (roleComp, request) => {
+        if (!request.allowedTools.includes("use_potion")) {
+          return null;
+        }
+        return {
+          name: "use_potion",
+          args: {
+            target_id: request.actorId,
+            potion_type: PotionType.None,
+          },
+        };
+      },
+    }),
   },
   presentation: nativeRolePresentation("witch"),
 };

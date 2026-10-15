@@ -3,6 +3,7 @@
  * 带记录的上下文 getter 和非法语言；手写文字／引用／调用顺序为预期。只测试展示绑定、
  * 具体查询和片段格式化，不运行完整对局、模型、归档或资源结算；文案不授予权限。
  */
+import { type OwnedRoleInitContext } from "../../../src/rulesets/roles/owned-bindings";
 import { expect, test } from "bun:test";
 import {
   Camp,
@@ -24,7 +25,7 @@ import {
 } from "../../../src/rulesets/roles/role-catalog-assembly";
 import type {
   RoleProfile,
-  RoleInitContext,
+  RoleQueries,
   RoleContributions,
 } from "../../../src/rulesets/roles/contracts";
 import { World } from "../../../src/domain/world";
@@ -72,7 +73,9 @@ test("custom contribution preserves init receiver and two late renderer getters 
     init(actual, ctx) {
       expect(this).toBe(profile);
       expect<unknown>(actual).toBe(role);
-      expect(ctx).toBe(context);
+      expect(ctx).not.toBe(context);
+      expect(Object.hasOwn(ctx, "world")).toBe(false);
+      expect(ctx.initialCamp).toBe(initialCamp);
       trace.push("init");
       actual.privateState.custom = "kept";
     },
@@ -80,22 +83,17 @@ test("custom contribution preserves init receiver and two late renderer getters 
   Object.defineProperty(profile, "renderPrompt", {
     get() {
       trace.push("renderer");
-      return function (
-        this: RoleProfile,
-        actual: RoleComponent,
-        locale?: Locale,
-        actualWorld?: World,
-      ) {
+      return function (this: RoleProfile, queries: RoleQueries, locale?: Locale) {
         expect(this).toBe(profile);
-        expect(actual).toBe(role);
+        expect(queries.actorRole()).toBe(Role.Villager);
         expect(locale).toBe("en");
-        expect(actualWorld).toBe(world);
+        expect(Object.hasOwn(queries, "world")).toBe(false);
         trace.push("call");
         return "  raw {state}\n  ";
       };
     },
   });
-  const context: RoleInitContext = {
+  const context: OwnedRoleInitContext = {
     initialCamp,
     currentCamp,
     get locale(): Locale {

@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -42,7 +43,7 @@ export const DEBATER_ROLE_PROFILE: NativeRoleContributions = {
     ],
   },
   runtime: {
-    init: initializeDebaterState,
+    init: ownRoleCallback("init", { init: initializeDebaterState }),
     configuration: {
       schema: parameters,
       defaults: { policy: "awa_melbourne_2026_speech_gap_v1" },
@@ -94,10 +95,12 @@ export const DEBATER_ROLE_PROFILE: NativeRoleContributions = {
         return null;
       },
     }),
-    baselineAction: (_role, request) =>
-      request.allowedTools.includes("challenge") && request.context.debate_target_id !== undefined
-        ? { name: "challenge", args: { target_id: request.context.debate_target_id } }
-        : null,
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request) =>
+        request.allowedTools.includes("challenge") && request.context.debate_target_id !== undefined
+          ? { name: "challenge", args: { target_id: request.context.debate_target_id } }
+          : null,
+    }),
     llmRepair: {
       coerce: {
         challenge: (args) => {

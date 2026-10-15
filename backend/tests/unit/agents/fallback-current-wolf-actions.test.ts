@@ -184,10 +184,12 @@ test("a trusted permission callback cannot leave stale true flags after changing
               ...entry,
               runtime: {
                 ...entry.runtime,
-                wolfTeam: (role, world) => {
-                  if (change === "role") role.role = Role.Villager;
-                  if (change === "camp") world!.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
-                  if (change === "alive") world!.getComponent(1, COMPONENT.Alive)!.alive = false;
+                wolfTeam: () => {
+                  // 测试自有闭包显式持本局写权；公开贡献参数不再隐式取得 World 或角色组件。
+                  if (change === "role")
+                    f.world.getComponent(1, COMPONENT.Role)!.role = Role.Villager;
+                  if (change === "camp") f.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
+                  if (change === "alive") f.world.getComponent(1, COMPONENT.Alive)!.alive = false;
                   return {
                     recognizedByPack: true,
                     recognizes: "pack" as const,

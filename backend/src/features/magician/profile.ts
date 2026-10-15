@@ -5,6 +5,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -46,11 +47,13 @@ export const MAGICIAN_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.magician.brief"),
   },
   runtime: {
-    init: (role, ctx) => {
-      const value = parameters.parse(ctx.boardConfig?.magician ?? {});
-      // 原左值容器先于 create 参数读取；仅移交这次赋值，不提前取状态或冻结初始化结果。
-      MAGICIAN_STATE_SLOT.install(() => role.privateState, value);
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        const value = parameters.parse(ctx.boardConfig?.magician ?? {});
+        // 原左值容器先于 create 参数读取；仅移交这次赋值，不提前取状态或冻结初始化结果。
+        MAGICIAN_STATE_SLOT.install(() => role.privateState, value);
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: parameters.parse({}),
@@ -108,21 +111,23 @@ export const MAGICIAN_ROLE_PROFILE: NativeRoleContributions = {
       },
     }),
     nightStages: [MAGICIAN_EXCHANGE_STAGE],
-    baselineAction: (role, request, _pick, _pickCamp, _locale, world, currentCamp) => {
-      if (
-        !request.allowedTools.includes("swap_targets") ||
-        !world ||
-        !getMagicianState(role, currentCamp)
-      )
-        return null;
-      const targets = magicianChoiceTargets(world, request.context.day);
-      return targets.length >= 2
-        ? {
-            name: "swap_targets",
-            args: { first_id: targets[0]!, second_id: targets[1]!, abstain: false },
-          }
-        : { name: "swap_targets", args: { first_id: null, second_id: null, abstain: true } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, _pick, _pickCamp, _locale, world, currentCamp) => {
+        if (
+          !request.allowedTools.includes("swap_targets") ||
+          !world ||
+          !getMagicianState(role, currentCamp)
+        )
+          return null;
+        const targets = magicianChoiceTargets(world, request.context.day);
+        return targets.length >= 2
+          ? {
+              name: "swap_targets",
+              args: { first_id: targets[0]!, second_id: targets[1]!, abstain: false },
+            }
+          : { name: "swap_targets", args: { first_id: null, second_id: null, abstain: true } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("magician"),
 };

@@ -1,6 +1,7 @@
 /**
  * 录制集成测试验证狼队访问。输入为原方向性狼聊／刀权、在途回复和事实时点受众；字面回执、引用／getter／错误、事实和状态为预期。真实临时 Recorder 写读逐席 JSON，事实发生时冻结的受众不随后续身份变化；不读私有配置／认证或调用计费模型。
  */
+import type { RoleQueries } from "../../../src/rulesets/roles/contracts";
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
@@ -47,11 +48,11 @@ function fixture(locale: "zh-CN" | "en") {
           runtime: {
             ...profile.runtime,
             nightStages: [],
-            wolfTeam: (state: RoleComponent) => ({
+            wolfTeam: (queries: RoleQueries) => ({
               recognizedByPack: false,
               recognizes: "all" as const,
               canChat: false,
-              canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
+              canVoteForKill: (queries.stateData() as { readonly knife?: unknown }).knife === true,
             }),
           },
         };

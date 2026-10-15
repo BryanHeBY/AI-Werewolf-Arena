@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -59,18 +60,24 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
-    init: (role) => {
-      if (!getAwakenedState(role)) setAwakenedState(role, freshAwakenedState());
-    },
-    wolfTeam: (role, world, currentCamp) => ({
-      recognizedByPack: false,
-      recognizes: "none",
-      canChat: false,
-      canVoteForKill: canAwakenedKnife(role, world, currentCamp),
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        if (!getAwakenedState(role)) setAwakenedState(role, freshAwakenedState());
+      },
     }),
-    inspectionLabels: (role) => ({
-      camp: Camp.Wolf,
-      role: getAwakenedState(role)?.learned?.role ?? Role.AwakenedHiddenWolf,
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (role, world, currentCamp) => ({
+        recognizedByPack: false,
+        recognizes: "none",
+        canChat: false,
+        canVoteForKill: canAwakenedKnife(role, world, currentCamp),
+      }),
+    }),
+    inspectionLabels: ownRoleCallback("inspectionLabels", {
+      inspectionLabels: (role) => ({
+        camp: Camp.Wolf,
+        role: getAwakenedState(role)?.learned?.role ?? Role.AwakenedHiddenWolf,
+      }),
     }),
     configuration: {
       schema: z.strictObject({}),
@@ -123,39 +130,43 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
         ),
       },
     },
-    baselineAction: (role, request, pick, byCamp, locale, world, currentCamp) => {
-      if (request.allowedTools.includes("awakened_mimic")) {
-        const target = pick();
-        return target === null ? null : { name: "awakened_mimic", args: { target_id: target } };
-      }
-      if (request.allowedTools.includes("awakened_poison")) {
-        const target = byCamp("good");
-        return target === null ? null : { name: "awakened_poison", args: { target_id: target } };
-      }
-      if (request.allowedTools.includes("awakened_guard"))
-        return { name: "awakened_guard", args: { target_id: null } };
-      if (request.allowedTools.includes("awakened_attack"))
-        return { name: "awakened_attack", args: { target_id: byCamp("good") } };
-      if (request.allowedTools.includes("inspect_role")) {
-        const ability = findNightAbility(role, "role_check", request.context.ability_id),
-          target =
-            world && ability
-              ? roleInspectionTargets(world, request.actorId, ability.state)[0]
-              : undefined;
-        return target === undefined ? null : { name: "inspect_role", args: { target_id: target } };
-      }
-      if (request.allowedTools.includes("shoot"))
-        return { name: "shoot", args: { target_id: byCamp("good") } };
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
-        role,
-        request,
-        pick,
-        byCamp,
-        locale,
-        world,
-        currentCamp,
-      );
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, pick, byCamp, locale, world, currentCamp) => {
+        if (request.allowedTools.includes("awakened_mimic")) {
+          const target = pick();
+          return target === null ? null : { name: "awakened_mimic", args: { target_id: target } };
+        }
+        if (request.allowedTools.includes("awakened_poison")) {
+          const target = byCamp("good");
+          return target === null ? null : { name: "awakened_poison", args: { target_id: target } };
+        }
+        if (request.allowedTools.includes("awakened_guard"))
+          return { name: "awakened_guard", args: { target_id: null } };
+        if (request.allowedTools.includes("awakened_attack"))
+          return { name: "awakened_attack", args: { target_id: byCamp("good") } };
+        if (request.allowedTools.includes("inspect_role")) {
+          const ability = findNightAbility(role, "role_check", request.context.ability_id),
+            target =
+              world && ability
+                ? roleInspectionTargets(world, request.actorId, ability.state)[0]
+                : undefined;
+          return target === undefined
+            ? null
+            : { name: "inspect_role", args: { target_id: target } };
+        }
+        if (request.allowedTools.includes("shoot"))
+          return { name: "shoot", args: { target_id: byCamp("good") } };
+        return roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")!(
+          role,
+          request,
+          pick,
+          byCamp,
+          locale,
+          world,
+          currentCamp,
+        );
+      },
+    }),
   },
   presentation: nativeRolePresentation("awakened_hidden_wolf"),
 };

@@ -1,6 +1,7 @@
 /**
  * 负责分别推导狼队知识、聊天参与和刀权。输入为当前 World 角色及明确运行政策；输出保留队友、狼聊、狼刀名单和事件受众。狼阵营本身不等于拥有全部狼队权限，不据历史知识授予当前刀权。身份安装失败的退休仅关闭狼聊／刀执行，不抹已知队友或改写历史受众。
  */
+import { invokeRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { scholarMentorPackBlocked } from "../scholar-mentor/wolf-team-ports";
 import { animalPackKnifeBlocked } from "../animal-dream/wolf-team-ports";
 import { nightmareKnifeBlocked } from "../nightmare/wolf-team-ports";
@@ -36,7 +37,7 @@ export function wolfTeamPermissions(
   const permissions = catalog.runtime(role.role)?.wolfTeam;
   const result =
     typeof permissions === "function"
-      ? permissions(role, world, currentCamp)
+      ? invokeRoleCallback("wolfTeam", permissions, undefined, role, world, currentCamp)
       : (permissions ?? NO_ACCESS);
   const current =
     world &&
@@ -71,7 +72,7 @@ export function knownWolfTeammates(
     world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Wolf &&
     catalog.runtime(role.role)?.knownTeammates;
   if (snapshot)
-    return [...new Set(snapshot(role!, world))]
+    return [...new Set(invokeRoleCallback("knownTeammates", snapshot, undefined, role!, world))]
       .filter(
         (id) =>
           id !== actorId &&

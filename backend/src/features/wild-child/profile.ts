@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { createWildChildValidationRules } from "./validation-rules";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -42,20 +43,24 @@ export const WILD_CHILD_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     canSelfDestruct: false,
-    init: (role) => {
-      initializeWildChildState(role);
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        initializeWildChildState(role);
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: { policy: WILD_CHILD_POLICY },
       apply: (config, value) => ({ ...config, wildChild: parameters.parse(value) }),
       serialize: (config) => parameters.parse(config.wildChild ?? {}),
     },
-    wolfTeam: (role, world) => ({
-      recognizedByPack: wildChildPackKnown(role, world),
-      recognizes: wildChildPackKnown(role, world) ? "pack" : "none",
-      canChat: wildChildPackActive(role, world),
-      canVoteForKill: wildChildPackActive(role, world),
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (role, world) => ({
+        recognizedByPack: wildChildPackKnown(role, world),
+        recognizes: wildChildPackKnown(role, world) ? "pack" : "none",
+        canChat: wildChildPackActive(role, world),
+        canVoteForKill: wildChildPackActive(role, world),
+      }),
     }),
     nightStages: WOLF_NIGHT_STAGES,
     stageDirectives: WOLF_STAGE_DIRECTIVES,
@@ -75,26 +80,28 @@ export const WILD_CHILD_ROLE_PROFILE: NativeRoleContributions = {
     ],
     validationRules: createWildChildValidationRules(),
     llmRepair: WOLF_LLM_REPAIR_PACK,
-    baselineAction: (
-      role,
-      request,
-      pickAliveNotSelf,
-      pickAliveByCamp,
-      locale,
-      world,
-      currentCamp,
-    ) =>
-      request.allowedTools.includes("choose_wild_model")
-        ? { name: "choose_wild_model", args: { target_id: pickAliveNotSelf()! } }
-        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
-            role,
-            request,
-            pickAliveNotSelf,
-            pickAliveByCamp,
-            locale,
-            world,
-            currentCamp,
-          ) ?? null),
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (
+        role,
+        request,
+        pickAliveNotSelf,
+        pickAliveByCamp,
+        locale,
+        world,
+        currentCamp,
+      ) =>
+        request.allowedTools.includes("choose_wild_model")
+          ? { name: "choose_wild_model", args: { target_id: pickAliveNotSelf()! } }
+          : (roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")?.(
+              role,
+              request,
+              pickAliveNotSelf,
+              pickAliveByCamp,
+              locale,
+              world,
+              currentCamp,
+            ) ?? null),
+    }),
   },
   presentation: nativeRolePresentation("wild_child"),
 };

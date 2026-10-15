@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -26,7 +27,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
-    init: initializeWhiteWolfKingState,
+    init: ownRoleCallback("init", { init: initializeWhiteWolfKingState }),
     toolSpecs: [
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter(
         (spec) => spec.name !== "self_destruct",
@@ -100,26 +101,28 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (
-      role,
-      request,
-      pickAliveNotSelf,
-      pickAliveByCamp,
-      locale,
-      _world,
-      currentCamp,
-    ) =>
-      request.allowedTools.includes("self_destruct_with_target")
-        ? null
-        : ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
-            role,
-            request,
-            pickAliveNotSelf,
-            pickAliveByCamp,
-            locale,
-            undefined,
-            currentCamp,
-          ),
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (
+        role,
+        request,
+        pickAliveNotSelf,
+        pickAliveByCamp,
+        locale,
+        _world,
+        currentCamp,
+      ) =>
+        request.allowedTools.includes("self_destruct_with_target")
+          ? null
+          : roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")!(
+              role,
+              request,
+              pickAliveNotSelf,
+              pickAliveByCamp,
+              locale,
+              undefined,
+              currentCamp,
+            ),
+    }),
   },
   presentation: nativeRolePresentation("white_wolf_king"),
 };

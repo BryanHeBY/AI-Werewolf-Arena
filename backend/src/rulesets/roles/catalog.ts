@@ -4,16 +4,15 @@
  * 初始化仍先于默认语言读取，展示才按当前 role 查具体贡献；Catalog 不导入捕获程序。
  * 资料、运行贡献和原文不能相互授予权限，原重复／缺失角色错误前缀保持不变。
  */
+import { roleMethod, type OwnedRoleInitContext } from "./owned-bindings";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { Camp, type Role, type NativeRolePresentationId } from "@ai-werewolf-arena/game-contract";
 import { roleName, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import type { RoleComponent } from "../../domain/components/role";
-import type { World } from "../../domain/world";
-import type { CurrentCampSource } from "../../domain/components/camp";
 import { bindRolePresentation } from "../../agents/observation/role-presentation";
 import type {
   RoleContributions,
-  RoleInitContext,
+  RoleQueries,
   RoleInitializationComponent,
   RoleMetadata,
   RoleProfile,
@@ -22,10 +21,8 @@ import type {
 
 export type NativeRoleRenderer = (
   id: NativeRolePresentationId,
-  role: RoleComponent,
+  queries: RoleQueries,
   locale: Locale,
-  world: World | undefined,
-  currentCamp: CurrentCampSource,
 ) => string;
 
 /** 内建运行必须显式提供展示装配；自定义数组保持既有 flat 用户输入协议。 */
@@ -107,7 +104,7 @@ export class RoleCatalog {
     const runtime = this.runtime(role.role);
     if (!runtime) return { canVote: false, canBeExiled: false, canBeSheriff: false };
     return typeof runtime.participation === "function"
-      ? { ...runtime.participation(role) }
+      ? { ...roleMethod(runtime, "participation")!(role) }
       : { ...(runtime.participation ?? { canVote: true, canBeExiled: true, canBeSheriff: true }) };
   }
 
@@ -131,10 +128,10 @@ export class RoleCatalog {
     return text(locale, `role.${role}.brief` as MessageKey);
   }
 
-  applyRuntime(roleComp: RoleComponent, ctx: RoleInitContext): void {
+  applyRuntime(roleComp: RoleComponent, ctx: OwnedRoleInitContext): void {
     const entry = this.requireEntry(roleComp.role);
     const runtime = entry.kind === "custom-profile" ? entry.profile : entry.contributions.runtime;
-    runtime.init?.(roleComp as RoleInitializationComponent, ctx);
+    roleMethod(runtime, "init")?.(roleComp as RoleInitializationComponent, ctx);
     const defaultLocale = ctx.locale ?? "zh-CN";
     bindRolePresentation(roleComp, (locale = defaultLocale) => {
       // 只传晚读函数；不提前访问 ctx.currentCamp，保原贡献 getter、receiver 和 ctx.world 的失败时点。
@@ -142,18 +139,26 @@ export class RoleCatalog {
       if (active.kind === "custom-profile") {
         // 保留原两次方法 getter、profile receiver 及随后 ctx.world 求值的完整失败前缀。
         return active.profile.renderPrompt
-          ? active.profile.renderPrompt(roleComp, locale, ctx.world, () => ctx.currentCamp())
+          ? roleMethod(active.profile, "renderPrompt")!(roleComp, locale, ctx.world, () =>
+              ctx.currentCamp(),
+            )
           : text(locale, "role.generic.state", {
               role: this.label(active.profile.role, locale),
             });
       }
       const presentation = active.contributions.presentation;
       if (presentation.kind === "native")
-        return active.renderNative(presentation.id, roleComp, locale, ctx.world, () =>
-          ctx.currentCamp(),
+        return roleMethod(active, "renderNative")!(
+          presentation.id,
+          roleComp,
+          locale,
+          ctx.world,
+          () => ctx.currentCamp(),
         );
       return presentation.renderPrompt
-        ? presentation.renderPrompt(roleComp, locale, ctx.world, () => ctx.currentCamp())
+        ? roleMethod(presentation, "renderPrompt")!(roleComp, locale, ctx.world, () =>
+            ctx.currentCamp(),
+          )
         : text(locale, "role.generic.state", {
             role: this.label(active.contributions.metadata.role, locale),
           });

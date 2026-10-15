@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -32,10 +33,12 @@ export const HUNTER_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     configuration: deathActionConfiguration("hunter"),
-    init: (roleComp, ctx) => {
-      // 保原安装 callee／角色参数先于配置读取；状态由资源 owner 创建并同引用安装。
-      setHunterState(roleComp, createHunterState(ctx));
-    },
+    init: ownRoleCallback("init", {
+      init: (roleComp, ctx) => {
+        // 保原安装 callee／角色参数先于配置读取；状态由资源 owner 创建并同引用安装。
+        setHunterState(roleComp, createHunterState(ctx));
+      },
+    }),
     toolSpecs: HUNTER_TOOL_SPECS,
     validationRules: ownedToolRules({
       shoot: (ctx) =>
@@ -46,13 +49,15 @@ export const HUNTER_ROLE_PROFILE: NativeRoleContributions = {
     }),
     llmRepair: DEATH_SHOT_REPAIR,
     deathHook: hunterDeathHook,
-    baselineAction: (_roleComp, request, pickAliveNotSelf) => {
-      if (!request.allowedTools.includes("shoot")) {
-        return null;
-      }
-      const target = pickAliveNotSelf();
-      return { name: "shoot", args: { target_id: target } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_roleComp, request, pickAliveNotSelf) => {
+        if (!request.allowedTools.includes("shoot")) {
+          return null;
+        }
+        const target = pickAliveNotSelf();
+        return { name: "shoot", args: { target_id: target } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("hunter"),
 };

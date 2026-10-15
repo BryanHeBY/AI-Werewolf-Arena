@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { inspectionConfiguration } from "../role-inspection/contribution-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -34,23 +35,27 @@ export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
-    init: (role, ctx) => {
-      setGargoyleState(role, { hasInheritedKnife: false });
-      setRoleInspectionState(role, {
-        lastTarget: null,
-        lastDay: null,
-        history: [],
-        ...(ctx.boardConfig?.gargoyle?.inspectionPolicy &&
-        ctx.boardConfig.gargoyle.inspectionPolicy !== "awa_unique_required_v1"
-          ? { inspectionPolicy: ctx.boardConfig.gargoyle.inspectionPolicy }
-          : {}),
-      });
-    },
-    wolfTeam: (role, world, currentCamp) => ({
-      recognizedByPack: false,
-      recognizes: "none",
-      canChat: false,
-      canVoteForKill: canGargoyleKnife(role, world, currentCamp),
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        setGargoyleState(role, { hasInheritedKnife: false });
+        setRoleInspectionState(role, {
+          lastTarget: null,
+          lastDay: null,
+          history: [],
+          ...(ctx.boardConfig?.gargoyle?.inspectionPolicy &&
+          ctx.boardConfig.gargoyle.inspectionPolicy !== "awa_unique_required_v1"
+            ? { inspectionPolicy: ctx.boardConfig.gargoyle.inspectionPolicy }
+            : {}),
+        });
+      },
+    }),
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (role, world, currentCamp) => ({
+        recognizedByPack: false,
+        recognizes: "none",
+        canChat: false,
+        canVoteForKill: canGargoyleKnife(role, world, currentCamp),
+      }),
     }),
     // 此处仍按原时点创建政策配置；共享工具／规则／阶段保同一绑定，不授查验库存或跳过租约复验。
     configuration: inspectionConfiguration("gargoyle", "awa_unique_required_v1"),
@@ -73,24 +78,27 @@ export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (role, request, pick, byCamp, locale, world, currentCamp) => {
-      if (request.allowedTools.includes("inspect_role")) {
-        const state = getRoleInspectionState(role, request.context.ability_id),
-          target = world && state ? roleInspectionTargets(world, request.actorId, state)[0] : null;
-        return target === null || target === undefined
-          ? null
-          : { name: "inspect_role", args: { target_id: target } };
-      }
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
-        role,
-        request,
-        pick,
-        byCamp,
-        locale,
-        world,
-        currentCamp,
-      );
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, pick, byCamp, locale, world, currentCamp) => {
+        if (request.allowedTools.includes("inspect_role")) {
+          const state = getRoleInspectionState(role, request.context.ability_id),
+            target =
+              world && state ? roleInspectionTargets(world, request.actorId, state)[0] : null;
+          return target === null || target === undefined
+            ? null
+            : { name: "inspect_role", args: { target_id: target } };
+        }
+        return roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")!(
+          role,
+          request,
+          pick,
+          byCamp,
+          locale,
+          world,
+          currentCamp,
+        );
+      },
+    }),
   },
   presentation: nativeRolePresentation("gargoyle"),
 };

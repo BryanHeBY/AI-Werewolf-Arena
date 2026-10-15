@@ -1,6 +1,7 @@
 /**
  * 单元测试验证查验标签、严格结果 reader、历史展示和脱离投票投影的数据边界。输入为内存身份 fixture、合法／畸形字面量、getter 与 Proxy；原字段及隐私断言拒绝无效证据，不猜测好人阵营。展示预期保留既有 text helper 耦合，不执行夜间流水线。
  */
+import type { RoleQueries } from "../../../../src/rulesets/roles/contracts";
 import { expect, test } from "bun:test";
 import { readInspectionResult, readSeerInspectionResult } from "@ai-werewolf-arena/replay-contract";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -31,8 +32,8 @@ for (const locale of ["zh-CN", "en"] as const) {
               ...profile,
               runtime: {
                 ...profile.runtime,
-                inspectionLabels: (state: RoleComponent) =>
-                  (state.privateState as { readonly unmasked?: unknown }).unmasked === true
+                inspectionLabels: (queries: RoleQueries) =>
+                  (queries.stateData() as { readonly unmasked?: unknown }).unmasked === true
                     ? { camp: Camp.Wolf, role: Role.Wolf }
                     : { camp: Camp.Good, role: Role.Villager },
               },

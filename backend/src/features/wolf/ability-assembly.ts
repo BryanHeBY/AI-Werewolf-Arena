@@ -5,6 +5,7 @@
  * 派生角色在原字段读取／展开点读取这一可写对象，运行时替换 runtime 或 getter 仍按原时点生效，不提前缓存。
  * 本模块不建立通用角色基类，不推进阶段或付款，不授予生命、库存和租约写权；展示身份不构成行动许可。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../domain/model";
@@ -31,41 +32,43 @@ export const ORDINARY_WOLF_CONTRIBUTIONS: NativeRoleContributions = {
     validationRules: WOLF_VALIDATION_RULES,
     nightStages: WOLF_NIGHT_STAGES,
     llmRepair: WOLF_LLM_REPAIR_PACK,
-    baselineAction: (
-      _roleComp,
-      request,
-      _pickAliveNotSelf,
-      pickAliveByCamp,
-      locale = "zh-CN",
-      world,
-    ) => {
-      if (request.allowedTools.includes("speak_to_wolves")) {
-        return {
-          name: "speak_to_wolves",
-          args: {
-            text: text(locale, "fallback.wolf_chat"),
-            end_chat: false,
-          },
-        };
-      }
-      if (request.allowedTools.includes("kill_vote")) {
-        const circle = world && isMistRavenBoard(world) ? mistKnifeTargets(world) : null;
-        if (circle !== null) {
-          const target = circle[0] ?? null;
-          return { name: "kill_vote", args: { target_id: target, abstain: target === null } };
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (
+        _roleComp,
+        request,
+        _pickAliveNotSelf,
+        pickAliveByCamp,
+        locale = "zh-CN",
+        world,
+      ) => {
+        if (request.allowedTools.includes("speak_to_wolves")) {
+          return {
+            name: "speak_to_wolves",
+            args: {
+              text: text(locale, "fallback.wolf_chat"),
+              end_chat: false,
+            },
+          };
         }
-        const target = pickAliveByCamp("good");
-        if (target !== null) {
-          return { name: "kill_vote", args: { target_id: target, abstain: false } };
+        if (request.allowedTools.includes("kill_vote")) {
+          const circle = world && isMistRavenBoard(world) ? mistKnifeTargets(world) : null;
+          if (circle !== null) {
+            const target = circle[0] ?? null;
+            return { name: "kill_vote", args: { target_id: target, abstain: target === null } };
+          }
+          const target = pickAliveByCamp("good");
+          if (target !== null) {
+            return { name: "kill_vote", args: { target_id: target, abstain: false } };
+          }
+          return { name: "kill_vote", args: { target_id: null, abstain: true } };
         }
-        return { name: "kill_vote", args: { target_id: null, abstain: true } };
-      }
-      if (request.allowedTools.includes("self_destruct")) {
-        // 自爆属于高风险动作：fallback 不应在“可选中断窗口”默认触发。
+        if (request.allowedTools.includes("self_destruct")) {
+          // 自爆属于高风险动作：fallback 不应在“可选中断窗口”默认触发。
+          return null;
+        }
         return null;
-      }
-      return null;
-    },
+      },
+    }),
   },
   presentation: nativeRolePresentation("wolf"),
 };

@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -57,20 +58,25 @@ export const MIRROR_GIRL_ROLE_PROFILE: NativeRoleContributions = {
     ],
   },
   runtime: {
-    init: (role, ctx) => {
-      const native = nativeMirror(role);
-      if (native?.kind === "role_check" && roleInspectionPolicy(native.state) !== "mirror")
-        throw new Error("mirror_native_policy_invalid");
-      // 重复装配或复活不能重置仍存续的原生历史，也不能补充已经转移的查验资源。
-      if (!native && !retiredNightAbilityIds(role).some((id) => id.startsWith("native:role_check")))
-        setRoleInspectionState(role, {
-          ...freshMirrorInspectionState(),
-          ...(ctx.boardConfig?.mirrorGirl?.inspectionPolicy &&
-          ctx.boardConfig.mirrorGirl.inspectionPolicy !== "awa_unique_optional_v1"
-            ? { inspectionPolicy: ctx.boardConfig.mirrorGirl.inspectionPolicy }
-            : {}),
-        });
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        const native = nativeMirror(role);
+        if (native?.kind === "role_check" && roleInspectionPolicy(native.state) !== "mirror")
+          throw new Error("mirror_native_policy_invalid");
+        // 重复装配或复活不能重置仍存续的原生历史，也不能补充已经转移的查验资源。
+        if (
+          !native &&
+          !retiredNightAbilityIds(role).some((id) => id.startsWith("native:role_check"))
+        )
+          setRoleInspectionState(role, {
+            ...freshMirrorInspectionState(),
+            ...(ctx.boardConfig?.mirrorGirl?.inspectionPolicy &&
+            ctx.boardConfig.mirrorGirl.inspectionPolicy !== "awa_unique_optional_v1"
+              ? { inspectionPolicy: ctx.boardConfig.mirrorGirl.inspectionPolicy }
+              : {}),
+          });
+      },
+    }),
     // 此处仍按原时点创建政策配置；共享工具／规则／阶段保同一绑定，不授查验库存或跳过租约复验。
     configuration: inspectionConfiguration("mirrorGirl", "awa_unique_optional_v1"),
     toolSpecs: [ROLE_INSPECTION_TOOL],
@@ -85,14 +91,16 @@ export const MIRROR_GIRL_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (role, request, _pick, _byCamp, _locale, world) => {
-      if (!world || !request.allowedTools.includes("inspect_role")) return null;
-      const ability = findNightAbility(role, "role_check", request.context.ability_id),
-        target = ability
-          ? roleInspectionTargets(world, request.actorId, ability.state)[0]
-          : undefined;
-      return target === undefined ? null : { name: "inspect_role", args: { target_id: target } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, _pick, _byCamp, _locale, world) => {
+        if (!world || !request.allowedTools.includes("inspect_role")) return null;
+        const ability = findNightAbility(role, "role_check", request.context.ability_id),
+          target = ability
+            ? roleInspectionTargets(world, request.actorId, ability.state)[0]
+            : undefined;
+        return target === undefined ? null : { name: "inspect_role", args: { target_id: target } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("mirror_girl"),
 };

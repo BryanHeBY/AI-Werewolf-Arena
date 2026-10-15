@@ -5,6 +5,7 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  * 行动规则在原资格／目标读取后的成功尾拒执行退休；初始化、baseline 与玩家知识不按该标记过滤。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules, invokeValidationRule } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -40,17 +41,19 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
-    init: (role, ctx) => {
-      setWolfBeautyState(role, {
-        targetId: null,
-        lastActedDay: null,
-        history: [],
-        ...(ctx.boardConfig?.wolfBeauty?.deathLinkPolicy &&
-        ctx.boardConfig.wolfBeauty.deathLinkPolicy !== "awa_exile_poison_v1"
-          ? { deathLinkPolicy: ctx.boardConfig.wolfBeauty.deathLinkPolicy }
-          : {}),
-      });
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        setWolfBeautyState(role, {
+          targetId: null,
+          lastActedDay: null,
+          history: [],
+          ...(ctx.boardConfig?.wolfBeauty?.deathLinkPolicy &&
+          ctx.boardConfig.wolfBeauty.deathLinkPolicy !== "awa_exile_poison_v1"
+            ? { deathLinkPolicy: ctx.boardConfig.wolfBeauty.deathLinkPolicy }
+            : {}),
+        });
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: { deathLinkPolicy: "awa_exile_poison_v1" },
@@ -126,30 +129,32 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (role, request, pick, byCamp, locale, _world, currentCamp) => {
-      if (request.allowedTools.includes("charm")) {
-        const target = pick(),
-          previous = getWolfBeautyState(role)?.history.at(-1);
-        return {
-          name: "charm",
-          args: {
-            target_id:
-              previous?.day === request.context.day - 1 && previous.targetId === target
-                ? null
-                : target,
-          },
-        };
-      }
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
-        role,
-        request,
-        pick,
-        byCamp,
-        locale,
-        undefined,
-        currentCamp,
-      );
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, pick, byCamp, locale, _world, currentCamp) => {
+        if (request.allowedTools.includes("charm")) {
+          const target = pick(),
+            previous = getWolfBeautyState(role)?.history.at(-1);
+          return {
+            name: "charm",
+            args: {
+              target_id:
+                previous?.day === request.context.day - 1 && previous.targetId === target
+                  ? null
+                  : target,
+            },
+          };
+        }
+        return roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")!(
+          role,
+          request,
+          pick,
+          byCamp,
+          locale,
+          undefined,
+          currentCamp,
+        );
+      },
+    }),
   },
   presentation: nativeRolePresentation("wolf_beauty"),
 };

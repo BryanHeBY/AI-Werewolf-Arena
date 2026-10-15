@@ -5,6 +5,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -48,23 +49,29 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
-    canSelfDestruct: (role, currentCamp) =>
-      getNightmareShadowState(role, currentCamp)?.wolfActionPolicy === "standard",
-    wolfTeam: (role, world, currentCamp) => {
-      const ready =
-        !!getNightmareShadowState(role, currentCamp)?.packReady &&
-        (!world || nightmarePackReady(world));
-      return {
-        recognizedByPack: ready,
-        recognizes: ready ? "pack" : "none",
-        canChat: ready,
-        canVoteForKill: ready,
-      };
-    },
-    init: (role, ctx) => {
-      const value = parameters.parse(ctx.boardConfig?.nightmareShadow ?? {});
-      NIGHTMARE_SHADOW_STATE_SLOT.install(() => role.privateState, value);
-    },
+    canSelfDestruct: ownRoleCallback("canSelfDestruct", {
+      canSelfDestruct: (role, currentCamp) =>
+        getNightmareShadowState(role, currentCamp)?.wolfActionPolicy === "standard",
+    }),
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (role, world, currentCamp) => {
+        const ready =
+          !!getNightmareShadowState(role, currentCamp)?.packReady &&
+          (!world || nightmarePackReady(world));
+        return {
+          recognizedByPack: ready,
+          recognizes: ready ? "pack" : "none",
+          canChat: ready,
+          canVoteForKill: ready,
+        };
+      },
+    }),
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        const value = parameters.parse(ctx.boardConfig?.nightmareShadow ?? {});
+        NIGHTMARE_SHADOW_STATE_SLOT.install(() => role.privateState, value);
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: parameters.parse({}),
@@ -123,24 +130,26 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
       },
     }),
     nightStages: [NIGHTMARE_FEAR_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
-    baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
-      if (!request.allowedTools.includes("fear"))
-        return (
-          ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
-            role,
-            request,
-            pick,
-            pickCamp,
-            locale,
-            world,
-            currentCamp,
-          ) ?? null
-        );
-      const target = world
-        ? (nightmareFearTargets(world, request.actorId, request.context.day)[0] ?? null)
-        : null;
-      return { name: "fear", args: { target_id: target, abstain: target === null } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
+        if (!request.allowedTools.includes("fear"))
+          return (
+            roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")?.(
+              role,
+              request,
+              pick,
+              pickCamp,
+              locale,
+              world,
+              currentCamp,
+            ) ?? null
+          );
+        const target = world
+          ? (nightmareFearTargets(world, request.actorId, request.context.day)[0] ?? null)
+          : null;
+        return { name: "fear", args: { target_id: target, abstain: target === null } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("nightmare"),
 };

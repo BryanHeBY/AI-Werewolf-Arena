@@ -5,6 +5,7 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  * 行动规则在原资格／目标读取后的成功尾拒执行退休；初始化、baseline 与玩家知识不按该标记过滤。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -49,7 +50,7 @@ export const HYBRID_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     initialVictoryAffiliations: [],
-    init: installHybridState,
+    init: ownRoleCallback("init", { init: installHybridState }),
     configuration: {
       schema: z.strictObject({}),
       defaults: {},

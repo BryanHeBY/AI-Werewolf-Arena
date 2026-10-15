@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -25,7 +26,7 @@ export const KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.knight.brief"),
   },
   runtime: {
-    init: initializeKnightState,
+    init: ownRoleCallback("init", { init: initializeKnightState }),
     configuration: {
       schema: z.strictObject({
         enabledWindows: z
@@ -90,7 +91,7 @@ export const KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: () => null,
+    baselineAction: ownRoleCallback("baselineAction", { baselineAction: () => null }),
   },
   presentation: nativeRolePresentation("knight"),
 };

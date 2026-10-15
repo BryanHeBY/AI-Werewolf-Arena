@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { createFoxValidationRules, createPufferValidationRules } from "./validation-rules";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -61,9 +62,11 @@ export const WHITE_CAT_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...common.runtime,
-    init: (role) => {
-      role.privateState.whiteCat = freshWhiteCatState();
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        role.privateState.whiteCat = freshWhiteCatState();
+      },
+    }),
     configuration: {
       schema: cat,
       defaults: cat.parse({}),
@@ -82,9 +85,11 @@ export const FOX_CUB_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...common.runtime,
-    init: (role) => {
-      role.privateState.foxCub = freshFoxCubState();
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        role.privateState.foxCub = freshFoxCubState();
+      },
+    }),
     configuration: {
       schema: fox,
       defaults: fox.parse({}),
@@ -116,10 +121,12 @@ export const FOX_CUB_ROLE_PROFILE: NativeRoleContributions = {
     ],
     validationRules: createFoxValidationRules(),
     nightStages: [ANIMAL_FOX_STAGE],
-    baselineAction: (_role, request) =>
-      request.allowedTools.includes("fox_distract")
-        ? { name: "fox_distract", args: { target_id: null } }
-        : null,
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request) =>
+        request.allowedTools.includes("fox_distract")
+          ? { name: "fox_distract", args: { target_id: null } }
+          : null,
+    }),
   },
   presentation: nativeRolePresentation("fox_cub"),
 };
@@ -132,9 +139,11 @@ export const PUFFERFISH_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...common.runtime,
-    init: (role) => {
-      role.privateState.pufferfish = freshPufferfishState();
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        role.privateState.pufferfish = freshPufferfishState();
+      },
+    }),
     configuration: {
       schema: puffer,
       defaults: puffer.parse({}),
@@ -162,10 +171,12 @@ export const PUFFERFISH_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: createPufferValidationRules(),
-    baselineAction: (_role, request) =>
-      request.allowedTools.includes("puffer_retaliate")
-        ? { name: "puffer_retaliate", args: { activate: false } }
-        : null,
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request) =>
+        request.allowedTools.includes("puffer_retaliate")
+          ? { name: "puffer_retaliate", args: { activate: false } }
+          : null,
+    }),
   },
   presentation: nativeRolePresentation("pufferfish"),
 };

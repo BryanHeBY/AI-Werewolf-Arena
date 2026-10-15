@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { createNobleValidationRules, createSecretBodyValidationRules } from "./validation-rules";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -56,21 +57,25 @@ export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     ...common.runtime,
-    init: (role, ctx) => {
-      // 完整安装由既有数据 owner 持有；原 parse callee／receiver 与板子读取留在惰性政策输入内。
-      installNobleState(
-        role,
-        () => noble.parse(ctx.boardConfig?.nightNoble ?? {}).wolfActionPolicy,
-      );
-    },
-    canSelfDestruct: (role) =>
-      readNobleState(
-        (
-          role.privateState as {
-            readonly noble?: unknown;
-          }
-        ).noble,
-      )?.wolfActionPolicy === "standard",
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        // 完整安装由既有数据 owner 持有；原 parse callee／receiver 与板子读取留在惰性政策输入内。
+        installNobleState(
+          role,
+          () => noble.parse(ctx.boardConfig?.nightNoble ?? {}).wolfActionPolicy,
+        );
+      },
+    }),
+    canSelfDestruct: ownRoleCallback("canSelfDestruct", {
+      canSelfDestruct: (role) =>
+        readNobleState(
+          (
+            role.privateState as {
+              readonly noble?: unknown;
+            }
+          ).noble,
+        )?.wolfActionPolicy === "standard",
+    }),
     configuration: {
       schema: noble,
       defaults: noble.parse({}),
@@ -100,10 +105,16 @@ export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
     ],
     validationRules: createNobleValidationRules(),
     nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), NOBLE_CHOICE_STAGE],
-    baselineAction: (role, request, ...rest) =>
-      request.allowedTools.includes("choose_servant")
-        ? { name: "choose_servant", args: { target_id: null } }
-        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(role, request, ...rest) ?? null),
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, ...rest) =>
+        request.allowedTools.includes("choose_servant")
+          ? { name: "choose_servant", args: { target_id: null } }
+          : (roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")?.(
+              role,
+              request,
+              ...rest,
+            ) ?? null),
+    }),
   },
   presentation: nativeRolePresentation("night_noble"),
 };
@@ -119,13 +130,15 @@ export const AWAKENED_IDIOT_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...common.runtime,
     canSelfDestruct: false,
-    init: (role, ctx) => {
-      // owner 读取原左值容器之后才求值此政策，不把配置提前解析成值或另存状态。
-      installSecretBodyState(
-        role,
-        () => body.parse(ctx.boardConfig?.awakenedIdiot ?? {}).protectionRepeatPolicy,
-      );
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        // owner 读取原左值容器之后才求值此政策，不把配置提前解析成值或另存状态。
+        installSecretBodyState(
+          role,
+          () => body.parse(ctx.boardConfig?.awakenedIdiot ?? {}).protectionRepeatPolicy,
+        );
+      },
+    }),
     configuration: {
       schema: body,
       defaults: body.parse({}),
@@ -153,10 +166,12 @@ export const AWAKENED_IDIOT_ROLE_PROFILE: NativeRoleContributions = {
     ],
     validationRules: createSecretBodyValidationRules(),
     nightStages: [SECRET_BODY_STAGE],
-    baselineAction: (_role, request) =>
-      request.allowedTools.includes("protect_secret_body")
-        ? { name: "protect_secret_body", args: { target_id: null } }
-        : null,
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request) =>
+        request.allowedTools.includes("protect_secret_body")
+          ? { name: "protect_secret_body", args: { target_id: null } }
+          : null,
+    }),
   },
   presentation: nativeRolePresentation("awakened_idiot"),
 };

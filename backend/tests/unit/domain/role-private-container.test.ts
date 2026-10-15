@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证角色容器读契约与显式自定义初始化。输入为字面角色、扩展记录和上下文 getter；原容器 descriptor、回调 this 与 trace 为预期。展示属性离开 domain 是明确 API 退出，其他记录仍可由具体 owner 写；编译负例不执行。
  */
+import { type OwnedRoleInitContext } from "../../../src/rulesets/roles/owned-bindings";
 import { createRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { renderRolePrompt } from "../../../src/agents/observation/role-presentation";
 import "../../../src/app/bootstrap";
@@ -10,7 +11,7 @@ import { type RoleComponent } from "../../../src/domain/components/role";
 import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import { World } from "../../../src/domain/world";
 import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
-import type { RoleProfile, RoleInitContext } from "../../../src/rulesets/roles/contracts";
+import type { RoleProfile } from "../../../src/rulesets/roles/contracts";
 import { setHunterState } from "../../../src/features/hunter/ports";
 
 function ordinaryReaderCannotWrite(role: RoleComponent) {
@@ -49,7 +50,7 @@ test("custom initializer keeps extension/replacement rights and original role/co
     world = new World(),
     trace: string[] = [];
   const initialCamp = { camp: Camp.Good };
-  const ctx: RoleInitContext = {
+  const ctx: OwnedRoleInitContext = {
     initialCamp,
     currentCamp: () => initialCamp,
     get locale(): "en" {
@@ -69,17 +70,19 @@ test("custom initializer keeps extension/replacement rights and original role/co
       trace.push("init");
       expect(this).toBe(profile);
       expect<unknown>(actualRole).toBe(role);
-      expect(actualContext).toBe(ctx);
+      expect(actualContext).not.toBe(ctx);
+      expect(Object.hasOwn(actualContext, "world")).toBe(false);
+      expect(actualContext.initialCamp).toBe(initialCamp);
       expect<unknown>(actualRole.privateState).toBe(firstRecord);
       actualRole.privateState.extension = extension;
       actualRole.privateState = replacement;
     },
-    renderPrompt(actualRole, locale, actualWorld) {
+    renderPrompt(queries, locale) {
       trace.push("render");
       expect(this).toBe(profile);
-      expect(actualRole).toBe(role);
+      expect(queries.actorRole()).toBe(Role.Villager);
       expect(locale).toBe("en");
-      expect(actualWorld).toBe(world);
+      expect(Object.hasOwn(queries, "world")).toBe(false);
       return "Custom prompt";
     },
   };

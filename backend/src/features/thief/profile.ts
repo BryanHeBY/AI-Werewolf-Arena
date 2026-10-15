@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { THIEF_VALIDATION_SCOPE } from "../../rulesets/action-validation-assembly";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
@@ -37,9 +38,11 @@ export const THIEF_ROLE_PROFILE: NativeRoleContributions = {
     ],
   },
   runtime: {
-    init: (role, ctx) => {
-      initializeThiefState(role, () => ctx.boardConfig?.thief?.policy ?? THIEF_POLICY);
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        initializeThiefState(role, () => ctx.boardConfig?.thief?.policy ?? THIEF_POLICY);
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: { policy: THIEF_POLICY },
@@ -72,10 +75,12 @@ export const THIEF_ROLE_PROFILE: NativeRoleContributions = {
       },
       THIEF_VALIDATION_SCOPE,
     ),
-    baselineAction: (_role, request) =>
-      request.allowedTools.includes("choose_thief_card")
-        ? { name: "choose_thief_card", args: { slot: 0 } }
-        : null,
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request) =>
+        request.allowedTools.includes("choose_thief_card")
+          ? { name: "choose_thief_card", args: { slot: 0 } }
+          : null,
+    }),
   },
   presentation: nativeRolePresentation("thief"),
 };

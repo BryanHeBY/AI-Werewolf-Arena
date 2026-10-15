@@ -3,6 +3,7 @@
  * 原 55 角色的登记顺序；输出为唯一默认 Catalog 或独立 Catalog。捕获函数在此实际注入，
  * 不在 profile 声明时建立反向展示依赖。初始化／显示仍由 Catalog 在原时点执行，不复制状态。
  */
+import { ownRoleCallback } from "./owned-bindings";
 import { RoleCatalog } from "./catalog";
 import type { RoleContributions, RoleProfile, NativeRoleContributions } from "./contracts";
 
@@ -21,7 +22,9 @@ export function createRoleCatalog(
   return new RoleCatalog(
     {
       contributions: (resolved as { contributions: readonly RoleContributions[] }).contributions,
-      renderNative: captureNativeRolePresentation,
+      renderNative: ownRoleCallback("renderNative", {
+        renderNative: captureNativeRolePresentation,
+      }),
     },
     builtinMetadata,
   );

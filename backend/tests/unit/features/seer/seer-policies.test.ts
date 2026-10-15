@@ -3,6 +3,7 @@
  * DTO 和库存断言验证配置语义；输入及字面／不可变 fixture 预期保持原样，不运行模型
  * 或完整对局驱动。
  */
+import { roleMethod } from "../../../../src/rulesets/roles/owned-bindings";
 import { bindTargetHintContext } from "../../../../src/agents/tool-repair/target-hint-registry";
 import { captureNativeRolePresentation } from "../../../../src/agents/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
@@ -162,7 +163,7 @@ test("fresh target policy rechecks history after await and exhausts without an i
   });
   const role = game.world.getComponent(2, COMPONENT.Role)!;
   expect(
-    SEER_ROLE_PROFILE.runtime.baselineAction!(
+    roleMethod(SEER_ROLE_PROFILE.runtime, "baselineAction")!(
       role,
       req,
       () => 1,

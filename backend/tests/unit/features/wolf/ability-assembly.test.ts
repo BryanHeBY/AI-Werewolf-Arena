@@ -3,6 +3,7 @@
  * 输入为真实角色贡献、手写请求与可恢复的宿主属性替换；输出以独立引用、工具顺序和读取轨迹断言。
  * 这里只验证装配与特权 mock，不提交工具、消费资源、授予租约或运行整局／模型；属性修改在 finally 恢复。
  */
+import { roleMethod } from "../../../../src/rulesets/roles/owned-bindings";
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase, type ActionRequest } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../../src/domain/components/role";
@@ -96,7 +97,7 @@ test("derived mocks read a replaced runtime and method getter at each original c
     ]) {
       trace.length = 0;
       const role = createRoleComponent(profile.metadata.role);
-      const result = profile.runtime.baselineAction!(
+      const result = roleMethod(profile.runtime, "baselineAction")!(
         role,
         request(["kill_vote"]),
         () => 2,
@@ -111,7 +112,7 @@ test("derived mocks read a replaced runtime and method getter at each original c
     // 同一闭包再调用时再次解析新属性，不缓存首次 runtime 或方法 getter 的结果。
     trace.length = 0;
     expect(
-      MENTOR_ROLE_PROFILE.runtime.baselineAction!(
+      roleMethod(MENTOR_ROLE_PROFILE.runtime, "baselineAction")!(
         createRoleComponent(Role.NightMentor),
         request(["kill_vote"]),
         () => 2,
@@ -132,7 +133,7 @@ test("ordinary mock keeps chat before knife and never defaults an optional self 
   const role = createRoleComponent(Role.Wolf),
     seen: string[] = [],
     actualCamp = { camp: Camp.Wolf };
-  const mock = WOLF_ROLE_PROFILE.runtime.baselineAction!;
+  const mock = roleMethod(WOLF_ROLE_PROFILE.runtime, "baselineAction")!;
   const pick = (camp: "good" | "wolf" | "third_party") => {
     seen.push(camp);
     return 6;

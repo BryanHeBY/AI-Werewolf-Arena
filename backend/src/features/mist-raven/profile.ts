@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -70,10 +71,12 @@ export const ALCHEMIST_ROLE_PROFILE: NativeRoleContributions = {
     nightStages: [ALCHEMIST_MIST_STAGE],
     canSelfDestruct: false,
     configuration,
-    init: (role, ctx) => {
-      parameters.parse(ctx.boardConfig?.mistRaven ?? {});
-      role.privateState.alchemist = createAlchemistState();
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        parameters.parse(ctx.boardConfig?.mistRaven ?? {});
+        role.privateState.alchemist = createAlchemistState();
+      },
+    }),
     toolSpecs: [
       {
         name: "cast_mist",
@@ -162,16 +165,18 @@ export const ALCHEMIST_ROLE_PROFILE: NativeRoleContributions = {
         }
       },
     }),
-    baselineAction: (_role, request) => {
-      if (request.allowedTools.includes("cast_mist"))
-        return { name: "cast_mist", args: { target_ids: null } };
-      if (request.allowedTools.includes("use_snake"))
-        return {
-          name: "use_snake",
-          args: { target_id: request.context.snake_candidates?.[0] ?? null },
-        };
-      return null;
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request) => {
+        if (request.allowedTools.includes("cast_mist"))
+          return { name: "cast_mist", args: { target_ids: null } };
+        if (request.allowedTools.includes("use_snake"))
+          return {
+            name: "use_snake",
+            args: { target_id: request.context.snake_candidates?.[0] ?? null },
+          };
+        return null;
+      },
+    }),
   },
   presentation: nativeRolePresentation("alchemist"),
 };
@@ -191,15 +196,26 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
     nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), RAVEN_KNIFE_STAGE],
     canSelfDestruct: false,
     configuration,
-    init: (role, ctx) => {
-      parameters.parse(ctx.boardConfig?.mistRaven ?? {});
-      role.privateState.ravenClaw = createRavenState();
-    },
-    wolfTeam: (_role, world) => {
-      const awake = !!world && isMistRavenBoard(world) && ravenAwakened(world);
-      return { recognizedByPack: true, recognizes: "none", canChat: awake, canVoteForKill: awake };
-    },
-    knownTeammates: (_role, world) => (isMistRavenBoard(world) ? ravenKnownTeammates(world) : []),
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        parameters.parse(ctx.boardConfig?.mistRaven ?? {});
+        role.privateState.ravenClaw = createRavenState();
+      },
+    }),
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (_role, world) => {
+        const awake = !!world && isMistRavenBoard(world) && ravenAwakened(world);
+        return {
+          recognizedByPack: true,
+          recognizes: "none",
+          canChat: awake,
+          canVoteForKill: awake,
+        };
+      },
+    }),
+    knownTeammates: ownRoleCallback("knownTeammates", {
+      knownTeammates: (_role, world) => (isMistRavenBoard(world) ? ravenKnownTeammates(world) : []),
+    }),
     toolSpecs: [
       ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
       {
@@ -250,18 +266,20 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
         }
       },
     }),
-    baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) =>
-      request.allowedTools.includes("raven_knife")
-        ? { name: "raven_knife", args: { target_id: null } }
-        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
-            role,
-            request,
-            pick,
-            pickCamp,
-            locale,
-            world,
-            currentCamp,
-          ) ?? null),
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) =>
+        request.allowedTools.includes("raven_knife")
+          ? { name: "raven_knife", args: { target_id: null } }
+          : (roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")?.(
+              role,
+              request,
+              pick,
+              pickCamp,
+              locale,
+              world,
+              currentCamp,
+            ) ?? null),
+    }),
   },
   presentation: nativeRolePresentation("raven_claw_wolf"),
 };

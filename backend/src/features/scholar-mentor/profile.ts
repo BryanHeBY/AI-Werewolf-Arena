@@ -5,6 +5,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -59,22 +60,26 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
     runtime: {
       ...base?.runtime,
       canSelfDestruct: false,
-      wolfTeam: mentor
-        ? (role, world) => ({
-            recognizedByPack: true,
-            recognizes: "none",
-            canChat: false,
-            canVoteForKill: scholarMentorRoleCanKnife(world, role),
-          })
-        : undefined,
-      init: (role, ctx) => {
-        parameters.parse(ctx.boardConfig?.scholarMentor ?? {});
-        // 配置已原序 parse；privateState 左值仍先于 mentor 分支与状态工厂，不提前读取或复制。
-        initializeScholarMentorState(
-          () => role.privateState,
-          () => (mentor ? "night_mentor" : "day_scholar"),
-        );
-      },
+      wolfTeam: ownRoleCallback("wolfTeam", {
+        wolfTeam: mentor
+          ? (role, world) => ({
+              recognizedByPack: true,
+              recognizes: "none",
+              canChat: false,
+              canVoteForKill: scholarMentorRoleCanKnife(world, role),
+            })
+          : undefined,
+      }),
+      init: ownRoleCallback("init", {
+        init: (role, ctx) => {
+          parameters.parse(ctx.boardConfig?.scholarMentor ?? {});
+          // 配置已原序 parse；privateState 左值仍先于 mentor 分支与状态工厂，不提前读取或复制。
+          initializeScholarMentorState(
+            () => role.privateState,
+            () => (mentor ? "night_mentor" : "day_scholar"),
+          );
+        },
+      }),
       configuration: {
         schema: parameters,
         defaults: parameters.parse({}),
@@ -175,48 +180,53 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
         },
       }),
       nightStages: [...SCHOLAR_MENTOR_NIGHT_STAGES, ...(base?.runtime.nightStages ?? [])],
-      baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
-        if (request.allowedTools.includes("modify_skill") && world) {
-          const state = scholarMentorStateForRole(role, currentCamp),
-            targets = scholarMentorChoiceTargets(world, request.context.day, request.actorId);
-          const mode =
-            state?.remaining.enhance === 1
-              ? "enhance"
-              : state?.remaining.weaken === 1
-                ? "weaken"
-                : null;
-          const target = targets.find((id) => id !== request.actorId) ?? targets[0] ?? null;
-          return {
-            name: "modify_skill",
-            args: { mode: target === null ? null : mode, target_id: mode === null ? null : target },
-          };
-        }
-        if (
-          request.allowedTools.includes("bonus_action") &&
-          world &&
-          request.context.modifier_bonus_kind
-        ) {
-          const kind = request.context.modifier_bonus_kind,
-            target =
-              scholarMentorBonusTargets(world, request.context.day, request.actorId, kind)[0] ??
-              null;
-          return {
-            name: "bonus_action",
-            args: { kind, target_id: target, abstain: target === null },
-          };
-        }
-        return (
-          base?.runtime.baselineAction?.(
-            role,
-            request,
-            pick,
-            pickCamp,
-            locale,
-            world,
-            currentCamp,
-          ) ?? null
-        );
-      },
+      baselineAction: ownRoleCallback("baselineAction", {
+        baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
+          if (request.allowedTools.includes("modify_skill") && world) {
+            const state = scholarMentorStateForRole(role, currentCamp),
+              targets = scholarMentorChoiceTargets(world, request.context.day, request.actorId);
+            const mode =
+              state?.remaining.enhance === 1
+                ? "enhance"
+                : state?.remaining.weaken === 1
+                  ? "weaken"
+                  : null;
+            const target = targets.find((id) => id !== request.actorId) ?? targets[0] ?? null;
+            return {
+              name: "modify_skill",
+              args: {
+                mode: target === null ? null : mode,
+                target_id: mode === null ? null : target,
+              },
+            };
+          }
+          if (
+            request.allowedTools.includes("bonus_action") &&
+            world &&
+            request.context.modifier_bonus_kind
+          ) {
+            const kind = request.context.modifier_bonus_kind,
+              target =
+                scholarMentorBonusTargets(world, request.context.day, request.actorId, kind)[0] ??
+                null;
+            return {
+              name: "bonus_action",
+              args: { kind, target_id: target, abstain: target === null },
+            };
+          }
+          return (
+            roleMethod(base?.runtime, "baselineAction", base == null)?.(
+              role,
+              request,
+              pick,
+              pickCamp,
+              locale,
+              world,
+              currentCamp,
+            ) ?? null
+          );
+        },
+      }),
     },
     presentation: nativeRolePresentation(roleNameId),
   };

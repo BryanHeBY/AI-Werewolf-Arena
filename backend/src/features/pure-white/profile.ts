@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -13,10 +14,7 @@ import { PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-contract";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { Camp, Role, WinCondition } from "../../domain/model";
 import { ELIMINATION_PRIORITIES } from "../../domain/board";
-import type {
-  NativeRoleContributions,
-  RoleRuntimeContribution,
-} from "../../rulesets/roles/contracts";
+import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { getRoleInspectionState, setRoleInspectionState } from "../role-inspection/ports";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { PURE_WHITE_INSPECTION_STAGE, WOLF_WITCH_INSPECTION_STAGE } from "./night-stages";
@@ -42,21 +40,18 @@ const boardRoles = [
   Role.Hunter,
   Role.Guard,
 ];
-const inspectionBaseline: NonNullable<RoleRuntimeContribution["baselineAction"]> = (
-  role,
-  request,
-  _pickOther,
-  _pickCamp,
-  _locale,
-  world,
-) => {
-  if (!request.allowedTools.includes("inspect_night_identity")) return null;
-  const policy = role.role === Role.PureWhiteGirl ? "pure_white" : "wolf_witch";
-  const target = world
-    ? (pureWhiteInspectionTargets(world, request.actorId, policy)[0] ?? null)
-    : null;
-  return { name: "inspect_night_identity", args: { target_id: target, abstain: target === null } };
-};
+const inspectionBaseline: import("../../rulesets/roles/owned-bindings").OwnedRoleCallbacks["baselineAction"] =
+  (role, request, _pickOther, _pickCamp, _locale, world) => {
+    if (!request.allowedTools.includes("inspect_night_identity")) return null;
+    const policy = role.role === Role.PureWhiteGirl ? "pure_white" : "wolf_witch";
+    const target = world
+      ? (pureWhiteInspectionTargets(world, request.actorId, policy)[0] ?? null)
+      : null;
+    return {
+      name: "inspect_night_identity",
+      args: { target_id: target, abstain: target === null },
+    };
+  };
 
 export const PURE_WHITE_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
@@ -71,13 +66,15 @@ export const PURE_WHITE_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     canSelfDestruct: false,
-    init: (role) =>
-      setRoleInspectionState(role, {
-        policy: "pure_white",
-        lastTarget: null,
-        lastDay: null,
-        history: [],
-      }),
+    init: ownRoleCallback("init", {
+      init: (role) =>
+        setRoleInspectionState(role, {
+          policy: "pure_white",
+          lastTarget: null,
+          lastDay: null,
+          history: [],
+        }),
+    }),
     configuration: {
       schema: pureParameters,
       defaults: pureParameters.parse({}),
@@ -88,7 +85,7 @@ export const PURE_WHITE_ROLE_PROFILE: NativeRoleContributions = {
     validationRules: ownedToolRules({ inspect_night_identity: validatePureWhiteInspection }),
     nightStages: [PURE_WHITE_INSPECTION_STAGE],
     possibleNightAbilities: ["role_check"],
-    baselineAction: inspectionBaseline,
+    baselineAction: ownRoleCallback("baselineAction", { baselineAction: inspectionBaseline }),
   },
   presentation: nativeRolePresentation("pure_white_girl"),
 };
@@ -104,13 +101,15 @@ export const WOLF_WITCH_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
-    init: (role) =>
-      setRoleInspectionState(role, {
-        policy: "wolf_witch",
-        lastTarget: null,
-        lastDay: null,
-        history: [],
-      }),
+    init: ownRoleCallback("init", {
+      init: (role) =>
+        setRoleInspectionState(role, {
+          policy: "wolf_witch",
+          lastTarget: null,
+          lastDay: null,
+          history: [],
+        }),
+    }),
     configuration: {
       schema: wolfParameters,
       defaults: wolfParameters.parse({}),
@@ -130,10 +129,12 @@ export const WOLF_WITCH_ROLE_PROFILE: NativeRoleContributions = {
       WOLF_WITCH_INSPECTION_STAGE,
     ],
     possibleNightAbilities: ["role_check"],
-    baselineAction: (...args) =>
-      args[1].allowedTools.includes("inspect_night_identity")
-        ? inspectionBaseline(...args)
-        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(...args) ?? null),
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (...args) =>
+        args[1].allowedTools.includes("inspect_night_identity")
+          ? inspectionBaseline(...args)
+          : (roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")?.(...args) ?? null),
+    }),
   },
   presentation: nativeRolePresentation("wolf_witch"),
 };

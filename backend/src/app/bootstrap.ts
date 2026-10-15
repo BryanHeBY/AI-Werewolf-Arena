@@ -5,6 +5,7 @@
  * 校验后的配置克隆在角色初始化前冻结，原 World、actor、RNG 和调用方均不冻结。
  * PhaseManager 创建规则计划，流水线、开局上下文和记录入口消费同一引用。
  */
+import { invokeRoleCallback } from "../rulesets/roles/owned-bindings";
 import {
   createAliveComponent,
   createBadgeComponent,
@@ -186,7 +187,7 @@ function createPlayers(
       COMPONENT.Victory,
       createVictoryComponent(
         typeof membership === "function"
-          ? membership(roleComp, {
+          ? invokeRoleCallback("initialVictoryAffiliations", membership, undefined, roleComp, {
               boardConfig: config,
               locale: world.locale,
               initialCamp,

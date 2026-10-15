@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -79,10 +80,12 @@ export const RADIANT_COUNT_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...common.runtime,
-    init: (role) => {
-      installNativeAbility(role, "shelter", createShelterState());
-      setNightAbilityStartDay(activeNightAbility(role, "shelter", 1)!, 2);
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        installNativeAbility(role, "shelter", createShelterState());
+        setNightAbilityStartDay(activeNightAbility(role, "shelter", 1)!, 2);
+      },
+    }),
     nightStages: [RADIANT_SHELTER_STAGE],
     toolSpecs: [
       {
@@ -122,10 +125,12 @@ export const RADIANT_COUNT_ROLE_PROFILE: NativeRoleContributions = {
           : { code: RuleError.RadiantShelterTarget };
       },
     }),
-    baselineAction: (_role, request) =>
-      request.allowedTools.includes("cast_shelter")
-        ? { name: "cast_shelter", args: { target_id: null } }
-        : null,
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request) =>
+        request.allowedTools.includes("cast_shelter")
+          ? { name: "cast_shelter", args: { target_id: null } }
+          : null,
+    }),
   },
   presentation: nativeRolePresentation("radiant_count"),
 };
@@ -141,17 +146,23 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     ...common.runtime,
-    init: (role) => {
-      initializeEclipseState(role);
-      initializeNightAbilityInventory(role);
-    },
-    wolfTeam: (_role, world) => ({
-      recognizedByPack: false,
-      recognizes: "none",
-      canChat: false,
-      canVoteForKill: !!world && eclipseKnifeEligible(world),
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        initializeEclipseState(role);
+        initializeNightAbilityInventory(role);
+      },
     }),
-    knownTeammates: (_role, world) => eclipseKnownWolves(world),
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (_role, world) => ({
+        recognizedByPack: false,
+        recognizes: "none",
+        canChat: false,
+        canVoteForKill: !!world && eclipseKnifeEligible(world),
+      }),
+    }),
+    knownTeammates: ownRoleCallback("knownTeammates", {
+      knownTeammates: (_role, world) => eclipseKnownWolves(world),
+    }),
     possibleNightAbilities: ["shelter", "dream", "potion", "seer_check"],
     nightStages: [
       ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []),
@@ -192,10 +203,16 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
           : { code: RuleError.EclipseSwallowTarget };
       },
     }),
-    baselineAction: (role, request, ...rest) =>
-      request.allowedTools.includes("swallow_skill")
-        ? { name: "swallow_skill", args: { target_id: null } }
-        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(role, request, ...rest) ?? null),
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, ...rest) =>
+        request.allowedTools.includes("swallow_skill")
+          ? { name: "swallow_skill", args: { target_id: null } }
+          : (roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")?.(
+              role,
+              request,
+              ...rest,
+            ) ?? null),
+    }),
   },
   presentation: nativeRolePresentation("eclipse_maid"),
 };

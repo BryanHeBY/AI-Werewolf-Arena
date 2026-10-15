@@ -2,6 +2,7 @@
  * 单元测试用有序双施法者选择及首夜知识政策验证狼术师 frame。字面组合目标、循环处理和
  * withheld 知识断言是预期，输入及字面／不可变 fixture 保持原样，不运行模型或完整对局。
  */
+import { invokeRoleCallback } from "../../../src/rulesets/roles/owned-bindings";
 import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { WOLF_SORCERER_ROLE_PROFILE } from "../../../src/features/wolf-sorcerer/profile";
 import { expect, test } from "bun:test";
@@ -193,7 +194,11 @@ test("Wolf Sorcerer retains learned pack identities before later exchanges", () 
   const capability = WOLF_SORCERER_ROLE_PROFILE.runtime.wolfTeam;
   if (typeof capability !== "function") throw new Error("expected_dynamic_pack_capability");
   f.begin(1);
-  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp))).toEqual({
+  expect(
+    invokeRoleCallback("wolfTeam", capability, undefined, role, f.world, () =>
+      f.world.getComponent(2, COMPONENT.Camp),
+    ),
+  ).toEqual({
     recognizedByPack: false,
     recognizes: "none",
     canChat: false,
@@ -201,12 +206,18 @@ test("Wolf Sorcerer retains learned pack identities before later exchanges", () 
   });
   f.close(1);
   f.begin(2);
-  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp)).recognizes).toBe(
-    "none",
-  );
+  expect(
+    invokeRoleCallback("wolfTeam", capability, undefined, role, f.world, () =>
+      f.world.getComponent(2, COMPONENT.Camp),
+    ).recognizes,
+  ).toBe("none");
   commitMagicianExchange(f.world, 1, 2, null);
   commitWolfSorcererExchange(f.world, 2, 2, null);
-  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp))).toEqual({
+  expect(
+    invokeRoleCallback("wolfTeam", capability, undefined, role, f.world, () =>
+      f.world.getComponent(2, COMPONENT.Camp),
+    ),
+  ).toEqual({
     recognizedByPack: true,
     recognizes: "pack",
     canChat: true,
@@ -214,7 +225,11 @@ test("Wolf Sorcerer retains learned pack identities before later exchanges", () 
   });
   f.close(2);
   f.begin(3);
-  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp))).toEqual({
+  expect(
+    invokeRoleCallback("wolfTeam", capability, undefined, role, f.world, () =>
+      f.world.getComponent(2, COMPONENT.Camp),
+    ),
+  ).toEqual({
     recognizedByPack: true,
     recognizes: "pack",
     canChat: false,
@@ -222,7 +237,11 @@ test("Wolf Sorcerer retains learned pack identities before later exchanges", () 
   });
   commitMagicianExchange(f.world, 1, 3, null);
   commitWolfSorcererExchange(f.world, 2, 3, null);
-  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp))).toEqual({
+  expect(
+    invokeRoleCallback("wolfTeam", capability, undefined, role, f.world, () =>
+      f.world.getComponent(2, COMPONENT.Camp),
+    ),
+  ).toEqual({
     recognizedByPack: true,
     recognizes: "pack",
     canChat: true,

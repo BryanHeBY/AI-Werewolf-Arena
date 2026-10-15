@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { SEER_VALIDATION_RULES } from "../../rulesets/seer-tool-admission";
 import { z } from "zod";
@@ -45,20 +46,22 @@ export const SEER_ROLE_PROFILE: NativeRoleContributions = {
       apply: (config, value) => ({ ...config, seer: parameters.parse(value) }),
       serialize: (config) => parameters.parse(config.seer ?? {}),
     },
-    init: (roleComp, ctx) => {
-      setSeerState(roleComp, {
-        lastTarget: null,
-        lastIsWerewolf: null,
-        lastResult: null,
-        history: [],
-        ...(ctx.boardConfig?.seer?.targetPolicy === "awa_fresh_others_v1"
-          ? { targetPolicy: ctx.boardConfig.seer.targetPolicy }
-          : {}),
-        ...(ctx.boardConfig?.seer?.actionPolicy === "awa_optional_v1"
-          ? { actionPolicy: ctx.boardConfig.seer.actionPolicy }
-          : {}),
-      });
-    },
+    init: ownRoleCallback("init", {
+      init: (roleComp, ctx) => {
+        setSeerState(roleComp, {
+          lastTarget: null,
+          lastIsWerewolf: null,
+          lastResult: null,
+          history: [],
+          ...(ctx.boardConfig?.seer?.targetPolicy === "awa_fresh_others_v1"
+            ? { targetPolicy: ctx.boardConfig.seer.targetPolicy }
+            : {}),
+          ...(ctx.boardConfig?.seer?.actionPolicy === "awa_optional_v1"
+            ? { actionPolicy: ctx.boardConfig.seer.actionPolicy }
+            : {}),
+        });
+      },
+    }),
     toolSpecs: SEER_TOOL_SPECS,
     validationRules: SEER_VALIDATION_RULES,
     nightStages: SEER_NIGHT_STAGES,
@@ -70,36 +73,38 @@ export const SEER_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (roleComp, request, pickAliveNotSelf, _byCamp, _locale, world) => {
-      if (!request.allowedTools.includes("check_identity")) {
-        return null;
-      }
-      const ability = activeNightAbility(
-        roleComp,
-        "seer_check",
-        request.context.day,
-        request.context.ability_id,
-      );
-      const target =
-        world && ability
-          ? (world
-              .getAliveEntityIds()
-              .find(
-                (id) =>
-                  id !== request.actorId &&
-                  seerTargetAllowed(ability.state, request.actorId, id) &&
-                  luckyTargetAllowed(
-                    world,
-                    request.actorId,
-                    ability,
-                    request.context.day,
-                    "check",
-                    id,
-                  ),
-              ) ?? null)
-          : pickAliveNotSelf();
-      return target !== null ? { name: "check_identity", args: { target_id: target } } : null;
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (roleComp, request, pickAliveNotSelf, _byCamp, _locale, world) => {
+        if (!request.allowedTools.includes("check_identity")) {
+          return null;
+        }
+        const ability = activeNightAbility(
+          roleComp,
+          "seer_check",
+          request.context.day,
+          request.context.ability_id,
+        );
+        const target =
+          world && ability
+            ? (world
+                .getAliveEntityIds()
+                .find(
+                  (id) =>
+                    id !== request.actorId &&
+                    seerTargetAllowed(ability.state, request.actorId, id) &&
+                    luckyTargetAllowed(
+                      world,
+                      request.actorId,
+                      ability,
+                      request.context.day,
+                      "check",
+                      id,
+                    ),
+                ) ?? null)
+            : pickAliveNotSelf();
+        return target !== null ? { name: "check_identity", args: { target_id: target } } : null;
+      },
+    }),
   },
   presentation: nativeRolePresentation("seer"),
 };

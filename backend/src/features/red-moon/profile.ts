@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { redMoonVotedOutHook } from "./voted-out-hook";
 import { z } from "zod";
@@ -38,13 +39,15 @@ export const RED_MOON_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     votedOutHook: redMoonVotedOutHook,
-    init: (role, ctx) => {
-      // 延迟政策读取，保原左值容器先于 fresh／配置字段的顺序；安装仍归本族唯一数据槽。
-      RED_MOON_STATE_SLOT.install(
-        role,
-        () => parameters.parse(ctx.boardConfig?.redMoon ?? {}).lastWolfBlastPolicy,
-      );
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        // 延迟政策读取，保原左值容器先于 fresh／配置字段的顺序；安装仍归本族唯一数据槽。
+        RED_MOON_STATE_SLOT.install(
+          role,
+          () => parameters.parse(ctx.boardConfig?.redMoon ?? {}).lastWolfBlastPolicy,
+        );
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: parameters.parse({}),

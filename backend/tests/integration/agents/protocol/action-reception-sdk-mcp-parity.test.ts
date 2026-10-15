@@ -1,6 +1,7 @@
 /**
  * 集成测试验证行动接收在 SDK／MCP 的一致性。输入为原回执／权限矩阵、合成 SDK 回调或本机 HTTP／MCP；字面回执、引用／getter／错误轨迹、事实和状态为预期。真实 Bun 监听与 stdio sidecar 检验业务回执，一项原用例写临时录制。finally 关闭原传输和服务；不读取私有配置／认证或调用计费模型。
  */
+import type { RoleQueries } from "../../../../src/rulesets/roles/contracts";
 import {
   getDefaultRoleContributions,
   createRoleCatalog,
@@ -638,9 +639,9 @@ for (const locale of ["zh-CN", "en"] as const)
               ...profile,
               runtime: {
                 ...profile.runtime,
-                wolfTeam: (state: RoleComponent) => ({
+                wolfTeam: (queries: RoleQueries) => ({
                   recognizedByPack:
-                    (state.privateState as { readonly revealed?: unknown }).revealed === true,
+                    (queries.stateData() as { readonly revealed?: unknown }).revealed === true,
                   recognizes: "none" as const,
                   canChat: false,
                   canVoteForKill: false,

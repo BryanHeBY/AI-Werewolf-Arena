@@ -1,6 +1,7 @@
 /**
  * 负责熊的夜间采样 frame 与延迟到天亮的发布。阵营只读实际 Camp；默认只核值，黎明政策保原组件引用撤权。输入为原相邻玩家和采样吼声；只有匹配原 frame 时才产生历史与天亮事件。不重复发布同一夜，不以复活或替换相邻身体继续旧采样；关闭和失败保持原前缀。
  */
+import { roleMethod } from "../../rulesets/roles/owned-bindings";
 import {
   recordBearRoar,
   bearDataField as ownData,
@@ -62,7 +63,7 @@ function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): bool
     return (
       !!target &&
       world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf &&
-      (catalog.runtime(target.role)?.detectableByBear?.(world, target) ?? true)
+      (roleMethod(catalog.runtime(target.role), "detectableByBear", true)?.(world, target) ?? true)
     );
   });
 }

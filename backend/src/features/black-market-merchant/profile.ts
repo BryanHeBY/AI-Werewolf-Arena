@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -46,9 +47,11 @@ export const BLACK_MARKET_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
     ],
   },
   runtime: {
-    init: (role) => {
-      if (!getBlackMarketState(role)) setBlackMarketState(role, freshBlackMarketState());
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        if (!getBlackMarketState(role)) setBlackMarketState(role, freshBlackMarketState());
+      },
+    }),
     configuration: {
       schema: z.strictObject({}),
       defaults: {},
@@ -108,13 +111,15 @@ export const BLACK_MARKET_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (_role, request, pick) => {
-      if (!request.allowedTools.includes("black_market_trade")) return null;
-      const target = pick();
-      return target === null
-        ? null
-        : { name: "black_market_trade", args: { target_id: target, skill: "check" } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request, pick) => {
+        if (!request.allowedTools.includes("black_market_trade")) return null;
+        const target = pick();
+        return target === null
+          ? null
+          : { name: "black_market_trade", args: { target_id: target, skill: "check" } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("black_market_merchant"),
 };

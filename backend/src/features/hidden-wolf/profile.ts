@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { HIDDEN_WOLF_CAMP_INSPECTION_POLICIES } from "../../domain/board";
 import { z } from "zod";
@@ -29,34 +30,42 @@ export const HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
-    init: (role, ctx) => {
-      setHiddenWolfState(role, {
-        hasInheritedKnife: false,
-        ...(ctx.boardConfig?.hiddenWolf?.campInspection === "netease_2020_good_v1"
-          ? { campInspection: ctx.boardConfig.hiddenWolf.campInspection }
-          : {}),
-      });
-    },
-    wolfTeam: (role, world, currentCamp) => ({
-      recognizedByPack: false,
-      recognizes: "all",
-      canChat: false,
-      canVoteForKill: canHiddenWolfKnife(role, world, currentCamp),
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        setHiddenWolfState(role, {
+          hasInheritedKnife: false,
+          ...(ctx.boardConfig?.hiddenWolf?.campInspection === "netease_2020_good_v1"
+            ? { campInspection: ctx.boardConfig.hiddenWolf.campInspection }
+            : {}),
+        });
+      },
     }),
-    inspectionLabels: (role) => {
-      const state = getHiddenWolfState(role),
-        inherited = state?.hasInheritedKnife === true;
-      return {
-        camp:
-          state?.campInspection === "netease_2020_good_v1"
-            ? Camp.Good
-            : inherited
-              ? Camp.Wolf
-              : Camp.Good,
-        role: inherited ? Role.HiddenWolf : Role.Villager,
-      };
-    },
-    detectableByBear: (_world, role) => getHiddenWolfState(role)?.hasInheritedKnife === true,
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (role, world, currentCamp) => ({
+        recognizedByPack: false,
+        recognizes: "all",
+        canChat: false,
+        canVoteForKill: canHiddenWolfKnife(role, world, currentCamp),
+      }),
+    }),
+    inspectionLabels: ownRoleCallback("inspectionLabels", {
+      inspectionLabels: (role) => {
+        const state = getHiddenWolfState(role),
+          inherited = state?.hasInheritedKnife === true;
+        return {
+          camp:
+            state?.campInspection === "netease_2020_good_v1"
+              ? Camp.Good
+              : inherited
+                ? Camp.Wolf
+                : Camp.Good,
+          role: inherited ? Role.HiddenWolf : Role.Villager,
+        };
+      },
+    }),
+    detectableByBear: ownRoleCallback("detectableByBear", {
+      detectableByBear: (_world, role) => getHiddenWolfState(role)?.hasInheritedKnife === true,
+    }),
     configuration: {
       schema: parameters,
       defaults: { campInspection: "awa_inheritance_v1" },

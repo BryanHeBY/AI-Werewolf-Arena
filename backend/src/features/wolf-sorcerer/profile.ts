@@ -5,6 +5,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { COMPONENT } from "../../domain/components/names";
@@ -47,20 +48,24 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
-    wolfTeam: (role, world, currentCamp) => {
-      const known = !!getWolfSorcererState(role, currentCamp)?.history.length;
-      const active = known && (!world || wolfSorcererPackReady(world));
-      return {
-        recognizedByPack: known,
-        recognizes: known ? "pack" : "none",
-        canChat: active,
-        canVoteForKill: active,
-      };
-    },
-    init: (role, ctx) => {
-      const value = parameters.parse(ctx.boardConfig?.wolfSorcerer ?? {});
-      WOLF_SORCERER_STATE_SLOT.install(() => role.privateState, value);
-    },
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (role, world, currentCamp) => {
+        const known = !!getWolfSorcererState(role, currentCamp)?.history.length;
+        const active = known && (!world || wolfSorcererPackReady(world));
+        return {
+          recognizedByPack: known,
+          recognizes: known ? "pack" : "none",
+          canChat: active,
+          canVoteForKill: active,
+        };
+      },
+    }),
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        const value = parameters.parse(ctx.boardConfig?.wolfSorcerer ?? {});
+        WOLF_SORCERER_STATE_SLOT.install(() => role.privateState, value);
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: parameters.parse({}),
@@ -124,31 +129,33 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
       WOLF_SORCERER_EXCHANGE_STAGE,
       ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []),
     ],
-    baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
-      if (
-        !request.allowedTools.includes("swap_night_seats") ||
-        !world ||
-        !getWolfSorcererState(role, currentCamp)
-      )
-        return (
-          ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
-            role,
-            request,
-            pick,
-            pickCamp,
-            locale,
-            world,
-            currentCamp,
-          ) ?? null
-        );
-      const targets = wolfSorcererChoiceTargets(world, request.context.day);
-      return targets.length >= 2
-        ? {
-            name: "swap_night_seats",
-            args: { first_id: targets[0]!, second_id: targets[1]!, abstain: false },
-          }
-        : { name: "swap_night_seats", args: { first_id: null, second_id: null, abstain: true } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
+        if (
+          !request.allowedTools.includes("swap_night_seats") ||
+          !world ||
+          !getWolfSorcererState(role, currentCamp)
+        )
+          return (
+            roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")?.(
+              role,
+              request,
+              pick,
+              pickCamp,
+              locale,
+              world,
+              currentCamp,
+            ) ?? null
+          );
+        const targets = wolfSorcererChoiceTargets(world, request.context.day);
+        return targets.length >= 2
+          ? {
+              name: "swap_night_seats",
+              args: { first_id: targets[0]!, second_id: targets[1]!, abstain: false },
+            }
+          : { name: "swap_night_seats", args: { first_id: null, second_id: null, abstain: true } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("wolf_sorcerer"),
 };

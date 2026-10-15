@@ -3,6 +3,7 @@
  * 输入是测试自有角色、生命与原绑定，预期使用手写顺序和资源字段；不生成镜像 oracle。
  * 数据槽不授行动许可；使用真实反射命令复核来源，构造失败不退款，不运行模型或完整对局。
  */
+import { roleMethod } from "../../../../src/rulesets/roles/owned-bindings";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
@@ -43,7 +44,7 @@ test("evil knight initialization evaluates the original left side before parsing
       return undefined;
     },
   };
-  EVIL_KNIGHT_ROLE_PROFILE.runtime.init!(role, context);
+  roleMethod(EVIL_KNIGHT_ROLE_PROFILE.runtime, "init")!(role, context);
   expect(trace).toEqual(["container", "board", "assign"]);
   expect(assigned).toEqual({
     policy: "awa_evil_knight_v1",
@@ -60,7 +61,9 @@ test("evil knight initialization evaluates the original left side before parsing
       throw failure;
     },
   };
-  expect(() => EVIL_KNIGHT_ROLE_PROFILE.runtime.init!(bad, context)).toThrow(failure);
+  expect(() => roleMethod(EVIL_KNIGHT_ROLE_PROFILE.runtime, "init")!(bad, context)).toThrow(
+    failure,
+  );
   expect(trace).toEqual(["container"]);
 });
 

@@ -3,12 +3,13 @@
  * 独立字面轨迹、初态字段与同一 Error 为预期，验证左值先读取及失败时不补偿，不复制安装算法。
  * 只调用实际 init，不装配整局、运行夜能力或更新权威审计影子。
  */
+import {
+  roleMethod,
+  type OwnedRoleInitContext,
+} from "../../../../src/rulesets/roles/owned-bindings";
 import { expect, test } from "bun:test";
 import { Camp, Role } from "../../../../src/domain/identity";
-import type {
-  RoleInitializationComponent,
-  RoleInitContext,
-} from "../../../../src/rulesets/roles/contracts";
+import type { RoleInitializationComponent } from "../../../../src/rulesets/roles/contracts";
 import {
   NIGHT_NOBLE_ROLE_PROFILE,
   AWAKENED_IDIOT_ROLE_PROFILE,
@@ -35,7 +36,7 @@ const cases = [
 ] as const;
 
 /** 原初始化上下文的阵营字段保留；这里只观察配置的晚读取，不依赖当前阵营查询推导预期。 */
-function context(boardConfig: RoleInitContext["boardConfig"]): RoleInitContext {
+function context(boardConfig: OwnedRoleInitContext["boardConfig"]): OwnedRoleInitContext {
   return {
     initialCamp: { camp: Camp.Good },
     currentCamp: () => ({ camp: Camp.Good }),
@@ -81,7 +82,7 @@ test("both profile initializers read the original container before a throwing bo
       });
       let actual: unknown;
       try {
-        item.profile.runtime.init!(role, context(board));
+        roleMethod(item.profile.runtime, "init")!(role, context(board));
       } catch (failure) {
         actual = failure;
       }
@@ -126,7 +127,7 @@ test("both initializers send literal selected initial data to the original sette
     });
     let actual: unknown;
     try {
-      item.profile.runtime.init!(role, context(board));
+      roleMethod(item.profile.runtime, "init")!(role, context(board));
     } catch (failure) {
       actual = failure;
     }

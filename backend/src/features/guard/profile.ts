@@ -5,6 +5,7 @@
  * 本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { GUARD_VALIDATION_RULES } from "../../rulesets/guard-tool-admission";
 import { z } from "zod";
@@ -41,14 +42,16 @@ export const GUARD_ROLE_PROFILE: NativeRoleContributions = {
       apply: (config, value) => ({ ...config, guard: parameters.parse(value) }),
       serialize: (config) => parameters.parse(config.guard ?? {}),
     },
-    init: (roleComp, ctx) => {
-      setGuardState(roleComp, {
-        lastTarget: null,
-        ...(ctx.boardConfig?.guard?.repeatPolicy === "netease_consecutive_nights_v1"
-          ? { repeatPolicy: ctx.boardConfig.guard.repeatPolicy }
-          : {}),
-      });
-    },
+    init: ownRoleCallback("init", {
+      init: (roleComp, ctx) => {
+        setGuardState(roleComp, {
+          lastTarget: null,
+          ...(ctx.boardConfig?.guard?.repeatPolicy === "netease_consecutive_nights_v1"
+            ? { repeatPolicy: ctx.boardConfig.guard.repeatPolicy }
+            : {}),
+        });
+      },
+    }),
     toolSpecs: GUARD_TOOL_SPECS,
     validationRules: GUARD_VALIDATION_RULES,
     nightStages: GUARD_NIGHT_STAGES,
@@ -62,43 +65,45 @@ export const GUARD_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (roleComp, request, pickAliveNotSelf, _byCamp, _locale, world) => {
-      if (!request.allowedTools.includes("guard")) {
-        return null;
-      }
-      const ability = activeNightAbility(
-        roleComp,
-        "guard",
-        request.context.day,
-        request.context.ability_id,
-      );
-      const target =
-        world && ability
-          ? (world
-              .getAliveEntityIds()
-              .find(
-                (id) =>
-                  id !== request.actorId &&
-                  !guardTargetRepeated(ability, request.context.day, id) &&
-                  luckyTargetAllowed(
-                    world,
-                    request.actorId,
-                    ability,
-                    request.context.day,
-                    "guard",
-                    id,
-                  ),
-              ) ?? null)
-          : pickAliveNotSelf();
-      if (
-        target !== null &&
-        ability &&
-        !guardTargetRepeated(ability, request.context.day, target)
-      ) {
-        return { name: "guard", args: { target_id: target, abstain: false } };
-      }
-      return { name: "guard", args: { target_id: null, abstain: true } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (roleComp, request, pickAliveNotSelf, _byCamp, _locale, world) => {
+        if (!request.allowedTools.includes("guard")) {
+          return null;
+        }
+        const ability = activeNightAbility(
+          roleComp,
+          "guard",
+          request.context.day,
+          request.context.ability_id,
+        );
+        const target =
+          world && ability
+            ? (world
+                .getAliveEntityIds()
+                .find(
+                  (id) =>
+                    id !== request.actorId &&
+                    !guardTargetRepeated(ability, request.context.day, id) &&
+                    luckyTargetAllowed(
+                      world,
+                      request.actorId,
+                      ability,
+                      request.context.day,
+                      "guard",
+                      id,
+                    ),
+                ) ?? null)
+            : pickAliveNotSelf();
+        if (
+          target !== null &&
+          ability &&
+          !guardTargetRepeated(ability, request.context.day, target)
+        ) {
+          return { name: "guard", args: { target_id: target, abstain: false } };
+        }
+        return { name: "guard", args: { target_id: null, abstain: true } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("guard"),
 };

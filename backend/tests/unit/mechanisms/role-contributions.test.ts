@@ -3,6 +3,7 @@
  * 和显式原生贡献；原对象引用、读取次序、标量文案及有限支持集合为独立预期。
  * 不执行完整对局、模型或归档，不把资料和展示登记视为行动授权。
  */
+import { type OwnedRoleInitContext } from "../../../src/rulesets/roles/owned-bindings";
 import { expect, test } from "bun:test";
 import { Camp, Role, WinCondition } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
@@ -14,7 +15,7 @@ import {
 import type {
   RoleContributions,
   RoleProfile,
-  RoleInitContext,
+  RoleQueries,
 } from "../../../src/rulesets/roles/contracts";
 import {
   createRoleComponent,
@@ -23,7 +24,7 @@ import {
 import { World } from "../../../src/domain/world";
 
 // 编译约束限定各 facet 的消费权限，不执行这些反例。
-// 自定义展示测试自持原当前阵营；ctx引用和晚回调顺序仍是字面oracle。
+// 自定义展示测试自持原当前阵营；ctx 写权范围和晚回调顺序仍是字面 oracle；公开 ctx 明确不再保宿主对象身份。
 const initialCamp = { camp: Camp.Good };
 const currentCamp = () => initialCamp;
 
@@ -68,18 +69,20 @@ test("custom flat input remains its original receiver and queries never eagerly 
     init(actual, context) {
       expect(this).toBe(profile);
       expect<unknown>(actual).toBe(role);
-      expect(context).toBe(ctx);
+      expect(context).not.toBe(ctx);
+      expect(Object.hasOwn(context, "world")).toBe(false);
+      expect(context.initialCamp).toBe(initialCamp);
       trace.push("init-call");
     },
   };
   Object.defineProperty(profile, "renderPrompt", {
     get() {
       trace.push("render-get");
-      return function (this: RoleProfile, actual: typeof role, locale: Locale, passedWorld: World) {
+      return function (this: RoleProfile, queries: RoleQueries, locale: Locale) {
         expect(this).toBe(profile);
-        expect(actual).toBe(role);
+        expect(queries.actorRole()).toBe(Role.Villager);
         expect(locale).toBe("en");
-        expect(passedWorld).toBe(world);
+        expect(Object.hasOwn(queries, "world")).toBe(false);
         trace.push("render-call");
         return "raw {user} text";
       };
@@ -95,7 +98,7 @@ test("custom flat input remains its original receiver and queries never eagerly 
       throw new Error("foreign_native_probe");
     },
   });
-  const ctx: RoleInitContext = {
+  const ctx: OwnedRoleInitContext = {
     initialCamp,
     currentCamp,
     get locale(): Locale {
@@ -146,10 +149,10 @@ test("native assembly observes current role and calls the supplied renderer only
   const catalog = new RoleCatalog(
     {
       contributions: [witch, guard],
-      renderNative(id, actual, locale, world) {
-        expect(actual).toBe(role);
+      renderNative(id, queries, locale) {
+        expect(queries.actorRole()).toBe(Role.Guard);
         expect(locale).toBe("en");
-        expect(world).toBeUndefined();
+        expect(Object.hasOwn(queries, "world")).toBe(false);
         trace.push(id);
         return `native ${id}`;
       },
@@ -173,14 +176,10 @@ test("new custom presentation callback keeps its own receiver and late World acc
   Object.defineProperty(presentation, "renderPrompt", {
     get() {
       trace.push("renderer");
-      return function (
-        this: typeof presentation,
-        _role: typeof role,
-        _locale: Locale,
-        actualWorld: World,
-      ) {
+      return function (this: typeof presentation, queries: RoleQueries, _locale: Locale) {
         expect(this).toBe(presentation);
-        expect(actualWorld).toBe(world);
+        expect(queries.actorRole()).toBe(Role.Villager);
+        expect(Object.hasOwn(queries, "world")).toBe(false);
         trace.push("call");
         return "exact custom contribution";
       };

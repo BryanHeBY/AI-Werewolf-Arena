@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { createFragrantValidationRules, createPairValidationRules } from "./validation-rules";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -71,16 +72,22 @@ export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     ...common.runtime,
     canSelfDestruct: false,
-    wolfTeam: (role, world) => ({
-      recognizedByPack: false,
-      recognizes: "none",
-      canChat: false,
-      canVoteForKill: !!world && fragrantRoleKnifeEligible(world, role),
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (role, world) => ({
+        recognizedByPack: false,
+        recognizes: "none",
+        canChat: false,
+        canVoteForKill: !!world && fragrantRoleKnifeEligible(world, role),
+      }),
     }),
-    knownTeammates: (role, world) => fragrantKnownWolfIds(world, role),
-    init: (role) => {
-      installFragrantStateSlot(role);
-    },
+    knownTeammates: ownRoleCallback("knownTeammates", {
+      knownTeammates: (role, world) => fragrantKnownWolfIds(world, role),
+    }),
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        installFragrantStateSlot(role);
+      },
+    }),
     toolSpecs: [
       ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []).filter(
         (s) => s.name === "kill_vote",
@@ -107,10 +114,16 @@ export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
     ],
     validationRules: createFragrantValidationRules(),
     nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), FRAGRANT_BIND_STAGE],
-    baselineAction: (role, request, ...rest) =>
-      request.allowedTools.includes("bind_fragrant_pair")
-        ? { name: "bind_fragrant_pair", args: { target_ids: null } }
-        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(role, request, ...rest) ?? null),
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, ...rest) =>
+        request.allowedTools.includes("bind_fragrant_pair")
+          ? { name: "bind_fragrant_pair", args: { target_ids: null } }
+          : (roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")?.(
+              role,
+              request,
+              ...rest,
+            ) ?? null),
+    }),
   },
   presentation: nativeRolePresentation("fragrant_phantom"),
 };
@@ -126,9 +139,11 @@ export const AWAKENED_SEER_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...common.runtime,
     canSelfDestruct: false,
-    init: (role) => {
-      installPairStateSlot(role);
-    },
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        installPairStateSlot(role);
+      },
+    }),
     toolSpecs: [
       {
         name: "check_pair",
@@ -151,12 +166,14 @@ export const AWAKENED_SEER_ROLE_PROFILE: NativeRoleContributions = {
     ],
     validationRules: createPairValidationRules(),
     nightStages: [PAIR_INSPECTION_STAGE],
-    baselineAction: (_role, request) => {
-      const ids = request.context.pair_check_candidates;
-      return request.allowedTools.includes("check_pair") && ids && ids.length >= 2
-        ? { name: "check_pair", args: { target_ids: [ids[0]!, ids[1]!] } }
-        : null;
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request) => {
+        const ids = request.context.pair_check_candidates;
+        return request.allowedTools.includes("check_pair") && ids && ids.length >= 2
+          ? { name: "check_pair", args: { target_ids: [ids[0]!, ids[1]!] } }
+          : null;
+      },
+    }),
   },
   presentation: nativeRolePresentation("awakened_seer"),
 };

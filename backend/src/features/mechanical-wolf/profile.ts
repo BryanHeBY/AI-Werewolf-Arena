@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback, roleMethod } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -51,18 +52,24 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
-    init: (role) => {
-      if (!getMechanicalState(role)) setMechanicalState(role, freshMechanicalState());
-    },
-    wolfTeam: (role, world, currentCamp) => ({
-      recognizedByPack: false,
-      recognizes: "none",
-      canChat: false,
-      canVoteForKill: canMechanicalKnife(role, world, currentCamp),
+    init: ownRoleCallback("init", {
+      init: (role) => {
+        if (!getMechanicalState(role)) setMechanicalState(role, freshMechanicalState());
+      },
     }),
-    inspectionLabels: (role) => ({
-      camp: Camp.Wolf,
-      role: getMechanicalState(role)?.learned?.role ?? Role.MechanicalWolf,
+    wolfTeam: ownRoleCallback("wolfTeam", {
+      wolfTeam: (role, world, currentCamp) => ({
+        recognizedByPack: false,
+        recognizes: "none",
+        canChat: false,
+        canVoteForKill: canMechanicalKnife(role, world, currentCamp),
+      }),
+    }),
+    inspectionLabels: ownRoleCallback("inspectionLabels", {
+      inspectionLabels: (role) => ({
+        camp: Camp.Wolf,
+        role: getMechanicalState(role)?.learned?.role ?? Role.MechanicalWolf,
+      }),
     }),
     configuration: {
       schema: z.strictObject({}),
@@ -117,49 +124,55 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
         ),
       },
     },
-    baselineAction: (role, request, pick, byCamp, locale, world, currentCamp) => {
-      if (request.allowedTools.includes("mechanical_mode")) {
-        const state = getMechanicalState(role);
-        return {
-          name: "mechanical_mode",
-          args: {
-            mode:
-              state?.hasInheritedKnife &&
-              state.firstKnifeNight !== null &&
-              state.firstKnifeNight <= request.context.day
-                ? "kill"
-                : "skill",
-          },
-        };
-      }
-      if (request.allowedTools.includes("mimic_role")) {
-        const target = pick();
-        return target === null ? null : { name: "mimic_role", args: { target_id: target } };
-      }
-      if (request.allowedTools.includes("mechanical_inspect")) {
-        const target = pick();
-        return target === null ? null : { name: "mechanical_inspect", args: { target_id: target } };
-      }
-      if (request.allowedTools.includes("mechanical_poison")) {
-        const target = byCamp("good");
-        return target === null ? null : { name: "mechanical_poison", args: { target_id: target } };
-      }
-      if (request.allowedTools.includes("mechanical_guard"))
-        return { name: "mechanical_guard", args: { target_id: pick() } };
-      if (request.allowedTools.includes("mechanical_attack"))
-        return { name: "mechanical_attack", args: { target_id: byCamp("good") } };
-      if (request.allowedTools.includes("shoot"))
-        return { name: "shoot", args: { target_id: byCamp("good") } };
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
-        role,
-        request,
-        pick,
-        byCamp,
-        locale,
-        world,
-        currentCamp,
-      );
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (role, request, pick, byCamp, locale, world, currentCamp) => {
+        if (request.allowedTools.includes("mechanical_mode")) {
+          const state = getMechanicalState(role);
+          return {
+            name: "mechanical_mode",
+            args: {
+              mode:
+                state?.hasInheritedKnife &&
+                state.firstKnifeNight !== null &&
+                state.firstKnifeNight <= request.context.day
+                  ? "kill"
+                  : "skill",
+            },
+          };
+        }
+        if (request.allowedTools.includes("mimic_role")) {
+          const target = pick();
+          return target === null ? null : { name: "mimic_role", args: { target_id: target } };
+        }
+        if (request.allowedTools.includes("mechanical_inspect")) {
+          const target = pick();
+          return target === null
+            ? null
+            : { name: "mechanical_inspect", args: { target_id: target } };
+        }
+        if (request.allowedTools.includes("mechanical_poison")) {
+          const target = byCamp("good");
+          return target === null
+            ? null
+            : { name: "mechanical_poison", args: { target_id: target } };
+        }
+        if (request.allowedTools.includes("mechanical_guard"))
+          return { name: "mechanical_guard", args: { target_id: pick() } };
+        if (request.allowedTools.includes("mechanical_attack"))
+          return { name: "mechanical_attack", args: { target_id: byCamp("good") } };
+        if (request.allowedTools.includes("shoot"))
+          return { name: "shoot", args: { target_id: byCamp("good") } };
+        return roleMethod(ORDINARY_WOLF_CONTRIBUTIONS.runtime, "baselineAction")!(
+          role,
+          request,
+          pick,
+          byCamp,
+          locale,
+          world,
+          currentCamp,
+        );
+      },
+    }),
   },
   presentation: nativeRolePresentation("mechanical_wolf"),
 };

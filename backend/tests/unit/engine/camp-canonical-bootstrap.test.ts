@@ -11,6 +11,7 @@ import { Camp, Role } from "../../../src/domain/identity";
 import { World } from "../../../src/domain/world";
 import type {
   RoleInitContext,
+  RoleValueContext,
   RoleRuntimeContribution,
 } from "../../../src/rulesets/roles/contracts";
 import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
@@ -65,7 +66,7 @@ function withWorldMethods(
 
 test("custom init installs its same Camp draft and default Victory uses the initialized value", () => {
   const contexts: RoleInitContext[] = [];
-  const beforeInstall: Array<CampComponent | undefined> = [];
+  const beforeInstall: Array<Camp | undefined> = [];
   withVillagerRuntime(
     {
       init(_role, ctx) {
@@ -81,7 +82,7 @@ test("custom init installs its same Camp draft and default Victory uses the init
       expect(beforeInstall).toEqual([undefined, undefined]);
       expect(contexts).toHaveLength(2);
       expect(world.getComponent(1, COMPONENT.Camp)).toBe(ctx.initialCamp);
-      expect(ctx.currentCamp()).toBe(ctx.initialCamp);
+      expect(ctx.currentCamp()).toBe(ctx.initialCamp.camp);
       expect(world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Wolf);
       expect(world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
         { kind: "faction", faction: "wolf" },
@@ -167,7 +168,7 @@ test("a missing installed Camp fails only the default Victory branch before its 
 test("custom membership receives an independent worldless context without an extra Camp query", () => {
   const trace: string[] = [],
     initContexts: RoleInitContext[] = [],
-    membershipContexts: RoleInitContext[] = [];
+    membershipContexts: RoleValueContext[] = [];
   const add = World.prototype.addComponent,
     get = World.prototype.getComponent;
   let between = false,
@@ -215,17 +216,12 @@ test("custom membership receives an independent worldless context without an ext
         expect(trace).toEqual(["camp-installed", "custom-membership", "victory-installed"]);
         expect(membershipContexts).toHaveLength(2);
         expect(membership).not.toBe(init);
-        expect(Object.keys(membership)).toEqual([
-          "boardConfig",
-          "locale",
-          "initialCamp",
-          "currentCamp",
-        ]);
-        expect(membership.world).toBeUndefined();
+        expect(Object.keys(membership)).toEqual(["currentCamp", "locale", "boardConfig"]);
+        expect(Object.hasOwn(membership, "world")).toBe(false);
         expect(membership.boardConfig).toBe(init.boardConfig);
-        expect(membership.initialCamp).toBe(init.initialCamp);
-        expect(membership.currentCamp).toBe(init.currentCamp);
-        expect(membership.currentCamp()).toBe(world.getComponent(1, COMPONENT.Camp));
+        expect(Object.hasOwn(membership, "initialCamp")).toBe(false);
+        expect(typeof membership.currentCamp).toBe("function");
+        expect(membership.currentCamp()).toBe(world.getComponent(1, COMPONENT.Camp)?.camp);
         expect(world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
           { kind: "faction", faction: "third_party" },
         ]);

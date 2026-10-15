@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证原生双人查验槽的实际 owner。输入为手写双人历史、受控 privateState accessor 与不可写字段；字面归档形状、同引用和写前快照为预期。原角色／能力 factory 只造输入，不由生产命令生成预期；租约与完整对局留在外部。
  */
+import { roleMethod } from "../../../../src/rulesets/roles/owned-bindings";
 import type { RoleInitializationComponent } from "../../../../src/rulesets/roles/contracts";
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
 
@@ -37,12 +38,12 @@ test("actual profile initialization owns separate native instances with one stat
   const profile = getDefaultRoleCatalog().runtime(Role.AwakenedSeer)!;
   const firstCamp = { camp: Camp.Good },
     secondCamp = { camp: Camp.Good };
-  profile.init!(first as RoleInitializationComponent, {
+  roleMethod(profile, "init")!(first as RoleInitializationComponent, {
     locale: "en",
     initialCamp: firstCamp,
     currentCamp: () => firstCamp,
   });
-  profile.init!(second as RoleInitializationComponent, {
+  roleMethod(profile, "init")!(second as RoleInitializationComponent, {
     locale: "en",
     initialCamp: secondCamp,
     currentCamp: () => secondCamp,

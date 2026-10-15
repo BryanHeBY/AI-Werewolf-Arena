@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownRoleCallback } from "../../rulesets/roles/owned-bindings";
 import { ownedToolRules } from "../../engine/actions/validation-queries";
 
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
@@ -32,17 +33,19 @@ export const DREAMER_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.dreamer.brief"),
   },
   runtime: {
-    init: (role, ctx) => {
-      setDreamerState(role, {
-        lastTarget: null,
-        lastDay: null,
-        history: [],
-        ...(ctx.boardConfig?.dreamer?.protectionPolicy &&
-        ctx.boardConfig.dreamer.protectionPolicy !== "awa_night_damage_v1"
-          ? { protectionPolicy: ctx.boardConfig.dreamer.protectionPolicy }
-          : {}),
-      });
-    },
+    init: ownRoleCallback("init", {
+      init: (role, ctx) => {
+        setDreamerState(role, {
+          lastTarget: null,
+          lastDay: null,
+          history: [],
+          ...(ctx.boardConfig?.dreamer?.protectionPolicy &&
+          ctx.boardConfig.dreamer.protectionPolicy !== "awa_night_damage_v1"
+            ? { protectionPolicy: ctx.boardConfig.dreamer.protectionPolicy }
+            : {}),
+        });
+      },
+    }),
     configuration: {
       schema: parameters,
       defaults: { protectionPolicy: "awa_night_damage_v1" },
@@ -92,11 +95,13 @@ export const DREAMER_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (_role, request, pick) => {
-      if (!request.allowedTools.includes("dream")) return null;
-      const target = pick();
-      return target === null ? null : { name: "dream", args: { target_id: target } };
-    },
+    baselineAction: ownRoleCallback("baselineAction", {
+      baselineAction: (_role, request, pick) => {
+        if (!request.allowedTools.includes("dream")) return null;
+        const target = pick();
+        return target === null ? null : { name: "dream", args: { target_id: target } };
+      },
+    }),
   },
   presentation: nativeRolePresentation("dreamer"),
 };
