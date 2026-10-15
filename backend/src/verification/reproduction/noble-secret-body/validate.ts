@@ -912,6 +912,8 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
       );
     }
   };
+  // 检查点同时按事件数与操作数定位：同一事件间隙内的资源写也必须有确定前缀。
+  // 未 finalized 的归档不消费操作流，不能把最终操作库存提前回填到中途状态。
   const cpAt = new Map<string, RecordedCheckpoint[]>();
   for (const cp of record.checkpoints) {
     check(
@@ -999,6 +1001,8 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
           ops[oi]!.event_count! > ei &&
           ops[oi]!.event_count! <= record.events.length,
       );
+    // 先核当前位置及每个操作后的检查点，再保存下一事件之前的开窗／玩家历史视图；
+    // 后续请求从自己的 openedAtEventCount 取证，不能看到该事件之后才发生的变化。
     openingAt.set(ei, { day, phase, alive: [...alive], state: structuredClone(state) });
     feedAt.set(ei, new Map([...observed].map(([id, feed]) => [id, structuredClone(feed)])));
     if (ei < record.events.length) acceptEvent(record.events[ei]!);

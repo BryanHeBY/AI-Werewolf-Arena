@@ -714,6 +714,8 @@ export function validateAnimalDreamRecord(r: ReproductionRecord): void {
       expectedEffect = s.effect;
     const expectedNight = structuredClone(s.night),
       expectedUnit = structuredClone(s.unit);
+    // 失败检查点只从其已打开的决策前缀中，补推带结算序号且尚未进入历史的行动写入；
+    // 随后只把克隆的夜／单元视图标为中止。这里核对归档部分前缀，不回滚真实库存或用最终状态代填历史。
     if (!cp.complete) {
       for (const d of r.decisions.slice(0, cp.decisionCount ?? 0)) {
         const c = tool(d);

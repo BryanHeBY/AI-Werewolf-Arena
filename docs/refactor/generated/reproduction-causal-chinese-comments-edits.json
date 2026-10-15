@@ -1,0 +1,49 @@
+[
+  {
+    "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+    "edits": [
+      {
+        "beforeStart": 33451,
+        "beforeEnd": 33451,
+        "afterStart": 33451,
+        "afterEnd": 33540,
+        "before": "",
+        "after": "  // 检查点同时按事件数与操作数定位：同一事件间隙内的资源写也必须有确定前缀。\n  // 未 finalized 的归档不消费操作流，不能把最终操作库存提前回填到中途状态。\n"
+      },
+      {
+        "beforeStart": 36498,
+        "beforeEnd": 36498,
+        "afterStart": 36587,
+        "afterEnd": 36687,
+        "before": "",
+        "after": "    // 先核当前位置及每个操作后的检查点，再保存下一事件之前的开窗／玩家历史视图；\n    // 后续请求从自己的 openedAtEventCount 取证，不能看到该事件之后才发生的变化。\n"
+      }
+    ]
+  },
+  {
+    "path": "backend/src/verification/reproduction/animal-dream/validate.ts",
+    "edits": [
+      {
+        "beforeStart": 25110,
+        "beforeEnd": 25110,
+        "afterStart": 25110,
+        "afterEnd": 25211,
+        "before": "",
+        "after": "    // 失败检查点只从其已打开的决策前缀中，补推带结算序号且尚未进入历史的行动写入；\n    // 随后只把克隆的夜／单元视图标为中止。这里核对归档部分前缀，不回滚真实库存或用最终状态代填历史。\n"
+      }
+    ]
+  },
+  {
+    "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+    "edits": [
+      {
+        "beforeStart": 7044,
+        "beforeEnd": 7044,
+        "afterStart": 7044,
+        "afterEnd": 7138,
+        "before": "",
+        "after": "    // 未结算请求以最大安全整数阻止相关事实提前释放，接受请求本身不能证明领域效果已提交。\n    // 不同事件按其夜间、白天、选举或徽章决策前缀取证，不能共用整局最后一次结算。\n"
+      }
+    ]
+  }
+]

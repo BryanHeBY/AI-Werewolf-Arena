@@ -1,0 +1,46 @@
+{
+  "executor": "/root",
+  "sourceReady": {
+    "path": "docs/refactor/generated/reproduction-causal-chinese-comments-source-ready.json",
+    "sha256": "c85466bcbbd3d3d92d75f3d9dd2344589aa5b7e17fa0d2222deaaed6b674d994"
+  },
+  "proof": {
+    "command": "bun --no-env-file docs/refactor/generated/reproduction-causal-chinese-comments-proof.cjs > docs/refactor/generated/reproduction-causal-chinese-comments-proof-output.txt 2>&1",
+    "chunk": "df0762",
+    "exitCode": 0,
+    "raw": {
+      "path": "docs/refactor/generated/reproduction-causal-chinese-comments-proof-output.txt",
+      "sha256": "e53731741e2f7f6f19d3f7881f8ce73d8e39911b2627b97accaf9c570068cdaa"
+    },
+    "summary": {
+      "sources": 3,
+      "typedNodes": 19613,
+      "nodeArrays": 2306,
+      "nonCommentLeaves": 21682,
+      "wholeRawOutputs": 6
+    }
+  },
+  "unchangedHeaders": [
+    {
+      "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "headerBytesSame": true,
+      "wholeBeforeSourceSameAsPriorStrictGit": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/validate.ts",
+      "headerBytesSame": true,
+      "wholeBeforeSourceSameAsPriorStrictGit": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "headerBytesSame": true,
+      "wholeBeforeSourceSameAsPriorStrictGit": true
+    }
+  ],
+  "priorGlobalStrict": {
+    "path": "docs/refactor/generated/architecture-checkpoint-15424a84-report.json",
+    "sha256": "fee344c05ac8fefe0d2b4b2541f684610c96236e446d19cb765b468810bd197d"
+  },
+  "headChecksRepeated": false,
+  "typesTestsOrProductionExecuted": false
+}

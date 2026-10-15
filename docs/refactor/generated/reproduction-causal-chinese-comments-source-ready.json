@@ -1,0 +1,32 @@
+{
+  "baseCommit": "a8bf71ec6fc26605b2897088bdcf5c2d44ad2868",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "sha256": "bc8bd2eada96542a502db6a63cdfeb58c97da14c256a6d149dbce62123664b4b"
+    },
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/validate.ts",
+      "sha256": "e5722351ebaa2f85522e53d79fd8f02052636fe5f9adf85eca3a6e78dcd8eb1e"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "sha256": "61043a563f09b9442cc0855683d29673d0c7c3306d2e9b5a8966c5c8686ed57b"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "01a888c5aef2fada07e5d28e13142e63146eb1b525c5a9acb380f995b3a6e792"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "380c73bac804b4e0d2eba81c0a61e841a6f752b89c00df5e8a883f811f03ed99"
+    },
+    {
+      "path": "backend/src/runtime/simulation/reproduction_context.ts",
+      "sha256": "30abc6cfa46fc3e11bd9d6ed899865c772684acadc7a369420ea1b91d4a1e0c0"
+    }
+  ],
+  "limits": "Only four Chinese causal explanation insertions; original headers and code unchanged."
+}

@@ -215,6 +215,8 @@ export function validateRadiantRequests(
       .get(day)
       ?.find((f) => f.event.type === e.type && equal(f.event.payload, e.payload));
     if (n) return n.release;
+    // 未结算请求以最大安全整数阻止相关事实提前释放，接受请求本身不能证明领域效果已提交。
+    // 不同事件按其夜间、白天、选举或徽章决策前缀取证，不能共用整局最后一次结算。
     const max = (rows: RecordedDecision[]) =>
       Math.max(0, ...rows.map((d) => d.settleOrder ?? Number.MAX_SAFE_INTEGER));
     const night = record.decisions.filter((d) => d.day === day && d.request.phase === Phase.Night);

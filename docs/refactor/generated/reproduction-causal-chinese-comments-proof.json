@@ -1,0 +1,103 @@
+{
+  "baseCommit": "a8bf71ec6fc26605b2897088bdcf5c2d44ad2868",
+  "sourceReadySHA256": "c85466bcbbd3d3d92d75f3d9dd2344589aa5b7e17fa0d2222deaaed6b674d994",
+  "programs": [
+    {
+      "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "beforeSha256": "7f86412e0b1f011c2f325430346b43c04f8bcb86e638d8f2bc6f73df16e14214",
+      "sha256": "bc8bd2eada96542a502db6a63cdfeb58c97da14c256a6d149dbce62123664b4b",
+      "exactTextEdits": 2,
+      "typedNodes": 8542,
+      "nodeArrays": 1042,
+      "nonCommentLeaves": 9481,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "5a399d9ce67b102a2473408dcd48f11be59ace4a9e9723f7e462c8a526397fa0",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "e3f9e1324cebc93d0d7423368602126f7a5d1b2194d1d4e5df115492efbb4ca3",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/validate.ts",
+      "beforeSha256": "be443d67dfa75d9ff8dc28e978f7799fc8302704cc9e9bb39421fcc1a26365b5",
+      "sha256": "e5722351ebaa2f85522e53d79fd8f02052636fe5f9adf85eca3a6e78dcd8eb1e",
+      "exactTextEdits": 1,
+      "typedNodes": 7132,
+      "nodeArrays": 802,
+      "nonCommentLeaves": 7805,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "9227ac0a0ee08df452baf83621df4ca0918f756496e5c57649ef683d806d599d",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "34e541456c34cdadf6964ae4a4177fcd097bf983a5a9dc9f2b2c5cf7533f7458",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "beforeSha256": "f97dd13d3cd665aeaf825a4b6c542a226dd11a25754f5c33cb02d66c1a9b5c3b",
+      "sha256": "61043a563f09b9442cc0855683d29673d0c7c3306d2e9b5a8966c5c8686ed57b",
+      "exactTextEdits": 1,
+      "typedNodes": 3939,
+      "nodeArrays": 462,
+      "nonCommentLeaves": 4396,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "c1b773d73adfe8e8754609a818cf754574c5826695696f8070c707ba1fbbfe8a",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "e816f58edf92b5b2f104b6e9584684688a0108aeef088a9a87c3440620d0ac1b",
+          "wholeRawSame": true
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "01a888c5aef2fada07e5d28e13142e63146eb1b525c5a9acb380f995b3a6e792"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "380c73bac804b4e0d2eba81c0a61e841a6f752b89c00df5e8a883f811f03ed99"
+    },
+    {
+      "path": "backend/src/runtime/simulation/reproduction_context.ts",
+      "sha256": "30abc6cfa46fc3e11bd9d6ed899865c772684acadc7a369420ea1b91d4a1e0c0"
+    }
+  ],
+  "summary": {
+    "sources": 3,
+    "typedNodes": 19613,
+    "nodeArrays": 2306,
+    "nonCommentLeaves": 21682,
+    "wholeRawOutputs": 6
+  },
+  "limits": [
+    "只核三个完整源的注释增量、非注释树与移除注释后的整输出；不运行类型、行为、Playwright或全门禁。",
+    "职责真实含义仍需非作者逐源审查；机器文本、协议、类型和历史身份保持。JSDoc类型及tag原文、机器文字、协议、类型和算法均不变。"
+  ]
+}
