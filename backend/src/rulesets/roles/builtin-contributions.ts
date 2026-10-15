@@ -4,6 +4,7 @@
  * 角色支持集合仍与既有运行集合一致，顺序不得由名称、文件系统或自动发现重排。
  */
 import { CROW_ROLE_PROFILE } from "../../features/crow/profile";
+import { SILENCE_ELDER_ROLE_PROFILE } from "../../features/silence-elder/profile";
 import type { RoleContributions } from "./contracts";
 import {
   NIGHT_NOBLE_ROLE_PROFILE,
@@ -88,6 +89,7 @@ export const BUILTIN_ROLE_CONTRIBUTIONS: readonly RoleContributions[] = [
   TRICKSTER_ROLE_PROFILE,
   ORDER_PRINCE_ROLE_PROFILE,
   CROW_ROLE_PROFILE,
+  SILENCE_ELDER_ROLE_PROFILE,
   MAGICIAN_ROLE_PROFILE,
   RED_MOON_ROLE_PROFILE,
   NIGHTMARE_SHADOW_ROLE_PROFILE,

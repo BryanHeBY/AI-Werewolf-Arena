@@ -17,6 +17,7 @@
  * 普通黎明原因／原生命提案及动物／双生夜报名单归规则 owner；本经理先写完成标志，保原死亡 await、清理及封盘。
  */
 import { bindVictoryQueries } from "../rulesets/victory/default-specs";
+import { finishSilenceDay } from "../rulesets/silence-expression-plan";
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../domain/exile-unit";
 import { nightUnitOf } from "../domain/night-unit";
 import { PhaseRevisionClock } from "./phase-revision";
@@ -868,6 +869,7 @@ export class PhaseManager {
 
     if (this.state.gameOver || !dayIsCurrent()) return this.getSnapshot();
     if (dayResult.interrupted) {
+      finishSilenceDay(this.config, this.world, this.events, cycleDay);
       // 白天被自爆中断时直接结束当日并切到下一夜。
       if (
         this.state.gameOver ||
@@ -933,6 +935,7 @@ export class PhaseManager {
 
     if (!votingIsCurrent()) return this.getSnapshot();
     if (votingResult.interrupted) {
+      finishSilenceDay(this.config, this.world, this.events, cycleDay);
       // 投票前窗口发生自爆，同样跳过当日剩余流程。
       if (this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)) {
         return this.getSnapshot();
@@ -1000,6 +1003,7 @@ export class PhaseManager {
     if (!votingIsCurrent()) return this.getSnapshot();
     // await 后先保原当前性守卫，再核整侧；查询不是封盘，已提交死亡不因失败退款。
     const beautyResult = resolveBeautyExileVictory(this.world, beautyCandidate);
+    finishSilenceDay(this.config, this.world, this.events, cycleDay);
     if (
       this.checkAndSealResult(
         this.#rulePlan.checkpoints.exileSettled,
@@ -1071,6 +1075,7 @@ export class PhaseManager {
       () => this.world,
       () => this.state.day,
     );
+    finishSilenceDay(this.config, this.world, this.events, this.state.day);
     this.state.result = { winner, reason: decision.reason, outcome, decidedAt };
     this.state.gameOver = true;
     this.setPhase(Phase.GameOver);

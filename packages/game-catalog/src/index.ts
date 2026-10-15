@@ -360,10 +360,10 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "挑战、辩论、投票资格",
   },
   {
-    id: PLANNED_ROLE_IDS.SilenceElder,
-    status: "planned",
+    id: Role.SilenceElder,
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/rules/awa-melbourne-silence-elder-v1.md#silence_elder",
     mechanismSummary: "表达权限与翻译",
   },
   {

@@ -322,6 +322,34 @@ export function buildPlayerStageContextHint(
   queries: Pick<PlayerPromptDirectiveQueries, "locale" | "boardConfig">,
 ): string | undefined {
   // 按原字段优先级展示请求已带来的候选，不据这些文字重新授权目标。
+  if (request.context.silence_candidates !== undefined)
+    return text(queries.locale(), "prompt.stage.silence_candidates", {
+      ids: request.context.silence_candidates.join(", "),
+    });
+  if (
+    request.context.stage === "silence_gesture" &&
+    request.context.silence_target_id !== undefined
+  )
+    return text(queries.locale(), "prompt.stage.silence_gesture", {
+      target: request.context.silence_target_id,
+      round: text(
+        queries.locale(),
+        request.context.silence_round === "pk" ? "silence.round.pk" : "silence.round.day",
+      ),
+    });
+  if (
+    request.context.stage === "silence_translation" &&
+    request.context.silence_target_id !== undefined &&
+    request.context.silence_gesture_description !== undefined
+  )
+    return text(queries.locale(), "prompt.stage.silence_translation", {
+      target: request.context.silence_target_id,
+      round: text(
+        queries.locale(),
+        request.context.silence_round === "pk" ? "silence.round.pk" : "silence.round.day",
+      ),
+      description: request.context.silence_gesture_description,
+    });
   if (request.context.crow_candidates !== undefined) {
     const ids = request.context.crow_candidates;
     return ids.length

@@ -60,7 +60,7 @@ const roleNames = [
   { id: `${Role.DayScholar}`, names: { "zh-CN": "白昼学者", en: "Day Scholar" } },
   { id: `${Role.NightMentor}`, names: { "zh-CN": "寂夜导师", en: "Night Mentor" } },
   { id: `${Role.Debater}`, names: { "zh-CN": "杠精", en: "Debater" } },
-  { id: PLANNED_ROLE_IDS.SilenceElder, names: { "zh-CN": "禁言长老", en: "Silencing Elder" } },
+  { id: Role.SilenceElder, names: { "zh-CN": "禁言长老", en: "Silencing Elder" } },
   { id: Role.Crow, names: { "zh-CN": "乌鸦", en: "Crow" } },
   { id: `${Role.WhiteCat}`, names: { "zh-CN": "白猫", en: "White Cat" } },
   { id: `${Role.FoxCub}`, names: { "zh-CN": "子狐", en: "Fox Cub" } },

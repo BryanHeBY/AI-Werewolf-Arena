@@ -21,13 +21,13 @@ void contractMember;
 void contractEntity;
 void rawId;
 
-test("public core identity is the shared enum instance and preserves the 55-role runtime subset", () => {
+test("public core identity is the shared enum instance and preserves the delivered runtime subset", () => {
   expect(CoreRole).toBe(Role);
   expect(CoreCamp).toBe(Camp);
-  expect(Object.values(CoreRole)).toHaveLength(55);
+  expect(Object.values(CoreRole)).toHaveLength(57);
   expect(Object.values(Role)).not.toContain("awakened_knight");
   expect(ROLE_IDS).toHaveLength(64);
-  expect(ROLE_DEFINITIONS.map((row) => row.id)).toEqual(ROLE_IDS);
+  expect(ROLE_DEFINITIONS.map((row): RoleId => row.id)).toEqual(ROLE_IDS);
 });
 
 test("planned metadata is not a registered profile or execution capability", () => {

@@ -62,6 +62,11 @@ import {
   readOrderPrinceChoiceFact,
   readOrderPrinceRevoteFact,
 } from "@ai-werewolf-arena/game-contract/facts/order-prince";
+import {
+  SILENCE_ELDER_EVENT_TYPES,
+  readSilenceElderFact,
+  silenceElderFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/silence-elder";
 import { readCrowFact } from "@ai-werewolf-arena/game-contract";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
 import {
@@ -328,6 +333,11 @@ const requestSchema = z.strictObject({
     trickster_may_pass: z.boolean().optional(),
     swap_candidates: z.array(positive).optional(),
     shoot_candidates: z.array(positive).optional(),
+    silence_candidates: z.array(positive).optional(),
+    silence_target_id: positive.optional(),
+    silence_translator_id: positive.nullable().optional(),
+    silence_gesture_description: z.string().min(1).max(8192).optional(),
+    silence_round: z.enum(["day", "pk"]).optional(),
     crow_candidates: z.array(positive).optional(),
     fox_candidates: z.array(positive).optional(),
     fragrant_pair_candidates: z.array(positive).optional(),
@@ -623,6 +633,21 @@ const schema2 = z.strictObject({
           (!readDeathShotMissFact(event.type, event.payload) || event.audience !== undefined)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_magician_shot_miss_invalid" });
+        if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const f = readSilenceElderFact(event.type, event.payload);
+          const visibility = f && silenceElderFactAudience(f.type);
+          if (
+            !f ||
+            (visibility === "god"
+              ? event.audience?.length !== 0
+              : visibility === "actor"
+                ? !("actorId" in f.payload) ||
+                  event.audience?.length !== 1 ||
+                  event.audience[0] !== f.payload.actorId
+                : event.audience !== undefined)
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_silence_fact_invalid" });
+        }
         if (event.type === "crow_curse_chosen" || event.type === "crow_curse_applied") {
           const f = readCrowFact(event.type, event.payload);
           if (
@@ -732,6 +757,7 @@ const schema2 = z.strictObject({
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          !(SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type) &&
           event.type !== "crow_curse_chosen" &&
           event.type !== "nightmare_fear_committed" &&
           event.type !== "modifier_choice_committed" &&

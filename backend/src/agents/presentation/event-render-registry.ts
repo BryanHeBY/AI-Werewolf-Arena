@@ -19,6 +19,11 @@ import { tricksterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { magicianEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { redMoonEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { silenceElderEventLabel } from "@ai-werewolf-arena/game-presentation";
+import {
+  SILENCE_ELDER_EVENT_TYPES,
+  silenceElderFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/silence-elder";
 import { crowEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { nightmareEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { demonHunterEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -609,6 +614,8 @@ export class ScriptEventRenderRegistry {
     if (magician !== null) return magician;
     const redMoon = redMoonEventLabel(event.type, event.payload, locale);
     if (redMoon !== null) return redMoon;
+    const silence = silenceElderEventLabel(event.type, event.payload, locale);
+    if (silence !== null) return silence;
     const crow = crowEventLabel(event.type, event.payload, locale);
     if (crow !== null) return crow;
     const nightmare = nightmareEventLabel(event.type, event.payload, locale);
@@ -727,6 +734,16 @@ export class ScriptEventRenderRegistry {
           : [];
     const nightmare = nightmareEventLabel(event.type, event.payload, locale);
     if (nightmare !== null) return printPrivateEvents ? [{ kind: "god", text: nightmare }] : [];
+    const silence = silenceElderEventLabel(event.type, event.payload, locale);
+    if (silence !== null) {
+      const type = SILENCE_ELDER_EVENT_TYPES.find((type) => type === event.type)!;
+      const audience = silenceElderFactAudience(type);
+      return audience === "public"
+        ? [{ kind: event.type === "silence_announced" ? "system" : "chat", text: silence }]
+        : printPrivateEvents
+          ? [{ kind: audience === "actor" ? "private" : "god", text: silence }]
+          : [];
+    }
     const crow = crowEventLabel(event.type, event.payload, locale);
     if (crow !== null)
       return event.type === "crow_curse_applied"

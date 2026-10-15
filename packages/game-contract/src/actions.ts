@@ -8,6 +8,9 @@ import { ActionWindow, KnightDuelWindow, type EntityId, type PotionType } from "
 import type { MessageRef } from "./message-refs";
 /** 工具名关联其原参数形状；null／abstain／activate 各有原业务意义，不在类型层统一成同一种跳过。 */
 export interface ToolArgMap {
+  silence: { target_id: EntityId; translator_id: EntityId | null };
+  gesture: { description: string };
+  translate_silence: { text: string | null };
   curse_exile: { target_id: EntityId | null };
   fox_distract: { target_id: EntityId | null };
   puffer_retaliate: { activate: boolean };
@@ -88,6 +91,9 @@ export type ToolName = keyof ToolArgMap;
 /** 保留公共工具标识的原顺序；列入此表不表示任意角色或阶段都可使用。 */
 export const TOOL_NAMES = [
   "curse_exile",
+  "silence",
+  "gesture",
+  "translate_silence",
   "fox_distract",
   "puffer_retaliate",
   "bind_fragrant_pair",
@@ -202,6 +208,9 @@ export const ACTION_STAGES = [
   "magician_exchange",
   "nightmare_fear",
   "crow_curse",
+  "silence_elder",
+  "silence_gesture",
+  "silence_translation",
   "pure_white_girl",
   "wolf_witch",
   "demon_hunter",

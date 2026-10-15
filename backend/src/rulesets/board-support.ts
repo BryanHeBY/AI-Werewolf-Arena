@@ -23,6 +23,7 @@ import {
   isGhostBridePreset,
 } from "./support";
 import { isCrowPreset } from "./support/crow";
+import { isSilenceElderPreset } from "./support/silence-elder";
 import { Role, WinCondition } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { isDemonHunterPreset } from "./node-board-support";
@@ -160,5 +161,11 @@ export function boardPresetViolation(config: ReadonlyBoardConfig) {
     !isCrowPreset(config)
   )
     return "crow_preset_invalid";
+  if (
+    (config.silenceElder ||
+      config.roleSetups.some((row) => row.role === Role.SilenceElder && row.count > 0)) &&
+    !isSilenceElderPreset(config)
+  )
+    return "silence_elder_preset_invalid";
   return null;
 }

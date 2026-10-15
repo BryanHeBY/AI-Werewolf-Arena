@@ -25,6 +25,7 @@ import { validateMagicianRecord } from "./magician/validate";
 import { validateOrderPrinceRecord } from "./order-prince/validate";
 import { validateCupidRecord } from "./cupid/validate";
 import { validateHybridRecord } from "./hybrid/validate";
+import { validateSilenceElderRecord } from "./silence-elder/validate";
 import { validateCrowRecord } from "./crow/validate";
 import { validateDeathHistoryRecord } from "./death-history/validate";
 
@@ -52,4 +53,5 @@ export function verifyReproductionMechanisms(result: ReproductionRecord): void {
   // 只据确定来源、事实和完整／失败 CP 核普通后果；未知特殊段不补作运行许可。
   validateDeathHistoryRecord(result);
   validateCrowRecord(result);
+  validateSilenceElderRecord(result);
 }

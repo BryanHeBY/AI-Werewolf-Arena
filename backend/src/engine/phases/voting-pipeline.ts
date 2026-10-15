@@ -8,6 +8,7 @@
  * 定序王子的重收票政策归具名同步组合；同一 options 局部在原点替换，后续 PK 共享严格复验闭包。
  */
 import { applyCrowBonus } from "../../features/crow/ports";
+import { replaceSilencedSpeech } from "../../rulesets/silence-expression-plan";
 import { revealSecretBodyExile } from "../../features/noble-secret-body/exile-ports";
 import { openExileUnit, attachExileUnit } from "../../domain/exile-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -269,6 +270,34 @@ export class VotingPipeline {
         const life = captureNightLife(this.world, actorId);
         if (!life || !canBeExiled(this.world, actorId)) {
           if (options.strictRequired) throw new Error("order_prince_pk_candidate_stale");
+          continue;
+        }
+        const expression = replaceSilencedSpeech(
+          config,
+          {
+            world: this.world,
+            events: this.events,
+            requests,
+            provider: actionProvider,
+            gateway: this.toolGateway,
+            day: options.day,
+            phase: Phase.Voting,
+            isCurrent: () => options.isCurrent?.() !== false,
+          },
+          actorId,
+          "pk",
+        );
+        if (expression) {
+          await expression;
+          if (options.isCurrent?.() === false)
+            return attachExileUnit(
+              {
+                summary: { tally: {}, target: null, removed: [] },
+                interrupted: false,
+                removed: [],
+              },
+              exileUnit,
+            );
           continue;
         }
         const request = requests.create({

@@ -15,8 +15,8 @@ import {
 const fixedSequenceHash = "cd750ba72a9b5902562d650125797b2417126bdb82b2aaa199822b05cd22ec78";
 
 test("existing message IDs retain their exact sequence and presentation messages are appended", () => {
-  expect(MESSAGE_IDS).toHaveLength(1575);
-  expect(new Set(MESSAGE_IDS).size).toBe(1575);
+  expect(MESSAGE_IDS).toHaveLength(1610);
+  expect(new Set(MESSAGE_IDS).size).toBe(1610);
   expect(
     createHash("sha256")
       .update(JSON.stringify(MESSAGE_IDS.slice(0, 1513)))
@@ -87,6 +87,41 @@ test("existing message IDs retain their exact sequence and presentation messages
     "replay.stage.crow_curse_applied",
     "stage.crow_curse",
     "prompt.config.crow",
+    "role.silence_elder.brief",
+    "role.silence_elder.state",
+    "silence.choice",
+    "silence.round.day",
+    "silence.round.pk",
+    "action.silence.hint",
+    "action.silence.directive",
+    "action.gesture.hint",
+    "action.gesture.directive",
+    "action.translate_silence.hint",
+    "action.translate_silence.directive",
+    "request.summary.silence_elder",
+    "request.summary.silence_gesture",
+    "request.summary.silence_translation",
+    "stage.silence_elder",
+    "stage.silence_gesture",
+    "stage.silence_translation",
+    "prompt.config.silence_elder",
+    "prompt.stage.silence_candidates",
+    "prompt.stage.silence_gesture",
+    "prompt.stage.silence_translation",
+    "event.silence_chosen",
+    "event.silence_announced",
+    "event.silence_gesture",
+    "event.silence_translated",
+    "event.silence_translation_declined",
+    "event.silence_expired",
+    "replay.stage.silence_chosen",
+    "replay.stage.silence_announced",
+    "replay.stage.silence_gesture",
+    "replay.stage.silence_translated",
+    "replay.stage.silence_translation_declined",
+    "replay.stage.silence_expired",
+    "bot.silence.gesture",
+    "bot.silence.translation",
   ]);
 });
 

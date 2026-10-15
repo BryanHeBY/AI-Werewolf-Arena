@@ -1,0 +1,15 @@
+{
+  "board": "awa_silence_elder_12_gestures_v1",
+  "agent": "deepseek_v4_flash",
+  "maxDays": 30,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 45000,
+  "trace": false,
+  "printAllEvents": false,
+  "printChat": false,
+  "streamEvents": true,
+  "color": true,
+  "printLlmIo": false,
+  "printThinking": false,
+  "printPrivateEvents": true
+}

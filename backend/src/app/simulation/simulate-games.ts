@@ -134,6 +134,7 @@ export async function simulateGames(
         new ObservedBot(
           randomDraws(random.fork("players").fork(`id:${id}`)),
           styles[Math.floor(random.fork("styles").fork(`id:${id}`).next() * styles.length)],
+          locale,
         ),
       ]),
     );

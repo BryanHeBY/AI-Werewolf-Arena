@@ -34,6 +34,7 @@ import { projectTricksterState } from "../../features/trickster/ports";
 import { projectOrderPrinceState } from "../../features/order-prince/ports";
 import { projectMagicianState } from "../../features/magician/ports";
 import { projectRedMoonState } from "../../features/red-moon/ports";
+import { projectSilenceElderState } from "../../features/silence-elder/observation-ports";
 import { projectCrowState } from "../../features/crow/ports";
 import { projectNightmareShadowState } from "../../features/nightmare/ports";
 import { projectEvilKnightState } from "../../features/evil-knight/ports";
@@ -222,6 +223,8 @@ export function capturePlayerObservation(
     queries.world().getComponent(request.actorId, COMPONENT.Camp),
   );
   if (redMoon) ownState.redMoon = redMoon;
+  const silenceElder = projectSilenceElderState(role);
+  if (silenceElder) ownState.silenceElder = silenceElder;
   const crow = projectCrowState(role);
   if (crow) ownState.crow = crow;
   const nightmare = projectNightmareShadowState(role, () =>

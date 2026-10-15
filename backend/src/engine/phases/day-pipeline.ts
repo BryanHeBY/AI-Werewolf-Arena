@@ -4,6 +4,7 @@
  * 发言前后仍按原位置复查当前性与存活，窗口结果不代替死亡提交、最终阶段变化或判胜。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import { announceSilenceDay, replaceSilencedSpeech } from "../../rulesets/silence-expression-plan";
 import { createDaytimeInterruptionComposition } from "../../rulesets/daytime-interruption-composition";
 import type { DaytimeInterruptionComposition } from "../daytime-interruption-contracts";
 import { AliveComponent } from "../../domain/components/alive";
@@ -198,6 +199,8 @@ export class DayPipeline {
       speakerDirection,
     );
 
+    if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
+    announceSilenceDay(config, this.world, this.events, options.day, isCurrent);
     for (const actorId of speakers) {
       if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
       if (!this.isAlive(actorId)) {
@@ -215,34 +218,55 @@ export class DayPipeline {
       );
       if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
       if (!debate.skipSpeech && this.isAlive(actorId)) {
-        const req = requests.create({
-          phase: Phase.Day,
-          actorId,
-          allowedTools: ["speak"],
-          stage: "day_speech",
-          requiresAction: true,
-          summary: { key: "request.summary.day_speech" },
-          context: {},
-        });
-
-        const action = await actionProvider.getAction(req);
-        if (!isCurrent())
-          return { summary: { speeches, selfDestructBy: null }, interrupted: false };
-        if (action?.name === "speak") {
-          const result = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
+        const expression = replaceSilencedSpeech(
+          config,
+          {
+            world: this.world,
+            events: this.events,
+            requests,
+            provider: actionProvider,
+            gateway: this.toolGateway,
+            day: options.day,
             phase: Phase.Day,
+            isCurrent,
+          },
+          actorId,
+          "day",
+        );
+        if (expression) {
+          await expression;
+          if (!isCurrent())
+            return { summary: { speeches, selfDestructBy: null }, interrupted: false };
+        } else {
+          const req = requests.create({
+            phase: Phase.Day,
+            actorId,
+            allowedTools: ["speak"],
+            stage: "day_speech",
+            requiresAction: true,
+            summary: { key: "request.summary.day_speech" },
+            context: {},
           });
 
-          if (result.ok && result.sanitizedCall) {
-            speeches.push({ actorId, text: result.sanitizedCall.args.text });
-            this.events.push({
-              timestamp: Date.now(),
-              type: "day_speech",
-              payload: {
-                actorId,
-                text: result.sanitizedCall.args.text,
-              },
+          const action = await actionProvider.getAction(req);
+          if (!isCurrent())
+            return { summary: { speeches, selfDestructBy: null }, interrupted: false };
+          if (action?.name === "speak") {
+            const result = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
+              phase: Phase.Day,
             });
+
+            if (result.ok && result.sanitizedCall) {
+              speeches.push({ actorId, text: result.sanitizedCall.args.text });
+              this.events.push({
+                timestamp: Date.now(),
+                type: "day_speech",
+                payload: {
+                  actorId,
+                  text: result.sanitizedCall.args.text,
+                },
+              });
+            }
           }
         }
       }

@@ -136,8 +136,12 @@ export interface CrowConfig {
   actionPolicy: "optional" | "required_when_legal";
   selfTarget: boolean;
 }
+export interface SilenceElderConfig {
+  policy: "awa_melbourne_gestures_v1";
+}
 export interface BoardConfig {
   crow?: CrowConfig;
+  silenceElder?: SilenceElderConfig;
   animalDream?: { policy: "awa_animal_dream_v1"; eliminationPriority: "awa_wolf_priority_v1" };
   whiteCat?: { skippedVotePolicy: CatSkippedVotePolicy };
   pufferfish?: { ballotPolicy: PufferBallotPolicy };

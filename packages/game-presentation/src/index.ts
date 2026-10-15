@@ -53,3 +53,5 @@ export { GAME_PRESENTATION_CONTRACT, supportsGamePresentation } from "./version"
 export { animalDreamEventLabel } from "./events/animal-dream";
 
 export { crowEventLabel } from "./events/crow";
+
+export { silenceElderEventLabel } from "./events/silence-elder";

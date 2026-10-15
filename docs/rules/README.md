@@ -58,6 +58,7 @@
 | `night_mentor`          | 寂夜导师   | [awa-scholar-mentor-twelve-v1.md](awa-scholar-mentor-twelve-v1.md)                                             |
 | `debater`               | 杠精       | [awa-melbourne-debater-v1.md#debater](awa-melbourne-debater-v1.md#debater)                                     |
 | `crow`                  | 乌鸦       | [awa-netease-crow-v1.md](awa-netease-crow-v1.md)                                                               |
+| `silence_elder`         | 禁言长老   | [AWA 文字动作与翻译版](awa-melbourne-silence-elder-v1.md#silence_elder)                                      |
 | `white_cat`             | 白猫       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |
 | `fox_cub`               | 子狐       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |
 | `pufferfish`            | 河豚       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |

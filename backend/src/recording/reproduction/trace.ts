@@ -107,7 +107,8 @@ export class ReproductionTrace {
     return this.decisions.length;
   }
   get ownedEventCursor(): number | undefined {
-    return this.metadata.normalizedBoard.nobleSecretBody ||
+    return this.metadata.normalizedBoard.silenceElder ||
+      this.metadata.normalizedBoard.nobleSecretBody ||
       this.metadata.normalizedBoard.fragrantPairSeer ||
       this.metadata.normalizedBoard.animalDream
       ? (this.liveEvents?.().length ?? this.events.length)
@@ -174,7 +175,10 @@ export class ReproductionTrace {
     // 数量不匹配须在任何写入之前拒绝；带机制的 checkpoint 追加当前决定／结算计数。
     this.checkpoints.push(
       structuredClone(
-        checkpoint.animalDream || checkpoint.nobleBody || checkpoint.fragrantPair
+        this.metadata.normalizedBoard.silenceElder ||
+          checkpoint.animalDream ||
+          checkpoint.nobleBody ||
+          checkpoint.fragrantPair
           ? { ...checkpoint, settlementCount: this.settled, decisionCount: this.decisions.length }
           : checkpoint,
       ),

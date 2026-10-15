@@ -98,6 +98,10 @@ import {
   readVictoryResult,
   type ReplayEvent,
 } from "@ai-werewolf-arena/replay-contract";
+import {
+  SILENCE_ELDER_EVENT_TYPES,
+  readSilenceElderFact,
+} from "@ai-werewolf-arena/game-contract/facts/silence-elder";
 import { readCrowFact } from "@ai-werewolf-arena/game-contract";
 import { isRoleId, type RoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 
@@ -121,6 +125,12 @@ const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
   red_moon_night_sealed: ["actorId"],
   red_moon_exile_delayed: ["actorId"],
   red_moon_delay_expired: ["actorId"],
+  silence_chosen: ["actorId", "targetId"],
+  silence_announced: ["targetId"],
+  silence_gesture: ["actorId"],
+  silence_translated: ["actorId", "targetId"],
+  silence_translation_declined: ["actorId", "targetId"],
+  silence_expired: ["targetId"],
   crow_curse_chosen: ["actorId"],
   crow_curse_applied: ["targetId"],
   nightmare_fear_committed: [],
@@ -358,6 +368,8 @@ function validKnownFields(type: string, p: Record<string, unknown>): boolean {
   if (type === "red_moon_night_sealed" || type === "red_moon_exile_delayed")
     return !!readRedMoonNextNightFact(type, p);
   if (type === "red_moon_delay_expired") return !!readRedMoonExpiryFact(type, p);
+  if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readSilenceElderFact(type, p);
   if (type === "crow_curse_chosen" || type === "crow_curse_applied") return !!readCrowFact(type, p);
   if (type === "nightmare_fear_committed")
     return !!(readNightmareFearFact(type, p) ?? readNightmareOwnFearFact(type, p));
@@ -729,6 +741,19 @@ export function readReplayEvent(
     if (safe.type === "order_prince_revote_started") {
       if (safe.phase !== "voting") return null;
       add(p.actorId);
+    }
+    if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (p.day !== safe.day) return null;
+      if (safe.type === "silence_chosen" && safe.phase !== "night") return null;
+      if (safe.type === "silence_announced" && safe.phase !== "day") return null;
+      if (
+        ["silence_gesture", "silence_translated", "silence_translation_declined"].includes(
+          safe.type,
+        ) &&
+        safe.phase !== (p.round === "pk" ? "voting" : "day")
+      )
+        return null;
+      if (Object.hasOwn(p, "translatorId") && p.translatorId !== null) add(p.translatorId);
     }
     if (safe.type === "crow_curse_chosen" || safe.type === "crow_curse_applied") {
       if (

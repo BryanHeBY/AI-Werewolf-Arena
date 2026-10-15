@@ -29,6 +29,7 @@ export const choose_thief_card: ObservedToolHandler = ({ ownState, style }) => {
   if (style === "conservative" && !state.required) return null;
   return { name: "choose_thief_card", args: { slot: state.cards[0]!.slot } };
 };
+import { text } from "@ai-werewolf-arena/game-text";
 import type { ObservedToolHandler } from "./context";
 import { PotionType } from "@ai-werewolf-arena/game-contract";
 
@@ -217,6 +218,23 @@ export const choose_shapeshifter_card: ObservedToolHandler = ({ ownState }) => {
   return card ? { name: "choose_shapeshifter_card", args: { slot: card.slot } } : null;
 };
 
+/** 只使用夜窗已告知的存活名单；翻译与目标分开选，保守风格明确不指定翻译。 */
+export const silence: ObservedToolHandler = ({ request, ownState, pick, style }) => {
+  const candidates = request.context.silence_candidates;
+  if (!ownState.silenceElder || !candidates?.length) throw new Error("silence_observation_missing");
+  const target = pick([...candidates])!;
+  const translator =
+    style === "conservative" ? undefined : pick(candidates.filter((id) => id !== target));
+  return { name: "silence", args: { target_id: target, translator_id: translator ?? null } };
+};
+export const gesture: ObservedToolHandler = ({ locale }) => ({
+  name: "gesture",
+  args: { description: text(locale, "bot.silence.gesture") },
+});
+export const translateSilence: ObservedToolHandler = ({ locale, style }) => ({
+  name: "translate_silence",
+  args: { text: style === "conservative" ? null : text(locale, "bot.silence.translation") },
+});
 /** 仅消费本轮明确告知的候选及自身政策，不能从 World 推导暗夜死亡或真实身份。 */
 export const curseExile: ObservedToolHandler = ({ ownState, request, style, pick }) => {
   const s = ownState.crow;

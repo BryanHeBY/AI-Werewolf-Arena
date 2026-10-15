@@ -34,6 +34,10 @@ import {
   type AbilitySource,
 } from "@ai-werewolf-arena/game-contract";
 
+import {
+  SILENCE_ELDER_EVENT_TYPES,
+  silenceElderFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/silence-elder";
 import { readAgentEventFact, type PreparedAgentEvent } from "./agent-event-facts";
 
 /** 仅在命中原分支时执行的身份查询和显式自定义规则；不是行动许可或 World 通道。 */
@@ -313,6 +317,21 @@ function canViewAgentEventWithFacts(
       fact.actorId === actorId
     );
   }
+  if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readSilenceElderFact", event.type, event.payload, prepared);
+    if (!fact) return false;
+    const visibility = silenceElderFactAudience(fact.type);
+    if (visibility === "god") return false;
+    if (visibility === "public") return !("audience" in event);
+    return (
+      "actorId" in fact.payload &&
+      fact.payload.actorId === actorId &&
+      "audience" in event &&
+      Array.isArray(event.audience) &&
+      event.audience.length === 1 &&
+      event.audience[0] === actorId
+    );
+  }
   if (event.type === "crow_curse_chosen") {
     const fact = readAgentEventFact("readCrowFact", event.type, event.payload, prepared);
     return (
@@ -368,6 +387,10 @@ function projectPayload(
   queries: PreparedAgentEventProjectionQueries,
   prepared: PreparedAgentEvent,
 ): Record<string, unknown> {
+  if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readSilenceElderFact", event.type, event.payload, prepared);
+    return fact ? structuredClone(fact.payload) : {};
+  }
   switch (event.type) {
     case "red_moon_night_sealed":
     case "red_moon_exile_delayed":

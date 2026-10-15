@@ -5,6 +5,7 @@
  * 历史事实不执行规则、不恢复库存或授权行动；类型声明不代替未知数据解析、复制或深冻结。
  */
 import type { NobleSecretBodyPayloadMap } from "./facts/noble-secret-body";
+import type { SilenceElderPayloadMap } from "./facts/silence-elder";
 import type { AnimalDreamPayloadMap } from "./facts/animal-dream";
 import type { FragrantPairPayloadMap } from "./facts/fragrant-pair-seer";
 import type { RedMoonNextNightFact, RedMoonExpiryFact } from "./facts/red-moon";
@@ -59,7 +60,11 @@ export interface ExileFeedback {
 
 /** 每种事实保原字段／可选性，并合入本族声明；记录名中的 committed 不单独证明完整业务或录制成功。 */
 export interface EventPayloadMap
-  extends NobleSecretBodyPayloadMap, FragrantPairPayloadMap, AnimalDreamPayloadMap {
+  extends
+    NobleSecretBodyPayloadMap,
+    FragrantPairPayloadMap,
+    AnimalDreamPayloadMap,
+    SilenceElderPayloadMap {
   eclipse_swallowed: {
     actorId: EntityId;
     day: number;
@@ -589,6 +594,9 @@ export type GameEvent = {
       | "raven_knife_chosen"
       | "raven_knife_skipped"
       | "crow_curse_chosen"
+      | "silence_chosen"
+      | "silence_translation_declined"
+      | "silence_expired"
       | "nightmare_fear_committed"
       | "modifier_choice_committed"
       | "modifier_choice_skipped"

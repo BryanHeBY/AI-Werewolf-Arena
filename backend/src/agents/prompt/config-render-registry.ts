@@ -42,6 +42,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
         : []),
       ...(config.radiantEclipse ? [text(locale, "rules.radiant_eclipse")] : []),
       text(locale, "prompt.config.title"),
+      ...(config.silenceElder ? [text(locale, "prompt.config.silence_elder")] : []),
       ...(config.crow
         ? [
             text(locale, "prompt.config.crow", {
