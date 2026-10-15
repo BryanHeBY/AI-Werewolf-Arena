@@ -12,6 +12,22 @@ import type { DeathCause } from "./death-facts";
 
 /** 可选附加字段由具体机制形成；工厂另供必填公共 context，候选名单／实例 ID 不是运行许可。 */
 export interface ActionRequestExtras {
+  awakened_brew_options?: {
+    readonly healRemaining: 0 | 1;
+    readonly brewRemaining: 0 | 1 | 2 | 3;
+    readonly usedAssistantIds: readonly EntityId[];
+    readonly targetIds: readonly EntityId[];
+    readonly assistantIds: readonly EntityId[];
+    readonly requiredAssistants: number;
+    readonly canPoison: boolean;
+    readonly canHeal: boolean;
+    readonly wolfTarget?: EntityId | null;
+  };
+  brew_collaboration?: {
+    readonly ordinal: 1 | 2 | 3;
+    readonly targetId: EntityId;
+    readonly assistantIds: readonly EntityId[];
+  };
   warden_candidates?: readonly EntityId[];
   warden_partner_id?: EntityId;
   warden_forced_target?: EntityId;

@@ -25,6 +25,7 @@ import { validateMagicianRecord } from "./magician/validate";
 import { validateOrderPrinceRecord } from "./order-prince/validate";
 import { validateCupidRecord } from "./cupid/validate";
 import { validateHybridRecord } from "./hybrid/validate";
+import { validateAwakenedWitchRecord } from "./awakened-witch/validate";
 import { validateAwakenedClawRecord } from "./awakened-wolf-king/validate";
 import { validateSilenceElderRecord } from "./silence-elder/validate";
 import { validateWardenRecord } from "./warden/validate";
@@ -57,5 +58,6 @@ export function verifyReproductionMechanisms(result: ReproductionRecord): void {
   validateCrowRecord(result);
   validateSilenceElderRecord(result);
   validateAwakenedClawRecord(result);
+  validateAwakenedWitchRecord(result);
   validateWardenRecord(result);
 }

@@ -15,8 +15,8 @@ import {
 const fixedSequenceHash = "cd750ba72a9b5902562d650125797b2417126bdb82b2aaa199822b05cd22ec78";
 
 test("existing message IDs retain their exact sequence and presentation messages are appended", () => {
-  expect(MESSAGE_IDS).toHaveLength(1661);
-  expect(new Set(MESSAGE_IDS).size).toBe(1661);
+  expect(MESSAGE_IDS).toHaveLength(1696);
+  expect(new Set(MESSAGE_IDS).size).toBe(1696);
   expect(
     createHash("sha256")
       .update(JSON.stringify(MESSAGE_IDS.slice(0, 1513)))
@@ -173,6 +173,41 @@ test("existing message IDs retain their exact sequence and presentation messages
     "replay.stage.awakened_claw_bequeathed",
     "replay.stage.awakened_claw_spent",
     "replay.stage.awakened_claws_expired",
+    "role.awakened_witch.brief",
+    "role.awakened_witch.state",
+    "action.awakened_brew.hint",
+    "action.awakened_brew.directive",
+    "action.brew_discuss.hint",
+    "action.brew_discuss.directive",
+    "action.brew_approve.hint",
+    "action.brew_approve.directive",
+    "stage.awakened_witch",
+    "stage.brew_discussion",
+    "stage.brew_approval",
+    "request.summary.awakened_witch",
+    "request.summary.brew_discussion",
+    "request.summary.brew_approval",
+    "prompt.config.awakened_witch",
+    "prompt.stage.awakened_brew",
+    "prompt.stage.brew_group",
+    "awakened_witch.choice.pass",
+    "awakened_witch.choice.heal",
+    "awakened_witch.choice.poison",
+    "bot.brew.discuss",
+    "event.awakened_brew_pass",
+    "event.awakened_brew_heal",
+    "event.awakened_brew_poison",
+    "event.brew_started",
+    "event.brew_discussion",
+    "event.brew_approved",
+    "event.brew_vetoed",
+    "event.brew_resolved_poison",
+    "event.brew_resolved_vetoed",
+    "replay.stage.awakened_brew_chosen",
+    "replay.stage.brew_started",
+    "replay.stage.brew_discussion",
+    "replay.stage.brew_approval",
+    "replay.stage.brew_resolved",
   ]);
 });
 

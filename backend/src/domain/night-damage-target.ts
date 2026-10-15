@@ -62,7 +62,9 @@ export function resolveNightDamageTarget(
   const hasGuard =
     marks?.has(StatusMark.GuardMark) === true &&
     (!claimedGuardTargets.has(entityId) || guarded.has(entityId));
-  const hasHeal = marks?.has(StatusMark.HealMark) === true;
+  const hasHeal =
+    marks?.has(StatusMark.HealMark) === true &&
+    (!plan.healing || !plan.healing.claimed.has(entityId) || plan.healing.healed.has(entityId));
   // 保存进入此分支时的守／救读值；取消之后不重读印记，机械与觉醒刀仍用各自保护政策。
   const effectiveHeal = hasHeal && !hasGuard;
   const hasWolfKill =

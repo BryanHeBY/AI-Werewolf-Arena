@@ -49,6 +49,7 @@ export interface NightDamageEffects {
   consecutiveDeaths?: readonly EntityId[];
   poisonClaims?: readonly NightPoisonClaim[];
   guardClaims?: readonly NightGuardClaim[];
+  healClaims?: readonly import("./night-effects").NightHealClaim[];
   merchantBacklashes?: readonly NightMerchantBacklash[];
   blackMarketBacklashes?: readonly NightBlackMarketBacklash[];
   mechanicalEffects?: NightMechanicalEffects;
@@ -57,6 +58,10 @@ export interface NightDamageEffects {
 
 /** 本次运行的折叠结果；集合只读，当前实体印记仍由结算器消费。 */
 export interface NightDamagePlan {
+  readonly healing?: {
+    readonly claimed: ReadonlySet<EntityId>;
+    readonly healed: ReadonlySet<EntityId>;
+  };
   readonly awakenedShields: ReadonlySet<EntityId>;
   readonly awakenedAttacks: ReadonlySet<EntityId>;
   readonly mechanical: MechanicalDamagePlan;
@@ -165,6 +170,23 @@ export function planNightDamage(
       .map((claim) => claim.target.id),
   );
   return {
+    ...(Object.hasOwn(effects, "healClaims")
+      ? {
+          healing: {
+            claimed: new Set(effects.healClaims?.map((c) => c.target.id)),
+            healed: new Set(
+              effects.healClaims
+                ?.filter(
+                  (c) =>
+                    c.isCurrent() &&
+                    livingNightLife(world, c.target) &&
+                    world.getComponent(c.target.id, COMPONENT.StatusMarks) === c.marks,
+                )
+                .map((c) => c.target.id),
+            ),
+          },
+        }
+      : {}),
     awakenedShields,
     awakenedAttacks,
     mechanical,

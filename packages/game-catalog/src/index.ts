@@ -437,10 +437,10 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "替死/关系结算",
   },
   {
-    id: PLANNED_ROLE_IDS.AwakenedWitch,
-    status: "planned",
+    id: Role.AwakenedWitch,
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/rules/awa-awakened-witch-v1.md#awakened_witch",
     mechanismSummary: "多次调配、协助者秘密决策",
   },
   {

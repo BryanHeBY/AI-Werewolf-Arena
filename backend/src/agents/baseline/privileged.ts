@@ -6,6 +6,7 @@
  */
 import { roleMethod } from "../../rulesets/roles/owned-bindings";
 import { awakenedClawBaseline } from "../../features/awakened-wolf-king/baseline-action";
+import { awakenedWitchBaseline } from "../../features/awakened-witch/baseline";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { scholarMentorBonusTargets } from "../../features/scholar-mentor/night-frame";
 import { prohibitsLoversVote } from "../../features/cupid/relation";
@@ -41,6 +42,11 @@ export class BaselineBotActionProvider implements ActionProvider {
    * 根据阶段与角色生成默认动作。
    */
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
+    if (
+      request.allowedTools.includes("brew_discuss") ||
+      request.allowedTools.includes("brew_approve")
+    )
+      return awakenedWitchBaseline(request, this.world.locale) ?? null;
     if (request.allowedTools.includes("write_note"))
       return { name: "write_note", args: { text: "..." } };
     if (request.allowedTools.includes("debate_vote"))

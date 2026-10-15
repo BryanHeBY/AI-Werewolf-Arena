@@ -8,10 +8,13 @@
  * 这里不提交行动、付款或更新知识。旧直接投影 API 已退出；未知受众或无效家族不得进入字段裁剪。
  */
 import {
+  isAwakenedWitchEventType,
+  awakenedWitchFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
+import {
   WARDEN_EVENT_TYPES,
   wardenFactAudience,
 } from "@ai-werewolf-arena/game-contract/facts/warden";
-
 import {
   ANIMAL_DREAM_EVENT_TYPES,
   animalDreamFactAudience,
@@ -323,6 +326,34 @@ function canViewAgentEventWithFacts(
       fact.actorId === actorId
     );
   }
+  if (isAwakenedWitchEventType(event.type)) {
+    const fact = readAgentEventFact("readAwakenedWitchFact", event.type, event.payload, prepared);
+    if (!fact || !("audience" in event) || !Array.isArray(event.audience)) return false;
+    const mode = awakenedWitchFactAudience(fact.type),
+      p = fact.payload;
+    if (mode === "god") return false;
+    const expected: readonly number[] =
+      mode === "actor" && "actorId" in p
+        ? [p.actorId]
+        : fact.type === "brew_started"
+          ? [...fact.payload.assistantIds].sort((a, b) => a - b)
+          : fact.type === "brew_discussion"
+            ? event.audience
+            : [];
+    return (
+      expected.includes(actorId) &&
+      event.audience.length === expected.length &&
+      expected.every(
+        (id, i) =>
+          event.audience![i] === id &&
+          Number.isSafeInteger(id) &&
+          id > 0 &&
+          (i === 0 || id > expected[i - 1]!),
+      ) &&
+      (fact.type !== "brew_discussion" ||
+        (expected.length === fact.payload.ordinal && expected.includes(fact.payload.actorId)))
+    );
+  }
   if ((WARDEN_EVENT_TYPES as readonly string[]).includes(event.type)) {
     const fact = readAgentEventFact("readWardenFact", event.type, event.payload, prepared);
     if (!fact || wardenFactAudience(fact.type) === "god") return false;
@@ -418,6 +449,10 @@ function projectPayload(
   queries: PreparedAgentEventProjectionQueries,
   prepared: PreparedAgentEvent,
 ): Record<string, unknown> {
+  if (isAwakenedWitchEventType(event.type)) {
+    const fact = readAgentEventFact("readAwakenedWitchFact", event.type, event.payload, prepared);
+    return fact ? structuredClone({ ...fact.payload }) : {};
+  }
   if ((WARDEN_EVENT_TYPES as readonly string[]).includes(event.type)) {
     const fact = readAgentEventFact("readWardenFact", event.type, event.payload, prepared);
     return fact ? structuredClone(fact.payload) : {};

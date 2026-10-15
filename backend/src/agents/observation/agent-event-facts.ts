@@ -5,8 +5,11 @@
  * sourceEvent 保留可信自定义规则的原参数；schema 家族的输出由已解析事实固定，回调不能换掉授权依据。
  * 无 schema 家族仍沿用既有字段裁剪和可信回调语义；历史 audience 不根据当前阵营重算。
  */
+import {
+  isAwakenedWitchEventType,
+  readAwakenedWitchFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
 import { WARDEN_EVENT_TYPES, readWardenFact } from "@ai-werewolf-arena/game-contract/facts/warden";
-
 import {
   ANIMAL_DREAM_EVENT_TYPES,
   readAnimalDreamFact,
@@ -107,6 +110,7 @@ import {
   readSilenceElderFact,
 } from "@ai-werewolf-arena/game-contract/facts/silence-elder";
 const FACT_READERS = {
+  readAwakenedWitchFact,
   readAwakenedClawFact,
   readWardenFact,
   readSilenceElderFact,
@@ -161,6 +165,7 @@ export interface PreparedAgentEvent {
 
 /** 家族分派集中在这里；选择唯一实际读器，不先后试读同一个 payload。 */
 function factReader(type: GameEvent["type"]): AgentEventFactReader | null {
+  if (isAwakenedWitchEventType(type)) return "readAwakenedWitchFact";
   if ((WARDEN_EVENT_TYPES as readonly string[]).includes(type)) return "readWardenFact";
   if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(type))
     return "readAwakenedClawFact";
@@ -242,6 +247,7 @@ export function prepareInertAgentEvent(event: InertAgentEvent): PreparedAgentEve
   // reader 与 value 在同一次调用中关联；联合由该标识导航，不能把事实当成任意字典。
   const fact = { reader, value } as AgentEventFact;
   const payload =
+    fact.reader === "readAwakenedWitchFact" ||
     fact.reader === "readWardenFact" ||
     fact.reader === "readAnimalDreamFact" ||
     fact.reader === "readSilenceElderFact" ||

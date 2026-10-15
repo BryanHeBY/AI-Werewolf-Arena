@@ -8,6 +8,13 @@ import { ActionWindow, KnightDuelWindow, type EntityId, type PotionType } from "
 import type { MessageRef } from "./message-refs";
 /** 工具名关联其原参数形状；null／abstain／activate 各有原业务意义，不在类型层统一成同一种跳过。 */
 export interface ToolArgMap {
+  awakened_brew: {
+    mode: "heal" | "poison" | "pass";
+    target_id: EntityId | null;
+    assistant_ids: EntityId[];
+  };
+  brew_discuss: { text: string };
+  brew_approve: { approve: boolean };
   warden_pair: { target_ids: readonly [EntityId, EntityId] | null };
   warden_decide: { choice: "trade" | "betray" };
   bequeath_claw: { target_id: EntityId | null };
@@ -93,6 +100,9 @@ export interface ToolArgMap {
 export type ToolName = keyof ToolArgMap;
 /** 保留公共工具标识的原顺序；列入此表不表示任意角色或阶段都可使用。 */
 export const TOOL_NAMES = [
+  "awakened_brew",
+  "brew_discuss",
+  "brew_approve",
   "warden_pair",
   "warden_decide",
   "bequeath_claw",
@@ -191,6 +201,9 @@ export interface TurnConstraints {
 
 /** 保留阶段字面值及两个窗口枚举的原展开顺序；此清单不推进阶段或打开行动窗口。 */
 export const ACTION_STAGES = [
+  "awakened_witch",
+  "brew_discussion",
+  "brew_approval",
   "warden_pair",
   "warden_decide",
   "fox_distract",

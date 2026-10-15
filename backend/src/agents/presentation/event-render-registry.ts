@@ -2,7 +2,6 @@
  * 负责按事件类型装配脚本和终端的展示贡献。输入为事件、私有输出选项与语言；输出为原聊天行和分类文本。保留各贡献的读取、受众与分派顺序，不提交行动、改写事实或重算历史阵营。事件文案消费共享展示 owner，自定义贡献仍保留原接口。
  */
 import { wardenEventLabel } from "@ai-werewolf-arena/game-presentation";
-
 import { nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-presentation";
 import {
@@ -21,6 +20,7 @@ import { tricksterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { magicianEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { redMoonEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { awakenedWitchEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { awakenedClawEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { silenceElderEventLabel } from "@ai-werewolf-arena/game-presentation";
 import {
@@ -619,6 +619,8 @@ export class ScriptEventRenderRegistry {
     if (redMoon !== null) return redMoon;
     const warden = wardenEventLabel(event.type, event.payload, locale);
     if (warden !== null) return warden;
+    const brew = awakenedWitchEventLabel(event.type, event.payload, locale);
+    if (brew !== null) return brew;
     const claws = awakenedClawEventLabel(event.type, event.payload, locale);
     if (claws !== null) return claws;
     const silence = silenceElderEventLabel(event.type, event.payload, locale);
@@ -745,6 +747,11 @@ export class ScriptEventRenderRegistry {
     if (warden !== null)
       return printPrivateEvents
         ? [{ kind: event.type === "warden_resolved" ? "god" : "private", text: warden }]
+        : [];
+    const brew = awakenedWitchEventLabel(event.type, event.payload, locale);
+    if (brew !== null)
+      return printPrivateEvents
+        ? [{ kind: event.type === "brew_resolved" ? "god" : "private", text: brew }]
         : [];
     const claws = awakenedClawEventLabel(event.type, event.payload, locale);
     if (claws !== null)

@@ -90,6 +90,7 @@ export const boardConfigSchema = z.strictObject({
     .optional(),
   silenceElder: z.strictObject({ policy: z.literal("awa_melbourne_gestures_v1") }).optional(),
   awakenedWolfKing: z.strictObject({ policy: z.literal("awa_awakened_wolf_king_v1") }).optional(),
+  awakenedWitch: z.strictObject({ policy: z.literal("awa_awakened_witch_v1") }).optional(),
   orderPrince: z.strictObject({ policy: z.literal("awa_order_prince_first_ballot_v1") }).optional(),
   magician: z
     .strictObject({

@@ -5,11 +5,15 @@
  * 精确 source／lock 检查仍由实际 replay 执行；用户原文不经过展示翻译改写。
  */
 import {
+  isAwakenedWitchEventType,
+  readAwakenedWitchFact,
+  awakenedWitchFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
+import {
   WARDEN_EVENT_TYPES,
   readWardenFact,
   wardenFactAudience,
 } from "@ai-werewolf-arena/game-contract/facts/warden";
-
 import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { verifyReproductionMechanisms } from "../verification/assembly";
 import { animalCheckpointSchema } from "./checkpoint/animal-format";
@@ -343,6 +347,28 @@ const requestSchema = z.strictObject({
     trickster_may_pass: z.boolean().optional(),
     swap_candidates: z.array(positive).optional(),
     shoot_candidates: z.array(positive).optional(),
+    awakened_brew_options: z
+      .object({
+        healRemaining: z.union([z.literal(0), z.literal(1)]),
+        brewRemaining: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
+        usedAssistantIds: z.array(positive),
+        targetIds: z.array(positive),
+        assistantIds: z.array(positive),
+        requiredAssistants: positive,
+        canPoison: z.boolean(),
+        canHeal: z.boolean(),
+        wolfTarget: positive.nullable().optional(),
+      })
+      .strict()
+      .optional(),
+    brew_collaboration: z
+      .object({
+        ordinal: z.union([z.literal(1), z.literal(2), z.literal(3)]),
+        targetId: positive,
+        assistantIds: z.array(positive),
+      })
+      .strict()
+      .optional(),
     claw_bequest_candidates: z.array(positive).optional(),
     warden_candidates: z.array(z.number().int().positive()).optional(),
     warden_partner_id: z.number().int().positive().optional(),
@@ -647,6 +673,30 @@ const schema2 = z.strictObject({
           (!readDeathShotMissFact(event.type, event.payload) || event.audience !== undefined)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_magician_shot_miss_invalid" });
+        if (isAwakenedWitchEventType(event.type)) {
+          const f = readAwakenedWitchFact(event.type, event.payload),
+            audience = event.audience;
+          const mode = f && awakenedWitchFactAudience(f.type),
+            p = f?.payload;
+          const expected =
+            mode === "god"
+              ? []
+              : mode === "actor" && p && "actorId" in p
+                ? [p.actorId]
+                : f?.type === "brew_started"
+                  ? [...f.payload.assistantIds].sort((a, b) => a - b)
+                  : audience;
+          if (
+            !f ||
+            !Array.isArray(audience) ||
+            !Array.isArray(expected) ||
+            audience.length !== expected.length ||
+            !expected.every((id, i) => audience[i] === id) ||
+            (f.type === "brew_discussion" &&
+              (audience.length !== f.payload.ordinal || !audience.includes(f.payload.actorId)))
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_awakened_witch_fact_invalid" });
+        }
         if ((WARDEN_EVENT_TYPES as readonly string[]).includes(event.type)) {
           const f = readWardenFact(event.type, event.payload);
           if (
@@ -797,6 +847,7 @@ const schema2 = z.strictObject({
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          !isAwakenedWitchEventType(event.type) &&
           !(AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(WARDEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type) &&

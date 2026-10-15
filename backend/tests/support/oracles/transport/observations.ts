@@ -26,6 +26,10 @@ import { readTricksterSkipFact } from "@ai-werewolf-arena/game-contract/facts/tr
 import { assertMistTransportEvents } from "../../features/mist-raven/oracles/transport";
 import type { MistWireExpectations } from "../../features/mist-raven/oracles/transport";
 import type { MistWireState } from "../../features/mist-raven/oracles/transport";
+import {
+  isAwakenedWitchEventType,
+  readAwakenedWitchFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
 
 export function assertTransportIdentity(plan: ActorTransportPlan, content: string): void {
   for (const marker of plan.requiredSystemMarkers ?? []) {
@@ -39,6 +43,9 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  awakened_witch: ["觉醒女巫选择", "Awakened Witch choice"],
+  brew_discussion: ["秘密调毒交流", "Private brewing discussion"],
+  brew_approval: ["秘密调毒决定", "Private brewing decision"],
   fox_distract: ["子狐迷惑", "Fox Cub distraction"],
   puffer_reaction: ["河豚票后反击", "Pufferfish ballot reaction"],
   fragrant_bind: ["寻香绑定", "Fragrant binding"],
@@ -399,6 +406,22 @@ export function assertTransportEvents(
 ) {
   assertMistTransportEvents(role, actorId, events, expected, state);
   for (const [, type, payload] of events) {
+    if (isAwakenedWitchEventType(type)) {
+      const f = readAwakenedWitchFact(type, payload);
+      if (
+        !f ||
+        f.type === "brew_resolved" ||
+        (f.type === "awakened_brew_chosen" &&
+          (role !== "awakened_witch" || f.payload.actorId !== actorId)) ||
+        (f.type === "brew_approval" && f.payload.actorId !== actorId) ||
+        (f.type === "brew_started" && !f.payload.assistantIds.includes(actorId)) ||
+        ((f.type === "brew_started" ||
+          f.type === "brew_discussion" ||
+          f.type === "brew_approval") &&
+          role === "awakened_witch")
+      )
+        throw Error("fixture_brew_private_fact_exposed");
+    }
     if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(type)) {
       const f = readAnimalDreamFact(type, payload);
       if (

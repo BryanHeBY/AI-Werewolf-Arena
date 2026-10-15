@@ -77,7 +77,7 @@ const roleNames = [
     id: PLANNED_ROLE_IDS.AwakenedWolfBeauty,
     names: { "zh-CN": "觉醒狼美人", en: "Awakened Wolf Beauty" },
   },
-  { id: PLANNED_ROLE_IDS.AwakenedWitch, names: { "zh-CN": "觉醒女巫", en: "Awakened Witch" } },
+  { id: Role.AwakenedWitch, names: { "zh-CN": "觉醒女巫", en: "Awakened Witch" } },
   { id: PLANNED_ROLE_IDS.AwakenedHunter, names: { "zh-CN": "觉醒猎人", en: "Awakened Hunter" } },
   { id: PLANNED_ROLE_IDS.AwakenedGuard, names: { "zh-CN": "觉醒守卫", en: "Awakened Guard" } },
   { id: PLANNED_ROLE_IDS.AwakenedKnight, names: { "zh-CN": "觉醒骑士", en: "Awakened Knight" } },

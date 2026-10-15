@@ -80,6 +80,7 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
               !board.silenceElder &&
               !board.warden &&
               !board.awakenedWolfKing &&
+              !board.awakenedWitch &&
               o.event_count !== undefined),
         ) &&
         !record.decisions.some(
@@ -89,6 +90,7 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
               !board.silenceElder &&
               !board.warden &&
               !board.awakenedWolfKing &&
+              !board.awakenedWitch &&
               d.openedAtEventCount !== undefined) ||
             ["secret_body", "night_noble", "awakened_idiot_reveal_speech"].includes(d.stage) ||
             d.request.allowedTools.some((t) =>
@@ -111,6 +113,7 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
             !board.silenceElder &&
             !board.warden &&
             !board.awakenedWolfKing &&
+            !board.awakenedWitch &&
             (cp.operationCount !== undefined ||
               cp.settlementCount !== undefined ||
               cp.decisionCount !== undefined)),

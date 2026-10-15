@@ -8,6 +8,7 @@ import {
   awakenedWolfKingTenConfig,
   awakenedWolfKingTwelveConfig,
 } from "../../../../src/rulesets/presets/awakened-wolf-king";
+import { awakenedWitchTwelveConfig } from "../../../../src/rulesets/presets/awakened-witch-twelve";
 import { validateAwakenedClawRecord } from "../../../../src/recording/verification/awakened-wolf-king/validate";
 import type { ReproductionRecord } from "../../../../src/recording/reproduction/format";
 const roles = [
@@ -578,7 +579,47 @@ test("子枪明确空过仍须先结算，下一爪不能跨过无公示的子�
 });
 
 test("下一夜传授开窗不能借第一夜库存与候选", () => {
-  const r = failedBequest(false), d=r.decisions[0]!;
-  d.day=d.request.context.day=2;
-  expect(()=>validateAwakenedClawRecord(r)).toThrow("reproduction_awakened_claw_invalid");
+  const r = failedBequest(false),
+    d = r.decisions[0]!;
+  d.day = d.request.context.day = 2;
+  expect(() => validateAwakenedClawRecord(r)).toThrow("reproduction_awakened_claw_invalid");
+});
+
+test("女巫第三板原生猎人枪完整子链先于下一爪，使用hunterId建立Shot来源", () => {
+  const r = doubleClawChild(),
+    roles = [
+      "wolf",
+      "wolf",
+      "awakened_wolf_king",
+      "hunter",
+      "villager",
+      "villager",
+      "villager",
+      "seer",
+      "guard",
+      "villager",
+      "wolf",
+      "awakened_witch",
+    ];
+  r.metadata.normalizedBoard = structuredClone(awakenedWitchTwelveConfig);
+  r.metadata.players = roles.map((role, i) => ({
+    id: i + 1,
+    role,
+    camp: [1, 2, 3, 11].includes(i + 1) ? "wolf" : "good",
+  })) as any;
+  for (const p of r.checkpoints[0]!.players) {
+    p.role = roles[p.id - 1] as any;
+    p.camp = [1, 2, 3, 11].includes(p.id) ? ("wolf" as any) : ("good" as any);
+  }
+  for (const p of r.metadata.players.slice(-2))
+    r.checkpoints[0]!.players.push({ ...p, alive: true, privateState: {} } as any);
+  for (const d of r.decisions)
+    d.request.context.shoot_candidates = [...d.request.context.shoot_candidates!, 11, 12];
+  delete r.decisions[1]!.request.context.ability_id;
+  r.events[5]!.type = "hunter_shot";
+  r.events[5]!.payload = { hunterId: 4, targetId: 6 };
+  expect(() => validateAwakenedClawRecord(r)).not.toThrow();
+  r.decisions[2]!.openedAtEventCount = 4;
+  r.decisions[2]!.request.context.shoot_candidates = [1, 2, 5, 6, 7, 8, 9, 10, 11, 12];
+  expect(() => validateAwakenedClawRecord(r)).toThrow("reproduction_awakened_claw_invalid");
 });

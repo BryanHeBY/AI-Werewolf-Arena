@@ -45,10 +45,11 @@
 | 17  | `validateCupidRecord`           | `backend/src/recording/verification/cupid/validate.ts`              |
 | 18  | `validateHybridRecord`          | `backend/src/recording/verification/hybrid/validate.ts`             |
 | 19  | `validateDeathHistoryRecord`    | `backend/src/recording/verification/death-history/validate.ts`      |
-| 20 | `validateCrowRecord` | `backend/src/recording/verification/crow/validate.ts` |
-| 21 | `validateSilenceElderRecord` | `backend/src/recording/verification/silence-elder/validate.ts` |
-| 22 | `validateAwakenedClawRecord` | `backend/src/recording/verification/awakened-wolf-king/validate.ts` |
-| 23 | `validateWardenRecord` | `backend/src/recording/verification/warden/validate.ts` |
+| 20  | `validateCrowRecord`            | `backend/src/recording/verification/crow/validate.ts`               |
+| 21  | `validateSilenceElderRecord`    | `backend/src/recording/verification/silence-elder/validate.ts`      |
+| 22  | `validateAwakenedClawRecord`    | `backend/src/recording/verification/awakened-wolf-king/validate.ts` |
+| 23  | `validateAwakenedWitchRecord`   | `backend/src/recording/verification/awakened-witch/validate.ts`     |
+| 24  | `validateWardenRecord`          | `backend/src/recording/verification/warden/validate.ts`             |
 
 没有专属校验器的机制仍受共同格式、身份及实际执行检查约束；专属校验器的数量不表示全部角色规则都已独立覆盖。普通死亡历史审计不能提供完整生命引用证明。
 
@@ -76,7 +77,6 @@ Tape3 仅在自身明确保存返回候选时重交原值；旧 Tape2 或字段�
 
 跨模块使用当前 package exports 和具名公共端口，不承诺旧物理深路径、未知动态导入或任意 JavaScript／Proxy 观察兼容。代码文件、注释和导出调整可能改变源码指纹；不得回写历史归档身份来掩盖不兼容。
 
-
 ## 典狱长有限组合
 
 [典狱长规则](../rules/awa-melbourne-warden-v1.md)只开放三普狼＋典狱长＋四民＋预女猎梦原十二人板，见[完整示例](../examples/warden/README.md)。运行 `features/warden` 拥有唯一不可变历史、每人一次参与资格、pair／独立decide窗口及已付原体效果；`rulesets/warden-native-target-validation.ts` 仅为原生个人技能增加partner限制，不更改团队刀票。
@@ -85,8 +85,16 @@ Tape3 仅在自身明确保存返回候选时重交原值；旧 Tape2 或字段�
 
 ## 觉醒狼王有限组合
 
-[双爪与亲传规则](../rules/awa-awakened-wolf-king-v1.md)只开放原十／十二人牌池及显式女巫自救／十二人梦保护。[完整示例](../examples/awakened-wolf-king/README.md)给出对应公开入口，未实现的觉醒女巫合板另批启用。
+[双爪与亲传规则](../rules/awa-awakened-wolf-king-v1.md)开放原十／十二人牌池及显式女巫自救／十二人梦保护；觉醒女巫另有下节精确原十二人组合。[完整示例](../examples/awakened-wolf-king/README.md)给出对应公开入口，觉醒女巫合板不继承原十二人梦保护，按下节独立闭包验证。
 
 `features/awakened-wolf-king/` 持唯一原生／受传库存和亲传夜窗，普通狼受传不改变原身份、不建立赠枪镜像。`engine/hooks/death-action-continuation.ts` 只持一次不透明继续程序；DeathResolution 在首枪真实死亡及全部后代／词徽完成后执行下一爪，仍独占阶段与判胜。付款末端只读真实 ECS 同步核两端原体，不调用可重入的 World 查询或执行未知范围 getter。
 
 `recording/verification/awakened-wolf-king/validate.ts` 只读档案独立重建单位／转出／消费／失效，严格核私有受众、开窗日次、真实夜伤与梦保护、完整后代顺序及精确已知候选的失败CP。它不导入生产库存、死亡写者或恢复许可。两个原板分别以两语各20seed完成受限自然局／严格重放，双爪／亲传的LLM、ACP、mixed完整传输及第二枪missing／late独立反例不外推为其它混搭支持。
+
+## 觉醒女巫有限组合
+
+[三次秘密调毒规则](../rules/awa-awakened-witch-v1.md)只开放三普狼＋觉醒狼王＋四民＋预言家／守卫／猎人／觉醒女巫原十二人板。[公开入口与两语God教学档](../examples/awakened-witch/README.md)只要求复制board与game，个人runtime不覆盖。`roles.awakened_witch`严格为空对象，不暴露无来源的任意瓶数／协助／自救开关。
+
+`features/awakened-witch/`拥有唯一历史和原体窗口；发起、每次讨论、每张批准与最终Poison提案分别首写。发起先消耗次数和参与资格，否决不退款；全票已付但finalize失败时仍可为building失败前缀。最终typed Heal／Poison交原伤害所有者，普通Guard不挡毒，刀毒混合禁因优先；原生Hunter与狼爪后代仍按完整链结算。
+
+独立`verification/awakened-witch/`只从请求／事实／游标／God检查点重建资源与隐票矩阵，不导入生产authority或伤害writer。女巫只看本人已付选择，协助者只看本组交流与自己票，最终结果仅God。40两语受限自然局逐份strict、六正常及十二失败真实SDK／ACP／mixed、多人一late保另一付款与Web帧证据见规则卡，不外推为其它混板或付费模型验收。

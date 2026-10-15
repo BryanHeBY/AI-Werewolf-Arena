@@ -97,26 +97,51 @@ function transfer(
 }
 function board(record: ReproductionRecord): void {
   const c = record.metadata.normalizedBoard,
-    size = c.boardSize;
+    size = c.boardSize,
+    awakenedWitch = c.awakenedWitch !== undefined;
   check(size === 10 || size === 12);
-  const roles = {
-    wolf: size === 10 ? 2 : 3,
-    awakened_wolf_king: 1,
-    villager: 4,
-    seer: 1,
-    witch: 1,
-    miracle_merchant: 1,
-    ...(size === 12 ? { dreamer: 1 } : {}),
-  };
+  // 觉醒女巫的原十二人是另一份来源牌池；只认本板固定政策，不借metadata角色名册允许任意合板。
+  const roles = awakenedWitch
+    ? {
+        wolf: 3,
+        awakened_wolf_king: 1,
+        villager: 4,
+        seer: 1,
+        guard: 1,
+        hunter: 1,
+        awakened_witch: 1,
+      }
+    : {
+        wolf: size === 10 ? 2 : 3,
+        awakened_wolf_king: 1,
+        villager: 4,
+        seer: 1,
+        witch: 1,
+        miracle_merchant: 1,
+        ...(size === 12 ? { dreamer: 1 } : {}),
+      };
   check(
     c.roleSetups.length === Object.keys(roles).length &&
       same(Object.fromEntries(c.roleSetups.map((r) => [r.role, r.count])), roles) &&
       same(c.awakenedWolfKing, { policy: AWAKENED_CLAW_POLICY }) &&
       same(c.winConditions ?? [c.winCondition], ["slaughter_side"]) &&
       (c.winCondition === undefined || c.winCondition === "slaughter_side") &&
-      c.witch?.canSelfHeal === (size === 10 ? "first_night_only" : "disabled") &&
+      (awakenedWitch
+        ? size === 12 &&
+          same(c.awakenedWitch, { policy: "awa_awakened_witch_v1" }) &&
+          c.witch === undefined &&
+          c.dreamer === undefined &&
+          same(c.guard, { repeatPolicy: "awa_last_action_v1" }) &&
+          same(c.hunter, { deathActionPolicy: "awa_qualified_sources_v1" }) &&
+          same(c.seer, {
+            targetPolicy: "awa_alive_v1",
+            actionPolicy: "awa_required_when_legal_v1",
+          }) &&
+          same(c.lastWords, { policy: "awa_initial_wave_v1" }) &&
+          same(c.disclosure, { deathRevealPolicy: "awa_hidden_v1" })
+        : c.witch?.canSelfHeal === (size === 10 ? "first_night_only" : "disabled")) &&
       c.voting?.exilePolicy === "awa_one_pk_v1" &&
-      (size === 10
+      (awakenedWitch || size === 10
         ? c.dreamer === undefined
         : same(c.dreamer, { protectionPolicy: "awa_night_damage_v1" })),
   );
@@ -138,6 +163,7 @@ function board(record: ReproductionRecord): void {
     "roleSetups",
     "awakenedWolfKing",
     "dreamer",
+    ...(awakenedWitch ? ["awakenedWitch", "guard", "hunter"] : []),
   ]);
   check(Object.keys(c).every((k) => allowed.has(k)));
 }
@@ -362,8 +388,8 @@ export function validateAwakenedClawRecord(record: ReproductionRecord): void {
       check(Array.isArray(p.deaths));
       for (const id of p.deaths as number[]) alive.delete(id);
     }
-    if (e.type === "player_shot" || e.type === "death_shot_blocked") {
-      const actor = p.actorId as number,
+    if (e.type === "player_shot" || e.type === "hunter_shot" || e.type === "death_shot_blocked") {
+      const actor = (e.type === "hunter_shot" ? p.hunterId : p.actorId) as number,
         target = p.targetId as number;
       const pending = shots.filter(
         (s) => s.actor === actor && s.target === target && s.resolvedAt === undefined,
@@ -386,7 +412,8 @@ export function validateAwakenedClawRecord(record: ReproductionRecord): void {
         );
         pending[0]!.resolvedAt = index + 1;
       }
-      if (e.type === "player_shot") die(target, ["shot"], deaths.get(actor)?.origin ?? phase);
+      if (e.type === "player_shot" || e.type === "hunter_shot")
+        die(target, ["shot"], deaths.get(actor)?.origin ?? phase);
     }
     if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(e.type)) {
       const f = readAwakenedClawFact(e.type, p);
@@ -541,10 +568,11 @@ export function validateAwakenedClawRecord(record: ReproductionRecord): void {
           const p = e.payload;
           if (
             (e.type === "player_shot" ||
+              e.type === "hunter_shot" ||
               e.type === "death_shot_blocked" ||
               e.type === "dream_death") &&
-            typeof p.actorId === "number" &&
-            descendants.has(p.actorId)
+            typeof (e.type === "hunter_shot" ? p.hunterId : p.actorId) === "number" &&
+            descendants.has((e.type === "hunter_shot" ? p.hunterId : p.actorId) as number)
           ) {
             check(i < d.openedAtEventCount!);
             if (e.type !== "death_shot_blocked") descendants.add(p.targetId as number);

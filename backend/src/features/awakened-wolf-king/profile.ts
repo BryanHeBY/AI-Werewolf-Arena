@@ -37,6 +37,9 @@ export const AWAKENED_WOLF_KING_PROFILE: RoleContributions = {
       Role.Witch,
       Role.MiracleMerchant,
       Role.Dreamer,
+      Role.Guard,
+      Role.Hunter,
+      Role.AwakenedWitch,
     ],
   },
   runtime: {

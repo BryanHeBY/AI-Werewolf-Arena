@@ -2,8 +2,11 @@
  * 负责把纯数据复盘事件读取为玩家关联及画面效果。输入为 JSON 归档事件，输出为规范读取或拒绝，保各机制未知／畸形分支和用户原文。
  * 共享事实契约拥有结构解析，浏览器层只解释复盘，不授予游戏许可；不承诺归档边界外的任意 Proxy 零 trap。
  */
+import {
+  isAwakenedWitchEventType,
+  readAwakenedWitchFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened-witch";
 import { WARDEN_EVENT_TYPES, readWardenFact } from "@ai-werewolf-arena/game-contract/facts/warden";
-
 import {
   ANIMAL_DREAM_EVENT_TYPES,
   readAnimalDreamFact,
@@ -128,6 +131,11 @@ export interface ReadReplayEvent {
 
 // 必须的玩家引用按事件类别决定；未知扩展字段不自动成为玩家关联。
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  awakened_brew_chosen: ["actorId"],
+  brew_started: ["targetId"],
+  brew_discussion: ["actorId"],
+  brew_approval: ["actorId"],
+  brew_resolved: ["actorId", "targetId"],
   red_moon_night_sealed: ["actorId"],
   red_moon_exile_delayed: ["actorId"],
   red_moon_delay_expired: ["actorId"],
@@ -381,6 +389,7 @@ function validKnownFields(type: string, p: Record<string, unknown>): boolean {
   if (type === "red_moon_night_sealed" || type === "red_moon_exile_delayed")
     return !!readRedMoonNextNightFact(type, p);
   if (type === "red_moon_delay_expired") return !!readRedMoonExpiryFact(type, p);
+  if (isAwakenedWitchEventType(type)) return !!readAwakenedWitchFact(type, p);
   if ((WARDEN_EVENT_TYPES as readonly string[]).includes(type)) return !!readWardenFact(type, p);
   if ((AWAKENED_CLAW_EVENT_TYPES as readonly string[]).includes(type))
     return !!readAwakenedClawFact(type, p);
@@ -757,6 +766,11 @@ export function readReplayEvent(
     if (safe.type === "order_prince_revote_started") {
       if (safe.phase !== "voting") return null;
       add(p.actorId);
+    }
+    if (isAwakenedWitchEventType(safe.type)) {
+      if (p.day !== safe.day || safe.phase !== "night") return null;
+      if (Object.hasOwn(p, "targetId")) add(p.targetId, true);
+      if (Array.isArray(p.assistantIds)) for (const id of p.assistantIds) add(id);
     }
     if ((WARDEN_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       if (p.day !== safe.day || safe.phase !== "night") return null;

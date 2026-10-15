@@ -49,3 +49,13 @@ ACP 会话能回复文本，不代表注入的游戏 MCP 已启动成功。若�
 ## 觉醒狼王原十／十二人
 
 [觉醒狼王示例](../examples/awakened-wolf-king/README.md)给出两份来源牌池、中文／英文 LLM 与 ACP 入口、亲传／双爪及失败前缀的真实归档说明。仅复制本族 board/game，保留已有 runtime 和隔离认证；角色参数为严格 `{}`，具体死因和梦保护按具名 `awa_awakened_wolf_king_v1`。觉醒女巫来源板在其独立交付前不开放。
+
+## 觉醒女巫原十二人板
+
+[完整配置与两语命令](../examples/awakened-witch/README.md)包含公开board、中文／英文LLM与ACP示例，以及四夜真实God教学档。只复制对应board／game，保留个人`configs/runtime/`及已配置Agent。SDK中文入口：
+
+```bash
+bun run --cwd backend run --configs-dir ../configs --game-config-name twelve_player_awakened_witch --locale zh-CN --display-locale zh-CN
+```
+
+当前精确牌池为三普狼、觉醒狼王、四民、预言家、守卫、猎人与觉醒女巫；三次调毒分别消耗1／2／3名新协助者。女巫看不到讨论、隐票或结果；终端私有显示与God回放不代表玩家可以获知这些秘密。其它牌池、复制、复活或任意药数开关仍拒绝。

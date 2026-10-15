@@ -339,6 +339,7 @@ export async function replayReproduction(
   );
   if (
     board.awakenedWolfKing ||
+    board.awakenedWitch ||
     board.warden ||
     board.silenceElder ||
     board.animalDream ||
@@ -355,7 +356,7 @@ export async function replayReproduction(
       context.phaseManager.getEvents().length,
     ),
     // 禁言族计数由录制Trace追加；复现从同一实际provider起点重建，不引入第二机制库存。
-    ...(board.warden || board.silenceElder || board.awakenedWolfKing
+    ...(board.warden || board.silenceElder || board.awakenedWolfKing || board.awakenedWitch
       ? { settlementCount: 0, decisionCount: 0 }
       : {}),
   };
@@ -387,6 +388,7 @@ export async function replayReproduction(
   );
   if (
     board.awakenedWolfKing ||
+    board.awakenedWitch ||
     board.warden ||
     board.silenceElder ||
     board.animalDream ||
@@ -434,7 +436,9 @@ export async function replayReproduction(
             cycleFailure,
             provider.cursors,
           ),
-          ...(board.warden || board.silenceElder || board.awakenedWolfKing ? provider.cursors : {}),
+          ...(board.warden || board.silenceElder || board.awakenedWolfKing || board.awakenedWitch
+            ? provider.cursors
+            : {}),
         };
         requireMatch(
           stableJson(actual) === stableJson(checkpoint),

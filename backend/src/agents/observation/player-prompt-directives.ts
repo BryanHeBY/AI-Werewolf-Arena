@@ -328,6 +328,29 @@ export function buildPlayerStageContextHint(
   request: ActionRequest,
   queries: Pick<PlayerPromptDirectiveQueries, "locale" | "boardConfig">,
 ): string | undefined {
+  if (request.context.awakened_brew_options) {
+    const o = request.context.awakened_brew_options,
+      locale = queries.locale(),
+      none = text(locale, "common.none");
+    return text(locale, "prompt.stage.awakened_brew", {
+      assistants: o.assistantIds.join(", ") || none,
+      brews: o.brewRemaining,
+      canHeal: text(locale, o.canHeal ? "common.yes" : "common.no"),
+      canPoison: text(locale, o.canPoison ? "common.yes" : "common.no"),
+      heal: o.healRemaining,
+      knife: o.wolfTarget ?? none,
+      required: o.requiredAssistants,
+      targets: o.targetIds.join(", ") || none,
+    });
+  }
+  if (request.context.brew_collaboration) {
+    const g = request.context.brew_collaboration;
+    return text(queries.locale(), "prompt.stage.brew_group", {
+      assistants: g.assistantIds.join(", "),
+      ordinal: g.ordinal,
+      target: g.targetId,
+    });
+  }
   if (request.context.warden_candidates !== undefined)
     return text(queries.locale(), "prompt.stage.warden_candidates", {
       ids: request.context.warden_candidates.join(", "),

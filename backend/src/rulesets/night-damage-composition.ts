@@ -7,6 +7,7 @@
  * 本组合不提前收齐 input、不复制结果、不存第二份效果、不退款或隐藏已付／失败前缀。
  */
 import { wardenProtectionsForState, wardenDealsForState } from "../features/warden/ports";
+import { awakenedWitchHealForState } from "../features/awakened-witch/heal-ports";
 import { bindDreamLifeQueries } from "../domain/dream-night-effects";
 import { Role, type EntityId, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
@@ -81,6 +82,9 @@ export function composeNightDamage(runtime: NightDamageCompositionRuntime): {
   const damage = runtime.solver().resolve(runtime.world(), {
     intentNight: runtime.day(),
     radiantShelters: radiantEffects?.shelters,
+    ...(wardenClaims && awakenedWitchHealForState(wardenClaims)
+      ? { healClaims: awakenedWitchHealForState(wardenClaims) }
+      : {}),
     ...(wardenProtections.length ? { wardenProtections } : {}),
     radiantBacklashes: radiantEffects?.backlashes,
     modifierDeaths: runtime.claims().modifierDeaths,

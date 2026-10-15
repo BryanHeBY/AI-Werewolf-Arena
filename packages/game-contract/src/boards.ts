@@ -143,6 +143,7 @@ export interface BoardConfig {
   awakenedWolfKing?: { policy: "awa_awakened_wolf_king_v1" };
   crow?: CrowConfig;
   silenceElder?: SilenceElderConfig;
+  awakenedWitch?: { policy: "awa_awakened_witch_v1" };
   warden?: { policy: "awa_melbourne_warden_v1"; forcePolicy: "awa_warden_partner_native_v1" };
   animalDream?: { policy: "awa_animal_dream_v1"; eliminationPriority: "awa_wolf_priority_v1" };
   whiteCat?: { skippedVotePolicy: CatSkippedVotePolicy };

@@ -6,7 +6,6 @@
  * 结构观察不提交行动、不克隆完整私有库存，也不提前执行自定义人设或角色展示回调；失败前缀保持。
  */
 import { wardenOwnKnowledge } from "../../features/warden/observation-ports";
-
 import {
   getWhiteWolfKingState,
   projectWhiteWolfKingState,
@@ -36,6 +35,7 @@ import { projectTricksterState } from "../../features/trickster/ports";
 import { projectOrderPrinceState } from "../../features/order-prince/ports";
 import { projectMagicianState } from "../../features/magician/ports";
 import { projectRedMoonState } from "../../features/red-moon/ports";
+import { projectAwakenedWitch } from "../../features/awakened-witch/observation-ports";
 import { projectAwakenedClaws } from "../../features/awakened-wolf-king/observation-ports";
 import { projectSilenceElderState } from "../../features/silence-elder/observation-ports";
 import { projectCrowState } from "../../features/crow/ports";
@@ -228,6 +228,8 @@ export function capturePlayerObservation(
   if (redMoon) ownState.redMoon = redMoon;
   const warden = wardenOwnKnowledge(role, request.actorId);
   if (warden) ownState.warden = warden;
+  const awakenedWitch = projectAwakenedWitch(role);
+  if (awakenedWitch) ownState.awakenedWitch = awakenedWitch;
   const awakenedClaws = projectAwakenedClaws(role);
   if (awakenedClaws) ownState.awakenedClaws = awakenedClaws;
   const silenceElder = projectSilenceElderState(role);

@@ -141,8 +141,9 @@ export function beginGameReproduction(
     // 不能用旧 checkpoint 事件误判本人可见事实为伪造；副本仍由 Trace.build 持有，
     // 不提前推进 checkpoint、公开隐藏归属或改变普通板子原有的回调选择。
     parameters.board.warden ||
-    parameters.board.silenceElder ||
+      parameters.board.silenceElder ||
       parameters.board.awakenedWolfKing ||
+      parameters.board.awakenedWitch ||
       parameters.board.radiantEclipse ||
       parameters.board.nobleSecretBody ||
       parameters.board.fragrantPairSeer ||

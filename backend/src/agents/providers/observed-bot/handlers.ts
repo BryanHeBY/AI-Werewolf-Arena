@@ -5,6 +5,7 @@
  * 工具动作不是付款或生效凭据，合法性仍由引擎在提交入口复验。
  */
 import { bindFragrantPair, inspectPair } from "./fragrant-pair-seer";
+import { awakenedBrew, brewDiscuss, brewApprove } from "./awakened-witch";
 import { bequeathClaw } from "./awakened-wolf-king";
 import { castShelter, swallowSkill } from "./radiant-eclipse";
 import { chooseServant, protectSecretBody } from "./noble-secret-body";
@@ -78,8 +79,11 @@ import {
 
 /** 保持原工具优先级和随机抽取次序，避免相同 seed 的严格 Tape 因装配顺序变化而漂移。 */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
-  {tool:"warden_pair",decide:wardenPair},
-  {tool:"warden_decide",decide:wardenDecide},
+  { tool: "awakened_brew", decide: awakenedBrew },
+  { tool: "brew_discuss", decide: brewDiscuss },
+  { tool: "brew_approve", decide: brewApprove },
+  { tool: "warden_pair", decide: wardenPair },
+  { tool: "warden_decide", decide: wardenDecide },
   { tool: "bequeath_claw", decide: bequeathClaw },
   {
     tool: "fox_distract",

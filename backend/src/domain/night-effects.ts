@@ -43,6 +43,7 @@ export interface NightIntentOrigin {
     | "mechanical"
     | "awakened"
     | "witch"
+    | "awakened-witch"
     | "demon-witch"
     | "lucky"
     | "black-market"
@@ -54,6 +55,7 @@ export interface NightIntentOrigin {
     | "awakened_skill"
     | "awakened_attack"
     | "witch"
+    | "awakened_witch"
     | "lucky"
     | "black_market_recipient"
     | "scholar_mentor_bonus";
@@ -224,6 +226,12 @@ export interface NightGuardClaim {
   readonly contribution?: object;
   readonly target: NightLifeScope;
   readonly marks: StatusMarksComponent;
+}
+/** 新解药提案持原生命、原印记和已付款有效性；不能用同座号码把救治交给替身。 */
+export interface NightHealClaim {
+  readonly target: NightLifeScope;
+  readonly marks: StatusMarksComponent;
+  readonly isCurrent: () => boolean;
 }
 export interface NightMerchantBacklash {
   readonly target: NightLifeScope;
