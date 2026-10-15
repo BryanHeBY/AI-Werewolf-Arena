@@ -2,7 +2,7 @@
 
 多智能体狼人杀对局引擎，以及用于离线复盘和视频生成的 React 工作台。
 
-当前维护入口见[项目文档](docs/README.md)；原扩充／重构记录在[历史索引](docs/history/README.md)，历史停止条件不作为当前指令。
+当前维护入口见[项目文档](docs/README.md)，玩法约定见[规则卡](docs/rules/README.md)，模块职责见[架构说明](docs/architecture/README.md)。
 
 ## 当前架构
 
