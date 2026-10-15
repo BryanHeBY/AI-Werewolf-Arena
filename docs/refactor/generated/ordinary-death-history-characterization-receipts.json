@@ -1,0 +1,147 @@
+{
+  "executor": "/root",
+  "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+  "command": "bun --no-env-file /tmp/awa-q3-archive-guarantees/probe.mjs > /tmp/awa-q3-archive-guarantees/output.txt 2>&1",
+  "launchChunk": "ca81c3",
+  "sessionId": 27035,
+  "terminalChunk": "8fb248",
+  "exitCode": 0,
+  "sourceIdentity": {
+    "metadataEngine": {
+      "id": "awa-engine",
+      "sourceHash": "1495c831dbfe92bab6cfd34317018e374c7bdc55a13fec446f3191d25a597674",
+      "lockHash": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+      "commit": "b1b5a860e8556d4bc5d3cdafaf27bdcb0615f19c"
+    },
+    "isolatedFixedGitBuild": false,
+    "description": "Actual HEAD b1b5a860 plus Root-declared frozen Ghost/C44 workspace inputs at invocation; sourceHash is the actual execution fingerprint, not a claim that all bytes equal Git b1b5a860. Ghost later commit does not rewrite the original engine metadata.",
+    "preparationCriticalSourceCount": 14
+  },
+  "newInputCounts": {
+    "baselineScenarios": 3,
+    "baselineExactReplaysAccepted": 3,
+    "handEditedVariants": 4,
+    "oldSuiteOrMatrixRepeated": false
+  },
+  "artifactBindings": {
+    "script": {
+      "originalPath": "/tmp/awa-q3-archive-guarantees/probe.mjs",
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-probe.mjs",
+      "bytes": 13893,
+      "sha256": "34e7ef2aee7074373ee52c274b862ef322eec41512ed92092378713bb88c13d8",
+      "byteExact": true
+    },
+    "raw": {
+      "originalPath": "/tmp/awa-q3-archive-guarantees/output.txt",
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-output.txt",
+      "bytes": 12888,
+      "sha256": "b2f3da40d659df4ed30e8709e3eedaa12850b061a83140d7644c22ec1ece5328",
+      "byteExact": true
+    },
+    "result": {
+      "originalPath": "/tmp/awa-q3-archive-guarantees/execution/result.json",
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-result.json",
+      "bytes": 12888,
+      "sha256": "b2f3da40d659df4ed30e8709e3eedaa12850b061a83140d7644c22ec1ece5328",
+      "byteExact": true
+    }
+  },
+  "observedResults": [
+    {
+      "id": "cupid-derived-hunter-shot",
+      "direct18": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_cupid_state_invalid"
+      },
+      "structuralPlus18": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_cupid_state_invalid"
+      },
+      "publicReader": {
+        "accepted": true,
+        "summary": {
+          "events": 18
+        }
+      },
+      "exactReplay": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_cupid_state_invalid"
+      }
+    },
+    {
+      "id": "dream-derived-hunter-shot",
+      "direct18": {
+        "accepted": true,
+        "summary": "18 mechanism verifiers accepted"
+      },
+      "structuralPlus18": {
+        "accepted": true,
+        "summary": "generic structure plus assembly accepted"
+      },
+      "publicReader": {
+        "accepted": true,
+        "summary": {
+          "events": 30
+        }
+      },
+      "exactReplay": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_checkpoint_mismatch"
+      }
+    },
+    {
+      "id": "badge-fact-vs-final-checkpoint",
+      "direct18": {
+        "accepted": true,
+        "summary": "18 mechanism verifiers accepted"
+      },
+      "structuralPlus18": {
+        "accepted": true,
+        "summary": "generic structure plus assembly accepted"
+      },
+      "publicReader": {
+        "accepted": true,
+        "summary": {
+          "events": 28
+        }
+      },
+      "exactReplay": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_events_mismatch"
+      }
+    },
+    {
+      "id": "last-words-illegal-source-phase",
+      "direct18": {
+        "accepted": true,
+        "summary": "18 mechanism verifiers accepted"
+      },
+      "structuralPlus18": {
+        "accepted": true,
+        "summary": "generic structure plus assembly accepted"
+      },
+      "publicReader": {
+        "notApplicable": true,
+        "reason": "Public view does not contain the mutated source-phase input."
+      },
+      "exactReplay": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_observation_mismatch"
+      }
+    }
+  ],
+  "versionExecutablePathNotInRawNotClaimed": true,
+  "noAuthorExecutions": true,
+  "limits": [
+    "A successful probe exit means its preparation/baseline checks completed and all observations were recorded; it does not mean all variants were accepted.",
+    "These are newly executed bounded archive inputs, not whole55/C47/transport/seed coverage or a new independent ledger.",
+    "Each variant preserves baseline metadata.engine, random, ruleset and envelope identity; no source/lock/hash bypass.",
+    "Public safe-reader acceptance is intentional structural width. Exact-replay refusal does not substitute for independent rule coverage required by plan 11.2."
+  ]
+}

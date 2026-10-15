@@ -1,0 +1,426 @@
+{
+  "format": "awa-recording",
+  "envelopeVersion": 1,
+  "kind": "public_replay",
+  "payloadSchemaVersion": 2,
+  "identities": {
+    "request": {
+      "id": "awa-action-request",
+      "version": "1"
+    },
+    "presentation": {
+      "id": "awa-game-presentation",
+      "version": "1"
+    },
+    "ruleset": {
+      "id": "awa_classic",
+      "version": "1.0.0"
+    },
+    "build": {
+      "engine": {
+        "id": "awa-engine",
+        "sourceHash": "1495c831dbfe92bab6cfd34317018e374c7bdc55a13fec446f3191d25a597674",
+        "lockHash": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+        "commit": "b1b5a860e8556d4bc5d3cdafaf27bdcb0615f19c"
+      },
+      "random": {
+        "algorithm": "mulberry32-fnv1a-utf16-v1",
+        "streamPolicy": "named-path-v1",
+        "path": []
+      }
+    }
+  },
+  "payload": {
+    "schemaVersion": 2,
+    "perspective": "god",
+    "sessionId": "q3-cupid",
+    "meta": {
+      "board": "q3_cupid",
+      "startedAt": "2026-10-15T00:00:00.000Z",
+      "endedAt": "2026-10-15T00:01:00.000Z"
+    },
+    "result": {
+      "winner": "good",
+      "reason": "all_wolves_eliminated",
+      "decision": {
+        "winner": "good",
+        "reason": "all_wolves_eliminated",
+        "outcome": {
+          "kind": "victory",
+          "primary": {
+            "kind": "faction",
+            "faction": "good",
+            "winningPlayerIds": [
+              4,
+              5,
+              6
+            ]
+          },
+          "additional": [],
+          "winningPlayerIds": [
+            4,
+            5,
+            6
+          ]
+        },
+        "decidedAt": {
+          "day": 1,
+          "phase": "day",
+          "checkpoint": "night_settled"
+        }
+      }
+    },
+    "players": [
+      {
+        "player_id": 1,
+        "role": "cupid",
+        "camp": "good"
+      },
+      {
+        "player_id": 2,
+        "role": "hunter",
+        "camp": "good"
+      },
+      {
+        "player_id": 3,
+        "role": "wolf",
+        "camp": "wolf"
+      },
+      {
+        "player_id": 4,
+        "role": "villager",
+        "camp": "good"
+      },
+      {
+        "player_id": 5,
+        "role": "villager",
+        "camp": "good"
+      },
+      {
+        "player_id": 6,
+        "role": "villager",
+        "camp": "good"
+      }
+    ],
+    "events": [
+      {
+        "seq": 1,
+        "timestamp": "2026-10-15T01:28:27.634Z",
+        "phase": "night",
+        "day": 1,
+        "stage": "god_private_game_info",
+        "type": "god_private_game_info",
+        "payload": {
+          "boardSize": 6,
+          "players": [
+            {
+              "id": 1,
+              "seat": 1,
+              "name": "玩家1",
+              "role": "cupid",
+              "camp": "good"
+            },
+            {
+              "id": 2,
+              "seat": 2,
+              "name": "玩家2",
+              "role": "hunter",
+              "camp": "good"
+            },
+            {
+              "id": 3,
+              "seat": 3,
+              "name": "玩家3",
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "id": 4,
+              "seat": 4,
+              "name": "玩家4",
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "id": 5,
+              "seat": 5,
+              "name": "玩家5",
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "id": 6,
+              "seat": 6,
+              "name": "玩家6",
+              "role": "villager",
+              "camp": "good"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 2,
+        "timestamp": "2026-10-15T01:28:27.634Z",
+        "phase": "night",
+        "day": 1,
+        "stage": "night",
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 1
+        }
+      },
+      {
+        "seq": 3,
+        "timestamp": "2026-10-15T01:28:27.752Z",
+        "phase": "night",
+        "day": 1,
+        "stage": "cupid_lovers_chosen",
+        "type": "cupid_lovers_chosen",
+        "payload": {
+          "actorId": 1,
+          "day": 1,
+          "pairIds": [
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "seq": 4,
+        "timestamp": "2026-10-15T01:28:27.752Z",
+        "phase": "night",
+        "day": 1,
+        "stage": "lover_recognized",
+        "type": "lover_recognized",
+        "payload": {
+          "actorId": 2,
+          "partnerId": 3
+        }
+      },
+      {
+        "seq": 5,
+        "timestamp": "2026-10-15T01:28:27.752Z",
+        "phase": "night",
+        "day": 1,
+        "stage": "lover_recognized",
+        "type": "lover_recognized",
+        "payload": {
+          "actorId": 3,
+          "partnerId": 2
+        }
+      },
+      {
+        "seq": 6,
+        "timestamp": "2026-10-15T01:28:27.752Z",
+        "phase": "night",
+        "day": 1,
+        "stage": "cupid_relation_resolved",
+        "type": "cupid_relation_resolved",
+        "payload": {
+          "actorId": 1,
+          "day": 1,
+          "policy": "netease_2017_cupid_follows_lovers_v1",
+          "pairIds": [
+            2,
+            3
+          ],
+          "pairCamps": [
+            "good",
+            "wolf"
+          ],
+          "groupId": "cupid_lovers",
+          "mixed": true
+        }
+      },
+      {
+        "seq": 7,
+        "timestamp": "2026-10-15T01:28:27.752Z",
+        "phase": "night",
+        "day": 1,
+        "stage": "wolf_tactical_order",
+        "type": "wolf_tactical_order",
+        "payload": {
+          "order": [
+            3
+          ]
+        }
+      },
+      {
+        "seq": 8,
+        "timestamp": "2026-10-15T01:28:27.754Z",
+        "phase": "night",
+        "day": 1,
+        "stage": "wolf_discussion",
+        "type": "wolf_discussion_ended",
+        "payload": {
+          "actorId": 3,
+          "reason": "Q3 literal end",
+          "round": 1
+        }
+      },
+      {
+        "seq": 9,
+        "timestamp": "2026-10-15T01:28:27.755Z",
+        "phase": "night",
+        "day": 1,
+        "stage": "wolf_discussion",
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 3,
+          "abstain": false,
+          "targetId": 3
+        }
+      },
+      {
+        "seq": 10,
+        "timestamp": "2026-10-15T01:28:27.757Z",
+        "phase": "day",
+        "day": 1,
+        "stage": "day",
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 1
+        }
+      },
+      {
+        "seq": 11,
+        "timestamp": "2026-10-15T01:28:27.757Z",
+        "phase": "day",
+        "day": 1,
+        "stage": "night_resolved",
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [
+            3
+          ]
+        }
+      },
+      {
+        "seq": 12,
+        "timestamp": "2026-10-15T01:28:27.759Z",
+        "phase": "day",
+        "day": 1,
+        "stage": "lovers_death",
+        "type": "lovers_death",
+        "payload": {
+          "actorId": 3,
+          "targetId": 2
+        }
+      },
+      {
+        "seq": 13,
+        "timestamp": "2026-10-15T01:28:27.759Z",
+        "phase": "day",
+        "day": 1,
+        "stage": "additional_deaths",
+        "type": "additional_deaths",
+        "payload": {
+          "deaths": [
+            2
+          ]
+        }
+      },
+      {
+        "seq": 14,
+        "timestamp": "2026-10-15T01:28:27.760Z",
+        "phase": "day",
+        "day": 1,
+        "stage": "last_words_granted",
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 3,
+          "phase": "day",
+          "day": 1
+        }
+      },
+      {
+        "seq": 15,
+        "timestamp": "2026-10-15T01:28:27.761Z",
+        "phase": "day",
+        "day": 1,
+        "stage": "last_words_spoken",
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 3,
+          "phase": "day",
+          "day": 1,
+          "text": "Q3 literal words"
+        }
+      },
+      {
+        "seq": 16,
+        "timestamp": "2026-10-15T01:28:27.765Z",
+        "phase": "game_over",
+        "day": 1,
+        "stage": "game_over",
+        "type": "phase_changed",
+        "payload": {
+          "phase": "game_over",
+          "day": 1,
+          "winner": "good",
+          "reason": "all_wolves_eliminated",
+          "outcome": {
+            "kind": "victory",
+            "primary": {
+              "kind": "faction",
+              "faction": "good",
+              "winningPlayerIds": [
+                4,
+                5,
+                6
+              ]
+            },
+            "additional": [],
+            "winningPlayerIds": [
+              4,
+              5,
+              6
+            ]
+          },
+          "decidedAt": {
+            "day": 1,
+            "phase": "day",
+            "checkpoint": "night_settled"
+          }
+        }
+      },
+      {
+        "seq": 17,
+        "timestamp": "2026-10-15T01:28:27.765Z",
+        "phase": "game_over",
+        "day": 1,
+        "stage": "game_over",
+        "type": "game_over",
+        "payload": {
+          "winner": "good",
+          "reason": "all_wolves_eliminated",
+          "outcome": {
+            "kind": "victory",
+            "primary": {
+              "kind": "faction",
+              "faction": "good",
+              "winningPlayerIds": [
+                4,
+                5,
+                6
+              ]
+            },
+            "additional": [],
+            "winningPlayerIds": [
+              4,
+              5,
+              6
+            ]
+          },
+          "decidedAt": {
+            "day": 1,
+            "phase": "day",
+            "checkpoint": "night_settled"
+          }
+        }
+      }
+    ]
+  }
+}

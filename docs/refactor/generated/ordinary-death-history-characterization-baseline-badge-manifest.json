@@ -1,0 +1,91 @@
+{
+  "session_id": "q3-badge",
+  "board": "q3_badge",
+  "started_at": "2026-10-15T00:00:00.000Z",
+  "ended_at": "2026-10-15T00:01:00.000Z",
+  "winner": null,
+  "finish_reason": "runtime_timeout",
+  "players": [
+    {
+      "player_id": 1,
+      "role": "guard",
+      "camp": "good",
+      "alive": true
+    },
+    {
+      "player_id": 2,
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": true
+    },
+    {
+      "player_id": 3,
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": true
+    },
+    {
+      "player_id": 4,
+      "role": "villager",
+      "camp": "good",
+      "alive": false
+    },
+    {
+      "player_id": 5,
+      "role": "villager",
+      "camp": "good",
+      "alive": true
+    },
+    {
+      "player_id": 6,
+      "role": "seer",
+      "camp": "good",
+      "alive": true
+    }
+  ],
+  "files": {
+    "reproduction": "reproduction.json",
+    "replay": "replay.json",
+    "phase_windows": "phase_windows.json",
+    "timeline_index": "timeline_index.json",
+    "logic_ops": "logic_ops.json",
+    "debug_reports": "debug_reports.json",
+    "debug_summary": "debug_summary.md",
+    "player_views": [
+      "players/player_1.json",
+      "players/player_2.json",
+      "players/player_3.json",
+      "players/player_4.json",
+      "players/player_5.json",
+      "players/player_6.json"
+    ]
+  },
+  "schemaVersion": 1,
+  "identities": {
+    "request": {
+      "id": "awa-action-request",
+      "version": "1"
+    },
+    "presentation": {
+      "id": "awa-game-presentation",
+      "version": "1"
+    },
+    "ruleset": {
+      "id": "awa_classic",
+      "version": "1.0.0"
+    },
+    "build": {
+      "engine": {
+        "id": "awa-engine",
+        "sourceHash": "1495c831dbfe92bab6cfd34317018e374c7bdc55a13fec446f3191d25a597674",
+        "lockHash": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+        "commit": "b1b5a860e8556d4bc5d3cdafaf27bdcb0615f19c"
+      },
+      "random": {
+        "algorithm": "mulberry32-fnv1a-utf16-v1",
+        "streamPolicy": "named-path-v1",
+        "path": []
+      }
+    }
+  }
+}

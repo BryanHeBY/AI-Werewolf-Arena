@@ -1,0 +1,92 @@
+{
+  "kind": "prepared-only-q3-bounded-archive-characterization",
+  "preparedCommit": "b1b5a860e8556d4bc5d3cdafaf27bdcb0615f19c",
+  "executed": false,
+  "script": {
+    "path": "/tmp/awa-q3-archive-guarantees/probe.mjs",
+    "sha256": "34e7ef2aee7074373ee52c274b862ef322eec41512ed92092378713bb88c13d8"
+  },
+  "before": {
+    "path": "/tmp/awa-q3-archive-guarantees/before.json",
+    "sha256": "18edd3b5fccfb7181695f9240b2b1003fb120fb8ae183e63f2526cec734f371a",
+    "criticalSourceCount": 14,
+    "currentGitDifferences": []
+  },
+  "executor": "/root",
+  "command": "bun --no-env-file /tmp/awa-q3-archive-guarantees/probe.mjs > /tmp/awa-q3-archive-guarantees/output.txt 2>&1",
+  "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+  "baselines": [
+    {
+      "id": "cupid",
+      "roles": [
+        "cupid",
+        "hunter",
+        "wolf",
+        "villager",
+        "villager",
+        "villager"
+      ],
+      "actions": "Cupid pair [2,3]; Wolf knife 3. Hunter 2 has only Lovers-derived death and no gun fact."
+    },
+    {
+      "id": "dream",
+      "roles": [
+        "dreamer",
+        "wolf",
+        "witch",
+        "hunter",
+        "villager",
+        "villager"
+      ],
+      "actions": "Dreamer 1 dreams Hunter 4; Wolf knives 1; Witch uses none; live players exile Wolf 2. Hunter 4 has linked Dream death and no gun fact."
+    },
+    {
+      "id": "badge",
+      "roles": [
+        "guard",
+        "wolf",
+        "wolf",
+        "villager",
+        "villager",
+        "seer"
+      ],
+      "actions": "Initial sheriff 4; Wolf knives 4; holder chooses successor 5; ordinary first-night LastWords; remaining players abstain. One cycle then maxDays=1 terminal."
+    }
+  ],
+  "variants": [
+    {
+      "id": "cupid-derived-hunter-shot",
+      "edit": "After lovers_death insert hunter_shot hunterId2,targetId4; update only included CP eventCount/public seq.",
+      "staticExpected": "Existing Cupid verifier should refuse; already a known independent boundary, not a proposed new gap."
+    },
+    {
+      "id": "dream-derived-hunter-shot",
+      "edit": "After dream_death insert hunter_shot hunterId4,targetId2; update only included CP eventCount/public seq.",
+      "staticExpected": "Ordinary independent causal coverage remains an observation question; exact replay must be observed separately."
+    },
+    {
+      "id": "badge-fact-vs-final-checkpoint",
+      "edit": "Existing transfer from4,to5 fact changes only toId6; final CP still has sheriff5. Public fact receives same edit."
+    },
+    {
+      "id": "last-words-illegal-source-phase",
+      "edit": "Actor4 last_words request context death_phase Night->Day; death_sources literal [wolf_kill]; execution phase remains Day.",
+      "publicEquivalent": false,
+      "reason": "Public LastWords facts do not serialize source phase. Do not invent a display field as equivalent."
+    }
+  ],
+  "layers": [
+    "readReplayDocument: safe public envelope/document shape, event sequence and explicit terminal-display consistency, not runtime causal permission",
+    "verifyReproductionMechanisms: direct fixed 18-family semantic assembly on precisely shaped data",
+    "parseReproductionRecord: generic strict Tape schema/cursors plus same 18-family assembly; generic schema is not separately exported",
+    "replayReproduction: finalized+same engine/lock/RNG/ruleset/envelope identity, actual actions/checkpoints/events/operations re-execution"
+  ],
+  "rules": [
+    "0 checks/production loads during preparation",
+    "No real model/provider/config, network or subprocess transport; three literal action providers with real engine recording only when Root runs",
+    "No sourceHash/lock/envelope identity rewrite; strict baseline must pass actual exact replay before variants are used",
+    "Original archive/public bytes saved first; mutations clone data and preserve baseline identity",
+    "No source/ledger/progress/Git changes; no new role verifier; no claims about absent life/ref/version evidence",
+    "Root must freeze current source window before invoking once; actual build is execution-time fingerprint, not this preparation commit"
+  ]
+}

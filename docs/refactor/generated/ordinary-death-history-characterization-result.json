@@ -1,0 +1,481 @@
+{
+  "kind": "q3-bounded-archive-characterization",
+  "notPolicyFix": true,
+  "baselines": [
+    {
+      "kind": "cupid",
+      "artifact": {
+        "file": "cupid-original.json",
+        "bytes": 29644,
+        "sha256": "3a156b882f763794ba567b33b32706215d3c79bfbc0d1637b979d5eb3a450a62"
+      },
+      "publicArtifact": {
+        "file": "cupid-public-original.json",
+        "bytes": 9758,
+        "sha256": "b0ce647a7ec79a60fe706d0d63bcfd30476df6db062754df46dbd7ee2e98706c"
+      },
+      "engine": {
+        "id": "awa-engine",
+        "sourceHash": "1495c831dbfe92bab6cfd34317018e374c7bdc55a13fec446f3191d25a597674",
+        "lockHash": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+        "commit": "b1b5a860e8556d4bc5d3cdafaf27bdcb0615f19c"
+      },
+      "reproduced": {
+        "accepted": true,
+        "summary": {
+          "eventCount": 17,
+          "decisionCount": 4
+        }
+      },
+      "calls": [
+        [
+          1,
+          1,
+          "cupid"
+        ],
+        [
+          3,
+          1,
+          "wolf_discussion"
+        ],
+        [
+          3,
+          1,
+          "wolf_vote"
+        ],
+        [
+          3,
+          1,
+          "last_words"
+        ]
+      ],
+      "archiveFile": "/tmp/awa-q3-archive-guarantees/execution/cupid-baseline/q3-cupid/reproduction.json",
+      "publicFile": "/tmp/awa-q3-archive-guarantees/execution/cupid-baseline/q3-cupid/replay.json"
+    },
+    {
+      "kind": "dream",
+      "artifact": {
+        "file": "dream-original.json",
+        "bytes": 77597,
+        "sha256": "24291488c308e4889cb0b1d729c481fddb09fe57221288d7453260f6f315d9f7"
+      },
+      "publicArtifact": {
+        "file": "dream-public-original.json",
+        "bytes": 14017,
+        "sha256": "e49b5943d7d1bba4b5c87c3a6a8f1d032a3bdfc0ee2de5ebbcaea924fd1f8f45"
+      },
+      "engine": {
+        "id": "awa-engine",
+        "sourceHash": "1495c831dbfe92bab6cfd34317018e374c7bdc55a13fec446f3191d25a597674",
+        "lockHash": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+        "commit": "b1b5a860e8556d4bc5d3cdafaf27bdcb0615f19c"
+      },
+      "reproduced": {
+        "accepted": true,
+        "summary": {
+          "eventCount": 29,
+          "decisionCount": 15
+        }
+      },
+      "calls": [
+        [
+          1,
+          1,
+          "dreamer"
+        ],
+        [
+          2,
+          1,
+          "wolf_discussion"
+        ],
+        [
+          2,
+          1,
+          "wolf_vote"
+        ],
+        [
+          3,
+          1,
+          "witch"
+        ],
+        [
+          1,
+          1,
+          "last_words"
+        ],
+        [
+          4,
+          1,
+          "last_words"
+        ],
+        [
+          2,
+          1,
+          "day_speech"
+        ],
+        [
+          3,
+          1,
+          "day_speech"
+        ],
+        [
+          5,
+          1,
+          "day_speech"
+        ],
+        [
+          6,
+          1,
+          "day_speech"
+        ],
+        [
+          2,
+          1,
+          "voting"
+        ],
+        [
+          3,
+          1,
+          "voting"
+        ],
+        [
+          5,
+          1,
+          "voting"
+        ],
+        [
+          6,
+          1,
+          "voting"
+        ],
+        [
+          2,
+          1,
+          "last_words"
+        ]
+      ],
+      "archiveFile": "/tmp/awa-q3-archive-guarantees/execution/dream-baseline/q3-dream/reproduction.json",
+      "publicFile": "/tmp/awa-q3-archive-guarantees/execution/dream-baseline/q3-dream/replay.json"
+    },
+    {
+      "kind": "badge",
+      "artifact": {
+        "file": "badge-original.json",
+        "bytes": 90380,
+        "sha256": "74e4d2430a5dcfcf642c7c8204103b6289ce91e6f72e69b7a866e84d1a3cd672"
+      },
+      "publicArtifact": {
+        "file": "badge-public-original.json",
+        "bytes": 11951,
+        "sha256": "bea974ab4130092f5a0e8fde9e44bf59397909ddb693d928955ace5bd01b3b44"
+      },
+      "engine": {
+        "id": "awa-engine",
+        "sourceHash": "1495c831dbfe92bab6cfd34317018e374c7bdc55a13fec446f3191d25a597674",
+        "lockHash": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+        "commit": "b1b5a860e8556d4bc5d3cdafaf27bdcb0615f19c"
+      },
+      "reproduced": {
+        "accepted": true,
+        "summary": {
+          "eventCount": 28,
+          "decisionCount": 19
+        }
+      },
+      "calls": [
+        [
+          2,
+          1,
+          "wolf_discussion"
+        ],
+        [
+          3,
+          1,
+          "wolf_discussion"
+        ],
+        [
+          1,
+          1,
+          "guard"
+        ],
+        [
+          2,
+          1,
+          "wolf_vote"
+        ],
+        [
+          3,
+          1,
+          "wolf_vote"
+        ],
+        [
+          6,
+          1,
+          "seer"
+        ],
+        [
+          4,
+          1,
+          "last_words"
+        ],
+        [
+          4,
+          1,
+          "sheriff_badge_choice"
+        ],
+        [
+          5,
+          1,
+          "sheriff_choose_direction"
+        ],
+        [
+          6,
+          1,
+          "day_speech"
+        ],
+        [
+          1,
+          1,
+          "day_speech"
+        ],
+        [
+          2,
+          1,
+          "day_speech"
+        ],
+        [
+          3,
+          1,
+          "day_speech"
+        ],
+        [
+          5,
+          1,
+          "day_speech"
+        ],
+        [
+          1,
+          1,
+          "voting"
+        ],
+        [
+          2,
+          1,
+          "voting"
+        ],
+        [
+          3,
+          1,
+          "voting"
+        ],
+        [
+          5,
+          1,
+          "voting"
+        ],
+        [
+          6,
+          1,
+          "voting"
+        ]
+      ],
+      "archiveFile": "/tmp/awa-q3-archive-guarantees/execution/badge-baseline/q3-badge/reproduction.json",
+      "publicFile": "/tmp/awa-q3-archive-guarantees/execution/badge-baseline/q3-badge/replay.json"
+    }
+  ],
+  "variants": [
+    {
+      "id": "cupid-derived-hunter-shot",
+      "input": {
+        "file": "cupid-derived-hunter-shot.json",
+        "bytes": 29808,
+        "sha256": "ac1e53238b056b5bcfa7b14f684467a1b617914b006c4898abf5e8b6f8a8fc10"
+      },
+      "publicInput": {
+        "file": "cupid-derived-hunter-shot-public.json",
+        "bytes": 10028,
+        "sha256": "23ea7b73ff322737a746b424b397b7e980665defd7a3f998569e0beaca699c80"
+      },
+      "edits": [
+        {
+          "pointer": "/events",
+          "operation": "insert-after-lovers_death",
+          "value": {
+            "timestamp": 1792027707759,
+            "type": "hunter_shot",
+            "payload": {
+              "hunterId": 2,
+              "targetId": 4
+            }
+          }
+        },
+        {
+          "pointer": "/checkpoints/*/eventCount",
+          "operation": "shift-only-included-event-cursors"
+        }
+      ],
+      "literalPolicy": "Derived Lovers cause does not authorize the ordinary native Hunter gun. No source/death permit is reconstructed from the forged fact.",
+      "directMechanismAssembly": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_cupid_state_invalid"
+      },
+      "structuralPlusAssemblyReader": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_cupid_state_invalid"
+      },
+      "publicReader": {
+        "accepted": true,
+        "summary": {
+          "events": 18
+        }
+      },
+      "exactReplay": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_cupid_state_invalid"
+      }
+    },
+    {
+      "id": "dream-derived-hunter-shot",
+      "input": {
+        "file": "dream-derived-hunter-shot.json",
+        "bytes": 77761,
+        "sha256": "ace0787694302cac4c3dbc54f4c5e2956726b160ecd2561c300d405cbca66b35"
+      },
+      "publicInput": {
+        "file": "dream-derived-hunter-shot-public.json",
+        "bytes": 14287,
+        "sha256": "1c378d95e1ecaba8b80d8c35834337c3302c30fe18dcae137d2e12fe9628f835"
+      },
+      "edits": [
+        {
+          "pointer": "/events",
+          "operation": "insert-after-dream_death",
+          "value": {
+            "timestamp": 1792027708029,
+            "type": "hunter_shot",
+            "payload": {
+              "hunterId": 4,
+              "targetId": 2
+            }
+          }
+        },
+        {
+          "pointer": "/checkpoints/*/eventCount",
+          "operation": "shift-only-included-event-cursors"
+        }
+      ],
+      "literalPolicy": "Derived Dream cause does not authorize the ordinary native Hunter gun. No source/death permit is reconstructed from the forged fact.",
+      "directMechanismAssembly": {
+        "accepted": true,
+        "summary": "18 mechanism verifiers accepted"
+      },
+      "structuralPlusAssemblyReader": {
+        "accepted": true,
+        "summary": "generic structure plus assembly accepted"
+      },
+      "publicReader": {
+        "accepted": true,
+        "summary": {
+          "events": 30
+        }
+      },
+      "exactReplay": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_checkpoint_mismatch"
+      }
+    },
+    {
+      "id": "badge-fact-vs-final-checkpoint",
+      "input": {
+        "file": "badge-fact-vs-final-checkpoint.json",
+        "bytes": 90380,
+        "sha256": "2f17b72a6ddb385cc9f1890044b4588954bf4c902efb56de58df10cfaaf451cb"
+      },
+      "publicInput": {
+        "file": "badge-fact-vs-final-checkpoint-public.json",
+        "bytes": 11951,
+        "sha256": "725b8572dc4b244bc7e859b912df4a73aaa991944e1758d779ed92b4d9a84261"
+      },
+      "edits": [
+        {
+          "pointer": "/events/sheriff_badge_transferred/payload/toId",
+          "before": 5,
+          "after": 6
+        }
+      ],
+      "literalPolicy": "A handoff fact claiming player 6 conflicts with the untouched final badge at player 5. Tape has no actual AliveComponent identity/version; this is not a serialized death-version experiment.",
+      "directMechanismAssembly": {
+        "accepted": true,
+        "summary": "18 mechanism verifiers accepted"
+      },
+      "structuralPlusAssemblyReader": {
+        "accepted": true,
+        "summary": "generic structure plus assembly accepted"
+      },
+      "publicReader": {
+        "accepted": true,
+        "summary": {
+          "events": 28
+        }
+      },
+      "exactReplay": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_events_mismatch"
+      }
+    },
+    {
+      "id": "last-words-illegal-source-phase",
+      "input": {
+        "file": "last-words-illegal-source-phase.json",
+        "bytes": 90450,
+        "sha256": "149a235334d6cb67f943f4dd44b998a4b3a4227e9ef178fb6b01a4b0462ccaf2"
+      },
+      "publicInput": null,
+      "edits": [
+        {
+          "pointer": "/decisions/actor4:last_words/request/context/death_phase",
+          "before": "night",
+          "after": "day"
+        },
+        {
+          "pointer": "/decisions/actor4:last_words/request/context/death_sources",
+          "after": [
+            "wolf_kill"
+          ]
+        }
+      ],
+      "literalPolicy": "awa_initial_wave_v1 grants first-night WolfKill, not Day+WolfKill. Execution phase stays Day. Public grant/spoken facts do not serialize death_phase; do not invent a public-reader equivalent.",
+      "directMechanismAssembly": {
+        "accepted": true,
+        "summary": "18 mechanism verifiers accepted"
+      },
+      "structuralPlusAssemblyReader": {
+        "accepted": true,
+        "summary": "generic structure plus assembly accepted"
+      },
+      "publicReader": {
+        "notApplicable": true,
+        "reason": "Public view does not contain the mutated source-phase input."
+      },
+      "exactReplay": {
+        "accepted": false,
+        "name": "Error",
+        "message": "reproduction_observation_mismatch"
+      }
+    }
+  ],
+  "limits": [
+    "Three new literal public no-model recording scenarios only; no old test case or transport/seed matrix is run.",
+    "Baseline is produced by the actual engine solely as legal source. Handwritten mutations/policy notes are independent; no production resolver computes expected rejection.",
+    "Direct mechanism verification and parseReproductionRecord(generic schema plus 18 verifiers) are separate observations; generic schema has no standalone exported API.",
+    "Public replay intentionally checks data/sequence/terminal display consistency, not all runtime causal permissions. Acceptance is not an authorization vulnerability.",
+    "Strict replay retains original source/lock/RNG/ruleset/envelope identity and actually re-executes. No sourceHash/identity mismatch is bypassed or rewritten.",
+    "No archived life component ref/version or absent source-phase evidence is fabricated. Outputs are bounded to the actual mutated fields and actual refusal layer."
+  ],
+  "completed": true
+}
