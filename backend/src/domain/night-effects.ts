@@ -435,3 +435,10 @@ export interface NightImmunityClaim {
   readonly target: NightLifeScope;
   readonly isCurrent: () => boolean;
 }
+
+/** 典狱长已付交易死亡，独立于查验、刀口和毒；当前性由原交易owner提供。 */
+export interface NightDealClaim {
+  readonly actorId: EntityId;
+  readonly target: NightLifeScope;
+  readonly isCurrent: () => boolean;
+}

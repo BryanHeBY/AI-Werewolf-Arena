@@ -1,5 +1,5 @@
 /**
- * 将已校验事实中的玩家名单和死因整理为两端共用文案。
+ * 负责把输入的已校验玩家名单和死因整理为两端共用文案，输出自然语言片段。
  * 这里只命名事件携带的原因，按原死亡名单顺序展示；不推断致死关系、不查询角色，也不决定受众。
  */
 import type { Locale, MessageKey } from "@ai-werewolf-arena/game-contract";
@@ -8,6 +8,7 @@ import { text } from "@ai-werewolf-arena/game-text";
 const deathMessages: Readonly<Record<string, MessageKey>> = {
   wolf_kill: "death.wolf_kill",
   poison: "death.poison",
+  deal: "death.deal",
   exile: "death.exile",
   self_destruct: "death.self_destruct",
   shot: "death.shot",

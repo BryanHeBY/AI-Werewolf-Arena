@@ -82,6 +82,12 @@ export const boardConfigSchema = z.strictObject({
       selfTarget: z.boolean(),
     })
     .optional(),
+  warden: z
+    .strictObject({
+      policy: z.literal("awa_melbourne_warden_v1"),
+      forcePolicy: z.literal("awa_warden_partner_native_v1"),
+    })
+    .optional(),
   silenceElder: z.strictObject({ policy: z.literal("awa_melbourne_gestures_v1") }).optional(),
   orderPrince: z.strictObject({ policy: z.literal("awa_order_prince_first_ballot_v1") }).optional(),
   magician: z

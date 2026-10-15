@@ -6,6 +6,7 @@
  * resolve 的 callee／receiver 先于 World 和对象参数读取，角色查询 callee 也先于 Role 参数；
  * 本组合不提前收齐 input、不复制结果、不存第二份效果、不退款或隐藏已付／失败前缀。
  */
+import { wardenProtectionsForState, wardenDealsForState } from "../features/warden/ports";
 import { bindDreamLifeQueries } from "../domain/dream-night-effects";
 import { Role, type EntityId, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
@@ -61,15 +62,26 @@ export function composeNightDamage(runtime: NightDamageCompositionRuntime): {
   const radiantEffects = runtime.ownsRadiant()
     ? sealRadiantNightEffects(runtime.world(), runtime.day())
     : undefined;
+  let wardenClaims: object | undefined;
+  let wardenProtections: ReturnType<typeof wardenProtectionsForState> = [];
   // 保原 constructor callee、claims 与 shelters 参数顺序；读取同数组，不重建已付／原生命绑定。
   const dreamFrame = new DreamNightFrame(
-    readDreamNightLinks(runtime.claims()),
-    radiantEffects?.shelters,
+    (() => {
+      const claims = runtime.claims();
+      wardenClaims = claims;
+      const links = readDreamNightLinks(claims);
+      wardenProtections = wardenProtectionsForState(claims);
+      return links;
+    })(),
+    wardenProtections.length
+      ? [...(radiantEffects?.shelters ?? []), ...wardenProtections]
+      : radiantEffects?.shelters,
   );
   assertNightModifierBonusEffects(runtime);
   const damage = runtime.solver().resolve(runtime.world(), {
     intentNight: runtime.day(),
     radiantShelters: radiantEffects?.shelters,
+    ...(wardenProtections.length ? { wardenProtections } : {}),
     radiantBacklashes: radiantEffects?.backlashes,
     modifierDeaths: runtime.claims().modifierDeaths,
     protectedTargets: dreamFrame.protectedTargets(bindDreamLifeQueries(runtime.world())),
@@ -79,6 +91,9 @@ export function composeNightDamage(runtime: NightDamageCompositionRuntime): {
     retaliationAttacks: runtime.claims().retaliationAttacks,
     nightImmunities: runtime.claims().nightImmunities,
     inspectionAttacks: runtime.claims().inspectionAttacks,
+    ...(wardenClaims && wardenDealsForState(wardenClaims).length
+      ? { wardenDeals: wardenDealsForState(wardenClaims) }
+      : {}),
     foxInspections: runtime.claims().foxInspections,
     wolfImmuneTargets: runtime.aliveByRole(() => Role.CursedFox),
     guardClaims: runtime.claims().guardClaims,

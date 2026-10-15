@@ -422,6 +422,7 @@ function wordsAllowed(
         DeathCause.WolfKill,
         DeathCause.AwakenedHiddenKnife,
         DeathCause.Poison,
+        DeathCause.Deal,
         DeathCause.Dream,
         DeathCause.FoxInspection,
         DeathCause.MerchantBacklash,

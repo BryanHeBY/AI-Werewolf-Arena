@@ -59,6 +59,7 @@
 | `debater`               | 杠精       | [awa-melbourne-debater-v1.md#debater](awa-melbourne-debater-v1.md#debater)                                     |
 | `crow`                  | 乌鸦       | [awa-netease-crow-v1.md](awa-netease-crow-v1.md)                                                               |
 | `silence_elder`         | 禁言长老   | [AWA 文字动作与翻译版](awa-melbourne-silence-elder-v1.md#silence_elder)                                      |
+| `warden`                | 典狱长（已交付）     | [AWA 原生技能强制partner版](awa-melbourne-warden-v1.md)；[两语完整示例](../examples/warden/README.md) |
 | `white_cat`             | 白猫       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |
 | `fox_cub`               | 子狐       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |
 | `pufferfish`            | 河豚       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |

@@ -5,6 +5,7 @@
  * 普通请求以 F02 租约约束信封／能力和期限，全部领域写入完成后才结算，晚事实失败不退款。
  * Demon 封存原生控制器保持独立，不把原体或运行完成端口写入玩家知识。
  */
+import { forcedWardenNativeTarget } from "../warden/ports";
 import { SEER_STATE_SLOT } from "./ports";
 import { openNativeNightRequestDelivery } from "../../engine/night/native-request-lease";
 import type { RequestLeaseTurn } from "../../domain/request-lease";
@@ -49,6 +50,8 @@ const seerCheckStage: NightStageHandler = {
           () => ctx.isCurrent() && ctx.currentDay() === day,
         );
       if (!scope?.isEligible()) continue;
+      const wardenForced = forcedWardenNativeTarget(ctx, seerId);
+      if (wardenForced && !wardenForced.isCurrent()) throw new Error("warden_native_partner_stale");
       const targets = new Map(
         ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
       );
@@ -71,10 +74,14 @@ const seerCheckStage: NightStageHandler = {
         .getAliveEntityIds()
         .filter(
           (id) =>
+            (!wardenForced || id === wardenForced.targetId) &&
             seerTargetAllowed(ability.state, seerId, id) &&
             luckyTargetAllowed(ctx.world, seerId, ability, day, "check", id),
         );
-      if (!legalTargets.length) continue;
+      if (!legalTargets.length) {
+        if (wardenForced) throw new Error("warden_seer_no_legal_target");
+        continue;
+      }
       let delivery: RequestLeaseTurn | undefined;
       let failed = false;
       try {
@@ -82,6 +89,13 @@ const seerCheckStage: NightStageHandler = {
         let requestAbilityId: string;
         const req = ctx.makeRequest(seerId, ["check_identity"], {
           stage: "seer",
+          ...(wardenForced
+            ? {
+                warden_forced_target: wardenForced.targetId,
+                action_failure_policy: "error" as const,
+                allow_fallback: false,
+              }
+            : {}),
           ability_id: (requestAbilityId = ability.id),
           requiresAction: ability.state.actionPolicy !== "awa_optional_v1",
         });
@@ -95,7 +109,7 @@ const seerCheckStage: NightStageHandler = {
             day,
             stage: "seer",
             abilityId: requestAbilityId,
-            current: () => scope.isEligible(),
+            current: () => scope.isEligible() && (!wardenForced || wardenForced.isCurrent()),
           },
           req,
         );
@@ -114,6 +128,7 @@ const seerCheckStage: NightStageHandler = {
         }
         if (!delivery.current()) continue;
         if (action?.name !== "check_identity") {
+          if (wardenForced) throw new Error("warden_seer_action_missing");
           ctx.nativeNightFailure.actionMissing("seer");
           continue;
         }
@@ -130,11 +145,14 @@ const seerCheckStage: NightStageHandler = {
         }
         if (!delivery.current()) continue;
         if (!result.ok || !result.sanitizedCall) {
+          if (wardenForced) throw new Error("warden_seer_action_invalid");
           ctx.nativeNightFailure.actionInvalid("seer");
           continue;
         }
 
         const targetId = result.sanitizedCall.args.target_id;
+        if (wardenForced && targetId !== wardenForced.targetId)
+          throw new Error("warden_seer_target_invalid");
         const target = targets.get(targetId);
         if (
           !target ||
@@ -187,6 +205,8 @@ const seerCheckStage: NightStageHandler = {
           "check",
         ];
         const invokeReflectedTarget = Reflect.apply.bind(Reflect);
+        if (wardenForced && (!wardenForced.isCurrent() || targetId !== wardenForced.targetId))
+          throw new Error("warden_seer_target_revoked");
         if (!delivery.current()) continue;
         invokeReflectedTarget(commitReflectedTarget, effects, reflectedArguments);
         if (seerState) {

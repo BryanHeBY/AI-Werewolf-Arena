@@ -33,6 +33,9 @@ export interface NightDamageEffects {
   /** 原 Pipeline 的已捕获 day；仅新 owned intent 读取，旧注入输入不访问额外字段。 */
   intentNight?: number;
   radiantShelters?: readonly NightImmunityClaim[];
+  /** 具名交易保护仅免普通刀、毒和梦；带原体与已付当前性，不加入全伤害免疫。 */
+  wardenProtections?: readonly NightImmunityClaim[];
+  wardenDeals?: readonly import("./night-effects").NightDealClaim[];
   radiantBacklashes?: readonly NightRadiantBacklash[];
   modifierDeaths?: readonly import("./night-effects").NightLifeScope[];
   nightImmunities?: readonly NightImmunityClaim[];

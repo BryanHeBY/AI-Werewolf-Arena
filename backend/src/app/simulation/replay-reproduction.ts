@@ -337,7 +337,13 @@ export async function replayReproduction(
       stableJson(record.metadata.initialDeal ?? null),
     "reproduction_initial_deal_mismatch",
   );
-  if (board.silenceElder || board.animalDream || board.nobleSecretBody || board.fragrantPairSeer)
+  if (
+    board.warden ||
+    board.silenceElder ||
+    board.animalDream ||
+    board.nobleSecretBody ||
+    board.fragrantPairSeer
+  )
     provider.setEventCursor(() => context.phaseManager.getEvents().length);
   const initial = {
     ...captureCheckpoint(
@@ -348,7 +354,9 @@ export async function replayReproduction(
       context.phaseManager.getEvents().length,
     ),
     // 禁言族计数由录制Trace追加；复现从同一实际provider起点重建，不引入第二机制库存。
-    ...(board.silenceElder ? { settlementCount: 0, decisionCount: 0 } : {}),
+    ...(board.warden || board.silenceElder
+      ? { settlementCount: 0, decisionCount: 0 }
+      : {}),
   };
   requireMatch(
     stableJson(initial) === stableJson(record.checkpoints[0]),
@@ -376,7 +384,13 @@ export async function replayReproduction(
     recordRoot,
     displayLocale ?? record.metadata.locale,
   );
-  if (board.silenceElder || board.animalDream || board.nobleSecretBody || board.fragrantPairSeer)
+  if (
+    board.warden ||
+    board.silenceElder ||
+    board.animalDream ||
+    board.nobleSecretBody ||
+    board.fragrantPairSeer
+  )
     manager.setReplayEventCursor(() => context.phaseManager.getEvents().length);
   const recorder = new GameEventRecorder(
     { world: context.world, replayManager: manager },
@@ -418,7 +432,7 @@ export async function replayReproduction(
             cycleFailure,
             provider.cursors,
           ),
-          ...(board.silenceElder ? provider.cursors : {}),
+          ...(board.warden || board.silenceElder ? provider.cursors : {}),
         };
         requireMatch(
           stableJson(actual) === stableJson(checkpoint),

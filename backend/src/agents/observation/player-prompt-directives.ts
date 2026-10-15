@@ -321,6 +321,18 @@ export function buildPlayerStageContextHint(
   request: ActionRequest,
   queries: Pick<PlayerPromptDirectiveQueries, "locale" | "boardConfig">,
 ): string | undefined {
+  if (request.context.warden_candidates !== undefined)
+    return text(queries.locale(), "prompt.stage.warden_candidates", {
+      ids: request.context.warden_candidates.join(", "),
+    });
+  if (request.context.warden_partner_id !== undefined)
+    return text(queries.locale(), "prompt.stage.warden_partner", {
+      partner: request.context.warden_partner_id,
+    });
+  if (request.context.warden_forced_target !== undefined)
+    return text(queries.locale(), "prompt.stage.warden_forced", {
+      target: request.context.warden_forced_target,
+    });
   // 按原字段优先级展示请求已带来的候选，不据这些文字重新授权目标。
   if (request.context.silence_candidates !== undefined)
     return text(queries.locale(), "prompt.stage.silence_candidates", {

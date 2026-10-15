@@ -1,6 +1,8 @@
 /**
  * 负责前端复盘事件标签的分派与普通事件文案。输入为复盘事件、语言与原玩家名单；输出为经原事件 reader 校验后的标签或未知回退。共享机制标签由 game-presentation 生成，不引入后端 World，不扩大玩家视角或修改事件。
  */
+import { wardenEventLabel } from "@ai-werewolf-arena/game-presentation";
+
 import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { animalDreamEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { fragrantPairEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -56,6 +58,8 @@ export function eventLabel(
   if (!fact) return text(locale, "replay.unknown");
   event = fact.event;
   const p = event.payload;
+  const warden = wardenEventLabel(event.type, p, locale);
+  if (warden !== null) return warden;
   const silence = silenceElderEventLabel(event.type, p, locale);
   if (silence !== null) return silence;
   const crow = crowEventLabel(event.type, p, locale);

@@ -1,6 +1,6 @@
 /**
  * 负责维护请求、归档与双语词典共用的有限机器消息 ID。保留原一千五百一十三项标识顺序，新增标识只在末尾追加；输出冻结且有序的注册表与 MessageKey 判定。
- * 注册表在此手工维护；翻译与参数校验属于 game-text，不在这里导入字典、渲染用户原文或按语言改写 ID。
+ * 输入为手工声明的机器键及既有注册顺序；注册表在此手工维护；翻译与参数校验属于 game-text，不在这里导入字典、渲染用户原文或按语言改写 ID。
  */
 export const MESSAGE_IDS = Object.freeze([
   "replay.stage.animal_night_opened",
@@ -1613,6 +1613,34 @@ export const MESSAGE_IDS = Object.freeze([
   "replay.stage.silence_expired",
   "bot.silence.gesture",
   "bot.silence.translation",
+  "role.warden.brief",
+  "role.warden.state",
+  "action.warden_pair.hint",
+  "action.warden_pair.directive",
+  "action.warden_decide.hint",
+  "action.warden_decide.directive",
+  "stage.warden_pair",
+  "stage.warden_decide",
+  "request.summary.warden_pair",
+  "request.summary.warden_decide",
+  "prompt.config.warden",
+  "prompt.stage.warden_candidates",
+  "prompt.stage.warden_partner",
+  "prompt.stage.warden_forced",
+  "event.warden_pair_chosen",
+  "event.warden_partner_notified",
+  "event.warden_decision",
+  "event.warden_resolved",
+  "warden.choice.trade",
+  "warden.choice.betray",
+  "warden.outcome.protect",
+  "warden.outcome.force",
+  "warden.outcome.deal",
+  "death.deal",
+  "replay.stage.warden_pair_chosen",
+  "replay.stage.warden_partner_notified",
+  "replay.stage.warden_decision",
+  "replay.stage.warden_resolved",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];

@@ -4,6 +4,12 @@
  * 请求轨迹及其可变游标由 reproduction-trace 单独拥有；此模块不创建 Trace、不执行行动或修改游戏。
  * 精确 source／lock 检查仍由实际 replay 执行；用户原文不经过展示翻译改写。
  */
+import {
+  WARDEN_EVENT_TYPES,
+  readWardenFact,
+  wardenFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/warden";
+
 import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { verifyReproductionMechanisms } from "../verification/assembly";
 import { animalCheckpointSchema } from "./checkpoint/animal-format";
@@ -333,6 +339,9 @@ const requestSchema = z.strictObject({
     trickster_may_pass: z.boolean().optional(),
     swap_candidates: z.array(positive).optional(),
     shoot_candidates: z.array(positive).optional(),
+    warden_candidates: z.array(z.number().int().positive()).optional(),
+    warden_partner_id: z.number().int().positive().optional(),
+    warden_forced_target: z.number().int().positive().optional(),
     silence_candidates: z.array(positive).optional(),
     silence_target_id: positive.optional(),
     silence_translator_id: positive.nullable().optional(),
@@ -633,6 +642,16 @@ const schema2 = z.strictObject({
           (!readDeathShotMissFact(event.type, event.payload) || event.audience !== undefined)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_magician_shot_miss_invalid" });
+        if ((WARDEN_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const f = readWardenFact(event.type, event.payload);
+          if (
+            !f ||
+            (wardenFactAudience(f.type) === "god"
+              ? event.audience?.length !== 0
+              : event.audience?.length !== 1 || event.audience[0] !== f.payload.actorId)
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_warden_fact_invalid" });
+        }
         if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type)) {
           const f = readSilenceElderFact(event.type, event.payload);
           const visibility = f && silenceElderFactAudience(f.type);
@@ -757,6 +776,7 @@ const schema2 = z.strictObject({
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          !(WARDEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type) &&
           event.type !== "crow_curse_chosen" &&
           event.type !== "nightmare_fear_committed" &&

@@ -22,6 +22,7 @@ import {
   isPureWhitePreset,
   isGhostBridePreset,
 } from "./support";
+import { isWardenPreset } from "./support/warden";
 import { isCrowPreset } from "./support/crow";
 import { isSilenceElderPreset } from "./support/silence-elder";
 import { Role, WinCondition } from "@ai-werewolf-arena/game-contract";
@@ -167,5 +168,10 @@ export function boardPresetViolation(config: ReadonlyBoardConfig) {
     !isSilenceElderPreset(config)
   )
     return "silence_elder_preset_invalid";
+  if (
+    (config.warden || config.roleSetups.some((row) => row.role === Role.Warden && row.count > 0)) &&
+    !isWardenPreset(config)
+  )
+    return "warden_preset_invalid";
   return null;
 }

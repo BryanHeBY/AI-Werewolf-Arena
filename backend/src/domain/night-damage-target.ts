@@ -30,6 +30,8 @@ export type NightDamageTargetEffects = Readonly<
   >
 > & {
   readonly modifierDeaths?: readonly NightLifeReadScope[];
+  readonly wardenProtections?: NightDamageEffects["wardenProtections"];
+  readonly wardenDeals?: NightDamageEffects["wardenDeals"];
 };
 
 /** 在原印记处理时点解析一个目标，不提前快照效果或重查有效性。 */
@@ -72,10 +74,16 @@ export function resolveNightDamageTarget(
   const hasPoison = hasDirectPoison || nightPoisonRouteTargets(mechanical, entityId, "reflected");
   // 毒独立于普通守护／解药冲突；不能被同守同救抵消。
   const dreamProtected = effects.protectedTargets?.includes(entityId) === true;
+  // 交易保护携真实原体和已付predicate；不能用座位集合保护同号新身体，也不并入全伤害免疫。
+  const wardenProtected =
+    effects.wardenProtections?.some(
+      (claim) =>
+        claim.target.id === entityId && claim.isCurrent() && livingNightLife(world, claim.target),
+    ) === true;
   const mechanicalShield = mechanical.shields.has(entityId);
   const awakenedShield = awakenedShields.has(entityId);
   if (foxInspections.has(entityId) && !dreamProtected) sources.push(DeathCause.FoxInspection);
-  if (hasPoison && !dreamProtected && !awakenedShield) {
+  if (hasPoison && !dreamProtected && !awakenedShield && !wardenProtected) {
     sources.push(DeathCause.Poison);
     // 只在真实毒接受点携带来源；direct 复用原已读旗标，不能另查印记或扩大源资格。
     // 已反射路由独立保留，即使同目标同时存在另一直接毒，也不合并其 cause 身份。
@@ -90,12 +98,19 @@ export function resolveNightDamageTarget(
     // 同守同救互相抵消，但若同时被狼刀命中仍会死亡。
     // 命令内保留先移除守护、再移除解药的原顺序；第二步失败不能撤销第一步。
     cancelOrdinaryProtection();
-    if (hasWolfKill && !dreamProtected && !mechanicalShield && !awakenedShield) {
+    if (
+      hasWolfKill &&
+      !dreamProtected &&
+      !mechanicalShield &&
+      !awakenedShield &&
+      !wardenProtected
+    ) {
       sources.push(DeathCause.WolfKill);
     }
   } else {
     if (
       hasWolfKill &&
+      !wardenProtected &&
       !dreamProtected &&
       !mechanicalShield &&
       !awakenedShield &&
@@ -131,7 +146,8 @@ export function resolveNightDamageTarget(
   if (blackBacklashes.has(entityId) && !nightImmune) sources.push(DeathCause.BlackMarketBacklash);
   if (backlashTargets.has(entityId) && !dreamProtected) sources.push(DeathCause.MerchantBacklash);
   if (radiantBacklashes.has(entityId) && !dreamProtected) sources.push(DeathCause.RadiantBacklash);
-  if (effects.consecutiveDeaths?.includes(entityId)) sources.push(DeathCause.Dream);
+  if (effects.consecutiveDeaths?.includes(entityId) && !wardenProtected)
+    sources.push(DeathCause.Dream);
 
   if (
     effects.modifierDeaths?.some(
@@ -139,5 +155,12 @@ export function resolveNightDamageTarget(
     )
   )
     sources.push(DeathCause.Ability);
+  if (
+    effects.wardenDeals?.some(
+      (claim) =>
+        claim.target.id === entityId && claim.isCurrent() && livingNightLife(world, claim.target),
+    )
+  )
+    sources.push(DeathCause.Deal);
   return sources;
 }

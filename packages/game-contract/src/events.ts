@@ -4,6 +4,8 @@
  * 声明不定义组件句柄、scope、回调或运行许可；数据读器、事实发表与玩家投影各持原验证／裁剪职责。
  * 历史事实不执行规则、不恢复库存或授权行动；类型声明不代替未知数据解析、复制或深冻结。
  */
+import type { WardenPayloadMap } from "./facts/warden";
+
 import type { NobleSecretBodyPayloadMap } from "./facts/noble-secret-body";
 import type { SilenceElderPayloadMap } from "./facts/silence-elder";
 import type { AnimalDreamPayloadMap } from "./facts/animal-dream";
@@ -64,7 +66,8 @@ export interface EventPayloadMap
     NobleSecretBodyPayloadMap,
     FragrantPairPayloadMap,
     AnimalDreamPayloadMap,
-    SilenceElderPayloadMap {
+    SilenceElderPayloadMap,
+    WardenPayloadMap {
   eclipse_swallowed: {
     actorId: EntityId;
     day: number;
@@ -593,6 +596,10 @@ export type GameEvent = {
       | "raven_unsealed"
       | "raven_knife_chosen"
       | "raven_knife_skipped"
+      | "warden_pair_chosen"
+      | "warden_partner_notified"
+      | "warden_decision"
+      | "warden_resolved"
       | "crow_curse_chosen"
       | "silence_chosen"
       | "silence_translation_declined"

@@ -8,6 +8,11 @@
  * 这里不提交行动、付款或更新知识。旧直接投影 API 已退出；未知受众或无效家族不得进入字段裁剪。
  */
 import {
+  WARDEN_EVENT_TYPES,
+  wardenFactAudience,
+} from "@ai-werewolf-arena/game-contract/facts/warden";
+
+import {
   ANIMAL_DREAM_EVENT_TYPES,
   animalDreamFactAudience,
 } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
@@ -317,6 +322,16 @@ function canViewAgentEventWithFacts(
       fact.actorId === actorId
     );
   }
+  if ((WARDEN_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readWardenFact", event.type, event.payload, prepared);
+    if (!fact || wardenFactAudience(fact.type) === "god") return false;
+    return (
+      fact.payload.actorId === actorId &&
+      "audience" in event &&
+      event.audience.length === 1 &&
+      event.audience[0] === actorId
+    );
+  }
   if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type)) {
     const fact = readAgentEventFact("readSilenceElderFact", event.type, event.payload, prepared);
     if (!fact) return false;
@@ -387,6 +402,10 @@ function projectPayload(
   queries: PreparedAgentEventProjectionQueries,
   prepared: PreparedAgentEvent,
 ): Record<string, unknown> {
+  if ((WARDEN_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readAgentEventFact("readWardenFact", event.type, event.payload, prepared);
+    return fact ? structuredClone(fact.payload) : {};
+  }
   if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(event.type)) {
     const fact = readAgentEventFact("readSilenceElderFact", event.type, event.payload, prepared);
     return fact ? structuredClone(fact.payload) : {};

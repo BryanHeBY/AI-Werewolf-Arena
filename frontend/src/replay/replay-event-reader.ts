@@ -2,6 +2,8 @@
  * 负责把纯数据复盘事件读取为玩家关联及画面效果。输入为 JSON 归档事件，输出为规范读取或拒绝，保各机制未知／畸形分支和用户原文。
  * 共享事实契约拥有结构解析，浏览器层只解释复盘，不授予游戏许可；不承诺归档边界外的任意 Proxy 零 trap。
  */
+import { WARDEN_EVENT_TYPES, readWardenFact } from "@ai-werewolf-arena/game-contract/facts/warden";
+
 import {
   ANIMAL_DREAM_EVENT_TYPES,
   readAnimalDreamFact,
@@ -125,6 +127,10 @@ const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
   red_moon_night_sealed: ["actorId"],
   red_moon_exile_delayed: ["actorId"],
   red_moon_delay_expired: ["actorId"],
+  warden_pair_chosen: ["actorId"],
+  warden_partner_notified: ["actorId", "partnerId"],
+  warden_decision: ["actorId"],
+  warden_resolved: ["actorId"],
   silence_chosen: ["actorId", "targetId"],
   silence_announced: ["targetId"],
   silence_gesture: ["actorId"],
@@ -368,6 +374,7 @@ function validKnownFields(type: string, p: Record<string, unknown>): boolean {
   if (type === "red_moon_night_sealed" || type === "red_moon_exile_delayed")
     return !!readRedMoonNextNightFact(type, p);
   if (type === "red_moon_delay_expired") return !!readRedMoonExpiryFact(type, p);
+  if ((WARDEN_EVENT_TYPES as readonly string[]).includes(type)) return !!readWardenFact(type, p);
   if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(type))
     return !!readSilenceElderFact(type, p);
   if (type === "crow_curse_chosen" || type === "crow_curse_applied") return !!readCrowFact(type, p);
@@ -741,6 +748,12 @@ export function readReplayEvent(
     if (safe.type === "order_prince_revote_started") {
       if (safe.phase !== "voting") return null;
       add(p.actorId);
+    }
+    if ((WARDEN_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (p.day !== safe.day || safe.phase !== "night") return null;
+      add(p.actorId);
+      if (Object.hasOwn(p, "partnerId")) add(p.partnerId);
+      if (Array.isArray(p.pair)) for (const id of p.pair) add(id);
     }
     if ((SILENCE_ELDER_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       if (p.day !== safe.day) return null;

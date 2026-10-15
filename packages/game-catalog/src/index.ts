@@ -395,10 +395,10 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "投票反击、特殊死亡",
   },
   {
-    id: PLANNED_ROLE_IDS.Warden,
-    status: "planned",
+    id: Role.Warden,
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/rules/awa-melbourne-warden-v1.md",
     mechanismSummary: "秘密交易/背叛决策",
   },
   {

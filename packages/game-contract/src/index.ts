@@ -242,3 +242,5 @@ export type { ComponentPresentationPart } from "./component-presentation-data";
 export { ACTION_REQUEST_CONTRACT } from "./request-version";
 
 export { GAME_PRESENTATION_CONTRACT } from "./presentation-version";
+
+export * from "./facts/warden";

@@ -105,6 +105,8 @@ const stages: Record<string, [string, string]> = {
   awakened_attack: ["觉醒隐狼额外刀", "Awakened Hidden Wolf extra knife"],
   role_inspection: ["具体角色查验", "Role inspection"],
   dreamer: ["摄梦人行动", "Dreamer action"],
+  warden_pair: ["典狱长配对", "Warden pairing"],
+  warden_decide: ["秘密交易决定", "Sealed trade decision"],
   silence_elder: ["长老禁言选择", "Elder silence choice"],
   silence_gesture: ["禁言动作表达", "Silenced gesture"],
   silence_translation: ["动作翻译", "Gesture interpretation"],
@@ -649,6 +651,7 @@ export function assertTransportEvents(
       ![
         "wolf",
         "wolf_king",
+        "warden",
         "white_wolf_king",
         "wolf_beauty",
         "wolf_witch",

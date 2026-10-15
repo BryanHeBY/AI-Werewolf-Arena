@@ -65,7 +65,7 @@ const roleNames = [
   { id: `${Role.WhiteCat}`, names: { "zh-CN": "白猫", en: "White Cat" } },
   { id: `${Role.FoxCub}`, names: { "zh-CN": "子狐", en: "Fox Cub" } },
   { id: `${Role.Pufferfish}`, names: { "zh-CN": "河豚", en: "Pufferfish" } },
-  { id: PLANNED_ROLE_IDS.Warden, names: { "zh-CN": "典狱长", en: "Warden" } },
+  { id: Role.Warden, names: { "zh-CN": "典狱长", en: "Warden" } },
   { id: `${Role.AwakenedIdiot}`, names: { "zh-CN": "觉醒愚者", en: "Awakened Village Idiot" } },
   { id: `${Role.AwakenedSeer}`, names: { "zh-CN": "觉醒预言家", en: "Awakened Seer" } },
   {

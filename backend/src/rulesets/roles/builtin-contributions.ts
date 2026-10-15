@@ -3,6 +3,7 @@
  * 输出为实际组合根使用的同一贡献对象；登记不执行初始化或展示，不调用 World、不复制库存。
  * 角色支持集合仍与既有运行集合一致，顺序不得由名称、文件系统或自动发现重排。
  */
+import { WARDEN_ROLE_PROFILE } from "../../features/warden/profile";
 import { CROW_ROLE_PROFILE } from "../../features/crow/profile";
 import { SILENCE_ELDER_ROLE_PROFILE } from "../../features/silence-elder/profile";
 import type { RoleContributions } from "./contracts";
@@ -89,6 +90,7 @@ export const BUILTIN_ROLE_CONTRIBUTIONS: readonly RoleContributions[] = [
   TRICKSTER_ROLE_PROFILE,
   ORDER_PRINCE_ROLE_PROFILE,
   CROW_ROLE_PROFILE,
+  WARDEN_ROLE_PROFILE,
   SILENCE_ELDER_ROLE_PROFILE,
   MAGICIAN_ROLE_PROFILE,
   RED_MOON_ROLE_PROFILE,

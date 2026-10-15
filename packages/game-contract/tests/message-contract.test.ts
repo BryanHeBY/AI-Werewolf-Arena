@@ -15,8 +15,8 @@ import {
 const fixedSequenceHash = "cd750ba72a9b5902562d650125797b2417126bdb82b2aaa199822b05cd22ec78";
 
 test("existing message IDs retain their exact sequence and presentation messages are appended", () => {
-  expect(MESSAGE_IDS).toHaveLength(1610);
-  expect(new Set(MESSAGE_IDS).size).toBe(1610);
+  expect(MESSAGE_IDS).toHaveLength(1638);
+  expect(new Set(MESSAGE_IDS).size).toBe(1638);
   expect(
     createHash("sha256")
       .update(JSON.stringify(MESSAGE_IDS.slice(0, 1513)))
@@ -122,6 +122,34 @@ test("existing message IDs retain their exact sequence and presentation messages
     "replay.stage.silence_expired",
     "bot.silence.gesture",
     "bot.silence.translation",
+    "role.warden.brief",
+    "role.warden.state",
+    "action.warden_pair.hint",
+    "action.warden_pair.directive",
+    "action.warden_decide.hint",
+    "action.warden_decide.directive",
+    "stage.warden_pair",
+    "stage.warden_decide",
+    "request.summary.warden_pair",
+    "request.summary.warden_decide",
+    "prompt.config.warden",
+    "prompt.stage.warden_candidates",
+    "prompt.stage.warden_partner",
+    "prompt.stage.warden_forced",
+    "event.warden_pair_chosen",
+    "event.warden_partner_notified",
+    "event.warden_decision",
+    "event.warden_resolved",
+    "warden.choice.trade",
+    "warden.choice.betray",
+    "warden.outcome.protect",
+    "warden.outcome.force",
+    "warden.outcome.deal",
+    "death.deal",
+    "replay.stage.warden_pair_chosen",
+    "replay.stage.warden_partner_notified",
+    "replay.stage.warden_decision",
+    "replay.stage.warden_resolved",
   ]);
 });
 

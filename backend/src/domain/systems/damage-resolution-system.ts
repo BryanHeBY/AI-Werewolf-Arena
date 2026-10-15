@@ -60,6 +60,7 @@ export class DamageResolutionSystem {
         !foxInspections.has(entityId) &&
         !inspectionSources.has(entityId) &&
         !effects.consecutiveDeaths?.includes(entityId) &&
+        !effects.wardenDeals?.some(claim=>claim.target.id===entityId) &&
         !mechanical.attacks.has(entityId) &&
         !awakenedAttacks.has(entityId) &&
         !mechanical.failures.has(entityId) &&

@@ -142,6 +142,7 @@ export interface SilenceElderConfig {
 export interface BoardConfig {
   crow?: CrowConfig;
   silenceElder?: SilenceElderConfig;
+  warden?: { policy: "awa_melbourne_warden_v1"; forcePolicy: "awa_warden_partner_native_v1" };
   animalDream?: { policy: "awa_animal_dream_v1"; eliminationPriority: "awa_wolf_priority_v1" };
   whiteCat?: { skippedVotePolicy: CatSkippedVotePolicy };
   pufferfish?: { ballotPolicy: PufferBallotPolicy };

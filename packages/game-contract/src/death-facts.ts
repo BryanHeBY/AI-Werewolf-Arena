@@ -4,6 +4,7 @@
  * 原生命、来源资格、保护效果及死亡枪回调仍归运行所有者；数据记录不授予结算权限。
  */
 export enum DeathCause {
+  Deal = "deal",
   WhiteCatExpiry = "white_cat_expiry",
   PufferRetaliation = "puffer_retaliation",
   FragrantLink = "fragrant_link",

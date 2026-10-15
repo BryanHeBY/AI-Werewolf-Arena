@@ -5,6 +5,8 @@
  * 角色和队友方法在 actor 参数之前查找；每个 World 读取保原位置，机制知识／权限仍归各原 owner。
  * 结构观察不提交行动、不克隆完整私有库存，也不提前执行自定义人设或角色展示回调；失败前缀保持。
  */
+import { wardenOwnKnowledge } from "../../features/warden/observation-ports";
+
 import {
   getWhiteWolfKingState,
   projectWhiteWolfKingState,
@@ -223,6 +225,8 @@ export function capturePlayerObservation(
     queries.world().getComponent(request.actorId, COMPONENT.Camp),
   );
   if (redMoon) ownState.redMoon = redMoon;
+  const warden = wardenOwnKnowledge(role, request.actorId);
+  if (warden) ownState.warden = warden;
   const silenceElder = projectSilenceElderState(role);
   if (silenceElder) ownState.silenceElder = silenceElder;
   const crow = projectCrowState(role);

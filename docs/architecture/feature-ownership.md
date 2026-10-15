@@ -45,6 +45,7 @@
 | thief                 | `backend/src/features/thief/`                 | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
 | time-wolf-consort     | `backend/src/features/time-wolf-consort/`     | `recording/verification/time-wolf-consort/`                    |
 | trickster             | `backend/src/features/trickster/`             | `recording/verification/trickster/`                            |
+| warden                | `backend/src/features/warden/`                | `recording/verification/warden/`                              |
 | villager              | `backend/src/features/villager/`              | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
 | white-wolf-king       | `backend/src/features/white-wolf-king/`       | 无本族专属validator；按真实共同格式／执行路径登记，不自动判N/A |
 | wild-child            | `backend/src/features/wild-child/`            | `recording/verification/wild-child/`                           |

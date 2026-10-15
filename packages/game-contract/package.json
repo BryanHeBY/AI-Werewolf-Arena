@@ -43,7 +43,8 @@
     "./role-inspection-policy": "./src/role-inspection-policy.ts",
     "./night-ability-views": "./src/night-ability-views.ts",
     "./facts/crow": "./src/facts/crow.ts",
-    "./facts/silence-elder": "./src/facts/silence-elder.ts"
+    "./facts/silence-elder": "./src/facts/silence-elder.ts",
+    "./facts/warden": "./src/facts/warden.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -171,6 +172,9 @@
       ],
       "facts/silence-elder": [
         "src/facts/silence-elder.ts"
+      ],
+      "facts/warden": [
+        "src/facts/warden.ts"
       ]
     }
   }

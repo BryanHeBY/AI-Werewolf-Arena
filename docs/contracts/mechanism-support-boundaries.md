@@ -71,3 +71,10 @@ Tape3 仅在自身明确保存返回候选时重交原值；旧 Tape2 或字段�
 ## 公共 API
 
 跨模块使用当前 package exports 和具名公共端口，不承诺旧物理深路径、未知动态导入或任意 JavaScript／Proxy 观察兼容。代码文件、注释和导出调整可能改变源码指纹；不得回写历史归档身份来掩盖不兼容。
+
+
+## 典狱长有限组合
+
+[典狱长规则](../rules/awa-melbourne-warden-v1.md)只开放三普狼＋典狱长＋四民＋预女猎梦原十二人板，见[完整示例](../examples/warden/README.md)。运行 `features/warden` 拥有唯一不可变历史、每人一次参与资格、pair／独立decide窗口及已付原体效果；`rulesets/warden-native-target-validation.ts` 仅为原生个人技能增加partner限制，不更改团队刀票。
+
+夜伤将保护与 `Deal` 分开：交易保护晚查原体及已付predicate，仅免普通刀／毒／梦；Deal保留独立死因且纯Deal不授枪。摄梦Frame复用其既有夜源连锁保护端口，不把交易保护加入Shot免疫。`recording/verification/warden/validate.ts` 在实际assembly登记，独立验一次参与、秘密受众、四格表、原生目标与按真实settleOrder的完整／失败CP；它不读取生产窗口作oracle。God archive含完整决定，玩家导出逐人只含自己的pair或通知／决定。

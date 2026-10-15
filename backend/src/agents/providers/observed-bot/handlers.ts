@@ -49,6 +49,8 @@ import {
 } from "./copied";
 import {
   fear,
+  wardenPair,
+  wardenDecide,
   curseExile,
   silence,
   gesture,
@@ -75,6 +77,8 @@ import {
 
 /** 保持原工具优先级和随机抽取次序，避免相同 seed 的严格 Tape 因装配顺序变化而漂移。 */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  {tool:"warden_pair",decide:wardenPair},
+  {tool:"warden_decide",decide:wardenDecide},
   {
     tool: "fox_distract",
     decide: ({ request, pick, style, random }) => ({

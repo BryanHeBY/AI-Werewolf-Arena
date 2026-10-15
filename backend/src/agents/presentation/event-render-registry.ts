@@ -1,6 +1,8 @@
 /**
  * 负责按事件类型装配脚本和终端的展示贡献。输入为事件、私有输出选项与语言；输出为原聊天行和分类文本。保留各贡献的读取、受众与分派顺序，不提交行动、改写事实或重算历史阵营。事件文案消费共享展示 owner，自定义贡献仍保留原接口。
  */
+import { wardenEventLabel } from "@ai-werewolf-arena/game-presentation";
+
 import { nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-presentation";
 import {
@@ -614,6 +616,8 @@ export class ScriptEventRenderRegistry {
     if (magician !== null) return magician;
     const redMoon = redMoonEventLabel(event.type, event.payload, locale);
     if (redMoon !== null) return redMoon;
+    const warden = wardenEventLabel(event.type, event.payload, locale);
+    if (warden !== null) return warden;
     const silence = silenceElderEventLabel(event.type, event.payload, locale);
     if (silence !== null) return silence;
     const crow = crowEventLabel(event.type, event.payload, locale);
@@ -734,6 +738,11 @@ export class ScriptEventRenderRegistry {
           : [];
     const nightmare = nightmareEventLabel(event.type, event.payload, locale);
     if (nightmare !== null) return printPrivateEvents ? [{ kind: "god", text: nightmare }] : [];
+    const warden = wardenEventLabel(event.type, event.payload, locale);
+    if (warden !== null)
+      return printPrivateEvents
+        ? [{ kind: event.type === "warden_resolved" ? "god" : "private", text: warden }]
+        : [];
     const silence = silenceElderEventLabel(event.type, event.payload, locale);
     if (silence !== null) {
       const type = SILENCE_ELDER_EVENT_TYPES.find((type) => type === event.type)!;

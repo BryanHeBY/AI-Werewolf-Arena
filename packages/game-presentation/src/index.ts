@@ -55,3 +55,5 @@ export { animalDreamEventLabel } from "./events/animal-dream";
 export { crowEventLabel } from "./events/crow";
 
 export { silenceElderEventLabel } from "./events/silence-elder";
+
+export { wardenEventLabel } from "./events/warden";
