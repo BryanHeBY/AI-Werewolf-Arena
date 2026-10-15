@@ -47,7 +47,7 @@ test("fault input is independent immutable data and actually replaces the origin
   ).toEqual(["f1"]);
   expect(w.getComponent(6, COMPONENT.Alive)).not.toBe(before);
   expect(w.getComponent(6, COMPONENT.Alive)!.alive).toBe(true);
-  expect(applied).toEqual([
+  expect<unknown>(applied).toEqual([
     { step: readFaultPlan(plan()).steps[0], originalVersion: 0, replacementVersion: 0 },
   ]);
   expect(Object.isFrozen(runtime.plan.steps[0]!.mutation)).toBe(true);

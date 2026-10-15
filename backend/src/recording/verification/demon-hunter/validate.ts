@@ -210,7 +210,10 @@ export function validateDemonHunterRecord(
         equal(op.input, { tool: "demon_hunt", args: call.args }),
     );
   }
-  const plan = record.metadata.faultPlan ? readFaultPlan(record.metadata.faultPlan) : null,
+  const plan =
+      record.metadata.faultPlan?.version === "awa_fault_plan_v1"
+        ? readFaultPlan(record.metadata.faultPlan)
+        : null,
     faults = record.operations.filter((o) => o.op === "fault_applied"),
     applied = new Map<number, string>();
   for (let index = 0; index < faults.length; index++) {

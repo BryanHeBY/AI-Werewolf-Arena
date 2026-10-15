@@ -14,6 +14,12 @@ JSON.stringify在宽写入catch外的既有位置，编码失败仍传播；宽c
 
 Trace记录issued request、selection／operation／完成及真实失败CP。completion由具体领域窗口在完成其既定处理后结算，不等同于库存付款：遗言没有库存，墙报的合法空回复或经窗口处理的拒绝也可以正常完成。涉及资源提交的窗口仍按其原契约核对付款；partial false保存已经发生的世界前缀。当前Tape3在实际false结算时保存已安全复制的`returnedCandidate`，outcome仍为error；真Provider抛错或交付检查早拒不保存该字段。历史Tape2保持原shape，不补候选；字段缺席不能推成null。候选、窗口完成和付款分别核对，具体完成责任见[行动请求契约](action-requests.md)，版本见[档案兼容](archive-compatibility.md)。
 
+## 显式故障因果
+
+受控外部换体必须作为离线输入进入既有 `metadata.faultPlan`，由录制和重放共用的故障所有者执行。`awa_fault_plan_v1` 保留猎魔决策后、夜来源冻结前的原协议；`awa_noble_request_fault_plan_v1` 只接受单步、具名的贵族请求正常返回边界，限定当前含猎魔者的 canonical Noble 板及 `secret_body`、`night_noble`、`awakened_idiot_reveal_speech` 三个窗口。新协议只用于严格 Tape3，不授予任意组件补丁或脚本执行能力。
+
+贵族故障先替换声明行动者或所选目标的真实生命组件并消费步骤，再写入必需的 `noble_request_fault_applied` 因果操作；晚记录失败保留换体前缀，计划不能再次执行。正常返回候选继续交原机制复验，不能删除候选或根据错误码推测换体。独立审计交叉核对计划、候选、操作和末 checkpoint；精确重放按同一明确输入实际执行。未记录的任意测试闭包修改不具备这种复现保证。
+
 ## 三层不同保证
 
 1. 公共reader：格式／已声明版本／payload和玩家关联合法，可读历史公开档；不执行规则。

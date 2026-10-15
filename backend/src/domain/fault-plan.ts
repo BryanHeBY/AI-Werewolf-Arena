@@ -1,6 +1,6 @@
 /**
  * 负责离线故障计划的数据复制、结构校验与冻结；输入外部计划，输出已校验的独立数据。
- * 只接受既有猎魔决策后、夜来源冻结前的替换生命步骤，计划执行和实际 World 写入归引擎。
+ * 保留猎魔来源冻结前的原 v1；另有显式贵族请求返回点单步协议，计划执行和实际 World 写入归引擎。
  * 读取先拒绝 Node Proxy 与访问器，解析失败保原错误；数据计划本身不授予运行身份或行动权限。
  */
 import { types } from "node:util";
@@ -37,8 +37,34 @@ const faultPlanSchema = z
       plan.steps.every((step, index) => index === 0 || step.at.day > plan.steps[index - 1]!.at.day),
     "fault_plan_order_invalid",
   );
-export type FaultPlan = z.infer<typeof faultPlanSchema>;
-export type FaultStep = FaultPlan["steps"][number];
+/** 贵族仅重放这三个实际请求边界；独立版本不把旧猎魔协议扩成任意 World patch。 */
+const nobleRequestFaultPlanSchema = z.strictObject({
+  version: z.literal("awa_noble_request_fault_plan_v1"),
+  steps: z.tuple([
+    z.strictObject({
+      id: z.string().regex(/^[a-z][a-z0-9_-]{0,63}$/),
+      at: z.strictObject({
+        day: positive,
+        point: z.literal("after_provider_return"),
+        afterDecision: z.strictObject({
+          actorId: positive,
+          stage: z.enum(["secret_body", "night_noble", "awakened_idiot_reveal_speech"]),
+          turn: z.literal(1),
+        }),
+      }),
+      mutation: z.strictObject({
+        kind: z.literal("replace_alive_component"),
+        playerId: positive,
+        alive: z.literal(true),
+      }),
+    }),
+  ]),
+});
+export type DemonFaultPlan = z.infer<typeof faultPlanSchema>;
+export type NobleRequestFaultPlan = z.infer<typeof nobleRequestFaultPlanSchema>;
+export type FaultPlan = DemonFaultPlan | NobleRequestFaultPlan;
+export type FaultStep = DemonFaultPlan["steps"][number];
+export type NobleRequestFaultStep = NobleRequestFaultPlan["steps"][number];
 
 /** 按自身数据描述符复制；数值先原样传递，其有限性和业务范围留给后续 schema 校验。 */
 export function readFaultPlanData(value: unknown, seen = new Set<object>(), depth = 0): unknown {
@@ -90,5 +116,13 @@ function deepFreeze<T>(value: T): T {
 }
 /** 严格按复制 → schema parse → 深冻结执行；任一步抛错即停止，未执行任何故障步骤。 */
 export function readFaultPlan(value: unknown): FaultPlan {
-  return deepFreeze(faultPlanSchema.parse(readFaultPlanData(value)));
+  const data = readFaultPlanData(value);
+  // 数据副本无 getter／Proxy；新版本显式分支，旧 v1 仍交原 schema，保原无效输入错误。
+  return deepFreeze(
+    data &&
+      typeof data === "object" &&
+      (data as { version?: unknown }).version === "awa_noble_request_fault_plan_v1"
+      ? nobleRequestFaultPlanSchema.parse(data)
+      : faultPlanSchema.parse(data),
+  );
 }

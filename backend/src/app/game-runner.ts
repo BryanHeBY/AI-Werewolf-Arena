@@ -61,6 +61,8 @@ export interface GameRunResult {
  * 期限选择回调返回绝对时间，只参与取最小值；关闭观察回调接收脱离副本，异常归清理失败。
  */
 export interface GameRunDependencies {
+  /** 可信 controller 的显式离线故障数据；进入原 metadata.faultPlan，同一 owner 在录制和重放消费，不是模型／JSON 配置。 */
+  faultPlan?: unknown;
   selectRequestDeadline?: (
     request: Readonly<{
       actorId: number;
@@ -132,6 +134,7 @@ export async function runGame(
         entry.name !== undefined ? [[seat, entry.name]] : [],
       ),
     ),
+    ...(dependencies.faultPlan !== undefined ? { faultPlan: dependencies.faultPlan } : {}),
   });
   const profilesByActor = selectPlayerProfiles(context.world, setup);
   const sessionId = buildSessionId();

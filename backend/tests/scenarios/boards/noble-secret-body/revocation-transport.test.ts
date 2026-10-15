@@ -1,9 +1,8 @@
 /**
  * 真实传输撤销场景验证原贵族／躯体生命被替换后，未结束请求会取消。输入为实际 turn 开启、
- * 受控原角色／生命替换及迟到模型回复；撤销后无消费／提交选择与原字面部分 checkpoint／wire
+ * 显式归档的单步生命替换与原模型回复；同一故障 owner 在录制／严格重放执行，撤销后无消费／提交选择与原字面部分 checkpoint／wire
  * 结果是独立预期。不调用计费模型，也不重写 fixture 或 Tape 预期字节。
  */
-import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, spyOn, test } from "bun:test";
 import {
   COMPONENT,
@@ -26,7 +25,7 @@ const rank: Partial<Record<ActionStage, number>> = {
   night_noble: 450,
 };
 // 仅测试使用的监督点：真实传输回复已返回，但领域提交尚未执行。
-// 只锁定 runner 的首个管理器，避免影响后续严格 Tape 重放。
+// 只锁定 runner 的首个管理器观察原引用；不写生命，不在 replay 注入另一份镜像故障。
 for (const [stage, old, changed] of [
   ["secret_body", 5, "actor"],
   ["secret_body", 5, "target"],
@@ -57,7 +56,29 @@ for (const [stage, old, changed] of [
                   : t,
               ),
           );
+        const playerId =
+          changed === "actor" ? actorId : scenario.mapping.get(stage === "secret_body" ? 7 : 6)!;
+        const faultPlan = {
+          version: "awa_noble_request_fault_plan_v1" as const,
+          steps: [
+            {
+              id: "noble_original_life_replaced",
+              at: {
+                day,
+                point: "after_provider_return" as const,
+                afterDecision: { actorId, stage, turn: 1 as const },
+              },
+              mutation: {
+                kind: "replace_alive_component" as const,
+                playerId,
+                alive: true as const,
+              },
+            },
+          ] as [import("../../../../src/domain/fault-plan").NobleRequestFaultStep],
+        };
         let manager: PhaseManager | undefined,
+          previousLife: AliveComponent | undefined,
+          observedWorld: World | undefined,
           fired = 0;
         const original = PhaseManager.prototype.runSingleCycle,
           spy = spyOn(PhaseManager.prototype, "runSingleCycle").mockImplementation(async function (
@@ -82,18 +103,10 @@ for (const [stage, old, changed] of [
                     expect(action).toEqual(
                       turns.get(actorId)!.find((t) => t.day === day && t.stage === stage)!.action,
                     );
-                    const id =
-                        changed === "actor"
-                          ? actorId
-                          : scenario.mapping.get(stage === "secret_body" ? 7 : 6)!,
-                      previous = world.getComponent(id, COMPONENT.Alive),
-                      replacement = createAliveComponent(true, locale);
-                    expect(Number.isSafeInteger(id)).toBe(true);
-                    expect(previous).toBeDefined();
-                    world.addComponent(id, COMPONENT.Alive, replacement);
-                    expect(world.getComponent(id, COMPONENT.Alive)).toBe(replacement);
-                    expect(replacement).not.toBe(previous);
-                    expect(replacement.alive).toBe(true);
+                    previousLife = world.getComponent(playerId, COMPONENT.Alive);
+                    observedWorld = world;
+                    expect(Number.isSafeInteger(playerId)).toBe(true);
+                    expect(previousLife).toBeDefined();
                     fired++;
                   }
                   return action;
@@ -104,12 +117,19 @@ for (const [stage, old, changed] of [
           });
         try {
           const run = await runTransportGame(
-              { ...scenario, turns, expectedFailure: { actorId, stage } },
+              { ...scenario, turns, faultPlan, expectedFailure: { actorId, stage } },
               kind,
               locale,
             ),
             cp = run.record.checkpoints.at(-1)!;
           expect(fired).toBe(1);
+          const replacement = observedWorld!.getComponent(playerId, COMPONENT.Alive)!;
+          expect(replacement).not.toBe(previousLife);
+          expect(replacement.alive).toBe(true);
+          expect(run.record.metadata.faultPlan).toEqual(faultPlan);
+          expect(
+            run.record.operations.filter((op) => op.op === "noble_request_fault_applied"),
+          ).toHaveLength(1);
           assertNobleTransportWire(run);
           expect(cp.complete).toBe(false);
           expect(cp.snapshot.gameOver).toBe(false);

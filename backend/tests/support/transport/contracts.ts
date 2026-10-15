@@ -61,6 +61,8 @@ export interface ActorTransportPlan {
 }
 
 export interface TransportGameScenario {
+  /** 显式离线输入经真实 controller/metadata 交原故障 owner；不是在 replay 另造一份镜像 mutation。 */
+  faultPlan?: import("../../../src/domain/fault-plan").FaultPlan;
   expectedFailure?: { actorId: number; stage: string };
   board: ResolvedBoardDefinition;
   seed: string;

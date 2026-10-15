@@ -158,7 +158,7 @@ export class PhaseManager {
     installFragrantGameSetup(config, { world: () => world, events: () => this.events });
     if (options.faultPlan !== undefined) {
       if (demonHunterActorId(world) === null) throw new Error("fault_plan_demon_board_required");
-      this.nightFaultPlan = new NightFaultPlan(world, options.faultPlan);
+      this.nightFaultPlan = new NightFaultPlan(world, options.faultPlan, !!config.nobleSecretBody);
     }
     this.eventRegistry = new EventRegistry();
     this.deathResolution = new DeathResolution(
@@ -364,6 +364,31 @@ export class PhaseManager {
     });
     if (this.state.gameOver) {
       return this.getSnapshot();
+    }
+    // 只有明确声明的贵族因果计划才接这一正常返回边界；普通运行不增加代理或 World 读取。
+    if (this.nightFaultPlan?.plan.version === "awa_noble_request_fault_plan_v1") {
+      const faultPlan = this.nightFaultPlan,
+        underlying = actionProvider;
+      actionProvider = {
+        getAction: async (request) => {
+          const action = await underlying.getAction(request);
+          faultPlan.applyAfterProviderReturn(request, action, (fault) => {
+            getSessionRecorder()?.recordRequiredLogicOp({
+              scope: "resolution",
+              op: "noble_request_fault_applied",
+              actorId: request.actorId,
+              phase: request.phase,
+              status: "ok",
+              input: { version: "awa_noble_request_fault_plan_v1", step: fault.step },
+              output: {
+                originalVersion: fault.originalVersion,
+                replacementVersion: fault.replacementVersion,
+              },
+            });
+          });
+          return action;
+        },
+      };
     }
     if (demonHunterActorId(this.world) !== null) {
       const underlying = actionProvider;

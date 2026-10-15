@@ -1,11 +1,16 @@
 /**
- * 负责在声明的决策与来源冻结边界执行显式夜间故障计划。输入为计划描述与当前 World 引用；
+ * 负责在声明的猎魔来源冻结或贵族请求返回边界执行显式离线故障计划。输入为计划描述与当前 World 引用；
  * 输出保留实际故障及计划消费检查。这个受控故障驱动不创造正常角色动作，也不改变 RNG 抽取顺序。
  */
 import { createAliveComponent } from "../agents/observation/component-presentation";
 import { types } from "node:util";
 import { z } from "zod";
-import { readFaultPlan, type FaultPlan, type FaultStep } from "../domain/fault-plan";
+import {
+  readFaultPlan,
+  type FaultPlan,
+  type FaultStep,
+  type NobleRequestFaultStep,
+} from "../domain/fault-plan";
 export { readFaultPlan, type FaultPlan, type FaultStep } from "../domain/fault-plan";
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 function inputData(value: unknown): unknown {
@@ -18,6 +23,10 @@ import {
   aliveLifeVersion,
   aliveLifeDescriptor,
   type AliveComponent,
+  type ActionRequest,
+  type ToolCall,
+  Role,
+  Phase,
   type World,
 } from "../domain";
 
@@ -40,14 +49,18 @@ export interface AppliedFault {
 /** 显式离线输入驱动故障；不依据取消事实反推或触发故障执行。 */
 export class NightFaultPlan {
   readonly plan: FaultPlan;
+  private requestTurns = new Map<string, number>();
   private readonly consumed = new Set<string>();
   private lastDay = 0;
   private failed = false;
   constructor(
     private readonly world: World,
     input: unknown,
+    allowNobleRequest = false,
   ) {
     this.plan = readFaultPlan(input);
+    if (this.plan.version === "awa_noble_request_fault_plan_v1" && !allowNobleRequest)
+      throw new Error("fault_plan_noble_board_required");
     for (const step of this.plan.steps)
       if (
         !world.hasEntity(step.at.afterDecision.actorId) ||
@@ -63,6 +76,7 @@ export class NightFaultPlan {
     recordApplied: (fault: AppliedFault) => void,
   ): readonly string[] {
     if (this.failed) throw new Error("fault_plan_failed");
+    if (this.plan.version !== "awa_fault_plan_v1") return [];
     try {
       return this.apply(day, decision, recordApplied);
     } catch (error) {
@@ -77,6 +91,7 @@ export class NightFaultPlan {
     decision: FaultDecisionBoundary | null,
     recordApplied: (fault: AppliedFault) => void,
   ): readonly string[] {
+    if (this.plan.version !== "awa_fault_plan_v1") return [];
     if (
       typeof recordApplied !== "function" ||
       types.isProxy(recordApplied) ||
@@ -154,6 +169,106 @@ export class NightFaultPlan {
       throw new Error("fault_plan_recorder_not_sync");
     }
     return Object.freeze([step.id]);
+  }
+
+  /**
+   * 显式贵族故障只在真实 Provider 正常返回后、原领域资格复验前执行。
+   * 候选仍是候选，不伪造 paid/错误；替换本身先提交，必需因果记录失败不回滚，失败计划不再重试。
+   * 无此计划时 PhaseManager 不安装此代理；旧猎魔冻结端口也不消费这些请求步骤。
+   */
+  applyAfterProviderReturn(
+    request: ActionRequest,
+    action: ToolCall | null,
+    recordApplied: (fault: {
+      step: NobleRequestFaultStep;
+      originalVersion: number;
+      replacementVersion: number;
+    }) => void,
+  ): void {
+    if (this.failed) throw new Error("fault_plan_failed");
+    if (this.plan.version !== "awa_noble_request_fault_plan_v1") return;
+    const step = this.plan.steps[0],
+      after = step.at.afterDecision;
+    if (
+      request.actorId !== after.actorId ||
+      request.context.day !== step.at.day ||
+      request.context.stage !== after.stage
+    )
+      return;
+    const key = `${request.actorId}/${request.context.day}/${request.context.stage}`,
+      turn = (this.requestTurns.get(key) ?? 0) + 1;
+    this.requestTurns.set(key, turn);
+    try {
+      if (this.consumed.has(step.id) || turn !== after.turn)
+        throw new Error("fault_plan_boundary_repeated");
+      if (
+        typeof recordApplied !== "function" ||
+        types.isProxy(recordApplied) ||
+        types.isAsyncFunction(recordApplied) ||
+        types.isGeneratorFunction(recordApplied)
+      )
+        throw new Error("fault_plan_recorder_invalid");
+      const actorRole = this.world.getComponent(request.actorId, COMPONENT.Role)?.role,
+        reveal = after.stage === "awakened_idiot_reveal_speech",
+        tool = reveal
+          ? "speak"
+          : after.stage === "secret_body"
+            ? "protect_secret_body"
+            : "choose_servant";
+      if (
+        request.phase !== (reveal ? Phase.Voting : Phase.Night) ||
+        actorRole !== (after.stage === "night_noble" ? Role.NightNoble : Role.AwakenedIdiot) ||
+        !action ||
+        action.name !== tool ||
+        !(
+          step.mutation.playerId === request.actorId ||
+          (!reveal &&
+            (action.args as { target_id: number | null }).target_id === step.mutation.playerId)
+        )
+      )
+        throw new Error("fault_plan_decision_boundary_invalid");
+      const original = this.world.getComponent(step.mutation.playerId, COMPONENT.Alive),
+        version = original && aliveLifeVersion(original),
+        factory = original && aliveLifeDescriptor(original),
+        actual = original && Object.getOwnPropertyDescriptor(original, "alive");
+      if (
+        !original ||
+        types.isProxy(original) ||
+        version === undefined ||
+        !factory ||
+        !actual ||
+        actual.get !== factory.get ||
+        actual.set !== factory.set ||
+        actual.enumerable !== factory.enumerable ||
+        actual.configurable !== factory.configurable ||
+        original.alive !== true
+      )
+        throw new Error("fault_plan_original_life_invalid");
+      const replacement = createAliveComponent(true, this.world.locale);
+      this.world.addComponent(step.mutation.playerId, COMPONENT.Alive, replacement);
+      this.consumed.add(step.id);
+      // 使用与原 v1 相同的同步记录器规则；不能吞异步结果或执行任意 thenable。
+      const result: unknown = recordApplied({
+        step,
+        originalVersion: version,
+        replacementVersion: aliveLifeVersion(replacement)!,
+      });
+      if (result !== undefined) {
+        if (
+          types.isPromise(result) &&
+          !types.isProxy(result) &&
+          Object.getPrototypeOf(result) === Promise.prototype &&
+          !Object.hasOwn(result, "constructor") &&
+          Object.getOwnPropertyDescriptor(Promise.prototype, "constructor")?.value === Promise &&
+          Object.getOwnPropertyDescriptor(Promise, Symbol.species)?.get === nativePromiseSpecies
+        )
+          nativePromiseThen.call(result, undefined, () => undefined);
+        throw new Error("fault_plan_recorder_not_sync");
+      }
+    } catch (error) {
+      this.failed = true;
+      throw error;
+    }
   }
 
   assertConsumed(): void {

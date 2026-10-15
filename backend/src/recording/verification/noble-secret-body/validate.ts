@@ -66,7 +66,9 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
     owns = !!board.nobleSecretBody;
   if (!owns) {
     check(
-      !board.nightNoble &&
+      record.metadata.faultPlan?.version !== "awa_noble_request_fault_plan_v1" &&
+        !record.operations.some((op) => op.op === "noble_request_fault_applied") &&
+        !board.nightNoble &&
         !board.awakenedIdiot &&
         !board.roleSetups.some((r) => [Role.NightNoble, Role.AwakenedIdiot].includes(r.role)) &&
         !record.operations.some(
@@ -131,6 +133,75 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
   );
   for (const p of roster.values())
     check(p.camp === ([Role.Wolf, Role.NightNoble].includes(p.role) ? Camp.Wolf : Camp.Good));
+  // 正常候选不解释生命换体；只有这份显式、单步且具名的外部因果能支撑同源重放。
+  const requestPlan =
+      record.metadata.faultPlan?.version === "awa_noble_request_fault_plan_v1"
+        ? record.metadata.faultPlan
+        : null,
+    requestFaults = record.operations.filter((op) => op.op === "noble_request_fault_applied");
+  if (!requestPlan) check(requestFaults.length === 0);
+  else {
+    check(record.schemaVersion === 3);
+    const step = requestPlan.steps[0],
+      point = step.at.afterDecision,
+      decisions = record.decisions.filter(
+        (d) =>
+          d.actorId === point.actorId &&
+          d.day === step.at.day &&
+          d.stage === point.stage &&
+          d.turn === point.turn,
+      ),
+      decision = decisions[0],
+      candidate = decision?.returnedCandidate,
+      reveal = point.stage === "awakened_idiot_reveal_speech",
+      expectedTool = reveal
+        ? "speak"
+        : point.stage === "secret_body"
+          ? "protect_secret_body"
+          : "choose_servant";
+    check(point.actorId === (point.stage === "night_noble" ? nobleId : bodyId));
+    check(requestFaults.length <= 1);
+    // 原增量 Trace 不附 operations，不能要求尚未归档的因果；最终包才同时审实际 op 与候选。
+    if (!record.finalized) check(requestFaults.length === 0);
+    if (requestFaults.length) {
+      const op = requestFaults[0]!;
+      check(
+        decisions.length === 1 &&
+          decision!.outcome.kind === "error" &&
+          candidate &&
+          candidate.name === expectedTool &&
+          (step.mutation.playerId === point.actorId ||
+            (!reveal &&
+              (candidate.args as { target_id: number | null }).target_id ===
+                step.mutation.playerId)) &&
+          decision!.request.phase === (reveal ? Phase.Voting : Phase.Night) &&
+          op.scope === "resolution" &&
+          op.status === "ok" &&
+          op.actor_id === point.actorId &&
+          op.phase === decision!.request.phase &&
+          op.event_count !== undefined &&
+          decision!.openedAtEventCount !== undefined &&
+          op.event_count >= decision!.openedAtEventCount &&
+          op.event_count <= record.checkpoints.at(-1)!.eventCount &&
+          equal(op.input, { version: "awa_noble_request_fault_plan_v1", step }) &&
+          equal(op.output, { originalVersion: 0, replacementVersion: 0 }) &&
+          !record.checkpoints.at(-1)!.complete &&
+          record.checkpoints.at(-1)!.snapshot.day === step.at.day,
+      );
+    }
+    // 命中具名步骤的返回候选必须有实际换体记录；不能删掉因果 operation 再借 false-close 证明撤权。
+    if (
+      record.finalized &&
+      candidate &&
+      candidate.name === expectedTool &&
+      (step.mutation.playerId === point.actorId ||
+        (!reveal &&
+          (candidate.args as { target_id: number | null }).target_id === step.mutation.playerId))
+    )
+      check(requestFaults.length === 1);
+    if (record.finalized && record.checkpoints.at(-1)!.complete) check(requestFaults.length === 1);
+  }
+
   const state: RecordedNobleBodyState = {
     nobleId,
     bodyId,

@@ -338,6 +338,7 @@ export async function runTransportGame(
         scenario.board,
       ),
       {
+        ...(scenario.faultPlan ? { faultPlan: scenario.faultPlan } : {}),
         selectRequestDeadline(request) {
           const targeted =
             failureTarget?.mode === "late" &&
