@@ -31,7 +31,7 @@ import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspect
 import { canMechanicalKnife } from "../../../../src/game/mechanisms/roles/mechanical_wolf/inheritance";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { MECHANICAL_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/mechanical_wolf/night_stages";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";

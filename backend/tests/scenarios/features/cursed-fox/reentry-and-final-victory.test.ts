@@ -14,7 +14,7 @@ import {
 } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/night_stages";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 

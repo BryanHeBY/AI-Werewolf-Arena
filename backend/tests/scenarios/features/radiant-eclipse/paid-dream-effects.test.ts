@@ -23,7 +23,7 @@ import { createShelterState } from "../../../../src/game/mechanisms/roles/radian
 import { installRadiantEclipseBoard } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
 import type { GameEvent } from "../../../../src/core/domain/events";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { ECLIPSE_SWALLOW_STAGE } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_stages";
 import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

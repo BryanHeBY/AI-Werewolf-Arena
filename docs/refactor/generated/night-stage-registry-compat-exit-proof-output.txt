@@ -1,0 +1,1 @@
+{"sources":19,"deleted":1,"exactRouteEdits":19,"tests":18,"barrels":1,"typedNodes":39727,"nodeArrays":7338,"noncommentLeaves":51548,"wholeInverseOutputs":38,"actualCurrentOutputs":38,"testBindingMappedOutputs":36,"physicalBindings":18,"controls":5,"oldIncoming":0}

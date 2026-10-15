@@ -13,7 +13,7 @@ import {
   wolfChatParticipants,
 } from "../../../../src/game/mechanisms/roles/wolf_team";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { getDefaultNightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { getDefaultNightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { findNightAbility, abilityStatus } from "../../../../src/game/mechanisms/roles/abilities";
 
 const matrix: Array<{

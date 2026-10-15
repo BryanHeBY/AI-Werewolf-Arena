@@ -35,7 +35,7 @@ import {
   refreshGargoyleInheritance,
 } from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
 import { refreshHiddenWolfInheritance } from "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
-import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

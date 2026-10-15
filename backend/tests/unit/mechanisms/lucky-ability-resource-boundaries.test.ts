@@ -38,7 +38,7 @@ import {
   recordOwnNightAction,
 } from "../../../src/game/mechanisms/roles/night_action_history";
 import { LUCKY_ABILITY_STAGE } from "../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage";
-import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

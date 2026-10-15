@@ -59,6 +59,6 @@ export * from "./sheriff/speaking_order";
 export * from "./sheriff/badge";
 export * from "./self_destruct/config_normalizer";
 export * from "./stages/night/contracts";
-export * from "./stages/night/night_stage_registry";
+export { NightStageRegistry, getDefaultNightStageRegistry } from "../../rulesets/night-stage-plan";
 export * from "./validation/tool_validation_rule_registry";
 export * from "./win_conditions/contracts";

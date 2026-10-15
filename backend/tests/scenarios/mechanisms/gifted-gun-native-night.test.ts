@@ -29,7 +29,7 @@ import {
   getDefaultRoleContributions,
   createRoleCatalog,
 } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 
 const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 

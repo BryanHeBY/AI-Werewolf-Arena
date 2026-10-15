@@ -30,7 +30,7 @@ import {
   getDefaultRoleContributions,
   createRoleCatalog,
 } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

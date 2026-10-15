@@ -41,7 +41,7 @@ import {
   wolfChatParticipants,
   wolfKnifeHolders,
 } from "../../../../src/game/mechanisms/roles/wolf_team";
-import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

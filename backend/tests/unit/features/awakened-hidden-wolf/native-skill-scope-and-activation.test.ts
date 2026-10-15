@@ -28,7 +28,7 @@ import { GameActionRequestFactory } from "../../../../src/game/engine/action_req
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import {
   allNightAbilities,
   findNightAbility,

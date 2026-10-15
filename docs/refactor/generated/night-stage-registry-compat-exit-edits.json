@@ -1,0 +1,126 @@
+{
+  "baseCommit": "b1b5a860e8556d4bc5d3cdafaf27bdcb0615f19c",
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "before": "export * from \"./stages/night/night_stage_registry\";",
+      "after": "export { NightStageRegistry, getDefaultNightStageRegistry } from \"../../rulesets/night-stage-plan\";",
+      "reason": "原star只有两值，当前明确同两值以免扩owner其它type exports，保原clause位置。"
+    },
+    {
+      "path": "backend/tests/scenarios/engine/awakened-proposal-settlement.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/features/cursed-fox/reentry-and-final-victory.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/native-shelter-and-borrowed-stock-matrices.test.ts",
+      "before": "import { getDefaultNightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { getDefaultNightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/inspection/seer-private-history.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/gifted-gun-native-night.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/granted-night-ability-execution.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/wolf-team-dynamic-night-scheduling.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/unit/configuration/radiant-eclipse-roundtrip.test.ts",
+      "before": "import { getDefaultNightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { getDefaultNightStageRegistry } from \"../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "before": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+      "after": "import { NightStageRegistry } from \"../../../src/rulesets/night-stage-plan\";",
+      "reason": "原具名绑定/别名不变，模块端点直达唯一规则集owner。"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+      "sha256": "f6459e866dacaf794795177c4649e3aef7395a5600b26e63fd07b55636c8a249",
+      "reason": "原纯具名两值兼容leaf退休，不保另一个wrapper。"
+    }
+  ]
+}

@@ -13,7 +13,7 @@ import {
 } from "../../../src/runtime/config/board_definition";
 import { configDiagnostic } from "../../../src/runtime/config/error_codes";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { getDefaultNightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { getDefaultNightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { isRadiantEclipsePreset } from "../../../src/rulesets";
 const dir = new URL("../../../../configs.example/boards/", import.meta.url);
 const raw = JSON.parse(await readFile(new URL("awa_radiant_eclipse_12_v1.json", dir), "utf8"));

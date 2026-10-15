@@ -9,7 +9,7 @@ import { DeathCause, Role, StatusMark, type BoardConfig } from "../../../src/cor
 import { captureNightLife, type NightAwakenedEffect } from "../../../src/core/domain/night_effects";
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import type { NightStageHandler } from "../../../src/game/mechanisms/stages/night/contracts";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
