@@ -53,6 +53,7 @@ import {
   ScriptReplayStageHandlers,
 } from "./contracts";
 import { GUARD_SCRIPT_LIVE_HANDLERS } from "../../features/guard/event-presenters";
+import { animalDreamLiveLabel } from "../../features/animal-dream/event-presenters";
 import { HUNTER_SCRIPT_JUDGE_HANDLERS } from "../../features/hunter/event-presenters";
 import { SEER_SCRIPT_LIVE_HANDLERS } from "../../features/seer/event-presenters";
 import { WITCH_SCRIPT_LIVE_HANDLERS } from "../../features/witch/event-presenters";
@@ -660,10 +661,12 @@ export class ScriptEventRenderRegistry {
     const animal = animalDreamEventLabel(event.type, event.payload, locale);
     if (animal !== null) {
       const visibility = animalDreamFactAudience(event.type as AnimalDreamEventType);
+      // 仅终端使用技能提示；共享裁判与回放标签保留原事实格式，受众边界不变。
+      const label = animalDreamLiveLabel(event.type, event.payload, locale) ?? animal;
       return visibility === "public"
-        ? [{ kind: "system", text: animal }]
+        ? [{ kind: "system", text: label }]
         : printPrivateEvents
-          ? [{ kind: visibility === "actor" ? "private" : "god", text: animal }]
+          ? [{ kind: visibility === "actor" ? "private" : "god", text: label }]
           : [];
     }
     const fragrant = fragrantPairEventLabel(event.type, event.payload, locale);

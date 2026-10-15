@@ -60,6 +60,19 @@ export const definition = {
     "bear.roar": [],
     "bear.quiet": [],
     "console.bear.report": ["day", "result"],
+    "console.animal.fox_choice": ["actor", "day", "target"],
+    "console.animal.fox_effect": ["actor", "beauty", "day", "knife", "target"],
+    "console.animal.knife_available": ["actor", "day"],
+    "console.animal.knife_blocked": ["actor", "day"],
+    "console.animal.beauty": ["actor", "charm", "day", "link", "target"],
+    "console.animal.puffer_decision": ["actor", "day", "decision"],
+    "console.animal.puffer_targets": ["actor", "day", "round", "targets"],
+    "console.animal.blocked": [],
+    "console.animal.not_blocked": [],
+    "console.animal.available": [],
+    "console.animal.unavailable": [],
+    "console.animal.activate": [],
+    "console.animal.pass": [],
     "replay.stage.bear_roared": [],
   },
 } as const satisfies MessageDefinition;
@@ -127,6 +140,21 @@ export const zhCN = {
   "bear.roar": "熊咆哮了",
   "bear.quiet": "熊没有咆哮",
   "console.bear.report": "第{day}天：{result}",
+  "console.animal.fox_choice": "{actor}号子狐第{day}夜迷惑目标：{target}",
+  "console.animal.fox_effect":
+    "第{day}夜：{actor}号子狐迷惑{target}号，整队狼刀{knife}，狼美人魅惑{beauty}",
+  "console.animal.knife_available": "{actor}号第{day}夜拥有狼刀资格",
+  "console.animal.knife_blocked": "{actor}号第{day}夜无狼刀资格，本夜跳过狼刀投票",
+  "console.animal.beauty":
+    "{actor}号狼美人第{day}轮：魅惑{charm}，牵连{link}，当前魅惑目标：{target}",
+  "console.animal.puffer_decision": "{actor}号河豚第{day}轮选择{decision}",
+  "console.animal.puffer_targets": "{actor}号河豚第{day}轮反击目标（第{round}轮票）：{targets}",
+  "console.animal.blocked": "已封锁",
+  "console.animal.not_blocked": "未封锁",
+  "console.animal.available": "可用",
+  "console.animal.unavailable": "不可用",
+  "console.animal.activate": "发动反击",
+  "console.animal.pass": "保留技能",
   "replay.stage.bear_roared": "熊公告",
 } as const satisfies Record<keyof typeof definition.parameters, string>;
 
@@ -200,6 +228,23 @@ export const en = {
   "bear.roar": "Bear roared",
   "bear.quiet": "Bear did not roar",
   "console.bear.report": "Day {day}: {result}",
+  "console.animal.fox_choice": "Fox Cub {actor}, night {day} distraction target: {target}",
+  "console.animal.fox_effect":
+    "Night {day}: Fox Cub {actor} distracts player {target}; pack knife {knife}; Wolf Beauty charm {beauty}",
+  "console.animal.knife_available": "Player {actor} is eligible for the knife on night {day}",
+  "console.animal.knife_blocked":
+    "Player {actor} is ineligible for the knife on night {day}; skip tonight's knife vote",
+  "console.animal.beauty":
+    "Wolf Beauty {actor}, cycle {day}: charm {charm}; death link {link}; current charm target: {target}",
+  "console.animal.puffer_decision": "Pufferfish {actor}, cycle {day}: {decision}",
+  "console.animal.puffer_targets":
+    "Pufferfish {actor}, cycle {day} retaliation targets (ballot round {round}): {targets}",
+  "console.animal.blocked": "blocked",
+  "console.animal.not_blocked": "not blocked",
+  "console.animal.available": "available",
+  "console.animal.unavailable": "unavailable",
+  "console.animal.activate": "activate retaliation",
+  "console.animal.pass": "preserve the ability",
   "replay.stage.bear_roared": "Bear announcement",
 } satisfies Record<keyof typeof definition.parameters, string>;
 

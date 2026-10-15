@@ -1,6 +1,6 @@
 /**
  * 包级单元／类型契约测试验证不绑定语言的消息标识。
- * 独立预期为原有 1513 键顺序摘要及明确追加的终端标签；输入包括未知键和可序列化消息引用。
+ * 独立预期为原有 1513 键顺序摘要及明确追加的终端标签与动物行动文案；输入包括未知键和可序列化消息引用。
  * DTO 不按每个键约束参数，运行参数格式归 game-text；本文件不加载词典、展示器、World 或模型。
  */
 import { expect, test } from "bun:test";
@@ -15,8 +15,8 @@ import {
 const fixedSequenceHash = "cd750ba72a9b5902562d650125797b2417126bdb82b2aaa199822b05cd22ec78";
 
 test("existing message IDs retain their exact sequence and console messages are appended", () => {
-  expect(MESSAGE_IDS).toHaveLength(1517);
-  expect(new Set(MESSAGE_IDS).size).toBe(1517);
+  expect(MESSAGE_IDS).toHaveLength(1530);
+  expect(new Set(MESSAGE_IDS).size).toBe(1530);
   expect(
     createHash("sha256")
       .update(JSON.stringify(MESSAGE_IDS.slice(0, 1513)))
@@ -29,6 +29,19 @@ test("existing message IDs retain their exact sequence and console messages are 
     "console.live.action",
     "console.live.private",
     "console.live.god_private",
+    "console.animal.fox_choice",
+    "console.animal.fox_effect",
+    "console.animal.knife_available",
+    "console.animal.knife_blocked",
+    "console.animal.beauty",
+    "console.animal.puffer_decision",
+    "console.animal.puffer_targets",
+    "console.animal.blocked",
+    "console.animal.not_blocked",
+    "console.animal.available",
+    "console.animal.unavailable",
+    "console.animal.activate",
+    "console.animal.pass",
   ]);
 });
 

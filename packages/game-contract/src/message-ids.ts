@@ -1520,6 +1520,19 @@ export const MESSAGE_IDS = Object.freeze([
   "console.live.action",
   "console.live.private",
   "console.live.god_private",
+  "console.animal.fox_choice",
+  "console.animal.fox_effect",
+  "console.animal.knife_available",
+  "console.animal.knife_blocked",
+  "console.animal.beauty",
+  "console.animal.puffer_decision",
+  "console.animal.puffer_targets",
+  "console.animal.blocked",
+  "console.animal.not_blocked",
+  "console.animal.available",
+  "console.animal.unavailable",
+  "console.animal.activate",
+  "console.animal.pass",
 ] as const);
 
 export type MessageKey = (typeof MESSAGE_IDS)[number];
