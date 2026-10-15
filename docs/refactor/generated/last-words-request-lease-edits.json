@@ -1,0 +1,421 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "edits": [
+        {
+          "beforeStart": 204,
+          "beforeEnd": 204,
+          "afterStart": 204,
+          "afterEnd": 237,
+          "before": "",
+          "after": "；独立交付租约 pin 原信封／来源字段、隔离坏别名并共享最早期限"
+        },
+        {
+          "beforeStart": 205,
+          "beforeEnd": 214,
+          "afterStart": 238,
+          "afterEnd": 249,
+          "before": "等待与校验后仍复验",
+          "after": "不能替代 World "
+        },
+        {
+          "beforeStart": 217,
+          "beforeEnd": 217,
+          "afterStart": 252,
+          "afterEnd": 287,
+          "before": "",
+          "after": "\n * 等待、网关及发表前均晚核租约，真正发表成功后才通知 true；"
+        },
+        {
+          "beforeStart": 219,
+          "beforeEnd": 221,
+          "afterStart": 289,
+          "afterEnd": 289,
+          "before": "成功",
+          "after": ""
+        },
+        {
+          "beforeStart": 225,
+          "beforeEnd": 226,
+          "afterStart": 293,
+          "afterEnd": 294,
+          "before": "都",
+          "after": "仍"
+        },
+        {
+          "beforeStart": 231,
+          "beforeEnd": 231,
+          "afterStart": 299,
+          "afterEnd": 300,
+          "before": "",
+          "after": "原"
+        },
+        {
+          "beforeStart": 233,
+          "beforeEnd": 247,
+          "afterStart": 302,
+          "afterEnd": 302,
+          "before": "异常保留原 finally ",
+          "after": ""
+        },
+        {
+          "beforeStart": 251,
+          "beforeEnd": 252,
+          "afterStart": 306,
+          "afterEnd": 306,
+          "before": "级",
+          "after": ""
+        },
+        {
+          "beforeStart": 606,
+          "beforeEnd": 606,
+          "afterStart": 660,
+          "afterEnd": 750,
+          "before": "",
+          "after": "\";\nimport { RequestLease, type RequestLeaseTurn } from \"../../../core/domain/request-lease"
+        },
+        {
+          "beforeStart": 1099,
+          "beforeEnd": 1099,
+          "afterStart": 1243,
+          "afterEnd": 1772,
+          "before": "",
+          "after": "\n\n/** 每个真实请求独立持有捕获日次和晚域查询，不透明对象不进入提示，也不能由 death_action_id 重建。 */\ninterface LastWordsRequestScope {\n  actorId: EntityId;\n  phase: Phase;\n  day: number;\n  current(): boolean;\n}\n\n// 复用唯一请求租约 owner；三个来源字段只 pin 创建时值／引用，不校验深层 JSON 或创建第二死亡许可。\nconst lastWordsRequests = RequestLease.window<LastWordsRequestScope>({\n  actorId: (scope) => scope.actorId,\n  phase: (scope) => scope.phase,\n  day: (scope) => scope.day,\n  stage: () => \"last_words\",\n  current: (scope) => scope.current(),\n}, 130, [\"trigger\", \"death_phase\", \"death_action_id\"]);"
+        },
+        {
+          "beforeStart": 2610,
+          "beforeEnd": 2610,
+          "afterStart": 3283,
+          "afterEnd": 3359,
+          "before": "",
+          "after": "let delivery: RequestLeaseTurn | undefined;\n      let failed = false;\n      "
+        },
+        {
+          "beforeStart": 3030,
+          "beforeEnd": 3030,
+          "afterStart": 3779,
+          "afterEnd": 3947,
+          "before": "",
+          "after": "const requestScope: LastWordsRequestScope = {\n          actorId: deadId,\n          phase,\n          day,\n          // 新交付政策在 create 后也完整查阶段／日次／终局；查询仍按原 scope→状态→真实 perm"
+        },
+        {
+          "beforeStart": 3031,
+          "beforeEnd": 3032,
+          "afterStart": 3948,
+          "afterEnd": 3972,
+          "before": "f",
+          "after": "t 顺序。\n          current:"
+        },
+        {
+          "beforeStart": 3034,
+          "beforeEnd": 3035,
+          "afterStart": 3974,
+          "afterEnd": 3991,
+          "before": "!",
+          "after": ") =>\n            "
+        },
+        {
+          "beforeStart": 3050,
+          "beforeEnd": 3052,
+          "afterStart": 4006,
+          "afterEnd": 4116,
+          "before": "||",
+          "after": "&&\n            this.runtime.state.phase === phase &&\n            this.runtime.state.day === day &&\n           "
+        },
+        {
+          "beforeStart": 3054,
+          "beforeEnd": 3054,
+          "afterStart": 4118,
+          "afterEnd": 4161,
+          "before": "",
+          "after": "this.runtime.state.gameOver &&\n            "
+        },
+        {
+          "beforeStart": 3127,
+          "beforeEnd": 3128,
+          "afterStart": 4234,
+          "afterEnd": 4235,
+          "before": ")",
+          "after": ","
+        },
+        {
+          "beforeStart": 3137,
+          "beforeEnd": 3137,
+          "afterStart": 4244,
+          "afterEnd": 4247,
+          "before": "",
+          "after": "};\n"
+        },
+        {
+          "beforeStart": 3138,
+          "beforeEnd": 3138,
+          "afterStart": 4248,
+          "afterEnd": 4398,
+          "before": "",
+          "after": "       lastWordsRequests.bind(requestScope, request);\n        delivery = lastWordsRequests.openDelivery(requestScope, request);\n        if (!delivery)"
+        },
+        {
+          "beforeStart": 3158,
+          "beforeEnd": 3161,
+          "afterStart": 4418,
+          "afterEnd": 4457,
+          "before": "等待前",
+          "after": "先保原 provider callee／receiver，再准备新增调用口；最"
+        },
+        {
+          "beforeStart": 3162,
+          "beforeEnd": 3169,
+          "afterStart": 4458,
+          "afterEnd": 4470,
+          "before": "分别复验；回复",
+          "after": "守卫后只调用已准备函数，"
+        },
+        {
+          "beforeStart": 3170,
+          "beforeEnd": 3182,
+          "afterStart": 4471,
+          "afterEnd": 4481,
+          "before": "会重开已经撤销的生命许可",
+          "after": "能晚读 .apply"
+        },
+        {
+          "beforeStart": 3183,
+          "beforeEnd": 3183,
+          "afterStart": 4482,
+          "afterEnd": 4694,
+          "before": "",
+          "after": "\n        const getAction = actionProvider.getAction;\n        const actionArguments: [typeof request] = [request];\n        const invokeAction = Reflect.apply.bind(Reflect);\n        if (!delivery.current()) return;"
+        },
+        {
+          "beforeStart": 3213,
+          "beforeEnd": 3213,
+          "afterStart": 4724,
+          "afterEnd": 4748,
+          "before": "",
+          "after": "invokeAction(getAction, "
+        },
+        {
+          "beforeStart": 3227,
+          "beforeEnd": 3232,
+          "afterStart": 4762,
+          "afterEnd": 4765,
+          "before": ".getA",
+          "after": ", a"
+        },
+        {
+          "beforeStart": 3237,
+          "beforeEnd": 3238,
+          "afterStart": 4770,
+          "afterEnd": 4771,
+          "before": "(",
+          "after": "A"
+        },
+        {
+          "beforeStart": 3239,
+          "beforeEnd": 3239,
+          "afterStart": 4772,
+          "afterEnd": 4775,
+          "before": "",
+          "after": "gum"
+        },
+        {
+          "beforeStart": 3240,
+          "beforeEnd": 3243,
+          "afterStart": 4776,
+          "afterEnd": 4778,
+          "before": "que",
+          "after": "nt"
+        },
+        {
+          "beforeStart": 3244,
+          "beforeEnd": 3245,
+          "afterStart": 4779,
+          "afterEnd": 4779,
+          "before": "t",
+          "after": ""
+        },
+        {
+          "beforeStart": 3260,
+          "beforeEnd": 3271,
+          "afterStart": 4794,
+          "afterEnd": 4794,
+          "before": "\n          ",
+          "after": ""
+        },
+        {
+          "beforeStart": 3272,
+          "beforeEnd": 3273,
+          "afterStart": 4795,
+          "afterEnd": 4804,
+          "before": "s",
+          "after": "delivery."
+        },
+        {
+          "beforeStart": 3274,
+          "beforeEnd": 3278,
+          "afterStart": 4805,
+          "afterEnd": 4805,
+          "before": "opeC",
+          "after": ""
+        },
+        {
+          "beforeStart": 3286,
+          "beforeEnd": 3506,
+          "afterStart": 4813,
+          "afterEnd": 4813,
+          "before": " ||\n          this.runtime.state.phase !== phase ||\n          this.runtime.state.day !== day ||\n          this.runtime.state.gameOver ||\n          !this.runtime.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id",
+          "after": ""
+        },
+        {
+          "beforeStart": 3507,
+          "beforeEnd": 3527,
+          "afterStart": 4814,
+          "afterEnd": 4814,
+          "before": "\n        )\n         ",
+          "after": ""
+        },
+        {
+          "beforeStart": 3918,
+          "beforeEnd": 3929,
+          "afterStart": 5205,
+          "afterEnd": 5205,
+          "before": "\n          ",
+          "after": ""
+        },
+        {
+          "beforeStart": 3930,
+          "beforeEnd": 3931,
+          "afterStart": 5206,
+          "afterEnd": 5215,
+          "before": "s",
+          "after": "delivery."
+        },
+        {
+          "beforeStart": 3932,
+          "beforeEnd": 3936,
+          "afterStart": 5216,
+          "afterEnd": 5216,
+          "before": "opeC",
+          "after": ""
+        },
+        {
+          "beforeStart": 3944,
+          "beforeEnd": 4164,
+          "afterStart": 5224,
+          "afterEnd": 5224,
+          "before": " ||\n          this.runtime.state.phase !== phase ||\n          this.runtime.state.day !== day ||\n          this.runtime.state.gameOver ||\n          !this.runtime.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id",
+          "after": ""
+        },
+        {
+          "beforeStart": 4165,
+          "beforeEnd": 4185,
+          "afterStart": 5225,
+          "afterEnd": 5225,
+          "before": "\n        )\n         ",
+          "after": ""
+        },
+        {
+          "beforeStart": 4233,
+          "beforeEnd": 4234,
+          "afterStart": 5273,
+          "afterEnd": 5273,
+          "before": "原",
+          "after": ""
+        },
+        {
+          "beforeStart": 4236,
+          "beforeEnd": 4237,
+          "afterStart": 5275,
+          "afterEnd": 5289,
+          "before": "点",
+          "after": "序；新增调用准备也在末守卫前"
+        },
+        {
+          "beforeStart": 4245,
+          "beforeEnd": 4248,
+          "afterStart": 5297,
+          "afterEnd": 5297,
+          "before": "已完成",
+          "after": ""
+        },
+        {
+          "beforeStart": 4259,
+          "beforeEnd": 4259,
+          "afterStart": 5308,
+          "afterEnd": 5323,
+          "before": "",
+          "after": " const events ="
+        },
+        {
+          "beforeStart": 4279,
+          "beforeEnd": 4279,
+          "afterStart": 5343,
+          "afterEnd": 5375,
+          "before": "",
+          "after": ";\n        const publish = events"
+        },
+        {
+          "beforeStart": 4284,
+          "beforeEnd": 4285,
+          "afterStart": 5380,
+          "afterEnd": 5421,
+          "before": "(",
+          "after": ";\n        const publication: GameEvent = "
+        },
+        {
+          "beforeStart": 4543,
+          "beforeEnd": 4543,
+          "afterStart": 5679,
+          "afterEnd": 5806,
+          "before": "",
+          "after": ";\n        const publicationArguments: [GameEvent] = [publication];\n        const invokePublication = Reflect.apply.bind(Reflect"
+        },
+        {
+          "beforeStart": 4544,
+          "beforeEnd": 4544,
+          "afterStart": 5807,
+          "afterEnd": 6074,
+          "before": "",
+          "after": ";\n        if (!delivery.current()) return;\n        invokePublication(publish, events, publicationArguments);\n        // 只以实际 push 正常返回确认完成；先终结租约再通知，true 回调晚错不撤事件或二次 false。\n        delivery.complete();\n      } catch (error) {\n        failed = true;\n        throw error"
+        },
+        {
+          "beforeStart": 4572,
+          "beforeEnd": 4601,
+          "afterStart": 6102,
+          "afterEnd": 6104,
+          "before": "// 不捕获关闭错误；close 抛错仍按原 finall",
+          "after": "tr"
+        },
+        {
+          "beforeStart": 4603,
+          "beforeEnd": 4617,
+          "afterStart": 6106,
+          "afterEnd": 6107,
+          "before": "语义覆盖正在传播的正文错误。",
+          "after": "{"
+        },
+        {
+          "beforeStart": 4618,
+          "beforeEnd": 4618,
+          "afterStart": 6108,
+          "afterEnd": 6110,
+          "before": "",
+          "after": "  "
+        },
+        {
+          "beforeStart": 4648,
+          "beforeEnd": 4648,
+          "afterStart": 6140,
+          "afterEnd": 6482,
+          "before": "",
+          "after": "  } catch (error) {\n          failed = true;\n          throw error;\n        } finally {\n          // 原 close 仍覆盖正文错误；新增 false 通知只在没有旧错时传播，boolean 同样保 throw undefined。\n          if (failed) {\n            try { delivery?.close(); } catch { /* 保留正在传播的正文／许可关闭错误。 */ }\n          } else {\n            delivery?.close();\n          }\n        }\n      "
+        }
+      ]
+    }
+  ],
+  "newSource": [
+    "backend/tests/unit/mechanisms/last-words-request-lease.test.ts"
+  ],
+  "policy": "有意新增F02动态窗口交付；完整正逆只证明精确范围，不声称新旧行为等价。"
+}

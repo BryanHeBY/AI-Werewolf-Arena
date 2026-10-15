@@ -1,0 +1,1 @@
+{"sources":2,"exactEdits":51,"protectedPrograms":13,"originalProgram":{"typedNodes":581,"nodeArrays":65,"nonCommentLeaves":699},"currentProgram":{"typedNodes":777,"nodeArrays":112,"nonCommentLeaves":965},"newUnitProgram":{"typedNodes":2067,"nodeArrays":457,"nonCommentLeaves":2690},"wholeInverseRawOutputs":2,"controls":6}

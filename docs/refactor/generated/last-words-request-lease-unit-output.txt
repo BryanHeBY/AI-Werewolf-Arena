@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/last-words-request-lease.test.ts:
+(pass) last words settle only after real publication and isolate a registered alias on a later day [78.56ms]
+(pass) last words original source fields and context corruption stay terminal after restoration [7.25ms]
+(pass) last words earliest alias deadline remains expired after clock rollback and a real delayed reply [2.02ms]
+(pass) last words guard the prepared publication and retain old errors before false notification failures [5.95ms]
+
+ 4 pass
+ 0 fail
+ 91 expect() calls
+Ran 4 tests across 1 file. [327.00ms]

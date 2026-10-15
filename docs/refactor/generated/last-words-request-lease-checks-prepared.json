@@ -1,0 +1,38 @@
+{
+  "sourceReady": {
+    "path": "docs/refactor/generated/last-words-request-lease-source-ready.json",
+    "sha256": "fc19f8def5429f411e686af466acab4e8a08c15ad6eb2e8913d2194b9c1c9a32"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "sha256": "761406c951b8b68faeccb6cb0308fe626e2fbbb09fc832c19faa841550e45e19"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-request-lease.test.ts",
+      "sha256": "8900d63fea25b20493f301550b3a5ab19754f38ff2bcbc46a9a327ad65832131"
+    }
+  ],
+  "commands": {
+    "newUnit": "bun --no-env-file test backend/tests/unit/mechanisms/last-words-request-lease.test.ts > docs/refactor/generated/last-words-request-lease-unit-output.txt 2>&1",
+    "heads": "bun --no-env-file docs/refactor/generated/last-words-request-lease-heads.ts > docs/refactor/generated/last-words-request-lease-heads-output.txt 2>&1",
+    "proof": "bun --no-env-file docs/refactor/generated/last-words-request-lease-proof.cjs > docs/refactor/generated/last-words-request-lease-proof-output.txt 2>&1"
+  },
+  "tools": [
+    {
+      "path": "docs/refactor/generated/last-words-request-lease-proof.cjs",
+      "sha256": "1d12785931edb58f7835344d8303d66a6ba1c1d53dadbd8c3b7c3adba9028403"
+    },
+    {
+      "path": "docs/refactor/generated/last-words-request-lease-heads.ts",
+      "sha256": "939d3fdc1abab13d03207b851ff8d2e0dd971ff38d4069671894aa88ea577ae5"
+    },
+    {
+      "path": "docs/refactor/generated/last-words-request-lease-types-config.json",
+      "sha256": "10220f39ed0a8862957ebe22b6c45f5e70028daca5a78eaf318f3eeccc5379a4"
+    }
+  ],
+  "typesPolicy": "备用own2cfg不执行；Root对三个无重叠批共同10根唯一finite types。",
+  "executor": "/root only",
+  "checksRun": false
+}

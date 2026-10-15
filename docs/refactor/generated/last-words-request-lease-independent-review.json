@@ -1,0 +1,73 @@
+{
+  "approved": true,
+  "reviewer": "/root/preflight_final_review",
+  "role": "independent non-author source / semantics / provenance review",
+  "scope": {
+    "path": "docs/refactor/generated/last-words-request-lease-scope-final.json",
+    "sha256": "ea13f82722aea1a6c539cdec32aba5c872e12d017068b095d790ed6ee8cfd68b"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "sha256": "761406c951b8b68faeccb6cb0308fe626e2fbbb09fc832c19faa841550e45e19"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-request-lease.test.ts",
+      "sha256": "8900d63fea25b20493f301550b3a5ab19754f38ff2bcbc46a9a327ad65832131"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/last-words-request-lease.md",
+    "sha256": "d730aa05bbc6812edbf142119828092ecbb36db65282584c66d32b9b52e1e4ba"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/last-words-request-lease-evidence.json",
+    "sha256": "fcb1aaf65303a2dd9797567057039b6f8645f3f0c6313aa7ae940a92b906f02a"
+  },
+  "findings": [],
+  "coverage": {
+    "actualBaseCommit": "6714bef448e48dec7d1871d6deb10a0d3d86f06b",
+    "actualGitWholeBefore": 1,
+    "newPathAbsentAtBase": true,
+    "orderedFreshSources": 2,
+    "immutableGitAndCurrentControls": 6,
+    "authorAndJointArtifacts": 23,
+    "exactWholeForwardAndInverseEdits": 51,
+    "sharedDynamicCore": {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "8990b10d8a281237c440d3edb3f7e7b07642851cab3a2492397e7155071247ff",
+      "immutableControl": false,
+      "manualActualBodyRead": true
+    },
+    "baselineThreeOriginalTmpCopiesSame": true
+  },
+  "semanticReview": [
+    "完整窗口、原6714正文、真实DR唯一caller／World permit／LastWordsMechanism及core8990动态协议全文读取；原factory两个day读取、原政策与open顺序保持。",
+    "动态actor/phase/day/stage/context与三来源pin、同scope owner、最早期限和alias自身隔离正确；不新增Role墓碑过滤已付遗言知识。",
+    "provider及publication callee/receiver/完整参数与Reflect准备均在末guard前，null/工具拒绝continue、域/交付失效return整collection按政策明示。",
+    "真正push正常返回才true；先append再throw留event但false，true通知晚错不撤事件/不二次false。原permit.close优先于正文，新增false通知仅无旧错传播，failed boolean保throw undefined。",
+    "四独立新风险、真实挂起期限与两种通知错误、原baseline宽信封行为全部实读；不把旧baseline当新oracle。完整51编辑与13保留body/signature及实际调用映射来源核对。",
+    "中文职责、sourceHash/API/Reflect观察与期限单调边界、actual type首红/onlyfailed阶段准确。"
+  ],
+  "actualRecordedChecks": {
+    "executor": "/root",
+    "new4FirstExit0Assertions91": true,
+    "oldBaseline1FirstExit0Assertions24": true,
+    "heads2FirstExit0": true,
+    "proofFirstExit0": true,
+    "jointFirst10Exit2Foreign23": true,
+    "jointOnlyFailedAndChanged3Exit0": true,
+    "ownTwoRootsNotRepeated": true,
+    "finalFullTenRootRerun": false
+  },
+  "reviewerMetadataRead": {
+    "firstAttempt": "纯metadata reader误用jointTypes key而KeyError；实际receipt字段jointTypeReceipt，修读取字段后本次绑定成功。",
+    "productOrAuthorCheckWasRun": false
+  },
+  "limits": [
+    "未执行任何作者proof/head/type/test/gate或加载生产；仅读源码/真实Git/精确文字记录与附件摘要。",
+    "有意新增F02交付政策，不冒新旧JS等价、任意getter/Proxy事务或全55角色/完整机制完成。",
+    "共享core8990是本阶段实际接口而非旧Git immutable控制；共同有限类型不冒全仓或末十根重新全绿。"
+  ]
+}

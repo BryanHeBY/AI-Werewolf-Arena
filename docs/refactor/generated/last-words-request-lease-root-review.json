@@ -1,0 +1,47 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "6714bef448e48dec7d1871d6deb10a0d3d86f06b",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "sha256": "761406c951b8b68faeccb6cb0308fe626e2fbbb09fc832c19faa841550e45e19"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-request-lease.test.ts",
+      "sha256": "8900d63fea25b20493f301550b3a5ab19754f38ff2bcbc46a9a327ad65832131"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/last-words-request-lease-scope-final.json",
+    "sha256": "ea13f82722aea1a6c539cdec32aba5c872e12d017068b095d790ed6ee8cfd68b"
+  },
+  "document": {
+    "path": "docs/refactor/last-words-request-lease.md",
+    "sha256": "d730aa05bbc6812edbf142119828092ecbb36db65282584c66d32b9b52e1e4ba"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/last-words-request-lease-evidence.json",
+    "sha256": "fcb1aaf65303a2dd9797567057039b6f8645f3f0c6313aa7ae940a92b906f02a"
+  },
+  "integrity": {
+    "freshSources": 2,
+    "actualGitBefore": 1,
+    "controls": 6,
+    "artifactHashes": 23,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "Root完整读原窗口、当前完整窗口及四新风险声明，实际provider/发表callee与参数准备后才末guard，World原生命许可仍唯一",
+    "动态day/phase、三source字段pin、原envelope终态/alias隔离/earliest、create后新增domain读与整collection return均为明确F02政策；非付款前false/真正push返回后true与原错误优先同步中文",
+    "原factory两个day读取、政策先行/open原点、null/invalid继续下一死者保；finally permit.close盖body，新false通知仅无旧错传播且throw undefined也保",
+    "Root814bf1基线1/24、c7fc4c四新例/91、两头7eb682和完整51增量/13保留程序/两inverse85b7bc首成功；实际JS与API有意不同不冒机械全等",
+    "共同10根类型23foreign诊断真实保、后继只failed/changed3根通过，本两源首阶段未变，未重任何绿或最终全仓验收；actual6714前态/新unit absence另由peer实核，末23附件与SHA完整匹配"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

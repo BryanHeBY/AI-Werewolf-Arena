@@ -1,0 +1,205 @@
+{
+  "baseCommit": "6714bef448e48dec7d1871d6deb10a0d3d86f06b",
+  "sourceReadySHA256": "fc19f8def5429f411e686af466acab4e8a08c15ad6eb2e8913d2194b9c1c9a32",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "sha256": "761406c951b8b68faeccb6cb0308fe626e2fbbb09fc832c19faa841550e45e19"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-request-lease.test.ts",
+      "sha256": "8900d63fea25b20493f301550b3a5ab19754f38ff2bcbc46a9a327ad65832131"
+    }
+  ],
+  "exactEdits": 51,
+  "wholeForwardInverse": true,
+  "originalProgram": {
+    "typedNodes": 581,
+    "nodeArrays": 65,
+    "nonCommentLeaves": 699
+  },
+  "currentProgram": {
+    "typedNodes": 777,
+    "nodeArrays": 112,
+    "nonCommentLeaves": 965
+  },
+  "newUnitProgram": {
+    "typedNodes": 2067,
+    "nodeArrays": 457,
+    "nonCommentLeaves": 2690
+  },
+  "protectedPrograms": [
+    {
+      "name": "runtime",
+      "completePrintedSame": true,
+      "sha256": "1c8aaafd1f69cb244b2dafbc9ef49aaf446ad1dac75b6e57fc6e6b4ed585782a"
+    },
+    {
+      "name": "constructor",
+      "completePrintedSame": true,
+      "sha256": "97d54aeaeca565855411ec4c41d7b75d16422fdb8ffd9576890bba00c800df26"
+    },
+    {
+      "name": "parameters",
+      "completePrintedSame": true,
+      "sha256": "46c6c97abc95d919c513e72a8faa9a4e5933a4d252330994a1cbd7691f65c2fd"
+    },
+    {
+      "name": "factory",
+      "completePrintedSame": true,
+      "sha256": "99ddcd93abc53850bde6640db30d0da0e0fd620886cfd0740a105485bfce2b61"
+    },
+    {
+      "name": "collectionDay",
+      "completePrintedSame": true,
+      "sha256": "42d537a2a55418bb3caa8e918f5755e9dce5284a18a804b26fff3a9801c847b1"
+    },
+    {
+      "name": "actualDeathPhase",
+      "completePrintedSame": true,
+      "sha256": "bb3810443b824850f39d99c03b2a44fdd4ffe01ffdadda2b28276ce4ab7c8786"
+    },
+    {
+      "name": "policyGuard",
+      "completePrintedSame": true,
+      "sha256": "bc78e917a78ca33ee45d5adb7933f28df0e1fe56606a9fcf77825fd092cb1cd6"
+    },
+    {
+      "name": "earlyDomainGuard",
+      "completePrintedSame": true,
+      "sha256": "25a895d7da20d97339759a0280a0aa8249dc2d2f95d43e138b85ee007dbb34b1"
+    },
+    {
+      "name": "openPermit",
+      "completePrintedSame": true,
+      "sha256": "570012931ac95bdd616824690cd0db7b39be41beaebf941374d484592f75d170"
+    },
+    {
+      "name": "createRequest",
+      "completePrintedSame": true,
+      "sha256": "d834ac444d8a2a1e1f11e58edffa0c6d685930fee74fe8831dfd2306388f01a3"
+    },
+    {
+      "name": "actionKindContinue",
+      "completePrintedSame": true,
+      "sha256": "8b7f9c9b16499442653fc939ae2562d9e7790b96d2c2a3560385d93291a23697"
+    },
+    {
+      "name": "gateway",
+      "completePrintedSame": true,
+      "sha256": "2472eae4ec275b9b5b9004045982f9e4cf33142adc705f8d51f01a09566271a4"
+    },
+    {
+      "name": "gatewayContinue",
+      "completePrintedSame": true,
+      "sha256": "852c14575d57055434bc0ee7237db49e91245d0c1645fd0f451ea9876f3a4213"
+    }
+  ],
+  "currentTerms": [
+    "scopeCurrent()",
+    "this.runtime.state.phase === phase",
+    "this.runtime.state.day === day",
+    "!this.runtime.state.gameOver",
+    "this.runtime.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)"
+  ],
+  "providerOrder": [
+    "lastWordsRequests.bind(requestScope, request);",
+    "delivery = lastWordsRequests.openDelivery(requestScope, request);",
+    "if (!delivery) return;",
+    "const getAction = actionProvider.getAction;",
+    "const actionArguments:",
+    "const invokeAction = Reflect.apply.bind(Reflect);",
+    "if (!delivery.current()) return;",
+    "await invokeAction(getAction, actionProvider, actionArguments);",
+    "if (!delivery.current()) return;"
+  ],
+  "publicationOrder": [
+    "if (!validated.ok || !validated.sanitizedCall)",
+    "if (!delivery.current()) return;",
+    "const events = this.runtime.events;",
+    "const publish = events.push;",
+    "const publication: GameEvent = {",
+    "timestamp: Date.now()",
+    "day: this.runtime.state.day",
+    "text: validated.sanitizedCall.args.text",
+    "const publicationArguments:",
+    "const invokePublication = Reflect.apply.bind(Reflect);",
+    "if (!delivery.current()) return;",
+    "invokePublication(publish, events, publicationArguments);",
+    "delivery.complete();"
+  ],
+  "sharedBinding": {
+    "path": "backend/src/core/domain/request-lease.ts",
+    "sha256": "8990b10d8a281237c440d3edb3f7e7b07642851cab3a2492397e7155071247ff",
+    "imported": [
+      {
+        "name": "RequestLease",
+        "typeOnly": false
+      },
+      {
+        "name": "RequestLeaseTurn",
+        "typeOnly": true
+      }
+    ],
+    "propagationOrder": 130,
+    "contextPins": [
+      "trigger",
+      "death_phase",
+      "death_action_id"
+    ]
+  },
+  "actualCleanup": {
+    "completeCurrentTextSHA256": "35fe7f0bbaf3713616532cc77088d3909fafda064d8c1b5ba1162cb5733d3b21",
+    "permitCloseBeforeNotification": true,
+    "failedBooleanPreservesThrownUndefined": true
+  },
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeInverseRawSame": true,
+      "originalSHA256": "adb587b06933dbcf165bf995832bc24d446697484fbb11b1d32dba18e1d98b98",
+      "inverseSHA256": "adb587b06933dbcf165bf995832bc24d446697484fbb11b1d32dba18e1d98b98",
+      "currentSHA256": "31ae84e909664a475a767772ae363c2e56b4f80f1215b487571199d688dca899",
+      "actualPolicyOutputDifferent": true
+    },
+    {
+      "module": "CommonJS",
+      "wholeInverseRawSame": true,
+      "originalSHA256": "777b34658581b65db134d0855c080644af152417317f6a784111a7addfabc30c",
+      "inverseSHA256": "777b34658581b65db134d0855c080644af152417317f6a784111a7addfabc30c",
+      "currentSHA256": "d3443ec60624bfcd1ae2bb6f1874b146984d99e27e5e262d932191b0c5fe991c",
+      "actualPolicyOutputDifferent": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+      "sha256": "2dd1be56ecfecbe1d355f2ef742ab720c185dfe178af72f98784ad882a2a389e"
+    },
+    {
+      "path": "backend/src/core/domain/world.ts",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1"
+    },
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "sha256": "47ca276d4271630035d3aae3bcde79fbff3c2cbf1ecbedcdaae334f42df8f6d6"
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6"
+    },
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2554d44803b5ddbe1d267ac2840bd370f0df6acba7a76433575b291b97f49389"
+    }
+  ],
+  "limits": [
+    "新租约/字段pin/期限/完成/Reflect调用是明确政策和API观察，完整逆仅证明范围，不冒有意变化全等价。",
+    "保留13组完整程序/签名或原条件与body；新增请求和发表序列另按实际源码核，运行意义由独立风险和人工审查支持。",
+    "共享core由另一作者拥有，当前摘要只链接其本阶段，不当本批immutable；不运行产品/测试/类型/头或架构门禁。"
+  ]
+}
