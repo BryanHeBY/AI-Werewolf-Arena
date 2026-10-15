@@ -15,7 +15,7 @@ provider返回是候选，不是accepted、committed或paid。接收器修复与
 - 正确owner观察到原envelope／共享domain／最早期限失效，共同turn永久关闭，恢复字段或回拨时钟不复活。
 - 已登记alias自身context／envelope坏，只永退alias；unknown clone／wrongWorld／wrong-owner只拒输入，不读取并毒化有效original。
 - 合法deadline别名只能收紧有限未来预算；非法target pin／过去或延长预算在登记／预算写前拒绝。顶层原键／原值引用和context身份按该协议比较，不推成深JSON schema或freeze。
-- close与settle不是同一事实：先落终态再通知；领域全部付款完成后才true，取消／异常未完成false。部分付款保实际前缀；facts或通知晚抛保true且不二结算。
+- close与settle不是同一事实：先落终态再通知；窗口按本族契约完成处理后才true，未完成的取消／异常为false。资源窗口仍核对其规定付款，部分付款保实际前缀；true已经落定之后的facts或通知晚抛保true且不二结算。
 
 Initial／Wild／Lonely／Wall、Cupid110／Hybrid120／LastWords130、普通夜请求140及警徽150各有实际 scope 及完成点。普通夜协议当前接入 Seer，初次关联和后续 pin 要求原 `ability_id` 与捕获值一致；不为此新增 World 查询。Seer 的 slot、狐提案、checks、use、modifier、reflection 和自身历史全成功后、`seer_checked` 前才 true；警徽在旧徽／旧票重／新徽／新票重及特殊 frame 全完成后、事实前 true，null 销毁同样是合法完成。LastWords额外pin trigger/death_phase/death_action_id；关系窗口无额外context字段pins。LastWords没有独立库存付款，遗言事实push成功本身是提交，所以true在其后；此前sink错误为未完成。不能把所有facts一律当作true之后的晚发布。Wall每位作者独立完成，不能整个墙一个布尔值。
 

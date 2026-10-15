@@ -12,7 +12,7 @@ JSON.stringify在宽写入catch外的既有位置，编码失败仍传播；宽c
 
 捕获按既有特殊 authority 优先和实际选择链取数据，保原引用／getter／JSON 时点；Demon 整 players 特殊贡献保外层优先，ordinary 完整 private 容器 clone 不按角色删扩展字段。玩家 DTO 的裁剪白名单不能用作 God checkpoint codec。
 
-Trace记录issued request、selection／operation／完成及真实失败CP。completion只在真正全部领域付款后true；partial false仍保存已经发生的世界前缀。当前Tape3在实际false结算时保存已安全复制的`returnedCandidate`，outcome仍为error；真Provider抛错或交付检查早拒不保存该字段。历史Tape2保持原shape，不补候选；字段缺席不能推成null。候选与付款分别核对，具体版本见[档案兼容](archive-compatibility.md)。
+Trace记录issued request、selection／operation／完成及真实失败CP。completion由具体领域窗口在完成其既定处理后结算，不等同于库存付款：遗言没有库存，墙报的合法空回复或经窗口处理的拒绝也可以正常完成。涉及资源提交的窗口仍按其原契约核对付款；partial false保存已经发生的世界前缀。当前Tape3在实际false结算时保存已安全复制的`returnedCandidate`，outcome仍为error；真Provider抛错或交付检查早拒不保存该字段。历史Tape2保持原shape，不补候选；字段缺席不能推成null。候选、窗口完成和付款分别核对，具体完成责任见[行动请求契约](action-requests.md)，版本见[档案兼容](archive-compatibility.md)。
 
 ## 三层不同保证
 
