@@ -1,11 +1,9 @@
 /**
- * Responsibility: own the frozen archive support check for ghost-bride boards.
- * Input: inert normalized board data from a replay archive; output: the finite
- * supported-board verdict preserved from Git 80ce15f. Local verification owns
- * this algorithm independently; it never calls production ruleset predicates,
- * accepts raw configuration on schema alone, authorizes actions or writes state.
- * Public contract supplies only inert copying, facts and stable policy IDs;
- * Node ingress must reject hostile objects before this reader reflects data.
+ * 负责独立核验归档中的鬼魂新娘有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。
+ * 十二人固定牌组、三方胜利目标及既定警长／自爆配置；内部绕过公开 schema 的调用也须满足本判定。
+ * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。
+ * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。
+ * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。
  */
 import {
   GHOST_BRIDE_GOAL,
@@ -13,6 +11,7 @@ import {
   GHOST_BRIDE_ROLE,
 } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
+// 仅为复制后数据的局部类型视图；类型断言本身不校验字段，下面仍逐项核牌组与政策。
 interface PresetCandidate {
   boardSize: number;
   enableSheriff: boolean;
@@ -55,7 +54,7 @@ function exact(value: unknown, keys: readonly string[]): boolean {
     keys.every((k) => Object.hasOwn(value, k))
   );
 }
-/** Validate the normalized finite preset, including internal callers that bypass public schema. */
+/** 校验规范化有限预设；内部绕过公开 schema 的调用也沿此完整判定。 */
 export function isGhostBridePreset(config: unknown): boolean {
   let c: PresetCandidate;
   try {
@@ -91,6 +90,7 @@ export function isGhostBridePreset(config: unknown): boolean {
     c.roleSetups.length !== 7
   )
     return false;
+  // 行数、唯一角色和各角色数量共同限定牌组；不依赖输入行顺序，也不按总人数放行替代牌。
   const counts: Record<string, number> = {};
   for (const entry of c.roleSetups) {
     if (
@@ -105,6 +105,7 @@ export function isGhostBridePreset(config: unknown): boolean {
     counts[entry.role] = entry.count;
   }
   if (Object.hasOwn(c, "winConditions") && !Array.isArray(c.winConditions)) return false;
+  // 多目标字段优先；若同时提供旧单目标字段，两者必须指向同一三方目标。窗口按集合检查而非顺序。
   const goals = c.winConditions ?? (c.winCondition ? [c.winCondition] : []),
     windows = c.selfDestruct?.enabledWindows;
   if (

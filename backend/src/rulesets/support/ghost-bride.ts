@@ -1,9 +1,8 @@
 /**
- * Owns the existing finite ghost-bride composition predicate for production setup.
- * Inputs are inert normalized board data; outputs are the original support
- * verdict with unchanged field, deck, goal and policy checks. It never applies
- * game effects, chooses an actor or authorizes a turn. Archive verification has
- * a separately owned predicate and must not call this production implementation.
+ * 负责生产装配前的鬼魂新娘有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。
+ * 十二人固定牌组、三方胜利目标及既定警长／自爆配置；内部绕过公开 schema 的调用也须满足本判定。
+ * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。
+ * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。
  */
 import {
   GHOST_BRIDE_GOAL,
@@ -11,6 +10,7 @@ import {
   GHOST_BRIDE_ROLE,
 } from "@ai-werewolf-arena/game-contract";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
+// 仅为复制后数据的局部类型视图；类型断言本身不校验字段，下面仍逐项核牌组与政策。
 interface PresetCandidate {
   boardSize: number;
   enableSheriff: boolean;
@@ -53,7 +53,7 @@ function exact(value: unknown, keys: readonly string[]): boolean {
     keys.every((k) => Object.hasOwn(value, k))
   );
 }
-/** Validate the normalized finite preset, including internal callers that bypass public schema. */
+/** 校验规范化有限预设；内部绕过公开 schema 的调用也沿此完整判定。 */
 export function isGhostBridePreset(config: unknown): boolean {
   let c: PresetCandidate;
   try {
@@ -89,6 +89,7 @@ export function isGhostBridePreset(config: unknown): boolean {
     c.roleSetups.length !== 7
   )
     return false;
+  // 行数、唯一角色和各角色数量共同限定牌组；不依赖输入行顺序，也不按总人数放行替代牌。
   const counts: Record<string, number> = {};
   for (const entry of c.roleSetups) {
     if (
@@ -103,6 +104,7 @@ export function isGhostBridePreset(config: unknown): boolean {
     counts[entry.role] = entry.count;
   }
   if (Object.hasOwn(c, "winConditions") && !Array.isArray(c.winConditions)) return false;
+  // 多目标字段优先；若同时提供旧单目标字段，两者必须指向同一三方目标。窗口按集合检查而非顺序。
   const goals = c.winConditions ?? (c.winCondition ? [c.winCondition] : []),
     windows = c.selfDestruct?.enabledWindows;
   if (

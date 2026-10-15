@@ -1,0 +1,1372 @@
+{
+  "baseCommit": "4f775d49f85eccc8eeb4da9c67517048879cadc4",
+  "source": [
+    "backend/src/rulesets/board-support.ts",
+    "backend/src/rulesets/index.ts",
+    "backend/src/rulesets/native-night-failure-policy.ts",
+    "backend/src/rulesets/native-night-target-policy.ts",
+    "backend/src/rulesets/night-stage-registration.ts",
+    "backend/src/rulesets/node-board-support.ts",
+    "backend/src/rulesets/support/animal-dream.ts",
+    "backend/src/rulesets/support/demon-hunter.ts",
+    "backend/src/rulesets/support/evil-knight.ts",
+    "backend/src/rulesets/support/fragrant-pair-seer.ts",
+    "backend/src/rulesets/support/ghost-bride.ts",
+    "backend/src/rulesets/support/index.ts",
+    "backend/src/rulesets/support/magician.ts",
+    "backend/src/rulesets/support/mist-raven.ts",
+    "backend/src/rulesets/support/nightmare.ts",
+    "backend/src/rulesets/support/noble-secret-body.ts",
+    "backend/src/rulesets/support/order-prince.ts",
+    "backend/src/rulesets/support/pure-white.ts",
+    "backend/src/rulesets/support/radiant-eclipse.ts",
+    "backend/src/rulesets/support/red-moon.ts",
+    "backend/src/rulesets/support/scholar-mentor.ts",
+    "backend/src/rulesets/support/time-consort.ts",
+    "backend/src/rulesets/support/trickster.ts",
+    "backend/src/rulesets/support/wolf-sorcerer.ts",
+    "backend/src/rulesets/supported-role-deck.ts",
+    "backend/src/rulesets/tool-spec-registration.ts",
+    "backend/src/runtime/scenarios/animal_dream_twelve.ts",
+    "backend/src/runtime/scenarios/evil_knight_twelve.ts",
+    "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+    "backend/src/runtime/scenarios/magician_twelve.ts",
+    "backend/src/runtime/scenarios/nightmare_twelve.ts",
+    "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+    "backend/src/runtime/scenarios/order_prince_twelve.ts",
+    "backend/src/runtime/scenarios/pure_white_twelve.ts",
+    "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+    "backend/src/runtime/scenarios/six_player_mvp.ts",
+    "backend/src/runtime/scenarios/time_consort_twelve.ts",
+    "backend/src/runtime/scenarios/trickster_twelve.ts",
+    "backend/src/runtime/scenarios/twelve_player_standard.ts",
+    "backend/src/runtime/scenarios/wolf_sorcerer_twelve.ts",
+    "backend/src/verification/board-support/animal-dream-preset.ts",
+    "backend/src/verification/board-support/demon-hunter-preset.ts",
+    "backend/src/verification/board-support/evil-knight-preset.ts",
+    "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+    "backend/src/verification/board-support/ghost-bride-preset.ts",
+    "backend/src/verification/board-support/index.ts",
+    "backend/src/verification/board-support/magician-preset.ts",
+    "backend/src/verification/board-support/mist-raven-preset.ts",
+    "backend/src/verification/board-support/nightmare-preset.ts",
+    "backend/src/verification/board-support/noble-secret-body-preset.ts",
+    "backend/src/verification/board-support/order-prince-preset.ts",
+    "backend/src/verification/board-support/pure-white-preset.ts",
+    "backend/src/verification/board-support/radiant-eclipse-preset.ts",
+    "backend/src/verification/board-support/red-moon-preset.ts",
+    "backend/src/verification/board-support/scholar-mentor-preset.ts",
+    "backend/src/verification/board-support/time-consort-preset.ts",
+    "backend/src/verification/board-support/trickster-preset.ts",
+    "backend/src/verification/board-support/wolf-sorcerer-preset.ts"
+  ],
+  "edits": [
+    {
+      "path": "backend/src/rulesets/support/animal-dream.ts",
+      "before": "/**\n * Owns the existing finite animal-dream composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的动物梦境有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 固定十二人牌组及白猫弃票、河豚计票政策的四种候选组合；Catalog 仍另行决定运行激活。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/animal-dream.ts",
+      "before": "/** Four frozen candidate board shapes; runtime activation is separately checked by the role catalog. */",
+      "after": "/** 只检查四种有限候选板子；角色 Catalog 仍独立检查运行激活。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/animal-dream.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/animal-dream.ts",
+      "before": "function exact(v: unknown, expected: Readonly<Record<string, unknown>>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Readonly<Record<string, unknown>>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/animal-dream-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for animal-dream boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的动物梦境有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 固定十二人牌组及白猫弃票、河豚计票政策的四种候选组合；Catalog 仍另行决定运行激活。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/animal-dream-preset.ts",
+      "before": "/** Four frozen candidate board shapes; runtime activation is separately checked by the role catalog. */",
+      "after": "/** 只检查四种有限候选板子；角色 Catalog 仍独立检查运行激活。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/animal-dream-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/animal-dream-preset.ts",
+      "before": "function exact(v: unknown, expected: Readonly<Record<string, unknown>>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Readonly<Record<string, unknown>>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/demon-hunter.ts",
+      "before": "/**\n * Owns the existing finite demon-hunter composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的猎魔人有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 先接受赤月、贵族秘身的已列组合，再检查本模块六人／十二人标准牌组；不是任意猎魔人混搭。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/demon-hunter.ts",
+      "before": "/** Finite normalized four-board boundary; registration never authorizes other role combinations. */",
+      "after": "/** 先按已列组合委托，再检查规范化标准牌组；注册角色不扩大组合支持范围。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/demon-hunter.ts",
+      "before": "  if (isRedMoonPreset(input) || isNobleSecretBodyPreset(input)) return true;",
+      "after": "  // 先按原顺序委托两个完整组合，再进入标准牌组检查；不能把已注册角色视作任意组合许可。\n  if (isRedMoonPreset(input) || isNobleSecretBodyPreset(input)) return true;",
+      "count": 1,
+      "reason": "有限并集和原委托顺序"
+    },
+    {
+      "path": "backend/src/verification/board-support/demon-hunter-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for demon-hunter boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的猎魔人有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 先接受赤月、贵族秘身的已列组合，再检查本模块六人／十二人标准牌组；不是任意猎魔人混搭。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/demon-hunter-preset.ts",
+      "before": "/** Finite normalized four-board boundary; registration never authorizes other role combinations. */",
+      "after": "/** 先按已列组合委托，再检查规范化标准牌组；注册角色不扩大组合支持范围。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/demon-hunter-preset.ts",
+      "before": "  if (isRedMoonPreset(input) || isNobleSecretBodyPreset(input)) return true;",
+      "after": "  // 先按原顺序委托两个完整组合，再进入标准牌组检查；不能把已注册角色视作任意组合许可。\n  if (isRedMoonPreset(input) || isNobleSecretBodyPreset(input)) return true;",
+      "count": 1,
+      "reason": "有限并集和原委托顺序"
+    },
+    {
+      "path": "backend/src/rulesets/support/evil-knight.ts",
+      "before": "/**\n * Owns the existing finite evil-knight composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的恶夜骑士有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定牌组，只允许已列射击与女巫自救政策；额外机制字段不在此闭包内。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/evil-knight.ts",
+      "before": "/** Closed 12-player evil-knight board; unrelated experimental mechanisms are rejected. */",
+      "after": "/** 恶夜骑士十二人闭包；额外实验机制字段保持原拒绝。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/evil-knight.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/evil-knight.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/evil-knight-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for evil-knight boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的恶夜骑士有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定牌组，只允许已列射击与女巫自救政策；额外机制字段不在此闭包内。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/evil-knight-preset.ts",
+      "before": "/** Closed 12-player evil-knight board; unrelated experimental mechanisms are rejected. */",
+      "after": "/** 恶夜骑士十二人闭包；额外实验机制字段保持原拒绝。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/evil-knight-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/evil-knight-preset.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/fragrant-pair-seer.ts",
+      "before": "/**\n * Owns the existing finite fragrant-pair-seer composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的寻香魅影／觉醒预言家有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人原生配对牌组，猎人参数可省略或取指定资格政策；不扩展为学习／赠予混搭。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/fragrant-pair-seer.ts",
+      "before": "/** Exact native twelve-player Fragrant Phantom / Awakened Seer policy, no learned or gifted mixtures. */",
+      "after": "/** 原生寻香魅影／觉醒预言家十二人组合，不扩展为学习或赠予混搭。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/fragrant-pair-seer.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/fragrant-pair-seer.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for fragrant-pair-seer boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的寻香魅影／觉醒预言家有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人原生配对牌组，猎人参数可省略或取指定资格政策；不扩展为学习／赠予混搭。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+      "before": "/** Exact native twelve-player Fragrant Phantom / Awakened Seer policy, no learned or gifted mixtures. */",
+      "after": "/** 原生寻香魅影／觉醒预言家十二人组合，不扩展为学习或赠予混搭。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/ghost-bride.ts",
+      "before": "/**\n * Owns the existing finite ghost-bride composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的鬼魂新娘有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定牌组、三方胜利目标及既定警长／自爆配置；内部绕过公开 schema 的调用也须满足本判定。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/ghost-bride.ts",
+      "before": "/** Validate the normalized finite preset, including internal callers that bypass public schema. */",
+      "after": "/** 校验规范化有限预设；内部绕过公开 schema 的调用也沿此完整判定。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/ghost-bride.ts",
+      "before": "interface PresetCandidate {",
+      "after": "// 仅为复制后数据的局部类型视图；类型断言本身不校验字段，下面仍逐项核牌组与政策。\ninterface PresetCandidate {",
+      "count": 1,
+      "reason": "候选数据结构不构成运行校验"
+    },
+    {
+      "path": "backend/src/rulesets/support/ghost-bride.ts",
+      "before": "  const counts: Record<string, number> = {};",
+      "after": "  // 行数、唯一角色和各角色数量共同限定牌组；不依赖输入行顺序，也不按总人数放行替代牌。\n  const counts: Record<string, number> = {};",
+      "count": 1,
+      "reason": "完整牌组与唯一性"
+    },
+    {
+      "path": "backend/src/rulesets/support/ghost-bride.ts",
+      "before": "  const goals = c.winConditions ?? (c.winCondition ? [c.winCondition] : []),",
+      "after": "  // 多目标字段优先；若同时提供旧单目标字段，两者必须指向同一三方目标。窗口按集合检查而非顺序。\n  const goals = c.winConditions ?? (c.winCondition ? [c.winCondition] : []),",
+      "count": 1,
+      "reason": "目标双字段和窗口集合"
+    },
+    {
+      "path": "backend/src/verification/board-support/ghost-bride-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for ghost-bride boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的鬼魂新娘有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定牌组、三方胜利目标及既定警长／自爆配置；内部绕过公开 schema 的调用也须满足本判定。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/ghost-bride-preset.ts",
+      "before": "/** Validate the normalized finite preset, including internal callers that bypass public schema. */",
+      "after": "/** 校验规范化有限预设；内部绕过公开 schema 的调用也沿此完整判定。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/ghost-bride-preset.ts",
+      "before": "interface PresetCandidate {",
+      "after": "// 仅为复制后数据的局部类型视图；类型断言本身不校验字段，下面仍逐项核牌组与政策。\ninterface PresetCandidate {",
+      "count": 1,
+      "reason": "候选数据结构不构成运行校验"
+    },
+    {
+      "path": "backend/src/verification/board-support/ghost-bride-preset.ts",
+      "before": "  const counts: Record<string, number> = {};",
+      "after": "  // 行数、唯一角色和各角色数量共同限定牌组；不依赖输入行顺序，也不按总人数放行替代牌。\n  const counts: Record<string, number> = {};",
+      "count": 1,
+      "reason": "完整牌组与唯一性"
+    },
+    {
+      "path": "backend/src/verification/board-support/ghost-bride-preset.ts",
+      "before": "  const goals = c.winConditions ?? (c.winCondition ? [c.winCondition] : []),",
+      "after": "  // 多目标字段优先；若同时提供旧单目标字段，两者必须指向同一三方目标。窗口按集合检查而非顺序。\n  const goals = c.winConditions ?? (c.winCondition ? [c.winCondition] : []),",
+      "count": 1,
+      "reason": "目标双字段和窗口集合"
+    },
+    {
+      "path": "backend/src/rulesets/support/magician.ts",
+      "before": "/**\n * Owns the existing finite magician composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的魔术师有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 依次接受狼术师、诡术师组合，再检查魔术师／狼王牌组；射击资格与夜间目标映射分别受各自政策约束。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/magician.ts",
+      "before": "/** Finite native twelve-player board; gun eligibility and night target mapping are independent. */",
+      "after": "/** 有限原生十二人组合；枪的资格与夜间目标映射分别检查。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/magician.ts",
+      "before": "  if (isWolfSorcererPreset(input)) return true;",
+      "after": "  // 两个完整组合在基础牌组之前独立判定；后续基础字段检查不反向收紧已接受组合。\n  if (isWolfSorcererPreset(input)) return true;",
+      "count": 1,
+      "reason": "有限并集和原委托顺序"
+    },
+    {
+      "path": "backend/src/rulesets/support/magician.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/magician-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for magician boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的魔术师有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 依次接受狼术师、诡术师组合，再检查魔术师／狼王牌组；射击资格与夜间目标映射分别受各自政策约束。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/magician-preset.ts",
+      "before": "/** Finite native twelve-player board; gun eligibility and night target mapping are independent. */",
+      "after": "/** 有限原生十二人组合；枪的资格与夜间目标映射分别检查。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/magician-preset.ts",
+      "before": "  if (isWolfSorcererPreset(input)) return true;",
+      "after": "  // 两个完整组合在基础牌组之前独立判定；后续基础字段检查不反向收紧已接受组合。\n  if (isWolfSorcererPreset(input)) return true;",
+      "count": 1,
+      "reason": "有限并集和原委托顺序"
+    },
+    {
+      "path": "backend/src/verification/board-support/magician-preset.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/mist-raven.ts",
+      "before": "/**\n * Owns the existing finite mist-raven composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的炼金魔女／狼鸦之爪有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定牌组与四个中断窗口；梦保护和黎明信号所需政策不由角色注册自动补齐。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/mist-raven.ts",
+      "before": "/** Finite native twelve-player Alchemist and Raven Claw Wolf board. */",
+      "after": "/** 炼金魔女与狼鸦之爪的有限原生十二人板子。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/mist-raven.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/mist-raven.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/mist-raven.ts",
+      "before": "    const w = c.selfDestruct.enabledWindows;",
+      "after": "    // 四个已列窗口须各出现一次；这里只确认配置，不实际打开白天中断窗口。\n    const w = c.selfDestruct.enabledWindows;",
+      "count": 1,
+      "reason": "有限窗口集合不等于执行许可"
+    },
+    {
+      "path": "backend/src/verification/board-support/mist-raven-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for mist-raven boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的炼金魔女／狼鸦之爪有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定牌组与四个中断窗口；梦保护和黎明信号所需政策不由角色注册自动补齐。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/mist-raven-preset.ts",
+      "before": "/** Finite native twelve-player Alchemist and Raven Claw Wolf board. */",
+      "after": "/** 炼金魔女与狼鸦之爪的有限原生十二人板子。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/mist-raven-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/mist-raven-preset.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/mist-raven-preset.ts",
+      "before": "    const w = c.selfDestruct.enabledWindows;",
+      "after": "    // 四个已列窗口须各出现一次；这里只确认配置，不实际打开白天中断窗口。\n    const w = c.selfDestruct.enabledWindows;",
+      "count": 1,
+      "reason": "有限窗口集合不等于执行许可"
+    },
+    {
+      "path": "backend/src/rulesets/support/nightmare.ts",
+      "before": "/**\n * Owns the existing finite nightmare composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的噩梦之影／摄梦人有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定牌组，只接受已列恐惧与狼人行动政策；不接受其它实验机制混入。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/nightmare.ts",
+      "before": "/** Closed 12-player nightmare/dreamer board; unrelated experimental mechanisms are rejected. */",
+      "after": "/** 噩梦之影／摄梦人十二人闭包；其它实验机制保持原拒绝。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/nightmare.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/nightmare.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/nightmare-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for nightmare boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的噩梦之影／摄梦人有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定牌组，只接受已列恐惧与狼人行动政策；不接受其它实验机制混入。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/nightmare-preset.ts",
+      "before": "/** Closed 12-player nightmare/dreamer board; unrelated experimental mechanisms are rejected. */",
+      "after": "/** 噩梦之影／摄梦人十二人闭包；其它实验机制保持原拒绝。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/nightmare-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/nightmare-preset.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/noble-secret-body.ts",
+      "before": "/**\n * Owns the existing finite noble-secret-body composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的贵族秘身有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定牌组的狼人行动、重复保护两项有限政策各二选一，共四组合；不授权任意猎魔人混搭。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/noble-secret-body.ts",
+      "before": "/** Only four named twelve-seat noble/body policy combinations; never authorizes arbitrary DemonHunter mixtures. */",
+      "after": "/** 仅接受四种已列十二人贵族秘身政策组合，不授权任意猎魔人混搭。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/noble-secret-body.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/noble-secret-body.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/noble-secret-body-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for noble-secret-body boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的贵族秘身有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定牌组的狼人行动、重复保护两项有限政策各二选一，共四组合；不授权任意猎魔人混搭。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/noble-secret-body-preset.ts",
+      "before": "/** Only four named twelve-seat noble/body policy combinations; never authorizes arbitrary DemonHunter mixtures. */",
+      "after": "/** 仅接受四种已列十二人贵族秘身政策组合，不授权任意猎魔人混搭。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/noble-secret-body-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/noble-secret-body-preset.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/order-prince.ts",
+      "before": "/**\n * Owns the existing finite order-prince composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的定序王子有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 先接受诡术师、蚀时狼妃组合；本族牌组仅固定人数、原生牌组、屠边与一次 PK，普通警长／钩子选项仍由其它层检查。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/order-prince.ts",
+      "before": "/** Frozen native roster and PK contract; ordinary sheriff/hook options remain configurable. */",
+      "after": "/** 固定原生牌组与 PK 契约；普通警长／钩子选项仍可配置，不在此扩为严格全字段判定。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/order-prince.ts",
+      "before": "    const rows = c.roleSetups;",
+      "after": "    // 每种牌只出现一次且数量匹配；行顺序不决定牌组支持，警长与钩子参数不在本分支收紧。\n    const rows = c.roleSetups;",
+      "count": 1,
+      "reason": "牌组去重与本分支接受宽度"
+    },
+    {
+      "path": "backend/src/rulesets/support/order-prince.ts",
+      "before": "    const wins = c.winConditions ?? (c.winCondition ? [c.winCondition] : []);",
+      "after": "    // 优先使用多目标字段；空数组仍会拒绝，旧单目标字段存在时也须与唯一屠边目标一致。\n    const wins = c.winConditions ?? (c.winCondition ? [c.winCondition] : []);",
+      "count": 1,
+      "reason": "目标字段优先与失败宽度"
+    },
+    {
+      "path": "backend/src/verification/board-support/order-prince-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for order-prince boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的定序王子有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 先接受诡术师、蚀时狼妃组合；本族牌组仅固定人数、原生牌组、屠边与一次 PK，普通警长／钩子选项仍由其它层检查。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/order-prince-preset.ts",
+      "before": "/** Frozen native roster and PK contract; ordinary sheriff/hook options remain configurable. */",
+      "after": "/** 固定原生牌组与 PK 契约；普通警长／钩子选项仍可配置，不在此扩为严格全字段判定。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/order-prince-preset.ts",
+      "before": "    const rows = c.roleSetups;",
+      "after": "    // 每种牌只出现一次且数量匹配；行顺序不决定牌组支持，警长与钩子参数不在本分支收紧。\n    const rows = c.roleSetups;",
+      "count": 1,
+      "reason": "牌组去重与本分支接受宽度"
+    },
+    {
+      "path": "backend/src/verification/board-support/order-prince-preset.ts",
+      "before": "    const wins = c.winConditions ?? (c.winCondition ? [c.winCondition] : []);",
+      "after": "    // 优先使用多目标字段；空数组仍会拒绝，旧单目标字段存在时也须与唯一屠边目标一致。\n    const wins = c.winConditions ?? (c.winCondition ? [c.winCondition] : []);",
+      "count": 1,
+      "reason": "目标字段优先与失败宽度"
+    },
+    {
+      "path": "backend/src/rulesets/support/pure-white.ts",
+      "before": "/**\n * Owns the existing finite pure-white composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的纯白之女／狼巫有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定配对牌组，胜负优先级与女巫自救只接受已列取值；不扩展到其它实验机制。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/pure-white.ts",
+      "before": "/** Closed 12-player paired board; unrelated experimental mechanisms are rejected. */",
+      "after": "/** 纯白之女／狼巫十二人配对闭包；其它实验机制保持原拒绝。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/pure-white.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/pure-white.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/pure-white-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for pure-white boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的纯白之女／狼巫有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定配对牌组，胜负优先级与女巫自救只接受已列取值；不扩展到其它实验机制。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/pure-white-preset.ts",
+      "before": "/** Closed 12-player paired board; unrelated experimental mechanisms are rejected. */",
+      "after": "/** 纯白之女／狼巫十二人配对闭包；其它实验机制保持原拒绝。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/pure-white-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/pure-white-preset.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/radiant-eclipse.ts",
+      "before": "/**\n * Owns the existing finite radiant-eclipse composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的流光伯爵／蚀日侍女有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定牌组、摄梦人与女巫政策；角色出现本身不能替代完整配置判定。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/radiant-eclipse.ts",
+      "before": "/** Finite native twelve-player Radiant Count and Eclipse Maid board. */",
+      "after": "/** 流光伯爵与蚀日侍女的有限原生十二人板子。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/radiant-eclipse.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/radiant-eclipse.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/radiant-eclipse-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for radiant-eclipse boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的流光伯爵／蚀日侍女有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定牌组、摄梦人与女巫政策；角色出现本身不能替代完整配置判定。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/radiant-eclipse-preset.ts",
+      "before": "/** Finite native twelve-player Radiant Count and Eclipse Maid board. */",
+      "after": "/** 流光伯爵与蚀日侍女的有限原生十二人板子。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/radiant-eclipse-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/radiant-eclipse-preset.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/red-moon.ts",
+      "before": "/**\n * Owns the existing finite red-moon composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的赤月使徒有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定牌组的末狼自爆政策二选一；不授权任意猎魔人混搭。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/red-moon.ts",
+      "before": "/** Only two named twelve-seat native boards; never authorizes arbitrary DemonHunter mixtures. */",
+      "after": "/** 仅接受两种已列十二人原生政策组合，不授权任意猎魔人混搭。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/red-moon.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/red-moon.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/red-moon-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for red-moon boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的赤月使徒有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定牌组的末狼自爆政策二选一；不授权任意猎魔人混搭。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/red-moon-preset.ts",
+      "before": "/** Only two named twelve-seat native boards; never authorizes arbitrary DemonHunter mixtures. */",
+      "after": "/** 仅接受两种已列十二人原生政策组合，不授权任意猎魔人混搭。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/red-moon-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/red-moon-preset.ts",
+      "before": "function exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(value: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/scholar-mentor.ts",
+      "before": "/**\n * Owns the existing finite scholar-mentor composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的白昼学者／寂夜导师有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定配对牌组及守卫上次行动政策；注册能力不意味着其它牌组也受支持。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/scholar-mentor.ts",
+      "before": "/** Finite native twelve-player Day Scholar and Night Mentor board. */",
+      "after": "/** 白昼学者与寂夜导师的有限原生十二人板子。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/scholar-mentor.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/scholar-mentor.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for scholar-mentor boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的白昼学者／寂夜导师有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定配对牌组及守卫上次行动政策；注册能力不意味着其它牌组也受支持。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+      "before": "/** Finite native twelve-player Day Scholar and Night Mentor board. */",
+      "after": "/** 白昼学者与寂夜导师的有限原生十二人板子。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/time-consort.ts",
+      "before": "/**\n * Owns the existing finite time-consort composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的蚀时狼妃有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定定序王子组合，反射范围只接受整夜或首次效果两项；不是任意反射角色混搭。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/time-consort.ts",
+      "before": "/** Finite native twelve-player Time-Wolf Consort and Order Prince board. */",
+      "after": "/** 蚀时狼妃与定序王子的有限原生十二人板子。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/time-consort.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/time-consort.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/time-consort-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for time-consort boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的蚀时狼妃有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定定序王子组合，反射范围只接受整夜或首次效果两项；不是任意反射角色混搭。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/time-consort-preset.ts",
+      "before": "/** Finite native twelve-player Time-Wolf Consort and Order Prince board. */",
+      "after": "/** 蚀时狼妃与定序王子的有限原生十二人板子。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/time-consort-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/time-consort-preset.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/trickster.ts",
+      "before": "/**\n * Owns the existing finite trickster composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的诡术师有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定魔术师／定序王子组合，魔术师首夜与死亡射击目标政策也须匹配。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/trickster.ts",
+      "before": "/** Finite native twelve-player Trickster/Magician/Order Prince combination. */",
+      "after": "/** 诡术师、魔术师与定序王子的有限原生十二人组合。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/trickster.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/trickster.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/trickster-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for trickster boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的诡术师有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定魔术师／定序王子组合，魔术师首夜与死亡射击目标政策也须匹配。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/trickster-preset.ts",
+      "before": "/** Finite native twelve-player Trickster/Magician/Order Prince combination. */",
+      "after": "/** 诡术师、魔术师与定序王子的有限原生十二人组合。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/trickster-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/trickster-preset.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/wolf-sorcerer.ts",
+      "before": "/**\n * Owns the existing finite wolf-sorcerer composition predicate for production setup.\n * Inputs are inert normalized board data; outputs are the original support\n * verdict with unchanged field, deck, goal and policy checks. It never applies\n * game effects, chooses an actor or authorizes a turn. Archive verification has\n * a separately owned predicate and must not call this production implementation.\n */",
+      "after": "/**\n * 负责生产装配前的狼术师有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。\n * 十二人固定魔术师组合；两者首夜字段须相同，死亡射击目标政策另行检查。\n * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。\n * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/wolf-sorcerer.ts",
+      "before": "/** Finite native twelve-player ordered Magician/Wolf Sorcerer combination. */",
+      "after": "/** 魔术师与狼术师的有限原生十二人组合，首夜配置必须对应。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/rulesets/support/wolf-sorcerer.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/rulesets/support/wolf-sorcerer.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+      "before": "/**\n * Responsibility: own the frozen archive support check for wolf-sorcerer boards.\n * Input: inert normalized board data from a replay archive; output: the finite\n * supported-board verdict preserved from Git 80ce15f. Local verification owns\n * this algorithm independently; it never calls production ruleset predicates,\n * accepts raw configuration on schema alone, authorizes actions or writes state.\n * Public contract supplies only inert copying, facts and stable policy IDs;\n * Node ingress must reject hostile objects before this reader reflects data.\n */",
+      "after": "/**\n * 负责独立核验归档中的狼术师有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。\n * 十二人固定魔术师组合；两者首夜字段须相同，死亡射击目标政策另行检查。\n * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。\n * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。\n * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+      "before": "/** Finite native twelve-player ordered Magician/Wolf Sorcerer combination. */",
+      "after": "/** 魔术师与狼术师的有限原生十二人组合，首夜配置必须对应。 */",
+      "count": 1,
+      "reason": "完整原函数维护说明翻译"
+    },
+    {
+      "path": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+      "before": "    const seen = new Set<string>();",
+      "after": "    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。\n    const seen = new Set<string>();",
+      "count": 1,
+      "reason": "牌组集合与去重语义"
+    },
+    {
+      "path": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+      "before": "function exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "after": "// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。\nfunction exact(v: unknown, expected: Record<string, unknown>): boolean {",
+      "count": 1,
+      "reason": "字段闭包及规范化边界"
+    },
+    {
+      "path": "backend/src/rulesets/index.ts",
+      "before": "/**\n * Public ruleset setup boundary consumed by configuration and game assembly.\n * Exports finite inert support predicates, their ordered rejection dispatcher\n * and the distinct Node Demon Hunter ingress. These verdicts never execute a\n * game or grant action authority. Archive verification owns separate checks.\n */",
+      "after": "/**\n * 向配置解析与游戏装配调用方导出生产规则集的有限支持契约。\n * 输入为本目录既有判定与入口，输出为原支持函数、有序拒绝分派及独立 Node 猎魔人入口。\n * 这些裁决不执行游戏或授予行动权限；归档验证使用各自独立的板子检查。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/support/index.ts",
+      "before": "/**\n * Public production support exit consumed by board setup and ruleset assembly.\n * Exports named finite predicates only, preserving the current supported sets.\n * Recording verification owns separate implementations; no oracle, state write,\n * actor snapshot or transport is exposed through this setup-only entry.\n */",
+      "after": "/**\n * 向板子设置与规则装配调用方导出具名的生产有限支持判定。\n * 输出保留各自既有支持集合和原函数绑定；角色注册不扩大组合范围。\n * 归档验证拥有独立实现；本入口不提供验证 oracle、状态写入、actor 快照或传输。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/verification/board-support/index.ts",
+      "before": "/**\n * Responsibility: expose the archive verifier's frozen finite board checks.\n * Input: named support predicates owned in this directory; output: the public\n * verification-only API used by record validators. It never imports production\n * rulesets or text, normalizes config, pays resources or authorizes game actions.\n * Data/schema validity alone is not a supported-board verdict. Individual checks\n * preserve the archived compatibility policies and internal call order.\n */",
+      "after": "/**\n * 向归档规则核验调用方导出本目录独立拥有的有限板子检查。\n * 输入为既有具名支持函数，输出为仅供验证使用的原 API；保留各检查的兼容政策和内部顺序。\n * 不导入生产规则集或展示文字，不规范化外部配置、支付资源或授予行动权限。\n * 数据／schema 合法不能替代板子支持裁决。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/board-support.ts",
+      "before": "/**\n * Owns the production finite-board rejection dispatch used before game assembly.\n * Input is a normalized ReadonlyBoardConfig; output is the original first violation or\n * null in exactly the existing order. No roles, state or effects are created.\n * DemonHunter uses the owned Node snapshot ingress before its inert support\n * predicate, preserving the existing rejection boundary. A verdict alone grants\n * no runtime capability.\n * Archive verification does not import this production dispatch or its policies.\n */",
+      "after": "/**\n * 负责游戏装配前的生产有限板子拒绝分派。输入为规范化的 ReadonlyBoardConfig，\n * 输出为既有顺序中的首个违规码或 null；不创建角色、状态或效果。\n * 猎魔人分支先经过其 Node 自有数据快照入口，再执行有限纯数据判定。\n * 单个裁决不授予运行能力；归档验证不导入本生产分派或其政策。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/board-support.ts",
+      "before": "/** Shared finite-board eligibility for configuration checks and direct bootstrap callers. */",
+      "after": "/** 配置检查与直接 bootstrap 调用方共用有限支持裁决；首个命中即返回，后续分支不再读取。 */",
+      "count": 1,
+      "reason": "真实调用方与首失败顺序"
+    },
+    {
+      "path": "backend/src/rulesets/node-board-support.ts",
+      "before": "/**\n * Responsibility: preserve Node ingress for the finite Demon Hunter board check.\n * Input: unknown candidate data; output: the original support boolean, returning\n * false for any snapshot or predicate failure. Domain snapshotPlainData rejects\n * Proxy before reflection and keeps depth 16, array limit 256 and the original\n * error code; the inert predicate then applies its own unchanged limits.\n * This setup check never installs state, grants a lease or pays a resource.\n */",
+      "after": "/**\n * 负责猎魔人有限板子检查的 Node 输入边界。输入为未知候选值，\n * 输出为原支持布尔值；数据快照或判定抛错均转换为 false。\n * snapshotPlainData 在反射前拒绝 Proxy，保留深度 16、数组上限 256 与原错误码；\n * 之后的纯数据判定仍应用自身原有限边界，不安装状态、授予租约或支付资源。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-failure-policy.ts",
+      "before": "/**\n * Composes the existing native night failure and source-qualification policies.\n * Inputs are deferred original World reads, stage kinds and live read-only\n * ability references; outputs are the original rejection or continuation.\n * Every feature lookup retains its original short circuit and repeated World\n * read. Binding never queries a board, actor, resource, clock or request.\n * This query port cannot consume stock, settle a receipt or publish a fact.\n */",
+      "after": "/**\n * 负责组合原生夜间的失败政策与来源资格检查。输入为延迟 World 查询、阶段种类及活的只读能力引用，\n * 输出为原拒绝或继续；每次特性查询仍保留原短路及重复 World 读取。\n * 绑定函数不查询板子、actor、库存、时钟或请求；只读类型不复制或冻结引用。\n * 本策略不扣库存、不结算回执或发布事实，实际付款与效果提交仍归原所有者。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-failure-policy.ts",
+      "before": "/** The delegate, rather than a cached World, preserves each original argument read. */",
+      "after": "/** 每次沿委托取得原 World 参数，不缓存 World，也不把一次板子命中当作后续许可。 */",
+      "count": 1,
+      "reason": "World晚读取边界"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-failure-policy.ts",
+      "before": "export interface NativeNightFailurePolicy {",
+      "after": "// 同一端口包含有序错误选择和来源校验；返回值／未抛错只说明该检查，不代表资源已付款。\nexport interface NativeNightFailurePolicy {",
+      "count": 1,
+      "reason": "政策数据与执行权限区分"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-failure-policy.ts",
+      "before": "    strictWolfFailurePrefix() {",
+      "after": "    // 采用首个命中的严格板子前缀；每个查询都在该分支现场读取 World，不合并为缓存布尔值。\n    strictWolfFailurePrefix() {",
+      "count": 1,
+      "reason": "失败前缀选择顺序"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "before": "/**\n * Composes native mapped/reflected targets and the existing potion request hints.\n * Inputs are deferred context/day/target reads; outputs preserve original target\n * references and readonly receipt views without exposing a receipt commit method.\n * Every board check and resolver argument is evaluated at its old position.\n * Binding never selects an actor, snapshots inventory, invokes a getter or spends\n * stock. Paid receipt consumption belongs to the separate native effect port.\n */",
+      "after": "/**\n * 负责组合原生夜间的目标映射、反射及药剂请求提示。输入为延迟的上下文、日次和目标读取，\n * 输出保留原目标与回执引用；类型视图不声明 commit，但不复制、冻结对象或移除其运行字段。\n * 板子检查与 resolver 参数仍在原时点求值；绑定时不选择 actor、快照库存或调用这些 getter。\n * 请求提示不授予权限，已付回执的消费仍归独立原生效果端口。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "before": "/** Delegation remains lazy even when a caller's day or target is accessor-backed. */",
+      "after": "/** 即使日次或目标来自访问器，也只在对应板子分支命中后调用委托；绑定时不提前求值。 */",
+      "count": 1,
+      "reason": "条件读取与调用时点"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "before": "export type NativeTargetScope =",
+      "after": "// readonly／Omit 仅限制此 TypeScript 查询视图；life、scope 与回执仍为原运行对象。\nexport type NativeTargetScope =",
+      "count": 1,
+      "reason": "只读视图结构与身份"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "before": "    potionKnifeHints() {",
+      "after": "    // 仅学者导师板子读取原刀目标与附加刀；去重保首次出现次序，提示不消费伤害或回执。\n    potionKnifeHints() {",
+      "count": 1,
+      "reason": "刀目标去重与提示边界"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-registration.ts",
+      "before": "/**\n * Owns explicit compatibility and Ghost Bride replacement registration policies.\n * Inputs are already collected handler references and compiler-provided wedding\n * handlers; outputs are the registered Map, owned replacement refs or a named conflict.\n * Profile and compiler reservations share only the same original handler for an\n * observed ID. No duplicate priority/execute getters, actor queries or coercion\n * run here; declared replacements preserve their original four-step order. Clone\n * refs are captured at the original argument position and recorded after set succeeds.\n */",
+      "after": "/**\n * 负责夜间阶段的显式同引用兼容与鬼魂新娘替换登记。输入为已收集的 handler 引用和编译器婚约 handler，\n * 输出为登记 Map、替换引用记录或具名冲突；登记不查询 actor 或授予执行权限。\n * 同一已观察 ID 只允许原 handler 同引用共享，不读取 priority／execute 做额外等价推断。\n * 婚约替换按原四步顺序执行；克隆引用在原参数位置捕获，set 成功后才加入变更记录。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-registration.ts",
+      "before": "/** These are finite existing operations, not a general replacement graph. */",
+      "after": "/** 固定的四个现有操作按数组顺序执行，不构造通用替换图或扩展可替换 ID。 */",
+      "count": 1,
+      "reason": "有限操作说明"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-registration.ts",
+      "before": "// Keep the original second ID evaluation for a newly registered winner.",
+      "after": "// 新登记获选者仍第二次读取原 id；访问器变化或抛错的前缀不能由缓存首值替代。",
+      "count": 1,
+      "reason": "重复id读取与异常前缀"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-registration.ts",
+      "before": "        registered.set(stage.id, stage);",
+      "after": "        // Map 写入成功后才记录引用；若 set 抛错，之前的删除／安装保持，不回滚已执行操作。\n        registered.set(stage.id, stage);",
+      "count": 1,
+      "reason": "替换部分失败前缀"
+    },
+    {
+      "path": "backend/src/rulesets/supported-role-deck.ts",
+      "before": "/** Read-only metadata queries preserve the original catalog and profile identities. */",
+      "after": "/** 只读元数据查询保留原 Catalog／profile 身份；每次调用仍由装配方取得当前目录。 */",
+      "count": 1,
+      "reason": "元数据端口说明"
+    },
+    {
+      "path": "backend/src/rulesets/supported-role-deck.ts",
+      "before": "  const counts = new Map<Role, number>();",
+      "after": "  // 先检查事件组合，再按牌组首次出现顺序核各角色上限与支持集合；首个失败不继续后续读取。\n  const counts = new Map<Role, number>();",
+      "count": 1,
+      "reason": "牌组限制与失败顺序"
+    },
+    {
+      "path": "backend/src/rulesets/supported-role-deck.ts",
+      "before": "  if (fixedRoles) {",
+      "after": "  // 盗贼／千面人合法性与额外底牌已准备完毕，才比对固定底牌多重集；成功返回新数组且不洗牌。\n  if (fixedRoles) {",
+      "count": 1,
+      "reason": "固定底牌顺序与拷贝范围"
+    },
+    {
+      "path": "backend/src/rulesets/tool-spec-registration.ts",
+      "before": "/**\n * Owns duplicate domain-tool schema compatibility and last-reference presentation selection.\n * Inputs are original ToolSpec references and the registry's owned Map; outputs are\n * the selected original references or a named schema conflict, without validating actions.\n * Different descriptions may override when complete own-data schemas have equal structure.\n * Node Proxy detection precedes reflection; accessors, inherited parameters and non-data\n * structures remain explicitly unverified legacy overrides and are never eagerly evaluated.\n * This policy does not freeze schemas, read World/clock/RNG or claim semantic JSON Schema\n * equivalence. Runtime parsing and its first-use cache remain ActionReception's responsibility.\n */",
+      "after": "/**\n * 负责重复领域工具 schema 的结构兼容与最后原引用的展示选择。输入为原 ToolSpec 引用与注册表拥有的 Map，\n * 输出为选中的原规格或具名 schema 冲突，不校验玩家动作或授予调用权限。\n * 完整自有数据 schema 的结构相同才允许不同说明覆盖；Proxy 先于反射识别。\n * 访问器、继承 parameters 与非数据结构沿原不透明覆盖政策，不主动读取 getter。\n * 不冻结 schema、不读 World／时钟／RNG，也不宣称 JSON Schema 语义等价；运行解析与首次缓存仍归 ActionReception。\n */",
+      "count": 1,
+      "reason": "中文职责、输入输出与实际边界"
+    },
+    {
+      "path": "backend/src/rulesets/tool-spec-registration.ts",
+      "before": "/** The bounded structural reader observes descriptors, never field getters or toJSON. */",
+      "after": "/** 有界结构读取只观察描述符，不调用字段 getter 或 toJSON；超限／循环返回不透明，不自行拒绝整个覆盖。 */",
+      "count": 1,
+      "reason": "有界结构观察与接受政策"
+    },
+    {
+      "path": "backend/src/rulesets/tool-spec-registration.ts",
+      "before": "/** Preserve Map.set lookup before the original single name read, then select the last ref. */",
+      "after": "/** 先取得 Map.set，再进行原单次 name 读取与兼容检查；成功选最后原引用，失败保已登记前缀。 */",
+      "count": 1,
+      "reason": "callee顺序与写入前缀"
+    },
+    {
+      "path": "backend/src/rulesets/tool-spec-registration.ts",
+      "before": "type SchemaObservation =",
+      "after": "// data 才参与完整结构比较；opaque 是原兼容接受面，不表示已验证安全或等价。\ntype SchemaObservation =",
+      "count": 1,
+      "reason": "数据观察结果与兼容边界"
+    },
+    {
+      "path": "backend/src/rulesets/tool-spec-registration.ts",
+      "before": "  ancestors.add(value);",
+      "after": "  // 只跟踪当前递归路径；共享但不成环的子对象可分别观察，退出路径由 finally 保证。\n  ancestors.add(value);",
+      "count": 1,
+      "reason": "递归路径与共享子树"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/animal_dream_twelve.ts",
+      "before": "import type { BoardConfig } from \"../../core/domain/board\";",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定动物梦境十二人牌组，白猫等待实际放逐、河豚按最终票与熊的黎明信号一起声明。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport type { BoardConfig } from \"../../core/domain/board\";",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/evil_knight_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定恶夜骑士十二人牌组，声明夜枪免疫、禁自救与屠边政策。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定寻香魅影／觉醒预言家十二人牌组，声明守卫重复和猎人合格来源政策。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/magician_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定魔术师／狼王十二人牌组；首夜、死亡枪目标与两类枪资格分别列出，不互相推导。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/nightmare_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定噩梦之影／摄梦人十二人牌组；此预设选择可弃恐惧和普通狼人行动。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 接收两项已列政策参数，每次构造新的贵族秘身十二人配置；默认值只选其中一个组合。\n * 输入为本模块固定声明和显式政策参数，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/order_prince_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定定序王子十二人牌组，声明一次 PK、候选提名与持徽者选择政策。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/pure_white_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定纯白之女／狼巫十二人牌组，此预设选择狼人优先与禁自救政策。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定白昼学者／寂夜导师十二人牌组，声明守卫按上次行动判定重复。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/six_player_mvp.ts",
+      "before": "import { BoardConfig, Role, WinCondition } from \"../../core/domain/model\";",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定六人基础牌组，关闭警长与四个钩子，并按数组顺序声明屠城、狼达半两项目标。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport { BoardConfig, Role, WinCondition } from \"../../core/domain/model\";",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/six_player_mvp.ts",
+      "before": "/**\n * 6 人 MVP：最小闭环板子，用于验证基础夜昼流转与守卫/预言家核心规则。\n */",
+      "after": "/** 六人基础输入供夜昼流转与守卫／预言家场景消费；本声明本身不执行验证。 */",
+      "count": 1,
+      "reason": "原短说明限定为输入职责"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定蚀时狼妃／定序王子十二人牌组，此预设选择整夜反射及守卫上次行动政策。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/trickster_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定诡术师／魔术师／定序王子十二人牌组，明确首夜与原目标死亡枪政策。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+      "before": "import { ActionWindow, BoardConfig, Role, WinCondition } from \"../../core/domain/model\";",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定十二人基础牌组及四钩子开关；只启用投票前自爆窗口，不由其它钩子开关自动扩展窗口。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport { ActionWindow, BoardConfig, Role, WinCondition } from \"../../core/domain/model\";",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+      "before": "/**\n * 12 人标准局：用于验证警长系统、白痴/猎人钩子与白天中断链路。\n */",
+      "after": "/** 十二人基础输入供警长、白痴／猎人及白天中断场景消费；本声明本身不执行验证。 */",
+      "count": 1,
+      "reason": "原短说明限定为输入职责"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/wolf_sorcerer_twelve.ts",
+      "before": "import {",
+      "after": "/**\n * 负责向运行装配及场景调用方提供既有板子预设。\n * 固定狼术师／魔术师十二人牌组，两者均声明第二夜开始；通灵师重复查验政策独立列出。\n * 输入为本模块固定声明，输出为原 BoardConfig 数据；不在此解析、验证或冻结配置。\n * 预设不代表任意角色组合受支持，也不创建 World、支付资源或授予行动权限；规范化与有限支持由调用方继续执行。\n */\nimport {",
+      "count": 1,
+      "reason": "补齐固定预设职责、输入输出及装配边界"
+    },
+    {
+      "path": "backend/src/rulesets/board-support.ts",
+      "before": "首个命中即返回，后续分支不再读取。",
+      "after": "首个违规命中即返回，后续分支不再读取。",
+      "count": 1,
+      "reason": "首次检查前手工复读精度：限定实际判定或原顺序"
+    },
+    {
+      "path": "backend/src/rulesets/supported-role-deck.ts",
+      "before": "先检查事件组合，再按牌组首次出现顺序核各角色上限与支持集合；首个失败不继续后续读取。",
+      "after": "先检查事件组合，再按牌组首次出现顺序检查全部角色上限，随后核支持集合；首个失败不继续后续读取。",
+      "count": 1,
+      "reason": "首次检查前手工复读精度：限定实际判定或原顺序"
+    },
+    {
+      "path": "backend/src/rulesets/support/mist-raven.ts",
+      "before": "十二人固定牌组与四个中断窗口；梦保护和黎明信号所需政策不由角色注册自动补齐。",
+      "after": "十二人固定牌组与四个中断窗口；梦保护、钩子和窗口政策不由角色注册自动补齐。",
+      "count": 1,
+      "reason": "首次检查前手工复读精度：限定实际判定或原顺序"
+    },
+    {
+      "path": "backend/src/rulesets/support/animal-dream.ts",
+      "before": "固定十二人牌组及白猫弃票、河豚计票政策的四种候选组合；Catalog 仍另行决定运行激活。",
+      "after": "固定十二人牌组及白猫跳过投票、河豚计票政策的四种候选组合；Catalog 仍另行决定运行激活。",
+      "count": 1,
+      "reason": "首次检查前手工复读精度：限定实际判定或原顺序"
+    },
+    {
+      "path": "backend/src/verification/board-support/mist-raven-preset.ts",
+      "before": "十二人固定牌组与四个中断窗口；梦保护和黎明信号所需政策不由角色注册自动补齐。",
+      "after": "十二人固定牌组与四个中断窗口；梦保护、钩子和窗口政策不由角色注册自动补齐。",
+      "count": 1,
+      "reason": "首次检查前手工复读精度：限定实际判定或原顺序"
+    },
+    {
+      "path": "backend/src/verification/board-support/animal-dream-preset.ts",
+      "before": "固定十二人牌组及白猫弃票、河豚计票政策的四种候选组合；Catalog 仍另行决定运行激活。",
+      "after": "固定十二人牌组及白猫跳过投票、河豚计票政策的四种候选组合；Catalog 仍另行决定运行激活。",
+      "count": 1,
+      "reason": "首次检查前手工复读精度：限定实际判定或原顺序"
+    }
+  ],
+  "limits": [
+    "Exact whole-comment replacements and anchored comment insertions only.",
+    "No algorithm, string literal, ID, enum, schema, default, signature or import/export change authorized.",
+    "No checks executed by this editor."
+  ]
+}

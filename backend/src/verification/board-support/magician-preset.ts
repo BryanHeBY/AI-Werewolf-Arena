@@ -1,11 +1,9 @@
 /**
- * Responsibility: own the frozen archive support check for magician boards.
- * Input: inert normalized board data from a replay archive; output: the finite
- * supported-board verdict preserved from Git 80ce15f. Local verification owns
- * this algorithm independently; it never calls production ruleset predicates,
- * accepts raw configuration on schema alone, authorizes actions or writes state.
- * Public contract supplies only inert copying, facts and stable policy IDs;
- * Node ingress must reject hostile objects before this reader reflects data.
+ * 负责独立核验归档中的魔术师有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。
+ * 依次接受狼术师、诡术师组合，再检查魔术师／狼王牌组；射击资格与夜间目标映射分别受各自政策约束。
+ * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。
+ * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。
+ * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。
  */
 import { isWolfSorcererPreset } from "./wolf-sorcerer-preset";
 import { isTricksterPreset } from "./trickster-preset";
@@ -22,6 +20,7 @@ const deck: Readonly<Record<string, number>> = {
 function record(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === "object" && !Array.isArray(v);
 }
+// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。
 function exact(v: unknown, expected: Record<string, unknown>): boolean {
   return (
     record(v) &&
@@ -29,8 +28,9 @@ function exact(v: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Finite native twelve-player board; gun eligibility and night target mapping are independent. */
+/** 有限原生十二人组合；枪的资格与夜间目标映射分别检查。 */
 export function isMagicianPreset(input: unknown): boolean {
+  // 两个完整组合在基础牌组之前独立判定；后续基础字段检查不反向收紧已接受组合。
   if (isWolfSorcererPreset(input)) return true;
   if (isTricksterPreset(input)) return true;
   try {

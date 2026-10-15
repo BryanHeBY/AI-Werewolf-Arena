@@ -1,11 +1,8 @@
 /**
- * Owns the production finite-board rejection dispatch used before game assembly.
- * Input is a normalized ReadonlyBoardConfig; output is the original first violation or
- * null in exactly the existing order. No roles, state or effects are created.
- * DemonHunter uses the owned Node snapshot ingress before its inert support
- * predicate, preserving the existing rejection boundary. A verdict alone grants
- * no runtime capability.
- * Archive verification does not import this production dispatch or its policies.
+ * 负责游戏装配前的生产有限板子拒绝分派。输入为规范化的 ReadonlyBoardConfig，
+ * 输出为既有顺序中的首个违规码或 null；不创建角色、状态或效果。
+ * 猎魔人分支先经过其 Node 自有数据快照入口，再执行有限纯数据判定。
+ * 单个裁决不授予运行能力；归档验证不导入本生产分派或其政策。
  */
 import {
   isAnimalDreamPreset,
@@ -29,7 +26,7 @@ import { Role, WinCondition } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { isDemonHunterPreset } from "./node-board-support";
 
-/** Shared finite-board eligibility for configuration checks and direct bootstrap callers. */
+/** 配置检查与直接 bootstrap 调用方共用有限支持裁决；首个违规命中即返回，后续分支不再读取。 */
 export function boardPresetViolation(config: ReadonlyBoardConfig) {
   if (
     (config.animalDream ||

@@ -1,12 +1,9 @@
 /**
- * Owns duplicate domain-tool schema compatibility and last-reference presentation selection.
- * Inputs are original ToolSpec references and the registry's owned Map; outputs are
- * the selected original references or a named schema conflict, without validating actions.
- * Different descriptions may override when complete own-data schemas have equal structure.
- * Node Proxy detection precedes reflection; accessors, inherited parameters and non-data
- * structures remain explicitly unverified legacy overrides and are never eagerly evaluated.
- * This policy does not freeze schemas, read World/clock/RNG or claim semantic JSON Schema
- * equivalence. Runtime parsing and its first-use cache remain ActionReception's responsibility.
+ * 负责重复领域工具 schema 的结构兼容与最后原引用的展示选择。输入为原 ToolSpec 引用与注册表拥有的 Map，
+ * 输出为选中的原规格或具名 schema 冲突，不校验玩家动作或授予调用权限。
+ * 完整自有数据 schema 的结构相同才允许不同说明覆盖；Proxy 先于反射识别。
+ * 访问器、继承 parameters 与非数据结构沿原不透明覆盖政策，不主动读取 getter。
+ * 不冻结 schema、不读 World／时钟／RNG，也不宣称 JSON Schema 语义等价；运行解析与首次缓存仍归 ActionReception。
  */
 import { types } from "node:util";
 import type { ToolName } from "@ai-werewolf-arena/game-contract";
@@ -21,11 +18,12 @@ type SchemaStructure =
   | number
   | { kind: "object" | "array"; entries: [string, SchemaStructure][] };
 
+// data 才参与完整结构比较；opaque 是原兼容接受面，不表示已验证安全或等价。
 type SchemaObservation = { kind: "data"; structure: SchemaStructure } | { kind: "opaque" };
 
 const opaque: SchemaObservation = Object.freeze({ kind: "opaque" });
 
-/** The bounded structural reader observes descriptors, never field getters or toJSON. */
+/** 有界结构读取只观察描述符，不调用字段 getter 或 toJSON；超限／循环返回不透明，不自行拒绝整个覆盖。 */
 function observeStructure(
   value: unknown,
   ancestors: Set<object>,
@@ -50,6 +48,7 @@ function observeStructure(
   if (keys.some((key) => typeof key !== "string")) return opaque;
   const descriptors = Object.getOwnPropertyDescriptors(value);
   const entries: [string, SchemaStructure][] = [];
+  // 只跟踪当前递归路径；共享但不成环的子对象可分别观察，退出路径由 finally 保证。
   ancestors.add(value);
   try {
     for (const key of (keys as string[]).sort()) {
@@ -104,7 +103,7 @@ function checkedName(registered: Map<ToolName, ToolSpec>, spec: ToolSpec): ToolN
   return name;
 }
 
-/** Preserve Map.set lookup before the original single name read, then select the last ref. */
+/** 先取得 Map.set，再进行原单次 name 读取与兼容检查；成功选最后原引用，失败保已登记前缀。 */
 export function registerToolSpecs(
   registered: Map<ToolName, ToolSpec>,
   specs: readonly ToolSpec[],

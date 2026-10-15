@@ -1,9 +1,8 @@
 /**
- * Owns the existing finite magician composition predicate for production setup.
- * Inputs are inert normalized board data; outputs are the original support
- * verdict with unchanged field, deck, goal and policy checks. It never applies
- * game effects, chooses an actor or authorizes a turn. Archive verification has
- * a separately owned predicate and must not call this production implementation.
+ * 负责生产装配前的魔术师有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。
+ * 依次接受狼术师、诡术师组合，再检查魔术师／狼王牌组；射击资格与夜间目标映射分别受各自政策约束。
+ * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。
+ * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。
  */
 import { isWolfSorcererPreset } from "./wolf-sorcerer";
 import { isTricksterPreset } from "./trickster";
@@ -20,6 +19,7 @@ const deck: Readonly<Record<string, number>> = {
 function record(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === "object" && !Array.isArray(v);
 }
+// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。
 function exact(v: unknown, expected: Record<string, unknown>): boolean {
   return (
     record(v) &&
@@ -27,8 +27,9 @@ function exact(v: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Finite native twelve-player board; gun eligibility and night target mapping are independent. */
+/** 有限原生十二人组合；枪的资格与夜间目标映射分别检查。 */
 export function isMagicianPreset(input: unknown): boolean {
+  // 两个完整组合在基础牌组之前独立判定；后续基础字段检查不反向收紧已接受组合。
   if (isWolfSorcererPreset(input)) return true;
   if (isTricksterPreset(input)) return true;
   try {

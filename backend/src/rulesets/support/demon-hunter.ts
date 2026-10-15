@@ -1,9 +1,8 @@
 /**
- * Owns the existing finite demon-hunter composition predicate for production setup.
- * Inputs are inert normalized board data; outputs are the original support
- * verdict with unchanged field, deck, goal and policy checks. It never applies
- * game effects, chooses an actor or authorizes a turn. Archive verification has
- * a separately owned predicate and must not call this production implementation.
+ * 负责生产装配前的猎魔人有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。
+ * 先接受赤月、贵族秘身的已列组合，再检查本模块六人／十二人标准牌组；不是任意猎魔人混搭。
+ * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。
+ * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。
  */
 import { isNobleSecretBodyPreset } from "./noble-secret-body";
 import { isRedMoonPreset } from "./red-moon";
@@ -28,8 +27,9 @@ function equals(value: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([key, v]) => value[key] === v)
   );
 }
-/** Finite normalized four-board boundary; registration never authorizes other role combinations. */
+/** 先按已列组合委托，再检查规范化标准牌组；注册角色不扩大组合支持范围。 */
 export function isDemonHunterPreset(input: unknown): boolean {
+  // 先按原顺序委托两个完整组合，再进入标准牌组检查；不能把已注册角色视作任意组合许可。
   if (isRedMoonPreset(input) || isNobleSecretBodyPreset(input)) return true;
   try {
     const c = copyEventData(input) as Record<string, any>;

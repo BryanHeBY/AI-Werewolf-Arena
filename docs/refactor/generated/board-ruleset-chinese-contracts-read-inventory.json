@@ -1,0 +1,483 @@
+{
+  "baseCommit": "4f775d49f85eccc8eeb4da9c67517048879cadc4",
+  "sourceCount": 58,
+  "groups": {
+    "productionRuleset": 26,
+    "runtimePreset": 14,
+    "independentArchiveSupport": 18
+  },
+  "sourceRead": [
+    {
+      "path": "backend/src/rulesets/board-support.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "02f15f236ca3985b07e65deb5953f837a3008c64caf5bccfc59682dd0617e021",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/index.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "d95cacab3a701eaacdd02d2c4a877648577293d5c855f49a4b78a80cd4bdfa6a",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/native-night-failure-policy.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "c7864c2c603a10accdcd07332ac55189fc594c88c49386780a1c660c288c940a",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "d27f1662dee42b65cb4bf2d8507efd71f2c63d307b5df2ef7067dc5041a87a1d",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-registration.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "948b4a2e3f4828a5c3264030bababaf994b6edd4f4493c6263d8faefe41103dd",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/node-board-support.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "00cd04437e40622b3e676d7aff820a1394cd34266da7af4edcda7176da41a553",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/animal-dream.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "4bb029dfff9f1c5569402635f52fe9adf6ac143045190bd007811a28a0183ce8",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/demon-hunter.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "b3edc65bba949c4b306908210dd3252a2250af3c02f8a1f2de0f22b55bf0ad23",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/evil-knight.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "d106fec8dbca2b6b09138d35d5c55747694c7f2ea880c030cdee5ca61005527a",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/fragrant-pair-seer.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "706c32287ce6dd875744f28d453a38a7505cb8a3cb3ca47d4fd5c32cee5af315",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/ghost-bride.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "315d683d87acbff532901fdaa8563e7b31090dbba0c7e5c6eaafb6d3a28173cc",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/index.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "baeaa017c9438e577d3b4d8a6432d9c7fadad6ccb0eff17b73167b956946f326",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/magician.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "93b90f78033f43e2370e43dfd3d949079eb9ba1661f35cbba548d3d7bbee7e9b",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/mist-raven.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "aaaaf1f35afeb877eafaffb1ac22d0d51c362a6903eab3c02c517e23150c2019",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/nightmare.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "cd8e5b8bc0804318d070801d85828413dd156f53502bd05b46dc2974b3f97288",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/noble-secret-body.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "1c413787d8bd84998316a97a3868b8d44027e13d381427334e472d1decd3dfff",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/order-prince.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "2ce0888d76c901a282ed651a9558e6ed0fd6bdbdfb8c802ecf8e7473f027c032",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/pure-white.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "6ba2d17d94adac49b7a880e9062d415fefb3f2a4ac57bf84baa0b833ec98ca59",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/radiant-eclipse.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "39b7ea08ab6431e295dcf1eb095af63fc3103299c38d89ca67b077fbe1fa58c7",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/red-moon.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "b2644ca2705e35ebd236416776d9a50dca92ba961b73d7cf5fcba2530e183a2b",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/scholar-mentor.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "d03df455441bbcee45530402779b4771a36d1e2791306d90b04142a977da56be",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/time-consort.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "84db79cdf2f811afba8e9242754c82936acb90daba2f66bb4d2321ee2c500c6c",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/trickster.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "d8519727b030a2cc6ad55a92e13144f951049248ae94957a9cfd79260b556dc9",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/support/wolf-sorcerer.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "ce6b51fa9c799304f64293e08b8ee0c81e4302edd7e1e4c55d16e9becdf8c233",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/supported-role-deck.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "4a4f3af2146f0489670acae9699baf15339620dc576fa2eed316819e998ddd90",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/rulesets/tool-spec-registration.ts",
+      "group": "productionRuleset",
+      "beforeSHA256": "6328e75f901a4dbca852d77af5f399b91bf8a8055dd2f8e2ba51286349a14a45",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/animal_dream_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "b1fc9a1649249aef396dc185337171b6d7563cc4d9edc9c8f6e5e7a1d276ffc2",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/evil_knight_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "133fb24d1ee53f28d5df24351707d9d8a60b2334e7b182a1d67c84e9d53a7e84",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "aef1f6265f463008f656ce412f2826dac4ed5cee1c09cde130fda9946dee9e95",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/magician_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "dce2c6ecb96cffb3b49fb32581b62ede0fbdc06793edb2732792b8a2f4679c3a",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/nightmare_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "6edc70412b2bc32260987c7d617a644cb328d4970dc122243c802ac558fdf9b6",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "f65da392707c878f7e62faf752c53e50e2f1c08b09414b46f436819099198816",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/order_prince_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "4800cf332df699672a9dbcde7ec18e8b2a33cd7f41196399c8e63c2496a3eb79",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/pure_white_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "3bcd05b16770d0748cf3cfafd43aefb9c4e2df4cfb6b5cca10259c0ee1d7d95f",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "104bb7d587506401ac64a9a30c035d8da0646d3638f020b82f79db71914373bd",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/six_player_mvp.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "d0d537c761fb4272397898319eb05f63f1fc4c6dbec7888a74bb2ac4bb53fa34",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "d9809928cc91bc7e3aeb623852a95d3beba2188e375d62418e689d56bc7dd88e",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/trickster_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "666377038d345ecc01aa32e8ced1bde0010c2214bc65338da89c1dff70e83f57",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "aa801e2ce517e9c6f49b7b7ab01ac234d63fc717db77d3b17b535f857538452b",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/runtime/scenarios/wolf_sorcerer_twelve.ts",
+      "group": "runtimePreset",
+      "beforeSHA256": "ca47cedf92af14d874886ba20ae51c64282bb6feb3b93bef3c4ad1e2dea7f942",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/animal-dream-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "ac474e89ff62fe466f4bf16b7a2ea37dd9bfb7c2553f730b225ea876baba804e",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/demon-hunter-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "16c087f9c2aca2c53576265a919a3b6904746141984bc3fffa2dd5b5ab1708be",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/evil-knight-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "d171fbdfa063a89118d4a16082f0fcdae399050925059dc800778b3c80f7e996",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "e0768e6db3259a98b070e48cfd05aee877ee9a0fc80f89453c3feb89092ccc2a",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/ghost-bride-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "1dd9003388cab2e193f5be1bc1be99f5c1747e9170875d1a3261804774da4d05",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/index.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "aeeac79dc3aeef4c6794105b0337a20be9b4298052e12f3d10c9aaba6bde02d1",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/magician-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "b15481840cf026b7cad5694621dc7ebf52c7994737efc87b3d1bd17b440b444b",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/mist-raven-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "35dd0f43d53d99c5915b7ce409937d6ed664a617ac795cc05a3c0669d8383f02",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/nightmare-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "71af4b38588f36a0b87a01740ab9e4b38fc76cf0ae9236bfc98626096ae3e5a2",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/noble-secret-body-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "f29fe4f1683bafa92e3ae67b4a2b87f0abe08ad3457b88e7916b6aa4374fcb2e",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/order-prince-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "c881a4b86d4fd71502381cc19d1a1c3c38dc717bb012369c2f5f782f5cf1dbd7",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/pure-white-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "5930f1b6163480d0dd6a9cd8dab9b829793640fd42d28c502a3bf1abb698be75",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/radiant-eclipse-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "5bdfefa30cf4507dd2f0b46352a61cfd6cf0cf31867007705d5deeebbcaa2f4b",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/red-moon-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "7783423ecb651afd7fe162514966c86d3bb4eee4e31c8161cd32d175f8dc21ac",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "e1f07aa7434f49f6672e18816ee70d15c744856c251cbf7242b5928a343aa571",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/time-consort-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "3a5c7dff01d8943487962ee17a532d5f9a1778e34d321ef6f1e0c53b5b1b3288",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/trickster-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "c234e53ae4eef0b33a41ee376df64c08453b631d581efd17a19367fb467d89c8",
+      "completeSourceRead": true
+    },
+    {
+      "path": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+      "group": "independentArchiveSupport",
+      "beforeSHA256": "c482b4aa64ee91dab8266fd633057e651310a92d626c19f39331a9d8375c000e",
+      "completeSourceRead": true
+    }
+  ],
+  "actualConsumers": [
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "symbols": [
+        "parseBoardDefinition",
+        "boardDefinitionFromConfig"
+      ],
+      "use": "公开字段解析、Catalog 限制与角色参数规范化后调用 boardPresetViolation；有限支持不是 schema 成功的同义词。",
+      "immutableControl": true
+    },
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "symbols": [
+        "buildRoleDeck"
+      ],
+      "use": "buildSupportedRoleDeck 返回后，只在非 fixedRoles 分支调用 shuffled；本次不迁洗牌或装配。",
+      "immutableControl": false
+    },
+    {
+      "path": "backend/src/runtime/scenarios/board_config_resolver.ts",
+      "symbols": [
+        "baseBoard",
+        "cloneBoardConfig",
+        "resolveBoardConfig"
+      ],
+      "use": "旧兼容入口只从六人／十二人基础常量显式复制指定容器，合并后交 normalizer，不自动枚举所有预设。",
+      "immutableControl": true
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan.ts",
+      "symbols": [
+        "NightStageRegistry.getStages"
+      ],
+      "use": "收集 profile 与编译器预约后同引用去重，鬼魂新娘固定替换后才按 priority/id 排序；本次不改 collector 或时点。",
+      "immutableControl": false
+    },
+    {
+      "path": "backend/src/rulesets/rule-plan.ts",
+      "symbols": [
+        "RulePlan.nativeNightFailure",
+        "RulePlan.nativeNightTargets"
+      ],
+      "use": "直接绑定两原策略；运行 World/context 委托仍在策略调用点读取。",
+      "immutableControl": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/registries/tool_spec_registry.ts",
+      "symbols": [
+        "ToolSpecRegistry.constructor"
+      ],
+      "use": "默认工具／指令集合准备后向同一 Map 登记原规格；展示采用最后引用，ActionReception 另有解析与权限。",
+      "immutableControl": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "symbols": [
+        "SEER_NIGHT_STAGE"
+      ],
+      "use": "await/当前性/目标生命复验后，映射→反射→独立效果提交仍原调用；查询回执不是付款。",
+      "immutableControl": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "symbols": [
+        "executePotionTurn"
+      ],
+      "use": "请求提示读取后原验证；非 None 才映射，毒药才反射，扣用及标记仍原效果路径。",
+      "immutableControl": false
+    },
+    {
+      "path": "backend/src/verification/reproduction/red-moon/validate.ts",
+      "symbols": [
+        "validateRedMoonRecord"
+      ],
+      "use": "命中原角色／产物检查后才调用本目录独立 isRedMoonPreset；继续核记录迁移，不调生产谓词。",
+      "immutableControl": true
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/runtime-game.ts",
+      "symbols": [
+        "animalBoard",
+        "animalGame"
+      ],
+      "use": "从固定预设显式覆盖白猫／河豚两项政策，再交真实 bootstrap；不是通用组合生成器。",
+      "immutableControl": false
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/builders/transport-plan.ts",
+      "symbols": [
+        "nobleTransportScenario"
+      ],
+      "use": "调用参数化 nobleSecretBodyTwelveConfig，另有固定记录／传输期望；本次不改测试输入或 oracle。",
+      "immutableControl": false
+    },
+    {
+      "path": "backend/tests/unit/configuration/scholar-mentor-public-preset.test.ts",
+      "symbols": [
+        "Scholar Mentor public finite preset boots"
+      ],
+      "use": "消费实际公开定义与固定运行预设；只读原断言，不执行或扩大其覆盖。",
+      "immutableControl": false
+    },
+    {
+      "path": "packages/game-contract/src/inert-event-data.ts",
+      "symbols": [
+        "copyEventData"
+      ],
+      "use": "共享纯数据复制不提供 Node Proxy 防御；独立与生产支持判定保持原复制限度。",
+      "immutableControl": false
+    },
+    {
+      "path": "backend/src/core/domain/plain_data.ts",
+      "symbols": [
+        "snapshotPlainData"
+      ],
+      "use": "Node 猎魔人入口先拒 Proxy 再反射，原深度／数组限制和错误码不变。",
+      "immutableControl": false
+    }
+  ],
+  "limits": [
+    "只记录本批实际读过的边界与调用方，不声称 whole-program 消费闭包或玩法验收。",
+    "归档17个实际模块与生产对应原全文逐对阅读；差异为各自说明、独立同目录依赖及中立出口，原方法体均读核，不导生产作验证算法。",
+    "引用的非控制调用方仅为本次只读语义依据，不要求并行树全字节冻结。"
+  ]
+}

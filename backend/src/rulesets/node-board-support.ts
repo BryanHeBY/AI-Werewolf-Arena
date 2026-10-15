@@ -1,10 +1,8 @@
 /**
- * Responsibility: preserve Node ingress for the finite Demon Hunter board check.
- * Input: unknown candidate data; output: the original support boolean, returning
- * false for any snapshot or predicate failure. Domain snapshotPlainData rejects
- * Proxy before reflection and keeps depth 16, array limit 256 and the original
- * error code; the inert predicate then applies its own unchanged limits.
- * This setup check never installs state, grants a lease or pays a resource.
+ * 负责猎魔人有限板子检查的 Node 输入边界。输入为未知候选值，
+ * 输出为原支持布尔值；数据快照或判定抛错均转换为 false。
+ * snapshotPlainData 在反射前拒绝 Proxy，保留深度 16、数组上限 256 与原错误码；
+ * 之后的纯数据判定仍应用自身原有限边界，不安装状态、授予租约或支付资源。
  */
 import { snapshotPlainData } from "../core/domain/plain_data";
 import { isDemonHunterPreset as readPreset } from "./support";

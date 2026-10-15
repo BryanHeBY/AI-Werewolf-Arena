@@ -1,11 +1,9 @@
 /**
- * Responsibility: own the frozen archive support check for wolf-sorcerer boards.
- * Input: inert normalized board data from a replay archive; output: the finite
- * supported-board verdict preserved from Git 80ce15f. Local verification owns
- * this algorithm independently; it never calls production ruleset predicates,
- * accepts raw configuration on schema alone, authorizes actions or writes state.
- * Public contract supplies only inert copying, facts and stable policy IDs;
- * Node ingress must reject hostile objects before this reader reflects data.
+ * 负责独立核验归档中的狼术师有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。
+ * 十二人固定魔术师组合；两者首夜字段须相同，死亡射击目标政策另行检查。
+ * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。
+ * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。
+ * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。
  */
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 const deck: Readonly<Record<string, number>> = {
@@ -20,6 +18,7 @@ const deck: Readonly<Record<string, number>> = {
 function record(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === "object" && !Array.isArray(v);
 }
+// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。
 function exact(v: unknown, expected: Record<string, unknown>): boolean {
   return (
     record(v) &&
@@ -27,7 +26,7 @@ function exact(v: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Finite native twelve-player ordered Magician/Wolf Sorcerer combination. */
+/** 魔术师与狼术师的有限原生十二人组合，首夜配置必须对应。 */
 export function isWolfSorcererPreset(input: unknown): boolean {
   try {
     const c = copyEventData(input);
@@ -71,6 +70,7 @@ export function isWolfSorcererPreset(input: unknown): boolean {
       return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
       return false;
+    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。
     const seen = new Set<string>();
     for (const row of c.roleSetups) {
       if (

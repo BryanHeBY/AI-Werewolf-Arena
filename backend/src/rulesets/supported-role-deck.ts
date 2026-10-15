@@ -5,7 +5,7 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role, WinCondition } from "@ai-werewolf-arena/game-contract";
 import { boardPresetViolation } from "./board-support";
 
-/** Read-only metadata queries preserve the original catalog and profile identities. */
+/** 只读元数据查询保留原 Catalog／profile 身份；每次调用仍由装配方取得当前目录。 */
 export interface SupportedRoleDeckCatalog {
   readonly requireMetadata: (role: Role) => {
     readonly maxCount?: number;
@@ -35,6 +35,7 @@ export function buildSupportedRoleDeck(
     (!supportsWallRoles(deck) || config.events.pack !== "awa_wall_notes_once_v1")
   )
     throw new Error("event_pack_combination_not_supported");
+  // 先检查事件组合，再按牌组首次出现顺序检查全部角色上限，随后核支持集合；首个失败不继续后续读取。
   const counts = new Map<Role, number>();
   for (const role of deck) counts.set(role, (counts.get(role) ?? 0) + 1);
   for (const [role, count] of counts) {
@@ -129,6 +130,7 @@ export function buildSupportedRoleDeck(
       throw new Error("thief_finite_composition_required");
     deck.push(Role.Villager, Role.Villager);
   }
+  // 盗贼／千面人合法性与额外底牌已准备完毕，才比对固定底牌多重集；成功返回新数组且不洗牌。
   if (fixedRoles) {
     if (
       fixedRoles.length !== deck.length ||

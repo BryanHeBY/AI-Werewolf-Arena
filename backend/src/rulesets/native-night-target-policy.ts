@@ -1,10 +1,8 @@
 /**
- * Composes native mapped/reflected targets and the existing potion request hints.
- * Inputs are deferred context/day/target reads; outputs preserve original target
- * references and readonly receipt views without exposing a receipt commit method.
- * Every board check and resolver argument is evaluated at its old position.
- * Binding never selects an actor, snapshots inventory, invokes a getter or spends
- * stock. Paid receipt consumption belongs to the separate native effect port.
+ * 负责组合原生夜间的目标映射、反射及药剂请求提示。输入为延迟的上下文、日次和目标读取，
+ * 输出保留原目标与回执引用；类型视图不声明 commit，但不复制、冻结对象或移除其运行字段。
+ * 板子检查与 resolver 参数仍在原时点求值；绑定时不选择 actor、快照库存或调用这些 getter。
+ * 请求提示不授予权限，已付回执的消费仍归独立原生效果端口。
  */
 import type { NightStageContext } from "../game/mechanisms/stages/night/contracts";
 import type { NightLifeScope } from "../core/domain/night_effects";
@@ -24,6 +22,7 @@ import {
   scholarMentorBlocks,
 } from "../game/mechanisms/roles/scholar_mentor/ports";
 
+// readonly／Omit 仅限制此 TypeScript 查询视图；life、scope 与回执仍为原运行对象。
 export type NativeTargetScope = Readonly<Omit<NightLifeScope, "life">> & {
   readonly life: Readonly<AliveComponent>;
 };
@@ -48,7 +47,7 @@ export interface NativeNightTargetPolicy {
 
 type TargetRuntime = Pick<NightStageContext, "world" | "currentDay" | "state">;
 
-/** Delegation remains lazy even when a caller's day or target is accessor-backed. */
+/** 即使日次或目标来自访问器，也只在对应板子分支命中后调用委托；绑定时不提前求值。 */
 export function bindNativeNightTargetPolicy(context: () => TargetRuntime): NativeNightTargetPolicy {
   return Object.freeze({
     mappedTarget(day: () => number, targetId: () => number) {
@@ -78,6 +77,7 @@ export function bindNativeNightTargetPolicy(context: () => TargetRuntime): Nativ
           }
         : {};
     },
+    // 仅学者导师板子读取原刀目标与附加刀；去重保首次出现次序，提示不消费伤害或回执。
     potionKnifeHints() {
       return isScholarMentorBoard(context().world)
         ? {

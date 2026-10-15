@@ -1,13 +1,13 @@
 /**
- * Owns the existing finite pure-white composition predicate for production setup.
- * Inputs are inert normalized board data; outputs are the original support
- * verdict with unchanged field, deck, goal and policy checks. It never applies
- * game effects, chooses an actor or authorizes a turn. Archive verification has
- * a separately owned predicate and must not call this production implementation.
+ * 负责生产装配前的纯白之女／狼巫有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。
+ * 十二人固定配对牌组，胜负优先级与女巫自救只接受已列取值；不扩展到其它实验机制。
+ * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。
+ * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。
  */
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-contract";
 
+// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。
 function exact(value: unknown, expected: Record<string, unknown>): boolean {
   return (
     !!value &&
@@ -28,7 +28,7 @@ const deck: Readonly<Record<string, number>> = {
   hunter: 1,
   guard: 1,
 };
-/** Closed 12-player paired board; unrelated experimental mechanisms are rejected. */
+/** 纯白之女／狼巫十二人配对闭包；其它实验机制保持原拒绝。 */
 export function isPureWhitePreset(input: unknown): boolean {
   try {
     const c = copyEventData(input) as Record<string, any>;
@@ -61,6 +61,7 @@ export function isPureWhitePreset(input: unknown): boolean {
       return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
       return false;
+    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。
     const seen = new Set<string>();
     for (const row of c.roleSetups) {
       if (

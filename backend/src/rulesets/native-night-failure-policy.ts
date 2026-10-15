@@ -1,10 +1,8 @@
 /**
- * Composes the existing native night failure and source-qualification policies.
- * Inputs are deferred original World reads, stage kinds and live read-only
- * ability references; outputs are the original rejection or continuation.
- * Every feature lookup retains its original short circuit and repeated World
- * read. Binding never queries a board, actor, resource, clock or request.
- * This query port cannot consume stock, settle a receipt or publish a fact.
+ * 负责组合原生夜间的失败政策与来源资格检查。输入为延迟 World 查询、阶段种类及活的只读能力引用，
+ * 输出为原拒绝或继续；每次特性查询仍保留原短路及重复 World 读取。
+ * 绑定函数不查询板子、actor、库存、时钟或请求；只读类型不复制或冻结引用。
+ * 本策略不扣库存、不结算回执或发布事实，实际付款与效果提交仍归原所有者。
  */
 import type { World } from "../core/domain/world";
 import { Role } from "../core/domain/identity";
@@ -29,6 +27,7 @@ import {
 
 export type NativeNightAction = "seer" | "guard" | "witch";
 
+// 同一端口包含有序错误选择和来源校验；返回值／未抛错只说明该检查，不代表资源已付款。
 export interface NativeNightFailurePolicy {
   scopeStale(kind: NativeNightAction): void;
   actionMissing(kind: NativeNightAction): void;
@@ -42,7 +41,7 @@ export interface NativeNightFailurePolicy {
   skipsEmptyBorrowedPotion(ability: NightAbilityReadView<"potion">): boolean;
 }
 
-/** The delegate, rather than a cached World, preserves each original argument read. */
+/** 每次沿委托取得原 World 参数，不缓存 World，也不把一次板子命中当作后续许可。 */
 export function bindNativeNightFailurePolicy(world: () => World): NativeNightFailurePolicy {
   const scopeStale = (kind: NativeNightAction): void => {
     if (kind !== "guard" && isRadiantEclipseBoard(world()))
@@ -71,6 +70,7 @@ export function bindNativeNightFailurePolicy(world: () => World): NativeNightFai
     scopeStale,
     actionMissing: (kind: NativeNightAction) => actionRejected(kind, "missing"),
     actionInvalid: (kind: NativeNightAction) => actionRejected(kind, "invalid"),
+    // 采用首个命中的严格板子前缀；每个查询都在该分支现场读取 World，不合并为缓存布尔值。
     strictWolfFailurePrefix() {
       if (isFragrantPairBoard(world())) return "fragrant_pair_seer";
       if (isNobleBodyBoard(world())) return "noble_secret_body";

@@ -1,10 +1,8 @@
 /**
- * Responsibility: expose the archive verifier's frozen finite board checks.
- * Input: named support predicates owned in this directory; output: the public
- * verification-only API used by record validators. It never imports production
- * rulesets or text, normalizes config, pays resources or authorizes game actions.
- * Data/schema validity alone is not a supported-board verdict. Individual checks
- * preserve the archived compatibility policies and internal call order.
+ * 向归档规则核验调用方导出本目录独立拥有的有限板子检查。
+ * 输入为既有具名支持函数，输出为仅供验证使用的原 API；保留各检查的兼容政策和内部顺序。
+ * 不导入生产规则集或展示文字，不规范化外部配置、支付资源或授予行动权限。
+ * 数据／schema 合法不能替代板子支持裁决。
  */
 export { isAnimalDreamPreset } from "./animal-dream-preset";
 export { isDemonHunterPreset } from "./demon-hunter-preset";

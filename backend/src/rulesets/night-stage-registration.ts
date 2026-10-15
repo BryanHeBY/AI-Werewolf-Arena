@@ -1,11 +1,8 @@
 /**
- * Owns explicit compatibility and Ghost Bride replacement registration policies.
- * Inputs are already collected handler references and compiler-provided wedding
- * handlers; outputs are the registered Map, owned replacement refs or a named conflict.
- * Profile and compiler reservations share only the same original handler for an
- * observed ID. No duplicate priority/execute getters, actor queries or coercion
- * run here; declared replacements preserve their original four-step order. Clone
- * refs are captured at the original argument position and recorded after set succeeds.
+ * 负责夜间阶段的显式同引用兼容与鬼魂新娘替换登记。输入为已收集的 handler 引用和编译器婚约 handler，
+ * 输出为登记 Map、替换引用记录或具名冲突；登记不查询 actor 或授予执行权限。
+ * 同一已观察 ID 只允许原 handler 同引用共享，不读取 priority／execute 做额外等价推断。
+ * 婚约替换按原四步顺序执行；克隆引用在原参数位置捕获，set 成功后才加入变更记录。
  */
 import type { NightStageHandler } from "../game/mechanisms/stages/night/contracts";
 import type { GhostStageRegistrationChange } from "./night-stage-plan-contracts";
@@ -16,7 +13,7 @@ export const NIGHT_STAGE_SHARING = Object.freeze({
   conflictCode: "night_stage_handler_conflict",
 } as const);
 
-/** These are finite existing operations, not a general replacement graph. */
+/** 固定的四个现有操作按数组顺序执行，不构造通用替换图或扩展可替换 ID。 */
 export const GHOST_BRIDE_STAGE_OPERATIONS = Object.freeze([
   Object.freeze({ kind: "remove", id: "wolf_kill_vote" } as const),
   Object.freeze({ kind: "install", source: "wedding-chat" } as const),
@@ -31,7 +28,7 @@ export function registerNightStages(
   for (const stage of collected) {
     const observedId = stage.id;
     if (!registered.has(observedId)) {
-      // Keep the original second ID evaluation for a newly registered winner.
+      // 新登记获选者仍第二次读取原 id；访问器变化或抛错的前缀不能由缓存首值替代。
       const registeredId = stage.id,
         existing = registered.get(registeredId);
       if (existing !== undefined && existing !== stage) conflict(registeredId);
@@ -61,6 +58,7 @@ export function applyGhostBrideStageRegistration(
         break;
       case "install": {
         const stage = operation.source === "wedding-chat" ? weddingChat : weddingKnife;
+        // Map 写入成功后才记录引用；若 set 抛错，之前的删除／安装保持，不回滚已执行操作。
         registered.set(stage.id, stage);
         changes.push(Object.freeze({ handler: stage, operation: operation.source }));
         break;

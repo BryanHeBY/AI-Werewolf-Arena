@@ -1,0 +1,69 @@
+{
+  "baseCommit": "4f775d49f85eccc8eeb4da9c67517048879cadc4",
+  "sourceReady": {
+    "path": "docs/refactor/generated/board-ruleset-chinese-contracts-source-ready.json",
+    "sha256": "9dfd34309a06abb834795100631267e83c1ad712f6641d6270c79d4a5117deff"
+  },
+  "executedBy": "Root /root; author only prepared scripts",
+  "firstProof": {
+    "command": "bun --no-env-file docs/refactor/generated/board-ruleset-chinese-contracts-proof.cjs",
+    "script": {
+      "path": "docs/refactor/generated/board-ruleset-chinese-contracts-proof.cjs",
+      "sha256": "baa24a68788979ababc1613e3a74749ea398c2bac4a2724e120654fa60c824be"
+    },
+    "launch": "eacd7c",
+    "sessionId": 72247,
+    "terminal": "70b26f",
+    "exitCode": 0,
+    "report": {
+      "path": "docs/refactor/generated/board-ruleset-chinese-contracts-proof.json",
+      "sha256": "bf123d8d463b44566fd8aec39e1482f1de9f1c715459e618e45a440ff3aae97c"
+    },
+    "rawOutput": {
+      "path": "docs/refactor/generated/board-ruleset-chinese-contracts-proof-output.txt",
+      "sha256": "9ea291fefdc1995fb46082ec6fd48d944a94e7fed5ed98f4be233b6a5bd44455"
+    },
+    "reportedMetrics": {
+      "sourceCount": 58,
+      "commentEditRecords": 186,
+      "syntaxNodesExcludingJSDoc": 56472,
+      "syntaxLeavesExcludingJSDoc": 37715,
+      "nodeArrays": 4067,
+      "protectedJsDocTags": 0,
+      "protectedDirectiveLines": 0,
+      "wholeRawOutputs": 116
+    }
+  },
+  "firstHeads": {
+    "command": "bun --no-env-file docs/refactor/generated/board-ruleset-chinese-contracts-heads.ts",
+    "script": {
+      "path": "docs/refactor/generated/board-ruleset-chinese-contracts-heads.ts",
+      "sha256": "df45d4f8a11169328d671be09aaaa08631adfe3006976ce34de6653acd4bb31c"
+    },
+    "receipt": "d2af85",
+    "exitCode": 0,
+    "report": {
+      "path": "docs/refactor/generated/board-ruleset-chinese-contracts-heads.json",
+      "sha256": "86121a35596fe6f361015e7274f199d35db820d6724d74df721b1555e879492f"
+    },
+    "rawOutput": {
+      "path": "docs/refactor/generated/board-ruleset-chinese-contracts-heads-output.txt",
+      "sha256": "7d5d6308805ad716cdf466deba7fb0205fed734bcf0bd088b02baa9eff5a5535"
+    },
+    "roots": 58,
+    "documentationPaths": 731,
+    "diagnostics": []
+  },
+  "notRun": [
+    "types",
+    "business/runtime tests",
+    "models",
+    "whole gates",
+    "network/private configuration"
+  ],
+  "limits": [
+    "Both checks are unique first executions with final source-ready bytes; no subsequent source edits or repeat green.",
+    "Root explicit terminal/receipt messages establish exit codes; JSON report alone is not used to invent exit status.",
+    "Source-ready checksRun=false is historical preparation metadata, not a claim about the later receipt."
+  ]
+}

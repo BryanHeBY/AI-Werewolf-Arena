@@ -1,11 +1,9 @@
 /**
- * Responsibility: own the frozen archive support check for demon-hunter boards.
- * Input: inert normalized board data from a replay archive; output: the finite
- * supported-board verdict preserved from Git 80ce15f. Local verification owns
- * this algorithm independently; it never calls production ruleset predicates,
- * accepts raw configuration on schema alone, authorizes actions or writes state.
- * Public contract supplies only inert copying, facts and stable policy IDs;
- * Node ingress must reject hostile objects before this reader reflects data.
+ * 负责独立核验归档中的猎魔人有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。
+ * 先接受赤月、贵族秘身的已列组合，再检查本模块六人／十二人标准牌组；不是任意猎魔人混搭。
+ * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。
+ * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。
+ * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。
  */
 import { isNobleSecretBodyPreset } from "./noble-secret-body-preset";
 import { isRedMoonPreset } from "./red-moon-preset";
@@ -30,8 +28,9 @@ function equals(value: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([key, v]) => value[key] === v)
   );
 }
-/** Finite normalized four-board boundary; registration never authorizes other role combinations. */
+/** 先按已列组合委托，再检查规范化标准牌组；注册角色不扩大组合支持范围。 */
 export function isDemonHunterPreset(input: unknown): boolean {
+  // 先按原顺序委托两个完整组合，再进入标准牌组检查；不能把已注册角色视作任意组合许可。
   if (isRedMoonPreset(input) || isNobleSecretBodyPreset(input)) return true;
   try {
     const c = copyEventData(input) as Record<string, any>;

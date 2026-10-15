@@ -1,11 +1,9 @@
 /**
- * Responsibility: own the frozen archive support check for radiant-eclipse boards.
- * Input: inert normalized board data from a replay archive; output: the finite
- * supported-board verdict preserved from Git 80ce15f. Local verification owns
- * this algorithm independently; it never calls production ruleset predicates,
- * accepts raw configuration on schema alone, authorizes actions or writes state.
- * Public contract supplies only inert copying, facts and stable policy IDs;
- * Node ingress must reject hostile objects before this reader reflects data.
+ * 负责独立核验归档中的流光伯爵／蚀日侍女有限板子。输入为归档中已规范化的纯数据，输出为支持布尔值。
+ * 十二人固定牌组、摄梦人与女巫政策；角色出现本身不能替代完整配置判定。
+ * 本目录保留来自 Git 80ce15f 的独立判定及调用顺序，不导入生产规则集作验证 oracle。
+ * 中立契约仅供应数据复制、事实与稳定政策标识；此处不是敌意对象的 Node 安全入口。
+ * 通过数据 schema 不等于通过板子支持检查；本模块不授权行动或写入游戏状态。
  */
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 const deck: Readonly<Record<string, number>> = {
@@ -20,6 +18,7 @@ const deck: Readonly<Record<string, number>> = {
 function record(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === "object" && !Array.isArray(v);
 }
+// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。
 function exact(v: unknown, expected: Record<string, unknown>): boolean {
   return (
     record(v) &&
@@ -27,7 +26,7 @@ function exact(v: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Finite native twelve-player Radiant Count and Eclipse Maid board. */
+/** 流光伯爵与蚀日侍女的有限原生十二人板子。 */
 export function isRadiantEclipsePreset(input: unknown): boolean {
   try {
     const c = copyEventData(input);
@@ -59,6 +58,7 @@ export function isRadiantEclipsePreset(input: unknown): boolean {
     if (!exact(c.radiantEclipse, { policy: "awa_radiant_eclipse_v1" })) return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
       return false;
+    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。
     const seen = new Set<string>();
     for (const row of c.roleSetups) {
       if (

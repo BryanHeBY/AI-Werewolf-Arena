@@ -1,9 +1,8 @@
 /**
- * Owns the existing finite fragrant-pair-seer composition predicate for production setup.
- * Inputs are inert normalized board data; outputs are the original support
- * verdict with unchanged field, deck, goal and policy checks. It never applies
- * game effects, chooses an actor or authorizes a turn. Archive verification has
- * a separately owned predicate and must not call this production implementation.
+ * 负责生产装配前的寻香魅影／觉醒预言家有限板子判定。输入为已规范化的纯板子数据，输出为支持布尔值。
+ * 十二人原生配对牌组，猎人参数可省略或取指定资格政策；不扩展为学习／赠予混搭。
+ * 按现有字段、牌组、胜利目标与政策检查，不创建角色、支付资源或授予行动权限。
+ * 归档验证拥有独立实现，不以本生产判定作为验证 oracle。
  */
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract";
@@ -20,6 +19,7 @@ const deck: Readonly<Record<string, number>> = {
 function record(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === "object" && !Array.isArray(value);
 }
+// 数据复制之后只比较自有可枚举键的数量、存在性与预期值；不在这里补默认字段。
 function exact(value: unknown, expected: Record<string, unknown>): boolean {
   return (
     record(value) &&
@@ -29,7 +29,7 @@ function exact(value: unknown, expected: Record<string, unknown>): boolean {
     )
   );
 }
-/** Exact native twelve-player Fragrant Phantom / Awakened Seer policy, no learned or gifted mixtures. */
+/** 原生寻香魅影／觉醒预言家十二人组合，不扩展为学习或赠予混搭。 */
 export function isFragrantPairSeerPreset(input: unknown): boolean {
   try {
     const c = copyEventData(input);
@@ -69,6 +69,7 @@ export function isFragrantPairSeerPreset(input: unknown): boolean {
       return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
       return false;
+    // 固定行数、逐角色数量和去重共同限定牌组；输入行可重排，重复角色不能抵消缺牌。
     const seen = new Set<string>();
     for (const row of c.roleSetups) {
       if (
