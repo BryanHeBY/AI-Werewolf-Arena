@@ -77,6 +77,8 @@ export function ReplayFrame({ input, frame }: { input: ReplayRenderInput; frame:
         const angle = (Math.PI * 2 * index) / view.players.length - Math.PI / 2;
         const left = 50 + Math.cos(angle) * 38;
         const top = seatCenter + Math.sin(angle) * seatRadius;
+        // 密集圆桌的文字沿左右外侧错开，长角色名不伸入相邻号码圆环；不改变圆环或席位顺序。
+        const labelOffset = view.players.length >= 10 ? Math.cos(angle) * 20 : 0;
         return (
           <div
             key={player.playerId}
@@ -108,16 +110,18 @@ export function ReplayFrame({ input, frame }: { input: ReplayRenderInput; frame:
             >
               {player.playerId}
             </div>
-            {player.name && (
-              <div style={{ fontSize: 14, overflowWrap: "anywhere" }}>{player.name}</div>
-            )}
-            <div style={{ fontSize: 15, fontWeight: 700 }}>
-              {player.roleLabel}
-              {player.sheriffLabel ? ` · ${player.sheriffLabel}` : ""}
+            <div style={{ transform: `translateX(${labelOffset}px)` }}>
+              {player.name && (
+                <div style={{ fontSize: 14, overflowWrap: "anywhere" }}>{player.name}</div>
+              )}
+              <div style={{ fontSize: 15, fontWeight: 700 }}>
+                {player.roleLabel}
+                {player.sheriffLabel ? ` · ${player.sheriffLabel}` : ""}
+              </div>
+              {player.isWinner && (
+                <div style={{ color: "#e4c67d", fontSize: 14 }}>{view.winnerLabel}</div>
+              )}
             </div>
-            {player.isWinner && (
-              <div style={{ color: "#e4c67d", fontSize: 14 }}>{view.winnerLabel}</div>
-            )}
           </div>
         );
       })}
