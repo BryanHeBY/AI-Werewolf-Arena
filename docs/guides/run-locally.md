@@ -35,3 +35,9 @@ bun run --cwd backend config:migrate --configs-dir ../configs
 先校验再备份，目标独占发布。备份存在且字节不同应拒绝，不通过删除别人的文件或重试丢弃错误。完整参数仍以CLI帮助／实际parser为准。
 
 记录与关闭失败应保错误；初始化失败或必需replay写失败使命令失败，不能只看最后一行日志判成功。
+
+## ACP 沙箱中的 MCP 依赖
+
+使用本地 bwrap 启动器时，`ACP_READONLY_ROOTS` 必须覆盖 MCP 入口的实际运行依赖，包括 `packages/game-contract`、`packages/game-text` 及其依赖目录。`node_modules` 中的 workspace 符号链接不会把目标目录带入沙箱；新增共享包或调整模块归属后，需要同步更新每个隔离 provider 的只读挂载。
+
+ACP 会话能回复文本，不代表注入的游戏 MCP 已启动成功。若模型提示缺少 `submit_action`，先在相同沙箱内检查 MCP 启动、工具发现与提交。`ENOENT reading .../@ai-werewolf-arena/game-contract` 表示缺少共享包挂载。正常工具列表应包含 `get_game_schema`、`submit_action`、`report_bug`；终端出现回退发言不代表模型完成了工具提交。
