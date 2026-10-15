@@ -1,6 +1,7 @@
 /**
  * 单元测试验证骑士真实阵营决斗、只读接收及有界 provider／actor／target 权限。输入保留原 locale、字面规则／目标修改及受控直接决斗收集／提交；精确库存、无身份泄露、错误身份和陈旧选择拒绝是预期，不推进完整 PhaseManager 周期或记录文件。
  */
+import { bindTargetHintContext } from "../../../../src/agents/tool-repair/target-hint-registry";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -94,13 +95,15 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(resolveInspection(world, 2, "camp", catalog)).toEqual({ kind: "camp", camp: Camp.Good });
     setIdiotState(role(world, 4), { revealed: true });
     expect(catalog.participation(role(world, 4)).canBeExiled).toBe(false);
-    const hint = new DefaultTargetHintRegistry().buildActionableIdsHint({
-      actorId: 1,
-      actorRole: Role.Knight,
-      allowedTools: ["duel"],
-      world,
-      roleCatalog: catalog,
-    });
+    const hint = new DefaultTargetHintRegistry().buildActionableIdsHint(
+      bindTargetHintContext({
+        actorId: 1,
+        actorRole: Role.Knight,
+        allowedTools: ["duel"],
+        world,
+        roleCatalog: catalog,
+      }),
+    );
     expect(hint).toContain("2, 3, 4, 5, 6");
     expect(new ActionReception(world).validate(req, "duel", duel(4).args).ok).toBe(true);
     const events: GameEvent[] = [];

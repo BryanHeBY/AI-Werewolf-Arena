@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证配置的查验／死亡政策在有界阶段、hook、校验、提示与投影中的实际使用。输入为角色／政策／语言矩阵和原 live 槽修改；手写许可、库存／历史计数和错误为预期。死亡链在场景中，此处不运行完整阶段或模型。
  */
+import { bindTargetHintContext } from "../../../src/agents/tool-repair/target-hint-registry";
 import { rolePresentationRenderer } from "../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -183,14 +184,16 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
             { phase: Phase.Night, day: 2, abilityId: ability.id },
           ).ok,
         ).toBe(repeated);
-        const hint = getDefaultTargetHintRegistry().buildActionableIdsHint({
-          world: game.world,
-          actorId: 1,
-          actorRole: kind,
-          day: 2,
-          abilityId: ability.id,
-          allowedTools: ["inspect_role"],
-        })!;
+        const hint = getDefaultTargetHintRegistry().buildActionableIdsHint(
+          bindTargetHintContext({
+            world: game.world,
+            actorId: 1,
+            actorRole: kind,
+            day: 2,
+            abilityId: ability.id,
+            allowedTools: ["inspect_role"],
+          }),
+        )!;
         expect(
           hint
             .match(/\b\d+\b/g)

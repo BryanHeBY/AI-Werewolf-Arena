@@ -1,6 +1,7 @@
 /**
  * 馥郁双生有界周期场景测试验证已公开死亡、继承刀权提示与玩家／网关投影一致。输入为两语矩阵、关联死亡计划与真实阶段管理器请求；预期为手写已知状态、历史、隐私及序号断言，不额外生成预期对局。
  */
+import { bindTargetHintContext } from "../../../../src/agents/tool-repair/target-hint-registry";
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/domain/identity";
 import { Role } from "../../../../src/domain/identity";
@@ -180,14 +181,16 @@ for (const locale of ["zh-CN", "en"] as const)
               { name: "kill_vote", args: { target_id: 1, abstain: false } },
               { phase: Phase.Night, day: 3 },
             ).ok;
-            hint = targets.buildActionableIdsHint({
-              actorId: 1,
-              day: 3,
-              actorRole: Role.FragrantPhantom,
-              allowedTools: ["kill_vote"],
-              world: g.world,
-              roleCatalog: catalog,
-            });
+            hint = targets.buildActionableIdsHint(
+              bindTargetHintContext({
+                actorId: 1,
+                day: 3,
+                actorRole: Role.FragrantPhantom,
+                allowedTools: ["kill_vote"],
+                world: g.world,
+                roleCatalog: catalog,
+              }),
+            );
             user = policy.buildUser(r, {
               turnId: "t1",
               allowedTools: ["kill_vote"],

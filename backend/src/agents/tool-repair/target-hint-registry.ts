@@ -17,7 +17,9 @@ import { seerTargetAllowed } from "../../features/seer/ports";
 import { guardTargetRepeated } from "../../features/guard/ports";
 import { text } from "@ai-werewolf-arena/game-text";
 import { Role, ToolName } from "../../domain/model";
-import { TargetHintContext, TargetHintRegistry } from "./contracts";
+import { TargetHintContext, TargetHintRegistry, type TargetHintQueries } from "./contracts";
+import type { World } from "../../domain/world";
+import type { RoleCatalog } from "../../rulesets/roles/catalog";
 import { canBeExiled, canBeSheriff } from "../../engine/participation";
 import { inspectionRepeats } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { getRoleInspectionState } from "../../features/role-inspection/ports";
@@ -104,154 +106,99 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       ctx.allowedTools.includes("choose_servant") ||
       ctx.allowedTools.includes("protect_secret_body")
     ) {
-      const ids = nobleBodyChoiceTargets(
-        ctx.world,
-        ctx.day ?? 1,
-        ctx.allowedTools.includes("choose_servant") ? "noble" : "body",
-      );
+      const ids = ctx.queries.nobleChoiceTargets();
       return ids.length
         ? text(
-            ctx.world.locale,
+            ctx.queries.locale(),
             ctx.allowedTools.includes("protect_secret_body")
               ? "prompt.targets.self"
               : "prompt.targets.others",
             { ids: ids.join(", ") },
           )
-        : text(ctx.world.locale, "prompt.targets.none");
+        : text(ctx.queries.locale(), "prompt.targets.none");
     }
     if (ctx.allowedTools.includes("cast_shelter") || ctx.allowedTools.includes("swallow_skill")) {
       const ids = ctx.allowedTools.includes("cast_shelter")
-        ? shelterTargets(ctx.world, ctx.day ?? 1, ctx.actorId, ctx.abilityId!)
-        : eclipseSwallowTargets(ctx.world, ctx.day ?? 1);
+        ? ctx.queries.shelterTargets()
+        : ctx.queries.eclipseSwallowTargets();
       return ids.length
-        ? text(ctx.world.locale, "prompt.targets.others", { ids: ids.join(", ") })
-        : text(ctx.world.locale, "prompt.targets.none");
+        ? text(ctx.queries.locale(), "prompt.targets.others", { ids: ids.join(", ") })
+        : text(ctx.queries.locale(), "prompt.targets.none");
     }
     if (ctx.allowedTools.includes("modify_skill") || ctx.allowedTools.includes("bonus_action")) {
       const candidates = ctx.allowedTools.includes("modify_skill")
         ? ctx.modifierCandidates
         : ctx.modifierBonusCandidates;
       if (candidates === undefined) throw new Error("scholar_mentor_candidates_missing");
-      const alive = new Set(ctx.world.getAliveEntityIds()),
+      const alive = new Set(ctx.queries.aliveIds()),
         ids = [...new Set(candidates)].filter((id) => alive.has(id)).sort((a, b) => a - b);
       return ids.length
         ? text(
-            ctx.world.locale,
+            ctx.queries.locale(),
             ids.includes(ctx.actorId) ? "prompt.targets.self" : "prompt.targets.others",
             { ids: ids.join(", ") },
           )
-        : text(ctx.world.locale, "prompt.targets.none");
+        : text(ctx.queries.locale(), "prompt.targets.none");
     }
     if (ctx.allowedTools.includes("challenge") && ctx.debateTargetId !== undefined)
-      return text(ctx.world.locale, "prompt.targets.debate", { target: ctx.debateTargetId });
+      return text(ctx.queries.locale(), "prompt.targets.debate", { target: ctx.debateTargetId });
     if (ctx.allowedTools.includes("choose_lovers"))
-      return text(ctx.world.locale, "prompt.targets.lovers", {
-        ids: ctx.world.getAliveEntityIds().join(", "),
+      return text(ctx.queries.locale(), "prompt.targets.lovers", {
+        ids: ctx.queries.aliveIds().join(", "),
       });
     const targetTools = ctx.allowedTools.filter((tool) => this.getRule(ctx.actorRole, tool));
     if (targetTools.length === 0) {
       return undefined;
     }
     const radiantSelf =
-      isRadiantEclipseBoard(ctx.world) &&
+      ctx.queries.isRadiantBoard() &&
       (ctx.allowedTools.includes("use_potion") ||
         ctx.allowedTools.includes("check_identity") ||
         ctx.allowedTools.includes("kill_vote"));
     const allowSelf =
       radiantSelf || targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
-    const inspection = getRoleInspectionState(
-      ctx.world.getComponent(ctx.actorId, COMPONENT.Role)!,
-      ctx.abilityId,
-    );
-    const ownRole = ctx.world.getComponent(ctx.actorId, COMPONENT.Role);
-    const awakenedGuard = getAwakenedState(ownRole)?.learned?.skill;
-    const luckyAllowed = (tool: ToolName, id: number) => {
-      const kind =
-        tool === "check_identity"
-          ? "seer_check"
-          : tool === "guard"
-            ? "guard"
-            : tool === "use_potion"
-              ? "potion"
-              : null;
-      if (!kind) return true;
-      const ability = findNightAbility(ownRole, kind, ctx.abilityId);
-      if (!ability) return true;
-      // 普通女巫仍可救这个目标，即使其毒药目标因该行动者的历史记录而被限制。
-      if (
-        ability.kind === "potion" &&
-        ability.activation !== "lucky" &&
-        ability.activation !== "black_market" &&
-        ability.state.heal > 0
-      )
-        return true;
-      if (ability.kind === "seer_check" && !seerTargetAllowed(ability.state, ctx.actorId, id))
-        return false;
-      if (ability.kind === "guard" && guardTargetRepeated(ability, ctx.day ?? 1, id)) return false;
-      return luckyTargetAllowed(
-        ctx.world,
-        ctx.actorId,
-        ability,
-        ctx.day ?? 1,
-        kind === "seer_check" ? "check" : kind === "guard" ? "guard" : "poison",
-        id,
-      );
-    };
-    const ids = ctx.world
-      .getAliveEntityIds()
+    const inspection = ctx.queries.inspection();
+    const actorRules = ctx.queries.actorRules();
+    const ids = ctx.queries
+      .aliveIds()
       .filter((id) =>
         targetTools.some(
           (tool) =>
             (radiantSelf || this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
-            luckyAllowed(tool, id) &&
-            (tool !== "fear" ||
-              nightmareFearTargets(ctx.world, ctx.actorId, ctx.day ?? 1).includes(id)) &&
-            (tool !== "swap_targets" ||
-              magicianChoiceTargets(ctx.world, ctx.day ?? 1).includes(id)) &&
-            (tool !== "kill_vote" || bindWolfKnifeTargetQuery(ctx.world).allows(id)) &&
+            actorRules.luckyAllowed(tool, id) &&
+            (tool !== "fear" || ctx.queries.fearTargets().includes(id)) &&
+            (tool !== "swap_targets" || ctx.queries.swapTargets().includes(id)) &&
+            (tool !== "kill_vote" || ctx.queries.wolfKnifeAllows(id)) &&
             (tool !== "inspect_night_identity" ||
               ctx.actorRole !== Role.WolfWitch ||
-              (ctx.world.getComponent(id, COMPONENT.Role) &&
-                ctx.world.getComponent(id, COMPONENT.Camp)?.camp) !== "wolf") &&
-            (tool !== "awakened_guard" ||
-              awakenedGuard?.kind !== "guard" ||
-              awakenedGuard.lastGuardDay !== (ctx.day ?? 1) - 1 ||
-              awakenedGuard.lastTarget !== id) &&
+              ctx.queries.wolfWitchTargetAllowed(id)) &&
+            (tool !== "awakened_guard" || actorRules.awakenedGuardAllowed(id)) &&
             (tool !== "vote" ||
               ((ctx.exileCandidates === undefined || ctx.exileCandidates.includes(id)) &&
-                canBeExiled(ctx.world, id, ctx.roleCatalog) &&
-                !prohibitsLoversVote(ctx.world, ctx.actorId, id))) &&
-            (tool !== "inspect_role" ||
-              !inspection ||
-              inspectionRepeats(inspection) ||
-              !inspection.history.some((report) => report.targetId === id)) &&
+                ctx.queries.canBeExiled(id) &&
+                ctx.queries.loversVoteAllowed(id))) &&
+            (tool !== "inspect_role" || !inspection || inspection.allows(id)) &&
             (tool !== "choose_badge_successor" ||
-              (ctx.badgeCandidates?.includes(id) &&
-                canBeSheriff(ctx.world, id, ctx.roleCatalog))) &&
+              (ctx.badgeCandidates?.includes(id) && ctx.queries.canBeSheriff(id))) &&
             (tool !== "vote_for_sheriff" ||
-              (ctx.sheriffCandidates?.includes(id) &&
-                canBeSheriff(ctx.world, id, ctx.roleCatalog))),
+              (ctx.sheriffCandidates?.includes(id) && ctx.queries.canBeSheriff(id))),
         ),
       )
       .sort((a, b) => a - b);
-    const potion = findNightAbility(ownRole, "potion", ctx.abilityId);
-    if (
-      targetTools.length === 1 &&
-      targetTools[0] === "use_potion" &&
-      potion?.activation === "lucky"
-    ) {
-      return text(ctx.world.locale, "prompt.targets.lucky_poison", {
-        ids: ids.join(", ") || text(ctx.world.locale, "common.none"),
+    const potion = actorRules.potion();
+    if (targetTools.length === 1 && targetTools[0] === "use_potion" && potion?.isLucky()) {
+      return text(ctx.queries.locale(), "prompt.targets.lucky_poison", {
+        ids: ids.join(", ") || text(ctx.queries.locale(), "common.none"),
         actor: ctx.actorId,
       });
     }
     if (ids.length === 0) {
-      return text(ctx.world.locale, "prompt.targets.none");
+      return text(ctx.queries.locale(), "prompt.targets.none");
     }
     if (allowSelf) {
-      return text(ctx.world.locale, "prompt.targets.self", { ids: ids.join(", ") });
+      return text(ctx.queries.locale(), "prompt.targets.self", { ids: ids.join(", ") });
     }
-    return text(ctx.world.locale, "prompt.targets.others", { ids: ids.join(", ") });
+    return text(ctx.queries.locale(), "prompt.targets.others", { ids: ids.join(", ") });
   }
 
   private getRule(role: Role | undefined, tool: ToolName): TargetRule | undefined {
@@ -268,4 +215,141 @@ export function getDefaultTargetHintRegistry(): TargetHintRegistry {
     defaultTargetHintRegistry = new DefaultTargetHintRegistry();
   }
   return defaultTargetHintRegistry;
+}
+
+/** 可信提示装配输入；只在调用端绑定，不交给可替换 TargetHintRegistry。 */
+export type TargetHintRuntimeInput = Omit<TargetHintContext, "queries"> & {
+  world: World;
+  roleCatalog?: RoleCatalog;
+};
+
+/**
+ * 每次提示建立实际窄对象。数据字段保持晚读，组件和能力原引用只留在具体查询闭包里。
+ * 这里不快照或复制资源，不发许可；查询异常仍由原提示调用路径传播。
+ */
+export function bindTargetHintContext(source: TargetHintRuntimeInput): TargetHintContext {
+  const queries: TargetHintQueries = {
+    locale: () => source.world.locale,
+    aliveIds: () => [...source.world.getAliveEntityIds()],
+    nobleChoiceTargets: () =>
+      nobleBodyChoiceTargets(
+        source.world,
+        source.day ?? 1,
+        source.allowedTools.includes("choose_servant") ? "noble" : "body",
+      ),
+    shelterTargets: () =>
+      shelterTargets(source.world, source.day ?? 1, source.actorId, source.abilityId!),
+    eclipseSwallowTargets: () => eclipseSwallowTargets(source.world, source.day ?? 1),
+    isRadiantBoard: () => isRadiantEclipseBoard(source.world),
+    inspection() {
+      const inspection = getRoleInspectionState(
+        source.world.getComponent(source.actorId, COMPONENT.Role)!,
+        source.abilityId,
+      );
+      return inspection
+        ? {
+            allows: (id) =>
+              inspectionRepeats(inspection) ||
+              !inspection.history.some((report) => report.targetId === id),
+          }
+        : undefined;
+    },
+    actorRules() {
+      const ownRole = source.world.getComponent(source.actorId, COMPONENT.Role);
+      const awakenedGuard = getAwakenedState(ownRole)?.learned?.skill;
+      return {
+        luckyAllowed(tool, id) {
+          const kind =
+            tool === "check_identity"
+              ? "seer_check"
+              : tool === "guard"
+                ? "guard"
+                : tool === "use_potion"
+                  ? "potion"
+                  : null;
+          if (!kind) return true;
+          const ability = findNightAbility(ownRole, kind, source.abilityId);
+          if (!ability) return true;
+          // 普通女巫仍可救这个目标，即使其毒药目标因该行动者的历史记录而被限制。
+          if (
+            ability.kind === "potion" &&
+            ability.activation !== "lucky" &&
+            ability.activation !== "black_market" &&
+            ability.state.heal > 0
+          )
+            return true;
+          if (
+            ability.kind === "seer_check" &&
+            !seerTargetAllowed(ability.state, source.actorId, id)
+          )
+            return false;
+          if (ability.kind === "guard" && guardTargetRepeated(ability, source.day ?? 1, id))
+            return false;
+          return luckyTargetAllowed(
+            source.world,
+            source.actorId,
+            ability,
+            source.day ?? 1,
+            kind === "seer_check" ? "check" : kind === "guard" ? "guard" : "poison",
+            id,
+          );
+        },
+
+        awakenedGuardAllowed: (id) =>
+          awakenedGuard?.kind !== "guard" ||
+          awakenedGuard.lastGuardDay !== (source.day ?? 1) - 1 ||
+          awakenedGuard.lastTarget !== id,
+        potion() {
+          // 定位仍先于外层工具分支，activation 仅在原幸运毒提示分支读取。
+          const potion = findNightAbility(ownRole, "potion", source.abilityId);
+          return potion ? { isLucky: () => potion.activation === "lucky" } : undefined;
+        },
+      };
+    },
+    fearTargets: () => nightmareFearTargets(source.world, source.actorId, source.day ?? 1),
+    swapTargets: () => magicianChoiceTargets(source.world, source.day ?? 1),
+    wolfKnifeAllows: (id) => bindWolfKnifeTargetQuery(source.world).allows(id),
+    wolfWitchTargetAllowed: (id) =>
+      (source.world.getComponent(id, COMPONENT.Role) &&
+        source.world.getComponent(id, COMPONENT.Camp)?.camp) !== "wolf",
+    canBeExiled: (id) => canBeExiled(source.world, id, source.roleCatalog),
+    loversVoteAllowed: (id) => !prohibitsLoversVote(source.world, source.actorId, id),
+    canBeSheriff: (id) => canBeSheriff(source.world, id, source.roleCatalog),
+  };
+  return {
+    get modifierCandidates() {
+      return source.modifierCandidates;
+    },
+    get modifierBonusCandidates() {
+      return source.modifierBonusCandidates;
+    },
+    get actorId() {
+      return source.actorId;
+    },
+    get day() {
+      return source.day;
+    },
+    get actorRole() {
+      return source.actorRole;
+    },
+    get abilityId() {
+      return source.abilityId;
+    },
+    get debateTargetId() {
+      return source.debateTargetId;
+    },
+    get allowedTools() {
+      return source.allowedTools;
+    },
+    get sheriffCandidates() {
+      return source.sheriffCandidates;
+    },
+    get badgeCandidates() {
+      return source.badgeCandidates;
+    },
+    get exileCandidates() {
+      return source.exileCandidates;
+    },
+    queries,
+  };
 }

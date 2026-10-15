@@ -4,7 +4,7 @@
  * 可写字段与 readonly 候选类型不复制、冻结或验证输入；提示及修复结果不授予请求权限或库存。
  */
 import { EntityId, Role, ToolName } from "../../domain/model";
-import { World } from "../../domain/world";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 
 /** 修复只取得本次行动者编号；该字段本身不证明请求绑定、身份或当前行动资格。 */
 export interface CoerceContext {
@@ -26,7 +26,7 @@ export interface ToolRepairPack {
 }
 
 /**
- * 目标提示按当前工具与候选来源选择编号，World 保原 live 引用；这里不持有提交回执或独立库存。
+ * 目标提示按当前工具与候选来源选择编号；查询实时读取所属 owner，不持有提交回执或独立库存。
  * 可选字段由原调用方逐项求值，缺项处理与异常由具体目标规则决定，不统一补全或校验。
  */
 export interface TargetHintContext {
@@ -43,9 +43,8 @@ export interface TargetHintContext {
   debateTargetId?: number;
   /** 原可写工具数组决定提示分支；是否可提交仍由真实请求、接收器和机制复验。 */
   allowedTools: ToolName[];
-  /** 规则在原查询点读取组件、存活名单和 locale；此引用不是数据快照。 */
-  world: World;
-  roleCatalog?: import("../../rulesets/roles/catalog").RoleCatalog;
+  /** 只暴露编号、标量和受限查询句柄，不返回原组件或可写世界。 */
+  readonly queries: TargetHintQueries;
   /** 警长、徽章与放逐候选用于对应提示过滤，仍须按原参与规则核资格。 */
   sheriffCandidates?: readonly EntityId[];
   badgeCandidates?: readonly EntityId[];
@@ -55,4 +54,30 @@ export interface TargetHintContext {
 /** 返回提示文本或无提示；查询／本地化异常按实现传播，提示不等于动作准入结果。 */
 export interface TargetHintRegistry {
   buildActionableIdsHint(ctx: TargetHintContext): string | undefined;
+}
+
+/** 捕获本次行动者原能力引用，只返回目标判断；不授予使用能力或付款的权限。 */
+export interface TargetHintActorQueries {
+  luckyAllowed(tool: ToolName, id: EntityId): boolean;
+  awakenedGuardAllowed(id: EntityId): boolean;
+  potion(): { isLucky(): boolean } | undefined;
+}
+
+/** 目标提示的具体查询；候选只是建议，实际提交仍须由网关与资源 owner 复验。 */
+export interface TargetHintQueries {
+  locale(): Locale;
+  aliveIds(): EntityId[];
+  nobleChoiceTargets(): readonly EntityId[];
+  shelterTargets(): EntityId[];
+  eclipseSwallowTargets(): EntityId[];
+  isRadiantBoard(): boolean;
+  inspection(): { allows(id: EntityId): boolean } | undefined;
+  actorRules(): TargetHintActorQueries;
+  fearTargets(): EntityId[];
+  swapTargets(): EntityId[];
+  wolfKnifeAllows(id: EntityId): boolean;
+  wolfWitchTargetAllowed(id: EntityId): boolean;
+  canBeExiled(id: EntityId): boolean;
+  loversVoteAllowed(id: EntityId): boolean;
+  canBeSheriff(id: EntityId): boolean;
 }

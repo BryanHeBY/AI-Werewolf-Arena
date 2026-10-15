@@ -3,6 +3,7 @@
  * DTO 和库存断言验证配置语义；输入及字面／不可变 fixture 预期保持原样，不运行模型
  * 或完整对局驱动。
  */
+import { bindTargetHintContext } from "../../../../src/agents/tool-repair/target-hint-registry";
 import { captureNativeRolePresentation } from "../../../../src/agents/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -106,14 +107,16 @@ for (const targetPolicy of ["awa_alive_v1", "awa_fresh_others_v1"] as const)
       expect<unknown>(projected.state.history).toEqual(game.ability.state.history);
       if (targetPolicy === "awa_fresh_others_v1")
         expect(projected.state.targetPolicy).toBe(targetPolicy);
-      const hint = getDefaultTargetHintRegistry().buildActionableIdsHint({
-        world: game.world,
-        actorId: 2,
-        actorRole: Role.Seer,
-        day: 4,
-        abilityId: game.ability.id,
-        allowedTools: ["check_identity"],
-      })!;
+      const hint = getDefaultTargetHintRegistry().buildActionableIdsHint(
+        bindTargetHintContext({
+          world: game.world,
+          actorId: 2,
+          actorRole: Role.Seer,
+          day: 4,
+          abilityId: game.ability.id,
+          allowedTools: ["check_identity"],
+        }),
+      )!;
       const ids = hint.match(/\b\d+\b/g)?.map(Number) ?? [];
       expect(ids.includes(1)).toBe(targetPolicy === "awa_alive_v1");
     });

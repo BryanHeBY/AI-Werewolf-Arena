@@ -1,6 +1,7 @@
 /**
  * 单元测试验证杠精的存活投票分母、阈值、翻牌、拒绝与原生库存。输入为有限板子、显式票和受控请求 scope；预期为字面量或不变 fixture，不请求模型或完整对局。
  */
+import { bindTargetHintContext } from "../../../../src/agents/tool-repair/target-hint-registry";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { rolePresentationRenderer } from "../../../../src/agents/observation/role-presentation";
 import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
@@ -436,13 +437,15 @@ for (const locale of ["zh-CN", "en"] as const)
     ).toBeNull();
     const g = fixture();
     expect(
-      new DefaultTargetHintRegistry().buildActionableIdsHint({
-        actorId: 1,
-        actorRole: Role.Debater,
-        debateTargetId: 2,
-        allowedTools: ["challenge"],
-        world: g.world,
-      }),
+      new DefaultTargetHintRegistry().buildActionableIdsHint(
+        bindTargetHintContext({
+          actorId: 1,
+          actorRole: Role.Debater,
+          debateTargetId: 2,
+          allowedTools: ["challenge"],
+          world: g.world,
+        }),
+      ),
     ).toBe(text(g.world.locale, "prompt.targets.debate", { target: 2 }));
   });
 test("native tools fail outside their exact runtime window", () => {

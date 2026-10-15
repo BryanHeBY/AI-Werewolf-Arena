@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证守卫配置的重复目标语义。输入为相邻夜、前次合法行动和明确空守；原字面历史与拒绝断言区分政策。只调用有界机制与提示，不运行模型或完整对局驱动。
  */
+import { bindTargetHintContext } from "../../../../src/agents/tool-repair/target-hint-registry";
 import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -86,14 +87,16 @@ for (const policy of ["awa_last_action_v1", "netease_consecutive_nights_v1"] as 
       await game.act(2, skipped === "wait" ? null : choose(999));
       expect(game.ability.state.lastTarget).toBe(4);
       expect(game.ability.lastUsedDay).toBe(1);
-      const hint = getDefaultTargetHintRegistry().buildActionableIdsHint({
-        world: game.world,
-        actorId: 2,
-        actorRole: Role.Guard,
-        day: 3,
-        abilityId: game.ability.id,
-        allowedTools: ["guard"],
-      })!;
+      const hint = getDefaultTargetHintRegistry().buildActionableIdsHint(
+        bindTargetHintContext({
+          world: game.world,
+          actorId: 2,
+          actorRole: Role.Guard,
+          day: 3,
+          abilityId: game.ability.id,
+          allowedTools: ["guard"],
+        }),
+      )!;
       const ids = hint.match(/\b\d+\b/g)?.map(Number) ?? [];
       expect(ids.includes(4)).toBe(policy === "netease_consecutive_nights_v1");
       await game.act(3, choose(4));

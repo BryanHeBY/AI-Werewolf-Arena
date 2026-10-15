@@ -39,3 +39,9 @@ current链接实际可达，所有真实读点无旧根依赖，history每项原
 ## 初始身份与野孩子的原句柄
 
 `InitialIdentityScope.world` 和 `WildChildBinding.world` 退出。世界归属由各实际所有者的私有 WeakMap 保存，不随请求 scope、绑定对象或其副本返回；没有公开反查世界的替代方法。原句柄、资源引用与请求绑定继续由原 owner 复核，复制字段或额外补入 `world` 字段不构成授权。需要读取当前数据时使用具体查询端口，需要提交时调用相应窗口或资源所有者。
+
+## 目标提示扩展
+
+`TargetHintContext.world` 和 `roleCatalog` 退出。调用端先用 `bindTargetHintContext(runtimeInput)` 绑定当次可信输入，再交给 `TargetHintRegistry.buildActionableIdsHint`。扩展通过 `queries` 取得候选编号、语言和具体目标判断；行动者能力及查验历史只由查询闭包捕获，不返回原组件或能力对象。
+
+绑定不提前读取世界或上下文字段，数据字段保持晚读；默认提示仍沿原工具、角色和政策顺序筛选。查询得到的候选不授予提交权限，实际网关、请求与资源所有者继续复验。需要自定义目标规则时组合具体查询，不能重新传入可写 World。

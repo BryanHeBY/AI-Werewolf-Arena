@@ -7,6 +7,7 @@
  * 候选仅作提示，不授予行动许可；本模块不提交资源、变更阶段或复制新的私有库存。
  */
 
+import { bindTargetHintContext } from "../tool-repair/target-hint-registry";
 import {
   buildPlayerStatusDirective,
   buildPlayerStageContextHint,
@@ -181,21 +182,23 @@ export class PlayerPromptPolicy {
         ]
           .filter(Boolean)
           .join(" ") || undefined,
-      actionableIdsHint: this.options.targetHintRegistry.buildActionableIdsHint({
-        modifierCandidates: request.context.modifier_candidates,
-        modifierBonusCandidates: request.context.modifier_bonus_candidates,
-        actorId: request.actorId,
-        day: request.context.day,
-        actorRole: targetRuleRole,
-        abilityId: request.context.ability_id,
-        debateTargetId: request.context.debate_target_id,
-        allowedTools: input.allowedTools,
-        world: this.world,
-        roleCatalog: this.options.roleCatalog,
-        sheriffCandidates: request.context.sheriff_candidates,
-        exileCandidates: request.context.exile_candidates,
-        badgeCandidates: request.context.badge_candidates,
-      }),
+      actionableIdsHint: this.options.targetHintRegistry.buildActionableIdsHint(
+        bindTargetHintContext({
+          modifierCandidates: request.context.modifier_candidates,
+          modifierBonusCandidates: request.context.modifier_bonus_candidates,
+          actorId: request.actorId,
+          day: request.context.day,
+          actorRole: targetRuleRole,
+          abilityId: request.context.ability_id,
+          debateTargetId: request.context.debate_target_id,
+          allowedTools: input.allowedTools,
+          world: this.world,
+          roleCatalog: this.options.roleCatalog,
+          sheriffCandidates: request.context.sheriff_candidates,
+          exileCandidates: request.context.exile_candidates,
+          badgeCandidates: request.context.badge_candidates,
+        }),
+      ),
       actionSubmissionHint: input.actionSubmissionHint,
     });
   }
