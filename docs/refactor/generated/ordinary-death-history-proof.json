@@ -1,0 +1,142 @@
+{
+  "baseCommit": "1d42f118f80f3ffadcd35f367d8569ed20928bd7",
+  "sourceReadySHA256": "5f73e7406d0764bcfedb8dca057ea46da754072c86e1adab33e8aa3b8f174241",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/death-history.ts",
+      "sha256": "73af07a6db72b4c103cb797f33d711320e2ec353f0353ffa058e660698b9e9d6"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "c2fde79b57ea29ef268cf94a0b8f25c2425fa4d9276be09ed86dcb2307fa27b2"
+    },
+    {
+      "path": "backend/tests/unit/recording/death-history.test.ts",
+      "sha256": "07e362bf8c13363ed282e0cdbd6fce79973fbab41dc14829f9dce1dfb7a72d55"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/domain/deaths.ts",
+      "sha256": "93c2c37c06f2d1aba95c9e73aa080ff82f7f18fa7895aa25d4e44ff7e31fb454"
+    },
+    {
+      "path": "packages/game-contract/src/boards.ts",
+      "sha256": "4cac318aaba8793e2d6c966a9e5e7ae1b6cb69056268c8d4c0f13bad86b45b3e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+      "sha256": "582c0e6f2e7c38b1e139bf0063bb01f85b928121ca7d296dd37aba2f61bd6f8b"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-format.ts",
+      "sha256": "5136c9ff6f94667ff4497bb13e0085feab0fd97924871efb4012c99de7a09479"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "sha256": "69cb45a2b8e3386bff1377425b90348596c17f094655dec6146320baafd9b630"
+    }
+  ],
+  "assembly": {
+    "edits": 3,
+    "wholeForward": true,
+    "wholeInverse": true,
+    "originalCalls": [
+      "validateInitialIdentityRecord",
+      "validateWildChildRecord",
+      "validateLonelyGirlRecord",
+      "validateGhostBrideRecord",
+      "validateAnimalDreamRecord",
+      "validateFragrantPairRecord",
+      "validateNobleSecretBodyRecord",
+      "validateDemonHunterRecord",
+      "validateScholarMentorRecord",
+      "validateMistRavenRecord",
+      "validateRadiantEclipseRecord",
+      "validateTimeConsortRecord",
+      "validateWolfSorcererRecord",
+      "validateTricksterRecord",
+      "validateMagicianRecord",
+      "validateOrderPrinceRecord",
+      "validateCupidRecord",
+      "validateHybridRecord"
+    ],
+    "actualCalls": [
+      "validateInitialIdentityRecord",
+      "validateWildChildRecord",
+      "validateLonelyGirlRecord",
+      "validateGhostBrideRecord",
+      "validateAnimalDreamRecord",
+      "validateFragrantPairRecord",
+      "validateNobleSecretBodyRecord",
+      "validateDemonHunterRecord",
+      "validateScholarMentorRecord",
+      "validateMistRavenRecord",
+      "validateRadiantEclipseRecord",
+      "validateTimeConsortRecord",
+      "validateWolfSorcererRecord",
+      "validateTricksterRecord",
+      "validateMagicianRecord",
+      "validateOrderPrinceRecord",
+      "validateCupidRecord",
+      "validateHybridRecord",
+      "validateDeathHistoryRecord"
+    ],
+    "raw": [
+      {
+        "module": "ESNext",
+        "originalSHA256": "5d1b0c951c0cb6c97bf65d188a092cdd372cdaa863494b7d2ee6d80d1a5d6a4b",
+        "inverseSHA256": "5d1b0c951c0cb6c97bf65d188a092cdd372cdaa863494b7d2ee6d80d1a5d6a4b",
+        "actualSHA256": "047974d0614738c5cef91c8b7310117e8bb92ee248914276e46466c22d699e9b",
+        "inverseSame": true,
+        "actualSame": false
+      },
+      {
+        "module": "CommonJS",
+        "originalSHA256": "2108b4ac9a406ec3ed826c90199c821152277dd123caa7f2acdc49a0c0704400",
+        "inverseSHA256": "2108b4ac9a406ec3ed826c90199c821152277dd123caa7f2acdc49a0c0704400",
+        "actualSHA256": "b494d8df97134d1bc850d03194c86df99df8bffcbce403a1170c6ee4b3599349",
+        "inverseSame": true,
+        "actualSame": false
+      }
+    ]
+  },
+  "inventory": [
+    {
+      "path": "backend/src/verification/reproduction/death-history.ts",
+      "sha256": "73af07a6db72b4c103cb797f33d711320e2ec353f0353ffa058e660698b9e9d6",
+      "nodes": 5884,
+      "arrays": 730,
+      "leaves": 3107
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "c2fde79b57ea29ef268cf94a0b8f25c2425fa4d9276be09ed86dcb2307fa27b2",
+      "nodes": 211,
+      "arrays": 44,
+      "leaves": 86
+    },
+    {
+      "path": "backend/tests/unit/recording/death-history.test.ts",
+      "sha256": "07e362bf8c13363ed282e0cdbd6fce79973fbab41dc14829f9dce1dfb7a72d55",
+      "nodes": 3734,
+      "arrays": 426,
+      "leaves": 1866
+    }
+  ],
+  "ownerImports": [
+    {
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "typeOnly": false
+    },
+    {
+      "specifier": "../../recording/reproduction",
+      "typeOnly": true
+    }
+  ],
+  "limits": [
+    "New owner algorithm is a new strict semantic audit, not a mechanical-equivalence claim.",
+    "AST inventory uses forEachChild typed nodes, leaves and explicit NodeArray callbacks; JSDoc text is not counted as semantic leaves.",
+    "Only direct value/type import boundary is sampled here; no dynamic runtime, parser, types or behavioral test is executed."
+  ]
+}

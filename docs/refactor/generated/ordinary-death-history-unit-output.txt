@@ -1,0 +1,14 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/recording/death-history.test.ts:
+(pass) ordinary gun policy checks the whole source set, configured native origin and distinct learned or gifted policy [4.96ms]
+(pass) gun attempt groups cannot reuse an old candidate or one permit for two facts; opaque, pass, blocked and late replacement stay distinct [1.20ms]
+(pass) LastWords source policy is independent of execution phase and does not require an unrecorded source field [1.46ms]
+(pass) LastWords grants, opaque errors and source-wave evidence preserve legal failed prefixes [1.27ms]
+(pass) ordinary badge facts, original arbitrary weight and final CP form one ordered history [1.39ms]
+(pass) failed badge CP allows precisely ordered clear/install prefixes but not an unexplained complete handoff [1.58ms]
+
+ 6 pass
+ 0 fail
+ 68 expect() calls
+Ran 6 tests across 1 file. [58.00ms]

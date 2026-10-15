@@ -1,0 +1,12 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/recording/death-history.test.ts:
+(pass) ordinary gun policy checks the whole source set, configured native origin and distinct learned or gifted policy [5.46ms]
+(pass) gun attempt groups cannot reuse an old candidate or one permit for two facts; opaque, pass, blocked and late replacement stay distinct [1.47ms]
+(pass) generic blocked facts use the actual gift window instead of the actor native knife or day policy [1.35ms]
+
+ 3 pass
+ 4 filtered out
+ 0 fail
+ 39 expect() calls
+Ran 3 tests across 1 file. [62.00ms]

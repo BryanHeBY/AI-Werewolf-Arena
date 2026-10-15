@@ -1,0 +1,10 @@
+{
+  "stage": "formal metadata generation only",
+  "firstToolChunk": "bd859e",
+  "exitCode": 1,
+  "error": "Python SyntaxError: unterminated string literal in document replacement string, line17",
+  "sourceWritten": false,
+  "metadataWrittenBeforeFailure": false,
+  "productOrCheckFailure": false,
+  "repair": "Fix multiline Python string only; no source or checks rerun."
+}

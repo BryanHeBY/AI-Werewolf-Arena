@@ -1,0 +1,49 @@
+{
+  "firstSourceReadySHA256": "5f73e7406d0764bcfedb8dca057ea46da754072c86e1adab33e8aa3b8f174241",
+  "finalSourceReadySHA256": "30d97c8e2763d18568a8de8e0449ad7571f0a981a5c4223e0a00f6ce7e3757b0",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/death-history.ts",
+      "sha256": "b8a84ed95e1dc9f910b013434bd7e876cb4b78a250f0fbc77f4071ad094de393"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "c2fde79b57ea29ef268cf94a0b8f25c2425fa4d9276be09ed86dcb2307fa27b2"
+    },
+    {
+      "path": "backend/tests/unit/recording/death-history.test.ts",
+      "sha256": "e1fc8d85ba7e0d980be6d8feb62f7754ed9264510190f74c3bfbadf717747c01"
+    }
+  ],
+  "ownerPolicyDeltas": 2,
+  "ownerErasedTypeDeltas": 1,
+  "ownerWholeForward": true,
+  "ownerWholeInverse": true,
+  "raw": [
+    {
+      "module": "ESNext",
+      "firstSHA256": "4e8430454b0dc0d21404aa32dab2d9e5c52247baadfe77114be63bed59e61320",
+      "typeOnlySHA256": "4e8430454b0dc0d21404aa32dab2d9e5c52247baadfe77114be63bed59e61320",
+      "currentSHA256": "ec1852bb1d75714511793e42b3f575f9fc7ab28dc71d8b8f005f76201496a036",
+      "typeOnlySame": true,
+      "currentSame": false
+    },
+    {
+      "module": "CommonJS",
+      "firstSHA256": "52c6dac6c7cb28e7e1de6b21fb729fc808a7d68f07b963de7bf7c4dd10bf25d6",
+      "typeOnlySHA256": "52c6dac6c7cb28e7e1de6b21fb729fc808a7d68f07b963de7bf7c4dd10bf25d6",
+      "currentSHA256": "ad96aa70849f5f8d7f8e21c1ef14b08756b05272888c0e8798197445a4b6cc4b",
+      "typeOnlySame": true,
+      "currentSame": false
+    }
+  ],
+  "unitWholeAppend": true,
+  "oldDeclarations": 6,
+  "addedDeclarations": 1,
+  "assemblySame": true,
+  "limits": [
+    "Policy repair is a real new JS candidate association, not an erased type-only claim.",
+    "Gift blocked can use gift policy; gift miss is not a legal producer branch and remains rejected.",
+    "All first outputs remain historical; this script does not rerun runtime, type, head, main proof or compatibility probe."
+  ]
+}

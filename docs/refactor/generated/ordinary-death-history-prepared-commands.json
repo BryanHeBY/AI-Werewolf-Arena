@@ -1,0 +1,16 @@
+{
+  "kind": "prepared only; Root executes after production fence",
+  "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+  "sourceReady": "docs/refactor/generated/ordinary-death-history-source-ready.json",
+  "commands": {
+    "unit": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/recording/death-history.test.ts > docs/refactor/generated/ordinary-death-history-unit-output.txt 2>&1",
+    "types": "bun --no-env-file backend/node_modules/typescript/bin/tsc --project docs/refactor/generated/ordinary-death-history-types-config.json --noEmit > docs/refactor/generated/ordinary-death-history-types-output.txt 2>&1",
+    "heads": "bun --no-env-file docs/refactor/generated/ordinary-death-history-heads.cjs > docs/refactor/generated/ordinary-death-history-heads-output.txt 2>&1",
+    "proof": "bun --no-env-file docs/refactor/generated/ordinary-death-history-proof.cjs > docs/refactor/generated/ordinary-death-history-proof-output.txt 2>&1"
+  },
+  "authorExecutions": false,
+  "limits": [
+    "No old Q3 probe, baseline exact replay, green tests, full gate, types outside finite roots, model or matrix runs.",
+    "Capture Root actual launch, session when any, terminal, exit code and full raw; first failure is not overwritten."
+  ]
+}

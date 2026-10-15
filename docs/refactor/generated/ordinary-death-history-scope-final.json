@@ -1,0 +1,347 @@
+{
+  "baseCommit": "1d42f118f80f3ffadcd35f367d8569ed20928bd7",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/death-history.ts",
+      "sha256": "133e81cdaa14cb0f4cd00340c285908e7868dfb21e7e74f7bd020a7bddcb2ba5"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "c2fde79b57ea29ef268cf94a0b8f25c2425fa4d9276be09ed86dcb2307fa27b2"
+    },
+    {
+      "path": "backend/tests/unit/recording/death-history.test.ts",
+      "sha256": "270e3dd86c79c30dfec2571cd65073b0c02bf601970f330c1ac5551607112d0e"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/domain/deaths.ts",
+      "sha256": "93c2c37c06f2d1aba95c9e73aa080ff82f7f18fa7895aa25d4e44ff7e31fb454"
+    },
+    {
+      "path": "packages/game-contract/src/boards.ts",
+      "sha256": "4cac318aaba8793e2d6c966a9e5e7ae1b6cb69056268c8d4c0f13bad86b45b3e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+      "sha256": "582c0e6f2e7c38b1e139bf0063bb01f85b928121ca7d296dd37aba2f61bd6f8b"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-format.ts",
+      "sha256": "5136c9ff6f94667ff4497bb13e0085feab0fd97924871efb4012c99de7a09479"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "sha256": "69cb45a2b8e3386bff1377425b90348596c17f094655dec6146320baafd9b630"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/ordinary-death-history.md",
+    "sha256": "be87a6d892bdfbe9ae1a89d8b71be3c7b6deb65e94edc4e2d6f4186a43d64747"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-before.json",
+      "sha256": "4bfc9bc16a7b33a20bb68b4f03f693c1193a5cee891d629aad535094dff50e8a"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-badge-fact-vs-final-checkpoint.json",
+      "sha256": "2f17b72a6ddb385cc9f1890044b4588954bf4c902efb56de58df10cfaaf451cb"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-badge-original.json",
+      "sha256": "74e4d2430a5dcfcf642c7c8204103b6289ce91e6f72e69b7a866e84d1a3cd672"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-cupid-derived-hunter-shot.json",
+      "sha256": "ac1e53238b056b5bcfa7b14f684467a1b617914b006c4898abf5e8b6f8a8fc10"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-cupid-original.json",
+      "sha256": "3a156b882f763794ba567b33b32706215d3c79bfbc0d1637b979d5eb3a450a62"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-dream-derived-hunter-shot.json",
+      "sha256": "ace0787694302cac4c3dbc54f4c5e2956726b160ecd2561c300d405cbca66b35"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-dream-original.json",
+      "sha256": "24291488c308e4889cb0b1d729c481fddb09fe57221288d7453260f6f315d9f7"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-evidence.json",
+      "sha256": "145c4b6fe871111476016d29bfce7a978e522023347cad952cca7fbf09d04d23"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-last-words-illegal-source-phase.json",
+      "sha256": "149a235334d6cb67f943f4dd44b998a4b3a4227e9ef178fb6b01a4b0462ccaf2"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-characterization-scope-final.json",
+      "sha256": "3e9c1e09b85d69cd182b2e7c5637d34fec6569b73a923f63c82b892a27e6e5fe"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-final-probe-output.txt",
+      "sha256": "8242b35f4fee3e6f7df5c711a7d73e8cae017a713c6a83f7ef8b3cc9c3d12b8b"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-final-probe.json",
+      "sha256": "25a68e872469df46881d9b4f0dd22eb4fff518d1f75600cd43edab9440d04250"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-final-probe.ts",
+      "sha256": "9ef1218adea7c0af44074ccbca4846d4f3f9caa28a3c7178db4e41f504a34347"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-probe-correct-input-output.txt",
+      "sha256": "8242b35f4fee3e6f7df5c711a7d73e8cae017a713c6a83f7ef8b3cc9c3d12b8b"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-probe-first-output.txt",
+      "sha256": "bdf734338c446ef3df30e896611c90c2b20f99bf538c8d438a091f6a11c90056"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-probe-first.json",
+      "sha256": "d711416706af26e01e9bf1293be87df18be5a08845475f9a1030abd6f5238f0d"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-probe-first.ts",
+      "sha256": "13cfd9dcfd0583923430a2853451aec6febc1e9c0d37e2ebdd5b5d0525ac7db7"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-probe-output.txt",
+      "sha256": "bdf734338c446ef3df30e896611c90c2b20f99bf538c8d438a091f6a11c90056"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-probe.json",
+      "sha256": "bc3df81179c10bb53de4f16c6e5b21712e5a7752dc60527903892816dfe15275"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-compatibility-probe.ts",
+      "sha256": "efcd6273ffec5b3e52a8fcdb8ae9e4f11f2199bcaa7e78f5bd56bb8594b12050"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-edits.json",
+      "sha256": "125554a28bf35db89fd3ecca4d41706d6de145d1c395fede15e2c95ab62da991"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-alive-prefix-before.json",
+      "sha256": "7e0d725887e62cdab6f7562bd263669a69dace13554f23970010e00f4ccf7e24"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-alive-prefix-edits.json",
+      "sha256": "ff6de814c91d57a5f068afcaf5958f85ea59bd621a68375981ff45394f9cbc8f"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-alive-prefix-precheck-input-precision.json",
+      "sha256": "6264866fc9d39b365144af3a2237dd8d3aaeebc2576527a66e1f86800d149480"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-alive-prefix-proof-output.txt",
+      "sha256": "7fdc239718feb503e050997ad3e6a0431f83f03d66c5cec3ef3325af2cd15eec"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-alive-prefix-proof.cjs",
+      "sha256": "bfd03175879a739ddc861cfcdd1b1807fbee7a281201fcc4210269bd8fa7f3dc"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-alive-prefix-proof.json",
+      "sha256": "5d5551915f63f0dbf40be36a0c87efc0a27e82ae9db7c7a7349aebe8128af27b"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-alive-prefix-unit-output.txt",
+      "sha256": "43151b5242a2068e18368313e2ad11694cedb282c5b69a32cfd67f273c4f4a88"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-prefix-before.json",
+      "sha256": "b22f7b5091985cd7d77a0a480e987e374930437982fcc89d853209d844cf683b"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-prefix-edits.json",
+      "sha256": "bc146601e1f062e82ae3e6c9bcaae165f42400dc8659b483aa0f27938ed6af78"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-prefix-proof-output.txt",
+      "sha256": "82eedbfc375298ed75f4a30ab62538ee73f35692e961a6b85ebeec360c3b28f6"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-prefix-proof.cjs",
+      "sha256": "70fcc01bc88aa4582013668df923f4d507e79cb786b8fc8949216e152896bbb3"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-prefix-proof.json",
+      "sha256": "c5210bb21da7da4745c5c7d0feedfb3d1595d000fd56864f3f814433090909f3"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-election-prefix-unit-output.txt",
+      "sha256": "13fd3216491b3308c9c89b5f584b95c1664c5e268e3f8a79d36abb21b4c19143"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-first-executed-source-snapshot.json",
+      "sha256": "9dce2410edd9b12356f0ff61e08702e03eed53b4113570ab1fdd60cf564f281d"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-heads-output.txt",
+      "sha256": "ffc803649b00c0979dfa5302115bd4ccd8feebc8b112c4995fa8f484a4d7580c"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-heads.cjs",
+      "sha256": "0bbb154fddf8ad36c92b56e53f8c67e41de5b87fdb3b3f4eea78f63cca6af4ca"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-heads.json",
+      "sha256": "ca9ae72497c11b865aa4b1efb89bae9992367e8fd557a93fe0d25e2dbff5c616"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-metadata-preparation-history.json",
+      "sha256": "bfb922474b427a43ce9833018bd1b2c58adadc5430b30863cea5cfe62b597af5"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-paths.json",
+      "sha256": "cf93c790830e53dcb8d8ab59efae1bc4f200485aa343aab446a73d9bdcd18376"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-policy-repair-edits.json",
+      "sha256": "659441c0edd20e278548296ff2a3b9ae10fba7d9879c8dbd65b47a4c9faac2c0"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-policy-repair-prepared-commands.json",
+      "sha256": "07476ce642fc60090a9531d30a161f90948e3641240ec10247a4296c4356ba99"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-policy-repair-proof-output.txt",
+      "sha256": "1e816e8f542728c9d09aacfa67999bf889f3ab94d44631f605d45fc5ec79d85a"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-policy-repair-proof.cjs",
+      "sha256": "f67bb22a053a6ffe0a88310fc2b3da1f21ec2f9b534bc4cb6da75e86fac8fd06"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-policy-repair-proof.json",
+      "sha256": "6b02c7ce492051af02b070e53d5962df13d32eb8a01c612049edce4082963b23"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-policy-repair-unit-output.txt",
+      "sha256": "b707c707b61cd83d4fdb2c6a9eeb132dfd8403d7ee00d3483cb5ace9a40bfca3"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-prepared-commands.json",
+      "sha256": "a42e8d50d18edfe2c78dfddadc37b7732fdddbde277c7644bf0a6c69c73a0f09"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-proof-output.txt",
+      "sha256": "5ece229ba92eec6160c4fcf6af19acbaf3e4b6f1874c4d721d45792d312e6b44"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-proof.cjs",
+      "sha256": "8fa6f0a59bc6f8ecefd8450c2ed9afd2ab3d66af42f17bbbc41610eae4c62c30"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-proof.json",
+      "sha256": "9843a9cb4a6664940a3d763b6c324cbbf56fd2b8263f64d32049c7c0e28fa2ed"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-receipts.json",
+      "sha256": "9f216dc0333552fb4aa5a919d9bd5e75a4fa630542dea30afc6924ea29955f08"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-source-ready-election-candidate-snapshot.json",
+      "sha256": "2836184b93c8fe98fe1f836370e04f2cdc9cd51e36fe30bae8e056535a65896a"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-source-ready-first-snapshot.json",
+      "sha256": "5f73e7406d0764bcfedb8dca057ea46da754072c86e1adab33e8aa3b8f174241"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-source-ready-policy-snapshot.json",
+      "sha256": "30d97c8e2763d18568a8de8e0449ad7571f0a981a5c4223e0a00f6ce7e3757b0"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-source-ready.json",
+      "sha256": "600e590457d7c3c7a9bf59c2df82da86910e752245ae9474ab289eef4910c817"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-type-repair-stage.json",
+      "sha256": "d2a237a468eb6cf58d0ce7c2a06e70bba849d4642ae837c6c39a688832dd661a"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-types-changed-config.json",
+      "sha256": "87fa8dc27f6aea01b093079a83360cb5f132cab8bcef96770070610c1924eb35"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-types-changed-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-types-config.json",
+      "sha256": "571ffa482dbbdf150231d4efd5d43e340967fc61c7fd392478a54916d6b4d7fe"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-types-election-alive-prefix-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-types-output.txt",
+      "sha256": "5961c86b1b2ee982cf82f3c204698cbe49cf48927698c9b8b4339a5700c99229"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-unit-output.txt",
+      "sha256": "70900b5e97aaa0e5c9f9a39cca065011bd220b03f9b249f24ad531728669ada7"
+    },
+    {
+      "path": "docs/refactor/generated/request-and-death-policy-source-fence-final-frozen.json",
+      "sha256": "c29247409214a354b0daa91138153e3ee6df1b4052d5cb08b1ed40c1a0cb822f"
+    },
+    {
+      "path": "docs/refactor/generated/request-and-death-policy-source-fence-final.json",
+      "sha256": "7c6952117b122b8284dff00fff81f26d9e9110b0d11a9d0970cf24eb795f64ea"
+    },
+    {
+      "path": "docs/refactor/generated/request-and-death-policy-source-fence-load-repaired.json",
+      "sha256": "9229ed02a5a39822b569fcc420480dea970d95c0e4ded521140e0e6d0a19c655"
+    },
+    {
+      "path": "docs/refactor/generated/request-and-death-policy-source-fence.json",
+      "sha256": "25e2f8b5c024af596cc49dc20664c7f3a11330b644b8cd5280fc08c983a0c619"
+    },
+    {
+      "path": "docs/refactor/generated/request-and-death-policy-types-final-config.json",
+      "sha256": "9a201583d9b07776d068462d93718c570d3c3ce1ce1a6ce8af2d385445341667"
+    },
+    {
+      "path": "docs/refactor/generated/request-and-death-policy-types-final-output.txt",
+      "sha256": "f3b89c039774d78edcdc95d03fe0e03202decc409e2aec7f6e4ec63b6064212c"
+    },
+    {
+      "path": "docs/refactor/generated/request-and-death-policy-types-load-repaired-config.json",
+      "sha256": "518903bb3f2a4974b543a750c6431c5361a20ccc5c8c8d7265132c53292d1551"
+    },
+    {
+      "path": "docs/refactor/generated/request-and-death-policy-types-load-repaired-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/ordinary-death-history-characterization.md",
+      "sha256": "1383686de87721bafe523e3980427126a8de01e6cfc88280e9ce6102f20e16dd"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-death-history-document-precision.json",
+      "sha256": "9bda7895fedc496c677d95538be9be664b721dd43c8cc38ce05458031f87bcbb"
+    }
+  ],
+  "frozen": true,
+  "scope": "Q3 bounded neutral ordinary death-aftermath independent history audit: one owner, append after18 and handwritten pure Tape unit.",
+  "policySurface": {
+    "schemaVersion": 2,
+    "newStrictSemanticRefusal": true,
+    "publicReplayReadersUnchanged": true,
+    "historicalSourceHashRewritten": false
+  },
+  "limits": [
+    "No complete initial-night-damage/life-ref-version/runtime permission/full55 proof.",
+    "Unknown/special-owned evidence keeps multiple reachable prefixes; acceptance for absent evidence is not a proof of legality.",
+    "No final all9/full3/full8 rerun claim; actual first, repaired and final inputs retain their own receipts."
+  ]
+}

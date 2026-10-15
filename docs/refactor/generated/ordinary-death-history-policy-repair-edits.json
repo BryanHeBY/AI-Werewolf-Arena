@@ -1,0 +1,33 @@
+{
+  "owner": "backend/src/verification/reproduction/death-history.ts",
+  "ownerFirstSHA256": "73af07a6db72b4c103cb797f33d711320e2ec353f0353ffa058e660698b9e9d6",
+  "ownerTypedStageSHA256": "9a152b8785d9a0a81da5f32c92d731aff29f94694f703467495fcf2bb93f7dbd",
+  "typeOnly": {
+    "before": "return wordsAllowed(declared ?? e.sources(episode, index), context.death_phase, d.day, episode.wave, policy,",
+    "after": "return wordsAllowed(declared ?? e.sources(episode, index), context.death_phase as Phase, d.day, episode.wave, policy,",
+    "count": 1,
+    "completeText": "type-repair-stage.json",
+    "runtimeChange": false
+  },
+  "policyEdits": [
+    {
+      "before": "    const episode = e.at(actor, day, index), source = e.sources(episode, index);\n    if (source) check(shotAllowed(source, nativePolicy(e, actor, index, undefined, event.type), episode?.origin) !== false);\n    const candidates: number[] = [];\n",
+      "after": "    const episode = e.at(actor, day, index), source = e.sources(episode, index);\n    const candidates: number[] = [];\n",
+      "count": 1
+    },
+    {
+      "before": "      const candidate = action(last, \"shoot\");\n",
+      "after": "      // blocked 事实本身不带资源 id，必须按实际尝试区分原生配置与赠枪；不能先套演员本体政策。\n      // miss 只由原生／学习枪的交换分支产生；赠枪原 hook 会拒绝死目标，不能借它解释 mapped miss。\n      if (event.type === \"death_shot_missed\" && last.request.context.ability_id !== undefined) continue;\n      const generic = event.type === \"death_shot_blocked\" || event.type === \"death_shot_missed\";\n      const policyKind = generic ? (last.stage === \"hunter_shot\" ? \"hunter_shot\" : undefined) : event.type;\n      if (source && shotAllowed(source, nativePolicy(e, actor, index, last.request.context.ability_id, policyKind), episode?.origin) === false) continue;\n      const candidate = action(last, \"shoot\");\n",
+      "count": 1
+    }
+  ],
+  "unit": "backend/tests/unit/recording/death-history.test.ts",
+  "unitFirstSHA256": "07e362bf8c13363ed282e0cdbd6fce79973fbab41dc14829f9dce1dfb7a72d55",
+  "unitAppend": "\n\n// generic blocked 不披露是哪份枪；明确 gift 请求适用默认枪源政策，miss 仍不可借 gift 窗口解释。\ntest(\"generic blocked facts use the actual gift window instead of the actor native knife or day policy\", () => {\n  for (const actorRole of [Role.Hunter, Role.WolfKing]) {\n    const gift = shot([DeathCause.Shot], \"awa_knife_or_exile_v1\");\n    if (actorRole === Role.WolfKing) {\n      gift.metadata.players[0]!.role = actorRole;\n      gift.metadata.normalizedBoard.roleSetups[0]!.role = actorRole;\n      gift.metadata.normalizedBoard.wolfKing = { deathActionPolicy: \"awa_day_deaths_v1\" };\n      for (const cp of gift.checkpoints) {\n        cp.players[0]!.role = actorRole;\n        cp.players[0]!.privateState = { wolfKing: { canShoot: cp.cycle === 0 } };\n      }\n    }\n    gift.decisions[0]!.stage = \"death_shot\";\n    gift.decisions[0]!.request.context.stage = \"death_shot\";\n    gift.decisions[0]!.request.context.ability_id = \"gift:literal:blocked\";\n    gift.events[2] = { timestamp: 3, type: \"death_shot_blocked\", payload: { actorId: 1, targetId: 4, reason: \"night_protection\" } };\n    gift.checkpoints[1]!.players[3]!.alive = true;\n    accepts(gift);\n    const native = structuredClone(gift);\n    delete native.decisions[0]!.request.context.ability_id;\n    if (actorRole === Role.Hunter) {\n      native.decisions[0]!.stage = \"hunter_shot\";\n      native.decisions[0]!.request.context.stage = \"hunter_shot\";\n    }\n    rejects(native);\n    const giftMiss = structuredClone(gift);\n    giftMiss.events[2] = { timestamp: 3, type: \"death_shot_missed\", payload: { actorId: 1, reason: \"no_effect\" } };\n    rejects(giftMiss);\n  }\n});\n",
+  "oldSixDeclarationsUnchanged": true,
+  "findingKind": "static independent review before executing affected repair; no prior runtime red claimed",
+  "limits": [
+    "Blocked is bound to actual native/gift attempt policy. Gift missed remains rejected because its producer cannot publish mapped miss.",
+    "Only the already validated death_phase argument receives an erased Phase assertion."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "owner": "backend/src/verification/reproduction/death-history.ts",
+  "ownerEdits": [
+    {
+      "before": "  let state = badgeView(first);",
+      "after": "  let state = badgeView(first);\n  let previousCheckpoint = first;",
+      "count": 1
+    },
+    {
+      "before": "      const next = cloneBadges(stable);\n      for (const player of first.players) {\n        const current = next.get(player.id)!;\n        current.isSheriff = player.id === id; result.push(cloneBadges(next));\n        current.destroyed = false; result.push(cloneBadges(next));\n        current.voteWeight = weight; result.push(cloneBadges(next));\n        if (policy === \"awa_holder_choice_v1\") current.handoffPolicy = policy; else delete current.handoffPolicy;\n        result.push(cloneBadges(next));\n        if (current.canVote) { current.rightWeight = player.id === id ? weight : 1; result.push(cloneBadges(next)); }\n      }",
+      "after": "      const next = cloneBadges(stable), actual = badgeView(cp);\n      for (const player of first.players) {\n        const current = next.get(player.id)!, original = { ...current };\n        const wasAlive = previousCheckpoint.players.find(p => p.id === player.id)?.alive;\n        // assign 只遍历活人。前一 CP 已知死亡席位跳过，不把旧徽一起改成新配置。\n        if (wasAlive === false) {\n          if (!equal(current, actual.get(player.id))) break;\n          continue;\n        }\n        // 本段来源只是提案，无物理提交游标时保留写／跳过；二者不变成任意字段豁免。\n        const maySkip = wasAlive === undefined || e.episodes.some(episode =>\n          episode.actorId === player.id && episode.start >= previousCheckpoint.eventCount && episode.start < cp.eventCount);\n        current.isSheriff = player.id === id; result.push(cloneBadges(next));\n        current.destroyed = false; result.push(cloneBadges(next));\n        current.voteWeight = weight; result.push(cloneBadges(next));\n        if (policy === \"awa_holder_choice_v1\") current.handoffPolicy = policy; else delete current.handoffPolicy;\n        result.push(cloneBadges(next));\n        if (current.canVote) { current.rightWeight = player.id === id ? weight : 1; result.push(cloneBadges(next)); }\n        // 每席随后不再被本命令写。只推进与实际末 CP 相符的整席分支，避免未知席位的2^N组合。\n        if (!equal(current, actual.get(player.id))) {\n          if (maySkip && equal(original, actual.get(player.id))) next.set(player.id, original);\n          else break;\n        }\n      }",
+      "count": 1
+    },
+    {
+      "before": "    state = badgeView(cp); uncertain.clear();",
+      "after": "    state = badgeView(cp); previousCheckpoint = cp; uncertain.clear();",
+      "count": 1
+    }
+  ],
+  "unit": "backend/tests/unit/recording/death-history.test.ts",
+  "unitAppend": "\n\n// 前一 CP 已死席位不进入 assign；来源提案没有死亡收据时，手写两种有据前缀，拒绝颠倒字段写序。\ntest(\"failed sheriff assignment skips known dead seats and keeps bounded write or skip prefixes for uncertain proposals\", () => {\n  function partial(kind: \"known_dead\" | \"unknown_skip\" | \"unknown_write\") {\n    const record = literal();\n    record.metadata.normalizedBoard.enableSheriff = true;\n    record.metadata.normalizedBoard.sheriff = { voteWeight: 2.25, badgePolicy: \"awa_holder_choice_v1\", electionPolicy: \"awa_nomination_offstage_pk_v1\" };\n    if (kind === \"known_dead\") {\n      // 初始装配仍全活；先有夜来源与完整 CP 的已死读数，才进入后继选举的失败 CP。\n      night(record, 1, [DeathCause.WolfKill]);\n      const previous = checkpoint(record);\n      previous.players[0]!.alive = false;\n    } else night(record, 1, [DeathCause.WolfKill]);\n    event(record, \"sheriff_candidates_finalized\", { candidates: [3] });\n    const cp = checkpoint(record, false);\n    cp.players[0]!.alive = false;\n    // 活席2已完成全部字段，候选3只完成第一个 isSheriff；早席1是原徽或已写新徽两种字面输入。\n    cp.players[1]!.badge = { isSheriff: false, destroyed: false, voteWeight: 2.25, handoffPolicy: \"awa_holder_choice_v1\" };\n    cp.players[2]!.badge.isSheriff = true;\n    if (kind === \"unknown_write\") cp.players[0]!.badge = { isSheriff: false, destroyed: false, voteWeight: 2.25, handoffPolicy: \"awa_holder_choice_v1\" };\n    return record;\n  }\n  accepts(partial(\"known_dead\"));\n  accepts(partial(\"unknown_skip\"));\n  accepts(partial(\"unknown_write\"));\n  const reverse = partial(\"known_dead\");\n  reverse.checkpoints.at(-1)!.players[2]!.badge.isSheriff = false;\n  reverse.checkpoints.at(-1)!.players[2]!.badge.voteWeight = 2.25;\n  rejects(reverse);\n});\n",
+  "originalEightPreserved": true,
+  "policy": "Known dead prior-CP seats skip; uncertain proposed deaths keep only complete write/skip branches compatible with actual CP. No whole-field unknown waiver.",
+  "complexity": "No binary path tree: one compatible completed state advances per player; partials preserve original field order.",
+  "precheckInputPrecision": "election-alive-prefix-precheck-input-precision.json"
+}
