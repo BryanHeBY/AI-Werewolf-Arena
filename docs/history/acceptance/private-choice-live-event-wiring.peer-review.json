@@ -1,0 +1,325 @@
+{
+  "kind": "Cupid-Hybrid-live-event-entry-wiring-merged-bounded-independent-review",
+  "reviewer": "/root/native_presentation_finish",
+  "decision": "approved",
+  "approved": true,
+  "approvalBoundary": "批准当前两源合并batch的有限接线与真实focused收据；不表示C47同源42入口已重跑或整体目标完成。",
+  "actualGitBeforeOriginalBatch": "da664f6defe7f653b1450b07738964efc36a315d",
+  "successorBefore": "此前Root已应用且独审的Hybrid-only 4bde43ab/cda8793c阶段，不冒这两before是Git整源。",
+  "preservedHybridReview": {
+    "path": "/tmp/awa-hybrid-live-events-independent/independent-review.json",
+    "sha256": "4682a92366e525088a137fdef1d119173baf919fb45a28f8f0eb345f6bcee5cd",
+    "bytes": 14037
+  },
+  "source": [
+    {
+      "path": "/home/hby/dev/AI-Werewolf-Arena/backend/src/app/simulation/reproduction-context.ts",
+      "sha256": "daa39bab460e9681663e1e225271de08c6e638edf6259d9d7b8fba36502cbdc6",
+      "bytes": 5847,
+      "repoPath": "backend/src/app/simulation/reproduction-context.ts",
+      "mode": "100644"
+    },
+    {
+      "path": "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/recording/live-event-snapshot.test.ts",
+      "sha256": "26ae28cce6b5d28ba16f6792247aaead37338e5c9bf989ab07918b5fa36daed4",
+      "bytes": 14984,
+      "repoPath": "backend/tests/unit/recording/live-event-snapshot.test.ts",
+      "mode": "100644"
+    }
+  ],
+  "controls": [
+    {
+      "path": "/home/hby/dev/AI-Werewolf-Arena/backend/src/recording/reproduction/trace.ts",
+      "sha256": "34d122b03a7bfa3945a12a81c63fc652c4366c8039132c27e63ef793fc43ce08",
+      "bytes": 9061,
+      "sameActualGit": true
+    },
+    {
+      "path": "/home/hby/dev/AI-Werewolf-Arena/backend/src/recording/verification/hybrid/validate.ts",
+      "sha256": "80e44e162f3fbeec22a60f4f9d7fdfbbf6ede1660b49179226f9e9aad9e911ce",
+      "bytes": 14364,
+      "sameActualGit": true
+    },
+    {
+      "path": "/home/hby/dev/AI-Werewolf-Arena/backend/src/recording/verification/cupid/validate.ts",
+      "sha256": "781670af99bbe551bae6ddfb1f95074587863ae0669aec67331f5321f283e0e6",
+      "bytes": 18473,
+      "sameActualGit": true
+    },
+    {
+      "path": "/home/hby/dev/AI-Werewolf-Arena/backend/src/recording/verification/death-history/validate.ts",
+      "sha256": "2de708f001e30d5b6bddcc87372e9ff136c609d3ea888b0759fc8f0a8da8a4fe",
+      "bytes": 34945,
+      "sameActualGit": true
+    }
+  ],
+  "incrementalRawChecks": {
+    "proposalBeforeEqualsPreservedHybridSource": true,
+    "productionMatchesPreparedCandidate": true,
+    "oldFixtureHelperAndAllFiveDeclarationBodiesWholeExactSubstring": true,
+    "formattedNewOnlyDiffRead": "新Cupid追加内行/对象布局展开及一空行；字面预期/请求代码/负例均保，首头只扩丘比特真实职责。",
+    "actualSixSourceFenceMatchesRootReceipt": true
+  },
+  "diagnostic": {
+    "firstRecord": {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-1.json",
+      "sha256": "b2c33ba62a0e537835c2d0c4a3f88e0a4c89d3d393567bc6e28cb49025405b2c",
+      "bytes": 5109
+    },
+    "firstRecordFacts": {
+      "finalized": false,
+      "GodEvents": 2,
+      "CP0eventCount": 2,
+      "GodFamilyFacts": [],
+      "decision1Actor": 3,
+      "decision1Stage": "wolf_discussion",
+      "visible": [
+        {
+          "seq": 2,
+          "type": "lover_recognized",
+          "payload": {
+            "actorId": 3,
+            "partnerId": 2
+          }
+        }
+      ]
+    },
+    "allCapturedRecords": 9,
+    "scope": "同一真实Root场景的多次flush，不是9个独立场景；9份全保持events2/CP0count2与God缺family事实。",
+    "reason": "与Hybrid相同：请求已带合法本人相认，录制build仍用CP0旧事件；原284要求God对应正确，修入口供当前事件而非放宽validator。"
+  },
+  "approvedDelta": [
+    "原四special配置OR后，同一roleSetups.some仅从Hybrid count>0扩为(Hybrid||Cupid)&&count>0；原late() => context.phaseManager.getEvents()及receiver不变。",
+    "无新流/缓存/WeakMap/阶段状态；捕获初始CP与trace.checkpoint尾调用原文不变，没有以CP推进或改schema隐去不一致。",
+    "Trace和PM getEvents脱离复制原body不变，当前God完整流不等玩家可见副本；Cupid/Hybrid独立validator整源保持，隐私判断不变。",
+    "新Cupid声明实际bootstrap/beginGame→manager转交真实callback→CUPID_STAGE→Factory→Trace，保与NightPipeline一致的构造选项拆分；没有手工注入待测liveEvents。",
+    "字面God四事实、恋人仅本人recognized、非恋人零family、relationship Victory、3settlement、不增加CP均核；wrongPartner和他人recognized泄漏仍拒。",
+    "先前Hybrid/ordinary与原三snapshot声明完整保，原已绿不重；新增角色元数据读取和Role运行时值导入是明确新观察，不冒任意getter/CJS全等。"
+  ],
+  "failureClassificationPrecision": {
+    "supersedes": "保留Hybrid报告pendingBoundary关于Cupid后6不归接线收益的简写过窄；以此精确重叠分类为准。旧报告原bytes不改。",
+    "CupidFileDistinctFailed": 21,
+    "pureCupid": 15,
+    "pureDeath": 2,
+    "doubleRoot": 4,
+    "anyCupid284": 19,
+    "anyDeath470": 6,
+    "overlap": 4,
+    "finalStackCupid284": 15,
+    "finalStackDeath470": 6,
+    "overlapCases": [
+      "two_sources/acp",
+      "two_sources/mixed",
+      "beauty_poison/acp",
+      "beauty_poison/mixed"
+    ],
+    "pureDeathCases": ["two_sources/llm", "beauty_poison/llm"],
+    "wholeAPrintedFinalStacks": {
+      "Hybrid225": 21,
+      "Cupid284": 15,
+      "Death470": 9,
+      "distinctPrintedFailures": 45
+    },
+    "interpretation": "final栈分类不是所有根因集合；19+6-4=21，不能按25独立例相加，也不能把6Death最终栈全说成不受接线修复。",
+    "executionAttribution": "死亡审核修复da664与当前接线共同使失败文件恢复；不把15/19/Cupid21或整个A45混成同一验证范围。"
+  },
+  "actualReceipts": {
+    "priorHybrid": "承接原报告：schema构造两红保→真实225红→新增Hybrid1/11通过；原3+ordinary4绿保，Hybrid原21失败21/10015/6filtered/70.144s通过。",
+    "newCupidUnitFirstRed": "旧Hybrid-only生产上的真正Cupid284：0pass1fail/5filtered；不是schema错误。",
+    "newCupidUnitSuccessor": "1pass0fail/5filtered/9expect，原其余5不重。",
+    "CupidOriginal21FailuresOnly": {
+      "exitCode": 0,
+      "session": 6955,
+      "terminalChunk": "d18b38",
+      "pass": 21,
+      "fail": 0,
+      "filtered": 9,
+      "expects": 4637,
+      "seconds": 43.07288670539856,
+      "actualSixSourcesSame": true
+    },
+    "twoRootTypeSuccessor": {
+      "exitCode": 0,
+      "session": 65541,
+      "terminalChunk": "e66079",
+      "diagnostics": 0,
+      "sourceGraph": 1055,
+      "scope": "两changed roots真实传递图，非完整backend测试项目或C4714项目。"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-wiring-successor/proposal.json",
+      "sha256": "91eaf24297f61598054d99bbc57d5ea782f4a28a7a4757d0334762bc12ee24d2",
+      "bytes": 4784
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-wiring-successor/patch.diff",
+      "sha256": "7f3251db2d17a3b33488061b9b944d0684859ee57b80013d5c9c101814c28fcd",
+      "bytes": 7264
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-wiring-successor/before/reproduction-context.ts",
+      "sha256": "4bde43aba3ee03640b6b5653657e2f7d6b9ba22132933496c53b8702baf4797d",
+      "bytes": 5778
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-wiring-successor/before/live-event-snapshot.test.ts",
+      "sha256": "cda8793c3a8f2afdca3aa138e520dbdd9c5eb12e7aa9221a2ef47d5dc3862877",
+      "bytes": 10316
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-wiring-successor/candidates/reproduction-context.ts",
+      "sha256": "daa39bab460e9681663e1e225271de08c6e638edf6259d9d7b8fba36502cbdc6",
+      "bytes": 5847
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-wiring-successor/candidates/live-event-snapshot.test.ts",
+      "sha256": "999f2250d88e4711d02fd616197f6ddae311710d6d4fdb10208a4a5c7c8b2021",
+      "bytes": 14799
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/formatted-candidates.json",
+      "sha256": "db59893e63ee2b2d128d4da7825bd730d55efb432b96f30bdde7937e4b78e40d",
+      "bytes": 604
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/first-regression.stderr",
+      "sha256": "c8e8210fb2d72a5ddc6b39325b4c9c96e21a0264cd24ce9a28295a44890929ca",
+      "bytes": 1136
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/first-regression.stdout",
+      "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "bytes": 28
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/unit-successor.stderr",
+      "sha256": "75983757871e9006f99d4e8c986c7ca4133b1d4065d0c3d5a8c1fc1ce5e2be29",
+      "bytes": 264
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/unit-successor.stdout",
+      "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "bytes": 28
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/affected-types.json",
+      "sha256": "3dfeb1b8aee85c908d5fe851fd11ebf7985ecdb64a59d63cec86b16103ff3a0f",
+      "bytes": 212296
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/affected-types.diagnostics.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/affected-types.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/affected-types.stdout",
+      "sha256": "c2a7b1c78bff20b2719916c7d665056eb2aa59a70445561d7bd1d9a013974974",
+      "bytes": 37
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/scenario-failed-only-successor/launch.json",
+      "sha256": "5683449008e34a4c668bf3bde31cab1f5631f042d1c331701b7cc8dab666bd6e",
+      "bytes": 2081
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/scenario-failed-only-successor/receipt.json",
+      "sha256": "c0df7876e9da172f05d6e15c6521eed661b8dc24ac1ec90fa52d2e4da1940a47",
+      "bytes": 874
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/scenario-failed-only-successor/stderr.raw",
+      "sha256": "bac977a62e3a28f8b69f73e582a5d426acdb60a7f1a6e06fee28df7af707b534",
+      "bytes": 2807
+    },
+    {
+      "path": "/tmp/awa-cupid-hybrid-live-events-execution/scenario-failed-only-successor/stdout.raw",
+      "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "bytes": 28
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/launch.json",
+      "sha256": "e631c1d7a4fa8e6568cadc391739fd98387136bf1971e7df132b073534e91147",
+      "bytes": 873
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/receipt.json",
+      "sha256": "974a0884f701de77f61ff75c7c28a9baf1aa338ef9c0d22463812b93c4b01c9e",
+      "bytes": 1447
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/trace.before.ts",
+      "sha256": "34d122b03a7bfa3945a12a81c63fc652c4366c8039132c27e63ef793fc43ce08",
+      "bytes": 9061
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/trace.diagnostic.ts",
+      "sha256": "5de191b8e490c89b3268c20118a0b5093b67c187ecfb9d5725466fb5fc5712e1",
+      "bytes": 9428
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/stderr.raw",
+      "sha256": "26d4a968bb2f47665e477870333c9c26b5c5179f1e2ce6f9d594a856eed4aefc",
+      "bytes": 10125
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/stdout.raw",
+      "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "bytes": 28
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-1.json",
+      "sha256": "b2c33ba62a0e537835c2d0c4a3f88e0a4c89d3d393567bc6e28cb49025405b2c",
+      "bytes": 5109
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-2.json",
+      "sha256": "b2c33ba62a0e537835c2d0c4a3f88e0a4c89d3d393567bc6e28cb49025405b2c",
+      "bytes": 5109
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-3.json",
+      "sha256": "b3f6469794a8c7fb7fad1df6f85df59539f2851350a4c9398fe0358dd3109381",
+      "bytes": 6697
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-4.json",
+      "sha256": "b3f6469794a8c7fb7fad1df6f85df59539f2851350a4c9398fe0358dd3109381",
+      "bytes": 6697
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-5.json",
+      "sha256": "9f69f22fa7fb5e788d735474e8aacdf4eea133e90864494f104539abbc29f001",
+      "bytes": 8576
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-6.json",
+      "sha256": "9f69f22fa7fb5e788d735474e8aacdf4eea133e90864494f104539abbc29f001",
+      "bytes": 8576
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-7.json",
+      "sha256": "434c7a69b1558b47f462f57e68fee6dde1448a2c29eb74036b20470ee0263885",
+      "bytes": 10898
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-8.json",
+      "sha256": "434c7a69b1558b47f462f57e68fee6dde1448a2c29eb74036b20470ee0263885",
+      "bytes": 10898
+    },
+    {
+      "path": "/tmp/awa-cupid-live-diagnostic/record-9.json",
+      "sha256": "68c470cbb31e000741d392ed499f18d8250ea9a90150ee2989f81fa30760fcc8",
+      "bytes": 15863
+    }
+  ],
+  "findings": [],
+  "remaining": "新源码需要后继固定candidate执行完整42；本报告不拼旧cb/e93绿，不作C47或P9最终done声明。",
+  "method": "只读实际source、proposal、原完整JSON/收据/raw；普通Git/字节/SHA比较，未执行产品、parser/validator、AST、类型、测试、编译、证明或门禁，未写仓库。"
+}

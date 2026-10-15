@@ -20,7 +20,7 @@ import {
 } from "../checkpoint/contributions";
 import { initialIdentityDeal } from "../../features/initial-identity/deal";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
-import { type Locale } from "@ai-werewolf-arena/game-contract";
+import { Role, type Locale } from "@ai-werewolf-arena/game-contract";
 import type { BootstrapResult } from "../bootstrap";
 import type { BoardConfig } from "../../domain";
 import type { ResolvedAgentRuntimeProfile } from "../config/contracts";
@@ -137,10 +137,16 @@ export function beginGameReproduction(
         };
       }),
     },
+    // 丘比特／混血儿的选择与相认事实会先于下个 checkpoint 进入后续请求。刷盘必须复制当前事件，
+    // 不能用旧 checkpoint 事件误判本人可见事实为伪造；副本仍由 Trace.build 持有，
+    // 不提前推进 checkpoint、公开隐藏归属或改变普通板子原有的回调选择。
     parameters.board.radiantEclipse ||
       parameters.board.nobleSecretBody ||
       parameters.board.fragrantPairSeer ||
-      parameters.board.animalDream
+      parameters.board.animalDream ||
+      parameters.board.roleSetups.some(
+        (row) => (row.role === Role.Hybrid || row.role === Role.Cupid) && row.count > 0,
+      )
       ? () => context.phaseManager.getEvents()
       : undefined,
   );
