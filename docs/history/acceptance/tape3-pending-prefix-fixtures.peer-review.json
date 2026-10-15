@@ -1,0 +1,612 @@
+{
+  "kind": "limited-independent-peer-review",
+  "decision": "approved",
+  "approved": true,
+  "preparedAt": "2026-10-15T08:25:31.079007+00:00",
+  "base": "07ef28ef06f2579a6e7fb7467bca588c87608348",
+  "scope": "Exactly two existing scenario test inputs: two Radiant and one Ghost returnedCandidate deletions plus Chinese explanation. No production/schema/version/validator/oracle weakening.",
+  "source": [
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "change": "modified_test_input_only",
+      "sha256": "bcc91c66531210332e3c0855bb148b7ac753f37bc52090a6fb25980dc1934eb0",
+      "bytes": 1836,
+      "beforeSha256": "60b026ac65b2cdb1e5bd230cc9812c79f7259b35454eda9d38fe567f62f98d26",
+      "beforeBytes": 1491,
+      "expectedAddedDeleteStatements": 2,
+      "actualGitBeforeEqualsCapturedWhole": true,
+      "currentEqualsExactPreparedCandidate": true,
+      "fullTextForwardEqualsCurrent": true,
+      "fullTextInverseEqualsOriginal": true,
+      "exactSteps": [
+        {
+          "offset": 840,
+          "beforeMatches": true
+        },
+        {
+          "offset": 1228,
+          "beforeMatches": true
+        }
+      ],
+      "ownerExecutableMode": false
+    },
+    {
+      "path": "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "change": "modified_test_input_only",
+      "sha256": "586328ffdae265350234f662571acb932f360419df25fd4c7dfb9fa6ce5ee92c",
+      "bytes": 20913,
+      "beforeSha256": "f659d57ddee08c341999d57cc836d76041345d01fc0444252d104cf441cfb22c",
+      "beforeBytes": 20724,
+      "expectedAddedDeleteStatements": 1,
+      "actualGitBeforeEqualsCapturedWhole": true,
+      "currentEqualsExactPreparedCandidate": true,
+      "fullTextForwardEqualsCurrent": true,
+      "fullTextInverseEqualsOriginal": true,
+      "exactSteps": [
+        {
+          "offset": 16976,
+          "beforeMatches": true
+        }
+      ],
+      "ownerExecutableMode": false
+    }
+  ],
+  "deleted": [],
+  "gitBeforeModesAndBlobs": "100644 blob 4031c7e7b322ddabaebf147e36d78761ea00aa02\tbackend/tests/scenarios/boards/ghost-bride/reproduction.test.ts\n100644 blob 8dfe56070fcaa96a1e6aa27792511fc45348c941\tbackend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts\n",
+  "trackedProductionDiffNamesAtRead": "",
+  "controls": [
+    {
+      "path": "backend/src/recording/reproduction/trace.ts",
+      "sha256": "4a70d9ec452d8e2635584ded790776a85855fe4e9754b99f46e7618817f9d83d",
+      "bytes": 9383,
+      "equalToActualGit07efWhole": true
+    },
+    {
+      "path": "backend/src/recording/reproduction/format.ts",
+      "sha256": "5139ba631f427055759fd64e0de18590999f8b0463c339f25000b0fce8a70b2d",
+      "bytes": 33290,
+      "equalToActualGit07efWhole": true
+    },
+    {
+      "path": "backend/src/features/ghost-bride/setup.ts",
+      "sha256": "905b2315705bd579b7ef9da2af69a20a8f1540ee2e10f78b01b2f12e69dcdc78",
+      "bytes": 9375,
+      "equalToActualGit07efWhole": true
+    },
+    {
+      "path": "backend/src/features/ghost-bride/authority.ts",
+      "sha256": "6b9be7c2c6a6a10e3cc4111e551d7ea5c5d5d46fe8fa7dea3b8a35c465d8da3c",
+      "bytes": 43067,
+      "equalToActualGit07efWhole": true
+    }
+  ],
+  "semanticReview": [
+    "Trace3在真实Provider正常返回、copyDecisionData成功且deferred false结算时保留returnedCandidate，null是显式事实，不等缺席；error仍为error。",
+    "schema3只允许该own字段与outcome error/name Error并存；将真实已关闭error行改造为pending必须去掉这一终态字段，不能因此放宽schema或伪造其他结算政策。",
+    "Radiant两原场景的failureStage seer、默认missing/null、CP/events/operations截断、原settleOrder删除、所有标题与assert保持。第二负例删后仍触及原Radiant finalized约束，而非借残留字段提前schema拒绝。",
+    "Ghost只删first决定的returnedCandidate，原settleOrder与CP/events截断保留；第一个not.toThrow和追加guard后的ghost_bride_state_invalid原断言全文保持。",
+    "这三处delete真实改变合成测试输入JS；不是全程序运行等价、不是生产行为修正。"
+  ],
+  "radiantRealDiagnostic": {
+    "execution": {
+      "receipt": {
+        "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/execution.json",
+        "sha256": "af61eaffe0051af485eb93da6a6c1e6c809b98a4b828eb8a8b902483f93b64d4",
+        "bytes": 1634
+      },
+      "exitCode": 0,
+      "argv": ["/usr/bin/bun", "--no-env-file", "/tmp/awa-radiant-pending-candidate-diagnostic.ts"],
+      "cwd": "/var/tmp/awa-refactor-20261015/c47-07ef28ef/snapshot/backend",
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "HOME": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/home",
+        "TMPDIR": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/tmp",
+        "LANG": "C.UTF-8",
+        "TZ": "UTC",
+        "BUN_RUNTIME_EXECUTABLE": "/usr/bin/bun",
+        "BUN_RUNTIME_TRANSPILER_CACHE_PATH": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/cache",
+        "AWA_DIAGNOSTIC_ROOT": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor"
+      },
+      "actualPrintedCounts": {},
+      "sourceField": null,
+      "otherChangedInput": null,
+      "declaredFence": null,
+      "rawBindings": [
+        {
+          "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/pending-without-candidate.json",
+          "sha256": "7813388229ec155212802b9e65859fbb412d625c156f0a25fa49f389a478e742",
+          "bytes": 308868,
+          "matchesReceipt": true
+        },
+        {
+          "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/diagnostic.json",
+          "sha256": "3016af40868e99ac2a13447f166b30a3e5e872c2e449674f88ef1ac23cc52420",
+          "bytes": 8312,
+          "matchesReceipt": true
+        },
+        {
+          "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/original.json",
+          "sha256": "097fe7436c66388d9416d0102c73c1a63b33dc7f97161aea4426a6475c362e53",
+          "bytes": 346585,
+          "matchesReceipt": true
+        },
+        {
+          "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/stdout.raw",
+          "sha256": "2094d409b3e233ad8c28a3abc5dfc894773b077ad7e97ac1fbe89d9783347912",
+          "bytes": 351,
+          "matchesReceipt": true
+        },
+        {
+          "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/stderr.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "matchesReceipt": true
+        }
+      ],
+      "rawFooterRead": ""
+    },
+    "firstLaunchFailure": {
+      "receipt": {
+        "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic/execution.json",
+        "sha256": "df4f5e9b8649649e6aa221b0d824a83c0b8cc79cb9ff221c3801b4adb6e6eada",
+        "bytes": 1170
+      },
+      "exitCode": 1,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "--preload",
+        "./tests/setup.ts",
+        "/tmp/awa-radiant-pending-candidate-diagnostic.ts"
+      ],
+      "cwd": "/var/tmp/awa-refactor-20261015/c47-07ef28ef/snapshot/backend",
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "HOME": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic/home",
+        "TMPDIR": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic/tmp",
+        "LANG": "C.UTF-8",
+        "TZ": "UTC",
+        "BUN_RUNTIME_EXECUTABLE": "/usr/bin/bun",
+        "BUN_RUNTIME_TRANSPILER_CACHE_PATH": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic/cache",
+        "AWA_DIAGNOSTIC_ROOT": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic"
+      },
+      "actualPrintedCounts": {},
+      "sourceField": null,
+      "otherChangedInput": null,
+      "declaredFence": null,
+      "rawBindings": [
+        {
+          "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic/stdout.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "matchesReceipt": true
+        },
+        {
+          "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic/stderr.raw",
+          "sha256": "d2746bf01bd77ea1345a798fb4404fc8bbb93d068e379307e1e59469ce1ae4a4",
+          "bytes": 343,
+          "matchesReceipt": true
+        }
+      ],
+      "rawFooterRead": "19 |   info: jest.fn(),\n20 |   debug: jest.fn(),\n21 | };\n22 | \n23 | // 每个测试之前重置全部 mock。\n24 | beforeEach(() => {\n     ^\nerror: Cannot use beforeEach() outside of the test runner. Run \"bun test\" to run tests.\n      at /var/tmp/awa-refactor-20261015/c47-07ef28ef/snapshot/backend/tests/setup.ts:24:1\n\nBun v1.4.3 (Linux x64)\n"
+    },
+    "original": {
+      "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/original.json",
+      "sha256": "097fe7436c66388d9416d0102c73c1a63b33dc7f97161aea4426a6475c362e53",
+      "bytes": 346585
+    },
+    "pendingWithoutCandidate": {
+      "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/pending-without-candidate.json",
+      "sha256": "7813388229ec155212802b9e65859fbb412d625c156f0a25fa49f389a478e742",
+      "bytes": 308868
+    },
+    "results": {
+      "path": "/var/tmp/awa-refactor-20261015/radiant-pending-diagnostic-successor/diagnostic.json",
+      "sha256": "3016af40868e99ac2a13447f166b30a3e5e872c2e449674f88ef1ac23cc52420",
+      "bytes": 8312
+    },
+    "actualRecordedFacts": {
+      "schemaVersion": 3,
+      "terminalOwnCandidate": true,
+      "candidate": null,
+      "terminalOutcome": {
+        "kind": "error",
+        "code": "decision_failed",
+        "name": "Error"
+      },
+      "terminalSettleOrder": 61,
+      "pendingHasCandidate": false,
+      "pendingHasSettleOrder": false
+    },
+    "actualResults": {
+      "original": {
+        "accepted": true
+      },
+      "withCandidate": {
+        "accepted": false,
+        "error": "reproduction_record_invalid"
+      },
+      "withoutCandidate": {
+        "accepted": true
+      },
+      "finalizedWithCandidate": {
+        "accepted": false,
+        "error": "reproduction_record_invalid"
+      },
+      "finalizedWithoutCandidate": {
+        "accepted": false,
+        "error": "reproduction_radiant_eclipse_invalid"
+      }
+    },
+    "initialFailureClassification": "误将含beforeEach的test preload用于普通Bun脚本；退出1在beforeEach，未进入diagnostic产品流程，不计领域失败或用例运行。后继去preload才真实执行。"
+  },
+  "actualLimitedRuns": {
+    "radiantTwoOriginalDeclarations": {
+      "receipt": {
+        "path": "/var/tmp/awa-refactor-20261015/radiant-pending-fixture-successor/receipt.json",
+        "sha256": "644f07109661d3e538c258549c2645f5a39dc17d995396b65b8b84c07fd836b7",
+        "bytes": 1445
+      },
+      "exitCode": 0,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "test",
+        "--preload",
+        "./tests/setup.ts",
+        "tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts"
+      ],
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "HOME": "/var/tmp/awa-refactor-20261015/radiant-pending-fixture-successor/home",
+        "TMPDIR": "/var/tmp/awa-refactor-20261015/radiant-pending-fixture-successor/tmp",
+        "LANG": "C.UTF-8",
+        "TZ": "UTC",
+        "CI": "1",
+        "BUN_RUNTIME_EXECUTABLE": "/usr/bin/bun",
+        "BUN_RUNTIME_TRANSPILER_CACHE_PATH": "/var/tmp/awa-refactor-20261015/radiant-pending-fixture-successor/cache",
+        "GIT_CONFIG_GLOBAL": "/dev/null",
+        "GIT_CONFIG_NOSYSTEM": "1"
+      },
+      "actualPrintedCounts": {
+        "pass": 2,
+        "fail": 0,
+        "expect": 2
+      },
+      "sourceField": {
+        "path": "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+        "sha256": "bcc91c66531210332e3c0855bb148b7ac753f37bc52090a6fb25980dc1934eb0"
+      },
+      "otherChangedInput": null,
+      "declaredFence": "only the specified test file differs from07ef before and after",
+      "rawBindings": [
+        {
+          "path": "/var/tmp/awa-refactor-20261015/radiant-pending-fixture-successor/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28,
+          "matchesReceipt": true
+        },
+        {
+          "path": "/var/tmp/awa-refactor-20261015/radiant-pending-fixture-successor/stderr.raw",
+          "sha256": "b2820873a7d5e204200cf327a894f25848d17de6711ee4e0bdd351c9a48368b3",
+          "bytes": 352,
+          "matchesReceipt": true
+        }
+      ],
+      "rawFooterRead": "\ntests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts:\n(pass) legitimate pending Trace uses only previous complete checkpoint and current unarchived requests [675.55ms]\n(pass) a finalized failed archive cannot still contain a pending terminal request [511.38ms]\n\n 2 pass\n 0 fail\n 2 expect() calls\nRan 2 tests across 1 file. [1336.00ms]\n"
+    },
+    "ghostOriginalBefore": {
+      "receipt": {
+        "path": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-before/receipt.json",
+        "sha256": "fda29e730c7d968d03a7cc2d2a4d54e0f8d957d30e4085042f7abe8bd6c93b8a",
+        "bytes": 1585
+      },
+      "exitCode": 1,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "test",
+        "--preload",
+        "./tests/setup.ts",
+        "tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+        "-t",
+        "^pending first setup decision is a terminal prefix even in an unfinalized archive$"
+      ],
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "HOME": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-before/home",
+        "TMPDIR": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-before/tmp",
+        "LANG": "C.UTF-8",
+        "TZ": "UTC",
+        "CI": "1",
+        "BUN_RUNTIME_EXECUTABLE": "/usr/bin/bun",
+        "BUN_RUNTIME_TRANSPILER_CACHE_PATH": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-before/cache",
+        "GIT_CONFIG_GLOBAL": "/dev/null",
+        "GIT_CONFIG_NOSYSTEM": "1"
+      },
+      "actualPrintedCounts": {
+        "pass": 0,
+        "fail": 1,
+        "filteredOut": 17,
+        "expect": 1
+      },
+      "sourceField": {
+        "path": "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+        "sha256": "f659d57ddee08c341999d57cc836d76041345d01fc0444252d104cf441cfb22c"
+      },
+      "otherChangedInput": [
+        "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts"
+      ],
+      "declaredFence": true,
+      "rawBindings": [
+        {
+          "path": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-before/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28,
+          "matchesReceipt": true
+        },
+        {
+          "path": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-before/stderr.raw",
+          "sha256": "a8453dab9f1b1cdea1d5fe7fa2bd88afcd2fe00dc3e147ea8e3081d985d3b579",
+          "bytes": 876,
+          "matchesReceipt": true
+        }
+      ],
+      "rawFooterRead": "                             ^\nerror: expect(received).not.toThrow()\n\nError name: \"Error\"\nError message: \"reproduction_record_invalid\"\n\n      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts:410:52)\n(fail) pending first setup decision is a terminal prefix even in an unfinalized archive [304.02ms]\n\n 0 pass\n 17 filtered out\n 1 fail\n 1 expect() calls\nRan 1 test across 1 file. [458.00ms]\n"
+    },
+    "ghostOriginalAfter": {
+      "receipt": {
+        "path": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-after-successor/receipt.json",
+        "sha256": "351e97b5dbe0f3801aa1ab39ba0ce5883afe44da896ea021831e598b306fbaed",
+        "bytes": 1682
+      },
+      "exitCode": 0,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "test",
+        "--preload",
+        "./tests/setup.ts",
+        "tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+        "-t",
+        "^pending first setup decision is a terminal prefix even in an unfinalized archive$"
+      ],
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "HOME": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-after-successor/home",
+        "TMPDIR": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-after-successor/tmp",
+        "LANG": "C.UTF-8",
+        "TZ": "UTC",
+        "CI": "1",
+        "BUN_RUNTIME_EXECUTABLE": "/usr/bin/bun",
+        "BUN_RUNTIME_TRANSPILER_CACHE_PATH": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-after-successor/cache",
+        "GIT_CONFIG_GLOBAL": "/dev/null",
+        "GIT_CONFIG_NOSYSTEM": "1"
+      },
+      "actualPrintedCounts": {
+        "pass": 1,
+        "fail": 0,
+        "filteredOut": 17,
+        "expect": 2
+      },
+      "sourceField": {
+        "path": "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+        "sha256": "586328ffdae265350234f662571acb932f360419df25fd4c7dfb9fa6ce5ee92c"
+      },
+      "otherChangedInput": [
+        "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+        "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts"
+      ],
+      "declaredFence": true,
+      "rawBindings": [
+        {
+          "path": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-after-successor/stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28,
+          "matchesReceipt": true
+        },
+        {
+          "path": "/var/tmp/awa-refactor-20261015/ghost-pending-fixture-after-successor/stderr.raw",
+          "sha256": "a64d74f82c77d46ea319dd85529b01bf66058d2f51e6aa72c6ec794f011ccf01",
+          "bytes": 246,
+          "matchesReceipt": true
+        }
+      ],
+      "rawFooterRead": "\ntests/scenarios/boards/ghost-bride/reproduction.test.ts:\n(pass) pending first setup decision is a terminal prefix even in an unfinalized archive [424.27ms]\n\n 1 pass\n 17 filtered out\n 0 fail\n 2 expect() calls\nRan 1 test across 1 file. [592.00ms]\n"
+    },
+    "toolTerminalsFromRoot": {
+      "radiant": {
+        "session": 72594,
+        "terminal": "66ae37"
+      },
+      "ghostBefore": "971946",
+      "ghostAfter": "bbd67c"
+    },
+    "doNotDoubleCount": "Ghost原1expect在首断言即失败；后继2expect来自原两个assert，无新增expect。Radiant2/2与Ghost1/2分别运行，不冒新全suite。"
+  },
+  "rootProgramAndFormatProof": {
+    "report": {
+      "path": "/tmp/awa-pending-fixture-root-proof.json",
+      "sha256": "09d7965b6ab360a8be6a14148356bc90d76b25eddd71f950079a5ea9e83506cf",
+      "bytes": 1031
+    },
+    "script": {
+      "path": "/tmp/awa-pending-fixture-proof.cjs",
+      "sha256": "d719acc5408e48770156b2e72d70ba432a340081df84ee479f6a8bc80cd4bffe",
+      "bytes": 2294
+    },
+    "toolTerminalFromRoot": "15559c",
+    "sourceRowBindings": [
+      {
+        "path": "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+        "matchesSourceBinding": true,
+        "statementCount": 2,
+        "originalParsedStructureAndTokensEqualAfterRemovingOnlyTheseDeletions": true,
+        "formatStable": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+        "matchesSourceBinding": true,
+        "statementCount": 1,
+        "originalParsedStructureAndTokensEqualAfterRemovingOnlyTheseDeletions": true,
+        "formatStable": true
+      }
+    ],
+    "reviewBoundary": "Reviewer仅读现有实际proof/script/result，未执行TS parser/formatter。Root证明去仅3新增delete后原parsed结构/tokens同；完整comment+delete精确正逆另由本次数据绑定。"
+  },
+  "preExecutionAndToolFailuresPreserved": {
+    "scannerDrafts": [
+      {
+        "path": "/tmp/awa-pending-fixture-proof-first.cjs",
+        "sha256": "ae9f9921841d8fe53d1c0e49ab7bb075dfc7571053328dd66e0f1ce76541e89b",
+        "bytes": 2139
+      },
+      {
+        "path": "/tmp/awa-pending-fixture-proof-second.cjs",
+        "sha256": "d453625a7ea7a13af7b1ac4629d6ce0dd5ef9adb4f1b300cf1539378cccf46e9",
+        "bytes": 2193
+      }
+    ],
+    "scannerScope": "Root报告前两standalone scanner误读模板；真实parser后继修的是证明工具，不是测试/生产。没有把旧工具红称产品红。",
+    "ghostAfterGuard": "Root报告首次after在摘要守卫拒非候选额外comment，Bun未启动；当前after-successor源码SHA等精确候选且真实绿。原空运行目录仍在；不虚构该阶段测试输出。"
+  },
+  "boundedCompanionSearch": {
+    "report": {
+      "path": "/tmp/awa-tape3-pending-construction-audit/report.json",
+      "sha256": "f5aafb1aec6b51a729c1f19f76f311ba446e98e6d6d8b966039f51aacc88d386",
+      "bytes": 20853
+    },
+    "records": 22,
+    "sourceInputs": 30,
+    "reviewBoundary": "引用Pres有限直接outcome构造静态盘点，不冒本审者重做30源完整语义证明或任意动态输入完备性。其它故意畸形schema负例/原成功模板不改。"
+  },
+  "artifacts": [
+    {
+      "path": "/tmp/awa-tape3-pending-trace-fixture-repair/HANDOFF.json",
+      "sha256": "777936c2d00f136a3aa3a8d2b6b1f0f41199c0538fa8cfc4c8c3773b619628ce",
+      "bytes": 1715
+    },
+    {
+      "path": "/tmp/awa-tape3-pending-trace-fixture-repair/proposal.json",
+      "sha256": "c6b2db2dda11b5971082e2507ca624d166847e8f7ff5f79e90225d5f9e8d5184",
+      "bytes": 2656
+    },
+    {
+      "path": "/tmp/awa-tape3-pending-trace-fixture-repair/edits.json",
+      "sha256": "b7f5eec339211960bbe8017f24f63e018b20d8900d498bfd4a5389b51c278062",
+      "bytes": 671
+    },
+    {
+      "path": "/tmp/awa-tape3-pending-trace-fixture-repair/patch.diff",
+      "sha256": "f8ec58eb883aebd48ec7be4f273cce7f5a21c0610292ba2cef2e9360bc1c2961",
+      "bytes": 1049
+    },
+    {
+      "path": "/tmp/awa-tape3-ghost-pending-fixture-repair/HANDOFF.json",
+      "sha256": "781850947e92bc429d8477d17ad9fc8e40ae4d3a30fed08b874cad350468731d",
+      "bytes": 1465
+    },
+    {
+      "path": "/tmp/awa-tape3-ghost-pending-fixture-repair/proposal.json",
+      "sha256": "ef921e5dbd4ca6514361b7ca9bb88714a6848199b7ce6f46332009bcd6402433",
+      "bytes": 2286
+    },
+    {
+      "path": "/tmp/awa-tape3-ghost-pending-fixture-repair/edits.json",
+      "sha256": "4d8da7ea723a23689c1a592740b767fcca14feec6723413e3489194f5c8a7828",
+      "bytes": 575
+    },
+    {
+      "path": "/tmp/awa-tape3-ghost-pending-fixture-repair/patch.diff",
+      "sha256": "1c54a86a74777118272a78dc4bb7ad4d0035373458d7a1b30b3f4bfca9c47e96",
+      "bytes": 661
+    },
+    {
+      "path": "/tmp/awa-tape3-pending-trace-fixture-repair/before/backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "sha256": "60b026ac65b2cdb1e5bd230cc9812c79f7259b35454eda9d38fe567f62f98d26",
+      "bytes": 1491
+    },
+    {
+      "path": "/tmp/awa-tape3-pending-trace-fixture-repair/candidates/backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "sha256": "bcc91c66531210332e3c0855bb148b7ac753f37bc52090a6fb25980dc1934eb0",
+      "bytes": 1836
+    },
+    {
+      "path": "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "sha256": "bcc91c66531210332e3c0855bb148b7ac753f37bc52090a6fb25980dc1934eb0",
+      "bytes": 1836
+    },
+    {
+      "path": "/tmp/awa-tape3-ghost-pending-fixture-repair/before/backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "sha256": "f659d57ddee08c341999d57cc836d76041345d01fc0444252d104cf441cfb22c",
+      "bytes": 20724
+    },
+    {
+      "path": "/tmp/awa-tape3-ghost-pending-fixture-repair/candidates/backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "sha256": "586328ffdae265350234f662571acb932f360419df25fd4c7dfb9fa6ce5ee92c",
+      "bytes": 20913
+    },
+    {
+      "path": "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "sha256": "586328ffdae265350234f662571acb932f360419df25fd4c7dfb9fa6ce5ee92c",
+      "bytes": 20913
+    },
+    {
+      "path": "/tmp/awa-pending-fixture-proof.cjs",
+      "sha256": "d719acc5408e48770156b2e72d70ba432a340081df84ee479f6a8bc80cd4bffe",
+      "bytes": 2294
+    },
+    {
+      "path": "/tmp/awa-pending-fixture-proof-first.cjs",
+      "sha256": "ae9f9921841d8fe53d1c0e49ab7bb075dfc7571053328dd66e0f1ce76541e89b",
+      "bytes": 2139
+    },
+    {
+      "path": "/tmp/awa-pending-fixture-proof-second.cjs",
+      "sha256": "d453625a7ea7a13af7b1ac4629d6ce0dd5ef9adb4f1b300cf1539378cccf46e9",
+      "bytes": 2193
+    },
+    {
+      "path": "/tmp/awa-pending-fixture-proof-debug.cjs",
+      "sha256": "ccd08d65cce9c94d4a293afad88d1c19e39600912c3188edf77e343e7c17149c",
+      "bytes": 2412
+    },
+    {
+      "path": "/tmp/awa-run-ghost-pending-fixture.py",
+      "sha256": "6ce769d93929ec39dbbd16865cd1b33724bdc9b077a89140776ce3d60843707d",
+      "bytes": 2403
+    },
+    {
+      "path": "/tmp/awa-run-ghost-pending-fixture-successor.py",
+      "sha256": "cdd023f508075811c0625eb04e516be027a43850dc0026b6d5d3b924bf251adf",
+      "bytes": 2416
+    },
+    {
+      "path": "/tmp/awa-run-radiant-pending-diagnostic.py",
+      "sha256": "cb425328d1aad3cbd7ab06059ccd8007ebebabf1950ee354cf90d24a031ef8eb",
+      "bytes": 1392
+    },
+    {
+      "path": "/tmp/awa-run-radiant-pending-diagnostic-successor.py",
+      "sha256": "7f7ff9b18b693860ce5b6b1823e78befc89dcc11b5b238f498caff7a0f68f5b8",
+      "bytes": 1371
+    },
+    {
+      "path": "/tmp/awa-radiant-pending-candidate-diagnostic.ts",
+      "sha256": "d590d4e2aece3dd5f3f4e811162fb02c289985aaa78546e7113350c6ff305a2c",
+      "bytes": 2400
+    }
+  ],
+  "limits": [
+    "Approval is only this two-fixture adaptation and existing limited raw/source binding, not a new production policy or final C47/C48 acceptance.",
+    "Original07ef scenarioA remains its own immutable running/failing round; local successors must not turn its first red into an all-green round or be mixed with older cb greens.",
+    "Final acceptance must use explicitly fixed successor source/manifest, including the separately required architecture implementations, not only these local successes.",
+    "No tests, parser, formatter, compiler, product or gate executed by reviewer; no repository writes; Git reads are solely public metadata/blob comparison."
+  ],
+  "executionsByReviewer": [],
+  "repositoryWrites": false,
+  "findings": []
+}

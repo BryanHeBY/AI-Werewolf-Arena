@@ -18,12 +18,16 @@ test("legitimate pending Trace uses only previous complete checkpoint and curren
   r.events = r.events.slice(0, r.checkpoints.at(-1).eventCount);
   r.decisions.at(-1).outcome = { kind: "pending" };
   delete r.decisions.at(-1).settleOrder;
+  // Tape3 的 false-close 候选属于终态 error；这里构造尚未结算的前缀，须移除这份返回证据。
+  delete r.decisions.at(-1).returnedCandidate;
   expect(() => parseReproductionRecord(r)).not.toThrow();
 });
 test("a finalized failed archive cannot still contain a pending terminal request", async () => {
   const r = await failed();
   r.decisions.at(-1).outcome = { kind: "pending" };
   delete r.decisions.at(-1).settleOrder;
+  // 先保持 pending 的合法字段形状，再核 finalized 的原矛盾，不能让残留候选提前在 schema 层拒绝。
+  delete r.decisions.at(-1).returnedCandidate;
   let accepted = false;
   try {
     parseReproductionRecord(r);

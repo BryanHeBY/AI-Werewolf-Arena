@@ -405,6 +405,8 @@ test("pending first setup decision is a terminal prefix even in an unfinalized a
   const first = structuredClone(record);
   first.finalized = false;
   first.decisions[0]!.outcome = { kind: "pending" };
+  // 初始选婚返回 null 的候选属于已关闭的 error；构造 pending 前缀时移除此终态证据，保留原截断与计数。
+  delete first.decisions[0]!.returnedCandidate;
   first.checkpoints = [first.checkpoints[0]!];
   first.events = first.events.slice(0, first.checkpoints[0]!.eventCount);
   expect(() => parseReproductionRecord(first)).not.toThrow();

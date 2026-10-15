@@ -1,0 +1,93 @@
+{
+  "scope": "two synthetic pending test inputs only; no production/schema/verifier/golden/assertion change",
+  "baseCommit": "07ef28ef06f2579a6e7fb7467bca588c87608348",
+  "sources": [
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "beforeSha256": "60b026ac65b2cdb1e5bd230cc9812c79f7259b35454eda9d38fe567f62f98d26",
+      "afterSha256": "bcc91c66531210332e3c0855bb148b7ac753f37bc52090a6fb25980dc1934eb0",
+      "insertedReturnedCandidateDeletions": 2,
+      "originalParsedStructureAndTokensEqualAfterRemovingOnlyTheseDeletions": true,
+      "formatStable": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "beforeSha256": "f659d57ddee08c341999d57cc836d76041345d01fc0444252d104cf441cfb22c",
+      "afterSha256": "586328ffdae265350234f662571acb932f360419df25fd4c7dfb9fa6ce5ee92c",
+      "insertedReturnedCandidateDeletions": 1,
+      "originalParsedStructureAndTokensEqualAfterRemovingOnlyTheseDeletions": true,
+      "formatStable": true
+    }
+  ],
+  "diagnostic": {
+    "directory": "execution/radiant-pending-diagnostic-successor",
+    "result": "actual schema3 own returnedCandidate:null; pending with candidate rejected structurally; removing only candidate accepts unfinished prefix; finalized pending still rejected by Radiant semantic audit",
+    "initialPreparationFailure": "preloading tests/setup outside Bun test invoked beforeEach; no product diagnostic ran. Original stderr retained."
+  },
+  "actualTests": [
+    {
+      "name": "Radiant original two declarations successor",
+      "pass": 2,
+      "fail": 0,
+      "expects": 2,
+      "directory": "execution/radiant-pending-fixture-successor",
+      "session": 72594,
+      "terminal": "66ae37",
+      "exitCode": 0
+    },
+    {
+      "name": "Ghost original declaration before",
+      "pass": 0,
+      "fail": 1,
+      "expects": 1,
+      "filtered": 17,
+      "directory": "execution/ghost-pending-fixture-before",
+      "terminal": "971946",
+      "exitCode": 1
+    },
+    {
+      "name": "Ghost original declaration successor",
+      "pass": 1,
+      "fail": 0,
+      "expects": 2,
+      "filtered": 17,
+      "directory": "execution/ghost-pending-fixture-after-successor",
+      "terminal": "bbd67c",
+      "exitCode": 0
+    }
+  ],
+  "programProof": {
+    "path": "root/awa-pending-fixture-root-proof.json",
+    "sha256": "09d7965b6ab360a8be6a14148356bc90d76b25eddd71f950079a5ea9e83506cf",
+    "result": "after removing exactly3 newly inserted delete statements, actual TS parsed structure and token text equals original;2 formatting-stable files",
+    "terminal": "15559c",
+    "priorPreparation": "standalone scanner drafts did not rescan template literals and falsely reported difference; parser-based proof replaces those unexecuted-proof claims, originals retained"
+  },
+  "otherPreparation": "one Ghost after source-SHA gate refused a different Root comment before Bun launch; exact prepared candidate restored and a fresh successor run succeeded; no hidden test retry",
+  "staticConstructionAudit": {
+    "path": "preparation/construction-audit/report.json",
+    "sources": 30,
+    "classifications": 22,
+    "limits": "only two confirmed terminal-candidate leftovers; other successful action/manualTape2/intentional invalid candidate tests retained"
+  },
+  "independent": {
+    "originalPath": "/tmp/awa-tape3-two-pending-fixtures-independent/peer-review.json",
+    "sha256": "180e94b030c36becbbe05404f5dd546dc4d52f6533d3f04732a3f2c19634ac48",
+    "publishedFile": "tape3-pending-prefix-fixtures.peer-review.json",
+    "archivedOriginalSha256": "180e94b030c36becbbe05404f5dd546dc4d52f6533d3f04732a3f2c19634ac48",
+    "publishedSha256": "c60f329f8d28bd0d9e2d22195869404fad6973f470789199877f7b3eb730da7f",
+    "publicationDifference": "仅按仓库Prettier排版；原独立审查字节保存在independent/peer-review.json封包成员。"
+  },
+  "archive": {
+    "path": "tape3-pending-prefix-fixtures.tar.gz",
+    "sha256": "a963aa4c7b3ba53ea2859340553656f21ba0588ad57b1caad668e5d5bbac52de",
+    "bytes": 87843,
+    "members": 52
+  },
+  "limits": [
+    "3 original declarations, not3 new tests; executions/diagnostic are not one combined suite",
+    "07ef full A still running with original immutable inputs; no altered fixture pass merged into that round",
+    "no full test-types or global gate execution claimed for this two-input adaptation",
+    "full goal still requires rawWorld extension ports and role-name dictionary migration plus final same-source gates/C48"
+  ]
+}
