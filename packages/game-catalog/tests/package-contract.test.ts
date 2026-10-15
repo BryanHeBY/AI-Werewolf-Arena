@@ -1,9 +1,9 @@
 /**
- * 包单元测试负责目录公开资料及与机器契约的关系，不导入后端引擎。输入为字面覆盖、机器 ID 与双语名称，输出以原断言核对。
+ * 包单元测试负责目录公开资料及与机器契约的关系，不导入后端引擎。输入为字面覆盖、机器 ID 与规则引用，输出核对完整资料及名称 API 退出。
  * 目录包含角色不等于允许运行；profile 注册与具体规则仍归应用测试，机器 ID 直接消费契约包。
  */
 import { describe, expect, test } from "bun:test";
-import { ROLE_DEFINITIONS, roleDefinition, roleName } from "@ai-werewolf-arena/game-catalog";
+import { ROLE_DEFINITIONS, roleDefinition } from "@ai-werewolf-arena/game-catalog";
 import {
   EVENT_IDS,
   EVENT_PACK_IDS,
@@ -30,25 +30,19 @@ describe("catalog public package contract", () => {
     expect(roleDefinition("awakened_knight")?.status).toBe("planned");
   });
 
-  test("all catalog entries have both names and delivered entries cite a rule contract", () => {
+  test("all catalog entries retain metadata and delivered entries cite a rule contract", () => {
     for (const role of ROLE_DEFINITIONS) {
       expect(isRoleId(role.id)).toBe(true);
-      for (const locale of LOCALES) {
-        expect(role.names[locale].trim()).not.toBeEmpty();
-        expect(roleName(role.id, locale)).toBe(role.names[locale]);
-      }
+      expect(Object.hasOwn(role, "names")).toBe(false);
       if (role.status === "verified" || role.status === "implemented")
         expect(role.ruleCardRef).not.toBeNull();
     }
-    expect(roleName("wolf", "zh-CN")).toBe("狼人");
-    expect(roleName("wolf", "en")).toBe("Werewolf");
   });
 
-  test("unknown names remain raw data and machine locale inputs are exact", () => {
+  test("unknown IDs remain absent and machine locale inputs are exact", () => {
     for (const value of [null, 3, {}, "", "Wolf", "unsupported_role"])
       expect(isRoleId(value)).toBe(false);
     expect(roleDefinition("unsupported_role")).toBeUndefined();
-    expect(roleName("Custom {role}", "en")).toBe("Custom {role}");
     expect(LOCALES).toEqual(["zh-CN", "en"]);
     expect(isLocale("zh-CN")).toBe(true);
     expect(isLocale("en")).toBe(true);

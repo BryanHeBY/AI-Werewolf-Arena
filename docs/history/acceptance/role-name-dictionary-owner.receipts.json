@@ -1,0 +1,299 @@
+{
+  "baseCommit": "8dd28e93ded9eeb04fdd49d1a1e6d369f8649f3b",
+  "scope": "H01 role names sole production owner; not global C47/P9 acceptance",
+  "publishedSourceAndDocs": [
+    {
+      "path": "packages/game-catalog/src/index.ts",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "4b1cd6d924a441156457ffa19f9e67e99c709f258ad53ad1dab526ac70b51d25",
+      "sha256": "d0533924b2736a626e1e155f95dcd27685cc5203cddf69de8fbc9b99720f9a93",
+      "bytes": 13729,
+      "preparedSha256": "d0533924b2736a626e1e155f95dcd27685cc5203cddf69de8fbc9b99720f9a93",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "packages/game-text/src/index.ts",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "90899a973988fcaf9384703b0df12a23f4dc9c16855615f25d21ced774006d17",
+      "sha256": "655a80a2cc5246e9d88d31f0c13c9929284755069c74d0f52b32728222ee8d00",
+      "bytes": 4275,
+      "preparedSha256": "655a80a2cc5246e9d88d31f0c13c9929284755069c74d0f52b32728222ee8d00",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "packages/game-text/src/role-names.ts",
+      "mode": "100644",
+      "beforeExists": false,
+      "beforeSha256": null,
+      "sha256": "c8dabd597473ca3f7cfec36d1c6b3bf1292a5bf2518596c4fc72450f90fc72e1",
+      "bytes": 6846,
+      "preparedSha256": "490dae6debd653b20cfaf2cc1066c766013f0d62fdeff1c344d4f9ca37603b44",
+      "formatChanged": true,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "packages/game-text/package.json",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "6577e3aa999cf90b91cdb4c28fa99cea1a605c5e64ca40fe3e6c6f84b718da64",
+      "sha256": "92f19d28ea311913a1be8af719b2509c27122470b7ef5bb2b8f35d378425cab1",
+      "bytes": 476,
+      "preparedSha256": "92f19d28ea311913a1be8af719b2509c27122470b7ef5bb2b8f35d378425cab1",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "bun.lock",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+      "sha256": "b08f64f6dc4ef8f8b2c9ba7092cc3556385f07ca3c9e1efc0986f14eb9e9e558",
+      "bytes": 107076,
+      "preparedSha256": "b08f64f6dc4ef8f8b2c9ba7092cc3556385f07ca3c9e1efc0986f14eb9e9e558",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "packages/game-catalog/tests/package-contract.test.ts",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "ef30694035e1bc69706bc090f982378434641fbd7310f66569fb68e72b9814bf",
+      "sha256": "0e68e9c500d35e1192ea840a885399df8741fc9943bcb3b1c29ad25cbf8d7324",
+      "bytes": 2954,
+      "preparedSha256": "0e68e9c500d35e1192ea840a885399df8741fc9943bcb3b1c29ad25cbf8d7324",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "packages/game-catalog/tests/owner-boundary.test.ts",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "acfbbc2db4e094c5c79d55e8496f6b0f50cfd8d27c8f461d4656eed0e1c6f0b7",
+      "sha256": "ba232fe6fead61db4f3922691534b68a682da020b854c8b08c5fba46041d3d4c",
+      "bytes": 5292,
+      "preparedSha256": "0e20928626f0c9ae83f1a6c38a579ee8bed056bf7bb2667608f5269525daccb0",
+      "formatChanged": true,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "packages/game-text/tests/package-contract.test.ts",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "0e63d421a809d5c8c183483e72f38ab94ec13549ff05e6a32dd7b962014f99b8",
+      "sha256": "5f00127343897bf014b8c455c6539c0b320b292d583ff6f9be3af490113d26f8",
+      "bytes": 3141,
+      "preparedSha256": "5f00127343897bf014b8c455c6539c0b320b292d583ff6f9be3af490113d26f8",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "packages/game-text/tests/role-names.test.ts",
+      "mode": "100644",
+      "beforeExists": false,
+      "beforeSha256": null,
+      "sha256": "df53f4672a80924e16d9efef8cee0ea0bddf4b9b0d332c714d71876ccd3a6764",
+      "bytes": 5335,
+      "preparedSha256": "fc7c938418ab61b6493e4c26a9c340fb9d02462c3168d605d30eee17d5b5ce2f",
+      "formatChanged": true,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/role-catalog-contract.test.ts",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "2b41dbf3a05cc7c363ee5df74221a6c8871bccd7cc7c8e8bca8d25b565ab093b",
+      "sha256": "58b5f94827bae1a49735a6e1a0af3c4f493caaa8bc0bee15eb5fe8404860067e",
+      "bytes": 3738,
+      "preparedSha256": "58b5f94827bae1a49735a6e1a0af3c4f493caaa8bc0bee15eb5fe8404860067e",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "backend/tests/unit/presentation/i18n-contract.test.ts",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "9a9906d07df6f3bff85d3da6e3327ea1c2b48ca4750318c60591bc600a1a2878",
+      "sha256": "6d25599269f9779ad56c94af37a34652b06516a6e93cf407e107115988b6bfcf",
+      "bytes": 4243,
+      "preparedSha256": "6d25599269f9779ad56c94af37a34652b06516a6e93cf407e107115988b6bfcf",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "backend/tests/unit/presentation/bilingual-console.test.ts",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "4fedee8ea74cb6924008075ec2e50f7aa50cab293188dc230b1c3bb256f25a26",
+      "sha256": "3e36c1ad0035dfb02ebb29339fadd91daf819b77040c88b8375ddabb84f6dc34",
+      "bytes": 16477,
+      "preparedSha256": "3e36c1ad0035dfb02ebb29339fadd91daf819b77040c88b8375ddabb84f6dc34",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "backend/tests/integration/tooling/role-rule-card-references.test.ts",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "514b41b100ad8a3b1da22a9a111fc383f8d9c2cc87196a48640fb0ce59f107de",
+      "sha256": "8c298afb338d3a2bb504b2623ecc85d988a019ce4068ac891ce0f953db7eeb8d",
+      "bytes": 1216,
+      "preparedSha256": "8c298afb338d3a2bb504b2623ecc85d988a019ce4068ac891ce0f953db7eeb8d",
+      "formatChanged": false,
+      "formatProgramOrDataEqualIgnoringOnlyOptionalTrailingListComma": true,
+      "kind": "source-or-test"
+    },
+    {
+      "path": "README.md",
+      "kind": "current-doc",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "4cddeb4b85157971d67e5a8d326007ca190d5f246dec82073ff81f78a45fc623",
+      "sha256": "7fe3e51a237aae9c83e000c74a8dbe9e88d325592f742331542e573bff424eb6",
+      "bytes": 9865
+    },
+    {
+      "path": "docs/guides/migration.md",
+      "kind": "current-doc",
+      "mode": "100644",
+      "beforeExists": true,
+      "beforeSha256": "03b277fdc98a5cb1738cba825e9c90d554c81a58ef4801a2c519d64bda9c0e79",
+      "sha256": "666639916b8abc2cf8e061debff76876846e05a997bf5dac672ac73321f9f7b0",
+      "bytes": 3135
+    }
+  ],
+  "actualExecutionFence": {
+    "source": 13,
+    "controls": 7,
+    "publishedDocsOutsideFence": 2
+  },
+  "executions": [
+    {
+      "id": "baseline",
+      "receipt": "/var/tmp/awa-refactor-20261015/role-name-owner/baseline/receipt.json",
+      "sha256": "c7afb56c4d5f66f82c37600854a073835d5378a2ac86489bddd7c64aaad02c67",
+      "seconds": 0.06476092338562012
+    },
+    {
+      "id": "catalog-tests",
+      "receipt": "/var/tmp/awa-refactor-20261015/role-name-owner/catalog-tests/receipt.json",
+      "sha256": "8ce2f3f17588127bc90b56fa6812dd3f963e0cd840518492987f1d55678b05cd",
+      "seconds": 0.06477856636047363
+    },
+    {
+      "id": "text-tests",
+      "receipt": "/var/tmp/awa-refactor-20261015/role-name-owner/text-tests/receipt.json",
+      "sha256": "375bf98483da66249fd9ea996a4b12bdca8a07be85c2cc5ca0949ce31c28fb3c",
+      "seconds": 0.11523747444152832
+    },
+    {
+      "id": "backend-consumers",
+      "receipt": "/var/tmp/awa-refactor-20261015/role-name-owner/backend-consumers/receipt.json",
+      "sha256": "b400f05c0a1db2c8d9d98e9e5ee4111ec8c9077aa46049727f5897acd001acb5",
+      "seconds": 0.31587910652160645
+    },
+    {
+      "id": "catalog-types",
+      "receipt": "/var/tmp/awa-refactor-20261015/role-name-owner/catalog-types/receipt.json",
+      "sha256": "dfe04725d31aa2d7a16c99313096737d98bdc4d6664446484da59aaebff49dfd",
+      "seconds": 1.9196233749389648
+    },
+    {
+      "id": "catalog-test-types",
+      "receipt": "/var/tmp/awa-refactor-20261015/role-name-owner/catalog-test-types/receipt.json",
+      "sha256": "a0c71fdd5c50f09745d3c1fd400cfa8592f9b5d3e36b2bd95b7dc6db415f58df",
+      "seconds": 2.120149850845337
+    },
+    {
+      "id": "text-types",
+      "receipt": "/var/tmp/awa-refactor-20261015/role-name-owner/text-types/receipt.json",
+      "sha256": "d9bf151e3773da18d6055a1fa7999b7af64f43deabaa95990a809885c1a3344b",
+      "seconds": 2.2210819721221924
+    },
+    {
+      "id": "text-test-types",
+      "receipt": "/var/tmp/awa-refactor-20261015/role-name-owner/text-test-types/receipt.json",
+      "sha256": "69671fd247c8360d323d2ebec2bae99115bc30e0b1ccbc70b37656d57a0bcedf",
+      "seconds": 2.4716126918792725
+    },
+    {
+      "id": "backend-test-types",
+      "receipt": "/var/tmp/awa-refactor-20261015/role-name-owner/backend-test-types/receipt.json",
+      "sha256": "1dc98558b5311b54549ade677375785ee97b2526b3279b707dddef7965eaa10b",
+      "seconds": 40.13226842880249
+    }
+  ],
+  "results": {
+    "oldProductionBaseline": {
+      "pass": 3,
+      "fail": 0,
+      "expect": 152
+    },
+    "catalog": {
+      "pass": 5,
+      "fail": 0,
+      "expect": 215
+    },
+    "text": {
+      "pass": 8,
+      "fail": 0,
+      "expect": 3323,
+      "includesSameThreeBaselineCases": true
+    },
+    "backendConsumers": {
+      "pass": 25,
+      "fail": 0,
+      "expect": 4205,
+      "files": 4
+    },
+    "typeProjects": {
+      "count": 5,
+      "allExitCode": 0
+    }
+  },
+  "names": {
+    "ids": 64,
+    "localizedValues": 128,
+    "runtimeRoles": 55,
+    "plannedIds": 9,
+    "literalsAndOrderPreserved": true
+  },
+  "fingerprint": {
+    "previousInputs": 913,
+    "currentInputs": 914,
+    "added": ["packages/game-text/src/role-names.ts"],
+    "sourceAndLockHashChanged": true,
+    "proof": "execution/root/fingerprint-proof.json"
+  },
+  "formatPreparation": "First strict proof rejected optional trailing commas introduced by Prettier; successor permits only terminal list comma in actual three diffs. Original draft preserved. No test failure hidden.",
+  "peerSha256": "d27090db04bc9cc5116f96912fd698ef2b575340a495ede17eceb112d27a8639",
+  "archive": {
+    "path": "role-name-dictionary-owner.tar.gz",
+    "bytes": 419353,
+    "sha256": "b976d7dddd6606a08e56a1c51d77ac2e4ca77ea59cb323a78db4ffbe392871b2",
+    "members": 118
+  },
+  "limits": [
+    "Nine actual finite receipts; no complete final same-source gates.",
+    "Baseline three cases overlap text suite; do not count them twice as distinct new risks.",
+    "H02 raw World extension ports and H03 request admission remain unfinished.",
+    "Catalog roleName/names API retired; custom role text and all other metadata preserved."
+  ],
+  "peerSha256Meaning": "Original independent bytes archived at independent/final-limited-review.json; the published JSON is formatted without data changes.",
+  "publishedPeerSha256": "d110ba95116fa6de2a03d03beb0fa08122a23bc79268a3494d63d1b2eb2f848f"
+}

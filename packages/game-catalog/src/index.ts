@@ -1,15 +1,14 @@
 /**
  * 负责配置、引擎装配与展示消费的角色资料目录。
- * 输入为契约包的稳定 ID；输出按原顺序提供双语名称、交付状态和现行规则卡引用。
- * 资料描述角色，不授予执行许可；机器 ID、枚举与语言的唯一所有者仍是契约包。
+ * 输入为契约包的稳定 ID；输出按原顺序提供交付状态、规则来源和现行规则卡引用。
+ * 资料描述角色，不授予执行许可；机器 ID 与枚举仍归契约包，双语名称由 game-text 词典提供。
  * 规则卡位于 docs/rules，扩充验收历史单独保留；本出口只提供资料，机读／查验／胜利／错误直接消费契约包。
  */
-import { Role, PLANNED_ROLE_IDS, type Locale } from "@ai-werewolf-arena/game-contract";
+import { Role, PLANNED_ROLE_IDS } from "@ai-werewolf-arena/game-contract";
 export type RoleStatus = "planned" | "rules_frozen" | "implemented" | "verified";
 /** 资料状态与规则引用说明交付进度，不等于角色已注册、板子可运行或玩家有行动资格。 */
 export interface RoleDefinition {
   readonly id: string;
-  readonly names: Readonly<Record<Locale, string>>;
   readonly status: RoleStatus;
   readonly targetPhase: string;
   readonly ruleCardRef: string | null;
@@ -19,7 +18,6 @@ export interface RoleDefinition {
 export const ROLE_DEFINITIONS = [
   {
     id: `${Role.Wolf}`,
-    names: { "zh-CN": "狼人", en: "Werewolf" },
     status: "verified",
     targetPhase: "P1",
     ruleCardRef: "docs/rules/awa-classic-v1.md#wolf",
@@ -27,7 +25,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Villager}`,
-    names: { "zh-CN": "平民", en: "Villager" },
     status: "verified",
     targetPhase: "P1",
     ruleCardRef: "docs/rules/awa-classic-v1.md#villager",
@@ -35,7 +32,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Seer}`,
-    names: { "zh-CN": "预言家", en: "Seer" },
     status: "verified",
     targetPhase: "P1",
     ruleCardRef: "docs/rules/awa-classic-v1.md#seer",
@@ -43,7 +39,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Witch}`,
-    names: { "zh-CN": "女巫", en: "Witch" },
     status: "verified",
     targetPhase: "P1",
     ruleCardRef: "docs/rules/awa-classic-v1.md#witch",
@@ -51,7 +46,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Hunter}`,
-    names: { "zh-CN": "猎人", en: "Hunter" },
     status: "verified",
     targetPhase: "P1",
     ruleCardRef: "docs/rules/awa-classic-v1.md#hunter",
@@ -59,7 +53,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Guard}`,
-    names: { "zh-CN": "守卫", en: "Guard" },
     status: "verified",
     targetPhase: "P1",
     ruleCardRef: "docs/rules/awa-classic-v1.md#guard",
@@ -67,7 +60,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Idiot}`,
-    names: { "zh-CN": "白痴", en: "Village Idiot" },
     status: "verified",
     targetPhase: "P1",
     ruleCardRef: "docs/rules/awa-classic-v1.md#idiot",
@@ -75,7 +67,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.WolfKing}`,
-    names: { "zh-CN": "狼王", en: "Wolf King" },
     status: "verified",
     targetPhase: "P5",
     ruleCardRef: "docs/rules/awa-wolf-king-v1.md#wolf_king",
@@ -83,7 +74,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.WhiteWolfKing}`,
-    names: { "zh-CN": "白狼王", en: "White Wolf King" },
     status: "verified",
     targetPhase: "P5",
     ruleCardRef: "docs/rules/awa-white-wolf-king-v1.md#white_wolf_king",
@@ -91,7 +81,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Knight}`,
-    names: { "zh-CN": "骑士", en: "Knight" },
     status: "verified",
     targetPhase: "P5",
     ruleCardRef: "docs/rules/awa-knight-v1.md#knight",
@@ -99,7 +88,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Gravekeeper}`,
-    names: { "zh-CN": "守墓人", en: "Gravekeeper" },
     status: "verified",
     targetPhase: "P5",
     ruleCardRef: "docs/rules/awa-gravekeeper-v1.md#gravekeeper",
@@ -107,7 +95,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Dreamer}`,
-    names: { "zh-CN": "摄梦人", en: "Dreamer" },
     status: "verified",
     targetPhase: "P6",
     ruleCardRef: "docs/rules/awa-dreamer-v1.md#dreamer",
@@ -115,7 +102,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.WolfBeauty}`,
-    names: { "zh-CN": "狼美人", en: "Wolf Beauty" },
     status: "verified",
     targetPhase: "P6",
     ruleCardRef: "docs/rules/awa-wolf-beauty-v1.md#wolf_beauty",
@@ -123,7 +109,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Bear}`,
-    names: { "zh-CN": "熊", en: "Bear" },
     status: "verified",
     targetPhase: "P6",
     ruleCardRef: "docs/rules/awa-bear-v1.md#bear",
@@ -131,7 +116,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.HiddenWolf}`,
-    names: { "zh-CN": "隐狼", en: "Hidden Wolf" },
     status: "verified",
     targetPhase: "P6",
     ruleCardRef: "docs/rules/awa-hidden-wolf-v1.md#hidden_wolf",
@@ -139,7 +123,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Gargoyle}`,
-    names: { "zh-CN": "石像鬼", en: "Gargoyle" },
     status: "verified",
     targetPhase: "P6",
     ruleCardRef: "docs/rules/awa-gargoyle-v1.md#gargoyle",
@@ -147,7 +130,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Psychic}`,
-    names: { "zh-CN": "通灵师", en: "Spirit Seer" },
     status: "verified",
     targetPhase: "P7",
     ruleCardRef: "docs/rules/awa-psychic-v1.md#psychic",
@@ -155,7 +137,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.MirrorGirl}`,
-    names: { "zh-CN": "魔镜少女", en: "Mirror Girl" },
     status: "verified",
     targetPhase: "P7",
     ruleCardRef: "docs/rules/awa-mirror-girl-v1.md#mirror_girl",
@@ -163,7 +144,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.MechanicalWolf}`,
-    names: { "zh-CN": "机械狼", en: "Mechanical Wolf" },
     status: "verified",
     targetPhase: "P7",
     ruleCardRef: "docs/rules/awa-mechanical-wolf-v1.md#mechanical_wolf",
@@ -171,7 +151,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.MiracleMerchant}`,
-    names: { "zh-CN": "奇迹商人", en: "Miracle Merchant" },
     status: "verified",
     targetPhase: "P7",
     ruleCardRef: "docs/rules/awa-miracle-merchant-v1.md#miracle_merchant",
@@ -179,7 +158,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.BlackMarketMerchant}`,
-    names: { "zh-CN": "黑市商人", en: "Black Market Merchant" },
     status: "verified",
     targetPhase: "P7",
     ruleCardRef: "docs/rules/awa-black-market-merchant-v1.md#black_market_merchant",
@@ -187,7 +165,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Hybrid}`,
-    names: { "zh-CN": "混血儿", en: "Hybrid" },
     status: "verified",
     targetPhase: "P7",
     ruleCardRef: "docs/rules/awa-hybrid-v1.md#hybrid",
@@ -195,7 +172,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Thief}`,
-    names: { "zh-CN": "盗贼", en: "Thief" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/lui-meme-thief-v1.md",
@@ -203,7 +179,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Shapeshifter}`,
-    names: { "zh-CN": "千面人", en: "Many-Faced One" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-netease-shapeshifter-v1.md",
@@ -211,7 +186,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.LonelyGirl}`,
-    names: { "zh-CN": "孤独少女", en: "Lonely Girl" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-netease-lonely-girl-v1.md",
@@ -219,7 +193,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.WildChild}`,
-    names: { "zh-CN": "野孩子", en: "Wild Child" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-lui-meme-wild-child-v1.md",
@@ -227,7 +200,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.GhostBride}`,
-    names: { "zh-CN": "鬼魂新娘", en: "Ghost Bride" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-melbourne-ghost-bride-v1.md",
@@ -235,7 +207,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Cupid}`,
-    names: { "zh-CN": "丘比特", en: "Cupid" },
     status: "implemented",
     targetPhase: "P8",
     ruleCardRef: "docs/rules/sourced-cupid-v1.md#cupid",
@@ -243,7 +214,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.CursedFox}`,
-    names: { "zh-CN": "咒狐", en: "Cursed Fox" },
     status: "implemented",
     targetPhase: "P8",
     ruleCardRef: "docs/rules/netease-cursed-fox-v1.md#cursed_fox",
@@ -251,7 +221,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.DemonHunter}`,
-    names: { "zh-CN": "猎魔人", en: "Demon Hunter" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-netease-demon-hunter-v1.md",
@@ -259,7 +228,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.PureWhiteGirl}`,
-    names: { "zh-CN": "纯白之女", en: "Pure White Girl" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-pure-white-night-v1.md",
@@ -267,7 +235,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.WolfWitch}`,
-    names: { "zh-CN": "狼巫", en: "Wolf Witch" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-pure-white-night-v1.md",
@@ -275,7 +242,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.EvilKnight}`,
-    names: { "zh-CN": "恶夜骑士", en: "Dark Knight" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-evil-knight-v1.md",
@@ -283,7 +249,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.RedMoonApostle}`,
-    names: { "zh-CN": "赤月使徒", en: "Red Moon Apostle" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-red-moon-demon-v1.md",
@@ -291,7 +256,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Alchemist}`,
-    names: { "zh-CN": "炼金魔女", en: "Alchemist" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-mist-raven-twelve-v1.md",
@@ -299,7 +263,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.RavenClawWolf}`,
-    names: { "zh-CN": "狼鸦之爪", en: "Raven-Claw Wolf" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-mist-raven-twelve-v1.md",
@@ -307,7 +270,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.RadiantCount}`,
-    names: { "zh-CN": "流光伯爵", en: "Radiant Count" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-radiant-eclipse-twelve-v1.md",
@@ -315,7 +277,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.EclipseMaid}`,
-    names: { "zh-CN": "蚀日侍女", en: "Eclipse Maid" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-radiant-eclipse-twelve-v1.md",
@@ -323,7 +284,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.NightNoble}`,
-    names: { "zh-CN": "夜之贵族", en: "Night Noble" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-noble-secret-body-twelve-v1.md",
@@ -331,7 +291,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.FragrantPhantom}`,
-    names: { "zh-CN": "寻香魅影", en: "Fragrant Phantom" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-fragrant-pair-seer-twelve-v1.md",
@@ -339,7 +298,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.NightmareShadow}`,
-    names: { "zh-CN": "噩梦之影", en: "Nightmare" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-nightmare-dreamer-v1.md",
@@ -347,7 +305,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Magician}`,
-    names: { "zh-CN": "魔术师", en: "Magician" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-magician-wolf-king-v1.md",
@@ -355,7 +312,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Trickster}`,
-    names: { "zh-CN": "诡术师", en: "Trickster" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-trickster-exile-v1.md",
@@ -363,7 +319,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.WolfSorcerer}`,
-    names: { "zh-CN": "狼术师", en: "Wolf Sorcerer" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-wolf-sorcerer-seats-v1.md",
@@ -371,7 +326,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.OrderPrince}`,
-    names: { "zh-CN": "定序王子", en: "Order Prince" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-order-prince-first-ballot-v1.md",
@@ -379,7 +333,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.TimeWolfConsort}`,
-    names: { "zh-CN": "蚀时狼妃", en: "Time-Wolf Consort" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-time-consort-reflection-v1.md",
@@ -387,7 +340,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.DayScholar}`,
-    names: { "zh-CN": "白昼学者", en: "Day Scholar" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-scholar-mentor-twelve-v1.md",
@@ -395,7 +347,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.NightMentor}`,
-    names: { "zh-CN": "寂夜导师", en: "Night Mentor" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-scholar-mentor-twelve-v1.md",
@@ -403,7 +354,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Debater}`,
-    names: { "zh-CN": "杠精", en: "Debater" },
     status: "implemented",
     targetPhase: "P8",
     ruleCardRef: "docs/rules/awa-melbourne-debater-v1.md#debater",
@@ -411,7 +361,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: PLANNED_ROLE_IDS.SilenceElder,
-    names: { "zh-CN": "禁言长老", en: "Silencing Elder" },
     status: "planned",
     targetPhase: "P9",
     ruleCardRef: null,
@@ -419,7 +368,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: PLANNED_ROLE_IDS.Crow,
-    names: { "zh-CN": "乌鸦", en: "Crow" },
     status: "planned",
     targetPhase: "P9",
     ruleCardRef: null,
@@ -427,7 +375,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.WhiteCat}`,
-    names: { "zh-CN": "白猫", en: "White Cat" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-animal-dream-twelve-v1.md",
@@ -435,7 +382,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.FoxCub}`,
-    names: { "zh-CN": "子狐", en: "Fox Cub" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-animal-dream-twelve-v1.md",
@@ -443,7 +389,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.Pufferfish}`,
-    names: { "zh-CN": "河豚", en: "Pufferfish" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-animal-dream-twelve-v1.md",
@@ -451,7 +396,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: PLANNED_ROLE_IDS.Warden,
-    names: { "zh-CN": "典狱长", en: "Warden" },
     status: "planned",
     targetPhase: "P9",
     ruleCardRef: null,
@@ -459,7 +403,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.AwakenedIdiot}`,
-    names: { "zh-CN": "觉醒愚者", en: "Awakened Village Idiot" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-noble-secret-body-twelve-v1.md",
@@ -467,7 +410,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.AwakenedSeer}`,
-    names: { "zh-CN": "觉醒预言家", en: "Awakened Seer" },
     status: "implemented",
     targetPhase: "P9",
     ruleCardRef: "docs/rules/awa-fragrant-pair-seer-twelve-v1.md",
@@ -475,7 +417,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: PLANNED_ROLE_IDS.AwakenedWolfKing,
-    names: { "zh-CN": "觉醒狼王", en: "Awakened Wolf King" },
     status: "planned",
     targetPhase: "P9",
     ruleCardRef: null,
@@ -483,7 +424,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: `${Role.AwakenedHiddenWolf}`,
-    names: { "zh-CN": "觉醒隐狼", en: "Awakened Hidden Wolf" },
     status: "verified",
     targetPhase: "P7",
     ruleCardRef: "docs/rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf",
@@ -491,7 +431,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: PLANNED_ROLE_IDS.AwakenedWolfBeauty,
-    names: { "zh-CN": "觉醒狼美人", en: "Awakened Wolf Beauty" },
     status: "planned",
     targetPhase: "P9",
     ruleCardRef: null,
@@ -499,7 +438,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: PLANNED_ROLE_IDS.AwakenedWitch,
-    names: { "zh-CN": "觉醒女巫", en: "Awakened Witch" },
     status: "planned",
     targetPhase: "P9",
     ruleCardRef: null,
@@ -507,7 +445,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: PLANNED_ROLE_IDS.AwakenedHunter,
-    names: { "zh-CN": "觉醒猎人", en: "Awakened Hunter" },
     status: "planned",
     targetPhase: "P9",
     ruleCardRef: null,
@@ -515,7 +452,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: PLANNED_ROLE_IDS.AwakenedGuard,
-    names: { "zh-CN": "觉醒守卫", en: "Awakened Guard" },
     status: "planned",
     targetPhase: "P9",
     ruleCardRef: null,
@@ -523,7 +459,6 @@ export const ROLE_DEFINITIONS = [
   },
   {
     id: PLANNED_ROLE_IDS.AwakenedKnight,
-    names: { "zh-CN": "觉醒骑士", en: "Awakened Knight" },
     status: "planned",
     targetPhase: "P9",
     ruleCardRef: null,
@@ -534,8 +469,5 @@ export const ROLE_DEFINITIONS = [
 /** 按原 ID 查资料；未知 ID 不补造角色或修改注册表。 */
 export function roleDefinition(id: string): RoleDefinition | undefined {
   return ROLE_DEFINITIONS.find((item) => item.id === id);
-}
-export function roleName(id: string, locale: Locale): string {
-  return roleDefinition(id)?.names[locale] ?? id;
 }
 export const RULESET = { id: "awa_classic", version: "1.0.0" } as const;

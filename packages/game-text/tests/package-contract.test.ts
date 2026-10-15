@@ -1,6 +1,6 @@
 /**
  * 包级单元测试验证公共双语词典与格式政策。
- * 独立字面输出、完整键／占位符比较核对文本格式；角色名另与实际目录元数据比较，不冒充独立角色规则预期。
+ * 独立字面输出、完整键／占位符比较核对文本格式；本包覆盖六十四个机器 ID 的名称，完整双语字面预期另见 role-names 单元测试。
  * 用户内容原样作为参数，不当翻译键；显式 locale 调用不写共享当前语言。本文件不使用 World、传输或应用预加载。
  */
 import { describe, expect, test } from "bun:test";
@@ -14,7 +14,7 @@ import {
   validateDictionaries,
   type MessageKey,
 } from "@ai-werewolf-arena/game-text";
-import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
+import { ROLE_IDS } from "@ai-werewolf-arena/game-contract";
 
 describe("text public package contract", () => {
   test("every Chinese and English message has the same parameters and immutable owner", () => {
@@ -29,15 +29,14 @@ describe("text public package contract", () => {
     expect(Object.isFrozen(dictionaries["zh-CN"])).toBe(true);
   });
 
-  test("literal bilingual outputs and role metadata preserve the public contract", () => {
+  test("literal bilingual outputs and role labels preserve the public contract", () => {
     expect(text("en", "role.witch.state", { heal: 1, poison: 0 })).toBe(
       "Your role is Witch. Antidote:1 Poison:0",
     );
     expect(text("zh-CN", "common.player", { id: 12 })).toBe("12号");
     expect(renderMessage("en", { key: "common.player", parameters: { id: 12 } })).toBe("Player 12");
     for (const locale of ["zh-CN", "en"] as const)
-      for (const role of ROLE_DEFINITIONS)
-        expect(roleName(role.id, locale)).toBe(role.names[locale]);
+      for (const id of ROLE_IDS) expect(roleName(id, locale)).not.toBe(id);
     expect(term("stage", "archived_unknown_stage", "en")).toBe("archived_unknown_stage");
   });
 

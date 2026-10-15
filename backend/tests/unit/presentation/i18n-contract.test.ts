@@ -1,10 +1,10 @@
 /**
- * 单元测试：验证双语词典 key、占位符、不可变性及共享角色资料。输入为原机器 ID、字面参数
+ * 单元测试：验证双语词典 key、占位符、不可变性及共享角色名称覆盖。输入为原机器 ID、字面参数
  * 与显式自定义原文；精确字面文案和完整 key 集合为独立预期，不执行模型或完整对局。
  * 三贡献装配不改变翻译策略，用户昵称、人格及自定义资料保持原文。
  */
 import { expect, test } from "bun:test";
-import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
+import { ROLE_IDS } from "@ai-werewolf-arena/game-contract";
 import {
   dictionaries,
   placeholders,
@@ -29,9 +29,10 @@ test("shared Chinese/English keys and placeholders are complete and immutable", 
   expect(Object.isFrozen(dictionaries.en)).toBe(true);
 });
 
-test("supported machine IDs have shared labels and all 64 role names remain catalog owned", () => {
+test("supported machine IDs have shared labels and all 64 role names are text owned", () => {
   for (const locale of ["zh-CN", "en"] as const) {
-    for (const role of ROLE_DEFINITIONS) expect(roleName(role.id, locale)).toBe(role.names[locale]);
+    // 完整双语字面快照由共享名称 owner 的测试保存；本层核公开机器 ID 均走文案回退而非裸 ID。
+    for (const id of ROLE_IDS) expect(roleName(id, locale)).not.toBe(id);
     for (const [kind, ids] of [
       ["phase", Object.values(Phase)],
       ["stage", ACTION_STAGES],

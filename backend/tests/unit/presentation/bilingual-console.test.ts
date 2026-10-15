@@ -7,7 +7,8 @@ import { expect, test } from "bun:test";
 import { Camp, Phase, PotionType, ActionWindow, type GameEvent } from "../../../src/domain";
 import { getDefaultScriptEventRenderRegistry } from "../../../src/rulesets/mechanism-api";
 import { presentStreamEvents, toChatLines } from "../../../src/adapters/console/console-presenter";
-import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
+import { ROLE_IDS } from "@ai-werewolf-arena/game-contract";
+import { roleName } from "@ai-werewolf-arena/game-text";
 
 const event = <K extends GameEvent["type"]>(
   type: K,
@@ -284,9 +285,10 @@ test("terminal wrappers honor their locale while speech, last words and wolf clo
 
 test("broadcast queries use all shared role names, preserve explicit overrides and keep unknown IDs", () => {
   const registry = new TextLocalizationRegistry();
-  for (const role of ROLE_DEFINITIONS) {
-    expect(registry.roleName(role.id, "en")).toBe(role.names.en);
-    expect(registry.roleName(role.id)).toBe(role.names["zh-CN"]);
+  // 核实际 Registry → 文案 owner 的路由；两语全部字面值另由共享词典测试独立核对。
+  for (const id of ROLE_IDS) {
+    expect(registry.roleName(id, "en")).toBe(roleName(id, "en"));
+    expect(registry.roleName(id)).toBe(roleName(id));
   }
   expect(registry.roleName("historical_role", "en")).toBe("historical_role");
   expect(registry.gameOverReason("historical_reason", "en")).toBe("historical_reason");

@@ -7,7 +7,7 @@
 
 import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-contract";
 
-import { roleName as catalogRoleName } from "@ai-werewolf-arena/game-catalog";
+import { roleName } from "./role-names";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 
 import { zhCN } from "./zh-CN";
@@ -42,10 +42,7 @@ export function text(
   return template.replace(placeholderPattern, (_match, name: string) => String(parameters[name]));
 }
 
-export function roleName(id: string, locale: Locale = "zh-CN"): string {
-  if (!isLocale(locale)) throw new Error("i18n_locale_invalid");
-  return catalogRoleName(id, locale);
-}
+export { roleName };
 export function term(
   kind: "camp" | "camp_team" | "phase" | "stage" | "potion" | "reason" | "rule" | "tie",
   id: string,

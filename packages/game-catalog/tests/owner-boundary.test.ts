@@ -1,6 +1,6 @@
 /**
  * 包单元测试负责资料目录的公开出口边界。输入为实际目录 namespace 与编译期旧具名导入；
- * 输出用字面四个运行出口和逐项类型拒绝核对，元数据不冒充机器契约或角色执行许可。
+ * 输出用字面三个运行出口和逐项类型拒绝核对，元数据不冒充文案、机器契约或角色执行许可。
  * 编译负例的名字全部在导出类型中使用，避免未使用导入诊断掩盖旧出口意外保留。
  */
 import { expect, test } from "bun:test";
@@ -55,7 +55,14 @@ import type { RuleError } from "@ai-werewolf-arena/game-catalog";
 // @ts-expect-error 目录已退出此契约出口，调用方应使用 game-contract。
 import type { RuleViolation } from "@ai-werewolf-arena/game-catalog";
 
+// @ts-expect-error 角色名称查询已迁入 game-text，目录不保反向依赖或长期转发。
+import type { roleName } from "@ai-werewolf-arena/game-catalog";
+
+// @ts-expect-error 双语名称字段已退出目录资料，由 game-text 的名称词典独占。
+export type RetiredCatalogNames = catalog.RoleDefinition["names"];
+
 export type RetiredCatalogContracts = [
+  typeof roleName,
   typeof EVENT_PACK_IDS,
   typeof EVENT_IDS,
   typeof ITEM_IDS,
@@ -82,11 +89,6 @@ export type RetiredCatalogContracts = [
   RuleViolation,
 ];
 
-test("catalog runtime namespace contains exactly its four metadata owners", () => {
-  expect(Object.keys(catalog).sort()).toEqual([
-    "ROLE_DEFINITIONS",
-    "RULESET",
-    "roleDefinition",
-    "roleName",
-  ]);
+test("catalog runtime namespace contains exactly its three metadata owners", () => {
+  expect(Object.keys(catalog).sort()).toEqual(["ROLE_DEFINITIONS", "RULESET", "roleDefinition"]);
 });

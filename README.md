@@ -9,7 +9,10 @@
 - `backend/`：Bun + TypeScript 的对局引擎、LLM/ACP 调度、复盘落盘与导出 CLI。
 - `frontend/`：React + Remotion Player 的离线复盘播放器；当前只读取导出的 `.replay.json` 文件。
 - `packages/replay-contract/`：前端播放器与后端导出器共享的复盘数据类型。
-- `packages/game-catalog/`：角色稳定ID、中英名称和计划／实现状态；资料登记不代表角色已可运行。
+- `packages/game-contract/`：稳定角色 ID、机器契约和纯数据读取；运行身份与规划资料分开。
+- `packages/game-catalog/`：角色资料标识、规则卡及计划／实现状态；资料登记不代表角色已可运行。
+- `packages/game-text/`：中文／英文消息、角色名称词典及参数格式化。
+- `packages/game-presentation/`：双端共享的展示映射、规则说明和结果标签。
 - `configs.example/`：本地运行配置模板，默认经 OpenRouter 使用 DeepSeek V4 Flash。
 
 真实 Agent 对局由 backend 的 `run` 系列命令启动，并将事件和最终结果写入 `record/<session>/replay.json`；backend 的 `run:mock` 命令只运行本地基线机器人对局并打印结果。前端直接加载 `replay.json` 进行播放。当前没有在线观战或多租户在线服务；引擎按玩家投影信息，ACP 会话和工具权限独立隔离。

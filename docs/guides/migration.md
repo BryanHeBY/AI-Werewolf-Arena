@@ -8,6 +8,14 @@
 
 `time-wolf-consort`是组织slug；`time_wolf_consort`、board／policy／event／error／message keys与原RNG种子继续稳定。fixture currentPath可以搬，originPath／suiteId／原JSON字节不改。子进程template、AST读文件、package exports/typesVersions和Trace finite profile单独适配；历史负例／旧构建profile不能当漏路由删除。
 
+## 角色名称与公开入口
+
+角色显示名称由 `@ai-werewolf-arena/game-text` 的 `roleName(id, locale)` 提供；中文默认、六十四项双语名称、未知 ID 原样回退和非法语言错误保持。运行 Role 与规划资料身份仍由 game-contract 定义，catalog 的资料登记不授予运行支持。
+
+旧 `@ai-werewolf-arena/game-catalog` 的 `roleName`、`RoleDefinition.names` 和 `ROLE_DEFINITIONS[n].names` 有意退出。需要显示名称时，改为调用 game-text；catalog 继续提供原顺序的 ID、实现状态、阶段、规则卡和机制简介，不保存名称镜像，也不反向依赖 text。
+
+显式自定义 profile、用户昵称与原文仍按原运行目录及文字注册政策处理，不能把用户文字改成消息 key。未知仓外对旧字段的读取或修改不承诺兼容。该移动及 lock 变化会改变严格来源指纹，不改写旧归档或放宽跨构建重放。
+
 ## 两批文档落地
 
 第一原子批提炼current架构／契约／指南／决策／规则索引与current导航，标清其source布局已落条件。第二原子批把旧expansion／refactor原文件原字节移至`history/{expansion,refactor}`，同时切换真实I/O、current链接与源文档指向。两批之前不标C43完整关闭。
