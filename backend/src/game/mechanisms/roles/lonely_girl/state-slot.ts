@@ -7,7 +7,7 @@
 import type { LonelyGirlState, LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
-import type { RoleComponent } from "../../../../core/domain";
+import type { RoleComponent } from "../../../../domain";
 export {
   LONELY_GIRL_POLICY,
   readLonelyGirlChoiceTool as readLonelyGirlTool,

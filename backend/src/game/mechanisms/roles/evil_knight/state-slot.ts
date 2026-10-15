@@ -5,11 +5,11 @@
  * 方法表冻结不冻结状态或副本；仍接受原字段宽度，Proxy／访问器拒绝不等于严格档案 decoder。
  * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
 import type { EvilKnightShotPolicy, EvilKnightState, EvilKnightReadState } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp } from "../../../../core/domain/identity";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp } from "../../../../domain/identity";
 
 export const EVIL_KNIGHT_ROLE = "evil_knight" as const;
 export const EVIL_KNIGHT_POLICY = "awa_evil_knight_v1" as const;

@@ -5,8 +5,8 @@
  * getter、清洗与校验异常原样传播，不统一吞错、补偿或保证任意输入都能得到结构化拒绝。
  */
 import { sanitizeSpeechText } from "../../utils/speech_text";
-import { EntityId, ToolCall, ToolValidationResult } from "../../core/domain/model";
-import { World } from "../../core/domain/world";
+import { EntityId, ToolCall, ToolValidationResult } from "../../domain/model";
+import { World } from "../../domain/world";
 import { ActionValidator, type ValidationContext } from "./action_validator";
 
 /**

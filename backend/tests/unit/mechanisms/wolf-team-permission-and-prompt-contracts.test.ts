@@ -13,7 +13,7 @@ import {
   type RoleComponent,
   type ToolCall,
   type World,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import {

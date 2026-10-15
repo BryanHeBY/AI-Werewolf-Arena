@@ -4,7 +4,7 @@
  * 库存与物理换牌只归initial_identity；本入口保先kind后共享调用、原错误前缀及选择slot限制。
  * 显示投影不授予换牌或生命权限，不合并盗贼可保留身份与千面人必须选牌两种政策。
  */
-import { type World, type Role } from "../../../../core/domain";
+import { type World, type Role } from "../../../../domain";
 // 公共库存出口仍指向原 deal；保 namespace 成员的原读取位置，不从状态查询加载设置窗口。
 import * as shared from "../initial_identity/deal-ports";
 export type ShapeshifterCard = shared.InitialIdentityCard;

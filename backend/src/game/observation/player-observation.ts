@@ -79,7 +79,7 @@ export interface PlayerObservation {
     awakened?: PlayerAwakenedState;
     hybrid?: PlayerHybridState;
     debater?: {
-      policy: import("../../core/domain/board").DebaterPolicy;
+      policy: import("../../domain/board").DebaterPolicy;
       remaining: 0 | 1;
       choice: { day: number; targetId: number } | null;
     };

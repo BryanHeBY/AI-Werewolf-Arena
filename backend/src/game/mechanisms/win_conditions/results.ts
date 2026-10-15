@@ -3,8 +3,8 @@
  * 本模块不重新选择屠边政策、不修改玩家组件；判胜仍由原胜利条件与检查点负责。
  */
 import type { GameOutcome, VictoryClaim, VictoryTarget } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT, type WinDecision, type World } from "../../../core/domain";
-import type { VictoryComponent } from "../../../core/domain/components/victory";
+import { COMPONENT, type WinDecision, type World } from "../../../domain";
+import type { VictoryComponent } from "../../../domain/components/victory";
 import { readGameOutcome } from "@ai-werewolf-arena/replay-contract";
 
 /** 成员来自明确 Victory 组件，不根据角色或真实阵营推断。 */

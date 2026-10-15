@@ -6,14 +6,14 @@
  * 授予行动许可、关闭或标死。身份 JSON 仅为原运行比对，档案格式与独立核验仍归原 owner。
  * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
 import type {
   WolfSorcererChoice,
   WolfSorcererState,
   WolfSorcererReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
-import { Camp, type RoleComponent } from "../../../../core";
+import { Camp, type RoleComponent } from "../../../../domain";
 export const WOLF_SORCERER_ROLE = "wolf_sorcerer" as const;
 export const WOLF_SORCERER_POLICY = "awa_wolf_sorcerer_seats_v1" as const;
 function field(value: unknown, key: PropertyKey): unknown {

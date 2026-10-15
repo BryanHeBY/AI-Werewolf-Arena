@@ -2,9 +2,9 @@
  * 引擎场景测试：验证完整对局、白天／投票 pipeline 和猎人请求上下文。输入为原受控 provider、World 和重试／票权／顺序矩阵；快照、权重、重试及请求上下文为精确预期，生产推导目标是既有债务，不冒称独立 oracle。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { RoleComponent } from "../../../src/core/domain/components/role";
-import { ActionProvider, ActionRequest, Camp, Phase, ToolCall, Role } from "../../../src/core/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { RoleComponent } from "../../../src/domain/components/role";
+import { ActionProvider, ActionRequest, Camp, Phase, ToolCall, Role } from "../../../src/domain/model";
 import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

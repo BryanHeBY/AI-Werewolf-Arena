@@ -15,7 +15,7 @@ import {
   type ActionRequest,
   type GameEvent,
   type ToolCall,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

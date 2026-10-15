@@ -6,11 +6,11 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 
-import { Camp, Role, Phase, DeathCause, type GameEvent } from "../../../../src/core/domain/model";
+import { Camp, Role, Phase, DeathCause, type GameEvent } from "../../../../src/domain/model";
 import {
   getWolfBeautyState,
   setWolfBeautyState,

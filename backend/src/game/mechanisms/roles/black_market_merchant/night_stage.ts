@@ -6,13 +6,13 @@
  */
 import { closeBlackMarketTrade, recordBlackMarketTrade } from "./state";
 
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Role, Phase, WitchSelfHealRule, type ToolCall } from "../../../../core/domain/model";
-import { aliveLifeVersion } from "../../../../core/domain/components/alive";
-import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
-import type { World } from "../../../../core/domain/world";
+import { COMPONENT } from "../../../../domain/components/names";
+import { isRoleExecutionRetired } from "../../../../domain/role-execution-authority";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Role, Phase, WitchSelfHealRule, type ToolCall } from "../../../../domain/model";
+import { aliveLifeVersion } from "../../../../domain/components/alive";
+import { captureNightLife, livingNightLife } from "../../../../domain/night-effects";
+import type { World } from "../../../../domain/world";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { grantNightAbility } from "../night-ability-grants";
 import { grantDeathGun } from "../death_abilities";

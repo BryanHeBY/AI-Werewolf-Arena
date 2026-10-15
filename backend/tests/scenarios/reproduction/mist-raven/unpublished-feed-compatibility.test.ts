@@ -6,7 +6,7 @@
 import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix";
 import { test, expect } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Phase, createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { Phase, createRandom, type ActionRequest, type ToolCall } from "../../../../src/domain";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";

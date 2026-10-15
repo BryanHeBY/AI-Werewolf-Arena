@@ -5,8 +5,8 @@
  * 请求和回复只是数据；独立交付租约 pin 原信封／来源字段、隔离坏别名并共享最早期限，不能替代 World 许可。
  * 等待、网关及发表前均晚核租约，真正发表成功后才通知 true；开放后的退出仍关闭许可，原关闭错误优先。
  */
-import type { ActionRequestFactoryConstructorPort } from "../../../core/domain/actions";
-import type { LastWordsPolicy } from "../../../core/domain/board";
+import type { ActionRequestFactoryConstructorPort } from "../../../domain/actions";
+import type { LastWordsPolicy } from "../../../domain/board";
 import type {
   ActionProvider,
   EntityId,
@@ -14,9 +14,9 @@ import type {
   Phase,
   RuntimeSnapshot,
   DeathSources,
-} from "../../../core/domain/model";
-import type { World } from "../../../core/domain/world";
-import { RequestLease, type RequestLeaseTurn } from "../../../core/domain/request-lease";
+} from "../../../domain/model";
+import type { World } from "../../../domain/world";
+import { RequestLease, type RequestLeaseTurn } from "../../../domain/request-lease";
 import type { ToolGateway } from "../../gateway/tool_gateway";
 import type { LastWordsGrantContext, LastWordsMechanism } from "./last_words_mechanism";
 

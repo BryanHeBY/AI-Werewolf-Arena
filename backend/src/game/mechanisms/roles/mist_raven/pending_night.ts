@@ -8,13 +8,13 @@ import {
   AliveComponent,
   aliveLifeDescriptor,
   aliveLifeVersion,
-} from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { DeathCause } from "../../../../core/domain/deaths";
-import type { World } from "../../../../core/domain/world";
-import { attachDamagePoisonEvidence, damagePoisonRoutes } from "../../../../core/domain/damage-evidence";
-import type { DamageResolutionResult } from "../../../../core/domain/systems/damage_resolution_system";
-import type { DreamNightEffects } from "../../../../core/domain/dream-night-effects";
+} from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import { DeathCause } from "../../../../domain/deaths";
+import type { World } from "../../../../domain/world";
+import { attachDamagePoisonEvidence, damagePoisonRoutes } from "../../../../domain/damage-evidence";
+import type { DamageResolutionResult } from "../../../../domain/systems/damage-resolution-system";
+import type { DreamNightEffects } from "../../../../domain/dream-night-effects";
 
 type PendingStatus = "pending" | "committing" | "committed" | "aborted";
 interface OriginalLife {

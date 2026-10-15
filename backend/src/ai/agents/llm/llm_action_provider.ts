@@ -3,9 +3,9 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain";
-import { World } from "../../../core/domain/world";
+import { RoleComponent } from "../../../domain/components/role";
+import { ActionProvider, ActionRequest, ToolCall } from "../../../domain";
+import { World } from "../../../domain/world";
 import {
   ConfigRenderRegistry,
   getDefaultConfigRenderRegistry,

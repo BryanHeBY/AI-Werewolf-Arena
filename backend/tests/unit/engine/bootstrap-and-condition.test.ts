@@ -2,12 +2,12 @@
  * 单元测试：验证启动时上帝信息与狼人半数条件。输入为原公开板子、有限 World 修改或条件注册表查询；初始玩家字段及阵营结果保留精确字面预期，不执行完整阶段、文件或模型。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { AliveComponent } from "../../../src/core/domain/components/alive";
-import { RoleComponent } from "../../../src/core/domain/components/role";
-import { Camp, WinCondition } from "../../../src/core/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { AliveComponent } from "../../../src/domain/components/alive";
+import { RoleComponent } from "../../../src/domain/components/role";
+import { Camp, WinCondition } from "../../../src/domain/model";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { ConditionRegistry } from "../../../src/core/domain/registries/condition_registry";
+import { ConditionRegistry } from "../../../src/domain/registries/condition-registry";
 import { getDefaultWinConditionRegistry } from "../../../src/game/mechanisms/registries/win_condition_registry";
 
 describe("PhaseManager", () => {

@@ -4,7 +4,7 @@
  * 玩家规范化在原返回前作 canonical2 断言，保 timeline 同引用；不推进游戏或回收资源，序列化外的失败不回滚已发生的聚合前缀。
  */
 import { assertReplayPlayerView, readVictoryResult, type CanonicalReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
-import { PlayerVisibleEvent } from "../core/domain/model";
+import { PlayerVisibleEvent } from "../domain/model";
 import {
   ReplayDebugReport,
   ReplayFinalizeMeta,

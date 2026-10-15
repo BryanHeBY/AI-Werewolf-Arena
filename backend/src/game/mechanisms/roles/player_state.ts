@@ -17,7 +17,7 @@ import type {
   PlayerRoleInspectionState,
   PlayerDeathGun,
 } from "@ai-werewolf-arena/game-contract/player-state-views";
-import { WitchSelfHealRule } from "../../../core/domain/model";
+import { WitchSelfHealRule } from "../../../domain/model";
 import { readInspectionResult } from "@ai-werewolf-arena/replay-contract";
 
 function positiveOrNull(value: unknown): number | null {

@@ -41,8 +41,8 @@ import {
   type ActionRequest,
   type ToolCall,
   type ToolName,
-} from "../../core/domain";
-import { World } from "../../core/domain/world";
+} from "../../domain";
+import { World } from "../../domain/world";
 import { ActionValidator } from "./action_validator";
 import { ToolGateway } from "./tool_gateway";
 import {

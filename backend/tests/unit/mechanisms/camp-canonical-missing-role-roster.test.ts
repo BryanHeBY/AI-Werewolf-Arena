@@ -4,11 +4,11 @@
  * 每例独立 World 与局部查询探针，不改默认注册表、不推进对局或访问模型。
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import type { CampComponent } from "../../../src/core/domain/components/camp";
-import type { GameEvent } from "../../../src/core/domain/events";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import type { CampComponent } from "../../../src/domain/components/camp";
+import type { GameEvent } from "../../../src/domain/events";
 import { refreshHiddenWolfInheritance } from "../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
 import { refreshGargoyleInheritance } from "../../../src/game/mechanisms/roles/gargoyle/inheritance";
 import { refreshMechanicalInheritance } from "../../../src/game/mechanisms/roles/mechanical_wolf/inheritance";

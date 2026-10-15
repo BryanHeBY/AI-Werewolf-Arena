@@ -12,7 +12,7 @@ import type {
   VictoryPoint,
   WinDecision,
 } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../core/domain/world";
+import type { World } from "../../../domain/world";
 import { readGameOutcome, readVictoryPoint } from "@ai-werewolf-arena/replay-contract";
 import { victoryDecision } from "./results";
 

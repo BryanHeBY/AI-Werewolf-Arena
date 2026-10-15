@@ -2,7 +2,7 @@
  * 辉光／夜仆场景验证真实庇护、借用和原生夜间矩阵。输入为公开板子、字面保护／死亡／库存选择及原库存变更；手写请求、死因及不写回结果是预期。公开样本字节和 URL 不变，不调用模型。
  */
 import { expect, test } from "bun:test";
-import { DeathCause, COMPONENT, type AliveComponent } from "../../../../src/core";
+import { DeathCause, COMPONENT, type AliveComponent } from "../../../../src/domain";
 import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
 import {
   radiantProvider,

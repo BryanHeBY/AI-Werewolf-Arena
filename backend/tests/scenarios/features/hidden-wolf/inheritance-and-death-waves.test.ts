@@ -4,7 +4,7 @@
  * 梦境、熊、魅惑、胜利效果。四个原启发式单元已用真实中央波；模型受控，不从生产输出新建 golden。
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -19,7 +19,7 @@ import {
   type RoleComponent,
   type ActionRequest,
   type GameEvent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/ports";
 import { getBearState } from "../../../../src/game/mechanisms/roles/bear/ports";

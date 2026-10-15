@@ -6,8 +6,8 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, Role, COMPONENT, type RoleComponent, type GameEvent } from "../../../../src/core";
-import { isRoleExecutionRetired } from "../../../../src/core/domain/role-execution-authority";
+import { Camp, Role, COMPONENT, type RoleComponent, type GameEvent } from "../../../../src/domain";
+import { isRoleExecutionRetired } from "../../../../src/domain/role-execution-authority";
 import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
 import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";
 import { ThiefSetupWindow } from "../../../../src/game/mechanisms/roles/thief/setup";

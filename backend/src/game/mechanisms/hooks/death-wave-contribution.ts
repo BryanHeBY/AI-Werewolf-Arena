@@ -10,7 +10,7 @@ import type {
   EntityId,
   GameEvent,
 } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../core/domain/world";
+import type { World } from "../../../domain/world";
 
 /** 查询在原表达式位置读取；World 的原身份供具体权威核对，不复制或冻结运行对象。 */
 export interface DeathWaveContributionRuntime {

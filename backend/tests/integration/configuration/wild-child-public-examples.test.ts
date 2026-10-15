@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, COMPONENT, type RoleComponent } from "../../../src/core";
+import { Role, COMPONENT, type RoleComponent } from "../../../src/domain";
 import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
 
 for (const size of [6, 12])

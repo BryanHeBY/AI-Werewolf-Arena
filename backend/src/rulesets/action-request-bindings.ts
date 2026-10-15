@@ -6,7 +6,7 @@
  */
 import type { ActionStage } from "@ai-werewolf-arena/game-contract";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
-import type { World } from "../core/domain/world";
+import type { World } from "../domain/world";
 import { bindGhostBrideRequest } from "../game/mechanisms/roles/ghost_bride/authority";
 import { bindLonelyGirlRequest } from "../game/mechanisms/roles/lonely_girl/lifecycle";
 import { bindWildChildRequest } from "../game/mechanisms/roles/wild_child/lifecycle";

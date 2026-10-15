@@ -8,8 +8,8 @@ import type { ActionRequest, ToolCall, GameEvent } from "@ai-werewolf-arena/game
 import { createDefaultRoleRegistry } from "../../../../src/game/mechanisms/roles/permissions";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import type { ActionProvider } from "../../../../src/core/domain/actions";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import type { ActionProvider } from "../../../../src/domain/actions";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { VotingPipeline } from "../../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
@@ -17,7 +17,7 @@ import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { revealSecretBodyExile, type SecretBodyExileRevealQueries } from "../../../../src/game/mechanisms/roles/noble_secret_body/exile-reveal";
 import { beginNobleBodyNight, openSecretBodyChoice, expireServantAtNightEnd, closeNobleBodyNight, resolveSecretBodyDamage, checkpointNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
 import { nobleBodyRequestScope } from "../../../../src/game/mechanisms/roles/noble_secret_body/requests";
-import { deferRequestDelivery } from "../../../../src/core/domain/request_delivery";
+import { deferRequestDelivery } from "../../../../src/domain/request-delivery";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import type { SessionRecordManager } from "../../../../src/recording/session_recorder";
 

@@ -9,7 +9,7 @@ import {
   type World,
   type WinDecision,
   type RoleComponent,
-} from "../../../../core/domain";
+} from "../../../../domain";
 import { victoryDecision } from "../../win_conditions/results";
 import { CURSED_FOX_GOAL } from "./profile";
 export function replaceWithFoxVictory(world: World, decision: WinDecision): WinDecision {

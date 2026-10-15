@@ -7,16 +7,16 @@
  * 原生命、末狼、夜窗口、请求租约和完整容器失效／最终审计写入仍由恶魔猎手权威持有。
  * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
 import type {
   LastWolfBlastPolicy,
   RedMoonState,
   RedMoonReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import type { RoleInitializationComponent } from "../contracts";
-import { Camp } from "../../../../core/domain/identity";
+import { Camp } from "../../../../domain/identity";
 
 export const RED_MOON_ROLE = "red_moon_apostle" as const;
 export const RED_MOON_POLICY = "awa_red_moon_demon_v1" as const;

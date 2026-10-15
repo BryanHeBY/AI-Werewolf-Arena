@@ -6,19 +6,19 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { weddingBadgeSwallowed } from "../roles/ghost_bride/authority";
-import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
-import { COMPONENT } from "../../../core/domain/components/names";
-import { IdentityComponent } from "../../../core/domain/entities/player";
+import { captureNightLife, livingNightLife } from "../../../domain/night-effects";
+import { COMPONENT } from "../../../domain/components/names";
+import { IdentityComponent } from "../../../domain/entities/player";
 import {
   ActionProvider,
   EntityId,
   GameEvent,
   Phase,
   TieBreakerStrategy,
-} from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+} from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
-import type { ActionRequestFactoryConstructorPort, ActionRequestConstructionPort } from "../../../core/domain/actions";
+import type { ActionRequestFactoryConstructorPort, ActionRequestConstructionPort } from "../../../domain/actions";
 import { assignSheriff, findSheriffId } from "./badge";
 import { canBeSheriff, canVote } from "../common/participation";
 import type { RoleCatalog } from "../roles/catalog";

@@ -7,8 +7,8 @@
  * 准备回执只在结算器原 commit/cancel/finally 位置消费；运行关系／梦句柄不是 JSON 或玩家许可。
  */
 import { Phase, DeathCause, type DeathSources, type EntityId, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../core/domain/world";
-import type { DreamNightEffects } from "../core/domain/dream-night-effects";
+import type { World } from "../domain/world";
+import type { DreamNightEffects } from "../domain/dream-night-effects";
 import { expandLoversWave } from "../game/mechanisms/roles/cupid/death-ports";
 import { prepareFragrantDeathWave } from "../game/mechanisms/roles/fragrant_pair_seer/ports";
 

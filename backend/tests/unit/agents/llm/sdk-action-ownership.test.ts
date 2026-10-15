@@ -1,7 +1,7 @@
 /**
  * 单元测试：验证 SDK 行动接收的原生所有权与接收一致性。输入为原内存请求、mock 组件和非法调用；既有字面预期及引用断言检查边界，不调用模型或完整对局。
  */
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { SdkGameToolLoop } from "../../../../src/ai/agents/llm/sdk_game_tool_loop";
@@ -23,7 +23,7 @@ import {
   Role,
   type ActionRequest,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import type {
   ChatModelClient,
@@ -121,7 +121,7 @@ const submissions = [
 
 test("SDK owns its accepted action, rejects callbacks after completion/timeout, and ignores a fabricated transport finalAction", async () => {
   const game = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale: "en" });
-  let callback!: ToolLoopCallbacks<import("../../../../src/core").ToolCall>["onToolCall"];
+  let callback!: ToolLoopCallbacks<import("../../../../src/domain").ToolCall>["onToolCall"];
   const submitted = { id: "synthetic", name: "submit_action", rawArgs: "{}", args: submissions[6] };
   const forgedClient = {
     chat: async () => "",

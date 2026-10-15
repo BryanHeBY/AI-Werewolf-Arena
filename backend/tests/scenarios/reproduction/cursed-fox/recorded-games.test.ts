@@ -4,7 +4,7 @@
  * Output and oracle: Handwritten death/survivor/winner facts and private-view assertions remain causal with the actual replay; no engine run generates expected terminal data.
  */
 import { expect, test } from "bun:test";
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { FOX_CASES, foxScenario } from "../../../support/features/cursed-fox/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { promises as fs } from "node:fs";

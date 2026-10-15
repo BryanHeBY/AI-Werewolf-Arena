@@ -16,7 +16,7 @@ import {
   type AliveComponent,
   type BadgeComponent,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 
 async function setup() {
   const raw = JSON.parse(

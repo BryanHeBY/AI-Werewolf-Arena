@@ -3,7 +3,7 @@
  */
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
-import { PotionType } from "../../../../src/core/domain/identity";
+import { PotionType } from "../../../../src/domain/identity";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
@@ -23,7 +23,7 @@ import {
   type ToolCall,
   type World,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import { activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";

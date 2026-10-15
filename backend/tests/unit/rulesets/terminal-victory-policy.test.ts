@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Phase, Role, WinCondition, type BoardConfig, type WinDecision } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createVictoryComponent } from "../../../src/core/domain/components/victory";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { createVictoryComponent } from "../../../src/domain/components/victory";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ghostBrideBoard, ghostBrideDeck } from "../../support/features/ghost-bride/builders/scenario";

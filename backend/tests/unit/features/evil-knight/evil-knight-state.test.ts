@@ -7,14 +7,14 @@ import type { EvilKnightShotPolicy } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
-import type { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
-import { Camp, Role, StatusMark } from "../../../../src/core/domain/identity";
-import { DeathCause } from "../../../../src/core/domain/deaths";
-import { captureNightLife } from "../../../../src/core/domain/night_effects";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
+import type { RoleComponent } from "../../../../src/domain/components/role";
+import type { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
+import { Camp, Role, StatusMark } from "../../../../src/domain/identity";
+import { DeathCause } from "../../../../src/domain/deaths";
+import { captureNightLife } from "../../../../src/domain/night-effects";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import {
   captureEvilKnight,
   commitEvilKnightReflection,

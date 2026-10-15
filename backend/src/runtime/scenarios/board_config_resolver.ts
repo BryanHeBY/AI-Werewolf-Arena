@@ -10,7 +10,7 @@ import {
   Role,
   WinCondition,
   WitchSelfHealRule,
-} from "../../core/domain/model";
+} from "../../domain/model";
 import { getDefaultConfigNormalizerRegistry } from "../../game/mechanisms";
 import { sixPlayerMvpConfig } from "./six_player_mvp";
 import { twelvePlayerStandardConfig } from "./twelve_player_standard";

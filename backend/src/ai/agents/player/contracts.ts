@@ -4,7 +4,7 @@
  * 原始文案、工具参数与诊断保留输入含义；工具接受结果和最终游戏结算分别由各自所有者确认。
  */
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
-import { ToolCall } from "../../../core/domain";
+import { ToolCall } from "../../../domain";
 import { ChatMessage } from "../../integrations/llm/transport";
 
 /** 本次提示及记录定位信息；各传输自行维护历史，因此窗口指标不承诺相同实现。 */

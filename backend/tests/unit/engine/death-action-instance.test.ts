@@ -4,7 +4,7 @@
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/core";
+import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/domain";
 
 import { ActionReception } from "../../../src/game/gateway/action-reception";
 import { ActionTurn } from "../../../src/ai/agents/player/action-turn";

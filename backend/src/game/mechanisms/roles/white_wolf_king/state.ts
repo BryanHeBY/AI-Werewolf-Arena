@@ -9,7 +9,7 @@ import type { WhiteWolfKingState, WhiteWolfKingReadState } from "@ai-werewolf-ar
 
 import type { PlayerWhiteWolfKingState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import { playerDataField } from "../player-state-data";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 
 export function setWhiteWolfKingState(
   roleComp: RoleComponent,

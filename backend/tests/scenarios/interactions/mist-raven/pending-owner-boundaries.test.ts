@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
-import { ActionWindow, Role, Phase, COMPONENT, type ActionRequest, type ToolCall, type AliveComponent, type RoleComponent } from "../../../../src/core";
+import { ActionWindow, Role, Phase, COMPONENT, type ActionRequest, type ToolCall, type AliveComponent, type RoleComponent } from "../../../../src/domain";
 import {
   beginMistNight,
   snakeWindowTargets,

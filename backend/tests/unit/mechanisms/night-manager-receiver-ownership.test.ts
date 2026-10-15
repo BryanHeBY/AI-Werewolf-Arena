@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import { Role, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { NightManagerLifecycle } from "../../../src/rulesets/night-lifecycle-plan";
 import { MagicianNightUnit } from "../../../src/game/mechanisms/roles/magician/ports";
 import { WolfSorcererNightUnit } from "../../../src/game/mechanisms/roles/wolf_sorcerer/ports";

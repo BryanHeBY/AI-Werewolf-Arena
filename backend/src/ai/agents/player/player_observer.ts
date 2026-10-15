@@ -4,7 +4,7 @@
  * 文案依据 locale 渲染，机器标签及模型原文保持原值；console 异常仍交给调用方处理。
  */
 import { text, dictionaries, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";
-import { ActionRequest } from "../../../core/domain";
+import { ActionRequest } from "../../../domain";
 import { colorize, isAnsiEnabled } from "../../../utils/ansi";
 import { ChatMessage, ToolLoopStepTrace } from "../../integrations/llm/transport";
 

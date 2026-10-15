@@ -4,13 +4,13 @@
  * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
-import { Role } from "../../../../../src/core";
-import { WinCondition } from "../../../../../src/core";
-import type { BoardConfig } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
+import { WinCondition } from "../../../../../src/domain";
+import type { BoardConfig } from "../../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../../src/runtime/scenarios/six_player_mvp";
-import { PotionType } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
-import type { ActionStage } from "../../../../../src/core";
+import { PotionType } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
+import type { ActionStage } from "../../../../../src/domain";
 import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
 import type { PlannedTurn } from "../../../transport/contracts";

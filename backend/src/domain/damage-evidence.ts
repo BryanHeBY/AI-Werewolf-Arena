@@ -4,7 +4,7 @@
  * 证据仅存于同一结果的不可枚举属性；身份品牌不保存另一份世界状态。
  * 旧注入结果／Proxy 不访问新增属性；JSON、事件和 schema2 仍仅消费原可枚举事实。
  */
-import type { NightPoisonRoute } from "./night_effects";
+import type { NightPoisonRoute } from "./night-effects";
 
 const POISON_EVIDENCE = Symbol("damage_poison_evidence");
 const ownedResults = new WeakSet<object>();

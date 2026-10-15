@@ -4,9 +4,9 @@
  * exact callback types. No game, model, filesystem, live permission or expected outcome is allocated or
  * computed here.
  */
-import type { ActionStage } from "../../../src/core";
-import type { ToolCall } from "../../../src/core";
-import type { Role } from "../../../src/core";
+import type { ActionStage } from "../../../src/domain";
+import type { ToolCall } from "../../../src/domain";
+import type { Role } from "../../../src/domain";
 import type { MistWireExpectations } from "../features/mist-raven/oracles/transport";
 import type { ResolvedBoardDefinition } from "../../../src/runtime/config/board_definition";
 

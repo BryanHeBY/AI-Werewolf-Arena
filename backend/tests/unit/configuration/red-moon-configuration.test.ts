@@ -13,9 +13,9 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { Role, WinCondition, WitchSelfHealRule } from "../../../src/core/domain/identity";
-import type { BoardConfig } from "../../../src/core/domain/board";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+import { Role, WinCondition, WitchSelfHealRule } from "../../../src/domain/identity";
+import type { BoardConfig } from "../../../src/domain/board";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
 for (const policy of ["ends_game", "forbidden"] as const)
   test("Red Moon public board roundtrip " + policy, async () => {
     const config = structuredClone(redMoonTwelveConfig);

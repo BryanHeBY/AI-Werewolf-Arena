@@ -2,9 +2,9 @@
  * 单元测试：验证 ToolGateway 在独立构造玩家上的规则预检与拒绝。输入为原局部玩家、工具及非法参数；原字面断言为预期，不执行模型或完整对局。
  */
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { RoleComponent } from "../../../../src/core/domain/components/role";
-import { Phase, PotionType, Role } from "../../../../src/core/domain/model";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { RoleComponent } from "../../../../src/domain/components/role";
+import { Phase, PotionType, Role } from "../../../../src/domain/model";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";

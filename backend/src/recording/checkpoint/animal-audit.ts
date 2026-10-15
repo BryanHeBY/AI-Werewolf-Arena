@@ -3,7 +3,7 @@
  * 输出为原 own-data 描述符筛选及 snapshotPlainData 副本，保持 undefined 省略与拒绝顺序。
  * 本贡献不读取字段 getter、不替换原身份／库存，也不改变动物权威或失败记录政策。
  */
-import { snapshotPlainData } from "../../core/domain/plain_data";
+import { snapshotPlainData } from "../../domain/plain-data";
 export function auditData(value: unknown, keys: readonly string[]): unknown {
   if (!value || typeof value !== "object") throw Error("animal_audit_data_invalid");
   const descriptors = Object.fromEntries(

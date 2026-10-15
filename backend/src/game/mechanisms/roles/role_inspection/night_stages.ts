@@ -8,9 +8,9 @@ import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-insp
 import type { RoleInspectionPolicy } from "@ai-werewolf-arena/game-contract";
 
 import { ROLE_INSPECTION_STATE_SLOT } from "./state-slot";
-import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { Phase, Role } from "../../../../core/domain/model";
+import { AliveComponent, aliveLifeVersion } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import { Phase, Role } from "../../../../domain/model";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { type NightAbilityReadView } from "../abilities";
 import { recordNightAbilityUse } from "../abilities";

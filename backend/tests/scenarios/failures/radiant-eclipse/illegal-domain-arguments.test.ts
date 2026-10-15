@@ -2,11 +2,11 @@
  * Failure scenario tests send permitted tools with illegal domain arguments through a full Radiant/Eclipse night pipeline. Inputs are literal stage/borrow/action/error rows and the public board fixture; exact abort, suppression cleanup and preserved native stock are the oracle. Original board input and role state are not normalized to avoid rejection.
  */
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
 import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";
-import type { ToolCall } from "../../../../src/core";
+import type { ToolCall } from "../../../../src/domain";
 
 const rows: [string, number | null, ToolCall, string][] = [
   [

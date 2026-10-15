@@ -5,7 +5,7 @@
  * 玩家 remaining 只按原 setup 状态展示，副本不消费库存；换新身份的盗贼旧对象不在千面人分支付款。
  */
 import type { ThiefState, ThiefReadState } from "@ai-werewolf-arena/game-contract";
-import { Role, type RoleComponent, type World } from "../../../../core/domain";
+import { Role, type RoleComponent, type World } from "../../../../domain";
 import { thiefSetupStatus } from "./deal";
 import { dataField } from "../initial_identity/data-ports";
 export const THIEF_POLICY = "lui_meme_thief_two_extra_villagers_v1" as const;
@@ -55,7 +55,7 @@ export function readThiefChoice(value: unknown): 0 | 1 | undefined {
 /** 先核原两键与工具名，再读取args／slot；首个失败按原null结果或反射异常传播，不补新参数。 */
 export function readThiefTool(
   value: unknown,
-): import("../../../../core/domain").TypedToolCall<"choose_thief_card"> | null {
+): import("../../../../domain").TypedToolCall<"choose_thief_card"> | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const keys = Reflect.ownKeys(value);
   if (

@@ -6,14 +6,14 @@
  */
 import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { type RoleComponent } from "../../../../src/core/domain/components/role";
+import { World } from "../../../../src/domain/world";
+import { Role, Camp, WitchSelfHealRule } from "../../../../src/domain/identity";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { type RoleComponent } from "../../../../src/domain/components/role";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 
 
-import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
+import { createVictoryComponent } from "../../../../src/domain/components/victory";
 import {
   findNightAbility,
   abilityStatus,
@@ -32,7 +32,7 @@ import {
   commitRadiantShelter,
   sealRadiantNightEffects,
 } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
-import type { GameEvent } from "../../../../src/core/domain/events";
+import type { GameEvent } from "../../../../src/domain/events";
 function fixture() {
   const world = new World();
   const roles = [
@@ -102,10 +102,10 @@ function fixture() {
   openEclipseChoice(world, 2);
   return { world, role, events };
 }
-import { captureNightLife } from "../../../../src/core/domain/night_effects";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
-import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
-import { StatusMark } from "../../../../src/core/domain/identity";
+import { captureNightLife } from "../../../../src/domain/night-effects";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
+import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
+import { StatusMark } from "../../../../src/domain/identity";
 test("a returned shelter claim cannot redirect an original paid shelter to another player", () => {
   const f = fixture();
   commitEclipseChoice(f.world, 2, 2, f.events);

@@ -4,13 +4,13 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
+import { COMPONENT } from "../../../../domain/components/names";
+import { isRoleExecutionRetired } from "../../../../domain/role-execution-authority";
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
-import { Camp, Role, Phase } from "../../../../core/domain/model";
+import { Camp, Role, Phase } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";

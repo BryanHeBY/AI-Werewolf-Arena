@@ -5,22 +5,22 @@
  * 行动 permit 关闭与已付效果 current 分开，不以关闭请求恢复失效原体。规则见 docs/rules/awa-radiant-eclipse-twelve-v1.md。
  */
 import { types } from "node:util";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { Role, Camp } from "../../../../core/domain/identity";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import { COMPONENT } from "../../../../domain/components/names";
+import { Role, Camp } from "../../../../domain/identity";
+import type { RoleComponent } from "../../../../domain/components/role";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
-import type { World } from "../../../../core/domain/world";
-import type { GameEvent } from "../../../../core/domain/events";
+} from "../../../../domain/components/alive";
+import type { World } from "../../../../domain/world";
+import type { GameEvent } from "../../../../domain/events";
 import {
   captureNightLife,
   type NightLifeScope,
   type NightImmunityClaim,
   type NightRadiantBacklash,
-} from "../../../../core/domain/night_effects";
+} from "../../../../domain/night-effects";
 import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "../abilities";
 import { retireBorrowedNightAbility } from "../abilities";
 import { grantNightAbility } from "../night-ability-grants";

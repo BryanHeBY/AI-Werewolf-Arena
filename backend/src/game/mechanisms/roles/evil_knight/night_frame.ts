@@ -5,11 +5,11 @@
  * 捕获与反射资格归 reflection，实际余量写入归 state-slot；运行回调／生命引用不进入玩家观察或归档，也不授权行动。
  * 当前 Camp 在原字段点由实际 World 查询；保原值比较，不把同值组件替换改成新的引用撤权。
  */
-import type { World } from "../../../../core/domain/world";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Role } from "../../../../core/domain/identity";
-import { captureNightLife } from "../../../../core/domain/night_effects";
+import type { World } from "../../../../domain/world";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Role } from "../../../../domain/identity";
+import { captureNightLife } from "../../../../domain/night-effects";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { captureEvilKnight } from "./reflection";
 import { hasEvilKnightNightBindings, installEvilKnightNightBindings } from "./night-bindings";

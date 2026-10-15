@@ -5,9 +5,9 @@
  * 窗口不修改板子参数、不重新发库存，也不把过期请求当成选择许可。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../core/domain";
-import type { RequestLeaseTurn } from "../../../../core/domain/request-lease";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../domain";
+import type { RequestLeaseTurn } from "../../../../domain/request-lease";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { readWildChildTool } from "./state-slot";
 import {

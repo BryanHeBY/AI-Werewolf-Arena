@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { deathActionConfiguration, renderDeathActionPolicy } from "../death_action_policy";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：猎人角色 profile。 */
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role } from "../../../../domain/model";
 import { NativeRoleContributions } from "../contracts";
 import { getHunterState, setHunterState, createHunterState } from "../native-death-gun-resources";
 import { hunterDeathHook } from "./death_hook";

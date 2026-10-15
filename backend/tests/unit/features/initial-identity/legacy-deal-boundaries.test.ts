@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, COMPONENT, type RoleComponent } from "../../../../src/core";
+import { Role, COMPONENT, type RoleComponent } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import * as shared from "../../../../src/game/mechanisms/roles/initial_identity/deal";
 import * as thief from "../../../../src/game/mechanisms/roles/thief/deal";

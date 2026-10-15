@@ -6,17 +6,17 @@
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { DeathCommitter } from "../../../../src/game/engine/death-committer";
-import { World } from "../../../../src/core/domain/world";
+import { World } from "../../../../src/domain/world";
 
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import {
   Camp,
   Phase,
   Role,
   type GameEvent,
   type RuntimeSnapshot,
-} from "../../../../src/core/domain/model";
+} from "../../../../src/domain/model";
 import type { firstDeathGuns } from "../../../../src/game/mechanisms/roles/death_abilities";
 
 function fixture() {

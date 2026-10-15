@@ -3,7 +3,7 @@
  * Input: Original scenario/transport/locale matrices and handwritten targets, role labels, pass/no-target and survivor facts.
  * Output and oracle: Explicit private knowledge, opportunity/stock and result assertions retain exact replay; expected history remains the declared table.
  */
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { MIRROR_CASES, mirrorScenario, type MirrorScenario } from "../../../support/features/mirror-girl/builders/scenario";

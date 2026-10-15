@@ -18,11 +18,11 @@ import {
   type SelfDestructSelection,
   type DeathSources,
   type GameEvent,
-} from "../../../core/domain/model";
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
-import type { World } from "../../../core/domain/world";
+} from "../../../domain/model";
+import { COMPONENT } from "../../../domain/components/names";
+import type { RoleComponent } from "../../../domain/components/role";
+import { isRoleExecutionRetired } from "../../../domain/role-execution-authority";
+import type { World } from "../../../domain/world";
 import { getWhiteWolfKingState, consumeWhiteWolfDetonation } from "../roles/white_wolf_king/ports";
 import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 

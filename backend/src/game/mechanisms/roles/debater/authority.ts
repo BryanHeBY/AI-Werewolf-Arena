@@ -7,14 +7,14 @@ import {
   COMPONENT,
   type World,
   type DebatePenaltyComponent,
-} from "../../../../core/domain";
+} from "../../../../domain";
 import {
   captureNightLife,
   livingNightLife,
   type NightLifeScope,
-} from "../../../../core/domain/night_effects";
+} from "../../../../domain/night-effects";
 
-import type { OriginalParticipant as DebateParticipant } from "../../../../core/domain/original-participant";
+import type { OriginalParticipant as DebateParticipant } from "../../../../domain/original-participant";
 
 export interface DebateAuthority {
   id: string;

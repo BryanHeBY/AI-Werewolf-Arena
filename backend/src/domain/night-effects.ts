@@ -9,7 +9,7 @@ import { COMPONENT } from "./components/names";
 import { aliveLifeVersion, type AliveComponent } from "./components/alive";
 import type { World } from "./world";
 import type { EntityId } from "./identity";
-import type { StatusMarksComponent } from "./components/status_marks";
+import type { StatusMarksComponent } from "./components/status-marks";
 
 /** 查询原生命和印记身份，不暴露组件修改命令。 */
 export interface NightEffectQuery {

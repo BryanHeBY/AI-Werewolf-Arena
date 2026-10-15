@@ -13,8 +13,8 @@ import {
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
-import { Role, WitchSelfHealRule, type BoardConfig } from "../../../src/core";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
+import { Role, WitchSelfHealRule, type BoardConfig } from "../../../src/domain";
 for (const wolf of ["standard", "no_blast_no_self_knife"] as const)
   for (const body of ["awa_nonconsecutive_nights_v1", "awa_repeat_v1"] as const)
     test(`finite noble/body public four-policy roundtrip ${wolf}/${body}`, async () => {

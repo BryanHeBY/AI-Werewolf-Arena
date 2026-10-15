@@ -5,7 +5,7 @@
  * transport execution.
  */
 import type { AnimalPlan } from "../contracts";
-import { Camp } from "../../../../../src/core";
+import { Camp } from "../../../../../src/domain";
 
 export function animalGolden(name: AnimalPlan, skip = false, first = false) {
   const g = {

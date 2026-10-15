@@ -3,7 +3,7 @@
  * rulesets 拥有支持结论与 Node 数据入口，本断言不创建状态、安装 roster 或授予猎杀许可。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type {} from "../../../../core";
+import type {} from "../../../../domain";
 import { isDemonHunterNodePreset as isDemonHunterPreset } from "../../../../rulesets";
 export { isDemonHunterNodePreset as isDemonHunterPreset } from "../../../../rulesets";
 import { DEMON_HUNTER_POLICY } from "./state-slot";

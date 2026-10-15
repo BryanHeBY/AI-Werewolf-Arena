@@ -3,7 +3,7 @@
  * 有来源赠枪保留专属校验，普通角色在原时点读取当前规则；不提交动作、付款或执行结算。
  */
 import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-contract";
-import { ToolName } from "../../../core/domain/model";
+import { ToolName } from "../../../domain/model";
 import { COMMON_VALIDATION_RULES } from "../common/validation_rules";
 import { RoleCatalog } from "../roles/catalog";
 import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";

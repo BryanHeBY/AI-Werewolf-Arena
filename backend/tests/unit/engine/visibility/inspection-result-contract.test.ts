@@ -6,7 +6,7 @@ import { readInspectionResult, readSeerInspectionResult } from "@ai-werewolf-are
 import { text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/core";
+import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/domain";
 import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import {
   getDefaultRoleCatalog,

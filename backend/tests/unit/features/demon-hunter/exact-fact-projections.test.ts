@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import { DEMON_HUNTER_POLICY, readDemonHunterEventFact, readDemonHunterPlayerFact } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { demonHunterEventLabel } from "@ai-werewolf-arena/game-presentation";
-import { type GameEvent } from "../../../../src/core";
+import { type GameEvent } from "../../../../src/domain";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 

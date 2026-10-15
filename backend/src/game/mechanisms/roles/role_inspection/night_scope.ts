@@ -9,11 +9,11 @@ import type { GargoyleReadState as GargoyleState } from "@ai-werewolf-arena/game
 
 import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
 
-import { aliveLifeVersion, type AliveComponent } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Role } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+import { aliveLifeVersion, type AliveComponent } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Role } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import { findNightAbility, type NightAbilityReadView } from "../abilities";
 import { getGargoyleState } from "../gargoyle/ports";
 

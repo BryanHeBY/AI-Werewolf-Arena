@@ -4,7 +4,7 @@
  * 通过有界公共 owner 检查安装／次数／玩家投影与来源，原窗口和被拒入口仍保留。
  * 不执行完整阶段、模型或新 golden，也不回滚已付前缀。
  */
-import { PotionType } from "../../../src/core";
+import { PotionType } from "../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -16,7 +16,7 @@ import {
   type ActionRequest,
   type GameEvent,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   allNightAbilities,

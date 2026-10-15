@@ -5,8 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type AliveComponent, type RoleComponent } from "../../../src/core";
-import { createRandom, randomDraws } from "../../../src/core/domain/random";
+import { COMPONENT, Phase, Role, type AliveComponent, type RoleComponent } from "../../../src/domain";
+import { createRandom, randomDraws } from "../../../src/domain/random";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../src/app/observed-players-action-provider";

@@ -9,7 +9,7 @@ import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { Role, Camp, WinCondition, COMPONENT } from "../../../../core/domain";
+import { Role, Camp, WinCondition, COMPONENT } from "../../../../domain";
 import type { NativeRoleContributions } from "../contracts";
 import { canSubmitWeddingTool } from "./authority";
 import { initializeGhostBrideState } from "./state";

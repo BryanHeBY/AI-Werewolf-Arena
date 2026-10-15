@@ -9,26 +9,26 @@ import {
   createBadgeComponent,
 } from "../../../../../src/game/observation/component-presentation";
 import "../../../../../src/app/bootstrap";
-import { Role } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
 import { DEMON_HUNTER_ROLE } from "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
-import { WinCondition } from "../../../../../src/core";
-import { ActionWindow } from "../../../../../src/core";
-import { WitchSelfHealRule } from "../../../../../src/core";
-import type { BoardConfig } from "../../../../../src/core";
+import { WinCondition } from "../../../../../src/domain";
+import { ActionWindow } from "../../../../../src/domain";
+import { WitchSelfHealRule } from "../../../../../src/domain";
+import type { BoardConfig } from "../../../../../src/domain";
 import { DEMON_HUNTER_POLICY } from "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
-import { World } from "../../../../../src/core";
-import { Camp } from "../../../../../src/core";
-import { COMPONENT } from "../../../../../src/core";
+import { World } from "../../../../../src/domain";
+import { Camp } from "../../../../../src/domain";
+import { COMPONENT } from "../../../../../src/domain";
 import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
 
-import { createVictoryComponent } from "../../../../../src/core";
+import { createVictoryComponent } from "../../../../../src/domain";
 
-import { createRandom } from "../../../../../src/core";
-import type { ToolName } from "../../../../../src/core";
-import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
-import { installInitialRoster } from "../../../../../src/core/domain/initial_roster";
-import { ConditionRegistry } from "../../../../../src/core/domain/registries/condition_registry";
-import { DamageResolutionSystem } from "../../../../../src/core/domain/systems/damage_resolution_system";
+import { createRandom } from "../../../../../src/domain";
+import type { ToolName } from "../../../../../src/domain";
+import { createIdentityComponent } from "../../../../../src/domain/entities/player";
+import { installInitialRoster } from "../../../../../src/domain/initial-roster";
+import { ConditionRegistry } from "../../../../../src/domain/registries/condition-registry";
+import { DamageResolutionSystem } from "../../../../../src/domain/systems/damage-resolution-system";
 import { PhaseManager } from "../../../../../src/game/engine/phase_manager";
 import { ToolGateway } from "../../../../../src/game/gateway/tool_gateway";
 import { ActionValidator } from "../../../../../src/game/gateway/action_validator";

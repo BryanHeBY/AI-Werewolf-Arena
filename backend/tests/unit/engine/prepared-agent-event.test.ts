@@ -12,7 +12,7 @@ import {
   Role,
   Camp,
 } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { AgentEventVisibilityRegistry } from "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
 import {
   prepareInertAgentEvent,

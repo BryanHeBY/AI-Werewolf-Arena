@@ -15,16 +15,16 @@ import {
   StatusMark,
   Phase,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
-import { captureNightLife } from "../../../../src/core/domain/night_effects";
+import { captureNightLife } from "../../../../src/domain/night-effects";
 
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
-import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
+import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import {
   captureInspectionIdentity,
   commitFoxInspection,
@@ -36,13 +36,13 @@ import {
   getDefaultRoleContributions,
   createRoleCatalog,
 } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { permitsDeathShot } from "../../../../src/core/domain/deaths";
+import { permitsDeathShot } from "../../../../src/domain/deaths";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/night_stages";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { LUCKY_ABILITY_STAGE } from "../../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage";
-import type { GameEvent, AliveComponent } from "../../../../src/core";
+import type { GameEvent, AliveComponent } from "../../../../src/domain";
 
 const deck = [Role.CursedFox, Role.Seer, Role.Wolf, Role.Witch, Role.Guard, Role.Villager];
 

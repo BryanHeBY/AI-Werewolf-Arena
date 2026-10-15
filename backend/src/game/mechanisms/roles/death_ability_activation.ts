@@ -3,9 +3,9 @@
  * 存活玩家和原枪记录；输出为原武装效果及提交查询。资格和资源写仍由 armDeathGun 持有；
  * 这里按原序在激活返回、armedOnNight 命中后记账，不安装新 Role 或自行恢复撤销的枪权。
  */
-import type { World } from "../../../core/domain/world";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import { COMPONENT } from "../../../core/domain/components/names";
+import type { World } from "../../../domain/world";
+import type { RoleComponent } from "../../../domain/components/role";
+import { COMPONENT } from "../../../domain/components/names";
 import type { NightStageHandler } from "../stages/night/contracts";
 import { allDeathGuns, armDeathGun } from "./death_abilities";
 const committed = new WeakMap<World, Set<number>>();

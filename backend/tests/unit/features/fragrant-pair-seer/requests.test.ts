@@ -4,12 +4,12 @@
  * 测试自有 mock 与组件只驱动此边界，不调用模型或物理传输；迁移保留样本字节、政策和状态行为。
  */
 import { expect, test, setSystemTime } from "bun:test";
-import type { ActionRequest } from "../../../../src/core/domain/actions";
-import { Phase } from "../../../../src/core/domain/identity";
+import type { ActionRequest } from "../../../../src/domain/actions";
+import { Phase } from "../../../../src/domain/identity";
 import {
   assertRequestDelivery,
   deferRequestDelivery,
-} from "../../../../src/core/domain/request_delivery";
+} from "../../../../src/domain/request-delivery";
 import { fragrantPairOwnerFixture } from "../../../support/features/fragrant-pair-seer/builders/owner";
 import {
   openFragrantPairRequest,

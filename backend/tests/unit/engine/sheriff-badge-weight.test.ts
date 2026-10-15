@@ -9,7 +9,7 @@ import {
   type RoleComponent,
   type VotingRightComponent,
   type GameEvent,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import {
   assignSheriff,

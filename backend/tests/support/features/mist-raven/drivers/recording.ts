@@ -2,7 +2,7 @@
  * 测试 driver：负责原雾鸦受控执行与录制。输入为原角色、动作计划及局部 store；输出保留原请求和录制前缀，独立预期由外部测试提供，不调用模型。
  */
 import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
-import type { ActionRequest } from "../../../../../src/core";
+import type { ActionRequest } from "../../../../../src/domain";
 import type { MistRecordVariant } from "../builders/board";
 import { mistBoard } from "../builders/board";
 import { MIST_ROLES } from "../builders/board";
@@ -14,9 +14,9 @@ import { copyFile } from "node:fs/promises";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
-import { COMPONENT } from "../../../../../src/core";
-import { createRandom } from "../../../../../src/core";
-import type { BadgeComponent } from "../../../../../src/core";
+import { COMPONENT } from "../../../../../src/domain";
+import { createRandom } from "../../../../../src/domain";
+import type { BadgeComponent } from "../../../../../src/domain";
 import { SessionRecordManager } from "../../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../../src/recording/recording_context";
 import { parseReproductionRecord } from "../../../../../src/recording/reproduction";

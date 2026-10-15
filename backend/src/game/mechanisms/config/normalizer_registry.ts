@@ -3,7 +3,7 @@
  * 默认依次执行女巫、警长、自爆规则；每次调用保 normalizer 方法 receiver 和前一步配置引用。
  * 抛错即停止后续处理，已发生的读取／写入不回滚；此 registry 不替具体机制重写规则或校验权限。
  */
-import { BoardConfig } from "../../../core/domain/model";
+import { BoardConfig } from "../../../domain/model";
 import { ConfigNormalizer } from "./contracts";
 import { SHERIFF_CONFIG_NORMALIZER } from "../sheriff/config_normalizer";
 import { WITCH_CONFIG_NORMALIZER } from "../roles/witch/config_normalizer";

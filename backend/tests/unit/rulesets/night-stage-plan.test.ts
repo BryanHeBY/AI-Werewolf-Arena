@@ -10,7 +10,7 @@ import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effec
 import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";

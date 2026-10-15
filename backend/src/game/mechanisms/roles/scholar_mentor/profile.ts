@@ -5,12 +5,12 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
+import { COMPONENT } from "../../../../domain/components/names";
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
+import { Role, Camp, WinCondition, Phase } from "../../../../domain/identity";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import {

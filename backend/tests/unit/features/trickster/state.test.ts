@@ -3,7 +3,7 @@
  * 原字面预期、身份和拒绝断言保持，不组装整局或模型，不把测试自有对象变更当生产授权。
  */
 import { expect, test } from "bun:test";
-import { Camp, type RoleComponent } from "../../../../src/core";
+import { Camp, type RoleComponent } from "../../../../src/domain";
 import {
   createTricksterState,
   getTricksterState,

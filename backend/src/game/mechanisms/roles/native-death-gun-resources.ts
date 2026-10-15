@@ -6,7 +6,7 @@
  * 学习枪先晚取原查询并裸调用、读 skill，再在原阵营点调用显式 source；不存 Camp 引用。
  * 猎魔板子先捕获原审计库存，支付仍由同一权威执行；setter／编码或后续发表失败均不退款。
  */
-import type { CurrentCampSource } from "../../../core/domain/components/camp";
+import type { CurrentCampSource } from "../../../domain/components/camp";
 import type {
   HunterState,
   HunterReadState,
@@ -21,9 +21,9 @@ import type {
   AwakenedReadSkill as AwakenedSkill,
   AwakenedReadState,
 } from "@ai-werewolf-arena/game-contract";
-import { Camp, Role } from "../../../core/domain/model";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import type { World } from "../../../core/domain/world";
+import { Camp, Role } from "../../../domain/model";
+import type { RoleComponent } from "../../../domain/components/role";
+import type { World } from "../../../domain/world";
 import type { RoleInitContext } from "./contracts";
 import type { openDemonHunterStockFrame } from "./demon_hunter/native-gun-ports";
 

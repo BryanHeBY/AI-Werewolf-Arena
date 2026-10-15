@@ -6,13 +6,13 @@
  */
 import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { Role, Camp, WitchSelfHealRule } from "../../../../src/domain/identity";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
 
-import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
+import { createIdentityComponent } from "../../../../src/domain/entities/player";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import { createEclipseState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";

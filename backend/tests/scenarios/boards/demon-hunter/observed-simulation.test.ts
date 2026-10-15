@@ -7,7 +7,7 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { WinCondition } from "../../../../src/core";
+import { WinCondition } from "../../../../src/domain";
 import { demonHunterBoard } from "../../../support/features/demon-hunter/builders/candidate-world";
 import {
   boardDefinitionFromConfig,

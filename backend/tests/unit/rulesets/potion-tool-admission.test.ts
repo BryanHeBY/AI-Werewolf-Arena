@@ -5,11 +5,11 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase, PotionType, RuleError, StatusMark, WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createRoleComponent } from "../../../src/domain/components/role";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { WITCH_VALIDATION_RULES } from "../../../src/rulesets/potion-tool-admission";
 import { WITCH_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/witch/profile";
 import { setWitchState } from "../../../src/game/mechanisms/roles/witch/ports";

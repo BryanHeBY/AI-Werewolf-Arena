@@ -10,7 +10,7 @@ import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_regis
 import type { AcpSession, AcpSessionCreateInput } from "../../../src/ai/integrations/acp/session";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { Phase, type ActionRequest, type ToolCall } from "../../../src/core";
+import { Phase, type ActionRequest, type ToolCall } from "../../../src/domain";
 
 function request(): ActionRequest {
   return {

@@ -7,7 +7,7 @@
  */
 import { mistTransportScenario } from "../../../support/features/mist-raven/builders/transport-plan";
 import { expect, test } from "bun:test";
-import { Role } from "../../../../src/core";
+import { Role } from "../../../../src/domain";
 import { assertTransportEvents, assertTransportPrompt } from "../../../support/oracles/transport/observations";
 import type { MistWireState } from "../../../support/features/mist-raven/oracles/transport";
 const unseal = { actorId: 9, day: 2, awakened: true, knownTeammateIds: [10] },

@@ -4,7 +4,7 @@
  * 仅核数据边界，不运行完整对局、模型或真实重投，不在迁移中重写fixture、政策或golden。
  */
 import { expect, test } from "bun:test";
-import { Camp, type RoleComponent } from "../../../../src/core";
+import { Camp, type RoleComponent } from "../../../../src/domain";
 import {
   ORDER_PRINCE_POLICY,
   createOrderPrinceState,

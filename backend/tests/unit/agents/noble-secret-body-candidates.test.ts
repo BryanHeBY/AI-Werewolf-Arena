@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import type { BotStyle } from "../../../src/ai/agents/providers/observed_bot";
 import type { PlayerObservation } from "../../../src/game/observation/player-observation";
-import { Phase } from "../../../src/core";
+import { Phase } from "../../../src/domain";
 
 function dto(
   tool: "choose_servant" | "protect_secret_body",

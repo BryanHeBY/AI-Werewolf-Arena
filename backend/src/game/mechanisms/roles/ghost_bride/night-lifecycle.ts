@@ -5,7 +5,7 @@
  * 规则依据：docs/rules/awa-melbourne-ghost-bride-v1.md。
  */
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { captureWeddingKnife, closeWeddingNight } from "./authority";
 
 export interface WeddingNightRuntime {

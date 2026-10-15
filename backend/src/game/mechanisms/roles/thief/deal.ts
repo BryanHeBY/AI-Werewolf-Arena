@@ -4,7 +4,7 @@
  * 唯一库存、发牌和提交仍归initial_identity；异族库存／投影返回undefined，布尔验证沿原false，ready为true，关闭／开夜不操作异族。
  * 先核安装kind再调用原共享方法，不以当前玩家角色标签重新分配权限，也不创建第二份库存。
  */
-import { type World, type Role } from "../../../../core/domain";
+import { type World, type Role } from "../../../../domain";
 // 公共库存出口仍指向原 deal；保 namespace 成员的原读取位置，不从状态查询加载设置窗口。
 import * as shared from "../initial_identity/deal-ports";
 export type ThiefCard = shared.InitialIdentityCard;

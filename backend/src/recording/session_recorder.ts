@@ -97,7 +97,7 @@ export class SessionRecordManager {
 
   beginReproduction(
     metadata: ReproductionMetadata,
-    liveEvents?: () => readonly import("../core").GameEvent[],
+    liveEvents?: () => readonly import("../domain").GameEvent[],
   ): ReproductionTrace {
     if (this.lifecycle.isClosed || this.reproduction)
       throw new Error("reproduction_scope_already_started_or_closed");

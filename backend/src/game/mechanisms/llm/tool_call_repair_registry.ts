@@ -3,7 +3,7 @@
  * 输出为原 coercion 结果或原参数副本。注册保持顺序和最后处理函数引用；
  * 本索引不接受动作、消耗库存或授予当前请求权限。
  */
-import { ToolName } from "../../../core/domain/model";
+import { ToolName } from "../../../domain/model";
 import { COMMON_LLM_REPAIR_PACK } from "../common/llm_repair";
 import { RoleCatalog } from "../roles/catalog";
 import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";

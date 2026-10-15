@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { createRandom, PotionType, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { createRandom, PotionType, type ActionRequest, type ToolCall } from "../../../../src/domain";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {

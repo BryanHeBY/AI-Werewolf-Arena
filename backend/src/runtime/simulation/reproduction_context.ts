@@ -10,7 +10,7 @@ import { RulePlan } from "../../rulesets/rule-plan";
 import { fingerprintEngine } from "../../recording/engine-fingerprint";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import type { RuntimeSnapshot, World } from "../../core";
+import type { RuntimeSnapshot, World } from "../../domain";
 import type { EngineVersion, RecordedCheckpoint } from "../../recording/reproduction";
 import { recordedErrorName } from "../../recording/reproduction";
 import {
@@ -22,7 +22,7 @@ import { initialIdentityDeal } from "../../game/mechanisms/roles/initial_identit
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { type Locale } from "@ai-werewolf-arena/game-contract";
 import type { BootstrapResult } from "../../app/bootstrap";
-import type { BoardConfig } from "../../core";
+import type { BoardConfig } from "../../domain";
 import type { ResolvedAgentRuntimeProfile } from "../config/contracts";
 import type { SessionRecordManager } from "../../recording/session_recorder";
 

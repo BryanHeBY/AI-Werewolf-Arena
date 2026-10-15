@@ -5,8 +5,8 @@
  * 本族记录数组归 bonus-effect-records，完整复验归 bonus-effect-validation；原 receipt.commit 与 marks／效果追加顺序及检查点不变。
  * 本模块不重新计算别族的已付目标，也不将原体句柄或因果 Symbol 写入事件。
  */
-import { COMPONENT, Camp, Phase, StatusMark, type RoleComponent } from "../../../../core";
-import { originalPoisonIntent, type NightLifeScope } from "../../../../core/domain/night_effects";
+import { COMPONENT, Camp, Phase, StatusMark, type RoleComponent } from "../../../../domain";
+import { originalPoisonIntent, type NightLifeScope } from "../../../../domain/night-effects";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { resolveInspection } from "../inspection";
 import { scholarMentorStateForRole } from "./state-slot";

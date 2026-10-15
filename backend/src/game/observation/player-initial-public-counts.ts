@@ -5,8 +5,8 @@
  * 每次板子、角色和缓存查询保留原位置及接收方，失败保留此前已经写入的 Map 前缀，不回滚或补默认值。
  */
 import type { EntityId, ReadonlyBoardConfig, Role } from "@ai-werewolf-arena/game-contract";
-import type { RoleComponent } from "../../core/domain/components/role";
-import type { World } from "../../core/domain/world";
+import type { RoleComponent } from "../../domain/components/role";
+import type { World } from "../../domain/world";
 import { initialIdentityCandidateCounts } from "../mechanisms/roles/initial_identity/deal";
 
 /** 查询在原表达式处执行；缓存仍归调用方，role 查询保留其原方法的 receiver。 */

@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import { animalTransportScenario } from "../../../support/features/animal-dream/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import type { ToolCall } from "../../../../src/core";
+import type { ToolCall } from "../../../../src/domain";
 for (const skill of ["fox", "puffer"] as const)
   for (const fault of ["missing", "invalid", "late"] as const)
     for (const kind of ["llm", "acp"] as const)

@@ -7,10 +7,10 @@
  */
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
-import { BEAUTY_DEATH_LINK_POLICIES } from "../../../../core/domain/board";
+import { BEAUTY_DEATH_LINK_POLICIES } from "../../../../domain/board";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
-import { Role, Camp, Phase } from "../../../../core/domain/model";
+import { Role, Camp, Phase } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getWolfBeautyState, setWolfBeautyState } from "./state";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
@@ -21,8 +21,8 @@ import { WOLF_BEAUTY_CHARM_STAGE } from "./night_stages";
 import { wolfBeautyDeathHook } from "./death_hook";
 import { animalBeautyCharmAllowed, isAnimalDreamBoard } from "../animal_dream/beauty-query-ports";
 import { animalBeautyKnowledge } from "../animal_dream/beauty-fact-ports";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
+import { COMPONENT } from "../../../../domain/components/names";
+import { isRoleExecutionRetired } from "../../../../domain/role-execution-authority";
 
 const parameters = z.strictObject({
   deathLinkPolicy: z.enum(BEAUTY_DEATH_LINK_POLICIES).default("awa_exile_poison_v1"),

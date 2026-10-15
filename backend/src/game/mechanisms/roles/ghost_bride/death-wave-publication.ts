@@ -8,7 +8,7 @@
  */
 import type { DeathSources, GameEvent, Phase } from "@ai-werewolf-arena/game-contract";
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { expandWeddingDeaths, weddingGroup } from "./authority";
 
 /**

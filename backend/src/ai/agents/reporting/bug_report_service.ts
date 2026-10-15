@@ -5,9 +5,9 @@
  * 直接报告记录及接受回调可传播失败；已经写入的记录和本地计数保留，不承诺事务回滚。
  */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
-import { COMPONENT } from "../../../core/domain/components/names";
-import { RoleComponent } from "../../../core/domain/components/role";
-import { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
+import { World } from "../../../domain/world";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { getSessionRecorder } from "../../../recording/recording_context";
 

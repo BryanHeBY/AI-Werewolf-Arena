@@ -3,9 +3,9 @@
  * 输出为原恐惧提交和事件；Provider 等待前后及提交前按原顺序复验名单、日期与运行窗口。
  * 阻断资格仍由 frame 持有，不因模型拒绝、玩家状态形状或文案直接产生许可。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Phase } from "../../../../core/domain/identity";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Phase } from "../../../../domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { getNightmareShadowState } from "./state-slot";
 import {

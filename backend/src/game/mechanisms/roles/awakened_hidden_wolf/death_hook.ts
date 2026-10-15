@@ -4,7 +4,7 @@
  * 查询函数在原 callee 点取得并裸调用；此装配不授许可、不标死或切换阶段，付款／失败由完整结算处理。
  * 在原有序死亡钩子时点只装配原读写贡献；许可与生命仍由结算复验，失败不补偿已付款库存。
  */
-import { Role, permitsDeathShot } from "../../../../core/domain/model";
+import { Role, permitsDeathShot } from "../../../../domain/model";
 import type { DeathHook } from "../../hooks/hook_registry";
 import { resolveNativeDeathShots } from "../native-death-shot-settlement";
 import { getAwakenedState } from "./state";

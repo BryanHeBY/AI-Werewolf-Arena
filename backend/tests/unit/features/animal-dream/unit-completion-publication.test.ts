@@ -4,7 +4,7 @@
  * 使用真实owner，不复制关闭或事实算法；跳过计数政策保持，不运行完整对局、模型或传输。
  */
 import { expect, test } from "bun:test";
-import type { GameEvent } from "../../../../src/core/domain/events";
+import type { GameEvent } from "../../../../src/domain/events";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
 import { completeAndPublishAnimalExileUnit } from "../../../../src/game/mechanisms/roles/animal_dream/ports";
 import {

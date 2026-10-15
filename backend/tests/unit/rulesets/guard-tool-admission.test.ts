@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase, RuleError, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createRoleComponent } from "../../../src/domain/components/role";
+import { createAliveComponent } from "../../../src/domain/components/alive";
 import { GUARD_VALIDATION_RULES } from "../../../src/rulesets/guard-tool-admission";
 import { GUARD_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/guard/profile";
 import { setGuardState } from "../../../src/game/mechanisms/roles/guard/ports";

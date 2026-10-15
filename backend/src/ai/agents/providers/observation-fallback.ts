@@ -7,7 +7,7 @@
  * 这是 F01 独立策略变化；无适合的观察行动时返回 null，不伪造严格必选动作。
  */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
-import type { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain/actions";
+import type { ActionProvider, ActionRequest, ToolCall } from "../../../domain/actions";
 import type {
   ObservedPlayerStrategy,
   PlayerObservation,

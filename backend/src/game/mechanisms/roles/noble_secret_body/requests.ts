@@ -4,16 +4,16 @@
  * 不变量：已登记别名必须保原 context／正文，只缩短共享期限；
  * 未登记外来输入不获得 turn，也不撤原有效权限，领域 commit 返回后再关 turn／通知 true，关闭保持原结算顺序。
  */
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { registerRequestAliasPropagation } from "../../../../domain/request-delivery";
 import { types } from "node:util";
-import { Phase } from "../../../../core/domain/identity";
-import type { ActionRequest, ToolCall } from "../../../../core/domain/actions";
-import type { World } from "../../../../core/domain/world";
+import { Phase } from "../../../../domain/identity";
+import type { ActionRequest, ToolCall } from "../../../../domain/actions";
+import type { World } from "../../../../domain/world";
 import {
   bindRequestDeliveryGuard,
   settleRequestDelivery,
-} from "../../../../core/domain/request_delivery";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+} from "../../../../domain/request-delivery";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 import {
   nobleBodyChoiceActor,
   nobleBodyChoiceTargets,

@@ -2,7 +2,7 @@
  * 模拟场景测试：负责执行学者／导师原四十个种子和双语的实际 World。输入为原 preset 和动作矩阵；双持有者库存、模式只用一次、第二天历史边界及自然完成为明确预期，不替代归档 golden 或声称新增独立规则覆盖。
  */
 import { expect, test } from "bun:test";
-import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../../src/core";
+import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../../src/domain";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { scholarMentorTwelveConfig } from "../../../../src/runtime/scenarios/scholar_mentor_twelve";
 import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";

@@ -7,7 +7,7 @@
  * 本地编码只核状态替换／内容变更，不是归档格式、sourceHash 或行动授权；流光伯爵庇护沿独立所有者。
  */
 import type { EclipseState, EclipseSwallowedRole } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 
 import { types } from "node:util";
 import { RADIANT_ECLIPSE_POLICY, record, positive } from "./state-data";

@@ -13,7 +13,7 @@ import {
   PotionType,
   type ActionRequest,
   type ToolCall,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";

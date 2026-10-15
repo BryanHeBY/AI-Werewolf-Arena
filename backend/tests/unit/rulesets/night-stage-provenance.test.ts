@@ -8,7 +8,7 @@
 import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import type { RoleProfile } from "../../../src/game/mechanisms/roles/contracts";
 import type { NightStageHandler } from "../../../src/game/mechanisms/stages/night/contracts";
@@ -19,8 +19,8 @@ import { nightStageContext } from "../../support/builders/night-stage-context";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { createRandom } from "../../../src/core/domain/random";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
+import { createRandom } from "../../../src/domain/random";
 
 const profile = (role: Role, nightStages: NightStageHandler[]): RoleProfile => ({
   role,

@@ -12,7 +12,7 @@
  * 明辉／梦及增益伤害与猎魔来源交付各归具名规则组合；本流水线保封存、伤害结算及死亡生命捕获的原检查点。
  * 运行梦句柄、猎魔 token 与晚保护闭包不进入玩家摘要或归档。
  */
-import { attachNightUnit } from "../../../core/domain/night-unit";
+import { attachNightUnit } from "../../../domain/night-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { prepareNightPipelineLifecycle, type NightLifecycleHandoff } from "../../../rulesets/night-lifecycle-plan";
 
@@ -41,11 +41,11 @@ import {
 import { demonHunterActorId, originalDemonNightLives } from "../../mechanisms/roles/demon_hunter/ports";
 import type { DemonKnifeProtection } from "../../mechanisms/roles/demon_hunter/ports";
 import { weddingSetup } from "../../mechanisms/roles/ghost_bride/ports";
-import { COMPONENT } from "../../../core/domain/components/names";
-import { RoleComponent } from "../../../core/domain/components/role";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
 import {
   StatusMarksComponent,
-} from "../../../core/domain/components/status_marks";
+} from "../../../domain/components/status-marks";
 import {
   ActionProvider,
   ActionRequest,
@@ -60,12 +60,12 @@ import {
   Role,
   TieBreakerStrategy,
   DeathCause,
-} from "../../../core/domain/model";
+} from "../../../domain/model";
 import {
   DamageResolutionResult,
   DamageResolutionSystem,
-} from "../../../core/domain/systems/damage_resolution_system";
-import { World } from "../../../core/domain/world";
+} from "../../../domain/systems/damage-resolution-system";
+import { World } from "../../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { NightStageState } from "../../mechanisms";
 import type { NightStageContext } from "../../mechanisms/stages/night/contracts";
@@ -76,13 +76,13 @@ import {
 import { getSessionRecorder } from "../../../recording/recording_context";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
-import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
-import type { DreamNightEffects } from "../../../core/domain/dream-night-effects";
+import { createRandom, shuffled, type RandomSource } from "../../../domain/random";
+import type { DreamNightEffects } from "../../../domain/dream-night-effects";
 import { composeNightDamage } from "../../../rulesets/night-damage-composition";
 import { prepareNightSourceDelivery } from "../../../rulesets/night-source-delivery";
 import { discardStaleNightKnives } from "../../../rulesets/night-knife-admission";
-import { livingNightLife } from "../../../core/domain/night_effects";
-import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
+import { livingNightLife } from "../../../domain/night-effects";
+import { AliveComponent, aliveLifeVersion } from "../../../domain/components/alive";
 import { assertNightCommitAdmission } from "../../../rulesets/night-commit-admission";
 
 export interface NightPipelineDependencies {
@@ -108,13 +108,13 @@ export type NightPipelineResult =
       dreamFrame: DreamNightEffects;
       mistDelay?: boolean;
       demonSources?: object;
-      retaliationAttacks?: readonly import("../../../core/domain/night_effects").NightRetaliationAttack[];
+      retaliationAttacks?: readonly import("../../../domain/night-effects").NightRetaliationAttack[];
       /** 本族捕获的运行查询；不携带可替换 Map 或私有库存结构。 */
       blocksPassiveNightShot?: (targetId: EntityId) => boolean;
-      inspectionAttacks?: readonly import("../../../core/domain/night_effects").NightInspectionAttack[];
+      inspectionAttacks?: readonly import("../../../domain/night-effects").NightInspectionAttack[];
       demonWolfSourceCurrent?: (targetId: number) => boolean;
       demonKnifeProtection?: DemonKnifeProtection;
-      foxInspections?: readonly import("../../../core/domain/night_effects").NightFoxInspectionClaim[];
+      foxInspections?: readonly import("../../../domain/night-effects").NightFoxInspectionClaim[];
       deathLives: ReadonlyMap<EntityId, { life: AliveComponent; version: number | undefined }>;
     }
   | { interrupted: true };

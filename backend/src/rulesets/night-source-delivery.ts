@@ -16,11 +16,11 @@ import {
   type DemonKnifeProtection,
 } from "../game/mechanisms/roles/demon_hunter/ports";
 import { sealDeliveredDemonWitchSources } from "../game/mechanisms/roles/demon_hunter/native_potion_controller";
-import { COMPONENT } from "../core/domain/components/names";
-import { StatusMark } from "../core/domain/model";
-import { statusMarkSnapshot } from "../core/domain/components/status_marks";
-import { livingNightLife } from "../core/domain/night_effects";
-import type { World } from "../core/domain/world";
+import { COMPONENT } from "../domain/components/names";
+import { StatusMark } from "../domain/model";
+import { statusMarkSnapshot } from "../domain/components/status-marks";
+import { livingNightLife } from "../domain/night-effects";
+import type { World } from "../domain/world";
 import type { NightStageState } from "../game/mechanisms/stages/night/contracts";
 
 /** 同一阶段状态的窄类型视图；数组、刀口和原生命引用不复制成另一个授权 store。 */

@@ -12,7 +12,7 @@ import {
   Role,
   type ActionRequest,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
 import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
 import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";

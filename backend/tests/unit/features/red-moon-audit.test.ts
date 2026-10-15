@@ -2,7 +2,7 @@
  * 单元测试：验证赤月自爆审计的白天权威与最后狼人政策。输入为原日期和名单；单次提交、后续夜晚封印及名单断言为独立预期，保留原 fixture 与审计状态。
  */
 import { assignSheriff } from "../../../src/game/mechanisms/sheriff/badge";
-import type { BadgeComponent } from "../../../src/core";
+import type { BadgeComponent } from "../../../src/domain";
 import { freezeDemonHunt } from "../../../src/game/mechanisms/roles/demon_hunter/authority";
 import { expect, test } from "bun:test";
 import {
@@ -10,7 +10,7 @@ import {
   type AliveComponent,
   type RoleComponent,
   type VotingRightComponent,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import {
   beginDemonHunterNight,

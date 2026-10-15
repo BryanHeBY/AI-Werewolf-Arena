@@ -6,14 +6,14 @@
  */
 import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { type RoleComponent } from "../../../../src/core/domain/components/role";
+import { World } from "../../../../src/domain/world";
+import { Role, Camp, WitchSelfHealRule } from "../../../../src/domain/identity";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { type RoleComponent } from "../../../../src/domain/components/role";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 
 
-import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
+import { createVictoryComponent } from "../../../../src/domain/components/victory";
 import {
   findNightAbility,
   abilityStatus,
@@ -32,7 +32,7 @@ import {
   commitRadiantShelter,
   sealRadiantNightEffects,
 } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
-import type { GameEvent } from "../../../../src/core/domain/events";
+import type { GameEvent } from "../../../../src/domain/events";
 function fixture() {
   const world = new World();
   const roles = [

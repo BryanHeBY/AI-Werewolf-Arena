@@ -5,9 +5,9 @@
  * 原下一历史先编码，再 push 和更新 JSON；后续 actor 审计、夜选择、请求结算和 stock 写权仍归 authority。
  * 此 owner 不建镜像／第二 WeakMap、不冻结 live 数据或把类型／查询当许可；失败保原部分写入前缀。
  */
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 import { types } from "node:util";
-import type { RoleComponent } from "../../../../core";
+import type { RoleComponent } from "../../../../domain";
 import { DEMON_HUNTER_POLICY, readDemonHunterState as readState, readDemonHuntTool as readTool } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import type { DemonHunterState, DemonHuntTool } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 export { DEMON_HUNTER_POLICY };

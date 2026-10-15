@@ -17,7 +17,7 @@ import {
   type BoardConfig,
   type HiddenWolfCampInspectionPolicy,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/state";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";

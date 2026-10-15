@@ -7,13 +7,13 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { openDemonBadgeFrame, assertDemonBadgeReadable } from "../roles/demon_hunter/authority";
 import { weddingBadgeSwallowed } from "../roles/ghost_bride/authority";
 /** 文件说明：警徽流转、销毁与授予逻辑。 */
-import { AliveComponent } from "../../../core/domain/components/alive";
-import { BadgeComponent } from "../../../core/domain/components/badge";
-import { COMPONENT } from "../../../core/domain/components/names";
-import { VotingRightComponent } from "../../../core/domain/components/voting_right";
-import { IdentityComponent } from "../../../core/domain/entities/player";
-import { EntityId, GameEvent } from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+import { AliveComponent } from "../../../domain/components/alive";
+import { BadgeComponent } from "../../../domain/components/badge";
+import { COMPONENT } from "../../../domain/components/names";
+import { VotingRightComponent } from "../../../domain/components/voting-right";
+import { IdentityComponent } from "../../../domain/entities/player";
+import { EntityId, GameEvent } from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { canBeSheriff } from "../common/participation";
 import type { RoleCatalog } from "../roles/catalog";
 

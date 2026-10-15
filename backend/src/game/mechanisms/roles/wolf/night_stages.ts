@@ -11,13 +11,13 @@ import { resolveOrdinaryWolfKnife, type AcceptedWolfKnifeTarget } from "../../..
 import { nightmareKnifeBlocked } from "../nightmare_shadow/ports";
 import { bindWolfKnifeTargetQuery } from "./ports";
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
-import { EntityId, Phase } from "../../../../core/domain/model";
+import { EntityId, Phase } from "../../../../domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { wolfChatParticipants, wolfKnifeHolders, wolfTeamEvent } from "../wolf_team";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import { COMPONENT } from "../../../../domain/components/names";
+import { AliveComponent, aliveLifeVersion } from "../../../../domain/components/alive";
+import type { RoleComponent } from "../../../../domain/components/role";
 import type { NightStageContext } from "../../stages/night/contracts";
 
 const WOLF_DISCUSSION_MAX_ROUNDS = 3;

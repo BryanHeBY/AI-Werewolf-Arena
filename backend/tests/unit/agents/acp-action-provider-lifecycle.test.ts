@@ -5,7 +5,7 @@ import { describe, expect, test } from "bun:test";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
 import { AcpSessionFactory } from "../../../src/ai/integrations/acp/session";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { ActionRequest, Phase } from "../../../src/core/domain/model";
+import { ActionRequest, Phase } from "../../../src/domain/model";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 function request(deadlineAtMs: number): ActionRequest {

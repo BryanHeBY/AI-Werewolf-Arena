@@ -34,31 +34,31 @@ import { createEliminationWinConditionSpecs } from "../game/mechanisms/win_condi
 import { installGhostBride } from "../game/mechanisms/roles/ghost_bride/authority";
 import { installLonelyGirl } from "../game/mechanisms/roles/lonely_girl/lifecycle";
 import { installWildChild } from "../game/mechanisms/roles/wild_child/lifecycle";
-import { installInitialRoster } from "../core/domain/initial_roster";
+import { installInitialRoster } from "../domain/initial-roster";
 import { installShapeshifterDeal } from "../game/mechanisms/roles/shapeshifter/deal";
 import { installThiefDeal } from "../game/mechanisms/roles/thief/deal";
 import { supportsWallRoles } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 
-import { COMPONENT } from "../core/domain/components/names";
-import type { RoleComponent } from "../core/domain/components/role";
+import { COMPONENT } from "../domain/components/names";
+import type { RoleComponent } from "../domain/components/role";
 import { createRoleComponent } from "../game/observation/role-presentation";
 
-import { createVictoryComponent } from "../core/domain/components/victory";
-import { createIdentityComponent } from "../core/domain/entities/player";
-import { BoardConfig, EntityId, Role } from "../core/domain/model";
+import { createVictoryComponent } from "../domain/components/victory";
+import { createIdentityComponent } from "../domain/entities/player";
+import { BoardConfig, EntityId, Role } from "../domain/model";
 import {
   getDefaultWinConditionRegistry,
   getDefaultRoleCatalog,
   assignInitialSheriff,
   createDefaultRoleRegistry,
 } from "../game/mechanisms";
-import { ConditionRegistry } from "../core/domain/registries/condition_registry";
-import { DamageResolutionSystem } from "../core/domain/systems/damage_resolution_system";
-import { World } from "../core/domain/world";
+import { ConditionRegistry } from "../domain/registries/condition-registry";
+import { DamageResolutionSystem } from "../domain/systems/damage-resolution-system";
+import { World } from "../domain/world";
 import { PhaseManager } from "../game/engine/phase_manager";
 import { ToolGateway } from "../game/gateway/tool_gateway";
-import { createRandom, shuffled, type RandomSource } from "../core/domain/random";
+import { createRandom, shuffled, type RandomSource } from "../domain/random";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 
 /**

@@ -4,9 +4,9 @@
  */
 import { AWAKENED_TOOL_NAMES } from "./tool_names";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
-import { Camp, Phase, Role } from "../../../../core/domain/model";
+import { COMPONENT } from "../../../../domain/components/names";
+import { isRoleExecutionRetired } from "../../../../domain/role-execution-authority";
+import { Camp, Phase, Role } from "../../../../domain/model";
 import { isAliveTarget, type ToolRule, type ToolRuleMap } from "../../validation/contracts";
 import { canAwakenedKnife } from "./inheritance";
 import { currentAwakenedNight } from "./night_scope";

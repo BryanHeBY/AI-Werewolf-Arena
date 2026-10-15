@@ -7,9 +7,9 @@
  * 本组合不提前收齐 input、不复制结果、不存第二份效果、不退款或隐藏已付／失败前缀。
  */
 import { Role, type EntityId, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../core/domain/world";
-import type { DreamNightEffects } from "../core/domain/dream-night-effects";
-import type { DamageResolutionSystem } from "../core/domain/systems/damage_resolution_system";
+import type { World } from "../domain/world";
+import type { DreamNightEffects } from "../domain/dream-night-effects";
+import type { DamageResolutionSystem } from "../domain/systems/damage-resolution-system";
 import type { NightStageContext, NightStageState } from "../game/mechanisms/stages/night/contracts";
 import { DreamNightFrame } from "../game/mechanisms/roles/dreamer/night_frame";
 import { readDreamNightLinks } from "../game/mechanisms/roles/dreamer/night-ports";

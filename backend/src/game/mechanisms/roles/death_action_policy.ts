@@ -8,7 +8,7 @@ import {
   WOLF_KING_DEATH_ACTION_POLICIES,
   type BoardConfig,
   type DeathActionPolicy,
-} from "../../../core/domain/board";
+} from "../../../domain/board";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { RoleProfile } from "./contracts";
 export const DEFAULT_DEATH_ACTION_POLICY: DeathActionPolicy = "awa_qualified_sources_v1";

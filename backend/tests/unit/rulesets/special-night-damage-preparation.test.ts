@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { DeathCause, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent, aliveLifeVersion } from "../../../src/core/domain/components/alive";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent, aliveLifeVersion } from "../../../src/domain/components/alive";
 import type { NightPipelineResult } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import type { AppliedFault, FaultDecisionBoundary } from "../../../src/game/engine/fault_plan";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";

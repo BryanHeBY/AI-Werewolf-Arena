@@ -14,7 +14,7 @@ import {
 } from "../../../src/runtime/config/board_definition";
 import { configDiagnostic } from "../../../src/runtime/config/error_codes";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { Phase, Role, type ActionRequest } from "../../../src/core";
+import { Phase, Role, type ActionRequest } from "../../../src/domain";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultRoleCatalog,

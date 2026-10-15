@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { Camp, Role, WinCondition } from "../../../../core/domain";
+import { Camp, Role, WinCondition } from "../../../../domain";
 import type { NativeRoleContributions } from "../contracts";
 import { WOLF_NIGHT_STAGES } from "../wolf/ability-ports";
 import { WOLF_TOOL_SPECS, WOLF_STAGE_DIRECTIVES } from "../wolf/ability-ports";

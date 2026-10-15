@@ -6,10 +6,10 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { Role, Camp } from "../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { Phase } from "../../../../src/core/domain/identity";
+import { World } from "../../../../src/domain/world";
+import { Role, Camp } from "../../../../src/domain/identity";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { Phase } from "../../../../src/domain/identity";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 

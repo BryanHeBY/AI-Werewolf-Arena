@@ -3,7 +3,7 @@
  * 输出按动物、双生、贵族、录制计数的原顺序形成数据，保留重复权威查询与 schema.parse 的失败前缀。
  * 动物最初审计快照在 setup 查询前取得；本模块不重新推导规则、不改变资源或独立 verifier。
  */
-import type { World } from "../../core/domain/world";
+import type { World } from "../../domain/world";
 import type { RecordedCheckpoint } from "../reproduction";
 import { animalCheckpointSchema } from "./animal-format";
 import { fragrantCheckpointSchema } from "./fragrant-pair-format";

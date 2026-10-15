@@ -4,12 +4,12 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { animalInternalConfig } from "../../support/features/animal-dream/builders/roster";
-import { Role, type BoardConfig } from "../../../src/core";
+import { Role, type BoardConfig } from "../../../src/domain";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { WinCondition } from "../../../src/core/domain/model";
+import { WinCondition } from "../../../src/domain/model";
 
 const fixed = [
   Role.WolfBeauty,

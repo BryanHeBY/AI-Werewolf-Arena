@@ -4,23 +4,23 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
-import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
-import { DeathCause } from "../../../../src/core/domain/deaths";
-import { StatusMark } from "../../../../src/core/domain/identity";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { aliveLifeVersion } from "../../../../src/domain/components/alive";
+import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
+import { DeathCause } from "../../../../src/domain/deaths";
+import { StatusMark } from "../../../../src/domain/identity";
 import {
   captureNightLife,
   type NightImmunityClaim,
   type NightRadiantBacklash,
-} from "../../../../src/core/domain/night_effects";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+} from "../../../../src/domain/night-effects";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import {
   DreamNightFrame,
   type DreamNightLink,
 } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
-import type { GameEvent } from "../../../../src/core/domain/events";
+import type { GameEvent } from "../../../../src/domain/events";
 import { text } from "@ai-werewolf-arena/game-text";
 
 function bodies() {

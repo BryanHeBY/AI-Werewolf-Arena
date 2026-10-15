@@ -6,7 +6,7 @@
  * 五个印记方法在本模块原初始化点捕获一次；原库存／原型、实例遮蔽和已退休展示名称按原次序拒绝。
  * 捕获表、请求 WeakMap 和 guard 保持同一所有者；只读查询不冻结实例、不复制库存或写来源／付款。
  */
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { registerRequestAliasPropagation } from "../../../../domain/request-delivery";
 import {
   Phase,
   PotionType,
@@ -14,12 +14,12 @@ import {
   type ActionRequest,
   type ToolCall,
   type World,
-} from "../../../../core";
-import { COMPONENT, StatusMark } from "../../../../core";
+} from "../../../../domain";
+import { COMPONENT, StatusMark } from "../../../../domain";
 import {
   StatusMarksComponent,
   statusMarkSnapshot,
-} from "../../../../core/domain/components/status_marks";
+} from "../../../../domain/components/status-marks";
 import { demonSnapshot, exactDemonData, ownDemonData } from "./state-slot";
 /** 同一原请求的运行绑定；别名共享可提前的期限，World／上下文和current闭包不是序列化凭证。 */
 interface Turn {

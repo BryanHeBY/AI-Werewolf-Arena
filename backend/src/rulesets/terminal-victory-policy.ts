@@ -12,7 +12,7 @@ import {
   type VictoryCheckpoint,
   type WinDecision,
 } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../core/domain/world";
+import type { World } from "../domain/world";
 import { weddingSetup, weddingAssignment } from "../game/mechanisms/roles/ghost_bride/ports";
 import { replaceWithFoxVictory } from "../game/mechanisms/roles/cursed_fox/victory-ports";
 import { validateVictoryDecision } from "../game/mechanisms/win_conditions/validated-victory";

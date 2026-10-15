@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom, Phase, Role, type ActionRequest } from "../../../src/core";
+import { createRandom, Phase, Role, type ActionRequest } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import {

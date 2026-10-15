@@ -14,10 +14,10 @@ import {
   canSubmitWeddingTool,
 } from "../game/mechanisms/roles/ghost_bride/ports";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { ActionWindow, Phase } from "../core/domain/model";
+import { ActionWindow, Phase } from "../domain/model";
 import type { ToolRuleMap } from "../game/mechanisms/validation/contracts";
 import { wolfTeamPermissions } from "../game/mechanisms/roles/wolf_team";
-import { COMPONENT } from "../core/domain/components/names";
+import { COMPONENT } from "../domain/components/names";
 
 /** 三工具保原首失败顺序；actorId仅在原Camp读取点的source内取得，常量能力不新增查询。 */
 export const WOLF_VALIDATION_RULES: ToolRuleMap = {

@@ -3,8 +3,8 @@
  * 婚约权威拥有原付款、投票和关闭；本阶段保 await 后真实复验，不令旧 pending 请求重新有效。
  * priority=150／400 的原顺序保持，过期普通／婚约狼刀清理归规则组合，历史票不重建或退款。
  */
-import { StatusMark, COMPONENT } from "../../../../core/domain";
-import { aliveLifeVersion, type AliveComponent } from "../../../../core/domain/components/alive";
+import { StatusMark, COMPONENT } from "../../../../domain";
+import { aliveLifeVersion, type AliveComponent } from "../../../../domain/components/alive";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { executeWeddingTurn } from "./setup";
 import {

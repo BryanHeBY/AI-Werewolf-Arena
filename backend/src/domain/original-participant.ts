@@ -8,7 +8,7 @@ import { COMPONENT } from "./components/names";
 import type { Camp } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "./components/role";
 import type { World } from "./world";
-import { captureNightLife, livingNightLife, type NightLifeScope } from "./night_effects";
+import { captureNightLife, livingNightLife, type NightLifeScope } from "./night-effects";
 
 /** 保原可写顶层字段与组件引用；camp 是捕获的当前阵营值，可缺失；同值组件替换不撤权，也不授独立行动权限。 */
 export interface OriginalParticipant {

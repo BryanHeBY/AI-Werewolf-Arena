@@ -8,7 +8,7 @@ import { expect, test, spyOn } from "bun:test";
 import path from "node:path";
 import { readdir } from "node:fs/promises";
 import * as factory from "../../../src/runtime/player_agent_factory";
-import { bindRequestDeliveryGuard } from "../../../src/core";
+import { bindRequestDeliveryGuard } from "../../../src/domain";
 import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
 import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";

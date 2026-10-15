@@ -16,7 +16,7 @@ import {
   type BoardConfig,
   type GameEvent,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { findNightAbility, allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
 import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
@@ -51,7 +51,7 @@ import {
 } from "../../../../src/game/mechanisms";
 import { hasRoleInspectionNightCommit } from "../../../../src/game/mechanisms/roles/role_inspection/night_scope";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 
 const deck = [Role.MirrorGirl, Role.Wolf, Role.HiddenWolf, Role.Witch, Role.Guard, Role.Villager];
 

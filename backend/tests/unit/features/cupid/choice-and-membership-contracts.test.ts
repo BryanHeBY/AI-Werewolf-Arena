@@ -19,7 +19,7 @@ import {
   type ActionRequest,
   type ToolCall,
   type RuntimeSnapshot,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
 import {
@@ -53,7 +53,7 @@ import { cupidEventLabel } from "@ai-werewolf-arena/game-presentation";
 
 const deck = [Role.Cupid, Role.Hunter, Role.Wolf, Role.Villager, Role.Wolf, Role.Villager];
 
-type CupidPolicy = import("../../../../src/core/domain/board").CupidPolicy;
+type CupidPolicy = import("../../../../src/domain/board").CupidPolicy;
 
 const fixture = (roles = deck, policy: CupidPolicy = "netease_2017_cupid_follows_lovers_v1") => {
   const config = { ...foxBoard(roles), cupid: { policy } };

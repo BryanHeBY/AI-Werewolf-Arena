@@ -14,10 +14,10 @@ import {
   type RoleInspectionReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { formatNativeRolePart } from "@ai-werewolf-arena/game-presentation";
-import type { RoleComponent } from "../../core/domain/components/role";
-import type { World } from "../../core/domain/world";
-import type { CurrentCampSource } from "../../core/domain/components/camp";
-import { COMPONENT } from "../../core/domain/components/names";
+import type { RoleComponent } from "../../domain/components/role";
+import type { World } from "../../domain/world";
+import type { CurrentCampSource } from "../../domain/components/camp";
+import { COMPONENT } from "../../domain/components/names";
 import { inspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { nativeMirror, freshMirrorInspectionState } from "../mechanisms/roles/mirror_girl/ports";
 import { getTimeConsortState } from "../mechanisms/roles/time_wolf_consort/ports";

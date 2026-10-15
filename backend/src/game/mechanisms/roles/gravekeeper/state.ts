@@ -12,7 +12,7 @@ import type {
   GravekeeperReadState,
 } from "@ai-werewolf-arena/game-contract";
 
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import type { ExileFeedback } from "@ai-werewolf-arena/game-contract";
 import type { PlayerGravekeeperState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";

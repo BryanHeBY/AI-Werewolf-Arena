@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import type { FearActionPolicy, NightmareWolfActionPolicy } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
-import { Camp } from "../../../../src/core/domain/identity";
-import type { World } from "../../../../src/core/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import type { RoleComponent } from "../../../../src/domain/components/role";
+import { Camp } from "../../../../src/domain/identity";
+import type { World } from "../../../../src/domain/world";
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { NIGHTMARE_SHADOW_STATE_SLOT } from "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";
 import {

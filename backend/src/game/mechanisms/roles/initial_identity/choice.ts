@@ -4,7 +4,7 @@
  * 千面人换新身份先付款及失败补偿归其轻数据槽；盗贼换新身份原不消耗旧槽，保留分支不额外读取kind。
  * 此组合不发牌、不查询World或验证许可，不因数据写入保证身份安装成功或回滚失败。
  */
-import { Role, type RoleComponent, type ToolCall } from "../../../../core/domain";
+import { Role, type RoleComponent, type ToolCall } from "../../../../domain";
 import { getThiefState, readThiefTool } from "../thief/state-ports";
 import { getShapeshifterState, readShapeshifterTool } from "../shapeshifter/state-ports";
 import {

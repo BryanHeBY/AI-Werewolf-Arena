@@ -5,7 +5,7 @@
  * unchanged handwritten literals and identity snapshots as the independent oracle.
  * This builder never runs a whole game, transport or production rule verifier.
  */
-import { Phase, type ActionRequest } from "../../../../src/core/domain/model";
+import { Phase, type ActionRequest } from "../../../../src/domain/model";
 export function speakRequest(actorId = 1): ActionRequest {
   return {
     actorId,

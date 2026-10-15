@@ -14,17 +14,17 @@ import {
   type ActionProvider,
   type GameEvent,
   type World,
-} from "../../../../core";
+} from "../../../../domain";
 import {
   StatusMarksComponent,
   statusMarkSnapshot,
-} from "../../../../core/domain/components/status_marks";
+} from "../../../../domain/components/status-marks";
 import {
   captureNightLife,
   originalPoisonIntent,
   type NightPoisonClaim,
-} from "../../../../core/domain/night_effects";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+} from "../../../../domain/night-effects";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { recordNightAbilityUse, type NightAbility } from "../abilities";

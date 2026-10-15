@@ -18,7 +18,7 @@ import {
   createRandom,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core";
+} from "../../../src/domain";
 function fixture() {
   const deck = sixPlayerMvpConfig.roleSetups.flatMap(({ role, count }) =>
       Array<Role>(count).fill(role),

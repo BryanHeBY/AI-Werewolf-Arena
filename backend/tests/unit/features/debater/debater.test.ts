@@ -27,7 +27,7 @@ import {
   type GameEvent,
   type ActionRequest,
   type ToolCall,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { DebaterWindow } from "../../../../src/game/mechanisms/roles/debater/window";
 import {

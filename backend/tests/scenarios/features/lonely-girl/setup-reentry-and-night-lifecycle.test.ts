@@ -7,7 +7,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Phase, PotionType, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent } from "../../../../src/core";
+import { Role, Phase, PotionType, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 
 const deck = [Role.LonelyGirl, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Villager];

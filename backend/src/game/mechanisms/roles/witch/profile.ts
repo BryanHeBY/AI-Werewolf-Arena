@@ -7,7 +7,7 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：女巫角色 profile。 */
-import { Camp, PotionType, Role, WitchSelfHealRule } from "../../../../core/domain/model";
+import { Camp, PotionType, Role, WitchSelfHealRule } from "../../../../domain/model";
 import { NativeRoleContributions } from "../contracts";
 import { getWitchState, setWitchState } from "./ports";
 import { WITCH_LLM_REPAIR_PACK } from "./llm_repair";
@@ -18,7 +18,7 @@ import { z } from "zod";
 import {
   WITCH_KNIFE_VISIBILITY_POLICIES,
   WITCH_POTION_POLICIES,
-} from "../../../../core/domain/board";
+} from "../../../../domain/board";
 
 const witchParameters = z.strictObject({
   selfHeal: z.enum(WitchSelfHealRule).default(WitchSelfHealRule.Disabled),

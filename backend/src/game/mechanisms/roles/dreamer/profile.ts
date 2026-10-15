@@ -6,10 +6,10 @@
  */
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
-import { DREAM_PROTECTION_POLICIES } from "../../../../core/domain/board";
+import { DREAM_PROTECTION_POLICIES } from "../../../../domain/board";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
-import { Camp, Role, Phase } from "../../../../core/domain/model";
+import { Camp, Role, Phase } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { activeNightAbility } from "../abilities";
 import { getDreamerState, setDreamerState } from "./ports";

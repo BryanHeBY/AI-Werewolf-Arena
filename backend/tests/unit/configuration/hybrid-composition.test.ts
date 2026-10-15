@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { Role, type BoardConfig } from "../../../src/core";
+import { Role, type BoardConfig } from "../../../src/domain";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {

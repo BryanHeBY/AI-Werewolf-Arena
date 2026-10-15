@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import type { TimeConsortReadState, TimeConsortState } from "@ai-werewolf-arena/game-contract";
-import { Camp, type RoleComponent } from "../../../../src/core";
+import { Camp, type RoleComponent } from "../../../../src/domain";
 import { TIME_CONSORT_STATE_SLOT as SLOT } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state-slot";
 
 // worldless 数据样本只持显式 Camp 句柄，不建立 Role→World／Camp 回退。

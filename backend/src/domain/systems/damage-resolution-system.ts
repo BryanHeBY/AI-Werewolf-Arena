@@ -8,7 +8,7 @@ import { COMPONENT } from "../components/names";
 import { EntityId, StatusMark, type DeathSources } from "../model";
 import { World } from "../world";
 import { attachDamagePoisonEvidence } from "../damage-evidence";
-import type { NightPoisonRoute, NightPoisonReflection } from "../night_effects";
+import type { NightPoisonRoute, NightPoisonReflection } from "../night-effects";
 import { resolveNightDamageTarget } from "../night-damage-target";
 import { planNightDamage, type NightDamageEffects } from "../night-damage-plan";
 

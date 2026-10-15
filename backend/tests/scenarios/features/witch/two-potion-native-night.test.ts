@@ -16,7 +16,7 @@ import {
   type RoleComponent,
   type ToolCall,
   type StatusMarksComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { WITCH_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/witch/night_stages";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
@@ -26,7 +26,7 @@ import {
 } from "../../../../src/runtime/config/board_definition";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 

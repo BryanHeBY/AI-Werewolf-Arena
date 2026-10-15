@@ -4,7 +4,7 @@
  * Output and oracle: Literal terminal timing, live-state, stock and failed-prefix assertions remain tied to actual recordings; failed healing is not repaired into a legal action.
  */
 import { expect, test } from "bun:test";
-import { Camp, Phase } from "../../../../src/core";
+import { Camp, Phase } from "../../../../src/domain";
 import { mistRecording, type MistRequestObservation } from "../../../support/features/mist-raven/drivers/recording";
 import { type MistRecordVariant } from "../../../support/features/mist-raven/builders/board";
 for (const variant of ["last-villager-pass", "last-villager-heal", "last-god"] as const)

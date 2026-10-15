@@ -10,7 +10,7 @@ import {
   WitchSelfHealRule,
   ActionWindow,
   type BoardConfig,
-} from "../../core/domain/model";
+} from "../../domain/model";
 export const fragrantPairSeerTwelveConfig: BoardConfig = {
   boardSize: 12,
   enableSheriff: true,

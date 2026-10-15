@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import { z } from "zod";
-import { Camp, Role, COMPONENT } from "../../../src/core";
+import { Camp, Role, COMPONENT } from "../../../src/domain";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { createRecordedPlayerSchema } from "../../../src/recording/checkpoint/player-format";
 import type { RecordedPlayerState } from "../../../src/recording/reproduction";

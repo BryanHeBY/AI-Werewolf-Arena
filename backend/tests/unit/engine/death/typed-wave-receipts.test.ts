@@ -6,12 +6,12 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
+import { World } from "../../../../src/domain/world";
+import { aliveLifeVersion } from "../../../../src/domain/components/alive";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import type { ComponentName } from "../../../../src/core/domain/components/names";
+import type { ComponentName } from "../../../../src/domain/components/names";
 import type { DeathHookResult } from "../../../../src/game/mechanisms/hooks/hook_registry";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import {
   Camp,
   DeathCause,
@@ -20,15 +20,15 @@ import {
   type DeathSources,
   type GameEvent,
   type RuntimeSnapshot,
-} from "../../../../src/core/domain/model";
+} from "../../../../src/domain/model";
 import type {
   NightIntentOrigin,
   NightPoisonRoute,
-} from "../../../../src/core/domain/night_effects";
-import { captureNightLife, originalPoisonIntent } from "../../../../src/core/domain/night_effects";
-import { damagePoisonRoutes } from "../../../../src/core/domain/damage-evidence";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
-import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
+} from "../../../../src/domain/night-effects";
+import { captureNightLife, originalPoisonIntent } from "../../../../src/domain/night-effects";
+import { damagePoisonRoutes } from "../../../../src/domain/damage-evidence";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
+import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { StatusMark } from "@ai-werewolf-arena/game-contract";
 import { DeathCommitter } from "../../../../src/game/engine/death-committer";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";

@@ -4,7 +4,7 @@
  * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
-import { ActionWindow } from "../../../../../src/core";
+import { ActionWindow } from "../../../../../src/domain";
 import type { MistRecordVariant } from "./board";
 
 type NightPlan = {

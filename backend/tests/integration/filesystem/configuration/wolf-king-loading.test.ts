@@ -3,7 +3,7 @@
  * Input: Existing public board/game JSON files plus literal undeclared variants and unregistered roles.
  * Output and oracle: Explicit profile/default values and strict rejection are asserted; parsed synthetic provider metadata never makes a model request.
  */
-import { Role } from "../../../../src/core";
+import { Role } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

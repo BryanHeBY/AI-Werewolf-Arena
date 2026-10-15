@@ -6,8 +6,8 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Camp, COMPONENT, Role, type GameEvent, type ToolCall } from "../../../src/core";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { Camp, COMPONENT, Role, type GameEvent, type ToolCall } from "../../../src/domain";
+import { createRoleComponent } from "../../../src/domain/components/role";
 import type { RoleInitializationComponent, RoleInitContext } from "../../../src/game/mechanisms/roles/contracts";
 import { getDebaterState, initializeDebaterState } from "../../../src/game/mechanisms/roles/debater/state";
 import { hasActiveDebate, hasDebateCommit } from "../../../src/game/mechanisms/roles/debater/authority";

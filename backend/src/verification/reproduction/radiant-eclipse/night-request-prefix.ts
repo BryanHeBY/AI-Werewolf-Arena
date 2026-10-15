@@ -5,7 +5,7 @@
  * 原角色查询、能力副本字段及错误顺序保持，类型和值依赖仍由本族具体叶拥有。
  */
 import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "../../../recording/reproduction";
-import { Role, Camp } from "../../../core/domain/identity";
+import { Role, Camp } from "../../../domain/identity";
 import {
   radiantCheck as check,
   radiantEqual as equal,

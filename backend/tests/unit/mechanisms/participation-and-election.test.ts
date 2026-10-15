@@ -15,7 +15,7 @@ import {
   type ActionRequest,
   type GameEvent,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { ActionReception } from "../../../src/game/gateway/action-reception";
 import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
@@ -46,7 +46,7 @@ import {
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
 import { getIdiotState } from "../../../src/game/mechanisms/roles/idiot/ports";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { DeathCause } from "../../../src/core/domain/deaths";
+import { DeathCause } from "../../../src/domain/deaths";
 
 const roles = [
   Role.Wolf,

@@ -12,7 +12,7 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
 test("Order Prince public board roundtrip", async () => {
   const config = structuredClone(orderPrinceTwelveConfig);
   expect(boardConfigSchema.parse(config)).toEqual(config);

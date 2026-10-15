@@ -15,10 +15,10 @@ import {
   WitchSelfHealRule,
   type BoardConfig,
   type GameEvent,
-} from "../../../src/core";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
-import type { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+} from "../../../src/domain";
+import type { RoleComponent } from "../../../src/domain/components/role";
+import type { StatusMarksComponent } from "../../../src/domain/components/status-marks";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { KnightDuelWindow as DuelExecutor } from "../../../src/game/mechanisms/roles/knight/ports";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

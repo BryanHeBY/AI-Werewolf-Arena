@@ -2,11 +2,11 @@
  * 寻香原生运行场景测试：验证实际绑定、来源死亡、继承狼刀、次序及终局。输入为原受控角色与真实周期；既有字面预期和不可变 fixture 保留因果链，不生成新动作或 oracle。
  */
 import { expect, test } from "bun:test";
-import { createRandom, type RandomSource } from "../../../../src/core/domain/random";
-import { Camp, Phase } from "../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import type { AliveComponent } from "../../../../src/core/domain/components/alive";
-import type { ActionRequest } from "../../../../src/core/domain/actions";
+import { createRandom, type RandomSource } from "../../../../src/domain/random";
+import { Camp, Phase } from "../../../../src/domain/identity";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import type { AliveComponent } from "../../../../src/domain/components/alive";
+import type { ActionRequest } from "../../../../src/domain/actions";
 import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";

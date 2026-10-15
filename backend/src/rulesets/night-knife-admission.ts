@@ -7,10 +7,10 @@
  */
 import { bindWolfKnifeTargetQuery } from "../game/mechanisms/roles/wolf/ports";
 import { weddingKnifeCurrent } from "../game/mechanisms/roles/ghost_bride/ports";
-import { aliveLifeVersion } from "../core/domain/components/alive";
-import { COMPONENT } from "../core/domain/components/names";
-import { StatusMark } from "../core/domain/model";
-import type { World } from "../core/domain/world";
+import { aliveLifeVersion } from "../domain/components/alive";
+import { COMPONENT } from "../domain/components/names";
+import { StatusMark } from "../domain/model";
+import type { World } from "../domain/world";
 import type { NightStageState } from "../game/mechanisms/stages/night/contracts";
 
 /** 仅持有原表达式的延迟读取，不能序列化、预读或将阶段声明当作提交许可。 */

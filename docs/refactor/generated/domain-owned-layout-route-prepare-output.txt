@@ -1,0 +1,55 @@
+{
+  "revision": "6cb97e6acc52f35bc094fb67e9badb681230ec6a",
+  "moves": 42,
+  "deleted": 1,
+  "changedSources": 1144,
+  "moduleSpecifierEdits": 2836,
+  "unresolved": [],
+  "otherCoreLiterals": [
+    {
+      "from": "backend/scripts/import_boundaries.cjs",
+      "line": 11,
+      "value": "core"
+    },
+    {
+      "from": "backend/tests/architecture/engine-fingerprint-review.test.ts",
+      "line": 216,
+      "value": "backend/src/core"
+    },
+    {
+      "from": "backend/tests/integration/recording/outcome-fingerprint-and-checkpoint-wiring.test.ts",
+      "line": 29,
+      "value": "backend/src/core"
+    },
+    {
+      "from": "tooling/refactor/inventory.ts",
+      "line": 14,
+      "value": "backend/src/core"
+    },
+    {
+      "from": "tooling/refactor/inventory.ts",
+      "line": 711,
+      "value": "backend/src/core/index.ts"
+    },
+    {
+      "from": "tooling/refactor/inventory.ts",
+      "line": 712,
+      "value": "backend/src/core/domain/index.ts"
+    },
+    {
+      "from": "tooling/refactor/public-port-facets.test.ts",
+      "line": 42,
+      "value": "backend/src/core/domain/input.ts"
+    },
+    {
+      "from": "tooling/refactor/trace-game.ts",
+      "line": 23,
+      "value": "backend/src/core/index.ts"
+    },
+    {
+      "from": "tooling/refactor/trace-game.ts",
+      "line": 65,
+      "value": "core"
+    }
+  ]
+}

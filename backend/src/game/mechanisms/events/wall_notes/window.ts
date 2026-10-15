@@ -9,11 +9,11 @@ import {
   type ActionProvider,
   type GameEvent,
   type ToolCall,
-} from "../../../../core/domain";
-import { shuffled, type RandomSource } from "../../../../core/domain/random";
+} from "../../../../domain";
+import { shuffled, type RandomSource } from "../../../../domain/random";
 import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
-import type { RequestLeaseTurn } from "../../../../core/domain/request-lease";
-import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
+import type { RequestLeaseTurn } from "../../../../domain/request-lease";
+import type { ActionRequestConstructionPort } from "../../../../domain/actions";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import {
   openWall,

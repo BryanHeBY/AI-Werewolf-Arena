@@ -4,10 +4,10 @@
  * 角色缺失仍先报原错误；发布按原 push 方法、Date.now、字段和 source 克隆顺序执行，错误不撤回先前库存写入。
  * 不校验新 payload、寻找替代实例、授予行动权限或建立额外资源账本；本内部叶不经机制聚合出口公开。
  */
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import type { EntityId, GameEvent } from "../../../core/domain/model";
-import type { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import type { RoleComponent } from "../../../domain/components/role";
+import type { EntityId, GameEvent } from "../../../domain/model";
+import type { World } from "../../../domain/world";
 import type { NightAbilityReadView } from "./abilities";
 
 export const roleOf = (world: World, actorId: EntityId): RoleComponent => {

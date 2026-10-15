@@ -6,8 +6,8 @@
  */
 import { expect, test } from "bun:test";
 import type { OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/order-prince";
-import { Camp, Role, WinCondition, type RoleComponent } from "../../../../src/core";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { Camp, Role, WinCondition, type RoleComponent } from "../../../../src/domain";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { ORDER_PRINCE_STATE_SLOT as SLOT } from "../../../../src/game/mechanisms/roles/order_prince/state-slot";

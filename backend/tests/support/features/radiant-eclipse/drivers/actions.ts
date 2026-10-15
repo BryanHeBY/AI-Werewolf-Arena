@@ -5,9 +5,9 @@
  * It keeps the original local reads and defaults, without running a model,
  * advancing a phase, changing stock or regenerating expected outcomes.
  */
-import { PotionType } from "../../../../../src/core";
-import type { ActionRequest } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { PotionType } from "../../../../../src/domain";
+import type { ActionRequest } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 
 export interface RadiantChoices {
   swallow?: number | null;

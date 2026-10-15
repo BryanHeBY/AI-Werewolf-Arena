@@ -13,8 +13,8 @@ import {
   type ActionRequest,
   type GameEvent,
   type RoleComponent,
-} from "../../../src/core";
-import { type AliveComponent } from "../../../src/core/domain/components/alive";
+} from "../../../src/domain";
+import { type AliveComponent } from "../../../src/domain/components/alive";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   allDeathGuns,
@@ -32,10 +32,10 @@ import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { ActionReception } from "../../../src/game/gateway/action-reception";
 import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { HookRegistry } from "../../../src/game/mechanisms/hooks/hook_registry";
 import { giftGunDeathHook } from "../../../src/game/mechanisms/roles/gift_gun_death_hook";
-import { captureNightLife } from "../../../src/core/domain/night_effects";
+import { captureNightLife } from "../../../src/domain/night-effects";
 
 const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 

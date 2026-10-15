@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type GameEvent, type RoleComponent } from "../../../src/core";
+import { COMPONENT, Phase, Role, type GameEvent, type RoleComponent } from "../../../src/domain";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";

@@ -1,7 +1,7 @@
 /**
  * 单元测试用原内存请求、约束 DTO 与明确畸形输入验证回合约束解析／评估。原字面预期、引用快照和拒绝断言构成 oracle；迁移不重新生成预期。测试组件／mock 不运行模型或物理传输，支持文件、fixture 字节、政策与状态行为保持。
  */
-import { ActionRequest, Phase } from "../../../src/core/domain/model";
+import { ActionRequest, Phase } from "../../../src/domain/model";
 import { evaluateTurnConstraints, resolveTurnConstraints } from "../../../src/game/gateway/turn-constraints";
 
 describe("turn_constraints", () => {

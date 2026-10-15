@@ -5,7 +5,7 @@
  * 子狐 pass、河豚主动／狼刀被动及白猫延迟期限各自计付，不能用归档合法性替代运行权限。
  */
 import { z } from "zod";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 
 import { ANIMAL_DREAM_POLICY, CAT_SKIPPED_VOTE_POLICIES, type CatSkippedVotePolicy } from "@ai-werewolf-arena/game-contract";
 export { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";

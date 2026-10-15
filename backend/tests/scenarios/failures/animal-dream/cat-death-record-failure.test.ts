@@ -22,8 +22,8 @@ import {
   type ActionRequest,
   type ToolCall,
   type AliveComponent,
-} from "../../../../src/core";
-import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
+} from "../../../../src/domain";
+import { aliveLifeVersion } from "../../../../src/domain/components/alive";
 for (const point of ["deferred", "actually_dead"] as const)
   test(`R actual PM+Trace Cat ${point} publication-failure archive`, async () => {
     const g = animalGame(),

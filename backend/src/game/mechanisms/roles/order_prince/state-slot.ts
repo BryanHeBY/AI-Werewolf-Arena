@@ -6,10 +6,10 @@
  * JSON仅为原 expected 比较；赋值／编码失败保留已写前缀，不回滚资源或建立第二份状态。
  * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
 import type { OrderPrinceChoice, OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { types } from "node:util";
-import { Camp, type RoleComponent } from "../../../../core";
+import { Camp, type RoleComponent } from "../../../../domain";
 
 export const ORDER_PRINCE_ROLE = "order_prince" as const;
 export const ORDER_PRINCE_POLICY = "awa_order_prince_first_ballot_v1" as const;

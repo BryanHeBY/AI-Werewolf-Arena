@@ -5,8 +5,8 @@
  * 全局 JSON 探针在 finally 恢复；实际资格、冻结和完整流程仍由原 authority 精准案例覆盖。
  */
 import { expect, test } from "bun:test";
-import { Role } from "../../../../src/core/domain/identity";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { Role } from "../../../../src/domain/identity";
+import { createRoleComponent } from "../../../../src/domain/components/role";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {

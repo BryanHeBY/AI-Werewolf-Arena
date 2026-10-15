@@ -4,14 +4,14 @@
  * 死亡许可只覆盖本次选择；持有者与许可仍当前时，已选目标生命失效按原规则改为销毁。
  * 玩家异常不被伪装成一次有效选择；显式构造依赖仅在原 new 点读取，失败不补交警徽且仍关闭本次许可。
  */
-import { aliveLifeVersion, type AliveComponent } from "../../../core/domain/components/alive";
-import type { BadgeComponent } from "../../../core/domain/components/badge";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import { COMPONENT } from "../../../core/domain/components/names";
-import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
-import type { ActionProvider, EntityId, GameEvent, Phase } from "../../../core/domain/model";
-import type { World } from "../../../core/domain/world";
-import type { ActionRequestFactoryConstructorPort } from "../../../core/domain/actions";
+import { aliveLifeVersion, type AliveComponent } from "../../../domain/components/alive";
+import type { BadgeComponent } from "../../../domain/components/badge";
+import type { RoleComponent } from "../../../domain/components/role";
+import { COMPONENT } from "../../../domain/components/names";
+import { captureNightLife, livingNightLife } from "../../../domain/night-effects";
+import type { ActionProvider, EntityId, GameEvent, Phase } from "../../../domain/model";
+import type { World } from "../../../domain/world";
+import type { ActionRequestFactoryConstructorPort } from "../../../domain/actions";
 import type { ToolGateway } from "../../gateway/tool_gateway";
 import {
   badgeSuccessorEligible,

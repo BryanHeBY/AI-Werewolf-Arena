@@ -3,9 +3,9 @@
  * 生命周期、库存及选择提交仍由共享所有者复验；请求别名统一走公共传播入口，不以查询或构造依赖授予许可。
  * 包装类构造时才读取 shared 类，并透传同一惰性依赖；请求工厂仍在共享窗口原执行点创建，异常原样传播。
  */
-import type { World, ActionRequest, Phase, GameEvent } from "../../../../core/domain";
+import type { World, ActionRequest, Phase, GameEvent } from "../../../../domain";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 // 公共选择 API 保同一原绑定；不在模块顶层捕获窗口类，原构造器仍在 new 表达式处晚读。
 import * as shared from "../initial_identity/ports";
 export type ThiefScope = shared.InitialIdentityScope;

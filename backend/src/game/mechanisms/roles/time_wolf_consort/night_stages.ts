@@ -3,10 +3,10 @@
  * 输出为原私有锁定／跳过事实；反射付款仍在之后具体原生效果回执的提交时点。
  * 等待及网关前后保原名单／当前日复验，提交历史先于事件发布；失败不回滚已付前缀。
  */
-import type { AliveComponent } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Phase } from "../../../../core/domain/identity";
+import type { AliveComponent } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Phase } from "../../../../domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { getTimeConsortState } from "./state-slot";
 import {

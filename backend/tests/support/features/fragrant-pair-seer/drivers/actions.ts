@@ -6,9 +6,9 @@
  * advancing a phase, changing stock or regenerating expected outcomes.
  */
 import type { FragrantRuntimePlan } from "../contracts";
-import { PotionType } from "../../../../../src/core/domain/identity";
-import type { ActionRequest } from "../../../../../src/core/domain/actions";
-import type { ToolCall } from "../../../../../src/core/domain/actions";
+import { PotionType } from "../../../../../src/domain/identity";
+import type { ActionRequest } from "../../../../../src/domain/actions";
+import type { ToolCall } from "../../../../../src/domain/actions";
 
 export function fragrantRuntimeAction(
   r: ActionRequest,

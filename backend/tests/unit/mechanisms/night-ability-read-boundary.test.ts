@@ -9,7 +9,7 @@ import type { NightAbilityStates } from "@ai-werewolf-arena/game-contract";
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role, WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
-import { type RoleComponent } from "../../../src/core/domain/components/role";
+import { type RoleComponent } from "../../../src/domain/components/role";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import {
   activeNightAbility,

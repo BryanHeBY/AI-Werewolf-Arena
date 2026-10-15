@@ -15,20 +15,20 @@ import {
   weddingSetup,
   ghostBrideReady,
 } from "../game/mechanisms/roles/ghost_bride/ports";
-import { AliveComponent, aliveLifeVersion } from "../core/domain/components/alive";
-import { COMPONENT } from "../core/domain/components/names";
-import { RoleComponent } from "../core/domain/components/role";
-import { isRoleExecutionRetired } from "../core/domain/role-execution-authority";
+import { AliveComponent, aliveLifeVersion } from "../domain/components/alive";
+import { COMPONENT } from "../domain/components/names";
+import { RoleComponent } from "../domain/components/role";
+import { isRoleExecutionRetired } from "../domain/role-execution-authority";
 import {
   ActionProvider,
   ActionWindow,
   Phase,
   type SelfDestructSelection,
-} from "../core/domain/model";
-import { RoleRegistry } from "../core/domain/registries/role_registry";
-import { World } from "../core/domain/world";
+} from "../domain/model";
+import { RoleRegistry } from "../domain/registries/role-registry";
+import { World } from "../domain/world";
 import { ToolGateway } from "../game/gateway/tool_gateway";
-import type { ActionRequestConstructionPort } from "../core/domain/actions";
+import type { ActionRequestConstructionPort } from "../domain/actions";
 import { getWhiteWolfKingState } from "../game/mechanisms/roles/white_wolf_king/ports";
 
 /** 并发收集选项，按编号升序复验并尝试提交；回调明确返回 false 时跳过该选项，返回首个未被拒绝的选择。 */

@@ -8,12 +8,12 @@
  * F05a 将永久退休拒绝放在新执行入口；已消费提案的纯原体／来源／生命及 capture.isCurrent 不含此判断。
  */
 import type { DeathGun, DeathGunReadView } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
-import { Camp, type EntityId, type GameEvent } from "../../../core/domain/model";
-import { aliveLifeVersion, type AliveComponent } from "../../../core/domain/components/alive";
-import type { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import type { RoleComponent } from "../../../domain/components/role";
+import { isRoleExecutionRetired } from "../../../domain/role-execution-authority";
+import { Camp, type EntityId, type GameEvent } from "../../../domain/model";
+import { aliveLifeVersion, type AliveComponent } from "../../../domain/components/alive";
+import type { World } from "../../../domain/world";
 import { projectDeathGun } from "./player_state";
 
 // 原体证明捕获原 World、角色、private 容器、生命版本及来源；相同字符串 ID 不构成授权。

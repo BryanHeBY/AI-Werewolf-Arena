@@ -7,7 +7,7 @@
  */
 
 import type { Pair, PairSeerState } from "@ai-werewolf-arena/game-contract";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 export { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";

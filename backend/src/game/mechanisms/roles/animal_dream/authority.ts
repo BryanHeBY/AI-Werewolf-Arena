@@ -5,11 +5,11 @@
  * 此处仍拥有生命、当前性、河豚租约建立、付款及关闭顺序。
  * 关闭、失败和中止永久撤销原窗口，不允许替换身体恢复，不退还已提交的效果或记录前缀。
  */
-import type { World } from "../../../../core/domain/world";
-import { Camp } from "../../../../core/domain/identity";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
-import { aliveLifeVersion } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
+import type { World } from "../../../../domain/world";
+import { Camp } from "../../../../domain/identity";
+import { snapshotPlainData } from "../../../../domain/plain-data";
+import { aliveLifeVersion } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
 import { bindCharm } from "../wolf_beauty/charm-ports";
 import {
   animalRequestEnvelopeHeader,

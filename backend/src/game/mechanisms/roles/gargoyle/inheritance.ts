@@ -4,11 +4,11 @@
  * 刷新先写继承标记，后发表觉醒事实，发表失败不退标记；本模块不改角色或从未提交死亡推断继承。
  * 查验完成通过轻公开记账端口晚读，不能以公开函数或合法状态形状重新授权旧请求。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Role, type GameEvent } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import { getGargoyleState, recordGargoyleKnifeInheritance } from "./state";
 import { completedGargoyleInspection } from "../role_inspection/night-commit-ports";
 

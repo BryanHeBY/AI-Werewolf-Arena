@@ -3,12 +3,12 @@
  * 未启警长或无警长保原早返回，不读取／创建工厂；有效持徽者之后才独立 new 本次方向工厂。
  * 请求、玩家或网关失败保原异常，方向事实在原回复处理之后发布；此模块不赋警徽、改生命或共享选举工厂。
  */
-import { COMPONENT } from "../../../core/domain/components/names";
-import { IdentityComponent } from "../../../core/domain/entities/player";
-import { ActionProvider, EntityId, GameEvent, Phase } from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import { IdentityComponent } from "../../../domain/entities/player";
+import { ActionProvider, EntityId, GameEvent, Phase } from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
-import type { ActionRequestFactoryConstructorPort } from "../../../core/domain/actions";
+import type { ActionRequestFactoryConstructorPort } from "../../../domain/actions";
 import { findSheriffId } from "./badge";
 
 export type SpeakerDirection = "clockwise" | "counter_clockwise";

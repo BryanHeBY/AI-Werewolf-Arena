@@ -4,9 +4,9 @@
  * 仅已获取且未正常关闭的单元尝试 abort；开夜或发布失败保留此前前缀，不重抽、退款或延长已付绑定。
  * 原阵容、选择及关系写权仍由 authority 持有。
  */
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { RandomDraws } from "../../../../core/domain/random";
+import type { RandomDraws } from "../../../../domain/random";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import { beginFragrantNight, closeFragrantNight, fragrantAuthoritySnapshot } from "./authority";
 import { FRAGRANT_PAIR_POLICY } from "./state";

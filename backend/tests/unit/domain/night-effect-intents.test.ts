@@ -6,16 +6,16 @@
  */
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
 
-import { StatusMark } from "../../../src/core/domain/identity";
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
+import { StatusMark } from "../../../src/domain/identity";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import {
   captureNightLife, mechanicalNightIntent, awakenedNightIntent, originalPoisonIntent,
   planMechanicalDamage, type NightMechanicalEffect,
-} from "../../../src/core/domain/night_effects";
-import { planNightDamage } from "../../../src/core/domain/night-damage-plan";
+} from "../../../src/domain/night-effects";
+import { planNightDamage } from "../../../src/domain/night-damage-plan";
 
 function fixture() {
   const world = new World();

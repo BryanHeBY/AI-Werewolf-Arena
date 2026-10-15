@@ -10,7 +10,7 @@ import { animalInternalConfig } from "../../support/features/animal-dream/builde
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
 import { parseReproductionRecord } from "../../../src/recording/reproduction";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { Role, Phase, type BoardConfig } from "../../../src/core";
+import { Role, Phase, type BoardConfig } from "../../../src/domain";
 const roles = [
   Role.WolfBeauty,
   Role.Wolf,

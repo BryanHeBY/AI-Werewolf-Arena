@@ -5,7 +5,7 @@
  * 不创建运行租约、选择实际行动或改变截止时间；失败仅拒绝归档，不改变已付资源或关闭／重开真实窗口。
  */
 import { radiantNightRequestPrefix } from "./night-request-prefix";
-import { Camp, Phase, Role } from "../../../core/domain/identity";
+import { Camp, Phase, Role } from "../../../domain/identity";
 import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "../../../recording/reproduction";
 import {
   radiantCheck as check,

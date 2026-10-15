@@ -6,15 +6,15 @@
  */
 import type { OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { types } from "node:util";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { aliveLifeDescriptor, aliveLifeVersion } from "../../../../core/domain/components/alive";
-import type { World } from "../../../../core/domain/world";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { aliveLifeDescriptor, aliveLifeVersion } from "../../../../domain/components/alive";
+import type { World } from "../../../../domain/world";
 import {
   captureNightLife,
   livingNightLife,
   type NightLifeScope,
-} from "../../../../core/domain/night_effects";
+} from "../../../../domain/night-effects";
 import {
   getOrderPrinceState,
   ORDER_PRINCE_STATE_SLOT,

@@ -8,7 +8,7 @@
  * 定序王子的重收票政策归具名同步组合；同一 options 局部在原点替换，后续 PK 共享严格复验闭包。
  */
 import { revealSecretBodyExile } from "../../mechanisms/roles/noble_secret_body/exile-ports";
-import { openExileUnit, attachExileUnit } from "../../../core/domain/exile-unit";
+import { openExileUnit, attachExileUnit } from "../../../domain/exile-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
   beginAnimalExileUnit,
@@ -18,10 +18,10 @@ import {
 import { runAnimalPufferChoice } from "../../mechanisms/roles/animal_dream/choice-ports";
 import { prepareMappedExile, resolveMappedExile, mappedExileSummary } from "../../../rulesets/mapped-exile-resolution";
 import { recollectOrderPrinceVotes } from "../../../rulesets/order-prince-revote";
-import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
-import { COMPONENT } from "../../../core/domain/components/names";
-import { IdentityComponent } from "../../../core/domain/entities/player";
-import { VotingRightComponent } from "../../../core/domain/components/voting_right";
+import { captureNightLife, livingNightLife } from "../../../domain/night-effects";
+import { COMPONENT } from "../../../domain/components/names";
+import { IdentityComponent } from "../../../domain/entities/player";
+import { VotingRightComponent } from "../../../domain/components/voting-right";
 import {
   ActionProvider,
   ActionWindow,
@@ -31,12 +31,12 @@ import {
   TieBreakerStrategy,
   VoteRecord,
   VotingSummary,
-} from "../../../core/domain/model";
-import { RoleRegistry } from "../../../core/domain/registries/role_registry";
+} from "../../../domain/model";
+import { RoleRegistry } from "../../../domain/registries/role-registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { EventRegistry } from "../event_registry";
-import { World } from "../../../core/domain/world";
+import { World } from "../../../domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../../../rulesets/self-destruct-window";
 import { canBeExiled, canVoteExile } from "../../mechanisms/common/participation";
@@ -50,7 +50,7 @@ export interface VotingPipelineResult {
   summary: VotingSummary;
   interrupted: boolean;
   removed: EntityId[];
-  selfDestruct?: import("../../../core").SelfDestructSelection;
+  selfDestruct?: import("../../../domain").SelfDestructSelection;
 }
 
 export interface VotingPipelineOptions {
@@ -60,7 +60,7 @@ export interface VotingPipelineOptions {
   day: number;
   isCurrent?: () => boolean;
   commitSelfDestruct?: (
-    choice: import("../../../core").SelfDestructSelection,
+    choice: import("../../../domain").SelfDestructSelection,
   ) => Promise<void | boolean>;
 }
 

@@ -5,8 +5,8 @@
  * 机制仍拥有许可、状态、付款与关闭；组合不缓存演员、改变配置、推进阶段或判断胜负。
  */
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../core/domain/world";
-import type { RoleRegistry } from "../core/domain/registries/role_registry";
+import type { World } from "../domain/world";
+import type { RoleRegistry } from "../domain/registries/role-registry";
 import type { ToolGateway } from "../game/gateway/tool_gateway";
 import type { DaytimeInterruptionComposition } from "../game/engine/daytime-interruption-contracts";
 import { SelfDestructWindow } from "./self-destruct-window";

@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Camp, Phase, Role, WinCondition, type ActionRequest } from "../../../src/core";
+import { COMPONENT, Camp, Phase, Role, WinCondition, type ActionRequest } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 for (const locale of ["zh-CN", "en"] as const)

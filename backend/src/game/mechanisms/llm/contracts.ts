@@ -3,8 +3,8 @@
  * 输出契约为修复候选或提示文字。实际处理函数与目标规则由各 registry 拥有。
  * 可写字段与 readonly 候选类型不复制、冻结或验证输入；提示及修复结果不授予请求权限或库存。
  */
-import { EntityId, Role, ToolName } from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+import { EntityId, Role, ToolName } from "../../../domain/model";
+import { World } from "../../../domain/world";
 
 /** 修复只取得本次行动者编号；该字段本身不证明请求绑定、身份或当前行动资格。 */
 export interface CoerceContext {

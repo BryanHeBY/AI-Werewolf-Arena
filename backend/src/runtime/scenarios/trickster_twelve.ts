@@ -10,7 +10,7 @@ import {
   WinCondition,
   WitchSelfHealRule,
   type BoardConfig,
-} from "../../core/domain/model";
+} from "../../domain/model";
 export const tricksterTwelveConfig: BoardConfig = {
   boardSize: 12,
   trickster: { policy: "awa_trickster_exile_v1" },

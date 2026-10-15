@@ -5,7 +5,7 @@
  * 每次 World／语言／Catalog／板子读取保留位置，不建立新状态镜像；角色 renderer 晚调用，
  * 失败保留原回调和读取前缀。模板、人设、传输提示及实际行动提交由各自所有者负责。
  */
-import { COMPONENT } from "../../core/domain/components/names";
+import { COMPONENT } from "../../domain/components/names";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { rolePresentationRenderer } from "./role-presentation";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -45,13 +45,13 @@ import { ownNightActions } from "../mechanisms/roles/night_action_history";
 import { debateVoteBlocked } from "../mechanisms/roles/debater/authority";
 import { projectLover } from "../mechanisms/roles/cupid/relation";
 import { projectEclipseState } from "../mechanisms/roles/radiant_eclipse/ports";
-import { RoleComponent } from "../../core/domain/components/role";
-import { ActionRequest, ActionWindow, EntityId, Role } from "../../core/domain";
+import { RoleComponent } from "../../domain/components/role";
+import { ActionRequest, ActionWindow, EntityId, Role } from "../../domain";
 import {
   getActionRequestDay,
   getActionRequestStage,
-} from "../../core/domain/action_request_context";
-import { World } from "../../core/domain/world";
+} from "../../domain/action-request-context";
+import { World } from "../../domain/world";
 import { RoleCatalog, allNightAbilities, abilityStatus } from "../mechanisms";
 import { getDreamerState } from "../mechanisms/roles/dreamer/ports";
 import { getIdiotState } from "../mechanisms/roles/idiot/ports";

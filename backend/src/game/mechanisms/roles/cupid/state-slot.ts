@@ -7,7 +7,7 @@
 import type { CupidReadState, CupidState } from "@ai-werewolf-arena/game-contract";
 import { playerDataField } from "../player-state-data";
 
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import type { RoleInitializationComponent, RoleInitContext } from "../contracts";
 export function getCupidState(role: RoleComponent | undefined): CupidReadState | undefined {
   return (role as { readonly privateState: { readonly cupid?: unknown } } | undefined)?.privateState

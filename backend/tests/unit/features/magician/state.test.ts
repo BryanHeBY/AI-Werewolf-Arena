@@ -5,8 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";
-import type { CampComponent } from "../../../../src/core/domain/components/camp";
-import { Camp, type Role, type RoleComponent } from "../../../../src/core";
+import type { CampComponent } from "../../../../src/domain/components/camp";
+import { Camp, type Role, type RoleComponent } from "../../../../src/domain";
 import {
   createMagicianState,
   getMagicianState,

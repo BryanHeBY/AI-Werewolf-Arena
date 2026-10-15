@@ -4,7 +4,7 @@
  * Output and oracle: Literal failed actor/stage, prior-night count and absent fallback assertions remain tied to the real execution; no full passing game is substituted for the failure prefix.
  */
 import { expect, test } from "bun:test";
-import { Role } from "../../../../src/core";
+import { Role } from "../../../../src/domain";
 import { evilKnightScenario } from "../../../support/features/evil-knight/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { type PlannedTurn } from "../../../support/transport/contracts";

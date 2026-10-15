@@ -3,7 +3,7 @@
  * 可见性与受众投影归上游，增量游标和发送失败归各提示会话；本模块不读取全局事件、补发秘密或授予动作权限。
  * 解析只核基本字段，未知 type 仍保留，payload 持同引用；不是 Proxy／getter 安全边界，访问或序列化异常直接传播。
  */
-import { PlayerVisibleEvent } from "../../core/domain";
+import { PlayerVisibleEvent } from "../../domain";
 
 /** 非数组返回空；有效的正整数 seq 后写覆盖前写，再升序返回，既不验证连续性也不补缺号。 */
 export function parsePlayerVisibleEvents(value: unknown): PlayerVisibleEvent[] {

@@ -6,7 +6,7 @@
  * frame 保留关闭／中止和重复调用的原政策；查询或 World 读取失败原样传播，不承诺幂等或补偿前缀。
  * 本单位不映射目标、消费号码、退还历史或推进阶段。
  */
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { closeMagicianNight, abortMagicianNight } from "./night_frame";
 
 /** 只保存运行对象供需要中止时读取 World；构造不执行 world getter，也不复制玩家或捕获生命。 */

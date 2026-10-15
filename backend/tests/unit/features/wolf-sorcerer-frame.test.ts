@@ -5,7 +5,7 @@
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { WOLF_SORCERER_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf_sorcerer/profile";
 import { expect, test } from "bun:test";
-import { COMPONENT, Camp, type World, type RoleComponent } from "../../../src/core";
+import { COMPONENT, Camp, type World, type RoleComponent } from "../../../src/domain";
 
 import { createMagicianState } from "../../../src/game/mechanisms/roles/magician/state-slot";
 import { createWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";

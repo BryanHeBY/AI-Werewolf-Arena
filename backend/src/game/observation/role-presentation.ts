@@ -10,7 +10,7 @@ import { Role } from "@ai-werewolf-arena/game-contract";
 import {
   createRoleComponent as createDomainRoleComponent,
   type RoleComponent,
-} from "../../core/domain/components/role";
+} from "../../domain/components/role";
 
 // 唯一展示绑定保存原闭包引用；角色状态仍只在 World 中的原组件。
 const presentations = new WeakMap<RoleComponent, (locale?: Locale) => string>();

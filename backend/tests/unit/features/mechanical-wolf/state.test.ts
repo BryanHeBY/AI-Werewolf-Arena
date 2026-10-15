@@ -5,7 +5,7 @@ import type { MechanicalSkill } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { Camp, Role } from "../../../../src/core/domain/model";
+import { Camp, Role } from "../../../../src/domain/model";
 import {
   advanceMechanicalNight,
   canMechanicalExtraKnife,

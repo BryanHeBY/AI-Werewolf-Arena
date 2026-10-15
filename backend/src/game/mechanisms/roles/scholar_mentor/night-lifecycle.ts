@@ -4,7 +4,7 @@
  * 只有原晚 transfer 才抑制管线 abort。正常关闭后经理仍读 abort 参数，由 frame.closed 防止污染后夜。
  * 这里不授奖励、不付款、启动阶段或录制 I/O。
  */
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { closeScholarMentorNight, abortScholarMentorNight } from "./night_frame";
 
 export interface ScholarMentorNightRuntime {

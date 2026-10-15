@@ -8,11 +8,11 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { GUARD_VALIDATION_RULES } from "../../../../rulesets/guard-tool-admission";
 import { z } from "zod";
-import { GUARD_REPEAT_POLICIES } from "../../../../core/domain/board";
+import { GUARD_REPEAT_POLICIES } from "../../../../domain/board";
 import { guardTargetRepeated } from "./ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：守卫角色 profile。 */
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role } from "../../../../domain/model";
 import { NativeRoleContributions } from "../contracts";
 import { getGuardState, setGuardState } from "./ports";
 import { numberOrNull } from "../../llm/helpers";

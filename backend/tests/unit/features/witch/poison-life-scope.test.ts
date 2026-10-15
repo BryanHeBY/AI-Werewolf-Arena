@@ -4,7 +4,7 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -16,7 +16,7 @@ import {
   type RoleComponent,
   type GameEvent,
   type BoardConfig,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { WITCH_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/witch/night_stages";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
@@ -24,8 +24,8 @@ import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/rol
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 
-import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 const roles = [Role.Wolf, Role.Witch, Role.Seer, Role.Guard, Role.Villager, Role.Villager],
   config: BoardConfig = {

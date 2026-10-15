@@ -14,8 +14,8 @@ import {
 } from "./death-wave";
 import { getSessionRecorder } from "../../recording/recording_context";
 import { isRoleId } from "@ai-werewolf-arena/game-contract";
-import { aliveLifeVersion, type AliveComponent } from "../../core/domain/components/alive";
-import { COMPONENT } from "../../core/domain/components/names";
+import { aliveLifeVersion, type AliveComponent } from "../../domain/components/alive";
+import { COMPONENT } from "../../domain/components/names";
 import {
   DeathCause,
   Role,
@@ -23,8 +23,8 @@ import {
   type GameEvent,
   type RuntimeSnapshot,
   type DeathSources,
-} from "../../core/domain/model";
-import type { World } from "../../core/domain/world";
+} from "../../domain/model";
+import type { World } from "../../domain/world";
 import {
   isAnimalDreamBoard,
   commitAnimalPufferKnifeDeath,

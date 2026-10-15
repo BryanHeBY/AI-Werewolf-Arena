@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Phase, type ActionRequest } from "../../../../src/core";
+import { Role, Phase, type ActionRequest } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";

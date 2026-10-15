@@ -4,8 +4,8 @@
 import { expect, test } from "bun:test";
 import { Camp, Role, WinCondition, type BoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame, type BootstrapOptions } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { RandomSource } from "../../../src/core/domain/random";
+import { COMPONENT } from "../../../src/domain/components/names";
+import type { RandomSource } from "../../../src/domain/random";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,

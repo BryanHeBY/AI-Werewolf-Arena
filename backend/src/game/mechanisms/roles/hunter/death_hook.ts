@@ -5,7 +5,7 @@
  * 中毒保留原沉默事件，失败或关闭窗口不绕过检查。本钩子不打开死亡权限、不提交目标死亡，
  * 也不切换阶段或关闭死亡波。
  */
-import { Role, permitsHunterShot } from "../../../../core/domain/model";
+import { Role, permitsHunterShot } from "../../../../domain/model";
 import type { DeathHook } from "../../hooks/hook_registry";
 import { getHunterState } from "../native-death-gun-resources";
 import { openDemonHunterStockFrame } from "../demon_hunter/native-gun-ports";

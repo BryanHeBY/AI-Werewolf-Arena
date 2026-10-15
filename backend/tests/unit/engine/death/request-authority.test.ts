@@ -12,7 +12,7 @@ import {
   type ActionRequest,
   type GameEvent,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";

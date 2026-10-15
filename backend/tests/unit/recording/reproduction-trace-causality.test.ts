@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { Camp, Phase, Role, type ActionRequest, type ToolCall } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom } from "../../../src/core/domain/random";
+import { createRandom } from "../../../src/domain/random";
 import { ReproductionTrace, normalizedRequest } from "../../../src/recording/reproduction-trace";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";

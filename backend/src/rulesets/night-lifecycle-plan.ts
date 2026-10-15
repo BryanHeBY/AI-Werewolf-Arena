@@ -6,10 +6,10 @@
  * 所有 World/day/events 求值仍发生在原时点，不去重重复 close，不增加 acquired 守卫，
  * 不返还已付库存、不推进阶段、不序列化运行时 receiver。
  */
-import { openNightUnit } from "../core/domain/night-unit";
+import { openNightUnit } from "../domain/night-unit";
 import { expireNobleNight } from "../game/mechanisms/roles/noble_secret_body/ports";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../core/domain/world";
+import type { World } from "../domain/world";
 import {
   demonNightTerminal,
   type DemonNightUnit,
@@ -48,7 +48,7 @@ import { abortAnimalGame } from "../game/mechanisms/roles/animal_dream/ports";
 import { bindBoardParameters, type BoardParameters } from "./board-parameters";
 import { Phase } from "@ai-werewolf-arena/game-contract";
 import { getSessionRecorder } from "../recording/recording_context";
-import { randomDraws, type RandomSource } from "../core/domain/random";
+import { randomDraws, type RandomSource } from "../domain/random";
 import { AnimalNightUnit } from "../game/mechanisms/roles/animal_dream/ports";
 import { FragrantNightUnit, FRAGRANT_PAIR_POLICY } from "../game/mechanisms/roles/fragrant_pair_seer/ports";
 import { NobleNightUnit } from "../game/mechanisms/roles/noble_secret_body/ports";

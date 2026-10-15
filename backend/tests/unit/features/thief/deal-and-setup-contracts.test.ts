@@ -2,8 +2,8 @@
  * 单元测试验证盗贼原 N+2 发牌、备用牌／租约修改和严格 provider 失败 Tape。原字面回执、引用／getter／错误轨迹、事实和状态是预期，覆盖发牌／配置／多重集及有界设置窗口／capability／库存投影。原 case11 只在设置期间探测被拒 PhaseManager 入口，不完成周期；不运行完整阶段或付费模型，原本地窗口及被拒探针保持有界。
  */
 import { expect, test } from "bun:test";
-import { inheritRequestAlias } from "../../../../src/core/domain/request_delivery";
-import { shuffled } from "../../../../src/core";
+import { inheritRequestAlias } from "../../../../src/domain/request-delivery";
+import { shuffled } from "../../../../src/domain";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Role,
@@ -18,7 +18,7 @@ import {
   type GameEvent,
   type VictoryComponent,
   type AliveComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import {
   ThiefSetupWindow,

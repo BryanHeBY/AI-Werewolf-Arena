@@ -5,7 +5,7 @@
  * 不变量：原墙、参与者、note／source 必须保持捕获关联，投影不授新权限。
  * 关闭先撤 active 权，再尝试标记存储过期；存储损坏不恢复权限，失败保留已发生的写入前缀。
  */
-import { RequestLease } from "../../../../core/domain/request-lease";
+import { RequestLease } from "../../../../domain/request-lease";
 import { readWallNoteData } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import {
   COMPONENT,
@@ -14,12 +14,12 @@ import {
   type World,
   type ActionRequest,
   type WallNoteComponent,
-} from "../../../../core/domain";
+} from "../../../../domain";
 import {
   captureOriginalParticipant as captureDebateParticipant,
   sameOriginalParticipant as sameDebateParticipant,
   type OriginalParticipant as DebateParticipant,
-} from "../../../../core/domain/original-participant";
+} from "../../../../domain/original-participant";
 export const WALL_ROLES: readonly Role[] = [
   Role.Wolf,
   Role.Villager,

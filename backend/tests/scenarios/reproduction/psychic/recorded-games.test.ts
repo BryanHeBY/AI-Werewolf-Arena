@@ -3,7 +3,7 @@
  * Input: Original scenario/transport/locale matrices with handwritten label, skip, use-count, survivor and last-word facts.
  * Output and oracle: Literal audience/resource/terminal assertions remain causal with the actual replay; expected state is supplied independently of observed engine output.
  */
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { PSYCHIC_CASES, psychicScenario, type PsychicScenario } from "../../../support/features/psychic/builders/scenario";

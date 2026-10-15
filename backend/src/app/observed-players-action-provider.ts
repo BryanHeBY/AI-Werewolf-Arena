@@ -6,10 +6,10 @@
  * 观察、候选和返回动作均不授予提交权限；资源、生命、阶段与付款仍由引擎复验。
  */
 import type { ActionRequest, EntityId, ToolCall } from "@ai-werewolf-arena/game-contract";
-import type { ActionProvider } from "../core/domain/actions";
-import { COMPONENT } from "../core/domain/components/names";
-import type { RoleComponent } from "../core/domain/components/role";
-import type { World } from "../core/domain/world";
+import type { ActionProvider } from "../domain/actions";
+import { COMPONENT } from "../domain/components/names";
+import type { RoleComponent } from "../domain/components/role";
+import type { World } from "../domain/world";
 import type { ObservedPlayerStrategy } from "../game/observation/player-observation";
 import { capturePlayerObservation } from "../game/observation/player-observation-projector";
 import type { RoleCatalog } from "../game/mechanisms/roles/catalog";

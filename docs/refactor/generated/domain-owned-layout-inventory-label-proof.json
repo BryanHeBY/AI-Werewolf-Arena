@@ -1,0 +1,10 @@
+{
+  "path": "tooling/refactor/inventory.ts",
+  "exactEdits": 3,
+  "otherUnchangedSources": 1146,
+  "historicalRootsAndAlgorithmUntouched": true,
+  "metadataValuesIntentionallyChanged": true,
+  "limits": [
+    "只验证一个现行工具说明增量及其它1146源字节；未重跑首证明、类型或指标生成。"
+  ]
+}

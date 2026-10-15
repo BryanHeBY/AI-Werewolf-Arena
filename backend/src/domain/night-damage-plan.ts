@@ -27,14 +27,14 @@ import {
   type NightBlackMarketBacklash,
   type NightRadiantBacklash,
   type NightAwakenedEffects,
-} from "./night_effects";
+} from "./night-effects";
 
 export interface NightDamageEffects {
   /** 原 Pipeline 的已捕获 day；仅新 owned intent 读取，旧注入输入不访问额外字段。 */
   intentNight?: number;
   radiantShelters?: readonly NightImmunityClaim[];
   radiantBacklashes?: readonly NightRadiantBacklash[];
-  modifierDeaths?: readonly import("./night_effects").NightLifeScope[];
+  modifierDeaths?: readonly import("./night-effects").NightLifeScope[];
   nightImmunities?: readonly NightImmunityClaim[];
   retaliationAttacks?: readonly NightRetaliationAttack[];
   inspectionAttacks?: readonly NightInspectionAttack[];

@@ -6,15 +6,15 @@
  * 夜初 ravenChecked 先写再转换，后续失败不重开检查；不修补被替换的槽或重复保存库存。
  */
 import { types } from "node:util";
-import { COMPONENT } from "../../../../core/domain/components/names";
+import { COMPONENT } from "../../../../domain/components/names";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp } from "../../../../core/domain/identity";
-import type { World } from "../../../../core/domain/world";
+} from "../../../../domain/components/alive";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp } from "../../../../domain/identity";
+import type { World } from "../../../../domain/world";
 import {
   readMistOwnData as own,
   selectMist,

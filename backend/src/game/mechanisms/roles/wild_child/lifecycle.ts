@@ -7,19 +7,19 @@
  * 转换核心抛错永久撤销本绑定及捕获 Role 的运行行动授权；不删除原数据或撤销已付效果原体谓词。
  * 完整核心提交后的事实发表失败不撤销已提交资格；墓碑按同对象永久保留，不随字段恢复或跨 World 复用清除。
  */
-import { retireRoleExecution } from "../../../../core/domain/role-execution-authority";
+import { retireRoleExecution } from "../../../../domain/role-execution-authority";
 import { createCampComponent } from "../../../observation/component-presentation";
 import type { WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { RequestLease } from "../../../../core/domain/request-lease";
-import { COMPONENT, Camp, Role, Phase, createVictoryComponent, type World, type ActionRequest, type RoleComponent, type CampComponent, type VictoryComponent, type GameEvent, type DeathSources } from "../../../../core/domain";
-import { aliveLifeVersion } from "../../../../core/domain/components/alive";
+import { RequestLease } from "../../../../domain/request-lease";
+import { COMPONENT, Camp, Role, Phase, createVictoryComponent, type World, type ActionRequest, type RoleComponent, type CampComponent, type VictoryComponent, type GameEvent, type DeathSources } from "../../../../domain";
+import { aliveLifeVersion } from "../../../../domain/components/alive";
 import {
   captureNightLife,
   livingNightLife,
   type NightLifeScope,
-} from "../../../../core/domain/night_effects";
-import { captureOriginalParticipant as captureDebateParticipant, type OriginalParticipant as DebateParticipant } from "../../../../core/domain/original-participant";
+} from "../../../../domain/night-effects";
+import { captureOriginalParticipant as captureDebateParticipant, type OriginalParticipant as DebateParticipant } from "../../../../domain/original-participant";
 import { getWildChildState, encodeWildChildData as safeJson,
   commitWildChildState, cancelWildChildState, transformWildChildState, activateWildChildState,
   projectWildChildData } from "./state-slot";

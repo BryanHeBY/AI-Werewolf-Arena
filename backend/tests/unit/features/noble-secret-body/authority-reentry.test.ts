@@ -1,8 +1,8 @@
 /**
  * 单元测试：验证贵族／不死之身的独立权威重入契约。输入为原内存 owner、frame、reader 与明确非法修改；原字面预期、对象身份和拒绝断言为 oracle，不组装完整对局。
  */
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { expect, test } from "bun:test";
 import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
 import {
@@ -381,7 +381,7 @@ for (const [name, affiliations] of [
   test(`initial Victory rejects ${name}`, () => {
     const world = uninstalled();
     // 原畸形成员样本必须原样进入存储；断言仅替代旧 unknown 写入泛型，不补齐或验证它。
-    world.addComponent(3, COMPONENT.Victory, { affiliations } as unknown as import("../../../../src/core/domain/component-map").ComponentWrite<typeof COMPONENT.Victory>);
+    world.addComponent(3, COMPONENT.Victory, { affiliations } as unknown as import("../../../../src/domain/component-map").ComponentWrite<typeof COMPONENT.Victory>);
     expect(() => commit(world)).toThrow();
   });
 test("finite noble-body owner rejects empty Victory without changing shared generic membership schema", () => {

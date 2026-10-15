@@ -12,7 +12,7 @@ import {
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, type BoardConfig } from "../../../src/core";
+import { Role, type BoardConfig } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 for (const id of ["six_player_black_market_merchant", "twelve_player_black_market_merchant"])
   test(`${id}: public AWA board composes exactly one strict Black and the declared roles`, async () => {

@@ -5,9 +5,9 @@
  * 记录失败向调用方传播并保留已追加前缀；领域提交与受众授权仍由各自所有者负责。
  * 游标不是跨失败重放的事务保证，不能把一次中途异常当成整条事件从未记录。
  */
-import type { World } from "../core/domain/world";
+import type { World } from "../domain/world";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
-import { COMPONENT, RoleComponent } from "../core";
+import { COMPONENT, RoleComponent } from "../domain";
 import { buildAgentVisibleEvent } from "../game/engine/agent_visible_event_feed";
 import { getDefaultScriptEventRenderRegistry } from "../game";
 import type { SessionRecordManager } from "../recording/session_recorder";

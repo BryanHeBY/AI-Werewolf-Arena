@@ -11,7 +11,7 @@ import {
   createRandom,
   type ActionRequest,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";

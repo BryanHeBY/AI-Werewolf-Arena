@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { DeathCause, Role, StatusMark, type BoardConfig } from "../../../src/core";
-import { captureNightLife, type NightAwakenedEffect } from "../../../src/core/domain/night_effects";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+import { DeathCause, Role, StatusMark, type BoardConfig } from "../../../src/domain";
+import { captureNightLife, type NightAwakenedEffect } from "../../../src/domain/night-effects";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import type { NightStageHandler } from "../../../src/game/mechanisms/stages/night/contracts";

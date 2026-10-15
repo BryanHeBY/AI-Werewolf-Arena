@@ -2,14 +2,14 @@
  * 测试 driver：负责执行原受控赤月对局并推导后续传输计划。输入为固定角色和明确回复；输出为实际已执行前缀及传输输入，期望保留在外部字面 oracle，不调用模型。
  */
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
-import { Camp } from "../../../../../src/core";
-import { Role } from "../../../../../src/core";
-import { PotionType } from "../../../../../src/core";
-import { createRandom } from "../../../../../src/core";
-import { COMPONENT } from "../../../../../src/core";
-import type { RoleComponent } from "../../../../../src/core";
-import type { ActionRequest } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { Camp } from "../../../../../src/domain";
+import { Role } from "../../../../../src/domain";
+import { PotionType } from "../../../../../src/domain";
+import { createRandom } from "../../../../../src/domain";
+import { COMPONENT } from "../../../../../src/domain";
+import type { RoleComponent } from "../../../../../src/domain";
+import type { ActionRequest } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 import { redMoonTwelveConfig } from "../../../../../src/runtime/scenarios/red_moon_twelve";
 import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";

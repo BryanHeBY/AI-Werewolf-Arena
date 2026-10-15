@@ -7,7 +7,7 @@
  */
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { Camp, Phase } from "../../../../src/core";
+import { Camp, Phase } from "../../../../src/domain";
 import { evilKnightScenario } from "../../../support/features/evil-knight/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const kind of ["night_immune_wolf", "shot_bypass_good", "day_shot_good"] as const)

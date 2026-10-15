@@ -4,19 +4,19 @@
  */
 import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-contract";
 import { toolFailure } from "@ai-werewolf-arena/game-text";
-import { AliveComponent } from "../../core/domain/components/alive";
-import { COMPONENT } from "../../core/domain/components/names";
-import { RoleComponent } from "../../core/domain/components/role";
+import { AliveComponent } from "../../domain/components/alive";
+import { COMPONENT } from "../../domain/components/names";
+import { RoleComponent } from "../../domain/components/role";
 import {
   ActionWindow,
   EntityId,
   Phase,
   ToolCall,
   ToolValidationResult,
-} from "../../core/domain/model";
+} from "../../domain/model";
 import { getDefaultToolValidationRuleRegistry, ToolValidationRuleRegistry } from "../mechanisms";
 import { safeRecordLogicOp } from "../../recording/session_recorder";
-import { World } from "../../core/domain/world";
+import { World } from "../../domain/world";
 
 /**
  * 动作校验上下文。
@@ -42,7 +42,7 @@ export interface ValidationContext {
   phase: Phase;
   actionWindow?: ActionWindow;
   allowSelfDestruct?: boolean;
-  duelWindow?: import("../../core/domain/identity").KnightDuelWindow;
+  duelWindow?: import("../../domain/identity").KnightDuelWindow;
   allowKnightDuel?: boolean;
   deathActionId?: number;
   sheriffCandidates?: readonly EntityId[];

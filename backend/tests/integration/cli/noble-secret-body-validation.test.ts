@@ -8,7 +8,7 @@ import { expect, test, spyOn } from "bun:test";
 import { readFile, mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { World } from "../../../src/core";
+import { World } from "../../../src/domain";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,

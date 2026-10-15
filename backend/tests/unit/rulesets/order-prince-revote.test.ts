@@ -9,11 +9,11 @@ import { GameActionRequestFactory } from "../../../src/game/engine/action_reques
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { getOrderPrinceState } from "../../../src/game/mechanisms/roles/order_prince/ports";
 import { recollectOrderPrinceVotes, type OrderPrinceRevoteRuntime } from "../../../src/rulesets/order-prince-revote";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../src/domain/components/names";
 import { Role, WinCondition, type BoardConfig, type GameEvent, type ToolCall } from "@ai-werewolf-arena/game-contract";
 import type { VotingPipelineOptions } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
-import type { World } from "../../../src/core/domain/world";
-import type { ActionProvider, ActionRequestConstructionPort } from "../../../src/core/domain/actions";
+import type { World } from "../../../src/domain/world";
+import type { ActionProvider, ActionRequestConstructionPort } from "../../../src/domain/actions";
 
 function fixture() {
   const roles = [Role.Wolf, Role.Wolf, Role.Wolf, Role.Wolf, Role.Villager, Role.Villager,

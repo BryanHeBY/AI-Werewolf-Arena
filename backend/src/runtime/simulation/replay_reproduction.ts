@@ -5,7 +5,7 @@
  */
 import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { reproductionIdentitiesMatch } from "../../recording/archive_identity";
-import { initialPlayerIdentity } from "../../core/domain/initial_roster";
+import { initialPlayerIdentity } from "../../domain/initial-roster";
 import { initialIdentityDeal } from "../../game/mechanisms/roles/initial_identity/deal";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { readFile } from "node:fs/promises";
@@ -18,7 +18,7 @@ import {
   type ActionProvider,
   type ActionRequest,
   type GameEvent,
-} from "../../core";
+} from "../../domain";
 import { parseReproductionRecord, recordedErrorName, type RecordedDecision, type RecordedGameEvent, type ReproductionRecord } from "../../recording/reproduction";
 import { normalizedRequest } from "../../recording/reproduction-trace";
 import { SessionRecordManager } from "../../recording/session_recorder";
@@ -75,7 +75,7 @@ class RecordedActions implements ActionProvider {
     number,
     {
       decision: RecordedDecision;
-      resolve: (action: import("../../core").ToolCall | null) => void;
+      resolve: (action: import("../../domain").ToolCall | null) => void;
       reject: (error: unknown) => void;
     }
   >();
@@ -107,7 +107,7 @@ class RecordedActions implements ActionProvider {
     }
   }
 
-  getAction(request: ActionRequest): Promise<import("../../core").ToolCall | null> {
+  getAction(request: ActionRequest): Promise<import("../../domain").ToolCall | null> {
     const base = `${request.actorId}/${request.context.day}/${request.context.stage}`;
     const turn = (this.turns.get(base) ?? 0) + 1;
     this.turns.set(base, turn);

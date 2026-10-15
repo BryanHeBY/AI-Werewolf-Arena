@@ -5,9 +5,9 @@
  * 已失败或关闭的选择不重写游戏参数，不重新开启准备，也不授予过期请求许可。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../core/domain";
-import type { RequestLeaseTurn } from "../../../../core/domain/request-lease";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../domain";
+import type { RequestLeaseTurn } from "../../../../domain/request-lease";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { LONELY_GIRL_POLICY, readLonelyGirlTool } from "./state-slot";
 import {

@@ -4,10 +4,10 @@
  */
 import type { RuleViolation } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：工具校验规则契约定义。 */
-import { COMPONENT } from "../../../core/domain/components/names";
-import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionWindow, EntityId, Phase, ToolCall, ToolName } from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
+import { ActionWindow, EntityId, Phase, ToolCall, ToolName } from "../../../domain/model";
+import { World } from "../../../domain/world";
 import type { RoleCatalog } from "../roles/catalog";
 
 /** 单次工具校验上下文。 */
@@ -35,7 +35,7 @@ export interface ValidationRuleContext {
   phase: Phase;
   actionWindow?: ActionWindow;
   allowSelfDestruct?: boolean;
-  duelWindow?: import("../../../core/domain/identity").KnightDuelWindow;
+  duelWindow?: import("../../../domain/identity").KnightDuelWindow;
   allowKnightDuel?: boolean;
   sheriffCandidates?: readonly EntityId[];
   badgeCandidates?: readonly EntityId[];

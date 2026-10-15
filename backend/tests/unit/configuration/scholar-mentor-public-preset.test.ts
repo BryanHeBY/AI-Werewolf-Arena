@@ -14,7 +14,7 @@ import { readFileSync } from "node:fs";
 import { isScholarMentorPreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { scholarMentorTwelveConfig } from "../../../src/runtime/scenarios/scholar_mentor_twelve";
-import { Role, type BoardConfig } from "../../../src/core";
+import { Role, type BoardConfig } from "../../../src/domain";
 const publicDefinition = JSON.parse(
   readFileSync(
     new URL("../../../../configs.example/boards/awa_scholar_mentor_12_v1.json", import.meta.url),

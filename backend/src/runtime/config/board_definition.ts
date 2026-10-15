@@ -7,7 +7,7 @@ import { supportsWallRoles } from "../../game/mechanisms/events/wall_notes/autho
 import { z } from "zod";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { ROLE_IDS, isRoleId } from "@ai-werewolf-arena/game-contract";
-import { ActionWindow, Camp, Role, WinCondition, type BoardConfig } from "../../core/domain/model";
+import { ActionWindow, Camp, Role, WinCondition, type BoardConfig } from "../../domain/model";
 import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/role-catalog-assembly";
 import {
   EVENT_PACK_IDS,
@@ -16,8 +16,8 @@ import {
   SHERIFF_BADGE_POLICIES,
   SHERIFF_ELECTION_POLICIES,
   EXILE_VOTE_POLICIES,
-} from "../../core/domain/board";
-import { boardConfigSchema } from "../../core/domain/board_schema";
+} from "../../domain/board";
+import { boardConfigSchema } from "../../domain/board-schema";
 
 export const CONFIG_ID_PATTERN = /^[a-z][a-z0-9_-]*$/;
 export const MAX_BOARD_PLAYERS = 128;

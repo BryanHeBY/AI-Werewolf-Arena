@@ -7,11 +7,11 @@
  */
 import { DeathCause, Phase, type EntityId, type DeathSources, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../core/domain/components/names";
-import { aliveLifeVersion } from "../core/domain/components/alive";
-import type { World } from "../core/domain/world";
-import type { NightFoxInspectionClaim } from "../core/domain/night_effects";
-import type { DamageResolutionResult } from "../core/domain/systems/damage_resolution_system";
+import { COMPONENT } from "../domain/components/names";
+import { aliveLifeVersion } from "../domain/components/alive";
+import type { World } from "../domain/world";
+import type { NightFoxInspectionClaim } from "../domain/night-effects";
+import type { DamageResolutionResult } from "../domain/systems/damage-resolution-system";
 import type { DeathCommitReceipt, DeathOriginalLife } from "../game/engine/death-wave";
 
 /** 只声明真实读取字段；伤害和已付 claim 原引用保留，不冻结回调或提前快照其当前性。 */

@@ -11,7 +11,7 @@ import {
   type BoardConfig,
   type HiddenWolfCampInspectionPolicy,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/ports";
 import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";

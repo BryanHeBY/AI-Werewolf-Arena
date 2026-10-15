@@ -12,7 +12,7 @@ import {
   createRandom,
   randomDraws,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { demonHunterBoard } from "../../../support/features/demon-hunter/builders/candidate-world";

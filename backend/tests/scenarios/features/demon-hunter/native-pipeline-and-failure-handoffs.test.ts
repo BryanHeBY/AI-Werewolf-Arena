@@ -5,7 +5,7 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import { COMPONENT, Camp, Phase, PotionType, WinCondition, DeathCause, StatusMark, type AliveComponent, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/core";
+import { COMPONENT, Camp, Phase, PotionType, WinCondition, DeathCause, StatusMark, type AliveComponent, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/domain";
 import type { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
@@ -248,7 +248,7 @@ for (const phase of [
           throw new Error("foreign_alive_read");
         },
         renderPrompt: () => "",
-      } as unknown as import("../../../../src/core/domain/component-map").ComponentWrite<typeof COMPONENT.Alive>);
+      } as unknown as import("../../../../src/domain/component-map").ComponentWrite<typeof COMPONENT.Alive>);
     if (phase === "before_night") revoke();
     const realResolve = f.damage.resolve.bind(f.damage),
       calls = spyOn(f.damage, "resolve").mockImplementation((world, effects) => {
@@ -463,7 +463,7 @@ test("direct actual NightPipeline reentry cannot close the already waiting origi
       nightPipeline: import("../../../../src/game/engine/phase_pipeline/night_pipeline").NightPipeline;
     }
   ).nightPipeline;
-  const { assertRequestDelivery } = await import("../../../../src/core");
+  const { assertRequestDelivery } = await import("../../../../src/domain");
   await f.phaseManager.runSingleCycle(
     {
       getAction: async (request) => {

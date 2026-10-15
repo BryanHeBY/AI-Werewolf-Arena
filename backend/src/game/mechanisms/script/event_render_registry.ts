@@ -41,7 +41,7 @@ import {
   awakenedEventLabel,
 } from "@ai-werewolf-arena/game-presentation";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
-import { GameEvent } from "../../../core/domain/model";
+import { GameEvent } from "../../../domain/model";
 import {
   ScriptChatLineHandlers,
   ScriptJudgeLineHandlers,

@@ -4,16 +4,16 @@
  * 原毒来源复用既有 abilityId／目标参数读取，不新增 getter、资格重检或资源回滚。
  * 查验先调用状态 owner 再追加咒狐提案；本模块不替换状态槽，原体／当前性句柄仅留原运行效果，不进入玩家知识。
  */
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import { Camp, Phase, PotionType, StatusMark, type ToolName } from "../../../core/domain/model";
+import { COMPONENT } from "../../../domain/components/names";
+import type { RoleComponent } from "../../../domain/components/role";
+import { Camp, Phase, PotionType, StatusMark, type ToolName } from "../../../domain/model";
 import {
   captureNightLife,
   livingNightLife,
   originalPoisonIntent,
   type NightLifeScope,
-} from "../../../core/domain/night_effects";
-import type { World } from "../../../core/domain/world";
+} from "../../../domain/night-effects";
+import type { World } from "../../../domain/world";
 import type { NightStageHandler } from "../stages/night/contracts";
 import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "./abilities";
 import { recordNightAbilityUse } from "./abilities";

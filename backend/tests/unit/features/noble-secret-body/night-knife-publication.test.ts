@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { Phase, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../../src/core/domain/world";
+import { World } from "../../../../src/domain/world";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import type { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import type { ReplayRecordLogicOpInput } from "../../../../src/recording/contracts";

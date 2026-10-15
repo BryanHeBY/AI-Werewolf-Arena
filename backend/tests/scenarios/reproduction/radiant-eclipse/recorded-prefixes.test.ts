@@ -3,7 +3,7 @@
  * Input: Original named full plans, locale/failure/action matrices and shared recording helper calls.
  * Output and oracle: Explicit checkpoint, private-state, publication and malformed-record assertions remain attached to generated game inputs; source archives and expected tables are unchanged.
  */
-import { Camp } from "../../../../src/core";
+import { Camp } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 import { radiantFullPlans } from "../../../support/features/radiant-eclipse/oracles/literal-plans";

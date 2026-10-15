@@ -4,13 +4,13 @@
  * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
-import { ActionWindow } from "../../../../../src/core";
-import { Camp } from "../../../../../src/core";
-import { Role } from "../../../../../src/core";
-import { createRandom } from "../../../../../src/core";
-import { shuffled } from "../../../../../src/core";
-import type { ActionStage } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { ActionWindow } from "../../../../../src/domain";
+import { Camp } from "../../../../../src/domain";
+import { Role } from "../../../../../src/domain";
+import { createRandom } from "../../../../../src/domain";
+import { shuffled } from "../../../../../src/domain";
+import type { ActionStage } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 import type { PlannedTurn } from "../../../transport/contracts";
 import type { TransportGameScenario } from "../../../transport/contracts";
 import type { MistExpectedWireChoice } from "../oracles/transport";

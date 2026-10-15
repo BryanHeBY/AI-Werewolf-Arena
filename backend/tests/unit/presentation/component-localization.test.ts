@@ -18,7 +18,7 @@ import {
   type RoleComponent,
   type StatusMarksComponent,
   type VotingRightComponent,
-} from "../../../src/core";
+} from "../../../src/domain";
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: public component prompt APIs bind game locale and support independent display calls`, () => {

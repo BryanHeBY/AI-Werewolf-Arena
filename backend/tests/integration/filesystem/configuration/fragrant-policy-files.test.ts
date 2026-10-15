@@ -14,8 +14,8 @@ import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_se
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { fragrantPairSeerTwelveConfig as config } from "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
 import { isFragrantPairSeerPreset } from "../../../../src/rulesets";
-import { Role, Camp } from "../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { Role, Camp } from "../../../../src/domain/identity";
+import { COMPONENT } from "../../../../src/domain/components/names";
 
 const root = path.resolve(import.meta.dir, "../../../../.."),
   id = "awa_fragrant_pair_seer_12_v1";

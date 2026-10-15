@@ -6,11 +6,11 @@
  * 本组合不创建 Promise、标死、换阶段、判胜或关闭外层夜；经理保原 try/finally、初始死亡波 DR 等待与后续到期裁决。
  */
 import { DeathCause, Phase, StatusMark, type EntityId, type DeathSources, type ReadonlyBoardConfig, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../core/domain/world";
-import { COMPONENT } from "../core/domain/components/names";
-import { aliveLifeVersion, type AliveComponent } from "../core/domain/components/alive";
-import { statusMarkSnapshot } from "../core/domain/components/status_marks";
-import type { DamageResolutionResult } from "../core/domain/systems/damage_resolution_system";
+import type { World } from "../domain/world";
+import { COMPONENT } from "../domain/components/names";
+import { aliveLifeVersion, type AliveComponent } from "../domain/components/alive";
+import { statusMarkSnapshot } from "../domain/components/status-marks";
+import type { DamageResolutionResult } from "../domain/systems/damage-resolution-system";
 import type { DeathOriginalLife } from "../game/engine/death-wave";
 import type { NightPipelineResult } from "../game/engine/phase_pipeline/night_pipeline";
 import type { NightFaultPlan } from "../game/engine/fault_plan";

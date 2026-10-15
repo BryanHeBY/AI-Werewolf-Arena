@@ -5,20 +5,20 @@
  * 只有匹配的原夜间对象可交付捕获伤害；复活不恢复旧许可，失败保留已付前缀，不补交付。
  */
 import { types } from "node:util";
-import { COMPONENT } from "../../../../core/domain/components/names";
+import { COMPONENT } from "../../../../domain/components/names";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp } from "../../../../core/domain/identity";
-import type { World } from "../../../../core/domain/world";
+} from "../../../../domain/components/alive";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp } from "../../../../domain/identity";
+import type { World } from "../../../../domain/world";
 import {
   captureNightLife,
   livingNightLife,
   type NightLifeScope,
-} from "../../../../core/domain/night_effects";
+} from "../../../../domain/night-effects";
 import { MistCasterAuthority } from "./caster_authority";
 import {
   createAlchemistState,

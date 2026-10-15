@@ -7,7 +7,7 @@
  */
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
-import { World, Phase, type GameEvent } from "../../../src/core";
+import { World, Phase, type GameEvent } from "../../../src/domain";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { DemonNightUnit, demonNightTerminal } from "../../../src/game/mechanisms/roles/demon_hunter/ports";
 import { WeddingNightUnit, weddingNightTerminal } from "../../../src/game/mechanisms/roles/ghost_bride/ports";

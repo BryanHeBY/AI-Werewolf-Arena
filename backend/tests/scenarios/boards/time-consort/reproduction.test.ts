@@ -13,7 +13,7 @@ import {
   type ActionRequest,
   type ToolCall,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {
@@ -33,7 +33,7 @@ import { createTestTempDirectory } from "../../../support/drivers/temp-directori
 import { timeConsortTwelveConfig } from "../../../../src/runtime/scenarios/time_consort_twelve";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
-import { randomDraws } from "../../../../src/core";
+import { randomDraws } from "../../../../src/domain";
 const records = new Map<string, Promise<ReproductionRecord>>();
 let version: ReturnType<typeof currentEngineVersion> | undefined;
 function recording(

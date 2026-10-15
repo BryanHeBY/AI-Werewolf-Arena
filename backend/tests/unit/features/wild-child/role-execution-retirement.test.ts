@@ -7,12 +7,12 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, DeathCause, Phase, Role, type GameEvent } from "../../../../src/core";
-import { World } from "../../../../src/core/domain/world";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
-import { captureNightLife } from "../../../../src/core/domain/night_effects";
-import { isRoleExecutionRetired, retireRoleExecution } from "../../../../src/core/domain/role-execution-authority";
+import { Camp, COMPONENT, DeathCause, Phase, Role, type GameEvent } from "../../../../src/domain";
+import { World } from "../../../../src/domain/world";
+import { createAliveComponent } from "../../../../src/domain/components/alive";
+import { createRoleComponent } from "../../../../src/domain/components/role";
+import { captureNightLife } from "../../../../src/domain/night-effects";
+import { isRoleExecutionRetired, retireRoleExecution } from "../../../../src/domain/role-execution-authority";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";

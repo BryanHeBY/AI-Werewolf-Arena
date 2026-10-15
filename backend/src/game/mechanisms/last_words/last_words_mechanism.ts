@@ -5,17 +5,17 @@
  * 此机制不执行玩家发言、更新死亡波或判胜，发言与阶段推进归原调用流程。
  */
 /** 文件说明：遗言规则与事件写入机制。 */
-import type { LastWordsPolicy } from "../../../core/domain/board";
-import { AliveComponent } from "../../../core/domain/components/alive";
-import { COMPONENT } from "../../../core/domain/components/names";
+import type { LastWordsPolicy } from "../../../domain/board";
+import { AliveComponent } from "../../../domain/components/alive";
+import { COMPONENT } from "../../../domain/components/names";
 import {
   EntityId,
   GameEvent,
   Phase,
   DeathCause,
   type DeathSources,
-} from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+} from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 export interface LastWordsGrantContext {
   policy: typeof FRAGRANT_PAIR_POLICY;

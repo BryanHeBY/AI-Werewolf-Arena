@@ -4,7 +4,7 @@
  * 本模块不新增时间预算、读取角色库存或提交领域动作；取消在原记录前后重检，保留失败前缀。
  */
 import { text } from "@ai-werewolf-arena/game-text";
-import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain";
+import { ActionProvider, ActionRequest, ToolCall } from "../../../domain";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { LlmObserver } from "../player/player_observer";
 import { allowsActionFallback, resolveTurnConstraints } from "../../../game/gateway/turn-constraints";

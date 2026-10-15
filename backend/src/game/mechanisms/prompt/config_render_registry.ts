@@ -12,7 +12,7 @@ import {
   WitchSelfHealRule,
   Role,
   KnightDuelWindow,
-} from "../../../core/domain/model";
+} from "../../../domain/model";
 import { roleName, term, text, type Locale } from "@ai-werewolf-arena/game-text";
 
 export interface ConfigRenderRegistry {

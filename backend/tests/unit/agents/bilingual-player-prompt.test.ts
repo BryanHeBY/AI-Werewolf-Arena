@@ -19,7 +19,7 @@ import {
   type BoardConfig,
   type ToolName,
   type ActionStage,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
 import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
@@ -37,8 +37,8 @@ import {
 } from "../../../src/game/mechanisms";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import { setSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
+import { COMPONENT } from "../../../src/domain/components/names";
+import type { RoleComponent } from "../../../src/domain/components/role";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 
 const roles = [

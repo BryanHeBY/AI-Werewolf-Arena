@@ -6,14 +6,14 @@
  */
 import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { Role, Camp, Phase } from "../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
+import { Role, Camp, Phase } from "../../../../src/domain/identity";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 
-import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
-import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
-import type { GameEvent } from "../../../../src/core/domain/events";
+import { createIdentityComponent } from "../../../../src/domain/entities/player";
+import { createVictoryComponent } from "../../../../src/domain/components/victory";
+import type { GameEvent } from "../../../../src/domain/events";
 import { freshPairSeerState } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";

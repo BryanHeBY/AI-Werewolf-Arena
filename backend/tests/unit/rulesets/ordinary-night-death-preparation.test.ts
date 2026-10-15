@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { DeathCause, Phase, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent, aliveLifeVersion } from "../../../src/core/domain/components/alive";
-import { captureNightLife, type NightFoxInspectionClaim } from "../../../src/core/domain/night_effects";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent, aliveLifeVersion } from "../../../src/domain/components/alive";
+import { captureNightLife, type NightFoxInspectionClaim } from "../../../src/domain/night-effects";
 import { DeathCommitReceipt, planDeathWave } from "../../../src/game/engine/death-wave";
 import {
   prepareOrdinaryNightDeaths,

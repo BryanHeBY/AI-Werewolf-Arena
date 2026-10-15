@@ -10,7 +10,7 @@ import {
   COMPONENT,
   type BoardConfig,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   boardDefinitionFromConfig,
@@ -24,15 +24,15 @@ import {
 import {
   DREAM_PROTECTION_POLICIES,
   BEAUTY_DEATH_LINK_POLICIES,
-} from "../../../src/core/domain/board";
+} from "../../../src/domain/board";
 import { getDreamerState } from "../../../src/game/mechanisms/roles/dreamer/ports";
 import { getWolfBeautyState } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import {
   projectDreamerState,
   projectWolfBeautyState,
 } from "../../../src/game/mechanisms/roles/player_state";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { captureNightLife } from "../../../src/core/domain/night_effects";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
+import { captureNightLife } from "../../../src/domain/night-effects";
 import { DreamNightFrame } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
 import { captureNightAbilityScope } from "../../../src/game/mechanisms/roles/ability_scope";
 import { allNightAbilities } from "../../../src/game/mechanisms/roles/abilities";
@@ -190,7 +190,7 @@ for (const policy of DREAM_PROTECTION_POLICIES)
       { ...config(roles), dreamer: { protectionPolicy: "netease_2026_night_immunity_v1" } },
       { fixedRoles: roles },
     );
-    const events: import("../../../src/core").GameEvent[] = [];
+    const events: import("../../../src/domain").GameEvent[] = [];
     const gift = grantNightAbility(
       game.world,
       4,

@@ -5,8 +5,8 @@
  * 错会话／turnId 只拒绝本次输入，不消耗别的有效窗口，成功选择后按原次序移除登记与 resolve。
  */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
-import { ActionRequest, ToolCall } from "../../../core/domain";
-import { World } from "../../../core/domain/world";
+import { ActionRequest, ToolCall } from "../../../domain";
+import { World } from "../../../domain/world";
 import {
   RoleCatalog,
   getDefaultRoleCatalog,
@@ -25,7 +25,7 @@ import { isLocale } from "@ai-werewolf-arena/game-contract";
 import {
   getActionRequestDay,
   getActionRequestStage,
-} from "../../../core/domain/action_request_context";
+} from "../../../domain/action-request-context";
 export type {
   GameReportBugInput as McpReportBugParams,
   GameSubmitActionInput as McpSubmitActionParams,

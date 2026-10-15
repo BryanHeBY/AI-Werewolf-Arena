@@ -4,7 +4,7 @@
  * 测试仅核本族读取边界，不执行组装对局、模型或物理传输；原政策与所有输入保持。
  */
 import { expect, test } from "bun:test";
-import { Camp, type RoleComponent } from "../../../../src/core";
+import { Camp, type RoleComponent } from "../../../../src/domain";
 import {
   createWolfSorcererState,
   getWolfSorcererState,

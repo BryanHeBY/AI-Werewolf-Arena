@@ -5,7 +5,7 @@
  * 此轻数据所有者不拥有物理牌、World 身份或窗口授权，也不增加未知对象零反射异常保证。
  */
 import type { ShapeshifterState, ShapeshifterReadState } from "@ai-werewolf-arena/game-contract";
-import { Role, type RoleComponent, type World } from "../../../../core/domain";
+import { Role, type RoleComponent, type World } from "../../../../domain";
 import { shapeshifterSetupStatus } from "./deal";
 export const SHAPESHIFTER_POLICY = "awa_netease_shapeshifter_two_extra_villagers_v1" as const;
 import { dataField } from "../initial_identity/data-ports";

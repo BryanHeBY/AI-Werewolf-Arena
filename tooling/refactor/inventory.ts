@@ -10,6 +10,7 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import type * as TypeScript from "typescript";
 
+// 六根保留历史盘点口径；目录迁移后的现行精确身份由 recording/engine-fingerprint.ts 枚举。
 const sourceRoots = [
   "backend/src/core",
   "backend/src/game",
@@ -689,7 +690,7 @@ export async function buildInventory(options: {
     fixtures: { ...metadata, files: fixtureRows },
     sourceHash: {
       ...metadata,
-      owner: "backend/src/runtime/simulation/reproduction_context.ts:currentEngineVersion",
+      owner: "历史实现：backend/src/runtime/simulation/reproduction_context.ts:currentEngineVersion（所选 Git 的历史六根口径，非现行精确指纹）",
       algorithm:
         "sha256(path UTF-8 + NUL + bytes + NUL), recursive lexical traversal for each root in declared order",
       roots: sourceRoots,
@@ -699,7 +700,7 @@ export async function buildInventory(options: {
       covered: covered.map((file) => ({ path: file.path, sha256: sha(file.bytes) })),
       uncoveredSource: uncovered.map((file) => ({ path: file.path, sha256: sha(file.bytes) })),
       boundary:
-        "Current engine hash is not a whole-build hash; runtime, AI, recording, audit and frontend source outside the six roots are explicitly enumerated.",
+        "仅按历史六根策略计算所选 Git 的盘点指标；owner 记录历史实现位置，不代表现行 engineFingerprint/sourceHash。六根外的源码单列，禁止把本值用于严格复现身份。",
     },
     contracts: {
       ...metadata,
@@ -710,13 +711,14 @@ export async function buildInventory(options: {
             "backend/src/index.ts",
             "backend/src/core/index.ts",
             "backend/src/core/domain/index.ts",
+            "backend/src/domain/index.ts",
             "frontend/src/main.tsx",
           ].includes(file.path),
         )
         .map((file) => ({ path: file.path, exports: ast.get(file.path)?.exports ?? [] })),
       domainContractDeclarations: [...ast.entries()]
         .filter(([file]) =>
-          /^backend\/src\/core\/domain\/(?:actions|events|board|results|deaths|night_effects|action_request_context|request_delivery|model)\.ts$/.test(
+          /^backend\/src\/(?:core\/domain\/(?:actions|events|board|results|deaths|night_effects|action_request_context|request_delivery|model)|domain\/(?:actions|events|board|results|deaths|night-effects|action-request-context|request-delivery|model))\.ts$/.test(
             file,
           ),
         )

@@ -5,11 +5,11 @@
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
-import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
-import { Camp, Role } from "../../../../src/core/domain/identity";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { createRoleComponent } from "../../../../src/domain/components/role";
+import { createVictoryComponent } from "../../../../src/domain/components/victory";
+import { Camp, Role } from "../../../../src/domain/identity";
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { initialIdentityDeal, installInitialIdentityDeal } from "../../../../src/game/mechanisms/roles/initial_identity/deal";
 import { publishInitialIdentityDeal } from "../../../../src/game/mechanisms/roles/initial_identity/initial-deal-publication";

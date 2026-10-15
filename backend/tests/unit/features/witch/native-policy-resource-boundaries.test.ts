@@ -18,7 +18,7 @@ import {
   type RoleComponent,
   type ToolCall,
   type StatusMarksComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { WITCH_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/witch/night_stages";
 import { WITCH_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/witch/profile";

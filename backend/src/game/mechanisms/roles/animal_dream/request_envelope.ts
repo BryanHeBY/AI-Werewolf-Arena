@@ -7,8 +7,8 @@
  */
 import { types } from "node:util";
 import { z } from "zod";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
-import type { World } from "../../../../core/domain/world";
+import { snapshotPlainData } from "../../../../domain/plain-data";
+import type { World } from "../../../../domain/world";
 
 type Kind = "fox" | "puffer";
 interface Header {

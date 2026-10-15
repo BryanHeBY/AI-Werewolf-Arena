@@ -4,8 +4,8 @@
  * 反射先取原提交 callee，再读取 World、本族同夜 binding、source 和种类；原状态命令负责资格与消费。
  * 原 context／receipt receiver 与每次读取点保持，不增加退款、复制或序列化运行句柄。
  */
-import { Role } from "../core/domain/identity";
-import type { NightLifeScope } from "../core/domain/night_effects";
+import { Role } from "../domain/identity";
+import type { NightLifeScope } from "../domain/night-effects";
 import type { NightStageContext } from "../game/mechanisms/stages/night/contracts";
 import type { NightAbilityReadView } from "../game/mechanisms/roles/abilities";
 import {

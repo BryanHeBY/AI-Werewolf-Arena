@@ -11,7 +11,7 @@ import {
   type ActionStage,
   type World,
   type AliveComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 
 import { PhaseManager } from "../../../../src/game/engine/phase_manager";
 import { type PlannedTurn } from "../../../support/transport/contracts";

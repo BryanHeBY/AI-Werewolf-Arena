@@ -17,7 +17,7 @@ import {
   createIdentityComponent,
   type RoleComponent,
   type ToolCall,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";

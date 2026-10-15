@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import { Role, Camp } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/domain/components/role";
 import {
   freshFragrantState,
   installFragrantStateSlot,

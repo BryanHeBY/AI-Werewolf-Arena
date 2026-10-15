@@ -5,7 +5,7 @@
  */
 import type { GargoyleState, GargoyleReadState } from "@ai-werewolf-arena/game-contract";
 
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 
 export function setGargoyleState(role: RoleComponent, state: GargoyleState): GargoyleReadState {
   (role.privateState as { gargoyle: GargoyleState })["gargoyle"] = state;

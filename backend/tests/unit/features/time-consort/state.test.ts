@@ -5,7 +5,7 @@
  */
 import type { ReflectionScope } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
-import { Camp, type RoleComponent } from "../../../../src/core";
+import { Camp, type RoleComponent } from "../../../../src/domain";
 import {
   createTimeConsortState,
   getTimeConsortState,

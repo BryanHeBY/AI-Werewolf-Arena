@@ -4,9 +4,9 @@
  * 首次单元 guard 前快照两份输入，最后 guard 后保持原重复票权读取；撤权先停止原 owner 再抛错。
  * 封票先记最终轮、后读政策和库存；接受票或租约均不等于付款，生命／关闭写权仍归原 authority。
  */
-import type { World } from "../../../../core/domain/world";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
-import { COMPONENT } from "../../../../core/domain/components/names";
+import type { World } from "../../../../domain/world";
+import { snapshotPlainData } from "../../../../domain/plain-data";
+import { COMPONENT } from "../../../../domain/components/names";
 import { animalOriginalPlayer, animalRosterPolicies } from "./roster";
 import { descriptor } from "./state-slot";
 import type { AcceptedBallot } from "./ballot-ledger";

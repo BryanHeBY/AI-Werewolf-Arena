@@ -9,11 +9,11 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { Role, WinCondition, WitchSelfHealRule } from "../../../src/core/domain/identity";
-import type { BoardConfig } from "../../../src/core/domain/board";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
+import { Role, WinCondition, WitchSelfHealRule } from "../../../src/domain/identity";
+import type { BoardConfig } from "../../../src/domain/board";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
+import { COMPONENT } from "../../../src/domain/components/names";
+import type { RoleComponent } from "../../../src/domain/components/role";
 import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/ports";
 for (const shotPolicy of ["night_shot_immune", "hunter_shot_bypasses"] as const) {
   for (const selfHeal of [WitchSelfHealRule.Disabled, WitchSelfHealRule.FirstNightOnly]) {

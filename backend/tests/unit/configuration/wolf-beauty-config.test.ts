@@ -4,7 +4,7 @@
  * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
  * these module assertions invoke no model or complete-game driver.
  */
-import { Role } from "../../../src/core";
+import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";

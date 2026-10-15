@@ -11,7 +11,7 @@ import { refreshWolfKnifeInheritanceAtCheckpoint } from "./wolf-knife-inheritanc
 import type { BoardParameters } from "./board-parameters";
 import type { NightStageRegistry } from "./night-stage-plan";
 import type { NightStagePlan, SupportedNightDefinition } from "./night-stage-plan-contracts";
-import type { World } from "../core/domain/world";
+import type { World } from "../domain/world";
 import { types } from "node:util";
 import { bindNativeNightFailurePolicy } from "./native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "./native-night-target-policy";

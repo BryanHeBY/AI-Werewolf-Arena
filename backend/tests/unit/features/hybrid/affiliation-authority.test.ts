@@ -21,12 +21,12 @@ import {
   type GameEvent,
   type RoleComponent,
   type ToolCall,
-} from "../../../../src/core";
-import type { VictoryComponent } from "../../../../src/core/domain/components/victory";
+} from "../../../../src/domain";
+import type { VictoryComponent } from "../../../../src/domain/components/victory";
 
-import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
-import { ConditionRegistry } from "../../../../src/core/domain/registries/condition_registry";
+import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
+import { ConditionRegistry } from "../../../../src/domain/registries/condition-registry";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { HYBRID_STAGE } from "../../../../src/game/mechanisms/roles/hybrid/night_stage";
 import {

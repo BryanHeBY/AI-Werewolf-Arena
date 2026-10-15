@@ -5,8 +5,8 @@
  */
 import type { HiddenWolfState, HiddenWolfReadState } from "@ai-werewolf-arena/game-contract";
 
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import type { HiddenWolfCampInspectionPolicy } from "../../../../core/domain/board";
+import type { RoleComponent } from "../../../../domain/components/role";
+import type { HiddenWolfCampInspectionPolicy } from "../../../../domain/board";
 
 export function setHiddenWolfState(
   role: RoleComponent,

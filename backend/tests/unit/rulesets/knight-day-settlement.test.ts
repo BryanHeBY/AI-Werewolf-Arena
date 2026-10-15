@@ -4,11 +4,11 @@
  * 不替代窗口／网关授权，不模拟真实死亡；经理的原DR等待另由精准旧场景覆盖。
  */
 import { expect, test } from "bun:test";
-import { Camp, Role, type GameEvent } from "../../../src/core/domain/model";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { World } from "../../../src/core/domain/world";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+import { Camp, Role, type GameEvent } from "../../../src/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { createRoleComponent } from "../../../src/domain/components/role";
+import { createAliveComponent } from "../../../src/domain/components/alive";
 import { setKnightState } from "../../../src/game/mechanisms/roles/knight/state";
 import { settleKnightDay, type KnightDaySettlementRuntime } from "../../../src/rulesets/knight-day-settlement";
 

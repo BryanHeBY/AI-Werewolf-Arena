@@ -7,7 +7,7 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
-import { Role, ActionWindow, Phase } from "../../../../core/domain/model";
+import { Role, ActionWindow, Phase } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { getWhiteWolfKingState, initializeWhiteWolfKingState } from "./state";

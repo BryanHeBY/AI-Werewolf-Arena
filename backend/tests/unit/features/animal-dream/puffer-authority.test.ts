@@ -6,9 +6,9 @@
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 
-import type { VotingRightComponent } from "../../../../src/core/domain/components/voting_right";
+import type { VotingRightComponent } from "../../../../src/domain/components/voting-right";
 import {
   installAnimalAuthority,
   beginAnimalNight,

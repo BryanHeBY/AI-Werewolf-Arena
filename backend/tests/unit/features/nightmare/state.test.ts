@@ -4,8 +4,8 @@
  * 这些测试不以数据形状授予生命／夜许可，也不在迁移中重生成预期或改变状态接受政策。
  */
 import { describe, expect, test } from "bun:test";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
-import { Camp } from "../../../../src/core/domain/identity";
+import type { RoleComponent } from "../../../../src/domain/components/role";
+import { Camp } from "../../../../src/domain/identity";
 import {
   freshNightmareShadowState,
   getNightmareShadowState,

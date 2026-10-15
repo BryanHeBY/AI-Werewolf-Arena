@@ -11,7 +11,7 @@ import {
   type ActionRequest,
   type RoleComponent,
   type ToolCall,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
 import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
 import { MIST_ROLES, mistBoard } from "../../../support/features/mist-raven/builders/board";

@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
-import { Camp, Role } from "../../../../src/core";
+import { Camp, Role } from "../../../../src/domain";
 import { WILD_CHILD_CASES, wildChildScenario } from "../../../support/features/wild-child/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";

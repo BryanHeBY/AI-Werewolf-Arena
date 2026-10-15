@@ -1,7 +1,7 @@
 /**
  * 负责按角色运行贡献生成领域工具许可注册表。输入为明确 Catalog，输出为角色与可用工具的原有序登记；公共工具与原贡献去重，不维护第二份角色资料或提示视图，也不授权具体行动租约。
  */
-import { RoleRegistry } from "../../../core/domain/registries/role_registry";
+import { RoleRegistry } from "../../../domain/registries/role-registry";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { type RoleCatalog } from "./catalog";
 import { getDefaultRoleCatalog } from "./role-catalog-assembly";

@@ -4,17 +4,17 @@
  * 运行范围不成为协议数据，也不替换已捕获组件；原体身份与当前性仍在实际查询时复核。
  */
 import { types } from "node:util";
-import type { World } from "../../../core/domain/world";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import type { CampComponent } from "../../../core/domain/components/camp";
+import type { World } from "../../../domain/world";
+import type { RoleComponent } from "../../../domain/components/role";
+import type { CampComponent } from "../../../domain/components/camp";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
   type AliveComponent,
-} from "../../../core/domain/components/alive";
-import { COMPONENT } from "../../../core/domain/components/names";
+} from "../../../domain/components/alive";
+import { COMPONENT } from "../../../domain/components/names";
 import { isRoleId, type RoleId } from "@ai-werewolf-arena/game-contract";
-import { Camp } from "../../../core/domain/identity";
+import { Camp } from "../../../domain/identity";
 export interface OriginalPlayerScope {
   readonly id: number;
   readonly life: AliveComponent;

@@ -10,7 +10,7 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { WeddingActorView } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { registerRequestAliasPropagation } from "../../../../domain/request-delivery";
 import { types } from "node:util";
 import { GHOST_BRIDE_POLICY, GHOST_BRIDE_ROLE, type GhostBrideState, type WeddingPair, type WeddingGroup, type WeddingSetup, type WeddingKnifeCapture, type WeddingTool, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import {
@@ -27,12 +27,12 @@ import {
   type RoleComponent,
   type CampComponent,
   type VictoryComponent,
-} from "../../../../core/domain";
+} from "../../../../domain";
 import {
   aliveLifeVersion,
   aliveLifeDescriptor,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
+} from "../../../../domain/components/alive";
 import { assertGhostBridePreset } from "./preset";
 import {
   readGhostBrideState,
@@ -1182,7 +1182,7 @@ export function weddingBadgeSwallowed(world: World): boolean {
 }
 export function swallowWeddingBadges(
   world: World,
-  events: import("../../../../core/domain").GameEvent[],
+  events: import("../../../../domain").GameEvent[],
 ): void {
   const b = bindings.get(world);
   if (!b || !ghostBrideReady(world)) throw new Error("ghost_bride_badge_authority_invalid");

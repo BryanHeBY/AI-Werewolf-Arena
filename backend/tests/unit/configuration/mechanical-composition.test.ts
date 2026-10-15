@@ -10,7 +10,7 @@ import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
 } from "../../../src/runtime/config/board_definition";
-import { Role, type BoardConfig } from "../../../src/core";
+import { Role, type BoardConfig } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { configDiagnostic } from "../../../src/runtime/config/error_codes";
 

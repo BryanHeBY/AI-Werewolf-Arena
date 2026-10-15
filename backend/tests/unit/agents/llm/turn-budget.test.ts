@@ -5,7 +5,7 @@ import { expect, spyOn, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { Phase, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { Phase, type ActionRequest, type ToolCall } from "../../../../src/domain";
 
 function request(actorId: number, deadlineAtMs?: number): ActionRequest {
   return {

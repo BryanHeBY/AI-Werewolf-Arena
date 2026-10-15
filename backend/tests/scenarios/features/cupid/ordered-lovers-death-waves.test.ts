@@ -6,7 +6,7 @@
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, type RoleComponent, type AliveComponent, type GameEvent, type ActionRequest, type ToolCall, type RuntimeSnapshot } from "../../../../src/core";
+import { COMPONENT, DeathCause, Phase, Role, type RoleComponent, type AliveComponent, type GameEvent, type ActionRequest, type ToolCall, type RuntimeSnapshot } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
 import {
@@ -21,7 +21,7 @@ import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { DreamNightFrame } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
+import { aliveLifeVersion } from "../../../../src/domain/components/alive";
 import {
   permitsCharm,
   bindCharm,
@@ -30,7 +30,7 @@ import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_b
 
 const deck = [Role.Cupid, Role.Hunter, Role.Wolf, Role.Villager, Role.Wolf, Role.Villager];
 
-type CupidPolicy = import("../../../../src/core/domain/board").CupidPolicy;
+type CupidPolicy = import("../../../../src/domain/board").CupidPolicy;
 
 const fixture = (roles = deck, policy: CupidPolicy = "netease_2017_cupid_follows_lovers_v1") => {
   const config = { ...foxBoard(roles), cupid: { policy } };

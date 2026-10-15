@@ -17,7 +17,7 @@ import { createTestTempDirectory } from "../../../support/drivers/temp-directori
 import { expect, spyOn, test } from "bun:test";
 import { thiefScenario } from "../../../support/features/thief/builders/scenario";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Phase, COMPONENT, PotionType, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall, type GameEvent } from "../../../../src/core";
+import { Role, Phase, COMPONENT, PotionType, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall, type GameEvent } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 
 const deal = [

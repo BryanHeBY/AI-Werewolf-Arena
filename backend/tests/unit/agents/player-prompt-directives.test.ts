@@ -12,8 +12,8 @@ import {
   type ActionRequest,
   type ReadonlyBoardConfig,
 } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
 import {
   createRoleComponent,
   bindRolePresentation,

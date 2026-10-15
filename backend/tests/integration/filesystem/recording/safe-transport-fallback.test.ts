@@ -16,7 +16,7 @@ import { SessionRecordManager } from "../../../../src/recording/session_recorder
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { ReplayFileStore } from "../../../../src/recording/file_store";
-import { Phase, Role, type ActionRequest } from "../../../../src/core";
+import { Phase, Role, type ActionRequest } from "../../../../src/domain";
 
 const secret = "synthetic-private-transport-canary";
 

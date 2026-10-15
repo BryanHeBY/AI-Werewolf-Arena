@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { ActionWindow, COMPONENT, Phase, Role, type GameEvent } from "../../../src/core";
+import { ActionWindow, COMPONENT, Phase, Role, type GameEvent } from "../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { SelfDestructWindow } from "../../../src/rulesets/self-destruct-window";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";

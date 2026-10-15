@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type RoleComponent, type ActionRequest } from "../../../src/core";
+import { COMPONENT, Phase, Role, type RoleComponent, type ActionRequest } from "../../../src/domain";
 import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
 import {
   resolveGameSetup,

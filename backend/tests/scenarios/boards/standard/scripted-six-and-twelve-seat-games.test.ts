@@ -4,7 +4,7 @@
 import { mapPlayerArchive } from "../../../support/drivers/recording/player-archive-handler";
 import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { ActionWindow } from "../../../../src/core";
+import { ActionWindow } from "../../../../src/domain";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { PlayerPromptSession } from "../../../../src/ai/agents/llm/player_prompt_session";
@@ -32,8 +32,8 @@ import {
   type RoleComponent,
   type ToolCall,
   type VotingRightComponent,
-} from "../../../../src/core";
-import { createRandom } from "../../../../src/core/domain/random";
+} from "../../../../src/domain";
+import { createRandom } from "../../../../src/domain/random";
 import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
 import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";

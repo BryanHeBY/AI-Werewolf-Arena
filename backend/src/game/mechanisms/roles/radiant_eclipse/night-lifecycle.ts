@@ -4,7 +4,7 @@
  * 正常关闭不跳过已获取单元的 finally abort 或参数读取，
  * 重复终止由原 frame.closed 决定；这里不查询施法者、推进阶段、退款或录制 I/O。
  */
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import { beginRadiantNight, closeRadiantNight } from "./night_frame";
 

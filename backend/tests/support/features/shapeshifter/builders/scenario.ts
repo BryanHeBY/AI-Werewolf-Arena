@@ -7,12 +7,12 @@
 import { text } from "@ai-werewolf-arena/game-text";
 import { roleName } from "@ai-werewolf-arena/game-text";
 import { term } from "@ai-werewolf-arena/game-text";
-import { Role } from "../../../../../src/core";
-import { PotionType } from "../../../../../src/core";
-import { createRandom } from "../../../../../src/core";
-import { shuffled } from "../../../../../src/core";
-import type { ActionStage } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
+import { PotionType } from "../../../../../src/domain";
+import { createRandom } from "../../../../../src/domain";
+import { shuffled } from "../../../../../src/domain";
+import type { ActionStage } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 import { foxBoard } from "../../cursed-fox/builders/scenario";
 import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";

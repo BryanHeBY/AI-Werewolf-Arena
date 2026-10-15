@@ -10,7 +10,7 @@ import { expect, spyOn, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom, Phase, type ActionRequest } from "../../../src/core";
+import { createRandom, Phase, type ActionRequest } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { ReplayFileStore } from "../../../src/recording/file_store";

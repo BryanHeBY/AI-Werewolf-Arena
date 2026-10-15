@@ -2,12 +2,12 @@
  * 单元测试：验证警长初始配置及有限投票／死亡警徽生命周期。输入为原局部 World、警徽／票权／生命修改和直接 DeathResolution 操作；竞选、转移／销毁与白痴翻牌为原字面预期，不运行完整白天 pipeline 或模型。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { AliveComponent } from "../../../src/core/domain/components/alive";
-import { BadgeComponent } from "../../../src/core/domain/components/badge";
-import { VotingRightComponent } from "../../../src/core/domain/components/voting_right";
-import { RoleComponent } from "../../../src/core/domain/components/role";
-import { DeathCause, Phase } from "../../../src/core/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { AliveComponent } from "../../../src/domain/components/alive";
+import { BadgeComponent } from "../../../src/domain/components/badge";
+import { VotingRightComponent } from "../../../src/domain/components/voting-right";
+import { RoleComponent } from "../../../src/domain/components/role";
+import { DeathCause, Phase } from "../../../src/domain/model";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

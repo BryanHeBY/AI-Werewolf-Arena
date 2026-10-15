@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { redMoonVotedOutHook } from "./voted_out_hook";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { Role, WinCondition } from "../../../../core/domain/identity";
+import { Role, WinCondition } from "../../../../domain/identity";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { RED_MOON_POLICY, RED_MOON_STATE_SLOT } from "./state-slot";

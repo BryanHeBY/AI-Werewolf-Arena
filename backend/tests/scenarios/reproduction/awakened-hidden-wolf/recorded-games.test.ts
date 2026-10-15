@@ -3,7 +3,7 @@
  * Input: Original scenario/transport/locale matrices and handwritten terminal, learned-template, death and last-word facts.
  * Output and oracle: Explicit archived resource, phase, private-view and result assertions retain the original action replay; no fixture or declared expected table is regenerated.
  */
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { AWAKENED_CASES, awakenedScenario, type AwakenedScenario } from "../../../support/features/awakened-hidden-wolf/builders/scenario";

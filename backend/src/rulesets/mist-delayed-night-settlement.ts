@@ -5,14 +5,14 @@
  * 原生命／伤害复制、疗救付款和窗口许可仍归本族原所有者。失败停在当前步骤，不退款、不自动完成或正常关闭。
  */
 import type { EntityId, NightSummary } from "@ai-werewolf-arena/game-contract";
-import type { ActionProvider } from "../core/domain/actions";
-import type { GameEvent } from "../core/domain/events";
-import type { World } from "../core/domain/world";
-import type { AliveComponent } from "../core/domain/components/alive";
-import { aliveLifeVersion } from "../core/domain/components/alive";
-import { COMPONENT } from "../core/domain/components/names";
-import type { DamageResolutionResult } from "../core/domain/systems/damage_resolution_system";
-import type { DreamNightEffects } from "../core/domain/dream-night-effects";
+import type { ActionProvider } from "../domain/actions";
+import type { GameEvent } from "../domain/events";
+import type { World } from "../domain/world";
+import type { AliveComponent } from "../domain/components/alive";
+import { aliveLifeVersion } from "../domain/components/alive";
+import { COMPONENT } from "../domain/components/names";
+import type { DamageResolutionResult } from "../domain/systems/damage-resolution-system";
+import type { DreamNightEffects } from "../domain/dream-night-effects";
 import { Phase } from "@ai-werewolf-arena/game-contract";
 import type { ToolGateway } from "../game/gateway/tool_gateway";
 import type { NightManagerLifecycle } from "./night-lifecycle-plan";

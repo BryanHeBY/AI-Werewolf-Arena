@@ -5,15 +5,15 @@
  */
 import { expect, test } from "bun:test";
 import { Role, Phase, ActionWindow, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { ActionRequest, ToolCall } from "../../../src/core/domain/actions";
+import type { ActionRequest, ToolCall } from "../../../src/domain/actions";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
-import { openExileUnit, exileUnitOf } from "../../../src/core/domain/exile-unit";
-import { openNightUnit } from "../../../src/core/domain/night-unit";
+import { openExileUnit, exileUnitOf } from "../../../src/domain/exile-unit";
+import { openNightUnit } from "../../../src/domain/night-unit";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { deathExecutionContext, type DeathCommitReceipt } from "../../../src/game/engine/death-wave";
 import { animalRosterFixture } from "../../support/features/animal-dream/builders/roster";

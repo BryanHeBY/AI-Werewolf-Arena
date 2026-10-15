@@ -5,10 +5,10 @@
  */
 import { expect, test, spyOn } from "bun:test";
 import { Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import type { ActionRequestConstructionInput, ActionRequest } from "../../../src/core/domain/actions";
+import type { ActionRequestConstructionInput, ActionRequest } from "../../../src/domain/actions";
 import { prepareGameSetup, type GameSetupRuntime } from "../../../src/rulesets/game-setup";
 import {
   installInitialIdentityDeal,

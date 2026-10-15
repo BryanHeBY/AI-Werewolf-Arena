@@ -8,17 +8,17 @@
  * 请求另有动态交付租约：观察原 envelope／领域失配或到期即共闭，别名自身坏只退自己，期限只缩短。
  * Provider 返回不等于领域提交；全部付款成功才在事实前 complete，退出的通知异常不得盖原正文错误。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
-import { RequestLease } from "../../../../core/domain/request-lease";
+import { COMPONENT } from "../../../../domain/components/names";
+import { isRoleExecutionRetired } from "../../../../domain/role-execution-authority";
+import { RequestLease } from "../../../../domain/request-lease";
 
 import {
   createVictoryComponent,
   type VictoryComponent,
-} from "../../../../core/domain/components/victory";
-import { Camp, Phase, Role } from "../../../../core/domain/model";
-import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
-import type { World } from "../../../../core/domain/world";
+} from "../../../../domain/components/victory";
+import { Camp, Phase, Role } from "../../../../domain/model";
+import { captureNightLife, livingNightLife } from "../../../../domain/night-effects";
+import type { World } from "../../../../domain/world";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { canChooseExemplar, getHybridState, commitHybridChoice } from "./state-slot";
 

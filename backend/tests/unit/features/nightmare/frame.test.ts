@@ -5,11 +5,11 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
-import { Camp } from "../../../../src/core/domain/identity";
-import type { World } from "../../../../src/core/domain/world";
+import type { RoleComponent } from "../../../../src/domain/components/role";
+import { Camp } from "../../../../src/domain/identity";
+import type { World } from "../../../../src/domain/world";
 import {
   freshNightmareShadowState,
 } from "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";

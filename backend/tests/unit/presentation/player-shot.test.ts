@@ -5,7 +5,7 @@
  * oracle; these module assertions invoke no model or complete-game driver.
  */
 import { expect, test } from "bun:test";
-import type { GameEvent } from "../../../src/core";
+import type { GameEvent } from "../../../src/domain";
 import { getDefaultScriptEventRenderRegistry } from "../../../src/game";
 
 for (const locale of ["zh-CN", "en"] as const)

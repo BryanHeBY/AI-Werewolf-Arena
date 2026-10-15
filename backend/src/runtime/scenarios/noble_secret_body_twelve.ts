@@ -10,7 +10,7 @@ import {
   WinCondition,
   WitchSelfHealRule,
   type BoardConfig,
-} from "../../core/domain/model";
+} from "../../domain/model";
 export function nobleSecretBodyTwelveConfig(
   wolfActionPolicy: "standard" | "no_blast_no_self_knife" = "standard",
   protectionRepeatPolicy:

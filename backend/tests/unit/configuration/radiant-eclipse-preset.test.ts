@@ -8,7 +8,7 @@
  */
 import { expect, test } from "bun:test";
 import { isRadiantEclipsePreset } from "../../../src/rulesets";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,

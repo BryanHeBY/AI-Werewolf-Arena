@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/domain/components/role";
 import type { RoleInitializationComponent } from "../../../src/game/mechanisms/roles/contracts";
 import {
   commitPreparedNativeAbility,

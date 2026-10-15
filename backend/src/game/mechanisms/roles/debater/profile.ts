@@ -15,12 +15,12 @@ import {
   Phase,
   DEBATER_POLICIES,
   type RoleComponent,
-} from "../../../../core/domain";
+} from "../../../../domain";
 import type { NativeRoleContributions } from "../contracts";
 import { numberOrNull } from "../../llm/helpers";
 import { getDebaterState, projectDebaterState, initializeDebaterState } from "./state";
 import { debateAuthority, hasDebateCommit } from "./authority";
-import { sameOriginalParticipant as sameDebateParticipant } from "../../../../core/domain/original-participant";
+import { sameOriginalParticipant as sameDebateParticipant } from "../../../../domain/original-participant";
 const parameters = z.strictObject({
   policy: z.enum(DEBATER_POLICIES).default("awa_melbourne_2026_speech_gap_v1"),
 });

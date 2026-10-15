@@ -6,7 +6,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { Phase } from "../../../src/core";
+import { Phase } from "../../../src/domain";
 import { resolveTurnConstraints } from "../../../src/game/gateway/turn-constraints";
 import { renderTurnConstraintUserHint } from "../../../src/ai/agents/player/turn_constraints";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";

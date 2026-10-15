@@ -11,7 +11,7 @@ import type {
   ShelterState,
 } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
-import { WitchSelfHealRule } from "../../../../core/domain/identity";
+import { WitchSelfHealRule } from "../../../../domain/identity";
 import { readShelterState } from "./shelter-state";
 
 interface BorrowedStates {

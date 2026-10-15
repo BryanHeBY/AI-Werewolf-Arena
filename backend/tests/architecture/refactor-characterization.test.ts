@@ -14,11 +14,11 @@ import {
   createRandom,
   type ActionRequest,
   type RoleComponent,
-} from "../../src/core";
+} from "../../src/domain";
 import {
   assertRequestDelivery,
   deriveBoundedRequest,
-} from "../../src/core/domain/request_delivery";
+} from "../../src/domain/request-delivery";
 import { BaselineBotActionProvider } from "../../src/game/drivers/privileged-baseline";
 import { ObservedPlayersActionProvider } from "../../src/app/observed-players-action-provider";
 import { ObservedBot } from "../../src/ai/agents/providers/observed_bot";

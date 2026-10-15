@@ -2,10 +2,10 @@
  * 单元测试：验证内存放逐、中毒及被枪击的角色 hook。输入为原事件与角色；生命、票权和枪的字面结果为预期，不推进完整对局。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { AliveComponent } from "../../../src/core/domain/components/alive";
-import { RoleComponent } from "../../../src/core/domain/components/role";
-import { Role, DeathCause, Phase } from "../../../src/core/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { AliveComponent } from "../../../src/domain/components/alive";
+import { RoleComponent } from "../../../src/domain/components/role";
+import { Role, DeathCause, Phase } from "../../../src/domain/model";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 

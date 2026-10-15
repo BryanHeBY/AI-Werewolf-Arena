@@ -9,7 +9,7 @@
  * 撤权不关闭整夜、不撤回已付选择／来源；完成通知仍由原提交和 finally 持有。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { registerRequestAliasPropagation } from "../../../../domain/request-delivery";
 import { recordNobleContractClosure } from "../noble_secret_body/hunt-ports";
 import type { NobleContractClosedFact } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import {
@@ -47,7 +47,7 @@ import {
   type CampComponent,
   type VictoryComponent,
   type World,
-} from "../../../../core";
+} from "../../../../domain";
 import {
   DEMON_HUNTER_POLICY,
   DEMON_HUNTER_ROLE,
@@ -64,7 +64,7 @@ import {
   type DemonHunterStateSlot,
 } from "./state-slot";
 import type { DemonHunterChoice, DemonHunterState } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
-import { statusMarkSnapshot } from "../../../../core/domain/components/status_marks";
+import { statusMarkSnapshot } from "../../../../domain/components/status-marks";
 import { assertDemonHunterPreset } from "./preset";
 import type { FaultDecisionBoundary } from "../../../engine/fault_plan";
 import {

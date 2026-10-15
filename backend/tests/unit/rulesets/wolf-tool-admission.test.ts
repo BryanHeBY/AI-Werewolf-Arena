@@ -7,10 +7,10 @@
 import { expect, test } from "bun:test";
 import { fileURLToPath } from "node:url";
 import { ActionWindow, Camp, Phase, Role, RuleError, type ToolCall } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { createRoleComponent } from "../../../src/domain/components/role";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { WOLF_VALIDATION_RULES } from "../../../src/rulesets/wolf-tool-admission";
 import { WOLF_VALIDATION_RULES as publicRules, ORDINARY_WOLF_CONTRIBUTIONS } from "../../../src/game/mechanisms/roles/wolf/ability-ports";

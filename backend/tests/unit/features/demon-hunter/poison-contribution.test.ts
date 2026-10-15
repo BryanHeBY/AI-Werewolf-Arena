@@ -5,11 +5,11 @@
  */
 import { createStatusMarksComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World, COMPONENT, StatusMark } from "../../../../src/core";
+import { World, COMPONENT, StatusMark } from "../../../../src/domain";
 import {
   StatusMarksComponent,
   statusMarkSnapshot,
-} from "../../../../src/core/domain/components/status_marks";
+} from "../../../../src/domain/components/status-marks";
 import {
   openNativePoisonContribution,
   commitNativePoisonContribution,

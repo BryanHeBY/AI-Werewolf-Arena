@@ -5,8 +5,8 @@
  */
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
-import { Camp, PlayerVisibleEvent, ToolCall, type GameResult } from "../core/domain/model";
-import type { RandomMetadata } from "../core/domain/random";
+import { Camp, PlayerVisibleEvent, ToolCall, type GameResult } from "../domain/model";
+import type { RandomMetadata } from "../domain/random";
 
 /** 玩家回合行动模式。 */
 export type ReplayActionMode = "tool_call" | "text_action" | "none";

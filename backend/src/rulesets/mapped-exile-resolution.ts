@@ -8,8 +8,8 @@
  * 规则见 docs/rules/awa-trickster-exile-v1.md。
  */
 import type { ReadonlyBoardConfig, EntityId, VotingSummary } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../core/domain/world";
-import type { GameEvent } from "../core/domain/events";
+import type { World } from "../domain/world";
+import type { GameEvent } from "../domain/events";
 import type { VotedOutResult } from "../game/mechanisms/hooks/hook_registry";
 import { resolveTricksterExile } from "../game/mechanisms/roles/trickster/ports";
 

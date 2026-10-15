@@ -6,8 +6,8 @@
  */
 import type { RadiantFullPlanName } from "../oracles/literal-plans";
 import type { BootstrapResult } from "../../../../../src/app/bootstrap";
-import type { ActionProvider } from "../../../../../src/core";
-import type { ActionRequest } from "../../../../../src/core";
+import type { ActionProvider } from "../../../../../src/domain";
+import type { ActionRequest } from "../../../../../src/domain";
 import { radiantManualAction } from "./manual-actions";
 import { readFile } from "node:fs/promises";
 import { rm } from "node:fs/promises";
@@ -15,7 +15,7 @@ import { mkdir } from "node:fs/promises";
 import { copyFile } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
-import { createRandom } from "../../../../../src/core";
+import { createRandom } from "../../../../../src/domain";
 import { radiantRoles } from "../builders/runtime-game";
 import { radiantProvider } from "./actions";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";

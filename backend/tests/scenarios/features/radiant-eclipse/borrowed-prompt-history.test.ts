@@ -4,7 +4,7 @@
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -17,10 +17,10 @@ import {
   type ActionRequest,
   type RoleComponent,
   type GameEvent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   findNightAbility,

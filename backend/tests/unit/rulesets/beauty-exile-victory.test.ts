@@ -5,13 +5,13 @@
  * 规则依据 docs/rules/awa-wolf-beauty-v1.md；不运行完整阶段、模型或网络，预期不从生产结果生成。
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createVictoryComponent } from "../../../src/core/domain/components/victory";
-import { Camp, Role, DeathCause, WinCondition, type WinDecision } from "../../../src/core/domain/model";
-import { ConditionRegistry } from "../../../src/core/domain/registries/condition_registry";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createRoleComponent } from "../../../src/domain/components/role";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { createVictoryComponent } from "../../../src/domain/components/victory";
+import { Camp, Role, DeathCause, WinCondition, type WinDecision } from "../../../src/domain/model";
+import { ConditionRegistry } from "../../../src/domain/registries/condition-registry";
 import { bindCharm } from "../../../src/game/mechanisms/roles/wolf_beauty/relation";
 import { activeCharm, attemptCharmTrigger, commitCharmDeath, setWolfBeautyState, type CharmClaimReceipt } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import { prepareBeautyExileVictory, resolveBeautyExileVictory, beautyExileVictoryOverrides } from "../../../src/rulesets/beauty-exile-victory";

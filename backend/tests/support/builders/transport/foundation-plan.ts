@@ -5,10 +5,10 @@
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
 import type { PlannedTurn } from "../../transport/contracts";
-import { ActionWindow } from "../../../../src/core";
-import { PotionType } from "../../../../src/core";
-import type { ActionStage } from "../../../../src/core";
-import type { ToolCall } from "../../../../src/core";
+import { ActionWindow } from "../../../../src/domain";
+import { PotionType } from "../../../../src/domain";
+import type { ActionStage } from "../../../../src/domain";
+import type { ToolCall } from "../../../../src/domain";
 
 export function foundationTransportPlan(size: 6 | 12, alternate = false) {
   const rows = new Map<number, PlannedTurn[]>(

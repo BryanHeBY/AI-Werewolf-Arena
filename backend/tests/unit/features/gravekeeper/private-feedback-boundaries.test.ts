@@ -15,7 +15,7 @@ import {
   type GameEvent,
   type BoardConfig,
   type ActionRequest,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { GRAVEKEEPER_FEEDBACK_STAGE } from "../../../../src/game/mechanisms/roles/gravekeeper/feedback";
 import {

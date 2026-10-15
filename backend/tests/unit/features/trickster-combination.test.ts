@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { tricksterTwelveConfig } from "../../../src/runtime/scenarios/trickster_twelve";
-import { Role, COMPONENT, type RoleComponent } from "../../../src/core";
+import { Role, COMPONENT, type RoleComponent } from "../../../src/domain";
 import { isTricksterPreset } from "../../../src/rulesets";
 import {
   beginTricksterNight,

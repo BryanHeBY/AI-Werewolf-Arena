@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
-import { Role, Camp, Phase, KnightDuelWindow } from "../../../../core/domain/model";
+import { Role, Camp, Phase, KnightDuelWindow } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getKnightState, initializeKnightState } from "./state";
 import { isAliveTarget } from "../../validation/contracts";

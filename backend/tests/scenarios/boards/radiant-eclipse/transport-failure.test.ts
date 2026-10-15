@@ -5,7 +5,7 @@
 import { assertRadiantTransportWire } from "../../../support/features/radiant-eclipse/oracles/wire";
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { Role, PotionType, type ActionStage, type ToolCall } from "../../../../src/core";
+import { Role, PotionType, type ActionStage, type ToolCall } from "../../../../src/domain";
 import { radiantTransportScenario } from "../../../support/features/radiant-eclipse/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { type PlannedTurn } from "../../../support/transport/contracts";

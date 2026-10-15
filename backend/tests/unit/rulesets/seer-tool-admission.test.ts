@@ -6,10 +6,10 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase, RuleError, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createRoleComponent } from "../../../src/domain/components/role";
+import { createAliveComponent } from "../../../src/domain/components/alive";
 import { SEER_VALIDATION_RULES } from "../../../src/rulesets/seer-tool-admission";
 import { SEER_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/seer/profile";
 import { setSeerState } from "../../../src/game/mechanisms/roles/seer/ports";

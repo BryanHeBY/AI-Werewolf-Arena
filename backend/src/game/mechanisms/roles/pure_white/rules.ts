@@ -4,10 +4,10 @@
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { Camp, Phase, Role, type EntityId } from "../../../../core/domain/model";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import type { World } from "../../../../core/domain/world";
+import { Camp, Phase, Role, type EntityId } from "../../../../domain/model";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import type { World } from "../../../../domain/world";
 import type { ToolRule } from "../../validation/contracts";
 import type { RoleProfile } from "../contracts";
 import { activeNightAbility } from "../abilities";

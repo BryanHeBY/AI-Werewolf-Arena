@@ -5,7 +5,7 @@
  * 中止是否关闭由 frame 的原 finished 条件决定。重复终结调用不抑制参数读取或原生错误，不承诺幂等。
  * 清理写入仅委托原 frame；共享视图不是行动授权，本单位不增加外层周期清理、消费号码或结算放逐。
  */
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import type { MagicianNightCleanupOwnership } from "../magician/ports";
 import { finishTricksterNight, abortTricksterNight } from "./night_frame";
 

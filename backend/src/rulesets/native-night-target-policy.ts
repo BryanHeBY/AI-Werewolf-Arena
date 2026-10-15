@@ -5,8 +5,8 @@
  * 请求提示不授予权限，已付回执的消费仍归独立原生效果端口。
  */
 import type { NightStageContext } from "../game/mechanisms/stages/night/contracts";
-import type { NightLifeScope } from "../core/domain/night_effects";
-import type { AliveComponent } from "../core/domain/components/alive";
+import type { NightLifeScope } from "../domain/night-effects";
+import type { AliveComponent } from "../domain/components/alive";
 import {
   isMagicianBoard,
   resolveMagicianNightTarget,

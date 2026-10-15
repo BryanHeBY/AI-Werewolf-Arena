@@ -11,7 +11,7 @@ import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { Phase, type ActionRequest } from "../../../../src/core";
+import { Phase, type ActionRequest } from "../../../../src/domain";
 
 const secret = "synthetic-private-transport-canary";
 

@@ -7,7 +7,7 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { createRandom, type ActionRequest, type ToolCall } from "../../../../src/domain";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {
@@ -27,7 +27,7 @@ import { createTestTempDirectory } from "../../../support/drivers/temp-directori
 import { tricksterTwelveConfig } from "../../../../src/runtime/scenarios/trickster_twelve";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
-import { randomDraws } from "../../../../src/core";
+import { randomDraws } from "../../../../src/domain";
 import { validateTricksterRecord } from "../../../../src/verification/reproduction/trickster/validate";
 const records = new Map<string, Promise<ReproductionRecord>>();
 let version: ReturnType<typeof currentEngineVersion> | undefined;

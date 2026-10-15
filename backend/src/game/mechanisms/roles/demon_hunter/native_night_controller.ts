@@ -10,11 +10,11 @@ import {
   settleRequestDelivery,
   COMPONENT,
   type StatusMarksComponent,
-} from "../../../../core";
-import { StatusMarksComponent as Marks } from "../../../../core/domain/components/status_marks";
-import { captureNightLife } from "../../../../core/domain/night_effects";
+} from "../../../../domain";
+import { StatusMarksComponent as Marks } from "../../../../domain/components/status-marks";
+import { captureNightLife } from "../../../../domain/night-effects";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 import type { NightStageContext } from "../../stages/night/contracts";
 import { resolveInspection } from "../inspection";
 import { recordOwnNightAction } from "../night_action_history";

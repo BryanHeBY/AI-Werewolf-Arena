@@ -9,7 +9,7 @@ import {
   victoryPointLabel,
 } from "@ai-werewolf-arena/game-presentation";
 import { getDefaultScriptEventRenderRegistry } from "../game";
-import type { GameEvent, RuntimeSnapshot } from "../core";
+import type { GameEvent, RuntimeSnapshot } from "../domain";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
 
 export type ConsoleTone = "muted" | "info" | "ok" | "warn" | "error" | "accent" | "god";

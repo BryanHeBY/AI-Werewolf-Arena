@@ -6,11 +6,11 @@
  * 不合并阵营／角色查验、失败语义或阶段顺序，不引入最终目标复检。
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Phase, Role } from "../../../../core/domain/model";
-import { DeathCause } from "../../../../core/domain/deaths";
-import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Phase, Role } from "../../../../domain/model";
+import { DeathCause } from "../../../../domain/deaths";
+import { captureNightLife, livingNightLife } from "../../../../domain/night-effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 
 import { recordNightAbilityUse } from "../abilities";

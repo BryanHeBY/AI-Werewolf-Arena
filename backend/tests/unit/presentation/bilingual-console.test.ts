@@ -8,7 +8,7 @@
 import { fixtureResult } from "../../support/builders/recording/result";
 import { TextLocalizationRegistry } from "../../../src/game/mechanisms/shared/text_localization_registry";
 import { expect, test } from "bun:test";
-import { Camp, Phase, PotionType, ActionWindow, type GameEvent } from "../../../src/core";
+import { Camp, Phase, PotionType, ActionWindow, type GameEvent } from "../../../src/domain";
 import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms";
 import { presentStreamEvents, toChatLines } from "../../../src/runtime/console_presenter";
 import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";

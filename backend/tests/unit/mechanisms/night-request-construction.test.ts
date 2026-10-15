@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { Phase, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../src/domain/components/names";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

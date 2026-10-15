@@ -6,7 +6,7 @@
  */
 import type { WildChildState, WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 export const WILD_CHILD_POLICY = "awa_lui_meme_wild_child_v1" as const;
 export function freshWildChildState(): WildChildState {
   return {
@@ -63,7 +63,7 @@ export function encodeWildChildData(value: unknown): string {
   }
 }
 
-import type { NightLifeScope } from "../../../../core/domain/night_effects";
+import type { NightLifeScope } from "../../../../domain/night-effects";
 /** 直接使用原 lifecycle 绑定字段，不新增 store、镜像或绑定类；model 仍是原捕获生命引用。 */
 interface WildChildDataBinding {
   state: WildChildReadState;

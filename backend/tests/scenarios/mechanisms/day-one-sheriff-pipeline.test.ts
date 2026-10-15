@@ -4,7 +4,7 @@
  * Output and oracle: Exact vote actors, visible feeds and elected holder retain the original causal boundary; no expected result is regenerated.
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { ActionProvider, ActionRequest, ToolCall, Phase } from "../../../src/core/domain/model";
+import { ActionProvider, ActionRequest, ToolCall, Phase } from "../../../src/domain/model";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";

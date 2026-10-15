@@ -6,8 +6,8 @@
  * 规则依据：docs/rules/awa-noble-secret-body-twelve-v1.md。
  */
 import { types } from "node:util";
-import type { NightUnit } from "../../../../core/domain/night-unit";
-import type { World } from "../../../../core/domain/world";
+import type { NightUnit } from "../../../../domain/night-unit";
+import type { World } from "../../../../domain/world";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import {
   beginNobleBodyNight,

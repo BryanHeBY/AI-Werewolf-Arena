@@ -4,7 +4,7 @@
  * 录制驱动拥有执行和文件资源，变体只改脱离副本，不覆盖原归档或真实运行权威。
  */
 import { expect, test } from "bun:test";
-import { Camp } from "../../../../src/core";
+import { Camp } from "../../../../src/domain";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 import { validateMistRavenRecord } from "../../../../src/verification/reproduction/mist-raven/validate";

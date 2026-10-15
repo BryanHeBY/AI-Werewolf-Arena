@@ -4,7 +4,7 @@
  * Output and oracle: Literal failed actor/cycle, remaining stock and history assertions remain together with explicit forgery rejection; the generated record supplies input rather than new golden output.
  */
 import { expect, test } from "bun:test";
-import { Role } from "../../../../src/core";
+import { Role } from "../../../../src/domain";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 import { type PlannedTurn } from "../../../support/transport/contracts";
 import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";

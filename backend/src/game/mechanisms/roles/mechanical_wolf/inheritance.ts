@@ -3,11 +3,11 @@
  * 状态先按原点查询，再核角色／阵营／模式；无 World 时仍保守拒刀，不建立 Role 反向索引。
  * 输出为刀权资格或原继承事实；刷新不改复制技能或真实阵营，先写继承再发表，后续错误保留已写前缀。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Role, type EntityId, type GameEvent } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Role, type EntityId, type GameEvent } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import { hasCurrentMechanicalKillMode } from "./night_scope";
 import { getMechanicalState, mechanicalKnifeSelected, recordMechanicalInheritance } from "./state";
 

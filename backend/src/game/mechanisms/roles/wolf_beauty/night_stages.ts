@@ -7,11 +7,11 @@
  * 首选择字段写后继续原绑定／事实前缀；本流程不提前领取死亡牵连，实际来源政策、保护与标死另归原 owner。
  */
 import { recordCharmSelection } from "./state";
-import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
-import { Role, Camp, Phase } from "../../../../core/domain/model";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import { AliveComponent, aliveLifeVersion } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import { isRoleExecutionRetired } from "../../../../domain/role-execution-authority";
+import { Role, Camp, Phase } from "../../../../domain/model";
+import type { RoleComponent } from "../../../../domain/components/role";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { getWolfBeautyState } from "./state";
 import { bindCharm } from "./relation";

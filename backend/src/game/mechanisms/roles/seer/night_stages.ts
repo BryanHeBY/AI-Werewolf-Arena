@@ -7,16 +7,16 @@
 import { SEER_STATE_SLOT } from "./ports";
 /** 文件说明：预言家夜间查验阶段处理。 */
 import { seerTargetAllowed } from "./ports";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Phase, Role } from "../../../../core/domain/model";
+import { COMPONENT } from "../../../../domain/components/names";
+import { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Phase, Role } from "../../../../domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getSeerState } from "./ports";
 import { resolveInspection } from "../inspection";
 import { activeNightAbility } from "../abilities";
 import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
-import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
+import { captureNightLife, livingNightLife } from "../../../../domain/night-effects";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
 
 import { captureInspectionIdentity, commitFoxInspection } from "../cursed_fox/inspection-ports";

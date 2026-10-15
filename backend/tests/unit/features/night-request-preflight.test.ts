@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type RoleComponent, type GameEvent } from "../../../src/core";
+import { COMPONENT, Phase, Role, type RoleComponent, type GameEvent } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
 import { SEER_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/seer/night_stages";

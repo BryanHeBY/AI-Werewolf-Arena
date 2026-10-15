@@ -2,10 +2,10 @@
  * 负责按当前角色和狼队权限核对广播受众。输入为 World 与受众身份；输出为狼队／角色可见性谓词。这些谓词只裁剪信息，不赋予玩家全知状态或行动权限。
  */
 /** 文件说明：封装广播可见性判定逻辑。 */
-import { COMPONENT } from "../../../core/domain/components/names";
-import { RoleComponent } from "../../../core/domain/components/role";
-import { Camp, EntityId, Role } from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
+import { Camp, EntityId, Role } from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 
 /** 广播受众身份视图。 */

@@ -5,11 +5,11 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { retireRoleExecution, isRoleExecutionRetired } from "../../../src/core/domain/role-execution-authority";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createRoleComponent } from "../../../src/domain/components/role";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { retireRoleExecution, isRoleExecutionRetired } from "../../../src/domain/role-execution-authority";
 import { allNightAbilities, findNightAbility, activeNightAbility, abilityStatus, type NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
 import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { allDeathGuns, findDeathGun, grantDeathGun, armDeathGun, activeDeathGun, deathGunOwnerCurrent, captureDeathGun, firstDeathGuns, finishDeathGuns, transferDeathGun, consumeDeathGunShot, setDeathGunEnabled } from "../../../src/game/mechanisms/roles/death-gun-lifecycle";

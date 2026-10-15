@@ -6,9 +6,9 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { Camp, Phase, Role } from "../../../src/core/domain/identity";
-import type { ActionRequest } from "../../../src/core/domain/actions";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { Camp, Phase, Role } from "../../../src/domain/identity";
+import type { ActionRequest } from "../../../src/domain/actions";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";

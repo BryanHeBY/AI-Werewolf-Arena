@@ -6,7 +6,7 @@
  */
 import type { HybridState, HybridReadState } from "@ai-werewolf-arena/game-contract";
 import type { PlayerHybridState } from "@ai-werewolf-arena/game-contract/player-state-views";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import type { RoleInitializationComponent } from "../contracts";
 export const freshHybridState = (): HybridState => ({ remaining: 1, choice: null });
 export function getHybridState(role: RoleComponent | undefined): HybridReadState | undefined {

@@ -14,7 +14,7 @@ import {
   type ActionRequest,
   type AliveComponent,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
 import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";

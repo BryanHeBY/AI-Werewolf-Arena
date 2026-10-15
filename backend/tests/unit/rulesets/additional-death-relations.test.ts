@@ -6,11 +6,11 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Phase, DeathCause, type DeathSources, type EntityId, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { captureNightLife } from "../../../src/core/domain/night_effects";
-import type { DreamNightEffects } from "../../../src/core/domain/dream-night-effects";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { captureNightLife } from "../../../src/domain/night-effects";
+import type { DreamNightEffects } from "../../../src/domain/dream-night-effects";
 import { bindLovers } from "../../../src/game/mechanisms/roles/cupid/relation";
 import { prepareAdditionalDeathRelations, type AdditionalDeathRelationRuntime, type AdditionalDeathRelationWave } from "../../../src/rulesets/additional-death-relations";
 import { fragrantPairOwnerFixture } from "../../support/features/fragrant-pair-seer/builders/owner";

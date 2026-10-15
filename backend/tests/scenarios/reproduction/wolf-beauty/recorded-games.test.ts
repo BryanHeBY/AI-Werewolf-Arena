@@ -3,7 +3,7 @@
  * Input: Original scenario/transport/locale matrices and handwritten charm choices, extra death waves, survivors and last-word facts.
  * Output and oracle: Literal effect, privacy and chain-final outcome assertions remain attached to exact action replay; no production result is reused to manufacture expected state.
  */
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { BEAUTY_CASES, wolfBeautyScenario, type BeautyScenario } from "../../../support/features/wolf-beauty/builders/scenario";

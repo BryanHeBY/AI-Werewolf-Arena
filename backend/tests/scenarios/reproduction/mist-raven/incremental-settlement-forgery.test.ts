@@ -5,7 +5,7 @@
  */
 import { test, expect } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { createRandom, type ActionRequest, type ToolCall } from "../../../../src/domain";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
 import { validateMistRavenRecord } from "../../../../src/verification/reproduction/mist-raven/validate";

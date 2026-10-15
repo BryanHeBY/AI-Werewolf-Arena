@@ -4,7 +4,7 @@
  * 只调用实际 init，不装配整局、运行夜能力或更新权威审计影子。
  */
 import { expect, test } from "bun:test";
-import { Camp, Role } from "../../../../src/core/domain/identity";
+import { Camp, Role } from "../../../../src/domain/identity";
 import type { RoleInitializationComponent, RoleInitContext } from "../../../../src/game/mechanisms/roles/contracts";
 import { NIGHT_NOBLE_ROLE_PROFILE, AWAKENED_IDIOT_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/noble_secret_body/profile";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";

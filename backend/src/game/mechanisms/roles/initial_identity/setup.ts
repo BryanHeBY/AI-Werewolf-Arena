@@ -9,19 +9,19 @@ import { createCampComponent } from "../../../observation/component-presentation
 import type {
   ReadonlyBoardConfig,
 } from "@ai-werewolf-arena/game-contract";
-import { RequestLease, type RequestLeaseTurn } from "../../../../core/domain/request-lease";
+import { RequestLease, type RequestLeaseTurn } from "../../../../domain/request-lease";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT, Camp, Phase, Role, createVictoryComponent, type ActionProvider, type ActionRequest, type CampComponent, type GameEvent, type RoleComponent, type VictoryComponent, type World } from "../../../../core/domain";
-import { retireRoleExecution } from "../../../../core/domain/role-execution-authority";
+import { COMPONENT, Camp, Phase, Role, createVictoryComponent, type ActionProvider, type ActionRequest, type CampComponent, type GameEvent, type RoleComponent, type VictoryComponent, type World } from "../../../../domain";
+import { retireRoleExecution } from "../../../../domain/role-execution-authority";
 import { createRoleComponent } from "../../../observation/role-presentation";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import {
   captureOriginalParticipant as captureDebateParticipant,
   sameOriginalParticipant as sameDebateParticipant,
   type OriginalParticipant as DebateParticipant,
-} from "../../../../core/domain/original-participant";
+} from "../../../../domain/original-participant";
 import {
   openInitialIdentitySetup,
   closeInitialIdentitySetup,

@@ -13,7 +13,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
 import { createAcpConsoleLogger } from "../../../../src/runtime/console_presenter";
-import { Phase, type ActionRequest } from "../../../../src/core";
+import { Phase, type ActionRequest } from "../../../../src/domain";
 import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";

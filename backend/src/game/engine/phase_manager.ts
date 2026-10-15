@@ -16,10 +16,10 @@
  * 骑士日结算在原提交与死亡之后恢复具名同步序列，本经理保原死亡等待、判胜回调和阶段写权。
  * 普通黎明原因／原生命提案及动物／双生夜报名单归规则 owner；本经理先写完成标志，保原死亡 await、清理及封盘。
  */
-import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
-import { nightUnitOf } from "../../core/domain/night-unit";
+import { openExileUnit, exileUnitOf, type ExileUnit } from "../../domain/exile-unit";
+import { nightUnitOf } from "../../domain/night-unit";
 import { PhaseRevisionClock } from "./phase-revision";
-import { damagePoisonRoutes } from "../../core/domain/damage-evidence";
+import { damagePoisonRoutes } from "../../domain/damage-evidence";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { NightManagerLifecycle } from "../../rulesets/night-lifecycle-plan";
 import { prepareGameSetup, installFragrantGameSetup } from "../../rulesets/game-setup";
@@ -69,10 +69,10 @@ import {
   DeathCause,
   type DeathSources,
   WinCondition,
-} from "../../core/domain/model";
-import { ConditionRegistry } from "../../core/domain/registries/condition_registry";
-import { DamageResolutionSystem } from "../../core/domain/systems/damage_resolution_system";
-import { World } from "../../core/domain/world";
+} from "../../domain/model";
+import { ConditionRegistry } from "../../domain/registries/condition-registry";
+import { DamageResolutionSystem } from "../../domain/systems/damage-resolution-system";
+import { World } from "../../domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { findSheriffId } from "../mechanisms/sheriff/badge";
 import { DeathResolution } from "./death_resolution";
@@ -80,8 +80,8 @@ import { EventRegistry } from "./event_registry";
 import { DayPipeline } from "./phase_pipeline/day_pipeline";
 import { NightPipeline } from "./phase_pipeline/night_pipeline";
 import { VotingPipeline } from "./phase_pipeline/voting_pipeline";
-import { RoleRegistry } from "../../core/domain/registries/role_registry";
-import { COMPONENT } from "../../core/domain/components/names";
+import { RoleRegistry } from "../../domain/registries/role-registry";
+import { COMPONENT } from "../../domain/components/names";
 import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit";
 import { settleKnightDay } from "../../rulesets/knight-day-settlement";
 import { prepareAnimalExileDeaths, captureAnimalExileFeedback, captureOrdinaryExileFeedback, prepareOrdinaryExileDeaths } from "../../rulesets/exile-death-preparation";
@@ -92,18 +92,18 @@ import {
   type BeautyExileCandidate,
 } from "../../rulesets/beauty-exile-victory";
 import { captureDawnKnowledge, publishDawnKnowledge } from "../../rulesets/dawn-knowledge-publication";
-import type { AliveComponent } from "../../core/domain/components/alive";
+import type { AliveComponent } from "../../domain/components/alive";
 import {
   beginAnimalExileUnit,
   prepareAnimalCatExpiry,
   completeAndPublishAnimalExileUnit,
   animalPufferReaction,
 } from "../mechanisms/roles/animal_dream/ports";
-import { aliveLifeVersion } from "../../core/domain/components/alive";
-import { VotingRightComponent } from "../../core/domain/components/voting_right";
-import { IdentityComponent } from "../../core/domain/entities/player";
-import { RoleComponent } from "../../core/domain/components/role";
-import { createRandom, type RandomSource } from "../../core/domain/random";
+import { aliveLifeVersion } from "../../domain/components/alive";
+import { VotingRightComponent } from "../../domain/components/voting-right";
+import { IdentityComponent } from "../../domain/entities/player";
+import { RoleComponent } from "../../domain/components/role";
+import { createRandom, type RandomSource } from "../../domain/random";
 
 /**
  * PhaseManager 是游戏引擎的时序中枢。

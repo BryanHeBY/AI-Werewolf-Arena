@@ -4,7 +4,7 @@
  * 只有已获取且未正常关闭的单元才尝试 abort；发布失败保留原 authority 前缀，不退款狐狸选择、
  * 推进阶段或改变猫／河豚死亡及实际放逐单元。
  */
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import { beginAnimalNight, closeAnimalNight } from "./authority";
 import { appendAnimalFact } from "./facts";

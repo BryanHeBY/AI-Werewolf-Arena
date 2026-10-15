@@ -5,7 +5,7 @@
  * 规则预检属于游戏 Gateway，领域完成责任仍由 reproduction 与各机制所有者持有。
  */
 import { text, toolFailure } from "@ai-werewolf-arena/game-text";
-import type { ActionRequest, ToolCall, ToolName } from "../../../core/domain";
+import type { ActionRequest, ToolCall, ToolName } from "../../../domain";
 import type {
   ActionPreflightPort,
   GameActionValidation,

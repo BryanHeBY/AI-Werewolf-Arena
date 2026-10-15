@@ -9,7 +9,7 @@ import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { Role } from "../../../../src/core";
+import { Role } from "../../../../src/domain";
 
 for (const id of ["six_player_mechanical_wolf", "twelve_player_mechanical_wolf"])
   test(`${id}: public board and game examples load with the complete finite learning role set`, async () => {

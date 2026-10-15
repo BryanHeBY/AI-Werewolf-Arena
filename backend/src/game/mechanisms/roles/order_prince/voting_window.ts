@@ -4,11 +4,11 @@
  * 每个等待后保留原当前性复验；选择提交先于发言，后续失败不回滚已提交前缀，finally 仍关闭本族窗口。
  * 构造端口不授予行动或资源权限，也不绕过网关及原体检查。
  */
-import type { ActionProvider, GameEvent } from "../../../../core/domain/model";
-import { Phase } from "../../../../core/domain/identity";
-import type { World } from "../../../../core/domain/world";
+import type { ActionProvider, GameEvent } from "../../../../domain/model";
+import { Phase } from "../../../../domain/identity";
+import type { World } from "../../../../domain/world";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
-import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
+import type { ActionRequestConstructionPort } from "../../../../domain/actions";
 import {
   openOrderPrinceChoice,
   assertOrderPrinceCurrent,

@@ -6,8 +6,8 @@
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { createDaytimeInterruptionComposition } from "../../../rulesets/daytime-interruption-composition";
 import type { DaytimeInterruptionComposition } from "../daytime-interruption-contracts";
-import { AliveComponent } from "../../../core/domain/components/alive";
-import { COMPONENT } from "../../../core/domain/components/names";
+import { AliveComponent } from "../../../domain/components/alive";
+import { COMPONENT } from "../../../domain/components/names";
 import {
   ActionProvider,
   ActionWindow,
@@ -16,13 +16,13 @@ import {
   GameEvent,
   Phase,
   KnightDuelWindow as DuelWindow,
-} from "../../../core/domain/model";
-import { RoleRegistry } from "../../../core/domain/registries/role_registry";
+} from "../../../domain/model";
+import { RoleRegistry } from "../../../domain/registries/role-registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { electSheriffIfNeeded } from "../../mechanisms/sheriff/election";
 import { buildSpeakerOrder, chooseSpeakerDirection } from "../../mechanisms/sheriff/speaking_order";
 import { findSheriffId } from "../../mechanisms/sheriff/badge";
-import { World } from "../../../core/domain/world";
+import { World } from "../../../domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { isSelfDestructWindowEnabled } from "../../../rulesets/self-destruct-window";
 
@@ -32,8 +32,8 @@ import { isSelfDestructWindowEnabled } from "../../../rulesets/self-destruct-win
 export interface DayPipelineResult {
   summary: DaySummary;
   interrupted: boolean;
-  selfDestruct?: import("../../../core").SelfDestructSelection;
-  duel?: import("../../../core").KnightDuelSelection;
+  selfDestruct?: import("../../../domain").SelfDestructSelection;
+  duel?: import("../../../domain").KnightDuelSelection;
 }
 
 export interface DayPipelineOptions {
@@ -43,12 +43,12 @@ export interface DayPipelineOptions {
   afterSheriffElection?: () => Promise<boolean>;
   isCurrent?: () => boolean;
   commitSelfDestruct?: (
-    choice: import("../../../core").SelfDestructSelection,
+    choice: import("../../../domain").SelfDestructSelection,
     window: ActionWindow,
   ) => Promise<void | boolean>;
   commitKnightDuel?: (
-    choice: import("../../../core").KnightDuelSelection,
-  ) => Promise<import("../../../core").KnightDuelCommit>;
+    choice: import("../../../domain").KnightDuelSelection,
+  ) => Promise<import("../../../domain").KnightDuelCommit>;
 }
 
 export interface DayPipelineDependencies {

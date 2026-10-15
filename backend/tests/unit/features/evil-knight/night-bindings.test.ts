@@ -5,11 +5,11 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { captureNightLife } from "../../../../src/core/domain/night_effects";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { createRoleComponent } from "../../../../src/domain/components/role";
+import { createAliveComponent } from "../../../../src/domain/components/alive";
+import { captureNightLife } from "../../../../src/domain/night-effects";
 import type { NightStageState, NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import type { NightPipelineResult } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { captureEvilKnight } from "../../../../src/game/mechanisms/roles/evil_knight/reflection";

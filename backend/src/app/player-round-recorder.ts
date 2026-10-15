@@ -5,14 +5,14 @@
  * 不缓存 actorId、不回滚已递增计数，原字段 getter 与录制失败前缀保持。
  * 接受工具或记录 finalAction 不表示领域付款、生效或判胜；会话聚合和文件持久化仍归记录器。
  */
-import { COMPONENT } from "../core/domain/components/names";
-import type { RoleComponent } from "../core/domain/components/role";
+import { COMPONENT } from "../domain/components/names";
+import type { RoleComponent } from "../domain/components/role";
 import type { ActionRequest, EntityId } from "@ai-werewolf-arena/game-contract";
 import {
   getActionRequestDay,
   getActionRequestStage,
-} from "../core/domain/action_request_context";
-import type { World } from "../core/domain/world";
+} from "../domain/action-request-context";
+import type { World } from "../domain/world";
 import { getSessionRecorder } from "../recording/recording_context";
 import type { BuiltPlayerPrompt, PlayerRoundOutcome } from "../ai/agents/player/contracts";
 

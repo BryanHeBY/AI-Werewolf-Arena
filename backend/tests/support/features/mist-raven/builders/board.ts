@@ -5,7 +5,7 @@
  * stays intact. This builder writes no file, runs no game or model, and computes
  * no expected settlement outcome; handwritten expectations retain their oracle.
  */
-import { Role } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
 import { readFile } from "node:fs/promises";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
 

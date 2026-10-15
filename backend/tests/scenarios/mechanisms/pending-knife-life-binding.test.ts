@@ -5,7 +5,7 @@
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, WinCondition, COMPONENT, type BoardConfig } from "../../../src/core";
+import { Role, WinCondition, COMPONENT, type BoardConfig } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 

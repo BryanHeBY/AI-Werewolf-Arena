@@ -5,7 +5,7 @@
  * foreign-context rejection and closure; no transport or archived input changes.
  */
 import { expect, test } from "bun:test";
-import { Phase, type ActionRequest } from "../../../src/core";
+import { Phase, type ActionRequest } from "../../../src/domain";
 import {
   assertRequestDelivery,
   bindRequestDeliveryGuard,
@@ -14,7 +14,7 @@ import {
   inheritRequestAlias,
   registerRequestAliasPropagation,
   settleRequestDelivery,
-} from "../../../src/core/domain/request_delivery";
+} from "../../../src/domain/request-delivery";
 import { nobleBodyAuthorityFixture } from "../../support/features/noble-secret-body/drivers/authority";
 import {
   beginNobleBodyNight,

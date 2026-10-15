@@ -11,11 +11,11 @@ import {
   type GameEvent,
   type DeathSources,
 } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { createAliveComponent } from "../../../../src/domain/components/alive";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import type { DreamNightEffects } from "../../../../src/core/domain/dream-night-effects";
+import type { DreamNightEffects } from "../../../../src/domain/dream-night-effects";
 import {
   createWolfBeautyDeathContribution,
   attemptCharmTrigger,

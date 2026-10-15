@@ -11,7 +11,7 @@ import { WITCH_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/witch/
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { Camp, Role, WitchSelfHealRule } from "../../../../src/core/domain/identity";
+import { Camp, Role, WitchSelfHealRule } from "../../../../src/domain/identity";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 
 test("shelter starts at N2, cannot self or repeat across consecutive actual nights; a pass breaks repeat", () => {

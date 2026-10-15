@@ -2,8 +2,8 @@
  * 交互场景测试：验证首夜结算、首日竞选、死亡和遗言的 PhaseManager 因果顺序。输入为固定身份、原确定动作 provider 与终局停止样本；事件、请求历史及单次执行为明确字面预期，不以生产结果替换预期。
  */
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { RoleComponent } from "../../../../src/core/domain/components/role";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { RoleComponent } from "../../../../src/domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
@@ -12,7 +12,7 @@ import {
   PotionType,
   Role,
   ToolCall,
-} from "../../../../src/core/domain/model";
+} from "../../../../src/domain/model";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 
 class DeterministicFlowProvider implements ActionProvider {

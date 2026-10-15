@@ -5,7 +5,7 @@
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
 import { expect, test } from "bun:test";
-import { Phase } from "../../../../src/core";
+import { Phase } from "../../../../src/domain";
 import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";
 import { assertNobleTransportWire } from "../../../support/features/noble-secret-body/oracles/wire";
 import { assertNobleTransportGolden } from "../../../support/features/noble-secret-body/oracles/transport-golden";

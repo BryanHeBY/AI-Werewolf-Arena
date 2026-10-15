@@ -5,8 +5,8 @@
  * 记录存在不代表效果仍有效；读取和回调失败原样传播，已付资源及记录不由这里关闭、删除或退款。
  * 原 receipt／生命／印记是运行句柄，数据副本不能替代；本模块不推进阶段或重新打开请求窗口。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { aliveLifeVersion } from "../../../../core/domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import { aliveLifeVersion } from "../../../../domain/components/alive";
 import type { NightStageContext } from "../../stages/night/contracts";
 import { assertScholarMentorRosterCurrent } from "./night_frame";
 import { readScholarMentorBonusEffectRecords } from "./bonus-effect-records";

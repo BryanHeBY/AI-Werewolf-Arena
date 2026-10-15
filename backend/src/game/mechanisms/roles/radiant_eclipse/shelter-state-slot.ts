@@ -8,7 +8,7 @@
 import type { ShelterState } from "@ai-werewolf-arena/game-contract";
 import { copyAbilityData, type NightAbilityReadView } from "../abilities";
 import { commitPreparedNativeAbility } from "../abilities";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import { createShelterState, readShelterState, selectShelter, projectShelterState } from "./shelter-state";
 
 /** 仅初始化安装库存，保留原 JSON 复制和 owned 返回引用，不提前执行 strict reader。 */

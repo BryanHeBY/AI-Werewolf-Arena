@@ -16,14 +16,14 @@ import {
   type DeathActionPolicy,
   type RoleComponent,
   type GameEvent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
-import { boardConfigSchema } from "../../../../src/core/domain/board_schema";
+import { boardConfigSchema } from "../../../../src/domain/board-schema";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import {

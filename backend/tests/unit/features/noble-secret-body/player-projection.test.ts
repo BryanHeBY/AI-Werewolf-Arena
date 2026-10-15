@@ -7,7 +7,7 @@
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
 import { expect, test } from "bun:test";
-import { Phase } from "../../../../src/core/domain/identity";
+import { Phase } from "../../../../src/domain/identity";
 import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
 import {
   beginNobleBodyNight,

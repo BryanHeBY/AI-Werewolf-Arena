@@ -7,7 +7,7 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { Role, WinCondition } from "../../../../core/domain/identity";
+import { Role, WinCondition } from "../../../../domain/identity";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { EVIL_KNIGHT_POLICY, EVIL_KNIGHT_STATE_SLOT, getEvilKnightState } from "./state-slot";

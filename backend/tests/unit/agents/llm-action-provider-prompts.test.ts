@@ -2,11 +2,11 @@
  * 单元测试验证 llm-action-provider-prompts 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
-import { PotionType } from "../../../src/core";
+import { PotionType } from "../../../src/domain";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { RoleComponent } from "../../../src/core/domain/components/role";
-import { ActionWindow, Phase } from "../../../src/core/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { RoleComponent } from "../../../src/domain/components/role";
+import { ActionWindow, Phase } from "../../../src/domain/model";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";

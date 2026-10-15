@@ -4,7 +4,7 @@
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { type RoleComponent } from "../../../src/core/domain/components/role";
+import { type RoleComponent } from "../../../src/domain/components/role";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import type { RoleInitializationComponent } from "../../../src/game/mechanisms/roles/contracts";
 import { projectEclipseState } from "../../../src/game/mechanisms/roles/radiant_eclipse/ports";

@@ -12,8 +12,8 @@ import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pip
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import type { NightStageHandler } from "../../../src/game/mechanisms/stages/night/contracts";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { createRandom } from "../../../src/core/domain/random";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
+import { createRandom } from "../../../src/domain/random";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { type ReproductionMetadata } from "../../../src/recording/reproduction";
 import { ReproductionTrace } from "../../../src/recording/reproduction-trace";

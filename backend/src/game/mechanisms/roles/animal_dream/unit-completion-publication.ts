@@ -5,8 +5,8 @@
  * 完成跳过单位不必推进实际放逐计数，仍按原政策决定；快照／发表失败不回滚关闭、重开单位或补发事实。
  * 本模块不标死、推进阶段、重新检查经理当前性或授予新许可，token仍由原权威检验，不能从JSON重建。
  */
-import type { GameEvent } from "../../../../core/domain/events";
-import type { World } from "../../../../core/domain/world";
+import type { GameEvent } from "../../../../domain/events";
+import type { World } from "../../../../domain/world";
 import { animalAuthoritySnapshot, closeAnimalExileUnit } from "./authority";
 import { appendAnimalFact } from "./facts";
 

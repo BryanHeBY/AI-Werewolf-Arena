@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { DeathCause, Phase, Role, type ActionRequest, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../../../src/core/domain/model";
-import { assertRequestDelivery, deferRequestDelivery, deriveBoundedRequest } from "../../../src/core/domain/request_delivery";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { DeathCause, Phase, Role, type ActionRequest, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../../../src/domain/model";
+import { assertRequestDelivery, deferRequestDelivery, deriveBoundedRequest } from "../../../src/domain/request-delivery";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { getDefaultLastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";

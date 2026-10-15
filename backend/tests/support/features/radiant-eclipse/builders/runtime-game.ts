@@ -1,18 +1,18 @@
 /**
  * 测试 builder：负责按辉光／蚀月公开板子与语言构造原运行 fixture。输入为原配置、角色及受控组件；输出保留原对象和装配顺序，预期仍由独立字面测试提供，不执行模型或替换 oracle。
  */
-import { Role } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
 import { readFile } from "node:fs/promises";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
-import { COMPONENT } from "../../../../../src/core";
-import { createRandom } from "../../../../../src/core";
-import type { RoleComponent } from "../../../../../src/core";
-import type { ActionRequest } from "../../../../../src/core";
-import type { GameEvent } from "../../../../../src/core";
+import { COMPONENT } from "../../../../../src/domain";
+import { createRandom } from "../../../../../src/domain";
+import type { RoleComponent } from "../../../../../src/domain";
+import type { ActionRequest } from "../../../../../src/domain";
+import type { GameEvent } from "../../../../../src/domain";
 import { NightPipeline } from "../../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../../src/domain/systems/damage-resolution-system";
 import { allNightAbilities } from "../../../../../src/game/mechanisms/roles/abilities";
 
 export const radiantRoles = [

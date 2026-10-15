@@ -11,7 +11,7 @@ import {
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
 import { pureWhiteTwelveConfig } from "../../../../src/runtime/scenarios/pure_white_twelve";
-import { WitchSelfHealRule } from "../../../../src/core";
+import { WitchSelfHealRule } from "../../../../src/domain";
 import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
 import {
   readReproduction,

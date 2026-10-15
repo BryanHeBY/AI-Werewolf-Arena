@@ -10,7 +10,7 @@ import {
   COMPONENT,
   type RoleComponent,
   type AliveComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import {
   createTricksterState,
   getTricksterState,

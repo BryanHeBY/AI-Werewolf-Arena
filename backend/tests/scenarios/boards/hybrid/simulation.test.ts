@@ -4,7 +4,7 @@
  * Output and independent oracle: Independent exemplar/faction coverage, real committed choices and exact winner/Tape replay.
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
-import { Camp } from "../../../../src/core";
+import { Camp } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";

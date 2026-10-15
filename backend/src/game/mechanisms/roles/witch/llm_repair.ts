@@ -3,7 +3,7 @@
  * 先经 numberOrNull 读并转换目标，再核瓶型；转换可能执行 caller coercion 或抛错。
  * 修复成功不等于动作接受，不查询库存、刀口、当前请求或付款。
  */
-import { PotionType } from "../../../../core/domain/model";
+import { PotionType } from "../../../../domain/model";
 import { ToolRepairPack } from "../../llm/contracts";
 import { numberOrNull } from "../../llm/helpers";
 

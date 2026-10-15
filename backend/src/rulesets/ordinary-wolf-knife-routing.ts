@@ -4,9 +4,9 @@
  * 炼金魔女的雾圈与原生命、魔术师映射和已付加成各由原本族所有者复验；此组合不持有库存或发放许可。
  * 狼阶段仍负责聊天、逐票复验、等待与末尾贵族事实发布；这里不增加等待、随机抽取、退款或失败清理。
  */
-import { EntityId, Phase, StatusMark } from "../core/domain/model";
-import { COMPONENT } from "../core/domain/components/names";
-import { aliveLifeVersion } from "../core/domain/components/alive";
+import { EntityId, Phase, StatusMark } from "../domain/model";
+import { COMPONENT } from "../domain/components/names";
+import { aliveLifeVersion } from "../domain/components/alive";
 import { safeRecordLogicOp } from "../recording/session_recorder";
 import { wolfTeamEvent } from "../game/mechanisms/roles/wolf_team";
 import { bindWolfKnifeTargetQuery } from "../game/mechanisms/roles/wolf/ports";
@@ -36,7 +36,7 @@ export function resolveOrdinaryWolfKnife(
   explicitPasses: Set<EntityId>,
 ): EntityId | null {
   let wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);
-  let mistRandomScope: import("../core/domain/night_effects").NightLifeScope | null =
+  let mistRandomScope: import("../domain/night-effects").NightLifeScope | null =
     null;
   // 先查询原板身份，再判断空刀；只有原雾圈可用且全部弃票时才使用一次原随机源。
   if (isMistRavenBoard(ctx.world) && wolfTarget === null) {

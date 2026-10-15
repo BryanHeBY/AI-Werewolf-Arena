@@ -5,7 +5,7 @@
  * 历史只追加，窗口仅影响本次发送；本模块不选择行动、不执行工具，也不改变游戏阶段。
  */
 import { text } from "@ai-werewolf-arena/game-text";
-import { ActionRequest, EntityId, PlayerVisibleEvent, ToolName } from "../../../core/domain";
+import { ActionRequest, EntityId, PlayerVisibleEvent, ToolName } from "../../../domain";
 import { encodePlayerVisibleEvent, parsePlayerVisibleEvents } from "../visible_event_protocol";
 import { BuiltPlayerPrompt } from "../player/contracts";
 import { ChatMessage } from "../../integrations/llm/transport";

@@ -4,7 +4,7 @@
 import { validateDemonHunterRecord } from "../../../src/verification/reproduction/demon-hunter/validate";
 import { expect, test } from "bun:test";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
-import { COMPONENT, type RoleComponent } from "../../../src/core";
+import { COMPONENT, type RoleComponent } from "../../../src/domain";
 import type { ReproductionRecord } from "../../../src/recording/reproduction";
 import { validateRedMoonRecord } from "../../../src/verification/reproduction/red-moon/validate";
 function fixture(policy: "ends_game" | "forbidden" = "ends_game"): any {

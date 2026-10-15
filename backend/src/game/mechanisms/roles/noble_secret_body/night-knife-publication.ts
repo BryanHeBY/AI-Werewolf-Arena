@@ -5,7 +5,7 @@
  * 本模块不投票、映射、标死或付款；push／记录失败原样传播，保留此前印记、刀口和已发表前缀。
  */
 import { Phase, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { getSessionRecorder } from "../../../../recording/recording_context";
 import { checkpointNobleBodyAuthority, isNobleBodyBoard } from "./authority";
 

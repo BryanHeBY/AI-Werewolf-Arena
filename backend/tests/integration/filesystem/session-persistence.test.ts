@@ -5,12 +5,12 @@ import { readReplayPlayerView, readReplayManifest } from "@ai-werewolf-arena/rep
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { promises as fs } from "fs";
 import path from "path";
-import { Camp, Phase } from "../../../src/core/domain/model";
+import { Camp, Phase } from "../../../src/domain/model";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
 import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../src/domain/components/names";
 import { SessionRecordManager, safeRecordLogicOp } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
 import { buildDebugSummaryMarkdown } from "../../../src/audit/debug_summary_generator";

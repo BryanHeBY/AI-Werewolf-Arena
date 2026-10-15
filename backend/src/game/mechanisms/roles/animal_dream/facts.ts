@@ -6,11 +6,11 @@
  */
 import { readAnimalDreamFact, animalDreamFactAudience, type AnimalDreamEventType, type AnimalDreamPayloadMap, type AnimalBeautyKnowledge } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { types } from "node:util";
-import type { GameEvent } from "../../../../core/domain/events";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
-import { Camp } from "../../../../core/domain/identity";
+import type { GameEvent } from "../../../../domain/events";
+import { snapshotPlainData } from "../../../../domain/plain-data";
+import { Camp } from "../../../../domain/identity";
 import { getWolfBeautyState } from "../wolf_beauty/ports";
 import { animalOriginalRolePlayer, animalOriginalPlayer } from "./roster";
 import {

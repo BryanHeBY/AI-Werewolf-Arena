@@ -5,15 +5,15 @@
  */
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent, aliveLifeVersion } from "../../../src/core/domain/components/alive";
-import { DeathCause, type GameEvent } from "../../../src/core/domain/model";
-import type { NightDamageEffects } from "../../../src/core/domain/night-damage-plan";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent, aliveLifeVersion } from "../../../src/domain/components/alive";
+import { DeathCause, type GameEvent } from "../../../src/domain/model";
+import type { NightDamageEffects } from "../../../src/domain/night-damage-plan";
 import type {
   DamageResolutionSystem,
   DamageResolutionResult,
-} from "../../../src/core/domain/systems/damage_resolution_system";
+} from "../../../src/domain/systems/damage-resolution-system";
 import { DreamNightFrame, type DreamNightLink } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
 import { installDreamNightLinks } from "../../../src/game/mechanisms/roles/dreamer/night-links";
 import {

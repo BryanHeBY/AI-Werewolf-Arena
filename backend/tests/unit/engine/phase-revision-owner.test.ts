@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { Phase, Role } from "@ai-werewolf-arena/game-contract";
-import type { ActionRequest, ToolCall } from "../../../src/core/domain/actions";
+import type { ActionRequest, ToolCall } from "../../../src/domain/actions";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import type { PhaseRevisionClock } from "../../../src/game/engine/phase-revision";

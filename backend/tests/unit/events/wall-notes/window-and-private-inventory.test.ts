@@ -5,7 +5,7 @@ import { captureCheckpoint } from "../../../../src/runtime/simulation/reproducti
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { expect, test } from "bun:test";
-import { inheritRequestAlias } from "../../../../src/core/domain/request_delivery";
+import { inheritRequestAlias } from "../../../../src/domain/request-delivery";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   COMPONENT,
@@ -18,7 +18,7 @@ import {
   type ToolCall,
   type WallNoteComponent,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WallNotesWindow } from "../../../../src/game/mechanisms/events/wall_notes/window";
 import {

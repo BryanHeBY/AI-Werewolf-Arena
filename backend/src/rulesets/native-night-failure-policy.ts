@@ -4,8 +4,8 @@
  * 绑定函数不查询板子、actor、库存、时钟或请求；只读类型不复制或冻结引用。
  * 本策略不扣库存、不结算回执或发布事实，实际付款与效果提交仍归原所有者。
  */
-import type { World } from "../core/domain/world";
-import { Role } from "../core/domain/identity";
+import type { World } from "../domain/world";
+import { Role } from "../domain/identity";
 import type { NightAbilityReadView } from "../game/mechanisms/roles/abilities";
 import { isRadiantEclipseBoard } from "../game/mechanisms/roles/radiant_eclipse/ports";
 import { isScholarMentorBoard } from "../game/mechanisms/roles/scholar_mentor/ports";

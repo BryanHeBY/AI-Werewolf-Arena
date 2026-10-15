@@ -9,7 +9,7 @@ import path from "node:path";
 import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom } from "../../../src/core";
+import { createRandom } from "../../../src/domain";
 import { initialThiefDeal } from "../../../src/game/mechanisms/roles/thief/deal";
 import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
 

@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Phase, Role, type ActionStage } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { deriveBoundedRequest } from "../../../src/core/domain/request_delivery";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { deriveBoundedRequest } from "../../../src/domain/request-delivery";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { bindRulesetActionRequest } from "../../../src/rulesets/action-request-bindings";

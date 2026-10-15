@@ -4,7 +4,7 @@
  */
 import type { Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：脚本回放与终端渲染相关契约。 */
-import type { GameEvent } from "../../../core/domain/model";
+import type { GameEvent } from "../../../domain/model";
 
 /** 终端 live 输出类型。 */
 export type ScriptLiveKind = "chat" | "action" | "private" | "god" | "system" | "end";

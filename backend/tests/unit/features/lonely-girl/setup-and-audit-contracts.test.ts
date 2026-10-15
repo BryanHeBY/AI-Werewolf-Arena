@@ -3,10 +3,10 @@
  */
 import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import { inheritRequestAlias } from "../../../../src/core/domain/request_delivery";
+import { inheritRequestAlias } from "../../../../src/domain/request-delivery";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, COMPONENT, WinCondition, createVictoryComponent, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent, type VictoryComponent } from "../../../../src/core";
+import { Role, Camp, Phase, COMPONENT, WinCondition, createVictoryComponent, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent, type VictoryComponent } from "../../../../src/domain";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { LonelyGirlSetupWindow } from "../../../../src/game/mechanisms/roles/lonely_girl/setup";
@@ -27,7 +27,7 @@ import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { readLonelyGirlEventFact, readLonelyGirlChoiceTool } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -39,7 +39,7 @@ import {
   getDefaultRoleCatalog,
   getDefaultWinConditionRegistry,
 } from "../../../../src/game/mechanisms";
-import { ConditionRegistry } from "../../../../src/core/domain/registries/condition_registry";
+import { ConditionRegistry } from "../../../../src/domain/registries/condition-registry";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,

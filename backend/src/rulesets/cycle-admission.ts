@@ -4,7 +4,7 @@
  * 提交证据、准备状态及活跃窗口仍由各机制拥有；拒绝不撤销已付效果，也不重开窗口。
  * 这里不推进阶段、不标记周期、不授予行动许可；终局返回、时钟和失败清理由阶段经理处理。
  */
-import type { World } from "../core/domain/world";
+import type { World } from "../domain/world";
 import type { RuntimeSnapshot } from "@ai-werewolf-arena/game-contract";
 import { hasRadiantNight } from "../game/mechanisms/roles/radiant_eclipse/ports";
 import { hasDemonNightStarted } from "../game/mechanisms/roles/demon_hunter/ports";

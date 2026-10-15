@@ -4,16 +4,16 @@
  * choice.commit 返回之后才关 turn 并通知 true；关闭按原序撤信封、关 choice、通知 false。
  * 路由 metadata 不授予行动权；异常保留此前已写前缀，不提供事务回滚。
  */
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { registerRequestAliasPropagation } from "../../../../domain/request-delivery";
 import { z } from "zod";
-import type { World } from "../../../../core/domain/world";
-import { Phase } from "../../../../core/domain/identity";
-import type { ActionRequest, ToolCall } from "../../../../core/domain/actions";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import type { World } from "../../../../domain/world";
+import { Phase } from "../../../../domain/identity";
+import type { ActionRequest, ToolCall } from "../../../../domain/actions";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 import {
   bindRequestDeliveryGuard,
   settleRequestDelivery,
-} from "../../../../core/domain/request_delivery";
+} from "../../../../domain/request-delivery";
 import {
   captureAnimalRequestEnvelope,
   animalRequestEnvelopeHeader,

@@ -5,16 +5,16 @@
  * 实例安装入口迁共享 owner，但不运行 profile、流水线、传输或模型。
  */
 import { createAliveComponent, createCampComponent } from "../../../../../src/game/observation/component-presentation";
-import { World } from "../../../../../src/core/domain/world";
-import { Role, Camp } from "../../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../../src/core/domain/components/names";
-import { type AliveComponent } from "../../../../../src/core/domain/components/alive";
-import { type RoleComponent } from "../../../../../src/core/domain/components/role";
+import { World } from "../../../../../src/domain/world";
+import { Role, Camp } from "../../../../../src/domain/identity";
+import { COMPONENT } from "../../../../../src/domain/components/names";
+import { type AliveComponent } from "../../../../../src/domain/components/alive";
+import { type RoleComponent } from "../../../../../src/domain/components/role";
 import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
 
-import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
-import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
-import type { GameEvent } from "../../../../../src/core/domain/events";
+import { createIdentityComponent } from "../../../../../src/domain/entities/player";
+import { createVictoryComponent } from "../../../../../src/domain/components/victory";
+import type { GameEvent } from "../../../../../src/domain/events";
 import { freshFragrantState } from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot";
 import { freshPairSeerState } from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
 import { installNativeAbility } from "../../../../../src/game/mechanisms/roles/ability_changes";

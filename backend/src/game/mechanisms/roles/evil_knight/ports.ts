@@ -6,9 +6,9 @@
  * 反射命令保留原来源校验与付款时点，余量只交本族槽写入；此公开出口不暴露数据槽写者。
  * 反射终态与失败前缀由状态命令维护，出口不拦截错误或尝试回滚。
  */
-import { Role, type EntityId } from "../../../../core/domain/identity";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { World } from "../../../../core/domain/world";
+import { Role, type EntityId } from "../../../../domain/identity";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { World } from "../../../../domain/world";
 export { isEvilKnightBoard, assertEvilKnightNativeActor, assertEvilKnightRosterCurrent } from "./night_frame";
 export { commitEvilKnightReflection } from "./reflection";
 /** 运行查询保原 binding／Map 捕获，不公开 Map 或增加库存／生命写权。 */

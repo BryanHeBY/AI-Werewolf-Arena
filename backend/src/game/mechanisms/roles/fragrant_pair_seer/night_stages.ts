@@ -4,7 +4,7 @@
  * 领域提交先于事件和录制；finally 关闭请求，晚发布失败不撤销已写选择，不接管关系／查验算法。
  */
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
-import { Phase } from "../../../../core/domain/identity";
+import { Phase } from "../../../../domain/identity";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { fragrantChoiceActor, fragrantChoiceCandidates } from "./authority";
 import {

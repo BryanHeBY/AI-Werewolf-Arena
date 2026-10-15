@@ -13,12 +13,12 @@ import {
   type VotingRightComponent,
   type VictoryComponent,
   type World,
-} from "../../core";
+} from "../../domain";
 import type { RecordedCheckpoint } from "../reproduction";
 import type { prepareAnimalCheckpoint } from "./authority-snapshots";
 import { auditData } from "./animal-audit";
 import { encodeCheckpointPrivateState } from "./private-state-codec";
-import { aliveLifeDescriptor } from "../../core/domain/components/alive";
+import { aliveLifeDescriptor } from "../../domain/components/alive";
 import {
   animalOriginalAuditPlayer,
   animalOriginalAuditIds,

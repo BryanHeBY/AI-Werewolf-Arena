@@ -3,7 +3,7 @@
  * Input: Original scenario/transport/locale matrices and handwritten survivor, dream, death-reason, checkpoint and last-word facts.
  * Output and oracle: Literal effect/knowledge/consumption and terminal assertions retain exact action replay; expected outcomes remain the supplied table.
  */
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { DREAMER_CASES, dreamerScenario, type DreamerScenario } from "../../../support/features/dreamer/builders/scenario";

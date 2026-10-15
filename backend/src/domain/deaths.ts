@@ -6,7 +6,7 @@
  */
 import { Phase } from "./identity";
 import type { DeathActionPolicy } from "./board";
-import type { NightLifeScope } from "./night_effects";
+import type { NightLifeScope } from "./night-effects";
 import { DeathCause } from "@ai-werewolf-arena/game-contract";
 export { DeathCause } from "@ai-werewolf-arena/game-contract";
 export type { DeathSources } from "@ai-werewolf-arena/game-contract";

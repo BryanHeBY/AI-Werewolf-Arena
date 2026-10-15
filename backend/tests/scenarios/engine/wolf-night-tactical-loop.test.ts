@@ -3,8 +3,8 @@
  */
 import { completedNight } from "../../support/builders/night-stage-context";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { RoleComponent } from "../../../src/core/domain/components/role";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { RoleComponent } from "../../../src/domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
@@ -15,8 +15,8 @@ import {
   Role,
   ToolCall,
   WinCondition,
-} from "../../../src/core/domain/model";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+} from "../../../src/domain/model";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

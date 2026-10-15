@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";
-import { Phase, Camp } from "../../../../src/core";
+import { Phase, Camp } from "../../../../src/domain";
 test("actual Noble pre-vote blast checkpoint uses completed night and preserves pending contract", async () => {
   const { record, replay } = await recordNobleLiteral("blast_skips_vote", "en", { blastDay: 2 }),
     cp = record.checkpoints[2]!;

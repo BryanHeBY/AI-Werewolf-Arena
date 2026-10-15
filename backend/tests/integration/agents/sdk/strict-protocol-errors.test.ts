@@ -9,7 +9,7 @@ import {
   Role,
   type ActionRequest,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
 import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";

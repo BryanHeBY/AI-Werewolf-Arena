@@ -6,9 +6,9 @@
  */
 import { DREAMER_STATE_SLOT } from "./ports";
 import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant_eclipse/paid-effect-ports";
-import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { Phase } from "../../../../core/domain/model";
+import { AliveComponent, aliveLifeVersion } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import { Phase } from "../../../../domain/model";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";

@@ -4,11 +4,11 @@
  * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
-import { Role } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
 import { animalDreamTwelveConfig } from "../../../../../src/runtime/scenarios/animal_dream_twelve";
-import type { BoardConfig } from "../../../../../src/core";
+import type { BoardConfig } from "../../../../../src/domain";
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
-import { createRandom } from "../../../../../src/core";
+import { createRandom } from "../../../../../src/domain";
 
 export const animalRoles = [
   Role.WolfBeauty,

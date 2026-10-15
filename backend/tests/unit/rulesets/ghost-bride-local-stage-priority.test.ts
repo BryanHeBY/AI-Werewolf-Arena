@@ -2,7 +2,7 @@
  * Unit test checks local Ghost Bride stage priority and win-condition contributions. Inputs are literal role sets with and without Bride; fixed priorities, unchanged ordinary descriptors and explicit goal registration are the oracle. No setup window, phase, death chain, file or model executes.
  */
 import { expect, test } from "bun:test";
-import { Role } from "../../../src/core";
+import { Role } from "../../../src/domain";
 import { ghostBrideBoard } from "../../support/features/ghost-bride/builders/scenario";
 import { getDefaultWinConditionRegistry, NightStageRegistry } from "../../../src/game/mechanisms";
 

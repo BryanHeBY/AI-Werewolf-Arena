@@ -1,10 +1,10 @@
 /**
  * 混血儿场景测试：验证首夜归属、自刀、警徽与原终局成员一起结算。输入为原跟随狼人矩阵及固定 PM 回复；死亡、独立归属和获胜玩家采用手写预期，不用新代码生成结果。
  */
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, Phase, Role, WinCondition, type ActionRequest, type BoardConfig, type RoleComponent, type ToolCall } from "../../../../src/core";
+import { Camp, COMPONENT, Phase, Role, WinCondition, type ActionRequest, type BoardConfig, type RoleComponent, type ToolCall } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 
 const deck = [Role.Hybrid, Role.Wolf, Role.HiddenWolf, Role.Seer, Role.Witch, Role.Villager];

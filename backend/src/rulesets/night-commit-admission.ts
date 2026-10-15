@@ -4,7 +4,7 @@
  * 提交证据仍归各机制，本模块不缓存 World、日次或演员，不写库存、重新开窗或撤销原已付效果。
  * 逐项查完才读取下一项，黑市交易与黑市受赠者保持原短路；失败不执行后续判断或新增清理策略。
  */
-import type { World } from "../core/domain/world";
+import type { World } from "../domain/world";
 import { hasFoxInspectionNightCommit } from "../game/mechanisms/roles/cursed_fox/inspection_effect";
 import { hasDreamNightCommit } from "../game/mechanisms/roles/dreamer/night_frame";
 import { hasRoleInspectionNightCommit } from "../game/mechanisms/roles/role_inspection/night_scope";

@@ -15,12 +15,12 @@ import {
   AliveComponent,
   aliveLifeVersion,
   aliveLifeDescriptor,
-} from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import type { IdentityComponent } from "../../../../core/domain/entities/player";
-import { Camp, Role, type GameEvent, type EntityId } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+} from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import type { IdentityComponent } from "../../../../domain/entities/player";
+import { Camp, Role, type GameEvent, type EntityId } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import { RoleCatalog } from "../catalog";
 import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import { getBearState } from "./state";
@@ -30,7 +30,7 @@ import {
   originalPlayerSameLife,
   type OriginalPlayerScope,
 } from "../original_player_scope";
-import type { CampComponent } from "../../../../core/domain/components/camp";
+import type { CampComponent } from "../../../../domain/components/camp";
 /** 同一 World／夜号的黎明发表状态：checking 只允许当前尝试，重入会撤销它；
  * 成功后 published，未完成则 finally 置 revoked。清空原 state.history 不恢复这一原发布许可。 */
 const dawnPublications = new WeakMap<

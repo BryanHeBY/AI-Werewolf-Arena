@@ -5,7 +5,7 @@
  * 这些数据工具仅服务本族两个槽，不运行控制器、创建存储、授予租约或结算请求。
  */
 import type { Pair } from "@ai-werewolf-arena/game-contract";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 
 export function plainJson(value: unknown): string | null {
   try {

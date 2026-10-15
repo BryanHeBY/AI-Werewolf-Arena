@@ -19,13 +19,13 @@ import type {
 } from "@ai-werewolf-arena/game-contract";
 import { readPairSeerState } from "./fragrant_pair_seer/state";
 import { nativePotionSecondTurn } from "./witch/policies";
-import { Role } from "../../../core/domain/model";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
+import { Role } from "../../../domain/model";
+import type { RoleComponent } from "../../../domain/components/role";
+import { isRoleExecutionRetired } from "../../../domain/role-execution-authority";
 import type { RoleInitializationComponent } from "./contracts";
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { EntityId, GameEvent } from "../../../core/domain/model";
-import type { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import type { EntityId, GameEvent } from "../../../domain/model";
+import type { World } from "../../../domain/world";
 import { roleOf, emit } from "./night-ability-change-runtime";
 import { types as utilTypes } from "node:util";
 import type {

@@ -8,7 +8,7 @@
  * Provider 返回不是付款；窗口完整付款后才 complete，状态先落再通知，晚异常不能二次结算。
  */
 import type { ActionRequest } from "./actions";
-import { bindRequestDeliveryGuard, registerRequestAliasPropagation, settleRequestDelivery } from "./request_delivery";
+import { bindRequestDeliveryGuard, registerRequestAliasPropagation, settleRequestDelivery } from "./request-delivery";
 
 /** 仅晚读原 scope 字段／活跃表；不接受整个请求回调，字段接纳与读取次序在本 owner 中实现。 */
 export interface RequestLeaseScopeQueries<Owner, Scope> {

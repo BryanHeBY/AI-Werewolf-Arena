@@ -2,7 +2,7 @@
  * 女巫场景测试通过完整夜晚验证耗尽狼刀信息的隐私及守／救／毒复合死因。输入保留原 locale 计划、受控 NightPipeline 行动和当前标记／库存；原请求与提示知识、隐藏事件和被毒猎人禁枪是明确预期，不重新计算预期结果。
  */
 import { completedNight } from "../../../support/builders/night-stage-context";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -13,13 +13,13 @@ import {
   type ActionRequest,
   type GameEvent,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";

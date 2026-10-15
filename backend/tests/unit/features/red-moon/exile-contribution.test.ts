@@ -4,8 +4,8 @@
  * 不执行完整对局或标死；事件发布失败后的延期库存仍归原权威，测试不将公开端口视作许可。
  */
 import { expect, test } from "bun:test";
-import type { GameEvent } from "../../../../src/core/domain/events";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import type { GameEvent } from "../../../../src/domain/events";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import {
   beginDemonHunterNight,
   closeDemonHunterNight,

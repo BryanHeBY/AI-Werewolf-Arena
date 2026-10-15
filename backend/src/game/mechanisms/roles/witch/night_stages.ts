@@ -11,16 +11,16 @@ import {
   captureNightLife,
   livingNightLife,
   originalPoisonIntent,
-} from "../../../../core/domain/night_effects";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { RoleComponent } from "../../../../core/domain/components/role";
+} from "../../../../domain/night-effects";
+import { COMPONENT } from "../../../../domain/components/names";
+import { RoleComponent } from "../../../../domain/components/role";
 import {
   Phase,
   PotionType,
   Role,
   StatusMark,
   WitchSelfHealRule,
-} from "../../../../core/domain/model";
+} from "../../../../domain/model";
 import { type NightAbilityReadView } from "../abilities";
 import { nativePotionsCanCombine, witchKnifeVisible } from "./policies";
 import { NightStageContext, NightStageHandler } from "../../stages/night/contracts";

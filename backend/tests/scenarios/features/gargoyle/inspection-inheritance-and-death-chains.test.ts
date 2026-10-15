@@ -2,7 +2,7 @@
  * 石像鬼场景验证真实阶段的查验／继承、死亡连锁和查验后撤权。输入为固定底牌与受控行动；手写仅本人报告、存活名单和事件序列是预期。原生产观察断言仅保留既有范围，不声称新增独立整局覆盖。
  */
 import { nightStageContext } from "../../../support/builders/night-stage-context";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -17,7 +17,7 @@ import {
   type RoleComponent,
   type ActionRequest,
   type GameEvent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   getGargoyleState,
@@ -356,7 +356,7 @@ test("Gargoyle and Hidden Wolf cannot have simultaneous knives; independent role
 });
 
 test("Knight uses Gargoyle true camp despite a prior private role inspection", async () => {
-  const { KnightDuelWindow } = await import("../../../../src/core"),
+  const { KnightDuelWindow } = await import("../../../../src/domain"),
     fixed = [Role.Gargoyle, Role.Wolf, Role.Knight, Role.Gravekeeper, Role.Villager, Role.Villager],
     game = bootstrapGame(
       { ...config(fixed), knight: { enabledWindows: [KnightDuelWindow.AfterSpeeches] } },

@@ -8,13 +8,13 @@ import type { IdentityComponent } from "./entities/player";
 import type { RoleComponent } from "./components/role";
 import type { CampComponent } from "./components/camp";
 import type { AliveComponent } from "./components/alive";
-import type { VotingRightComponent } from "./components/voting_right";
-import type { StatusMarksComponent } from "./components/status_marks";
+import type { VotingRightComponent } from "./components/voting-right";
+import type { StatusMarksComponent } from "./components/status-marks";
 import type { BadgeComponent } from "./components/badge";
 import type { VictoryComponent } from "./components/victory";
 import type { LoversComponent } from "./components/lovers";
-import type { WallNoteComponent } from "./components/wall_note";
-import type { DebatePenaltyComponent } from "./components/debate_penalty";
+import type { WallNoteComponent } from "./components/wall-note";
+import type { DebatePenaltyComponent } from "./components/debate-penalty";
 
 /** 十一具名槽分别关联其原组件类型；该映射不创建实例，也不把两个槽的字段合成一个对象。 */
 export interface ComponentMap {

@@ -12,8 +12,8 @@ import type {
   RoleInspectionState,
 } from "@ai-werewolf-arena/game-contract";
 
-import type { RoleComponent } from "../../../core/domain/components/role";
-import { Role } from "../../../core/domain/model";
+import type { RoleComponent } from "../../../domain/components/role";
+import { Role } from "../../../domain/model";
 import { projectPairState, copyAbilityData, commitPreparedNativeAbility } from "./abilities";
 
 import { DREAMER_STATE_SLOT } from "./dreamer/ports";

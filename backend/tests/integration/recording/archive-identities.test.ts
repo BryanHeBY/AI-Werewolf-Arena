@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom } from "../../../src/core/domain/random";
+import { createRandom } from "../../../src/domain/random";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { createReproductionArchive } from "../../../src/recording/archive_identity";
 import { ReproductionTrace } from "../../../src/recording/reproduction-trace";

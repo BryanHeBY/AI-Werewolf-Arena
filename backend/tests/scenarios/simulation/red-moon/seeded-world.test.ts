@@ -11,7 +11,7 @@ import {
   createRandom,
   randomDraws,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 for (const policy of ["ends_game", "forbidden"] as const)

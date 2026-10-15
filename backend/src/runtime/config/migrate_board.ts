@@ -8,7 +8,7 @@ import {
   parseBoardDefinition,
   type BoardDefinition,
 } from "./board_definition";
-import { ActionWindow } from "../../core/domain/model";
+import { ActionWindow } from "../../domain/model";
 import {
   parseBoardOverride,
   resolveBoardConfig,

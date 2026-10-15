@@ -11,7 +11,7 @@ import {
   WinCondition,
   type ActionRequest,
   type ActionProvider,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   boardDefinitionFromConfig,

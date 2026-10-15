@@ -11,7 +11,7 @@ import {
   createRandom,
   type ActionRequest,
   type ToolCall,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";

@@ -12,7 +12,7 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
 for (const firstNight of [1, 2] as const)
   for (const shot of ["original", "exchanged"] as const)
     test("Magician public board roundtrip/" + firstNight + "/" + shot, async () => {

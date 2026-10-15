@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { AnimalDeathWavePreparation } from "../../../../src/game/mechanisms/roles/animal_dream/death-wave";
-import { Phase, DeathCause, type DeathSources } from "../../../../src/core/domain/model";
+import { Phase, DeathCause, type DeathSources } from "../../../../src/domain/model";
 
 type Ports = ConstructorParameters<typeof AnimalDeathWavePreparation>[4];
 function fixture(failure?: "expiry" | "first_fact") {

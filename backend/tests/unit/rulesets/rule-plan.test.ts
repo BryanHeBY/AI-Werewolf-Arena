@@ -6,8 +6,8 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { World } from "../../../src/core/domain/world";
-import { Role } from "../../../src/core/domain/identity";
+import { World } from "../../../src/domain/world";
+import { Role } from "../../../src/domain/identity";
 import { bindBoardParameters } from "../../../src/rulesets/board-parameters";
 import { RulePlan } from "../../../src/rulesets/rule-plan";
 import {

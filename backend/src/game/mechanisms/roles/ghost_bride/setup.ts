@@ -15,8 +15,8 @@ import {
   type ActionRequest,
   type ActionStage,
   type ToolName,
-} from "../../../../core/domain";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+} from "../../../../domain";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import {
   beginWeddingSetup,

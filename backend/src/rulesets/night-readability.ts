@@ -4,7 +4,7 @@
  * 各机制权威拥有原体、生命、库存和失效状态；本组合不缓存名单、不写资源、不新建窗口或改变阶段。
  * 所有查询仍在原表达式处读取，命中失败立即停止；猎魔 marks 保原逐编号短路，不把合法数据当许可。
  */
-import type { World } from "../core/domain/world";
+import type { World } from "../domain/world";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { hasActiveGhostBride, ghostBrideReady } from "../game/mechanisms/roles/ghost_bride/ports";
 import { hasActiveLonelyGirl, lonelyGirlReady } from "../game/mechanisms/roles/lonely_girl/ports";

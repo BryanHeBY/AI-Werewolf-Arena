@@ -15,9 +15,9 @@ import {
   type GameEvent,
   type BadgeComponent,
   type VotingRightComponent,
-} from "../../../../core/domain";
+} from "../../../../domain";
 import { ToolGateway } from "../../../gateway/tool_gateway";
-import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
+import type { ActionRequestConstructionPort } from "../../../../domain/actions";
 import { commitSheriffBadgeChoice, badgeSuccessorEligible } from "../../sheriff/badge";
 import { getDebaterState, consumeDebaterChallenge, recordDebaterChoice } from "./state";
 import {
@@ -33,7 +33,7 @@ import {
 import {
   captureOriginalParticipant as captureDebateParticipant,
   sameOriginalParticipant as sameDebateParticipant,
-} from "../../../../core/domain/original-participant";
+} from "../../../../domain/original-participant";
 /** 有限 AWA 适配：原一次预定发言之前依次进行两次公开陈述，再收集密封匿名票。 */
 export class DebaterWindow {
   constructor(

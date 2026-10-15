@@ -8,7 +8,7 @@ import { mkdtemp, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom } from "../../../src/core/domain/random";
+import { createRandom } from "../../../src/domain/random";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { type ReproductionMetadata } from "../../../src/recording/reproduction";
 import { ReproductionTrace } from "../../../src/recording/reproduction-trace";

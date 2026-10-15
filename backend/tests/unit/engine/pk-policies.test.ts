@@ -3,9 +3,9 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
-import type { VotingRightComponent } from "../../../src/core/domain/components/voting_right";
+import { COMPONENT } from "../../../src/domain/components/names";
+import type { AliveComponent } from "../../../src/domain/components/alive";
+import type { VotingRightComponent } from "../../../src/domain/components/voting-right";
 import {
   Phase,
   Role,
@@ -13,7 +13,7 @@ import {
   type BoardConfig,
   type GameEvent,
   type ToolCall,
-} from "../../../src/core/domain/model";
+} from "../../../src/domain/model";
 import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

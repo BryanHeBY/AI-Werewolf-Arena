@@ -9,10 +9,10 @@
  * 真正已消费提案分别保赠枪 capture.isCurrent 与原生 pending 的原当前性，不合并成行动资格。
  */
 import { Role, type EntityId, type DeathSources, type Phase, type DeathActionPolicy } from "@ai-werewolf-arena/game-contract";
-import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { World } from "../../../core/domain/world";
-import { permitsDeathShot } from "../../../core/domain/deaths";
+import { isRoleExecutionRetired } from "../../../domain/role-execution-authority";
+import { COMPONENT } from "../../../domain/components/names";
+import type { World } from "../../../domain/world";
+import { permitsDeathShot } from "../../../domain/deaths";
 import { activeDeathGun, captureDeathGun } from "./death-gun-lifecycle";
 import { getHunterState } from "./hunter/ports";
 import { getWolfKingState } from "./wolf_king/ports";

@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { StatusMark } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent, aliveLifeVersion } from "../../../src/core/domain/components/alive";
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent, aliveLifeVersion } from "../../../src/domain/components/alive";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import type { NightStageState } from "../../../src/game/mechanisms/stages/night/contracts";
 import { discardStaleNightKnives } from "../../../src/rulesets/night-knife-admission";
 

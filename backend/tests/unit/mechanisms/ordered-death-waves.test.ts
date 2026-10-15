@@ -11,7 +11,7 @@ import {
   type ActionRequest,
   type GameEvent,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";

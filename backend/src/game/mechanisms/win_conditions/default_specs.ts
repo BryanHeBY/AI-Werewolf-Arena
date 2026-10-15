@@ -4,15 +4,15 @@
  * 配置工厂只替换两种淘汰条件的 evaluate，不修改缓存默认数组；未匹配规格保原引用。
  * 不封盘或执行死亡，判胜时点、关系领域和唯一终态仍由原 owner／引擎维护。
  */
-import { ELIMINATION_PRIORITIES, type EliminationPriority } from "../../../core/domain/board";
+import { ELIMINATION_PRIORITIES, type EliminationPriority } from "../../../domain/board";
 import { demonHunterIsGod } from "../roles/demon_hunter/authority";
 import { weddingFactionResult } from "../roles/ghost_bride/authority";
 /** 文件说明：内置胜利条件规格实现。 */
 import { cupidCityDecision } from "../roles/cupid/victory";
-import { COMPONENT } from "../../../core/domain/components/names";
-import { RoleComponent } from "../../../core/domain/components/role";
-import { Camp, type WinDecision, WinCondition } from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
+import { Camp, type WinDecision, WinCondition } from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 import { WinConditionSpec } from "./contracts";
 import { victoryDecision } from "./results";

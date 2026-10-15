@@ -9,10 +9,10 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   Camp, COMPONENT, KnightDuelWindow, Phase, Role, WinCondition,
   type ActionRequest, type BoardConfig, type GameEvent, type ToolCall,
-} from "../../../src/core";
-import type { World } from "../../../src/core/domain/world";
-import { captureNightLife } from "../../../src/core/domain/night_effects";
-import { isRoleExecutionRetired, retireRoleExecution } from "../../../src/core/domain/role-execution-authority";
+} from "../../../src/domain";
+import type { World } from "../../../src/domain/world";
+import { captureNightLife } from "../../../src/domain/night-effects";
+import { isRoleExecutionRetired, retireRoleExecution } from "../../../src/domain/role-execution-authority";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { CUPID_STAGE } from "../../../src/game/mechanisms/roles/cupid/night_stage";

@@ -4,12 +4,12 @@
  * 不模拟完整对局，也不绕过权威付款；注入错误仅观察已写前缀，不改变生产规则或授权。
  */
 import { expect, test } from "bun:test";
-import { COMPONENT, type ComponentName } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
-import { createVotingRightComponent } from "../../../src/core/domain/components/voting_right";
-import { Camp, Role, type GameEvent } from "../../../src/core/domain/model";
-import { World } from "../../../src/core/domain/world";
+import { COMPONENT, type ComponentName } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { createRoleComponent } from "../../../src/domain/components/role";
+import { createVotingRightComponent } from "../../../src/domain/components/voting-right";
+import { Camp, Role, type GameEvent } from "../../../src/domain/model";
+import { World } from "../../../src/domain/world";
 import { setIdiotState, getIdiotState } from "../../../src/game/mechanisms/roles/idiot/state";
 import {
   beginDemonHunterNight,

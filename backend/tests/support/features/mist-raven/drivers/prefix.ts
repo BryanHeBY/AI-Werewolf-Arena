@@ -6,9 +6,9 @@
 import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
 import { expect } from "bun:test";
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
-import { createRandom } from "../../../../../src/core";
-import type { ActionRequest } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { createRandom } from "../../../../../src/domain";
+import type { ActionRequest } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 import { ReproductionTrace } from "../../../../../src/recording/reproduction-trace";
 import { captureCheckpoint } from "../../../../../src/runtime/simulation/reproduction_context";
 import { mistRecording } from "./recording";

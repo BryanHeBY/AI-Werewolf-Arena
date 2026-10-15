@@ -7,7 +7,7 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：平民角色 profile。 */
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role } from "../../../../domain/model";
 import { NativeRoleContributions } from "../contracts";
 
 /** 平民角色配置。 */

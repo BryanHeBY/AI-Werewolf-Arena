@@ -14,8 +14,8 @@ import type {
   KnightDuelWindow,
   Phase,
   SelfDestructSelection,
-} from "../../core/domain/model";
-import type { ActionRequestConstructionPort } from "../../core/domain/actions";
+} from "../../domain/model";
+import type { ActionRequestConstructionPort } from "../../domain/actions";
 
 /** 提交回调返回 false 则继续下一候选；无回调时只返回选择，付款与标死仍归原提交／结算路径。 */
 export interface DaytimeSelfDestructOpportunity {

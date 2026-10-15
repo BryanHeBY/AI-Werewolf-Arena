@@ -6,10 +6,10 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { Phase, Role, type ActionProvider, type BoardConfig, type GameEvent, type ToolCall } from "../../../src/core/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { Phase, Role, type ActionProvider, type BoardConfig, type GameEvent, type ToolCall } from "../../../src/domain/model";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { retireRoleExecution } from "../../../src/core/domain/role-execution-authority";
+import { retireRoleExecution } from "../../../src/domain/role-execution-authority";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";

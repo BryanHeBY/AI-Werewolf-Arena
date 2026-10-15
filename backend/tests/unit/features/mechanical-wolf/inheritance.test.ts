@@ -3,11 +3,11 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { Camp, Role } from "../../../../src/core/domain/model";
-import { World } from "../../../../src/core/domain/world";
+import { Camp, Role } from "../../../../src/domain/model";
+import { World } from "../../../../src/domain/world";
 import {
   canMechanicalKnife,
   refreshMechanicalInheritance,

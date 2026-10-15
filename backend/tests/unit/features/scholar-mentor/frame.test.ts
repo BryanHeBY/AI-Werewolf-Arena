@@ -6,7 +6,7 @@
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import type { ModifierState } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
-import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../src/core";
+import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../src/domain";
 
 import { createModifierState, scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/state-slot";
 import {

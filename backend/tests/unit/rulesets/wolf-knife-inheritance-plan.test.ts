@@ -5,8 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { getHiddenWolfState } from "../../../src/game/mechanisms/roles/hidden_wolf/ports";

@@ -7,7 +7,7 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { DEATH_SHOT_TOOL_SPECS, DEATH_SHOT_REPAIR, validateDeathShot } from "../death_shot";

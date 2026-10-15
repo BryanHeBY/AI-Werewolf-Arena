@@ -2,8 +2,8 @@
  * 单元测试负责验证赤月使徒独立基础契约：使用原内存 owner／frame／reader、回调控制及明确畸形修改。手写预期、身份快照和拒绝断言不变，不推进装配后的完整日夜或使用模型／实体传输。
  */
 import { describe, expect, test } from "bun:test";
-import { Camp } from "../../../../src/core/domain/identity";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import { Camp } from "../../../../src/domain/identity";
+import type { RoleComponent } from "../../../../src/domain/components/role";
 import {
   freshRedMoonState,
   getRedMoonState,

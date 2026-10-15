@@ -7,17 +7,17 @@
  * state 只接晚取阵营 source，普通 Hunter／WolfKing 可忽略；原值比较不升级组件引用撤权。
  * 已消费延期提案保原 isCurrent，不因行动墓碑撤回已付前缀；本 owner 不开许可、标死或封盘。
  */
-import type { CurrentCampSource } from "../../../core/domain/components/camp";
-import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
+import type { CurrentCampSource } from "../../../domain/components/camp";
+import { isRoleExecutionRetired } from "../../../domain/role-execution-authority";
 import {
   captureNativeGunStock,
   consumeNativeDeathGun,
   type NativeDeathGunStockQueries,
 } from "./native-death-gun-resources";
-import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
-import { aliveLifeVersion } from "../../../core/domain/components/alive";
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { RoleComponent } from "../../../core/domain/components/role";
+import { captureNightLife, livingNightLife } from "../../../domain/night-effects";
+import { aliveLifeVersion } from "../../../domain/components/alive";
+import { COMPONENT } from "../../../domain/components/names";
+import type { RoleComponent } from "../../../domain/components/role";
 import {
   DeathCause,
   permitsDeathShot,
@@ -27,8 +27,8 @@ import {
   type Role,
   type DeathSources,
   type DeathShotSelection,
-} from "../../../core/domain/model";
-import type { World } from "../../../core/domain/world";
+} from "../../../domain/model";
+import type { World } from "../../../domain/world";
 import type { DeathHookResult, DeathHookContext } from "../hooks/hook_registry";
 
 export interface NativeDeathShotRules extends NativeDeathGunStockQueries {

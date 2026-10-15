@@ -11,12 +11,12 @@ import {
   type ActionRequest,
   type GameEvent,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { allDeathGuns, grantDeathGun } from "../../../src/game/mechanisms/roles/death_abilities";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
 import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";

@@ -8,7 +8,7 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom } from "../../../src/core/domain/random";
+import { createRandom } from "../../../src/domain/random";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   beginGameReproduction,

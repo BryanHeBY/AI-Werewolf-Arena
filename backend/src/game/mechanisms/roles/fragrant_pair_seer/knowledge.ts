@@ -2,7 +2,7 @@
  * 维护香对预言家的玩家已知日志与纯知识更新。输入为已发表通知、已知狼／选择／死亡及 pair ID；输出按原序校验复制和更新，不推导隐藏触发凭据或授予阵容／行动权限。
  */
 
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 import { normalizePair } from "./state";
 /** 此日志只保存 owner 授权的已知信息，不保存真实触发凭据。 */
 export type { FragrantKnowledge } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";

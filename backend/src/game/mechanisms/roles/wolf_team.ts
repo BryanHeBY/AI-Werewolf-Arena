@@ -6,17 +6,17 @@ import { animalPackKnifeBlocked } from "./animal_dream/authority";
 import { nightmareKnifeBlocked } from "./nightmare_shadow/night_frame";
 import { weddingMember, ghostBrideReady, weddingSetup } from "./ghost_bride/authority";
 import { initialIdentitySetupReady } from "./initial_identity/deal";
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import type { CurrentCampSource } from "../../../core/domain/components/camp";
-import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
+import { COMPONENT } from "../../../domain/components/names";
+import type { RoleComponent } from "../../../domain/components/role";
+import type { CurrentCampSource } from "../../../domain/components/camp";
+import { isRoleExecutionRetired } from "../../../domain/role-execution-authority";
 import {
   Camp,
   type EntityId,
   type GameEvent,
   type WolfTeamEventType,
-} from "../../../core/domain/model";
-import type { World } from "../../../core/domain/world";
+} from "../../../domain/model";
+import type { World } from "../../../domain/world";
 import type { RoleCatalog } from "./catalog";
 import type { WolfTeamPermissions } from "./contracts";
 

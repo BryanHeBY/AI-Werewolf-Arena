@@ -9,12 +9,12 @@ import type { PairSeerState, Pair } from "@ai-werewolf-arena/game-contract";
 
 import { types } from "node:util";
 import type { FragrantPlayerState } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
-import type { World } from "../../../../core/domain/world";
-import type { GameEvent } from "../../../../core/domain/events";
-import type { RandomDraws } from "../../../../core/domain/random";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { Camp, Role, Phase } from "../../../../core/domain/identity";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import type { World } from "../../../../domain/world";
+import type { GameEvent } from "../../../../domain/events";
+import type { RandomDraws } from "../../../../domain/random";
+import { COMPONENT } from "../../../../domain/components/names";
+import { Camp, Role, Phase } from "../../../../domain/identity";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 import { abilityStatus, type NightAbilityReadView } from "../abilities";
 import { plainJson } from "./owned-state-data";
 import { PAIR_STATE_SLOT_CONTRACT, type PairStateSlot } from "./pair-state-slot";

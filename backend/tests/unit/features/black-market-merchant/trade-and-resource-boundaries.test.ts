@@ -21,10 +21,10 @@ import {
   type RoleComponent,
   type ActionProvider,
   type GameEvent,
-} from "../../../../src/core";
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
+} from "../../../../src/domain";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getBlackMarketState } from "../../../../src/game/mechanisms/roles/black_market_merchant/state";
 import {

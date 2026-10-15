@@ -1,10 +1,10 @@
 /**
  * 奇迹商人场景测试：验证完整首夜反噬、最后狼人死亡、遗言和警徽先于判胜。输入为固定角色和受控完整 PM 请求；死亡、事件次序及好人成员为手写预期，不读取新 fixture 或调用模型。
  */
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { Role, Camp, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 
 const deck = [Role.MiracleMerchant, Role.Wolf, Role.WolfKing, Role.Seer, Role.Witch, Role.Villager];

@@ -8,8 +8,8 @@ import {
   getDefaultAgentEventVisibilityRegistry,
   getDefaultScriptEventRenderRegistry,
 } from "../../../src/game/mechanisms";
-import { GameEvent } from "../../../src/core/domain/model";
-import { World } from "../../../src/core/domain/world";
+import { GameEvent } from "../../../src/domain/model";
+import { World } from "../../../src/domain/world";
 
 describe("idiot_revealed event presenters", () => {
   test("should be visible to agents and render in script output", () => {

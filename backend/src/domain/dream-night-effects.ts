@@ -7,7 +7,7 @@
  */
 import type { EntityId, GameEvent } from "./model";
 import type { World } from "./world";
-import type { DamageResolutionResult } from "./systems/damage_resolution_system";
+import type { DamageResolutionResult } from "./systems/damage-resolution-system";
 
 export interface DreamNightEffects {
   /** 查询原行动者／目标的当前性；可能调用原有效性回调，不是无副作用纯函数。 */

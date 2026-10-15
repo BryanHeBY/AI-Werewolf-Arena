@@ -4,7 +4,7 @@
  * 使用实际 authority 的有界子狐窗口，不推进 PhaseManager、完整对局、传输或模型；不重生成归档 oracle。
  */
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import {
   animalRosterFixture,
 } from "../../../support/features/animal-dream/builders/roster";
@@ -30,7 +30,7 @@ import {
   readWhiteCatState,
   type FoxCubState,
 } from "../../../../src/game/mechanisms/roles/animal_dream/state";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import type { RoleComponent } from "../../../../src/domain/components/role";
 
 const privateData = (role: RoleComponent) => role.privateState as Record<string, unknown>;
 const fixture = () => animalRosterFixture(undefined, installAnimalAuthority);

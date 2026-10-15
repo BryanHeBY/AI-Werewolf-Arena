@@ -4,9 +4,9 @@
  * 知识与通知纯结构归公共契约，实际库存和付款仍归 authority；本模块不选择目标、
  * 重新判胜或授予租约，先检查权威回执再记录／发布的原顺序保持。
  */
-import type { GameEvent } from "../../../../core/domain/events";
-import { Phase } from "../../../../core/domain/identity";
-import type { World } from "../../../../core/domain/world";
+import type { GameEvent } from "../../../../domain/events";
+import { Phase } from "../../../../domain/identity";
+import type { World } from "../../../../domain/world";
 import { getSessionRecorder } from "../../../../recording/recording_context";
 import { checkpointNobleBodyAuthority } from "./authority";
 import { NOBLE_SECRET_BODY_POLICY } from "./state";

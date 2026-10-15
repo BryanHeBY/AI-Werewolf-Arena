@@ -8,7 +8,7 @@ import {
   type World,
   type RoleComponent,
   type WinDecision,
-} from "../../../../core/domain";
+} from "../../../../domain";
 import { victoryDecision } from "../../win_conditions/results";
 import { loversRecord, livingOriginalLovers } from "./relation";
 /** 有限 City 板贡献只在完整死亡链之后判断，不把局部死亡提案当最终名单。 */

@@ -5,14 +5,14 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Phase, Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
-import { createBadgeComponent } from "../../../../src/core/domain/components/badge";
-import { createVotingRightComponent } from "../../../../src/core/domain/components/voting_right";
-import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
-import type { ActionRequestConstructionInput } from "../../../../src/core/domain/actions";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { createAliveComponent } from "../../../../src/domain/components/alive";
+import { createRoleComponent } from "../../../../src/domain/components/role";
+import { createBadgeComponent } from "../../../../src/domain/components/badge";
+import { createVotingRightComponent } from "../../../../src/domain/components/voting-right";
+import { createIdentityComponent } from "../../../../src/domain/entities/player";
+import type { ActionRequestConstructionInput } from "../../../../src/domain/actions";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { electSheriffIfNeeded } from "../../../../src/game/mechanisms/sheriff/election";

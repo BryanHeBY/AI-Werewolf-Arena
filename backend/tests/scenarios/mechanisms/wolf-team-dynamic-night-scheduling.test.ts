@@ -12,7 +12,7 @@ import {
   type GameEvent,
   type RoleComponent,
   type World,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import {
@@ -26,7 +26,7 @@ import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 

@@ -18,7 +18,7 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { isDemonHunterPreset } from "../../board-support";
 import { Role, Camp, Phase, DeathCause } from "@ai-werewolf-arena/game-contract";
-import { readFaultPlan } from "../../../core/domain/fault_plan";
+import { readFaultPlan } from "../../../domain/fault-plan";
 import type { ReproductionRecord } from "../../../recording/reproduction";
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 const choice = z.strictObject({ day: positive.min(2), targetId: positive.nullable() });

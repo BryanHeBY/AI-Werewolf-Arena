@@ -6,8 +6,8 @@
  * 租约、生命、目标、死亡／放逐单元和停止策略仍由 authority 拥有；快照解码不重新授权或再校验。
  */
 import { types } from "node:util";
-import type { World } from "../../../../core/domain/world";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import type { World } from "../../../../domain/world";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 import { animalOriginalRolePlayer, type AnimalOriginalPlayer } from "./roster";
 import {
   freshFoxCubState,

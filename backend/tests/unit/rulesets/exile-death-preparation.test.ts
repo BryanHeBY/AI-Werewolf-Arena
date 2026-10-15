@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, DeathCause, Role } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import {
   prepareAnimalExileDeaths,

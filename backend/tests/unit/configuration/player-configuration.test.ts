@@ -6,7 +6,7 @@ import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
 import { describeResolvedSetup } from "../../../src/runtime/config/describe_setup";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, type IdentityComponent } from "../../../src/core";
+import { COMPONENT, type IdentityComponent } from "../../../src/domain";
 import { readFile } from "node:fs/promises";
 import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
 import path from "node:path";

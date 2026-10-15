@@ -5,7 +5,7 @@
  * 本模块不读 World、不持玩家状态或授权，不增加参数 schema／有限数校验或修复既有非法输入。
  */
 import type { MessageRef } from "@ai-werewolf-arena/game-contract";
-import { ToolName, TurnConstraints } from "../../core/domain/model";
+import { ToolName, TurnConstraints } from "../../domain/model";
 
 /**
  * 构造统一的 turn_constraints 上下文字段。

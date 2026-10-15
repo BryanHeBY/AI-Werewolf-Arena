@@ -6,11 +6,11 @@
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { DeathCause } from "../../../src/core/domain/deaths";
-import { World } from "../../../src/core/domain/world";
+import { createRoleComponent } from "../../../src/domain/components/role";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { DeathCause } from "../../../src/domain/deaths";
+import { World } from "../../../src/domain/world";
 import type { RoleInitContext } from "../../../src/game/mechanisms/roles/contracts";
 import {
   createHunterState,

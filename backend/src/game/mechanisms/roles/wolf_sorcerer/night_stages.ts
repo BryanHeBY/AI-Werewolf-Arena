@@ -3,10 +3,10 @@
  * 输出原换位提交和私有事实，狼队知识就绪、目标回执与生命撤权仍由 frame 负责。
  * Provider／工具校验之后保原名单与阶段复验；commit 先于发布，发布失败不撤销已付选择。
  */
-import type { AliveComponent } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Phase } from "../../../../core/domain/identity";
+import type { AliveComponent } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Phase } from "../../../../domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { getWolfSorcererState } from "./state-slot";
 import {

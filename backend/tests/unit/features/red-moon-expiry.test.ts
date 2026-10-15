@@ -2,7 +2,7 @@
  * 单元测试：验证赤月延迟到期只发生一次且不重复标死。输入为冻结夜间来源和已死亡持有者；原到期与无追加死亡断言为预期，不生成新 fixture 或模型输入。
  */
 import { expect, test } from "bun:test";
-import { COMPONENT, type AliveComponent } from "../../../src/core";
+import { COMPONENT, type AliveComponent } from "../../../src/domain";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import {
   beginDemonHunterNight,

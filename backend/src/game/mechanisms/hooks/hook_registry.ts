@@ -10,10 +10,10 @@ import {
   type DeathSources,
   type Phase,
   type DeathShotSelection,
-} from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+} from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
-import type { NightLifeScope } from "../../../core/domain/night_effects";
+import type { NightLifeScope } from "../../../domain/night-effects";
 import type { DeathWaveContribution } from "./death-wave-contribution";
 import { giftGunDeathHook } from "../roles/gift_gun_death_hook";
 import { resolveWildChildDeathWave } from "../roles/wild_child/ports";

@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { DeathCause, Phase, Role, PotionType, ActionWindow, WinCondition, Camp, createRandom, type BoardConfig } from "../../../../src/core";
+import { DeathCause, Phase, Role, PotionType, ActionWindow, WinCondition, Camp, createRandom, type BoardConfig } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 
 const policy = "awa_day_deaths_v1" as const;
@@ -24,8 +24,8 @@ for (const copyRole of [Role.MechanicalWolf, Role.AwakenedHiddenWolf])
     const origins: Array<Phase | undefined> = [];
     const provider = {
       async getAction(
-        r: import("../../../../src/core").ActionRequest,
-      ): Promise<import("../../../../src/core").ToolCall | null> {
+        r: import("../../../../src/domain").ActionRequest,
+      ): Promise<import("../../../../src/domain").ToolCall | null> {
         const { day, stage } = r.context;
         if (stage === "mechanical_mode")
           return { name: "mechanical_mode", args: { mode: "skill" } };

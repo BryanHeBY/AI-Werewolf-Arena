@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Phase, Role, type ActionRequest } from "../../../src/core";
+import { Phase, Role, type ActionRequest } from "../../../src/domain";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";

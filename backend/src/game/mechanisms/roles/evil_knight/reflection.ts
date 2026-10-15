@@ -4,10 +4,10 @@
  * World／回调和原状态引用不是玩家 DTO、JSON 或新授权；名单与夜 Map 仍归 frame 和 night-bindings。
  * 原 caster lookup 与来源判断先于付款；已付余量之后的字段读取／效果构造失败不退款，迟到撤权不返还资源。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { Camp, Role, type EntityId } from "../../../../core/domain/identity";
-import { captureNightLife, livingNightLife, type NightLifeScope, type NightRetaliationAttack } from "../../../../core/domain/night_effects";
-import type { World } from "../../../../core/domain/world";
+import { COMPONENT } from "../../../../domain/components/names";
+import { Camp, Role, type EntityId } from "../../../../domain/identity";
+import { captureNightLife, livingNightLife, type NightLifeScope, type NightRetaliationAttack } from "../../../../domain/night-effects";
+import type { World } from "../../../../domain/world";
 import { EVIL_KNIGHT_STATE_SLOT, getEvilKnightState } from "./state-slot";
 
 /** 在等待其他玩家提交前绑定原体；每次提交仍校验生命、组件、私有容器与政策未被替换。 */

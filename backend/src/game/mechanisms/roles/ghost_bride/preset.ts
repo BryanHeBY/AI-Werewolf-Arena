@@ -6,7 +6,7 @@
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { isGhostBridePreset } from "../../../../rulesets";
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import type {} from "../../../../core/domain";
+import type {} from "../../../../domain";
 export type GhostBrideBoard = ReadonlyBoardConfig & {
   readonly ghostBride: { readonly policy: typeof GHOST_BRIDE_POLICY };
 };

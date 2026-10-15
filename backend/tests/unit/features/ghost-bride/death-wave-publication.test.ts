@@ -5,8 +5,8 @@
  */
 import { expect, spyOn, test } from "bun:test";
 import { DeathCause, Phase, type DeathSources, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { GhostBrideSetupWindow } from "../../../../src/game/mechanisms/roles/ghost_bride/setup";
 import { WeddingDeathWavePublication } from "../../../../src/game/mechanisms/roles/ghost_bride/ports";

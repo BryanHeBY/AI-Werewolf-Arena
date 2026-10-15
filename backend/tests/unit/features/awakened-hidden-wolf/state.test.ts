@@ -5,7 +5,7 @@ import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { Camp, Role } from "../../../../src/core";
+import { Camp, Role } from "../../../../src/domain";
 import {
   activateAwakenedLearning,
   awakenedKnifeReady,

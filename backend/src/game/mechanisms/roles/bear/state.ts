@@ -9,9 +9,9 @@ import type { BearState, BearReadState } from "@ai-werewolf-arena/game-contract"
 
 import type { PlayerBearState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import { playerDataField, positiveInteger, rows } from "../player-state-data";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import { types } from "node:util";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 
 /** 保留 privateState 的原 LHS 读取和同对象赋值；允许的状态形状仍由安装调用方负责。 */
 export function setBearState(role: RoleComponent, state: BearState): BearReadState {

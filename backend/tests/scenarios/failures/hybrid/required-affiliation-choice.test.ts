@@ -4,8 +4,8 @@
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Role, WinCondition, type RoleComponent } from "../../../../src/core";
-import type { VictoryComponent } from "../../../../src/core/domain/components/victory";
+import { COMPONENT, Role, WinCondition, type RoleComponent } from "../../../../src/domain";
+import type { VictoryComponent } from "../../../../src/domain/components/victory";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getHybridState } from "../../../../src/game/mechanisms/roles/hybrid/ports";
 import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";

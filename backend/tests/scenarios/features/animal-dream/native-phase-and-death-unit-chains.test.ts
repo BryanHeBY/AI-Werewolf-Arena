@@ -17,10 +17,10 @@ import {
   type ToolCall,
   type ActionProvider,
   type AliveComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
+import { aliveLifeVersion } from "../../../../src/domain/components/alive";
 import { animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
 import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import { activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";

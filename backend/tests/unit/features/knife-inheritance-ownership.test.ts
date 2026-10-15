@@ -6,10 +6,10 @@ import type { HiddenWolfState, GargoyleState } from "@ai-werewolf-arena/game-con
 
 import { expect, test } from "bun:test";
 import { Role, Camp, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../src/domain/components/names";
 
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import {
   getHiddenWolfState,
   setHiddenWolfState,

@@ -10,7 +10,7 @@ import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, type GameEvent } from "../../../../src/core";
+import { COMPONENT, DeathCause, Phase, Role, type GameEvent } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
 import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";

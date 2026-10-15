@@ -7,7 +7,7 @@
  */
 import { expect, test } from "bun:test";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
-import type { GameEvent } from "../../../src/core";
+import type { GameEvent } from "../../../src/domain";
 import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
 for (const type of [
   "red_moon_night_sealed",

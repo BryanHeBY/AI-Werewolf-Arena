@@ -4,9 +4,9 @@
  * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
-import { Camp } from "../../../../src/core/domain/identity";
-import { Phase } from "../../../../src/core/domain/identity";
-import type { GameResult } from "../../../../src/core/domain/results";
+import { Camp } from "../../../../src/domain/identity";
+import { Phase } from "../../../../src/domain/identity";
+import type { GameResult } from "../../../../src/domain/results";
 
 export function fixtureResult(winner: Camp | null, reason: string): GameResult {
   return {

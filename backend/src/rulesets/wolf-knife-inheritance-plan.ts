@@ -6,7 +6,7 @@
  * 不增加 await、阶段变化、判胜、RNG、lease 或通用事件／清理框架。
  */
 import { Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../core/domain/world";
+import type { World } from "../domain/world";
 import { refreshHiddenWolfInheritance } from "../game/mechanisms/roles/hidden_wolf/ports";
 import { refreshGargoyleInheritance } from "../game/mechanisms/roles/gargoyle/ports";
 import { refreshMechanicalInheritance } from "../game/mechanisms/roles/mechanical_wolf/ports";

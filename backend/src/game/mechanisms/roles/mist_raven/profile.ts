@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identity";
+import { Camp, Phase, Role, WinCondition } from "../../../../domain/identity";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { ALCHEMIST_MIST_STAGE, RAVEN_KNIFE_STAGE } from "./night_stages";
@@ -46,11 +46,11 @@ const supported = [
 const configuration = {
   schema: parameters,
   defaults: parameters.parse({}),
-  apply: (config: import("../../../../core/domain/board").BoardConfig, value: unknown) => ({
+  apply: (config: import("../../../../domain/board").BoardConfig, value: unknown) => ({
     ...config,
     mistRaven: parameters.parse(value),
   }),
-  serialize: (config: import("../../../../core/domain/board").BoardConfig) =>
+  serialize: (config: import("../../../../domain/board").BoardConfig) =>
     parameters.parse(config.mistRaven ?? {}),
 };
 export const ALCHEMIST_ROLE_PROFILE: NativeRoleContributions = {

@@ -5,7 +5,7 @@
  */
 import { readReplayManifest } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { Role, WitchSelfHealRule } from "../../../src/core";
+import { Role, WitchSelfHealRule } from "../../../src/domain";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";

@@ -17,9 +17,9 @@ import {
   getDefaultRoleContributions,
   createRoleCatalog,
 } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 
-import { Camp, Role, type GameEvent } from "../../../../src/core/domain/model";
+import { Camp, Role, type GameEvent } from "../../../../src/domain/model";
 const frame = (f: ReturnType<typeof animalRosterFixture>, day = 1) =>
   BearNightFrame.capture(f.world, day, undefined, "netease_dawn_live_v1")!;
 test("explicit dawn-live resamples the actual living ring while omitted policy keeps the old Night sample", () => {

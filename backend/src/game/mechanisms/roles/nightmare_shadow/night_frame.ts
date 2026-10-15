@@ -8,20 +8,20 @@
 import type {
   NightmareShadowReadState,
 } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../../core/domain/components/names";
+import { COMPONENT } from "../../../../domain/components/names";
 import {
   aliveLifeVersion,
   aliveLifeDescriptor,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
+} from "../../../../domain/components/alive";
 
-import type { World } from "../../../../core/domain/world";
-import { Camp, type EntityId } from "../../../../core/domain/identity";
+import type { World } from "../../../../domain/world";
+import { Camp, type EntityId } from "../../../../domain/identity";
 import {
   captureNightLife,
   livingNightLife,
   type NightLifeScope,
-} from "../../../../core/domain/night_effects";
+} from "../../../../domain/night-effects";
 import type { NightAbilityReadView } from "../abilities";
 import { getNightmareShadowState, NIGHTMARE_SHADOW_STATE_SLOT } from "./state-slot";
 import { nightmareFearTargets } from "./targets";

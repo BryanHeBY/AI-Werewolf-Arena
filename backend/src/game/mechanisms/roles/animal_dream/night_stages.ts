@@ -5,7 +5,7 @@
  * 请求始终在 finally 关闭，阶段失效后不发表后续通知，不回滚已付历史。
  */
 import { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";
-import { Phase } from "../../../../core/domain/identity";
+import { Phase } from "../../../../domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { animalFoxChoiceActor, animalFoxChoiceCandidates, animalFoxEffect } from "./authority";
 import {

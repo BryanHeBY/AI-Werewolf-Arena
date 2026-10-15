@@ -4,14 +4,14 @@
  * 这些数据命令不授予窗口许可，受控绑定不冒真实生命周期集成；原公开工具／选择场景另作精准验证。
  */
 import { expect, test } from "bun:test";
-import { Camp, Role } from "../../../src/core/domain/identity";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+import { Camp, Role } from "../../../src/domain/identity";
+import { createAliveComponent } from "../../../src/domain/components/alive";
 import { THIEF_POLICY, initializeThiefState } from "../../../src/game/mechanisms/roles/thief/state-ports";
 import { SHAPESHIFTER_POLICY, cancelShapeshifterState } from "../../../src/game/mechanisms/roles/shapeshifter/state-ports";
 import { freshWildChildState, commitWildChildState } from "../../../src/game/mechanisms/roles/wild_child/state-slot";
 import { freshLonelyGirlState, cancelLonelyGirlState } from "../../../src/game/mechanisms/roles/lonely_girl/state-slot";
 import type { WildChildReadState } from "@ai-werewolf-arena/game-contract";
-import type { NightLifeScope } from "../../../src/core/domain/night_effects";
+import type { NightLifeScope } from "../../../src/domain/night-effects";
 
 test("thief initialization obtains assignment container before deferred policy failure", () => {
   const trace: string[] = [], container: Record<string, unknown> = {}, failure = new Error("policy_failure");

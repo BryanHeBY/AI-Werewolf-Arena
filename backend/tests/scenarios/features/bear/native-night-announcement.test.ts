@@ -1,7 +1,7 @@
 /**
  * 熊场景测试：验证整夜死亡连锁和阶段修订先于公开感知与判胜。输入为原死因／时点／语言计划、固定身份和警徽／枪／自爆链；安静／咆哮、事件次序及终局采用精确预期，不重生 fixture。
  */
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -14,7 +14,7 @@ import {
   type RoleComponent,
   type ActionRequest,
   type ToolCall,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getBearState } from "../../../../src/game/mechanisms/roles/bear/ports";
 

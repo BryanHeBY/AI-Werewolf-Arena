@@ -9,7 +9,7 @@ import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom, RANDOM_ALGORITHM, RANDOM_STREAM_POLICY } from "../../../src/core";
+import { createRandom, RANDOM_ALGORITHM, RANDOM_STREAM_POLICY } from "../../../src/domain";
 import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";

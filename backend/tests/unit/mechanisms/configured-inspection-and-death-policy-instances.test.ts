@@ -16,13 +16,13 @@ import {
   type RoleComponent,
   type DeathActionPolicy,
   type InspectionPolicy,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   findNightAbility,

@@ -5,13 +5,13 @@
  * 后续失败不回滚已提交的动作，也不把可选摘要失败升级为对局失败。
  * Agent 与复现记录共用本局板子来源；maxDays 在原元数据读取处捕获，循环复用该值。
  */
-import { deriveBoundedRequest } from "../core/domain/request_delivery";
+import { deriveBoundedRequest } from "../domain/request-delivery";
 import {
   animalOriginalAuditIds,
   animalOriginalAuditPlayer,
 } from "../game/mechanisms/roles/animal_dream/roster";
-import { aliveLifeDescriptor } from "../core/domain/components/alive";
-import { initialPlayerIdentity } from "../core/domain/initial_roster";
+import { aliveLifeDescriptor } from "../domain/components/alive";
+import { initialPlayerIdentity } from "../domain/initial-roster";
 import { initialIdentityDeal } from "../game/mechanisms/roles/initial_identity/deal";
 import { text } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
@@ -29,7 +29,7 @@ import {
   type World,
   type IdentityComponent,
   createRandom,
-} from "../core";
+} from "../domain";
 import type { ResolvedAgentRuntimeProfile } from "./config/contracts";
 import type { ResolvedGameSetup } from "./config/resolve_game_setup";
 import { resolvePlayerProfile } from "./config/resolve_game_setup";

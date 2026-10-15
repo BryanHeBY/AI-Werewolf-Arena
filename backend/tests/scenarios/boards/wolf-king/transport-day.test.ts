@@ -6,7 +6,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { Phase, DeathCause, createRandom, type ActionRequest } from "../../../../src/core";
+import { Phase, DeathCause, createRandom, type ActionRequest } from "../../../../src/domain";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";

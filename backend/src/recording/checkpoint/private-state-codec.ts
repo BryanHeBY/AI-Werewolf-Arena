@@ -4,12 +4,12 @@
  * 本 owner 只编码，不写 live 状态、收窄 getter／扩展字段接受面或授予原体、库存与行动权限。
  * 普通 structuredClone 的接受宽度与稍后的归档 JSON 校验分开；失败仍在原查询／克隆点传播。
  */
-import type { World } from "../../core/domain/world";
-import type { RoleComponent } from "../../core/domain/components/role";
+import type { World } from "../../domain/world";
+import type { RoleComponent } from "../../domain/components/role";
 import type { prepareAnimalCheckpoint } from "./authority-snapshots";
 import type { animalOriginalAuditPlayer } from "../../game/mechanisms/roles/animal_dream/roster";
 import type { weddingAuditPlayer } from "../../game/mechanisms/roles/ghost_bride/authority";
-import { snapshotPlainData } from "../../core/domain/plain_data";
+import { snapshotPlainData } from "../../domain/plain-data";
 import { fragrantCheckpointPrivateState } from "../../game/mechanisms/roles/fragrant_pair_seer/authority";
 import {
   projectLonelyGirl,

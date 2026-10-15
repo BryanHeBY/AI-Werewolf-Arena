@@ -10,16 +10,16 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 import type { VictoryAffiliation } from "@ai-werewolf-arena/game-contract";
 import type { InspectionCamp, RoleId } from "@ai-werewolf-arena/game-contract";
-import { RoleComponent } from "../../../core/domain/components/role";
-import type { CampComponent, CurrentCampSource } from "../../../core/domain/components/camp";
-import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../../core/domain/model";
+import { RoleComponent } from "../../../domain/components/role";
+import type { CampComponent, CurrentCampSource } from "../../../domain/components/camp";
+import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../../domain/model";
 import type { ToolSpec, StageDirectiveRule } from "../contracts";
 import type { ToolRepairPack } from "../llm/contracts";
 import type { NightStageHandler } from "../stages/night/contracts";
 import type { ToolRuleMap } from "../validation/contracts";
 import type { DeathHook, VotedOutHook } from "../hooks/hook_registry";
 import type { z } from "zod";
-import type { World } from "../../../core/domain/world";
+import type { World } from "../../../domain/world";
 
 /** 初始化持有实际待安装 Camp；运行 source 在原读取点查询当前组件，不能以 draft 回退当前状态。 */
 export interface RoleInitContext {
@@ -57,7 +57,7 @@ export interface RoleMetadata {
   /** 具备有限学习规则的角色贡献组合白名单。 */
   supportedBoardRoles?: readonly Role[];
   /** 有限来源目标；公开解析与内部初始化均拒绝不兼容目标。 */
-  supportedWinConditions?: readonly import("../../../core/domain/identity").WinCondition[];
+  supportedWinConditions?: readonly import("../../../domain/identity").WinCondition[];
 }
 
 /** 具体机制的运行贡献；其原函数引用、资源所有权及失败前缀不由资料或展示改变。 */

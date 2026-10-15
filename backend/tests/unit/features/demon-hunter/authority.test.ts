@@ -3,7 +3,7 @@
  */
 import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import { World, Role, Camp, Phase, COMPONENT, WinCondition, ActionWindow, WitchSelfHealRule, PotionType, StatusMark, StatusMarksComponent, createVictoryComponent, assertRequestDelivery, deferRequestDelivery, bindRequestDeliveryGuard, type BoardConfig, type ActionStage, type ToolName, type GameEvent, type RoleComponent, type AliveComponent } from "../../../../src/core";
+import { World, Role, Camp, Phase, COMPONENT, WinCondition, ActionWindow, WitchSelfHealRule, PotionType, StatusMark, StatusMarksComponent, createVictoryComponent, assertRequestDelivery, deferRequestDelivery, bindRequestDeliveryGuard, type BoardConfig, type ActionStage, type ToolName, type GameEvent, type RoleComponent, type AliveComponent } from "../../../../src/domain";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import {
   installDemonHunter,
@@ -903,7 +903,7 @@ test("a real long canonical visible history remains authorized without relaxing 
 
 /** 测试在原 new 点才解析实际类；不改变已有 controllerDependencies 的动态导入或 await 次序。 */
 const requestConstruction = {
-  get requestFactory(): import("../../../../src/core/domain/actions").ActionRequestFactoryConstructorPort {
+  get requestFactory(): import("../../../../src/domain/actions").ActionRequestFactoryConstructorPort {
     return (require("../../../../src/game/engine/action_request_factory") as typeof import("../../../../src/game/engine/action_request_factory")).GameActionRequestFactory;
   },
 };

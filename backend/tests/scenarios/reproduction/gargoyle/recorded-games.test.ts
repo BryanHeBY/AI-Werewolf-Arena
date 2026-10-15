@@ -3,7 +3,7 @@
  * Input: Original scenario/transport/locale matrices with handwritten role-label, awakening, survivor and terminal facts.
  * Output and oracle: Explicit private history, knife timing, inheritance and result assertions remain causal with exact replay; no production World computes the expected table.
  */
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { GARGOYLE_CASES, gargoyleScenario, type GargoyleScenario } from "../../../support/features/gargoyle/builders/scenario";

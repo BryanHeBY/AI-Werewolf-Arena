@@ -4,11 +4,11 @@
  * 数据槽不授行动许可；使用真实反射命令复核来源，构造失败不退款，不运行模型或完整对局。
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
-import { Camp, Role } from "../../../../src/core/domain/identity";
-import { captureNightLife } from "../../../../src/core/domain/night_effects";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { createRoleComponent } from "../../../../src/domain/components/role";
+import { Camp, Role } from "../../../../src/domain/identity";
+import { captureNightLife } from "../../../../src/domain/night-effects";
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { EVIL_KNIGHT_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/evil_knight/profile";
 import { EVIL_KNIGHT_STATE_SLOT } from "../../../../src/game/mechanisms/roles/evil_knight/state-slot";

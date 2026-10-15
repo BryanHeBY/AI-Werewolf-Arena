@@ -4,9 +4,9 @@
  * 数据校验归本族 state-slot，关系／窗口归 frame；本阶段保持先 commit 后发布的失败前缀，
  * 不提前通过提示执行目标映射，后续行动仍取得原映射回执。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Phase } from "../../../../core/domain/identity";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Phase } from "../../../../domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { getMagicianState } from "./state-slot";
 import {

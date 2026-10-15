@@ -14,8 +14,8 @@ import {
   WinCondition,
   type GameEvent,
   type RoleComponent,
-} from "../../../../src/core";
-import { AliveComponent, aliveLifeVersion } from "../../../../src/core/domain/components/alive";
+} from "../../../../src/domain";
+import { AliveComponent, aliveLifeVersion } from "../../../../src/domain/components/alive";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { transferNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";

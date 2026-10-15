@@ -4,16 +4,16 @@
  * 不变量：领域 choice 与信封必须分别通过复验；失配／过期一旦被观察就关闭共享 turn，已登记别名保留原 context。
  * choice.commit 成功后才关 turn 并通知 true，发布与退款不归本模块；新别名不会凭路由 metadata 获权。
  */
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { registerRequestAliasPropagation } from "../../../../domain/request-delivery";
 import { types } from "node:util";
-import type { ActionRequest, ToolCall } from "../../../../core/domain/actions";
-import { Phase } from "../../../../core/domain/identity";
-import type { World } from "../../../../core/domain/world";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import type { ActionRequest, ToolCall } from "../../../../domain/actions";
+import { Phase } from "../../../../domain/identity";
+import type { World } from "../../../../domain/world";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 import {
   bindRequestDeliveryGuard,
   settleRequestDelivery,
-} from "../../../../core/domain/request_delivery";
+} from "../../../../domain/request-delivery";
 import { normalizePair } from "./state";
 import {
   fragrantChoiceActor,

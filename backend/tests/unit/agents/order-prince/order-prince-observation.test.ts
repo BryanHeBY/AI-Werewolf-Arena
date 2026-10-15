@@ -4,10 +4,10 @@
  * 不调用模型或完整对局；本批只迁观察类型进口，原输入、顺序和断言保持。
  */
 import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
-import type { GameEvent } from "../../../../src/core";
+import type { GameEvent } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type RoleComponent } from "../../../../src/core";
+import { COMPONENT, Phase, Role, type RoleComponent } from "../../../../src/domain";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import type { PlayerObservation } from "../../../../src/game/observation/player-observation";

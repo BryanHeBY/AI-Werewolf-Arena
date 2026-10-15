@@ -5,10 +5,10 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
-import { captureNightLife, type NightImmunityClaim } from "../../../../src/core/domain/night_effects";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { aliveLifeVersion } from "../../../../src/domain/components/alive";
+import { captureNightLife, type NightImmunityClaim } from "../../../../src/domain/night-effects";
 import {
   DreamNightFrame,
   type DreamNightLink,

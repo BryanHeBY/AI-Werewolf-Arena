@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, type RedMoonState } from "@ai-werewolf-arena/game-contract";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import type { RoleComponent } from "../../../../src/domain/components/role";
 import type {
   RoleInitContext,
   RoleInitializationComponent,

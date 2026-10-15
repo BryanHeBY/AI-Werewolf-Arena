@@ -16,7 +16,7 @@ import {
   type RoleComponent,
   type GameEvent,
   type ActionRequest,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getGargoyleState } from "../../../../src/game/mechanisms/roles/gargoyle/ports";
 import { allNightAbilities, findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";

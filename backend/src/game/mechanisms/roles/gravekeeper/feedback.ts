@@ -6,10 +6,10 @@
  * 历史成功写入后才发布事件，后续失败不回滚报告；本模块不替代期限、窗口或原体复验。
  */
 import { recordExileFeedback } from "./state";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { World } from "../../../../core/domain/world";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Role, type EntityId, type ExileFeedback } from "../../../../core/domain/model";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { World } from "../../../../domain/world";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Role, type EntityId, type ExileFeedback } from "../../../../domain/model";
 import { RoleCatalog } from "../catalog";
 import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import { resolveInspection } from "../inspection";

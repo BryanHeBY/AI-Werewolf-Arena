@@ -7,16 +7,16 @@
  */
 import type { WolfBeautyReadState as WolfBeautyState } from "@ai-werewolf-arena/game-contract";
 
-import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import { AliveComponent, aliveLifeVersion } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
 import {
   Role,
   DeathCause,
   type DeathSources,
   type EntityId,
-} from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+} from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import { getWolfBeautyState } from "./state";
 
 export interface CharmBinding {
@@ -30,7 +30,7 @@ export interface CharmBinding {
   readonly targetVersion: number | undefined;
   readonly resolved: boolean;
   readonly applied: boolean;
-  readonly deathLinkPolicy: import("../../../../core/domain/board").BeautyDeathLinkPolicy;
+  readonly deathLinkPolicy: import("../../../../domain/board").BeautyDeathLinkPolicy;
 }
 const bindings = new WeakMap<World, Map<EntityId, CharmBinding>>();
 
@@ -164,7 +164,7 @@ export function commitCharmDeath(
 }
 export function permitsCharm(
   sources: readonly DeathCause[],
-  policy: import("../../../../core/domain/board").BeautyDeathLinkPolicy = "awa_exile_poison_v1",
+  policy: import("../../../../domain/board").BeautyDeathLinkPolicy = "awa_exile_poison_v1",
   nativeHunterShot = false,
 ): boolean {
   // S7 仅规定放逐／原生猎人；未定义的复合死因先按抑制处理，不把赠枪当原生枪。

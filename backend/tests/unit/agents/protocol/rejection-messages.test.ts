@@ -19,7 +19,7 @@ import {
   type RoleComponent,
   type AliveComponent,
   type VotingRightComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { ActionValidator } from "../../../../src/game/gateway/action_validator";

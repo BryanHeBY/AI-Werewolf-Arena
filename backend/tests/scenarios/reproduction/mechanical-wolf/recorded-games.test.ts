@@ -3,7 +3,7 @@
  * Input: Original scenario/transport/locale matrices with handwritten learned-role, ready-day, survivor and last-word facts.
  * Output and oracle: Explicit private resource, knowledge, death and terminal assertions retain exact replay; no copy state or expected table is regenerated.
  */
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { MECHANICAL_CASES, mechanicalScenario, type MechanicalScenario } from "../../../support/features/mechanical-wolf/builders/scenario";

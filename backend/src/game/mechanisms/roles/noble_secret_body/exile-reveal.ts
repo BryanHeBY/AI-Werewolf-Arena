@@ -5,12 +5,12 @@
  * 生成器仅在原 Provider 等待点交出请求；调用方负责原唯一 await，拒绝时必须 return 进入已打开的 finally。
  * 非本族或不触发路径同步结束，不增加等待；发言复验、提交和关闭仍按原顺序执行。
  */
-import { Phase } from "../../../../core/domain/identity";
+import { Phase } from "../../../../domain/identity";
 import type { ActionRequest, ToolCall } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
-import type { World } from "../../../../core/domain/world";
-import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
+import type { World } from "../../../../domain/world";
+import type { ActionRequestConstructionPort } from "../../../../domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { checkpointNobleBodyAuthority, consumeSecretBodyExile } from "./authority";
 import {

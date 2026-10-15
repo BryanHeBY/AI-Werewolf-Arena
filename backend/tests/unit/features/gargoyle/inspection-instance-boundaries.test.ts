@@ -15,7 +15,7 @@ import {
   type RoleComponent,
   type ActionRequest,
   type GameEvent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   getGargoyleState,

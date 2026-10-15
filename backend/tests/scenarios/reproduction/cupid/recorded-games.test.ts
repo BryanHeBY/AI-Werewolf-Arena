@@ -4,7 +4,7 @@
  * Output and oracle: Explicit relationship visibility and chain-final result assertions preserve exact action replay; the declared winner table is independent of observed engine output.
  */
 import { expect, test } from "bun:test";
-import { Camp, Phase } from "../../../../src/core";
+import { Camp, Phase } from "../../../../src/domain";
 import { CUPID_CASES, cupidScenario } from "../../../support/features/cupid/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { promises as fs } from "node:fs";

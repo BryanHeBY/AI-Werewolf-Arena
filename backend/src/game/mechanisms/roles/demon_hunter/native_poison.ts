@@ -5,7 +5,7 @@
  * commit 只能复验已真实付款，不消费第二份库存。失效／失败保已消费前缀，不直接写 Alive 或授予新权限。
  */
 import { types } from "node:util";
-import { Role, WitchSelfHealRule, type World } from "../../../../core";
+import { Role, WitchSelfHealRule, type World } from "../../../../domain";
 import {
   demonNativePoisonFrame,
   demonHunterFreezeDay,

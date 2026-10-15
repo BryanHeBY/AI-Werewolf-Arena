@@ -4,10 +4,10 @@
  * 只执行纯查验查询，不初始化角色、推进窗口或调用模型；探针只附在本案例 World，不改全局登记或生产函数。
  */
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import type { CampComponent } from "../../../../src/core/domain/components/camp";
-import { Camp, Role } from "../../../../src/core/domain/identity";
-import { World } from "../../../../src/core/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import type { CampComponent } from "../../../../src/domain/components/camp";
+import { Camp, Role } from "../../../../src/domain/identity";
+import { World } from "../../../../src/domain/world";
 import type { RoleProfile } from "../../../../src/game/mechanisms/roles/contracts";
 import { createRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";

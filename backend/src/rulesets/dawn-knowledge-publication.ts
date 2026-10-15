@@ -8,8 +8,8 @@
  * 规则见 docs/rules/awa-bear-v1.md 和 docs/rules/awa-animal-dream-twelve-v1.md。
  */
 import type { BearSignalPolicy, ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type { GameEvent } from "../core/domain/events";
-import type { World } from "../core/domain/world";
+import type { GameEvent } from "../domain/events";
+import type { World } from "../domain/world";
 import { BearNightFrame } from "../game/mechanisms/roles/bear/ports";
 import { noteAnimalBearPublication, appendAnimalBeautyNotice } from "../game/mechanisms/roles/animal_dream/ports";
 

@@ -13,7 +13,7 @@ import {
   type GuardRepeatPolicy,
   type RoleComponent,
   type ToolCall,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { GUARD_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/guard/night_stages";
 import {

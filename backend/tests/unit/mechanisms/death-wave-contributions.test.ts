@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { Role, Camp, Phase, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { createRoleComponent } from "../../../src/domain/components/role";
 import {
   setWolfBeautyState,
   attemptCharmTrigger,

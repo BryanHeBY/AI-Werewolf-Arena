@@ -5,10 +5,10 @@
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
 import { oracle } from "../oracles/prompt-plan";
-import { Role } from "../../../../../src/core";
-import { KnightDuelWindow } from "../../../../../src/core";
-import { WinCondition } from "../../../../../src/core";
-import { PotionType } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
+import { KnightDuelWindow } from "../../../../../src/domain";
+import { WinCondition } from "../../../../../src/domain";
+import { PotionType } from "../../../../../src/domain";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
 import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
 import { sixPlayerMvpConfig } from "../../../../../src/runtime/scenarios/six_player_mvp";

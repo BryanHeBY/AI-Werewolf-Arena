@@ -8,8 +8,8 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   Camp, COMPONENT, Phase, Role, WinCondition,
   type GameEvent, type ToolCall,
-} from "../../../src/core";
-import { retireRoleExecution, isRoleExecutionRetired } from "../../../src/core/domain/role-execution-authority";
+} from "../../../src/domain";
+import { retireRoleExecution, isRoleExecutionRetired } from "../../../src/domain/role-execution-authority";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { nightStageContext } from "../../support/builders/night-stage-context";

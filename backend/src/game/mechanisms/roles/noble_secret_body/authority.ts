@@ -6,17 +6,17 @@
  * 新夜间身份仅关联本 Night 对象；到期消费同一身份，不改变旧日次数值、期限或归档字段。
  * 规则依据：docs/rules/awa-noble-secret-body-twelve-v1.md。
  */
-import { attachNightUnit, isNightUnit, nightUnitOf, type NightUnit } from "../../../../core/domain/night-unit";
+import { attachNightUnit, isNightUnit, nightUnitOf, type NightUnit } from "../../../../domain/night-unit";
 import { types } from "node:util";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import type { World } from "../../../../core/domain/world";
-import { Camp, Role, Phase } from "../../../../core/domain/identity";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import type { World } from "../../../../domain/world";
+import { Camp, Role, Phase } from "../../../../domain/identity";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
+} from "../../../../domain/components/alive";
 import {
   NobleBodyStateSlot,
   readNobleState,

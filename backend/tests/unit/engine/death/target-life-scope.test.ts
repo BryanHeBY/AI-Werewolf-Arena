@@ -14,7 +14,7 @@ import {
   type RoleComponent,
   type GameEvent,
   type BoardConfig,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
@@ -23,7 +23,7 @@ import { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registr
 import { hunterDeathHook } from "../../../../src/game/mechanisms/roles/hunter/death_hook";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 
-import { captureNightLife } from "../../../../src/core/domain/night_effects";
+import { captureNightLife } from "../../../../src/domain/night-effects";
 import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager],
   config: BoardConfig = {

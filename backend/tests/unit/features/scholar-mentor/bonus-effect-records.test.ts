@@ -4,10 +4,10 @@
  * 回执 commit 设置为失败哨兵，不运行整局或模型；数组／运行记录不授予付款、请求或生命写权。
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createAliveComponent, aliveLifeVersion } from "../../../../src/core/domain/components/alive";
-import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { createAliveComponent, aliveLifeVersion } from "../../../../src/domain/components/alive";
+import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import type { NightStageState, NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import type { ModifierBonusKind, ModifierBonusReceipt } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
 import { assertScholarMentorBonusEffects } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";

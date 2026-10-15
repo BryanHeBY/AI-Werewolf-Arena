@@ -1,7 +1,7 @@
 /**
  * 单元测试验证女巫救药接收与原十六条件伤害表的独立死因事实。输入保留原 locale、字面标记／死因表及有界 World／接收／伤害操作；精确拒绝、未消费库存、手写致死来源和标记清理是预期，不运行完整夜晚或模型。
  */
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -13,13 +13,13 @@ import {
   type ActionRequest,
   type RoleComponent,
   type StatusMarksComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 
 const roles12 = [
   Role.Wolf,

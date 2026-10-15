@@ -2,7 +2,7 @@
  * 负责按单个玩家的具名随机流和风格执行观察策略。输入为脱离 PlayerObservation；输出为工具选择或明确无行动。
  * 只保存此玩家的 RNG，不持有 World 或其他玩家原角色；候选知识不能授予资源写权，实际合法性仍由引擎重检。
  */
-import type { ToolCall, RandomDraws } from "../../../core";
+import type { ToolCall, RandomDraws } from "../../../domain";
 import type {
   ObservedPlayerStrategy,
   PlayerObservation,

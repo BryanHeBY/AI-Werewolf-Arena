@@ -4,9 +4,9 @@
  * 不复制窗口算法、生成 golden、运行整局或调用模型。
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { RoleRegistry } from "../../../src/core/domain/registries/role_registry";
-import type { GameEvent } from "../../../src/core/domain/model";
+import { World } from "../../../src/domain/world";
+import { RoleRegistry } from "../../../src/domain/registries/role-registry";
+import type { GameEvent } from "../../../src/domain/model";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { SelfDestructWindow } from "../../../src/rulesets/self-destruct-window";
 import { KnightDuelWindow } from "../../../src/game/mechanisms/roles/knight/ports";

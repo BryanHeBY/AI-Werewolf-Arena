@@ -3,16 +3,16 @@
  */
 import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { Camp, Role, WinCondition } from "../../../../src/core/domain/identity";
-import type { BoardConfig } from "../../../../src/core/domain/board";
+import { World } from "../../../../src/domain/world";
+import { Camp, Role, WinCondition } from "../../../../src/domain/identity";
+import type { BoardConfig } from "../../../../src/domain/board";
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { type RoleComponent } from "../../../../src/core/domain/components/role";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { type RoleComponent } from "../../../../src/domain/components/role";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
-import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
+import { createIdentityComponent } from "../../../../src/domain/entities/player";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   createAlchemistState,

@@ -9,7 +9,7 @@ import {
   readVictoryResult,
   readVictoryPoint,
 } from "@ai-werewolf-arena/replay-contract";
-import { Camp, Phase, type GameResult } from "../../../src/core";
+import { Camp, Phase, type GameResult } from "../../../src/domain";
 import { getDefaultScriptEventRenderRegistry } from "../../../src/game";
 
 const players = [1, 2, 3, 4, 5, 6].map((id) => ({
@@ -124,7 +124,7 @@ for (const locale of ["zh-CN", "en"] as const)
       type: "game_over" as const,
       timestamp: 1,
       payload,
-    } as unknown as import("../../../src/core").GameEvent;
+    } as unknown as import("../../../src/domain").GameEvent;
     expect(registry.toJudgeLine(event, locale)).toBe(locale === "en" ? "Unknown" : "未知");
     expect(registry.toLiveRender(event, false, locale).map((item) => item.text)).toEqual([
       locale === "en" ? "Unknown" : "未知",

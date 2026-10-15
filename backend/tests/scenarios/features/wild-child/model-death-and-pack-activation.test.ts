@@ -20,7 +20,7 @@ import {
   type ToolCall,
   type ActionRequest,
   type VictoryComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
 import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state-slot";
@@ -42,8 +42,8 @@ import {
   wolfTeamPermissions,
   wolfTeamEvent,
 } from "../../../../src/game/mechanisms/roles/wolf_team";
-import { ConditionRegistry } from "../../../../src/core/domain/registries/condition_registry";
-import { WinCondition } from "../../../../src/core";
+import { ConditionRegistry } from "../../../../src/domain/registries/condition-registry";
+import { WinCondition } from "../../../../src/domain";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { readWildChildEventFact } from "@ai-werewolf-arena/game-contract/facts/wild-child";
 

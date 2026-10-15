@@ -5,8 +5,8 @@
  * 绑定只捕获原 World 引用，不提前读组件、生命、库存或随机源；查询不公开 World 与提交写权。
  * 表面冻结不冻结 World 或复制名单，现场候选允许结果也不是实际狼刀提交许可。
  */
-import type { EntityId } from "../../../../core/domain/identity";
-import type { World } from "../../../../core/domain/world";
+import type { EntityId } from "../../../../domain/identity";
+import type { World } from "../../../../domain/world";
 import { bindMistKnifeTargetQuery, type MistKnifeTargetQuery } from "../mist_raven/ports";
 import { bindNobleKnifeTargetQuery, type NobleKnifeTargetQuery } from "../noble_secret_body/ports";
 import {

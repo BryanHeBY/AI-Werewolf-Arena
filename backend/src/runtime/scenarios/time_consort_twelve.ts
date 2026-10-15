@@ -10,7 +10,7 @@ import {
   WinCondition,
   WitchSelfHealRule,
   type BoardConfig,
-} from "../../core/domain/model";
+} from "../../domain/model";
 export const timeConsortTwelveConfig: BoardConfig = {
   boardSize: 12,
   timeConsort: { policy: "awa_time_consort_reflection_v1", reflectionScope: "whole_night" },

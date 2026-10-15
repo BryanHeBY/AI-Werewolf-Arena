@@ -4,10 +4,10 @@
  * 计划只引用调用方已有集合，不创建第二套 seen／原因／枪库存；凭证不是死亡行动授权。
  * 发布关联留在凭证内部，绝不修改事件、原 Alive 或归档形状；失败不生成成功凭证。
  */
-import { isNightUnit, type NightUnit } from "../../core/domain/night-unit";
-import { isExileUnit, type ExileUnit } from "../../core/domain/exile-unit";
+import { isNightUnit, type NightUnit } from "../../domain/night-unit";
+import { isExileUnit, type ExileUnit } from "../../domain/exile-unit";
 import { types } from "node:util";
-import type { AliveComponent } from "../../core/domain/components/alive";
+import type { AliveComponent } from "../../domain/components/alive";
 import {
   DeathCause,
   Phase,
@@ -15,7 +15,7 @@ import {
   type EntityId,
 } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
-import type { NightPoisonRoute } from "../../core/domain/night_effects";
+import type { NightPoisonRoute } from "../../domain/night-effects";
 
 /** 调用方先前捕获的原生命与版本，供提交证据关联；它本身不授予死亡行动。 */
 export interface DeathOriginalLife {

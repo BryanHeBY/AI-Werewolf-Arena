@@ -6,10 +6,10 @@ import type { SeerState, SeerReadState } from "@ai-werewolf-arena/game-contract"
 
 import { expect, test } from "bun:test";
 import { Camp, Role, type InspectionResult } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { World } from "../../../../src/core/domain/world";
+import { World } from "../../../../src/domain/world";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";
 import {

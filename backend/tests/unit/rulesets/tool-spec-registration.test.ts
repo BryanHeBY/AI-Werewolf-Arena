@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { Phase, type ActionRequest, type ToolName } from "@ai-werewolf-arena/game-contract";
 import type { ToolSpec } from "../../../src/game/mechanisms/contracts";
 import { ToolSpecRegistry } from "../../../src/game/mechanisms/registries/tool_spec_registry";

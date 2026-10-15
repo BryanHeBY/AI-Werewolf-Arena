@@ -3,11 +3,11 @@
  * 输出为原刀权资格与继承事实；原角色检查后才查阵营，再核继承状态与存活真狼，无 World 不授刀。
  * 持久继承来自实际提交，不改真实阵营，也不从拟议死亡授予权限。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Role, type GameEvent } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import { getHiddenWolfState, recordHiddenWolfKnifeInheritance } from "./state";
 
 /** 当前刀权与已获得的历史继承分别查询；数据标记本身不能恢复权限。 */

@@ -5,16 +5,16 @@
  */
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
 
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
-import { StatusMark, DeathCause } from "../../../src/core/domain/model";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
+import { StatusMark, DeathCause } from "../../../src/domain/model";
 import {
   captureNightLife, originalPoisonIntent, mechanicalNightIntent,
-} from "../../../src/core/domain/night_effects";
-import { damagePoisonRoutes } from "../../../src/core/domain/damage-evidence";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+} from "../../../src/domain/night-effects";
+import { damagePoisonRoutes } from "../../../src/domain/damage-evidence";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { MistPendingNight } from "../../../src/game/mechanisms/roles/mist_raven/pending_night";
 import { DreamNightFrame } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
 

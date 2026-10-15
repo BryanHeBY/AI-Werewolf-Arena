@@ -4,7 +4,7 @@
  * expectations. No expected game result is regenerated from production settlement; this owner performs no
  * game, model or transport execution.
  */
-import { Role } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
 import type { TransportGameScenario } from "../../../transport/contracts";
 
 export function oracle(scenario: TransportGameScenario): TransportGameScenario {

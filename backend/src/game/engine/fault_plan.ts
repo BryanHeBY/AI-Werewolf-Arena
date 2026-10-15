@@ -5,15 +5,15 @@
 import { createAliveComponent } from "../observation/component-presentation";
 import { types } from "node:util";
 import { z } from "zod";
-import { readFaultPlan, type FaultPlan, type FaultStep } from "../../core/domain/fault_plan";
-export { readFaultPlan, type FaultPlan, type FaultStep } from "../../core/domain/fault_plan";
+import { readFaultPlan, type FaultPlan, type FaultStep } from "../../domain/fault-plan";
+export { readFaultPlan, type FaultPlan, type FaultStep } from "../../domain/fault-plan";
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 function inputData(value: unknown): unknown {
   // 决策边界同样只接收有限纯数据；复用 core 的快照读取规则，不透传运行句柄。
   return readFaultPlanData(value);
 }
-import { readFaultPlanData } from "../../core/domain/fault_plan";
-import { COMPONENT, aliveLifeVersion, aliveLifeDescriptor, type AliveComponent, type World } from "../../core";
+import { readFaultPlanData } from "../../domain/fault-plan";
+import { COMPONENT, aliveLifeVersion, aliveLifeDescriptor, type AliveComponent, type World } from "../../domain";
 
 const nativePromiseThen = Promise.prototype.then;
 const nativePromiseSpecies = Object.getOwnPropertyDescriptor(Promise, Symbol.species)?.get;

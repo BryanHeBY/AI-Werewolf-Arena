@@ -7,7 +7,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { Camp, Phase, type GameResult } from "../../../src/core";
+import { Camp, Phase, type GameResult } from "../../../src/domain";
 import {
   outcomeLabel,
   outcomeWinnersLabel,

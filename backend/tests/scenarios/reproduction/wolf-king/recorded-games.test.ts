@@ -3,7 +3,7 @@
  * 输出用字面枪／死亡／遗言／胜者事实核对，失败、跳过和链顺序仍采用已声明政策预期。
  */
 import type { VictoryPoint } from "@ai-werewolf-arena/game-contract";
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { wolfKingScenario, type WolfKingScenario } from "../../../support/features/wolf-king/builders/scenario";

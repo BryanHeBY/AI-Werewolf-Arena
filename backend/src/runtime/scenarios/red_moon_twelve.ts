@@ -9,7 +9,7 @@ import {
   WinCondition,
   WitchSelfHealRule,
   type BoardConfig,
-} from "../../core/domain/model";
+} from "../../domain/model";
 import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 /** 既有固定板子数据；实际生命周期和有限支持检查由注册的机制／ruleset 负责。 */
 export const redMoonTwelveConfig: BoardConfig = {

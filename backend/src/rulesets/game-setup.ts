@@ -8,11 +8,11 @@
  * 不缓存 World 或提前读取构造参数；首夜序列成功末尾没有额外当前性查询，也不推进阶段或生成快照。
  */
 import type { GameEvent, ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type { ActionProvider } from "../core/domain/actions";
-import type { World } from "../core/domain/world";
+import type { ActionProvider } from "../domain/actions";
+import type { World } from "../domain/world";
 import type { ToolGateway } from "../game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../game/engine/action_request_factory";
-import { Role } from "../core/domain/identity";
+import { Role } from "../domain/identity";
 import { installFragrantPairAuthority } from "../game/mechanisms/roles/fragrant_pair_seer/setup-ports";
 import {
   InitialIdentitySetupWindow,

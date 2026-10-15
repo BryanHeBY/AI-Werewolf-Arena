@@ -22,8 +22,8 @@ import {
   type GameEvent,
   type RoleComponent,
   type ToolCall,
-} from "../../../../src/core";
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
+} from "../../../../src/domain";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

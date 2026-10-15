@@ -9,7 +9,7 @@
  */
 import type { LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { RequestLease } from "../../../../core/domain/request-lease";
+import { RequestLease } from "../../../../domain/request-lease";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import {
   COMPONENT,
@@ -22,8 +22,8 @@ import {
   type RoleComponent,
   type CampComponent,
   type VictoryComponent,
-} from "../../../../core/domain";
-import { aliveLifeVersion, type AliveComponent } from "../../../../core/domain/components/alive";
+} from "../../../../domain";
+import { aliveLifeVersion, type AliveComponent } from "../../../../domain/components/alive";
 import { freshLonelyGirlState, getLonelyGirlState, LONELY_GIRL_POLICY, lonelyData,
   consumeLonelyGirlState, cancelLonelyGirlState, projectLonelyGirlData } from "./state-slot";
 interface Participant {

@@ -3,7 +3,7 @@
  * 输出保留四次 setup 查询的原顺序及返回对象引用，归档字段仍按孤女、婚约、盗贼、换皮者排序。
  * 查询在三种强权威编码之前执行，字段加入在计数之后；不缓存跨次快照、不重开或关闭机制。
  */
-import type { World } from "../../core/domain/world";
+import type { World } from "../../domain/world";
 import { weddingSetup } from "../../game/mechanisms/roles/ghost_bride/authority";
 import { projectLonelyGirlSetup } from "../../game/mechanisms/roles/lonely_girl/lifecycle";
 import { projectThiefSetup } from "../../game/mechanisms/roles/thief/deal";

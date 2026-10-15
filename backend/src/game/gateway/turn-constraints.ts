@@ -5,7 +5,7 @@
  * 不关闭请求、消耗库存或执行 Agent，提示文案的组织仍属于 AI 玩家层。
  */
 import { text, type MessageRef, type Locale } from "@ai-werewolf-arena/game-text";
-import type { ActionRequest, ToolCall, ToolName } from "../../core/domain";
+import type { ActionRequest, ToolCall, ToolName } from "../../domain";
 
 export interface ResolvedTurnConstraints {
   minValidActions: number;

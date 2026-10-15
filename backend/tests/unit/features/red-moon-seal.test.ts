@@ -6,7 +6,7 @@ import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
 import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
-import { COMPONENT, type AliveComponent, type RoleComponent } from "../../../src/core";
+import { COMPONENT, type AliveComponent, type RoleComponent } from "../../../src/domain";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import {
   beginDemonHunterNight,

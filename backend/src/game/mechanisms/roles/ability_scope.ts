@@ -9,14 +9,14 @@
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
 import { captureRadiantTurn } from "./radiant_eclipse/night_frame";
-import { isRoleExecutionRetired } from "../../../core/domain/role-execution-authority";
-import { COMPONENT } from "../../../core/domain/components/names";
+import { isRoleExecutionRetired } from "../../../domain/role-execution-authority";
+import { COMPONENT } from "../../../domain/components/names";
 
-import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
-import type { World } from "../../../core/domain/world";
-import type { EntityId } from "../../../core/domain/model";
+import { captureNightLife, livingNightLife } from "../../../domain/night-effects";
+import type { World } from "../../../domain/world";
+import type { EntityId } from "../../../domain/model";
 import { activeNightAbility, type NightAbilityReadView } from "./abilities";
-import { aliveLifeVersion } from "../../../core/domain/components/alive";
+import { aliveLifeVersion } from "../../../domain/components/alive";
 
 import { DREAMER_STATE_SLOT } from "./dreamer/ports";
 import { SHELTER_STATE_SLOT } from "./radiant_eclipse/shelter-state-slot";

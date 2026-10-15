@@ -13,7 +13,7 @@ import {
   type GameEvent,
   type RoleComponent,
   type DeathSources,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";

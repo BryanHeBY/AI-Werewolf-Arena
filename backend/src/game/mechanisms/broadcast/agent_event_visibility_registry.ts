@@ -7,7 +7,7 @@
  * 历史 audience 不随当前阵营补发或撤回；这里不裁剪第二份副本、不付款，也不授予行动写权限。
  */
 import type { EntityId, GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../core/domain/world";
+import type { World } from "../../../domain/world";
 import { demonHunterActorId } from "../roles/demon_hunter/authority";
 import {
   canViewAgentEvent,

@@ -8,10 +8,10 @@ import type { NightStageState } from "../../../src/game/mechanisms/stages/night/
 import { nightStageContext } from "../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, Phase, WinCondition, COMPONENT, type BoardConfig, type GameEvent, StatusMark } from "../../../src/core";
+import { Role, Phase, WinCondition, COMPONENT, type BoardConfig, type GameEvent, StatusMark } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { WOLF_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/wolf/night_stages";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";

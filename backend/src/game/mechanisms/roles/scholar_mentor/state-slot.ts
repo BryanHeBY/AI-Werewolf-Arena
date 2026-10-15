@@ -6,7 +6,7 @@
  * frame 仍拥有 roster、原生命、夜 pending／selections、加成与提交／关闭；有限板碰撞另归同族 rules。
  * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
 import type {
   ModifierCaster,
   ModifierMode,
@@ -15,7 +15,7 @@ import type {
   ModifierReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { Camp } from "@ai-werewolf-arena/game-contract";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import { types } from "node:util";
 
 export const SCHOLAR_MENTOR_POLICY = "awa_scholar_mentor_twelve_v1" as const;

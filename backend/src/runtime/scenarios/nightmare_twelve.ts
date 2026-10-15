@@ -10,7 +10,7 @@ import {
   WinCondition,
   WitchSelfHealRule,
   type BoardConfig,
-} from "../../core/domain/model";
+} from "../../domain/model";
 export const nightmareTwelveConfig: BoardConfig = {
   boardSize: 12,
   enableSheriff: true,

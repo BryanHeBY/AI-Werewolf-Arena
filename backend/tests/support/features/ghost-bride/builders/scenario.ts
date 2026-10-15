@@ -1,18 +1,18 @@
 /**
  * 构造鬼新娘测试的计划、固定板子与明确玩家／标记数据。输入为 variant、语言、seed；输出保持原数组、库存和身份，发牌只构造输入，手写结果仍由测试提供，不运行对局或改变预期算法。
  */
-import { Role } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { WinCondition } from "../../../../../src/core";
-import { ActionWindow } from "../../../../../src/core";
-import { WitchSelfHealRule } from "../../../../../src/core";
-import type { BoardConfig } from "../../../../../src/core";
-import { Camp } from "../../../../../src/core";
-import { PotionType } from "../../../../../src/core";
-import { createRandom } from "../../../../../src/core";
-import { shuffled } from "../../../../../src/core";
-import type { ActionStage } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { WinCondition } from "../../../../../src/domain";
+import { ActionWindow } from "../../../../../src/domain";
+import { WitchSelfHealRule } from "../../../../../src/domain";
+import type { BoardConfig } from "../../../../../src/domain";
+import { Camp } from "../../../../../src/domain";
+import { PotionType } from "../../../../../src/domain";
+import { createRandom } from "../../../../../src/domain";
+import { shuffled } from "../../../../../src/domain";
+import type { ActionStage } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
 import type { PlannedTurn } from "../../../transport/contracts";

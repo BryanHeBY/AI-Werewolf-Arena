@@ -8,8 +8,8 @@ import { expect, test } from "bun:test";
 import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";
 import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
 
 test("day cycle reentry rejects before mutating the outer phase or feed", async () => {
   const g = game();

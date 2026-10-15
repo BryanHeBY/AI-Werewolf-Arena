@@ -7,7 +7,7 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { Role, Camp, WinCondition } from "../../../../core/domain";
+import { Role, Camp, WinCondition } from "../../../../domain";
 import type { NativeRoleContributions } from "../contracts";
 import { DEMON_HUNTER_POLICY, installDemonHunterStateSlot } from "./state-slot";
 import { projectDemonHunter } from "./authority";

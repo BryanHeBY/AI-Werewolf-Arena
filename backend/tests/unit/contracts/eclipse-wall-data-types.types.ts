@@ -12,7 +12,7 @@ import type {
   readWallNoteData,
 } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import type { PlayerObservation } from "../../../src/game/observation/player-observation";
-import type { WallNoteComponent as WorldWallNote } from "../../../src/core/domain/components/wall_note";
+import type { WallNoteComponent as WorldWallNote } from "../../../src/domain/components/wall-note";
 import type { projectEclipseState } from "../../../src/game/mechanisms/roles/radiant_eclipse/ports";
 import type {
   // @ts-expect-error 原 feature type 出口退休，runtime 规则／投影仍保留。

@@ -10,7 +10,7 @@ import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import rawBoard from "../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json";
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role } from "../../../../src/core/domain/identity";
+import { Role } from "../../../../src/domain/identity";
 import { RadiantNightUnit } from "../../../../src/game/mechanisms/roles/radiant_eclipse/ports";
 import { beginRadiantNight } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
 

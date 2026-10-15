@@ -9,7 +9,7 @@ import type { KnightState, KnightReadState } from "@ai-werewolf-arena/game-contr
 
 import type { PlayerKnightState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import { playerDataField } from "../player-state-data";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 
 export function setKnightState(roleComp: RoleComponent, state: KnightState): KnightReadState {
   (roleComp.privateState as { knight: KnightState })["knight"] = state;

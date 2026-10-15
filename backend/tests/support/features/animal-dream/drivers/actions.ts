@@ -6,9 +6,9 @@
  * advancing a phase, changing stock or regenerating expected outcomes.
  */
 import type { AnimalPlan } from "../contracts";
-import { ActionWindow } from "../../../../../src/core";
-import type { ActionRequest } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { ActionWindow } from "../../../../../src/domain";
+import type { ActionRequest } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 
 export function animalAction(r: ActionRequest, name: AnimalPlan, first = false): ToolCall | null {
   const d = r.context.day,

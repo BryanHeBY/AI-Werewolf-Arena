@@ -4,13 +4,13 @@
  * 运行接口区分查询和更新：连续／关联推导累计原因，expand 写调用方伤害，record 写去重与 events。
  * 原组件引用、回调和接收方保持，句柄不进入玩家知识或录制；本模块不标死、授予请求或推进阶段。
  */
-import type { DreamNightEffects } from "../../../../core/domain/dream-night-effects";
-import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { DeathCause, type EntityId, type GameEvent } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
-import type { DamageResolutionResult } from "../../../../core/domain/systems/damage_resolution_system";
-import type { NightImmunityClaim } from "../../../../core/domain/night_effects";
+import type { DreamNightEffects } from "../../../../domain/dream-night-effects";
+import { AliveComponent, aliveLifeVersion } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import { DeathCause, type EntityId, type GameEvent } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
+import type { DamageResolutionResult } from "../../../../domain/systems/damage-resolution-system";
+import type { NightImmunityClaim } from "../../../../domain/night-effects";
 
 /**
  * 本夜关系持原行动者／目标组件引用与当时捕获版本；可选回调仍归已付效果所有者。
@@ -23,7 +23,7 @@ export interface DreamNightLink {
   abilityId?: string;
   consecutive: boolean;
   isCurrent?: () => boolean;
-  protectionPolicy?: import("../../../../core/domain/board").DreamProtectionPolicy;
+  protectionPolicy?: import("../../../../domain/board").DreamProtectionPolicy;
   actorLife: AliveComponent;
   actorVersion: number | undefined;
   targetLife: AliveComponent;

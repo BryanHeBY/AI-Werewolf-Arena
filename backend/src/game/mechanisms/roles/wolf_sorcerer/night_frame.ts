@@ -8,13 +8,13 @@
 import type { WolfSorcererReadState } from "@ai-werewolf-arena/game-contract";
 import { resolveOrderedSeatTarget } from "./seat_mapping";
 import { types } from "node:util";
-import { COMPONENT, type Camp, type RoleComponent, type World } from "../../../../core";
+import { COMPONENT, type Camp, type RoleComponent, type World } from "../../../../domain";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
-import type { NightLifeScope } from "../../../../core/domain/night_effects";
+} from "../../../../domain/components/alive";
+import type { NightLifeScope } from "../../../../domain/night-effects";
 import { getWolfSorcererState, projectWolfSorcererState, WOLF_SORCERER_ROLE, WOLF_SORCERER_STATE_SLOT } from "./state-slot";
 
 interface OriginalPlayer {

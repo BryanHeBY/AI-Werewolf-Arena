@@ -5,18 +5,18 @@
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, COMPONENT, StatusMark, DeathCause, type BoardConfig } from "../../../src/core";
+import { Role, COMPONENT, StatusMark, DeathCause, type BoardConfig } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   captureNightLife,
   planMechanicalDamage,
   type NightMechanicalEffects,
   type NightPoisonClaim,
-} from "../../../src/core/domain/night_effects";
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
+} from "../../../src/domain/night-effects";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { permitsDeathShot } from "../../../src/core/domain/deaths";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
+import { permitsDeathShot } from "../../../src/domain/deaths";
 const roles = [Role.Wolf, Role.Witch, Role.Seer, Role.Guard, Role.Villager, Role.Villager],
   config: BoardConfig = {
     ...sixPlayerMvpConfig,

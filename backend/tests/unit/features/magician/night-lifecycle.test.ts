@@ -7,7 +7,7 @@
  */
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../../src/core/domain/world";
+import { World } from "../../../../src/domain/world";
 import rawBoard from "../../../../../configs.example/boards/awa_magician_12_n1_exchanged_v1.json";
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

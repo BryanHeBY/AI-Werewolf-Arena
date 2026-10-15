@@ -4,8 +4,8 @@
  * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
-import { ActionWindow } from "../../../../src/core";
-import type { ToolCall } from "../../../../src/core";
+import { ActionWindow } from "../../../../src/domain";
+import type { ToolCall } from "../../../../src/domain";
 import type { PlannedTurn } from "../../transport/contracts";
 
 export function selfDestructTransportPlan(window: ActionWindow): Map<number, PlannedTurn[]> {

@@ -5,7 +5,7 @@
  */
 import type { RoleInspectionState } from "@ai-werewolf-arena/game-contract";
 import { Role } from "@ai-werewolf-arena/game-contract";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import { allNightAbilities } from "../abilities";
 export const freshMirrorInspectionState = (): RoleInspectionState => ({
   policy: "mirror",

@@ -10,10 +10,10 @@ import {
   closeMechanicalExtraKnife,
 } from "./state";
 
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../core/domain/model";
-import { captureNightLife, livingNightLife, mechanicalNightIntent, originalPoisonIntent } from "../../../../core/domain/night_effects";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../domain/model";
+import { captureNightLife, livingNightLife, mechanicalNightIntent, originalPoisonIntent } from "../../../../domain/night-effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { resolveInspection } from "../inspection";
 import { canMechanicalKnife } from "./inheritance";

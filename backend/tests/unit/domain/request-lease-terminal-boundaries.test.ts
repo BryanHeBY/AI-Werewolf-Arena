@@ -7,10 +7,10 @@
 import { expect, test, spyOn } from "bun:test";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Role, Camp, Phase, createRandom, type World, type ActionRequest, type GameEvent, type ToolCall } from "../../../src/core/domain";
-import type { ActionRequestFactoryConstructorPort } from "../../../src/core/domain/actions";
-import { RequestLease } from "../../../src/core/domain/request-lease";
-import { assertRequestDelivery, deferRequestDelivery, inheritRequestAlias } from "../../../src/core/domain/request_delivery";
+import { COMPONENT, Role, Camp, Phase, createRandom, type World, type ActionRequest, type GameEvent, type ToolCall } from "../../../src/domain";
+import type { ActionRequestFactoryConstructorPort } from "../../../src/domain/actions";
+import { RequestLease } from "../../../src/domain/request-lease";
+import { assertRequestDelivery, deferRequestDelivery, inheritRequestAlias } from "../../../src/domain/request-delivery";
 import { foxBoard } from "../../support/features/cursed-fox/builders/scenario";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

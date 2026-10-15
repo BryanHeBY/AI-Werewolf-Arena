@@ -5,7 +5,7 @@
  * 已付选择、蛇窗和资源仍归 frame／施法 authority，这里不退款、结算死亡或推进阶段。
  */
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { beginMistNight, handOffMistNight, closeMistNight, abortMistNight } from "./night_frame";
 
 export interface MistNightRuntime {

@@ -5,7 +5,7 @@
  * 原体捕获／资格归 reflection，免疫提案归 night_frame，余量写入归 state-slot；本模块不查询 World、不复制 Map 或重抓角色。
  * 旧通用 map 属性／返回 map 注入接口退出；更换状态对象不接续旧 Map，已有结果闭包保原捕获引用。
  */
-import type { EntityId } from "../../../../core/domain/identity";
+import type { EntityId } from "../../../../domain/identity";
 import type { NightStageState } from "../../stages/night/contracts";
 import type { captureEvilKnight } from "./reflection";
 

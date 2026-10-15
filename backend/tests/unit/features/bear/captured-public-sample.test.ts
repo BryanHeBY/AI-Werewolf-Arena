@@ -15,7 +15,7 @@ import {
   type RoleComponent,
   type ActionRequest,
   type GameEvent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { BearNightFrame } from "../../../../src/game/mechanisms/roles/bear/night_frame";
 import { getBearState } from "../../../../src/game/mechanisms/roles/bear/state";
@@ -27,7 +27,7 @@ import {
 } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import type { IdentityComponent } from "../../../../src/core/domain/entities/player";
+import type { IdentityComponent } from "../../../../src/domain/entities/player";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import {
   getDefaultToolSpecRegistry,

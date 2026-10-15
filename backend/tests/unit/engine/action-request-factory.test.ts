@@ -9,8 +9,8 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   getActionRequestDay,
   getActionRequestStage,
-} from "../../../src/core/domain/action_request_context";
-import { Phase } from "../../../src/core/domain/model";
+} from "../../../src/domain/action-request-context";
+import { Phase } from "../../../src/domain/model";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 

@@ -6,7 +6,7 @@
  * 首次追加才建立数组；换状态对象不会继续旧夜记录，不读取或采纳旧 modifierBonusEffects 属性及其 getter。
  * 付款、原生命与当前性重验仍归本族阶段／frame；记录存在不代表已付、有效或已经造成死亡。
  */
-import type { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
+import type { StatusMarksComponent } from "../../../../domain/components/status-marks";
 import type { NightStageState } from "../../stages/night/contracts";
 import type { ModifierBonusKind, ModifierBonusReceipt } from "./night_frame";
 

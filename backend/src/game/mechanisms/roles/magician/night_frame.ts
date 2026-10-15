@@ -9,13 +9,13 @@ import type { MagicianReadState } from "@ai-werewolf-arena/game-contract";
 import { isWolfSorcererBoard, resolveWolfSorcererNightTarget } from "../wolf_sorcerer/exchange-ports";
 import { matchingExchangePairs } from "../trickster/exchange-ports";
 import { types } from "node:util";
-import { COMPONENT, type Camp, type RoleComponent, type World } from "../../../../core";
+import { COMPONENT, type Camp, type RoleComponent, type World } from "../../../../domain";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
-import type { NightLifeScope } from "../../../../core/domain/night_effects";
+} from "../../../../domain/components/alive";
+import type { NightLifeScope } from "../../../../domain/night-effects";
 import { getMagicianState, projectMagicianState, MAGICIAN_ROLE, MAGICIAN_STATE_SLOT } from "./state-slot";
 
 interface OriginalPlayer {

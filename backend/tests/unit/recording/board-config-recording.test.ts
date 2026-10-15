@@ -11,10 +11,10 @@ import {
   WitchSelfHealRule,
   createRandom,
   type BoardConfig,
-} from "../../../src/core";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
+} from "../../../src/domain";
+import type { RoleComponent } from "../../../src/domain/components/role";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,

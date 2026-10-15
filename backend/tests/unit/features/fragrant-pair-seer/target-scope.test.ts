@@ -3,12 +3,12 @@
  */
 import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
+import { World } from "../../../../src/domain/world";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { Role, Camp } from "../../../../src/core/domain/identity";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { Role, Camp } from "../../../../src/domain/identity";
 import {
   capturePairTarget,
   capturedPairContainsWolf,

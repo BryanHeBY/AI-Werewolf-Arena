@@ -8,15 +8,15 @@
 import type { EclipseSuppression } from "@ai-werewolf-arena/game-contract";
 
 import { types } from "node:util";
-import { COMPONENT } from "../../../../core/domain/components/names";
+import { COMPONENT } from "../../../../domain/components/names";
 
 import {
   aliveLifeDescriptor,
   type AliveComponent,
   aliveLifeVersion,
-} from "../../../../core/domain/components/alive";
-import { captureNightLife } from "../../../../core/domain/night_effects";
-import type { World } from "../../../../core/domain/world";
+} from "../../../../domain/components/alive";
+import { captureNightLife } from "../../../../domain/night-effects";
+import type { World } from "../../../../domain/world";
 import type { NightAbilityReadView } from "../abilities";
 import { RADIANT_ECLIPSE_POLICY } from "./state-data";
 

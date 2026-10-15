@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { inspectionConfiguration } from "../role_inspection/contribution-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getRoleInspectionState, setRoleInspectionState } from "../role_inspection/ports";
 import { numberOrNull } from "../../llm/helpers";

@@ -11,7 +11,7 @@ import {
   PotionType,
   type ActionRequest,
   type ToolCall,
-} from "../../../../src/core/index";
+} from "../../../../src/domain/index";
 import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { snapshotNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";

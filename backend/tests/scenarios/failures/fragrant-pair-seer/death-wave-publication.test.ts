@@ -11,8 +11,8 @@ import {
 } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import type { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import type { AliveComponent } from "../../../../src/domain/components/alive";
 for (const path of ["initial", "gun"] as const)
   test(`${path} wave record failure preserves the paid real deaths and original error`, async () => {
     const g = game(),

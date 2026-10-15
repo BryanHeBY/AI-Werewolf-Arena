@@ -18,15 +18,15 @@ export interface RecordedPlayerState {
   camp: Camp;
   alive: boolean;
   privateState: Record<string, unknown>;
-  wallNote?: import("../../core/domain/components/wall_note").WallNoteComponent;
-  debatePenalty?: import("../../core/domain/components/debate_penalty").DebatePenaltyComponent;
-  lovers?: import("../../core/domain/components/lovers").LoversComponent;
+  wallNote?: import("../../domain/components/wall-note").WallNoteComponent;
+  debatePenalty?: import("../../domain/components/debate-penalty").DebatePenaltyComponent;
+  lovers?: import("../../domain/components/lovers").LoversComponent;
   vote: { weight: number; canVote: boolean };
   badge: {
     isSheriff: boolean;
     destroyed: boolean;
     voteWeight: number;
-    handoffPolicy?: import("../../core/domain/board").SheriffBadgePolicy;
+    handoffPolicy?: import("../../domain/board").SheriffBadgePolicy;
   };
   marks: string[];
   victory: { affiliations: VictoryAffiliation[] };

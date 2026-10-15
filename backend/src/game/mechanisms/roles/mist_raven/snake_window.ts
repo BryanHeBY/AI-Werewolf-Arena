@@ -4,10 +4,10 @@
  * 不变量：先核 roster／候选并开放蛇窗口，才在原 new 点读构造器；本函数无 finally，失败保原已开窗口前缀，外层经理 abort。
  * Provider 是原唯一 await，随后原名单／状态／gateway 复验成功才提交选择、写事实，不退款或替换异常。
  */
-import { Phase, type ActionProvider, type GameEvent } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+import { Phase, type ActionProvider, type GameEvent } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 import type { MistPendingNight } from "./pending_night";
 import {
   assertMistRosterCurrent,

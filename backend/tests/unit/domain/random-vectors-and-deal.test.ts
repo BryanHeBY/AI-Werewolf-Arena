@@ -3,8 +3,8 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Role, type RoleComponent } from "../../../src/core";
-import { createRandom, RANDOM_ALGORITHM } from "../../../src/core/domain/random";
+import { COMPONENT, Role, type RoleComponent } from "../../../src/domain";
+import { createRandom, RANDOM_ALGORITHM } from "../../../src/domain/random";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 test("named random streams have frozen versioned vectors and do not consume their parent", () => {

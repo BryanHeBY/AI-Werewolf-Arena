@@ -12,11 +12,11 @@ import {
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { Phase } from "../../../../src/core/domain/identity";
-import { DeathCause } from "../../../../src/core/domain/deaths";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
-import type { RuntimeSnapshot } from "../../../../src/core/domain/model";
+import { Phase } from "../../../../src/domain/identity";
+import { DeathCause } from "../../../../src/domain/deaths";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
+import type { RuntimeSnapshot } from "../../../../src/domain/model";
 
 for (const mode of ["false", "throw"] as const)
   test(`uncommitted initial death reservation releases on ${mode} cancellation without spending`, async () => {

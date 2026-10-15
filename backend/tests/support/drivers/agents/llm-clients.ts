@@ -6,7 +6,7 @@
  * expectations and recording. No SDK request, network, model or game runs at import.
  */
 import { expect } from "bun:test";
-import { PotionType, type ActionProvider, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { PotionType, type ActionProvider, type ActionRequest, type ToolCall } from "../../../../src/domain";
 
 export const REQUIRED_ACTION_CONSTRAINTS = {
   min_valid_actions: 1,

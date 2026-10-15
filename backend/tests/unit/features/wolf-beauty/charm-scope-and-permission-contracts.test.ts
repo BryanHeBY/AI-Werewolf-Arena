@@ -13,7 +13,7 @@ import {
   type BoardConfig,
   type ActionRequest,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/state";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
@@ -24,7 +24,7 @@ import {
   bindCharm,
   permitsCharm,
 } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { DeathCause, type GameEvent } from "../../../../src/core";
+import { DeathCause, type GameEvent } from "../../../../src/domain";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 

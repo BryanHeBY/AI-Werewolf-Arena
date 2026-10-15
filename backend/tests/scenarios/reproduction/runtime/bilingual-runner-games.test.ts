@@ -22,7 +22,7 @@ import { createTestTempDirectory } from "../../../support/drivers/temp-directori
 import { foundationTransportPlan } from "../../../support/builders/transport/foundation-plan";
 import { type ActorTransportPlan } from "../../../support/transport/contracts";
 import { assertTransportPrompt, assertTransportEvents } from "../../../support/oracles/transport/observations";
-import { ActionWindow, Camp, Phase, Role, WinCondition } from "../../../../src/core";
+import { ActionWindow, Camp, Phase, Role, WinCondition } from "../../../../src/domain";
 
 import { selfDestructTransportPlan } from "../../../support/builders/transport/self-destruct-plan";
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";

@@ -6,17 +6,17 @@
  */
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
 
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
-import { StatusMark, DeathCause } from "../../../src/core/domain/model";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
+import { StatusMark, DeathCause } from "../../../src/domain/model";
 import {
   captureNightLife, originalPoisonIntent, mechanicalNightIntent, nightPoisonRoutes,
   planMechanicalDamage,
-} from "../../../src/core/domain/night_effects";
-import { planNightDamage } from "../../../src/core/domain/night-damage-plan";
-import { resolveNightDamageTarget } from "../../../src/core/domain/night-damage-target";
+} from "../../../src/domain/night-effects";
+import { planNightDamage } from "../../../src/domain/night-damage-plan";
+import { resolveNightDamageTarget } from "../../../src/domain/night-damage-target";
 
 function fixture() {
   const world = new World();

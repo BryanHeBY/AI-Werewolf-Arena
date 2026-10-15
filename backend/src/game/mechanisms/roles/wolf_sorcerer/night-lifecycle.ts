@@ -4,7 +4,7 @@
  * 优先级 100 开夜、复合映射回执和已付号码历史仍归原 owner；正常关闭后经理参数照读，
  * 重复关闭错误由 frame 决定，此单元不捕获施法者或计算目标。
  */
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import type { MagicianNightCleanupOwnership } from "../magician/ports";
 import { closeWolfSorcererNight, abortWolfSorcererNight } from "./night_frame";
 

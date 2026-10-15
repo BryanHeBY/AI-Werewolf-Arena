@@ -4,8 +4,8 @@
  * 不返回单人阵营、目标身份或新行动许可；原体算法由 OriginalPlayerScope 的同绑定出口拥有。
  */
 import { types } from "node:util";
-import type { World } from "../../../../core/domain/world";
-import { Camp } from "../../../../core/domain/identity";
+import type { World } from "../../../../domain/world";
+import { Camp } from "../../../../domain/identity";
 import { originalPlayerCurrent as pairTargetCurrent } from "../original_player_scope";
 import type { OriginalPlayerScope as PairTargetScope } from "../original_player_scope";
 export {

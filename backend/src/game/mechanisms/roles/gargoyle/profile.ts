@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { inspectionConfiguration } from "../role_inspection/contribution-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
-import { Role } from "../../../../core/domain/model";
+import { Role } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getGargoyleState, setGargoyleState } from "./state";
 import { getRoleInspectionState, setRoleInspectionState } from "../role_inspection/ports";

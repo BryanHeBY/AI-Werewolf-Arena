@@ -6,9 +6,9 @@
  * 关系事件或后续查询失败保留已发生前缀；来源阶段只在原逐目标提交点读取，未进入提交时不读当前 phase。
  */
 import { DeathCause, type DeathSources, type EntityId, type GameEvent, type Phase } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../core/domain/components/names";
-import type { World } from "../core/domain/world";
-import type { DreamNightEffects } from "../core/domain/dream-night-effects";
+import { COMPONENT } from "../domain/components/names";
+import type { World } from "../domain/world";
+import type { DreamNightEffects } from "../domain/dream-night-effects";
 import { expandLoversWave } from "../game/mechanisms/roles/cupid/death-ports";
 import { prepareFragrantDeathWave } from "../game/mechanisms/roles/fragrant_pair_seer/ports";
 import type { InitialWeddingExpansion } from "./initial-death-relations";

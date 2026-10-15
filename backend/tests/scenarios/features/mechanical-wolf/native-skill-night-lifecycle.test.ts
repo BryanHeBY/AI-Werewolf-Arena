@@ -7,7 +7,7 @@ import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-ni
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
 import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -20,7 +20,7 @@ import {
   type RoleComponent,
   type ToolCall,
   type ActionRequest,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   getMechanicalState,
@@ -37,8 +37,8 @@ import { MECHANICAL_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/m
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 
-import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
-import { DeathCause } from "../../../../src/core/domain/deaths";
+import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
+import { DeathCause } from "../../../../src/domain/deaths";
 import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 
 const deck = [Role.MechanicalWolf, Role.Wolf, Role.Psychic, Role.Witch, Role.Guard, Role.Villager];

@@ -7,9 +7,9 @@
 import { expect, test } from "bun:test";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
-import type { World } from "../../../../src/core/domain/world";
-import type { ActionRequestConstructionInput } from "../../../../src/core/domain/actions";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import type { World } from "../../../../src/domain/world";
+import type { ActionRequestConstructionInput } from "../../../../src/domain/actions";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

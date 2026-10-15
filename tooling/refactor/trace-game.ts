@@ -3,7 +3,7 @@
  * 每份构建创建自己的装配、运行许可和记录器，并使用自己的严格复现入口，不重写源码或归档引擎指纹。
  * 固定 Date.now 使逻辑时间可比较，真实定时器和通信生命周期仍需另外验收；产物写入调用方提供的临时目录。
  */
-import { readFile, mkdir, writeFile, realpath } from "node:fs/promises";
+import { readFile, mkdir, writeFile, realpath, lstat } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { literalAction, type LiteralTranscript, type TranscriptRequest } from "./transcripts";
@@ -27,6 +27,26 @@ export const originalLayout: BuildLayout = {
   reproduction: "backend/src/recording/reproduction.ts",
   replay: "backend/src/runtime/simulation/replay_reproduction.ts",
 };
+
+/** 新构建只改变实际领域入口，旧构建的路径声明保留，分别在各自构建中创建运行对象。 */
+const domainLayout: BuildLayout = { ...originalLayout, core: "backend/src/domain/index.ts" };
+
+/** 只识别两种已声明布局；双入口或缺少入口一律拒绝，避免把两套模块实例混进同次比较。 */
+async function selectBuildLayout(root: string): Promise<BuildLayout> {
+  const exists = async (relative: string) => {
+    try {
+      const entry = await lstat(path.join(root, relative));
+      if (!entry.isFile()) throw Error("differential_layout_input_invalid");
+      return true;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") return false;
+      throw error;
+    }
+  };
+  const oldEntry = await exists(originalLayout.core), domainEntry = await exists(domainLayout.core);
+  if (oldEntry === domainEntry) throw Error("differential_build_layout_ambiguous");
+  return oldEntry ? originalLayout : domainLayout;
+}
 export interface TraceScenario {
   id: string;
   board: unknown;
@@ -204,6 +224,6 @@ if (import.meta.main) {
     root,
     input,
     output,
-    layoutPath ? JSON.parse(await readFile(layoutPath, "utf8")) : originalLayout,
+    layoutPath ? JSON.parse(await readFile(layoutPath, "utf8")) : await selectBuildLayout(root),
   );
 }

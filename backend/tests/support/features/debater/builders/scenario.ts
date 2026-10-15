@@ -4,12 +4,12 @@
  * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
-import { Role } from "../../../../../src/core";
-import { PotionType } from "../../../../../src/core";
-import { createRandom } from "../../../../../src/core";
-import { shuffled } from "../../../../../src/core";
-import type { ActionStage } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { Role } from "../../../../../src/domain";
+import { PotionType } from "../../../../../src/domain";
+import { createRandom } from "../../../../../src/domain";
+import { shuffled } from "../../../../../src/domain";
+import type { ActionStage } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 import { foxBoard } from "../../cursed-fox/builders/scenario";
 import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";

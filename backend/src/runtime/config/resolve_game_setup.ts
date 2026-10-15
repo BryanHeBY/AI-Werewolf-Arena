@@ -3,7 +3,7 @@
  * 输出为完整对局设置、逐玩家配置和语言回退诊断。仅选择已登记角色，不创建对局、
  * 读取认证或授予行动权限；名字和人格保留原文，不参与模型选择。
  */
-import type { BoardConfig } from "../../core";
+import type { BoardConfig } from "../../domain";
 import type {
   GameConfig,
   GameAgentSelection,
@@ -20,7 +20,7 @@ import {
 } from "../scenarios/board_config_resolver";
 import { type ResolvedBoardDefinition } from "./board_definition";
 import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/role-catalog-assembly";
-import { Role } from "../../core/domain/identity";
+import { Role } from "../../domain/identity";
 
 export interface RunGameOptions {
   board: string;

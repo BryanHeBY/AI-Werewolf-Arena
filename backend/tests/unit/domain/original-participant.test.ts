@@ -4,16 +4,16 @@
  * 只核捕获与复验，不运行角色窗口或付款；普通属性读取不等于严格原体schema或权限；当前Camp输入取World组件值，旧Role字段渠道退休。
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createCampComponent } from "../../../src/core/domain/components/camp";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
-import { Camp, Role } from "../../../src/core/domain/identity";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { createCampComponent } from "../../../src/domain/components/camp";
+import type { RoleComponent } from "../../../src/domain/components/role";
+import { Camp, Role } from "../../../src/domain/identity";
 import {
   captureOriginalParticipant,
   sameOriginalParticipant,
-} from "../../../src/core/domain/original-participant";
+} from "../../../src/domain/original-participant";
 
 test("participant keeps getter and Proxy acceptance, original references and a writable snapshot using current Camp value without JSON inspection", () => {
   const world = new World(), id = world.createEntity(), life = createAliveComponent();

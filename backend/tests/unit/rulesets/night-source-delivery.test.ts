@@ -6,12 +6,12 @@
  */
 import { expect, test } from "bun:test";
 import { StatusMark } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { aliveLifeVersion } from "../../../src/core/domain/components/alive";
-import { StatusMarksComponent, statusMarkSnapshot } from "../../../src/core/domain/components/status_marks";
-import { captureNightLife, type NightGuardClaim } from "../../../src/core/domain/night_effects";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { aliveLifeVersion } from "../../../src/domain/components/alive";
+import { StatusMarksComponent, statusMarkSnapshot } from "../../../src/domain/components/status-marks";
+import { captureNightLife, type NightGuardClaim } from "../../../src/domain/night-effects";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { demonHunterFixture } from "../../support/features/demon-hunter/builders/candidate-world";
 import { beginDemonHunterNight, closeDemonHunterNight } from "../../../src/game/mechanisms/roles/demon_hunter/authority";
 import { openNativeGuardContribution, commitNativeGuardContribution, sealNativeGuardContribution } from "../../../src/game/mechanisms/roles/demon_hunter/guard_contribution";

@@ -7,9 +7,9 @@
  */
 import { radiantFullPlans } from "../oracles/literal-plans";
 import type { RadiantFullPlanName } from "../oracles/literal-plans";
-import { PotionType } from "../../../../../src/core";
-import type { ActionRequest } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { PotionType } from "../../../../../src/domain";
+import type { ActionRequest } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 
 export function radiantManualAction(
   q: ActionRequest,

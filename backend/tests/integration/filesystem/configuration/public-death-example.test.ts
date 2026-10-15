@@ -4,7 +4,7 @@
  * Output and oracle: Exact machine policy/count/win-condition values retain original assertions; source bytes are read unchanged without any game or model.
  */
 import { expect, test } from "bun:test";
-import { Role, WinCondition } from "../../../../src/core";
+import { Role, WinCondition } from "../../../../src/domain";
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 
 const newWords = "netease_2017_day_and_first_night_v1" as const;

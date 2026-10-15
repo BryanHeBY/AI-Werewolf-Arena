@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { captureNightLife } from "../../../src/core/domain/night_effects";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { captureNightLife } from "../../../src/domain/night-effects";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { assertNightCommitAdmission } from "../../../src/rulesets/night-commit-admission";
 import { commitFoxInspection } from "../../../src/game/mechanisms/roles/cursed_fox/inspection_effect";

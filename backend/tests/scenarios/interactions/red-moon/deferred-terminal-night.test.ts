@@ -11,7 +11,7 @@ import {
   type ActionRequest,
   type ToolCall,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 function game(policy: "ends_game" | "forbidden" = "ends_game") {

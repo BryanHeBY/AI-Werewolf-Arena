@@ -8,9 +8,9 @@ import {
   captureNightLife,
   livingNightLife,
   type NightLifeScope,
-} from "../../../../core/domain/night_effects";
+} from "../../../../domain/night-effects";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT, type RoleComponent, type Camp, Role, type World } from "../../../../core/domain";
+import { COMPONENT, type RoleComponent, type Camp, Role, type World } from "../../../../domain";
 export interface InitialIdentityCard {
   cardId: string;
   role: Role;

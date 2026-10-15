@@ -2,12 +2,12 @@
  * 馥郁双生有界周期场景测试验证已公开死亡、继承刀权提示与玩家／网关投影一致。输入为两语矩阵、关联死亡计划与真实阶段管理器请求；预期为手写已知状态、历史、隐私及序号断言，不额外生成预期对局。
  */
 import { expect, test } from "bun:test";
-import { Phase } from "../../../../src/core/domain/identity";
-import { Role } from "../../../../src/core/domain/identity";
+import { Phase } from "../../../../src/domain/identity";
+import { Role } from "../../../../src/domain/identity";
 import { ActionValidator } from "../../../../src/game/gateway/action_validator";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import type { AliveComponent } from "../../../../src/core/domain/components/alive";
-import type { ActionRequest } from "../../../../src/core/domain/actions";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import type { AliveComponent } from "../../../../src/domain/components/alive";
+import type { ActionRequest } from "../../../../src/domain/actions";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {

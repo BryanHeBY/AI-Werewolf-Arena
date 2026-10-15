@@ -4,7 +4,7 @@
  * Output and oracle: Explicit event/checkpoint/result assertions retain actual causal replay; no expected table or archive fixture is regenerated.
  */
 import { expect, test } from "bun:test";
-import { Camp } from "../../../../src/core";
+import { Camp } from "../../../../src/domain";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import { type MistRecordVariant } from "../../../support/features/mist-raven/builders/board";
 const cases: Array<{

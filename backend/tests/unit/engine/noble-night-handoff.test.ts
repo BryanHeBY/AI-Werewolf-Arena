@@ -9,10 +9,10 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { Role } from "../../../src/core/domain/identity";
+import { Role } from "../../../src/domain/identity";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { checkpointNobleBodyAuthority } from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
 import {

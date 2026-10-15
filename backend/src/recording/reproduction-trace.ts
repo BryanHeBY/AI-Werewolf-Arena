@@ -9,8 +9,8 @@ import { types } from "node:util";
 import { Camp, type ToolCall } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
-import type { ActionProvider } from "../core/domain/actions";
-import { assertRequestDelivery, deferRequestDelivery } from "../core/domain/request_delivery";
+import type { ActionProvider } from "../domain/actions";
+import { assertRequestDelivery, deferRequestDelivery } from "../domain/request-delivery";
 import {
   REPRODUCTION_SCHEMA_VERSION,
   parseReproductionRecord,

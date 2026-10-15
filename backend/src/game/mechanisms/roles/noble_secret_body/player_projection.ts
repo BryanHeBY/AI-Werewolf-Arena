@@ -4,7 +4,7 @@
  * 日志所有者仍拥有知识更新；此模块仅投影，不付款或授予行动权限。标记取公开阶段
  * 与已知公开放逐状态，不能比较真实与已知库存来泄漏尚未通知的变化。
  */
-import { Phase } from "../../../../core/domain/identity";
+import { Phase } from "../../../../domain/identity";
 import type { NightChoice } from "./state";
 
 import type {

@@ -4,15 +4,15 @@
  * 复用原捕获 life/day/目标，保留付款位置以及允许首次死亡的 paid callback。
  * 不以新来源数据替代资格、库存或重试规则，不恢复撤销的原 owner，不改变阶段优先级或归档。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../core/domain/model";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../domain/model";
 import {
   captureNightLife,
   livingNightLife,
   awakenedNightIntent,
   originalPoisonIntent,
-} from "../../../../core/domain/night_effects";
+} from "../../../../domain/night-effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { allNightAbilities, findNightAbility, retiredNightAbilityIds } from "../abilities";
 import { installNativeAbility } from "../ability_changes";

@@ -4,7 +4,7 @@
  */
 import type { MessageKey } from "@ai-werewolf-arena/game-text";
 /** 文件说明：机制层公共规格类型定义。 */
-import { ToolName } from "../../core/domain/model";
+import { ToolName } from "../../domain/model";
 
 /** 工具规格定义。 */
 export interface ToolSpec {

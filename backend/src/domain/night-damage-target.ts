@@ -8,8 +8,8 @@
  */
 import { DeathCause } from "./deaths";
 import { StatusMark, type EntityId } from "./identity";
-import type { StatusMarksComponent } from "./components/status_marks";
-import { livingNightLife, nightPoisonRouteTargets, nightPoisonRoutes, type NightPoisonRoute, type NightEffectQuery, type NightLifeReadScope } from "./night_effects";
+import type { StatusMarksComponent } from "./components/status-marks";
+import { livingNightLife, nightPoisonRouteTargets, nightPoisonRoutes, type NightPoisonRoute, type NightEffectQuery, type NightLifeReadScope } from "./night-effects";
 import type { NightDamageEffects, NightDamagePlan } from "./night-damage-plan";
 
 /**

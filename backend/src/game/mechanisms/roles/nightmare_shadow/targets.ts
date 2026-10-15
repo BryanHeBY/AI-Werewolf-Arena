@@ -3,9 +3,9 @@
  * 输入是原 World、演员序号和日期；输出保留原现场候选读取、禁选自身／相邻夜重复及狼同伴规则。
  * 原状态／存活与日期检查按原顺序短路；候选不是许可，此模块不写历史、打开夜窗口或支付资源。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { Camp, type EntityId } from "../../../../core/domain/identity";
-import type { World } from "../../../../core/domain/world";
+import { COMPONENT } from "../../../../domain/components/names";
+import { Camp, type EntityId } from "../../../../domain/identity";
+import type { World } from "../../../../domain/world";
 import { getNightmareShadowState, nightmareStateDayValid } from "./state-slot";
 
 /** 请求、校验、基线策略与目标提示使用同一目标政策，避免相邻两夜的禁选规则漂移。 */

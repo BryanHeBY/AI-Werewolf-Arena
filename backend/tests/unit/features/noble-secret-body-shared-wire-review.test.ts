@@ -8,7 +8,7 @@
 import { expect, test } from "bun:test";
 import { nobleTransportScenario } from "../../support/features/noble-secret-body/builders/transport-plan";
 import { assertTransportEvents, assertTransportPrompt } from "../../support/oracles/transport/observations";
-import { Role } from "../../../src/core/index";
+import { Role } from "../../../src/domain/index";
 const s = nobleTransportScenario("expiry"),
   noble = s.mapping.get(1)!,
   body = s.mapping.get(5)!,

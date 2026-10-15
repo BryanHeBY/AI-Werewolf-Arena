@@ -11,7 +11,7 @@ import {
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
 import { evilKnightTwelveConfig } from "../../../../src/runtime/scenarios/evil_knight_twelve";
-import { WitchSelfHealRule } from "../../../../src/core";
+import { WitchSelfHealRule } from "../../../../src/domain";
 import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
 import {
   readReproduction,

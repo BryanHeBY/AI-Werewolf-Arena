@@ -9,14 +9,14 @@ import {
   createVotingRightComponent,
 } from "../../../../../src/game/observation/component-presentation";
 import type { LastWolfBlastPolicy } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../../../src/core/domain/world";
-import { Role } from "../../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../../src/core/domain/components/names";
+import { World } from "../../../../../src/domain/world";
+import { Role } from "../../../../../src/domain/identity";
+import { COMPONENT } from "../../../../../src/domain/components/names";
 import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
 
-import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
-import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
-import { installInitialRoster } from "../../../../../src/core/domain/initial_roster";
+import { createVictoryComponent } from "../../../../../src/domain/components/victory";
+import { createIdentityComponent } from "../../../../../src/domain/entities/player";
+import { installInitialRoster } from "../../../../../src/domain/initial-roster";
 import { RoleCatalog } from "../../../../../src/game/mechanisms/roles/catalog";
 import {
   getDefaultRoleCatalog,

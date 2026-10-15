@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
 import { installAnimalAuthority } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
 import { AnimalDeathWavePreparation } from "../../../../src/game/mechanisms/roles/animal_dream/ports";
-import { World } from "../../../../src/core/domain/world";
+import { World } from "../../../../src/domain/world";
 import { Phase, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
 
 test("an unowned bound contribution preserves list identity without reading events or units", () => {

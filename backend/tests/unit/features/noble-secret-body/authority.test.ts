@@ -3,10 +3,10 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { Role, Camp } from "../../../../src/core/domain/identity";
+import { Role, Camp } from "../../../../src/domain/identity";
 import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
 import {
   beginNobleBodyNight,

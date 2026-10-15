@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identity";
+import { Camp, Phase, Role, WinCondition } from "../../../../domain/identity";
 import type { NativeRoleContributions, RoleRuntimeContribution } from "../contracts";
 import { activeNightAbility, initializeNightAbilityInventory } from "../abilities";
 import { installNativeAbility } from "../ability_changes";

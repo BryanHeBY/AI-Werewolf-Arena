@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
+import type { RoleComponent } from "../../../src/domain/components/role";
 import { initializeKnightState } from "../../../src/game/mechanisms/roles/knight/state";
 import { initializeIdiotState } from "../../../src/game/mechanisms/roles/idiot/state";
 import { initializeWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/state";

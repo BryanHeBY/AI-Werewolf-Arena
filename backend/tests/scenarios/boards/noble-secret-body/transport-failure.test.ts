@@ -7,7 +7,7 @@
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { ActionStage } from "../../../../src/core";
+import type { ActionStage } from "../../../../src/domain";
 import { type PlannedTurn } from "../../../support/transport/contracts";
 import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";

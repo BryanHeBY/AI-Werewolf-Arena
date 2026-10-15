@@ -3,7 +3,7 @@
  */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { registerToolSpecs } from "../../../rulesets/tool-spec-registration";
-import { ToolName } from "../../../core/domain/model";
+import { ToolName } from "../../../domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { StageDirectiveRule, ToolSpec } from "../contracts";
 import { RoleCatalog } from "../roles/catalog";

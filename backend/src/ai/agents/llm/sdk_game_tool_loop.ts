@@ -5,12 +5,12 @@
  * 不消耗库存、提交领域动作或订阅 settlement，失败保留原读取与记录顺序。
  */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
-import { ActionRequest, ToolCall } from "../../../core/domain";
+import { ActionRequest, ToolCall } from "../../../domain";
 import {
   getActionRequestDay,
   getActionRequestStage,
-} from "../../../core/domain/action_request_context";
-import { World } from "../../../core/domain/world";
+} from "../../../domain/action-request-context";
+import { World } from "../../../domain/world";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { AgentBugReportService } from "../reporting/bug_report_service";
 import { gameToolProtocol } from "../game_tool_protocol";

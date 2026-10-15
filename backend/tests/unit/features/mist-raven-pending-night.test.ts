@@ -4,16 +4,16 @@
  */
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { aliveLifeVersion } from "../../../src/core/domain/components/alive";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { DeathCause, type DeathSources } from "../../../src/core/domain/deaths";
+import { World } from "../../../src/domain/world";
+import { aliveLifeVersion } from "../../../src/domain/components/alive";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { DeathCause, type DeathSources } from "../../../src/domain/deaths";
 import {
   DreamNightFrame,
   type DreamNightLink,
 } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
 import { MistPendingNight } from "../../../src/game/mechanisms/roles/mist_raven/pending_night";
-import type { GameEvent } from "../../../src/core/domain/events";
+import type { GameEvent } from "../../../src/domain/events";
 
 function setup(day = 1, consecutive = false) {
   const world = new World();

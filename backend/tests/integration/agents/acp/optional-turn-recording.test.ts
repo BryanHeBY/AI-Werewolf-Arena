@@ -2,14 +2,14 @@
  * 集成测试验证 optional-turn-recording 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
-import { ActionWindow } from "../../../../src/core";
+import { ActionWindow } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
-import { Phase, type ActionRequest } from "../../../../src/core";
+import { Phase, type ActionRequest } from "../../../../src/domain";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";

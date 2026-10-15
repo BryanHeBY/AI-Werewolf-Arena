@@ -4,10 +4,10 @@
  * 不替代原资源权威，不执行完整对局；测试手动标死仅模拟经理已完成的死亡边界。
  */
 import { expect, test } from "bun:test";
-import { Camp, type GameEvent, type WinDecision } from "../../../src/core/domain/model";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { World } from "../../../src/core/domain/world";
-import { ConditionRegistry } from "../../../src/core/domain/registries/condition_registry";
+import { Camp, type GameEvent, type WinDecision } from "../../../src/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { ConditionRegistry } from "../../../src/domain/registries/condition-registry";
 import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/ports";
 import {
   beginDemonHunterNight,

@@ -4,7 +4,7 @@
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { COMPONENT, Phase, Role, type RoleComponent, World } from "../../../src/core";
+import { COMPONENT, Phase, Role, type RoleComponent, World } from "../../../src/domain";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import {
   beginNobleBodyNight,
@@ -126,7 +126,7 @@ for (const kind of ["original-getter", "foreign-state", "foreign-role"] as const
           reads++;
           throw Error("foreign role getter");
         },
-      } as unknown as import("../../../src/core/domain/component-map").ComponentWrite<typeof COMPONENT.Role>);
+      } as unknown as import("../../../src/domain/component-map").ComponentWrite<typeof COMPONENT.Role>);
     expect(() => demonHunterCheckpointPlayers(g.world, true)).toThrow();
     const cp = demonHunterCheckpointPlayers(g.world, false)!;
     expect(cp.find((p) => p.id === 5)!.privateState.secretBody).toEqual(expected);

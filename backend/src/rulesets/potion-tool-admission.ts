@@ -9,7 +9,7 @@ import { isMagicianBoard, resolveMagicianNightTarget } from "../game/mechanisms/
 import { nativePotionsCanCombine } from "../game/mechanisms/roles/witch/ports";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { PotionType, Phase, WitchSelfHealRule, StatusMark } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../core/domain/components/names";
+import { COMPONENT } from "../domain/components/names";
 import { type ToolRuleMap, isAliveTarget } from "../game/mechanisms/validation/contracts";
 import { activeNightAbility } from "../game/mechanisms/roles/abilities";
 import { luckyTargetAllowed } from "../game/mechanisms/roles/night_action_history";

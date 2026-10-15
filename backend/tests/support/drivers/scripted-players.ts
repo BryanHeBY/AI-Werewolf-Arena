@@ -6,7 +6,7 @@
  * expectations as the oracle. Driver ownership, cleanup and error policy never
  * change during this relocation; no billed model is introduced.
  */
-import type { ActionProvider, ActionRequest, ActionStage, ToolCall } from "../../../src/core";
+import type { ActionProvider, ActionRequest, ActionStage, ToolCall } from "../../../src/domain";
 
 export interface ScriptStep {
   actorId: number;

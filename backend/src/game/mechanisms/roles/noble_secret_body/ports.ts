@@ -5,9 +5,9 @@
  * 本入口不复制组件、不授予新生命或库存权限，也不提前提交贵族与侍从契约。
  * 玩家投影与请求 scope 沿原查询时点执行；已告知契约与当前许可不互相替代。
  */
-import { Role, type EntityId } from "../../../../core/domain/identity";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { World } from "../../../../core/domain/world";
+import { Role, type EntityId } from "../../../../domain/identity";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { World } from "../../../../domain/world";
 import { readNobleState } from "./state";
 
 export interface NobleKnifeTargetQuery {

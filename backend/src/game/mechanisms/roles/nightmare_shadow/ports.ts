@@ -5,10 +5,10 @@
  * 名单复验与四参数恐惧查询公开同一原函数；死亡窗口仍由调用方明确传入允许首次死亡，不改原撤销；
  * 查询时仍传播原名单撤销与目标生命失败；板子谓词保持原只读绑定及调用方重复参数的读取顺序。
  */
-import type { EntityId } from "../../../../core/domain/model";
-import { Role } from "../../../../core/domain/identity";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { World } from "../../../../core/domain/world";
+import type { EntityId } from "../../../../domain/model";
+import { Role } from "../../../../domain/identity";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { World } from "../../../../domain/world";
 import { nightmareFearBlocks } from "./night_frame";
 export { isNightmareBoard, nightmareKnifeBlocked, assertNightmareRosterCurrent, nightmareFearBlocks } from "./night_frame";
 import { getNightmareShadowState } from "./state-slot";

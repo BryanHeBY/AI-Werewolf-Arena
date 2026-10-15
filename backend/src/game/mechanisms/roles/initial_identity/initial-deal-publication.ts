@@ -5,7 +5,7 @@
  * getter／复制／push 失败原样传播，不回滚此前事实；阶段、私密牌表、继承与警长发布顺序仍由 manager 拥有。
  */
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { initialIdentityDeal, initialIdentityKind, INITIAL_IDENTITY_POLICIES } from "./deal";
 
 /** 原运行引用在各表达式处查询；事件数组仍可追加，端口与公共数据不充当运行权限。 */

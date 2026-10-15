@@ -17,10 +17,10 @@ import {
   type GameEvent,
   type RuntimeSnapshot,
   type ToolCall,
-} from "../../../../src/core";
-import type { BadgeComponent } from "../../../../src/core/domain/components/badge";
-import type { AliveComponent } from "../../../../src/core/domain/components/alive";
-import type { VotingRightComponent } from "../../../../src/core/domain/components/voting_right";
+} from "../../../../src/domain";
+import type { BadgeComponent } from "../../../../src/domain/components/badge";
+import type { AliveComponent } from "../../../../src/domain/components/alive";
+import type { VotingRightComponent } from "../../../../src/domain/components/voting-right";
 
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";

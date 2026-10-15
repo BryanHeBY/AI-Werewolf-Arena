@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import { readdir, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { Role } from "../../../../src/core";
+import { Role } from "../../../../src/domain";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   boardDefinitionFromConfig,

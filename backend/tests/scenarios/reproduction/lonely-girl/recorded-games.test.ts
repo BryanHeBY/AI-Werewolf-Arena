@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
-import { Role, Camp, type GameEvent } from "../../../../src/core";
+import { Role, Camp, type GameEvent } from "../../../../src/domain";
 import { LONELY_GIRL_CASES, lonelyGirlScenario } from "../../../support/features/lonely-girl/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";

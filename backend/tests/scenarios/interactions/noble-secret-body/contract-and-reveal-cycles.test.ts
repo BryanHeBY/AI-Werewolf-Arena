@@ -12,7 +12,7 @@ import {
   type ActionRequest,
   type ToolCall,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
 import { isNobleSecretBodyPreset } from "../../../../src/rulesets";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";

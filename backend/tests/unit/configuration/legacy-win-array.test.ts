@@ -3,7 +3,7 @@
  * Input: Original literal legacy overrides with absent, explicit single and empty array conditions.
  * Output and oracle: Exact WinCondition values and warning presence remain unchanged; no public file, World or game execution is needed.
  */
-import { WinCondition } from "../../../src/core/domain/identity";
+import { WinCondition } from "../../../src/domain/identity";
 import { expect, test } from "bun:test";
 import { convertLegacyBoard } from "../../../src/runtime/config/migrate_board";
 

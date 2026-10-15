@@ -4,9 +4,9 @@
  * 私有库存与知识更新仍归机制，投影不携带 Frame、原生命或租约，不付款、安装资源或授权。
  * Proxy 拒绝和字段描述符读取在原位置执行；本模块不扩大原状态 reader 的接受集合。
  */
-import { Role } from "../../../../core/domain/identity";
+import { Role } from "../../../../domain/identity";
 import { types } from "node:util";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import { playerDataField } from "../player-state-data";
 import { MIST_RAVEN_POLICY, readAlchemistState, readRavenState } from "./state";
 import type {

@@ -4,7 +4,7 @@
  * Output and oracle: Literal event/role/checkpoint assertions retain chain-final outcomes and action replay; the original variant tables and archived fixtures are unchanged.
  */
 import { expect, test } from "bun:test";
-import { ActionWindow, Camp, Phase } from "../../../../src/core";
+import { ActionWindow, Camp, Phase } from "../../../../src/domain";
 import { mistRecording, type MistRequestObservation } from "../../../support/features/mist-raven/drivers/recording";
 import { type MistRecordVariant } from "../../../support/features/mist-raven/builders/board";
 const cases: Array<{ variant: MistRecordVariant; window: ActionWindow; day: number }> = [

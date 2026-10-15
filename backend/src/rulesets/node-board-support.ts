@@ -4,7 +4,7 @@
  * snapshotPlainData 在反射前拒绝 Proxy，保留深度 16、数组上限 256 与原错误码；
  * 之后的纯数据判定仍应用自身原有限边界，不安装状态、授予租约或支付资源。
  */
-import { snapshotPlainData } from "../core/domain/plain_data";
+import { snapshotPlainData } from "../domain/plain-data";
 import { isDemonHunterPreset as readPreset } from "./support";
 
 export function isDemonHunterPreset(input: unknown): boolean {

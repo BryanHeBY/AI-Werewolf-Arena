@@ -10,10 +10,10 @@ import {
   PotionType,
   type ActionRequest,
   type ToolCall,
-} from "../../../../src/core/domain/model";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
-import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+} from "../../../../src/domain/model";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import type { RoleComponent } from "../../../../src/domain/components/role";
+import type { AliveComponent } from "../../../../src/domain/components/alive";
 function fixture(locale: "zh-CN" | "en") {
   const game = bootstrapGame(structuredClone(nightmareTwelveConfig), { locale });
   const id = (role: Role) =>

@@ -12,10 +12,10 @@ import {
   type KnightDuelSelection,
   type DeathSources,
   type GameEvent,
-} from "../../../../core/domain/model";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import type { World } from "../../../../core/domain/world";
+} from "../../../../domain/model";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import type { World } from "../../../../domain/world";
 import { getKnightState, consumeKnightDuel } from "./state";
 
 /** 只提交一次库存和事实并返回死亡提案；真正的生命写入仍由死亡结算器负责。 */

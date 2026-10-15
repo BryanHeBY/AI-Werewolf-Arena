@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, WinCondition } from "../../../src/core";
+import { Role, WinCondition } from "../../../src/domain";
 const read = async () =>
   JSON.parse(
     await readFile(

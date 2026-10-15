@@ -3,7 +3,7 @@
  * Input: Original public twelve-player definition reads, actual temporary board/runtime files and literal invalid overrides.
  * Output and oracle: Exact diagnostic paths, backup bytes and redacted setup values preserve loader/migration behavior; private markers are synthetic test literals and no model or game runs.
  */
-import { ActionWindow } from "../../../../src/core/domain/identity";
+import { ActionWindow } from "../../../../src/domain/identity";
 import { expect, test } from "bun:test";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";

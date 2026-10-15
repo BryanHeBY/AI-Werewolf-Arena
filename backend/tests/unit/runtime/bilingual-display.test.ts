@@ -11,7 +11,7 @@ import { createAcpConsoleLogger } from "../../../src/runtime/console_presenter";
 import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { Phase, Role, type ActionRequest } from "../../../src/core";
+import { Phase, Role, type ActionRequest } from "../../../src/domain";
 
 const speech = "Original 原话 {role} <b>quoted</b>";
 

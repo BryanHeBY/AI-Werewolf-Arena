@@ -4,7 +4,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom } from "../../../src/core/domain/random";
+import { createRandom } from "../../../src/domain/random";
 import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";

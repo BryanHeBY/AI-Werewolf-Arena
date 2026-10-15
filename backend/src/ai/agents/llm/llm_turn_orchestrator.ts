@@ -4,14 +4,14 @@
  * 并发租约只在本回合收尾时释放；每轮取消不可逆，关闭单向封住本 owner，任务兑现不等于领域提交。
  * 取消／关闭仅收走本 provider 资源，不代替规则预检或领域 commit，不扩大 fallback 的原预算。
  */
-import { inheritRequestAlias } from "../../../core/domain/request_delivery";
+import { inheritRequestAlias } from "../../../domain/request-delivery";
 import { text } from "@ai-werewolf-arena/game-text";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
-import { COMPONENT } from "../../../core/domain/components/names";
-import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest, ToolCall } from "../../../core/domain";
-import { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
+import { ActionRequest, ToolCall } from "../../../domain";
+import { World } from "../../../domain/world";
 import {
   FallbackActionPolicy,
   FallbackDeadlineElapsed,

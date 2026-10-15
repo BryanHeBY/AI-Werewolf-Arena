@@ -5,10 +5,10 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 import { nativeRolePresentation } from "../presentation-contribution";
-import { HIDDEN_WOLF_CAMP_INSPECTION_POLICIES } from "../../../../core/domain/board";
+import { HIDDEN_WOLF_CAMP_INSPECTION_POLICIES } from "../../../../domain/board";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getHiddenWolfState, setHiddenWolfState } from "./state";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";

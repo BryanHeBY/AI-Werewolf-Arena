@@ -1,10 +1,10 @@
 /**
  * 黑市商人场景测试：验证首夜反噬先获得原遗言再进入白天投票。输入为固定名单和完整 PM 交易／狼刀／药瓶／投票回复；死因、库存及公开请求／事件次序为手写预期，不调用模型或重生预期。
  */
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Role, Phase, DeathCause, WinCondition, type RoleComponent } from "../../../../src/core";
+import { COMPONENT, Role, Phase, DeathCause, WinCondition, type RoleComponent } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { LastWordsMechanism } from "../../../../src/game/mechanisms/last_words/last_words_mechanism";
 

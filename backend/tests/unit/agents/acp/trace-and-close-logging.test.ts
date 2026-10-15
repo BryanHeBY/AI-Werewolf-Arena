@@ -5,7 +5,7 @@ import { expect, spyOn, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { Phase, type ActionRequest } from "../../../../src/core";
+import { Phase, type ActionRequest } from "../../../../src/domain";
 
 const request: ActionRequest = {
   actorId: 1,

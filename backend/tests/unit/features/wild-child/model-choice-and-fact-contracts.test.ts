@@ -4,9 +4,9 @@
 import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { inheritRequestAlias } from "../../../../src/core/domain/request_delivery";
+import { inheritRequestAlias } from "../../../../src/domain/request-delivery";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, COMPONENT, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest } from "../../../../src/core";
+import { Role, Camp, COMPONENT, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest } from "../../../../src/domain";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";

@@ -4,9 +4,9 @@
  * 这里不结算已交接伤害，也不接管较晚蛇窗；晚事实抛错保留已经消费／记录的选择。
  */
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { Phase } from "../../../../core/domain/identity";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import { COMPONENT } from "../../../../domain/components/names";
+import { Phase } from "../../../../domain/identity";
+import type { RoleComponent } from "../../../../domain/components/role";
 import {
   assertMistRosterCurrent,
   mistCasterId,

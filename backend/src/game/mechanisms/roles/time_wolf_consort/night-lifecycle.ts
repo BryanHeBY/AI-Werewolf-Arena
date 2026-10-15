@@ -4,7 +4,7 @@
  * 只有原晚 transfer 抑制管线 abort；正常关闭后仍计算经理 abort 参数。
  * 选择库存和反射回执仍归 frame，这里不启动阶段、重定向效果、退款或推进阶段。
  */
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { closeTimeConsortNight, abortTimeConsortNight } from "./night_frame";
 
 export interface TimeConsortNightRuntime {

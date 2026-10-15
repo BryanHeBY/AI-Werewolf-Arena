@@ -4,7 +4,7 @@
  * 经理的原终止入口保持无条件调用；不修改封存库存、原生生命、已付效果或阶段。
  * 规则依据：docs/rules/awa-netease-demon-hunter-v1.md。
  */
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { beginDemonHunterNight, closeDemonHunterNight } from "./authority";
 
 export interface DemonNightRuntime {

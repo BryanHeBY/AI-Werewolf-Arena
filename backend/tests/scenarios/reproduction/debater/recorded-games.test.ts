@@ -5,7 +5,7 @@
  */
 import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";
-import { Camp, Role, Phase } from "../../../../src/core";
+import { Camp, Role, Phase } from "../../../../src/domain";
 import { debaterScenario } from "../../../support/features/debater/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const size of [6, 12] as const)

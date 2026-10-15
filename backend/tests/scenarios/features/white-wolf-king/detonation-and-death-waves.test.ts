@@ -1,8 +1,8 @@
 /**
  * 场景测试验证白狼王选择与自爆死亡波。输入保留 locale／窗口／死因矩阵和受控目标／库存撤权；预期来自原字面回执、引用／getter／错误轨迹、事实及状态。完整 PhaseManager 周期在判胜前连接自爆、警徽、猎人／遗言、夜间中断及毒／守效果；模型由控制 provider 替代，生产输出不生成新 golden。
  */
-import { Camp } from "../../../../src/core";
-import { PotionType } from "../../../../src/core";
+import { Camp } from "../../../../src/domain";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -13,7 +13,7 @@ import {
   DeathCause,
   WinCondition,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { getWhiteWolfKingState } from "../../../../src/game/mechanisms/roles/white_wolf_king/ports";

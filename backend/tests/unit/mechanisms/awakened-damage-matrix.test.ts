@@ -13,16 +13,16 @@ import {
   Role,
   StatusMark,
   type BoardConfig,
-} from "../../../src/core";
-import { type AliveComponent } from "../../../src/core/domain/components/alive";
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
-import { permitsDeathShot } from "../../../src/core/domain/deaths";
+} from "../../../src/domain";
+import { type AliveComponent } from "../../../src/domain/components/alive";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
+import { permitsDeathShot } from "../../../src/domain/deaths";
 import {
   captureNightLife,
   type NightAwakenedEffect,
   type NightMechanicalEffect,
-} from "../../../src/core/domain/night_effects";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+} from "../../../src/domain/night-effects";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { LastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 

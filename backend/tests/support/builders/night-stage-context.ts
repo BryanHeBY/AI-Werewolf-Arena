@@ -5,8 +5,8 @@ import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/n
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
-import { COMPONENT, type World } from "../../../src/core";
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
+import { COMPONENT, type World } from "../../../src/domain";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

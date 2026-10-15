@@ -6,7 +6,7 @@
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import type { ReflectionScope } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
-import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../src/core";
+import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../src/domain";
 
 import { createTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state-slot";
 import {

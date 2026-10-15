@@ -6,10 +6,10 @@ import type { WhiteWolfKingState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Role, Camp, Phase, ActionWindow, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../src/domain/components/names";
 
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { getWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/ports";
 import { setWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/state";
 import { commitSelfDestructSelection } from "../../../src/game/mechanisms/self_destruct/commit";

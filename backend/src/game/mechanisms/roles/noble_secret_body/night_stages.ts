@@ -4,7 +4,7 @@
  * finally 关闭请求，晚发布失败保留已付前缀。不接管契约、秘密之身或资源算法，这些写权仍由本族 authority 持有。
  */
 import type { NightStageHandler, NightStageContext } from "../../stages/night/contracts";
-import { Phase } from "../../../../core/domain/identity";
+import { Phase } from "../../../../domain/identity";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { nobleBodyChoiceActor, nobleBodyChoiceTargets } from "./authority";
 import {

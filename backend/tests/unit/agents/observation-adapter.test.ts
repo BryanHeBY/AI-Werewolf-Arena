@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ObservedPlayersActionProvider } from "../../../src/app/observed-players-action-provider";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { createRandom } from "../../../src/core/domain/random";
+import { createRandom } from "../../../src/domain/random";
 import { Phase, Role } from "@ai-werewolf-arena/game-contract";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 

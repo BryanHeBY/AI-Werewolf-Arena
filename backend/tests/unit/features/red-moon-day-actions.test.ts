@@ -2,7 +2,7 @@
  * 单元测试：验证赤月白天自爆及当前狼人名单。输入为受控自爆与原名单；死因和后续夜封印的原字面断言验证最后狼人终结不会多封一夜，不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
-import { COMPONENT, ActionWindow, Phase, DeathCause, type AliveComponent } from "../../../src/core";
+import { COMPONENT, ActionWindow, Phase, DeathCause, type AliveComponent } from "../../../src/domain";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import {
   beginDemonHunterNight,

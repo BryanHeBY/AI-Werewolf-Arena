@@ -11,7 +11,7 @@ import {
   type BoardConfig,
   type RoleComponent,
   type ActionRequest,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
@@ -31,7 +31,7 @@ import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ActionValidator } from "../../../../src/game/gateway/action_validator";
 import { ToolValidationRuleRegistry } from "../../../../src/game/mechanisms/validation/tool_validation_rule_registry";
 import { DreamNightFrame } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { DeathCause, type GameEvent, type RuntimeSnapshot } from "../../../../src/core";
+import { DeathCause, type GameEvent, type RuntimeSnapshot } from "../../../../src/domain";
 
 const deck = [Role.Dreamer, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 

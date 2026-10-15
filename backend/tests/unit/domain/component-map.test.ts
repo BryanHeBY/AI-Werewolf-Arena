@@ -3,7 +3,7 @@
  */
 import { createAliveComponent, createCampComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { COMPONENT, Camp, Phase, Role, World, aliveLifeVersion, createIdentityComponent, type AliveComponent, type CampComponent, type ComponentMap, type ComponentName, type RoleComponent } from "../../../src/core";
+import { COMPONENT, Camp, Phase, Role, World, aliveLifeVersion, createIdentityComponent, type AliveComponent, type CampComponent, type ComponentMap, type ComponentName, type RoleComponent } from "../../../src/domain";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 
 function compilerExamples(world: World, actorId: number) {

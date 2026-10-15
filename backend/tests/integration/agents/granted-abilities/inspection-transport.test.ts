@@ -2,18 +2,18 @@
  * 传输集成测试：验证实际 SDK／ACP 工厂对绑定赠予查验和女巫刀口的接线。输入为原复制能力和已耗尽解药状态；应用、身份及提示采用字面预期，保留所有权与披露边界，不启动计费模型。
  */
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/core";
+import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
 import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
 import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";

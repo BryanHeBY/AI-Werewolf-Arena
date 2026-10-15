@@ -8,7 +8,7 @@
  */
 import type { WitchState, WitchReadState } from "@ai-werewolf-arena/game-contract";
 
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import { WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
 import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../abilities";
 import { commitPreparedNativeAbility } from "../abilities";

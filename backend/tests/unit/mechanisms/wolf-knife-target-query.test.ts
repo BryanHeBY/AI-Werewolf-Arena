@@ -4,9 +4,9 @@
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Camp, Role, type EntityId } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT, type ComponentName } from "../../../src/core/domain/components/names";
-import { type RoleComponent } from "../../../src/core/domain/components/role";
+import { World } from "../../../src/domain/world";
+import { COMPONENT, type ComponentName } from "../../../src/domain/components/names";
+import { type RoleComponent } from "../../../src/domain/components/role";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 
 import { createNobleState } from "../../../src/game/mechanisms/roles/noble_secret_body/state";
@@ -31,7 +31,7 @@ import {
 } from "../../../src/game/mechanisms/roles/mist_raven/night_frame";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
-import { createRandom } from "../../../src/core/domain/random";
+import { createRandom } from "../../../src/domain/random";
 import mistDefinition from "../../../../configs.example/boards/awa_mist_raven_12_v1.json";
 
 function targetWorld(role: RoleComponent = createRoleComponent(Role.Villager, "en"), camp = Camp.Good) {

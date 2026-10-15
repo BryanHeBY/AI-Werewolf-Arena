@@ -13,8 +13,8 @@ import {
   type GameEvent,
   type RuntimeSnapshot,
   type ToolCall,
-} from "../../../../src/core";
-import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+} from "../../../../src/domain";
+import type { AliveComponent } from "../../../../src/domain/components/alive";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

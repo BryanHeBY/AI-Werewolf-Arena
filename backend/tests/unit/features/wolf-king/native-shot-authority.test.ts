@@ -14,7 +14,7 @@ import {
   type RoleComponent,
   type GameEvent,
   type ActionRequest,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   getDefaultRoleCatalog,

@@ -5,7 +5,7 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { COMPONENT, Camp, type World, type RoleComponent } from "../../../../src/core";
+import { COMPONENT, Camp, type World, type RoleComponent } from "../../../../src/domain";
 
 import { createMagicianState } from "../../../../src/game/mechanisms/roles/magician/state-slot";
 import {

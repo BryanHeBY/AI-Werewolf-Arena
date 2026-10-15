@@ -1,12 +1,12 @@
 /**
  * 单元测试：验证玩家事件 feed 的隐私与公开投票摘要。输入为明确狼队、角色、投票及公开结果事实；每位观察者的字段采用手写预期，不用真实私有状态代替已授权事件。
  */
-import { Phase } from "../../../src/core";
-import { PotionType } from "../../../src/core";
+import { Phase } from "../../../src/domain";
+import { PotionType } from "../../../src/domain";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { RoleComponent } from "../../../src/core/domain/components/role";
-import { GameEvent } from "../../../src/core/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { RoleComponent } from "../../../src/domain/components/role";
+import { GameEvent } from "../../../src/domain/model";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";

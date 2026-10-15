@@ -5,14 +5,14 @@
  * supplied data. It runs no game or model and changes no oracle algorithm.
  */
 import { roleName } from "@ai-werewolf-arena/game-text";
-import { ActionWindow } from "../../../../../src/core";
-import { Camp } from "../../../../../src/core";
-import { Role } from "../../../../../src/core";
-import { PotionType } from "../../../../../src/core";
-import { createRandom } from "../../../../../src/core";
-import { shuffled } from "../../../../../src/core";
-import type { ActionStage } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import { ActionWindow } from "../../../../../src/domain";
+import { Camp } from "../../../../../src/domain";
+import { Role } from "../../../../../src/domain";
+import { PotionType } from "../../../../../src/domain";
+import { createRandom } from "../../../../../src/domain";
+import { shuffled } from "../../../../../src/domain";
+import type { ActionStage } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 import { pureWhiteTwelveConfig } from "../../../../../src/runtime/scenarios/pure_white_twelve";
 import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
 import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";

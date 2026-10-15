@@ -6,13 +6,13 @@
  * 编码、字段写入或成功标记失败保留此前前缀，不退款、刷新 live 数据或加强原 schema 接受面。
  */
 import { types } from "node:util";
-import { Camp } from "../../../../core/domain/identity";
-import type { Role } from "../../../../core/domain/identity";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import type { VictoryComponent } from "../../../../core/domain/components/victory";
-import type { VotingRightComponent } from "../../../../core/domain/components/voting_right";
+import { Camp } from "../../../../domain/identity";
+import type { Role } from "../../../../domain/identity";
+import type { RoleComponent } from "../../../../domain/components/role";
+import type { VictoryComponent } from "../../../../domain/components/victory";
+import type { VotingRightComponent } from "../../../../domain/components/voting-right";
 import type { StatusMark } from "@ai-werewolf-arena/game-contract";
-import type { StatusMarkSnapshot } from "../../../../core/domain/components/status_marks";
+import type { StatusMarkSnapshot } from "../../../../domain/components/status-marks";
 import { demonJson, demonSnapshot, ownDemonData } from "./state-slot";
 
 /** 顶层槽引用与嵌套库存路径分别保留原身份；JSON 相等不能恢复被替换的原引用。 */
@@ -304,7 +304,7 @@ export function projectDemonParticipantCheckpoint(
       isSheriff: boolean;
       destroyed: boolean;
       voteWeight: number;
-      handoffPolicy?: import("../../../../core/domain/board").SheriffBadgePolicy;
+      handoffPolicy?: import("../../../../domain/board").SheriffBadgePolicy;
     },
     marks: marks.flatMap(([mark, snapshot]) => (snapshot?.present ? [mark] : [])),
   };

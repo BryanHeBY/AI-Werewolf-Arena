@@ -7,7 +7,7 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { Role } from "../../../../src/core";
+import { Role } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import {
   boardDefinitionFromConfig,

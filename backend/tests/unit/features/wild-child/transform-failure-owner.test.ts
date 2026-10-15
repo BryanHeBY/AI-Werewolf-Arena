@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, DeathCause, Phase, Role, type GameEvent } from "../../../../src/core";
+import { Camp, COMPONENT, DeathCause, Phase, Role, type GameEvent } from "../../../../src/domain";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import {

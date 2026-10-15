@@ -5,10 +5,10 @@ import { types } from "node:util";
 import { isAnimalDreamPreset } from "../../../../rulesets";
 import { type CatSkippedVotePolicy, type PufferBallotPolicy } from "@ai-werewolf-arena/game-contract";
 import type { RoleId } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../../core/domain/world";
-import { Camp } from "../../../../core/domain/identity";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import type { World } from "../../../../domain/world";
+import { Camp } from "../../../../domain/identity";
+import { COMPONENT } from "../../../../domain/components/names";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 import {
   captureOriginalPlayer,
   originalPlayerSameLife,

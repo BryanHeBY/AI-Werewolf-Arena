@@ -27,11 +27,11 @@ import type {
   RoleInitContext,
   RoleContributions,
 } from "../../../src/game/mechanisms/roles/contracts";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
 import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
+import type { RoleComponent } from "../../../src/domain/components/role";
 
 // worldless贡献持有自己的Camp，World参数仅在原展示点读取，不回退目录或索引Role。
 const initialCamp = { camp: Camp.Good };

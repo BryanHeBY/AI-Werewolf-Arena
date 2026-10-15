@@ -3,18 +3,18 @@
  * 输入为原 World、名单／原因、日期／阶段及角色动作上下文；输出保留免死替换或追加死亡提案。
  * 整波扩展在实际 Alive 提交后、梦记录／遗言前同步运行；分发器不标死、改阶段或回滚事实。
  */
-import { AliveComponent } from "../../core/domain/components/alive";
-import { COMPONENT } from "../../core/domain/components/names";
-import { RoleComponent } from "../../core/domain/components/role";
+import { AliveComponent } from "../../domain/components/alive";
+import { COMPONENT } from "../../domain/components/names";
+import { RoleComponent } from "../../domain/components/role";
 import {
   EntityId,
   GameEvent,
   type DeathSources,
   type DeathShotSelection,
   type Phase,
-} from "../../core/domain/model";
+} from "../../domain/model";
 import { getDefaultHookRegistry, HookRegistry } from "../mechanisms";
-import { World } from "../../core/domain/world";
+import { World } from "../../domain/world";
 import {
   createCommittedDeathWaveContributions,
   type CommittedDeathWaveHook,

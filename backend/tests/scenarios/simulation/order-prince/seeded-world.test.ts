@@ -1,13 +1,13 @@
 /**
  * 模拟场景测试：执行序王双语与原二十个种子的实际 World。输入为有种子的观察玩家策略；自然终局及正激活次数为字面预期，验证原翻牌路径，不替代 golden 或声称新增独立规则覆盖。
  */
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import type { RoleComponent } from "../../../../src/domain/components/role";
 import { getOrderPrinceState } from "../../../../src/game/mechanisms/roles/order_prince/ports";
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { orderPrinceTwelveConfig } from "../../../../src/runtime/scenarios/order_prince_twelve";
-import { createRandom, randomDraws } from "../../../../src/core";
+import { createRandom, randomDraws } from "../../../../src/domain";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 for (const locale of ["zh-CN", "en"] as const)

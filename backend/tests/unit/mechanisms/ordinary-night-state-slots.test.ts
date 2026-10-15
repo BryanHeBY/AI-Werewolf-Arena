@@ -15,8 +15,8 @@ import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "..
 import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
 import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
 
 const freshSeer = (): SeerState => ({ lastTarget: null, lastIsWerewolf: null, history: [] });
 const freshGuard = (): GuardState => ({ lastTarget: null });

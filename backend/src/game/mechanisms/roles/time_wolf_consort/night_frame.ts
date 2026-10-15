@@ -8,13 +8,13 @@
  */
 import type { TimeConsortReadState } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
-import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../core";
+import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../domain";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
-import type { NightLifeScope } from "../../../../core/domain/night_effects";
+} from "../../../../domain/components/alive";
+import type { NightLifeScope } from "../../../../domain/night-effects";
 import { getTimeConsortState, projectTimeConsortState, TIME_CONSORT_ROLE, TIME_CONSORT_STATE_SLOT } from "./state-slot";
 
 interface OriginalPlayer {

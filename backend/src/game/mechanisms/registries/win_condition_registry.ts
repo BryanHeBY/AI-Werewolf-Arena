@@ -4,8 +4,8 @@
  */
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：管理胜利条件规格与评估入口。 */
-import { WinDecision, WinCondition } from "../../../core/domain/model";
-import { World } from "../../../core/domain/world";
+import { WinDecision, WinCondition } from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { DEFAULT_WIN_CONDITION_SPECS } from "../win_conditions/default_specs";
 import { WinConditionSpec } from "../win_conditions/contracts";
 

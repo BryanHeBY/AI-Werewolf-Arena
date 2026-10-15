@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type { GameEvent } from "../../../src/core/domain/events";
+import type { GameEvent } from "../../../src/domain/events";
 import { animalRosterFixture } from "../../support/features/animal-dream/builders/roster";
 import { BearNightFrame, getBearState } from "../../../src/game/mechanisms/roles/bear/ports";
 import { animalBearKnowledge } from "../../../src/game/mechanisms/roles/animal_dream/ports";

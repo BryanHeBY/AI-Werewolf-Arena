@@ -3,8 +3,8 @@
  * 阵营晚查当前值，同值 Camp 替换不加引用撤权；输出保原记账与延期提案，知识发表不标死。
  * 原已付 owner／目标谓词不消费行动墓碑，不因剩余资源已经消费而取消提案。
  */
-import { COMPONENT, Role, Camp, type RoleComponent, type World } from "../../../../core/domain";
-import { livingNightLife, type NightLifeScope } from "../../../../core/domain/night_effects";
+import { COMPONENT, Role, Camp, type RoleComponent, type World } from "../../../../domain";
+import { livingNightLife, type NightLifeScope } from "../../../../domain/night-effects";
 import type { NightStageState } from "../../stages/night/contracts";
 const committed = new WeakMap<World, Set<number>>();
 export function hasFoxInspectionNightCommit(world: World, day: number): boolean {

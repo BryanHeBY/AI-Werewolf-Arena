@@ -4,10 +4,10 @@
  * 本模块唯一写入 WeakMap 账本；公共记录类型归数据契约，历史不代替许可、付款或公共事实。
  * 目标政策仍是行动者本地规则，保留实例过期／转移后的原历史影响，不读取他人行动。
  */
-import type { EntityId } from "../../../core/domain/model";
-import type { World } from "../../../core/domain/world";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import { COMPONENT } from "../../../core/domain/components/names";
+import type { EntityId } from "../../../domain/model";
+import type { World } from "../../../domain/world";
+import type { RoleComponent } from "../../../domain/components/role";
+import { COMPONENT } from "../../../domain/components/names";
 import { allNightAbilities, type NightAbilityReadView } from "./abilities";
 import type { NightActionKind, OwnNightAction } from "@ai-werewolf-arena/game-contract/night-ability-views";
 

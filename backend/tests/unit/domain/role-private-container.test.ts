@@ -6,9 +6,9 @@ import { renderRolePrompt } from "../../../src/game/observation/role-presentatio
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { type RoleComponent } from "../../../src/core/domain/components/role";
+import { type RoleComponent } from "../../../src/domain/components/role";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import type { RoleProfile, RoleInitContext } from "../../../src/game/mechanisms/roles/contracts";
 import { setHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";

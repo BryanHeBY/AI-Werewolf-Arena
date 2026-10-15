@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { createRandom, Camp, COMPONENT, Role, type RoleComponent } from "../../../../src/core";
+import { createRandom, Camp, COMPONENT, Role, type RoleComponent } from "../../../../src/domain";
 import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 import {
   FOX_CASES,

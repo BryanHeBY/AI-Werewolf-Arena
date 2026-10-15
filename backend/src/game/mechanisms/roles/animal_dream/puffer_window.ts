@@ -5,11 +5,11 @@
  * 不变量：无待选 actor 不读取构造依赖；有效 actor 后在原点 new 原独立工厂，不复用 Voting 的普通投票工厂。
  */
 import { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../../core/domain/world";
-import type { ActionProvider } from "../../../../core/domain/actions";
-import type { GameEvent } from "../../../../core/domain/events";
-import { Phase } from "../../../../core/domain/identity";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+import type { World } from "../../../../domain/world";
+import type { ActionProvider } from "../../../../domain/actions";
+import type { GameEvent } from "../../../../domain/events";
+import { Phase } from "../../../../domain/identity";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import {
   animalPufferChoiceActor,

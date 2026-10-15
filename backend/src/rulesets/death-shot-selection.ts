@@ -13,11 +13,11 @@ import {
   type RuntimeSnapshot,
   type ReadonlyBoardConfig,
 } from "@ai-werewolf-arena/game-contract";
-import type { ActionProvider } from "../core/domain/actions";
-import type { DeathShotSelection } from "../core/domain/deaths";
-import type { World } from "../core/domain/world";
-import { COMPONENT } from "../core/domain/components/names";
-import { captureNightLife, livingNightLife } from "../core/domain/night_effects";
+import type { ActionProvider } from "../domain/actions";
+import type { DeathShotSelection } from "../domain/deaths";
+import type { World } from "../domain/world";
+import { COMPONENT } from "../domain/components/names";
+import { captureNightLife, livingNightLife } from "../domain/night-effects";
 import type { ToolGateway } from "../game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../game/engine/action_request_factory";
 import { captureDeathShotEligibility } from "../game/mechanisms/roles/death_abilities";

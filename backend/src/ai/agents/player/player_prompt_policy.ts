@@ -19,11 +19,11 @@ import { collectPlayerInitialPublicCounts } from "../../../game/observation/play
 
 import { renderMessage, text, type Locale } from "@ai-werewolf-arena/game-text";
 
-import { COMPONENT } from "../../../core/domain/components/names";
-import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest, EntityId, Role, ToolName } from "../../../core/domain";
-import { getActionRequestStage } from "../../../core/domain/action_request_context";
-import { World } from "../../../core/domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
+import { ActionRequest, EntityId, Role, ToolName } from "../../../domain";
+import { getActionRequestStage } from "../../../domain/action-request-context";
+import { World } from "../../../domain/world";
 
 import {
   ConfigRenderRegistry,

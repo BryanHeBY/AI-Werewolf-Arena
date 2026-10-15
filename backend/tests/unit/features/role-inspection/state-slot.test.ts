@@ -12,8 +12,8 @@ import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-a
 import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
 
 const fresh = (policy: RoleInspectionState["policy"] = "psychic"): RoleInspectionState => ({
   policy, lastTarget: null, lastDay: null, history: [],

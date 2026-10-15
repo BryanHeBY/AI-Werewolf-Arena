@@ -5,7 +5,7 @@
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { type PlannedTurn } from "../../../support/transport/contracts";
-import type { ActionStage } from "../../../../src/core";
+import type { ActionStage } from "../../../../src/domain";
 import { mistTransportScenario } from "../../../support/features/mist-raven/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 

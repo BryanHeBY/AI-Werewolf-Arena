@@ -10,7 +10,7 @@ import type {
   PlayerNightAbilityStates,
   PlayerNightAbility,
 } from "@ai-werewolf-arena/game-contract/night-ability-views";
-import type { EventPayloadMap } from "../../core/domain/model";
+import type { EventPayloadMap } from "../../domain/model";
 import {
   abilityStatus,
   nightAbilityDisabled,

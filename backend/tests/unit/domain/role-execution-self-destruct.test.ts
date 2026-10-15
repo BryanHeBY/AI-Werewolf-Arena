@@ -12,9 +12,9 @@ import {
   ActionWindow,
   WinCondition,
   type GameEvent,
-} from "../../../src/core/domain/model";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { retireRoleExecution } from "../../../src/core/domain/role-execution-authority";
+} from "../../../src/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { retireRoleExecution } from "../../../src/domain/role-execution-authority";
 import { canRoleSelfDestruct } from "../../../src/game/mechanisms/roles/self_destruct_capability";
 import { knownWolfTeammates, wolfTeamPermissions } from "../../../src/game/mechanisms/roles/wolf_team";
 import { commitSelfDestructSelection } from "../../../src/game/mechanisms/self_destruct/commit";

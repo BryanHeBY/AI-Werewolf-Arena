@@ -5,7 +5,7 @@
  * 先更新来源和名单，再发布事实及必需操作；必需录制失败原样传播，已经付款／写入的前缀不回滚。
  */
 import { DeathCause, Phase, type DeathSources, type EntityId, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../../core/domain/world";
+import type { World } from "../../../../domain/world";
 import { getSessionRecorder } from "../../../../recording/recording_context";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { resolveSecretBodyDamage, checkpointNobleBodyAuthority } from "./authority";

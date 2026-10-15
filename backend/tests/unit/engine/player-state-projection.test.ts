@@ -11,7 +11,7 @@ import {
   WitchSelfHealRule,
   type ActionRequest,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
 import {

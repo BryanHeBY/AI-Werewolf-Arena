@@ -12,7 +12,7 @@ import {
   ActionWindow,
   Phase,
   ToolCall,
-} from "../../../src/core/domain/model";
+} from "../../../src/domain/model";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { EventRegistry } from "../../../src/game/engine/event_registry";

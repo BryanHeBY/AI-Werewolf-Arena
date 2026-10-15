@@ -13,7 +13,7 @@ import {
   type RoleComponent,
   type ActionRequest,
   type ToolCall,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";

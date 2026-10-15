@@ -4,8 +4,8 @@
  * 受控角色查询不冒有效阵容或安装许可；实际初始板的 bootstrap 另以原精准用例验证，不运行模型或完整周期。
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { Role } from "../../../src/core/domain/identity";
+import { World } from "../../../src/domain/world";
+import { Role } from "../../../src/domain/identity";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import { fragrantPairSeerTwelveConfig } from "../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
 import { isFragrantPairBoard } from "../../../src/game/mechanisms/roles/fragrant_pair_seer/ports";

@@ -3,10 +3,10 @@
  * Input: Original game events, a temporary SessionRecordManager and a throwing terminal presenter.
  * Output and oracle: Literal record counts and neutral player gun-stage fields retain native God source identity; terminal output does not own persistence.
  */
-import { Phase } from "../../../src/core";
+import { Phase } from "../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import type { GameEvent } from "../../../src/core/domain/model";
+import type { GameEvent } from "../../../src/domain/model";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { presentStreamEvents } from "../../../src/runtime/console_presenter";
 import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";

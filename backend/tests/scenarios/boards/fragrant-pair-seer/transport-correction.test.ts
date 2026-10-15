@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import { fragrantTransportScenario } from "../../../support/features/fragrant-pair-seer/builders/transport-plan";
 import { assertFragrantTransportWire } from "../../../support/features/fragrant-pair-seer/oracles/wire";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import type { ToolCall } from "../../../../src/core";
+import type { ToolCall } from "../../../../src/domain";
 for (const invalid of ["schema", "domain"] as const)
   for (const kind of ["llm", "acp"] as const)
     test(`Fragrant actual invalid pair then correction ${invalid}/${kind}`, async () => {

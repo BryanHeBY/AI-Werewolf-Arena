@@ -3,7 +3,7 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import { COMPONENT, StatusMark, PotionType, deferRequestDelivery, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/core";
+import { COMPONENT, StatusMark, PotionType, deferRequestDelivery, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/domain";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
@@ -70,7 +70,7 @@ for (const name of ["guard", "check_identity"] as const)
                 },
                 enumerable: true,
               });
-            return { name, args } as import("../../../../src/core").ToolCall;
+            return { name, args } as import("../../../../src/domain").ToolCall;
           },
         },
         10,
@@ -279,7 +279,7 @@ for (const transport of ["sdk", "acp"] as const)
 for (const mark of [StatusMark.GuardMark, StatusMark.HealMark])
   for (const replacement of [false, true])
     test(`late unknown ${mark}/${replacement} survives with no native protection claim`, async () => {
-      const { createStatusMarksComponent } = await import("../../../../src/core");
+      const { createStatusMarksComponent } = await import("../../../../src/domain");
       const f = demonHunterFixture(12);
       await f.phaseManager.runSingleCycle({ getAction: async (r) => demonNightChoice(r, 9) }, 10);
       const original = f.damage.resolve.bind(f.damage),

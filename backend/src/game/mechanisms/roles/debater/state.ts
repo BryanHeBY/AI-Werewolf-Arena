@@ -6,7 +6,7 @@
  * 玩家投影不替代许可或档案编码，readonly 类型不冻结库存；没有镜像、JSON 身份或新的撤销政策。
  */
 import type { DebaterReadState, DebaterState } from "@ai-werewolf-arena/game-contract";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 
 import { playerDataField } from "../player-state-data";
 import type { RoleInitializationComponent, RoleInitContext } from "../contracts";

@@ -7,7 +7,7 @@
  * 这些外部自定义注入仍保留明确 legacy 接受政策，不把同名字段视为 owned 来源。
  * 本族加成回执、恶夜骑士绑定与摄梦关系不属于通用字段，分别按本夜状态身份由各本族唯一所有者保存。
  */
-import { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
+import { StatusMarksComponent } from "../../../../domain/components/status-marks";
 import {
   ActionProvider,
   ActionRequest,
@@ -18,13 +18,13 @@ import {
   ExileFeedback,
   NightSummary,
   Role,
-} from "../../../../core/domain/model";
-import { World } from "../../../../core/domain/world";
+} from "../../../../domain/model";
+import { World } from "../../../../domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import type { RoleCatalog } from "../../roles/catalog";
-import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
+import type { ActionRequestFactoryConstructorPort } from "../../../../domain/actions";
 import type { NightAbilityActorQuery } from "../../roles/night-ability-actors";
-import type { AliveComponent } from "../../../../core/domain/components/alive";
+import type { AliveComponent } from "../../../../domain/components/alive";
 import type { NativeNightFailurePolicy } from "../../../../rulesets/native-night-failure-policy";
 import type { NativeNightTargetPolicy } from "../../../../rulesets/native-night-target-policy";
 import type { NativeNightEffects } from "../../../../rulesets/native-night-effects";
@@ -41,7 +41,7 @@ import type {
   NightMechanicalIntent,
   NightAwakenedIntent,
   NightOriginalPoisonIntent,
-} from "../../../../core/domain/night_effects";
+} from "../../../../domain/night-effects";
 
 /** 狼刀选定时捕获的原生命及印记引用；目标序号相同不代表原体和生命版本仍有效。 */
 export interface WolfKnifeTargetScope {
@@ -58,7 +58,7 @@ export interface WolfKnifeTargetScope {
  */
 export interface NightStageState {
   /** 学者／导师在原冲突检查点产生的死亡与刀口；不是直接修改 Alive 的指令。 */
-  modifierDeaths?: import("../../../../core/domain/night_effects").NightLifeScope[];
+  modifierDeaths?: import("../../../../domain/night-effects").NightLifeScope[];
   modifierKnifeTargets?: EntityId[];
   wolfChatOrder: EntityId[];
   endedWolves: Set<EntityId>;
@@ -71,8 +71,8 @@ export interface NightStageState {
   /** 内建有来源 intent 与旧注入 claim 共存；仅同名字段不能把旧对象变成内建来源。 */
   poisonClaims?: Array<NightOriginalPoisonIntent | NightPoisonClaim>;
   inspectionAttacks?: NightInspectionAttack[];
-  retaliationAttacks?: import("../../../../core/domain/night_effects").NightRetaliationAttack[];
-  nightImmunities?: import("../../../../core/domain/night_effects").NightImmunityClaim[];
+  retaliationAttacks?: import("../../../../domain/night-effects").NightRetaliationAttack[];
+  nightImmunities?: import("../../../../domain/night-effects").NightImmunityClaim[];
   foxInspections?: NightFoxInspectionClaim[];
   guardClaims?: NightGuardClaim[];
   merchantBacklashes?: NightMerchantBacklash[];

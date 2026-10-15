@@ -4,18 +4,18 @@
  * 殉情保原独立根／来源规则，梦关系通过运行接口在原时点参与闭包；不复制效果、不标死或判胜。
  * 未付阶段可给绑定命令传拒绝尾；它不授新许可，不过滤目标，已付关系查询／死亡闭包不读取执行退休。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { aliveLifeVersion } from "../../../../core/domain/components/alive";
-import type { LoversComponent } from "../../../../core/domain/components/lovers";
-import type { World } from "../../../../core/domain/world";
-import type { NightLifeScope } from "../../../../core/domain/night_effects";
+import { COMPONENT } from "../../../../domain/components/names";
+import { aliveLifeVersion } from "../../../../domain/components/alive";
+import type { LoversComponent } from "../../../../domain/components/lovers";
+import type { World } from "../../../../domain/world";
+import type { NightLifeScope } from "../../../../domain/night-effects";
 import {
   DeathCause,
   type DeathSources,
   type EntityId,
   type GameEvent,
-} from "../../../../core/domain/model";
-import type { DreamNightEffects } from "../../../../core/domain/dream-night-effects";
+} from "../../../../domain/model";
+import type { DreamNightEffects } from "../../../../domain/dream-night-effects";
 
 interface Binding {
   record: LoversComponent;

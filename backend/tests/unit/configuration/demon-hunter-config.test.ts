@@ -8,7 +8,7 @@ import {
   boardDefinitionFromConfig,
 } from "../../../src/runtime/config/board_definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, WinCondition } from "../../../src/core";
+import { Role, WinCondition } from "../../../src/domain";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { demonHunterDeck } from "../../support/features/demon-hunter/builders/candidate-world";
 const read = async (size: number, goal: string) =>

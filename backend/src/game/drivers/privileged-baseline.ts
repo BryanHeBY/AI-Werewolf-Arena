@@ -8,8 +8,8 @@ import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-insp
 import { scholarMentorBonusTargets } from "../mechanisms/roles/scholar_mentor/night_frame";
 import { prohibitsLoversVote } from "../mechanisms/roles/cupid/relation";
 import { text } from "@ai-werewolf-arena/game-text";
-import { COMPONENT } from "../../core/domain/components/names";
-import { RoleComponent } from "../../core/domain/components/role";
+import { COMPONENT } from "../../domain/components/names";
+import { RoleComponent } from "../../domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
@@ -18,8 +18,8 @@ import {
   Phase,
   Role,
   ToolCall,
-} from "../../core/domain";
-import { World } from "../../core/domain/world";
+} from "../../domain";
+import { World } from "../../domain/world";
 import { RoleCatalog, getDefaultRoleCatalog, wolfTeamPermissions, allNightAbilities, activeNightAbility, ROLE_INSPECTION_POLICY_ROLES } from "../mechanisms";
 import { canBeExiled, canBeSheriff, canVote } from "../mechanisms/common/participation";
 

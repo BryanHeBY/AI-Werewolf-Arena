@@ -20,7 +20,7 @@ import {
   type BoardConfig,
   type RoleComponent,
   type GameEvent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   getMerchantState,
@@ -34,8 +34,8 @@ import { GameActionRequestFactory } from "../../../../src/game/engine/action_req
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 
 
 const deck = [Role.MiracleMerchant, Role.Wolf, Role.WolfKing, Role.Seer, Role.Witch, Role.Villager];

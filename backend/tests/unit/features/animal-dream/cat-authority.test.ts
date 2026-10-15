@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
-import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
+import { aliveLifeVersion } from "../../../../src/domain/components/alive";
 import {
   installAnimalAuthority,
   beginAnimalNight,

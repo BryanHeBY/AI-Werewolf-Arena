@@ -6,7 +6,7 @@
  * 内部 JSON 只用于原运行比对，不是严格档案 codec；玩家历史可见至 day，耗尽只在触发日之后告知。
  * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
 import type {
   ReflectionScope,
   TimeConsortChoice,
@@ -15,7 +15,7 @@ import type {
 } from "@ai-werewolf-arena/game-contract";
 import type { PlayerTimeConsortState } from "@ai-werewolf-arena/game-contract/facts/time-consort";
 import { types } from "node:util";
-import { Camp, type RoleComponent } from "../../../../core";
+import { Camp, type RoleComponent } from "../../../../domain";
 export const TIME_CONSORT_ROLE = "time_wolf_consort" as const;
 export const TIME_CONSORT_POLICY = "awa_time_consort_reflection_v1" as const;
 function field(value: unknown, key: PropertyKey): unknown {

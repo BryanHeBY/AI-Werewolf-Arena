@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Camp, COMPONENT, Phase, Role, type GameEvent, type ToolCall, type World } from "../../../src/core";
+import { Camp, COMPONENT, Phase, Role, type GameEvent, type ToolCall, type World } from "../../../src/domain";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import type { RoleInitializationComponent, RoleInitContext } from "../../../src/game/mechanisms/roles/contracts";
 import { installCupidState, getCupidState } from "../../../src/game/mechanisms/roles/cupid/state-slot";

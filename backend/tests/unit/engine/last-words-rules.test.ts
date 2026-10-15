@@ -2,9 +2,9 @@
  * 单元测试：验证首夜、放逐及自爆死亡的遗言资格。输入为固定死因与日期；原允许／拒绝断言检查请求规则，不执行竞选或完整对局。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { AliveComponent } from "../../../src/core/domain/components/alive";
-import { Phase, DeathCause } from "../../../src/core/domain/model";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { AliveComponent } from "../../../src/domain/components/alive";
+import { Phase, DeathCause } from "../../../src/domain/model";
 import { LastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 

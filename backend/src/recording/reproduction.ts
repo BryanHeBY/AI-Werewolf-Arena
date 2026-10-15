@@ -67,7 +67,7 @@ import {
   readMagicianExchangeFact,
   readDeathShotMissFact,
 } from "@ai-werewolf-arena/game-contract/facts/magician";
-import { readFaultPlan, type FaultPlan } from "../core/domain/fault_plan";
+import { readFaultPlan, type FaultPlan } from "../domain/fault-plan";
 import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import {
   GHOST_BRIDE_EVENT_TYPES,
@@ -104,7 +104,7 @@ import {
 } from "@ai-werewolf-arena/game-contract";
 import { WOLF_TEAM_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/events";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
-import type { RandomMetadata } from "../core/domain/random";
+import type { RandomMetadata } from "../domain/random";
 
 export const REPRODUCTION_SCHEMA_VERSION = 2 as const;
 const ERROR_NAMES = [

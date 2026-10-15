@@ -5,7 +5,7 @@
  * getter、数组方法或角色回调失败保持原抛出；模板文本不授资源、当前角色或行动许可。
  * 本模块不提交行动、计算期限或实施重试次数，产品文案和消息 key 仍由原文本 owner 持有。
  */
-import { Role } from "../../../core/domain";
+import { Role } from "../../../domain";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 
 /** 调用方提供的身份与人设文本；role 是原显示字符串，不在这里据其重新判断阵营。 */

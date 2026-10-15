@@ -1,13 +1,13 @@
 /**
  * 模拟场景测试：负责执行诡术师双语及原二十个种子的实际 World。输入为有种子的观察玩家策略；自然终局和正配对次数采用字面预期，不替代归档 golden 或声称新增独立规则覆盖。
  */
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import type { RoleComponent } from "../../../../src/domain/components/role";
 import { getTricksterState } from "../../../../src/game/mechanisms/roles/trickster/ports";
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { tricksterTwelveConfig } from "../../../../src/runtime/scenarios/trickster_twelve";
-import { createRandom, randomDraws } from "../../../../src/core";
+import { createRandom, randomDraws } from "../../../../src/domain";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 for (const locale of ["zh-CN", "en"] as const)

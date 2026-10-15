@@ -8,7 +8,7 @@ import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
 import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
-import { PotionType } from "../../../src/core";
+import { PotionType } from "../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -23,7 +23,7 @@ import {
   type GameEvent,
   type RoleComponent,
   type BoardConfig,
-} from "../../../src/core";
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/abilities";
 import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
@@ -43,9 +43,9 @@ import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-c
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
+import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";

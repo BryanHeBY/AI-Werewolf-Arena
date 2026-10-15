@@ -6,11 +6,11 @@
  */
 import type { Camp, Locale } from "@ai-werewolf-arena/game-contract";
 import { formatComponentPart } from "@ai-werewolf-arena/game-presentation";
-import { createAliveComponent as createAliveData, type AliveComponent } from "../../core/domain/components/alive";
-import { createBadgeComponent as createBadgeData, type BadgeComponent } from "../../core/domain/components/badge";
-import { createCampComponent as createCampData, type CampComponent } from "../../core/domain/components/camp";
-import { createVotingRightComponent as createVotingData, type VotingRightComponent } from "../../core/domain/components/voting_right";
-import { createStatusMarksComponent as createMarksData, statusMarksSize, type StatusMarksComponent } from "../../core/domain/components/status_marks";
+import { createAliveComponent as createAliveData, type AliveComponent } from "../../domain/components/alive";
+import { createBadgeComponent as createBadgeData, type BadgeComponent } from "../../domain/components/badge";
+import { createCampComponent as createCampData, type CampComponent } from "../../domain/components/camp";
+import { createVotingRightComponent as createVotingData, type VotingRightComponent } from "../../domain/components/voting-right";
+import { createStatusMarksComponent as createMarksData, statusMarksSize, type StatusMarksComponent } from "../../domain/components/status-marks";
 
 const displayLocales = new WeakMap<object, Locale>();
 function bindLocale<T extends object>(component: T, locale: Locale): T {

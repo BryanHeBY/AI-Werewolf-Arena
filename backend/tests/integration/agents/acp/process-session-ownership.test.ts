@@ -15,7 +15,7 @@ import type {
   AcpMcpServerConfig,
 } from "../../../../src/ai/integrations/acp/acp_mcp_bridge";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { Phase, type ActionRequest } from "../../../../src/core";
+import { Phase, type ActionRequest } from "../../../../src/domain";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const fixture = acpAdapterEntry("ownership");

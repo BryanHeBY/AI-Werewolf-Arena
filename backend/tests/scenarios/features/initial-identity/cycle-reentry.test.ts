@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role } from "../../../../src/core";
+import { Role } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import * as shared from "../../../../src/game/mechanisms/roles/initial_identity/deal";
 

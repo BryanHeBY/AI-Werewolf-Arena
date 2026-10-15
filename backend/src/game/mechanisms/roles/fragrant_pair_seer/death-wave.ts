@@ -13,7 +13,7 @@ import {
   type EntityId,
   type GameEvent,
   type DeathSources,
-} from "../../../../core/domain/model";
+} from "../../../../domain/model";
 import type { FragrantWaveReceipt } from "./authority";
 
 /** 窄运行端口不暴露 World、原组件、库存或时钟；各 getter 在原表达式时点才读取。 */

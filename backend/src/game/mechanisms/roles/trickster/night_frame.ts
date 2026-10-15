@@ -7,12 +7,12 @@
 import type { TricksterReadState } from "@ai-werewolf-arena/game-contract";
 import { mapTricksterExileTarget } from "./exile_mapping";
 import { types } from "node:util";
-import { COMPONENT, type Camp, type RoleComponent, type World } from "../../../../core";
+import { COMPONENT, type Camp, type RoleComponent, type World } from "../../../../domain";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
   type AliveComponent,
-} from "../../../../core/domain/components/alive";
+} from "../../../../domain/components/alive";
 import {
   getTricksterState,
   projectTricksterState,

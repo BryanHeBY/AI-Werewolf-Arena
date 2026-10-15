@@ -7,7 +7,7 @@ import {
 } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -22,7 +22,7 @@ import {
   type GameEvent,
   type BoardConfig,
   type ActionRequest,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   captureExileFeedback,
@@ -39,7 +39,7 @@ import {
 } from "../../../../src/game/mechanisms";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";

@@ -2,7 +2,7 @@
  * 通灵师场景验证完整夜重入及梦／魅惑死亡链保留判胜前私有历史。输入为原 pass 矩阵、固定角色与受控 Pipeline／经理；手写报告、库存、死亡隐私和事实结果是预期。Catalog 查询仍返回原缓存贡献引用，不复制 authority。
  */
 import { nightStageContext } from "../../../support/builders/night-stage-context";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -15,7 +15,7 @@ import {
   type RoleComponent,
   type GameEvent,
   type ActionRequest,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
@@ -86,7 +86,7 @@ for (const pass of [false, true])
     const { NightPipeline } =
         await import("../../../../src/game/engine/phase_pipeline/night_pipeline"),
       { DamageResolutionSystem } =
-        await import("../../../../src/core/domain/systems/damage_resolution_system"),
+        await import("../../../../src/domain/systems/damage-resolution-system"),
       { BaselineBotActionProvider } =
         await import("../../../../src/game/drivers/privileged-baseline");
     const game = bootstrapGame(board(), { fixedRoles: deck }),

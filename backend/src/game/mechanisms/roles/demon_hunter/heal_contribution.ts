@@ -3,12 +3,12 @@
  * 输出为不透明 scope、native／unknown 封存结果及后续未知写查询。捕获、提交、封存各保原组件和 revision 规则，
  * 不替调用方 add 标记，也不把未知治疗误归原生来源；异常不回滚此前付款或标记。
  */
-import { COMPONENT, StatusMark, type World } from "../../../../core";
+import { COMPONENT, StatusMark, type World } from "../../../../domain";
 import {
   statusMarkSnapshot,
   type StatusMarksComponent,
   type StatusMarkSnapshot,
-} from "../../../../core/domain/components/status_marks";
+} from "../../../../domain/components/status-marks";
 /** 私有回执固定原组件／写前 revision，提交后记录写后快照，封存再固定当时组件和 revision。 */
 interface Contribution {
   world: World;

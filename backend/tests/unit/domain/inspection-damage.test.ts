@@ -5,17 +5,17 @@
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { type AliveComponent } from "../../../src/core/domain/components/alive";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
-import type { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
-import { DeathCause } from "../../../src/core/domain/deaths";
-import { Role, StatusMark } from "../../../src/core/domain/identity";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { type AliveComponent } from "../../../src/domain/components/alive";
+import type { RoleComponent } from "../../../src/domain/components/role";
+import type { StatusMarksComponent } from "../../../src/domain/components/status-marks";
+import { DeathCause } from "../../../src/domain/deaths";
+import { Role, StatusMark } from "../../../src/domain/identity";
 import {
   captureNightLife,
   type NightInspectionAttack,
-} from "../../../src/core/domain/night_effects";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+} from "../../../src/domain/night-effects";
+import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 function fixture(cause: NightInspectionAttack["cause"]) {

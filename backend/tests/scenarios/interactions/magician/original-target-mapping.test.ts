@@ -10,8 +10,8 @@ import {
   type RoleComponent,
   type ActionRequest,
   type ToolCall,
-} from "../../../../src/core";
-import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+} from "../../../../src/domain";
+import type { AliveComponent } from "../../../../src/domain/components/alive";
 import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import {

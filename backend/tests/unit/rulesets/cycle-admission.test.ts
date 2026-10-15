@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import {
   assertCycleAdmission,
   assertPhaseJumpAdmission,

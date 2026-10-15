@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { Camp, Role, WinCondition } from "../../../../core/domain";
+import { Camp, Role, WinCondition } from "../../../../domain";
 import type { NativeRoleContributions } from "../contracts";
 import { THIEF_POLICY, initializeThiefState, readThiefChoice } from "./state-ports";
 import { authorizedThiefScope } from "./setup";

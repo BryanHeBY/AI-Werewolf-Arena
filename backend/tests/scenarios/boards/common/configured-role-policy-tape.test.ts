@@ -11,13 +11,13 @@ import {
   WinCondition,
   type ActionRequest,
   type ActionProvider,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
-import { COMPONENT, type RoleComponent } from "../../../../src/core";
+import { COMPONENT, type RoleComponent } from "../../../../src/domain";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { roleInspectionTargets } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";

@@ -10,8 +10,8 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Camp, COMPONENT, Phase, World, createRandom, deferRequestDelivery,
   type ActionProvider, type ActionRequest, type GameEvent, type ToolCall,
-} from "../../../../src/core";
-import type { ActionRequestConstructionInput, ActionRequestFactoryConstructorPort } from "../../../../src/core/domain/actions";
+} from "../../../../src/domain";
+import type { ActionRequestConstructionInput, ActionRequestFactoryConstructorPort } from "../../../../src/domain/actions";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { GhostBrideSetupWindow } from "../../../../src/game/mechanisms/roles/ghost_bride/setup";

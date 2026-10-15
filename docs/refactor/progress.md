@@ -12,7 +12,7 @@
 | P5 效果、死亡与判胜    | 进行中 | 来源intent、DeathWave／Receipt、关系与普通黎明、阶段终局检查点已交；Q3普通死亡因果独审范围及同源组合验收待闭合 |
 | P6 能力、观察与展示    | 进行中 | 资源授予／转移、原生与学习枪、F01受限观察、五包和三类展示贡献已交；保留各族付款前缀并作最终消费验收 |
 | P7 记录与独立复现      | 进行中 | 完整checkpoint、18族独立verifier、录制生命周期和四类身份已交；Q3需区分公共reader、独立审计和exact重执行保证 |
-| P8 目录、命名与文档    | 进行中 | 当前规则卡与部分旧出口已退；C41／C42目标目录与kebab命名仍需实际迁移，C43当前决策索引及C44公口清单待合流 |
+| P8 目录、命名与文档    | 进行中 | 当前规则卡与部分旧出口已退；C41／C42领域42模块及旧core出口已迁，AI/runtime、engine/features等物理布局与全仓命名待继续，C43当前索引及C44清单待合流 |
 | P9 全仓收敛与验收      | 进行中 | C46固定15424a84严格检查1779旧债全清，根任务已强制strict；C45中文内容覆盖、C47最终同源全套及C48逐格登记尚未完成 |
 
 每个切片记录 commit、实现者、独立审查、命令 / 输入指纹及剩余风险。编译与发现范围在每笔提交保持有效。阶段跨越不代表跳过未完成的切片。
@@ -989,3 +989,5 @@
 - C18a 鬼魂新娘请求／保留同意F02：Root原两声明7fresh/16断言实证正文/域/观察到期恢复及第一proof恢复能完成；原13关键Git仅prep非全传递构建，raw/结果/原字节及真实限界保。只原authority/setup+新unit记turn/alias终态，保unknown/错World/actor隔离、alias先自检不读原域、已付chat/knife纯原体和原partial/通知次序。Root与Pref独审三完整源/6controls/44附件闭合；Pref静态发现shared域早短路只撤second可新开复用first，后继精确分shared/proof段修并含second-only隔离对照，不冒旧实验跑过组合。首7decl/13fresh/178绿与唯一新增第8decl/3fresh/49绿分次共8不同/227；首type两unit诊断保，2纯注解擦除双raw同后只失败1根0，后只实际变2根0。首3头/739/0、8delta/49保护项主证明0不复；后4delta桥4inverse同/4actual不同，新读取/Reflect调用渠道明确行为政策，setup及3头byte保，首7业务绿filtered无重跑。原finally资源耗尽不伪作成功付款，也不因新拒绝退款；完整目标继续。见ghost-bride-request-terminal-revocation.md。
 
 - C44 夜阶段注册表旧出口退出：实际b1b原20Git/5controls，19route直达唯一ruleset owner，删旧同binding叶；根barrel原位置只具名同2值，保owner额外2types不泄漏。Root与NativeFinal真正非作者读完整route/owner/公口/末8附件批准；唯一b4bf64/61274→737c930核19整程序/38逆输出同、18tests36路由输出映射与18真实绑定、1959当前源旧incoming/string0，原1960采样含Ghost WIP不冒全部固定Git。旧deep path/中间模块节点有意退休，不留wrapper、不改算法/断言；不保证未知外部反射/cold图。无新业务/头/类型/门禁，类型跟后继物理cohort集中，当前阶段表也按实际已交owner与Q2/Q3/物理迁移/最终验收明确收敛，不再把历史“继续”当现时全族缺实现。见night-stage-registry-compat-exit.md。
+
+- C41/C42领域目录：42个模块迁唯一domain，1144路由程序／2836精确编辑，旧core单条facade退休；六处工具／测试适配另列。全后端与tooling类型0、主程序／真实物理绑定证明0、历史身份单例1/0、真实公共API／交付弱表／875新指纹成员探针0。同行修正历史六根指标称谓，以窄桥保首证明与类型原结果，未重跑绿色。见 [领域布局](domain-owned-layout.md)。旧新源码身份严格分开，其它布局与最终双构建／全门禁仍待汇合执行。

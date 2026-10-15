@@ -7,8 +7,8 @@
  */
 import type { MistRecordVariant } from "../builders/board";
 import { manualPlans } from "../builders/literal-plans";
-import type { ActionRequest } from "../../../../../src/core";
-import type { ToolCall } from "../../../../../src/core";
+import type { ActionRequest } from "../../../../../src/domain";
+import type { ToolCall } from "../../../../../src/domain";
 
 export function mistAction(
   q: ActionRequest,

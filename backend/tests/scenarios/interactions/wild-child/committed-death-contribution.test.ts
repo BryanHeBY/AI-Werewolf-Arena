@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { Role, Camp, Phase, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
 import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state-slot";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";

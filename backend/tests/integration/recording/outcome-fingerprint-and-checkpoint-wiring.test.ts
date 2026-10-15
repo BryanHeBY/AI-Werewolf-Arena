@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Camp, Phase, Role, WinCondition, createVictoryComponent } from "../../../src/core";
+import { COMPONENT, Camp, Phase, Role, WinCondition, createVictoryComponent } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { victoryDecision } from "../../../src/game/mechanisms/win_conditions/results";
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";

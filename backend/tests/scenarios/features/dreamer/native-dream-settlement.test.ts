@@ -1,8 +1,8 @@
 /**
  * 摄梦场景测试：验证实际夜间保护、关系、枪、遗言、必选与已提交前缀重入。输入为原语言／样本／狼王矩阵、受控 PM／整夜回复及字面伤害计划；死亡、枪、事件、终局和资源为手写预期，不引入新 golden 或模型。
  */
-import { Camp } from "../../../../src/core";
-import { PotionType } from "../../../../src/core";
+import { Camp } from "../../../../src/domain";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -14,7 +14,7 @@ import {
   type BoardConfig,
   type RoleComponent,
   type ActionRequest,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
@@ -22,7 +22,7 @@ import { getWolfKingState } from "../../../../src/game/mechanisms/roles/wolf_kin
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 
 const deck = [Role.Dreamer, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];

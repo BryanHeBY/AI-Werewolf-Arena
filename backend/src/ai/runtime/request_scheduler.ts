@@ -4,8 +4,8 @@
  * scope／limit 在申请时解析，排队与移交仍检查原请求期限；租约不授予游戏行动或资源写权限。
  * close 单向拒绝排队和新申请，已授予槽位仍归调用方，在实际回合收尾后由其释放。
  */
-import { RoleComponent } from "../../core/domain/components/role";
-import { ActionRequest } from "../../core/domain";
+import { RoleComponent } from "../../domain/components/role";
+import { ActionRequest } from "../../domain";
 
 export interface RequestSchedulerOptions {
   defaultMaxConcurrentRequests: number;

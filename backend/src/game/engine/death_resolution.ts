@@ -22,7 +22,7 @@ import {
   DeathCommitReceipt,
   type DeathOriginalLife,
 } from "./death-wave";
-import type { NightPoisonRoute } from "../../core/domain/night_effects";
+import type { NightPoisonRoute } from "../../domain/night-effects";
 import { DeathCommitter } from "./death-committer";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
@@ -38,9 +38,9 @@ import { collectDeathShot, type DeathWaveActions } from "../../rulesets/death-sh
 import { prepareInitialDeathRelations } from "../../rulesets/initial-death-relations";
 import { WeddingDeathWavePublication } from "../mechanisms/roles/ghost_bride/ports";
 import { prepareAdditionalDeathRelations } from "../../rulesets/additional-death-relations";
-import type { BoardConfig } from "../../core/domain/board";
-import { livingNightLife } from "../../core/domain/night_effects";
-import { COMPONENT } from "../../core/domain/components/names";
+import type { BoardConfig } from "../../domain/board";
+import { livingNightLife } from "../../domain/night-effects";
+import { COMPONENT } from "../../domain/components/names";
 import {
   ActionProvider,
   EntityId,
@@ -50,9 +50,9 @@ import {
   RuntimeSnapshot,
   DeathCause,
   type DeathSources,
-} from "../../core/domain/model";
-import type { RoleComponent } from "../../core/domain/components/role";
-import { World } from "../../core/domain/world";
+} from "../../domain/model";
+import type { RoleComponent } from "../../domain/components/role";
+import { World } from "../../domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { getDefaultLastWordsMechanism } from "../mechanisms/last_words/last_words_mechanism";
 import type { LastWordsGrantContext } from "../mechanisms/last_words/last_words_mechanism";
@@ -60,7 +60,7 @@ import { LastWordsWindow } from "../mechanisms/last_words/window";
 import { resolveSheriffBadge } from "../mechanisms/sheriff/badge_choice";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
-import type { DreamNightEffects } from "../../core/domain/dream-night-effects";
+import type { DreamNightEffects } from "../../domain/dream-night-effects";
 import {
   firstDeathGuns,
   finishDeathGuns,

@@ -5,7 +5,7 @@
  * 已公布猫事实与已删原因属于原失败前缀，后续到期或记录失败不回滚，也不修改 Alive 或扩展其他关系。
  * 规则依据：docs/rules/awa-animal-dream-twelve-v1.md。
  */
-import { Phase, DeathCause, type EntityId, type DeathSources } from "../../../../core/domain/model";
+import { Phase, DeathCause, type EntityId, type DeathSources } from "../../../../domain/model";
 import {
   filterAnimalLethalWave,
   animalAuthoritySnapshot,
@@ -13,9 +13,9 @@ import {
   prepareAnimalCatExpiry,
 } from "./authority";
 import { appendAnimalFact } from "./facts";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { Role, type GameEvent } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+import { COMPONENT } from "../../../../domain/components/names";
+import { Role, type GameEvent } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 
 /** 只捕获结算器；每个 World／事件读取仍在原规则或事实参数位置，不缓存生命／权威快照。 */
 export interface AnimalDeathWaveRuntime {

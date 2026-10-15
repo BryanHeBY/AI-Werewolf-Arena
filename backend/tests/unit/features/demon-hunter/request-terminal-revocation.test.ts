@@ -10,8 +10,8 @@ import {
   ActionWindow, Camp, COMPONENT, Phase, PotionType, Role, WinCondition, WitchSelfHealRule,
   World, assertRequestDelivery, deferRequestDelivery, deriveBoundedRequest, inheritRequestAlias,
   type ActionProvider, type ActionRequest, type BoardConfig, type GameEvent, type ToolCall,
-} from "../../../../src/core";
-import { createRandom } from "../../../../src/core/domain/random";
+} from "../../../../src/domain";
+import { createRandom } from "../../../../src/domain/random";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";

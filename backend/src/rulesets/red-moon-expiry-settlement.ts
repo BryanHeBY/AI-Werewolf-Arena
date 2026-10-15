@@ -5,10 +5,10 @@
  * 只有经理成功完成死亡及复验后才恢复提交；恢复时先核已死，再提交到期、发布事件、记录操作，后项失败保原前缀不退款。
  */
 import type { ReadonlyBoardConfig, VictoryCheckpoint, WinDecision } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../core/domain/components/names";
-import { DeathCause, Phase, type EntityId, type GameEvent } from "../core/domain/model";
-import type { World } from "../core/domain/world";
-import type { ConditionRegistry } from "../core/domain/registries/condition_registry";
+import { COMPONENT } from "../domain/components/names";
+import { DeathCause, Phase, type EntityId, type GameEvent } from "../domain/model";
+import type { World } from "../domain/world";
+import type { ConditionRegistry } from "../domain/registries/condition-registry";
 import { demonRedMoonExpiry, commitDemonRedMoonTransition } from "../game/mechanisms/roles/demon_hunter/ports";
 import { TERMINAL_VICTORY_POLICY } from "./terminal-victory-policy";
 import { safeRecordLogicOp } from "../recording/session_recorder";

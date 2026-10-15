@@ -4,9 +4,9 @@
  * frame 保有已付效果有效性与借用实例所有权，共享 use 提交只处理原 metadata。
  * 不因 provider 返回而推断资格，也不移动租约、库存、记录或清理位置。
  */
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Phase, Role } from "../../../../core/domain/identity";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Phase, Role } from "../../../../domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";

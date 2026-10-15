@@ -25,7 +25,7 @@ import {
   animalFoxKnowledge,
   animalPufferKnowledge,
 } from "../../../../src/game/mechanisms/roles/animal_dream/facts";
-import { COMPONENT, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { COMPONENT, type ActionRequest, type ToolCall } from "../../../../src/domain";
 import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
 
 for (const skill of ["fox", "puffer"] as const)

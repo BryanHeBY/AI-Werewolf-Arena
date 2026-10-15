@@ -3,8 +3,8 @@
  * 输出为当前雾圈 ID、阵容断言、开夜清理单元和终止端口。绑定不查 frame、生命、时钟或随机源。
  * readonly 查询结果不授状态写或提交权；生命周期仍保原发布、晚交接和 abort 时点，阵容与关闭错误归 frame。
  */
-import type { EntityId } from "../../../../core/domain/identity";
-import type { World } from "../../../../core/domain/world";
+import type { EntityId } from "../../../../domain/identity";
+import type { World } from "../../../../domain/world";
 import { isMistRavenBoard, mistKnifeTargets } from "./night_frame";
 export { MistNightUnit, mistNightTerminal } from "./night-lifecycle";
 export type { MistNightRuntime } from "./night-lifecycle";

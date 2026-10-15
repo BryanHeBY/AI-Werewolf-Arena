@@ -4,9 +4,9 @@
  */
 import { MECHANICAL_TOOL_NAMES } from "./tool_names";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
-import { Camp, Role, Phase } from "../../../../core/domain/model";
+import { COMPONENT } from "../../../../domain/components/names";
+import { isRoleExecutionRetired } from "../../../../domain/role-execution-authority";
+import { Camp, Role, Phase } from "../../../../domain/model";
 import type { ToolRule, ToolRuleMap } from "../../validation/contracts";
 import { isAliveTarget } from "../../validation/contracts";
 import { canMechanicalKnife } from "./inheritance";

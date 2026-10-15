@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/core";
+import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/domain";
 import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import {
   getDefaultRoleCatalog,
@@ -17,7 +17,7 @@ import {
 import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { ActionValidator } from "../../../../src/game/gateway/action_validator";
 import { ToolValidationRuleRegistry } from "../../../../src/game/mechanisms/validation/tool_validation_rule_registry";

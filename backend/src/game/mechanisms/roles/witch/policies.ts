@@ -2,7 +2,7 @@
  * 负责女巫原生双药组合、刀口可见性与第二回合的纯政策查询。输入为原药实例及实际夜数；
  * 输出保留原字段读取顺序的布尔值。复制／赠与实例仍按自己的契约；这些查询不付款、关回合、写来源或授提交能力。
  */
-import { Role } from "../../../../core/domain/model";
+import { Role } from "../../../../domain/model";
 import type { NightAbilityReadView } from "../abilities";
 /** 只有原生来源使用这项产品政策；复制／赠与瓶仍保自己的契约，不在此补成原生。 */
 export function nativePotionsCanCombine(ability: NightAbilityReadView<"potion">): boolean {

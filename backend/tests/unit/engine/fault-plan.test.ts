@@ -4,7 +4,7 @@
  */
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World, COMPONENT, type AliveComponent } from "../../../src/core";
+import { World, COMPONENT, type AliveComponent } from "../../../src/domain";
 import { NightFaultPlan, readFaultPlan, type AppliedFault } from "../../../src/game/engine/fault_plan";
 const plan = () => ({
   version: "awa_fault_plan_v1",

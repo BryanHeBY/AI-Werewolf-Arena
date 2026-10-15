@@ -2,11 +2,11 @@
  * 单元测试：验证序王固定放逐票、明确放弃与合格持有者的翻牌投票。输入为原票和库存；生命、重启及库存断言检查仅翻牌一次的原机制，不生成新预期。
  */
 import { assignSheriff } from "../../../../src/game/mechanisms/sheriff/badge";
-import type { BadgeComponent } from "../../../../src/core/domain/components/badge";
-import type { VotingRightComponent } from "../../../../src/core/domain/components/voting_right";
+import type { BadgeComponent } from "../../../../src/domain/components/badge";
+import type { VotingRightComponent } from "../../../../src/domain/components/voting-right";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import {
   Role,
   WinCondition,
@@ -14,13 +14,13 @@ import {
   type ActionRequest,
   type GameEvent,
   type ToolCall,
-} from "../../../../src/core/domain/model";
+} from "../../../../src/domain/model";
 import { VotingPipeline } from "../../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { createDefaultRoleRegistry } from "../../../../src/game/mechanisms";
 import { getOrderPrinceState } from "../../../../src/game/mechanisms/roles/order_prince/ports";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import type { RoleComponent } from "../../../../src/domain/components/role";
 const roles = [
   Role.Wolf,
   Role.Wolf,

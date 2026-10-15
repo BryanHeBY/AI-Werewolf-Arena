@@ -16,7 +16,7 @@ import {
   PotionType,
   type ActionRequest,
   type ActionProvider,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {

@@ -3,9 +3,9 @@
  */
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { RoleComponent } from "../../../../src/core/domain/components/role";
-import { Phase } from "../../../../src/core/domain/model";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { RoleComponent } from "../../../../src/domain/components/role";
+import { Phase } from "../../../../src/domain/model";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
 import {

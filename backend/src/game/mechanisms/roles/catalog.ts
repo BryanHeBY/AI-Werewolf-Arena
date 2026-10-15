@@ -7,9 +7,9 @@
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { Camp, type Role, type NativeRolePresentationId } from "@ai-werewolf-arena/game-contract";
 import { roleName, text, type MessageKey } from "@ai-werewolf-arena/game-text";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import type { World } from "../../../core/domain/world";
-import type { CurrentCampSource } from "../../../core/domain/components/camp";
+import type { RoleComponent } from "../../../domain/components/role";
+import type { World } from "../../../domain/world";
+import type { CurrentCampSource } from "../../../domain/components/camp";
 import { bindRolePresentation } from "../../observation/role-presentation";
 import type {
   RoleContributions,

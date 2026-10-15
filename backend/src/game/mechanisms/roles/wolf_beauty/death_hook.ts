@@ -5,9 +5,9 @@
  * 失效关系不发 proposal；不修改库存、标死或发布事实。规则见 docs/rules/awa-wolf-beauty-v1.md。
  */
 import { getWolfBeautyState } from "./state";
-import { Role, DeathCause } from "../../../../core/domain/model";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import { Role, DeathCause } from "../../../../domain/model";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
 import type { DeathHook } from "../../hooks/hook_registry";
 import { activeCharm, permitsCharm, attemptCharmTrigger, commitCharmDeath } from "./relation";
 import { createWolfBeautyDeathContribution } from "./death-wave-publication";

@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { isDemonHunterPreset, isRedMoonPreset } from "../../../src/rulesets";
-import { COMPONENT, type RoleComponent } from "../../../src/core";
+import { COMPONENT, type RoleComponent } from "../../../src/domain";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import {
   getDefaultRoleCatalog,

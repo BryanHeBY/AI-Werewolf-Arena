@@ -11,7 +11,7 @@ import {
   type ActionProvider,
   type GameEvent,
   type RuntimeSnapshot,
-} from "../../core";
+} from "../../domain";
 import { readFile } from "node:fs/promises";
 import { ObservedBot, type BotStyle } from "../../ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../app/observed-players-action-provider";
@@ -19,7 +19,7 @@ import type { ResolvedBoardDefinition } from "../config/board_definition";
 import { SessionRecordManager } from "../../recording/session_recorder";
 import { runWithSessionRecorder } from "../../recording/recording_context";
 import { GameEventRecorder } from "../game_event_recorder";
-import { COMPONENT, type RoleComponent } from "../../core";
+import { COMPONENT, type RoleComponent } from "../../domain";
 import { getWitchState } from "../../game/mechanisms/roles/witch/ports";
 import {
   beginGameReproduction,

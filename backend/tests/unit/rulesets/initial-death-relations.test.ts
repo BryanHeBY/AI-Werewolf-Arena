@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Phase, DeathCause, type DeathSources, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { captureNightLife } from "../../../src/core/domain/night_effects";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { captureNightLife } from "../../../src/domain/night-effects";
 import { bindLovers } from "../../../src/game/mechanisms/roles/cupid/relation";
 import { prepareInitialDeathRelations, type InitialDeathRelationRuntime, type InitialWeddingExpansion } from "../../../src/rulesets/initial-death-relations";
 import { fragrantPairOwnerFixture } from "../../support/features/fragrant-pair-seer/builders/owner";

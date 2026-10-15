@@ -10,7 +10,7 @@ import {
   WinCondition,
   WitchSelfHealRule,
   type BoardConfig,
-} from "../../core/domain/model";
+} from "../../domain/model";
 export const wolfSorcererTwelveConfig: BoardConfig = {
   boardSize: 12,
   wolfSorcerer: { policy: "awa_wolf_sorcerer_seats_v1", firstNight: 2 },

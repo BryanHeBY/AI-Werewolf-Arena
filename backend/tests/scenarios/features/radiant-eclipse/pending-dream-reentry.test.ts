@@ -6,27 +6,27 @@
  */
 import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { type RoleComponent } from "../../../../src/core/domain/components/role";
+import { World } from "../../../../src/domain/world";
+import { Role, Camp, WitchSelfHealRule } from "../../../../src/domain/identity";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { type RoleComponent } from "../../../../src/domain/components/role";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 
 
-import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
+import { createVictoryComponent } from "../../../../src/domain/components/victory";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import { createEclipseState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";
 import { createShelterState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
 import { installRadiantEclipseBoard } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
-import type { GameEvent } from "../../../../src/core/domain/events";
+import type { GameEvent } from "../../../../src/domain/events";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { ECLIPSE_SWALLOW_STAGE } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_stages";
 import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
-import type { ActionProvider, BoardConfig } from "../../../../src/core/domain/model";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
+import type { ActionProvider, BoardConfig } from "../../../../src/domain/model";
 
 function fixture() {
   const world = new World();

@@ -10,7 +10,7 @@ import {
   WinCondition,
   WitchSelfHealRule,
   type BoardConfig,
-} from "../../core/domain/model";
+} from "../../domain/model";
 export const scholarMentorTwelveConfig: BoardConfig = {
   boardSize: 12,
   scholarMentor: { policy: "awa_scholar_mentor_twelve_v1" },

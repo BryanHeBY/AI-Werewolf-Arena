@@ -8,17 +8,17 @@ import type {
   AwakenedReadActiveSkill as AwakenedActiveSkill,
 } from "@ai-werewolf-arena/game-contract";
 
-import { aliveLifeVersion } from "../../../../core/domain/components/alive";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Role, type EntityId } from "../../../../core/domain/model";
+import { aliveLifeVersion } from "../../../../domain/components/alive";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Role, type EntityId } from "../../../../domain/model";
 import {
   captureNightLife,
   livingNightLife,
   type NightLifeScope,
-} from "../../../../core/domain/night_effects";
-import type { World } from "../../../../core/domain/world";
-import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
+} from "../../../../domain/night-effects";
+import type { World } from "../../../../domain/world";
+import { isRoleExecutionRetired } from "../../../../domain/role-execution-authority";
 import { awakenedSkillForNight, getAwakenedState } from "./state";
 import { findNightAbility, type NightAbilityReadView } from "../abilities";
 

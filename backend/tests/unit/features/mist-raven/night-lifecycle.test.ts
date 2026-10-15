@@ -11,7 +11,7 @@ import { Role } from "@ai-werewolf-arena/game-contract";
 import rawBoard from "../../../../../configs.example/boards/awa_mist_raven_12_v1.json";
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT } from "../../../../src/core";
+import { COMPONENT } from "../../../../src/domain";
 import {
   MistNightUnit,
   mistNightTerminal,

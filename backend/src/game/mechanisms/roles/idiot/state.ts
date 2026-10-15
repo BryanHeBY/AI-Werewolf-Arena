@@ -8,7 +8,7 @@ import type { IdiotState, IdiotReadState } from "@ai-werewolf-arena/game-contrac
 
 import type { PlayerIdiotState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import { playerDataField } from "../player-state-data";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 
 export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotReadState {
   (roleComp.privateState as { idiot: IdiotState })["idiot"] = state;

@@ -5,14 +5,14 @@ import { renderRolePrompt } from "../../../src/game/observation/role-presentatio
 import { expect, test } from "bun:test";
 import { ROLE_DEFINITIONS, roleName } from "@ai-werewolf-arena/game-catalog";
 import { ROLE_IDS, isRoleId } from "@ai-werewolf-arena/game-contract";
-import { Role } from "../../../src/core/domain/identity";
+import { Role } from "../../../src/domain/identity";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
 } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { Camp } from "../../../src/core/domain/identity";
+import { Camp } from "../../../src/domain/identity";
 import { createDefaultRoleRegistry } from "../../../src/game/mechanisms/roles/permissions";
 
 test("shared catalog distinguishes planned definitions from registered roles", () => {

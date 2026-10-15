@@ -19,7 +19,7 @@ import {
 import path from "node:path";
 import { engineFingerprintInputs, fingerprintEngine } from "../../src/recording/engine-fingerprint";
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { Camp, createRandom, type Role } from "../../src/core";
+import { Camp, createRandom, type Role } from "../../src/domain";
 import { ReproductionTrace } from "../../src/recording/reproduction-trace";
 import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 import { captureCheckpoint } from "../../src/runtime/simulation/reproduction_context";
@@ -195,33 +195,22 @@ test("private canary and generated dependency directory never join fingerprint m
   });
 });
 
-/** Independent old-policy hash of the six historical source roots, never an archive rewrite. */
+/** 读取固定27a构建的真实旧身份；旧目录已退，不在当前树重算历史六根算法。 */
 async function historicalSourceHash(root: string): Promise<string> {
-  const hash = createHash("sha256");
-  const walk = async (directory: string): Promise<void> => {
-    for (const entry of (await readdir(path.join(root, directory), { withFileTypes: true })).sort(
-      (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0),
-    )) {
-      const name = path.posix.join(directory, entry.name);
-      if (entry.isDirectory()) await walk(name);
-      else if (entry.isFile() && entry.name.endsWith(".ts"))
-        hash
-          .update(name)
-          .update("\0")
-          .update(await readFile(path.join(root, name)))
-          .update("\0");
-    }
-  };
-  for (const directory of [
+  const historical = JSON.parse(await readFile(
+    path.join(root, "docs/refactor/generated/baseline-source-hash.json"), "utf8",
+  )) as { commit: string; roots: string[]; sourceHash: string };
+  expect(historical.commit).toBe("27a97cb66e8f30fceb7cb20130154291559dd14a");
+  expect(historical.roots).toEqual([
     "backend/src/core",
     "backend/src/game",
     "backend/src/app",
     "packages/game-catalog/src",
     "packages/game-text/src",
     "packages/replay-contract/src",
-  ])
-    await walk(directory);
-  return hash.digest("hex");
+  ]);
+  expect(historical.sourceHash).toBe("b603ece35929ad44b8dae7caf3738d8e2ca41e9f5ffd3020c3b105d1db55c8e0");
+  return historical.sourceHash;
 }
 
 test("strict replay rejects a finalized initial archive with the historical narrower fingerprint without rewriting it", async () => {

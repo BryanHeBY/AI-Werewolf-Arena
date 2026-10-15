@@ -6,7 +6,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { tricksterTwelveConfig } from "../../../../src/runtime/scenarios/trickster_twelve";
 import { knownWolfTeammates } from "../../../../src/game/mechanisms/roles/wolf_team";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms";
-import { Role, COMPONENT, type RoleComponent } from "../../../../src/core";
+import { Role, COMPONENT, type RoleComponent } from "../../../../src/domain";
 import {
   beginTricksterNight,
   commitTricksterExchange,

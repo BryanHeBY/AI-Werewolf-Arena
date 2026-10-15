@@ -7,7 +7,7 @@
  */
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import {
   bindNativeNightTargetPolicy,

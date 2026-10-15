@@ -13,7 +13,7 @@ import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mv
 import { PlayerRoundRecorder } from "../../../src/app/player-round-recorder";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { Phase, Role } from "../../../src/core";
+import { Phase, Role } from "../../../src/domain";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 for (const locale of ["zh-CN", "en"] as const)

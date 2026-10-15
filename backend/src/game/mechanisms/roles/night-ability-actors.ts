@@ -5,9 +5,9 @@
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
-import type { EntityId } from "../../../core/domain/model";
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { World } from "../../../core/domain/world";
+import type { EntityId } from "../../../domain/model";
+import { COMPONENT } from "../../../domain/components/names";
+import type { World } from "../../../domain/world";
 import { abilityStatus, allNightAbilities, type NightAbilityReadView } from "./abilities";
 import {
   bindNightmareNightEligibility,

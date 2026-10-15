@@ -4,10 +4,10 @@
  * 执行权限由原 gun scope／死亡行动窗口核对，已付 pending 只保原 scope.isCurrent 原体复验；
  * 不重新授枪，晚事件失败不退款，也不让模型预检付款。
  */
-import { COMPONENT } from "../../../core/domain/components/names";
-import type { RoleComponent } from "../../../core/domain/components/role";
-import { DeathCause, permitsHunterShot } from "../../../core/domain/model";
-import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
+import { COMPONENT } from "../../../domain/components/names";
+import type { RoleComponent } from "../../../domain/components/role";
+import { DeathCause, permitsHunterShot } from "../../../domain/model";
+import { captureNightLife, livingNightLife } from "../../../domain/night-effects";
 import type { DeathHook } from "../hooks/hook_registry";
 import {
   activeDeathGun,

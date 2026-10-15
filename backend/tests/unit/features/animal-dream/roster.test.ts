@@ -5,12 +5,12 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { Camp, Role } from "../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { Camp, Role } from "../../../../src/domain/identity";
+import { COMPONENT } from "../../../../src/domain/components/names";
 
-import type { CampComponent } from "../../../../src/core/domain/components/camp";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
-import type { IdentityComponent } from "../../../../src/core/domain/entities/player";
+import type { CampComponent } from "../../../../src/domain/components/camp";
+import type { RoleComponent } from "../../../../src/domain/components/role";
+import type { IdentityComponent } from "../../../../src/domain/entities/player";
 import {
   animalRosterFixture,
   animalInternalConfig,
@@ -86,7 +86,7 @@ const invalid: Record<string, (w: ReturnType<typeof animalRosterFixture>["world"
   },
   // 错槽别名本身是被测非法样本；类型断言不复制对象或纠正存储内容。
   "Role and Camp alias": (w) => {
-    w.addComponent(10, COMPONENT.Camp, w.getComponent(10, COMPONENT.Role) as unknown as import("../../../../src/core/domain/component-map").ComponentWrite<typeof COMPONENT.Camp>);
+    w.addComponent(10, COMPONENT.Camp, w.getComponent(10, COMPONENT.Role) as unknown as import("../../../../src/domain/component-map").ComponentWrite<typeof COMPONENT.Camp>);
   },
   "shared private container": (w) => {
     (

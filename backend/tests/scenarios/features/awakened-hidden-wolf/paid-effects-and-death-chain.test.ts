@@ -6,7 +6,7 @@ import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-nig
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
 import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
 import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -20,10 +20,10 @@ import {
   type BoardConfig,
   type GameEvent,
   type RoleComponent,
-} from "../../../../src/core";
-import { type AliveComponent } from "../../../../src/core/domain/components/alive";
-import { captureNightLife } from "../../../../src/core/domain/night_effects";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+} from "../../../../src/domain";
+import { type AliveComponent } from "../../../../src/domain/components/alive";
+import { captureNightLife } from "../../../../src/domain/night-effects";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

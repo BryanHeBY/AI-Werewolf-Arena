@@ -11,12 +11,12 @@ import {
   SEER_TARGET_POLICIES,
   SEER_ACTION_POLICIES,
   DEFAULT_SEER_ACTION_POLICY,
-} from "../../../../core/domain/board";
+} from "../../../../domain/board";
 import { seerTargetAllowed } from "./ports";
 import { roleName, text, term } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 /** 文件说明：预言家角色 profile。 */
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role } from "../../../../domain/model";
 import { NativeRoleContributions } from "../contracts";
 import { getSeerState, setSeerState } from "./ports";
 import { numberOrNull } from "../../llm/helpers";

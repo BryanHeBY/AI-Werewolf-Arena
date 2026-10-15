@@ -5,7 +5,7 @@
  */
 import { beforeAll, expect, test } from "bun:test";
 import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";
-import { Phase } from "../../../../src/core";
+import { Phase } from "../../../../src/domain";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 let base: ReproductionRecord;
 beforeAll(async () => {

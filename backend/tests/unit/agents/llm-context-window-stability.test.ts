@@ -8,7 +8,7 @@
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { Phase } from "../../../src/core/domain/model";
+import { Phase } from "../../../src/domain/model";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 class RepeatSpeakToolLoopClient {

@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { CampComponent } from "../../../src/core/domain/components/camp";
-import { Camp, Role } from "../../../src/core/domain/identity";
-import { World } from "../../../src/core/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import type { CampComponent } from "../../../src/domain/components/camp";
+import { Camp, Role } from "../../../src/domain/identity";
+import { World } from "../../../src/domain/world";
 import type { RoleInitContext, RoleRuntimeContribution } from "../../../src/game/mechanisms/roles/contracts";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";

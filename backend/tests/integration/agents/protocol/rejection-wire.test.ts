@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Phase, PotionType, Role, type RoleComponent } from "../../../../src/core";
+import { COMPONENT, Phase, PotionType, Role, type RoleComponent } from "../../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";

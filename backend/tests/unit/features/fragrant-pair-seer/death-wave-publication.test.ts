@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import { FragrantDeathWavePublication } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/death-wave";
 import type { FragrantWaveReceipt } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import { Phase, DeathCause, type GameEvent } from "../../../../src/core/domain/model";
+import { Phase, DeathCause, type GameEvent } from "../../../../src/domain/model";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import type { SessionRecordManager } from "../../../../src/recording/session_recorder";
 

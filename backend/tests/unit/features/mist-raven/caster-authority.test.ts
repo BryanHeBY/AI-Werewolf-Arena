@@ -3,13 +3,13 @@
  */
 import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { Camp, type Role } from "../../../../src/core/domain/identity";
+import { World } from "../../../../src/domain/world";
+import { Camp, type Role } from "../../../../src/domain/identity";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 
 
-import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { createIdentityComponent } from "../../../../src/domain/entities/player";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import {
   createAlchemistState,
   createRavenState,

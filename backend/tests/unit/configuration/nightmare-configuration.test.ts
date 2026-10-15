@@ -13,9 +13,9 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { Role, WinCondition, WitchSelfHealRule } from "../../../src/core/domain/identity";
-import type { BoardConfig } from "../../../src/core/domain/board";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+import { Role, WinCondition, WitchSelfHealRule } from "../../../src/domain/identity";
+import type { BoardConfig } from "../../../src/domain/board";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
 for (const fear of ["optional", "required_when_legal"] as const)
   for (const wolf of ["standard", "no_blast_no_self_knife"] as const)
     test(`nightmare finite board and public JSON roundtrip ${fear}/${wolf}`, async () => {

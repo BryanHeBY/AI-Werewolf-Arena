@@ -11,7 +11,7 @@ import {
   initializeScholarMentorState,
   ScholarMentorStateSlot,
 } from "../../../../src/game/mechanisms/roles/scholar_mentor/state-slot";
-import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import type { RoleComponent } from "../../../../src/domain/components/role";
 
 test("学者槽初始化先取原左值，再读 caster 和写入；失败不重试", () => {
   const trace: string[] = [], failure = new Error("test_initial_setter");

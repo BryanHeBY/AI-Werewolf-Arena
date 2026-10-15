@@ -5,18 +5,18 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, StatusMark, type ComponentPresentationPart } from "@ai-werewolf-arena/game-contract";
-import type { BadgeComponent } from "../../../src/core/domain/components/badge";
-import type { VotingRightComponent } from "../../../src/core/domain/components/voting_right";
-import { aliveLifeDescriptor, aliveLifeVersion } from "../../../src/core/domain/components/alive";
-import { StatusMarksComponent, statusMarkSnapshot } from "../../../src/core/domain/components/status_marks";
+import type { BadgeComponent } from "../../../src/domain/components/badge";
+import type { VotingRightComponent } from "../../../src/domain/components/voting-right";
+import { aliveLifeDescriptor, aliveLifeVersion } from "../../../src/domain/components/alive";
+import { StatusMarksComponent, statusMarkSnapshot } from "../../../src/domain/components/status-marks";
 import {
   createAliveComponent, createBadgeComponent, createCampComponent, createVotingRightComponent,
   createStatusMarksComponent, renderAlivePrompt, renderBadgePrompt, renderCampPrompt,
   renderVotingRightPrompt, renderStatusMarksPrompt,
 } from "../../../src/game/observation/component-presentation";
 import { demonWitchMarksSafe } from "../../../src/game/mechanisms/roles/demon_hunter/ports";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
 
 function rejectsRuntimeData(component: BadgeComponent) {
   // @ts-expect-error 纯展示片段不接受领域组件句柄作为票重。

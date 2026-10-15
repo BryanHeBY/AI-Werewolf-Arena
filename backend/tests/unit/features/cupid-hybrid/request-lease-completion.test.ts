@@ -6,12 +6,12 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, Phase, Role, WinCondition, type ActionRequest, type BoardConfig, type GameEvent, type ToolCall } from "../../../../src/core";
-import { RequestLease } from "../../../../src/core/domain/request-lease";
+import { Camp, COMPONENT, Phase, Role, WinCondition, type ActionRequest, type BoardConfig, type GameEvent, type ToolCall } from "../../../../src/domain";
+import { RequestLease } from "../../../../src/domain/request-lease";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { assertRequestDelivery, deferRequestDelivery, deriveBoundedRequest } from "../../../../src/core/domain/request_delivery";
+import { assertRequestDelivery, deferRequestDelivery, deriveBoundedRequest } from "../../../../src/domain/request-delivery";
 import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
 import { HYBRID_STAGE, hasHybridNightCommit } from "../../../../src/game/mechanisms/roles/hybrid/night_stage";
 import { getCupidState } from "../../../../src/game/mechanisms/roles/cupid/ports";

@@ -5,8 +5,8 @@
 import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
 
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { Phase, type EntityId } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+import { Phase, type EntityId } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import type { ToolRule } from "../../validation/contracts";
 import { isAliveTarget } from "../../validation/contracts";
 import type { RoleProfile } from "../contracts";

@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { Camp, Phase, Role, type ActionRequest, type ToolName } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRandom, type RandomSource } from "../../../src/core/domain/random";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createRandom, type RandomSource } from "../../../src/domain/random";
 import { createRoleCatalog, getDefaultRoleContributions } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { getDefaultConfigRenderRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultTargetHintRegistry, getDefaultToolSpecRegistry } from "../../../src/game/mechanisms";
 import { capturePlayerObservation } from "../../../src/game/observation/player-observation-projector";

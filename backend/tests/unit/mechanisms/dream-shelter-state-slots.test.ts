@@ -13,8 +13,8 @@ import { projectNightState } from "../../../src/game/observation/night-ability-p
 import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
 import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
 
 const freshDream = (): DreamerState => ({ lastTarget: null, lastDay: null, history: [] });
 

@@ -3,9 +3,9 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, Role, PotionType, type RoleComponent } from "../../../../src/core";
+import { Camp, COMPONENT, Role, PotionType, type RoleComponent } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import {
   getDefaultRoleCatalog,

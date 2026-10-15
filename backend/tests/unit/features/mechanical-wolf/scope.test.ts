@@ -5,9 +5,9 @@ import { createAliveComponent } from "../../../../src/game/observation/component
 import { expect, test } from "bun:test";
 
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { Camp, Role } from "../../../../src/core/domain/model";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { World } from "../../../../src/core/domain/world";
+import { Camp, Role } from "../../../../src/domain/model";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { World } from "../../../../src/domain/world";
 import {
   bindMechanicalSkill,
   captureMechanicalOwner,

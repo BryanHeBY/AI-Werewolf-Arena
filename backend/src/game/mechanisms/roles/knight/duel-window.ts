@@ -6,9 +6,9 @@
  * 读取、Provider、网关及提交异常原样传播；已写前缀不回滚，缺少回调和明确 rejected 保留原分支。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import { COMPONENT } from "../../../../domain/components/names";
+import { AliveComponent, aliveLifeVersion } from "../../../../domain/components/alive";
+import type { RoleComponent } from "../../../../domain/components/role";
 import {
   Role,
   Phase,
@@ -17,10 +17,10 @@ import {
   type ActionProvider,
   type KnightDuelSelection,
   type KnightDuelCommit,
-} from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+} from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
-import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
+import type { ActionRequestConstructionPort } from "../../../../domain/actions";
 import { getKnightState } from "./state";
 
 /** 本次窗口保留原组件引用与当时字段值；不是可序列化玩家资料，也不授予资源或死亡写权。 */

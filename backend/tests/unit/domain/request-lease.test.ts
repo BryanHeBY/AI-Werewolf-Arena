@@ -4,10 +4,10 @@
  * 只写测试自有字段／记录，显式核 F02 失配永久拒绝与有限期限；不执行游戏、模型或领域付款。
  */
 import { expect, test } from "bun:test";
-import { Phase } from "../../../src/core/domain/identity";
-import type { ActionRequest } from "../../../src/core/domain/actions";
-import { RequestLease } from "../../../src/core/domain/request-lease";
-import { inheritRequestAlias } from "../../../src/core/domain/request_delivery";
+import { Phase } from "../../../src/domain/identity";
+import type { ActionRequest } from "../../../src/domain/actions";
+import { RequestLease } from "../../../src/domain/request-lease";
+import { inheritRequestAlias } from "../../../src/domain/request-delivery";
 
 function request(phase = Phase.Night, stage: ActionRequest["context"]["stage"] = "thief"): ActionRequest {
   return {

@@ -6,12 +6,12 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { Role, Camp } from "../../../../src/core/domain/identity";
+import { World } from "../../../../src/domain/world";
+import { COMPONENT } from "../../../../src/domain/components/names";
+import { Role, Camp } from "../../../../src/domain/identity";
 
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import type { GameEvent } from "../../../../src/core/domain/events";
+import type { GameEvent } from "../../../../src/domain/events";
 import { freshPairSeerState } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
 import {
   findNightAbility,

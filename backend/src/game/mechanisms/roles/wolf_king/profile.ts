@@ -7,7 +7,7 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { deathActionConfiguration, renderDeathActionPolicy } from "../death_action_policy";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { Role, permitsDeathShot } from "../../../../core/domain/model";
+import { Role, permitsDeathShot } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getWolfKingState, setWolfKingState, createWolfKingState } from "../native-death-gun-resources";
 import {

@@ -3,11 +3,11 @@
  * 输入保 World／日期、原槽和晚阵营 source；在原角色检查后才查阵营，不反向查找 Role 所属 World。
  * 输出为刀权资格与原继承事实；槽与本夜权限仍由原 owner 复验，刷新后事实失败不回退已写前缀。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
-import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
+import { COMPONENT } from "../../../../domain/components/names";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Role, type GameEvent } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import { currentAwakenedNight } from "./night_scope";
 import { awakenedKnifeReady, getAwakenedState, recordAwakenedInheritance } from "./state";
 

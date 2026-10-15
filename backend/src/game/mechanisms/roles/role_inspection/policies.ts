@@ -11,7 +11,7 @@ import {
   INSPECTION_POLICIES,
   type BoardConfig,
   type InspectionPolicy,
-} from "../../../../core/domain/board";
+} from "../../../../domain/board";
 
 import type { RoleProfile } from "../contracts";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";

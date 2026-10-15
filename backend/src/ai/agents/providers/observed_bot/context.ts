@@ -3,7 +3,7 @@
  * 输出为同一观察及局部选择／重复目标判断，不查询 World、真实 camp 或提交行动。
  * undefined 允许继续寻找处理器，null 表示明确不行动；原策略和随机读取顺序保持。
  */
-import type { RandomDraws, ToolCall } from "../../../../core";
+import type { RandomDraws, ToolCall } from "../../../../domain";
 import type { PlayerObservation } from "../../../../game/observation/player-observation";
 
 export type BotStyle = "active" | "conservative" | "competitive" | "random";

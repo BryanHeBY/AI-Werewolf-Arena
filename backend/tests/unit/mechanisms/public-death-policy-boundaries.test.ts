@@ -7,13 +7,13 @@ import { createAliveComponent } from "../../../src/game/observation/component-pr
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, type GameEvent, type BoardConfig, type ActionProvider } from "../../../src/core";
+import { COMPONENT, DeathCause, Phase, Role, type GameEvent, type BoardConfig, type ActionProvider } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+import { boardConfigSchema } from "../../../src/domain/board-schema";
 import { LastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";

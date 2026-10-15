@@ -8,8 +8,8 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：定义通用工具的校验规则。 */
 import { ToolRuleMap } from "../validation/contracts";
 import { debateAuthority } from "../roles/debater/authority";
-import { sameOriginalParticipant as sameDebateParticipant } from "../../../core/domain/original-participant";
-import { Phase } from "../../../core/domain";
+import { sameOriginalParticipant as sameDebateParticipant } from "../../../domain/original-participant";
+import { Phase } from "../../../domain";
 import { canBeExiled, canVoteExile } from "./participation";
 
 /** 通用工具校验规则集合。 */

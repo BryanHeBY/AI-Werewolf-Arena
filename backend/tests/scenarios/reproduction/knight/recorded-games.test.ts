@@ -3,7 +3,7 @@
  * 输出用字面决斗载荷、存活、遗言、检查点和胜者断言核对；用例生成及声明的原预期保持。
  */
 import type { VictoryPoint } from "@ai-werewolf-arena/game-contract";
-import { Camp, DeathCause, KnightDuelWindow, Phase } from "../../../../src/core";
+import { Camp, DeathCause, KnightDuelWindow, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { knightScenario, type KnightScenario } from "../../../support/features/knight/builders/scenario";

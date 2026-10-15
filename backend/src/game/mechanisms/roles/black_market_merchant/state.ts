@@ -11,7 +11,7 @@ import type {
 } from "@ai-werewolf-arena/game-contract";
 
 import type { PlayerBlackMarketState } from "@ai-werewolf-arena/game-contract/player-state-views";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleComponent } from "../../../../domain/components/role";
 import { copyAbilityData } from "../abilities";
 
 export const freshBlackMarketState = (): BlackMarketState => ({

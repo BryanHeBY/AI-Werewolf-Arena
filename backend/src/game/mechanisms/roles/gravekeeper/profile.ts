@@ -9,7 +9,7 @@ import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role } from "../../../../domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { initializeGravekeeperState } from "./state";
 import { GRAVEKEEPER_FEEDBACK_STAGE } from "./feedback";

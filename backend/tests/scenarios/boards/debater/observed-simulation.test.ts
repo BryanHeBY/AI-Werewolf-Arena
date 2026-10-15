@@ -7,7 +7,7 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { Role, KnightDuelWindow } from "../../../../src/core";
+import { Role, KnightDuelWindow } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import {
   boardDefinitionFromConfig,

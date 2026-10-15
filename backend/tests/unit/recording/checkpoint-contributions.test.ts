@@ -8,14 +8,14 @@ import { createAliveComponent, createBadgeComponent, createVotingRightComponent,
 import { expect, test } from "bun:test";
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
 import { auditData } from "../../../src/recording/checkpoint/animal-audit";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT, type ComponentName } from "../../../src/core/domain/components/names";
-import { createIdentityComponent } from "../../../src/core/domain/entities/player";
+import { World } from "../../../src/domain/world";
+import { COMPONENT, type ComponentName } from "../../../src/domain/components/names";
+import { createIdentityComponent } from "../../../src/domain/entities/player";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 
 
 
-import { createVictoryComponent } from "../../../src/core/domain/components/victory";
+import { createVictoryComponent } from "../../../src/domain/components/victory";
 
 import {
   Role,

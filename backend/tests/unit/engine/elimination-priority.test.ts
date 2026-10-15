@@ -3,11 +3,11 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
-import { Camp, Role, WinCondition } from "../../../src/core/domain/identity";
-import { ELIMINATION_PRIORITIES, type EliminationPriority } from "../../../src/core/domain/board";
+import { COMPONENT } from "../../../src/domain/components/names";
+import type { AliveComponent } from "../../../src/domain/components/alive";
+import type { RoleComponent } from "../../../src/domain/components/role";
+import { Camp, Role, WinCondition } from "../../../src/domain/identity";
+import { ELIMINATION_PRIORITIES, type EliminationPriority } from "../../../src/domain/board";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   createEliminationWinConditionSpecs,

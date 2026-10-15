@@ -6,7 +6,7 @@ import {
   createRoleCatalog,
 } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
 import path from "node:path";
@@ -38,7 +38,7 @@ import {
   Role,
   type ActionRequest,
   type RoleComponent,
-} from "../../../../src/core";
+} from "../../../../src/domain";
 import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import type { ToolLoopStepTrace } from "../../../../src/ai/integrations/llm/transport";

@@ -5,12 +5,12 @@
  * 规则依据 docs/rules/awa-trickster-exile-v1.md；只运行内存 owner，不使用模型或网络。
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createIdentityComponent } from "../../../src/core/domain/entities/player";
-import { Role, Camp, type GameEvent } from "../../../src/core/domain/model";
+import { World } from "../../../src/domain/world";
+import { COMPONENT } from "../../../src/domain/components/names";
+import { createRoleComponent } from "../../../src/domain/components/role";
+import { createAliveComponent } from "../../../src/domain/components/alive";
+import { createIdentityComponent } from "../../../src/domain/entities/player";
+import { Role, Camp, type GameEvent } from "../../../src/domain/model";
 import { createTricksterState } from "../../../src/game/mechanisms/roles/trickster/state-slot";
 import { installTricksterBoard, beginTricksterNight, commitTricksterExchange, finishTricksterNight } from "../../../src/game/mechanisms/roles/trickster/night_frame";
 import { resolveTricksterExile } from "../../../src/game/mechanisms/roles/trickster/ports";

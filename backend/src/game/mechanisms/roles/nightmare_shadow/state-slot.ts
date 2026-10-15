@@ -6,7 +6,7 @@
  * 身份 JSON 仅用于原运行比对，不是档案 decoder；目标政策归同族 targets 所有者。
  * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
-import type { CurrentCampSource } from "../../../../core/domain/components/camp";
+import type { CurrentCampSource } from "../../../../domain/components/camp";
 import type {
   FearActionPolicy,
   NightmareWolfActionPolicy,
@@ -14,8 +14,8 @@ import type {
   NightmareShadowReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, type EntityId } from "../../../../core/domain/identity";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { Camp, type EntityId } from "../../../../domain/identity";
 
 export const NIGHTMARE_SHADOW_ROLE = "nightmare" as const;
 export const NIGHTMARE_SHADOW_POLICY = "awa_nightmare_dreamer_v1" as const;

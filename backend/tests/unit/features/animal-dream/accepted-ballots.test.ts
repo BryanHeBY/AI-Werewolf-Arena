@@ -4,7 +4,7 @@
  * 只调用真实接受票 owner，不复制校验算法、不运行完整对局、模型、传输或档案复现。
  */
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
 import {
   installAnimalAuthority,

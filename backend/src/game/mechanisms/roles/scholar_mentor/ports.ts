@@ -5,8 +5,8 @@
  * 原生目标记录仍在原已付事实时点；资格查询没有 commit。生命周期仅在原晚点移交清理，manager 传当次参数。
  * frame 拥有原体／生命、加成完成、abort 与 roster 失败；本入口不额外付款、开夜或写第二份记录。
  */
-import type { EntityId } from "../../../../core/domain/model";
-import type { World } from "../../../../core/domain/world";
+import type { EntityId } from "../../../../domain/model";
+import type { World } from "../../../../domain/world";
 import { scholarMentorBlocks } from "./night_frame";
 export { readModifierState, scholarMentorStateForRole } from "./state-slot";
 export { ScholarMentorNightUnit, scholarMentorNightTerminal } from "./night-lifecycle";

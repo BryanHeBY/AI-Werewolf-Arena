@@ -3,7 +3,7 @@
  * 输出用手写存活、遗言、检查点和胜者的独立预期核对精确复盘；原窗口声明及临时输出字节保持。
  */
 import type { VictoryPoint } from "@ai-werewolf-arena/game-contract";
-import { ActionWindow, Camp, DeathCause, Phase } from "../../../../src/core";
+import { ActionWindow, Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { whiteWolfScenario, type WhiteWolfScenario } from "../../../support/features/white-wolf-king/builders/scenario";

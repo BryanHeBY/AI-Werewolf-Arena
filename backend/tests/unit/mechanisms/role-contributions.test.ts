@@ -20,7 +20,7 @@ import {
   createRoleComponent,
   renderRolePrompt,
 } from "../../../src/game/observation/role-presentation";
-import { World } from "../../../src/core/domain/world";
+import { World } from "../../../src/domain/world";
 
 // 编译约束限定各 facet 的消费权限，不执行这些反例。
 // 自定义展示测试自持原当前阵营；ctx引用和晚回调顺序仍是字面oracle。

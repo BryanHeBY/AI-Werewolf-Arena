@@ -10,7 +10,7 @@ import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_d
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
-import { KnightDuelWindow } from "../../../../src/core";
+import { KnightDuelWindow } from "../../../../src/domain";
 
 for (const [id, size] of [
   ["six_player_knight", 6],

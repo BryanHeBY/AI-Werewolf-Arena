@@ -5,7 +5,7 @@
  * computed here.
  */
 import "../../../../src/app/bootstrap";
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 
 export interface DemonNightChoices {
   knife?: number | null;

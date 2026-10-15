@@ -4,7 +4,7 @@
  * Output and oracle: Explicit raw response, consumption and malformed-prefix rejection retain both original parallel owners; no response is synthesized or removed to repair the expected record.
  */
 import { expect, test } from "bun:test";
-import { Camp, ActionWindow } from "../../../../src/core";
+import { Camp, ActionWindow } from "../../../../src/domain";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import type { ReproductionRecord } from "../../../../src/recording/reproduction";

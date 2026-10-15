@@ -4,8 +4,8 @@
  * Output and oracle: Exact null/false visibility checks preserve the existing projection boundary; no cycle, transport or recording executes.
  */
 import { expect, test } from "bun:test";
-import { Phase } from "../../../../src/core/domain/identity";
-import type { GameEvent } from "../../../../src/core/domain/events";
+import { Phase } from "../../../../src/domain/identity";
+import type { GameEvent } from "../../../../src/domain/events";
 import { getDefaultAgentEventVisibilityRegistry } from "../../../../src/game/mechanisms";
 import { buildAgentVisibleEvent } from "../../../../src/game/engine/agent_visible_event_feed";
 import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";

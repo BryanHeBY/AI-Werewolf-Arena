@@ -6,9 +6,9 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World } from "../../../../src/core/domain/world";
-import { Role, Camp } from "../../../../src/core/domain/identity";
-import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { World } from "../../../../src/domain/world";
+import { Role, Camp } from "../../../../src/domain/identity";
+import { COMPONENT } from "../../../../src/domain/components/names";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";

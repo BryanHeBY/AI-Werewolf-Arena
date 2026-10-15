@@ -7,8 +7,8 @@
  * 不是所有 private 扩展键的归档格式；状态知识和 public schema 不授予行动或资源写权限。
  */
 import type { Pair } from "@ai-werewolf-arena/game-contract";
-import type { RoleComponent } from "../../../../core/domain/components/role";
-import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import type { RoleComponent } from "../../../../domain/components/role";
+import { snapshotPlainData } from "../../../../domain/plain-data";
 import { FRAGRANT_PAIR_POLICY, normalizePair } from "./state";
 import { positive, exact, pair, write } from "./owned-state-data";
 

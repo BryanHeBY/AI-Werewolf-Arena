@@ -3,7 +3,7 @@
  * Input: Original scenario/transport/locale matrices with handwritten check, roar, awakening, survivor and last-word facts.
  * Output and oracle: Literal private-view, inheritance and chain-final outcome assertions remain attached to the real replay; expected survivors are not generated from another World.
  */
-import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { HIDDEN_CASES, hiddenWolfScenario, type HiddenScenario } from "../../../support/features/hidden-wolf/builders/scenario";

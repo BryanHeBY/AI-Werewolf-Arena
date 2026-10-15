@@ -13,8 +13,8 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { Role, WinCondition, WitchSelfHealRule } from "../../../src/core/domain/model";
-import type { BoardConfig } from "../../../src/core/domain/board";
+import { Role, WinCondition, WitchSelfHealRule } from "../../../src/domain/model";
+import type { BoardConfig } from "../../../src/domain/board";
 for (const priority of ["awa_wolf_priority_v1", "awa_good_priority_v1"] as const) {
   for (const selfHeal of [WitchSelfHealRule.Disabled, WitchSelfHealRule.FirstNightOnly]) {
     test(`finite paired board round trip preserves ${priority}/${selfHeal}`, () => {

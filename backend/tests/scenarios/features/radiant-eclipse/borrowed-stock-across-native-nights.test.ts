@@ -1,9 +1,9 @@
 /**
  * Scenario tests drive complete controlled NightPipeline and PhaseManager cycles across borrowed/native stock. Inputs are original literal bottle/shelter/dream matrices from a public board fixture; handwritten unchanged native histories, expiry and resource outcomes are the oracle. The supporting board file/URL and test-only original stock mutations are retained; no model or generated expected result runs.
  */
-import { PotionType } from "../../../../src/core";
+import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
-import { Phase } from "../../../../src/core";
+import { Phase } from "../../../../src/domain";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
 import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";

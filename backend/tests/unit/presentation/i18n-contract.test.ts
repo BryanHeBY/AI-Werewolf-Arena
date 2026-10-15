@@ -14,7 +14,7 @@ import {
   validateDictionaries,
   type MessageKey,
 } from "@ai-werewolf-arena/game-text";
-import { ACTION_STAGES, Camp, Phase, PotionType, Role, WinCondition } from "../../../src/core";
+import { ACTION_STAGES, Camp, Phase, PotionType, Role, WinCondition } from "../../../src/domain";
 import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { WOLF_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf/profile";
 

@@ -5,7 +5,7 @@
  * module assertions invoke no model or complete-game driver.
  */
 import { DefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
-import { ActionWindow, BoardConfig, WinCondition } from "../../../src/core/domain/model";
+import { ActionWindow, BoardConfig, WinCondition } from "../../../src/domain/model";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 describe("ConfigRenderRegistry", () => {

@@ -1,0 +1,165 @@
+{
+  "executor": "/root",
+  "baseCommit": "6cb97e6acc52f35bc094fb67e9badb681230ec6a",
+  "firstReady": {
+    "path": "docs/refactor/generated/domain-owned-layout-source-ready.json",
+    "sha256": "9d53c8afa6ba8987866e8678cf23d2d34cd40dea1be71f49a4fa12fc5d398c6c"
+  },
+  "finalReady": {
+    "path": "docs/refactor/generated/domain-owned-layout-source-ready-final.json",
+    "sha256": "7ee0116aded4f4c7029fe52e81be2b49cabeb33a43603902683249a9c03081ec"
+  },
+  "checks": [
+    {
+      "name": "full-backend-source-tests-scripts-types",
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --project backend/tsconfig.tests.json --noEmit > /tmp/awa-domain-owned-layout-backend-types-output.txt 2>&1",
+      "launchCell": "9327cb",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/domain-owned-layout-backend-types-output.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sessionId": 2466,
+      "terminalCell": "d5d616"
+    },
+    {
+      "name": "complete-module-program-and-physical-binding-proof",
+      "command": "bun --no-env-file docs/refactor/generated/domain-owned-layout-proof.cjs > docs/refactor/generated/domain-owned-layout-proof-output.txt 2>&1",
+      "launchCell": "613da9",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/domain-owned-layout-proof-output.txt",
+        "sha256": "962843fb82c21a474bc8e3dd421a5e35df6da4bbcbdf3c52802f585880e0c5f5"
+      },
+      "sessionId": 17585,
+      "terminalCell": "723dab",
+      "result": {
+        "path": "docs/refactor/generated/domain-owned-layout-proof.json",
+        "sha256": "9a1d29a543abb0012b8d6da89e28fdca8ce7941a122cf60d0abd7856ef51b26c"
+      }
+    },
+    {
+      "name": "tooling-types",
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --project tooling/tsconfig.json --noEmit > docs/refactor/generated/domain-owned-layout-tooling-types-output.txt 2>&1",
+      "launchCell": "7637f7",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/domain-owned-layout-tooling-types-output.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sessionId": 45134,
+      "terminalCell": "77535f"
+    },
+    {
+      "name": "only-affected-historical-source-identity-case",
+      "command": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/architecture/engine-fingerprint-review.test.ts --test-name-pattern '^strict replay rejects a finalized initial archive with the historical narrower fingerprint without rewriting it$' > docs/refactor/generated/domain-owned-layout-historical-identity-output.txt 2>&1",
+      "launchCell": "d6b817",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/domain-owned-layout-historical-identity-output.txt",
+        "sha256": "c8eeac0e664e578449e48be4dd2ced2ff86af3a0ca40f3a4782dc3c362d12f10"
+      }
+    },
+    {
+      "name": "actual-public-api-bootstrap-delivery-fingerprint-and-fixture-declaration",
+      "command": "bun --no-env-file docs/refactor/generated/domain-owned-layout-runtime-probe.ts > docs/refactor/generated/domain-owned-layout-runtime-probe-output.txt 2>&1",
+      "launchCell": "0080a1",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/domain-owned-layout-runtime-probe-output.txt",
+        "sha256": "70231f7cf45bc08d5b710bcdadaeb69c9055eac2279d22c05ade464af0a0d9e0"
+      },
+      "result": {
+        "path": "docs/refactor/generated/domain-owned-layout-runtime-probe.json",
+        "sha256": "4ede593880e1c4850e9b5f0eb76db46da42bef7bfd72426d6452aac4ee6f91e0"
+      }
+    },
+    {
+      "name": "only-inventory-label-review-successor",
+      "command": "bun --no-env-file docs/refactor/generated/domain-owned-layout-inventory-label-proof.cjs > docs/refactor/generated/domain-owned-layout-inventory-label-proof-output.txt 2>&1",
+      "launchCell": "4a1343",
+      "exitCode": 0,
+      "firstAndOnlyRun": true,
+      "rawOutput": {
+        "path": "docs/refactor/generated/domain-owned-layout-inventory-label-proof-output.txt",
+        "sha256": "cf3b8f4349a2d4ab8bd24d7ccbb22d4855c08c372b2895a4d3fd685d6d7c369a"
+      },
+      "result": {
+        "path": "docs/refactor/generated/domain-owned-layout-inventory-label-proof.json",
+        "sha256": "01c8945b74ef7d22f5f047b860ccb0255e9108e36020fdfa9f996acf483b626a"
+      }
+    }
+  ],
+  "preparation": [
+    {
+      "cell": "dbf4f0",
+      "sessionId": 41813,
+      "terminalCell": "d608f9",
+      "exitCode": 0,
+      "output": {
+        "path": "docs/refactor/generated/domain-owned-layout-route-prepare-output.txt",
+        "sha256": "cf5fd00db320b9c8e0eefcf900bcfd9ab9514ab714d0e11e2da73644cbd99401"
+      }
+    },
+    {
+      "cell": "91ffd0",
+      "exitCode": 0,
+      "result": {
+        "path": "docs/refactor/generated/domain-owned-layout-application.json",
+        "sha256": "7647b4b5f44fc0181495a4d00727d27b56c417d50dce9cce1b5981bbfc6b99f1"
+      }
+    }
+  ],
+  "proofSummary": {
+    "actualGitBefore": 1148,
+    "controls": 6,
+    "movedModules": 42,
+    "retiredFacades": 1,
+    "routePrograms": 1144,
+    "explicitAdaptationFiles": 6,
+    "moduleEdits": 2836,
+    "physicalBindingCorrespondences": 8868,
+    "normalizedTypedTokenNodeArraysSame": 1144,
+    "wholeInverseRawOutputs": 2288,
+    "normalizedActualESNextOutputs": 1141,
+    "nodes": 1222585,
+    "arrays": 210935,
+    "leaves": 1537834,
+    "currentPublicSources": 1955,
+    "oldCoreIncoming": 0
+  },
+  "runtimeProbe": {
+    "baseCommit": "6cb97e6acc52f35bc094fb67e9badb681230ec6a",
+    "actualBootstrap": true,
+    "publicDomainIdentity": true,
+    "crossEntryDeliveryAndAliasIdentity": true,
+    "firstSettlementOnly": [
+      true
+    ],
+    "movedInputs": 42,
+    "currentInputs": 875,
+    "oldInputs": 876,
+    "retiredInputs": 43,
+    "oldSourceHash": "1495c831dbfe92bab6cfd34317018e374c7bdc55a13fec446f3191d25a597674",
+    "currentFingerprint": {
+      "sourceHash": "a7497137c37cba214c3f2bcbd3c9b60cb30683d93fc51a0a887ab1ecfd78b612",
+      "lockHash": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288"
+    },
+    "actorTransportDeclarationSHA256": "bb3d3bb946b416574d9583587c92156014d138a057edc59e55eca123678499fc",
+    "limits": [
+      "仅装配初始 World 和独立请求交付弱表探针；未推进对局、创建归档或运行全量 gate。",
+      "旧 v2 身份按实际固定 Git 树与完整 blob 计算；与历史六根指标分开，不允许严格复现豁免。"
+    ]
+  },
+  "scopeLimits": [
+    "全后端与tooling类型绑定首ready；后继仅inventory两处指标说明字符串和一条中文注释，未重跑类型。",
+    "历史单例1 pass、11 filtered、0 fail、6 asserts，不冒其它11例重新执行。",
+    "真实runtime probe在inventory说明修正后执行；完整领域与生产模块仍与首ready同字节。",
+    "没有全局门禁、完整对局、两构建七场差分或计费模型执行；最终物理布局汇合后集中验收。"
+  ]
+}

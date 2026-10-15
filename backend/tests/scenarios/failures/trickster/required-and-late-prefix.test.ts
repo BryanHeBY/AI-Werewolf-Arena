@@ -8,7 +8,7 @@ import { tricksterScenario } from "../../../support/features/trickster/builders/
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { type PlannedTurn } from "../../../support/transport/contracts";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
-import { Role } from "../../../../src/core";
+import { Role } from "../../../../src/domain";
 for (const night of [1, 2])
   for (const failure of ["missing", "late", "invalid"] as const)
     for (const transport of ["llm", "acp"] as const)

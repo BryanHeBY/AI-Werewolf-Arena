@@ -17,12 +17,12 @@ import {
   WEDDING_KNIFE_STAGE,
 } from "../game/mechanisms/roles/ghost_bride/night_stages";
 /** 文件说明：根据板子角色集合构建夜间阶段列表。 */
-import { Role } from "../core/domain/model";
+import { Role } from "../domain/model";
 import { RoleCatalog } from "../game/mechanisms/roles/catalog";
 import { getDefaultRoleCatalog } from "../game/mechanisms/roles/role-catalog-assembly";
 import { NightStageHandler } from "../game/mechanisms/stages/night/contracts";
-import type { World } from "../core/domain/world";
-import { COMPONENT } from "../core/domain/components/names";
+import type { World } from "../domain/world";
+import { COMPONENT } from "../domain/components/names";
 import { allNightAbilities } from "../game/mechanisms/roles/abilities";
 
 import {

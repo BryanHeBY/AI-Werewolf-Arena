@@ -2,14 +2,14 @@
  * 负责将引擎请求适配为 ACP 会话和会话绑定的 MCP 行动。输入为 World、解析后的选项与请求；输出为已接受工具及回合记录。默认生产回退只把脱离玩家观察交给策略，显式特权驱动单列测试接口。原回合 owner 持有期限、取消和关闭；ACP 文本与 update 不提交游戏行动。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { inheritRequestAlias } from "../../../core/domain/request_delivery";
+import { inheritRequestAlias } from "../../../domain/request-delivery";
 import { allowsActionFallback, resolveTurnConstraints } from "../../../game/gateway/turn-constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
-import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain";
-import { World } from "../../../core/domain/world";
+import { RoleComponent } from "../../../domain/components/role";
+import { ActionProvider, ActionRequest, ToolCall } from "../../../domain";
+import { World } from "../../../domain/world";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,

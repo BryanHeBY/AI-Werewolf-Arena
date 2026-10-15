@@ -3,7 +3,7 @@
  * 输出为空动作或首个命中的原动作；脚本命中即从本驱动队列移除，不能据此视为领域已提交。
  * 仅管理本地脚本副本，不读取 World、调用模型或推导角色权限；特权基线决策归游戏驱动。
  */
-import type { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain";
+import type { ActionProvider, ActionRequest, ToolCall } from "../../../domain";
 
 /**
  * Noop 行为提供器：用于测试“无人行动”场景。
