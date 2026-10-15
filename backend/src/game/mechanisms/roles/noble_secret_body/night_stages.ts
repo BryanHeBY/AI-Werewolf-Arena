@@ -1,3 +1,8 @@
+/**
+ * 负责夜之贵族／觉醒愚者两段夜间选择流程。输入为当前上下文、原候选及必需工具回复；
+ * 输出为领域回执、本人事实和安全录制。await 后及 gateway 后复验请求 scope，提交先于事实和录制；
+ * finally 关闭请求，晚发布失败保留已付前缀。不接管契约、秘密之身或资源算法，这些写权仍由本族 authority 持有。
+ */
 import type { NightStageHandler, NightStageContext } from "../../stages/night/contracts";
 import { Phase } from "../../../../core/domain/identity";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
@@ -40,6 +45,7 @@ async function execute(ctx: NightStageContext, kind: "body" | "noble") {
     });
     if (!valid.ok || !valid.sanitizedCall || nobleBodyRequestScope(ctx.world, request) !== scope)
       throw Error("noble_body_required_action_invalid");
+    // 领域commit返回后才发布事实／录制；finally沿原路径关请求，晚发布不退款或重选。
     const receipt = commitNobleBodyChoice(ctx.world, scope, valid.sanitizedCall);
     ctx.events.push(
       kind === "body"

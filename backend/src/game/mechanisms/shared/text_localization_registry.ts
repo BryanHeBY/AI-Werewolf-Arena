@@ -1,6 +1,11 @@
-/** 文件说明：广播文案的可注册翻译注册表。 */
+/**
+ * 负责广播文本名词的可注册覆盖与语言回退。输入为角色／胜者／结束原因／瓶型贡献和查询语言；
+ * 输出为最后注册字符串或原词典结果。String 转换保 caller 行为及部分写入；默认实例惰性缓存，
+ * 自定义空串通过 nullish 规则保留，不据角色名推导真实阵营、重写事实或授予受众。
+ */
 import { roleName, term, text, type Locale } from "@ai-werewolf-arena/game-text";
 
+/** 四类覆盖表按原类别／Object.entries顺序逐项安装；不是事件payload或身份权限的副本。 */
 export interface TextLocalizationContributor {
   roleNames?: Record<string, string>;
   winnerNames?: Record<string, string>;

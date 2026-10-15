@@ -1,5 +1,7 @@
 /**
- * 负责预言家已授权查验事件的脚本展示贡献。输入为事件、是否允许私有输出与语言；输出为原查验文案，仅在原私有输出许可下渲染。不会查验目标、写历史或扩大事件受众。
+ * 负责预言家已查验事件的脚本展示贡献。输入为事件、是否打印私有输出与语言；
+ * 输出为原查验文案，仅在该选项开启后读取／渲染结果。无有效 reader 结果时按原 own-data／JSON 诊断回退，
+ * 不查验目标、写历史、证明 payload 授权或扩大原事件受众。
  */
 import { text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
@@ -15,7 +17,7 @@ export const SEER_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
         const raw = Object.getOwnPropertyDescriptor(event.payload, "result");
         if (raw && Object.hasOwn(raw, "value")) label = JSON.stringify(raw.value) ?? "?";
       } catch {
-        /* Invalid non-JSON diagnostic values remain unknown. */
+        /* 无法 JSON 编码的诊断值仍显示未知，不把异常值解释为额外查验结果。 */
       }
     }
     return [

@@ -1,9 +1,15 @@
+/**
+ * 负责追踪原生毒药一次真实标记写入的贡献回执。输入为原 World、目标和 StatusMarks；
+ * 输出为不透明 scope、native／unknown 封存结果及后续未知写查询。捕获、提交、封存各保原组件和 revision 规则，
+ * 不替调用方 add 标记，也不把未知毒误归原生来源；异常不回滚此前付款或标记。
+ */
 import { COMPONENT, StatusMark, type World } from "../../../../core";
 import {
   statusMarkSnapshot,
   type StatusMarksComponent,
   type StatusMarkSnapshot,
 } from "../../../../core/domain/components/status_marks";
+/** 私有回执固定原组件／写前 revision，提交后记录写后快照，封存再固定当时组件和 revision。 */
 interface Contribution {
   world: World;
   targetId: number;
@@ -15,7 +21,7 @@ interface Contribution {
   sealedRevision: number | null;
 }
 const contributions = new WeakMap<object, Contribution>();
-/** Capture immediately before the trusted native poison stage's single add(PoisonMark). */
+/** 在可信原生毒药阶段那一次 add(PoisonMark) 前立即捕获组件和标记快照。 */
 export function openNativePoisonContribution(
   world: World,
   targetId: number,
@@ -37,7 +43,7 @@ export function openNativePoisonContribution(
   });
   return scope;
 }
-/** Does not add a mark. A source must be tied to the one actual native mark write. */
+/** 不添加标记；只接纳同组件、实际新增一次 revision 且标记 present 的贡献。 */
 export function commitNativePoisonContribution(scope: object): void {
   const c = contributions.get(scope),
     after = c && statusMarkSnapshot(c.marks, StatusMark.PoisonMark);
@@ -57,7 +63,7 @@ export interface NativePoisonContributions {
   readonly native: boolean;
   readonly unknown: boolean;
 }
-/** Seal before DamageResolution clears marks; later native stock/life qualification does not erase unknown toxins. */
+/** 在伤害结算清标记之前封存；原已有或新增未知毒不能因后续原生库存／生命撤权而被抹去。 */
 export function sealNativePoisonContribution(scope: object): Readonly<NativePoisonContributions> {
   const c = contributions.get(scope);
   if (!c || !c.committed || c.sealed) throw new Error("demon_hunter_poison_mark_seal_invalid");
@@ -66,6 +72,7 @@ export function sealNativePoisonContribution(scope: object): Readonly<NativePois
   if (!snapshot) throw new Error("demon_hunter_poison_mark_unavailable");
   const native =
     current === c.marks && snapshot.present && snapshot.revision === c.committed.revision;
+  // 旧标记已 present 时，即使这次原生写匹配，也必须同时保 unknown，避免吞掉其他来源。
   const unknown = snapshot.present && (!native || c.before.present);
   c.sealed = true;
   c.sealedMarks = current as StatusMarksComponent;
@@ -73,7 +80,7 @@ export function sealNativePoisonContribution(scope: object): Readonly<NativePois
   return Object.freeze({ native, unknown });
 }
 
-/** The real pipeline consumes sealed marks synchronously. Any later present write is a new unknown contribution. */
+/** 真实管线同步消费已封存标记；封存后仍 present 且组件／revision 已变的写视为新未知贡献。 */
 export function lateUnknownPoisonContribution(scope: object): boolean {
   const c = contributions.get(scope);
   if (!c || !c.sealed) throw new Error("demon_hunter_poison_mark_not_sealed");

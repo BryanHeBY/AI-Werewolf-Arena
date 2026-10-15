@@ -1,12 +1,8 @@
 /**
- * Owns Wolf Beauty's existing private-state slot and ordinary charm history writes.
- * Inputs are the original role or captured state plus the accepted nullable target/day;
- * outputs retain the same stored reference, assignment order and partial writes.
- * State data retains death-link policy, nullable target/day and nullable-target history.
- * Callers own target qualification, charm binding and public/private publication;
- * this owner never repeats those checks, refunds effects or changes death policy.
- * Pure payload/read data structures belong to the neutral role-state data owner;
- * this leaf retains original live references and concrete installation/commit operations.
+ * 负责狼美人原私态槽及普通魅惑历史写。输入为原 Role／捕获状态、可空目标及 day；
+ * 输出保持对象同引用、槽安装和字段写序。选择依次写 targetId、lastActedDay、再 push history，
+ * 中途错误保留已完成前缀；目标资格、魅惑绑定、使用登记与发表仍归调用方。
+ * 纯 payload 形状归中立契约，这里不重复校验、退款、改变死亡连带政策或重算真实阵营。
  */
 import type { WolfBeautyState, WolfBeautyReadState } from "@ai-werewolf-arena/game-contract";
 
@@ -26,7 +22,7 @@ export function getWolfBeautyState(roleComp: RoleComponent): WolfBeautyReadState
     WolfBeautyReadState | undefined;
 }
 
-/** The caller retains every preflight and subsequent use/effect/publication operation. */
+/** 调用方保全部前检和随后使用／效果／发表操作；此处三次写中途失败不回滚。 */
 export function recordCharmSelection(
   state: WolfBeautyReadState,
   targetId: EntityId | null,

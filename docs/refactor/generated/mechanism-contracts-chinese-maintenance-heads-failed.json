@@ -1,0 +1,45 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "f56139dd1c8083e1ccba965423c44deb905ba42327cf765482a5986db33860cd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/request_envelope.ts",
+      "sha256": "2642840d9137862d5192e63e8ab53ae485c1f055f0b146d50df6bc0fe7935634"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/requests.ts",
+      "sha256": "3a0a4245198a6eed57097df01c269bd30e0edae3eb6fa4b7e01be22ec668feec"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/requests.ts",
+      "sha256": "b73661de47785933abbb8119c80f2e74efc795f5d054b525981da1d9cba5c645"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+      "sha256": "464d79b90f244b5742a73146edca5f93e4346e5a76d9a2ea5e298c81bb3d7a04"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night_stages.ts",
+      "sha256": "f1acdceaaaa6d11e0002e38786c87c14250df551b5bef710166e0c5d4e7092a9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/requests.ts",
+      "sha256": "711f5f3fec6ece7f928d5aa6507f38c07e4342db47b3636d0bfbbfb171f29689"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night-lifecycle.ts",
+      "sha256": "92e285647dd9a8d335a36933b3c83f4cd91130f5e100ada9273bfc654ff8294e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/script/contracts.ts",
+      "sha256": "91b98588840e26cb7009e033b0247b2daa5da840dc0540d24ba5679b1e8a5854"
+    }
+  ],
+  "sourceReadySHA256": "3130d51d2521fdea028458862caf84bf8cd9becf65a2a939a35a045187f86481",
+  "documentationBase": "4f775d49f85eccc8eeb4da9c67517048879cadc4",
+  "documentationPaths": 731,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

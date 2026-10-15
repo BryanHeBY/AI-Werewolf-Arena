@@ -1,0 +1,2079 @@
+{
+  "approved": true,
+  "baseCommit": "4f775d49f85eccc8eeb4da9c67517048879cadc4",
+  "sampledSourceReadySHA256": "eb51e444db0129b6bb0d019d8da84c8cadc542865a44198c83b3f10f0680feba",
+  "programs": [
+    {
+      "path": "backend/src/game/mechanisms/common/participation.ts",
+      "beforeSHA256": "bce027c66c758dd5ab59acf27399c9a406cc7b932c18313cf9fe5c3bf28ed7c5",
+      "afterSHA256": "7104d0273e7b91b570006880bf4d6b44053accf8b914c267da25de3398d7e8f5",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 262,
+      "nodeArrays": 36,
+      "noncommentLeaves": 309,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1205,
+          "sha256": "d352526d064585790ffd7fa526f31d1f52fc5ba0471fe6c6c384130c8cae6f4d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1546,
+          "sha256": "8469d568840ca2a4ef1c0b0d527963e4a0665aac73214d84de393e98d06b83d3"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/contracts.ts",
+      "beforeSHA256": "8cbf551218571121d61b871ef5ccdaff6105d771b19ebc32e67c1cee32a511c8",
+      "afterSHA256": "ea27a07ce3f2f40740d99443b1933df28041b82bac393ea1c872f7fd8172c679",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 89,
+      "nodeArrays": 14,
+      "noncommentLeaves": 112,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "beforeSHA256": "4a1c0e71ecb0b3509d2cd4355dc6e4e113d6bb1df952a2cf46c09c5cd8d14b3b",
+      "afterSHA256": "0dae43e548ea339195b6dda51fe0e4b5ac0ee801e913a4a2405d61daf6c4bec3",
+      "exactCommentEdits": 3,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 1080,
+      "nodeArrays": 160,
+      "noncommentLeaves": 1278,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4958,
+          "sha256": "37c6a8255029d1d8b288e8e6a890ce9c0864438f039c5208b1671a445294bcdb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5607,
+          "sha256": "4414c908f8690a379dfc1ac71cddd002b9127b244fa849608e60b1d377c86b42"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/event_presenters.ts",
+      "beforeSHA256": "9346f2a11601bc999036b6f88460b030d5dd286175f88d28f451868dfbab8f75",
+      "afterSHA256": "f17ff061fbaa3635c4360c083826f1dc6eab060f529117ef75adf22376149bb5",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 118,
+      "nodeArrays": 20,
+      "noncommentLeaves": 149,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 756,
+          "sha256": "618344fbe387d77bfec315cb029dc19b12001bcf94622110d0c43ce5a871b121"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 975,
+          "sha256": "2039d0506d0923f0f68b89a4b893def46ef8cdee49e5d3c132f2fda871489fef"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/night_death_timing.ts",
+      "beforeSHA256": "cabe36264d6986e8540ff5691c710c822223215e9c7d38c18f4c9d68f84f2bea",
+      "afterSHA256": "f295d8db0cdae2eac5d6229678e6b8cc69c158d935b4d607545c60c25e183b9a",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 43,
+      "nodeArrays": 6,
+      "noncommentLeaves": 50,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 147,
+          "sha256": "3355657e26fc60461f42b2a55927ac1b98963816757f721f955732e81da70c43"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 272,
+          "sha256": "fb7dbb956879fbd82f479c76728e181e396e94081894bb1d862af13e9b29f3ac"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/night-lifecycle.ts",
+      "beforeSHA256": "a0dbe6a4747a6d24dd34f51a88a2462dad3e025a7a8295582a29eb1791c0909d",
+      "afterSHA256": "d1338852eb2ebd6a74cd1a4598af61d82c8d7d8265131c7a80535e3b7a1ccf2d",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 166,
+      "nodeArrays": 30,
+      "noncommentLeaves": 212,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 870,
+          "sha256": "8ae10781b7141e1a0dbb0b8594d7c539767a71c621847325b5245a54e60611a3"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1051,
+          "sha256": "82672f7fae4d4d30644974b0715b1d103823ada87412109ba79323b5699aa24f"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/request_envelope.ts",
+      "beforeSHA256": "f2753b3b0fabf403fdae1176eafe1cb661579f3920882e6b2720d75af66982af",
+      "afterSHA256": "31576bf9dc6ed11eae251b3dc014f577b8772dc5fa32c09b5d896bac61f2b502",
+      "exactCommentEdits": 7,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 1168,
+      "nodeArrays": 175,
+      "noncommentLeaves": 1371,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5219,
+          "sha256": "8191cf502e27dde86a54faef1d1991a638c9e8e93e9f12f9160809b039a4b144"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5878,
+          "sha256": "ce37b36c69c148d3d5d4a9ca39a41a3c02c69baf43c7b8b8ffa9a7d099a5108a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/requests.ts",
+      "beforeSHA256": "1a2b2cfc46de24c0824d0869a2c126e523233f12e6cf3ca47f467b59788723e8",
+      "afterSHA256": "4eb33378582ac1fc065e20c760051e9c7d744773366013049cb20c71790fbfd0",
+      "exactCommentEdits": 3,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 935,
+      "nodeArrays": 142,
+      "noncommentLeaves": 1138,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4650,
+          "sha256": "da5a3735f0137d1b7130982475ffdd22a9d3a3d6c7e68738fbf60fed6927faf3"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5265,
+          "sha256": "6f01d82a15152e223769331d56358a0635c167632c49379faeeab55405f8f469"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/tool_names.ts",
+      "beforeSHA256": "4606455eae95362ef54bcc58d1295c615562d6b362c6c2ef5eac4cb0217b6ca9",
+      "afterSHA256": "f65804d0d4da82d42997c7f44c604cecc2fabf2636806345790139036bcb45ba",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 26,
+      "nodeArrays": 5,
+      "noncommentLeaves": 31,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 130,
+          "sha256": "06107587c377a84c47487a6cdd036f55fabe0c4e26df85f8b7942b9160fd4f8b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 240,
+          "sha256": "4eee7d3ff0d4054af86ce63095179db7fcb4e4fb60238c0a2235596b9d88729b"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/tool_specs.ts",
+      "beforeSHA256": "6a03509b4f8cec561e7c96e44f39f9c50fe3c95bc54d7ecb59159a73968f919d",
+      "afterSHA256": "febf2d3582c2dc082340d9308bf1a6b3ed4307740b73ad7ad9cbb09c443b9430",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 109,
+      "nodeArrays": 18,
+      "noncommentLeaves": 120,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 602,
+          "sha256": "2ca128c5aabfbae5604788b48740ca6e8b33b35d76bee846114f4c3a742a8335"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 719,
+          "sha256": "d88f173f9bc7caa155ed2a838ab3dc021422e1ed30403c1c781d9ecca37ffc3e"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+      "beforeSHA256": "c0899fe0b6d2f125d53ee587a0e663ad8e5382e8251ae4d00360206ff1f85922",
+      "afterSHA256": "97e0de4eb0682288a10ec20b97990340869e58771a8b9ee7d96cad6c43cd5298",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 7,
+      "nodeArrays": 2,
+      "noncommentLeaves": 8,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 58,
+          "sha256": "c9ea04929b7de6cf346d3de46ad2dc02335cc6cef9b3768fa516d11f701ff2f5"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 303,
+          "sha256": "b94a0b5e17b2e968f6e49078bc570b8f08c2fcc401dbb23c33185b017cf0a1a1"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_ability_activation.ts",
+      "beforeSHA256": "9ccb7844205fe7559c313722bc60ec6895f7df08f7c08bf6adf9c70bafba716c",
+      "afterSHA256": "cf2e2f6f3277acf8f1846bbc9d524b358e21282dc7d4cd5fcfe9ffb9af028530",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 201,
+      "nodeArrays": 39,
+      "noncommentLeaves": 258,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1092,
+          "sha256": "5d79898a791f35475830ec5c35e8b8ffa6f2d2ab459eec056193c8d9e27145af"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1327,
+          "sha256": "1b5441d221ba218cd23c7e3b2ffb4db4d94848a163d53d7b68094a23c9058da7"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_action_policy.ts",
+      "beforeSHA256": "73f385fb2b976d8a4500319901a14f1dc993c59a7d8c4895da9a82e04b060669",
+      "afterSHA256": "9a47e62d5005ea56877867cbd49859f3f046150403d5537641d3cad83fad0183",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 173,
+      "nodeArrays": 31,
+      "noncommentLeaves": 207,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1029,
+          "sha256": "d06e554bfd04a09bd938969d0341ab1296b5c8b2fb76924a6e3a12a60a064e5c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1272,
+          "sha256": "5d6169c8886dc9ad50b629ba51d69896e4db89db2e1cb51548bc8781da02ea2a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "beforeSHA256": "cb43b97eb1df5ccaa54b36faf023ae2f90de787aa292a10a2ab065093837469e",
+      "afterSHA256": "0c2918792eb4a720c3de0c3c307912d32d975886e28a8de63f61ec4ca8706304",
+      "exactCommentEdits": 7,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 510,
+      "nodeArrays": 62,
+      "noncommentLeaves": 585,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2502,
+          "sha256": "f7ca319ba60a2447dcbe17c2a9184fd48cb1cb1c9577443cbb178b9693c892f4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2943,
+          "sha256": "848e9781b4252da9f0a48faffa5c077b0a87cc03885ec331905fd0e547dc6377"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/heal_contribution.ts",
+      "beforeSHA256": "834ed90db2d0a7e6635f713a03ffde168322233704f5fe9fdfa3c8bc4740a249",
+      "afterSHA256": "bfab151819faface519b98dc515756e7cbf49647749290d6e7283a1c8b34dd85",
+      "exactCommentEdits": 7,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 510,
+      "nodeArrays": 62,
+      "noncommentLeaves": 585,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2488,
+          "sha256": "7eb9dca7982b21a3c6a7679760b318e5b6cd73284340d3d84109938587fc0634"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2921,
+          "sha256": "a590d8273ce66ad197fadb625a55251682490506b0e3ec5406c49f326fffe4db"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/poison_contribution.ts",
+      "beforeSHA256": "0846902ed221487ec489face6b4d0277b2216e73ce4471c23287712070de5601",
+      "afterSHA256": "fedd22fcab5eaa0ad6b99ff697549c68ee2ee4dce5f903f53047850076a66839",
+      "exactCommentEdits": 7,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 510,
+      "nodeArrays": 62,
+      "noncommentLeaves": 585,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2516,
+          "sha256": "f592dac4ac0ca02fa014c9205b3c39c9709aa6db18519ee1e0cc0b870460a916"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2965,
+          "sha256": "63467b6fcbdbc333e8e705ba508aa6eb752752603900b0ab886ae85260b2b394"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/night-lifecycle.ts",
+      "beforeSHA256": "c8ea7ab97baa2735e9e5c5b817338549b4d1673b352e0a92cb205963f0c1a30c",
+      "afterSHA256": "422115c9a232347d43377429b66289c93bc637b5f7fe9a79aa2c98ffb07e8220",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 408,
+      "nodeArrays": 63,
+      "noncommentLeaves": 517,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2410,
+          "sha256": "689f5e6507a87a407aa962e646639e6e39e8eb494c167b0181b9cb932ee701fd"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2635,
+          "sha256": "e393ee4cd1b54df1f114a6f406c32cc293efb2f486b951f8bd891872f47f978a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/night_stages.ts",
+      "beforeSHA256": "f0f06560342b016cf8ddecf1960a4c622339e0f8d46d88b6623cfbbffefeab65",
+      "afterSHA256": "d405785503b7ded861c5442166743610e935b0950ecce3bbab9f54a8cfe93606",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 475,
+      "nodeArrays": 66,
+      "noncommentLeaves": 585,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3395,
+          "sha256": "610f83c1283c35fdacf673dfb75ec87b1b3364672cd0771bc02cbb6ec1f7330e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3617,
+          "sha256": "3e97014edc0ca76ad86008e09254121ee44cdf90bce1fe61abb36f9ebe2ae30c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/requests.ts",
+      "beforeSHA256": "52d430b447a50907e65b181985449e7d4ffa017c203bfd690034d375d704ef7b",
+      "afterSHA256": "f635b62954837d663aef5b787f7b7440efa4f610e05db7762679e7f419db6c0b",
+      "exactCommentEdits": 4,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 1593,
+      "nodeArrays": 189,
+      "noncommentLeaves": 1774,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 7252,
+          "sha256": "3fe2f5c6bc9c74792542618d9f011e827f673912315994655b06a0140d05100b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 7913,
+          "sha256": "b2d80cbb0a223a10e0f2215c43297976c9e4b19ecce91db943c48d771baee638"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/target_scope.ts",
+      "beforeSHA256": "caf2305ea1ac13d07525dac952ec264814b1a29bf7036da56b71fcf5c1f6f84e",
+      "afterSHA256": "f6fb00d3a66c62ee69c2f0f619f82031922b08bc06d93f9c9914cc3909f2f179",
+      "exactCommentEdits": 3,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 234,
+      "nodeArrays": 24,
+      "noncommentLeaves": 270,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1108,
+          "sha256": "8b28fcce4b3d0382c83cb732580078852be7abea12b2c277b792841da90e11ab"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1772,
+          "sha256": "b397d0da403ac68263f868efcb903d5f54e39d0a2615748e426c213bc476436e"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/state.ts",
+      "beforeSHA256": "9f3fe7cb522ab8db059650e4d84afe0ba0aa03c56285ba7dad73ea4484d74be7",
+      "afterSHA256": "17f3f9a5b91617bbcfafc0bd50a2f40119edc4f0a3f4550c19315265feda69b1",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 101,
+      "nodeArrays": 18,
+      "noncommentLeaves": 117,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 290,
+          "sha256": "05c07890e58385a256a94d87367139a160d6593abb7afc75f96413684f858448"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 509,
+          "sha256": "22cfffac8279a474e587c7e2dedcbbcdf5f8416735850cfb068bff3bf3302d22"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+      "beforeSHA256": "ca561e4b5ca761ca92eb651672d092c563fb7ffb1a97a505c6922f18b73bb72d",
+      "afterSHA256": "ccda85ce8186e503df81ae97ee1209fcc6aaaf6116b60465069e264f1cc46984",
+      "exactCommentEdits": 3,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 471,
+      "nodeArrays": 67,
+      "noncommentLeaves": 580,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2742,
+          "sha256": "e83b1ad7bafc7df3085e2296028cbac650934deb5e17a3081b3cdbc06604bc4b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2990,
+          "sha256": "efd66a63250d9286a2793aa0e29c201e3921490ad9d5f2d213bc8d1db0b2fa7c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/event_presenters.ts",
+      "beforeSHA256": "059889a0ed1bbca4e15e3da63a530f6e6d747a85c414d644bae5ddcd1da35d8b",
+      "afterSHA256": "ad9db74284a8ab4809a125dd39d8b1652afa6b455c3b97c185ebf4105992cf9d",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 89,
+      "nodeArrays": 13,
+      "noncommentLeaves": 106,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 560,
+          "sha256": "84346cd901b2c2069a3b038bd2890d2e78b435e59119c8b27e839a765f586852"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 719,
+          "sha256": "f4cdf0ae68849cd26da7647d81700f9604589afff7a1a0cf7668d637d94aa3ad"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/phase_stage_localization.ts",
+      "beforeSHA256": "17ce7cc5ea9d8a056789aaaf66c4ec0260395654f2b3448c739b1825af3c1e8e",
+      "afterSHA256": "1108066fd4e22bb8a83ae1f0744e4ce53c194bbbd7b1035958f173c7bdf58cf1",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 32,
+      "nodeArrays": 8,
+      "noncommentLeaves": 40,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 189,
+          "sha256": "3f1b20caed223133edf86926adb88c3084b7897b93e32fc99695b5f0a0681b15"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 347,
+          "sha256": "fb41fff9a8ed7b7212b9510037c2e6f7068f3c1c84f52f821baecea7f3a33f41"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/tool_specs.ts",
+      "beforeSHA256": "277789507b134e550dd2adf3c2a67f73e7be2ae73bc744f2988ac6e90c45a01e",
+      "afterSHA256": "4bcecb79d07ba2283cb808fa307768818a1827235d119ecccfa35558b65a40d6",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 55,
+      "nodeArrays": 12,
+      "noncommentLeaves": 76,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 446,
+          "sha256": "c7927b08bbab61862a0de190810d4c232ce8480a4d5e675edd971ae9c269bebb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 553,
+          "sha256": "c9dd613ff5c3f2e353a4031f10989f918644d69de9da56cba0c85490155731f3"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/state.ts",
+      "beforeSHA256": "d3151c208452cfe3f0a19e82fdd899e1fdb09e498b1b2ea2aa626751e85b165d",
+      "afterSHA256": "8189b6104459e604ad6453801bcc085f5a6b54c0c66b965a16bfff1b194ddecc",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 107,
+      "nodeArrays": 19,
+      "noncommentLeaves": 126,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 302,
+          "sha256": "ecc8b1af2cc4b6f3e86e8458f252ca8ebe6de12e4ee237d6092ad386c1a35459"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 533,
+          "sha256": "2c9fb6e0930b016de7c8581e880177c2685c3e5c9e9d1f516b28b508b4fce131"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/event_presenters.ts",
+      "beforeSHA256": "b612490d2ddde52ef28b40d20bb2beab3110450099e95b7f33b42f2b1c501310",
+      "afterSHA256": "ff39765ef5d39246d1e0aff5dde376bc12233d44a89e94d565f9d4418525820b",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 50,
+      "nodeArrays": 9,
+      "noncommentLeaves": 61,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 274,
+          "sha256": "8ea40cc3b1c87f12287762cb4600981fdfa5c9ca1c10d03e35408087b2a2edaa"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 418,
+          "sha256": "c95b6ffd7ac9d3bf39e1c8f66e45322ae1db8fa2ea385775750d2598a3dc5d33"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/phase_stage_localization.ts",
+      "beforeSHA256": "e4c3c56863b9863d43954171a22b4e51566ea884e65972c91d62dd1145451bb8",
+      "afterSHA256": "330544a0575d0f665602812952593227ecca61037a9c701648e247de03920400",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 32,
+      "nodeArrays": 8,
+      "noncommentLeaves": 40,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 202,
+          "sha256": "4afd8d1f5dbfb39b094a0a907005727670b0c576c29ed2f4e8cb60184269e627"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 361,
+          "sha256": "78f8af01d010a4e7b6ef22ff1a0db2674b9dba814d3b08d4acd6d273874e19ae"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/tool_specs.ts",
+      "beforeSHA256": "7319b514c275d147fea96d43a904726e8df5d6d8bb1e6a86ed6569da09aa351f",
+      "afterSHA256": "3e005d521f348496835ef035d4caf959146c5272a0b025a098d56199b2d202a4",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 8,
+      "nodeArrays": 2,
+      "noncommentLeaves": 10,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 76,
+          "sha256": "108fa2304a658007823f3d6a74ff632fa49593ac0137312e338c3dc94f375c69"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 298,
+          "sha256": "5539c526b218667d0a0d358561a5beb985bf4cdb7e83c4df625ccd671f3c69b6"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/event_presenters.ts",
+      "beforeSHA256": "22c0f42c5c5c04e695c2f47ab0cef2b79d0a3e0a775eafd8fc829fffbdf4f3f0",
+      "afterSHA256": "91d33f9284065f47bc6453b9b8f406f690edebba6c3ef4352a72a2c432850a25",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 43,
+      "nodeArrays": 9,
+      "noncommentLeaves": 52,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 223,
+          "sha256": "7cb41a3da73aa5f4d53ca1e68b848cce8c9b15886bb511752c4dcaf5dae67c9d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 366,
+          "sha256": "6dd296d59a7360846d0970df0f4c21470a09a28e1d57d415a5790e4394eb817b"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "beforeSHA256": "e7fc96c56fd078b469cc121c33447cb370c7c0c91d8c21488659c03f0fc3319f",
+      "afterSHA256": "1bfc3b7b677c632a6a386ab2610153516cf7d3f4102d204626f32fd68a5ec15c",
+      "exactCommentEdits": 7,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 2579,
+      "nodeArrays": 351,
+      "noncommentLeaves": 2981,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 10898,
+          "sha256": "2e84e3982ea6b3b5d04c64644ad022412a9257bb3aa8e4faf0fcc2c081749e75"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 12157,
+          "sha256": "b88d04dfb25f3e8379ec6664f86e9f3dcda22d91502b4a5f6bc789090dd62605"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/tool_names.ts",
+      "beforeSHA256": "c74ecad0abfd4f4c5b029c5a7ec7462aeb136130939c782d115fc20a10e92272",
+      "afterSHA256": "87a581462fda1ca660b2a06e5a1884cf085875cdb3b5a429c09c8cfc811c1a4e",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 28,
+      "nodeArrays": 5,
+      "noncommentLeaves": 35,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 183,
+          "sha256": "8204fe4c93a4e61f292d6276e19a2da26cf69f1511d20a95d3cedc2d763ceb30"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 295,
+          "sha256": "00ffa9a923944eaf77f881227745c0c6d2fc5abcdae5081ad9e670c1758d0901"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/tool_specs.ts",
+      "beforeSHA256": "93ac332f0fdde904039aaeac4026559727db038e6d473ec524794ca923148e97",
+      "afterSHA256": "60269f04dda42e9f4ee2e41fd83401d52b528cd9fb61f28823f919aa5fdb1eec",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 158,
+      "nodeArrays": 23,
+      "noncommentLeaves": 175,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1123,
+          "sha256": "1218b062985e30999cc2b9f748c0bc8259d304d1dbd9857777e9fb578f901dc1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1240,
+          "sha256": "49af57d7d11af871341085a65373353c3734f02edaea18c53e5421569ebffd85"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts",
+      "beforeSHA256": "1a8941cc306e0f4f3ba28d22dcfe84776fa035c4e2f8d31fd3e25795f0a5069c",
+      "afterSHA256": "e4f6a2858808d5c66322311cf309e7f693df0e218fe1b91e252ebb25927c4ab4",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 65,
+      "nodeArrays": 14,
+      "noncommentLeaves": 78,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 394,
+          "sha256": "a58f6f6cf7788f294b52553bf96843ac1f84c6f5ea003fff4ceb1db335ac8885"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 705,
+          "sha256": "a3a7ac96bf67042084d77217a1c34fabcf1688ebdbf98cc6c06b4f43169461aa"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night-lifecycle.ts",
+      "beforeSHA256": "e1ab39f6897ff52925e99d744f5e86549d9b2ddb2f4a841de99d7505d9d84f7e",
+      "afterSHA256": "a53f4fa26d83d52ca716176336238dddd07b9fd51672d8d6082c6ed1c6f32130",
+      "exactCommentEdits": 4,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 225,
+      "nodeArrays": 46,
+      "noncommentLeaves": 290,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1215,
+          "sha256": "c9e10b91360b61e88127a0eb8e85da9aae7af419f7adfd9943f7fb1b47011ede"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1440,
+          "sha256": "1a9e465c37d5dacf1b93083b8590f699bf46169c95299db4d47bc1efc53bad91"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "beforeSHA256": "ce62ab9cd95eacf38058a82422b4ddca704d550b23de39aa8dea786a6a13a263",
+      "afterSHA256": "90c151ef025b1285bbc194d03a03f268fffc28369d9149683840f055a53bd439",
+      "exactCommentEdits": 8,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 3736,
+      "nodeArrays": 532,
+      "noncommentLeaves": 4402,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 17285,
+          "sha256": "569c25bc726fc29bfb511f8364f456b9f29430184f48ff12bc65a776580a9bf8"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 18502,
+          "sha256": "63d5ba7fcb1277fefd59133f362658556f890704f9a386949ff83399fda13ce1"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+      "beforeSHA256": "6b9355fdb6eab41e12d3da58ca5a9addf3d591f84f36dcb17bf20a69385da845",
+      "afterSHA256": "dc66272988a82f49dd09c74502f5cedb2910f85d2098fa1f4f628337f9b9e495",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 785,
+      "nodeArrays": 119,
+      "noncommentLeaves": 955,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4915,
+          "sha256": "c3849e3c11c8e2952931f3db890101af2aa4548b9b922500f041bc720663ea8f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5243,
+          "sha256": "711159ec5e10b1f85096b64d0e3b3971da59cb53bc54115b73e35ec748f925aa"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+      "beforeSHA256": "49aae448082d5cc57c43bdd543d7b4dc25b871d85ecd2da1a69de5c3201a68aa",
+      "afterSHA256": "8cf83de4269b4956dca816320ee8c6284c6fca3f7f17fa983a04aff2b4fb1830",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 86,
+      "nodeArrays": 19,
+      "noncommentLeaves": 112,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 401,
+          "sha256": "0e92a8f4dfe1abc82c50562d5af4a49ff57d34ae00244d30a3a7076cd4ba1710"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1328,
+          "sha256": "89d9e52cdc28b4b2bba6890b811548e591f4ff06ffc471b5612bf3525edd5836"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-actors.ts",
+      "beforeSHA256": "4aefaf6c4e2021dc5b3ae3448f30a8771b44c36295efc3d5240b3f7ebb9c7e35",
+      "afterSHA256": "5f6b8a32261bd698b277d43d9f2cef25506e2779d61c1f9adbdd174f2084d76e",
+      "exactCommentEdits": 6,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 352,
+      "nodeArrays": 68,
+      "noncommentLeaves": 447,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1543,
+          "sha256": "4b6f64a1296377f09a7f27a1b63eec6f2cc0d224ecb36fb1fd6a9546bca8ed20"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1809,
+          "sha256": "fcd2d01c4876d1923451bc4c6dc44f1a6747fbeb6f89aa22ffd65b6e6ca526a5"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night_stages.ts",
+      "beforeSHA256": "654b16899aaab1e68bcb659a75222d1dc3dc620c96b0ec4d5aee8838ae7b3689",
+      "afterSHA256": "62ae12801f6dfc2ef979e61959481c51fcffebb05e6508e6c266afb1af4e5647",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 504,
+      "nodeArrays": 67,
+      "noncommentLeaves": 612,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3603,
+          "sha256": "ef6d0db6d48ff97ba8ec176a7b9c0197901d18656fb48e9230c2b71363fd7bee"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 3832,
+          "sha256": "70b8e5c1a61de64ba98f4b9460e7e90c47eac8c28f0abcdea7c2514cba01cdbb"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/requests.ts",
+      "beforeSHA256": "dd13cafb0fccbe7bf81fc727d2efdc3f2e256f27209bfd32a6bad7255d3bc4f0",
+      "afterSHA256": "589de5cef736025c71a471d48e4e4c86d43a48bf9fbef2c3dde37d6d58070973",
+      "exactCommentEdits": 4,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 2033,
+      "nodeArrays": 224,
+      "noncommentLeaves": 2266,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 9423,
+          "sha256": "10da49735b9afc65b89b70845d9a18e571a38d3d69d040f98227c5c048c55479"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 10251,
+          "sha256": "04ee5d08c70623a1101c79204351a0a6722946da83cec62831f0d3c164899634"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night-lifecycle.ts",
+      "beforeSHA256": "c753d3239d9299e1246c49920a483df7fe966bc915b11abff37507e4da0f001f",
+      "afterSHA256": "961134ba28c6bddf926c99c656af860bd8b839619c39d9726c83ddeec0efab23",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 124,
+      "nodeArrays": 24,
+      "noncommentLeaves": 162,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 617,
+          "sha256": "089791353c92f9bc93ca9bc4049d37d987f2cfe00ccdc8bc22b44138e149cd2c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 802,
+          "sha256": "e070d60b1323b051826801588b1ee5c6e149603e56cc40fc6d02500f80e0d240"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "beforeSHA256": "8d2c0c1c659f17520f3759bc1c221ee66680e0917495fe0d12431af76ca260e9",
+      "afterSHA256": "6ab43c6a42f446c452b876edbbda0d5cdf9bbff82d1ec5dbf3d4f8123b1bf9cc",
+      "exactCommentEdits": 6,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 4575,
+      "nodeArrays": 604,
+      "noncommentLeaves": 5334,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 19897,
+          "sha256": "ca1932ecc1b168c1735b7f3911146e8740937984e4b90af393a2ca0478a9fd0e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 21320,
+          "sha256": "fd7eb75b639901cac7c3181e59f167b6573b1b8c17a8107085071ae92d4f52a2"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night-lifecycle.ts",
+      "beforeSHA256": "6f1f3f2155d2e8187e6d87c40ded13e16f38cc454a480400dd57edc61b753940",
+      "afterSHA256": "caf16692b24649410665ce96a516b88e7bde5c135b2cf467fa0303882660dc80",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 120,
+      "nodeArrays": 29,
+      "noncommentLeaves": 153,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 741,
+          "sha256": "1a0da3a2009d4136c64c1991cc603db145e23a3ab4357ba6b812491e331ca448"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 980,
+          "sha256": "f5cbeeb12445e6f08f93e770c8ac9954f5c9e52eb0f1e918d67017b9747e7a40"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/event_presenters.ts",
+      "beforeSHA256": "203f2db5196d0dcd52f2f7acf81cdf6926f32e3727d0f8ea6401c41aedb8327a",
+      "afterSHA256": "44fd8e2c8528412b48a255fdb4217394bf1b1b8c23454e92e37dcf059f486761",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 147,
+      "nodeArrays": 26,
+      "noncommentLeaves": 185,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1121,
+          "sha256": "829832e307774a5263d42c454d6bbe8ce29a7003c6144850793871415d10a3a8"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1309,
+          "sha256": "ff29093e69e2322ece94de4ce8e2e4d8541b2e803b9ec2a9a9887749ac176f11"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/phase_stage_localization.ts",
+      "beforeSHA256": "91cfb143a8aa96fc23f71bce2f3de99095a6d1861f2bac806277f6e372c226cb",
+      "afterSHA256": "0f8123f4df2fd2c84460fce46a997610d3fcf3223618fec4e4a8307e736b4398",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 32,
+      "nodeArrays": 8,
+      "noncommentLeaves": 40,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 186,
+          "sha256": "5bdc43e4f990c83b0c9cd5098da8d50acd6dd1a56ec1fac3c259fd5c1b89128b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 343,
+          "sha256": "813cba4c176a00282c5b3dfff1f680c9bb4e022dc85fc344ac204c2beaab1631"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/tool_specs.ts",
+      "beforeSHA256": "6776dab95a3702006f0de8cfacc03d5f1f5ef4c79e2c2eec494286ae4d5e0b6b",
+      "afterSHA256": "8e4f627b21bc39c36a5f5f5cdb97b1bdbd9ad277eacf9caefe350b451871f0df",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 46,
+      "nodeArrays": 10,
+      "noncommentLeaves": 62,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 370,
+          "sha256": "1ec5ff1dbc3e2b8367d8cfacb1a094b827afd5f5d85cd93a81dc12a25fcfaf29"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 476,
+          "sha256": "6518a2f19685a87cfa03e46669d3cbc86803e6a3dfa5e910b93ced8e61587300"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/effects.ts",
+      "beforeSHA256": "61ef19f60a4d801257571bb96b227db79d7bb7a985624ed422e93891191caada",
+      "afterSHA256": "f6c724b8dab71f6346d7fb242e42fb26046b30f3a086ed111017eaf96606d256",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 146,
+      "nodeArrays": 22,
+      "noncommentLeaves": 187,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 844,
+          "sha256": "4014ce65cf601c6906ee6d87a9edcf0b936edc2b06b4994a9a51802f9b0b54bc"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 988,
+          "sha256": "f757fd64c4e6ba8209a9a3fc5ab9db55b89360fd61a25558da8c5377bfd334d9"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night-lifecycle.ts",
+      "beforeSHA256": "9e800454793a72a875cc1bf86987293b8d35843a0947cd1660d5eb282583b30f",
+      "afterSHA256": "a9543e0b981054f6cbfa29dbcfcd86575c25f51f9a496c2d22ba303907aa683b",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 120,
+      "nodeArrays": 29,
+      "noncommentLeaves": 153,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 723,
+          "sha256": "bb44f0d428c2dc938029f8bb96e8da4b56ceca2fd7de9229e9cba0f0c67339c3"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 958,
+          "sha256": "53ca905c69a973438232205d177c8c27d34f47ca2f81203b443d02440f76540c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts",
+      "beforeSHA256": "c2ba07a5a689a47f0f7316e62d97cb0f944c8ad0d3323540b7b76b29e6337dbe",
+      "afterSHA256": "c0864b853694d428fe091b719e0c621e3856ddad2caa64737397c553278a2574",
+      "exactCommentEdits": 3,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 349,
+      "nodeArrays": 41,
+      "noncommentLeaves": 373,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1338,
+          "sha256": "c7f872078831dcc532ce0a1701041e1b432370925c9ed6228e948d523c04ce55"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1534,
+          "sha256": "b8afd585daebe0c0b0918cd1f079d561548443ff3c4b97c24f5f3bf31f9bdbf0"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/config_normalizer.ts",
+      "beforeSHA256": "752570c38c6866c7e4bff5d810fd9ccb49e4b61ec8318329aef7a343ab70313b",
+      "afterSHA256": "5fb12f2ddf7410293f7158cc0a5d4cb37276cee28b0ec7d97c327c9c835dbdf7",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 90,
+      "nodeArrays": 14,
+      "noncommentLeaves": 99,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 427,
+          "sha256": "3b2a7d481ebdeb9646642509181bed880a5bbbaff944a2369f03c69780ca7e04"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 553,
+          "sha256": "302ae3716600957b5a9d0eeeec624cd898aa511a81c8b720d38055ade3c35ecd"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/event_presenters.ts",
+      "beforeSHA256": "6526b446735603ea8b92b91d6dbaf2bf006a3497fa446b5afa7cecf612a9e7e3",
+      "afterSHA256": "6e244b8acbc6f0d0b7ab8ae3da17b6359c86f6927a51a2e61a7f88df982c44de",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 108,
+      "nodeArrays": 19,
+      "noncommentLeaves": 141,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 806,
+          "sha256": "b7617e0bc59e9d1ea01312921dab0f63e74f8640c737d96faa2d6860beb85651"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 994,
+          "sha256": "dbc0b6ddf317377ef4f35859f6713d2e1ff61473f48cc83938cf7bc811adcfa7"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/llm_repair.ts",
+      "beforeSHA256": "374a203a34db9d16839e27e3e5003a129976b360fc4555ca91810a3d0c57ce31",
+      "afterSHA256": "44d2a0b3d35320cb9aac4c2f63dfc2f2b0b8ea780ddf8f2b1edf59da4750fa1c",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 87,
+      "nodeArrays": 16,
+      "noncommentLeaves": 104,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 525,
+          "sha256": "b9e92271ca5cd0cc6eb6d55c4fc9199330e982f2c1f6e697236a233a40cf3957"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 672,
+          "sha256": "b3ea557fec20cd1e3eeb4cd74a061f6a282c0252cead0fefc20a7e979170bab9"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/phase_stage_localization.ts",
+      "beforeSHA256": "c7ef8e50d62ccd7f4f6e1973218469349b24bf0e399656e6a3a4de188731f43b",
+      "afterSHA256": "0906453b49ff46d8c98374055b1623291bc5c8ec5a759085c8f32ecd0c3a2e68",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 32,
+      "nodeArrays": 8,
+      "noncommentLeaves": 40,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 189,
+          "sha256": "61ca3dad14a406101fe90b05277b18f3a7ceea47d2df5748c7bc1c1eee7f9b5c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 347,
+          "sha256": "5507f77185b2ffc180531e8fa4a76207ad5041d059b1cb8ec99c5104f42f1d43"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/policies.ts",
+      "beforeSHA256": "15ebc56f69903fdb22fcb56dee06e6f8e97ff2c777b28d34121f40c0091a5fc1",
+      "afterSHA256": "edff671a2522e472e7dea03950e7af05a87c0aca2c86a60ce52e4eceaeebdbee",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 210,
+      "nodeArrays": 18,
+      "noncommentLeaves": 219,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1089,
+          "sha256": "95c1baa24e4247a9e814ea1830fbe186e27364aa45528962d414a00d32c60a25"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1320,
+          "sha256": "f3aabfffaa4605604233b43700a8b4e3b8961719110ca39543cd33d52d5688e0"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/tool_specs.ts",
+      "beforeSHA256": "117486e224e29904bf7be88d048f0c7f024178c19dc5acb39d135f1634154f18",
+      "afterSHA256": "a1b141c529703321568f9138551312939aa7d051617a469a44ec2407fce2c642",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 134,
+      "nodeArrays": 21,
+      "noncommentLeaves": 163,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 990,
+          "sha256": "d053134b6e50a8306ab926815f278215f7ad8fee62504d3f1b703f9a82dc2659"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1196,
+          "sha256": "f502ccb062be3d872be3c35b1985eba16d4040d51713fe217856a64fd0bae4fd"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/event_presenters.ts",
+      "beforeSHA256": "7c5467901a0aaf2f30779e4ad9fba930bd19cbd413f90d1d7c58aa7ea32ebf59",
+      "afterSHA256": "59f84f24e0f2578599ae7ccf616cd06a403f6533393c11933c57d02e799aafd3",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 280,
+      "nodeArrays": 43,
+      "noncommentLeaves": 361,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1838,
+          "sha256": "dca9e1c57bc04ef0dcdfb6bf6b49c084b8b0e88d88ecd9f26f7607dd9bef81dc"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2129,
+          "sha256": "48f8e91eb081c730b0620a6f4a6b01594c87ee686638e7e847a85862752aa4f6"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/llm_repair.ts",
+      "beforeSHA256": "3be706dced9ab3299d2ac442e5cfb1ed1ec8ef4a1e927ae5b39815a2324d3923",
+      "afterSHA256": "d126a80b05ae33af95855d4276ceb917bbb264c070ab06219aa3e87eb740625e",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 126,
+      "nodeArrays": 23,
+      "noncommentLeaves": 152,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 720,
+          "sha256": "9b7fcefcfeb7f9bf60613ea98015f2c55868ffc134a29a2ed1e42b759ec8eed0"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 844,
+          "sha256": "a4da529b4c9381499467701c5d0b0bc4608b9f8d76db877a363bf073321199e2"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/phase_stage_localization.ts",
+      "beforeSHA256": "86d2f11d907d678d47e6c187560d9917a7fbb29ef77c7fd20ab264236292d5fa",
+      "afterSHA256": "2fbe336bd77df8cbde64697b2bc11968baa7bea7f034be8e48a61323e13a5857",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 39,
+      "nodeArrays": 9,
+      "noncommentLeaves": 51,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 264,
+          "sha256": "b300aac193c54847bd5afaba3ee0d2e80cbb512c96a1c769506b9da67f106b03"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 438,
+          "sha256": "38dd3aabecdc74e340b53caf6e2d6eb86cc3dbba927849370cc8e0df015e150b"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/tool_specs.ts",
+      "beforeSHA256": "e9eb18adca972be2f2af71ebda6144e7cb53a4445e0920a9feff8a9bd613995d",
+      "afterSHA256": "ddec9f1377fec3031da8b6bb4c68a189a73b980ef9e251b439918243c29a1072",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 228,
+      "nodeArrays": 38,
+      "noncommentLeaves": 305,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 2056,
+          "sha256": "a30783030445c77a8f52e6e804ef2344861b1d7a5db93889558149483648764b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2248,
+          "sha256": "25c376aedbd804a028f122e52adbf0d69c20ac4f00f147ac8aa4ca02126efe6b"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "beforeSHA256": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "afterSHA256": "a0cae017dcd888977693f9bec737d77a17aaa85beef70584ceedad384743d2fb",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 156,
+      "nodeArrays": 25,
+      "noncommentLeaves": 175,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 389,
+          "sha256": "0fb5f9a808d5f8ab804c2c7b106a477b94ddb1776810e92c46e31443fcfc00ee"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 596,
+          "sha256": "5e532fbafc20e6f1134f4547f51426fd30b1716486a3f4de5bd864fa37133634"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+      "beforeSHA256": "6cbfebad52535ce4a2859be33ecceb693f8056e917923485b474288c25e48b3c",
+      "afterSHA256": "acf11166709dd627a3ef15fe6a055e99132edf8e32fb5a0ad2e73051ade9dde3",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 117,
+      "nodeArrays": 29,
+      "noncommentLeaves": 152,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 702,
+          "sha256": "fb466b0671794563b821e9aa9fba675b98fe8275e7d15dc67703486f47d5dec9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 939,
+          "sha256": "8b93629396e96b3afae8da41074705608f53da70feaf9cb6d4d26ad03cf1e402"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/seat_mapping.ts",
+      "beforeSHA256": "07631a14a16f28654cb45fae5548227a3269399ed31aabeacc2b47e6c39da834",
+      "afterSHA256": "f8d2babbf938184b9bb45b3bf3aa53c42d41106072077c7b8fc7c993146c7edf",
+      "exactCommentEdits": 3,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 315,
+      "nodeArrays": 38,
+      "noncommentLeaves": 355,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1312,
+          "sha256": "52d5902b80423221de9d27527c0b200fd0e0b583d506f8fb8850832a6dceafd3"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1462,
+          "sha256": "81b0e7d6409f306d764f5f2cb95ef07e782103418df38f522f591efdc26bcda2"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/script/contracts.ts",
+      "beforeSHA256": "e4cac78ad5738500021300a3554ff5144f224a53642bd9133d9fc028ea7ac6c8",
+      "afterSHA256": "ffbdfc2f9fba6631f5d593270b6ad0b7a4305bf9e33cc56557ad7e0b45dfcdd1",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 137,
+      "nodeArrays": 27,
+      "noncommentLeaves": 170,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/config_normalizer.ts",
+      "beforeSHA256": "280b3ba6ab87e00e2fa6095e355605a6d2ac347ca80a27e68aa4529da44482b4",
+      "afterSHA256": "14451fa27629391de712b495bc5df96c69f92e1fe8be5761634e9483646b1cdb",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 60,
+      "nodeArrays": 11,
+      "noncommentLeaves": 69,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 321,
+          "sha256": "2a6951778270d39334360a69146fb6e55feff74593788f03d9e5746b76190e5c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 443,
+          "sha256": "5a7c75bb802d3862a05c166c0cfedb6025b610e6ff3a278f817b5ecd19765205"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/shared/phase_stage_localization_registry.ts",
+      "beforeSHA256": "cef2b66f757f555986eb2c8d1a754fc306f79f56ca4959d2eedbff9fcc802021",
+      "afterSHA256": "c6e0cf618367120545a3ae62cfe6b1b64b72d4ecbdc432675741de653c8b708e",
+      "exactCommentEdits": 3,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 449,
+      "nodeArrays": 90,
+      "noncommentLeaves": 627,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3508,
+          "sha256": "893061d0c7ef3a62fb7b689ea6764dada651b5cbc78b78c03224bcbe69da634a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4311,
+          "sha256": "3458dd45546fecc5bbe004f18a58d5a814c02d2bc85caf42e3aea3f545d18109"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/shared/text_localization_registry.ts",
+      "beforeSHA256": "15d2028c271178ff7545339bd1a8f7bf29d66345d53b927af0d6c9d47d3c8557",
+      "afterSHA256": "2d8bf432913be54d91f2e42d92e6606b5b7e8892c9ab28a6b208ecff7ea71b74",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 402,
+      "nodeArrays": 91,
+      "noncommentLeaves": 544,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1950,
+          "sha256": "160b90a56257539a5aa53ee637f1e233a8a654c813938355c947fa713f24ca95"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 2292,
+          "sha256": "97f3ada3121a33bbaf4566a0a164660966b9a82104c83e8e631036bcb68caae6"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge.ts",
+      "beforeSHA256": "e5fc2bf2f9401585b42c8ad6da4623038248a2a12f15760a86b4da013e255d4d",
+      "afterSHA256": "9b674bcd48b51c9782f4606896b9d78cd97057786f6c79f77a01cb30eaa825a1",
+      "exactCommentEdits": 3,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 1072,
+      "nodeArrays": 128,
+      "noncommentLeaves": 1205,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 5457,
+          "sha256": "f9f0820c124f2f1122a35d84ba99fe640b465f7d1f10757eefb303db0b07c0f4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 6101,
+          "sha256": "65693dff8b5de047aabb4db63594f4264d06dc2c85cafba61b04a499d7a965d7"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/config_normalizer.ts",
+      "beforeSHA256": "bef16c8700565722600bc3716067a48890dcd8f2d9572cdd4d852e2e05b54413",
+      "afterSHA256": "4a1c46087002f2356de94496420d2314445837260bf52fe548c08875dcaebf4a",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 100,
+      "nodeArrays": 18,
+      "noncommentLeaves": 121,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 543,
+          "sha256": "c12b9c03068cb2d4659922d028a3238b546da00bbc91fddd86f70ed4e3076028"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 659,
+          "sha256": "bf355f8027b25d5cedabaf1666d0cbd9ae0894e3dc8d976ae4e54309bde8ef4e"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/event_presenters.ts",
+      "beforeSHA256": "23b3de138bb7d0f30c265e77d24cc3d2db14b97f5fd8e9e000e69cae8bd92722",
+      "afterSHA256": "3fc3edfcfa8e54129ac51116b802bf95ab2de551358c6ae47b47ce846d6c6263",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 646,
+      "nodeArrays": 97,
+      "noncommentLeaves": 824,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 3976,
+          "sha256": "2218c898d46b89342787ae224bce0bc574e3f9ffb1e95acf8cc267a1482f9fba"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 4484,
+          "sha256": "ba3b154cfd29dc96df06439fedf3a8e9edb9428a3f1418b9f7ab224a00c530fa"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/llm_repair.ts",
+      "beforeSHA256": "9184819470aff4716a04a72f105cccc3a543df303a6cdc5440b66185ca710e64",
+      "afterSHA256": "c0efb5287b55cd0c343a7498d3011852697ea419c9aa994dd1c010f74066d7f7",
+      "exactCommentEdits": 2,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 126,
+      "nodeArrays": 25,
+      "noncommentLeaves": 148,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 717,
+          "sha256": "8dbdf1c2b1b24984e3c6ed7f8c44e1b6dbd2e6767118dd4109cee4216f144c2b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 831,
+          "sha256": "db786647f75a9524efba33e794aaf7b64ca414c0d22a312957f87c02a21984d2"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/phase_stage_localization.ts",
+      "beforeSHA256": "31fa40560f4d7788275f0e6813a15e4e477589936357ef1cfc2e8fc233c01d64",
+      "afterSHA256": "bb87a08e56fce50ea32bb6c97f986ec3f6772cda345d1b7126f86c7a6543c0b6",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 81,
+      "nodeArrays": 15,
+      "noncommentLeaves": 117,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 737,
+          "sha256": "8d0d6620baf5defdfbf92abb2b3bef4a30b2bd0b33cf8fb42ca372eda4e34607"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1016,
+          "sha256": "d1ad25383042812f8c532806f6d3dce1ad6bb1fcfcb2d234d1ffad5286fbc46b"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/tool_specs.ts",
+      "beforeSHA256": "f3a15be1c30174aaa2da2be3e58819428bf9525684e7e3dc842cce3fbe695287",
+      "afterSHA256": "e9b8b12d457be937b5b79e8a98ea075b954331b411fc3152d1ba4fe4a32fa51c",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 152,
+      "nodeArrays": 29,
+      "noncommentLeaves": 224,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 1715,
+          "sha256": "9b0433e93812876fc56c0babb3beeac7f728dd56cc121846b6361a0f18ba285e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 1824,
+          "sha256": "b91875cb33fae05b219b6f7a34fa8964dae4729742fac198c1ec4b762c66296c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+      "beforeSHA256": "3f5e56f33889f1fa467e42be7c587bb05506a139b8331c84809700274ed2e9b9",
+      "afterSHA256": "f6459e866dacaf794795177c4649e3aef7395a5600b26e63fd07b55636c8a249",
+      "exactCommentEdits": 1,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 9,
+      "nodeArrays": 2,
+      "noncommentLeaves": 11,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 107,
+          "sha256": "a608d856e61df222a33e0c3db00698abf22f43dd7d438bc05fb659e2deb88e45"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 536,
+          "sha256": "3248102aa2620d230ab443e907bd983053d00cf12fff9197a859f18e1c3c201c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/default_specs.ts",
+      "beforeSHA256": "9cecaaa3a616a037e1b5f437d502d524871b6547e9c8aa40479697a699c3c219",
+      "afterSHA256": "914c6b9364337045d58b6fa4061bf5815022bdda2e6e61d6914f348f2768e8ac",
+      "exactCommentEdits": 3,
+      "wholeForwardInverse": true,
+      "completeTypedAndTokenTreeSame": true,
+      "typedNodes": 743,
+      "nodeArrays": 106,
+      "noncommentLeaves": 926,
+      "jsdocTypesAndTags": 0,
+      "protectedComments": 0,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "bytes": 4546,
+          "sha256": "6b4d185a5c67d64b7c27ca3320a6f10d3dff27a2e3db76ef13f3582295dba26a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "bytes": 5073,
+          "sha256": "16dba4d2a8570ca256c90d0601b2347035d4377d87b0ff3e51001c7ac2979702"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/llm/contracts.ts",
+      "mode": "100644",
+      "blob": "6e1512c3c8d9de16a1cf0aaf7eb81e02b4fd36ec",
+      "sha256": "e18af0356207a5fcb63e67b8811dae4e2c54e48881089f9829457f233f53f99b",
+      "bytes": 2998
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/helpers.ts",
+      "mode": "100644",
+      "blob": "fc438aea2c2eb673b41979ebc760b6626ae9398c",
+      "sha256": "a529d174fa8c5012d622a36fd420c25c9d0f7c924f3d4a52af0404c092f4a68d",
+      "bytes": 666
+    },
+    {
+      "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+      "mode": "100644",
+      "blob": "17d5442aa68b585564f14b6dd737e5caac18759d",
+      "sha256": "e33ac23895db0a6dcf2781057e2447ba2574ba7a15f132906ad985cf4dab5060",
+      "bytes": 2025
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan.ts",
+      "mode": "100644",
+      "blob": "57567354f6fd2415cf2a67267ccdf98b80e241bd",
+      "sha256": "9e725d34d8770f352d1c64253a89a170f8a1233e0f39c25ceaecbd08975073d0",
+      "bytes": 15253
+    }
+  ],
+  "summary": {
+    "sources": 75,
+    "exactCommentEdits": 178,
+    "typedNodes": 31714,
+    "nodeArrays": 4572,
+    "noncommentLeaves": 37657,
+    "jsdocTypesAndTags": 0,
+    "protectedComments": 0,
+    "wholeRawOutputs": 150
+  },
+  "countConvention": "AST／NodeArray／非注释叶为每个前态完整程序各计一次的累计；与后态逐项深比，不把两侧或递归次数冒distinct源码数。",
+  "limits": [
+    "75完整TS程序的AST/NodeArray顺序及trailingComma、完整非注释token树/叶文本、JSDoc类型/tag名和受保护原文保持；150份ESNext/CommonJS移除注释整输出相同。",
+    "没有类型检查、生产加载、行为测试、全门禁或模型调用；只转译实际源码文本。",
+    "完整精确正逆证明注释变换来源，不替代对中文语义及真实调用方的人工审查。",
+    "注释改变新构建sourceHash；不重写历史字段、指纹或精确内部档案兼容政策。"
+  ]
+}

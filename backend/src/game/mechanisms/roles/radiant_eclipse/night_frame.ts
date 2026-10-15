@@ -1,9 +1,8 @@
 /**
- * 负责明辉／黯月原阵容、吞噬借用租约及已付庇护／反噬效果的唯一权限。
- * 输入为当前能力原体和目标租约；输出为当次资格检查、封存夜效果与关闭事实。
- * 仅原匹配来源可以付款，借用关闭不恢复失效原体；payload、租约和原主抑制仍在此持有。
- * 公共 metadata 安装和退役写归共享实例 owner，原库存、抑制解除、生命校验和失败前缀不变。
- * 规则依据：docs/rules/awa-radiant-eclipse-twelve-v1.md。
+ * 负责流光伯爵／蚀日侍女原阵容、吞噬借用及已付庇护／反噬效果的本族权限。输入为当前能力原体与目标；
+ * 输出为当次资格、封存夜效果及关闭事实。payload、借用租约和原主抑制由此持有，
+ * 共享 owner 只持能力安装／退役写，状态槽绑定持原值与编码；库存、生命复验及失败前缀保原顺序。
+ * 行动 permit 关闭与已付效果 current 分开，不以关闭请求恢复失效原体。规则见 docs/rules/awa-radiant-eclipse-twelve-v1.md。
  */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -50,6 +49,7 @@ function factoryLife(life: AliveComponent): boolean {
     a.configurable === b.configurable
   );
 }
+/** 原体快照既固定Camp组件引用也固定值；首次死亡可保付费效果，不等于允许新行动或正常组件替换。 */
 interface Original {
   id: number;
   role: RoleComponent;
@@ -71,6 +71,7 @@ interface Original {
   nativeMetadata: readonly unknown[];
   nativePolicy: readonly unknown[];
 }
+/** 每夜唯一借用记录关联原主、原生／借用实例及抑制句柄；allowed表另保实际已安装实例。 */
 interface BorrowLease {
   target: Original;
   native: NightAbilityReadView | undefined;
@@ -78,6 +79,7 @@ interface BorrowLease {
   borrowedId: string | null;
   suppression: ReturnType<typeof openEclipseSuppression> | undefined;
 }
+/** 夜状态区分open/committed/aborted；已付庇护持原生命与owner闭包，不依赖关闭后的动作permit。 */
 interface Night {
   day: number;
   closed: boolean;
@@ -491,7 +493,7 @@ export function captureRadiantTurn(
         source.suppression?.isCurrent() === true &&
         n.sourceChecks.get(source.target.id)?.() === true));
 }
-/** Paid effects bind bodies and resources independently of a closed action permit. */
+/** 已付效果固定原体和资源，不因动作permit关闭而重判执行资格；仍核原夜未aborted及捕获实例／生命。 */
 export function captureRadiantPaidEffect(
   world: World,
   day: number,
@@ -585,6 +587,7 @@ export function closeRadiantNight(
   const b = boards.get(world),
     n = b?.night;
   if (!b || !n || n.day !== day || n.closed) return;
+  // 先落closed/status，再关原主抑制、退原借用实例和发表关闭事实；后续失败不回滚已关闭前缀。
   n.closed = true;
   n.status = status;
   const l = n.lease;

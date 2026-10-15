@@ -1,3 +1,8 @@
+/**
+ * 负责阶段名称贡献的顺序注册与语言查询。输入为 phaseNames／stageNames 及语言；
+ * 输出为最后注册的字符串覆盖或词典回退。注册时 String 转换可能执行 caller 方法／抛错，前面写入不回滚。
+ * 默认实例惰性创建，内建中文值在查询时可回退目标语言；这里只翻译阶段，不调度阶段或修改请求许可。
+ */
 import { term, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：行动提示中 phase/stage 的可注册翻译注册表。 */
 import { GUARD_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR } from "../roles/guard/phase_stage_localization";
@@ -7,6 +12,7 @@ import { WITCH_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR } from "../roles/witch/phase
 import { WOLF_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR } from "../roles/wolf/phase_stage_localization";
 import { SHERIFF_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR } from "../sheriff/phase_stage_localization";
 
+/** 贡献值注册时转成字符串并存Map；同名后写覆盖，字段可选不改变原遍历顺序。 */
 export interface PhaseStageLocalizationContributor {
   phaseNames?: Record<string, string>;
   stageNames?: Record<string, string>;
@@ -32,6 +38,7 @@ export class PhaseStageLocalizationRegistry {
     }
   }
 
+  /** 自定义非空且不同于内建中文词时优先；空串／内建中文值沿原词典按locale回退。 */
   phaseName(phase: string, locale: Locale = "zh-CN"): string {
     const value = this.phaseNames.get(String(phase));
     return value && value !== term("phase", phase, "zh-CN") ? value : term("phase", phase, locale);

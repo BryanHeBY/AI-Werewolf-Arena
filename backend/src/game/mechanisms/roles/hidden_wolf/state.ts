@@ -1,12 +1,7 @@
 /**
- * Owns HiddenWolf state data and access to its existing private-state slot.
- * Inputs are the role component and native state; outputs retain the exact stored object, including assignment-before-return behavior.
- * The inheritance coordinator owns the original qualification and publication order;
- * this owner commits only the selected inheritance flag, without a second state read.
- * The stored reference and checkpoint shape stay unchanged. It does not grant
- * current knife permission, change camp or refund a fact after publication fails.
- * Pure payload/read data structures belong to the neutral role-state data owner;
- * this leaf retains original live references and concrete installation/commit operations.
+ * 负责隐狼原私态槽的读写及已选接刀标志。输入为原 Role／捕获状态；输出保持存储对象同引用，
+ * 安装先写槽再返回，接刀写只改该状态标志，不再读一次容器。最后狼和已继承检查仍由调用方执行。
+ * 纯数据形状归中立契约；这里不授刀权、不改阵营或重写检查点，事实晚失败不退款。
  */
 import type { HiddenWolfState, HiddenWolfReadState } from "@ai-werewolf-arena/game-contract";
 
@@ -26,7 +21,7 @@ export function getHiddenWolfState(role: RoleComponent): HiddenWolfReadState | u
     HiddenWolfReadState | undefined;
 }
 
-/** Caller retains original last-wolf and already-inherited checks. */
+/** 最后狼与已继承检查仍在原调用方；这里只对捕获状态写已继承标志。 */
 export function recordHiddenWolfKnifeInheritance(state: HiddenWolfReadState): void {
   (state as { hasInheritedKnife: boolean }).hasInheritedKnife = true;
 }

@@ -1,0 +1,15 @@
+{
+  "scope": "未执行9源准备阶段保留，后继Root批准集中新增comment精度；不是已执行或绿色阶段。",
+  "sourceReady": {
+    "path": "docs/refactor/generated/mechanism-contracts-chinese-maintenance-source-ready-head-repair.json",
+    "sha256": "f7fcb217a0413511be629631b204a56172ef47e4e2497bf8d3ecdf8295d5c950"
+  },
+  "before": {
+    "path": "docs/refactor/generated/mechanism-contracts-chinese-maintenance-head-repair-before.json",
+    "sha256": "c94033693782f1708367ae6bc79667c3cb5cc412bcd9acf67c5ac44cb2e6c3ea"
+  },
+  "edits": {
+    "path": "docs/refactor/generated/mechanism-contracts-chinese-maintenance-head-repair-edits.json",
+    "sha256": "ea6b5d3c29136d7364b8eaccc6121c33eb1d1899e8af3b3e01d70113c6ac03d2"
+  }
+}

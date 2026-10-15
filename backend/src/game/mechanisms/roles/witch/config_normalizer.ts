@@ -1,4 +1,7 @@
-/** 文件说明：女巫配置规范化器（仅当板子包含女巫时保留角色配置）。 */
+/**
+ * 负责按实际板子角色配置规范女巫扩展。输入为原 BoardConfig；输出为同一配置或去掉 witch 的浅副本。
+ * 存在正数量女巫或无真值 witch 时保原对象，不克隆嵌套值、不安装角色，也不替代配置 schema 校验。
+ */
 import { BoardConfig, Role } from "../../../../core/domain/model";
 import { ConfigNormalizer } from "../../config/contracts";
 

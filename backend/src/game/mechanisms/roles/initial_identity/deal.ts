@@ -1,8 +1,8 @@
 /**
- * 负责拥有盗贼／千面人发到的卡、原手牌与首夜设置状态；阵营只晚读真实 Camp，保原组件引用撤权。
- * 输入为已安装阵容和明确选牌；输出为库存、设置状态和玩家 setup 数据副本。
- * 原 World 对应的 deal owner 持有手牌及参与者快照；关闭后保留选牌身份，后续角色替换
- * 不重新发库存，副本不授予 live 选择权限。
+ * 负责持有盗贼／千面人发到的卡、原手牌与首夜设置状态；阵营只晚读真实 Camp，保原组件引用撤权。
+ * 输入为已安装阵容和明确选牌；输出为库存、设置状态及 setup 数据副本。
+ * 原 World 对应的 deal owner 持手牌和参与者快照；关闭后保留选牌身份，后继角色替换不重发库存。
+ * 投影副本不授 live 选牌权，换牌／状态写保原先后，失败不以修复存储为由重新打开窗口。
  */
 import {
   captureNightLife,
@@ -30,6 +30,7 @@ export const INITIAL_IDENTITY_POLICIES = Object.freeze({
   thief: "lui_meme_thief_two_extra_villagers_v1",
   shapeshifter: "awa_netease_shapeshifter_two_extra_villagers_v1",
 } as const);
+/** 唯一运行 owner 保留真实 cards／hands／reserve；initialCards 与 selectionSnapshot 只用于原数据比对／投影。 */
 interface DealOwner {
   kind: InitialIdentityKind;
   deal: InitialIdentityDeal;
@@ -43,6 +44,7 @@ interface DealOwner {
   selectionSnapshot: InitialIdentityDeal["selection"];
   players: InitialPlayer[];
 }
+/** 固定开局角色、私态、生命、Camp组件／值与Victory引用／编码；普通同值组件替换仍按本族原引用规则拒绝。 */
 interface InitialPlayer {
   id: number;
   role: RoleComponent;
@@ -224,6 +226,7 @@ export function closeInitialIdentitySetup(
   world: World,
   status: Exclude<InitialIdentitySetupStatus, "pending">,
 ): void {
+  // 先撤活动权限，再写owner状态；外露deal的status只在原可写data描述符下尝试同步，错误不回开窗口。
   active.delete(world);
   const o = owned.get(world);
   if (!o) return;
@@ -233,7 +236,7 @@ export function closeInitialIdentitySetup(
     try {
       Object.defineProperty(o.deal, "status", { ...d, value: status });
     } catch {
-      /* Authority closes even with corrupted storage. */
+      /* active 已撤且 owner.status 已写；存储损坏不撤回关闭，也不重新授予选牌权。 */
     }
 }
 export function selectInitialIdentityCard(
@@ -255,6 +258,7 @@ export function selectInitialIdentityCard(
   )
     throw unavailable(world, "selection_invalid");
   const chosen = slot === null ? original : (readSlot(o.reserve, slot) as InitialIdentityCard);
+  // 真换牌先改hands，再改reserve，最后三份selection依次写；中途抛错保原部分前缀，不做事务回滚。
   if (slot !== null) {
     Map.prototype.set.call(o.hands, actorId, chosen);
     o.reserve[slot] = original;
@@ -346,6 +350,7 @@ export function openInitialIdentityNight(world: World, day: number): () => void 
     days = new Set();
     committedNights.set(world, days);
   }
+  // 本夜记录先落再标active；返回的关闭函数只撤active，不退还同夜重开资格。
   days.add(day);
   activeNights.add(world);
   return () => {

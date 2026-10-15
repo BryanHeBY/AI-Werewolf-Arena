@@ -1,3 +1,8 @@
+/**
+ * 负责狼人战术顺序、私聊和刀票事实的脚本展示贡献。输入为原事件与语言；
+ * 输出为原聊天／God／行动分类文本，按原 join、String 与 abstain 分支读取 payload。
+ * 这些 handler 不自行依据 _private 过滤输入；上游分派拥有受众，不在展示层组织讨论、计票或消费刀权。
+ */
 import { text } from "@ai-werewolf-arena/game-text";
 import type { ScriptLiveRenderHandlers, ScriptChatLineHandlers } from "../../script/contracts";
 

@@ -1,7 +1,7 @@
 /**
- * Activates late death abilities for the actual recipient instances. Inputs are the current
- * night context and owned gun/ability records; outputs preserve activation commit bookkeeping.
- * It never installs a new role or allows a retired source to reclaim a death action.
+ * 负责在夜末对实际持枪实例尝试激活，并记录该 World／夜数的激活提交。输入为当前夜上下文、
+ * 存活玩家和原枪记录；输出为原武装效果及提交查询。资格和资源写仍由 armDeathGun 持有；
+ * 这里按原序在激活返回、armedOnNight 命中后记账，不安装新 Role 或自行恢复撤销的枪权。
  */
 import type { World } from "../../../core/domain/world";
 import type { RoleComponent } from "../../../core/domain/components/role";

@@ -1,9 +1,9 @@
 /**
- * 负责拥有当前匿名墙、原作者库存与请求绑定，按窗口和作者身份提交行动及派生别名。
- * 输入为原 World、作者与请求；输出为已接受墙操作，写权只覆盖该作者／窗口的库存及绑定。
- * 不变量：别名必须保留原请求身份和窗口校验。关闭墙或参与者替换撤销本地权限，
- * 失败仍保留原已提交前缀，不以别名跳过 authority 检查。
- * 请求记录及别名传播归独立公共实例；按最早预算永久记录已观察撤权；作者／墙晚复验仍使用本模块的原条件。
+ * 负责持有匿名墙、原作者库存与请求绑定，按窗口和作者身份提交行动及派生别名。
+ * 输入为原 World、作者与请求；输出为墙 scope、作者原记录及投影，写权只覆盖墙／作者库存和本地绑定。
+ * 请求预算与已观察撤权归独立 RequestLease 实例；本模块仍晚复验墙、原参与者和 note 同引用。
+ * 不变量：原墙、参与者、note／source 必须保持捕获关联，投影不授新权限。
+ * 关闭先撤 active 权，再尝试标记存储过期；存储损坏不恢复权限，失败保留已发生的写入前缀。
  */
 import { RequestLease } from "../../../../core/domain/request-lease";
 import { readWallNoteData } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
@@ -32,6 +32,7 @@ export const WALL_ROLES: readonly Role[] = [
 export function supportsWallRoles(roles: readonly Role[]): boolean {
   return roles.every((role) => WALL_ROLES.includes(role));
 }
+/** 捕获原参与者与 note/source 同引用，并另持本地 remaining／closed；投影不会补回作者资格。 */
 export interface WallAuthor {
   id: number;
   participant: DebateParticipant;
@@ -165,7 +166,7 @@ export function closeWall(world: World, a: WallAuthority): void {
       try {
         Object.defineProperty(author.note, "expired", { ...field, value: true });
       } catch {
-        /* Runtime revocation is independent of a corrupted storage object. */
+        /* active 已先撤回；存储损坏或过期字段无法写入不会恢复运行权限。 */
       }
   }
 }

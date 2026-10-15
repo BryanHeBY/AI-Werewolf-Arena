@@ -1,5 +1,6 @@
 /**
- * 负责查询放逐、投票和警长参与资格。输入为玩家编号及当前生命／角色权利；输出为原资格布尔值。不提交票、修改票重或执行出局。
+ * 负责查询放逐、投票和警长的公开参与资格。输入为玩家 ID、当前生命／投票权及角色目录；
+ * 输出为原资格布尔值，放逐投票再按原顺序查询辩论封票。不提交票、修改票重、泄露秘密免疫或执行出局。
  */
 import { COMPONENT, type RoleComponent, type World, type EntityId } from "../../../core/domain";
 import { type RoleCatalog } from "../roles/catalog";
@@ -16,7 +17,7 @@ export function canVoteExile(
   return canVote(world, id, catalog) && !debateVoteBlocked(world, id, day);
 }
 
-/** Public eligibility; never exposes a secret immunity or another player's state. */
+/** 只查公开放逐资格，不揭示秘密免疫或另一玩家的私态。 */
 export function canBeExiled(
   world: World,
   id: EntityId,

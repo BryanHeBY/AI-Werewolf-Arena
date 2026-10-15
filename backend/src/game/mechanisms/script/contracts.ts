@@ -1,3 +1,7 @@
+/**
+ * 负责定义脚本回放与终端渲染贡献的事件专属数据结构。输入为 GameEvent 联合、可选语言及私有输出选项；
+ * 输出约束聊天／裁判／阶段行和分类文本。类型按注册事件收窄 payload，不运行分派、校验事实真实性或授予受众。
+ */
 import type { Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：脚本回放与终端渲染相关契约。 */
 import type { GameEvent } from "../../../core/domain/model";
@@ -11,7 +15,7 @@ export interface ScriptLiveRender {
   text: string;
 }
 
-/** A handler receives the payload belonging to its registered event type. */
+/** 每个 handler 的事件实参按它所注册的 type 收窄，不把别族 payload 混作同一结构。 */
 type ScriptEventHandlers<T> = {
   [K in GameEvent["type"]]?: (event: Extract<GameEvent, { type: K }>, locale?: Locale) => T;
 };

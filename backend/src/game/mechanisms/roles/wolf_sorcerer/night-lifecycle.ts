@@ -1,11 +1,8 @@
 /**
- * Owns Wolf Sorcerer's cleanup under the existing shared Magician transfer gate.
- * Inputs are its original delegated World and the same readonly ownership view;
- * outputs retain configured failure abort and manager normal/abort calls.
- * No independent handedOff/acquired flag is created. Priority-100 opening,
- * composed target receipts and paid number history stay in their native owners.
- * Manager argument reads never skip after normal close; frame authority alone
- * decides repeat-close errors. This unit never captures actors or resolves targets.
+ * 负责狼术师在原魔术师共享交接门控下的清理。输入为惰性原 World 与同一只读清理 ownership；
+ * 输出保留配置失败 abort 及经理正常／中止调用，不另建 acquired／handedOff 位。
+ * 优先级 100 开夜、复合映射回执和已付号码历史仍归原 owner；正常关闭后经理参数照读，
+ * 重复关闭错误由 frame 决定，此单元不捕获施法者或计算目标。
  */
 import type { World } from "../../../../core/domain/world";
 import type { MagicianNightCleanupOwnership } from "../magician/ports";
@@ -25,7 +22,7 @@ export const wolfSorcererNightTerminal = Object.freeze({
 });
 
 export class WolfSorcererNightUnit {
-  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  /** 经理接收同一清理实例；终止函数仍使用调用时新求值的 World／day 参数。 */
   readonly closeNormally = wolfSorcererNightTerminal.closeNormally;
   readonly abort = wolfSorcererNightTerminal.abort;
 

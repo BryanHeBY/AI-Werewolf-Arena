@@ -1,3 +1,8 @@
+/**
+ * 负责狼人聊天、刀票、自爆的工具规格及阶段提示。输入为静态 schema、机器工具名与 allowedTools；
+ * 输出为原可写规格和本地化指令列表。提示匹配保 includes／单工具条件，schema 不判定狼队资格、
+ * 当前窗口或目标，数组可写不授予库存，也不执行任何动作。
+ */
 import { text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：狼人工具规格与阶段提示规则定义。 */
 import { StageDirectiveRule, ToolSpec } from "../../contracts";

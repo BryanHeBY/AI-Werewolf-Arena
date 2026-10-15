@@ -1,0 +1,414 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "4f775d49f85eccc8eeb4da9c67517048879cadc4",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/common/participation.ts",
+      "sha256": "7104d0273e7b91b570006880bf4d6b44053accf8b914c267da25de3398d7e8f5",
+      "bytes": 1881
+    },
+    {
+      "path": "backend/src/game/mechanisms/contracts.ts",
+      "sha256": "ea27a07ce3f2f40740d99443b1933df28041b82bac393ea1c872f7fd8172c679",
+      "bytes": 1198
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "f56139dd1c8083e1ccba965423c44deb905ba42327cf765482a5986db33860cd",
+      "bytes": 6898
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/event_presenters.ts",
+      "sha256": "f17ff061fbaa3635c4360c083826f1dc6eab060f529117ef75adf22376149bb5",
+      "bytes": 1121
+    },
+    {
+      "path": "backend/src/game/mechanisms/night_death_timing.ts",
+      "sha256": "f295d8db0cdae2eac5d6229678e6b8cc69c158d935b4d607545c60c25e183b9a",
+      "bytes": 641
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/night-lifecycle.ts",
+      "sha256": "d1338852eb2ebd6a74cd1a4598af61d82c8d7d8265131c7a80535e3b7a1ccf2d",
+      "bytes": 1503
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/request_envelope.ts",
+      "sha256": "2642840d9137862d5192e63e8ab53ae485c1f055f0b146d50df6bc0fe7935634",
+      "bytes": 7243
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/requests.ts",
+      "sha256": "3a0a4245198a6eed57097df01c269bd30e0edae3eb6fa4b7e01be22ec668feec",
+      "bytes": 6230
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/tool_names.ts",
+      "sha256": "f65804d0d4da82d42997c7f44c604cecc2fabf2636806345790139036bcb45ba",
+      "bytes": 564
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/tool_specs.ts",
+      "sha256": "febf2d3582c2dc082340d9308bf1a6b3ed4307740b73ad7ad9cbb09c443b9430",
+      "bytes": 965
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+      "sha256": "97e0de4eb0682288a10ec20b97990340869e58771a8b9ee7d96cad6c43cd5298",
+      "bytes": 401
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_ability_activation.ts",
+      "sha256": "cf2e2f6f3277acf8f1846bbc9d524b358e21282dc7d4cd5fcfe9ffb9af028530",
+      "bytes": 1602
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_action_policy.ts",
+      "sha256": "9a47e62d5005ea56877867cbd49859f3f046150403d5537641d3cad83fad0183",
+      "bytes": 1556
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "sha256": "0c2918792eb4a720c3de0c3c307912d32d975886e28a8de63f61ec4ca8706304",
+      "bytes": 4093
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/heal_contribution.ts",
+      "sha256": "bfab151819faface519b98dc515756e7cbf49647749290d6e7283a1c8b34dd85",
+      "bytes": 4076
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/poison_contribution.ts",
+      "sha256": "fedd22fcab5eaa0ad6b99ff697549c68ee2ee4dce5f903f53047850076a66839",
+      "bytes": 4104
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/night-lifecycle.ts",
+      "sha256": "422115c9a232347d43377429b66289c93bc637b5f7fe9a79aa2c98ffb07e8220",
+      "bytes": 3176
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/night_stages.ts",
+      "sha256": "3ab715b4ef4248f85a158adc2c6cca7f23792737db1eb7fe2c322c6f741a591f",
+      "bytes": 3842
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/requests.ts",
+      "sha256": "b73661de47785933abbb8119c80f2e74efc795f5d054b525981da1d9cba5c645",
+      "bytes": 9204
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/target_scope.ts",
+      "sha256": "f6fb00d3a66c62ee69c2f0f619f82031922b08bc06d93f9c9914cc3909f2f179",
+      "bytes": 2063
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/state.ts",
+      "sha256": "17f3f9a5b91617bbcfafc0bd50a2f40119edc4f0a3f4550c19315265feda69b1",
+      "bytes": 1238
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+      "sha256": "464d79b90f244b5742a73146edca5f93e4346e5a76d9a2ea5e298c81bb3d7a04",
+      "bytes": 3543
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/event_presenters.ts",
+      "sha256": "ad9db74284a8ab4809a125dd39d8b1652afa6b455c3b97c185ebf4105992cf9d",
+      "bytes": 871
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/phase_stage_localization.ts",
+      "sha256": "1108066fd4e22bb8a83ae1f0744e4ce53c194bbbd7b1035958f173c7bdf58cf1",
+      "bytes": 534
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/tool_specs.ts",
+      "sha256": "4bcecb79d07ba2283cb808fa307768818a1827235d119ecccfa35558b65a40d6",
+      "bytes": 747
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/state.ts",
+      "sha256": "8189b6104459e604ad6453801bcc085f5a6b54c0c66b965a16bfff1b194ddecc",
+      "bytes": 1341
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/event_presenters.ts",
+      "sha256": "ff39765ef5d39246d1e0aff5dde376bc12233d44a89e94d565f9d4418525820b",
+      "bytes": 606
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/phase_stage_localization.ts",
+      "sha256": "330544a0575d0f665602812952593227ecca61037a9c701648e247de03920400",
+      "bytes": 535
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/tool_specs.ts",
+      "sha256": "3e005d521f348496835ef035d4caf959146c5272a0b025a098d56199b2d202a4",
+      "bytes": 320
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/event_presenters.ts",
+      "sha256": "91d33f9284065f47bc6453b9b8f406f690edebba6c3ef4352a72a2c432850a25",
+      "bytes": 556
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "1bfc3b7b677c632a6a386ab2610153516cf7d3f4102d204626f32fd68a5ec15c",
+      "bytes": 14023
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/tool_names.ts",
+      "sha256": "87a581462fda1ca660b2a06e5a1884cf085875cdb3b5a429c09c8cfc811c1a4e",
+      "bytes": 616
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/tool_specs.ts",
+      "sha256": "60269f04dda42e9f4ee2e41fd83401d52b528cd9fb61f28823f919aa5fdb1eec",
+      "bytes": 1629
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts",
+      "sha256": "e4f6a2858808d5c66322311cf309e7f693df0e218fe1b91e252ebb25927c4ab4",
+      "bytes": 793
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night-lifecycle.ts",
+      "sha256": "a53f4fa26d83d52ca716176336238dddd07b9fd51672d8d6082c6ed1c6f32130",
+      "bytes": 2289
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "sha256": "90c151ef025b1285bbc194d03a03f268fffc28369d9149683840f055a53bd439",
+      "bytes": 20227
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+      "sha256": "c644440e4df377eacb48c08b814daf112c349d56b1dcc15512d410b909f971c3",
+      "bytes": 5416
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+      "sha256": "8cf83de4269b4956dca816320ee8c6284c6fca3f7f17fa983a04aff2b4fb1830",
+      "bytes": 1237
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-actors.ts",
+      "sha256": "5f6b8a32261bd698b277d43d9f2cef25506e2779d61c1f9adbdd174f2084d76e",
+      "bytes": 3671
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night_stages.ts",
+      "sha256": "f1acdceaaaa6d11e0002e38786c87c14250df551b5bef710166e0c5d4e7092a9",
+      "bytes": 4036
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/requests.ts",
+      "sha256": "711f5f3fec6ece7f928d5aa6507f38c07e4342db47b3636d0bfbbfb171f29689",
+      "bytes": 11355
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night-lifecycle.ts",
+      "sha256": "92e285647dd9a8d335a36933b3c83f4cd91130f5e100ada9273bfc654ff8294e",
+      "bytes": 1389
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "b9202a6e1ca9067345c6b29357d6b1e0885b6f9aa7d8b59061a2cbfcd4fb1944",
+      "bytes": 23422
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night-lifecycle.ts",
+      "sha256": "caf16692b24649410665ce96a516b88e7bde5c135b2cf467fa0303882660dc80",
+      "bytes": 1470
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/event_presenters.ts",
+      "sha256": "44fd8e2c8528412b48a255fdb4217394bf1b1b8c23454e92e37dcf059f486761",
+      "bytes": 1496
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/phase_stage_localization.ts",
+      "sha256": "0f8123f4df2fd2c84460fce46a997610d3fcf3223618fec4e4a8307e736b4398",
+      "bytes": 513
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/tool_specs.ts",
+      "sha256": "8e4f627b21bc39c36a5f5f5cdb97b1bdbd9ad277eacf9caefe350b451871f0df",
+      "bytes": 690
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/effects.ts",
+      "sha256": "f6c724b8dab71f6346d7fb242e42fb26046b30f3a086ed111017eaf96606d256",
+      "bytes": 1472
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night-lifecycle.ts",
+      "sha256": "a9543e0b981054f6cbfa29dbcfcd86575c25f51f9a496c2d22ba303907aa683b",
+      "bytes": 1458
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts",
+      "sha256": "23998ada1f351fc80899914dff968afe73dd4b4e09b9811c12399620db1887b5",
+      "bytes": 2112
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/config_normalizer.ts",
+      "sha256": "5fb12f2ddf7410293f7158cc0a5d4cb37276cee28b0ec7d97c327c9c835dbdf7",
+      "bytes": 889
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/event_presenters.ts",
+      "sha256": "6e244b8acbc6f0d0b7ab8ae3da17b6359c86f6927a51a2e61a7f88df982c44de",
+      "bytes": 1159
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/llm_repair.ts",
+      "sha256": "44d2a0b3d35320cb9aac4c2f63dfc2f2b0b8ea780ddf8f2b1edf59da4750fa1c",
+      "bytes": 1023
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/phase_stage_localization.ts",
+      "sha256": "0906453b49ff46d8c98374055b1623291bc5c8ec5a759085c8f32ecd0c3a2e68",
+      "bytes": 525
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/policies.ts",
+      "sha256": "edff671a2522e472e7dea03950e7af05a87c0aca2c86a60ce52e4eceaeebdbee",
+      "bytes": 1654
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/tool_specs.ts",
+      "sha256": "a1b141c529703321568f9138551312939aa7d051617a469a44ec2407fce2c642",
+      "bytes": 1433
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/event_presenters.ts",
+      "sha256": "59f84f24e0f2578599ae7ccf616cd06a403f6533393c11933c57d02e799aafd3",
+      "bytes": 2171
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/llm_repair.ts",
+      "sha256": "d126a80b05ae33af95855d4276ceb917bbb264c070ab06219aa3e87eb740625e",
+      "bytes": 1144
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/phase_stage_localization.ts",
+      "sha256": "2fbe336bd77df8cbde64697b2bc11968baa7bea7f034be8e48a61323e13a5857",
+      "bytes": 593
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/tool_specs.ts",
+      "sha256": "ddec9f1377fec3031da8b6bb4c68a189a73b980ef9e251b439918243c29a1072",
+      "bytes": 2403
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "sha256": "a0cae017dcd888977693f9bec737d77a17aaa85beef70584ceedad384743d2fb",
+      "bytes": 1597
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+      "sha256": "313633a8af6eb9bc601b5d893c83a45ee373a68f0ecad02bf8b36d7520bffbbd",
+      "bytes": 1481
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/seat_mapping.ts",
+      "sha256": "100a3d02a85f3f01da2e45a62a36095d249ff06ef2f29ceee18010deb7516acc",
+      "bytes": 2077
+    },
+    {
+      "path": "backend/src/game/mechanisms/script/contracts.ts",
+      "sha256": "91b98588840e26cb7009e033b0247b2daa5da840dc0540d24ba5679b1e8a5854",
+      "bytes": 1410
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/config_normalizer.ts",
+      "sha256": "14451fa27629391de712b495bc5df96c69f92e1fe8be5761634e9483646b1cdb",
+      "bytes": 842
+    },
+    {
+      "path": "backend/src/game/mechanisms/shared/phase_stage_localization_registry.ts",
+      "sha256": "c6e0cf618367120545a3ae62cfe6b1b64b72d4ecbdc432675741de653c8b708e",
+      "bytes": 4543
+    },
+    {
+      "path": "backend/src/game/mechanisms/shared/text_localization_registry.ts",
+      "sha256": "2d8bf432913be54d91f2e42d92e6606b5b7e8892c9ab28a6b208ecff7ea71b74",
+      "bytes": 2989
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge.ts",
+      "sha256": "9b674bcd48b51c9782f4606896b9d78cd97057786f6c79f77a01cb30eaa825a1",
+      "bytes": 7057
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/config_normalizer.ts",
+      "sha256": "4a1c46087002f2356de94496420d2314445837260bf52fe548c08875dcaebf4a",
+      "bytes": 1141
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/event_presenters.ts",
+      "sha256": "3fc3edfcfa8e54129ac51116b802bf95ab2de551358c6ae47b47ce846d6c6263",
+      "bytes": 4872
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/llm_repair.ts",
+      "sha256": "c0efb5287b55cd0c343a7498d3011852697ea419c9aa994dd1c010f74066d7f7",
+      "bytes": 1203
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/phase_stage_localization.ts",
+      "sha256": "bb87a08e56fce50ea32bb6c97f986ec3f6772cda345d1b7126f86c7a6543c0b6",
+      "bytes": 1066
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/tool_specs.ts",
+      "sha256": "e9b8b12d457be937b5b79e8a98ea075b954331b411fc3152d1ba4fe4a32fa51c",
+      "bytes": 1823
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+      "sha256": "f6459e866dacaf794795177c4649e3aef7395a5600b26e63fd07b55636c8a249",
+      "bytes": 481
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/default_specs.ts",
+      "sha256": "914c6b9364337045d58b6fa4061bf5815022bdda2e6e61d6914f348f2768e8ac",
+      "bytes": 5784
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/mechanism-contracts-chinese-maintenance-scope-final.json",
+    "sha256": "adba79978aa1c2af0d5b52afe25ca0eace4d5e6e712b8810ad291f4bddfe1eaa"
+  },
+  "document": {
+    "path": "docs/refactor/mechanism-contracts-chinese-maintenance.md",
+    "sha256": "9ba6389c70fdec31f526f169780013d7ab5906eba9cbbad4e947102b6d253308"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/mechanism-contracts-chinese-maintenance-evidence.json",
+    "sha256": "1748e5d1e5f07791c718843ce12d62061719bef8f2e8b7709a8b00b7fb1ee462"
+  },
+  "integrity": {
+    "freshSources": 75,
+    "actualGitBefore": 75,
+    "controls": 4,
+    "artifactHashes": 27,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "读取75源全部中文变换与末15源18精确修正，真实lease/已付效果/窗口/phase-name/展示schema/资源写权分开说明；不新增领域算法、状态容器或生命周期框架。",
+    "保首75程序证明0及75头真实1(10诊断9根)，只末15注释整程序桥和9失败头0；原66绿头/主proof/业务/类型均不重复，首准备工具literal错及未执行9稿分阶段保留。",
+    "同行完整源审查的空选不付款、赠枪钩子返回时点和正式角色名均由纯comment增量精确闭合；Root核实际请求/authority/映射/展示边界与有限受众说明。",
+    "actual4f775完整75Git前态、4稳定controls、27附件及末scope/MD/ev纯字节对照；首31714typed/4572arrays/37657leaves/150actualraw与末14661/1972/17105/30，原60仅同SHA，不冒重新全75绿色。",
+    "注释只改变源码身份/位置；工具名/消息键/模型原文/JSDoc类型tag/受保护指令/协议及算法保，完整P9 strict/55角色同源验收另行收口。"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

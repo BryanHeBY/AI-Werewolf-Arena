@@ -1,8 +1,8 @@
 /**
- * Provides granted death-gun actions after the native role death hook commits. Inputs are the
- * original dead player and owned first-death gun rights; outputs are trusted shots, death
- * proposals or deferred shot events. Only current gun permissions may write remaining stock;
- * revoked captures fail without opening another shot or letting model preflight consume the gun.
+ * 负责原生死亡钩子完成之后的赠与／转移死亡枪行动。输入为原死亡玩家、合格死因和当前首死枪；
+ * 输出为追加死亡、来源、夜目标及立即／延期枪事件。请求后先核执行资格与死亡许可，消费先于保护和事实，
+ * 执行权限由原 gun scope／死亡行动窗口核对，已付 pending 只保原 scope.isCurrent 原体复验；
+ * 不重新授枪，晚事件失败不退款，也不让模型预检付款。
  */
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -16,7 +16,7 @@ import {
   consumeDeathGunShot,
 } from "./death_abilities";
 
-/** One transferred/gifted stock per actor, after their native role hook has actually committed. */
+/** 原生角色死亡钩子依次返回之后，每名玩家读取其首个转移／赠与枪；不在此重新安装或补充库存。 */
 export const giftGunDeathHook: DeathHook = async (world, ids, sources, choose, events, context) => {
   const result = {
     extraDeaths: [] as number[],
@@ -53,6 +53,7 @@ export const giftGunDeathHook: DeathHook = async (world, ids, sources, choose, e
     }
     const target = selected.targetScope ?? targets.get(selected.targetId);
     if (!target || target.id !== selected.targetId || !livingNightLife(world, target)) continue;
+    // 此刻已消费；保护判断、提案与事件随后执行，pending.current 不能变回未付执行资格。
     consumeDeathGunShot(gun);
     if (context?.nightEffect && context.blocksNightShot(target.id)) {
       events.push({

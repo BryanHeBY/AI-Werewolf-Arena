@@ -1,9 +1,8 @@
 /**
- * Owns Noble/Secret Body choice and reveal request bindings plus delivery completion.
- * Receives original contexts, turn scopes and deadline aliases; writes only accepted current
- * local bindings and committed tools. Failed current checks of the original or a bound
- * alias permanently close their shared turn. Foreign unbound inputs never acquire a turn
- * or revoke its valid authority; closing and domain commit retain settlement ownership.
+ * 负责夜之贵族／觉醒愚者选择及翻牌发言的请求绑定与交付完成。输入为原 context、领域 turn 和期限别名；
+ * 输出为接受的本地绑定、工具读取及提交回执。原请求或已登记别名 current 失败会永久关共同 turn，
+ * 不变量：已登记别名必须保原 context／正文，只缩短共享期限；
+ * 未登记外来输入不获得 turn，也不撤原有效权限，领域 commit 返回后再关 turn／通知 true，关闭保持原结算顺序。
  */
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
@@ -25,6 +24,7 @@ import {
 } from "./authority";
 type Kind = "body" | "noble";
 type ChoiceTool = Extract<ToolCall, { name: "choose_servant" | "protect_secret_body" }>;
+/** choice／reveal同用本地turn，固定原正文/context并为别名单存期限；targets只是选择快照，提交仍晚查领域。 */
 interface Turn {
   world: World;
   day: number;
@@ -141,8 +141,7 @@ export function nobleBodyRequestScope(world: World, request: object): object | u
   const r = requests.get(request);
   return r && r.turn.world === world && current(request, r) ? r.turn.scope : undefined;
 }
-/** Only bounded aliases retaining the original context may share a turn. All aliases
- * use the earliest deadline; replacing an original body or context revokes every alias. */
+/** 只有保原 context 且期限不放宽的别名可共用 turn；共享最早预算，原正文／context 被替换会撤销所有别名。 */
 export function inheritNobleBodyDeadlineRequest(
   request: ActionRequest,
   clone: ActionRequest,
@@ -224,6 +223,7 @@ export function commitNobleBodyChoice(world: World, scope: object, raw: unknown)
     call = readNobleBodyTool(raw);
   if (!t || !call || !canSubmitNobleBodyChoice(world, t.actorId, Phase.Night, t.day, scope, call))
     throw Error("noble_body_request_unavailable");
+  // 真实choice完整返回后才关闭并通知true；scope存在不等于仍可付款。
   const receipt = t.choice!.commit(call.args.target_id);
   t.closed = true;
   settleRequestDelivery(scope, true);

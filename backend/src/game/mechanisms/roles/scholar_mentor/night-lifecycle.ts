@@ -1,12 +1,8 @@
 /**
- * Owns Scholar/Mentor's pipeline cleanup transfer and manager terminal-call port.
- * Inputs are delegated original World reads and manager-supplied World/day;
- * outputs retain original grant-resolution errors and frame abort writes.
- * Opening remains in the priority-50 stage, while configured cleanup runs even
- * before that stage. Only the original late transfer suppresses pipeline abort.
- * Manager abort still receives its World after normal close; the frame's closed
- * guard alone prevents poisoning the next night with an aborted modifier window.
- * This unit never grants a bonus, spends caster stock, starts a stage or records I/O.
+ * 负责学者／导师管线清理交接及经理终止端口。输入为惰性原 World 与经理实际 World／day；
+ * 输出保留原 grant 解析错误及 frame abort 写。开夜仍在优先级 50，配置清理即使未进该阶段也会运行，
+ * 只有原晚 transfer 才抑制管线 abort。正常关闭后经理仍读 abort 参数，由 frame.closed 防止污染后夜。
+ * 这里不授奖励、不付款、启动阶段或录制 I/O。
  */
 import type { World } from "../../../../core/domain/world";
 import { closeScholarMentorNight, abortScholarMentorNight } from "./night_frame";
@@ -25,7 +21,7 @@ export const scholarMentorNightTerminal = Object.freeze({
 });
 
 export class ScholarMentorNightUnit {
-  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  /** 经理接收同一清理实例；终止函数仍使用调用时新求值的 World／day 参数。 */
   readonly closeNormally = scholarMentorNightTerminal.closeNormally;
   readonly abort = scholarMentorNightTerminal.abort;
 

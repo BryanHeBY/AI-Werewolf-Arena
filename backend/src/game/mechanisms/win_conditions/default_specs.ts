@@ -1,5 +1,8 @@
 /**
- * 负责按真实存活阵营统计定义配置的淘汰条件。输入为 World 与胜负配置；输出为屠城、屠边和狼半条件的候选结果。不封盘或执行特殊关系胜利；判胜时点及唯一终态仍由引擎维护。
+ * 负责按真实存活阵营统计定义配置的淘汰条件。输入为 World 与胜负配置；
+ * 输出为屠城、屠边、狼半及既有特殊分支的候选结果，按原先后读取实际 Camp／角色元数据。
+ * 配置工厂只替换两种淘汰条件的 evaluate，不修改缓存默认数组；未匹配规格保原引用。
+ * 不封盘或执行死亡，判胜时点、关系领域和唯一终态仍由原 owner／引擎维护。
  */
 import { ELIMINATION_PRIORITIES, type EliminationPriority } from "../../../core/domain/board";
 import { demonHunterIsGod } from "../roles/demon_hunter/authority";
@@ -14,6 +17,7 @@ import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 import { WinConditionSpec } from "./contracts";
 import { victoryDecision } from "./results";
 
+/** 只统计真实存活Camp；good再按角色元数据／Demon规则区分god和villager，成员归属不等于真实Camp。 */
 interface AliveStat {
   wolves: number;
   gods: number;
@@ -138,7 +142,7 @@ export const DEFAULT_WIN_CONDITION_SPECS: WinConditionSpec[] = [
   },
 ];
 
-/** Build immutable per-game choices without changing the cached legacy registry. */
+/** 创建每局淘汰政策规格，不改缓存默认数组；只替换两项对象，其他项保原引用，结果并未深冻结。 */
 export function createEliminationWinConditionSpecs(
   priority: EliminationPriority,
 ): WinConditionSpec[] {

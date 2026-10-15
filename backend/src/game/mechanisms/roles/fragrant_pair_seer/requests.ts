@@ -1,8 +1,8 @@
 /**
- * Owns Fragrant Pair choice turns, request bodies and shared deadline bindings. Receives
- * original World/context references and bounded aliases; writes validated pair choices and
- * completion receipts only through the current turn. Closed, expired or replaced scopes
- * revoke delivery; aliases retain local validation and original settlement order.
+ * 负责寻香魅影／觉醒预言家的选择 turn、请求正文与共享期限绑定。输入为原 World／context、
+ * 类型对应请求和有限期限别名；输出为原 scope、合法工具及领域提交回执。
+ * 不变量：领域 choice 与信封必须分别通过复验；失配／过期一旦被观察就关闭共享 turn，已登记别名保留原 context。
+ * choice.commit 成功后才关 turn 并通知 true，发布与退款不归本模块；新别名不会凭路由 metadata 获权。
  */
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
@@ -23,6 +23,7 @@ import {
 } from "./authority";
 type Kind = "bind" | "pair";
 type ChoiceTool = Extract<ToolCall, { name: "bind_fragrant_pair" | "check_pair" }>;
+/** 原请求正文／context 与每别名 context／deadline 分开固定，共享 choice、预算及 closed，不复制领域库存。 */
 interface Turn {
   readonly world: World;
   readonly day: number;
@@ -61,7 +62,7 @@ function body(value: object): string | null {
     return null;
   }
 }
-/** No owner/controller calls: the domain lease invokes this after its last external check. */
+/** 不调用领域 owner／控制器；领域 lease 在其末次外部检查后调用此信封检查，失配只写共享 closed。 */
 function envelopeCurrent(request: object, alias: RequestAlias): boolean {
   const t = alias.turn;
   const eligible =
@@ -235,6 +236,7 @@ export function commitFragrantPairChoice(world: World, scope: object, raw: unkno
     !canSubmitFragrantPairChoice(world, t.actorId, Phase.Night, t.day, scope, call)
   )
     throw Error("fragrant_request_unavailable");
+  // commit 返回前不宣称完成；成功后的通知或上游事实失败不撤销此前领域写入。
   const receipt = t.choice.commit(call.args.target_ids);
   t.closed = true;
   settleRequestDelivery(scope, true);

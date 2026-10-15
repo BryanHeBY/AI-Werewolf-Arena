@@ -1,3 +1,8 @@
+/**
+ * 负责寻香绑定与双人查验的两段真实夜间请求流程。输入为当前上下文、原候选与工具回复；
+ * 输出为领域回执、本人可见事实和安全录制。await 后及 gateway 后复验本地 scope，
+ * 领域提交先于事件和录制；finally 关闭请求，晚发布失败不撤销已写选择，不接管关系／查验算法。
+ */
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { Phase } from "../../../../core/domain/identity";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
@@ -40,6 +45,7 @@ async function execute(ctx: NightStageContext, kind: "bind" | "pair") {
     });
     if (!valid.ok || !valid.sanitizedCall || fragrantPairRequestScope(ctx.world, request) !== scope)
       throw Error("fragrant_required_action_invalid");
+    // 先由领域 choice 完整提交（含空选），再发布本人事实；finally 的关闭保原 JS 异常优先，不做补偿。
     const receipt = commitFragrantPairChoice(ctx.world, scope, valid.sanitizedCall);
     ctx.events.push(
       "pairIds" in receipt

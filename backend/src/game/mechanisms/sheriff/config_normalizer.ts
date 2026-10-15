@@ -1,4 +1,7 @@
-/** 文件说明：警长配置规范化器。 */
+/**
+ * 负责按警长开关规范 sheriff 配置及平票扩展。输入为原 BoardConfig；输出为原对象或原分支的浅展开结果。
+ * 只按原真值条件处理字段，不深克隆、安装警徽或配置投票权；枚举／读取抛错仍传播，已执行转换不回滚。
+ */
 import { BoardConfig } from "../../../core/domain/model";
 import { ConfigNormalizer } from "../config/contracts";
 
@@ -14,6 +17,7 @@ export const SHERIFF_CONFIG_NORMALIZER: ConfigNormalizer = {
       return rest;
     }
     const { sheriffVote: _removedSheriffTie, ...otherTie } = rest.tieBreaker;
+    // 仅otherTie非空才覆写tieBreaker；空时展开仍保rest原字段，不在注释中扩称完整深清理。
     return {
       ...rest,
       ...(Object.keys(otherTie).length > 0 ? { tieBreaker: otherTie } : {}),

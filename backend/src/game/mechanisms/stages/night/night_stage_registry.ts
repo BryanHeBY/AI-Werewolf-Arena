@@ -1,9 +1,7 @@
 /**
- * Provides the existing night-stage registry from its ruleset owner to legacy consumers.
- * Output: the identical named registry class and default getter from the ruleset owner.
- * The ruleset compiler owns closure, collection and order; this named bridge
- * contains no duplicate algorithm or default instance and exits after consumers
- * move to the ruleset public entry. Existing class and singleton identity remain.
+ * 负责向既有调用方保留夜阶段注册表的具名出口。输入为规则集 owner 的模块契约；
+ * 输出为同一 NightStageRegistry 类与默认 getter 绑定。闭包、收集、排序及默认实例只由规则集持有，
+ * 此文件不复制算法／单例，保原模块加载与实例身份；兼容出口不授予阶段执行权限。
  */
 export {
   NightStageRegistry,

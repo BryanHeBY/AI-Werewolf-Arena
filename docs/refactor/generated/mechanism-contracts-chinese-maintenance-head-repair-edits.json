@@ -1,0 +1,109 @@
+{
+  "reason": "Root首有限75头的10项真实契约诊断，仅补9失败头真实说明；作者另发现赠枪说明需限定为原生hooks依次返回，不冒已消费。尚无本增量执行。",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "beforeSHA256": "0dae43e548ea339195b6dda51fe0e4b5ac0ee801e913a4a2405d61daf6c4bec3",
+      "afterSHA256": "f56139dd1c8083e1ccba965423c44deb905ba42327cf765482a5986db33860cd",
+      "edits": [
+        {
+          "before": " * 关闭先撤 active 权，再尝试标记存储过期；存储损坏不恢复权限，失败保留已发生的写入前缀。",
+          "after": " * 不变量：原墙、参与者、note／source 必须保持捕获关联，投影不授新权限。\n * 关闭先撤 active 权，再尝试标记存储过期；存储损坏不恢复权限，失败保留已发生的写入前缀。"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/request_envelope.ts",
+      "beforeSHA256": "31576bf9dc6ed11eae251b3dc014f577b8772dc5fa32c09b5d896bac61f2b502",
+      "afterSHA256": "2642840d9137862d5192e63e8ab53ae485c1f055f0b146d50df6bc0fe7935634",
+      "edits": [
+        {
+          "before": " * 这里只持请求数据能力，不调用 provider／控制器，不替代实际领域选择和库存许可。",
+          "after": " * 写入仅限私有信封／别名表及共享预算、withdrawn；显式撤回或观察到失效会关闭信封，不因字段恢复重开。\n * 这里只持请求数据能力，不调用 provider／控制器，不替代实际领域选择和库存许可。"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/requests.ts",
+      "beforeSHA256": "4eb33378582ac1fc065e20c760051e9c7d744773366013049cb20c71790fbfd0",
+      "afterSHA256": "3a0a4245198a6eed57097df01c269bd30e0edae3eb6fa4b7e01be22ec668feec",
+      "edits": [
+        {
+          "before": " * 输出为本地 scope、工具读取结果和领域提交回执。领域 choice 与信封同时 current 才可提交，",
+          "after": " * 输出为本地 scope、工具读取结果和领域提交回执。不变量：领域 choice 与信封必须同时 current 才可提交，"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/requests.ts",
+      "beforeSHA256": "f635b62954837d663aef5b787f7b7440efa4f610e05db7762679e7f419db6c0b",
+      "afterSHA256": "b73661de47785933abbb8119c80f2e74efc795f5d054b525981da1d9cba5c645",
+      "edits": [
+        {
+          "before": " * 领域 choice 与信封分别复验，失配／过期一旦被观察就关闭共享 turn；已登记别名保留原 context。",
+          "after": " * 不变量：领域 choice 与信封必须分别通过复验；失配／过期一旦被观察就关闭共享 turn，已登记别名保留原 context。"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+      "beforeSHA256": "ccda85ce8186e503df81ae97ee1209fcc6aaaf6116b60465069e264f1cc46984",
+      "afterSHA256": "464d79b90f244b5742a73146edca5f93e4346e5a76d9a2ea5e298c81bb3d7a04",
+      "edits": [
+        {
+          "before": " * 已付 pending 只保原 scope.isCurrent 原体复验，不重新授枪；晚事件失败不退款，也不让模型预检付款。",
+          "after": " * 执行权限由原 gun scope／死亡行动窗口核对，已付 pending 只保原 scope.isCurrent 原体复验；\n * 不重新授枪，晚事件失败不退款，也不让模型预检付款。"
+        },
+        {
+          "before": "/** 原生角色钩子实际提交之后，每名玩家读取其首个转移／赠与枪；不在此重新安装或补充库存。 */",
+          "after": "/** 原生角色死亡钩子依次返回之后，每名玩家读取其首个转移／赠与枪；不在此重新安装或补充库存。 */"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night_stages.ts",
+      "beforeSHA256": "62ae12801f6dfc2ef979e61959481c51fcffebb05e6508e6c266afb1af4e5647",
+      "afterSHA256": "f1acdceaaaa6d11e0002e38786c87c14250df551b5bef710166e0c5d4e7092a9",
+      "edits": [
+        {
+          "before": "契约、秘密之身与资源算法仍由本族 authority 持有。",
+          "after": "不接管契约、秘密之身或资源算法，这些写权仍由本族 authority 持有。"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/requests.ts",
+      "beforeSHA256": "589de5cef736025c71a471d48e4e4c86d43a48bf9fbef2c3dde37d6d58070973",
+      "afterSHA256": "711f5f3fec6ece7f928d5aa6507f38c07e4342db47b3636d0bfbbfb171f29689",
+      "edits": [
+        {
+          "before": " * 未登记外来输入不获得 turn，也不撤原有效权限；领域 commit 返回后再关 turn／通知 true，关闭保持原结算顺序。",
+          "after": " * 不变量：已登记别名必须保原 context／正文，只缩短共享期限；\n * 未登记外来输入不获得 turn，也不撤原有效权限，领域 commit 返回后再关 turn／通知 true，关闭保持原结算顺序。"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night-lifecycle.ts",
+      "beforeSHA256": "961134ba28c6bddf926c99c656af860bd8b839619c39d9726c83ddeec0efab23",
+      "afterSHA256": "7631f18395d55159a640f5992b103084f91c558bb414c8b9d4db349c6d76382f",
+      "edits": [
+        {
+          "before": " * 先 begin 成功再 acquired，正常 close 保关闭写先于事实。正常关闭不跳过已获取单元的 finally abort 或参数读取，",
+          "after": " * 输出为原开夜／关闭效果：先 begin 成功再 acquired，正常 close 保关闭写先于事实。\n * 正常关闭不跳过已获取单元的 finally abort 或参数读取，"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/script/contracts.ts",
+      "beforeSHA256": "ffbdfc2f9fba6631f5d593270b6ad0b7a4305bf9e33cc56557ad7e0b45dfcdd1",
+      "afterSHA256": "91b98588840e26cb7009e033b0247b2daa5da840dc0540d24ba5679b1e8a5854",
+      "edits": [
+        {
+          "before": " * 负责定义脚本回放与终端渲染贡献的事件专属类型。输入为 GameEvent 联合、可选语言及私有输出选项；",
+          "after": " * 负责定义脚本回放与终端渲染贡献的事件专属数据结构。输入为 GameEvent 联合、可选语言及私有输出选项；"
+        }
+      ]
+    }
+  ],
+  "commentEdits": 10
+}

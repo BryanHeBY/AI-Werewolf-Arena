@@ -1,8 +1,7 @@
 /**
- * Owns sheriff badge assignment, vote-weight updates and transfer/destruction commitment. Inputs
- * are current badge bodies and eligible successors; outputs preserve badge events, sheriff
- * identity and weights. A destroyed badge does not silently restore itself through a replacement
- * component.
+ * 负责警徽授予、转移／销毁与票重提交。输入为原 World、警徽持有者、合格接任者及配置；
+ * 输出为原警徽／VotingRight 写入和事件。先校验特殊板可读性，转移先销旧徽、重置旧票重，再安装接任状态、
+ * 提交特殊 frame 和发表事实；晚失败保留此前前缀，不事务回滚或以替换组件自动恢复销毁警徽。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { openDemonBadgeFrame, assertDemonBadgeReadable } from "../roles/demon_hunter/authority";
@@ -81,7 +80,7 @@ export function transferOrDestroySheriffBadge(
   );
 }
 
-/** Commits only a currently eligible target; a rejected choice destroys the held badge. */
+/** 只把警徽交给当前合格目标；null／拒绝目标走销毁，旧徽与票重先写，晚错误不撤回。 */
 export function commitSheriffBadgeChoice(
   world: World,
   fromId: EntityId,
@@ -98,6 +97,7 @@ export function commitSheriffBadgeChoice(
   const policy = badge.handoffPolicy;
   const nextSheriffId =
     targetId !== null && badgeSuccessorEligible(world, fromId, targetId, catalog) ? targetId : null;
+  // 旧徽先销毁并复位票重；接任安装、特殊frame提交或事件失败都保留此前前缀。
   badge.isSheriff = false;
   badge.destroyed = true;
   resetVotingWeight(world, fromId);

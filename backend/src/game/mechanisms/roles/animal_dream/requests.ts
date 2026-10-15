@@ -1,8 +1,8 @@
 /**
- * Owns Animal Dream turn scopes, request envelopes and transactional completion. Receives
- * original World/choice/envelope references; writes accepted bindings and tool commits only
- * through current monotonic authority. Closed, cancelled or invalid envelopes revoke delivery
- * and all aliases; routing metadata never grants permission.
+ * 负责动物梦境选择 turn、请求信封与交付完成通知。输入为原 World／请求及河豚单元 token；
+ * 输出为本地 scope、工具读取结果和领域提交回执。不变量：领域 choice 与信封必须同时 current 才可提交，
+ * choice.commit 返回之后才关 turn 并通知 true；关闭按原序撤信封、关 choice、通知 false。
+ * 路由 metadata 不授予行动权；异常保留此前已写前缀，不提供事务回滚。
  */
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { z } from "zod";
@@ -29,6 +29,7 @@ import {
 } from "./authority";
 import { animalOriginalPlayer } from "./roster";
 type Call = Extract<ToolCall, { name: "fox_distract" | "puffer_retaliate" }>;
+/** scope 关联唯一领域 choice 与信封；closed 是本地撤权位，不是库存或事件的副本。 */
 interface Turn {
   readonly world: World;
   readonly scope: object;
@@ -167,6 +168,7 @@ export function commitAnimalRequest(world: World, scope: object, raw: unknown) {
     )
   )
     throw Error("animal_required_action_invalid");
+  // 领域 commit 先返回，才写 closed 并通知完成；commit 或通知抛错均不重建原资源。
   const receipt =
     call.name === "fox_distract"
       ? (t.choice as ReturnType<typeof openAnimalFoxChoice>).commit(call.args.target_id)

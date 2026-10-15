@@ -1,3 +1,8 @@
+/**
+ * 负责公开双人原体捕获绑定及“是否含狼”的唯一聚合查询。输入为原 World 与两个严格数组数据项；
+ * 输出为 boolean，结构或原体不合时为 null。先复验两人 current 再读已捕获阵营，
+ * 不返回单人阵营、目标身份或新行动许可；原体算法由 OriginalPlayerScope 的同绑定出口拥有。
+ */
 import { types } from "node:util";
 import type { World } from "../../../../core/domain/world";
 import { Camp } from "../../../../core/domain/identity";
@@ -10,7 +15,7 @@ export {
 } from "../original_player_scope";
 export type { OriginalPlayerScope as PairTargetScope } from "../original_player_scope";
 
-/** Both original identities must be live before producing the sole aggregate boolean. */
+/** 两个原体均须 current 且 ID 不同，才产生唯一聚合布尔值；不返回各人的阵营。 */
 export function capturedPairContainsWolf(
   world: World,
   targets: readonly PairTargetScope[],
@@ -21,6 +26,7 @@ export function capturedPairContainsWolf(
     Object.getPrototypeOf(targets) !== Array.prototype
   )
     return null;
+  // 只接纳精确两数据项与 length 的原数组形状，不主动求值元素 getter。
   const fields: Record<string, PropertyDescriptor> = Object.getOwnPropertyDescriptors(
     targets as object,
   );

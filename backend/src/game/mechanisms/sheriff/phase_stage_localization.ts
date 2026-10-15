@@ -1,3 +1,7 @@
+/**
+ * 负责贡献警徽选择、竞选、PK、投票与方向阶段名称。输入为共享语言词典；
+ * 输出为原中文阶段名映射。只供展示注册表装配，不开选举、决定 PK 或分派行动权限。
+ */
 import { term } from "@ai-werewolf-arena/game-text";
 import { PhaseStageLocalizationContributor } from "../shared/phase_stage_localization_registry";
 

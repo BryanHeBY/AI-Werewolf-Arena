@@ -1,3 +1,8 @@
+/**
+ * 负责警长竞选、票汇总、警徽与发言方向的裁判／终端展示。输入为既有事件和语言；
+ * 输出为原名单、票项及分类文案，空名单回退 none，放弃先于目标显示，未知方向保原字符串。
+ * 只渲染事实，不计票、授徽、校验候选人或改变事件受众。
+ */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ScriptJudgeLineHandlers, ScriptLiveRenderHandlers } from "../script/contracts";
 
@@ -10,6 +15,7 @@ function votes(
   items: Array<{ actorId: number; targetId: number | null; abstain: boolean }>,
   locale: Locale,
 ): string {
+  // 纯展示保原票序；abstain先于null目标，既有票权／计票结果不在这里重算。
   return items
     .map((item) =>
       item.abstain || item.targetId === null

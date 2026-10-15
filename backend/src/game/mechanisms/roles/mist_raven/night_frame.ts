@@ -1,8 +1,8 @@
 /**
- * 负责炼金魔女／狼鸦之爪的阵容原体、雾目标选择与待交付夜间伤害。输入为原玩家和已接受
- * 的施法选择；输出保留原生命来源刀口、蛇窗及关闭／中止操作，付款仍由施法权威负责。
- * 原阵营点读取实际 Camp 的 own-data，组件引用、原字段或生命改变仍按原规则撤权，不保 Role 镜像。
- * 只有匹配的原夜间对象可以交付捕获伤害；身体复活不能恢复该对象的旧许可，失败不补交付。
+ * 负责炼金魔女／狼鸦之爪的阵容原体、雾目标选择与待交付夜间伤害。输入为原玩家和已接受施法选择；
+ * 输出保留原生命目标、蛇窗及关闭／中止操作，付款仍由施法 authority 负责。
+ * 实际 Camp 只在原 own-data 点读取，组件引用、原字段或生命版本改变按原规则撤权，不保 Role 阵营镜像。
+ * 只有匹配的原夜间对象可交付捕获伤害；复活不恢复旧许可，失败保留已付前缀，不补交付。
  */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -129,6 +129,7 @@ function bindNativeAbilities(privateState: object): () => boolean {
     Reflect.ownKeys(container).length === names.length &&
     guards.every((guard) => guard());
 }
+/** 阵容快照固定组件／字段原值和首生命版本；允许原体首次死亡的复验不授予复活后的新行动。 */
 interface OriginalPlayer {
   id: number;
   role: RoleComponent;
@@ -142,6 +143,7 @@ interface OriginalPlayer {
   version: number;
   abilitiesCurrent: () => boolean;
 }
+/** 选择和狼刀绑定当夜原生命；handedOff、蛇窗与验证重入位各自独立，不复制施法库存。 */
 interface MistNight {
   day: number;
   closed: boolean;
@@ -311,6 +313,7 @@ export function beginMistNight(
     (b.night && !b.night.closed)
   )
     throw new Error("mist_night_reentry");
+  // started先落；后续caster创建或状态读取失败仍保本夜已尝试，不用失败重开规避原一次性门控。
   b.started.add(day);
   const lives = new Map(
     world.getAliveEntityIds().map((id) => [id, Object.freeze(captureNightLife(world, id)!)]),
@@ -429,6 +432,7 @@ export function handOffMistNight(
   const circle = mistKnifeTargets(world);
   if (circle !== null && (wolfTarget === null ? circle.length > 0 : !circle.includes(wolfTarget)))
     throw new Error("mist_knife_outside_circle");
+  // 全部选择及圈内刀口复验通过后才写目标→交付位；返回引用不自行完成清理交接。
   n.wolfTarget = wolfTarget;
   n.handedOff = true;
   return { delayEligible: n.delayEligible, extra: n.extra };
@@ -443,6 +447,7 @@ export function openSnakeWindow(
     caster = b.latestCasters.get(b.alchemistId);
   if (!n.handedOff || !n.delayEligible || n.snakeRequested || !caster?.isCurrent())
     throw new Error("snake_window_unavailable");
+  // 先记录已请求，再验目标数组；目标无效会关夜，不能更换输入后再次请求。
   n.snakeRequested = true;
   const target = n.wolfTarget,
     expected =
@@ -472,6 +477,7 @@ export function snakeWindowTargets(world: World, day: number, actorId: number): 
     !b.latestCasters.get(actorId)?.isCurrent()
   )
     throw new Error("snake_window_revoked");
+  // 外部current回调前置重入位，回调后再核board/night/window原引用；异常关夜并抛回同错误。
   n.snakeValidating = true;
   let current: boolean;
   try {
@@ -516,7 +522,7 @@ export function closeMistNight(world: World, day: number): void {
     throw new Error("mist_night_unsettled");
   n.closed = true;
 }
-/** Cleanup never validates/repairs state or restores a resource/window. */
+/** 清理只关旧夜／清蛇窗，不校验或修复私态，也不恢复资源或重开窗口。 */
 export function abortMistNight(world: World): void {
   const n = boards.get(world)?.night;
   if (n) {

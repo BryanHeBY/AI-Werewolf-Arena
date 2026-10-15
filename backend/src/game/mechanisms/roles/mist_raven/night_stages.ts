@@ -1,7 +1,7 @@
 /**
- * Runs Alchemist mist choice and Raven knife selection. Inputs are the current Mist/Raven frame
- * and validated night actions; outputs preserve mist commits and sourced knife claims. These
- * stages do not finalize handed-off damage or own the later Snake reaction window.
+ * 负责炼金魔女雾选择及狼鸦之爪额外刀的真实阶段。输入为当前 frame、候选和工具回复；
+ * 输出为原提交及带来源刀口。请求前后、gateway 后保持原阵容与阶段复验，提交先于本人事实。
+ * 这里不结算已交接伤害，也不接管较晚蛇窗；晚事实抛错保留已经消费／记录的选择。
  */
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -63,6 +63,7 @@ export const ALCHEMIST_MIST_STAGE: NightStageHandler = {
     assertMistRosterCurrent(ctx.world);
     if (!ctx.isCurrent() || !result.ok || result.sanitizedCall?.name !== "cast_mist")
       throw new Error("mist_choice_action_invalid");
+    // 先提交选择／历史（含不耗库存的空选）；之后重读state与push失败不撤回雾选择或补库存。
     commitMistChoice(ctx.world, day, result.sanitizedCall.args.target_ids);
     const state = readAlchemistState(
       (

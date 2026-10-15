@@ -1,3 +1,10 @@
+/**
+ * 负责动物梦境请求信封的私有绑定、数据快照、别名和最早期限。输入为原请求／World 与调度器副本；
+ * 输出为不透明 token、冻结元数据和当前性结果。严格数据 schema 与 plain-data 快照在此核对，
+ * 原 context 必须同引用，已登记任一信封失配或观察到期会永久撤回共同信封。
+ * 写入仅限私有信封／别名表及共享预算、withdrawn；显式撤回或观察到失效会关闭信封，不因字段恢复重开。
+ * 这里只持请求数据能力，不调用 provider／控制器，不替代实际领域选择和库存许可。
+ */
 import { types } from "node:util";
 import { z } from "zod";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
@@ -15,6 +22,7 @@ interface Alias {
   readonly context: object;
   readonly deadline: number | undefined;
 }
+/** 请求正文只排除期限编码；aliases 共享预算和 withdrawn，任一已登记项失配都会撤共同信封。 */
 interface Envelope {
   readonly world: World;
   readonly original: Alias;
@@ -72,8 +80,7 @@ function validDeadline(value: unknown): value is number | undefined {
     value === undefined || (typeof value === "number" && Number.isFinite(value) && value > now())
   );
 }
-/** Animal-specific request data capability. This reader executes no controller,
- * provider, phase or caller callback; the resource owner calls it after its last guard. */
+/** 捕获动物请求的数据能力；不执行控制器、provider、阶段或 caller 回调，资源 owner 在其末次守卫后调用。 */
 export function captureAnimalRequestEnvelope(world: World, request: object): object {
   const encoded = body(request),
     context = own(request, "context"),
@@ -116,7 +123,7 @@ export function captureAnimalRequestEnvelope(world: World, request: object): obj
 export function animalRequestEnvelopeMatchesWorld(token: object, world: World): boolean {
   return envelopes.get(token)?.world === world;
 }
-/** Detached immutable metadata; authenticity still comes from the private envelope table. */
+/** 返回与请求分离的冻结元数据；真实性仍由私有信封表核对，header 本身不是行动许可。 */
 export function animalRequestEnvelopeHeader(token: object): Header | null {
   return envelopes.get(token)?.header ?? null;
 }
@@ -127,6 +134,7 @@ export function animalRequestEnvelopeCurrent(token: object): boolean {
     e.withdrawn = true;
     return false;
   }
+  // 先核观察到期，再逐个原对象／context／正文，末尾再读时钟；已撤回不因字段恢复或回拨而复活。
   for (const a of e.aliases.values()) {
     if (
       own(a.request, "context") !== a.context ||
@@ -143,11 +151,11 @@ export function animalRequestEnvelopeCurrent(token: object): boolean {
   }
   return true;
 }
-/** Private signed deadline data; callers still need the complete current check. */
+/** 返回本地绑定的期限数据；null／数值都不能替代完整 current 检查，也不是密码学签名。 */
 export function animalRequestEnvelopeDeadline(token: object): number | null {
   return envelopes.get(token)?.deadline ?? null;
 }
-/** Scheduler clones share the exact original context and can only shorten the budget. */
+/** 调度别名必须共享原 context 同引用；成功登记只缩短预算，非法别名在写表前抛原错误。 */
 export function inheritAnimalRequestEnvelope(token: object, original: object, clone: object): void {
   const e = envelopes.get(token),
     deadline = own(clone, "deadlineAtMs");

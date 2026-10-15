@@ -1,10 +1,8 @@
 /**
- * Owns Animal Dream's per-execution acquisition, opening fact and terminal close.
- * Inputs are delegated original World/events, actual night day and currentness;
- * writes keep authority opening before acquisition and fact publication.
- * Only acquired, not normally closed units abort. Failed publication preserves
- * its original authority prefix; this owner never refunds Fox choices, advances
- * a phase or changes Cat/Puffer death and actual-exile units.
+ * 负责动物梦境每次夜间执行的获取、开夜事实与终止关闭。输入为惰性委托的原 World／events、
+ * 实际夜数和当前性回调；先开 authority，再标记 acquired，最后发布开夜事实。
+ * 只有已获取且未正常关闭的单元才尝试 abort；发布失败保留原 authority 前缀，不退款狐狸选择、
+ * 推进阶段或改变猫／河豚死亡及实际放逐单元。
  */
 import type { World } from "../../../../core/domain/world";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
