@@ -1,0 +1,32 @@
+{
+  "fixedCommit": "b466dbe320122b1462ddfc724360c8b95b577b4b",
+  "gate": {
+    "launchChunk": "aac332",
+    "sessionId": 6825,
+    "terminalChunk": "a8f7a2",
+    "actualExitCode": 0,
+    "firstGateExecution": true,
+    "command": "python reads exact fixedCommit from before.json and os.execvp bun --no-env-file run.ts fixedCommit",
+    "stdoutCapture": "实际首启动stdout与最终completion stdout顺序拼接；两原tool回执保留，未另重定向运行。"
+  },
+  "firstLaunchToolFailure": {
+    "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-first-launch-error.json",
+    "sha256": "d6c82d76d6a203ba098879e68be9c2a2831ddfdc4df37a59c69e428cc23e3900",
+    "actualExitCode": 1,
+    "gateWasNotCalled": true
+  },
+  "inputVerification": {
+    "terminalChunk": "ee07ae",
+    "actualExitCode": 0,
+    "firstExecution": true
+  },
+  "partition": {
+    "terminalChunk": "644e32",
+    "actualExitCode": 0,
+    "firstExecution": true
+  },
+  "limits": [
+    "fixed b466 source，不把后继工作树混入。",
+    "仅一次真实gate；输入与全集分区均仅读取，不重复green或主门禁。"
+  ]
+}

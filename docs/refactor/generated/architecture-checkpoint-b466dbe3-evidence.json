@@ -1,0 +1,104 @@
+{
+  "baseCommit": "b466dbe320122b1462ddfc724360c8b95b577b4b",
+  "fixedCommit": "b466dbe320122b1462ddfc724360c8b95b577b4b",
+  "source": [],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "tooling/refactor/inventory.ts",
+      "sha256": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce"
+    },
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394"
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d"
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb"
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db"
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-b466dbe3.md",
+    "sha256": "b6ea42eefa0fc53aa0a13765b4b4df373901520096f2e6e3cb7b7bc419bfb7c5"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-before.json",
+      "sha256": "b80153589e45529d0c79a3aeccb944f5ea02941982b3cd10f81084e6837f0c73"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-capture.json",
+      "sha256": "5c372d8cd01712437c3c10bb64f9705b9be502041c9cc064ce9cf0ce7f0656b0"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-completion-stdout.txt",
+      "sha256": "16da929ecf2cf33a5bdb4d720e4597050ba395b7fb2cf77a0622187378e860a9"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-first-launch-error-output.txt",
+      "sha256": "e4a20ab4931a02e1da605b82b6ba128859d2d10bc4bcbabf068bc05515748499"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-first-launch-error.json",
+      "sha256": "d6c82d76d6a203ba098879e68be9c2a2831ddfdc4df37a59c69e428cc23e3900"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-input-verification-output.txt",
+      "sha256": "5fa30bc13e356d960ce384687a428efbc661d7d44ea5336d498baf0b093aba1e"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-input-verification.json",
+      "sha256": "f3db240c351ab6d1ad49a0e0fac4efb05f3703d966088759fac36dc5e5778e71"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-input-verification.py",
+      "sha256": "ab8948e39c275112f60b3de5166adcafaaf6f630aa4986ae01acf7a4ddea7b54"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-output.txt",
+      "sha256": "4dae2f50994798e31dd1bb90ae361d45f7300aaed2620e506386023e0ed4baf9"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-partition.json",
+      "sha256": "c18d124980c34f214f249af14f60b24ea7e59cbb88b6a230cad8d2bee98495c4"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-receipts.json",
+      "sha256": "44d4e74170dd4053697f89c630ad5def8d4c5a6dc47026ac8194b30daa4045e2"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-report.json",
+      "sha256": "d3ffc27071cc0ba8af2756e58905f5c8298b51efa6689e3b4d323b890273a9ee"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-run.ts",
+      "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775"
+    }
+  ],
+  "limits": [
+    "没有生产源码修改，仅固定Git结构检查和历史完整证据，不冒玩法验收。"
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-b466dbe3-scope-final.json",
+    "sha256": "3a16496dce066d60830f0d46c926b7b93f8232f5294087c5aa735bbc2a22d7ee"
+  },
+  "counts": {
+    "files": 3290,
+    "violations": 114,
+    "failures": 0,
+    "remainingDebt": 114,
+    "clearedDebt": 1665
+  }
+}

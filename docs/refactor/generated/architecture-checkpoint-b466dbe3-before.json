@@ -1,0 +1,8 @@
+{
+  "fixedCommit": "b466dbe320122b1462ddfc724360c8b95b577b4b",
+  "parentCheckpoint": "c9551e66f20ef292c84d3bf24f11ade61b52459e",
+  "fixedToolSource": "docs/refactor/generated/architecture-checkpoint-c9551e66-run.ts",
+  "sameScriptSHA256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775",
+  "pendingWorkExcluded": "后继10source请求/归档政策尚未提交，不混进此fixedGit结构输入；只检查本大阶段已提交内容。",
+  "checksRun": false
+}
