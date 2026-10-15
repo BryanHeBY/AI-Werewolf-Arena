@@ -1,6 +1,7 @@
 /**
  * 场景测试验证狼美人关系链与判胜。输入保留魅惑／死因／locale／胜利参数及受控迟到提案；原字面回执、引用／getter／错误轨迹、事实和状态是预期。实际中心 DeathResolution（含异步撤销 hook）及 PhaseManager 周期结算复合死因、枪、魅惑、警徽与有序胜利；模型由受控 provider 替代，生产输出不生成新 golden。
  */
+import { invokeDeathHook } from "../../../../src/engine/hooks/registry";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
@@ -63,7 +64,15 @@ for (const mutation of [
         [],
         [
           async (...args) => {
-            const result = await wolfBeautyDeathHook(...args);
+            const result = await invokeDeathHook(
+              wolfBeautyDeathHook,
+              game.world,
+              args[1],
+              args[2],
+              args[3],
+              events,
+              args[4],
+            );
             queueMicrotask(() => {
               if (mutation === "replace_life")
                 game.world.addComponent(5, COMPONENT.Alive, createAliveComponent());

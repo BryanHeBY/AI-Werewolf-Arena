@@ -12,8 +12,8 @@ import type { World } from "../../domain/world";
 import { expandWeddingDeaths, weddingGroup } from "./authority";
 
 /**
- * 只声明四项原位查询，装配 getter 不缓存状态或时钟。world 仍是原运行对象，
- * 这不是可序列化 DTO、进程隔离或运行权限屏障；关系授权仍由原 authority 检查。
+ * 仅可信装配持有四项原位读取源；绑定时不查询状态或时钟。
+ * 实际执行对象只保存下方三项本族port，原World不进入动态扩展上下文或返回句柄。
  */
 interface WeddingDeathWaveRuntime {
   readonly world: World;
@@ -21,9 +21,53 @@ interface WeddingDeathWaveRuntime {
   readonly day: number;
   readonly phase: Phase;
 }
+/** 执行体只拿本族扩张、逐边婚约查询与专用事实命令；没有World或通用写回门。 */
+export interface WeddingDeathWavePorts {
+  expandDeaths(
+    ids: number[],
+    sources: DeathSources,
+    seen: ReadonlySet<number>,
+    nightOrigin: Set<number>,
+  ): ReturnType<typeof expandWeddingDeaths>;
+  currentGroup(): ReturnType<typeof weddingGroup>;
+  appendPartnerDeath(
+    group: NonNullable<ReturnType<typeof weddingGroup>>,
+    edge: ReturnType<typeof expandWeddingDeaths>[number],
+  ): void;
+}
+/** 可信DR构造完整owner；只建立闭包，World/events/day/phase均在原表达式位置读取。 */
+export function bindWeddingDeathWavePublication(
+  runtime: WeddingDeathWaveRuntime,
+): WeddingDeathWavePublication {
+  return new WeddingDeathWavePublication({
+    get expandDeaths(): WeddingDeathWavePorts["expandDeaths"] {
+      const expand = expandWeddingDeaths;
+      return (ids, sources, seen, nightOrigin) =>
+        expand(runtime.world, ids, sources, seen, nightOrigin);
+    },
+    get currentGroup() {
+      const current = weddingGroup;
+      return () => current(runtime.world);
+    },
+    appendPartnerDeath(group, edge) {
+      runtime.events.push({
+        timestamp: Date.now(),
+        type: "ghost_bride_partner_death",
+        payload: {
+          policy: GHOST_BRIDE_POLICY,
+          groupId: group.groupId,
+          day: runtime.day,
+          phase: runtime.phase,
+          ...edge,
+        },
+        audience: Object.freeze([]),
+      });
+    },
+  });
+}
 
 export class WeddingDeathWavePublication {
-  constructor(private readonly runtime: WeddingDeathWaveRuntime) {}
+  constructor(private readonly ports: WeddingDeathWavePorts) {}
 
   /** 先完成原地关系扩张，再逐边发布；最后仅筛出不在初始名单中的席位，不回滚失败前缀。 */
   expand(
@@ -33,21 +77,10 @@ export class WeddingDeathWavePublication {
     nightOrigin: Set<number>,
   ): number[] {
     const before = new Set(ids);
-    for (const edge of expandWeddingDeaths(this.runtime.world, ids, sources, seen, nightOrigin)) {
+    for (const edge of this.ports.expandDeaths(ids, sources, seen, nightOrigin)) {
       // 逐边调用原婚约查询；不提前读取 groupId 或缓存上一条边的快照。
-      const group = weddingGroup(this.runtime.world)!;
-      this.runtime.events.push({
-        timestamp: Date.now(),
-        type: "ghost_bride_partner_death",
-        payload: {
-          policy: GHOST_BRIDE_POLICY,
-          groupId: group.groupId,
-          day: this.runtime.day,
-          phase: this.runtime.phase,
-          ...edge,
-        },
-        audience: Object.freeze([]),
-      });
+      const group = this.ports.currentGroup()!;
+      this.ports.appendPartnerDeath(group, edge);
     }
     return ids.filter((id) => !before.has(id));
   }

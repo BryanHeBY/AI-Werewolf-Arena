@@ -16,11 +16,18 @@ import { transferOrDestroySheriffBadge } from "../features/sheriff/badge";
 import { getIdiotState, setIdiotState } from "../features/idiot/ports";
 
 /** 同步决定本次放逐是否免死；原生命、阶段与后续死亡提交仍归引擎。 */
-export function idiotVotedOutHook(
-  world: World,
+import {
+  ownVotedOutHook,
+  type OwnedHookBindingSource,
+  type OwnedVotedOutCommands,
+} from "../engine/hooks/owned-bindings";
+import type { VotedOutHook } from "../engine/hooks/registry";
+function resolveOwnedExile(
+  source: OwnedHookBindingSource,
   targetId: EntityId,
-  events: GameEvent[],
 ): VotedOutResult | null {
+  const world = source.world,
+    events = source.events;
   const roleComp = world.getComponent(targetId, COMPONENT.Role);
   const aliveComp = world.getComponent(targetId, COMPONENT.Alive);
   if (!roleComp || !aliveComp || !aliveComp.alive) {
@@ -62,3 +69,9 @@ export function idiotVotedOutHook(
     reason: "idiot_revealed",
   };
 }
+
+/** 运行回调只取得本族完整免死command，不接通用World或事件数组。 */
+export const idiotVotedOutHook: VotedOutHook = ownVotedOutHook<OwnedVotedOutCommands>(
+  (runtime, targetId) => runtime.ports.resolve(targetId),
+  (source) => ({ resolve: (targetId: number) => resolveOwnedExile(source, targetId) }),
+);

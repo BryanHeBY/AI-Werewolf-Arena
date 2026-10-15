@@ -3,6 +3,7 @@
  * 输入为真实原体／绑定、手写死因与运行 getter；输出以独立 trace、原引用及 resolved/applied 验收。
  * 仅驱动有限准备／发布，不运行整局或模型；事件失败不能退款，字段契约不是死亡许可。
  */
+import { bindDreamLifeQueries } from "../../../../src/domain/dream-night-effects";
 import { expect, test } from "bun:test";
 import {
   Camp,
@@ -18,6 +19,8 @@ import { createRoleComponent } from "../../../../src/agents/observation/role-pre
 import type { DreamNightEffects } from "../../../../src/domain/dream-night-effects";
 import {
   createWolfBeautyDeathContribution,
+  bindWolfBeautyDeathCommands,
+  type WolfBeautyDeathCommands,
   attemptCharmTrigger,
   commitCharmDeath,
   setWolfBeautyState,
@@ -54,18 +57,21 @@ test("a suppressed source refuses before runtime World, protection or publicatio
     proposed: number[] = [],
     sources: DeathSources = {},
     nightTargets: number[] = [];
-  const owner = createWolfBeautyDeathContribution([{ binding: f.binding, nightEffect: true }], {
-    attemptCharmTrigger,
-    commitCharmDeath,
-  });
-  const triggers = owner.prepare(
-    {
-      get world(): World {
+  const owner = createWolfBeautyDeathContribution(
+    [{ binding: f.binding, nightEffect: true }],
+    bindWolfBeautyDeathCommands({
+      world: f.world,
+      events: [],
+      prepareWorld() {
         throw new Error("world_must_not_read");
       },
-      get events(): GameEvent[] {
+      prepareEvents() {
         throw new Error("events_must_not_read");
       },
+    }),
+  );
+  const triggers = owner.prepare(
+    {
       blocksNightLinkedDeath() {
         throw new Error("dreams_must_not_read");
       },
@@ -98,7 +104,7 @@ test("blocked publication failure keeps the paid claim and original receiver/rea
       return function (this: typeof dreams, world, targetId, originalSeen) {
         trace.push("block");
         expect(this).toBe(dreams);
-        expect(world).toBe(f.world);
+        expect(world.matchesAlive(f.target, () => f.targetLife)).toBe(true);
         expect(targetId).toBe(f.target);
         expect(originalSeen).toBe(seen);
         expect(f.binding.resolved).toBe(true);
@@ -106,15 +112,36 @@ test("blocked publication failure keeps the paid claim and original receiver/rea
       };
     },
   };
+  const privateSource = {
+    get world() {
+      trace.push("world");
+      return f.world;
+    },
+    get events(): GameEvent[] {
+      trace.push("events");
+      throw failure;
+    },
+  };
+  const bound = bindWolfBeautyDeathCommands({
+    world: f.world,
+    events: [],
+    prepareWorld: () => privateSource.world,
+    prepareEvents: () => privateSource.events,
+  });
   const owner = createWolfBeautyDeathContribution([{ binding: f.binding, nightEffect: true }], {
-    get attemptCharmTrigger() {
+    get attempt() {
       trace.push("attempt");
-      return function (this: unknown, ...args: Parameters<typeof attemptCharmTrigger>) {
+      const attempt = bound.attempt;
+      return function (this: unknown, ...args: Parameters<WolfBeautyDeathCommands["attempt"]>) {
         expect(this).toBeUndefined();
-        return attemptCharmTrigger(...args);
+        return attempt(...args);
       };
     },
-    commitCharmDeath,
+    get commit() {
+      return bound.commit;
+    },
+    blocked: (binding) => bound.blocked(binding),
+    applied: (binding) => bound.applied(binding),
   });
   const nightEffects = {
     get dreams() {
@@ -125,16 +152,12 @@ test("blocked publication failure keeps the paid claim and original receiver/rea
   expect(() =>
     owner.prepare(
       {
-        get world() {
-          trace.push("world");
-          return f.world;
-        },
-        get events(): GameEvent[] {
-          trace.push("events");
-          throw failure;
-        },
         blocksNightLinkedDeath(target) {
-          return nightEffects?.dreams?.blocksNightCharm(this.world, target(), seen);
+          return nightEffects?.dreams?.blocksNightCharm(
+            bindDreamLifeQueries(privateSource.world),
+            target(),
+            seen,
+          );
         },
       },
       proposed,
@@ -160,18 +183,19 @@ test("claimed preparation preserves container prefixes and applies only after re
     nightTargets: number[] = [],
     failure = new Error("applied_publication_failed");
   const sources: DeathSources = { [f.target]: [DeathCause.Poison, DeathCause.Charm] };
-  const owner = createWolfBeautyDeathContribution([{ binding: f.binding, nightEffect: false }], {
-    attemptCharmTrigger,
-    commitCharmDeath,
-  });
-  const triggers = owner.prepare(
-    {
-      get world() {
-        return f.world;
-      },
-      get events(): GameEvent[] {
+  const owner = createWolfBeautyDeathContribution(
+    [{ binding: f.binding, nightEffect: false }],
+    bindWolfBeautyDeathCommands({
+      world: f.world,
+      events: [],
+      prepareWorld: () => f.world,
+      prepareEvents() {
         throw failure;
       },
+    }),
+  );
+  const triggers = owner.prepare(
+    {
       blocksNightLinkedDeath() {
         throw new Error("day_charm_must_not_read_dreams");
       },

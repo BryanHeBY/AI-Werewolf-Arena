@@ -1,0 +1,581 @@
+{
+  "kind": "death-query-ports-independent-static-review",
+  "decision": "requires_explicit_choice_result_followup_decision",
+  "approved": false,
+  "scope": "50-path D/E changes and adjacent concrete original choose return channel; no broad all H02/C47 approval",
+  "sourceIndex": {
+    "path": "/tmp/awa-death-query-ports-final-source.json",
+    "sha256": "d1784be9732b6de2a600d96b48e668328ff4989d997fe3b2fa16802a8c29b1b6",
+    "base": "5e26b88ae5208d927bcc28d408292a2cfeb43922"
+  },
+  "source": [
+    {
+      "path": "backend/src/domain/dream-night-effects.ts",
+      "sha256": "18fc502c74316e9c74ae23f39b225e396901598da8d33462e337579e5b416355",
+      "expectedSHA256": "18fc502c74316e9c74ae23f39b225e396901598da8d33462e337579e5b416355",
+      "same": true
+    },
+    {
+      "path": "backend/src/engine/death-resolution.ts",
+      "sha256": "89af96fbe88d32ed70657949c0d630ffca0a0ec73bccd6f7c7b14053a88115e9",
+      "expectedSHA256": "89af96fbe88d32ed70657949c0d630ffca0a0ec73bccd6f7c7b14053a88115e9",
+      "same": true
+    },
+    {
+      "path": "backend/src/engine/death-wave-contribution.ts",
+      "sha256": "3bc58e6285301709ab28e08e6e5e7d3bb0c96a4a08b8427928c86dcddab72e30",
+      "expectedSHA256": "3bc58e6285301709ab28e08e6e5e7d3bb0c96a4a08b8427928c86dcddab72e30",
+      "same": true
+    },
+    {
+      "path": "backend/src/engine/events/event-registry.ts",
+      "sha256": "9dc927a2421121975899ecee0e5643255999495a307936b5f855ca39da206838",
+      "expectedSHA256": "9dc927a2421121975899ecee0e5643255999495a307936b5f855ca39da206838",
+      "same": true
+    },
+    {
+      "path": "backend/src/engine/hooks/owned-bindings.ts",
+      "sha256": "b5132fa045ea4de7725975233a7fd1722fb2a468c867dda0ac2c363937c078d2",
+      "expectedSHA256": "b5132fa045ea4de7725975233a7fd1722fb2a468c867dda0ac2c363937c078d2",
+      "same": true
+    },
+    {
+      "path": "backend/src/engine/hooks/registry.ts",
+      "sha256": "a0fc5b9903574a54c98f1031e768199e562f6d0e67f7dc1facf71df5d044fcf2",
+      "expectedSHA256": "a0fc5b9903574a54c98f1031e768199e562f6d0e67f7dc1facf71df5d044fcf2",
+      "same": true
+    },
+    {
+      "path": "backend/src/engine/phases/night-pipeline.ts",
+      "sha256": "fad9c90b76538cdc037d0de470e7d19c76a2002341dfc77ef4b3654c0a9a5e31",
+      "expectedSHA256": "fad9c90b76538cdc037d0de470e7d19c76a2002341dfc77ef4b3654c0a9a5e31",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/awakened-hidden-wolf/death-hook.ts",
+      "sha256": "2cffeff4a3f2f8340b1d32f7627ec6c8eeeaa0cda40b821cfd3497d70f72a085",
+      "expectedSHA256": "2cffeff4a3f2f8340b1d32f7627ec6c8eeeaa0cda40b821cfd3497d70f72a085",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/cupid/relation.ts",
+      "sha256": "9edb19a219f608aaa456dc3f5ca857a93aae2f845a3043c2c0c55d410f106a2d",
+      "expectedSHA256": "9edb19a219f608aaa456dc3f5ca857a93aae2f845a3043c2c0c55d410f106a2d",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/death-actions/gift-gun-death-hook.ts",
+      "sha256": "152ef05eb31d788e5350283b476863e908f243e27b8fd86bffbd2a4cbfaedb86",
+      "expectedSHA256": "152ef05eb31d788e5350283b476863e908f243e27b8fd86bffbd2a4cbfaedb86",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/dreamer/night-frame.ts",
+      "sha256": "bef090f456f1a0bba1f781b570f412b57a6fa87e9b54fd4ae2ef0647bc9e1bc2",
+      "expectedSHA256": "bef090f456f1a0bba1f781b570f412b57a6fa87e9b54fd4ae2ef0647bc9e1bc2",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/ghost-bride/death-wave-publication.ts",
+      "sha256": "db3f2f9d3fe08eb04a2f22c508b1688566a8f4801c261fd15fa78aba118b1fad",
+      "expectedSHA256": "db3f2f9d3fe08eb04a2f22c508b1688566a8f4801c261fd15fa78aba118b1fad",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/ghost-bride/ports.ts",
+      "sha256": "d8ead83d29c556decaab0e4cf447b3b9c4a37549fe412edfb4c99687bb06822e",
+      "expectedSHA256": "d8ead83d29c556decaab0e4cf447b3b9c4a37549fe412edfb4c99687bb06822e",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/hunter/death-hook.ts",
+      "sha256": "14d37b0942f9276a225c6639b49a272c88c002e6471d24818b9c1ef91f8beec3",
+      "expectedSHA256": "14d37b0942f9276a225c6639b49a272c88c002e6471d24818b9c1ef91f8beec3",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/mechanical-wolf/death-hook.ts",
+      "sha256": "4dd635b9f0562097aaf7cc29f15a38be33b7cd9c596404fcfd1fa41620bfa272",
+      "expectedSHA256": "4dd635b9f0562097aaf7cc29f15a38be33b7cd9c596404fcfd1fa41620bfa272",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/mist-raven/pending-night.ts",
+      "sha256": "3e4256a7bcb83918ede331532c89d1af92f47c7ba27215ea1425978c66085635",
+      "expectedSHA256": "3e4256a7bcb83918ede331532c89d1af92f47c7ba27215ea1425978c66085635",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/red-moon/voted-out-hook.ts",
+      "sha256": "dcf8b65268244ee0e0074e02c77092503fd46cb014da1c992ae919dfbef8ce24",
+      "expectedSHA256": "dcf8b65268244ee0e0074e02c77092503fd46cb014da1c992ae919dfbef8ce24",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/wolf-beauty/death-hook.ts",
+      "sha256": "870eed997179848c6b51653e670028384106df3186e430421e82755703e7b7eb",
+      "expectedSHA256": "870eed997179848c6b51653e670028384106df3186e430421e82755703e7b7eb",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/wolf-beauty/death-wave-publication.ts",
+      "sha256": "fc582c28b6b03c73de46d7a2c33d0c33528b853a2ac910e9d01d7528c35041b8",
+      "expectedSHA256": "fc582c28b6b03c73de46d7a2c33d0c33528b853a2ac910e9d01d7528c35041b8",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/wolf-beauty/ports.ts",
+      "sha256": "71af1221a3ceab709c4cfa6d4fa64a57912415d894dd6f8168467e73e289d724",
+      "expectedSHA256": "71af1221a3ceab709c4cfa6d4fa64a57912415d894dd6f8168467e73e289d724",
+      "same": true
+    },
+    {
+      "path": "backend/src/features/wolf-king/profile.ts",
+      "sha256": "ce3725838f2f30e60d096b6f1b59b4fa3677fd3620ac1f52ca3ddf0bbbc6574b",
+      "expectedSHA256": "ce3725838f2f30e60d096b6f1b59b4fa3677fd3620ac1f52ca3ddf0bbbc6574b",
+      "same": true
+    },
+    {
+      "path": "backend/src/rulesets/additional-death-relations.ts",
+      "sha256": "5f726b971ab4b7958e2f5dc5e568e3d534d773223a69c36282f1269b0c9239a2",
+      "expectedSHA256": "5f726b971ab4b7958e2f5dc5e568e3d534d773223a69c36282f1269b0c9239a2",
+      "same": true
+    },
+    {
+      "path": "backend/src/rulesets/idiot-exile-outcome.ts",
+      "sha256": "a14a3ccb4c9c5025ae27c01040a0583f8579d79a452bfa68e2d1f41962291d80",
+      "expectedSHA256": "a14a3ccb4c9c5025ae27c01040a0583f8579d79a452bfa68e2d1f41962291d80",
+      "same": true
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "sha256": "62a0ed80180e5b7653a6309029f5056b240df195b23d3ac87b099a86b76d101b",
+      "expectedSHA256": "62a0ed80180e5b7653a6309029f5056b240df195b23d3ac87b099a86b76d101b",
+      "same": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "2d22845b16d55c8e61fc475fd2c069c942eaad2b7ca14bd3e6f871f4e9184042",
+      "expectedSHA256": "2d22845b16d55c8e61fc475fd2c069c942eaad2b7ca14bd3e6f871f4e9184042",
+      "same": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+      "sha256": "bdf0397c6f14c7ef0a6103425bd866b798d635680ec9f940b1d13b12b4933f5f",
+      "expectedSHA256": "bdf0397c6f14c7ef0a6103425bd866b798d635680ec9f940b1d13b12b4933f5f",
+      "same": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/wolf-beauty/charm-chain-and-victory.test.ts",
+      "sha256": "360ecb6fb3a71f0937b5ffeddd82f1edeb5d495f1e699c79441081fae8a1ba70",
+      "expectedSHA256": "360ecb6fb3a71f0937b5ffeddd82f1edeb5d495f1e699c79441081fae8a1ba70",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/engine/death/narrow-hook-capabilities.test.ts",
+      "sha256": "baac11d5bdb765c311e254a49bd3a2d816c89744914627252e6b1a666b06c976",
+      "expectedSHA256": "baac11d5bdb765c311e254a49bd3a2d816c89744914627252e6b1a666b06c976",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/engine/death/target-life-scope.test.ts",
+      "sha256": "04b298fb9e3b4330ee31cd8221e3762a18ec5bbb7747fc4df442f3fdf07617c2",
+      "expectedSHA256": "04b298fb9e3b4330ee31cd8221e3762a18ec5bbb7747fc4df442f3fdf07617c2",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "sha256": "54dd55e324f77a7ecee4100a15b3b37f8685367a40f89856648ef68ce52e8a8b",
+      "expectedSHA256": "54dd55e324f77a7ecee4100a15b3b37f8685367a40f89856648ef68ce52e8a8b",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "d4d2b43ea6b112a7526c4f410a1712da3d20d8d2286df3cdcd0cfa519a509a1b",
+      "expectedSHA256": "d4d2b43ea6b112a7526c4f410a1712da3d20d8d2286df3cdcd0cfa519a509a1b",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/radiant-eclipse-damage.test.ts",
+      "sha256": "c7e01439d765c68b2e2e49d27a21afae18b0ed9b200fed009e693c718383a3f1",
+      "expectedSHA256": "c7e01439d765c68b2e2e49d27a21afae18b0ed9b200fed009e693c718383a3f1",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+      "sha256": "6e8ed6f2d82ba2baab0e4b6c754c92e381708544f67e89391d88408ffd2883ac",
+      "expectedSHA256": "6e8ed6f2d82ba2baab0e4b6c754c92e381708544f67e89391d88408ffd2883ac",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/captured-gun-ownership.test.ts",
+      "sha256": "3665ee275400b1382eaa947e8bd12502b344fb8dece6bd64e1db89e50c590f39",
+      "expectedSHA256": "3665ee275400b1382eaa947e8bd12502b344fb8dece6bd64e1db89e50c590f39",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven-pending-night.test.ts",
+      "sha256": "068634228a65ba5f21b3e3f616762b0324cd096e3412b68674ae4d8a1264c495",
+      "expectedSHA256": "068634228a65ba5f21b3e3f616762b0324cd096e3412b68674ae4d8a1264c495",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/damage-snapshot.test.ts",
+      "sha256": "4c829f36815ef4e98cbd57a031b9ae06d2311afd7275fef4ab4535b11c817fba",
+      "expectedSHA256": "4c829f36815ef4e98cbd57a031b9ae06d2311afd7275fef4ab4535b11c817fba",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "65b0e931a2e5b5f57825707224027adf9850f8e9f9122639a81d0ce861cbf5a5",
+      "expectedSHA256": "65b0e931a2e5b5f57825707224027adf9850f8e9f9122639a81d0ce861cbf5a5",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-day-actions.test.ts",
+      "sha256": "5df5623a9915756a09fcb56d487a733b6538b28a84a27fcbe11cebafac86e039",
+      "expectedSHA256": "5df5623a9915756a09fcb56d487a733b6538b28a84a27fcbe11cebafac86e039",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/exile-contribution.test.ts",
+      "sha256": "e73552f281a52a4e48b05242feb095e26ff388a23f1242cf611d993d6d7892ed",
+      "expectedSHA256": "e73552f281a52a4e48b05242feb095e26ff388a23f1242cf611d993d6d7892ed",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+      "sha256": "075d4362f83430a2170be91a562dd334a064385c339cbb5ab04f810f14a0d4f9",
+      "expectedSHA256": "075d4362f83430a2170be91a562dd334a064385c339cbb5ab04f810f14a0d4f9",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+      "sha256": "b31e23e9b188427687a42a49e8b224da5b79b229c9b9b909695ee8319c655e18",
+      "expectedSHA256": "b31e23e9b188427687a42a49e8b224da5b79b229c9b9b909695ee8319c655e18",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-king/native-shot-authority.test.ts",
+      "sha256": "5b7ea332a3077d7f03e1e8f4790d3b17dd7b91d5c3337a8d2c70256076e72ad6",
+      "expectedSHA256": "5b7ea332a3077d7f03e1e8f4790d3b17dd7b91d5c3337a8d2c70256076e72ad6",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "3e6cd0e8060938201b43d809ccb4f2267285ba168d4fd80e4658f41fbe287b2e",
+      "expectedSHA256": "3e6cd0e8060938201b43d809ccb4f2267285ba168d4fd80e4658f41fbe287b2e",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/death-wave-contributions.test.ts",
+      "sha256": "7f2547d9fa1a49c94d15ad16bcf98ebadbb0ec3363386dfd55c81e9e4d6402bb",
+      "expectedSHA256": "7f2547d9fa1a49c94d15ad16bcf98ebadbb0ec3363386dfd55c81e9e4d6402bb",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/gifted-gun-resource-boundaries.test.ts",
+      "sha256": "c7312469f91126d662768b00a43a0e9a556cbb5c73b5662f35c63f42860c22ff",
+      "expectedSHA256": "c7312469f91126d662768b00a43a0e9a556cbb5c73b5662f35c63f42860c22ff",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "07355eeb620ca613e3e2b6065e8caeb0fbdec3607ad822a8e075569e4917eb3b",
+      "expectedSHA256": "07355eeb620ca613e3e2b6065e8caeb0fbdec3607ad822a8e075569e4917eb3b",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/hunter-death-causes.test.ts",
+      "sha256": "09027b5caf4659fdd83c535ca16c6ef908c501121dcc3d9bfb1edf1f5c10de1d",
+      "expectedSHA256": "09027b5caf4659fdd83c535ca16c6ef908c501121dcc3d9bfb1edf1f5c10de1d",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/additional-death-relations.test.ts",
+      "sha256": "cba557d52ce86999640edad9968ef60d1c842f4b168a2580dd52b67aaf6be337",
+      "expectedSHA256": "cba557d52ce86999640edad9968ef60d1c842f4b168a2580dd52b67aaf6be337",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/idiot-exile-outcome.test.ts",
+      "sha256": "75bd44561f923b6aefa09cfc0714c3097d358f4b5e43d062457151843f0cd539",
+      "expectedSHA256": "75bd44561f923b6aefa09cfc0714c3097d358f4b5e43d062457151843f0cd539",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "sha256": "bb88ca87f51b8686494a2105279ace402a155495168a288d9893c244e2bec731",
+      "expectedSHA256": "bb88ca87f51b8686494a2105279ace402a155495168a288d9893c244e2bec731",
+      "same": true
+    }
+  ],
+  "freshDrift": [],
+  "observations": [
+    "HookRuntime actual unknown callback sees only scalar/copy queries and empty ports; exact static builtin function identities receive private concrete commands. Binder maps store definitions, not World/per-game ports.",
+    "Beauty keeps proposals/receipt references private in its complete owner. Source rejection precedes prepareWorld; claim precedes protection; publishAfterDeaths follows actual engine death commit. Original event and partial error prefix remains in complete owner.",
+    "Ghost publication privately captures lazy world/events/day/phase sources. Expansion and per-edge group lookup precede append; events.push callee then Date.now/day/phase remain in original order.",
+    "Dream matchesAlive is boolean, not readonly component return. Getter captures original World.getComponent then id evaluation; query completion precedes original-ref thunk; original receiver and same Error path are literal-tested.",
+    "New narrow-hook cases cover actual function-identity binding, cross-World stock separation, unpaid thrown selection and query/ref evaluation ordering. Adapted old tests preserve domain literal stock/event/choice oracles; checks not executed by reviewer."
+  ],
+  "finding": {
+    "id": "D-E-public-death-choice-return-component",
+    "kind": "static actual source chain; no runtime counterexample executed",
+    "paths": [
+      "backend/src/engine/hooks/registry.ts",
+      "backend/src/engine/death-resolution.ts",
+      "backend/src/rulesets/death-shot-selection.ts",
+      "backend/src/domain/deaths.ts",
+      "backend/src/domain/night-effects.ts"
+    ],
+    "chain": [
+      "Unknown DeathHook still receives original chooseDeathShot argument directly from invokeDeathHook",
+      "DeathResolution callback returns collectDeathShot result unmodified",
+      "collectDeathShot real shot returns targetScope or mapped.scope",
+      "DeathShotSelection.targetScope is NightLifeScope; .life is original AliveComponent, not scalar/opaque proof"
+    ],
+    "minimalRisk": "A custom hook awaits choose(actorId) for a legal shot; selected.kind===shot exposes selected.targetScope.life even though HookRuntime.queries is narrow. This is an existing additional API channel, not an arbitrary externally planted object graph.",
+    "suggestion": "Unknown callback choose returns only public choice/id/permit values. Exact original full selection remains in trusted static owner binding, preserving mapped current/ref and error timing for native settlement. Keep this scoped separately if Root accepts the 50-path migration as bounded delivery; do not call complete public-hook closure."
+  },
+  "actualReceipts": [
+    {
+      "receipt": "/tmp/awa-death-query-ports-execution/tests/receipt.json",
+      "sha256": "8cf4496900e6a87c77930e612d3051a628de664c281b6aa22d7862ee7a091f21",
+      "exitCode": 0,
+      "prePostSame": true,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "test",
+        "--preload",
+        "./tests/setup.ts",
+        "tests/unit/engine/death/narrow-hook-capabilities.test.ts",
+        "tests/unit/engine/death/target-life-scope.test.ts",
+        "tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+        "tests/unit/features/dreamer/dream-scope.test.ts",
+        "tests/unit/features/dreamer/radiant-eclipse-damage.test.ts",
+        "tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+        "tests/unit/features/mechanical-wolf/captured-gun-ownership.test.ts",
+        "tests/unit/features/mist-raven-pending-night.test.ts",
+        "tests/unit/features/radiant-eclipse/damage-snapshot.test.ts",
+        "tests/unit/features/red-moon-audit.test.ts",
+        "tests/unit/features/red-moon-day-actions.test.ts",
+        "tests/unit/features/red-moon/exile-contribution.test.ts",
+        "tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+        "tests/unit/features/wolf-king/day-origin-policy.test.ts",
+        "tests/unit/features/wolf-king/native-shot-authority.test.ts",
+        "tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+        "tests/unit/mechanisms/death-wave-contributions.test.ts",
+        "tests/unit/mechanisms/gifted-gun-resource-boundaries.test.ts",
+        "tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+        "tests/unit/mechanisms/hunter-death-causes.test.ts",
+        "tests/unit/rulesets/additional-death-relations.test.ts",
+        "tests/unit/rulesets/idiot-exile-outcome.test.ts",
+        "tests/unit/rulesets/night-damage-composition.test.ts"
+      ],
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "raw": [
+        {
+          "path": "stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28,
+          "actualSHA256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "same": true
+        },
+        {
+          "path": "stderr.raw",
+          "sha256": "676ba816ea7bedf69afb29c760af37f0a39d117c1a225338b8ebc020106080e9",
+          "bytes": 35583,
+          "actualSHA256": "676ba816ea7bedf69afb29c760af37f0a39d117c1a225338b8ebc020106080e9",
+          "same": true
+        }
+      ]
+    },
+    {
+      "receipt": "/tmp/awa-death-query-ports-execution/scenarios/receipt.json",
+      "sha256": "f87585d40d5e772c627181030b2b38bb6003115c2c21a6a999e7aab45fb23da4",
+      "exitCode": 0,
+      "prePostSame": true,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "test",
+        "--preload",
+        "./tests/setup.ts",
+        "tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+        "tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+        "tests/scenarios/features/wolf-beauty/charm-chain-and-victory.test.ts"
+      ],
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "raw": [
+        {
+          "path": "stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28,
+          "actualSHA256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "same": true
+        },
+        {
+          "path": "stderr.raw",
+          "sha256": "0307bbc311a0afc3cd092e6767b752d4c98d19d7a47799aea6bbef38bf07251a",
+          "bytes": 4400,
+          "actualSHA256": "0307bbc311a0afc3cd092e6767b752d4c98d19d7a47799aea6bbef38bf07251a",
+          "same": true
+        }
+      ]
+    },
+    {
+      "receipt": "/tmp/awa-death-query-ports-execution/types/receipt.json",
+      "sha256": "e08c1f068ba7a872f1863c95e641e93a71b3f102870c9e1db1e4b8726ae3d764",
+      "exitCode": 2,
+      "prePostSame": true,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "tsconfig.tests.json",
+        "--noEmit"
+      ],
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "raw": [
+        {
+          "path": "stdout.raw",
+          "sha256": "a813ceda558cb744d9d87b8085faf7bda3f604cce0b2def2846fa726dd571e3a",
+          "bytes": 1227,
+          "actualSHA256": "a813ceda558cb744d9d87b8085faf7bda3f604cce0b2def2846fa726dd571e3a",
+          "same": true
+        },
+        {
+          "path": "stderr.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "actualSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "same": true
+        }
+      ]
+    },
+    {
+      "receipt": "/tmp/awa-death-query-ports-execution-successor/tests/receipt.json",
+      "sha256": "926f11d280b8a9ee07cbc73a5d94bef8719c48a0c99cb5d6ad59a6eb5012df64",
+      "exitCode": 0,
+      "prePostSame": true,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "test",
+        "--preload",
+        "./tests/setup.ts",
+        "tests/unit/engine/death/narrow-hook-capabilities.test.ts",
+        "tests/unit/engine/death/target-life-scope.test.ts",
+        "tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+        "tests/unit/features/dreamer/dream-scope.test.ts",
+        "tests/unit/features/dreamer/radiant-eclipse-damage.test.ts",
+        "tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+        "tests/unit/features/mechanical-wolf/captured-gun-ownership.test.ts",
+        "tests/unit/features/mist-raven-pending-night.test.ts",
+        "tests/unit/features/radiant-eclipse/damage-snapshot.test.ts",
+        "tests/unit/features/red-moon-audit.test.ts",
+        "tests/unit/features/red-moon-day-actions.test.ts",
+        "tests/unit/features/red-moon/exile-contribution.test.ts",
+        "tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+        "tests/unit/features/wolf-king/day-origin-policy.test.ts",
+        "tests/unit/features/wolf-king/native-shot-authority.test.ts",
+        "tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+        "tests/unit/mechanisms/death-wave-contributions.test.ts",
+        "tests/unit/mechanisms/gifted-gun-resource-boundaries.test.ts",
+        "tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+        "tests/unit/mechanisms/hunter-death-causes.test.ts",
+        "tests/unit/rulesets/additional-death-relations.test.ts",
+        "tests/unit/rulesets/idiot-exile-outcome.test.ts",
+        "tests/unit/rulesets/night-damage-composition.test.ts"
+      ],
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "raw": [
+        {
+          "path": "stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28,
+          "actualSHA256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "same": true
+        },
+        {
+          "path": "stderr.raw",
+          "sha256": "d01d0f7582af79bba61fc03e0bd153ad62950b951a9789dc7e996f4b97fb7848",
+          "bytes": 35584,
+          "actualSHA256": "d01d0f7582af79bba61fc03e0bd153ad62950b951a9789dc7e996f4b97fb7848",
+          "same": true
+        }
+      ]
+    },
+    {
+      "receipt": "/tmp/awa-death-query-ports-execution-successor/scenarios/receipt.json",
+      "sha256": "0c3d00c3b43d16b5e881fba388802b1d81bb9ee77a739c0f0f4ebec33bde2d9b",
+      "exitCode": 0,
+      "prePostSame": true,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "test",
+        "--preload",
+        "./tests/setup.ts",
+        "tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+        "tests/scenarios/features/witch/native-night-knowledge-and-sources.test.ts",
+        "tests/scenarios/features/wolf-beauty/charm-chain-and-victory.test.ts"
+      ],
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "raw": [
+        {
+          "path": "stdout.raw",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "bytes": 28,
+          "actualSHA256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "same": true
+        },
+        {
+          "path": "stderr.raw",
+          "sha256": "c6d78706554fba3f8f2eafae5097d31ebf3c15bf326656e9d732b151dc3ace08",
+          "bytes": 4400,
+          "actualSHA256": "c6d78706554fba3f8f2eafae5097d31ebf3c15bf326656e9d732b151dc3ace08",
+          "same": true
+        }
+      ]
+    },
+    {
+      "receipt": "/tmp/awa-death-query-ports-execution-successor/types/receipt.json",
+      "sha256": "d6ff64358ef87dcdc57a0bb0bd117daf521a67ccf21665d4c876891b71ffbb8e",
+      "exitCode": 0,
+      "prePostSame": true,
+      "argv": [
+        "/usr/bin/bun",
+        "--no-env-file",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "tsconfig.tests.json",
+        "--noEmit"
+      ],
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+      "raw": [
+        {
+          "path": "stdout.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "actualSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "same": true
+        },
+        {
+          "path": "stderr.raw",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "actualSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "same": true
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "0 project/program/parser/test/compiler/gate execution and 0 repository writes by reviewer",
+    "Actual 50 fresh SHA binding plus complete selected owner/dispatcher functions and relevant diffs/manual original-oracle review, not 50 files token-by-token proof",
+    "First and successor receipts retained separately; no C47 or full backend scenario coverage claim"
+  ]
+}

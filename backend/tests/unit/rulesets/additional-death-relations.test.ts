@@ -17,7 +17,7 @@ import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { captureNightLife } from "../../../src/domain/night-effects";
-import type { DreamNightEffects } from "../../../src/domain/dream-night-effects";
+import type { DreamNightEffects, DreamLifeQueries } from "../../../src/domain/dream-night-effects";
 import { bindLovers } from "../../../src/features/cupid/relation";
 import {
   prepareAdditionalDeathRelations,
@@ -71,13 +71,15 @@ test("夜梦方法在婚约前读取且保原receiver，婚约首失败保留已
       trace.push("linked-callee");
       return function (
         this: unknown,
-        current: World,
+        current: DreamLifeQueries,
         ids: readonly EntityId[],
         eligible?: ReadonlySet<EntityId>,
       ) {
         trace.push("linked-call");
         expect(this).toBe(dreams);
-        expect(current).toBe(world);
+        // 扩展只收布尔原体比较query，不取得World或由引擎返回的可写生命组件。
+        expect(Object.keys(current)).toEqual(["matchesAlive"]);
+        expect(current.matchesAlive(1, () => createAliveComponent())).toBe(false);
         expect(ids).toBe(w.nightTargets);
         expect([...eligible!]).toEqual([1]);
         return [2];
@@ -152,7 +154,8 @@ test("独立夜梦、婚约和真实恋人按原顺序扩张同一容器而不�
     [captureNightLife(world, 1)!, captureNightLife(world, 2)!],
   );
   const dreams = effects((current, ids, eligible) => {
-    expect(current).toBe(world);
+    expect(Object.keys(current)).toEqual(["matchesAlive"]);
+    expect(current.matchesAlive(1, () => world.getComponent(1, COMPONENT.Alive)!)).toBe(true);
     trace.push("dream:" + ids.join(","));
     return ids.includes(1) && !eligible?.has(3) ? [3] : [];
   });

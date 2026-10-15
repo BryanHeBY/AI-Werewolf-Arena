@@ -5,6 +5,7 @@
  * 各容器仍归结算器，具体关系和去重仍归机制；此步不标死、不更新 seen／next、不付款或提交／取消预约。
  * 关系事件或后续查询失败保留已发生前缀；来源阶段只在原逐目标提交点读取，未进入提交时不读当前 phase。
  */
+import { bindDreamLifeQueries } from "../domain/dream-night-effects";
 import {
   DeathCause,
   type DeathSources,
@@ -72,7 +73,11 @@ export function prepareAdditionalDeathRelations(
   if (runtime.dreams() && nightTargets.length)
     for (const id of runtime
       .dreams()!
-      .linkedDeaths(runtime.world(), nightTargets, new Set(Object.keys(allSources).map(Number)))) {
+      .linkedDeaths(
+        bindDreamLifeQueries(runtime.world()),
+        nightTargets,
+        new Set(Object.keys(allSources).map(Number)),
+      )) {
       linked.add(id);
       if (!proposed.includes(id)) proposed.push(id);
       proposedSources[id] = [...new Set([...(proposedSources[id] ?? []), DeathCause.Dream])];

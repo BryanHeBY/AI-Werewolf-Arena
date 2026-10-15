@@ -3,6 +3,7 @@
  * 输入为真实组件或已安装猎魔板子的 World；输出断言独立手写的读取次数、票权、生命和审计结果。
  * 不模拟完整对局，也不绕过权威付款；注入错误仅观察已写前缀，不改变生产规则或授权。
  */
+import { invokeVotedOutHook } from "../../../src/engine/hooks/registry";
 import { expect, test } from "bun:test";
 import { COMPONENT, type ComponentName } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
@@ -41,7 +42,9 @@ test("native audit rejection precedes an unaudited reveal getter and ordinary wr
     configurable: true,
   });
   const events: GameEvent[] = [];
-  expect(() => idiotVotedOutHook(world, 12, events)).toThrow("demon_hunter_idiot_state_revoked");
+  expect(() => invokeVotedOutHook(idiotVotedOutHook, world, 12, events)).toThrow(
+    "demon_hunter_idiot_state_revoked",
+  );
   expect(reads).toBe(0);
   expect(world.getComponent(12, COMPONENT.VotingRight)!.canVote).toBe(true);
   expect(world.getComponent(12, COMPONENT.VotingRight)!.weight).toBe(1);
@@ -71,7 +74,7 @@ test("ordinary badge lookup failure preserves reveal and voting writes without k
     },
   });
   const events: GameEvent[] = [];
-  expect(() => idiotVotedOutHook(world, id, events)).toThrow(failure);
+  expect(() => invokeVotedOutHook(idiotVotedOutHook, world, id, events)).toThrow(failure);
   expect(reads).toEqual([COMPONENT.Role, COMPONENT.Alive, COMPONENT.VotingRight, COMPONENT.Badge]);
   expect(getIdiotState(role)).toEqual({ revealed: true });
   expect(voting).toEqual({ canVote: false, weight: 0 });
@@ -79,7 +82,9 @@ test("ordinary badge lookup failure preserves reveal and voting writes without k
   expect(events).toEqual([]);
   // 再次翻牌在警徽读取前返回，不把上次失败当作恢复票权的理由。
   reads.length = 0;
-  expect(idiotVotedOutHook(world, id, events)?.reason).toBe("idiot_already_revealed");
+  expect(invokeVotedOutHook(idiotVotedOutHook, world, id, events)?.reason).toBe(
+    "idiot_already_revealed",
+  );
   expect(reads).toEqual([COMPONENT.Role, COMPONENT.Alive]);
 });
 
@@ -95,12 +100,14 @@ test("native event publication failure preserves the committed audit and retired
       throw failure;
     },
   });
-  expect(() => idiotVotedOutHook(world, 12, events)).toThrow(failure);
+  expect(() => invokeVotedOutHook(idiotVotedOutHook, world, 12, events)).toThrow(failure);
   expect(getIdiotState(role)).toEqual({ revealed: true });
   expect(world.getComponent(12, COMPONENT.VotingRight)!.canVote).toBe(false);
   expect(world.getComponent(12, COMPONENT.VotingRight)!.weight).toBe(0);
   expect(world.getComponent(12, COMPONENT.Alive)!.alive).toBe(true);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
-  expect(idiotVotedOutHook(world, 12, events)?.reason).toBe("idiot_already_revealed");
+  expect(invokeVotedOutHook(idiotVotedOutHook, world, 12, events)?.reason).toBe(
+    "idiot_already_revealed",
+  );
   expect(publications).toBe(1);
 });

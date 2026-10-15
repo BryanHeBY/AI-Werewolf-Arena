@@ -3,6 +3,7 @@
  * 修改；原字面预期、身份快照及拒绝断言是预期，不在迁移中重新生成。仅调用原生内存
  * owner／frame／reader，测试自有 mock／组件不运行完整对局、模型或真实传输，support／fixture 字节及政策状态不变。
  */
+import { bindDreamLifeQueries } from "../../../../src/domain/dream-night-effects";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
@@ -33,21 +34,21 @@ test("adding to the caller's readonly-compatible array cannot authorize a new sh
     claims: NightImmunityClaim[] = [],
     frame = new DreamNightFrame([f.link], claims);
   claims.push({ target: f.scope(4), isCurrent: () => true });
-  expect(frame.consecutiveDeaths(f.world)).toEqual([4]);
+  expect(frame.consecutiveDeaths(bindDreamLifeQueries(f.world))).toEqual([4]);
 });
 test("clearing the caller's array cannot remove a shelter already captured by a frame", () => {
   const f = fixture(),
     claims: NightImmunityClaim[] = [{ target: f.scope(4), isCurrent: () => true }],
     frame = new DreamNightFrame([f.link], claims);
   claims.length = 0;
-  expect(frame.consecutiveDeaths(f.world)).toEqual([]);
+  expect(frame.consecutiveDeaths(bindDreamLifeQueries(f.world))).toEqual([]);
 });
 test("a mutable source claim cannot move captured shelter to another original body", () => {
   const f = fixture(),
     claim = { target: f.scope(4), isCurrent: () => true },
     frame = new DreamNightFrame([f.link], [claim]);
   claim.target = f.scope(5);
-  expect(frame.consecutiveDeaths(f.world)).toEqual([]);
+  expect(frame.consecutiveDeaths(bindDreamLifeQueries(f.world))).toEqual([]);
 });
 test("valid claim method keeps its receiver in the Dream filter as it does in damage resolution", () => {
   const f = fixture();
@@ -58,20 +59,20 @@ test("valid claim method keeps its receiver in the Dream filter as it does in da
     },
   };
   const frame = new DreamNightFrame([f.link], [claim]);
-  expect(frame.consecutiveDeaths(f.world)).toEqual([]);
+  expect(frame.consecutiveDeaths(bindDreamLifeQueries(f.world))).toEqual([]);
 });
 test("captured authorization callback stays live, not an eagerly cached boolean", () => {
   const f = fixture();
   let current = true;
   const frame = new DreamNightFrame([f.link], [{ target: f.scope(4), isCurrent: () => current }]);
   current = false;
-  expect(frame.consecutiveDeaths(f.world)).toEqual([4]);
+  expect(frame.consecutiveDeaths(bindDreamLifeQueries(f.world))).toEqual([4]);
 });
 test("shelter follows eligible original first death, but never same-body revival", () => {
   const f = fixture(),
     frame = new DreamNightFrame([f.link], [{ target: f.scope(4), isCurrent: () => true }]);
   f.body(4).alive = false;
-  expect(frame.linkedDeaths(f.world, [2], new Set([4]))).toEqual([]);
+  expect(frame.linkedDeaths(bindDreamLifeQueries(f.world), [2], new Set([4]))).toEqual([]);
   f.body(4).alive = true;
-  expect(frame.linkedDeaths(f.world, [2], new Set([4]))).toEqual([]);
+  expect(frame.linkedDeaths(bindDreamLifeQueries(f.world), [2], new Set([4]))).toEqual([]);
 });

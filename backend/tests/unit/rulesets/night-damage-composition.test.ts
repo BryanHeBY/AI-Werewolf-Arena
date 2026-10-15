@@ -3,6 +3,7 @@
  * 输入为原生命、手写 links／claims、可观察 getter 与原伤害对象；输出以字面 trace、字段和引用验收。
  * 不从生产折叠构造预期、不跑整局或模型；替换 enum 描述符仅在测试内 finally 恢复，不新增生产权限。
  */
+import { bindDreamLifeQueries } from "../../../src/domain/dream-night-effects";
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
@@ -251,5 +252,5 @@ test("the returned frame owns the original reasons and links while solver receiv
     targetLife: nextLife,
     targetVersion: aliveLifeVersion(nextLife),
   });
-  expect(result.dreamFrame.protectedTargets(world)).toEqual([target, next]);
+  expect(result.dreamFrame.protectedTargets(bindDreamLifeQueries(world))).toEqual([target, next]);
 });

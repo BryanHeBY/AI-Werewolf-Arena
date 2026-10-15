@@ -4,9 +4,8 @@
  * 运行接口区分查询和更新：连续／关联推导累计原因，expand 写调用方伤害，record 写去重与 events。
  * 原组件引用、回调和接收方保持，句柄不进入玩家知识或录制；本模块不标死、授予请求或推进阶段。
  */
-import type { DreamNightEffects } from "../../domain/dream-night-effects";
+import type { DreamNightEffects, DreamLifeQueries } from "../../domain/dream-night-effects";
 import { AliveComponent, aliveLifeVersion } from "../../domain/components/alive";
-import { COMPONENT } from "../../domain/components/names";
 import { DeathCause, type EntityId, type GameEvent } from "../../domain/model";
 import type { World } from "../../domain/world";
 import type { DamageResolutionResult } from "../../domain/systems/damage-resolution-system";
@@ -57,7 +56,7 @@ export class DreamNightFrame implements DreamNightEffects {
   }
 
   private sheltered(
-    world: World,
+    queries: DreamLifeQueries,
     targetId: EntityId,
     eligibleDead: ReadonlySet<EntityId> = new Set(),
   ): boolean {
@@ -65,16 +64,16 @@ export class DreamNightFrame implements DreamNightEffects {
       ({ target, isCurrent }) =>
         target.id === targetId &&
         isCurrent() &&
-        world.getComponent(targetId, COMPONENT.Alive) === target.life &&
+        queries.matchesAlive(targetId, () => target.life) &&
         (target.life.alive
           ? aliveLifeVersion(target.life) === target.version
           : eligibleDead.has(targetId) && aliveLifeVersion(target.life) === target.version + 1),
     );
   }
 
-  private targetCurrent(world: World, link: DreamNightLink): boolean {
+  private targetCurrent(queries: DreamLifeQueries, link: DreamNightLink): boolean {
     return (
-      world.getComponent(link.targetId, COMPONENT.Alive) === link.targetLife &&
+      queries.matchesAlive(link.targetId, () => link.targetLife) &&
       link.targetLife.alive &&
       link.targetVersion !== undefined &&
       aliveLifeVersion(link.targetLife) === link.targetVersion
@@ -82,67 +81,71 @@ export class DreamNightFrame implements DreamNightEffects {
   }
   // 只接本波 eligible 集合中的同原目标首次死亡（版本仅 +1）；替换或复活后的生命不复用。
   private targetDeathCurrent(
-    world: World,
+    queries: DreamLifeQueries,
     link: DreamNightLink,
     eligible: ReadonlySet<EntityId>,
   ): boolean {
     return (
       eligible.has(link.targetId) &&
-      world.getComponent(link.targetId, COMPONENT.Alive) === link.targetLife &&
+      queries.matchesAlive(link.targetId, () => link.targetLife) &&
       !link.targetLife.alive &&
       link.targetVersion !== undefined &&
       aliveLifeVersion(link.targetLife) === link.targetVersion + 1
     );
   }
   // 已付梦允许同原行动者首死亡后的连锁，但仍检查回调、原组件和捕获版本，不无条件保留效果。
-  private actorCurrent(world: World, link: DreamNightLink): boolean {
+  private actorCurrent(queries: DreamLifeQueries, link: DreamNightLink): boolean {
     return (
       (link.isCurrent?.() ?? true) &&
-      world.getComponent(link.actorId, COMPONENT.Alive) === link.actorLife &&
+      queries.matchesAlive(link.actorId, () => link.actorLife) &&
       link.actorVersion !== undefined &&
       aliveLifeVersion(link.actorLife) === link.actorVersion + (link.actorLife.alive ? 0 : 1)
     );
   }
-  protectedTargets(world: World): EntityId[] {
+  protectedTargets(queries: DreamLifeQueries): EntityId[] {
     return [
       ...new Set(
         this.links
-          .filter((link) => this.targetCurrent(world, link) && this.actorCurrent(world, link))
+          .filter((link) => this.targetCurrent(queries, link) && this.actorCurrent(queries, link))
           .map((link) => link.targetId),
       ),
     ];
   }
-  immuneNightTargets(world: World): EntityId[] {
+  immuneNightTargets(queries: DreamLifeQueries): EntityId[] {
     return this.links
       .filter(
         (link) =>
           link.protectionPolicy === "netease_2026_night_immunity_v1" &&
-          this.targetCurrent(world, link) &&
-          this.actorCurrent(world, link),
+          this.targetCurrent(queries, link) &&
+          this.actorCurrent(queries, link),
       )
       .map((link) => link.targetId);
   }
-  blocksNightShot(world: World, targetId: EntityId): boolean {
-    return this.protectedTargets(world).includes(targetId);
+  blocksNightShot(queries: DreamLifeQueries, targetId: EntityId): boolean {
+    return this.protectedTargets(queries).includes(targetId);
   }
-  blocksNightCharm(world: World, targetId: EntityId, eligibleDead: ReadonlySet<EntityId>): boolean {
+  blocksNightCharm(
+    queries: DreamLifeQueries,
+    targetId: EntityId,
+    eligibleDead: ReadonlySet<EntityId>,
+  ): boolean {
     return this.links.some(
       (link) =>
         link.targetId === targetId &&
-        this.actorCurrent(world, link) &&
-        (this.targetCurrent(world, link) || this.targetDeathCurrent(world, link, eligibleDead)),
+        this.actorCurrent(queries, link) &&
+        (this.targetCurrent(queries, link) || this.targetDeathCurrent(queries, link, eligibleDead)),
     );
   }
 
-  consecutiveDeaths(world: World): EntityId[] {
+  consecutiveDeaths(queries: DreamLifeQueries): EntityId[] {
     // 累计原因但不标死；后续 record 仍使用这一实例，不能另造 frame 丢失已发生前缀。
     const deaths = new Set<EntityId>();
     for (const link of this.links)
       if (
         link.consecutive &&
-        this.targetCurrent(world, link) &&
-        this.actorCurrent(world, link) &&
-        !this.sheltered(world, link.targetId)
+        this.targetCurrent(queries, link) &&
+        this.actorCurrent(queries, link) &&
+        !this.sheltered(queries, link.targetId)
       ) {
         deaths.add(link.targetId);
         this.reason(link, "consecutive");
@@ -169,7 +172,7 @@ export class DreamNightFrame implements DreamNightEffects {
     this.reasons.set(link.targetId, facts);
   }
   linkedDeaths(
-    world: World,
+    queries: DreamLifeQueries,
     nightDeaths: readonly EntityId[],
     eligibleDead: ReadonlySet<EntityId> = new Set(),
   ): EntityId[] {
@@ -182,9 +185,10 @@ export class DreamNightFrame implements DreamNightEffects {
       for (const link of this.links)
         if (
           deaths.has(link.actorId) &&
-          this.actorCurrent(world, link) &&
-          !this.sheltered(world, link.targetId, eligibleDead) &&
-          (this.targetCurrent(world, link) || this.targetDeathCurrent(world, link, eligibleDead))
+          this.actorCurrent(queries, link) &&
+          !this.sheltered(queries, link.targetId, eligibleDead) &&
+          (this.targetCurrent(queries, link) ||
+            this.targetDeathCurrent(queries, link, eligibleDead))
         ) {
           added.add(link.targetId);
           this.reason(link, "linked");
@@ -196,8 +200,8 @@ export class DreamNightFrame implements DreamNightEffects {
     }
     return [...added];
   }
-  expandInitialDamage(world: World, damage: DamageResolutionResult): void {
-    for (const targetId of this.linkedDeaths(world, damage.deaths)) {
+  expandInitialDamage(queries: DreamLifeQueries, damage: DamageResolutionResult): void {
+    for (const targetId of this.linkedDeaths(queries, damage.deaths)) {
       if (!damage.deaths.includes(targetId)) damage.deaths.push(targetId);
       damage.deathSources[targetId] = [
         ...new Set([...(damage.deathSources[targetId] ?? []), DeathCause.Dream]),

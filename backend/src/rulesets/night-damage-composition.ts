@@ -6,6 +6,7 @@
  * resolve 的 callee／receiver 先于 World 和对象参数读取，角色查询 callee 也先于 Role 参数；
  * 本组合不提前收齐 input、不复制结果、不存第二份效果、不退款或隐藏已付／失败前缀。
  */
+import { bindDreamLifeQueries } from "../domain/dream-night-effects";
 import { Role, type EntityId, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
@@ -70,9 +71,9 @@ export function composeNightDamage(runtime: NightDamageCompositionRuntime): {
     radiantShelters: radiantEffects?.shelters,
     radiantBacklashes: radiantEffects?.backlashes,
     modifierDeaths: runtime.claims().modifierDeaths,
-    protectedTargets: dreamFrame.protectedTargets(runtime.world()),
-    immuneNightTargets: dreamFrame.immuneNightTargets(runtime.world()),
-    consecutiveDeaths: dreamFrame.consecutiveDeaths(runtime.world()),
+    protectedTargets: dreamFrame.protectedTargets(bindDreamLifeQueries(runtime.world())),
+    immuneNightTargets: dreamFrame.immuneNightTargets(bindDreamLifeQueries(runtime.world())),
+    consecutiveDeaths: dreamFrame.consecutiveDeaths(bindDreamLifeQueries(runtime.world())),
     poisonClaims: runtime.claims().poisonClaims,
     retaliationAttacks: runtime.claims().retaliationAttacks,
     nightImmunities: runtime.claims().nightImmunities,

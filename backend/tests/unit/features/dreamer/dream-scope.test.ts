@@ -1,6 +1,7 @@
 /**
  * 单元测试验证摄梦人持有回复期间替换玩家／目标后的 scope。原已提交前缀及拒绝是预期，检查旧许可不能再请求、付款或提交；输入和样本保留原值，不调用模型或完整对局。受控上下文在原 World 读取点绑定查询。
  */
+import { bindDreamLifeQueries } from "../../../../src/domain/dream-night-effects";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
@@ -256,7 +257,7 @@ test("owned dream links: same array survives frame capture and does not follow c
     targetLife: nextLife,
     targetVersion: aliveLifeVersion(nextLife),
   });
-  expect(frame.protectedTargets(game.world)).toEqual([5, 6]);
+  expect(frame.protectedTargets(bindDreamLifeQueries(game.world))).toEqual([5, 6]);
   expect(readDreamNightLinks({ ...ctx.state })).toEqual([]);
   expect(readDreamNightLinks(ctx.state)).toBe(links);
   // 旧字段退出通用结构，运行数组仍有自己的生命／付款复核，并非权限品牌。

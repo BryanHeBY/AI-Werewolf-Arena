@@ -3,6 +3,7 @@
  * getter／错误轨迹、事实和状态是预期；有界具体阶段／请求／reader／死亡 hook 检查激活、库存
  * 及原 scope 撤销，不运行完整流水线、PhaseManager 周期或计费模型，保留局部窗口和拒绝探针。
  */
+import { invokeDeathHook } from "../../../../src/engine/hooks/registry";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
@@ -530,7 +531,8 @@ for (const field of ["role", "targetId", "day", "activeFromNight", "activationNi
     const permit = game.world.openDeathAction(1, "shoot", Phase.Day, 1),
       events: GameEvent[] = [];
     try {
-      const result = await awakenedDeathHook(
+      const result = await invokeDeathHook(
+        awakenedDeathHook,
         game.world,
         [1],
         { 1: [DeathCause.WolfKill] },

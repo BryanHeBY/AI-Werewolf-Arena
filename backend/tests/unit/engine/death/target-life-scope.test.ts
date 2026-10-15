@@ -3,6 +3,7 @@
  * World、字面死因与注入目标／演员替换、复活或时钟变化；手写存活数组、枪消费量和无公开事件
  * 区分未付款与合法已消费前缀，不运行第二个 World 来生成预期存活结果。
  */
+import { invokeDeathHook } from "../../../../src/engine/hooks/registry";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -198,7 +199,15 @@ test("a accepted shot invalidated between hook completion and actual owner commi
       [],
       [
         async (...args) => {
-          const result = await hunterDeathHook(...args);
+          const result = await invokeDeathHook(
+            hunterDeathHook,
+            game.world,
+            args[1],
+            args[2],
+            args[3],
+            events,
+            args[4],
+          );
           if (result.pendingShots?.length)
             game.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
           return result;
@@ -242,7 +251,15 @@ for (const change of ["actor_revive", "actor_replace", "clock", "accepted_clock"
               [],
               [
                 async (...args) => {
-                  const result = await hunterDeathHook(...args);
+                  const result = await invokeDeathHook(
+                    hunterDeathHook,
+                    game.world,
+                    args[1],
+                    args[2],
+                    args[3],
+                    events,
+                    args[4],
+                  );
                   if (result.pendingShots?.length) state.phase = Phase.Voting;
                   return result;
                 },
@@ -290,7 +307,8 @@ test("legacy direct hook callers without a target scope still bind the target li
   game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   const permit = game.world.openDeathAction(2, "shoot", Phase.Day, 1);
   try {
-    const result = await hunterDeathHook(
+    const result = await invokeDeathHook(
+      hunterDeathHook,
       game.world,
       [2],
       { 2: [DeathCause.Exile] },

@@ -24,7 +24,11 @@ export { weddingBrideState } from "./authority";
 export { ghostBrideRequestScope } from "./authority";
 
 /** 原地关系扩张及逐边事实归机制；日期／阶段／事件仍按原时点晚读，不提交实际死亡。 */
-export { WeddingDeathWavePublication } from "./death-wave-publication";
+export {
+  WeddingDeathWavePublication,
+  bindWeddingDeathWavePublication,
+} from "./death-wave-publication";
+export type { WeddingDeathWavePorts } from "./death-wave-publication";
 
 /** 开局组合使用同一准备类绑定；具体窗口仍拥有选择校验、提交与失败关闭。 */
 export { GhostBrideSetupWindow } from "./setup";

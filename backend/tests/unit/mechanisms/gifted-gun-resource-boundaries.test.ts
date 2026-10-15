@@ -1,6 +1,7 @@
 /**
  * 单元测试验证赠枪原 World 授权、独立原生／gift 库存及有界死亡／转移／迟到回复。输入保留 locale／原生／死因／变化矩阵、明确生命 scope 和直接 hook／死亡结算；精确请求新鲜性、消费／到期库存、来源私有事实及陈旧 owner 拒绝是预期，不运行完整夜晚或原生文件记录器。
  */
+import { invokeDeathHook } from "../../../src/engine/hooks/registry";
 import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -87,7 +88,8 @@ test("a direct gift hook refuses a numeric target ID paired with another player'
   life(game, 5).alive = false;
   const permit = game.world.openDeathAction(5, "shoot", Phase.Day, 1, () => true, game.gun.id);
   try {
-    const result = await giftGunDeathHook(
+    const result = await invokeDeathHook(
+      giftGunDeathHook,
       game.world,
       [5],
       { 5: [DeathCause.Exile] },
@@ -192,7 +194,15 @@ for (const change of ["none", "private", "revive", "target_replace", "metadata"]
       [],
       [
         async (...args) => {
-          const result = await giftGunDeathHook(...args);
+          const result = await invokeDeathHook(
+            giftGunDeathHook,
+            game.world,
+            args[1],
+            args[2],
+            args[3],
+            game.events,
+            args[4],
+          );
           if (result.pendingShots?.length) {
             if (change === "private")
               (role(game, 5) as { privateState: Readonly<Record<string, unknown>> }).privateState =

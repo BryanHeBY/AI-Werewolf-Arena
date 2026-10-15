@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证机械狼人捕获枪的原生运行所有权。输入为原内存能力与受控操作；既有字面结果及原枪引用为预期，不运行模型传输或重建 fixture。
  */
+import { invokeDeathHook } from "../../../../src/engine/hooks/registry";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -63,7 +64,8 @@ for (const revoke of ["camp", "private_state", "owner_state", "learning"] as con
       events = [] as ReturnType<Game["phaseManager"]["getEvents"]>;
     const permit = game.world.openDeathAction(1, "shoot", Phase.Voting, 2);
     try {
-      const result = await mechanicalDeathHook(
+      const result = await invokeDeathHook(
+        mechanicalDeathHook,
         game.world,
         [1],
         { 1: [DeathCause.Exile] },

@@ -18,6 +18,8 @@ import { World } from "../../domain/world";
 import {
   createCommittedDeathWaveContributions,
   type CommittedDeathWaveHook,
+  invokeCommittedDeathWaveHook,
+  type DeathHookPreparationSource,
 } from "../hooks/registry";
 
 /**
@@ -52,7 +54,7 @@ export class EventRegistry {
     events: GameEvent[],
   ): void {
     for (const hook of this.committedDeathWaveHooks)
-      hook(world, deadIds, deathSources, day, phase, events);
+      invokeCommittedDeathWaveHook(hook, world, deadIds, deathSources, day, phase, events);
   }
 
   /**
@@ -86,6 +88,7 @@ export class EventRegistry {
     events: GameEvent[],
     commitAdditionalDeaths?: (result: DeathHookResult) => void,
     context?: import("../hooks/registry").DeathHookContext,
+    preparation?: DeathHookPreparationSource,
   ): Promise<DeathHookResult> {
     return this.hookRegistry.onDeath(
       world,
@@ -95,6 +98,7 @@ export class EventRegistry {
       events,
       commitAdditionalDeaths,
       context,
+      preparation,
     );
   }
 }

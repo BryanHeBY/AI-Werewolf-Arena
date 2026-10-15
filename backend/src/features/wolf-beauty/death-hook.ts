@@ -9,18 +9,27 @@ import { Role, DeathCause } from "../../domain/model";
 import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import type { DeathHook } from "../../engine/hooks/registry";
-import { activeCharm, permitsCharm, attemptCharmTrigger, commitCharmDeath } from "./relation";
-import { createWolfBeautyDeathContribution } from "./death-wave-publication";
+import {
+  ownDeathHook,
+  type OwnedHookBindingSource,
+  type OwnedDeathCommands,
+} from "../../engine/hooks/owned-bindings";
+import { activeCharm, permitsCharm } from "./relation";
+import {
+  createWolfBeautyDeathContribution,
+  bindWolfBeautyDeathCommands,
+} from "./death-wave-publication";
 import { animalBeautyLinkBlocked } from "../animal-dream/beauty-query-ports";
 
-export const wolfBeautyDeathHook: DeathHook = async (
-  world,
-  ids,
-  sources,
-  _choose,
-  events,
-  context,
-) => {
+async function resolveOwnedBeauty(
+  source: OwnedHookBindingSource,
+  ids: Parameters<DeathHook>[1],
+  sources: Parameters<DeathHook>[2],
+  choose: Parameters<DeathHook>[3],
+  context: Parameters<DeathHook>[4],
+): ReturnType<DeathHook> {
+  const world = source.world,
+    events = source.events;
   const result: Awaited<ReturnType<DeathHook>> = { extraDeaths: [], extraDeathSources: {} };
   let proposals: Parameters<typeof createWolfBeautyDeathContribution>[0][number][] | undefined;
   for (const actorId of ids) {
@@ -48,15 +57,21 @@ export const wolfBeautyDeathHook: DeathHook = async (
   if (proposals) {
     // 只捕获命令查询；直到原准备／发布 callee 位置才获取同一 live binding。
     result.deathWaveContributions = [
-      createWolfBeautyDeathContribution(proposals, {
-        get attemptCharmTrigger() {
-          return attemptCharmTrigger;
-        },
-        get commitCharmDeath() {
-          return commitCharmDeath;
-        },
-      }),
+      createWolfBeautyDeathContribution(proposals, bindWolfBeautyDeathCommands(source)),
     ];
   }
   return result;
-};
+}
+
+/** 运行扩展只持本族collect命令，真实World和晚prepare读取源只在resource binder闭包内。 */
+export const wolfBeautyDeathHook: DeathHook = ownDeathHook<OwnedDeathCommands>(
+  (runtime, ids, sources, choose, context) => runtime.ports.resolve(ids, sources, choose, context),
+  (source) => ({
+    resolve: (
+      ids: Parameters<DeathHook>[1],
+      sources: Parameters<DeathHook>[2],
+      choose: Parameters<DeathHook>[3],
+      context: Parameters<DeathHook>[4],
+    ) => resolveOwnedBeauty(source, ids, sources, choose, context),
+  }),
+);

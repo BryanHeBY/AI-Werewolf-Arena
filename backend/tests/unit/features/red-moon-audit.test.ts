@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证赤月自爆审计的白天权威与最后狼人政策。输入为原日期和名单；单次提交、后续夜晚封印及名单断言为独立预期，保留原 fixture 与审计状态。
  */
+import { invokeVotedOutHook } from "../../../src/engine/hooks/registry";
 import { assignSheriff } from "../../../src/features/sheriff/badge";
 import type { BadgeComponent } from "../../../src/domain";
 import { freezeDemonHunt } from "../../../src/features/demon-hunter/authority";
@@ -74,14 +75,16 @@ test("Idiot reveal keeps the original-world audit and disables voting without ki
   const { world } = dayWorld();
   const role = world.getComponent(12, COMPONENT.Role)!;
   const before = (role.privateState as { readonly idiot?: unknown }).idiot;
-  const events: Parameters<typeof idiotVotedOutHook>[2] = [];
-  expect(idiotVotedOutHook(world, 12, events)?.removed).toEqual([]);
+  const events: import("@ai-werewolf-arena/game-contract").GameEvent[] = [];
+  expect(invokeVotedOutHook(idiotVotedOutHook, world, 12, events)?.removed).toEqual([]);
   expect((role.privateState as { readonly idiot?: unknown }).idiot).toEqual({ revealed: true });
   expect((role.privateState as { readonly idiot?: unknown }).idiot).not.toBe(before);
   expect(world.getComponent(12, COMPONENT.VotingRight)!.canVote).toBe(false);
   expect(world.getComponent(12, COMPONENT.Alive)!.alive).toBe(true);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
-  expect(idiotVotedOutHook(world, 12, events)?.reason).toBe("idiot_already_revealed");
+  expect(invokeVotedOutHook(idiotVotedOutHook, world, 12, events)?.reason).toBe(
+    "idiot_already_revealed",
+  );
 });
 test("Idiot readonly vote stock rejects before consuming reveal", () => {
   const { world } = dayWorld();
@@ -89,7 +92,9 @@ test("Idiot readonly vote stock rejects before consuming reveal", () => {
   Object.defineProperty(world.getComponent(12, COMPONENT.VotingRight)!, "canVote", {
     writable: false,
   });
-  expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_idiot_state_revoked");
+  expect(() => invokeVotedOutHook(idiotVotedOutHook, world, 12, [])).toThrow(
+    "demon_hunter_idiot_state_revoked",
+  );
   expect((role.privateState as { readonly idiot?: unknown }).idiot).toEqual({ revealed: false });
 });
 
@@ -110,7 +115,9 @@ for (const getter of [false, true])
       (
         (role.privateState as { readonly idiot?: unknown }).idiot as { revealed: boolean }
       ).revealed = true;
-    expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_idiot_state_revoked");
+    expect(() => invokeVotedOutHook(idiotVotedOutHook, world, 12, [])).toThrow(
+      "demon_hunter_idiot_state_revoked",
+    );
     expect(reads).toBe(0);
     expect(world.getComponent(12, COMPONENT.VotingRight)!.canVote).toBe(true);
   });
@@ -118,7 +125,9 @@ test("Idiot badge preflight rejects readonly stock before reveal and vote change
   const { world } = dayWorld();
   const role = world.getComponent(12, COMPONENT.Role)!;
   Object.defineProperty(world.getComponent(12, COMPONENT.Badge)!, "isSheriff", { writable: false });
-  expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_badge_stock_revoked");
+  expect(() => invokeVotedOutHook(idiotVotedOutHook, world, 12, [])).toThrow(
+    "demon_hunter_badge_stock_revoked",
+  );
   expect((role.privateState as { readonly idiot?: unknown }).idiot).toEqual({ revealed: false });
   expect(world.getComponent(12, COMPONENT.VotingRight)!.canVote).toBe(true);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
@@ -136,7 +145,7 @@ test("Sheriff Idiot reveal transfers its badge without breaking audited metadata
   const { world, config, catalog } = dayWorld();
   expect(assignSheriff(world, 12, config, catalog)).toBe(true);
   expect(world.getComponent(12, COMPONENT.Badge)!.isSheriff).toBe(true);
-  expect(idiotVotedOutHook(world, 12, [])?.reason).toBe("idiot_revealed");
+  expect(invokeVotedOutHook(idiotVotedOutHook, world, 12, [])?.reason).toBe("idiot_revealed");
   expect(world.getComponent(12, COMPONENT.Badge)!.isSheriff).toBe(false);
   expect(world.getComponent(12, COMPONENT.VotingRight)!.weight).toBe(0);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
@@ -146,7 +155,9 @@ test("Readonly sheriff badge rejects before Idiot reveal or vote consumption", (
   expect(assignSheriff(world, 12, config, catalog)).toBe(true);
   const badge = world.getComponent(12, COMPONENT.Badge)!;
   Object.defineProperty(badge, "isSheriff", { writable: false });
-  expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_badge_stock_revoked");
+  expect(() => invokeVotedOutHook(idiotVotedOutHook, world, 12, [])).toThrow(
+    "demon_hunter_badge_stock_revoked",
+  );
   expect(
     (
       world.getComponent(12, COMPONENT.Role)!.privateState as {

@@ -14,6 +14,7 @@ import {
   attemptCharmTrigger,
   commitCharmDeath,
   createWolfBeautyDeathContribution,
+  bindWolfBeautyDeathCommands,
 } from "../../../src/features/wolf-beauty/ports";
 import { bindCharm, activeCharm } from "../../../src/features/wolf-beauty/relation";
 import { wolfBeautyDeathHook } from "../../../src/features/wolf-beauty/death-hook";
@@ -170,10 +171,15 @@ test("a declared-cause getter failure after real preparation keeps the paid clai
       return { extraDeaths: [], extraDeathSources: {} };
     },
   ]);
-  real = createWolfBeautyDeathContribution([{ binding: f.binding, nightEffect: false }], {
-    attemptCharmTrigger,
-    commitCharmDeath,
-  });
+  real = createWolfBeautyDeathContribution(
+    [{ binding: f.binding, nightEffect: false }],
+    bindWolfBeautyDeathCommands({
+      world: f.world,
+      events: f.events,
+      prepareWorld: () => f.world,
+      prepareEvents: () => f.events,
+    }),
+  );
   await expect(
     f.resolver.resolve(
       [f.actor],

@@ -14,7 +14,7 @@ import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { GhostBrideSetupWindow } from "../../../../src/features/ghost-bride/setup";
-import { WeddingDeathWavePublication } from "../../../../src/features/ghost-bride/ports";
+import { bindWeddingDeathWavePublication } from "../../../../src/features/ghost-bride/ports";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import {
@@ -51,7 +51,7 @@ test("without a wedding no event, date or phase query is read", () => {
     ids = [8],
     sources: DeathSources = { 8: [DeathCause.Shot] };
   let worldReads = 0;
-  const publisher = new WeddingDeathWavePublication({
+  const publisher = bindWeddingDeathWavePublication({
     get world() {
       worldReads++;
       return world;
@@ -92,7 +92,7 @@ test("real relation expands in place and reads publication queries in the origin
     return 456;
   });
   try {
-    const publisher = new WeddingDeathWavePublication({
+    const publisher = bindWeddingDeathWavePublication({
       get world() {
         trace.push("world");
         return world;
@@ -157,7 +157,7 @@ test("publication failure keeps relation mutation and consumed edge deduplicatio
     nightOrigin = new Set([1]);
   let eventReads = 0,
     dateReads = 0;
-  const publisher = new WeddingDeathWavePublication({
+  const publisher = bindWeddingDeathWavePublication({
     get world() {
       return world;
     },

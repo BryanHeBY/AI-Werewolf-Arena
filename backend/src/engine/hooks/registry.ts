@@ -12,6 +12,14 @@ import {
   type DeathShotSelection,
 } from "../../domain/model";
 import { World } from "../../domain/world";
+import { COMPONENT } from "../../domain/components/names";
+import {
+  ownedHookPorts,
+  ownCommittedDeathHook,
+  type HookRuntime,
+  type OwnedHookBindingSource,
+  type OwnedCommittedCommands,
+} from "./owned-bindings";
 import { getDefaultRoleCatalog } from "../../rulesets/roles/role-catalog-assembly";
 import type { NightLifeScope } from "../../domain/night-effects";
 import type { DeathWaveContribution } from "../death-wave-contribution";
@@ -19,18 +27,33 @@ import { giftGunDeathHook } from "../../features/death-actions/gift-hook-ports";
 import { resolveWildChildDeathWave } from "../../features/wild-child/ports";
 
 /** 已完成本批 Alive 提交后的具名扩展时点；不是可追加死亡或选择枪的晚 deathHook。 */
-export type CommittedDeathWaveHook = (
-  world: World,
-  deadIds: readonly EntityId[],
-  deathSources: DeathSources,
-  day: number,
-  phase: Phase,
-  events: GameEvent[],
-) => void;
+export type CommittedDeathWaveHook<Ports extends object = Record<never, never>> = {
+  invoke(
+    runtime: HookRuntime<Ports>,
+    deadIds: readonly EntityId[],
+    deathSources: DeathSources,
+    day: number,
+    phase: Phase,
+  ): void;
+}["invoke"];
+
+// 冷绑定只登记此同一函数；默认列表仍为静态装配，不按World缓存或每次构造新hook。
+const wildChildCommittedDeathHook = ownCommittedDeathHook<OwnedCommittedCommands>(
+  (runtime, deadIds, deathSources, day, phase) =>
+    runtime.ports.resolve(deadIds, deathSources, day, phase),
+  (source) => ({
+    resolve: (
+      deadIds: readonly EntityId[],
+      deathSources: DeathSources,
+      day: number,
+      phase: Phase,
+    ) => resolveWildChildDeathWave(source.world, deadIds, deathSources, day, phase, source.events),
+  }),
+);
 
 /** 真实必需整波贡献装配；不属于调用方可替换的 votedOut／晚 deathHook 列表。 */
 export function createCommittedDeathWaveContributions(): readonly CommittedDeathWaveHook[] {
-  return [resolveWildChildDeathWave];
+  return [wildChildCommittedDeathHook];
 }
 
 /** 放逐钩子返回结果。 */
@@ -66,21 +89,92 @@ export interface DeathHookContext {
 }
 
 /** 放逐钩子函数签名。 */
-export type VotedOutHook = (
+export type VotedOutHook<Ports extends object = Record<never, never>> = {
+  invoke(runtime: HookRuntime<Ports>, targetId: EntityId): VotedOutResult | null;
+}["invoke"];
+
+/** 死亡钩子函数签名。 */
+export type DeathHook<Ports extends object = Record<never, never>> = {
+  invoke(
+    runtime: HookRuntime<Ports>,
+    deadIds: EntityId[],
+    deathSources: DeathSources,
+    chooseDeathShot: (actorId: EntityId, abilityId?: string) => Promise<DeathShotSelection>,
+    context?: DeathHookContext,
+  ): Promise<DeathHookResult>;
+}["invoke"];
+
+/** 回调实际获得新query对象；原World只留本调用的私有闭包，不从返回值取回。 */
+function hookRuntime(
+  kind: "death" | "voted" | "committed",
+  hook: object,
+  source: OwnedHookBindingSource,
+): HookRuntime {
+  return {
+    queries: {
+      role: (id) => source.world.getComponent(id, COMPONENT.Role)?.role,
+      camp: (id) => source.world.getComponent(id, COMPONENT.Camp)?.camp,
+      alive: (id) => source.world.getComponent(id, COMPONENT.Alive)?.alive === true,
+      entityIds: () => source.world.entityIds(),
+    },
+    ports: ownedHookPorts(kind, hook, source),
+  };
+}
+/** 可信调用方才提供原World/事件；晚prepare源不传给动态hook或其返回对象。 */
+export interface DeathHookPreparationSource {
+  world(): World;
+  events(): GameEvent[];
+}
+function bindingSource(
+  world: World,
+  events: GameEvent[],
+  preparation?: DeathHookPreparationSource,
+): OwnedHookBindingSource {
+  return {
+    world,
+    events,
+    prepareWorld: () => (preparation ? preparation.world() : world),
+    prepareEvents: () => (preparation ? preparation.events() : events),
+  };
+}
+/** 真实一次调用端口，也供显式owner测试；未知custom只有query；需要具体command的调用方在自有闭包中显式绑定，不收通用World容器。 */
+export function invokeDeathHook(
+  hook: DeathHook,
+  world: World,
+  ids: EntityId[],
+  sources: DeathSources,
+  choose: (actorId: EntityId, abilityId?: string) => Promise<DeathShotSelection>,
+  events: GameEvent[],
+  context?: DeathHookContext,
+  preparation?: DeathHookPreparationSource,
+): Promise<DeathHookResult> {
+  return hook(
+    hookRuntime("death", hook, bindingSource(world, events, preparation)),
+    ids,
+    sources,
+    choose,
+    context,
+  );
+}
+export function invokeVotedOutHook(
+  hook: VotedOutHook,
   world: World,
   targetId: EntityId,
   events: GameEvent[],
-) => VotedOutResult | null;
-
-/** 死亡钩子函数签名。 */
-export type DeathHook = (
+): VotedOutResult | null {
+  return hook(hookRuntime("voted", hook, bindingSource(world, events)), targetId);
+}
+export function invokeCommittedDeathWaveHook(
+  hook: CommittedDeathWaveHook,
   world: World,
-  deadIds: EntityId[],
-  deathSources: DeathSources,
-  chooseDeathShot: (actorId: EntityId, abilityId?: string) => Promise<DeathShotSelection>,
+  ids: readonly EntityId[],
+  sources: DeathSources,
+  day: number,
+  phase: Phase,
   events: GameEvent[],
-  context?: DeathHookContext,
-) => Promise<DeathHookResult>;
+): void {
+  hook(hookRuntime("committed", hook, bindingSource(world, events)), ids, sources, day, phase);
+}
 
 function buildDefaultVotedOutHooks(): VotedOutHook[] {
   return getDefaultRoleCatalog()
@@ -106,7 +200,7 @@ export class HookRegistry {
 
   onVotedOut(world: World, targetId: EntityId, events: GameEvent[]): VotedOutResult | null {
     for (const hook of this.votedOutHooks) {
-      const result = hook(world, targetId, events);
+      const result = invokeVotedOutHook(hook, world, targetId, events);
       if (result) {
         return result;
       }
@@ -122,6 +216,7 @@ export class HookRegistry {
     events: GameEvent[],
     commitAdditionalDeaths?: (result: DeathHookResult) => void,
     context?: DeathHookContext,
+    preparation?: DeathHookPreparationSource,
   ): Promise<DeathHookResult> {
     const aggregated: DeathHookResult = {
       extraDeaths: [],
@@ -129,7 +224,16 @@ export class HookRegistry {
     };
     for (const hook of this.deathHooks) {
       if (context?.isCurrent && !context.isCurrent()) break;
-      const result = await hook(world, deadIds, deathSources, chooseDeathShot, events, context);
+      const result = await invokeDeathHook(
+        hook,
+        world,
+        deadIds,
+        deathSources,
+        chooseDeathShot,
+        events,
+        context,
+        preparation,
+      );
       commitAdditionalDeaths?.(result);
       aggregated.extraDeaths.push(...result.extraDeaths);
       if (result.nightEffectTargets?.length)

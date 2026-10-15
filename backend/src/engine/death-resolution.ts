@@ -8,6 +8,7 @@
  * 枪的资格归共同所有者，请求、等待与目标复验归规则组合；本结算器持同一许可数组并在原时点关闭。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
+import { bindDreamLifeQueries } from "../domain/dream-night-effects";
 import { refreshWolfKnifeInheritanceAtCheckpoint } from "../rulesets/wolf-knife-inheritance-plan";
 import { AnimalDeathWavePreparation } from "../features/animal-dream/ports";
 import {
@@ -36,7 +37,7 @@ import {
 } from "../features/fragrant-pair-seer/ports";
 import { collectDeathShot, type DeathWaveActions } from "../rulesets/death-shot-selection";
 import { prepareInitialDeathRelations } from "../rulesets/initial-death-relations";
-import { WeddingDeathWavePublication } from "../features/ghost-bride/ports";
+import { bindWeddingDeathWavePublication } from "../features/ghost-bride/ports";
 import { prepareAdditionalDeathRelations } from "../rulesets/additional-death-relations";
 import type { BoardConfig } from "../domain/board";
 import { livingNightLife } from "../domain/night-effects";
@@ -68,7 +69,7 @@ export class DeathResolution {
   // 只捕获原结算器；每条关系边在原表达式处晚读 World、事件、日期及阶段。
   private readonly weddingDeathWave = (() => {
     const resolution = this;
-    return new WeddingDeathWavePublication({
+    return bindWeddingDeathWavePublication({
       get world() {
         return resolution.world;
       },
@@ -506,14 +507,12 @@ export class DeathResolution {
                   (contribution) =>
                     contribution.prepare(
                       {
-                        get world() {
-                          return resolution.world;
-                        },
-                        get events() {
-                          return resolution.events;
-                        },
                         blocksNightLinkedDeath: (target) =>
-                          nightEffects?.dreams?.blocksNightCharm(this.world, target(), seen),
+                          nightEffects?.dreams?.blocksNightCharm(
+                            bindDreamLifeQueries(this.world),
+                            target(),
+                            seen,
+                          ),
                       },
                       proposed,
                       proposedSources,
@@ -700,12 +699,21 @@ export class DeathResolution {
                 nightEffect: nightOrigin.has(deadId),
                 blocksNightShot: (targetId: EntityId) =>
                   (nightEffects?.blocksPassiveNightShot?.(targetId) ?? false) ||
-                  (nightEffects?.dreams?.blocksNightShot(this.world, targetId) ?? false),
+                  (nightEffects?.dreams?.blocksNightShot(
+                    bindDreamLifeQueries(this.world),
+                    targetId,
+                  ) ??
+                    false),
                 blocksNightCharm: (targetId: EntityId) =>
-                  nightEffects?.dreams?.blocksNightCharm(this.world, targetId, seen) ?? false,
+                  nightEffects?.dreams?.blocksNightCharm(
+                    bindDreamLifeQueries(this.world),
+                    targetId,
+                    seen,
+                  ) ?? false,
                 eligibleDead: seen,
                 isCurrent,
               }),
+              { world: () => resolution.world, events: () => resolution.events },
             );
           } finally {
             for (const permit of actions.permits) permit.close();

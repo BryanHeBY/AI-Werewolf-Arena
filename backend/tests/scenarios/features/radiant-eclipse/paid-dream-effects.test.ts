@@ -4,6 +4,7 @@
  * 施法者生命、库存付款和晚阶段失败保持因果顺序，场景不是独立纯 reader。
  * 不调用模型／网络，不生成或重写原预期数据。
  */
+import { bindDreamLifeQueries } from "../../../../src/domain/dream-night-effects";
 import {
   createAliveComponent,
   createCampComponent,
@@ -172,10 +173,12 @@ for (const dead of [1, 5])
       history: [{ day: 1, targetId: 6 }],
       protectionPolicy: "netease_2026_night_immunity_v1",
     });
-    expect(result.dreamFrame.protectedTargets(f.world)).toEqual([7]);
+    expect(result.dreamFrame.protectedTargets(bindDreamLifeQueries(f.world))).toEqual([7]);
     const life = f.world.getComponent(dead, COMPONENT.Alive)!;
     life.alive = false;
-    expect(result.dreamFrame.linkedDeaths(f.world, [dead])).toEqual(dead === 1 ? [7] : []);
+    expect(result.dreamFrame.linkedDeaths(bindDreamLifeQueries(f.world), [dead])).toEqual(
+      dead === 1 ? [7] : [],
+    );
     expect(
       f.events.filter((e) => e.type === "eclipse_lease_closed").map((e) => e.payload.status),
     ).toEqual(["committed"]);
@@ -218,8 +221,8 @@ test("actual later-stage failure retains paid Dream fact and stock but revokes h
   expect(native.nightSuppression).toBeUndefined();
   expect(borrowed.uses).toBe(1);
   expect(borrowed.state.history).toEqual([{ day: 2, targetId: 7 }]);
-  expect(frame.protectedTargets(f.world)).toEqual([]);
-  expect(frame.linkedDeaths(f.world, [1])).toEqual([]);
+  expect(frame.protectedTargets(bindDreamLifeQueries(f.world))).toEqual([]);
+  expect(frame.linkedDeaths(bindDreamLifeQueries(f.world), [1])).toEqual([]);
   expect(f.events.filter((e) => e.type === "dream_applied").map((e) => e.payload)).toEqual([
     { actorId: 1, targetId: 7, day: 2, consecutive: false, abilityId: borrowed.id },
   ]);

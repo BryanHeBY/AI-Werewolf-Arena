@@ -3,6 +3,7 @@
  * 输入保留原政策／来源／死因／语言／时点矩阵及直接 hook／死亡结算调用；手写开枪资格、
  * 受保护目标、赠予枪及只读来源拒绝是预期，不运行完整 PhaseManager 周期或记录流程。
  */
+import { invokeDeathHook } from "../../../../src/engine/hooks/registry";
 import { captureNativeRolePresentation } from "../../../../src/agents/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -326,7 +327,8 @@ for (const timing of ["await", "deferred"] as const)
           [],
           [
             async (...args) => {
-              const [world, , sources] = args;
+              const [, , sources] = args;
+              const world = f.world;
               const state = getWolfKingState(world.getComponent(3, COMPONENT.Role)!)!;
               mutate = () => {
                 if (field === "policy")
@@ -341,7 +343,15 @@ for (const timing of ["await", "deferred"] as const)
                   ).deathActionPolicy = "awa_knife_or_exile_v1";
                 if (field === "cause") sources[3] = [DeathCause.Poison];
               };
-              const result = await WOLF_KING_ROLE_PROFILE.runtime.deathHook!(...args);
+              const result = await invokeDeathHook(
+                WOLF_KING_ROLE_PROFILE.runtime.deathHook!,
+                f.world,
+                args[1],
+                args[2],
+                args[3],
+                f.events,
+                args[4],
+              );
               if (timing === "deferred" && result.pendingShots?.length) mutate();
               return result;
             },
@@ -390,9 +400,17 @@ test("resolver-owned origin cannot be rewritten through a hook context", async (
       [],
       [
         async (...args) => {
-          context = args[5];
+          context = args[4];
           expect(Object.isFrozen(context)).toBe(true);
-          return WOLF_KING_ROLE_PROFILE.runtime.deathHook!(...args);
+          return invokeDeathHook(
+            WOLF_KING_ROLE_PROFILE.runtime.deathHook!,
+            f.world,
+            args[1],
+            args[2],
+            args[3],
+            f.events,
+            args[4],
+          );
         },
       ],
     ),
@@ -429,7 +447,8 @@ for (const timing of ["await", "deferred"] as const)
     };
     const permit = f.world.openDeathAction(3, "shoot", Phase.Day, 2);
     try {
-      const result = await WOLF_KING_ROLE_PROFILE.runtime.deathHook!(
+      const result = await invokeDeathHook(
+        WOLF_KING_ROLE_PROFILE.runtime.deathHook!,
         f.world,
         [3],
         { 3: [DeathCause.Exile] },
@@ -456,7 +475,8 @@ test("direct hooks with no origin reject only the new policy", async () => {
     const f = fixture(selected);
     f.world.getComponent(3, COMPONENT.Alive)!.alive = false;
     let requests = 0;
-    const result = await WOLF_KING_ROLE_PROFILE.runtime.deathHook!(
+    const result = await invokeDeathHook(
+      WOLF_KING_ROLE_PROFILE.runtime.deathHook!,
       f.world,
       [3],
       { 3: [DeathCause.Exile] },

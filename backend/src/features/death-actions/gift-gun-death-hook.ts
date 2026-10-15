@@ -10,6 +10,11 @@ import { DeathCause, permitsHunterShot } from "../../domain/model";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
 import type { DeathHook } from "../../engine/hooks/registry";
 import {
+  ownDeathHook,
+  type OwnedHookBindingSource,
+  type OwnedDeathCommands,
+} from "../../engine/hooks/owned-bindings";
+import {
   activeDeathGun,
   allDeathGuns,
   captureDeathGun,
@@ -17,7 +22,15 @@ import {
 } from "./death-abilities";
 
 /** 原生角色死亡钩子依次返回之后，每名玩家读取其首个转移／赠与枪；不在此重新安装或补充库存。 */
-export const giftGunDeathHook: DeathHook = async (world, ids, sources, choose, events, context) => {
+async function resolveOwnedDeath(
+  source: OwnedHookBindingSource,
+  ids: Parameters<DeathHook>[1],
+  sources: Parameters<DeathHook>[2],
+  choose: Parameters<DeathHook>[3],
+  context: Parameters<DeathHook>[4],
+): ReturnType<DeathHook> {
+  const world = source.world,
+    events = source.events;
   const result = {
     extraDeaths: [] as number[],
     extraDeathSources: {} as Record<number, DeathCause[]>,
@@ -76,4 +89,17 @@ export const giftGunDeathHook: DeathHook = async (world, ids, sources, choose, e
     else events.push(event);
   }
   return result;
-};
+}
+
+/** 本族运行hook只得到具体结算命令；cold绑定不查询名单、库存或World。 */
+export const giftGunDeathHook: DeathHook = ownDeathHook<OwnedDeathCommands>(
+  (runtime, ids, sources, choose, context) => runtime.ports.resolve(ids, sources, choose, context),
+  (source) => ({
+    resolve: (
+      ids: Parameters<DeathHook>[1],
+      sources: Parameters<DeathHook>[2],
+      choose: Parameters<DeathHook>[3],
+      context: Parameters<DeathHook>[4],
+    ) => resolveOwnedDeath(source, ids, sources, choose, context),
+  }),
+);

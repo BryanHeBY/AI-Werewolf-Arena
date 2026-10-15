@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证狼美人／摄梦历史抑制、已捕获 scope 失效、复合伤害与转移政策元数据。输入为原历史、scope 和伤害样本；原字面断言及独立 fixture 保留，不替换结算预期。
  */
+import { bindDreamLifeQueries } from "../../../src/domain/dream-night-effects";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -123,8 +124,8 @@ for (const policy of DREAM_PROTECTION_POLICIES)
       },
     ]);
     const damage = new DamageResolutionSystem().resolve(game.world, {
-      protectedTargets: frame.protectedTargets(game.world),
-      immuneNightTargets: frame.immuneNightTargets(game.world),
+      protectedTargets: frame.protectedTargets(bindDreamLifeQueries(game.world)),
+      immuneNightTargets: frame.immuneNightTargets(bindDreamLifeQueries(game.world)),
       blackMarketBacklashes: [{ target, isCurrent: () => true }],
       mechanicalEffects: {
         failures: [{ actorId: 4, target, isCurrent: () => true }],

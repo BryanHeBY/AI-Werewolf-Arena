@@ -12,6 +12,7 @@
  * 明辉／梦及增益伤害与猎魔来源交付各归具名规则组合；本流水线保封存、伤害结算及死亡生命捕获的原检查点。
  * 运行梦句柄、猎魔 token 与晚保护闭包不进入玩家摘要或归档。
  */
+import { bindDreamLifeQueries } from "../../domain/dream-night-effects";
 import { attachNightUnit } from "../../domain/night-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
@@ -388,7 +389,8 @@ export class NightPipeline {
           ...new Set([...(damage.deathSources[id] ?? []), DeathCause.RavenClawKnife]),
         ];
       }
-      if (!mist?.delayEligible) dreamFrame.expandInitialDamage(this.world, damage);
+      if (!mist?.delayEligible)
+        dreamFrame.expandInitialDamage(bindDreamLifeQueries(this.world), damage);
       if (!mist?.delayEligible && !ownsNoble)
         safeRecordLogicOp({
           scope: "resolution",

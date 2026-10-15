@@ -7,16 +7,55 @@
  */
 import { DeathCause, type EntityId } from "@ai-werewolf-arena/game-contract";
 import type { DeathWaveContribution } from "../../engine/death-wave-contribution";
-import type {
-  attemptCharmTrigger,
-  commitCharmDeath,
-  CharmBinding,
-  CharmClaimReceipt,
-} from "./relation";
+import type { CharmBinding, CharmClaimReceipt } from "./relation";
+import { attemptCharmTrigger, commitCharmDeath } from "./relation";
+import type { OwnedHookBindingSource } from "../../engine/hooks/owned-bindings";
 
-interface WolfBeautyDeathCommands {
-  readonly attemptCharmTrigger: typeof attemptCharmTrigger;
-  readonly commitCharmDeath: typeof commitCharmDeath;
+export interface WolfBeautyDeathCommands {
+  attempt(
+    binding: CharmBinding,
+    sources: import("../../domain/model").DeathSources,
+    nativeShots: ReadonlySet<EntityId>,
+    seen: ReadonlySet<EntityId>,
+    blocks: () => unknown,
+  ): ReturnType<typeof attemptCharmTrigger>;
+  commit(receipt: CharmClaimReceipt): ReturnType<typeof commitCharmDeath>;
+  blocked(binding: CharmBinding): void;
+  applied(binding: CharmBinding): void;
+}
+/** 可信资源绑定只捕获晚读取源；动态prepare/post对象不能取得World或source本身。 */
+export function bindWolfBeautyDeathCommands(
+  source: OwnedHookBindingSource,
+): WolfBeautyDeathCommands {
+  return {
+    get attempt(): WolfBeautyDeathCommands["attempt"] {
+      const attempt = attemptCharmTrigger;
+      return (binding, sources, nativeShots, seen, blocks) =>
+        attempt(binding, sources, nativeShots, seen, () => source.prepareWorld(), blocks);
+    },
+    get commit(): WolfBeautyDeathCommands["commit"] {
+      const commit = commitCharmDeath;
+      return (receipt) => commit(source.prepareWorld(), receipt);
+    },
+    blocked(binding) {
+      source.prepareEvents().push({
+        timestamp: Date.now(),
+        type: "charm_blocked",
+        payload: {
+          actorId: binding.actorId,
+          targetId: binding.targetId,
+          reason: "night_protection",
+        },
+      });
+    },
+    applied(binding) {
+      source.prepareEvents().push({
+        timestamp: Date.now(),
+        type: "charm_death",
+        payload: { actorId: binding.actorId, targetId: binding.targetId },
+      });
+    },
+  };
 }
 
 /** 一次 hook 的原 proposal 数组；未领取绑定仍由唯一 relation 库存持有，不复制原体。 */
@@ -39,26 +78,17 @@ export function createWolfBeautyDeathContribution(
         const binding = proposal.binding;
         // 具体关系 owner 在原位置领取和查询保护；延迟 World，permit 失败不新增读取。
         // 先取原命令再裸调用，保留 callee 读取时点与 receiver；之后才求值原参数。
-        const attemptCharmTrigger = commands.attemptCharmTrigger;
+        const attemptCharmTrigger = commands.attempt;
         const trigger = attemptCharmTrigger(
           binding,
           allSources,
           nativeHunterShotTargets,
           seen,
-          () => runtime.world,
           () => proposal.nightEffect && runtime.blocksNightLinkedDeath(() => binding.targetId),
         );
         if (!trigger) continue;
         if (trigger.kind === "blocked") {
-          runtime.events.push({
-            timestamp: Date.now(),
-            type: "charm_blocked",
-            payload: {
-              actorId: binding.actorId,
-              targetId: binding.targetId,
-              reason: "night_protection",
-            },
-          });
+          commands.blocked(binding);
           continue;
         }
         charmTriggers.push({ binding, receipt: trigger });
@@ -79,14 +109,9 @@ export function createWolfBeautyDeathContribution(
         // 原实际标死之后才核 applied；事件失败不能撤销已 applied 或既有事件。
         publishAfterDeaths() {
           for (const { binding, receipt } of charmTriggers) {
-            const commitCharmDeath = commands.commitCharmDeath;
-            const applied = commitCharmDeath(runtime.world, receipt);
-            if (applied?.kind === "applied")
-              runtime.events.push({
-                timestamp: Date.now(),
-                type: "charm_death",
-                payload: { actorId: binding.actorId, targetId: binding.targetId },
-              });
+            const commitCharmDeath = commands.commit;
+            const applied = commitCharmDeath(receipt);
+            if (applied?.kind === "applied") commands.applied(binding);
           }
         },
       };

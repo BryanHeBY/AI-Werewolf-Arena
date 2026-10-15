@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { ownDeathHook, type OwnedDeathCommands } from "../../engine/hooks/owned-bindings";
 import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
 import { deathActionConfiguration, renderDeathActionPolicy } from "../death-actions/policy-ports";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -52,26 +53,40 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         ...DEATH_SHOT_REPAIR.coerce,
       },
     },
-    deathHook: (world, ids, sources, choose, events, context) =>
-      resolveNativeDeathShots(
-        world,
-        ids,
-        sources,
-        choose,
-        events,
-        {
-          role: Role.WolfKing,
-          state: getWolfKingState,
-          permits: (sources) => permitsDeathShot(sources),
-          policy: (state) => state.deathActionPolicy ?? "awa_qualified_sources_v1",
-          shotEvent: (actorId, targetId) => ({
-            timestamp: Date.now(),
-            type: "wolf_king_shot",
-            payload: { actorId, targetId },
-          }),
+    deathHook: ownDeathHook<OwnedDeathCommands>(
+      (runtime, ids, sources, choose, context) =>
+        runtime.ports.resolve(ids, sources, choose, context),
+      (source) => ({
+        resolve: (
+          ids: number[],
+          sources: import("../../domain/model").DeathSources,
+          choose: Parameters<import("../../engine/hooks/registry").DeathHook>[3],
+          context: Parameters<import("../../engine/hooks/registry").DeathHook>[4],
+        ) => {
+          const world = source.world,
+            events = source.events;
+          return resolveNativeDeathShots(
+            world,
+            ids,
+            sources,
+            choose,
+            events,
+            {
+              role: Role.WolfKing,
+              state: getWolfKingState,
+              permits: (sources) => permitsDeathShot(sources),
+              policy: (state) => state.deathActionPolicy ?? "awa_qualified_sources_v1",
+              shotEvent: (actorId, targetId) => ({
+                timestamp: Date.now(),
+                type: "wolf_king_shot",
+                payload: { actorId, targetId },
+              }),
+            },
+            context,
+          );
         },
-        context,
-      ),
+      }),
+    ),
     baselineAction: (
       role,
       request,

@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证赤月白天自爆及当前狼人名单。输入为受控自爆与原名单；死因和后续夜封印的原字面断言验证最后狼人终结不会多封一夜，不调用模型或完整对局驱动。
  */
+import { invokeVotedOutHook } from "../../../src/engine/hooks/registry";
 import { expect, test } from "bun:test";
 import {
   COMPONENT,
@@ -78,11 +79,11 @@ for (const policy of ["ends_game", "forbidden"] as const)
   });
 test("Red Moon exile hook defers only the original last wolf and preserves its life", () => {
   const { world } = dayWorld();
-  const events: Parameters<typeof redMoonVotedOutHook>[2] = [];
-  expect(redMoonVotedOutHook(world, 4, events)).toBeNull();
-  expect(redMoonVotedOutHook(world, 5, events)).toBeNull();
+  const events: import("@ai-werewolf-arena/game-contract").GameEvent[] = [];
+  expect(invokeVotedOutHook(redMoonVotedOutHook, world, 4, events)).toBeNull();
+  expect(invokeVotedOutHook(redMoonVotedOutHook, world, 5, events)).toBeNull();
   for (const id of [1, 2, 3]) world.getComponent(id, COMPONENT.Alive)!.alive = false;
-  expect(redMoonVotedOutHook(world, 4, events)).toEqual({
+  expect(invokeVotedOutHook(redMoonVotedOutHook, world, 4, events)).toEqual({
     prevented: true,
     removed: [],
     reason: "red_moon_exile_delayed",

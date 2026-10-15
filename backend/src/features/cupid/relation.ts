@@ -4,6 +4,7 @@
  * 殉情保原独立根／来源规则，梦关系通过运行接口在原时点参与闭包；不复制效果、不标死或判胜。
  * 未付阶段可给绑定命令传拒绝尾；它不授新许可，不过滤目标，已付关系查询／死亡闭包不读取执行退休。
  */
+import { bindDreamLifeQueries } from "../../domain/dream-night-effects";
 import { COMPONENT } from "../../domain/components/names";
 import { aliveLifeVersion } from "../../domain/components/alive";
 import type { LoversComponent } from "../../domain/components/lovers";
@@ -154,7 +155,7 @@ export function expandLoversWave(
     }
     if (dreams && nightOrigin.size) {
       for (const id of dreams.linkedDeaths(
-        world,
+        bindDreamLifeQueries(world),
         [...nightOrigin],
         new Set([...eligibleDead, ...members]),
       )) {

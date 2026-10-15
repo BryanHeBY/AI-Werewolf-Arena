@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证配置的查验／死亡政策在有界阶段、hook、校验、提示与投影中的实际使用。输入为角色／政策／语言矩阵和原 live 槽修改；手写许可、库存／历史计数和错误为预期。死亡链在场景中，此处不运行完整阶段或模型。
  */
+import { invokeDeathHook } from "../../../src/engine/hooks/registry";
 import { bindTargetHintContext } from "../../../src/agents/tool-repair/target-hint-registry";
 import { rolePresentationRenderer } from "../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
@@ -347,7 +348,8 @@ for (const kind of [Role.Hunter, Role.WolfKing] as const)
         const hook =
           kind === Role.Hunter ? hunterDeathHook : WOLF_KING_ROLE_PROFILE.runtime.deathHook!;
         let permit: ReturnType<typeof game.world.openDeathAction> | undefined;
-        const result = await hook(
+        const result = await invokeDeathHook(
+          hook,
           game.world,
           [1],
           { 1: sources },
@@ -563,7 +565,8 @@ test("a native death proposal is revoked by a policy edit before central commit"
   game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
   const permit = game.world.openDeathAction(1, "shoot", Phase.Day, 1);
   try {
-    const result = await hunterDeathHook(
+    const result = await invokeDeathHook(
+      hunterDeathHook,
       game.world,
       [1],
       { 1: [DeathCause.Shot] },

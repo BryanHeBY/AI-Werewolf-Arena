@@ -6,7 +6,17 @@
  */
 import type { VotedOutHook } from "../../engine/hooks/registry";
 import { demonRedMoonDay, commitDemonRedMoonTransition } from "../demon-hunter/red-moon-ports";
-export const redMoonVotedOutHook: VotedOutHook = (world, actorId, events) => {
+import {
+  ownVotedOutHook,
+  type OwnedHookBindingSource,
+  type OwnedVotedOutCommands,
+} from "../../engine/hooks/owned-bindings";
+function resolveOwnedExile(
+  source: OwnedHookBindingSource,
+  actorId: number,
+): ReturnType<VotedOutHook> {
+  const world = source.world,
+    events = source.events;
   const day = demonRedMoonDay(world, actorId);
   if (day === null || !commitDemonRedMoonTransition(world, actorId, "exile", day)) return null;
   // 资源和审计已提交；保持 push 的方法／receiver 查找先于时钟与载荷，后续抛错不发布免死结果。
@@ -16,4 +26,10 @@ export const redMoonVotedOutHook: VotedOutHook = (world, actorId, events) => {
     payload: { actorId, day, night: day + 1 },
   });
   return { prevented: true, removed: [], reason: "red_moon_exile_delayed" };
-};
+}
+
+/** 运行回调只取得本族完整免死command，不接通用World或事件数组。 */
+export const redMoonVotedOutHook: VotedOutHook = ownVotedOutHook<OwnedVotedOutCommands>(
+  (runtime, targetId) => runtime.ports.resolve(targetId),
+  (source) => ({ resolve: (targetId: number) => resolveOwnedExile(source, targetId) }),
+);

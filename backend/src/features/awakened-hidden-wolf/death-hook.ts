@@ -6,11 +6,24 @@
  */
 import { Role, permitsDeathShot } from "../../domain/model";
 import type { DeathHook } from "../../engine/hooks/registry";
+import {
+  ownDeathHook,
+  type OwnedHookBindingSource,
+  type OwnedDeathCommands,
+} from "../../engine/hooks/owned-bindings";
 import { resolveNativeDeathShots } from "../death-actions/settlement-ports";
 import { getAwakenedState } from "./state";
 import { createAwakenedGunReader } from "../death-actions/native-resource-ports";
 
-export const awakenedDeathHook: DeathHook = (world, ids, sources, choose, events, context) => {
+function resolveOwnedDeath(
+  source: OwnedHookBindingSource,
+  ids: Parameters<DeathHook>[1],
+  sources: Parameters<DeathHook>[2],
+  choose: Parameters<DeathHook>[3],
+  context: Parameters<DeathHook>[4],
+): ReturnType<DeathHook> {
+  const world = source.world,
+    events = source.events;
   const readGun = createAwakenedGunReader({
     get getAwakenedState() {
       return getAwakenedState;
@@ -34,4 +47,17 @@ export const awakenedDeathHook: DeathHook = (world, ids, sources, choose, events
     },
     context,
   );
-};
+}
+
+/** 本族运行hook只得到具体结算命令；cold绑定不查询名单、库存或World。 */
+export const awakenedDeathHook: DeathHook = ownDeathHook<OwnedDeathCommands>(
+  (runtime, ids, sources, choose, context) => runtime.ports.resolve(ids, sources, choose, context),
+  (source) => ({
+    resolve: (
+      ids: Parameters<DeathHook>[1],
+      sources: Parameters<DeathHook>[2],
+      choose: Parameters<DeathHook>[3],
+      context: Parameters<DeathHook>[4],
+    ) => resolveOwnedDeath(source, ids, sources, choose, context),
+  }),
+);

@@ -4,6 +4,7 @@
  * 本模块不切换阶段或标死；延期副本保留真实毒因果，疗救和梦扩展仍用原政策。
  * 规则依据：docs/rules/awa-mist-raven-twelve-v1.md。
  */
+import { bindDreamLifeQueries } from "../../domain/dream-night-effects";
 import {
   AliveComponent,
   aliveLifeDescriptor,
@@ -182,7 +183,7 @@ export class MistPendingNight {
       }
     }
     try {
-      this.dreams.expandInitialDamage(this.world, damage);
+      this.dreams.expandInitialDamage(bindDreamLifeQueries(this.world), damage);
     } catch (error) {
       this.abort();
       throw error;

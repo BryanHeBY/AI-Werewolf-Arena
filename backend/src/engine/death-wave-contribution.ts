@@ -4,18 +4,10 @@
  * 并持有本族发布回调。具体绑定、领取回执、来源政策、夜间旗标和付款留在贡献所有者。
  * 这不是 JSON、权限品牌、资源账本或统一关系规则；失败时首异常向上传播，已经提交的前缀不回滚。
  */
-import type {
-  DeathCause,
-  DeathSources,
-  EntityId,
-  GameEvent,
-} from "@ai-werewolf-arena/game-contract";
-import type { World } from "../domain/world";
+import type { DeathCause, DeathSources, EntityId } from "@ai-werewolf-arena/game-contract";
 
-/** 查询在原表达式位置读取；World 的原身份供具体权威核对，不复制或冻结运行对象。 */
+/** 动态贡献只可查询本波夜保护；领取和事实命令已在具体资源owner私有绑定，不给World回门。 */
 export interface DeathWaveContributionRuntime {
-  readonly world: World;
-  readonly events: GameEvent[];
   /** 目标也是惰性查询，保护方法的 callee／receiver 和 World 先读取，随后才读取目标。 */
   blocksNightLinkedDeath(target: () => EntityId): unknown;
 }

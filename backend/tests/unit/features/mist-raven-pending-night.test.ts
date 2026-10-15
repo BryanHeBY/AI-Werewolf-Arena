@@ -2,6 +2,7 @@
  * 单元测试用明确根、连线、救药及穿透声明验证雾鸦待处理夜晚。手写死因集合与原前缀断言
  * 验证选择性来源移除，输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
+import { bindDreamLifeQueries } from "../../../src/domain/dream-night-effects";
 import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/domain/world";
@@ -100,8 +101,8 @@ test("extra knife on the dreamer survives snake and establishes its real linked 
 });
 test("snake preserves direct consecutive dream and an independent knife cause", () => {
   const { world, lives, dreams, pending } = setup(2, true);
-  expect(dreams.consecutiveDeaths(world)).toEqual([2]);
-  expect(dreams.consecutiveDeaths(new World())).toEqual([]); // 其他 World 不能激活已保存的关系。
+  expect(dreams.consecutiveDeaths(bindDreamLifeQueries(world))).toEqual([2]);
+  expect(dreams.consecutiveDeaths(bindDreamLifeQueries(new World()))).toEqual([]); // 其他 World 不能激活已保存的关系。
   const p = pending(2, { 2: [DeathCause.WolfKill, DeathCause.Dream] });
   p.claim(() => true);
   expect(p.prepareFinalDamage(2, () => true)).toEqual({

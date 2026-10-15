@@ -1,6 +1,7 @@
 /**
  * 单元测试验证狼王原生枪死因、独立库存、有界连锁结算和迟到选择关闭。输入保留原 locale／死因／变化表、明确死亡许可及本地角色／生命／资源；精确消费、接收、可见性、死亡波与陈旧选择断言是预期，不推进 PhaseManager 周期或记录器。
  */
+import { invokeDeathHook } from "../../../../src/engine/hooks/registry";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -101,7 +102,8 @@ for (const locale of ["zh-CN", "en"] as const)
       let choices = 0;
       try {
         const hook = getDefaultRoleCatalog().requireRuntime(Role.WolfKing).deathHook!;
-        const result = await hook(
+        const result = await invokeDeathHook(
+          hook,
           world,
           [1],
           { 1: sources },
@@ -120,7 +122,8 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(getWolfKingState(role(world, 1))!.canShoot).toBe(false);
         expect(world.getComponent(3, COMPONENT.Alive)!.alive).toBe(true); // hook 只提出死亡建议；resolver 才提交死亡。
         expect(events.map((event) => event.type)).toEqual(allowed ? ["wolf_king_shot"] : []);
-        await hook(
+        await invokeDeathHook(
+          hook,
           world,
           [1],
           { 1: sources },
@@ -141,7 +144,8 @@ for (const locale of ["zh-CN", "en"] as const)
       const permit = world.openDeathAction(1, "shoot", Phase.Day, 2),
         events: GameEvent[] = [];
       try {
-        const result = await getDefaultRoleCatalog().requireRuntime(Role.WolfKing).deathHook!(
+        const result = await invokeDeathHook(
+          getDefaultRoleCatalog().requireRuntime(Role.WolfKing).deathHook!,
           world,
           [1],
           { 1: [DeathCause.Exile] },
@@ -321,7 +325,8 @@ for (const locale of ["zh-CN", "en"] as const)
         original = getWolfKingState(role(world, 1))!,
         failure = new Error("original-shot-failure");
       try {
-        const task = getDefaultRoleCatalog().requireRuntime(Role.WolfKing).deathHook!(
+        const task = invokeDeathHook(
+          getDefaultRoleCatalog().requireRuntime(Role.WolfKing).deathHook!,
           world,
           [1],
           { 1: [DeathCause.Exile] },

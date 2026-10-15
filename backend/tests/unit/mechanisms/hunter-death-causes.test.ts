@@ -1,6 +1,7 @@
 /**
  * 单元测试验证猎人死因资格、有界死亡结算及真实死亡回执消费。输入保留原死因／胜利条件／locale 表、本地原生命及受控 hook／provider 决策；精确许可、开枪／pass／撤权、阶段和追加原因断言是预期，不运行 PhaseManager 周期、记录器或模型。
  */
+import { invokeDeathHook } from "../../../src/engine/hooks/registry";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -63,7 +64,8 @@ async function runHunterHook(
 ) {
   let permit: ReturnType<typeof world.openDeathAction> | undefined;
   try {
-    return await hunterDeathHook(
+    return await invokeDeathHook(
+      hunterDeathHook,
       world,
       deadIds,
       sources,

@@ -2,6 +2,7 @@
  * 单元测试用提交的状态印记及明确庇护／反噬声明验证日辉月蚀伤害。手写死因过滤与原守护／救药
  * 断言验证结算，输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
+import { bindDreamLifeQueries } from "../../../../src/domain/dream-night-effects";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
@@ -85,12 +86,12 @@ test("dream protection filters poison and backlash while caster death leaves onl
   const dreams = new DreamNightFrame([f.dream(2, 4)]);
   const damage = new DamageResolutionSystem().resolve(f.world, {
     radiantBacklashes: [f.backlash(4)],
-    protectedTargets: dreams.protectedTargets(f.world),
-    immuneNightTargets: dreams.immuneNightTargets(f.world),
-    consecutiveDeaths: dreams.consecutiveDeaths(f.world),
+    protectedTargets: dreams.protectedTargets(bindDreamLifeQueries(f.world)),
+    immuneNightTargets: dreams.immuneNightTargets(bindDreamLifeQueries(f.world)),
+    consecutiveDeaths: dreams.consecutiveDeaths(bindDreamLifeQueries(f.world)),
   });
   expect(damage).toEqual({ deaths: [2], deathSources: { 2: [DeathCause.WolfKill] } });
-  dreams.expandInitialDamage(f.world, damage);
+  dreams.expandInitialDamage(bindDreamLifeQueries(f.world), damage);
   expect(damage).toEqual({
     deaths: [2, 4],
     deathSources: { 2: [DeathCause.WolfKill], 4: [DeathCause.Dream] },
@@ -107,8 +108,8 @@ test("consecutive dream is still lethal when its protection filters independent 
     dreams = new DreamNightFrame([f.dream(2, 4, true)]);
   const damage = new DamageResolutionSystem().resolve(f.world, {
     radiantBacklashes: [f.backlash(4)],
-    protectedTargets: dreams.protectedTargets(f.world),
-    consecutiveDeaths: dreams.consecutiveDeaths(f.world),
+    protectedTargets: dreams.protectedTargets(bindDreamLifeQueries(f.world)),
+    consecutiveDeaths: dreams.consecutiveDeaths(bindDreamLifeQueries(f.world)),
   });
   expect(damage).toEqual({ deaths: [4], deathSources: { 4: [DeathCause.Dream] } });
 });
@@ -121,9 +122,9 @@ for (const mode of ["consecutive", "linked", "protected_caster"] as const)
     if (mode !== "consecutive") f.mark(2, StatusMark.WolfKillMark);
     const damage = new DamageResolutionSystem().resolve(f.world, {
       radiantShelters: shelters,
-      consecutiveDeaths: dreams.consecutiveDeaths(f.world),
+      consecutiveDeaths: dreams.consecutiveDeaths(bindDreamLifeQueries(f.world)),
     });
-    dreams.expandInitialDamage(f.world, damage);
+    dreams.expandInitialDamage(bindDreamLifeQueries(f.world), damage);
     expect(damage).toEqual(
       mode === "linked"
         ? { deaths: [2], deathSources: { 2: [DeathCause.WolfKill] } }
