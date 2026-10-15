@@ -1,0 +1,53 @@
+{
+  "executor": "Root only; all commands prepared, not executed by author",
+  "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+  "baseCommit": "7dd49c9942eed59897def06ec36b8af23ee83518",
+  "sourceReadySHA256": "b662dad019dad161593a533e05f611d1d8cc35d80359f9f080a46ac599af7cc6",
+  "commands": {
+    "unit": "cd backend && bun --no-env-file test --preload ./tests/setup.ts tests/unit/features/ghost-bride/request-terminal-revocation.test.ts",
+    "types": "bun --no-env-file backend/node_modules/typescript/bin/tsc --project docs/refactor/generated/ghost-bride-request-terminal-revocation-types-config.json --pretty false",
+    "heads": "bun --no-env-file docs/refactor/generated/ghost-bride-request-terminal-revocation-heads.cjs",
+    "proof": "bun --no-env-file docs/refactor/generated/ghost-bride-request-terminal-revocation-proof.cjs"
+  },
+  "prepared": [
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-before.json",
+      "sha256": "5428074f69e22dfd9a089ee441624dd786d6721c90a6456d1bf7f863eb9bf2c8"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-edits.json",
+      "sha256": "f77acb5db0f7444f8269a89ad412122ce0d434246bd067ab2560135a8034037e"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-source-ready.json",
+      "sha256": "b662dad019dad161593a533e05f611d1d8cc35d80359f9f080a46ac599af7cc6"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-types-config.json",
+      "sha256": "9207cfe1dbd1ba29a89bdcbc0c2e44a4d98a4de5f4a76bece9e259df9b0203ef"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-heads.cjs",
+      "sha256": "04ae5ef27b37b22faeaa24a429d4eb583fa79bf51a0f4615934dab1a75a1747b"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-proof.cjs",
+      "sha256": "3170c70014c841dafc224299eabe1509506c6f9eaadd5183a053668d390ad65e"
+    }
+  ],
+  "runtimeScope": "7 declarations, 13 fresh legal-board fixtures; no legacy probe/old suite/night pipeline rerun",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "7461b6a52756c2152933f8e51aa370613a8ec806e063ffc4610121a0ee144627"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "871fb07a1d2fba5e44ecd3a1ac20f39bc71011299548dc02f53913365f8cf7ca"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/request-terminal-revocation.test.ts",
+      "sha256": "986a418d83a36e916b6c5a93d4833c0d56c14f2f5980375f3b8d313f8d76e593"
+    }
+  ]
+}

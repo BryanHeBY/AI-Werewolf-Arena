@@ -12,6 +12,7 @@ import {
   type World,
   type GameEvent,
   type ActionProvider,
+  type ActionRequest,
   type ActionStage,
   type ToolName,
 } from "../../../../core/domain";
@@ -66,7 +67,14 @@ export async function executeWeddingTurn(input: {
           : {}),
       },
     });
-    const raw = await provider.getAction(request);
+    // 原 provider receiver／callee 先准备，新增 Reflect／bind 查找也在末守卫前；不提前调用候选动作。
+    // 已观察的 turn 失效不能继续发请求；builder 后新增这次当前性／时钟读取是 F02 政策。
+    const getAction = provider.getAction,
+      invoke = Reflect.apply.bind(Reflect),
+      args: [ActionRequest] = [request];
+    if (!authorizedWeddingTurn(world, actorId, Phase.Night, day, scope))
+      throw new Error("ghost_bride_turn_revoked");
+    const raw = await invoke(getAction, provider, args);
     if (!authorizedWeddingTurn(world, actorId, Phase.Night, day, scope))
       throw new Error("ghost_bride_turn_revoked");
     const call = readWeddingTool(raw);

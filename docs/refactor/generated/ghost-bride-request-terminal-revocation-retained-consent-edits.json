@@ -1,0 +1,29 @@
+{
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "start": 17261,
+      "before": "function validTurn(t: Turn): boolean {",
+      "after": "/** 只有尚在等待第二票的共同领域失效才撤旧第一同意；第二请求自己的壳／期限坏不连带撤它。 */\nfunction revokeRetainedConsentForSharedFailure(t: Turn): void {\n  const b = t.binding, consent = b.consent;\n  if (t.kind === \"witness\" && b.status === \"paired\" && b.votes.length === 1 && consent && consent !== t)\n    revokedRequestTurns.add(consent);\n}\nfunction validTurn(t: Turn): boolean {"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "start": 17736,
+      "before": "  try {\n    const current =\n      validWindow(t) &&\n      currentUnpaidRequestProof(t) &&\n      (t.kind !== \"witness\" || t.binding.votes.length !== 1 || validConsent(t.binding, t));",
+      "after": "  let observingSharedWindow = true;\n  try {\n    const windowCurrent = validWindow(t);\n    observingSharedWindow = false;\n    if (!windowCurrent) {\n      revokeRetainedConsentForSharedFailure(t);\n      revokedRequestTurns.add(t);\n      return false;\n    }\n    const current =\n      currentUnpaidRequestProof(t) &&\n      (t.kind !== \"witness\" || t.binding.votes.length !== 1 || validConsent(t.binding, t));"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "start": 18315,
+      "before": "  } catch (error) {\n    revokedRequestTurns.add(t);\n    throw error;\n  }\n}\nfunction validConsent",
+      "after": "  } catch (error) {\n    if (observingSharedWindow) revokeRetainedConsentForSharedFailure(t);\n    revokedRequestTurns.add(t);\n    throw error;\n  }\n}\nfunction validConsent"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "start": 18463,
+      "before": "function validConsent(b: Binding, second: Turn): boolean {\n  const t = b.consent;\n  return (\n    !!t &&\n    t.binding === b &&\n    t.kind === \"witness\" &&\n    t.actorId === b.actorId &&\n    t.day === 1 &&\n    b.setupCurrent?.() === true &&\n    t.isCurrent() &&\n    second.isCurrent() &&\n    b.turn === second &&\n    expectedTurn(b, second.kind, second.actorId, second.day) &&\n    validBinding(b, true) &&\n    // 第一同意虽已记票，但婚礼尚未全部付款；它的原请求失效要永久阻止后继同意。\n    currentUnpaidRequestProof(t) &&\n    currentUnpaidRequestProof(second) &&\n    [...b.participants].every(([id, p]) => json(p.state) === second.privateJson.get(id)) &&\n    [...b.participants].every(([id, p]) => json(p.state) === t.privateJson.get(id)) &&\n    targetCurrent(t, b.votes[0]!.targetId)\n  );\n}\n",
+      "after": "function validConsent(b: Binding, second: Turn): boolean {\n  const t = b.consent;\n  if (!t) return false;\n  let observingShared = true;\n  try {\n    // 保原 shared 前段的重复 current／World 读取顺序；这次观察失败不能靠另开第二请求复用旧第一票。\n    if (!(t.binding === b &&\n      t.kind === \"witness\" &&\n      t.actorId === b.actorId &&\n      t.day === 1 &&\n      b.setupCurrent?.() === true &&\n      t.isCurrent() &&\n      second.isCurrent() &&\n      b.turn === second &&\n      expectedTurn(b, second.kind, second.actorId, second.day) &&\n      validBinding(b, true))) {\n      revokedRequestTurns.add(t);\n      return false;\n    }\n    // 两份各自 proof 按原次序查询；second 自己的正文／期限错误只撤 second，不能毒化有效 first。\n    observingShared = false;\n    if (!currentUnpaidRequestProof(t) || !currentUnpaidRequestProof(second)) return false;\n    observingShared = true;\n    const current =\n      [...b.participants].every(([id, p]) => json(p.state) === second.privateJson.get(id)) &&\n      [...b.participants].every(([id, p]) => json(p.state) === t.privateJson.get(id)) &&\n      targetCurrent(t, b.votes[0]!.targetId);\n    if (!current) revokedRequestTurns.add(t);\n    return current && !revokedRequestTurns.has(t);\n  } catch (error) {\n    if (observingShared) revokedRequestTurns.add(t);\n    throw error;\n  }\n}\n"
+    }
+  ],
+  "base": "source-ready-type-repaired-snapshot; exact new F02 policy delta, not mechanical equivalence"
+}

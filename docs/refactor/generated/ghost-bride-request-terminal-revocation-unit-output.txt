@@ -1,0 +1,15 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/ghost-bride/request-terminal-revocation.test.ts:
+(pass) original stage/context/body observed invalid cannot resume the real groom turn after restoration [66.34ms]
+(pass) shared domain observation is permanent and a thrown current retains the original error [9.04ms]
+(pass) observed earliest alias expiry does not revive the original or alias after clock rollback [3.15ms]
+(pass) registered alias own invalidity is permanent only for that alias and foreign inputs do not poison the wedding [40.47ms]
+(pass) invalid first witness proof prevents the second consent even after restoration and a newly opened request [12.78ms]
+(pass) partial payment error and paid late publication retain their original prefixes and settlement [10.54ms]
+(pass) provider getter observation cannot invoke its returned method after revoking the prepared request [2.01ms]
+
+ 7 pass
+ 0 fail
+ 178 expect() calls
+Ran 7 tests across 1 file. [295.00ms]

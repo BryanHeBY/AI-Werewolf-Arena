@@ -1,0 +1,26 @@
+{
+  "status": "source-ready; prepared only; Root execution pending",
+  "baseCommit": "7dd49c9942eed59897def06ec36b8af23ee83518",
+  "script": {
+    "path": "/tmp/awa-ghost-bride-request-f02/characterization.test.ts",
+    "sha256": "4122ab943f3690138bd86f05d48fdb5f18ba1eb6a2eff453cee8d296193eca1c"
+  },
+  "before": {
+    "path": "/tmp/awa-ghost-bride-request-f02/before.json",
+    "sha256": "dc04b45d8545c78801f0b7daaf3100337d4c5f09e2756696a97116e567e0ade3"
+  },
+  "readme": {
+    "path": "/tmp/awa-ghost-bride-request-f02/README.md",
+    "sha256": "b6a7445def5f80f8b45886720fe139b5da1b4a2037cae27c4f5e398c4dd11ad8"
+  },
+  "captureSources": 13,
+  "allSameCurrentAtPreparation": true,
+  "declarations": 2,
+  "firstPermittedCommandPrepared": "bun --no-env-file test --preload ./backend/tests/setup.ts /tmp/awa-ghost-bride-request-f02/characterization.test.ts --test-name-pattern '^Ghost legacy groom:' > /tmp/awa-ghost-bride-request-f02/groom-output.txt 2>&1",
+  "secondConditionalCommandPrepared": "bun --no-env-file test --preload ./backend/tests/setup.ts /tmp/awa-ghost-bride-request-f02/characterization.test.ts --test-name-pattern '^Ghost legacy witness:' > /tmp/awa-ghost-bride-request-f02/witness-output.txt 2>&1",
+  "groomFixtureInvocationsPlanned": 6,
+  "witnessFixtureInvocationsPlanned": 1,
+  "testsOrTypesOrProofOrGatesExecuted": false,
+  "productionLoadedByAuthor": false,
+  "repositorySourcesWritten": false
+}

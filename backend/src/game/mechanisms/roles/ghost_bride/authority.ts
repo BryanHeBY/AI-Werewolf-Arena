@@ -3,8 +3,10 @@
  * 输入保留原 World 及封存请求；输出为原校验后已接受的选择、消息与结算记录。
  * 原参与者阵营只取真实 Camp，仍核同组件／own-data与Victory；婚约历史阵营不改为晚查询。
  * 资源及参与者私态数据写入归 state；身体／身份复验、Victory 与回执仍在这里按原顺序处理。
- * 不变量：提交必须匹配原参与者和绑定回合，别名不能替代本地校验。取消、关闭或失败
- * 均保持原结算及部分写入顺序，不修复被替换的库存。
+ * 不变量：提交必须匹配原参与者和绑定回合，别名不能替代本地校验。未付原信封、领域或最早期限
+ * 被正确观察为失效后永久撤回该 turn；别名自己的失配只退该别名，不读取或毒化原请求。
+ * 第一见证同意保留的原 proof 仍在第二次同意前复验，失效不能靠恢复字段完成婚礼。
+ * 已付聊天／刀口与关系的纯当前性保持原政策；取消、关闭或失败保原结算及写前缀，不修复库存。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { WeddingActorView } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
@@ -184,6 +186,9 @@ const bindings = new WeakMap<World, Binding>(),
       deadline: number | null;
     }
   >();
+/** 只记录运行请求撤权，不复制库存／JSON或改绑定字段；原 turn 与合法别名共享前者，别名独退用后者。 */
+const revokedRequestTurns = new WeakSet<Turn>(),
+  retiredRequestAliases = new WeakSet<object>();
 function capture(world: World, id: number): Participant {
   const role = world.getComponent(id, COMPONENT.Role),
     campComponent = world.getComponent(id, COMPONENT.Camp),
@@ -501,33 +506,87 @@ function validRequestProof(t: Turn): boolean {
     (data(r, "deadlineAtMs") ?? null) === a.deadline
   );
 }
+/**
+ * 只服务未付请求和仍等待第二同意的 retained proof；已付 takeWeddingChat 继续用上方纯 reader。
+ * 原 proof 的重复读取、deadline 时钟及错误位置保留；观察失败先落撤权，再返回／抛同一错误。
+ */
+function currentUnpaidRequestProof(t: Turn): boolean {
+  if (revokedRequestTurns.has(t)) return false;
+  try {
+    const current = validRequestProof(t);
+    if (!current && t.request) revokedRequestTurns.add(t);
+    return current;
+  } catch (error) {
+    if (t.request) revokedRequestTurns.add(t);
+    throw error;
+  }
+}
+/** 只有尚在等待第二票的共同领域失效才撤旧第一同意；第二请求自己的壳／期限坏不连带撤它。 */
+function revokeRetainedConsentForSharedFailure(t: Turn): void {
+  const b = t.binding, consent = b.consent;
+  if (t.kind === "witness" && b.status === "paired" && b.votes.length === 1 && consent && consent !== t)
+    revokedRequestTurns.add(consent);
+}
 function validTurn(t: Turn): boolean {
-  return (
-    validWindow(t) &&
-    validRequestProof(t) &&
-    (t.kind !== "witness" || t.binding.votes.length !== 1 || validConsent(t.binding, t))
-  );
+  // 正常已关闭的第一同意不因旧 scope 被查询就失去 retained proof；它不能再作为活跃请求使用。
+  if (revokedRequestTurns.has(t) || t.binding.turn !== t) return false;
+  let observingSharedWindow = true;
+  try {
+    const windowCurrent = validWindow(t);
+    observingSharedWindow = false;
+    if (!windowCurrent) {
+      revokeRetainedConsentForSharedFailure(t);
+      revokedRequestTurns.add(t);
+      return false;
+    }
+    const current =
+      currentUnpaidRequestProof(t) &&
+      (t.kind !== "witness" || t.binding.votes.length !== 1 || validConsent(t.binding, t));
+    // 上述领域回调可同步重入并撤权；最后只查私有位，不重读 World 或已付数据。
+    if (!current || revokedRequestTurns.has(t)) {
+      revokedRequestTurns.add(t);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    if (observingSharedWindow) revokeRetainedConsentForSharedFailure(t);
+    revokedRequestTurns.add(t);
+    throw error;
+  }
 }
 function validConsent(b: Binding, second: Turn): boolean {
   const t = b.consent;
-  return (
-    !!t &&
-    t.binding === b &&
-    t.kind === "witness" &&
-    t.actorId === b.actorId &&
-    t.day === 1 &&
-    b.setupCurrent?.() === true &&
-    t.isCurrent() &&
-    second.isCurrent() &&
-    b.turn === second &&
-    expectedTurn(b, second.kind, second.actorId, second.day) &&
-    validBinding(b, true) &&
-    validRequestProof(t) &&
-    validRequestProof(second) &&
-    [...b.participants].every(([id, p]) => json(p.state) === second.privateJson.get(id)) &&
-    [...b.participants].every(([id, p]) => json(p.state) === t.privateJson.get(id)) &&
-    targetCurrent(t, b.votes[0]!.targetId)
-  );
+  if (!t) return false;
+  let observingShared = true;
+  try {
+    // 保原 shared 前段的重复 current／World 读取顺序；这次观察失败不能靠另开第二请求复用旧第一票。
+    if (!(t.binding === b &&
+      t.kind === "witness" &&
+      t.actorId === b.actorId &&
+      t.day === 1 &&
+      b.setupCurrent?.() === true &&
+      t.isCurrent() &&
+      second.isCurrent() &&
+      b.turn === second &&
+      expectedTurn(b, second.kind, second.actorId, second.day) &&
+      validBinding(b, true))) {
+      revokedRequestTurns.add(t);
+      return false;
+    }
+    // 两份各自 proof 按原次序查询；second 自己的正文／期限错误只撤 second，不能毒化有效 first。
+    observingShared = false;
+    if (!currentUnpaidRequestProof(t) || !currentUnpaidRequestProof(second)) return false;
+    observingShared = true;
+    const current =
+      [...b.participants].every(([id, p]) => json(p.state) === second.privateJson.get(id)) &&
+      [...b.participants].every(([id, p]) => json(p.state) === t.privateJson.get(id)) &&
+      targetCurrent(t, b.votes[0]!.targetId);
+    if (!current) revokedRequestTurns.add(t);
+    return current && !revokedRequestTurns.has(t);
+  } catch (error) {
+    if (observingShared) revokedRequestTurns.add(t);
+    throw error;
+  }
 }
 export function authorizedWeddingTurn(
   world: World,
@@ -549,6 +608,7 @@ export function authorizedWeddingTurn(
 export function closeWeddingTurn(scope: object): void {
   const t = turns.get(scope);
   if (t && t.binding.turn === t) t.binding.turn = null;
+  // 不把已提交的第一同意标为失败；其 proof 可被下一位见证人读取，活动请求仍由 b.turn 身份关闭。
   if (!t || t.binding.pendingChat !== t) settleRequestDelivery(scope, false);
 }
 export function closeWeddingSetup(world: World, status: "failed" | "cancelled"): void {
@@ -635,14 +695,26 @@ export function bindGhostBrideRequest(world: World, request: WeddingRequest): vo
 }
 export function ghostBrideRequestScope(world: World, request: WeddingRequest): object | undefined {
   const a = requests.get(request);
-  return a &&
-    a.turn.binding.world === world &&
-    data(request, "context") === a.context &&
-    requestData(request) === a.json &&
-    (data(request, "deadlineAtMs") ?? null) === a.deadline &&
-    validTurn(a.turn)
-    ? a.turn.scope
-    : undefined;
+  // 外来对象／World不观察本地权限；已退别名也不再读取原请求或领域 current。
+  if (!a || a.turn.binding.world !== world || retiredRequestAliases.has(request)) return undefined;
+  const original = request === a.turn.request;
+  try {
+    // 保原 context→完整正文→自身 deadline 的短路；别名先自检，不能因自己换壳伤及 original。
+    if (
+      data(request, "context") !== a.context ||
+      requestData(request) !== a.json ||
+      (data(request, "deadlineAtMs") ?? null) !== a.deadline
+    ) {
+      if (original) revokedRequestTurns.add(a.turn);
+      else retiredRequestAliases.add(request);
+      return undefined;
+    }
+  } catch (error) {
+    if (original) revokedRequestTurns.add(a.turn);
+    else retiredRequestAliases.add(request);
+    throw error;
+  }
+  return validTurn(a.turn) ? a.turn.scope : undefined;
 }
 export function inheritGhostBrideDeadlineRequest(
   source: WeddingRequest,

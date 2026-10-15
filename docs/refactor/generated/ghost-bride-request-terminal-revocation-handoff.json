@@ -1,0 +1,24 @@
+{
+  "sourceFrozen": true,
+  "scope": {
+    "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-scope-final.json",
+    "sha256": "691ed47c85d16900fab9a2aeb432d03554f9b8b62f7b14f5642e7100f3d65c4d"
+  },
+  "document": {
+    "path": "docs/refactor/ghost-bride-request-terminal-revocation.md",
+    "sha256": "6fe06b55a7c6f4afec6cdd564b9db1b29079b2805ec58efab2b8e656b71e9c84"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-evidence.json",
+    "sha256": "c3c85293a10593702f5a798e8f84e12373adbcfb54ef5c1c7adcfa9e056c0042"
+  },
+  "authorReview": {
+    "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-author-review.json",
+    "sha256": "e2e69bfacddef249b6dd8e537589e21b3a6da6c34e4322ac6be2d738debeedb8"
+  },
+  "receipts": {
+    "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-receipts.json",
+    "sha256": "6f593ee60e86e88cb9a98f3dba2e98f851136daa93de2ba109290e06ef2a121b"
+  },
+  "next": "Root and non-author final read review; no green checks repeated, no stage/commit/progress by author"
+}

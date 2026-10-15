@@ -1,0 +1,11 @@
+/** 只核首执行 unit 的两处擦除类型注解；保全部字面输入／断言／注释和双份实际运行输出。 */
+const fs=require('node:fs'),assert=require('node:assert/strict'),{createHash}=require('node:crypto'),ts=require('../../../backend/node_modules/typescript');
+const p='docs/refactor/generated/ghost-bride-request-terminal-revocation-',b=JSON.parse(fs.readFileSync(p+'unit-type-before.json','utf8')),r=JSON.parse(fs.readFileSync(p+'source-ready.json','utf8')),hash=x=>createHash('sha256').update(x).digest('hex');
+const actual=fs.readFileSync(b.path,'utf8');assert.equal(hash(b.text),b.sha256);let expected=b.text;for(const e of b.edits){assert.equal(expected.split(e.before).length-1,1);expected=expected.replace(e.before,e.after);}assert.equal(actual,expected);assert.equal(hash(actual),r.source.at(-1).sha256);
+const parse=text=>{const sf=ts.createSourceFile(b.path,text,ts.ScriptTarget.Latest,true);assert.deepEqual(sf.parseDiagnostics,[]);return sf;};
+function tests(sf){return sf.statements.filter(n=>ts.isExpressionStatement(n)&&ts.isCallExpression(n.expression)&&n.expression.expression.getText(sf)==='test').map(n=>n.expression.arguments[0].getText(sf));}
+assert.deepEqual(tests(parse(actual)),tests(parse(b.text)));assert.equal(tests(parse(actual)).length,7);
+const outputs=[ts.ModuleKind.ESNext,ts.ModuleKind.CommonJS].map(module=>{const emit=text=>ts.transpileModule(text,{fileName:b.path,compilerOptions:{target:ts.ScriptTarget.ES2022,module,removeComments:true}}).outputText;const old=emit(b.text),current=emit(actual);assert.equal(current,old);return{module:ts.ModuleKind[module],sha256:hash(current),wholeActualRawSame:true};});
+const first=JSON.parse(fs.readFileSync(b.firstReady.path,'utf8'));assert.equal(hash(fs.readFileSync(b.firstReady.path)),b.firstReady.sha256);for(const source of first.source.slice(0,2))assert.equal(hash(fs.readFileSync(source.path)),source.sha256);
+const report={path:b.path,firstReady:b.firstReady,finalReadySHA256:hash(fs.readFileSync(p+'source-ready.json')),beforeSHA256:b.sha256,sha256:hash(actual),exactTypeAnnotations:2,originalRuntimeInputsTitlesOraclesCommentsSame:true,otherTwoProductionSame:true,outputs,limits:['Only erased policy field/this type annotations; no runtime, head, original main proof or whole three-root type run repeated.']};
+fs.writeFileSync(p+'unit-type-bridge.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

@@ -1,0 +1,27 @@
+{
+  "executor": "Root only; not executed by author",
+  "commands": {
+    "types": "bun --no-env-file backend/node_modules/typescript/bin/tsc --project docs/refactor/generated/ghost-bride-request-terminal-revocation-types-failed-unit-config.json --pretty false",
+    "bridge": "bun --no-env-file docs/refactor/generated/ghost-bride-request-terminal-revocation-unit-type-bridge.cjs"
+  },
+  "scope": "only prior failed/changed unit root; not a second whole-three-root run",
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-unit-type-bridge.cjs",
+      "sha256": "f58d9c9341137d56f016d9d3d137635061dfaf29706b22df991adbc472fcd54c"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-types-failed-unit-config.json",
+      "sha256": "e06cd0cc7eafda4fa9d46c3106c8728990a8ef94fa3dc72d3cae883ff9f7aa54"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-source-ready.json",
+      "sha256": "8b08feafc5fe4d21f87b5124048499b798765370bb705858f8ce23d5698dca8a"
+    },
+    {
+      "path": "docs/refactor/generated/ghost-bride-request-terminal-revocation-unit-type-before.json",
+      "sha256": "430ee9f31f40e5816fceb69e3b175ce958e30bc3ee0cc85964f7908b2c29b7e8"
+    }
+  ],
+  "greenRuntimeHeadsMainProofNotRepeated": true
+}

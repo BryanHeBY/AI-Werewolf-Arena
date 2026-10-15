@@ -1,0 +1,3074 @@
+{
+  "kind": "actual-legacy-ghost-request-characterization",
+  "policyChanged": false,
+  "selectedGroup": "groom",
+  "results": [
+    {
+      "probe": "stage",
+      "providerCalls": 5,
+      "trace": [
+        {
+          "label": "original-bound",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "defer-original",
+          "accepted": true
+        },
+        {
+          "label": "stage-invalid-observed",
+          "outcome": "undefined"
+        },
+        {
+          "label": "stage-restored",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "before-actual-window-commit",
+          "state": {
+            "setup": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "status": "active",
+              "actorId": 1,
+              "groomId": null,
+              "witnessId": null,
+              "witnessVotes": []
+            },
+            "pair": null,
+            "group": null,
+            "ready": false,
+            "brideState": {
+              "ghostBride": {
+                "policy": "awa_melbourne_ghost_bride_v1",
+                "remaining": 1,
+                "groomId": null
+              }
+            },
+            "camps": [
+              {
+                "id": 1,
+                "camp": "third_party"
+              },
+              {
+                "id": 2,
+                "camp": "wolf"
+              },
+              {
+                "id": 3,
+                "camp": "wolf"
+              },
+              {
+                "id": 4,
+                "camp": "wolf"
+              },
+              {
+                "id": 5,
+                "camp": "good"
+              },
+              {
+                "id": 6,
+                "camp": "good"
+              },
+              {
+                "id": 7,
+                "camp": "good"
+              },
+              {
+                "id": 8,
+                "camp": "good"
+              },
+              {
+                "id": 9,
+                "camp": "good"
+              },
+              {
+                "id": 10,
+                "camp": "good"
+              },
+              {
+                "id": 11,
+                "camp": "good"
+              },
+              {
+                "id": 12,
+                "camp": "good"
+              }
+            ],
+            "victory": [
+              {
+                "id": 1,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "third_party"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 11,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 12,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "label": "after-actual-window-finally-original",
+          "outcome": "undefined"
+        }
+      ],
+      "settlements": [
+        true
+      ],
+      "outcome": {
+        "returned": true
+      },
+      "after": {
+        "setup": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "status": "complete",
+          "actorId": 1,
+          "groomId": 2,
+          "witnessId": 3,
+          "witnessVotes": [
+            {
+              "actorId": 1,
+              "targetId": 3
+            },
+            {
+              "actorId": 2,
+              "targetId": 3
+            }
+          ]
+        },
+        "pair": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1
+        },
+        "group": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1,
+          "witnessId": 3
+        },
+        "ready": true,
+        "brideState": {
+          "ghostBride": {
+            "policy": "awa_melbourne_ghost_bride_v1",
+            "remaining": 0,
+            "groomId": 2
+          }
+        },
+        "camps": [
+          {
+            "id": 1,
+            "camp": "third_party"
+          },
+          {
+            "id": 2,
+            "camp": "wolf"
+          },
+          {
+            "id": 3,
+            "camp": "wolf"
+          },
+          {
+            "id": 4,
+            "camp": "wolf"
+          },
+          {
+            "id": 5,
+            "camp": "good"
+          },
+          {
+            "id": 6,
+            "camp": "good"
+          },
+          {
+            "id": 7,
+            "camp": "good"
+          },
+          {
+            "id": 8,
+            "camp": "good"
+          },
+          {
+            "id": 9,
+            "camp": "good"
+          },
+          {
+            "id": 10,
+            "camp": "good"
+          },
+          {
+            "id": 11,
+            "camp": "good"
+          },
+          {
+            "id": 12,
+            "camp": "good"
+          }
+        ],
+        "victory": [
+          {
+            "id": 1,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "wolf"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "type": "ghost_bride_pair_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 1,
+              "recipientId": 2,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 2,
+              "recipientId": 1,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 1,
+              "targetId": 3,
+              "voteIndex": 1
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 2,
+              "targetId": 3,
+              "voteIndex": 2
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_group_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1,
+              "witnessId": 3
+            },
+            "audience": [
+              1,
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "probe": "context",
+      "providerCalls": 5,
+      "trace": [
+        {
+          "label": "original-bound",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "defer-original",
+          "accepted": true
+        },
+        {
+          "label": "original-context-clone-observed",
+          "outcome": "undefined"
+        },
+        {
+          "label": "original-context-reference-restored",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "before-actual-window-commit",
+          "state": {
+            "setup": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "status": "active",
+              "actorId": 1,
+              "groomId": null,
+              "witnessId": null,
+              "witnessVotes": []
+            },
+            "pair": null,
+            "group": null,
+            "ready": false,
+            "brideState": {
+              "ghostBride": {
+                "policy": "awa_melbourne_ghost_bride_v1",
+                "remaining": 1,
+                "groomId": null
+              }
+            },
+            "camps": [
+              {
+                "id": 1,
+                "camp": "third_party"
+              },
+              {
+                "id": 2,
+                "camp": "wolf"
+              },
+              {
+                "id": 3,
+                "camp": "wolf"
+              },
+              {
+                "id": 4,
+                "camp": "wolf"
+              },
+              {
+                "id": 5,
+                "camp": "good"
+              },
+              {
+                "id": 6,
+                "camp": "good"
+              },
+              {
+                "id": 7,
+                "camp": "good"
+              },
+              {
+                "id": 8,
+                "camp": "good"
+              },
+              {
+                "id": 9,
+                "camp": "good"
+              },
+              {
+                "id": 10,
+                "camp": "good"
+              },
+              {
+                "id": 11,
+                "camp": "good"
+              },
+              {
+                "id": 12,
+                "camp": "good"
+              }
+            ],
+            "victory": [
+              {
+                "id": 1,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "third_party"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 11,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 12,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "label": "after-actual-window-finally-original",
+          "outcome": "undefined"
+        }
+      ],
+      "settlements": [
+        true
+      ],
+      "outcome": {
+        "returned": true
+      },
+      "after": {
+        "setup": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "status": "complete",
+          "actorId": 1,
+          "groomId": 2,
+          "witnessId": 3,
+          "witnessVotes": [
+            {
+              "actorId": 1,
+              "targetId": 3
+            },
+            {
+              "actorId": 2,
+              "targetId": 3
+            }
+          ]
+        },
+        "pair": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1
+        },
+        "group": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1,
+          "witnessId": 3
+        },
+        "ready": true,
+        "brideState": {
+          "ghostBride": {
+            "policy": "awa_melbourne_ghost_bride_v1",
+            "remaining": 0,
+            "groomId": 2
+          }
+        },
+        "camps": [
+          {
+            "id": 1,
+            "camp": "third_party"
+          },
+          {
+            "id": 2,
+            "camp": "wolf"
+          },
+          {
+            "id": 3,
+            "camp": "wolf"
+          },
+          {
+            "id": 4,
+            "camp": "wolf"
+          },
+          {
+            "id": 5,
+            "camp": "good"
+          },
+          {
+            "id": 6,
+            "camp": "good"
+          },
+          {
+            "id": 7,
+            "camp": "good"
+          },
+          {
+            "id": 8,
+            "camp": "good"
+          },
+          {
+            "id": 9,
+            "camp": "good"
+          },
+          {
+            "id": 10,
+            "camp": "good"
+          },
+          {
+            "id": 11,
+            "camp": "good"
+          },
+          {
+            "id": 12,
+            "camp": "good"
+          }
+        ],
+        "victory": [
+          {
+            "id": 1,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "wolf"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "type": "ghost_bride_pair_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 1,
+              "recipientId": 2,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 2,
+              "recipientId": 1,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 1,
+              "targetId": 3,
+              "voteIndex": 1
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 2,
+              "targetId": 3,
+              "voteIndex": 2
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_group_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1,
+              "witnessId": 3
+            },
+            "audience": [
+              1,
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "probe": "body",
+      "providerCalls": 5,
+      "trace": [
+        {
+          "label": "original-bound",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "defer-original",
+          "accepted": true
+        },
+        {
+          "label": "original-body-invalid-observed",
+          "outcome": "undefined"
+        },
+        {
+          "label": "original-body-reference-restored",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "before-actual-window-commit",
+          "state": {
+            "setup": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "status": "active",
+              "actorId": 1,
+              "groomId": null,
+              "witnessId": null,
+              "witnessVotes": []
+            },
+            "pair": null,
+            "group": null,
+            "ready": false,
+            "brideState": {
+              "ghostBride": {
+                "policy": "awa_melbourne_ghost_bride_v1",
+                "remaining": 1,
+                "groomId": null
+              }
+            },
+            "camps": [
+              {
+                "id": 1,
+                "camp": "third_party"
+              },
+              {
+                "id": 2,
+                "camp": "wolf"
+              },
+              {
+                "id": 3,
+                "camp": "wolf"
+              },
+              {
+                "id": 4,
+                "camp": "wolf"
+              },
+              {
+                "id": 5,
+                "camp": "good"
+              },
+              {
+                "id": 6,
+                "camp": "good"
+              },
+              {
+                "id": 7,
+                "camp": "good"
+              },
+              {
+                "id": 8,
+                "camp": "good"
+              },
+              {
+                "id": 9,
+                "camp": "good"
+              },
+              {
+                "id": 10,
+                "camp": "good"
+              },
+              {
+                "id": 11,
+                "camp": "good"
+              },
+              {
+                "id": 12,
+                "camp": "good"
+              }
+            ],
+            "victory": [
+              {
+                "id": 1,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "third_party"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 11,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 12,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "label": "after-actual-window-finally-original",
+          "outcome": "undefined"
+        }
+      ],
+      "settlements": [
+        true
+      ],
+      "outcome": {
+        "returned": true
+      },
+      "after": {
+        "setup": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "status": "complete",
+          "actorId": 1,
+          "groomId": 2,
+          "witnessId": 3,
+          "witnessVotes": [
+            {
+              "actorId": 1,
+              "targetId": 3
+            },
+            {
+              "actorId": 2,
+              "targetId": 3
+            }
+          ]
+        },
+        "pair": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1
+        },
+        "group": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1,
+          "witnessId": 3
+        },
+        "ready": true,
+        "brideState": {
+          "ghostBride": {
+            "policy": "awa_melbourne_ghost_bride_v1",
+            "remaining": 0,
+            "groomId": 2
+          }
+        },
+        "camps": [
+          {
+            "id": 1,
+            "camp": "third_party"
+          },
+          {
+            "id": 2,
+            "camp": "wolf"
+          },
+          {
+            "id": 3,
+            "camp": "wolf"
+          },
+          {
+            "id": 4,
+            "camp": "wolf"
+          },
+          {
+            "id": 5,
+            "camp": "good"
+          },
+          {
+            "id": 6,
+            "camp": "good"
+          },
+          {
+            "id": 7,
+            "camp": "good"
+          },
+          {
+            "id": 8,
+            "camp": "good"
+          },
+          {
+            "id": 9,
+            "camp": "good"
+          },
+          {
+            "id": 10,
+            "camp": "good"
+          },
+          {
+            "id": 11,
+            "camp": "good"
+          },
+          {
+            "id": 12,
+            "camp": "good"
+          }
+        ],
+        "victory": [
+          {
+            "id": 1,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "wolf"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "type": "ghost_bride_pair_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 1,
+              "recipientId": 2,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 2,
+              "recipientId": 1,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 1,
+              "targetId": 3,
+              "voteIndex": 1
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 2,
+              "targetId": 3,
+              "voteIndex": 2
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_group_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1,
+              "witnessId": 3
+            },
+            "audience": [
+              1,
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "probe": "domain",
+      "providerCalls": 5,
+      "trace": [
+        {
+          "label": "original-bound",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "defer-original",
+          "accepted": true
+        },
+        {
+          "label": "domain-invalid-observed",
+          "outcome": "undefined"
+        },
+        {
+          "label": "domain-restored",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "before-actual-window-commit",
+          "state": {
+            "setup": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "status": "active",
+              "actorId": 1,
+              "groomId": null,
+              "witnessId": null,
+              "witnessVotes": []
+            },
+            "pair": null,
+            "group": null,
+            "ready": false,
+            "brideState": {
+              "ghostBride": {
+                "policy": "awa_melbourne_ghost_bride_v1",
+                "remaining": 1,
+                "groomId": null
+              }
+            },
+            "camps": [
+              {
+                "id": 1,
+                "camp": "third_party"
+              },
+              {
+                "id": 2,
+                "camp": "wolf"
+              },
+              {
+                "id": 3,
+                "camp": "wolf"
+              },
+              {
+                "id": 4,
+                "camp": "wolf"
+              },
+              {
+                "id": 5,
+                "camp": "good"
+              },
+              {
+                "id": 6,
+                "camp": "good"
+              },
+              {
+                "id": 7,
+                "camp": "good"
+              },
+              {
+                "id": 8,
+                "camp": "good"
+              },
+              {
+                "id": 9,
+                "camp": "good"
+              },
+              {
+                "id": 10,
+                "camp": "good"
+              },
+              {
+                "id": 11,
+                "camp": "good"
+              },
+              {
+                "id": 12,
+                "camp": "good"
+              }
+            ],
+            "victory": [
+              {
+                "id": 1,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "third_party"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 11,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 12,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "label": "after-actual-window-finally-original",
+          "outcome": "undefined"
+        }
+      ],
+      "settlements": [
+        true
+      ],
+      "outcome": {
+        "returned": true
+      },
+      "after": {
+        "setup": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "status": "complete",
+          "actorId": 1,
+          "groomId": 2,
+          "witnessId": 3,
+          "witnessVotes": [
+            {
+              "actorId": 1,
+              "targetId": 3
+            },
+            {
+              "actorId": 2,
+              "targetId": 3
+            }
+          ]
+        },
+        "pair": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1
+        },
+        "group": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1,
+          "witnessId": 3
+        },
+        "ready": true,
+        "brideState": {
+          "ghostBride": {
+            "policy": "awa_melbourne_ghost_bride_v1",
+            "remaining": 0,
+            "groomId": 2
+          }
+        },
+        "camps": [
+          {
+            "id": 1,
+            "camp": "third_party"
+          },
+          {
+            "id": 2,
+            "camp": "wolf"
+          },
+          {
+            "id": 3,
+            "camp": "wolf"
+          },
+          {
+            "id": 4,
+            "camp": "wolf"
+          },
+          {
+            "id": 5,
+            "camp": "good"
+          },
+          {
+            "id": 6,
+            "camp": "good"
+          },
+          {
+            "id": 7,
+            "camp": "good"
+          },
+          {
+            "id": 8,
+            "camp": "good"
+          },
+          {
+            "id": 9,
+            "camp": "good"
+          },
+          {
+            "id": 10,
+            "camp": "good"
+          },
+          {
+            "id": 11,
+            "camp": "good"
+          },
+          {
+            "id": 12,
+            "camp": "good"
+          }
+        ],
+        "victory": [
+          {
+            "id": 1,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "wolf"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "type": "ghost_bride_pair_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 1,
+              "recipientId": 2,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 2,
+              "recipientId": 1,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 1,
+              "targetId": 3,
+              "voteIndex": 1
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 2,
+              "targetId": 3,
+              "voteIndex": 2
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_group_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1,
+              "witnessId": 3
+            },
+            "audience": [
+              1,
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "probe": "expiry",
+      "providerCalls": 5,
+      "trace": [
+        {
+          "label": "original-bound",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "defer-original",
+          "accepted": true
+        },
+        {
+          "label": "future-earliest-alias-bound",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "expiry-observed-original",
+          "outcome": "undefined"
+        },
+        {
+          "label": "expiry-observed-alias",
+          "outcome": "undefined"
+        },
+        {
+          "label": "clock-restored-original",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "clock-restored-alias",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "before-actual-window-commit",
+          "state": {
+            "setup": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "status": "active",
+              "actorId": 1,
+              "groomId": null,
+              "witnessId": null,
+              "witnessVotes": []
+            },
+            "pair": null,
+            "group": null,
+            "ready": false,
+            "brideState": {
+              "ghostBride": {
+                "policy": "awa_melbourne_ghost_bride_v1",
+                "remaining": 1,
+                "groomId": null
+              }
+            },
+            "camps": [
+              {
+                "id": 1,
+                "camp": "third_party"
+              },
+              {
+                "id": 2,
+                "camp": "wolf"
+              },
+              {
+                "id": 3,
+                "camp": "wolf"
+              },
+              {
+                "id": 4,
+                "camp": "wolf"
+              },
+              {
+                "id": 5,
+                "camp": "good"
+              },
+              {
+                "id": 6,
+                "camp": "good"
+              },
+              {
+                "id": 7,
+                "camp": "good"
+              },
+              {
+                "id": 8,
+                "camp": "good"
+              },
+              {
+                "id": 9,
+                "camp": "good"
+              },
+              {
+                "id": 10,
+                "camp": "good"
+              },
+              {
+                "id": 11,
+                "camp": "good"
+              },
+              {
+                "id": 12,
+                "camp": "good"
+              }
+            ],
+            "victory": [
+              {
+                "id": 1,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "third_party"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 11,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 12,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "label": "after-actual-window-finally-original",
+          "outcome": "undefined"
+        }
+      ],
+      "settlements": [
+        true
+      ],
+      "outcome": {
+        "returned": true
+      },
+      "after": {
+        "setup": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "status": "complete",
+          "actorId": 1,
+          "groomId": 2,
+          "witnessId": 3,
+          "witnessVotes": [
+            {
+              "actorId": 1,
+              "targetId": 3
+            },
+            {
+              "actorId": 2,
+              "targetId": 3
+            }
+          ]
+        },
+        "pair": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1
+        },
+        "group": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1,
+          "witnessId": 3
+        },
+        "ready": true,
+        "brideState": {
+          "ghostBride": {
+            "policy": "awa_melbourne_ghost_bride_v1",
+            "remaining": 0,
+            "groomId": 2
+          }
+        },
+        "camps": [
+          {
+            "id": 1,
+            "camp": "third_party"
+          },
+          {
+            "id": 2,
+            "camp": "wolf"
+          },
+          {
+            "id": 3,
+            "camp": "wolf"
+          },
+          {
+            "id": 4,
+            "camp": "wolf"
+          },
+          {
+            "id": 5,
+            "camp": "good"
+          },
+          {
+            "id": 6,
+            "camp": "good"
+          },
+          {
+            "id": 7,
+            "camp": "good"
+          },
+          {
+            "id": 8,
+            "camp": "good"
+          },
+          {
+            "id": 9,
+            "camp": "good"
+          },
+          {
+            "id": 10,
+            "camp": "good"
+          },
+          {
+            "id": 11,
+            "camp": "good"
+          },
+          {
+            "id": 12,
+            "camp": "good"
+          }
+        ],
+        "victory": [
+          {
+            "id": 1,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "wolf"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "type": "ghost_bride_pair_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 1,
+              "recipientId": 2,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 2,
+              "recipientId": 1,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 1,
+              "targetId": 3,
+              "voteIndex": 1
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 2,
+              "targetId": 3,
+              "voteIndex": 2
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_group_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1,
+              "witnessId": 3
+            },
+            "audience": [
+              1,
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "probe": "alias",
+      "providerCalls": 5,
+      "trace": [
+        {
+          "label": "original-bound",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "defer-original",
+          "accepted": true
+        },
+        {
+          "label": "registered-alias-bound",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "registered-alias-own-context-invalid",
+          "outcome": "undefined"
+        },
+        {
+          "label": "original-after-alias-own-invalid",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "registered-alias-own-context-restored",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "unknown-unregistered-alias",
+          "outcome": "undefined"
+        },
+        {
+          "label": "original-after-unknown",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "wrong-world",
+          "outcome": "undefined"
+        },
+        {
+          "label": "original-after-wrong-world",
+          "outcome": "same-scope"
+        },
+        {
+          "label": "before-actual-window-commit",
+          "state": {
+            "setup": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "status": "active",
+              "actorId": 1,
+              "groomId": null,
+              "witnessId": null,
+              "witnessVotes": []
+            },
+            "pair": null,
+            "group": null,
+            "ready": false,
+            "brideState": {
+              "ghostBride": {
+                "policy": "awa_melbourne_ghost_bride_v1",
+                "remaining": 1,
+                "groomId": null
+              }
+            },
+            "camps": [
+              {
+                "id": 1,
+                "camp": "third_party"
+              },
+              {
+                "id": 2,
+                "camp": "wolf"
+              },
+              {
+                "id": 3,
+                "camp": "wolf"
+              },
+              {
+                "id": 4,
+                "camp": "wolf"
+              },
+              {
+                "id": 5,
+                "camp": "good"
+              },
+              {
+                "id": 6,
+                "camp": "good"
+              },
+              {
+                "id": 7,
+                "camp": "good"
+              },
+              {
+                "id": 8,
+                "camp": "good"
+              },
+              {
+                "id": 9,
+                "camp": "good"
+              },
+              {
+                "id": 10,
+                "camp": "good"
+              },
+              {
+                "id": 11,
+                "camp": "good"
+              },
+              {
+                "id": 12,
+                "camp": "good"
+              }
+            ],
+            "victory": [
+              {
+                "id": 1,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "third_party"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "wolf"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 11,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              },
+              {
+                "id": 12,
+                "affiliations": [
+                  {
+                    "kind": "faction",
+                    "faction": "good"
+                  }
+                ]
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "label": "after-actual-window-finally-original",
+          "outcome": "undefined"
+        }
+      ],
+      "settlements": [
+        true
+      ],
+      "outcome": {
+        "returned": true
+      },
+      "after": {
+        "setup": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "status": "complete",
+          "actorId": 1,
+          "groomId": 2,
+          "witnessId": 3,
+          "witnessVotes": [
+            {
+              "actorId": 1,
+              "targetId": 3
+            },
+            {
+              "actorId": 2,
+              "targetId": 3
+            }
+          ]
+        },
+        "pair": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1
+        },
+        "group": {
+          "policy": "awa_melbourne_ghost_bride_v1",
+          "groupId": "ghost-bride:1:1",
+          "brideId": 1,
+          "groomId": 2,
+          "day": 1,
+          "witnessId": 3
+        },
+        "ready": true,
+        "brideState": {
+          "ghostBride": {
+            "policy": "awa_melbourne_ghost_bride_v1",
+            "remaining": 0,
+            "groomId": 2
+          }
+        },
+        "camps": [
+          {
+            "id": 1,
+            "camp": "third_party"
+          },
+          {
+            "id": 2,
+            "camp": "wolf"
+          },
+          {
+            "id": 3,
+            "camp": "wolf"
+          },
+          {
+            "id": 4,
+            "camp": "wolf"
+          },
+          {
+            "id": 5,
+            "camp": "good"
+          },
+          {
+            "id": 6,
+            "camp": "good"
+          },
+          {
+            "id": 7,
+            "camp": "good"
+          },
+          {
+            "id": 8,
+            "camp": "good"
+          },
+          {
+            "id": 9,
+            "camp": "good"
+          },
+          {
+            "id": 10,
+            "camp": "good"
+          },
+          {
+            "id": 11,
+            "camp": "good"
+          },
+          {
+            "id": 12,
+            "camp": "good"
+          }
+        ],
+        "victory": [
+          {
+            "id": 1,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "third_party"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "wolf"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "affiliations": [
+              {
+                "kind": "faction",
+                "faction": "good"
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "type": "ghost_bride_pair_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 1,
+              "recipientId": 2,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_partner_chat",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "actorId": 2,
+              "recipientId": 1,
+              "day": 1,
+              "text": ""
+            },
+            "audience": [
+              1,
+              2
+            ]
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 1,
+              "targetId": 3,
+              "voteIndex": 1
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_witness_vote",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "day": 1,
+              "actorId": 2,
+              "targetId": 3,
+              "voteIndex": 2
+            },
+            "audience": []
+          },
+          {
+            "type": "ghost_bride_group_chosen",
+            "payload": {
+              "policy": "awa_melbourne_ghost_bride_v1",
+              "groupId": "ghost-bride:1:1",
+              "brideId": 1,
+              "groomId": 2,
+              "day": 1,
+              "witnessId": 3
+            },
+            "audience": [
+              1,
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "Only source/fixture inputs explicitly captured in before.json are fixed; transitive dependencies are the execution workspace.",
+    "Restoration is observed in scope queries and separately the actual window result; no all-permission revival inference.",
+    "Alias-own context policy is recorded without imposing common-close or alias-only target semantics.",
+    "Witness declaration is prepared but must be run only after Root reviews groom restoration evidence.",
+    "No NightPipeline whole night, wedding knife, DeathWave, model or old suite is executed by this script."
+  ]
+}
