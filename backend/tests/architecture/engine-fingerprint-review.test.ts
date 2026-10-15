@@ -198,7 +198,7 @@ test("private canary and generated dependency directory never join fingerprint m
 /** 读取固定27a构建的真实旧身份；旧目录已退，不在当前树重算历史六根算法。 */
 async function historicalSourceHash(root: string): Promise<string> {
   const historical = JSON.parse(await readFile(
-    path.join(root, "docs/refactor/generated/baseline-source-hash.json"), "utf8",
+    path.join(root, "docs/history/refactor/generated/baseline-source-hash.json"), "utf8",
   )) as { commit: string; roots: string[]; sourceHash: string };
   expect(historical.commit).toBe("27a97cb66e8f30fceb7cb20130154291559dd14a");
   expect(historical.roots).toEqual([

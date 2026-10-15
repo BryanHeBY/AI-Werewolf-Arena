@@ -125,7 +125,7 @@ test("source discovery rejects a present dangling shared root instead of treatin
 test("repository Chinese literals have exact reviewed compatibility exceptions without broad directory skips", async () => {
   const exceptions = JSON.parse(
     await readFile(
-      path.resolve(process.cwd(), "../docs/expansion/i18n-source-exceptions.json"),
+      path.resolve(process.cwd(), "../tooling/refactor/policies/i18n-source-exceptions.json"),
       "utf8",
     ),
   );

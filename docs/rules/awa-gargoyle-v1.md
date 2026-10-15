@@ -19,7 +19,7 @@ role_check沿G02实例保存id/资源/lastDay/history，支持受控gift/copy/tr
 
 DeathResolution唯一提交死亡，装配及真实死亡整批后更新native继承事实，PM最后judge。基础狼刀沿已接入的每票原life、有效tally、临时刀scope、首日pending NightDamage生命复验，不旧刀伤新life；历史记录保留。
 
-本卡描述兼容默认；`roles.gargoyle.inspectionPolicy`现可显式选有限AWA目标/行动策略，见[配置契约](../expansion/contracts/role-policy-configuration.md)，未知自爆/相认/self/固定刀位等参数拒绝；公开6/12只用注册角色，12为3Wolf+Garg／Seer Witch Hunter Gravekeeper／4Villager。范围由交互／完整矩阵证据说明，不宣布其它同名规则或觉醒支持。
+本卡描述兼容默认；`roles.gargoyle.inspectionPolicy`现可显式选有限AWA目标/行动策略，见[配置契约](../history/expansion/contracts/role-policy-configuration.md)，未知自爆/相认/self/固定刀位等参数拒绝；公开6/12只用注册角色，12为3Wolf+Garg／Seer Witch Hunter Gravekeeper／4Villager。范围由交互／完整矩阵证据说明，不宣布其它同名规则或觉醒支持。
 
 ## 来源
 

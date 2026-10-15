@@ -1,6 +1,6 @@
 # P9a 盗贼：真实额外牌池与首次身份选择
 
-状态：有限策略已implemented并完成本批功能门禁，见[验收](../expansion/reviews/p9-thief.md)；整体任务仍待用户验收。唯一策略 `lui_meme_thief_two_extra_villagers_v1`。
+状态：有限策略已implemented并完成本批功能门禁，见[验收](../history/expansion/reviews/p9-thief.md)；整体任务仍待用户验收。唯一策略 `lui_meme_thief_two_extra_villagers_v1`。
 
 ## 来源及工程边界
 

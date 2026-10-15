@@ -1,6 +1,6 @@
 # P9a 孤独少女：首夜崇拜与独立胜利归属
 
-状态：implemented；本卡有限策略已交付，来源／规则与运行审查及最终离线证据见[验收记录](../expansion/reviews/p9-lonely-girl.md)。该记录对应当时冻结输入，不表示当前重构源码全量通过或其它组合已支持。唯一有限策略 `awa_netease_lonely_girl_v1`；机器ID `lonely_girl`，不改名或复用 `hybrid` 的状态/工具/事实身份。
+状态：implemented；本卡有限策略已交付，来源／规则与运行审查及最终离线证据见[验收记录](../history/expansion/reviews/p9-lonely-girl.md)。该记录对应当时冻结输入，不表示当前重构源码全量通过或其它组合已支持。唯一有限策略 `awa_netease_lonely_girl_v1`；机器ID `lonely_girl`，不改名或复用 `hybrid` 的状态/工具/事实身份。
 
 ## 原始来源与适配边界
 

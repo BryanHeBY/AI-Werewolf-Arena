@@ -398,9 +398,9 @@ test("generator rejects repository-root and ancestor symbolic links before openi
   const temporary = await mkdtemp(path.join(tmpdir(), "awa-fixture-root-negative-"));
   const actualRoot = path.join(temporary, "synthetic-private-repository");
   try {
-    await mkdir(path.join(actualRoot, "docs/refactor/generated"), { recursive: true });
+    await mkdir(path.join(actualRoot, "docs/history/refactor/generated"), { recursive: true });
     await writeFile(
-      path.join(actualRoot, "docs/refactor/generated/baseline-fixtures.json"),
+      path.join(actualRoot, "docs/history/refactor/generated/baseline-fixtures.json"),
       JSON.stringify({
         commit: originCommit,
         files: [{ path: "configs/runtime/providers.json", sha256: digest, bytes: 7 }],
@@ -428,12 +428,21 @@ test("fixture-root ancestor links are rejected before directory enumeration", as
     canary = path.join(temporary, "canary");
   try {
     const layout = parseFixtureManifest(JSON.stringify(publicSourceManifest));
-    for (const relative of [
-      "docs/refactor/generated/baseline-fixtures.json",
+    // 先备齐已登记声明迁移与两条历史包退桥的当前输入，再布置 frontend 祖先链接负例；不从生产结果生成预期。
+    for (const relative of new Set([
+      "docs/history/refactor/generated/baseline-fixtures.json",
       fixtureManifestPath,
       "backend/package.json",
       ...layout.sourceAssets.map((asset) => asset.currentPath),
-    ]) {
+      ...layout.sourceAssets.flatMap((asset) =>
+        (asset.moduleRelocations ?? []).map((relocation) => relocation.currentPath),
+      ),
+      "packages/game-contract/package.json",
+      "packages/game-contract/src/index.ts",
+      "packages/game-contract/src/locale.ts",
+      "packages/game-contract/src/facts/mist-raven.ts",
+      "packages/game-contract/src/inert-event-data.ts",
+    ])) {
       await mkdir(path.dirname(path.join(isolated, relative)), { recursive: true });
       await cp(path.join(repository, relative), path.join(isolated, relative));
     }
@@ -508,7 +517,7 @@ test("generator verifies 904 exact JSON archives and 3 equivalent source fixture
 
 test("generator rejects private inventory paths and symbolic-link inputs before reading their targets", async () => {
   const temporary = await mkdtemp(path.join(tmpdir(), "awa-fixture-manifest-negative-"));
-  const directory = path.join(temporary, "docs/refactor/generated");
+  const directory = path.join(temporary, "docs/history/refactor/generated");
   const target = path.join(directory, "baseline-fixtures.json");
   try {
     await mkdir(directory, { recursive: true });

@@ -16,13 +16,13 @@ awa_classic 1.0.0 角色扩展，ID `gravekeeper`，守墓人／Gravekeeper；�
 
 PhaseManager独占上一日放逐事实，作为内部NightPipeline输入；没有把待反馈信息提前放进角色私有DTO或提示。本人状态只保存实际已交付的历史（exileDay、receivedDay、targetId、camp result），没有待反馈目标/底牌。
 
-`gravekeeper_reported {actorId,targetId,exileDay,receivedDay,result:{kind:"camp",camp}}`仅actor可见，公开发言若主动引用是玩家原话，不自动认证具体牌。上帝复盘可保完整反馈，其他玩家投影无此事件/状态，终端该事件的直播行仅在printPrivateEvents启用时展示。operator若另启printLlmIo/printThinking，仍可能看到包含本人已知反馈的prompt/思考；这些独立诊断开关按[日志矩阵](../expansion/runtime-display.md#p4-m21sdk--acp-日志开关)工作，不是发给其他玩家的信息。回放消息/前端文案使用同一双语result标签，不改变席位生死。
+`gravekeeper_reported {actorId,targetId,exileDay,receivedDay,result:{kind:"camp",camp}}`仅actor可见，公开发言若主动引用是玩家原话，不自动认证具体牌。上帝复盘可保完整反馈，其他玩家投影无此事件/状态，终端该事件的直播行仅在printPrivateEvents启用时展示。operator若另启printLlmIo/printThinking，仍可能看到包含本人已知反馈的prompt/思考；这些独立诊断开关按[日志矩阵](../history/expansion/runtime-display.md#p4-m21sdk--acp-日志开关)工作，不是发给其他玩家的信息。回放消息/前端文案使用同一双语result标签，不改变席位生死。
 
 ## 来源及AWA改编
 
 [Melbourne Masters组织者板子与夜晚流程](https://melbournemasters.org/setups/shi-xiang-gui-shou-mu-ren)规定每夜告知上一放逐环节出局玩家好人/狼人，首夜只确认角色，后续位于女巫后、预言家前。该来源是组织者规则，不充当所有平台统一规范。
 
-AWA对无实际放逐不重报、主目标与追加死亡区分、冻结标签时点、同夜去重和复合/未来camp明确采用上述规则；来源没有提供这些全部细则。不与“跑跑狼人杀”尸体感应技能混用。P5普通狼＋守墓人的6/12示例保留；石像鬼已独立交付，放逐后的守墓人反馈等证据见[石像鬼卡](awa-gargoyle-v1.md)及[交叉审查](../expansion/reviews/p6-gargoyle.md)。单个交互验证不表示已复刻来源完整板子。
+AWA对无实际放逐不重报、主目标与追加死亡区分、冻结标签时点、同夜去重和复合/未来camp明确采用上述规则；来源没有提供这些全部细则。不与“跑跑狼人杀”尸体感应技能混用。P5普通狼＋守墓人的6/12示例保留；石像鬼已独立交付，放逐后的守墓人反馈等证据见[石像鬼卡](awa-gargoyle-v1.md)及[交叉审查](../history/expansion/reviews/p6-gargoyle.md)。单个交互验证不表示已复刻来源完整板子。
 
 ## 参数与支持边界
 

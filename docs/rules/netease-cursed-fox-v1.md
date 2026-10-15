@@ -33,4 +33,4 @@
 | 最后狼死亡枪杀咒狐                            | 先枪后判胜，好人胜                      |
 | 无普通阵营全灭                                | 不提前判胜；maxDays 仍 no_winner        |
 
-验收状态：来源与首批语义、实际请求/录制/Tape、晚提交和必要组合已完成本批验证，见[三组审查与证据](../expansion/reviews/p8-cursed-fox.md)。目录登记 implemented；待P8其余角色及阶段整体验收后统一更新verified，不把本角色门禁称总体用户验收。
+验收状态：来源与首批语义、实际请求/录制/Tape、晚提交和必要组合已完成本批验证，见[三组审查与证据](../history/expansion/reviews/p8-cursed-fox.md)。目录登记 implemented；待P8其余角色及阶段整体验收后统一更新verified，不把本角色门禁称总体用户验收。

@@ -1,6 +1,6 @@
 # AWA 诡术之境组合规则契约
 
-状态：implemented；公开预设 awa_trickster_12_v1，功能证据见 [本批验收](../expansion/reviews/p9-trickster.md)。支持原生十二人：三普通狼、诡术师、四村民、预言家、女巫、魔术师、定序王子，屠边。
+状态：implemented；公开预设 awa_trickster_12_v1，功能证据见 [本批验收](../history/expansion/reviews/p9-trickster.md)。支持原生十二人：三普通狼、诡术师、四村民、预言家、女巫、魔术师、定序王子，屠边。
 
 ## 来源与解释
 
@@ -29,4 +29,4 @@ https://www.douyin.com/shipin/7638093969662101555
 
 独立表示 requested exile target 与 effective exile target，后续死亡反馈/遗言使用实际出局者，公开原票统计仍保留原目标。能力本体与生命版本在异步返回前后核验；已提交夜效果与次日施法资格分别检查。缺失、非法与晚到必需动作失败，保留实际提交前缀。
 
-已贯通纯状态、一次映射/抵消、夜技能、有限组合配置、文本包、观测隔离、Tape、真实 SDK/ACP、固定 seed 及前端回放。魔术师与王子的旧独立板保留回归。implemented 仅表示本规则有限范围的功能门禁，P9c 同源阶段门禁已在当时冻结输入上完成，见[历史阶段验收](../expansion/reviews/p9c-stage-acceptance.md)；不表示当前重构源码全量通过，其余未验组合、P9 剩余／P10 与用户总体验收继续。
+已贯通纯状态、一次映射/抵消、夜技能、有限组合配置、文本包、观测隔离、Tape、真实 SDK/ACP、固定 seed 及前端回放。魔术师与王子的旧独立板保留回归。implemented 仅表示本规则有限范围的功能门禁，P9c 同源阶段门禁已在当时冻结输入上完成，见[历史阶段验收](../history/expansion/reviews/p9c-stage-acceptance.md)；不表示当前重构源码全量通过，其余未验组合、P9 剩余／P10 与用户总体验收继续。

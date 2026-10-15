@@ -68,4 +68,4 @@ source/Replay同一engine边界都真正以World操作新建Alive组件，记录
 
 ## 2026-10-10 完整实现状态
 
-上文 planned 与候选阶段说明保留对应历史时点。四个有限板子的公开装配、严格录制和 Tape、双语展示及完整门禁现已闭合，角色为 implemented；详见[完整验收](../expansion/reviews/p9-demon-hunter.md)。本批交付时目录为 23 verified、9 implemented、32 planned；该验收对应当时冻结输入，不代表当前重构源码全量通过，不表示其它组合、P9/P10 或最终用户验收完成。
+上文 planned 与候选阶段说明保留对应历史时点。四个有限板子的公开装配、严格录制和 Tape、双语展示及完整门禁现已闭合，角色为 implemented；详见[完整验收](../history/expansion/reviews/p9-demon-hunter.md)。本批交付时目录为 23 verified、9 implemented、32 planned；该验收对应当时冻结输入，不代表当前重构源码全量通过，不表示其它组合、P9/P10 或最终用户验收完成。

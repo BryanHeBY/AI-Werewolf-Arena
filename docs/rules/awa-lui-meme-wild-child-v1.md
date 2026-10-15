@@ -1,6 +1,6 @@
 # P9a 野孩子：榜样死亡后的阵营变化
 
-状态：有限策略已implemented，三组审查/原报告复验与最终离线完整门禁见[角色验收](../expansion/reviews/p9-wild-child.md)。唯一首批AWA适配 `awa_lui_meme_wild_child_v1`，不称网易完整预设。
+状态：有限策略已implemented，三组审查/原报告复验与最终离线完整门禁见[角色验收](../history/expansion/reviews/p9-wild-child.md)。唯一首批AWA适配 `awa_lui_meme_wild_child_v1`，不称网易完整预设。
 
 ## 来源
 

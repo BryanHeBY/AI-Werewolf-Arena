@@ -1,6 +1,6 @@
 # AWA Hybrid 1.0.0 规则卡
 
-规则集 `awa_classic` 1.0.0；ID `hybrid`，混血儿／Hybrid；核验日期 2026-10-09。本卡对应 P7 混血儿角色实现；有限组合、双语与完整通路验收见[角色审查](../expansion/reviews/p7-hybrid.md)。不代表其它同名版本均受支持。
+规则集 `awa_classic` 1.0.0；ID `hybrid`，混血儿／Hybrid；核验日期 2026-10-09。本卡对应 P7 混血儿角色实现；有限组合、双语与完整通路验收见[角色审查](../history/expansion/reviews/p7-hybrid.md)。不代表其它同名版本均受支持。
 
 ## 来源与版本边界
 

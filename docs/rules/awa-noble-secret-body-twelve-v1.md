@@ -1,6 +1,6 @@
 # AWA 觉醒之夜十二人板（实施草案）
 
-状态：implemented；角色 `night_noble` 与前置的 `awakened_idiot` 已完成四组合有限技术验收。联合政策为 `awa_noble_secret_body_v1`，猎魔人的夜仆例外仅扩展本卡原生有限板；不开放与所有新角色混搭。完整证据及原失败见[验收记录](../expansion/reviews/p9-noble-secret-body-stage-acceptance.md)。
+状态：implemented；角色 `night_noble` 与前置的 `awakened_idiot` 已完成四组合有限技术验收。联合政策为 `awa_noble_secret_body_v1`，猎魔人的夜仆例外仅扩展本卡原生有限板；不开放与所有新角色混搭。完整证据及原失败见[验收记录](../history/expansion/reviews/p9-noble-secret-body-stage-acceptance.md)。
 
 ## 来源与分歧
 

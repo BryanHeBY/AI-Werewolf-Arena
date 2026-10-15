@@ -2,6 +2,8 @@
 
 多智能体狼人杀对局引擎，以及用于离线复盘和视频生成的 React 工作台。
 
+当前维护入口见[项目文档](docs/README.md)；原扩充／重构记录在[历史索引](docs/history/README.md)，历史停止条件不作为当前指令。
+
 ## 当前架构
 
 - `backend/`：Bun + TypeScript 的对局引擎、LLM/ACP 调度、复盘落盘与导出 CLI。
@@ -10,11 +12,11 @@
 - `packages/game-catalog/`：角色稳定ID、中英名称和计划／实现状态；资料登记不代表角色已可运行。
 - `configs.example/`：本地运行配置模板，默认经 OpenRouter 使用 DeepSeek V4 Flash。
 
-真实 Agent 对局由 `runtime/cli/run_game.ts` 启动，并将事件和最终结果写入 `record/<session>/replay.json`；`runtime/run_mock_game.ts` 只运行本地基线机器人对局并打印结果。前端直接加载 `replay.json` 进行播放。当前没有在线观战或多租户在线服务；引擎按玩家投影信息，ACP 会话和工具权限独立隔离。
+真实 Agent 对局由 backend 的 `run` 系列命令启动，并将事件和最终结果写入 `record/<session>/replay.json`；backend 的 `run:mock` 命令只运行本地基线机器人对局并打印结果。前端直接加载 `replay.json` 进行播放。当前没有在线观战或多租户在线服务；引擎按玩家投影信息，ACP 会话和工具权限独立隔离。
 
 运行配置只接受固定文件结构：`runtime/providers.json`、`runtime/agents.json`、`games/<name>.json`、`boards/<id>.json`，以及可选的 `runtime/debug_summary.json`。板子使用完整 `version: 2` 配置，正常运行不搜索旧路径或回退内置板子。每个 Agent 都必须显式声明 `kind: "llm"` 或 `kind: "acp"`；调试汇总通过 `agentName` 引用一个 Agent，不能内联覆盖模型参数。
 
-玩家名字和模型选择可分开配置：`players.<seat>.name`、可选 `agent` 与 `personalityPrompt`。人格可用原字符串或中文／英文字典，`null` 清除继承值。配置格式、阶段执行限制与迁移说明见 [配置契约](docs/expansion/config-v2.md)。
+玩家名字和模型选择可分开配置：`players.<seat>.name`、可选 `agent` 与 `personalityPrompt`。人格可用原字符串或中文／英文字典，`null` 清除继承值。配置格式、阶段执行限制与迁移说明见 [配置契约](docs/contracts/configuration.md)。
 
 LLM 和 ACP Agent 均支持 `personalityPrompt`，统一追加到玩家的身份与规则提示中。可以在 `runtime/agents.json` 中设置默认风格，也可在对局的 `roleAgents`、`playerAgents` 对象中覆盖，无需重复定义模型或进程配置。例如：
 
@@ -102,10 +104,10 @@ bun run format
 
 类型门禁覆盖测试与夹具，后端脚本的 JavaScript 实现也参与检查；不通过排除文件或关闭严格选项避开错误。格式配置与 `.editorconfig` 使用两空格、LF 和文件末尾换行；本地秘密配置、构建产物和历史复盘 JSON 夹具不参加自动格式写入。检查命令不会启动真实 Agent 对局。
 
-已实现行为以代码和测试为准。玩法扩充的目标、64 项角色、中英双语支持、阶段验收、交叉审查和提交要求见 [扩充路线](docs/expansion/roadmap.md)；计划功能在实现并验证后才登记为支持。
+已实现行为以代码和测试为准。本轮维护导航按 55 个稳定角色 ID 与 49 个机制 feature 目录组织，见 [当前维护与规则入口](docs/README.md)；这不是对每项能力或任意组合的完成承诺。历史扩充目标保留在原来源中，未实现功能仍须经过实际实现与验证才登记支持。
 
-已有默认板子保持兼容。`configs.example/boards/awa_classic_pk_choice_12_v1.json` 提供完整的AWA具名竞选PK、放逐PK与死亡持徽者选择组合：首轮仅未上警者投警长、最多一次PK、再次平票/全弃票无徽或无人放逐、死亡警长选择继任者或撕徽。它不是网易或赛事的完整规则镜像；详细边界与参数见[警徽/投票契约](docs/expansion/contracts/sheriff-voting-policies.md)。示例不覆盖本地configs或改变省略参数默认；双语12人离线录制与严格Tape复现覆盖完整组合。
+已有默认板子保持兼容。`configs.example/boards/awa_classic_pk_choice_12_v1.json` 提供完整的AWA具名竞选PK、放逐PK与死亡持徽者选择组合：首轮仅未上警者投警长、最多一次PK、再次平票/全弃票无徽或无人放逐、死亡警长选择继任者或撕徽。它不是网易或赛事的完整规则镜像；详细边界与参数见[警徽/投票契约](docs/contracts/voting-and-public-death.md)。示例不覆盖本地configs或改变省略参数默认；双语12人离线录制与严格Tape复现覆盖完整组合。
 
-现有角色配置复核：预言家省略/空对象统一保留必选默认；猎人/狼王原生deathActionPolicy和石像鬼/通灵师/魔镜少女inspectionPolicy已连通有限AWA版本策略及实际Tape，详见[策略契约](docs/expansion/contracts/role-policy-configuration.md)。原审查范围仍在逐项复核，历史门禁不表示全部配置需求已交付。
+现有角色配置复核：预言家省略/空对象统一保留必选默认；猎人/狼王原生deathActionPolicy和石像鬼/通灵师/魔镜少女inspectionPolicy已连通有限AWA版本策略及实际Tape，详见[策略契约](docs/contracts/configuration.md)。原审查范围仍在逐项复核，历史门禁不表示全部配置需求已交付。
 
-公开翻牌与遗言支持保留AWA默认或显式选择网易2017局部具名条款，参数及信息披露/死亡波次边界见[公开死亡策略](docs/expansion/contracts/public-death-policies.md)。六人示例仅采用该来源的角色构成、屠城和局部条款，不宣称完整平台镜像。
+公开翻牌与遗言支持保留AWA默认或显式选择网易2017局部具名条款，参数及信息披露/死亡波次边界见[公开死亡策略](docs/contracts/voting-and-public-death.md)。六人示例仅采用该来源的角色构成、屠城和局部条款，不宣称完整平台镜像。

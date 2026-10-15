@@ -1,6 +1,6 @@
 # AWA 定序王子有限规则契约
 
-状态：implemented；覆盖 awa_order_prince_12_v1 原生十二人板及下文已交付的有限联合板，功能证据见 [本批验收](../expansion/reviews/p9-order-prince.md)。P9c 同源阶段门禁已在当时冻结输入上完成，见[历史阶段验收](../expansion/reviews/p9c-stage-acceptance.md)；不表示当前重构源码全量通过，其余未验组合、P9 剩余／P10 与用户总体验收继续。
+状态：implemented；覆盖 awa_order_prince_12_v1 原生十二人板及下文已交付的有限联合板，功能证据见 [本批验收](../history/expansion/reviews/p9-order-prince.md)。P9c 同源阶段门禁已在当时冻结输入上完成，见[历史阶段验收](../history/expansion/reviews/p9c-stage-acceptance.md)；不表示当前重构源码全量通过，其余未验组合、P9 剩余／P10 与用户总体验收继续。
 
 政策 ID：awa_order_prince_first_ballot_v1。角色为好人神职。原生固定身份；不把重投实现为回滚整个 World。
 

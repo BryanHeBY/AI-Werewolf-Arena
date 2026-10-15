@@ -1,0 +1,3586 @@
+{
+  "schema": 1,
+  "baseCommit": "14e7951787f4464573407a7bcc270303a3975856",
+  "purpose": "C43实际来源与最终文件身份；不是全量门禁或逐机制完成矩阵。",
+  "historyMoves": {
+    "count": 5511,
+    "bytes": 168795320,
+    "index": "docs/history/origin-paths.json",
+    "sha256": "0a782fe7cf211e0daedff7a981d4d45a2e1764300b59dc4e56c83781662f6aca"
+  },
+  "liveSourceCount": 336,
+  "source": [
+    {
+      "path": ".prettierignore",
+      "bytes": 883,
+      "sha256": "3b59814ff0cd8a377b6c2dd00e66903808799b6732906153fe09b86ab57b14ca",
+      "mode": "100644",
+      "before": {
+        "sha256": "1cd8c920aa89971588831f0bd72cd2abde03ab6d904fb435386f499fdc12ff6f",
+        "bytes": 661,
+        "gitBlob": "4f802814d901f21835525c7cf69de1784289b18d"
+      }
+    },
+    {
+      "path": "README.md",
+      "bytes": 9561,
+      "sha256": "4cddeb4b85157971d67e5a8d326007ca190d5f246dec82073ff81f78a45fc623",
+      "mode": "100644",
+      "before": {
+        "sha256": "7de20001ef68bea4b69fd68415ded23eb980fd087bb10e273c996d32d3a0ef4f",
+        "bytes": 9328,
+        "gitBlob": "c74177cdee75bd8f04298a83e76f8fb898678a6d"
+      }
+    },
+    {
+      "path": "backend/scripts/check-i18n-literals.mjs",
+      "bytes": 8566,
+      "sha256": "ea056a7ba0c06d86df55f756606fabfe394b187efd9e99a83b9fbba9fbf1cd5d",
+      "mode": "100644",
+      "before": {
+        "sha256": "18a17a71623646b859f7f572c448441bd24017535f9b578f4e5c6d042042360e",
+        "bytes": 8555,
+        "gitBlob": "79f83f5ee1c4eccbad058ca25dd9f4488b8b86ac"
+      }
+    },
+    {
+      "path": "backend/tests/architecture/engine-fingerprint-review.test.ts",
+      "bytes": 11432,
+      "sha256": "8710bed52647c18819eadbc850137d010426001ed614ecc7b12f617bd8e4a5c4",
+      "mode": "100644",
+      "before": {
+        "sha256": "733fc6a555f2661f0a506eca6bb548697a059f40bb4fe6741c32edf691a2e827",
+        "bytes": 11424,
+        "gitBlob": "61bdf27a5ad1479017d320a8aef42c59f12b0470"
+      }
+    },
+    {
+      "path": "backend/tests/integration/tooling/i18n-source-discovery.test.ts",
+      "bytes": 5930,
+      "sha256": "23328450e07aa3aecf01806b03c07fc15950dd79ff85ffe5e1ffcd095966cbce",
+      "mode": "100644",
+      "before": {
+        "sha256": "cf0bfa17e90684c39f90aaf808cda73702cda0660c740d047922c1456bb7897c",
+        "bytes": 5919,
+        "gitBlob": "eed1810958313e04f65495d23a9657e890b30c9b"
+      }
+    },
+    {
+      "path": "docs/README.md",
+      "bytes": 2346,
+      "sha256": "4884f0603f2b4cff49e023a28221154831f7067dd5458cacb995c05a8a2f7f42",
+      "mode": "100644",
+      "before": {
+        "sha256": "adbb67eb1e7866b97fdf9575d1887f5dba32ce01c05771aaa7048ae776857488",
+        "bytes": 1471,
+        "gitBlob": "a0e6902d43383b66963ee5228bf4e7e29ddba296"
+      }
+    },
+    {
+      "path": "docs/architecture/README.md",
+      "bytes": 819,
+      "sha256": "0ca39c942a672704b5fb6e98b6a9d6b724c4d4b8c5ef9c732415bc8e257c17d5",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/architecture/delivery-status.md",
+      "bytes": 7080,
+      "sha256": "7d8eafb1196b03ff724f7202edddda5f9d84b2bd56daf843d95ea8a0c139b9a0",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/architecture/feature-ownership.md",
+      "bytes": 9063,
+      "sha256": "112115943c1b45cf216283cd456e496e38e31a824cf2106f1c627d684219aea9",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/architecture/lifecycle-and-authority.md",
+      "bytes": 2615,
+      "sha256": "c2072110926a98f895f16012aafd1dec2ad86029d352ae999599699342bf731a",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/architecture/module-ownership.md",
+      "bytes": 5591,
+      "sha256": "f26b10dac5b73044fd7c755227ac6ee07b231ba7e1d8ebb0bc2cc5360163c590",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/contracts/README.md",
+      "bytes": 876,
+      "sha256": "9faaad800f11381dccff5341f748dedaaff17192ed852010385e54ef27283b3a",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/contracts/action-requests.md",
+      "bytes": 4467,
+      "sha256": "e727d77561ae641036c9caf5b694fd46faaf998b03ab7a9c19cb7316e8488f1b",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/contracts/agent-runtime.md",
+      "bytes": 1712,
+      "sha256": "08cc7fd1ac97b020aa1c35bda11ee77a86c27fc6af3885eef0e8bf3815f869b2",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/contracts/archive-compatibility.md",
+      "bytes": 2160,
+      "sha256": "a04b9e28a624a82224d664ef50e35777f54372ec6ceec703ed88d67d61d2e9cf",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/contracts/configuration.md",
+      "bytes": 3004,
+      "sha256": "e4786156cf1f92234ecb744b5bdf50ee6f11531f0b868a4b5a52aa4d4fcef07f",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/contracts/events-and-observation.md",
+      "bytes": 1657,
+      "sha256": "c02808873b2bf9364d52fe9b39caa82752e1397c47ae8b9c2a8c9882709130aa",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/contracts/identity-and-resources.md",
+      "bytes": 2707,
+      "sha256": "596013469e1856142088013e89daec322be3dc31b230c8eaead3458121b3066c",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/contracts/recording-and-reproduction.md",
+      "bytes": 3052,
+      "sha256": "63e9fc1f6690d40b6d37cfb7b56a2e2e3bdfbe2dfb4bc52d601b88643bd9aff0",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/contracts/voting-and-public-death.md",
+      "bytes": 2037,
+      "sha256": "5503e27201e635c6bfa76cfe6c9312bd38c2fd93ca0a21e45abf2d3166493d9e",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/decisions/0001-data-and-runtime-authority.md",
+      "bytes": 1126,
+      "sha256": "b33fb830c2633f8082849d9884950574b9a155774396c3b7694a2d72bd3bc1b0",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/decisions/0002-camp-and-execution-retirement.md",
+      "bytes": 1217,
+      "sha256": "7bb78d07c7f3ca92dd8e9d0ef07869bc03abf304129c00717ec7b7ea180457e1",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/decisions/0003-request-policy-and-completion.md",
+      "bytes": 2571,
+      "sha256": "70373be5355f9e5189f3255fbb22d807b30b9a14308227e7e7deeb1933dcf6ca",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/decisions/0004-archive-identities-and-evidence.md",
+      "bytes": 1315,
+      "sha256": "9d4e8d57f99ca9d79db1f73b3e968a2a1ad2ea352d61596c1fe2ef0119896400",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/decisions/0005-owned-layout-and-public-apis.md",
+      "bytes": 1489,
+      "sha256": "321983ae90633b1d71c8f4dc74c6538b56fa87c1cdb2cf267afec1ff3e0409e2",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/decisions/README.md",
+      "bytes": 1341,
+      "sha256": "d63e662f5a9fd17689f9cdb0929d8c0622b1bbda753201429a1e48c7fa9e6dc0",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/guides/README.md",
+      "bytes": 534,
+      "sha256": "571f9f97861f755a42fe68b6fccbd92fe74b3a037482e4e5243e644e95e1c162",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/guides/add-mechanism.md",
+      "bytes": 2859,
+      "sha256": "0ef047e57986abe7ce56f02ad8959f63411e1c751d6d1e243dbdfff5622ee4df",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/guides/migration.md",
+      "bytes": 2194,
+      "sha256": "03b277fdc98a5cb1738cba825e9c90d554c81a58ef4801a2c519d64bda9c0e79",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/guides/offline-replay.md",
+      "bytes": 1583,
+      "sha256": "057ef357fd73fddbc77c0a2768d7612de1e6ca7976698e7c5342a368c0e5fdd0",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/guides/refactoring-plan.md",
+      "bytes": 100501,
+      "sha256": "bd484ab38fa3b127785b6bcbed6f09b67ade57ee274aef212e16a85dc8f7d1ec",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/guides/run-locally.md",
+      "bytes": 1875,
+      "sha256": "d8c60c6761681dfca8886bec17e687d968de1f75e27940aa20198ccd2102ae0a",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/guides/validation.md",
+      "bytes": 4839,
+      "sha256": "f16443d220f10454e66b41a423d465bdb52114662cca9265ebd6610eeffdfeba",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/history/README.md",
+      "bytes": 1472,
+      "sha256": "b777a92059df6fda933a0a717c7d8efa17482fd2d557a85e3fce5782f4e33df4",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/history/expansion/README.md",
+      "bytes": 747,
+      "sha256": "e4cc8369ee1d5d16550822a87c9a2291ea361eda1e0436bde6d11965af26a1b7",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/history/origin-paths.json",
+      "bytes": 2567634,
+      "sha256": "0a782fe7cf211e0daedff7a981d4d45a2e1764300b59dc4e56c83781662f6aca",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/history/refactor/README.md",
+      "bytes": 1035,
+      "sha256": "e84ab85b8e79bb94dae0d83b4f784fe8bc519fd665ee54be20895420db1bde1f",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "docs/rules/README.md",
+      "bytes": 10128,
+      "sha256": "110b0a5f0d0bf33af5f8973b7f9e6e8a75edc792ed33331305a2b9346e6cca2b",
+      "mode": "100644",
+      "before": {
+        "sha256": "be343b729e5c44a002154b7904f42bb6a43e34cbc7bbafc724c6cf162a06517c",
+        "bytes": 976,
+        "gitBlob": "ce81b020de9a68b9ad64cdafa5f5382ac197b1ad"
+      }
+    },
+    {
+      "path": "docs/rules/awa-animal-dream-twelve-v1.md",
+      "bytes": 11716,
+      "sha256": "e2cc62e3c2f8b7bae786a944e21f1e8695ee7a29856800fa8c8c54a2b59c3291",
+      "mode": "100644",
+      "before": {
+        "sha256": "2759ef3f9831fe342ab5ee86843a85e1d32da5c4d85fab9391754720a08a31de",
+        "bytes": 11708,
+        "gitBlob": "7910eb1be6acaa5d72a5453f9f1bc8e19078b200"
+      }
+    },
+    {
+      "path": "docs/rules/awa-awakened-hidden-wolf-v1.md",
+      "bytes": 13990,
+      "sha256": "1aea2ad2845b7bf054f604609debbe003af29387eb5da8f7f472d0dd7efae411",
+      "mode": "100644",
+      "before": {
+        "sha256": "8b1b887251506dbdc62037666d8b5bf6eb03de415ed1f4c767b05230db09d1bd",
+        "bytes": 13982,
+        "gitBlob": "0643d814e09837c0b3321d25d74fc9ecea35d1df"
+      }
+    },
+    {
+      "path": "docs/rules/awa-bear-v1.md",
+      "bytes": 5348,
+      "sha256": "753ba2401b34c94a99a7b03e5b1d223c0de288e8272ba6eacef053cb1b76046b",
+      "mode": "100644",
+      "before": {
+        "sha256": "8103363de33fb5e40c8fd06823d7c5aa17b85d1fd0ae6446918e0c8f7facfc37",
+        "bytes": 5332,
+        "gitBlob": "83b3f4bf746d6cb7f4b198cbd51d8f99d23b2912"
+      }
+    },
+    {
+      "path": "docs/rules/awa-black-market-merchant-v1.md",
+      "bytes": 9911,
+      "sha256": "56ae973c2f099d28f955bb25b1169278b76b5d03af727aeef5f0170289783976",
+      "mode": "100644",
+      "before": {
+        "sha256": "c96714c4a49eab9465c1b4e0223b000f55f4b390b09d04693d761977bd465717",
+        "bytes": 9879,
+        "gitBlob": "14373a67330128c4a7907a167ed62fffec3c8752"
+      }
+    },
+    {
+      "path": "docs/rules/awa-classic-v1.md",
+      "bytes": 8556,
+      "sha256": "8c1ebb9fccc4cb31f5365d18d1975c984557eab8dd1daa6f8675ef829e1c99b0",
+      "mode": "100644",
+      "before": {
+        "sha256": "7b6ffc03d3f5785f0bcd35d96fcea1a3104f14febabd0eec42b03f8d88e30739",
+        "bytes": 8345,
+        "gitBlob": "70fa16e29b0ca2f0e11075cf961212562a5887d3"
+      }
+    },
+    {
+      "path": "docs/rules/awa-dreamer-v1.md",
+      "bytes": 7183,
+      "sha256": "55a997a4fd913d50dfdc1cb78236b0cd6d1f555d47bf40eb0dcc8ff90b75169a",
+      "mode": "100644",
+      "before": {
+        "sha256": "edd045e6baa65b7965f50f25e8354c60c06fe973c911473889d8e4fbf6da4030",
+        "bytes": 7167,
+        "gitBlob": "f538df197499c195a74159298b21dbc0d48e1e5b"
+      }
+    },
+    {
+      "path": "docs/rules/awa-evil-knight-v1.md",
+      "bytes": 5013,
+      "sha256": "1d7053bf7814b4776830645c4d4a0d29519991c96ec041677b3e8afdcc78d139",
+      "mode": "100644",
+      "before": {
+        "sha256": "6811c2893301c7887007b850d1aca75f0ff7cb76cf94a00b1f16c944d987be7d",
+        "bytes": 5005,
+        "gitBlob": "41ec845cd4950d40c584f0e198625152328499dc"
+      }
+    },
+    {
+      "path": "docs/rules/awa-fragrant-pair-seer-twelve-v1.md",
+      "bytes": 13710,
+      "sha256": "7cc5585194fa6fc7df6ab534c42d05c35c5697844befb38b2b37d7c972f27d31",
+      "mode": "100644",
+      "before": {
+        "sha256": "53bdfebde0c2a6cc35fd740e0a86eab5bc9b86e6249bfda86f737ddfc47a95cd",
+        "bytes": 13694,
+        "gitBlob": "6453dc112a5906eedd979b057c5171a57200a852"
+      }
+    },
+    {
+      "path": "docs/rules/awa-gargoyle-v1.md",
+      "bytes": 6085,
+      "sha256": "f667e81f8cc717142299368a103bdde0f5b7bc6674080cc9b692b5021b96cba4",
+      "mode": "100644",
+      "before": {
+        "sha256": "1f1cd2bf5424eab2de57df57a085f5a3777226df19571202dbe3f7ed40300a0f",
+        "bytes": 6077,
+        "gitBlob": "96e9461cb9f359990f4f0de9bd6615b3a5363ce1"
+      }
+    },
+    {
+      "path": "docs/rules/awa-gravekeeper-v1.md",
+      "bytes": 4410,
+      "sha256": "d72f29e975dfe812255248fe7e4d2245115135e2efd70286680063b0bea4a6a8",
+      "mode": "100644",
+      "before": {
+        "sha256": "1690bcd21530b6206ecc4d26ff047073ec40fa7cd4dba3b55432f2c1a98b175a",
+        "bytes": 4394,
+        "gitBlob": "8fbdb110c7d40b3d088e6f22d9193442daa6ff7a"
+      }
+    },
+    {
+      "path": "docs/rules/awa-hidden-wolf-v1.md",
+      "bytes": 6073,
+      "sha256": "cb1f056b00be89735124eba9fddbe92cbf18328be847960a4da758a15e666ef9",
+      "mode": "100644",
+      "before": {
+        "sha256": "019cb74b9d193218c8d2c2f80459a86c272ebc05f610560df046a716ed296945",
+        "bytes": 6065,
+        "gitBlob": "4cb304e4cbc840bdea71d7086ad3740939132f42"
+      }
+    },
+    {
+      "path": "docs/rules/awa-hybrid-v1.md",
+      "bytes": 7955,
+      "sha256": "8d8dd1bd56ab44675958975d236cb2783ff9b6ef31f5a07baec74c3ebfb27c5c",
+      "mode": "100644",
+      "before": {
+        "sha256": "a34d348ebb39a711bb11599dd1e74d394c927864bbedaa25cc7e7be00728ef51",
+        "bytes": 7947,
+        "gitBlob": "71de2dd3375beb875cc4744c600c40760e384665"
+      }
+    },
+    {
+      "path": "docs/rules/awa-lui-meme-wild-child-v1.md",
+      "bytes": 6958,
+      "sha256": "099e97fccf946516806d2bf786964f5aed25a2e6768c2ab577dfbb0d020ed088",
+      "mode": "100644",
+      "before": {
+        "sha256": "045a9062d7e1fb0a17a7d5baca512c9942c04e35d6875b8ea4b73a6add9b1db3",
+        "bytes": 6950,
+        "gitBlob": "1edb66a8923bbe6054a719e99575577fa5017050"
+      }
+    },
+    {
+      "path": "docs/rules/awa-magician-wolf-king-v1.md",
+      "bytes": 7295,
+      "sha256": "f6257acc7a372ebf7c4a4ceadefc44ed1e4630bc7bebde7b2858feea5445f9e4",
+      "mode": "100644",
+      "before": {
+        "sha256": "8588a8904ccc25cc66bf5a0a97177eac1a11e68a29a19b6fc0ecea53b871e183",
+        "bytes": 7263,
+        "gitBlob": "4fdc6ba287c8c5196b5dee24f7185c1c4b8e56e4"
+      }
+    },
+    {
+      "path": "docs/rules/awa-melbourne-debater-v1.md",
+      "bytes": 6574,
+      "sha256": "0f580ea7c644c3063e6965874be2b97a00fdab73cb63e495047a7f407a590243",
+      "mode": "100644",
+      "before": {
+        "sha256": "cab745a840673ea0193c592bec92adbd339bbaf8d18851260b6087d2451c8f24",
+        "bytes": 6566,
+        "gitBlob": "8da9b9913952179d6f2115311a79bc8bc14c5822"
+      }
+    },
+    {
+      "path": "docs/rules/awa-melbourne-ghost-bride-v1.md",
+      "bytes": 11477,
+      "sha256": "ff6d944f375042a7eacdd45cdfcc67d278d1ba977d37a825f9fda15c45e720cd",
+      "mode": "100644",
+      "before": {
+        "sha256": "81000205869359b8e5afb3ce7e42211e85fe1718f2fc10151a7dc70981238990",
+        "bytes": 11469,
+        "gitBlob": "8a1c74addf5b942fd4b6a6c9341c951a7063ac9c"
+      }
+    },
+    {
+      "path": "docs/rules/awa-miracle-merchant-v1.md",
+      "bytes": 6862,
+      "sha256": "d242dd9d596b490fbaabeb048a7cc808c023642f5d1274ef50c178b58e8fa691",
+      "mode": "100644",
+      "before": {
+        "sha256": "031a5ce5890fe93f61ac93e27f8fec060c8b82b373a2a4468ca6073ed4f2df4c",
+        "bytes": 6854,
+        "gitBlob": "43eac2964b970f83bbed56e22e9703a844f74dcc"
+      }
+    },
+    {
+      "path": "docs/rules/awa-mirror-girl-v1.md",
+      "bytes": 8111,
+      "sha256": "b200acf260a379d3e7266d17d70b3aec9dd33dcb959af69586aa835c72e3a6b6",
+      "mode": "100644",
+      "before": {
+        "sha256": "88462288e4f1690b0562e1e863286c05a15fc4d45e56fde34c29cb191665bca2",
+        "bytes": 8087,
+        "gitBlob": "2e831122074666f1835edb157811d46a43cfd158"
+      }
+    },
+    {
+      "path": "docs/rules/awa-mist-raven-twelve-v1.md",
+      "bytes": 14421,
+      "sha256": "eb39502473f9f6c393198428e89b745294d6eb21aa6637cdff494e5f57c2b1a7",
+      "mode": "100644",
+      "before": {
+        "sha256": "b4463ae6d2938677531d14c416f51d9ea2fa3dcf4f3620cdd4562a65afffc80f",
+        "bytes": 14405,
+        "gitBlob": "e42fdde50fc00c5e7eaa0fb5a765d6c13e61fe8d"
+      }
+    },
+    {
+      "path": "docs/rules/awa-netease-demon-hunter-v1.md",
+      "bytes": 13354,
+      "sha256": "d7e93e28f386a8eeb73ff58e5143d31f31952877c42588ef48b7d010dc3480de",
+      "mode": "100644",
+      "before": {
+        "sha256": "3098b645df81e8a8d0752da546be2820e80e6510c8d47698a35936436fa3c3cc",
+        "bytes": 13346,
+        "gitBlob": "a8a88d61d8b4071540c61b6d7b5f96f8ac88496e"
+      }
+    },
+    {
+      "path": "docs/rules/awa-netease-lonely-girl-v1.md",
+      "bytes": 7531,
+      "sha256": "b66423170564f9c3f04cb59bab6296f37e9c02524b97a2a97ee89ec001fce15d",
+      "mode": "100644",
+      "before": {
+        "sha256": "d78fcdd61632ae828cc982bb2064f87aec5a028d81fc279d16151a91e9d9206c",
+        "bytes": 7523,
+        "gitBlob": "03ef9da31d9bc8d1d763ffb2d62ee2147df3b50d"
+      }
+    },
+    {
+      "path": "docs/rules/awa-netease-shapeshifter-v1.md",
+      "bytes": 8243,
+      "sha256": "a261876af174a6ff887e7c36ac4f3752b318307d4f68795d0feff641e3553637",
+      "mode": "100644",
+      "before": {
+        "sha256": "5de9757d7f5fd61f8cd4ca6196b782b67088231378502babcf43e2c8ff874c2b",
+        "bytes": 8235,
+        "gitBlob": "6d8a601dec9477145b65e29783652bc5f80774a9"
+      }
+    },
+    {
+      "path": "docs/rules/awa-nightmare-dreamer-v1.md",
+      "bytes": 4971,
+      "sha256": "bcee88d6e31d2ff54a32f89604db95219ed7af99d0abf7aa18ea1ed7df434a8a",
+      "mode": "100644",
+      "before": {
+        "sha256": "11d2d97116b020759c7a3a6da4b1b2f49394445ff041bc903677fc3016a9764e",
+        "bytes": 4963,
+        "gitBlob": "3601e956970eb45af34890edb89e78cffa683f86"
+      }
+    },
+    {
+      "path": "docs/rules/awa-noble-secret-body-twelve-v1.md",
+      "bytes": 13798,
+      "sha256": "69a9159104869cf2694df05dd578bc7fd046f58cbe8781865f91b9a488e6c3f0",
+      "mode": "100644",
+      "before": {
+        "sha256": "16d97dedb999ec7f3a3c433cd1d248c71d0b51df6d33eda927d91dc26fa6cc76",
+        "bytes": 13790,
+        "gitBlob": "0b5b5b15989542d8dcdaa3db315fa7345cd8de72"
+      }
+    },
+    {
+      "path": "docs/rules/awa-order-prince-first-ballot-v1.md",
+      "bytes": 3456,
+      "sha256": "5a884327789b97915fda27aeb78cd24d787c67026cb74d20f5413fa2003583d9",
+      "mode": "100644",
+      "before": {
+        "sha256": "a1a82676283c2e916f171d7fb2e891a18185b57e1a61bd2421b592478c4507b5",
+        "bytes": 3440,
+        "gitBlob": "f1d669087010073f1a77ef97337de536e13b9662"
+      }
+    },
+    {
+      "path": "docs/rules/awa-psychic-v1.md",
+      "bytes": 5437,
+      "sha256": "ca20764996f5c75b4ea45c6cbe0c04e78f941b483e433e5f14a7e5c0ab06e914",
+      "mode": "100644",
+      "before": {
+        "sha256": "672e795c9a0839c219909005083d34fd2592633c873d26d67eb83ccc6686a05d",
+        "bytes": 5429,
+        "gitBlob": "50e8200bc97c7cf0518a5d787301d337a3a2c462"
+      }
+    },
+    {
+      "path": "docs/rules/awa-pure-white-night-v1.md",
+      "bytes": 8909,
+      "sha256": "40c8ead9d0620bd5e414edd0acbbb8809076f41b20faff693114521c973febff",
+      "mode": "100644",
+      "before": {
+        "sha256": "9c3b7d0e3d381befb450c57bab1866f20be6df5a275b777a907788faa5683481",
+        "bytes": 8901,
+        "gitBlob": "1d1572b114e4fa672c226303247160dbf0ff5e4a"
+      }
+    },
+    {
+      "path": "docs/rules/awa-radiant-eclipse-twelve-v1.md",
+      "bytes": 13480,
+      "sha256": "aec0be07ee5f217dcf394558b2d0bf2a33686f655da4c564f51cf7b2d2db6ca3",
+      "mode": "100644",
+      "before": {
+        "sha256": "a1f278ad6cae75196a8041c62df11c45a146ef40be6943dc6815deb7da879fa6",
+        "bytes": 13464,
+        "gitBlob": "908f8add19035341b9eb2b22211366dbc095dd59"
+      }
+    },
+    {
+      "path": "docs/rules/awa-red-moon-demon-v1.md",
+      "bytes": 4553,
+      "sha256": "e2d096ae6ea2d3e9cda66465d1b84b87c8a7afa81367abb687263dfd142ae1f3",
+      "mode": "100644",
+      "before": {
+        "sha256": "02e0fa5ee7981fdd828ad257a382a5a25d876ab660b72af55e13d4bf346c8daf",
+        "bytes": 4545,
+        "gitBlob": "032febe800503f3dd0a5ad5420362c2bafa118fa"
+      }
+    },
+    {
+      "path": "docs/rules/awa-scholar-mentor-twelve-v1.md",
+      "bytes": 3961,
+      "sha256": "9608d3732b04a6e06e188619a6fda874e504a615aad58a4309b889bc6e6fc21e",
+      "mode": "100644",
+      "before": {
+        "sha256": "51a136a183667d5ed1b735b5fb143edad3eb2dfb1d61e6787fc97c949e38a289",
+        "bytes": 3953,
+        "gitBlob": "dc89148ba5294e66044e4925af136020820b3523"
+      }
+    },
+    {
+      "path": "docs/rules/awa-time-consort-reflection-v1.md",
+      "bytes": 3510,
+      "sha256": "439fc1d0f233f27948b46e21bd5af215150c4ab4e90476a326aefdcef7884c18",
+      "mode": "100644",
+      "before": {
+        "sha256": "34765bc19ff3acd8a17c8771e97883cab57a6dd65128b63328d4ef17094aefe8",
+        "bytes": 3494,
+        "gitBlob": "0c3e6fb302684eb91911d4e66cff71c38eb2ecc5"
+      }
+    },
+    {
+      "path": "docs/rules/awa-trickster-exile-v1.md",
+      "bytes": 3637,
+      "sha256": "640adc03188da80cf0081d630877a73b68160c0f6e1c179ada0b2608895ebb27",
+      "mode": "100644",
+      "before": {
+        "sha256": "c3cda73bdd899def3f01a511e1caac1d4c48e015a3e7fc9f4952704df49119b3",
+        "bytes": 3621,
+        "gitBlob": "b4432ba7f3ea3c09892cd21dec6c34d4c8784acb"
+      }
+    },
+    {
+      "path": "docs/rules/awa-white-wolf-king-v1.md",
+      "bytes": 3788,
+      "sha256": "3483a203c352c9c589a3bbc9ce1d810ad8a20b4914711d2622bc1e430a25e8c9",
+      "mode": "100644",
+      "before": {
+        "sha256": "2d5e2b5d4e40bd6e04e17cfb18f35c64d0b9c97fd1b38709dd382c628fafdfbc",
+        "bytes": 3780,
+        "gitBlob": "5c80170d80b94bbe63af518810ee54d9cb2169ea"
+      }
+    },
+    {
+      "path": "docs/rules/awa-wolf-beauty-v1.md",
+      "bytes": 5625,
+      "sha256": "45286329562c21aa2caf9ede95742154b9563caf4a9ec4fec58e073662696198",
+      "mode": "100644",
+      "before": {
+        "sha256": "f4539b00a7ad093625544d8e74aafd26b85c68a6a22e1bd257a6bda27e714079",
+        "bytes": 5617,
+        "gitBlob": "a00e4528aa474a8816c480ceba9177ec1037862b"
+      }
+    },
+    {
+      "path": "docs/rules/awa-wolf-king-day-deaths-v1.md",
+      "bytes": 5317,
+      "sha256": "173da77787c42e135807112329d93d49f705e4439fb9325d8cd2c0b13b2a7a35",
+      "mode": "100644",
+      "before": {
+        "sha256": "44dc7ab529c92dbcb83e3b44bab975397674cb2129e7a3270f61013e515ffbab",
+        "bytes": 5301,
+        "gitBlob": "4f919eb1a5c51a6eed70fbfa89c766ae2e906be7"
+      }
+    },
+    {
+      "path": "docs/rules/awa-wolf-sorcerer-seats-v1.md",
+      "bytes": 3780,
+      "sha256": "ff967678e6e7e2a9d213cdc69e0a369bed6245fd97062cffd7c858175a86edd5",
+      "mode": "100644",
+      "before": {
+        "sha256": "97b54abec13c52de93497b75bd680aa993ca60ef5e945d8119fee69af6e4acd8",
+        "bytes": 3764,
+        "gitBlob": "6ac753bc62502471b09b2a88fdc6b4d960f4de5a"
+      }
+    },
+    {
+      "path": "docs/rules/lui-meme-thief-v1.md",
+      "bytes": 5133,
+      "sha256": "37f102a5805f3d0bc53d46bd5b87a704c5a2b4171f8d28072e9f68ad589ccdf0",
+      "mode": "100644",
+      "before": {
+        "sha256": "2f140aa1f290d4ac137279adba180156c69c8a7be7ff7e86a859911c578455cd",
+        "bytes": 5125,
+        "gitBlob": "8e3d9fcdd95d50d3f42a9c7825e2a38a944419b1"
+      }
+    },
+    {
+      "path": "docs/rules/netease-cursed-fox-v1.md",
+      "bytes": 5465,
+      "sha256": "e1ce92ea44822f02a6c475175ae4fa131630f32321d1aa2d5c6a6b163f65ca6f",
+      "mode": "100644",
+      "before": {
+        "sha256": "4590418b596f44a94eff3afdf5475ac345ab8fa72e94706922f960081accb2d1",
+        "bytes": 5457,
+        "gitBlob": "9d0784b6cf4a987596fdbab068d2a17dafb33e2d"
+      }
+    },
+    {
+      "path": "docs/rules/sourced-cupid-v1.md",
+      "bytes": 8292,
+      "sha256": "cc2ae69250085e11b6a7cfe6fbb804ca9cb9a92a4e2438c272b734b35ee75376",
+      "mode": "100644",
+      "before": {
+        "sha256": "53783fb26bc0eac3a6673e7e31ab5564ca024b00c407215236ef2463e930bb01",
+        "bytes": 8284,
+        "gitBlob": "0df2006493fdd176bf22c5019081c33408191e61"
+      }
+    },
+    {
+      "path": "frontend/README.md",
+      "bytes": 2468,
+      "sha256": "1850529949d636c184d11a180682f1f498e7eba5ed6d3143a9f4ea4972dff5f6",
+      "mode": "100644",
+      "before": {
+        "sha256": "39653a8edfd7cecacd5da311a285513f90342bcfc9626d696246a7534861ebc9",
+        "bytes": 2471,
+        "gitBlob": "dd7aef6747e13b5ec79438567bb1c93dcf31dd42"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-cat-badge-skip-final/en/manifest.json",
+      "bytes": 34946,
+      "sha256": "384938cea995f45fd84a29d69348a50274cb44f5124f1706ae6fa5e4e61759d5",
+      "mode": "100644",
+      "before": {
+        "sha256": "260d541e4e5479e819b048efccca3e9d1374946ae0bfd96e2023dd38f71b4087",
+        "bytes": 34946,
+        "gitBlob": "6bba04e5d278dcb1fd985c0d5c3eb76771c70d42"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-cat-badge-skip-final/zh-CN/manifest.json",
+      "bytes": 35207,
+      "sha256": "fca7085c6171943b4b1a3e13cda1e9812468f59d749806f6d4d8611643b8c6e8",
+      "mode": "100644",
+      "before": {
+        "sha256": "75c20891811dfb2fc84f1fab8555531240d0388a23e8c92d3799ec2385ad1a8f",
+        "bytes": 35207,
+        "gitBlob": "7d896c1109f3baefe96b58005a45057ed9795ece"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-cat-badge-skip-first/en/manifest.json",
+      "bytes": 34948,
+      "sha256": "534d109ebd7ca612df6a444f6e80f1798597666aa7aa7fbec9fec2c27ab4ccd4",
+      "mode": "100644",
+      "before": {
+        "sha256": "1d7a637f31304d437aeef26de062d21d77d7ae1c96ce4c2dc56998e182cc180f",
+        "bytes": 34948,
+        "gitBlob": "4a8ca2459f66c39ae5b1fb5440ea4a74b39789f6"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-cat-badge-skip-first/zh-CN/manifest.json",
+      "bytes": 35209,
+      "sha256": "b77ff5db60614c75b4e1644da62f884264459c10e11913a9ed1406681e849ac2",
+      "mode": "100644",
+      "before": {
+        "sha256": "5ce522381439fd9134799170f67d254592020779d0aac4fe102d0d311a760304",
+        "bytes": 35209,
+        "gitBlob": "46d0a55b856cbfe567ab054a0fce264e81ac9415"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-cat-badge-wait-final/en/manifest.json",
+      "bytes": 34950,
+      "sha256": "5178d2ceda2b064b063f1840e4ec7a2f29ab1090181ded6326b451d8ab2599d8",
+      "mode": "100644",
+      "before": {
+        "sha256": "d1d36691461da85c464496b6cd7b462a347b38adc232f8d948961267d51c1109",
+        "bytes": 34950,
+        "gitBlob": "7535cb984b6990e50e7831a76922fa4b0533cb0c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-cat-badge-wait-final/zh-CN/manifest.json",
+      "bytes": 35211,
+      "sha256": "2664de0335bbb5cb99189d583fe7fb7119113615f3e06060d96c5f3571b4bbf6",
+      "mode": "100644",
+      "before": {
+        "sha256": "2641ce5d45537d3975a8a36f864fa91e20f0f193c715e94e751d6f8964d7e4c1",
+        "bytes": 35211,
+        "gitBlob": "78c969ffe1d77c5c387c964401f03db0ff7a72d6"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-cat-badge-wait-first/en/manifest.json",
+      "bytes": 34950,
+      "sha256": "80e5b88621777cdb3d226d7436537379e50ad94d57b6f7b0f8a1e060b37f004c",
+      "mode": "100644",
+      "before": {
+        "sha256": "5a09409cc59ecaf39783ae22c0424a81e198085b557a7a40cb2b566488d2a5ef",
+        "bytes": 34950,
+        "gitBlob": "bf3244a99fe0f6879d536903c398e133370b27c2"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-cat-badge-wait-first/zh-CN/manifest.json",
+      "bytes": 35211,
+      "sha256": "0e0a211c158aea36d80b4f28b06776b5c6368be074f0cab9add3cbac870ca56c",
+      "mode": "100644",
+      "before": {
+        "sha256": "4a0a1fdd89bf598ae4eff9f8bb4828b213ad33dcb00ccf055ad16e2ff6de0f36",
+        "bytes": 35211,
+        "gitBlob": "2583ef6c5492a78e7f4a4fe76d0a1128f8571154"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-fox-beauty-skip-final/en/manifest.json",
+      "bytes": 33188,
+      "sha256": "72f59781fec69d4d90705ffa48886f741b5d8f9880998e37cfdf5a81bf426158",
+      "mode": "100644",
+      "before": {
+        "sha256": "cf42c72e8a33895dd6742737d9ad5098771b86d33c62544890a7a15cb999a2de",
+        "bytes": 33188,
+        "gitBlob": "f7628344f3c2c452021b84955cc73463246f9dbc"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-fox-beauty-skip-final/zh-CN/manifest.json",
+      "bytes": 33431,
+      "sha256": "bab0eee98de1d1c31714fe8a7ffe041768d30b914ea04624b8864bfb7a170ff2",
+      "mode": "100644",
+      "before": {
+        "sha256": "3a10e2726bd518f8c5d1181f336146f3162f9bfc69ce6f682ae083bfd61bfb83",
+        "bytes": 33431,
+        "gitBlob": "6eb66920e96f01bbb40a32c3178f2a4768da038e"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-fox-beauty-skip-first/en/manifest.json",
+      "bytes": 33186,
+      "sha256": "ea0560685a3d3ce5a7ba6cfe63e5666d2009ac637fe43017e3492ff3a6b2050e",
+      "mode": "100644",
+      "before": {
+        "sha256": "ef60de3805af73179137e5984e7cc8d27e520dd9441e6151cf06a4f603812d0f",
+        "bytes": 33186,
+        "gitBlob": "a8b650d1ef732103b81d2e94d569abde79eb465a"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-fox-beauty-skip-first/zh-CN/manifest.json",
+      "bytes": 33429,
+      "sha256": "0503ecf770cddc2c656a626a66f1bb5fad70a3556dc5a75c689403814f4d84a5",
+      "mode": "100644",
+      "before": {
+        "sha256": "b85ec96faa195d8db5f0f23ee427990c1c1ff5ec4acd936e4e5f3f59b80c074d",
+        "bytes": 33429,
+        "gitBlob": "4cf4de89144b2d7d42bbfdb69bd8d6d0906357c5"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-fox-beauty-wait-final/en/manifest.json",
+      "bytes": 33186,
+      "sha256": "14ffff9e191857fd31f2946e98d18c786e1a36a28f3a8251a5ea4c4f88614b32",
+      "mode": "100644",
+      "before": {
+        "sha256": "784df75ef3f8ba2662ba541e1dfae19ab527feace5e62f8f425d79abd3448175",
+        "bytes": 33186,
+        "gitBlob": "d110d09d6203ffd3950990e00e155c5d346c894f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-fox-beauty-wait-final/zh-CN/manifest.json",
+      "bytes": 33429,
+      "sha256": "f7d0e93aa31adb8502af47f3295d17ff81796f1418daee3db40a55749ed3dcbe",
+      "mode": "100644",
+      "before": {
+        "sha256": "87a89879a0783c0277e124b4d947e004a3c33fcffd9e91c24a04ca373d1681e1",
+        "bytes": 33429,
+        "gitBlob": "ee482228bc173d17821a15d5f64119a6061a8ee8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-fox-beauty-wait-first/en/manifest.json",
+      "bytes": 33184,
+      "sha256": "6f8fd30cf3a8e183635e181e2a9c76497ae10b861b11bbf641bbcf66398894ff",
+      "mode": "100644",
+      "before": {
+        "sha256": "e8f314a70728181408a79155b1aa157493781b7c49efae3f556e1b2519210c8f",
+        "bytes": 33184,
+        "gitBlob": "9fdce4e86d6cfc0331801d18807410937de36ef8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-fox-beauty-wait-first/zh-CN/manifest.json",
+      "bytes": 33427,
+      "sha256": "95b895b916e70f684869d8dada42d3412718a757edc4650289f79e45294edbef",
+      "mode": "100644",
+      "before": {
+        "sha256": "488fd892586e4c4ad990640c2aeaf936252e620c08bc951cc5dab140a189927e",
+        "bytes": 33427,
+        "gitBlob": "8e5e5284fbfd152b75b497bbccefa5478c909013"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-full-retaliation-skip-final/en/manifest.json",
+      "bytes": 35511,
+      "sha256": "94a55dc4159399fd9b52c56cca8c2f2471b6856d2564feda9a45a2e41f167eac",
+      "mode": "100644",
+      "before": {
+        "sha256": "227a2775f120ab64cc540ea313a7de7056089aec6fe9068be4e47efa6db3ff97",
+        "bytes": 35511,
+        "gitBlob": "bda907055847996303c400f94a836dd33a5acb93"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-full-retaliation-skip-final/zh-CN/manifest.json",
+      "bytes": 35772,
+      "sha256": "103ee832588504e7dabc8a22a715e5fc37a63cffac0689bb05a50054c4c551dd",
+      "mode": "100644",
+      "before": {
+        "sha256": "1de580436899655ec25f85740e405daeea09a2d397c1415939cee9e237411943",
+        "bytes": 35772,
+        "gitBlob": "1405a6c66de85873787bc6820162c0abd48b9f55"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-full-retaliation-skip-first/en/manifest.json",
+      "bytes": 35513,
+      "sha256": "1214735c63a0d5ba1e50755beadb923dda7aad9c7adcdf7ccee852d363fb0a14",
+      "mode": "100644",
+      "before": {
+        "sha256": "b792e7de8ff09b22be8bf481b8efab317a9ebef55fa21b3b939247f65695494e",
+        "bytes": 35513,
+        "gitBlob": "3258e314d9f0c7f39f99035626cd892be6328028"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-full-retaliation-skip-first/zh-CN/manifest.json",
+      "bytes": 35774,
+      "sha256": "14fc8b4b7246d6a6de2766e562880907c3e57026e3a3b10d077b45d1695b0616",
+      "mode": "100644",
+      "before": {
+        "sha256": "b3310ab94106d86b25f77b6fcc4a8048487b92a139bb1f926e847a5714781119",
+        "bytes": 35774,
+        "gitBlob": "6f65de7ab0361f291aa8dedd63da24aa41a4f9c0"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-full-retaliation-wait-final/en/manifest.json",
+      "bytes": 35511,
+      "sha256": "61fd91a9607619409fe07abc3abeddb6736437f43f10b5d4275062da268b1142",
+      "mode": "100644",
+      "before": {
+        "sha256": "19c50f1a40650eb50e9ed3479e2e7afb032061922f70dddb8d14cd98ec1a9fb6",
+        "bytes": 35511,
+        "gitBlob": "ea8b45501b770fc543877e279d61013d9de3368b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-full-retaliation-wait-final/zh-CN/manifest.json",
+      "bytes": 35772,
+      "sha256": "bdacc42bc88c09ab587c2a382a4e24c9bccb4addea08645314adf7729406f560",
+      "mode": "100644",
+      "before": {
+        "sha256": "38971fbad52390905bbc7f9050eb8dcdbb941c6a705ea3a98c0d9fc80aa6c9c1",
+        "bytes": 35772,
+        "gitBlob": "9fe51c482ae162bdacb53c49354e2c967f127917"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-full-retaliation-wait-first/en/manifest.json",
+      "bytes": 35515,
+      "sha256": "49357cb96c29ee43d6d3577adf93733b6f89dc1ab59bbf4e27cb6c02bc5315c5",
+      "mode": "100644",
+      "before": {
+        "sha256": "1bac9a9b8743849efd8516dd699b9f4cf80b0adfd3d65d1fa393d558f850a4f7",
+        "bytes": 35515,
+        "gitBlob": "9daced64d81105adbabd05c8084f090918e1be6c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-full-retaliation-wait-first/zh-CN/manifest.json",
+      "bytes": 35776,
+      "sha256": "a6656efbac244474f4d699f5ae978c76a3874ecfa4e451c3401b579bcf33e9e8",
+      "mode": "100644",
+      "before": {
+        "sha256": "b5b87e7b5846e8df0eae176901c8b91addbbddc9998e8420c09401ffc17eaa3e",
+        "bytes": 35776,
+        "gitBlob": "e97b523f274617f5f7fa2776f0c9d455a734db27"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-last-chain-skip-final/en/manifest.json",
+      "bytes": 35029,
+      "sha256": "0ccc90002424cb8440f2ea02c5c22deca42d0bb151f727e8cda6890f122c919b",
+      "mode": "100644",
+      "before": {
+        "sha256": "908e083ae630b40f9bf55c50b1743654e95bd4a96233052d9268049ef0b1044d",
+        "bytes": 35029,
+        "gitBlob": "ec8925bed4ad69000a0d67ebb46b7862f2d681ad"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-last-chain-skip-final/zh-CN/manifest.json",
+      "bytes": 35290,
+      "sha256": "1166a0519abb0f3e624923ce10e8442c1dfb1d4f7c567fc3d42614d0f992d60b",
+      "mode": "100644",
+      "before": {
+        "sha256": "12510f9e9f94b79c552e9a14bfa6514e4159c19ec49de3c3f3b17680d39f0c9d",
+        "bytes": 35290,
+        "gitBlob": "24359be897e08dec247a32ce1118b721af8cd428"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-last-chain-skip-first/en/manifest.json",
+      "bytes": 35027,
+      "sha256": "34966e5bc1296bb552d12f04cf0d6caf705ef367c65815575f007b30bdc302c1",
+      "mode": "100644",
+      "before": {
+        "sha256": "87ed68b732fd4522c29a65d8c2bf52efa1c2a050f9373618531c33592e59c66d",
+        "bytes": 35027,
+        "gitBlob": "a200897edb839c3bb71e8122d90f3c6fd9b0947e"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-last-chain-skip-first/zh-CN/manifest.json",
+      "bytes": 35288,
+      "sha256": "289ed9b2df8089484f0c1fb5c3761a4543dfc847b7c7930100cee9f9ed4b42d1",
+      "mode": "100644",
+      "before": {
+        "sha256": "e77ad84f18a877d3c7b6b6755581b16364c1751df448c75071f32107756f120d",
+        "bytes": 35288,
+        "gitBlob": "cb43696bb048796ecae9ef6f4c502548ac51ef49"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-last-chain-wait-final/en/manifest.json",
+      "bytes": 35029,
+      "sha256": "5a810dc95979688c43ac72fcfb9c1dcae2e267f9253adf4b57b67e5ac9e9fbad",
+      "mode": "100644",
+      "before": {
+        "sha256": "ee427c1670520ad383169a9d381a390a9e26ad8a9f50a82ceb35ee3754cb8932",
+        "bytes": 35029,
+        "gitBlob": "8309b6b74da323a574652b3afb5ffb136957371f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-last-chain-wait-final/zh-CN/manifest.json",
+      "bytes": 35290,
+      "sha256": "375d280ce53b11f769ab51fc15ae2fb8994475650efa3908e4e2ed28f06aa0ae",
+      "mode": "100644",
+      "before": {
+        "sha256": "407d34e228f19b99bbe5a3332d37c24baf7703864b1cbc0cb5b1bffe508d3b36",
+        "bytes": 35290,
+        "gitBlob": "aaf2e82e850f75d893f86a2b8b52a942ae967f63"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-last-chain-wait-first/en/manifest.json",
+      "bytes": 35029,
+      "sha256": "6b2fa878e8959866a0dd47f886d0c1f6c9e87a680574a58c7b8d973c568ec4bf",
+      "mode": "100644",
+      "before": {
+        "sha256": "374aef3283f4055fd398a2fa4bcaffc85fcea3ab734ef0a604e641ec246d0ebc",
+        "bytes": 35029,
+        "gitBlob": "554cd39ef9f8fc4bf966030322280e1cfe348890"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-last-chain-wait-first/zh-CN/manifest.json",
+      "bytes": 35290,
+      "sha256": "afcab9b4061c5b864b15320e923fd2d2fec9a42888453387ccbe62650ef31fc3",
+      "mode": "100644",
+      "before": {
+        "sha256": "29063afb9f9439e5129d3786e0b84a533f2b8012a8c63cc1f758b180e6c8ae57",
+        "bytes": 35290,
+        "gitBlob": "83af55c44cba2ab12f23e9f3f17600a86e51e801"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-pk-skip-final/en/manifest.json",
+      "bytes": 34387,
+      "sha256": "46aa4bd1549bf847e37b9fca734ab39eaaaacc46d4fde180b75cd3a182f54f22",
+      "mode": "100644",
+      "before": {
+        "sha256": "793b288511f1fe7cf757cdd3a1967b3883e420d3683f8a989767172c7378afeb",
+        "bytes": 34387,
+        "gitBlob": "88654652b64321d2ec56693d35211095f643eafa"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-pk-skip-final/zh-CN/manifest.json",
+      "bytes": 34648,
+      "sha256": "ae256fa0dd1ac10fd8b6759b605d5fc8004a7509a14dec84c03bf0a5aadb5505",
+      "mode": "100644",
+      "before": {
+        "sha256": "7af3959f4f8bb82e2fe5e9658f4aa42e00b93cc91b381bf6942d4f016213de29",
+        "bytes": 34648,
+        "gitBlob": "9900ef63e73891938a336600f620849009f53aab"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-pk-skip-first/en/manifest.json",
+      "bytes": 34381,
+      "sha256": "75621d36d1ab5e8aec7dfdf30c54c6558fac44e37b8abbbb6ce3dddf67e55232",
+      "mode": "100644",
+      "before": {
+        "sha256": "ad78d5e574cc9c0ae999f910d05a822c21a81c6e0caa27c4d35269a4a49f341b",
+        "bytes": 34381,
+        "gitBlob": "d994b18445cc45494d49eecb71265ce7286223c9"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-pk-skip-first/zh-CN/manifest.json",
+      "bytes": 34642,
+      "sha256": "ad2568d7c3fdc5f564eb213d322f669a18565f70edca468ed1ed937e0992cc3f",
+      "mode": "100644",
+      "before": {
+        "sha256": "488e15920783ab7a10527e7559e6614857bc709e6e136cfdb5b6c138a03648e0",
+        "bytes": 34642,
+        "gitBlob": "ade597be4f54b4cb348df3c2f1bf279d88b10efd"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-pk-wait-final/en/manifest.json",
+      "bytes": 34385,
+      "sha256": "3d9a9a72ffe34d860015baad67676e90375b117e83d284f6c0c350d169599c40",
+      "mode": "100644",
+      "before": {
+        "sha256": "aa411e743c30edcdce8dafe9d7414c41f7562ade4e866cf1d3c37c27bd4ac8d2",
+        "bytes": 34385,
+        "gitBlob": "3534da5e1ca3def1c5b23c18d984ce97a0839973"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-pk-wait-final/zh-CN/manifest.json",
+      "bytes": 34646,
+      "sha256": "b69c70926ec2953f6211b87d8d87c26f86fa30d521c9494b626a9d4c041e985b",
+      "mode": "100644",
+      "before": {
+        "sha256": "a60a525002ecd9e249edbca3e77bb15087d7ea41a825302d4740040ea759dc6c",
+        "bytes": 34646,
+        "gitBlob": "35c3fceff5dcd7c5083879a3ab67c373e9af56c8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-pk-wait-first/en/manifest.json",
+      "bytes": 34381,
+      "sha256": "0d74b73b963d810d339befb3ba0e5b8804ca5e9896eef117b3c78ec7a9c844ff",
+      "mode": "100644",
+      "before": {
+        "sha256": "0d5d712abb35981189e7dd018e06fa713572374a6f23f37a7764d1d24c6fe9a9",
+        "bytes": 34381,
+        "gitBlob": "630f041b6aa40d3ceea4790eaa8f2a8f80702a9a"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-pk-wait-first/zh-CN/manifest.json",
+      "bytes": 34642,
+      "sha256": "f92389cdbfc7fa3490318c3f9d3ea8919f735ebf7be2b3044f0bc5996cb37d84",
+      "mode": "100644",
+      "before": {
+        "sha256": "ccff0d906ee59a79bf0a3d4c74a177fbb7123ad1c28833f50ec8f7889685e632",
+        "bytes": 34642,
+        "gitBlob": "d0f646bebaeb92d3d53ac3ebadac189aba366d82"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-puffer-knife-skip-final/en/manifest.json",
+      "bytes": 35191,
+      "sha256": "1ce9c584f5f6a0a71346b4e78b93e361107f355405f7ca16f190d5cb224f5a8f",
+      "mode": "100644",
+      "before": {
+        "sha256": "c952595fa7e6756dd24f21f8860b73391812fc391359074fa0cea7e9ab68a0e8",
+        "bytes": 35191,
+        "gitBlob": "bd5d508706d23a5a82cf042ce23bda6295740d12"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-puffer-knife-skip-final/zh-CN/manifest.json",
+      "bytes": 35452,
+      "sha256": "b784efd2c43ca1f20ef58a16df1a9ac5460b5bdf911df389454e2d420aa583f4",
+      "mode": "100644",
+      "before": {
+        "sha256": "5d59ff4f81b82ba5c8af288b232cdf539f883428c361374128c35106a5667e44",
+        "bytes": 35452,
+        "gitBlob": "ad70cc3b007594eec10cccc2f95c813f1115de53"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-puffer-knife-skip-first/en/manifest.json",
+      "bytes": 35189,
+      "sha256": "f5f5d7cd74d980143ba2fb31d93aead96a287e5dc488bf375f882b33ca125c63",
+      "mode": "100644",
+      "before": {
+        "sha256": "d7f5dd910a2ee4c25e7ed8fb605dc428ca0724cb3332ecbc297376188ab8df34",
+        "bytes": 35189,
+        "gitBlob": "d6e66e1aa52b3cf80f2081aaf55dda3d9bff9cec"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-puffer-knife-skip-first/zh-CN/manifest.json",
+      "bytes": 35450,
+      "sha256": "c8d9b9fbc9960732faa9a9baa51a4430872c7e17d4526475744dfb6d07ef657d",
+      "mode": "100644",
+      "before": {
+        "sha256": "2fc05902b377bb9a658ad23be06754e53ba166a8f8247f369b1db4c76e1996c2",
+        "bytes": 35450,
+        "gitBlob": "e93ac1e941e5026e99eff6449f6a8a26ffc3b1c1"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-puffer-knife-wait-final/en/manifest.json",
+      "bytes": 35191,
+      "sha256": "f4ac8a37ddb48a02a09d82697bda0ae27b2ab63fd08a475378132bf1d5f72371",
+      "mode": "100644",
+      "before": {
+        "sha256": "98bfab80a34a0874e57403e2f7e30dedd0f1e7f41d300b30cde75aadfb38fa75",
+        "bytes": 35191,
+        "gitBlob": "845f9b46906bbb1e870ad1a15ed2b90eb2dde800"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-puffer-knife-wait-final/zh-CN/manifest.json",
+      "bytes": 35452,
+      "sha256": "3a3038d2636f7aeb869a5758d93085b09cfc7d72ec3d80da42604b69d4639d25",
+      "mode": "100644",
+      "before": {
+        "sha256": "d2674b70a8ccfb2e5aff3db970d1ba88d84b76ac860dab73ad25c2a52042f578",
+        "bytes": 35452,
+        "gitBlob": "5fc9c01f1781574e38bb84d8eb1043d55518d81b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-puffer-knife-wait-first/en/manifest.json",
+      "bytes": 35191,
+      "sha256": "3a79316b988025f42d67659f8378f87a2d212d7bada34c2c805d2a8d1893b09a",
+      "mode": "100644",
+      "before": {
+        "sha256": "c0cb1b0f497ab64bdc5bcf92f473249d334333830697110e1f15c994a017c826",
+        "bytes": 35191,
+        "gitBlob": "5f72d8ba840fe07b4aa89024490a532f436267fc"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/animal-dream/animal-puffer-knife-wait-first/zh-CN/manifest.json",
+      "bytes": 35452,
+      "sha256": "44375ac01a2740a412cf70f17c2700c756a793502585ed5f52c17628450dc410",
+      "mode": "100644",
+      "before": {
+        "sha256": "17983400315a44d96551913747799a4639f34ea3724beb3ef81d354773b23604",
+        "bytes": 35452,
+        "gitBlob": "37cad4cd844e7970a95f5264958c8bd616947b74"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-dead-caster/en/manifest.json",
+      "bytes": 38859,
+      "sha256": "34a9bb719d19bb1eec790d149a38b86f8f8c3d2102af7bbea6e134dc1fdad39e",
+      "mode": "100644",
+      "before": {
+        "sha256": "a0e8ffec2c51663234d39a648c792ff335748d8bb0f81894438316238798b3a1",
+        "bytes": 38859,
+        "gitBlob": "b4630423e64e99e9e54e627d280878f03c536f68"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-dead-caster/zh-CN/manifest.json",
+      "bytes": 39141,
+      "sha256": "896f0d8608de91bb1d50be1e828b3af79a3d546a5577c6dd202622ba1d2abacc",
+      "mode": "100644",
+      "before": {
+        "sha256": "28dd4c4fedaa8f07059f023e219ce04ac94349290141d865a143e4257c11b36a",
+        "bytes": 39141,
+        "gitBlob": "276f5f94aa124d70ab1a01c7dff3b20c42b6f0e7"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-expiry/en/manifest.json",
+      "bytes": 38427,
+      "sha256": "9724b0102cf689a6d1a37aef27c8b10e3316810f548eb1c0e879ec50917fb04e",
+      "mode": "100644",
+      "before": {
+        "sha256": "002d8de0905db5e1a91f17f861e869c46c939a103a2b172584dc8d8924743db7",
+        "bytes": 38427,
+        "gitBlob": "e383023f10abd37fcd3cc3b339dc37d36e481095"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-expiry/zh-CN/manifest.json",
+      "bytes": 38709,
+      "sha256": "d0d296cd3c8bfa402a61eeb7ba609bdfa285017d4b4dc08ff561d2c76400b32e",
+      "mode": "100644",
+      "before": {
+        "sha256": "9d714253f8b046341267602fb2d84c7992d2d967996d808544c9765f029b8fe9",
+        "bytes": 38709,
+        "gitBlob": "247ba7dffe99e5b21e0eb78a91a23943755158df"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-first-link/en/manifest.json",
+      "bytes": 38775,
+      "sha256": "8edfdb46d6c74e0202b53620fa39b7fe4cdc315d1a638080b71faea90b77d301",
+      "mode": "100644",
+      "before": {
+        "sha256": "7f0ac2759bfd3c2760d782a9209f0c8261dbef6bec1d86834eef8fa371c80aed",
+        "bytes": 38775,
+        "gitBlob": "506c14c280d7375b4721ea2c8af30d86932af2da"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-first-link/zh-CN/manifest.json",
+      "bytes": 39057,
+      "sha256": "7fd7bb292e686591f50e373c120dd12c5d7cce5d461863690f03c36fa43b4329",
+      "mode": "100644",
+      "before": {
+        "sha256": "29652c34108afdb40ad55a29c0f54f7cb2ef6585c220e484177b41898d3b64e3",
+        "bytes": 39057,
+        "gitBlob": "360c187d287f8c2fef4d672cc4a2aba29a71474f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-inherited-gun/en/manifest.json",
+      "bytes": 39037,
+      "sha256": "443c5ac11dbaed4932a20659d3e03b0ed0193f44f8621533d8f46864e467fd49",
+      "mode": "100644",
+      "before": {
+        "sha256": "073af790ecfbc8320e30e93f9479a4e7440116404dcd510ba363ffe57f010b07",
+        "bytes": 39037,
+        "gitBlob": "1a7af8edb7b84326bee47ec575f954d60670e322"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-inherited-gun/zh-CN/manifest.json",
+      "bytes": 39319,
+      "sha256": "272aa00ff15357edc139f897f4f4fa4e828fef58264a072b3f542b8bdf5e67dc",
+      "mode": "100644",
+      "before": {
+        "sha256": "bb378266caae61a802c70bdefd1985b677741b487bc2a675d252518bbd55763a",
+        "bytes": 39319,
+        "gitBlob": "5613dba1800721c02209724245c136a58e0b22d6"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-same-wave/en/manifest.json",
+      "bytes": 38687,
+      "sha256": "b4497f1be51c91bfb5abf271c8258fdc9a8dca844c2c2132d8490a1775d60be6",
+      "mode": "100644",
+      "before": {
+        "sha256": "884edbc410a2e3308e5b4c90fcd839c7328505255ea55b20aa36f77ba68a2d3b",
+        "bytes": 38687,
+        "gitBlob": "b49dd47ee218a03a081415af342034de4bb1fb0b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-fragrant-pair-seer-12-v1/fragrant-same-wave/zh-CN/manifest.json",
+      "bytes": 38969,
+      "sha256": "c5de77832d4eea0ce5fd1e8e193d7728d8a82c438c0bb6605f7b8e6c41ddb781",
+      "mode": "100644",
+      "before": {
+        "sha256": "2680d8566fb5d1f1f3bf3f6f0e006293215daf6e241af799ba28a1206c217f00",
+        "bytes": 38969,
+        "gitBlob": "568ca95823194fc5a8227c7826be7363506f7ccf"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-badge-chain/en/manifest.json",
+      "bytes": 37768,
+      "sha256": "c52e69f3d174435e37ad6ea45f9b3cdc16b7e762bf225d73b3d592f6d35abae4",
+      "mode": "100644",
+      "before": {
+        "sha256": "15b29d06988f2780ae51651ba2f0252b3dfbdf4d4d32c52547c1a24cb509d3af",
+        "bytes": 37768,
+        "gitBlob": "5d285c5d7051fd96fce263900229b4b1903bc993"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-badge-chain/zh-CN/manifest.json",
+      "bytes": 38032,
+      "sha256": "945cc59680401e805e8d3a7b3a256d72bc4fae8a9a1ff4da0cd307b7ac407431",
+      "mode": "100644",
+      "before": {
+        "sha256": "e020a514d84bbfe82f4eabb2b9e44cf5b178467ce428292b3d7ab0084a9ea0f5",
+        "bytes": 38032,
+        "gitBlob": "fd5f32c6459e0d9f873c1b01f1c85688b5c8cf24"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-daybreak/en/manifest.json",
+      "bytes": 37522,
+      "sha256": "3ab02f74bf1c38ca740b22804d5189e8ad8345b6603e51b22d2cf8c395996f7b",
+      "mode": "100644",
+      "before": {
+        "sha256": "e9fbb6c9aa893737df117b1af05b56e6143409ef14dc4c489efe79f498a3fbdb",
+        "bytes": 37522,
+        "gitBlob": "c37f6773bbcb631f099858219b04144dbc9d2abf"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-daybreak/zh-CN/manifest.json",
+      "bytes": 37786,
+      "sha256": "4b0a9559423bd882f12d7cb766d3394b03fa177f2c2ec526d700bff643d2ea8a",
+      "mode": "100644",
+      "before": {
+        "sha256": "f8c8a34a746afc1c0add7144acca0f7fdd34ba88c29bfdb9ff8a9b43d10144f3",
+        "bytes": 37786,
+        "gitBlob": "3feb7586157212d4dced759bd84139e4e9678673"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-last-wolf/en/manifest.json",
+      "bytes": 37604,
+      "sha256": "6f78099f8baa817cd71d7363fe1b091ab55a8e0687bcfed9f4b96bd1cc5bff10",
+      "mode": "100644",
+      "before": {
+        "sha256": "1819376de8b2cd949b905de6bec7313cf4fbd21094f0ba27263df563598d4648",
+        "bytes": 37604,
+        "gitBlob": "d8cc36ef9d49d72365c401b6e62063bea504c98b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-last-wolf/zh-CN/manifest.json",
+      "bytes": 37868,
+      "sha256": "027ee393a9375d9d4e21d426f9a4aaf4807d44a0304abf4b2a1247d3df4be047",
+      "mode": "100644",
+      "before": {
+        "sha256": "644bb75c7f2999108365c03d90fc27b0a11dce74569fa68f4fce993aeef58795",
+        "bytes": 37868,
+        "gitBlob": "dd4c5c78b83ee665ea0b0259bae40668da7796ab"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-parallel-raw-loser/en/manifest.json",
+      "bytes": 38342,
+      "sha256": "bcb70bc76deaf8b0969e24cd66b6a02db743118e928de6c351444e4da12e6bb0",
+      "mode": "100644",
+      "before": {
+        "sha256": "bd46b63a1a9e5b1a808a79e5eb0615f9054c128ba8fcad044d33c1982e20d8c1",
+        "bytes": 38342,
+        "gitBlob": "b5ac41e2d0fc32f723742423e5382a76c6385620"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-parallel-raw-loser/zh-CN/manifest.json",
+      "bytes": 38606,
+      "sha256": "d80088b1cb408f79c3d1590ecd8a8a42bc808894e769dd0dddd21dd992926b4d",
+      "mode": "100644",
+      "before": {
+        "sha256": "3bdc10e84d652160f582406526966004d7a816aa2f8c01129995f345577f27eb",
+        "bytes": 38606,
+        "gitBlob": "615a8137c2acb22291b1977323d04b3a90db1664"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-parallel-second-gap/en/manifest.json",
+      "bytes": 38424,
+      "sha256": "9c8e0095d9934d29356d6cddd8d0754eb1a5bcc6811ffa8aa691ae27934d58a9",
+      "mode": "100644",
+      "before": {
+        "sha256": "2fef362d6e8bee3c8cbab5965693f3112168d6e69d90207e34914b47ae25bce6",
+        "bytes": 38424,
+        "gitBlob": "106980ddd8956c147bd351ae8f405ab41ddf0141"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-parallel-second-gap/zh-CN/manifest.json",
+      "bytes": 38688,
+      "sha256": "8ed7dcec006117b284151a94c280a75a3077f25887ee62ecef1af0c02036946c",
+      "mode": "100644",
+      "before": {
+        "sha256": "724564c1fec76edef5ac9754b428c889e88de1fe151860733d8cbce056e6396f",
+        "bytes": 38688,
+        "gitBlob": "a82490b007fc44c03d65cdc5106f848cb156c190"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-pre-election/en/manifest.json",
+      "bytes": 37850,
+      "sha256": "c4d5666bd49c1d21508a93663264f9e9823883cf4948de145effda2138d8ef1f",
+      "mode": "100644",
+      "before": {
+        "sha256": "ffc64a636d6f987290cd96ec12244fa4d4896dc51965971b6831f86384915980",
+        "bytes": 37850,
+        "gitBlob": "d28fd672ddc9c4270336160788206d9eea5cc829"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-pre-election/zh-CN/manifest.json",
+      "bytes": 38114,
+      "sha256": "c6b836904ba723555bed622596319e6a278ed33f92e8111d898b1ab8774bd77d",
+      "mode": "100644",
+      "before": {
+        "sha256": "3ebaf7db2473e6e267f0b25f4cd42064a5836418ca242da02b4f0f0a52240f4a",
+        "bytes": 38114,
+        "gitBlob": "cd241f6d9e42a4ff8c3d6838ab5f2e46a2d0b3ee"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-pre-vote/en/manifest.json",
+      "bytes": 37522,
+      "sha256": "54a82f68be871c3e8f1dd0e60b1ac902f68170260c8a6de14db8373ddf7d0d0e",
+      "mode": "100644",
+      "before": {
+        "sha256": "087a0612159543ca331c02b99888b3ecef30aaec77c49de4d50d8782d103c55a",
+        "bytes": 37522,
+        "gitBlob": "35f92d954cf851fb7b3aebcad8d97a220c586de2"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-pre-vote/zh-CN/manifest.json",
+      "bytes": 37786,
+      "sha256": "76e31723ce81aea38bea70e8ef7babba5c431c26043ab050a465e55cad183e32",
+      "mode": "100644",
+      "before": {
+        "sha256": "a21696d23efae731692148532be96d3cff27192eb4c4e82cc687053835483a57",
+        "bytes": 37786,
+        "gitBlob": "cbfdf7538617541f2c6cbfcae27392b2f153b508"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-raw-target/en/manifest.json",
+      "bytes": 37686,
+      "sha256": "b72825992e1b94e32fbd39a14e4dfd1645ce2ea3f4d35e041dd2d042e7b660a6",
+      "mode": "100644",
+      "before": {
+        "sha256": "9277851694f2a934192be5cfa36bf7e303099fca7305c4ab41a001dac3066c34",
+        "bytes": 37686,
+        "gitBlob": "9be05db2bc602f2e9c58f4c34172a600ce362644"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-raw-target/zh-CN/manifest.json",
+      "bytes": 37950,
+      "sha256": "85f4951e7a7d3912331aa33801d4e51f38c6387a44ceca3b47b7b5d21e29116c",
+      "mode": "100644",
+      "before": {
+        "sha256": "b3b2b5674223fbfd6dfef5cafb7b9189abcc79de2a3d7a0c9ff41b894e5b7c32",
+        "bytes": 37950,
+        "gitBlob": "a88c89e9ff4db951c4e085c093b3b352d67cef3b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-speech-gap/en/manifest.json",
+      "bytes": 37686,
+      "sha256": "90bd3b7837f1bbc44962cf033644d20aa60eea386abbe07538ec2349088de74a",
+      "mode": "100644",
+      "before": {
+        "sha256": "a0753d3acaabcb5ee5d0cc9136be899daa223412c3fb447033211f95bfd1384f",
+        "bytes": 37686,
+        "gitBlob": "c3e2f86a33d4d84940f036930bd2ccc8c3d5a53f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-manual-blast-speech-gap/zh-CN/manifest.json",
+      "bytes": 37950,
+      "sha256": "f310c047a509ff001a64566dd11efb95c565b1ec5c3df9110b22b0ed09dde384",
+      "mode": "100644",
+      "before": {
+        "sha256": "d13a75297d2977bf482718ee2609ec5dd6265d3c1359e673d519b4f175f8c301",
+        "bytes": 37950,
+        "gitBlob": "755b508514f3f93936bb35de1c03e033bf92b159"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-normal-draw/en/manifest.json",
+      "bytes": 36706,
+      "sha256": "3bf172c909c6a1109d8b6aebf7ed474f708e065abecc8e64b551cd695b034f33",
+      "mode": "100644",
+      "before": {
+        "sha256": "e0bb8c8acc3837940729ee4be42637b14c24b9a8b9d4169bbce13ae3f1941868",
+        "bytes": 36706,
+        "gitBlob": "6605a89378ac5110c637a60169e00f90696c988b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-normal-draw/zh-CN/manifest.json",
+      "bytes": 36970,
+      "sha256": "80c2d8881d1ec82819b59487258cb7399645edca75c0d6fa337053ad2d22a14a",
+      "mode": "100644",
+      "before": {
+        "sha256": "df6abe85cd15706fbd4c4c45898ac2075a8eb0fe2ad4d621ba0cf8df700d8fa2",
+        "bytes": 36970,
+        "gitBlob": "f7918ff70da5a0d05a198afdee012bdab92a9949"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-normal-linked/en/manifest.json",
+      "bytes": 36870,
+      "sha256": "6120f6cbf8163f16efae934734bbfa4ebe3deaf74a002928c0969a65356e1208",
+      "mode": "100644",
+      "before": {
+        "sha256": "e85040784a674b73752bb06f54c74d5371c19e300d11166b5a12bcedce835699",
+        "bytes": 36870,
+        "gitBlob": "898678af4fc8c319054e1e8df48b48ad2a357626"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-normal-linked/zh-CN/manifest.json",
+      "bytes": 37134,
+      "sha256": "3da04f41ffe963b351769c8aa50215ee79b4a9cba59f39c7dbb32cfe184266f1",
+      "mode": "100644",
+      "before": {
+        "sha256": "36c773a3e46c18f0297043154a56a9a3070da2d389d75df83df854abb0ab3161",
+        "bytes": 37134,
+        "gitBlob": "c563fdd13195c817de103cbc85d7e06da9d60c49"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-normal-protected-heal/en/manifest.json",
+      "bytes": 37524,
+      "sha256": "e36f81a5e270c82fbe1e0cd44ea46beb0feb3d68e699b04447596d18398c2411",
+      "mode": "100644",
+      "before": {
+        "sha256": "2b88b705d69459246d256ad69b75a375493906105ee207ec9a24c37edd86a98c",
+        "bytes": 37524,
+        "gitBlob": "f0fc890d9f61976b12b9d97dd9fbfb689c3cc3ff"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-normal-protected-heal/zh-CN/manifest.json",
+      "bytes": 37788,
+      "sha256": "c6467e8be02146597e9aed1a01ec5f3db2d5dbac05488cda9515e58bf3182b46",
+      "mode": "100644",
+      "before": {
+        "sha256": "048c0ef0da8658c64e2fa68ac5fca4a9db2d51bc1ee9f43f73317bb7d4155ed6",
+        "bytes": 37788,
+        "gitBlob": "f18e40ee28ff05a55b727f495e083fdb5b523498"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-normal-saved-dreamer/en/manifest.json",
+      "bytes": 37444,
+      "sha256": "7a4770fa863e632d0201c2046be68f77ec461db11a02a662e55df62bb5e1fef6",
+      "mode": "100644",
+      "before": {
+        "sha256": "d10d16e9ae37fbc6a384699673d6c92749a3f1de3773004519596a8090e991fe",
+        "bytes": 37444,
+        "gitBlob": "d175f1c7a34d1a98465189b3ffa2933b6d8a0742"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-mist-raven-12-v1/mist-normal-saved-dreamer/zh-CN/manifest.json",
+      "bytes": 37708,
+      "sha256": "918e86f39afe2c189014dfb2e765e45890bb36257fceb031fa18b4079506a829",
+      "mode": "100644",
+      "before": {
+        "sha256": "438a008439b2db66029201ac08e4cee503a7786e772144e939f7082ef5f10d98",
+        "bytes": 37708,
+        "gitBlob": "014ae5899a83da427a8916a72908b3d65105b83b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-badge-reveal/en/manifest.json",
+      "bytes": 46946,
+      "sha256": "144778e2eb427616058fda5957766c535d6c5c4dc9fbbeae4b9ef9aef6533e6c",
+      "mode": "100644",
+      "before": {
+        "sha256": "64ba5a0781cdebad7a0ca00b4d16b92c8abfb57db3eb19d797fa778827eb3955",
+        "bytes": 46946,
+        "gitBlob": "71f1b0f8ba8403788a9a962f78764f030960aa0e"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-badge-reveal/zh-CN/manifest.json",
+      "bytes": 47306,
+      "sha256": "68e19f9b3199635935d6d38640cfb712c5c8ef24d22c373fd09fc8cbe16f3bf0",
+      "mode": "100644",
+      "before": {
+        "sha256": "dc1ccb56e67aa3540e8b62673592bfe945624ae40d7a740e6d2beaccae23ff7d",
+        "bytes": 47306,
+        "gitBlob": "039325caeb8b0062139171db1d7ba3c4cf07f1e8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-expiry/en/manifest.json",
+      "bytes": 44472,
+      "sha256": "6e4ddafd6f3da02bf4daa3170c34b163e203da402057c39092c2493dc6624834",
+      "mode": "100644",
+      "before": {
+        "sha256": "5cf5cf2dc9da7dd84ffbcb8ab0f1ead4bb2dba4b2a908e93fe7545e4ea6cd4ee",
+        "bytes": 44472,
+        "gitBlob": "82cfea81caa301b8d978d002352dcd8a7678151a"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-expiry/zh-CN/manifest.json",
+      "bytes": 44814,
+      "sha256": "5568b3fe2e5926536b17f1c97e9cb827efc3afcb85c4bd4398de76470e611138",
+      "mode": "100644",
+      "before": {
+        "sha256": "a89779c7c7acf57a73ebc83a5d087d52f51b11c2b8891c31aee6143fad030e88",
+        "bytes": 44814,
+        "gitBlob": "17bfb356f1c6c9b64d5e54817ac79a3ec58d08e0"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-failed-reveal/en/manifest.json",
+      "bytes": 30156,
+      "sha256": "c25c50d6a4eb495f8e080616e9139fe758aee2e4dfe0125ac8a861e42c3fa85a",
+      "mode": "100644",
+      "before": {
+        "sha256": "bafd57836c21b40a0a1f55d650e0dd9b63571cc061a6ef7c5208e76ab168fe1d",
+        "bytes": 30156,
+        "gitBlob": "551a6acc1fbbae90d106650423edeadee5f04726"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-failed-reveal/zh-CN/manifest.json",
+      "bytes": 30360,
+      "sha256": "240dbcbea827e1585a8c1173e0e3c5d75c9de24853499d59b8cb6b2d60d9fc41",
+      "mode": "100644",
+      "before": {
+        "sha256": "c3b37139c3fd7d6d026f687e5de3cdfa16adc3b73595cba1e4c7f45c3fadd011",
+        "bytes": 30360,
+        "gitBlob": "34bbeae95c5cb4880128dc0f68db9b53d99c55cb"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-new-and-old-clear/en/manifest.json",
+      "bytes": 45649,
+      "sha256": "9d14cc1d52ea9281915e249e8ee47432a8ec1daf99ccba80fcf0f0e0e64414d2",
+      "mode": "100644",
+      "before": {
+        "sha256": "9e4968ae93b9186fae72614af4ba997df3bd0bcd2f6d6e4d54c3791a7712e66f",
+        "bytes": 45649,
+        "gitBlob": "c0387db2f7f2c96bf8b3c96e544c8ead7f45c24e"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-new-and-old-clear/zh-CN/manifest.json",
+      "bytes": 45991,
+      "sha256": "36ea80f15b2d4e3beca6091012e5a67aecead51a53f9446be1bdbfa368f83814",
+      "mode": "100644",
+      "before": {
+        "sha256": "87691cfa589bed7aa54338ff440facb8a8bf7f31ce8ea38dd9e79264b1b5b1aa",
+        "bytes": 45991,
+        "gitBlob": "be40d0493f1ea3c33816c92439f595dfe9729e3b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-two-sources/en/manifest.json",
+      "bytes": 45007,
+      "sha256": "2d8fc69b7d75ce3ffc0a15f88543bae026537646890cbd796507a5ad2b8fda9c",
+      "mode": "100644",
+      "before": {
+        "sha256": "60832ade1e7ef62d2b293b3d9ed1602ae27cb85569256c2d5a89ad2adb87f00d",
+        "bytes": 45007,
+        "gitBlob": "d1dbb112498f8af3b0398a967aab3a4c9852e07c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-two-sources/zh-CN/manifest.json",
+      "bytes": 45349,
+      "sha256": "1db5d21540aeff12b2c0cc17a53724ce418bab3ab0e2ee4dac4b622ed423b706",
+      "mode": "100644",
+      "before": {
+        "sha256": "cbdc36cb3a8a5afd1aa64650b08e42da2fe9bddbd6427f0db95d5dd7e3ef6d92",
+        "bytes": 45349,
+        "gitBlob": "43ec7cf51149e1ec223847da6351a657826dc352"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-borrowed-dream-death-badge-words/en/manifest.json",
+      "bytes": 53358,
+      "sha256": "78f64ae59c6e737fef117260f7692481d0ba9cd81cb080f82ab78842b18b521a",
+      "mode": "100644",
+      "before": {
+        "sha256": "bf74cb63823735537c71b6930adb9485b529fd876ef5b0208583a5b55eb7f6d4",
+        "bytes": 53358,
+        "gitBlob": "8d06eff7e6efacc8b8d05b67a2f7ad032fc7061e"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-borrowed-dream-death-badge-words/zh-CN/manifest.json",
+      "bytes": 53748,
+      "sha256": "6c8dd42175e166107f77c299ec23a7e327c11f0a164fc89bbd55abc77843b5c0",
+      "mode": "100644",
+      "before": {
+        "sha256": "8da0f9f01730dad35739966e8794590d37fca89eda1d490560ddbcf06ddac834",
+        "bytes": 53748,
+        "gitBlob": "702f23d2786c35b616f594dc58fc51467c9c85e6"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/en/manifest.json",
+      "bytes": 51710,
+      "sha256": "af187aeca355bf29137811ee07a6498e5604ef0b24a725bb22918e198fd0f77e",
+      "mode": "100644",
+      "before": {
+        "sha256": "def386ccb6ea40aa76d7930a965e9e060739c91d2ef598188763bd06a3d702c6",
+        "bytes": 51710,
+        "gitBlob": "24d5ac36c36996432e1700ec01cef90b1a814b3b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-failed-paid-potion/zh-CN/manifest.json",
+      "bytes": 52100,
+      "sha256": "708eb16abbb4326291ae8e7dbcb031f47f1a9c3d3b563a19e71ace943e4f1027",
+      "mode": "100644",
+      "before": {
+        "sha256": "a5911445971aa268f6be32b8f19584fd124bcd66135ff83611d7f8ee00783942",
+        "bytes": 52100,
+        "gitBlob": "f7326d172482b2211aad2e97f16e7f2c19be8437"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/manifest.json",
+      "bytes": 53299,
+      "sha256": "7796c7e69e5363b71f275e3f0e926abce54c1ebbfd606c8c2837990265dd229c",
+      "mode": "100644",
+      "before": {
+        "sha256": "696fb9223ff31af6987b11ba481164d3d0837ca237e0ff4ec77be866d4c16c7b",
+        "bytes": 53299,
+        "gitBlob": "5f84595bbbc54308c23f1e4dcad4c8e2df9edb0c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/zh-CN/manifest.json",
+      "bytes": 53689,
+      "sha256": "479fd5484b0ea053437d006865c2376ef363f0202efca1a0544c1a9f1c82d641",
+      "mode": "100644",
+      "before": {
+        "sha256": "7b0bb8288a0d7a35b1cc560bbe421f0377a44512eb5cf6f2899b1bc800ef9dae",
+        "bytes": 53689,
+        "gitBlob": "291ded44856c018d560319bc9533f25a6468f76b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-last-god-restored-dream-gap/en/manifest.json",
+      "bytes": 52753,
+      "sha256": "25becc91f7ff2b0a4b626b2b4ad2b0055f76c8176ae175180c104b0546b3d72e",
+      "mode": "100644",
+      "before": {
+        "sha256": "d882c5b3fbcd8128b96671f547179d5cd672b6855f43fe57abe41a418a5fe85a",
+        "bytes": 52753,
+        "gitBlob": "6430670ba62af29dcab788d3ecd0c84dfb165af5"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-last-god-restored-dream-gap/zh-CN/manifest.json",
+      "bytes": 53143,
+      "sha256": "df7778b53fef6f1033851f4c510a51301959dad10918f6f66f920c661e91f129",
+      "mode": "100644",
+      "before": {
+        "sha256": "7d0e4324cbbf3f60b35ead69be86dc43acb21331ba38b934db06abeeaa0f4b47",
+        "bytes": 53143,
+        "gitBlob": "319ceca0774ba1ebb10d48f63e3dcddeadf20d8f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-last-villager-saved-then-double-cause/en/manifest.json",
+      "bytes": 53967,
+      "sha256": "081a0399e20fd0fedf5f21d125e4c10c3a9d9355c45091a88a1cea4910bca593",
+      "mode": "100644",
+      "before": {
+        "sha256": "de1193b1c5ebd98c823386e21a7b3c237fbf1a0a5563b2cc7bcd8b434edd3a63",
+        "bytes": 53967,
+        "gitBlob": "07fdd7d55ffa02d9238af0fb5265df5eba98405e"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-last-villager-saved-then-double-cause/zh-CN/manifest.json",
+      "bytes": 54357,
+      "sha256": "a5ea6ba20d36d694e7827af35df1d8f44bb89364238b2510ae195419c2d63a11",
+      "mode": "100644",
+      "before": {
+        "sha256": "ae541d922623d60ca959bdd38012056955164a58ad7176a47db537815d36229c",
+        "bytes": 54357,
+        "gitBlob": "4dc65277de8b3544b4583670ab30a318ce23d240"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-last-wolf-borrow-backlash/en/manifest.json",
+      "bytes": 52569,
+      "sha256": "1c9f2d9fc870d8f3efef9c28f15350c9bcfd970dad19c8247b16355a62f96719",
+      "mode": "100644",
+      "before": {
+        "sha256": "a608040cdaf45b1f126b9c7299340363d6ac3e289bbcd50e4fa681a3303f31fc",
+        "bytes": 52569,
+        "gitBlob": "9f19d6dd7839b0572fa5cc40098828ab24a74368"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-last-wolf-borrow-backlash/zh-CN/manifest.json",
+      "bytes": 52959,
+      "sha256": "6547efe63c511e278d6b3ac1135c3667a9f3b17343f18780b362a35e52fabba5",
+      "mode": "100644",
+      "before": {
+        "sha256": "219288deaacfba77915e84607e39cd14cca4261d4e93819a31d19911de7b00f4",
+        "bytes": 52959,
+        "gitBlob": "09ff820f3b8c8769f5b3fd2c5bd6cb55495eabd4"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-one-zero-borrow-heal/en/manifest.json",
+      "bytes": 51906,
+      "sha256": "7ae313a5590b481071bf7cbecff737d5c8e63d094c8af895e663cef48b397455",
+      "mode": "100644",
+      "before": {
+        "sha256": "dd06be257306f1866df556b560977292e69dcd74bb9589407e35563b85c6ef0f",
+        "bytes": 51906,
+        "gitBlob": "5f07f43ad238fcedfc3c1845412d7ba2f861445c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-one-zero-borrow-heal/zh-CN/manifest.json",
+      "bytes": 52296,
+      "sha256": "a98fe0c6d4cb7e77e4526f4071cfacee91af9f8d7388d147a1e2c3e64e7dbbb7",
+      "mode": "100644",
+      "before": {
+        "sha256": "bd0c186a67fa955f6b96b1758b406de5c73afa01796a7a274ec83a37e6598ed0",
+        "bytes": 52296,
+        "gitBlob": "20828e2f68ab2ddd1fd6830f63da0e26cdb8aa2d"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-zero-one-then-empty/en/manifest.json",
+      "bytes": 51847,
+      "sha256": "ba4da33e04bd9bfc9dd21a2861259e3a37fb11686f92834b887e2b23b14c9375",
+      "mode": "100644",
+      "before": {
+        "sha256": "ad74348f30ef78c813b015e9b188bc83c9a047624723d640c7c62e7c7473fec7",
+        "bytes": 51847,
+        "gitBlob": "a2c1028aad413a497269a116e680abd82cde97d8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-zero-one-then-empty/zh-CN/manifest.json",
+      "bytes": 52235,
+      "sha256": "12c78321619bc3e88d8b6cb045443fc35969eaf93450be76426bcc70a4ff52a4",
+      "mode": "100644",
+      "before": {
+        "sha256": "66f589f3c87a96d3458951a0bcb5ab888c0c5a0de3dbb2af31191c896200df52",
+        "bytes": 52235,
+        "gitBlob": "32d1bfa1796437b8d168f9e64b2856f68ccedf35"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/controlled-gift-gun/gift-gun-last-god/en/manifest.json",
+      "bytes": 11483,
+      "sha256": "104de03265c78519cdc096b3bc747936395d9e0bb5d3f424709b6ff4f53e4cec",
+      "mode": "100644",
+      "before": {
+        "sha256": "d98005ea202921fbcf06cf73022ded61568a471f377c096d3bcacbd6a6eeaacd",
+        "bytes": 11483,
+        "gitBlob": "ed0f12b0df8f18fadc31d653ce5a91f531bc4ce9"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/controlled-gift-gun/gift-gun-last-wolf/en/manifest.json",
+      "bytes": 11502,
+      "sha256": "ded38173b34f623fb26e1d0e0d243ff58bd11bc5e1b6ca8060a91a16a73fac09",
+      "mode": "100644",
+      "before": {
+        "sha256": "e5b6c0ddad7827fe04a037521723ad752fe9fee7f3ac6332fe4afbd2e2be0e4e",
+        "bytes": 11502,
+        "gitBlob": "d7245defa693cc2e023247d5286fbaf8e4b53ddc"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/debater-12-success/debater-12-success/zh-CN/manifest.json",
+      "bytes": 12938,
+      "sha256": "f76fa9fa88b811876d94df3622821a85889a4cc764811a0a3a2987980839e0e4",
+      "mode": "100644",
+      "before": {
+        "sha256": "e8655058630dcc474396ae2b065632f90e4abedce55af36c9c186cd3d0c3a32a",
+        "bytes": 12938,
+        "gitBlob": "d50c61da2bfa4eb31b64dae211f106d53d24b605"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/debater-12-tie/debater-12-tie/zh-CN/manifest.json",
+      "bytes": 12850,
+      "sha256": "3750af38acc3a7792aaf95c8d227f31a1120840e20ef7c316718bf53cb15d87a",
+      "mode": "100644",
+      "before": {
+        "sha256": "ee76e4668ada7a7e46642d0761f01fd433dd65a30616a02129bde11a8865bb93",
+        "bytes": 12850,
+        "gitBlob": "15935711f86668fb4bdf848b9d60c9cd4bd4566c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/debater-6-success/debater-6-success/zh-CN/manifest.json",
+      "bytes": 11478,
+      "sha256": "096554b4f02cfd0994c51a8f9abd18929e6d6ed4d5bdabc640668579913681f3",
+      "mode": "100644",
+      "before": {
+        "sha256": "aa526d352a3d5c315f489633693696928ca82fc29cec2872bc93f6857b534e42",
+        "bytes": 11478,
+        "gitBlob": "99a1055620374ad57ac0db597e9d1adb831366e3"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/debater-6-tie/debater-6-tie/zh-CN/manifest.json",
+      "bytes": 11390,
+      "sha256": "a8ed2f1969ee11ea1188cd89d8ff9f557bc35215ffb9572e126da8ae1b8dab55",
+      "mode": "100644",
+      "before": {
+        "sha256": "80383f76c7dd95e01e7ce22a9fd5e9a825c4855edc378332c45245ce4fb240bd",
+        "bytes": 11390,
+        "gitBlob": "8bce2737f3ab87cb847841d1f1f435bac7a705a4"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/demon-12/demon-hunter-terminal/zh-CN/manifest.json",
+      "bytes": 18891,
+      "sha256": "33e4172e837cb85cf46ee82e218cd89c5aae0974d28e66f07e6cfc6d78ac37ba",
+      "mode": "100644",
+      "before": {
+        "sha256": "e8260db76685ea36c10fcb31fcab184ddab4ab25f0b4719e39aa4c8e643c4e90",
+        "bytes": 18891,
+        "gitBlob": "00a68ee74abd1e9c6341e16ff73cc4aec0dfd16d"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/demon-transport-12-slaughter-city/demon-hunter-12-slaughter-city/zh-CN/manifest.json",
+      "bytes": 24577,
+      "sha256": "060b5883e6209b3380fb4386563de4f546127dc132ad20a5da839579cc801de1",
+      "mode": "100644",
+      "before": {
+        "sha256": "85d065f76afbf0697c062435e2b77903092d75c8f1db09a47edf082de5c1903a",
+        "bytes": 24577,
+        "gitBlob": "23a96647463b0f492c4eea0127cbaed708c96ea4"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/demon-transport-12-slaughter-side/demon-hunter-12-slaughter-side/zh-CN/manifest.json",
+      "bytes": 24573,
+      "sha256": "c73fe676f309e1bcc883e734f7e164ee7c96db03ff7905638a3500e16bc6127c",
+      "mode": "100644",
+      "before": {
+        "sha256": "a9017d5506ba0ae5c35f1a2682afc83be98e33bc3b48d08947ea13838be273a6",
+        "bytes": 24573,
+        "gitBlob": "6aa6c79878a293daa95bce9adcc436a56f7c1713"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/demon-transport-6-slaughter-city/demon-hunter-6-slaughter-city/zh-CN/manifest.json",
+      "bytes": 22361,
+      "sha256": "63577b228ff82eb3439e8ca3e860d65620f1c0252555eb93c795c28616cc9f0e",
+      "mode": "100644",
+      "before": {
+        "sha256": "fbb8d9143db048e5251b01fa45052bf3a8eb97ccbe03f526acbc61362e10b995",
+        "bytes": 22361,
+        "gitBlob": "19411e46119b6632b42de7e701861cea48a515b7"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/demon-transport-6-slaughter-side/demon-hunter-6-slaughter-side/zh-CN/manifest.json",
+      "bytes": 22361,
+      "sha256": "09b33bf603988a9ef3b28e373b072e536664bf34a3a42b588997f99e7444336c",
+      "mode": "100644",
+      "before": {
+        "sha256": "6b56e5fcf10a29366f725e70c7f1f8eec07c9c51d10a37d3b415d3ee789f6a7c",
+        "bytes": 22361,
+        "gitBlob": "240d60a5b1d5e8f00851ea47863b42bf60edb973"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/evil-knight-transport-day-shot-good/evil-knight-day-shot-good/en/manifest.json",
+      "bytes": 24036,
+      "sha256": "e4726ae2e1aae58882498cd46bf028941034c4663bf1b8900e6b4c15d7d17177",
+      "mode": "100644",
+      "before": {
+        "sha256": "23a24509be44ec073b2f11bc209b47a8b7aa10cb8f892d6404a4d071eebf7bd0",
+        "bytes": 24036,
+        "gitBlob": "50adc9bf8f0bd33843eef1bd150b8d2e99172d62"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/evil-knight-transport-day-shot-good/evil-knight-day-shot-good/zh-CN/manifest.json",
+      "bytes": 24168,
+      "sha256": "b267395574bc4ccebe99e761a44cafc8ef8696e6165b732e400db51514c3fb97",
+      "mode": "100644",
+      "before": {
+        "sha256": "0da83f4306f26cf9069e82b6cac198a0b850c4fff6fc0813ac2c45c9b090a6b1",
+        "bytes": 24168,
+        "gitBlob": "f9d114efb6958c8d8aa0aeb63c20d92702c16c52"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/evil-knight-transport-night-immune-wolf/evil-knight-night-immune-wolf/en/manifest.json",
+      "bytes": 24220,
+      "sha256": "ef62e2ee673826318b45629425d1d34efea0bb938ed273a7e54a9e31050a52dc",
+      "mode": "100644",
+      "before": {
+        "sha256": "be4e773add99d128e3185cdc2707cb57710f06f416fe9411292f97e1ef3b3e17",
+        "bytes": 24220,
+        "gitBlob": "3437cad28c2a03e80386e6e9c06f2de438fe2e40"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/evil-knight-transport-night-immune-wolf/evil-knight-night-immune-wolf/zh-CN/manifest.json",
+      "bytes": 24352,
+      "sha256": "4d864ffbd45c8de6f09185b19f0bc10443dbcd1651451488955fcf50c4105798",
+      "mode": "100644",
+      "before": {
+        "sha256": "59cfb9aefdce636e10c8b023090fef57727463f848c83f7fe6e81c8541fdbff3",
+        "bytes": 24352,
+        "gitBlob": "72ed1af21c218221c3022d27d8b101e54cc5a883"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/evil-knight-transport-shot-bypass-good/evil-knight-shot-bypass-good/en/manifest.json",
+      "bytes": 24174,
+      "sha256": "6db9c5d59c85b39e19bc0cc7ec9bbdc3c1b0c704a2b6fe61a068f57e1c4df85f",
+      "mode": "100644",
+      "before": {
+        "sha256": "1ffd4af9196a053e2168ab110ee3f0b25780648236b7c4e9e10bfd0d791ba76f",
+        "bytes": 24174,
+        "gitBlob": "aa6cf62c642a591bf9f8706d1967bee89cbd162c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/evil-knight-transport-shot-bypass-good/evil-knight-shot-bypass-good/zh-CN/manifest.json",
+      "bytes": 24306,
+      "sha256": "ea3cc9ca3b0f7ef1109046c60a1aee2127e314f6a903104d22d97926ac258f26",
+      "mode": "100644",
+      "before": {
+        "sha256": "1cecf08aec3d961940e61b7e702b7ba5d92cb8552dff42d3a6ab7df2218c0c8b",
+        "bytes": 24306,
+        "gitBlob": "783fd90962de8af8dea2bc79f27c30b045bcde4d"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/five-player-cupid-dream-chain/cupid-dream-chain/zh-CN/manifest.json",
+      "bytes": 11750,
+      "sha256": "476de56c5ec42bf43ccb04e43cb1a8ec3e484fb1909946152b79ee0fbdb6f8e4",
+      "mode": "100644",
+      "before": {
+        "sha256": "52a48091e24b072483cf604a94e6a54ddd17b530eb925167a39d2d9b38c58d1c",
+        "bytes": 11750,
+        "gitBlob": "7584d2f5b3e95759bd42ca7e333a88ce8a7a76aa"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/five-player-cupid-mixed-lui/cupid-mixed-lui/zh-CN/manifest.json",
+      "bytes": 11678,
+      "sha256": "113044f314b87d438a27d274909b0880a893fae76881980e5eef1f805a4762a4",
+      "mode": "100644",
+      "before": {
+        "sha256": "fddfb9673001d1aae146091612a94c6cf12bb8bafa7cb2cd7975b2f03ea691f8",
+        "bytes": 11678,
+        "gitBlob": "c25fe8eed9d37ab9914c2e343a5f551dc64782b3"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/five-player-cupid-mixed-netease/cupid-mixed-netease/zh-CN/manifest.json",
+      "bytes": 11800,
+      "sha256": "2ed1505eac9f40ab5f390781c7c3f06010c95a18f612081403d0ec683327fb17",
+      "mode": "100644",
+      "before": {
+        "sha256": "be55c93a93994bc39ddf96b0d98306fa5dd21eaa3f151810870c140c06ab59ec",
+        "bytes": 11800,
+        "gitBlob": "1ea29a0e8815ea09c1d9d9ced6c04b6abe2e5003"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/five-player-cupid-root-hunter/cupid-root-hunter/zh-CN/manifest.json",
+      "bytes": 11748,
+      "sha256": "bfd6c1056c672a983449b30269e741a3b095b89dadf9325b4ba95b381ed93544",
+      "mode": "100644",
+      "before": {
+        "sha256": "55945fd1935e9a2485cd13803048e5c72003a9b81d5f63e4096f21e4ffd9348c",
+        "bytes": 11748,
+        "gitBlob": "3df0db28492bfdf45ff077bc0912e9a919f2bd17"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/ghost-bride-12-good/ghost-bride-good/zh-CN/manifest.json",
+      "bytes": 33359,
+      "sha256": "2d662dfad67409ddaa2e4e32d1c736dc91d27eb9bd3b1d584e1462e8b4346b61",
+      "mode": "100644",
+      "before": {
+        "sha256": "2c722a379c853d5b23261362015dca2b9f676864dc2c40f9507acfa29d0a89b0",
+        "bytes": 33359,
+        "gitBlob": "e97adaf3e2b850c561245fbe19158b0730beb16f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/ghost-bride-12-pair/ghost-bride-pair/zh-CN/manifest.json",
+      "bytes": 33375,
+      "sha256": "408b6fd2e0c3c8e81d20d411d55645ed89d885c827f4e98eeae141b821e167af",
+      "mode": "100644",
+      "before": {
+        "sha256": "ec89b0fa2f974fce99dcf1681d649ef8efc095bc5a3a03d2d503e6e3dbb7af7d",
+        "bytes": 33375,
+        "gitBlob": "d5381283a1cd53adbc5e63332b6507573183492f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/ghost-bride-12-witness/ghost-bride-witness/zh-CN/manifest.json",
+      "bytes": 33623,
+      "sha256": "8d20a92a2d5774a2217ab270ca4696fa3e6f5c64380d395fa6d7eab59911d018",
+      "mode": "100644",
+      "before": {
+        "sha256": "c1e0e4bb5a9bf654ae96d935ecda14eaa904c99d48409d36f91d9f82d06de5ac",
+        "bytes": 33623,
+        "gitBlob": "1521097757e424427b2b79a8980c0147f809b305"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/ghost-bride-12-wolf/ghost-bride-wolf/zh-CN/manifest.json",
+      "bytes": 33369,
+      "sha256": "615ef4871ca9a98e45d74e5295bc0190649669440cb819b643989a0e52c1cf2e",
+      "mode": "100644",
+      "before": {
+        "sha256": "6300dc8513327c5a95f0f472bfef02836c9b17c15f3249e182aba73939785f06",
+        "bytes": 33369,
+        "gitBlob": "be8f1f2ea19641e3a58edff834313e7f11d39a7c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/ghost-bride-12/ghost-bride-all-dead/en/manifest.json",
+      "bytes": 18890,
+      "sha256": "ce9319dce605ebfbd853939e69e1c4e6b8c8ea7dcd1285f17f3790093f785943",
+      "mode": "100644",
+      "before": {
+        "sha256": "2d3d017dac52a264c10a58372bcc360d0872974a20a219f02349b5428336cbc8",
+        "bytes": 18890,
+        "gitBlob": "87b434421b44419ba1a3c58f3556d4079d3afd15"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/ghost-bride-12/ghost-bride-night-win/en/manifest.json",
+      "bytes": 18922,
+      "sha256": "51858b52aa2fc0de3521e1304742bff71c475620eebbc0a4527e25d38cae8395",
+      "mode": "100644",
+      "before": {
+        "sha256": "02e037c8dd90cb73212fb13d9a677cb96a366db6b9b62b70f57f6b47f23d168c",
+        "bytes": 18922,
+        "gitBlob": "eca0181a96f4874de9510632f246c6d418cd3b36"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/lonely-girl-12-wolf-win/lonely-girl-12-wolf-win/zh-CN/manifest.json",
+      "bytes": 18694,
+      "sha256": "9cc94bb82b8cea080c9734d3d5cce136b180da2ac3c4e5b5ec1f1f916101f7c9",
+      "mode": "100644",
+      "before": {
+        "sha256": "52c30b5d879e1ff51ebe866ef8e1f4e09fb1f9a799a57aa09f3d5456ddc93da2",
+        "bytes": 18694,
+        "gitBlob": "d67111c126df200b4c450e4ac39336c36bc72165"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/lonely-girl-6-good-dead/lonely-girl-6-good-dead/zh-CN/manifest.json",
+      "bytes": 17252,
+      "sha256": "15685a330e8c94c6ea63a17b5fd3aee9aeb6497176588b602794d2a1f0faacfe",
+      "mode": "100644",
+      "before": {
+        "sha256": "41d79589992c7c8d4ad392ffd9e9e04252bd8612bf4427c9af6f7d77ec47054b",
+        "bytes": 17252,
+        "gitBlob": "88fb90c5e77fc0df8b44e0394b4b99130eef85d7"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/lonely-girl-6-hunter-chain/lonely-girl-6-hunter-chain/zh-CN/manifest.json",
+      "bytes": 17374,
+      "sha256": "58d1d1893f25c76f7677ab9d27bb87da5c049b681748a14baf23edc36509355c",
+      "mode": "100644",
+      "before": {
+        "sha256": "6ac8310896658514f1900a169c667b935a006108dba9e7d8c5ad7f038503776d",
+        "bytes": 17374,
+        "gitBlob": "9e5f9f796dc75c912f31a1d18cd98b589823f554"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/lonely-girl-6-wolf-needs-girl/lonely-girl-6-wolf-needs-girl/zh-CN/manifest.json",
+      "bytes": 17492,
+      "sha256": "fd8514782d58389c77c70d5ff4bdc451ec61f5da7e4187e4262d23e110c128c3",
+      "mode": "100644",
+      "before": {
+        "sha256": "54fb44dca840a45a46ff8546f87a05c12c301c1b09c1c2acabb374e6384da9a3",
+        "bytes": 17492,
+        "gitBlob": "10652d90ff77f9c61b778da283fb666f0ba77f1b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-exchanged/day-king-exchanged-exile/en/manifest.json",
+      "bytes": 18556,
+      "sha256": "ee8468da6d27c30ca95f36d16669d72232f6ad68474033d1c5a10a6c10774c99",
+      "mode": "100644",
+      "before": {
+        "sha256": "f4d56e83fba1bd3b7e76f04d96e1114ed384fb84bbdaeb9d6018ba8f6edf53f3",
+        "bytes": 18556,
+        "gitBlob": "7835ba2a706c9efe865616db5d615a0dc6698d25"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-exchanged/day-king-exchanged-exile/zh-CN/manifest.json",
+      "bytes": 18652,
+      "sha256": "f67743fb112a67cd91c2cc4c246c4051453f8ac8329b631a6abd04d833cf74ca",
+      "mode": "100644",
+      "before": {
+        "sha256": "39085eb4eedbac636d95679e008d3233db87e1e52c07cf022a63f396b7e88e06",
+        "bytes": 18652,
+        "gitBlob": "62ac4f2f105436d66d0b0f30c426dac91443c0a6"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-exchanged/day-king-exchanged-night/en/manifest.json",
+      "bytes": 18556,
+      "sha256": "877ad74890a60a6676a7a2b8c782ad09be6a94bdd1c00c71d7be31f7df06ff52",
+      "mode": "100644",
+      "before": {
+        "sha256": "1b98985eef46938334b5810ef03ed241da4bba4fbee5252d904806f5f14e0ba7",
+        "bytes": 18556,
+        "gitBlob": "ec958efdec1e9a6d9eeaa8f8cf9edf938e51b04e"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-exchanged/day-king-exchanged-night/zh-CN/manifest.json",
+      "bytes": 18652,
+      "sha256": "d491c6dfa29ed3319f994887bd7e8683b44fbb6e84c08afce3e42ae5ee266430",
+      "mode": "100644",
+      "before": {
+        "sha256": "f9a1717b1a281ff6de10baf4f8341285912b082ae516d46b81cad5fe15a672cf",
+        "bytes": 18652,
+        "gitBlob": "27ee3fcaec9abf6364d4ea5755474f67d05215b4"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-exchanged/magician-exchanged/en/manifest.json",
+      "bytes": 18376,
+      "sha256": "25ff58176abfe6d8f6b25d45497b76944b87c1d4d35f2db653d9f03534b97a6e",
+      "mode": "100644",
+      "before": {
+        "sha256": "56b51d6b5632d542b499e43df0952472ceeda20090f253507201c3a38e7053b0",
+        "bytes": 18376,
+        "gitBlob": "895422b9296569c05212f9dde49ff5b427f89449"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-exchanged/magician-exchanged/zh-CN/manifest.json",
+      "bytes": 18472,
+      "sha256": "dc19c2739a3a2136a58af5272a977be20e91ec6d586fa87f53ec7dfc29747a07",
+      "mode": "100644",
+      "before": {
+        "sha256": "772598ded60e96a408bf64e6d296ecd12fcd9d5cca328e5d9b9caac417210b38",
+        "bytes": 18472,
+        "gitBlob": "d2c593e1a678177206dc08d2c9d118addf23e033"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-original/day-king-original-exile/en/manifest.json",
+      "bytes": 18522,
+      "sha256": "446c4ce4fcb3271e560534d870186652e266a1c0419590fd9d00a8fc81020dd6",
+      "mode": "100644",
+      "before": {
+        "sha256": "540de953a7ee320efa22cc70aedb9619f144b7408b2156c3dc3c8698902f5c61",
+        "bytes": 18522,
+        "gitBlob": "f1a7dae2759dbbd02c3eff4de869b4bf67817aae"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-original/day-king-original-exile/zh-CN/manifest.json",
+      "bytes": 18618,
+      "sha256": "277630edf89152f8c3652d956a7f2d38829c0550f776922f320ca70b518ce11c",
+      "mode": "100644",
+      "before": {
+        "sha256": "02ede1ef60df903da60b5ff2da783fac93804b3e7e7bd0c5b213c2fe5e71f13b",
+        "bytes": 18618,
+        "gitBlob": "26e6dfed06aeebf9833fe0daecb9738bdbe1d8a3"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-original/day-king-original-night/en/manifest.json",
+      "bytes": 18522,
+      "sha256": "4af101ce62aee986d0e7f63988fc35434c34b71bacfa53f5fd5da43ea4653e6d",
+      "mode": "100644",
+      "before": {
+        "sha256": "de440050e27c65c543723c6420b353fb60bc2db4a9df1a9ec3c816dc887d867e",
+        "bytes": 18522,
+        "gitBlob": "6617ef56a18c2ad5fc2d7d93107a40d892f9340f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-original/day-king-original-night/zh-CN/manifest.json",
+      "bytes": 18618,
+      "sha256": "0df07dc9e97fea8538a3d5c09df7e132a02db2cdddf23858c738a95f28fa1cea",
+      "mode": "100644",
+      "before": {
+        "sha256": "a79c80b3f0361ec998a6eaf1705025a980913a6de142de006f3d7fa162e2024f",
+        "bytes": 18618,
+        "gitBlob": "42968776d1700e41e47179e91e820885333978c2"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-original/magician-original/en/manifest.json",
+      "bytes": 18342,
+      "sha256": "b9b52ec416f199cf1ec1d1f792ed2e47d97819786d6cc7d1ad6d1eed546ebe1e",
+      "mode": "100644",
+      "before": {
+        "sha256": "9e58d45d4c1093f85402918c18b9c589e181193eae7f8d8fd98cba647c715f15",
+        "bytes": 18342,
+        "gitBlob": "a5c3e83934839f395ae441bb3343954089255ed8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/magician-transport-original/magician-original/zh-CN/manifest.json",
+      "bytes": 18438,
+      "sha256": "cb4737515dc5b54fe600ee69dbd612cd1a11372c202bc302e4b44dc9ef29310c",
+      "mode": "100644",
+      "before": {
+        "sha256": "f7b4d31d03fd432d8982e11b0d7cdca3d7e3866e2610e95087dbf22d91e6b0be",
+        "bytes": 18438,
+        "gitBlob": "729947928c5c8464c1fec37376fe17a68c8c25da"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/nightmare-transport-day-shot/nightmare/en/manifest.json",
+      "bytes": 12852,
+      "sha256": "0bef9e6f27ef8d375991e8126e99aa04cae3c497740b02b36038674529cb9d09",
+      "mode": "100644",
+      "before": {
+        "sha256": "f06041a3e7d3711be62fe00d3070a32c5e58f97efc17e168d706873fb37cab12",
+        "bytes": 12852,
+        "gitBlob": "1877298f0ac7827ade0ed5547a6230fb9837759f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/nightmare-transport-day-shot/nightmare/zh-CN/manifest.json",
+      "bytes": 12915,
+      "sha256": "873c5ed4b51f2859fa20ef3f88b778decf3db6a77eb8525ead2c4e6a83c02407",
+      "mode": "100644",
+      "before": {
+        "sha256": "636ba21971aef665875c3bb4299865ab268d2e9196f04cffd9dcdf0b137755fa",
+        "bytes": 12915,
+        "gitBlob": "c0ad4bb16d35587adeae26cf8c0bd90dec54bec2"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/order-prince-transport-day1/order-prince-day1/en/manifest.json",
+      "bytes": 18361,
+      "sha256": "6bd1e74984c6f1b13ece3c690eb0cadd31e34cf76081828515ad9000ae6c655d",
+      "mode": "100644",
+      "before": {
+        "sha256": "74d7b07fa00457003ff487e58261df1124ffcec12c15c2ac6f1ef74d4a70af9a",
+        "bytes": 18361,
+        "gitBlob": "8051bb9eab4f1999c106e794e51fc9e258f5d9d0"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/order-prince-transport-day1/order-prince-day1/zh-CN/manifest.json",
+      "bytes": 18457,
+      "sha256": "b7310b8d34a1d25c7303325e6cf60541d3ad5fffe7f37e0df46e5a99d0ea752c",
+      "mode": "100644",
+      "before": {
+        "sha256": "c4e82d375939f7d840462c5683b069efa666305f99d335928fb534615e172aa1",
+        "bytes": 18457,
+        "gitBlob": "458252185da99af6d801ebbd210b74cc7967212a"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/order-prince-transport-day2/order-prince-day2/en/manifest.json",
+      "bytes": 18361,
+      "sha256": "e477c75db4865d2f151b9f6087035df1e1405ecce6b6b5c9b37f287c1bc70158",
+      "mode": "100644",
+      "before": {
+        "sha256": "c4630a470ae328877204db2a3a7a1cfe5e52a11bea5384a9484af8fb598f8431",
+        "bytes": 18361,
+        "gitBlob": "c1442e6a6bf54c4604860e6413d5e8d66e5f0a8c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/order-prince-transport-day2/order-prince-day2/zh-CN/manifest.json",
+      "bytes": 18457,
+      "sha256": "173be31a00bb7ede75c3fdfcb2fb3705d39b305bf12d6b596f243279f7185c76",
+      "mode": "100644",
+      "before": {
+        "sha256": "1e5dbca07f9b1c51e5f1ca2072afbab65e0c0ef02e747d09787561bde3582fcc",
+        "bytes": 18457,
+        "gitBlob": "5665c0de29ec9e2531f01496d4d1de672880b7cb"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/pure-white-transport-good/pure-white-good/zh-CN/manifest.json",
+      "bytes": 24212,
+      "sha256": "b57193252627185204a619098a2c9b51b61061b704e937fef9018b7f5ab7b847",
+      "mode": "100644",
+      "before": {
+        "sha256": "277db9ce4340f090290daf215e3319704bcf0d26f5f0a1ab2d86e2b38de620ed",
+        "bytes": 24212,
+        "gitBlob": "5646821f738e3a198e62a301e5dee9cf791d1bca"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/pure-white-transport-wolf/pure-white-wolf/zh-CN/manifest.json",
+      "bytes": 24212,
+      "sha256": "4da7a3183562fd59e1b2f9b0d7c83d661148a2211c0daadabdd48c9aa37623b8",
+      "mode": "100644",
+      "before": {
+        "sha256": "603f5c81c815ce1e0de3a0ccc20ae23c61d8d14f1ad35105f4e7368a390babe3",
+        "bytes": 24212,
+        "gitBlob": "a2c24c641950cff722fb4e9bbed21a49a09b95fc"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/red-moon-transport-blast-ends-game/red-moon-blast/en/manifest.json",
+      "bytes": 19495,
+      "sha256": "f32f6351378a81de186fa3daf40fa2ab43b46a1d69c83f606c03876313e0853a",
+      "mode": "100644",
+      "before": {
+        "sha256": "210b228ed1156d5fe021a9d540f528c7175c713fe5c101b2074c9837b43883a2",
+        "bytes": 19495,
+        "gitBlob": "bb6f6347e74fdeeee58b2a3fef322ff5ecf76aff"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/red-moon-transport-blast-ends-game/red-moon-blast/zh-CN/manifest.json",
+      "bytes": 19603,
+      "sha256": "199eefd27cce8951d1c8073e9a28fb3d29edded68c0bee58a6af801e1af8ff0c",
+      "mode": "100644",
+      "before": {
+        "sha256": "de5d35efbe8f2494d027f748a9cbb727d840216a9dc12aa83343dc138242f3da",
+        "bytes": 19603,
+        "gitBlob": "c982e540eb73fbf0fb85805433cf029226172059"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/red-moon-transport-expire-ends-game/red-moon-expire/en/manifest.json",
+      "bytes": 19531,
+      "sha256": "b11e4021eacdc6ca6ff1adbf2be92c353c4a05966f75f0154d0fd76f39837d58",
+      "mode": "100644",
+      "before": {
+        "sha256": "2b14d00a2696a96811657403cfd56be7c20cf44dc8b1634a7f8f08e012b35e78",
+        "bytes": 19531,
+        "gitBlob": "d19de5ebfd36e6b20931d915ed6c8342702ca2ca"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/red-moon-transport-expire-ends-game/red-moon-expire/zh-CN/manifest.json",
+      "bytes": 19639,
+      "sha256": "e2db273219f8283274326328c729db82cd26ef7e59076e82b89db7046bc02905",
+      "mode": "100644",
+      "before": {
+        "sha256": "fe60b892d374b1262e6f4a0958ab9eab7e57bb8f1f3d4813df7c546ae7efbda3",
+        "bytes": 19639,
+        "gitBlob": "19b87ca217ebdb826df3e7746c981bd2f1abeb49"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/red-moon-transport-knife-ends-game/red-moon-knife/en/manifest.json",
+      "bytes": 19495,
+      "sha256": "4b1fdc8c158598bed4f6de001cbcb55332318b5564d608272707d9d1209a34ae",
+      "mode": "100644",
+      "before": {
+        "sha256": "275d351da625bba1866f76b26ab240f14e1e8cb8791f7dc95d7aa885e316603d",
+        "bytes": 19495,
+        "gitBlob": "713d66b0b1f271398af2204933cf16426da5a6bb"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/red-moon-transport-knife-ends-game/red-moon-knife/zh-CN/manifest.json",
+      "bytes": 19603,
+      "sha256": "9f5b9cb0fbe872c5876175352a4466083ace981ecacb7133678cbe4b95dfc2bf",
+      "mode": "100644",
+      "before": {
+        "sha256": "4f10992f71b46bcaed27afe8f3b9ecd2c97ca8b7ad649699abed67305c8d75ae",
+        "bytes": 19603,
+        "gitBlob": "a468f59a6a097c1128b03eaf93f6ddd536dd3bbc"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/scholar-mentor-transport-both-wolves/scholar-mentor-both-wolves/en/manifest.json",
+      "bytes": 18683,
+      "sha256": "7f2031946844cc4ff0f0bb46679185d0bc4198f5abc41aaaf23e1d2c74237077",
+      "mode": "100644",
+      "before": {
+        "sha256": "3b3d8b0783baf01e7be1696f2aa150e68306dc85d88ce1d44c9e8af801cf891b",
+        "bytes": 18683,
+        "gitBlob": "281f8e6a150aeeb030eab7f815bb1a3487b7529f"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/scholar-mentor-transport-both-wolves/scholar-mentor-both-wolves/zh-CN/manifest.json",
+      "bytes": 18779,
+      "sha256": "386df8861983b6c90aa1d57a86bf1c45efda0d9bdbe24b837ff5ef572372d93d",
+      "mode": "100644",
+      "before": {
+        "sha256": "d101a51d318d33730ab643ca4e9af9f8eb4db8ff4f9b480d28e9becd5495c4e1",
+        "bytes": 18779,
+        "gitBlob": "10a74b8206d43ce8622145d8949af60d53e8e646"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/scholar-mentor-transport-enhance/scholar-mentor/en/manifest.json",
+      "bytes": 18307,
+      "sha256": "cb791d39665d05ab955704cd69881a345dbc97edb683295b1332a89d316b82c2",
+      "mode": "100644",
+      "before": {
+        "sha256": "e752d8b77274e6c1fa2553236860d3928f93ae62da873e86fb69b3faa8e631de",
+        "bytes": 18307,
+        "gitBlob": "f63f9126a863be22c88517440ef671a0f781bc80"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/scholar-mentor-transport-enhance/scholar-mentor/zh-CN/manifest.json",
+      "bytes": 18403,
+      "sha256": "e1ed5038a42b4384834d4afaa4feda6bad0ece33e33d993b75d62e7d06b75714",
+      "mode": "100644",
+      "before": {
+        "sha256": "66b50c69ca91aa736ab54220ca76e5a750db5b4b6d37d988b1533b3ac70a17cc",
+        "bytes": 18403,
+        "gitBlob": "3d668b8fc8494b71359dabc11bdc5ac187faa3d8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/scholar-mentor-transport-same-good/scholar-mentor-same-good/en/manifest.json",
+      "bytes": 18615,
+      "sha256": "5f489b3bd133f42912d50fc501e72d29c6d8589628781a4abd1671fb3e3feeb4",
+      "mode": "100644",
+      "before": {
+        "sha256": "d2029b9fe188fcc1a5c5fafda1b40c97bbde0938074c3346d76688771d032788",
+        "bytes": 18615,
+        "gitBlob": "7bbe330214b9ace3d7109c07079a52e33e7debef"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/scholar-mentor-transport-same-good/scholar-mentor-same-good/zh-CN/manifest.json",
+      "bytes": 18711,
+      "sha256": "404dba84f300e8073d8945eb543bce0abc87ee3c8ac2995b308509dfbb2857e9",
+      "mode": "100644",
+      "before": {
+        "sha256": "4004e946dd6d78e989f5894ae83e8955e2d59912d829efe5759c2db1cab13d28",
+        "bytes": 18711,
+        "gitBlob": "3d71433131b4a5c4e3f1e886704cd03d61a6dbe0"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/shapeshifter-12-both0/shapeshifter-12-both0/zh-CN/manifest.json",
+      "bytes": 18695,
+      "sha256": "0116464f3eb163a6b2e04477c1fdf9e39c47b56f8561ae728c459b61b0d2752d",
+      "mode": "100644",
+      "before": {
+        "sha256": "feef74af71572a04b3b52d1653b37e40fe521e309158b04bb3b18a5a21bcf7e1",
+        "bytes": 18695,
+        "gitBlob": "0e6c56a1c72a1c94b2e355b47f90a85d06046480"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/shapeshifter-12-one1/shapeshifter-12-one1/zh-CN/manifest.json",
+      "bytes": 18653,
+      "sha256": "8edee9e2cb6ed0d78d0dac01612eb5f0e1a611e148e6a967ee7cd7a16fda0d88",
+      "mode": "100644",
+      "before": {
+        "sha256": "245652c3fac99dc7b18c2d0d601444506a91d7e552e0b871edbcd5e1ac8f94c9",
+        "bytes": 18653,
+        "gitBlob": "d102d5b5c2a483ec4023b9df7cfb6ea1908470c1"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/shapeshifter-6-hunter/shapeshifter-6-hunter/zh-CN/manifest.json",
+      "bytes": 17237,
+      "sha256": "104deda7db716928a8ffab2f319a74b9d215643e002a4837eca79db0867c2e48",
+      "mode": "100644",
+      "before": {
+        "sha256": "dd26d34836ec49fe9fdc76d2d0af5fd823bc1b48e047d9d06d9b6b8e85ae3d69",
+        "bytes": 17237,
+        "gitBlob": "62f168392e136725437c1f2673082c232ad27fa0"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/shapeshifter-6-seer/shapeshifter-6-seer/zh-CN/manifest.json",
+      "bytes": 17163,
+      "sha256": "05c2f6e815e249846738779c102e2563a6303a2815bc3ca47e2228ecf1a58442",
+      "mode": "100644",
+      "before": {
+        "sha256": "c4c89ec424058df046b1f687e3501269c81e824f1fdcfb8b0d7821e9dd7e2c77",
+        "bytes": 17163,
+        "gitBlob": "19c2137178a763425e9e9d71420bbc88d332450c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-black-check-duplicate/black-market-check-duplicate/en/manifest.json",
+      "bytes": 11730,
+      "sha256": "c32c8f6bca1b78acbea90f8d7245b3110f01249f7cb514abc4a515a6861b48dc",
+      "mode": "100644",
+      "before": {
+        "sha256": "ebbfda3e6281e6e7b70f05c280923a03483ced4303f3486e9df3cf4bb83052f0",
+        "bytes": 11730,
+        "gitBlob": "8cd91ab4c6b2e22c942e6f917d1d5fce7d387f6c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-black-last-god/black-market-last-god/en/manifest.json",
+      "bytes": 11582,
+      "sha256": "4239051dea70010f612df3cbb2fa7085d4bb78a06792dff390a7f11c60fd10d5",
+      "mode": "100644",
+      "before": {
+        "sha256": "d1540a73c2d0243ea6437ebc81cb03571f0563c464833df665c2c147f5ddfa6b",
+        "bytes": 11582,
+        "gitBlob": "69f14de165d3e2cb1d7c4f2563c6910421bd86bf"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-black-late-hold/black-market-late-hold/en/manifest.json",
+      "bytes": 11598,
+      "sha256": "219b82791fb3e240aa2c268062812bb1408d9aef34ed4c342695636efd42825d",
+      "mode": "100644",
+      "before": {
+        "sha256": "c857a1615d2cc16271ba72dce4891c146fbc9e04c88d64bc24cba344cc87cdaf",
+        "bytes": 11598,
+        "gitBlob": "6f4386b378c640a6ede33be20435e2b02b831318"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-awakened-extra-hold/awakened-extra-hold/en/manifest.json",
+      "bytes": 11574,
+      "sha256": "df82402b237f8ce26735e9419e0398546d216f51fb823c32d0e9a168998dc8e2",
+      "mode": "100644",
+      "before": {
+        "sha256": "51b23d50f6eee890693788b8e93b9fd2ac0e57bc5263a84d0e89ce7b10a2c733",
+        "bytes": 11574,
+        "gitBlob": "c0da76a2ea968971c5243b317fc633dcb0c63dbd"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-awakened-guard/awakened-guard/en/manifest.json",
+      "bytes": 11466,
+      "sha256": "5919bc69bbe815145e640e3e0add8f23f0677880e03360d0dce394d2a55264ec",
+      "mode": "100644",
+      "before": {
+        "sha256": "4e1ec4b8f652800ed13e6afc99e2c6318c0cc407d949a1b3e5a054d54348c176",
+        "bytes": 11466,
+        "gitBlob": "402b6a05eebbb2c2641d9970907ff02c04cbaf42"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-awakened-hunter-first/awakened-hunter-first/en/manifest.json",
+      "bytes": 11618,
+      "sha256": "0d2609ebd0a88e386028f8ae43034c4e2ab5719d48800f4c5cf63651d9b6f74b",
+      "mode": "100644",
+      "before": {
+        "sha256": "009397ae671917147c0fbc0c8cebfc1001a4d9cfdc90643651b9d437198848c6",
+        "bytes": 11618,
+        "gitBlob": "1f79e49460ecb671753653bf3020994f15ddcaa3"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-awakened-mirror/awakened-mirror/en/manifest.json",
+      "bytes": 11500,
+      "sha256": "6cbfdfeedafa1c7600e902c8524e503343cdd8523517329d4f78acfbce803d25",
+      "mode": "100644",
+      "before": {
+        "sha256": "dcf5cb8dfca72eeaab16000e66959f7adfd6d817c6e9fc0f54a7c48bab7798aa",
+        "bytes": 11500,
+        "gitBlob": "37618bd252f3c882c2f884317c4d943ec00ffba8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-bear-king-badge/bear-king-badge/zh-CN/manifest.json",
+      "bytes": 11489,
+      "sha256": "5437f226a562e5f36be48a3c8f80a77e2b44e2a30da80345e14d671c98f98b98",
+      "mode": "100644",
+      "before": {
+        "sha256": "074ecb5ebda71c6600fae8e728f5de7d364bb04a42e247a30b21fab7a64eabd3",
+        "bytes": 11489,
+        "gitBlob": "7fd6a3ce69f91d7f43967ed6af7328266415d7e8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-bear-neighbor-update/bear-neighbor-update/zh-CN/manifest.json",
+      "bytes": 11571,
+      "sha256": "64faf28a71afc0849e0bc5573499f2883f67555572ad61ff47af54104a3ac8ab",
+      "mode": "100644",
+      "before": {
+        "sha256": "2228a4debf4305f3875cbd7cb70668ec1c45bc9fba231e480dbaefb984b47334",
+        "bytes": 11571,
+        "gitBlob": "d697adbe3d516f45c746dae8593081bb07ece704"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-dreamer-gun-blocked/dreamer-gun-blocked/zh-CN/manifest.json",
+      "bytes": 11567,
+      "sha256": "4c50b630dfc7238ce323a2a5d5fd3e533b47208d2f606589b512e885c99f6eb8",
+      "mode": "100644",
+      "before": {
+        "sha256": "aa7cf012bf69063db02da1070d73e8cdf2e55b530f3b4fec19bade40da0c4810",
+        "bytes": 11567,
+        "gitBlob": "f7d9c3d478c2cd4285896b422efb7f320e52e2d8"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-dreamer-gun-link/dreamer-gun-link/zh-CN/manifest.json",
+      "bytes": 11501,
+      "sha256": "b80dfe443a37314f794f8228010491db5f4c392b1b0771e0756cdeceff3f7833",
+      "mode": "100644",
+      "before": {
+        "sha256": "55d645cc3043acde35fcb4a9dcc83d98ecb527094b69f829225d30aea9dff731",
+        "bytes": 11501,
+        "gitBlob": "d4d140f085e96cdd76beaca8f4346cb4bc69d4e1"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-fox-dream/fox-dream/zh-CN/manifest.json",
+      "bytes": 11357,
+      "sha256": "e0f49459a4ff3ae23900a4a99b8d5acfd5ac8a6faa431ae14aa7b5d4aa33b456",
+      "mode": "100644",
+      "before": {
+        "sha256": "9f58d145a5d79b40b0572f503054d0ebadb54df3378360367ef6a6e4313020bc",
+        "bytes": 11357,
+        "gitBlob": "b9e4956891961a2431e5e2d07ed9387e4c21b517"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-fox-inspection/fox-inspection/zh-CN/manifest.json",
+      "bytes": 11463,
+      "sha256": "0b12a53c9ddb8802600eb75a580d0723ac582107dc7f048ab40faeeec50e1cf0",
+      "mode": "100644",
+      "before": {
+        "sha256": "c9813cf2f3aa6dde2bb8a1abfe1019c8467bea4dc7d5773bbeb8313dd909f4a5",
+        "bytes": 11463,
+        "gitBlob": "369aaf2ca170e4e221482ed2e5cda8f6f04ba969"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-fox-king-chain/fox-king-chain/zh-CN/manifest.json",
+      "bytes": 11473,
+      "sha256": "fe3b90956ef108985000f60e7489fa0c549bd01cf23a5a9ae87eaa5e31fdc2e1",
+      "mode": "100644",
+      "before": {
+        "sha256": "1377d9e90502921306297808ab3dd435ab52bbb7b2092be380ddc5e6b778d36f",
+        "bytes": 11473,
+        "gitBlob": "ebd0f7ded92b1ac2ccd089e9e4444953f8f6edf5"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-gargoyle-king-link/gargoyle-king-link/zh-CN/manifest.json",
+      "bytes": 11561,
+      "sha256": "7fb87e740f04836c65b49f280fc59a2e3c34e4e800d7565b79ebe403cc97e40d",
+      "mode": "100644",
+      "before": {
+        "sha256": "942d2c4c9f6773109c8f34ce96151fb653b567f90be815bf25fd319c6c76c2b7",
+        "bytes": 11561,
+        "gitBlob": "038761bb792c7041ef2a5a3c7ee030f122eb06c6"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-hidden-wolf-bear-update/hidden-wolf-bear-update/zh-CN/manifest.json",
+      "bytes": 11653,
+      "sha256": "b7a117b4e0615748a14d96a3aa5613fd120c297d89106728f8fbdf19ca8cf65a",
+      "mode": "100644",
+      "before": {
+        "sha256": "6a371e02b5021db4043302bc404c10966877cc8650afdc3c7df1f0be60fdad84",
+        "bytes": 11653,
+        "gitBlob": "febbfff04d1be404c761b92b956ce5f9d6ffcf35"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-hidden-wolf-king-link/hidden-wolf-king-link/zh-CN/manifest.json",
+      "bytes": 11619,
+      "sha256": "7ddc29821efa2f1d74cd5999d39321b4acb3b25129391ff407194be6a4630ac9",
+      "mode": "100644",
+      "before": {
+        "sha256": "5b3d2461b8adca3b1be83738ae024b0f3d597f03a49a08f5cf570fef4cf59831",
+        "bytes": 11619,
+        "gitBlob": "ad06ec9cbcebad16f9022555014bad3ecd13feaa"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-hybrid-good-dead/hybrid-good-dead/en/manifest.json",
+      "bytes": 11488,
+      "sha256": "5b7bd57076fd83832e71c824bba08d93511ba04702689e592bfa3fb973753025",
+      "mode": "100644",
+      "before": {
+        "sha256": "384bf09baa39900bef2be979a52087e3e0b2c581627e0cfe5732e0e7e154b7d9",
+        "bytes": 11488,
+        "gitBlob": "972aefa07c122f70871c6eb4ece94303a46ddc56"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-hybrid-wolf-win/hybrid-wolf-win/en/manifest.json",
+      "bytes": 11466,
+      "sha256": "68947b8b781ca4ef2fb3302efbce798d858f95ab62cf508e078235e3183bdaf2",
+      "mode": "100644",
+      "before": {
+        "sha256": "3f4e16f59a18c6d0dd84e809280744b53774d3ea6e24a420ddd5601e97eb2e6b",
+        "bytes": 11466,
+        "gitBlob": "df670eb18a46c99ac6c75d530a1c9c6654f2b548"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-knight/knight-miss/zh-CN/manifest.json",
+      "bytes": 11376,
+      "sha256": "6322f02003e7e7b569a2836a562036ce762321595f68f90ae75c6188924dc1c4",
+      "mode": "100644",
+      "before": {
+        "sha256": "4d7003f2f16cac284f50b042dd8b5c54077288fed9638321cd2f0d63014e8161",
+        "bytes": 11376,
+        "gitBlob": "dc5c46de92819975086bb93980c70a03e5c665f0"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-knight/knight/zh-CN/manifest.json",
+      "bytes": 11277,
+      "sha256": "b564351902ac599033dd87b820be2613b282738c6065b219327fb4dc6af05aa1",
+      "mode": "100644",
+      "before": {
+        "sha256": "7e2356a30acce12d0d97970ed961bc6bb05a3855739cfc9d33dc54e89be16942",
+        "bytes": 11277,
+        "gitBlob": "be2c32fa8c471ec95a6f008b9569e01b7d9ae509"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-mechanical-guard-failure/mechanical-guard-failure/zh-CN/manifest.json",
+      "bytes": 11689,
+      "sha256": "f46171adbd2bd77271275d04c402bec09e4e09064de1b9de88421cbbb8ed6ec4",
+      "mode": "100644",
+      "before": {
+        "sha256": "6bbc1fd264a238429f29abc00ccda7576ba7dc8a3e9d4f6fa8a17bfe2bde296e",
+        "bytes": 11689,
+        "gitBlob": "19da96ba8278d1283949cfdeaf610266b84224db"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-mechanical-reflection/mechanical-reflection/zh-CN/manifest.json",
+      "bytes": 11623,
+      "sha256": "e4afa77671642de7099c1f3e0980c0991a1f2fa4ee4d6185c83db594ee8c534d",
+      "mode": "100644",
+      "before": {
+        "sha256": "5ec25c81208dea6a51e39d4775ab87f00c2ff372ba37d9b8e149a9437737ccd5",
+        "bytes": 11623,
+        "gitBlob": "da57f57dabc7c439795e7c84c78c46cc996fbae0"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-merchant-dream/merchant-dream/en/manifest.json",
+      "bytes": 11468,
+      "sha256": "850301032361626c4940a285557f3ad95bc2b3be50992e9f1f5a10f1a399f1a8",
+      "mode": "100644",
+      "before": {
+        "sha256": "85a8e28aa1de869b1a7bb2f72efe5178bb7eb8e5db6117c54c15fe3d3a892f1f",
+        "bytes": 11468,
+        "gitBlob": "34b30bd726df8df448ddc40bf99203c865fb40a4"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-merchant-poison/merchant-poison/zh-CN/manifest.json",
+      "bytes": 11491,
+      "sha256": "009e742611315326562fde48517298747c3fb2fe155c334823d27c39a1b4f999",
+      "mode": "100644",
+      "before": {
+        "sha256": "fe79797f958af9222eab6d4b19a59a032273be5f766e4ad407392cb45990e3bd",
+        "bytes": 11491,
+        "gitBlob": "54e76d27a8c32610de0e5b5a56e66bc1463a3f41"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-mirror-exhausted/mirror-exhausted/en/manifest.json",
+      "bytes": 11496,
+      "sha256": "41107a237cb229c9bf856d1bc81c799ef71821d0b0f6a3896e9524529f1e4f7c",
+      "mode": "100644",
+      "before": {
+        "sha256": "94c03390355fe6fd780270e3cd00a8cb8d0f74b88ac916feae5f7f0924916095",
+        "bytes": 11496,
+        "gitBlob": "cb2302fa4a79f51ef288fe433227e85b18383812"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-mirror-king-badge/mirror-king-badge/en/manifest.json",
+      "bytes": 11522,
+      "sha256": "3bfaec9f2114d202bd9614cc778f98e6408f536fb7f4d2faf99a805193d8c24f",
+      "mode": "100644",
+      "before": {
+        "sha256": "edd00eb4867cd5dcb71f03da6304a9839bfe10e62b9ef2ee4ea1868cb0897a23",
+        "bytes": 11522,
+        "gitBlob": "dcf9a91650f6b7a04afbd88c93e38cfa709841c3"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-mirror-skip/mirror-skip/en/manifest.json",
+      "bytes": 11386,
+      "sha256": "a872d816ef7ec6a1648e28f07eb28ca710b046c2876677541fa1baf46f162039",
+      "mode": "100644",
+      "before": {
+        "sha256": "efdd490d606b36ce85f4733bd8614beed9969194a453607741e84ce9e8202e1e",
+        "bytes": 11386,
+        "gitBlob": "48a0458a327b545b08b5b38f0014bddc5e61d74b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-mvp/sample/locale-unrecorded/manifest.json",
+      "bytes": 9642,
+      "sha256": "76d2f9e56740834aa76905f03d51777822b66f5a66ba27e43f9b66572936bda8",
+      "mode": "100644",
+      "before": {
+        "sha256": "9fe044c68d0b476022ee7dc095824a52569414b287155410970f35571cc92c9b",
+        "bytes": 9642,
+        "gitBlob": "4d11d659cb78809a91ee3af627d34be8aedbf23c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-psychic-six-skip/psychic-skip/zh-CN/manifest.json",
+      "bytes": 11421,
+      "sha256": "757c65955191c64215933082263bf22e81dc9c89d247f4ea16f897b567f82871",
+      "mode": "100644",
+      "before": {
+        "sha256": "c3e48cbc585cb62ca11219d64fd32f4597a33e09669ae94d35a304ec0fa6e9b7",
+        "bytes": 11421,
+        "gitBlob": "d2dc14324dbadb289e5a26c133ee29f8d44d749c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-white-wolf-king/white-wolf-king/en/manifest.json",
+      "bytes": 11480,
+      "sha256": "b8a94f4a618c947cc5be18a142d50e79b20422f753596a4334154b43ef3f9c64",
+      "mode": "100644",
+      "before": {
+        "sha256": "234b00995d96573427ce227771be023edfabc771eb47aea483419790b98459ee",
+        "bytes": 11480,
+        "gitBlob": "474488147f9d7ac105bf0b31c42f2d6850ba4c4b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-wolf-beauty-last-god/wolf-beauty-last-god/zh-CN/manifest.json",
+      "bytes": 11601,
+      "sha256": "6788e6bf6c8db276652458ba49685189a2224155673446b5b8124931255a0513",
+      "mode": "100644",
+      "before": {
+        "sha256": "8b5f0a3145588082bf80ba865edadf6b9ee54c9dca24128f51f34a95777e10c6",
+        "bytes": 11601,
+        "gitBlob": "d1c968503bf9a78eb7c7a06d18c53f660aeecbf5"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-wolf-beauty-night-dream-block/wolf-beauty-blocked/zh-CN/manifest.json",
+      "bytes": 11603,
+      "sha256": "4bc758a3c3b9be808511522caaaa3a3873275402e0beb666937ab2856ce8f850",
+      "mode": "100644",
+      "before": {
+        "sha256": "62fc650985bc6d8a918f5c7aac7b92a145f9d098b12946ecb3b54c05ecc315a6",
+        "bytes": 11603,
+        "gitBlob": "810cf99c5158f2f5b95b506a6b9a60cd2f812ffc"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/six-player-wolf-king/wolf-king/en/manifest.json",
+      "bytes": 11344,
+      "sha256": "5378d15cf05507955a46f43b75299f656b025c2843807331e0864a959759a522",
+      "mode": "100644",
+      "before": {
+        "sha256": "67f8ce6233e5f08b8830f0c48b00086b85606fe064513293a2d7d816d9eb5c10",
+        "bytes": 11344,
+        "gitBlob": "471c107c12059a2907f19f9e64132a567f093e8a"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/synthetic-victory-display/victory/zh-CN/manifest.json",
+      "bytes": 10598,
+      "sha256": "0dd9030e88300e46ac1d5b4877489cba6e7eb968d15f2bd4ec0f6a369516e8ea",
+      "mode": "100644",
+      "before": {
+        "sha256": "50128c8fa22a76650a1f1394e7ad06264bb0ce054732d4bb4ada698feb9baba0",
+        "bytes": 10598,
+        "gitBlob": "5a98f5136f66fb0f991a1279de9cd06a8f0c5568"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/thief-12-both0/thief-12-both0/zh-CN/manifest.json",
+      "bytes": 13324,
+      "sha256": "dc74010d6ccd004f6e445e8a2ed08c5e305e41edee5e3ca9504e1bda020260c5",
+      "mode": "100644",
+      "before": {
+        "sha256": "494dcf60e0e4988ea9bc67737df17a22d5a71e374697d4fab1dc4091f8c9bdf8",
+        "bytes": 13324,
+        "gitBlob": "ab32b5bcfa4edfe0faf692accb6a039dbb90edb2"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/thief-12-keep/thief-12-keep/zh-CN/manifest.json",
+      "bytes": 13300,
+      "sha256": "a1e6b20c016aca83ec2483ad721cb3bdaf2133c5fc8695a92b75c9200af66ae1",
+      "mode": "100644",
+      "before": {
+        "sha256": "3a348ae889bf70ac796100fa7e7e69391c16d9dde5f3329631d9ffe86bc84cbf",
+        "bytes": 13300,
+        "gitBlob": "6d8db96208dfa60b6920285bcae1813803dec044"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/thief-6-hunter/thief-6-hunter/zh-CN/manifest.json",
+      "bytes": 11866,
+      "sha256": "fbe61c8e61256d1cd94fd8f0b484fd220c73bed0dc8c4f8014ec116badc861d7",
+      "mode": "100644",
+      "before": {
+        "sha256": "04a5c117f17bccf2ac6a742220beea84cb43c3129a64561c01fb9d52c2fec9e3",
+        "bytes": 11866,
+        "gitBlob": "cf0b32f913c8e0d3aadd720cd78f94ed3083af8c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/thief-6-seer/thief-6-seer/zh-CN/manifest.json",
+      "bytes": 11826,
+      "sha256": "6eae8dbc18d513ac40719288684b62cfafc1e5182ede393378cc931e4b3c86be",
+      "mode": "100644",
+      "before": {
+        "sha256": "290a08069c6b94b25ca0f16bff4ca78908f66c32bebd9df3cafd11bdb78ee90f",
+        "bytes": 11826,
+        "gitBlob": "57da7dbcba7e28a6b9026144665178b4bb3281d0"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/trickster-transport-cancel/trickster-cancel/en/manifest.json",
+      "bytes": 19642,
+      "sha256": "908d3438ab39d6bdde5ba2e079d2dd5eca5af2ec443195a88f49559414ccf37f",
+      "mode": "100644",
+      "before": {
+        "sha256": "6857306be84671cf884c83070d10dbacfbab9e868854d7577889259f1ddcc37c",
+        "bytes": 19642,
+        "gitBlob": "934647feeb542544efc3eb01d7265cb03633ef7d"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/trickster-transport-cancel/trickster-cancel/zh-CN/manifest.json",
+      "bytes": 19750,
+      "sha256": "ba5d78e3a17d29bf0028d685f7fc527029cf4470dab61d5b01df735bba9ce79e",
+      "mode": "100644",
+      "before": {
+        "sha256": "7e92a11dbc2400634b088e8d4a431b148e7aeff1ffb3dcd62b190ba302250f60",
+        "bytes": 19750,
+        "gitBlob": "6c58db41a76bb2bd05d691b64a63d4099d0c91e6"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/trickster-transport-mapped/trickster-mapped/en/manifest.json",
+      "bytes": 19642,
+      "sha256": "e74d70ed9ef95425a5dcadf80acd28aa80a9198d27b457da731fcaf848a5c712",
+      "mode": "100644",
+      "before": {
+        "sha256": "dbc46245cae0fba73ac40d03be92e141e630fab9eaa33c5a9f60cdb675876821",
+        "bytes": 19642,
+        "gitBlob": "3e2ff8c5d51964b4d5bd2ef3ffd1c34ce22dbd4a"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/trickster-transport-mapped/trickster-mapped/zh-CN/manifest.json",
+      "bytes": 19750,
+      "sha256": "71829fdb5afc6bd3be5a1c64433edc0460504619b96c3b06b2ea034336f5ef55",
+      "mode": "100644",
+      "before": {
+        "sha256": "4a963e9ce64e2ea7cbdab9879f2bb310d31c9031bb8484b43bd87031b3bf690e",
+        "bytes": 19750,
+        "gitBlob": "59b36b9dbefeceae9d0a1fe7272a0512255b1d5b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/trickster-transport-pk/trickster-pk/en/manifest.json",
+      "bytes": 19490,
+      "sha256": "d277004687ff4ab1e37fce85f1637dd93f2e228e220a5f1b8a4c734841ebf8c2",
+      "mode": "100644",
+      "before": {
+        "sha256": "0862eecf7f90473ef6e49088240813c101627278b2485f2f441781544d5fd282",
+        "bytes": 19490,
+        "gitBlob": "468e9fb07a1e104644289558523ab638db675779"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/trickster-transport-pk/trickster-pk/zh-CN/manifest.json",
+      "bytes": 19598,
+      "sha256": "875f4965c44e1172c424e0ef213adc34849a0ac1567dbacff2174a8d89126bb1",
+      "mode": "100644",
+      "before": {
+        "sha256": "accd0888ea900b680a8eb5cdb529ab3cd37c39ee603811944a7d47c70553fc79",
+        "bytes": 19598,
+        "gitBlob": "2d395f61797a2d8b314d199f62df7bd1dbe64da9"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-black-twelve-backlash/black-market-twelve-backlash/en/manifest.json",
+      "bytes": 13189,
+      "sha256": "a53ec308f7b017696934d5036ea081761c814793a5a26bb5103f97badf8c8191",
+      "mode": "100644",
+      "before": {
+        "sha256": "7db53eeb78b1205165d5fd070286561243300b88c10f0045b3c6c11c3acae59e",
+        "bytes": 13189,
+        "gitBlob": "6160301e839a8dcd547fb7522b6ec639ecd0a866"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-black-twelve-gun/black-market-twelve-gun/en/manifest.json",
+      "bytes": 13079,
+      "sha256": "0446159a561b236cee55acb13e64ea8e259df76c644f7f1e078c29e8e61def30",
+      "mode": "100644",
+      "before": {
+        "sha256": "06fc5ff869653852a099cce6a893054313177144187d8d4c8fa8db1f625f8833",
+        "bytes": 13079,
+        "gitBlob": "20f49f3652d5573732337f82cd1ba50147caef0a"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-awakened-twelve/awakened-twelve/en/manifest.json",
+      "bytes": 12947,
+      "sha256": "22e4cdf7451351ea0426138d074eaf8f81cb77fc3ccf1b85f2bc040d963eabf9",
+      "mode": "100644",
+      "before": {
+        "sha256": "68f53547e8bf8d342c52e85459a6d68862ec37c2816550180cbe67a6e1a2aa9e",
+        "bytes": 12947,
+        "gitBlob": "75c4b23096a8b1b3c916e3770e13487d3537a39c"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-bear-twelve/bear-twelve/zh-CN/manifest.json",
+      "bytes": 12822,
+      "sha256": "7ce597377f54979e9c1b7e5ae95bc5a2dc42842ffec63bd092dd4c7ab4a679db",
+      "mode": "100644",
+      "before": {
+        "sha256": "c31fd16a12e4ac05c9326ac16fd8445d3ef87bdbd65d44d543866567b0a4d87a",
+        "bytes": 12822,
+        "gitBlob": "ec7cf12b1df32329b5248352c97b802354b6d3e4"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-dreamer/dreamer-twelve/zh-CN/manifest.json",
+      "bytes": 12871,
+      "sha256": "754675834c8083356d6d6ae3c734caccc7398b055585da3ee377e947fb956250",
+      "mode": "100644",
+      "before": {
+        "sha256": "2b8b3de676261f3299943dd4c6c96ec31f684664c8dd4f71a5ba7e6bb8e7f2d9",
+        "bytes": 12871,
+        "gitBlob": "5deaaeba052db9136681d6d23eec1e5159e5d314"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-gargoyle-twelve/gargoyle-twelve/en/manifest.json",
+      "bytes": 12921,
+      "sha256": "a2ac7d567c740971ccd29450a836486fa034f3c84de29b1602962a8e8264cf7c",
+      "mode": "100644",
+      "before": {
+        "sha256": "b22b78595b04d09423d3b27c3c66408c14f19d65bc2484e0ffc1799e3ee89aba",
+        "bytes": 12921,
+        "gitBlob": "358cab6da295fc04472f69fac8a67c57f76425b5"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-gravekeeper/gravekeeper/zh-CN/manifest.json",
+      "bytes": 12834,
+      "sha256": "a551692c8338b1d38b6cfdf279dd9f535e7a6e25cda01128dfa78e0f7439802e",
+      "mode": "100644",
+      "before": {
+        "sha256": "b92111e0c9d55cd971f378165d6b667d47ead19e24aaab988484b669d6c6571d",
+        "bytes": 12834,
+        "gitBlob": "4892aa8ac9b6cb83a81f2cafb5b62838ce8e9bc5"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-hidden-wolf-twelve/hidden-wolf-twelve/zh-CN/manifest.json",
+      "bytes": 12990,
+      "sha256": "3d6a870aedfcc3a44c5483aeec1a43f1b6c4d3bcf2d652386cbf3e2ffccbecdf",
+      "mode": "100644",
+      "before": {
+        "sha256": "5a295cf0ffcd872be6e732359d03c2763adc66a073efd956d4fee5bcf55fc568",
+        "bytes": 12990,
+        "gitBlob": "08839a2587a0bccbb58fb0331cf58cdf492787e2"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-hybrid-twelve-wolf-win/hybrid-twelve-wolf-win/en/manifest.json",
+      "bytes": 13061,
+      "sha256": "616d4eb7e663217a7d657742e7cb2be9d9f91d0ea6b15b4255a520c0866a8707",
+      "mode": "100644",
+      "before": {
+        "sha256": "ebfac65e47c9c7f3f450681edde581fbdee5f0896de3af9c4940828359fd1e32",
+        "bytes": 13061,
+        "gitBlob": "6f02a5b423a702699334fd65fc3d7cd3729df954"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-mechanical-twelve/mechanical-twelve/en/manifest.json",
+      "bytes": 12973,
+      "sha256": "716f22703f2d7a4ee2ece8797a752bb474544b917c54ff3fb480dabb8221912c",
+      "mode": "100644",
+      "before": {
+        "sha256": "157be199604405828c2390169007266b080edb9baa88ec8806b391c8876769de",
+        "bytes": 12973,
+        "gitBlob": "34ea1de8a442908ba25b0252ad2ce62a6a386e00"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-merchant-twelve/merchant-twelve/en/manifest.json",
+      "bytes": 12931,
+      "sha256": "f84639a31b861be8b33c2152e95b67a931dbf3a289a33d2c66c72c2d092e3437",
+      "mode": "100644",
+      "before": {
+        "sha256": "b0f84be069cf6be7a8c613827da2bd8b31fe35aa988054f0788e043d2c11db23",
+        "bytes": 12931,
+        "gitBlob": "e4e9636460666b2facf491a590b8db82629153a1"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-mirror-twelve/mirror-twelve/en/manifest.json",
+      "bytes": 12871,
+      "sha256": "1413f139c354585d72a4207f6ec7f9e98989059f7a4084fad968277106cd6b64",
+      "mode": "100644",
+      "before": {
+        "sha256": "592de086938b8aa90c2f1c4d111f8a2bbc21c559512c35f9595178629207b221",
+        "bytes": 12871,
+        "gitBlob": "2ae0ecf377beecbcc9a080226880b3fe6adcfcd3"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/twelve-player-psychic-twelve/psychic-twelve/en/manifest.json",
+      "bytes": 12885,
+      "sha256": "d46ea3ae35361915ab032082c8f9dab873776fbaf13848ace559de8fd8f8bbb1",
+      "mode": "100644",
+      "before": {
+        "sha256": "22235c5b70c1cdb209f3d60b441d34574b0fc4d71d48900954f1289915bfcab2",
+        "bytes": 12885,
+        "gitBlob": "e0ff1e162599abe6069e3d3dadd15b78c5280559"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wall-12-skip/wall-12-skip/zh-CN/manifest.json",
+      "bytes": 12808,
+      "sha256": "e569455d860a7e0f0fa8085451bbeeca9783610aefc7bb0e79643c05a117fb6a",
+      "mode": "100644",
+      "before": {
+        "sha256": "ad3be1d675e648393839dc45c1b93378badebf603bde71787f95396336394539",
+        "bytes": 12808,
+        "gitBlob": "4dd972c67c48800e8897e853b40a3e6460b49577"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wall-12-write/wall-12-write/zh-CN/manifest.json",
+      "bytes": 12830,
+      "sha256": "667977e25dc341419d00963e5aec3d94d22e9f22c8dbd1ca480f7afc0d9d1e82",
+      "mode": "100644",
+      "before": {
+        "sha256": "445fe5228d83e3a0e7695b157309a25015e360f02e6fe63293e55d792e247c55",
+        "bytes": 12830,
+        "gitBlob": "dab70082c123919add90855f6fa02b1ba7fc1f7a"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wall-6-skip/wall-6-skip/zh-CN/manifest.json",
+      "bytes": 11344,
+      "sha256": "5333898f3b8e632a94d733cd457569064224fba26f449e1b5e4e8888dae024d5",
+      "mode": "100644",
+      "before": {
+        "sha256": "0d43487e19802f70760d76315b79eeada6cb6febc5f2c219c778f69d963e6d74",
+        "bytes": 11344,
+        "gitBlob": "6f8c898e7bb2404314e7c2e8ebdaf302cb787308"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wall-6-write/wall-6-write/zh-CN/manifest.json",
+      "bytes": 11366,
+      "sha256": "c0b3b2e6baecb96703242b7148b99e93087d2c803715e6eb4fdd3c1933fe152c",
+      "mode": "100644",
+      "before": {
+        "sha256": "e158a875067e0b38f043de63f23d3bea97204ebcb1ea640c77ce030efb1eab82",
+        "bytes": 11366,
+        "gitBlob": "87125c01a9a8dd796cc6ea6a61fe07a072716215"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wild-child-12-good-knife/wild-child-12-good-knife/zh-CN/manifest.json",
+      "bytes": 13076,
+      "sha256": "334d9ce975048c11a32e020d9b7e7f1c24bd8298dbd8f0a4b27378ade7be2b7a",
+      "mode": "100644",
+      "before": {
+        "sha256": "44ad13260165deaa6fc5a3f0ddad4818ba43db708694f0b0b1ca6bfbabd5fe3c",
+        "bytes": 13076,
+        "gitBlob": "7ef0d76a720475fb9494fe3c6a7c5a07b3a7b32d"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wild-child-6-hunter-chain/wild-child-6-hunter-chain/zh-CN/manifest.json",
+      "bytes": 11656,
+      "sha256": "ddbf268004b56c8764794a45cfc7dbbccd412bfc7adffc2ce67bcd5e89c3139a",
+      "mode": "100644",
+      "before": {
+        "sha256": "27fceeb39bc4aad982ed1f9a0d2a800c87ff9eca9064ce9752d6594ffdb4f687",
+        "bytes": 11656,
+        "gitBlob": "11a8f67579136e702944105eef64c48c7d677848"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wild-child-6-same-wave/wild-child-6-same-wave/zh-CN/manifest.json",
+      "bytes": 11590,
+      "sha256": "91528c90d97204cfff36dc87c7b8703dbfb92c0f449f72ff44b4947732528c9d",
+      "mode": "100644",
+      "before": {
+        "sha256": "6c74b285e58d79ffa880ce2f0d6aba0b96799c5f146feb5a68b5dc5af7426349",
+        "bytes": 11590,
+        "gitBlob": "9ed81c73ec93c01b632c142b12c40640b5d50486"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wild-child-6-wolf-exile/wild-child-6-wolf-exile/zh-CN/manifest.json",
+      "bytes": 11612,
+      "sha256": "08c83632c88a0340347d850d46645edad6aeb7de0beb0fc778a63e8cf8b9af62",
+      "mode": "100644",
+      "before": {
+        "sha256": "07593669d2fbce615d2e9cc78983ae6503860c7164f8ec3e06f21f53599eb63b",
+        "bytes": 11612,
+        "gitBlob": "b5b76edc479bca363a72c2cdc0f3dca3b525f838"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wolf-sorcerer-transport-cancel/wolf-sorcerer-cancel/en/manifest.json",
+      "bytes": 19803,
+      "sha256": "ffa5b074ae71f7d11446e7bde136d4f0e92c432c3dcc365fcfff957f8f39747a",
+      "mode": "100644",
+      "before": {
+        "sha256": "2c65e4b659a8a40b572173c5b331b0eb0d0ef1cbcd78058516a459f4a120ce63",
+        "bytes": 19803,
+        "gitBlob": "5de9cf4a208c7e9d97529322ec4b3336f70c8b82"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wolf-sorcerer-transport-cancel/wolf-sorcerer-cancel/zh-CN/manifest.json",
+      "bytes": 19911,
+      "sha256": "10b80814951ebe82f3278df352d98c80d8459e87870e7335ee044970dcd6820e",
+      "mode": "100644",
+      "before": {
+        "sha256": "5b6a71faf049e99d365057a938130ef692c847cb3cd6c3d4175df7c31249049b",
+        "bytes": 19911,
+        "gitBlob": "c7cc015ce6ab3cd9c4a215b12efc2789b2dd4c40"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wolf-sorcerer-transport-disjoint/wolf-sorcerer-disjoint/en/manifest.json",
+      "bytes": 19879,
+      "sha256": "7ed50de880881bb4c648db382f06854255593e88a01697b2c26f3af3fbf11356",
+      "mode": "100644",
+      "before": {
+        "sha256": "620ff3b1ab1534200683522eca191c612de38389b6ab10d877461a506242da96",
+        "bytes": 19879,
+        "gitBlob": "4bc8c7983fd216f98b3b5967f333ae4e250fb694"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wolf-sorcerer-transport-disjoint/wolf-sorcerer-disjoint/zh-CN/manifest.json",
+      "bytes": 19987,
+      "sha256": "73f737f51ffe0a9809bf9b34304947cca2849b4d703188da857dc38afd953ac7",
+      "mode": "100644",
+      "before": {
+        "sha256": "600378bf7258219612e9df26b040b68d75c7ab86fffe7be82ff16c3f1444e6b2",
+        "bytes": 19987,
+        "gitBlob": "5e88a383867ef665f7e9549ff339795b7d54820b"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wolf-sorcerer-transport-overlap/wolf-sorcerer-overlap/en/manifest.json",
+      "bytes": 19841,
+      "sha256": "f9151208864467125e170678f9d9062c05347c4e799b0f9e19cda6d556422aa6",
+      "mode": "100644",
+      "before": {
+        "sha256": "4b8499b316138f1dce760493e3323b884c9f8c16a71acfc724161291a35331ce",
+        "bytes": 19841,
+        "gitBlob": "db6cbd4b0fc02fe3b4c9e482e897829a40728fb3"
+      }
+    },
+    {
+      "path": "frontend/tests/fixtures/wolf-sorcerer-transport-overlap/wolf-sorcerer-overlap/zh-CN/manifest.json",
+      "bytes": 19949,
+      "sha256": "bfcebc056068753c5cfb75bc7a16bc95d2182e02b53335e24fbda5d1862e06f2",
+      "mode": "100644",
+      "before": {
+        "sha256": "19a1a6c9ee1bc1bd352adc8679da79299bd7abd2821d77398fb2fdfe10e5d859",
+        "bytes": 19949,
+        "gitBlob": "67ca0e88d98f423883bfdf5ee64ce9bb12f73f2d"
+      }
+    },
+    {
+      "path": "package.json",
+      "bytes": 2234,
+      "sha256": "01c23b6774d312050a4637cadf7430f99c6696a21ebcaa4ad325c91e9ba46ef1",
+      "mode": "100644",
+      "before": {
+        "sha256": "11dd0dff1c16be4cb74701840fc270d218669c6228754ef37aa0e7c74e16f40f",
+        "bytes": 2026,
+        "gitBlob": "c5db1fd702cdb80a5dca8c4fe61d8d965050a24b"
+      }
+    },
+    {
+      "path": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/manifest.json",
+      "bytes": 9402,
+      "sha256": "986993674e4a6a803fd947e276088f13ca8c7f8d5540252d2aaab93dc326d36f",
+      "mode": "100644",
+      "before": {
+        "sha256": "bc3505bd4773d9ea0435cc7dcc0a49bf7e9132540a071be5b40591f793c13b46",
+        "bytes": 9402,
+        "gitBlob": "abf86329b6c2e0849b3cec57269fbb4c9413a797"
+      }
+    },
+    {
+      "path": "packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/manifest.json",
+      "bytes": 9873,
+      "sha256": "9733e5fd400e44eeb35441899604b96d68606ce375732e968cdbc6bd1990d4fd",
+      "mode": "100644",
+      "before": {
+        "sha256": "ea976da9c50a7ba02a2bb381db6f2b85d647504f210ff4a8ff1e435d83b9b384",
+        "bytes": 9873,
+        "gitBlob": "41bfbe309dea9e9783fde8dd936d71497e0ae0fc"
+      }
+    },
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "bytes": 13525,
+      "sha256": "151fd5d126b18aaae6fec82a1fc2eb88d6d807992da756122767367c54c23984",
+      "mode": "100644",
+      "before": {
+        "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+        "bytes": 13508,
+        "gitBlob": "40468cfa7361a8d3e3a7d81dbbe3aabbf010948a"
+      }
+    },
+    {
+      "path": "tooling/refactor/fixture-manifest.test.ts",
+      "bytes": 21643,
+      "sha256": "c2da1ee90cfc1f4fc69597253afc86b313ebc8a552aef4b61ba95038a9b42a63",
+      "mode": "100644",
+      "before": {
+        "sha256": "e3058a8ca1e795d17bab15221af8abb90018800f2c01f4f07be1c0169d89ea86",
+        "bytes": 21059,
+        "gitBlob": "6d6d23c4df73ac566fa7f900c4ac73b2220e057f"
+      }
+    },
+    {
+      "path": "tooling/refactor/fixture-manifest.ts",
+      "bytes": 75748,
+      "sha256": "bf022ee4c1bce4fd779ace6d9c79c679ebea57f1b5847c91fa14bec726484d94",
+      "mode": "100644",
+      "before": {
+        "sha256": "8798670e36625f6f510c3a9d77b22474491d80b4dc3587996f13ac0d13d3d6d9",
+        "bytes": 75572,
+        "gitBlob": "496402a7f858d6834a0be7da83f74ac4a30dbe2b"
+      }
+    },
+    {
+      "path": "tooling/refactor/fixture-source-relocations.test.ts",
+      "bytes": 17845,
+      "sha256": "80a5d85e5d1a516cfeb7e14e4c1f988376a00d7b1b8572db3f2348dc20c559f6",
+      "mode": "100644",
+      "before": {
+        "sha256": "c1461fb0253442863c7807a0d54944236128c7b66cb089ae9ff1f2c8a9eb57a1",
+        "bytes": 17820,
+        "gitBlob": "3fa0d505af69a60bc9ba9e5843e073e0c4429b21"
+      }
+    },
+    {
+      "path": "tooling/refactor/history-integrity.py",
+      "bytes": 7402,
+      "sha256": "8b33be713306922b3c1e3527a1fb5aa5d8cf567e9117368dec48309dc7190980",
+      "mode": "100644",
+      "before": null
+    },
+    {
+      "path": "tooling/refactor/policies/i18n-source-exceptions.json",
+      "bytes": 1115,
+      "sha256": "9c3369a5e48ba866d63267eb687ad7207a70584bce05da4630e40b0513935a16",
+      "mode": "100644",
+      "before": null
+    }
+  ],
+  "excludedMetadata": [
+    "knowledge-layout.md",
+    "knowledge-layout.receipts.json",
+    "knowledge-layout.evidence.json",
+    "knowledge-layout.scope.json",
+    "knowledge-layout.peer-review.json",
+    "knowledge-layout.tar.gz"
+  ]
+}

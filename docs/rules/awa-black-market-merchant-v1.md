@@ -1,6 +1,6 @@
 # AWA Black Market Merchant 1.0.0 规则卡
 
-规则集 `awa_classic` 1.0.0；ID `black_market_merchant`，黑市商人／Black Market Merchant。核验2026-10-09。当前 `verified`；规则经过R/A/L交叉审查及修正复查冻结，见[规则审查](../expansion/reviews/p7-black-market-rules.md)；完整功能证据见[交付验收](../expansion/reviews/p7-black-market-merchant.md)。支持范围为本卡限定的AWA版本与板子。
+规则集 `awa_classic` 1.0.0；ID `black_market_merchant`，黑市商人／Black Market Merchant。核验2026-10-09。当前 `verified`；规则经过R/A/L交叉审查及修正复查冻结，见[规则审查](../history/expansion/reviews/p7-black-market-rules.md)；完整功能证据见[交付验收](../history/expansion/reviews/p7-black-market-merchant.md)。支持范围为本卡限定的AWA版本与板子。
 
 ## 第一方来源与版本选择
 
@@ -53,4 +53,4 @@
 
 至少手写成功check/毒/gun、skip后晚赠、赠Wolf/Hidden失败不泄露、原Hunter双枪（含首枪null及首枪命中末Wolf/末神后仍完成另一枪）、原生与礼物同kind去重/跨actor独立、首夜knife/poison/compound、Dream保护/死亡、死亡与owner撤换、原12改编警徽/遗言/临界胜利的整局预期。角色正常及失败Tape、SDK/ACP（实际MCP）/混合×两语完整局、每板20受限seed、资源与私有信息、前端God档与玩家中立枪、实际browser/PNG全部过；R规则/人工oracle、A实例/授权/时序/清理、L/D双语/投影/呈现分别审查复查后启用。
 
-本卡规则及完整实现已验证，P7交付与当时交接见[历史阶段验收](../expansion/reviews/p7-activation.md)；该验收只证明其冻结输入，不代表当前源码全量通过。当前交付状态由[角色资料目录](../../packages/game-catalog/src/index.ts)维护，未完成的总体要求见[重构进度](../refactor/progress.md)，不以本角色登记关闭其它阶段、组合矩阵、长局或T6。
+本卡规则及完整实现已验证，P7交付与当时交接见[历史阶段验收](../history/expansion/reviews/p7-activation.md)；该验收只证明其冻结输入，不代表当前源码全量通过。当前交付状态由[角色资料目录](../../packages/game-catalog/src/index.ts)维护，未完成的总体要求见[重构进度](../history/refactor/progress.md)，不以本角色登记关闭其它阶段、组合矩阵、长局或T6。

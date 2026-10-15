@@ -1,6 +1,6 @@
 # P9b 赤月使徒有限板契约草案
 
-状态：implemented；十二人赤月猎魔有限板技术门禁通过，见[验收](../expansion/reviews/p9-red-moon.md)。其它组合、P9/P10 和用户总体验收不因此关闭。目录 ID red_moon_apostle，不因来源称呼血月使徒而重复注册角色。
+状态：implemented；十二人赤月猎魔有限板技术门禁通过，见[验收](../history/expansion/reviews/p9-red-moon.md)。其它组合、P9/P10 和用户总体验收不因此关闭。目录 ID red_moon_apostle，不因来源称呼血月使徒而重复注册角色。
 
 ## 来源
 

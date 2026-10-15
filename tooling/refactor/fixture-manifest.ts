@@ -118,6 +118,8 @@ export interface FixtureManifest {
 
 const baselineCommit = "27a97cb66e8f30fceb7cb20130154291559dd14a";
 const inventoryPath = "docs/refactor/generated/baseline-fixtures.json";
+// 协议 origin 保原身份；实际冻结文件只从精确归档落点读取。
+const inventoryFilePath = "docs/history/refactor/generated/baseline-fixtures.json";
 export const fixtureManifestPath = "tooling/refactor/fixtures/manifest.json";
 const fixtureRoots = [
   "backend/tests/fixtures",
@@ -1455,7 +1457,7 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
   const registeredContractInputs = new Set<string>();
   async function safeFile(relative: string) {
     if (
-      relative !== inventoryPath &&
+      relative !== inventoryFilePath &&
       relative !== fixtureManifestPath &&
       !publicFixturePath(relative) &&
       !publicSupportSourcePath(relative) &&
@@ -1476,7 +1478,7 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
     }
     return fs.readFile(path.join(root, relative));
   }
-  const inventoryBytes = await safeFile(inventoryPath),
+  const inventoryBytes = await safeFile(inventoryFilePath),
     inventory: unknown = JSON.parse(inventoryBytes.toString("utf8"));
   if (!record(inventory) || inventory.commit !== baselineCommit || !Array.isArray(inventory.files))
     fail("frozen_inventory_identity");

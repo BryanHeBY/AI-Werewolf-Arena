@@ -1,6 +1,6 @@
 # AWA 蚀时狼妃反弹规则契约
 
-状态：implemented。公开预设 awa_time_consort_12_v1，分层证据见 [本批验收](../expansion/reviews/p9-time-consort.md)。支持有限十二人板：三普通狼人、蚀时狼妃、四村民、预言家、女巫、守卫、定序王子。此 AWA 版本不等同于所有永序之轮规则变体。
+状态：implemented。公开预设 awa_time_consort_12_v1，分层证据见 [本批验收](../history/expansion/reviews/p9-time-consort.md)。支持有限十二人板：三普通狼人、蚀时狼妃、四村民、预言家、女巫、守卫、定序王子。此 AWA 版本不等同于所有永序之轮规则变体。
 
 ## 来源与分歧
 
@@ -31,4 +31,4 @@ awa_time_consort_reflection_v1 提供 reflectionScope：
 
 ## 验收边界
 
-本有限板的权威夜帧、严格请求、共享文本与私有观测、反弹范围矩阵、自目标、解药排除、原目标连续限制、跨夜消费、失败前缀与篡改拒绝均有分层测试。双语 World、真实 SDK/ACP/mixed 和四份实际回放的 Chromium 验证通过。P9c 同源阶段门禁已在当时冻结输入上完成，见[历史阶段验收](../expansion/reviews/p9c-stage-acceptance.md)；不表示当前重构源码全量通过，其余未验组合、P9 剩余／P10 与用户总体验收继续。
+本有限板的权威夜帧、严格请求、共享文本与私有观测、反弹范围矩阵、自目标、解药排除、原目标连续限制、跨夜消费、失败前缀与篡改拒绝均有分层测试。双语 World、真实 SDK/ACP/mixed 和四份实际回放的 Chromium 验证通过。P9c 同源阶段门禁已在当时冻结输入上完成，见[历史阶段验收](../history/expansion/reviews/p9c-stage-acceptance.md)；不表示当前重构源码全量通过，其余未验组合、P9 剩余／P10 与用户总体验收继续。

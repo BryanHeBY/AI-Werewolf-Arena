@@ -44,4 +44,4 @@
 | 情侣旧生命死而后复活                    | 不继承旧关系牵连或新关系胜利                                     |
 | 最后Wolf情侣根死亡引发Good情侣殉情/枪链 | 全部结算后普通屠城，按显式成员确定获胜者                         |
 
-状态：implemented；首批有限组合已启用。来源与三组审查、实际请求/DTO/录制/Tape及本批门禁见[功能验收](../expansion/reviews/p8-cupid.md)。整体P8–P10和用户最终验收仍开放。
+状态：implemented；首批有限组合已启用。来源与三组审查、实际请求/DTO/录制/Tape及本批门禁见[功能验收](../history/expansion/reviews/p8-cupid.md)。整体P8–P10和用户最终验收仍开放。

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "backend/src/audit/deterministic-checks.ts",
+    "text": "夜晚",
+    "count": 1,
+    "reason": "Exact historical localized phase alias for legacy-record recognition, not generated display text."
+  },
+  {
+    "file": "backend/src/audit/deterministic-checks.ts",
+    "text": "投票",
+    "count": 1,
+    "reason": "Exact historical localized phase alias for legacy-record recognition, not generated display text."
+  },
+  {
+    "file": "backend/src/audit/deterministic-checks.ts",
+    "text": "白天",
+    "count": 1,
+    "reason": "Exact historical localized phase alias for legacy-record recognition, not generated display text."
+  },
+  {
+    "file": "backend/src/audit/deterministic-checks.ts",
+    "text": "终局",
+    "count": 1,
+    "reason": "Exact historical localized phase alias for legacy-record recognition, not generated display text."
+  },
+  {
+    "file": "frontend/src/replay/ReplayDisplayControls.tsx",
+    "text": "中文",
+    "count": 1,
+    "reason": "Native language selector name 中文 intentionally remains readable independently of the selected display language."
+  }
+]

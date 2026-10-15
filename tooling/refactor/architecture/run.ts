@@ -41,7 +41,7 @@ async function readGateData(repository: string, requested: string): Promise<unkn
     target = path.resolve(requested);
   const relative = path.relative(root, target).replaceAll(path.sep, "/");
   if (
-    !/^docs\/refactor\/[a-zA-Z0-9_./-]+\.json$/.test(relative) ||
+    !/^docs\/history\/refactor\/[a-zA-Z0-9_./-]+\.json$/.test(relative) ||
     relative
       .split("/")
       .some(
@@ -309,7 +309,7 @@ if (import.meta.main) {
     else {
       const debtPath =
         options.get("--debt") ??
-        path.join(repository, "docs/refactor/generated/architecture-debt.json");
+        path.join(repository, "docs/history/refactor/generated/architecture-debt.json");
       const debt = (await readGateData(repository, debtPath)) as ArchitectureDebt;
       // CLI 对整个债务清单与固定 Git 重生成结果逐项一致核对，不能用改写清单静默接纳回归。
       // 直接调用 checkArchitecture 的捕获方须另行完成这项基线真实性与输入字节核对。

@@ -1,6 +1,6 @@
 # P9a 千面人：首夜必选身份与一狼强制
 
-状态：有限策略已实现并登记 implemented，三组来源/规则与源码复验已闭合；最终离线证据见[验收记录](../expansion/reviews/p9-shapeshifter.md)。唯一有限AWA策略 `awa_netease_shapeshifter_two_extra_villagers_v1`，机器角色ID `shapeshifter` 保留与 `thief` 分别登记。
+状态：有限策略已实现并登记 implemented，三组来源/规则与源码复验已闭合；最终离线证据见[验收记录](../history/expansion/reviews/p9-shapeshifter.md)。唯一有限AWA策略 `awa_netease_shapeshifter_two_extra_villagers_v1`，机器角色ID `shapeshifter` 保留与 `thief` 分别登记。
 
 ## 原始来源与差异
 

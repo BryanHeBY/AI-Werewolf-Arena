@@ -22,5 +22,9 @@ frontend/tests/fixtures/player-views/*.json
 packages/replay-contract/fixtures/*.json
 # 重构生成证据按原始字节交叉引用；检查脚本、首轮失败和审查收据均不可重排格式。
 # 生产代码、测试、公开配置和本目录外的文档仍由正常格式检查负责。
-docs/refactor/generated/
+# 仅原字节历史归档由 origin-paths manifest 逐项守卫；当前源码、测试与新文档仍参加格式检查。
+/docs/history/expansion/**
+!/docs/history/expansion/README.md
+/docs/history/refactor/**
+!/docs/history/refactor/README.md
 *.log

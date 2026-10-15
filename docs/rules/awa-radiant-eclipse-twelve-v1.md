@@ -1,6 +1,6 @@
 # AWA 猎日逐光十二人板
 
-状态：implemented；仅支持精确十二人预设 `awa_radiant_eclipse_12_v1`，完整证据见[有限板验收](../expansion/reviews/p9-radiant-eclipse-stage-acceptance.md)。角色 ID 为 `radiant_count`、`eclipse_maid`，联合政策为 `awa_radiant_eclipse_v1`。先冻结原生有限板；以下标记为 AWA 的资源和时序裁定不冒称官方完整法典。
+状态：implemented；仅支持精确十二人预设 `awa_radiant_eclipse_12_v1`，完整证据见[有限板验收](../history/expansion/reviews/p9-radiant-eclipse-stage-acceptance.md)。角色 ID 为 `radiant_count`、`eclipse_maid`，联合政策为 `awa_radiant_eclipse_v1`。先冻结原生有限板；以下标记为 AWA 的资源和时序裁定不冒称官方完整法典。
 
 ## 来源与有限牌组
 
@@ -84,4 +84,4 @@
 
 ## 实现验收（2026-10-12）
 
-本卡17项人工判例、原生资源／借用生命周期与独立账本、双语实际通信和完整前端门禁已通过三路复查及同源整轮验收。当前支持范围和证据见[完整验收](../expansion/reviews/p9-radiant-eclipse-stage-acceptance.md)，其余角色／混搭与P10仍按持续目标实施。
+本卡17项人工判例、原生资源／借用生命周期与独立账本、双语实际通信和完整前端门禁已通过三路复查及同源整轮验收。当前支持范围和证据见[完整验收](../history/expansion/reviews/p9-radiant-eclipse-stage-acceptance.md)，其余角色／混搭与P10仍按持续目标实施。

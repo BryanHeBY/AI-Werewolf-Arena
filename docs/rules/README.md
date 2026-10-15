@@ -1,16 +1,73 @@
-# 现行规则卡
+# 现行规则卡与稳定身份索引
 
-本目录保存 AWA 采纳的有限规则及来源。规则卡的 ID、版本、变体和未支持范围属于玩法契约；资料登记不自动开放执行支持。运行支持以 ruleset、配置校验、对应测试和角色资料的状态为准。
+本目录是完整角色规则的唯一维护位置。来源／采纳版本、有限板子、身份与阵营、胜利、能力库存、时点、死亡／到期、信息、交互及不支持变体由对应卡维护。内部模块只说明自身职责与链接，不复制第二份全文。
 
-规则卡由 `game-catalog` 的 `ruleCardRef` 导航，多个角色或有限板子可以共用同一规则卡。机器角色 ID 和规则版本不随目录迁移改变。
+资料中的verified／implemented是目录状态，不等于本轮所有组合或P9已验收；实际支持由schema、ruleset与真实测试决定。9个planned资料没有因本索引变成可执行角色。
 
-## 查找入口
+## 当前55个实际Role与规则来源
 
-- [基础七角色与公共规则](awa-classic-v1.md)
-- [角色目录及来源](../expansion/roles.md)
-- [可配置角色政策](../expansion/contracts/role-policy-configuration.md)
-- [架构重构进度](../refactor/progress.md)
+| 稳定RoleId              | 名称       | 唯一规则卡                                                                                                     |
+| ----------------------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
+| `wolf`                  | 狼人       | [awa-classic-v1.md#wolf](awa-classic-v1.md#wolf)                                                               |
+| `villager`              | 平民       | [awa-classic-v1.md#villager](awa-classic-v1.md#villager)                                                       |
+| `seer`                  | 预言家     | [awa-classic-v1.md#seer](awa-classic-v1.md#seer)                                                               |
+| `witch`                 | 女巫       | [awa-classic-v1.md#witch](awa-classic-v1.md#witch)                                                             |
+| `hunter`                | 猎人       | [awa-classic-v1.md#hunter](awa-classic-v1.md#hunter)                                                           |
+| `guard`                 | 守卫       | [awa-classic-v1.md#guard](awa-classic-v1.md#guard)                                                             |
+| `idiot`                 | 白痴       | [awa-classic-v1.md#idiot](awa-classic-v1.md#idiot)                                                             |
+| `wolf_king`             | 狼王       | [awa-wolf-king-v1.md#wolf_king](awa-wolf-king-v1.md#wolf_king)                                                 |
+| `white_wolf_king`       | 白狼王     | [awa-white-wolf-king-v1.md#white_wolf_king](awa-white-wolf-king-v1.md#white_wolf_king)                         |
+| `knight`                | 骑士       | [awa-knight-v1.md#knight](awa-knight-v1.md#knight)                                                             |
+| `gravekeeper`           | 守墓人     | [awa-gravekeeper-v1.md#gravekeeper](awa-gravekeeper-v1.md#gravekeeper)                                         |
+| `dreamer`               | 摄梦人     | [awa-dreamer-v1.md#dreamer](awa-dreamer-v1.md#dreamer)                                                         |
+| `wolf_beauty`           | 狼美人     | [awa-wolf-beauty-v1.md#wolf_beauty](awa-wolf-beauty-v1.md#wolf_beauty)                                         |
+| `bear`                  | 熊         | [awa-bear-v1.md#bear](awa-bear-v1.md#bear)                                                                     |
+| `hidden_wolf`           | 隐狼       | [awa-hidden-wolf-v1.md#hidden_wolf](awa-hidden-wolf-v1.md#hidden_wolf)                                         |
+| `gargoyle`              | 石像鬼     | [awa-gargoyle-v1.md#gargoyle](awa-gargoyle-v1.md#gargoyle)                                                     |
+| `psychic`               | 通灵师     | [awa-psychic-v1.md#psychic](awa-psychic-v1.md#psychic)                                                         |
+| `mirror_girl`           | 魔镜少女   | [awa-mirror-girl-v1.md#mirror_girl](awa-mirror-girl-v1.md#mirror_girl)                                         |
+| `mechanical_wolf`       | 机械狼     | [awa-mechanical-wolf-v1.md#mechanical_wolf](awa-mechanical-wolf-v1.md#mechanical_wolf)                         |
+| `miracle_merchant`      | 奇迹商人   | [awa-miracle-merchant-v1.md#miracle_merchant](awa-miracle-merchant-v1.md#miracle_merchant)                     |
+| `black_market_merchant` | 黑市商人   | [awa-black-market-merchant-v1.md#black_market_merchant](awa-black-market-merchant-v1.md#black_market_merchant) |
+| `hybrid`                | 混血儿     | [awa-hybrid-v1.md#hybrid](awa-hybrid-v1.md#hybrid)                                                             |
+| `thief`                 | 盗贼       | [lui-meme-thief-v1.md](lui-meme-thief-v1.md)                                                                   |
+| `shapeshifter`          | 千面人     | [awa-netease-shapeshifter-v1.md](awa-netease-shapeshifter-v1.md)                                               |
+| `lonely_girl`           | 孤独少女   | [awa-netease-lonely-girl-v1.md](awa-netease-lonely-girl-v1.md)                                                 |
+| `wild_child`            | 野孩子     | [awa-lui-meme-wild-child-v1.md](awa-lui-meme-wild-child-v1.md)                                                 |
+| `ghost_bride`           | 鬼魂新娘   | [awa-melbourne-ghost-bride-v1.md](awa-melbourne-ghost-bride-v1.md)                                             |
+| `cupid`                 | 丘比特     | [sourced-cupid-v1.md#cupid](sourced-cupid-v1.md#cupid)                                                         |
+| `cursed_fox`            | 咒狐       | [netease-cursed-fox-v1.md#cursed_fox](netease-cursed-fox-v1.md#cursed_fox)                                     |
+| `demon_hunter`          | 猎魔人     | [awa-netease-demon-hunter-v1.md](awa-netease-demon-hunter-v1.md)                                               |
+| `pure_white_girl`       | 纯白之女   | [awa-pure-white-night-v1.md](awa-pure-white-night-v1.md)                                                       |
+| `wolf_witch`            | 狼巫       | [awa-pure-white-night-v1.md](awa-pure-white-night-v1.md)                                                       |
+| `evil_knight`           | 恶夜骑士   | [awa-evil-knight-v1.md](awa-evil-knight-v1.md)                                                                 |
+| `red_moon_apostle`      | 赤月使徒   | [awa-red-moon-demon-v1.md](awa-red-moon-demon-v1.md)                                                           |
+| `alchemist`             | 炼金魔女   | [awa-mist-raven-twelve-v1.md](awa-mist-raven-twelve-v1.md)                                                     |
+| `raven_claw_wolf`       | 狼鸦之爪   | [awa-mist-raven-twelve-v1.md](awa-mist-raven-twelve-v1.md)                                                     |
+| `radiant_count`         | 流光伯爵   | [awa-radiant-eclipse-twelve-v1.md](awa-radiant-eclipse-twelve-v1.md)                                           |
+| `eclipse_maid`          | 蚀日侍女   | [awa-radiant-eclipse-twelve-v1.md](awa-radiant-eclipse-twelve-v1.md)                                           |
+| `night_noble`           | 夜之贵族   | [awa-noble-secret-body-twelve-v1.md](awa-noble-secret-body-twelve-v1.md)                                       |
+| `fragrant_phantom`      | 寻香魅影   | [awa-fragrant-pair-seer-twelve-v1.md](awa-fragrant-pair-seer-twelve-v1.md)                                     |
+| `nightmare`             | 噩梦之影   | [awa-nightmare-dreamer-v1.md](awa-nightmare-dreamer-v1.md)                                                     |
+| `magician`              | 魔术师     | [awa-magician-wolf-king-v1.md](awa-magician-wolf-king-v1.md)                                                   |
+| `trickster`             | 诡术师     | [awa-trickster-exile-v1.md](awa-trickster-exile-v1.md)                                                         |
+| `wolf_sorcerer`         | 狼术师     | [awa-wolf-sorcerer-seats-v1.md](awa-wolf-sorcerer-seats-v1.md)                                                 |
+| `order_prince`          | 定序王子   | [awa-order-prince-first-ballot-v1.md](awa-order-prince-first-ballot-v1.md)                                     |
+| `time_wolf_consort`     | 蚀时狼妃   | [awa-time-consort-reflection-v1.md](awa-time-consort-reflection-v1.md)                                         |
+| `day_scholar`           | 白昼学者   | [awa-scholar-mentor-twelve-v1.md](awa-scholar-mentor-twelve-v1.md)                                             |
+| `night_mentor`          | 寂夜导师   | [awa-scholar-mentor-twelve-v1.md](awa-scholar-mentor-twelve-v1.md)                                             |
+| `debater`               | 杠精       | [awa-melbourne-debater-v1.md#debater](awa-melbourne-debater-v1.md#debater)                                     |
+| `white_cat`             | 白猫       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |
+| `fox_cub`               | 子狐       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |
+| `pufferfish`            | 河豚       | [awa-animal-dream-twelve-v1.md](awa-animal-dream-twelve-v1.md)                                                 |
+| `awakened_idiot`        | 觉醒愚者   | [awa-noble-secret-body-twelve-v1.md](awa-noble-secret-body-twelve-v1.md)                                       |
+| `awakened_seer`         | 觉醒预言家 | [awa-fragrant-pair-seer-twelve-v1.md](awa-fragrant-pair-seer-twelve-v1.md)                                     |
+| `awakened_hidden_wolf`  | 觉醒隐狼   | [awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf](awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)     |
 
-## 历史与证据
+## 维护与历史
 
-[玩法扩充目录](../expansion/roadmap.md)及其验收记录保留历史来源、当时支持范围与提交证据。规则卡中的来源链接和验收引用继续指向原记录，不将某一历史阶段的通过说明扩大成所有组合已经验证。
+- [新增机制指南](../guides/add-mechanism.md)与[当前契约](../contracts/README.md)。
+- [64项原扩充目录](../history/expansion/roles.md)保存未实现目标与来源；不是当前支持清单。
+- [历史入口](../history/README.md)保存验收引用。卡中的历史source／review链接按原范围理解，不将旧green扩成当前全局通过。
+
+`time-wolf-consort`组织名和`time_wolf_consort`机器身份分开；已有版本卡`awa-time-consort-reflection-v1.md`作为公开source链接保留，不为改组织名伪造新规则版本。
