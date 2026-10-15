@@ -75,14 +75,15 @@ export const guard: ObservedToolHandler = (context) => {
 };
 
 export const dream: ObservedToolHandler = (context) => {
-  const { others, pick,request } = context;
-  const target = request.context.warden_forced_target??pick(others);
+  const { others, pick, request } = context;
+  const target = request.context.warden_forced_target ?? pick(others);
   if (target !== undefined) return { name: "dream", args: { target_id: target } };
 };
 
 export const check_identity: ObservedToolHandler = (context) => {
-  const { ownState, others, pick, style, bound, allowed,request } = context;
-  if(request.context.warden_forced_target!==undefined)return{name:"check_identity",args:{target_id:request.context.warden_forced_target}};
+  const { ownState, others, pick, style, bound, allowed, request } = context;
+  if (request.context.warden_forced_target !== undefined)
+    return { name: "check_identity", args: { target_id: request.context.warden_forced_target } };
   if (
     (bound?.activation === "lucky" || bound?.activation === "black_market") &&
     style === "conservative"
@@ -168,7 +169,8 @@ export const use_potion: ObservedToolHandler = (context) => {
     style !== "conservative" &&
     witch &&
     typeof knife === "number" &&
-    (request.context.warden_forced_target===undefined||knife===request.context.warden_forced_target) &&
+    (request.context.warden_forced_target === undefined ||
+      knife === request.context.warden_forced_target) &&
     knownAliveIds.includes(knife) &&
     witch.heal > 0 &&
     !witch.healUsedThisNight &&
@@ -186,7 +188,8 @@ export const use_potion: ObservedToolHandler = (context) => {
     (both || !witch.healUsedThisNight) &&
     request.context.day > 1
   ) {
-    const target = request.context.warden_forced_target??pick(others.filter((id) => allowed("poison", id)));
+    const target =
+      request.context.warden_forced_target ?? pick(others.filter((id) => allowed("poison", id)));
     if (target !== undefined)
       return {
         name: "use_potion",
@@ -369,13 +372,28 @@ export const bonusAction: ObservedToolHandler = ({ request, knownAliveIds, pick 
 };
 
 /** 只消费自己的秘密候选/对象，不查询对方身份或完成状态；null为真实主动空过。 */
-export const wardenPair:ObservedToolHandler=({request,pick,style})=>{
- const candidates=[...(request.context.warden_candidates??[])];
- if(style==="conservative"||candidates.length<2)return{name:"warden_pair",args:{target_ids:null}};
- const first=pick(candidates)!,second=pick(candidates.filter(id=>id!==first))!;
- return{name:"warden_pair",args:{target_ids:[first,second]}};
+export const wardenPair: ObservedToolHandler = ({ request, pick, style }) => {
+  const candidates = [...(request.context.warden_candidates ?? [])];
+  if (style === "conservative" || candidates.length < 2)
+    return { name: "warden_pair", args: { target_ids: null } };
+  const first = pick(candidates)!,
+    second = pick(candidates.filter((id) => id !== first))!;
+  return { name: "warden_pair", args: { target_ids: [first, second] } };
 };
-export const wardenDecide:ObservedToolHandler=({request,style,random})=>{
- if(request.context.warden_partner_id===undefined)throw new Error("warden_partner_observation_missing");
- return{name:"warden_decide",args:{choice:style==="conservative"?"trade":style==="competitive"?"betray":random.next()<0.5?"trade":"betray"}};
+export const wardenDecide: ObservedToolHandler = ({ request, style, random }) => {
+  if (request.context.warden_partner_id === undefined)
+    throw new Error("warden_partner_observation_missing");
+  return {
+    name: "warden_decide",
+    args: {
+      choice:
+        style === "conservative"
+          ? "trade"
+          : style === "competitive"
+            ? "betray"
+            : random.next() < 0.5
+              ? "trade"
+              : "betray",
+    },
+  };
 };

@@ -83,7 +83,10 @@ export class ToolValidationRuleRegistry {
   }
 
   validate(ctx: Omit<ValidationHostInput, "roleCatalog">): RuleViolation | null {
-    if(this.useProfileRules){const warden=validateWardenNativeTarget({...ctx,roleCatalog:this.roleProfileRegistry});if(warden)return warden;}
+    if (this.useProfileRules) {
+      const warden = validateWardenNativeTarget({ ...ctx, roleCatalog: this.roleProfileRegistry });
+      if (warden) return warden;
+    }
     if (this.useProfileRules && ctx.toolCall.name === "shoot" && ctx.abilityId !== undefined)
       return validateDeathShotSource({ ...ctx, roleCatalog: this.roleProfileRegistry });
     // 同名工具可以归不同角色库存；在原调用点按当前角色读取规则，不能只靠全局索引授权。

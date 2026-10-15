@@ -76,7 +76,6 @@
 5. W 与 A 的四格严格为：trade/trade→W，betray/betray→W，trade/betray→A，betray/trade→A；每格仅 Deal，不叠普通保护／强制。
 6. N2 pair 已付，A 有合法决定后 B 超时：保留两人已参与与 A 的已收记录，未收 B 不补默认决定，不发表正常博弈结算；下夜不能用 A／B 重新参与。
 
-
 ## 交付与独立审查回执（2026-10-16）
 
 已冻结并交付 `awa_melbourne_warden_v1`／`awa_warden_partner_native_v1`。完整公开板与 LLM／ACP 入口、两语 God 教学档案见[本族示例](../examples/warden/README.md)；God 档不替代玩家授权档。未知政策、未知字段与高级角色混板均显式拒绝。无私人配置、认证或付费模型调用。

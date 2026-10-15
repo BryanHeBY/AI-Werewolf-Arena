@@ -103,7 +103,7 @@ function fixture(): ReproductionRecord {
     outcome: { kind: "action", action: { name: tool, args } },
   });
   return {
-    finalized:true,
+    finalized: true,
     metadata: {
       normalizedBoard: structuredClone(wardenTwelveConfig),
       players: roles.map((role, i) => ({ id: i + 1, role, camp: i < 4 ? "wolf" : "good" })),

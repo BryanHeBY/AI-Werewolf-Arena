@@ -321,12 +321,19 @@ async function executePotionTurn(
     }
 
     if (potion === "none") {
-      if(wardenDelivery){
+      if (wardenDelivery) {
         // 强制回合的首语义写是skip事实；准备sink、时间和参数后才核最早期限与原partner。
-        const events=ctx.events,push=events.push,event={timestamp:Date.now(),type:"witch_potion_skipped" as const,payload:{actorId:witchId,...attribution,targetId,potionType:PotionType.None}},invoke=Reflect.apply.bind(Reflect);
-        if(!wardenDelivery.current())throw new Error("warden_witch_target_revoked");
-        invoke(push,events,[event]);
-      }else{
+        const events = ctx.events,
+          push = events.push,
+          event = {
+            timestamp: Date.now(),
+            type: "witch_potion_skipped" as const,
+            payload: { actorId: witchId, ...attribution, targetId, potionType: PotionType.None },
+          },
+          invoke = Reflect.apply.bind(Reflect);
+        if (!wardenDelivery.current()) throw new Error("warden_witch_target_revoked");
+        invoke(push, events, [event]);
+      } else {
         ctx.events.push({
           timestamp: Date.now(),
           type: "witch_potion_skipped",
