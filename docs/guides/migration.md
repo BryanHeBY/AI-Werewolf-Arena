@@ -27,3 +27,11 @@ history的origin索引只定位资料，不执行老script或替产品读取做�
 ## 退出条件
 
 current链接实际可达，所有真实读点无旧根依赖，history每项原blob／mode／字节保持，origin→current无重复／遗漏，无第二份活跃知识目录。最终来源身份、发现、独立验收与完整矩阵仍由Root固定同源发布，不由本文目录结构自动完成。
+
+## 可见性和判胜扩展查询
+
+自定义 `AgentEventVisibilityRule` 的首参由 `World` 改为 `AgentVisibilityQueries`。通过 `role(id)`、`camp(id)`、`isAlive(id)`、`aliveIds()` 和 `locale()` 查询当前值；不再从回调参数取得组件或实体写方法。历史受众和家族规则仍先于自定义回调，自定义规则仍收到原事件副本；事件投影继续使用已解析的事实。
+
+`WinConditionSpec.evaluate` 的首参改为 `VictoryQueries`，检查点参数不变。可通过编号／角色／阵营查询、`eliminationCounts()` 和既有关系判胜查询构造条件；`decision(target, reason, additional?)` 按真实 Victory 成员构造候选。候选仍须由阶段经理验证并封盘，查询不能提交死亡或终局。
+
+这两种端口在每次调用时绑定当前世界，构造时不读取组件，也不在默认注册表缓存世界。返回的编号数组是独立数据；状态读取仍是实时查询。旧扩展中的 `world.getComponent(...)` 需要改用对应值查询。需要写入的机制应由实际资源所有者提供具体提交端口，不能恢复通用 `World` 参数。

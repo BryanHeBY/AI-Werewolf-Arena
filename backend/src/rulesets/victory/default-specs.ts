@@ -14,19 +14,17 @@ import { RoleComponent } from "../../domain/components/role";
 import { Camp, type WinDecision, WinCondition } from "../../domain/model";
 import { World } from "../../domain/world";
 import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
-import { WinConditionSpec } from "../../engine/victory/contracts";
+import type {
+  AliveVictoryCounts,
+  VictoryQueries,
+  WinConditionSpec,
+} from "../../engine/victory/contracts";
 import { victoryDecision } from "../../engine/victory/results";
 
 /** 只统计真实存活Camp；good再按角色元数据／Demon规则区分god和villager，成员归属不等于真实Camp。 */
-interface AliveStat {
-  wolves: number;
-  gods: number;
-  villagers: number;
-  good: number;
-}
 
-function statAlive(world: World): AliveStat {
-  const stat: AliveStat = {
+function statAlive(world: World): AliveVictoryCounts {
+  const stat = {
     wolves: 0,
     gods: 0,
     villagers: 0,
@@ -57,56 +55,48 @@ function statAlive(world: World): AliveStat {
 }
 
 function evaluateSlaughterCity(
-  world: World,
+  queries: VictoryQueries,
   priority: EliminationPriority = "awa_good_priority_v1",
 ): WinDecision | null {
-  const cupid = cupidCityDecision(world);
+  const cupid = queries.cupidCityDecision();
   if (cupid) return cupid.decision;
-  const stat = statAlive(world);
+  const stat = queries.eliminationCounts();
   if (priority === "awa_wolf_priority_v1" && stat.good === 0) {
-    return victoryDecision(world, { kind: "faction", faction: Camp.Wolf }, "all_good_eliminated");
+    return queries.decision({ kind: "faction", faction: Camp.Wolf }, "all_good_eliminated");
   }
   if (stat.wolves === 0) {
-    return victoryDecision(world, { kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");
+    return queries.decision({ kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");
   }
   if (stat.good === 0) {
-    return victoryDecision(world, { kind: "faction", faction: Camp.Wolf }, "all_good_eliminated");
+    return queries.decision({ kind: "faction", faction: Camp.Wolf }, "all_good_eliminated");
   }
   return null;
 }
 
 function evaluateSlaughterSide(
-  world: World,
+  queries: VictoryQueries,
   priority: EliminationPriority = "awa_good_priority_v1",
 ): WinDecision | null {
-  const stat = statAlive(world);
+  const stat = queries.eliminationCounts();
   if (priority === "awa_wolf_priority_v1" && (stat.gods === 0 || stat.villagers === 0)) {
-    return victoryDecision(
-      world,
-      { kind: "faction", faction: Camp.Wolf },
-      "slaughter_side_completed",
-    );
+    return queries.decision({ kind: "faction", faction: Camp.Wolf }, "slaughter_side_completed");
   }
   if (stat.wolves === 0) {
-    return victoryDecision(world, { kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");
+    return queries.decision({ kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");
   }
   if (stat.gods === 0 || stat.villagers === 0) {
-    return victoryDecision(
-      world,
-      { kind: "faction", faction: Camp.Wolf },
-      "slaughter_side_completed",
-    );
+    return queries.decision({ kind: "faction", faction: Camp.Wolf }, "slaughter_side_completed");
   }
   return null;
 }
 
-function evaluateWolfReachHalf(world: World): WinDecision | null {
-  const stat = statAlive(world);
+function evaluateWolfReachHalf(queries: VictoryQueries): WinDecision | null {
+  const stat = queries.eliminationCounts();
   if (stat.wolves === 0) {
-    return victoryDecision(world, { kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");
+    return queries.decision({ kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");
   }
   if (stat.wolves >= stat.good && stat.good > 0) {
-    return victoryDecision(world, { kind: "faction", faction: Camp.Wolf }, "wolves_reach_half");
+    return queries.decision({ kind: "faction", faction: Camp.Wolf }, "wolves_reach_half");
   }
   return null;
 }
@@ -116,13 +106,12 @@ export const DEFAULT_WIN_CONDITION_SPECS: WinConditionSpec[] = [
   {
     id: WinCondition.ThreeFactionsElimination,
     checkpoints: ["night_settled", "exile_settled", "day_interrupted"],
-    evaluate: (world) => {
-      const result = weddingFactionResult(world);
+    evaluate: (queries) => {
+      const result = queries.weddingFactionResult();
       if (!result) return null;
       return result.faction === null
         ? { winner: null, reason: "three_factions_all_dead", outcome: { kind: "no_winner" } }
-        : victoryDecision(
-            world,
+        : queries.decision(
             { kind: "faction", faction: result.faction },
             "three_factions_eliminated",
           );
@@ -130,11 +119,11 @@ export const DEFAULT_WIN_CONDITION_SPECS: WinConditionSpec[] = [
   },
   {
     id: WinCondition.SlaughterCity,
-    evaluate: (world) => evaluateSlaughterCity(world),
+    evaluate: (queries) => evaluateSlaughterCity(queries),
   },
   {
     id: WinCondition.SlaughterSide,
-    evaluate: (world) => evaluateSlaughterSide(world),
+    evaluate: (queries) => evaluateSlaughterSide(queries),
   },
   {
     id: WinCondition.WolfReachHalf,
@@ -149,9 +138,32 @@ export function createEliminationWinConditionSpecs(
   if (!ELIMINATION_PRIORITIES.includes(priority)) throw new Error("elimination_priority_invalid");
   return DEFAULT_WIN_CONDITION_SPECS.map((spec) => {
     if (spec.id === WinCondition.SlaughterCity)
-      return { ...spec, evaluate: (world: World) => evaluateSlaughterCity(world, priority) };
+      return {
+        ...spec,
+        evaluate: (queries: VictoryQueries) => evaluateSlaughterCity(queries, priority),
+      };
     if (spec.id === WinCondition.SlaughterSide)
-      return { ...spec, evaluate: (world: World) => evaluateSlaughterSide(world, priority) };
+      return {
+        ...spec,
+        evaluate: (queries: VictoryQueries) => evaluateSlaughterSide(queries, priority),
+      };
     return spec;
   });
+}
+
+/**
+ * 可信评估入口绑定真实所有者；构造时不读取世界，具体查询仍按原规则顺序执行。
+ * 内建统计、关系判胜和成员投影的完整算法保留在各原 owner，端口不返回组件或任意回调入口。
+ */
+export function bindVictoryQueries(world: World): VictoryQueries {
+  return {
+    entityIds: () => [...world.entityIds()],
+    aliveIds: () => [...world.getAliveEntityIds()],
+    role: (id) => world.getComponent(id, COMPONENT.Role)?.role,
+    camp: (id) => world.getComponent(id, COMPONENT.Camp)?.camp,
+    eliminationCounts: () => statAlive(world),
+    cupidCityDecision: () => cupidCityDecision(world),
+    weddingFactionResult: () => weddingFactionResult(world),
+    decision: (primary, reason, additional) => victoryDecision(world, primary, reason, additional),
+  };
 }

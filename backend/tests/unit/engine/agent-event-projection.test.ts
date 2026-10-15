@@ -7,7 +7,10 @@
 import { expect, test } from "bun:test";
 import { Phase, Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
-import { AgentEventVisibilityRegistry } from "../../../src/agents/observation/agent-event-visibility-registry";
+import {
+  AgentEventVisibilityRegistry,
+  type AgentVisibilityQueries,
+} from "../../../src/agents/observation/agent-event-visibility-registry";
 import {
   buildAgentVisibleEvent,
   buildAgentVisibleEventFeed,
@@ -156,19 +159,24 @@ test("custom lookup and callback stay after family policy, with the original rec
       trace.push("rule");
       return function (
         this: unknown,
-        observedWorld: World,
+        queries: AgentVisibilityQueries,
         observedEvent: GameEvent,
         actorId: number,
       ) {
         trace.push("callback");
         expect(this).toBeUndefined();
-        expect(observedWorld).toBe(world);
+        expect(queries).not.toBe(world);
+        expect(queries.locale()).toBe(world.locale);
         expect(observedEvent).toBe(event);
         expect(actorId).toBe(2);
         return false;
       };
     },
-    get wolf_discussion(): (world: World, event: GameEvent, actorId: number) => boolean {
+    get wolf_discussion(): (
+      queries: AgentVisibilityQueries,
+      event: GameEvent,
+      actorId: number,
+    ) => boolean {
       throw Error("historical_rule_must_precede_custom");
     },
   };
@@ -266,4 +274,82 @@ test("the same event reaches custom visibility before projection and source fiel
   });
   expect(trace).toEqual(["visibility", "callee", "source", "disclosed"]);
   expect(actual?.payload.source).toEqual({ kind: "native" });
+});
+
+test("可见性规则只取得延迟查询，跨世界调用不共享可写运行对象", () => {
+  const zh = new World("zh-CN"),
+    en = new World("en");
+  const views: AgentVisibilityQueries[] = [];
+  const registry = new AgentEventVisibilityRegistry({
+    phase_changed(queries) {
+      views.push(queries);
+      // 约束真实回调对象，而不是只检查接口声明里没有 World。
+      expect(Object.keys(queries).sort()).toEqual([
+        "aliveIds",
+        "camp",
+        "isAlive",
+        "locale",
+        "role",
+      ]);
+      for (const key of [
+        "world",
+        "getWorld",
+        "getComponent",
+        "addComponent",
+        "createEntity",
+        "openDeathAction",
+      ])
+        expect(key in queries).toBe(false);
+      expect(queries.role(1)).toBeUndefined();
+      expect(queries.camp(1)).toBeUndefined();
+      expect(queries.isAlive(1)).toBe(false);
+      return queries.locale() === "zh-CN";
+    },
+  });
+  const event: GameEvent = {
+    timestamp: 1,
+    type: "phase_changed",
+    payload: { phase: Phase.Day, day: 1 },
+  };
+  expect(registry.canView(zh, event, 1)).toBe(true);
+  expect(registry.canView(en, event, 1)).toBe(false);
+  expect(views[0]).not.toBe(views[1]);
+  expect(views[0]!.locale()).toBe("zh-CN");
+  expect(views[1]!.locale()).toBe("en");
+  // 调用方修改返回编号数组不能给世界增加实体或影响下一次查询。
+  const ids = views[0]!.aliveIds() as number[];
+  ids.push(99);
+  expect(views[0]!.aliveIds()).toEqual([]);
+  expect(zh.entityIds()).toEqual([]);
+});
+
+test("绑定可见性查询不提前读取组件，查询异常保留原错误", () => {
+  const failure = new Error("late_visibility_query");
+  const world = new World();
+  const trace: string[] = [];
+  Object.defineProperty(world, "getComponent", {
+    get() {
+      trace.push("component");
+      throw failure;
+    },
+  });
+  const registry = new AgentEventVisibilityRegistry({
+    phase_changed(queries) {
+      trace.push("callback");
+      expect(trace).toEqual(["callback"]);
+      return queries.isAlive(1);
+    },
+  });
+  const event: GameEvent = {
+    timestamp: 1,
+    type: "phase_changed",
+    payload: { phase: Phase.Day, day: 1 },
+  };
+  try {
+    registry.canView(world, event, 1);
+    throw Error("must_throw");
+  } catch (error) {
+    expect(error).toBe(failure);
+  }
+  expect(trace).toEqual(["callback", "component"]);
 });

@@ -13,7 +13,10 @@ import {
   Camp,
 } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
-import { AgentEventVisibilityRegistry } from "../../../src/agents/observation/agent-event-visibility-registry";
+import {
+  AgentEventVisibilityRegistry,
+  type AgentVisibilityQueries,
+} from "../../../src/agents/observation/agent-event-visibility-registry";
 import {
   prepareInertAgentEvent,
   type InertAgentEvent,
@@ -488,13 +491,14 @@ test("trusted schema custom callback preserves receiver and original copy while 
       trace.push("lookup");
       return function (
         this: unknown,
-        observedWorld: World,
+        queries: AgentVisibilityQueries,
         observedEvent: GameEvent,
         actorId: number,
       ) {
         trace.push("callback");
         expect(this).toBeUndefined();
-        expect(observedWorld).toBe(world);
+        expect(queries).not.toBe(world);
+        expect(queries.locale()).toBe(world.locale);
         expect(observedEvent).toBe(event);
         expect(actorId).toBe(1);
         if (observedEvent.type === "red_moon_night_sealed") observedEvent.payload.day = 9;
@@ -627,12 +631,13 @@ test("prepared schema keeps its rule key and payload across actors after trusted
       trace.push("lookup");
       return function (
         this: unknown,
-        observedWorld: World,
+        queries: AgentVisibilityQueries,
         observedEvent: GameEvent,
         actorId: number,
       ) {
         expect(this).toBeUndefined();
-        expect(observedWorld).toBe(world);
+        expect(queries).not.toBe(world);
+        expect(queries.locale()).toBe(world.locale);
         expect(observedEvent).toBe(event);
         trace.push(`callback:${actorId}`);
         if (actorId === 1) {

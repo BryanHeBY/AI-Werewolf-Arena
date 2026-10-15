@@ -6,7 +6,10 @@ import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：管理胜利条件规格与评估入口。 */
 import { WinDecision, WinCondition } from "../../domain/model";
 import { World } from "../../domain/world";
-import { DEFAULT_WIN_CONDITION_SPECS } from "../../rulesets/victory/default-specs";
+import {
+  bindVictoryQueries,
+  DEFAULT_WIN_CONDITION_SPECS,
+} from "../../rulesets/victory/default-specs";
 import { WinConditionSpec } from "./contracts";
 
 /** 胜利条件注册表。 */
@@ -34,7 +37,8 @@ export class WinConditionRegistry {
     }
     if (spec.checkpoints && (checkpoint === undefined || !spec.checkpoints.includes(checkpoint)))
       return null;
-    return spec.evaluate(world, checkpoint);
+    // 查询对象每次评估单独绑定；默认规格表不持有 World，跨局不会共享运行能力。
+    return spec.evaluate(bindVictoryQueries(world), checkpoint);
   }
 
   all(): WinConditionSpec[] {
