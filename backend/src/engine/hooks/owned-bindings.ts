@@ -1,8 +1,9 @@
 /**
  * 负责内建死亡／放逐贡献的静态函数引用与私有资源绑定。
- * 这里只登记受信资源owner的cold binder；映射不保存World或每局端口，克隆/同id函数不继承绑定。
- * 引擎在实际调用时给binder原参数及晚prepare读取源，扩展只收到新建query/具体command对象。
- * 本内部装配叶不经公共barrel导出；自定义扩展可在闭包显式持有调用方本来拥有的窄command，不隐式继承内建绑定。
+ * 输入为原内建函数、当次 World／事件容器及延迟准备读点；输出为本族命令或不含能力的空对象。
+ * 静态登记只保存函数身份，不执行绑定，也不保存 World 或每局端口；同编号及复制函数不继承绑定。
+ * 执行时点由引擎选择，实际调用时才构造查询与命令。关闭、取消及已付前缀由具体资源所有者负责，绑定异常原样传播。
+ * 本内部模块不从公共入口导出；自定义扩展只能使用自身闭包显式持有的命令，不隐式继承内建绑定。
  */
 import type { EntityId, GameEvent, Role, Camp, DeathShotSelection } from "../../domain/model";
 import type { World } from "../../domain/world";

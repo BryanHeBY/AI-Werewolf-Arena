@@ -1,6 +1,6 @@
 /**
  * 单元测试负责公开验证回调的实际窄对象和绑定网关求值边界。
- * 输入为手写三实体 World、自定义合法 profile 与访问器；输出采用固定字段集合、Camp 值及 getter／同 Error 轨迹。
+ * 输入为手写三实体 World、自定义合法 profile 与访问器；输出预期由手写字段集合、Camp 值及 getter／同 Error 轨迹给定。
  * 回调只得值查询，不得 World／Catalog／原 scope；绑定仍按原 gateway、callee、World、三个参数次序晚读。
  * 这是公开接口收窄测试，不声称抵御任意 monkeypatch 或 外来候选人为埋入的对象图。
  */
