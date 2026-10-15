@@ -14,10 +14,24 @@ bun run test:packages
 bun run --cwd backend test:unit
 bun run --cwd backend test:integration
 bun run --cwd backend test:scenarios
+bun --no-env-file test --preload ./backend/tests/setup.ts ./backend/tests/architecture
 bun run --cwd frontend test
 ```
 
 整体检查使用 `bun run check`、`bun run lint` 和 `bun run format:check`；完整测试入口为 `bun run test`。不要把根聚合任务及其子任务重复计作不同验收。
+
+## 全公开板阶段批次
+
+```bash
+# 默认每个公开board中英各一局；两worker独立装配World、RNG、locale和录制。
+bun --no-env-file test ./backend/tests/scenarios/release/expansion-matrix.test.ts
+# 大阶段或发布候选集中执行总计1000局，每局均严格重放；不调用模型。
+AWA_EXPANSION_BATCH_COUNT=1000 bun --no-env-file test ./backend/tests/scenarios/release/expansion-matrix.test.ts
+```
+
+批次会打印`receipt.json`位置及源码身份、分支、自然终局、回退、逐局strict及实际日次／行动数统计。`longest`按行动数选出已解析归档见证，并保留其完整内容；全局最大日次取各行`maxDay`，不是`maxDays`配置上限。仅删除已经完整验证的独占子目录，失败原档与回执保留，不纳入通用afterEach清理器。需要较多空间时将`TMPDIR`显式指向操作者选定的独立测试目录；不能删别人的缓存来凑空间。精确角色交互仍以人工判例和真实协议路线为准。
+
+验收副本须先初始化其独立Git目录，再应用未提交补丁，并在启动前比较实际源码与锁文件指纹；不能把父仓库内被`git apply`跳过补丁的副本计作当前构建。复制只包含公开源码、示例和明确依赖，保留本地认证与运行配置边界。
 
 ## 检查约束
 
@@ -40,6 +54,10 @@ bun run build:frontend
 
 媒体检查按实际输出语言运行，读取 PNG／MP4 的尺寸、帧率和时长，并人工查看图片及视频关键帧。文件存在或命令退出为零不等于画面正确；样本通过也不代表所有角色或组合都被验证。
 
+真实付费模型另按[T6隔离配置与预算提案](release-evaluation.md)处理；未授权运行不得计作通过。
+
 ## 结果记录
+
+长批次采用互斥的文件清单，保留各批日志、构建身份和退出码。外层调度中断时，只接受已确认完成清理的完整文件，其余文件从头续跑；最终核清原集合与续跑集合的并集、交集及skip，部分文件的已通过项不重计，原中断码仍如实保留。
 
 在提交或 CI 中记录实际运行命令、失败、跳过原因和支持范围。重试保留首次失败原因，不叠加重复用例。旧记录的可读性与严格同构建复现分别按[归档兼容契约](../contracts/archive-compatibility.md)验证，不修改旧指纹求通过。
