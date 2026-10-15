@@ -132,19 +132,32 @@ test("Magician reader rejects own constructor accessors without executing them",
 
 // 新通道直接由夹具持有，不使用Role索引／旧参数桥；具体函数仍各按原短路和own-data政策读取。
 test("explicit Camp sources preserve lazy value comparison own data width and Scholar unconditional lookup", () => {
-  const f = fixture(), reads: string[] = [];
+  const f = fixture(),
+    reads: string[] = [];
   let current: CampComponent | undefined = f.camp;
-  const source = () => { reads.push("source"); return current; };
+  const source = () => {
+    reads.push("source");
+    return current;
+  };
   expect(getMagicianState(f.role, source)).toBe(f.state);
   current = { camp: Camp.Good };
   expect(getMagicianState(f.role, source)).toBe(f.state);
   current.camp = Camp.Wolf;
   expect(getMagicianState(f.role, source)).toBeUndefined();
   let accessorReads = 0;
-  current = Object.defineProperty({}, "camp", { get() { accessorReads++; return Camp.Good; } }) as CampComponent;
+  current = Object.defineProperty({}, "camp", {
+    get() {
+      accessorReads++;
+      return Camp.Good;
+    },
+  }) as CampComponent;
   expect(getMagicianState(f.role, source)).toBeUndefined();
   expect(accessorReads).toBe(0);
-  current = Object.defineProperty({}, "camp", { value: Camp.Good, writable: false, enumerable: false }) as CampComponent;
+  current = Object.defineProperty({}, "camp", {
+    value: Camp.Good,
+    writable: false,
+    enumerable: false,
+  }) as CampComponent;
   expect(getMagicianState(f.role, source)).toBe(f.state);
   reads.length = 0;
   expect(getMagicianState({ ...f.role, role: "villager" as Role }, source)).toBeUndefined();
@@ -152,5 +165,9 @@ test("explicit Camp sources preserve lazy value comparison own data width and Sc
   expect(scholarMentorStateForRole(undefined, source)).toBeUndefined();
   expect(reads).toEqual(["source"]);
   const failure = new Error("literal_new_camp_source_failure");
-  expect(() => scholarMentorStateForRole(undefined, () => { throw failure; })).toThrow(failure);
+  expect(() =>
+    scholarMentorStateForRole(undefined, () => {
+      throw failure;
+    }),
+  ).toThrow(failure);
 });

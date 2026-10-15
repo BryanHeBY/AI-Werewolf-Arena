@@ -6,7 +6,16 @@
 import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
-import { assertSdkTransportEnvelope, assertRuntimeClosure, assertArchiveDecisionEnvelope, assertFailedCheckpoint, assertFailedAcpTrace, assertFailureTiming, assertCompletedAcpTrace, assertPlannedDecisionTape } from "../../oracles/transport/outcomes";
+import {
+  assertSdkTransportEnvelope,
+  assertRuntimeClosure,
+  assertArchiveDecisionEnvelope,
+  assertFailedCheckpoint,
+  assertFailedAcpTrace,
+  assertFailureTiming,
+  assertCompletedAcpTrace,
+  assertPlannedDecisionTape,
+} from "../../oracles/transport/outcomes";
 import type { TransportGameScenario } from "../../transport/contracts";
 import { acpAdapterEntry } from "../../fixtures/manifest";
 import { expect } from "bun:test";
@@ -350,9 +359,9 @@ export async function runTransportGame(
         try {
           const name = (await fs.readdir(root)).find((name) => name.startsWith("session_"));
           if (name) {
-            const prefix = parseReproductionRecord(JSON.parse(
-              await fs.readFile(path.join(root, name, "reproduction.json"), "utf8"),
-            ));
+            const prefix = parseReproductionRecord(
+              JSON.parse(await fs.readFile(path.join(root, name, "reproduction.json"), "utf8")),
+            );
             transportDiagnostic(
               "[transport_failure_prefix]",
               JSON.stringify({
@@ -398,21 +407,23 @@ export async function runTransportGame(
     assertRuntimeClosure(scenario, failureThrown, closedState, failures);
     const session = (await fs.readdir(root)).find((name) => name.startsWith("session_"))!,
       directory = path.join(root, session);
-    const replay: ReplayDocument = readReplayDocument(JSON.parse(
-      await fs.readFile(path.join(directory, "replay.json"), "utf8"),
-    ));
+    const replay: ReplayDocument = readReplayDocument(
+      JSON.parse(await fs.readFile(path.join(directory, "replay.json"), "utf8")),
+    );
     assertReplayDocument(replay);
-    const manifest: ReplayManifest = readReplayManifest(JSON.parse(
-      await fs.readFile(path.join(directory, "manifest.json"), "utf8"),
-    )) as ReplayManifest;
+    const manifest: ReplayManifest = readReplayManifest(
+      JSON.parse(await fs.readFile(path.join(directory, "manifest.json"), "utf8")),
+    ) as ReplayManifest;
     assertArchiveDecisionEnvelope(scenario, replay, manifest, result);
     const views: ReplayPlayerView[] = [];
     if (scenario.expectedFailure) {
       const record = await readReproduction(path.join(directory, "reproduction.json"));
       for (const actor of plans.keys()) {
-        const view: ReplayPlayerView = readReplayPlayerView(JSON.parse(
-          await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8"),
-        ));
+        const view: ReplayPlayerView = readReplayPlayerView(
+          JSON.parse(
+            await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8"),
+          ),
+        );
         assertReplayPlayerView(view);
         views.push(view);
         const events = view.timeline.flatMap((row) =>
@@ -472,7 +483,15 @@ export async function runTransportGame(
         }
         trace.controlClosure = await assertControlOwnerClosed(trace.controlUrl, controlToken);
       }
-      assertFailureTiming(failureTarget, record, transportKind, arrivals, acpTraces, deadlines, delayedResponses);
+      assertFailureTiming(
+        failureTarget,
+        record,
+        transportKind,
+        arrivals,
+        acpTraces,
+        deadlines,
+        delayedResponses,
+      );
       return {
         diagnostics,
         result,
@@ -488,9 +507,9 @@ export async function runTransportGame(
       };
     }
     for (const [actor, plan] of plans) {
-      const view: ReplayPlayerView = readReplayPlayerView(JSON.parse(
-        await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8"),
-      ));
+      const view: ReplayPlayerView = readReplayPlayerView(
+        JSON.parse(await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8")),
+      );
       assertReplayPlayerView(view);
       views.push(view);
       const events = view.timeline

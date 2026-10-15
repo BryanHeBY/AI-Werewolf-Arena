@@ -268,7 +268,5 @@ test("a declared death capability collects final activation before a gift is pro
     1,
   );
   expect(result.interrupted).toBe(false);
-  expect(
-    allDeathGuns(game.world.getComponent(5, COMPONENT.Role))[0].armedOnNight,
-  ).toBe(1);
+  expect(allDeathGuns(game.world.getComponent(5, COMPONENT.Role))[0].armedOnNight).toBe(1);
 });

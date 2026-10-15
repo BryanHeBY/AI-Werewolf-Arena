@@ -95,9 +95,9 @@ for (const locale of ["zh-CN", "en"] as const)
         gameResult: result,
         players,
       });
-      const manifest = readReplayManifest(JSON.parse(
-          await readFile(path.join(manager.sessionDir, "manifest.json"), "utf8"),
-        )),
+      const manifest = readReplayManifest(
+          JSON.parse(await readFile(path.join(manager.sessionDir, "manifest.json"), "utf8")),
+        ),
         replay = readReplayDocument(
           JSON.parse(await readFile(path.join(manager.sessionDir, "replay.json"), "utf8")),
         );

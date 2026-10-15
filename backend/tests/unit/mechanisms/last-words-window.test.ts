@@ -7,7 +7,15 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
-import { DeathCause, Phase, Role, type ActionRequest, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../../../src/domain/model";
+import {
+  DeathCause,
+  Phase,
+  Role,
+  type ActionRequest,
+  type GameEvent,
+  type RuntimeSnapshot,
+  type ToolCall,
+} from "../../../src/domain/model";
 import { World } from "../../../src/domain/world";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
@@ -27,9 +35,13 @@ function fixture() {
 }
 
 test("last words construct at collection entry and reject a delayed reply after replacing the original life", async () => {
-  const f = fixture(), trace: string[] = [];
+  const f = fixture(),
+    trace: string[] = [];
   const state: RuntimeSnapshot = {
-    get day() { trace.push("day"); return 1; },
+    get day() {
+      trace.push("day");
+      return 1;
+    },
     phase: Phase.Day,
     gameOver: false,
     result: null,
@@ -44,21 +56,47 @@ test("last words construct at collection entry and reject a delayed reply after 
     }
   }
   const window = new LastWordsWindow({
-    get requestFactory() { trace.push("factory"); return TrackingRequests; },
-    get world() { trace.push("world"); return f.world; },
-    get events() { trace.push("events"); return f.events; },
-    get state() { return state; },
+    get requestFactory() {
+      trace.push("factory");
+      return TrackingRequests;
+    },
+    get world() {
+      trace.push("world");
+      return f.world;
+    },
+    get events() {
+      trace.push("events");
+      return f.events;
+    },
+    get state() {
+      return state;
+    },
     toolGateway: f.toolGateway,
     lastWordsMechanism: getDefaultLastWordsMechanism(),
   });
   expect(trace).toEqual([]);
   let notify!: () => void, reply!: (call: ToolCall | null) => void;
-  const requested = new Promise<void>((resolve) => { notify = resolve; });
-  const response = new Promise<ToolCall | null>((resolve) => { reply = resolve; });
+  const requested = new Promise<void>((resolve) => {
+    notify = resolve;
+  });
+  const response = new Promise<ToolCall | null>((resolve) => {
+    reply = resolve;
+  });
   let captured: ActionRequest | undefined;
-  const collecting = window.collect([5], Phase.Day, Phase.Night, { 5: [DeathCause.WolfKill] }, {
-    getAction(request) { captured = request; notify(); return response; },
-  }, {});
+  const collecting = window.collect(
+    [5],
+    Phase.Day,
+    Phase.Night,
+    { 5: [DeathCause.WolfKill] },
+    {
+      getAction(request) {
+        captured = request;
+        notify();
+        return response;
+      },
+    },
+    {},
+  );
   await requested;
   expect(trace.slice(0, 6)).toEqual(["factory", "world", "events", "day", "construct", "day"]);
   expect(captured?.context.stage).toBe("last_words");
@@ -77,23 +115,28 @@ test("last words construct at collection entry and reject a delayed reply after 
 });
 
 test("last words preserve the publication prefix and finally close error priority", async () => {
-  const f = fixture(), trace: string[] = [];
+  const f = fixture(),
+    trace: string[] = [];
   const publicationFailure = new Error("literal_last_words_publication_failure");
   const closeFailure = new Error("literal_last_words_close_failure");
   const open = f.world.openDeathAction;
   let permitId: number | undefined;
-  f.world.openDeathAction = function(...args: Parameters<World["openDeathAction"]>) {
+  f.world.openDeathAction = function (...args: Parameters<World["openDeathAction"]>) {
     trace.push("open");
     const permit = open.apply(this, args);
     permitId = permit.id;
     // 实际许可仍保存在 World；只适配收尾，以观察原 finally 的错误覆盖顺序。
     return {
       id: permit.id,
-      close() { trace.push("close"); permit.close(); throw closeFailure; },
+      close() {
+        trace.push("close");
+        permit.close();
+        throw closeFailure;
+      },
     };
   };
   let published: GameEvent | undefined;
-  f.events.push = function(...items: GameEvent[]) {
+  f.events.push = function (...items: GameEvent[]) {
     trace.push("publish");
     published = items[0];
     throw publicationFailure;
@@ -106,18 +149,32 @@ test("last words preserve the publication prefix and finally close error priorit
     toolGateway: f.toolGateway,
     lastWordsMechanism: getDefaultLastWordsMechanism(),
   });
-  await expect(window.collect([5], Phase.Day, Phase.Night, { 5: [DeathCause.WolfKill] }, {
-    async getAction(request) {
-      trace.push("provider");
-      expect(f.world.hasDeathAction(5, "speak", Phase.Day, 1, permitId)).toBe(true);
-      expect(request.context.death_action_id).toBe(permitId);
-      return { name: "speak" as const, args: { text: " literal-spoken-prefix " } };
-    },
-  }, {})).rejects.toBe(closeFailure);
+  await expect(
+    window.collect(
+      [5],
+      Phase.Day,
+      Phase.Night,
+      { 5: [DeathCause.WolfKill] },
+      {
+        async getAction(request) {
+          trace.push("provider");
+          expect(f.world.hasDeathAction(5, "speak", Phase.Day, 1, permitId)).toBe(true);
+          expect(request.context.death_action_id).toBe(permitId);
+          return { name: "speak" as const, args: { text: " literal-spoken-prefix " } };
+        },
+      },
+      {},
+    ),
+  ).rejects.toBe(closeFailure);
   expect(trace).toEqual(["open", "provider", "publish", "close"]);
   expect(published?.type).toBe("last_words_spoken");
   if (published?.type !== "last_words_spoken") throw new Error("literal_missing_words_event");
-  expect(published.payload).toEqual({ playerId: 5, phase: Phase.Day, day: 1, text: "literal-spoken-prefix" });
+  expect(published.payload).toEqual({
+    playerId: 5,
+    phase: Phase.Day,
+    day: 1,
+    text: "literal-spoken-prefix",
+  });
   expect(f.events).toHaveLength(0);
   expect(f.world.activeDeathActionCount).toBe(0);
   expect(f.originalLife.alive).toBe(false);

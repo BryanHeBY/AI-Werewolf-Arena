@@ -23,7 +23,11 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { isGhostBridePreset } from "../board-support";
 import { Role, Camp, Phase } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord, RecordedCheckpoint, RecordedDecision } from "../../reproduction/format";
+import type {
+  ReproductionRecord,
+  RecordedCheckpoint,
+  RecordedDecision,
+} from "../../reproduction/format";
 const setupStages = [
   "ghost_bride_groom",
   "ghost_bride_chat",

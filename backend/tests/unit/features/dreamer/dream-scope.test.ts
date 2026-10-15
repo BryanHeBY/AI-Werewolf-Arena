@@ -21,8 +21,16 @@ import { findNightAbility } from "../../../../src/features/night-abilities/abili
 import { transferNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
 import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { DREAMER_NIGHT_STAGE } from "../../../../src/features/dreamer/night-stages";
-import { hasDreamNightCommit, DreamNightFrame, type DreamNightLink } from "../../../../src/features/dreamer/night-frame";
-import { readDreamNightLinks, installDreamNightLinks, dreamNightLinksForAppend } from "../../../../src/features/dreamer/night-links";
+import {
+  hasDreamNightCommit,
+  DreamNightFrame,
+  type DreamNightLink,
+} from "../../../../src/features/dreamer/night-frame";
+import {
+  readDreamNightLinks,
+  installDreamNightLinks,
+  dreamNightLinksForAppend,
+} from "../../../../src/features/dreamer/night-links";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import type { NightStageContext } from "../../../../src/engine/night/contracts";
@@ -38,8 +46,7 @@ function fixture() {
     })),
   };
   const game = bootstrapGame(config, { fixedRoles: roles });
-  const role = (actorId: number) =>
-    game.world.getComponent(actorId, COMPONENT.Role)!;
+  const role = (actorId: number) => game.world.getComponent(actorId, COMPONENT.Role)!;
   return { ...game, role, ability: (actorId: number) => findNightAbility(role(actorId), "dream")! };
 }
 
@@ -54,7 +61,9 @@ function context(
   };
   return {
     world: game.world,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -209,26 +218,43 @@ for (const point of ["await", "gateway"] as const)
 
 // 以下三个新 ID 验证本族关系 owner；上面的原 scope 用例仅迁观察渠道，原预期没有改写。
 test("owned dream links: same array survives frame capture and does not follow cloned state or old getters", () => {
-  const game = fixture(), ctx = context(game, [], async () => null);
+  const game = fixture(),
+    ctx = context(game, [], async () => null);
   const actorLife = game.world.getComponent(1, COMPONENT.Alive)!,
     targetLife = game.world.getComponent(5, COMPONENT.Alive)!,
     nextLife = game.world.getComponent(6, COMPONENT.Alive)!;
-  Object.defineProperty(ctx.state, "dreamLinks", { get() { throw new Error("retired_links_must_not_read"); } });
+  Object.defineProperty(ctx.state, "dreamLinks", {
+    get() {
+      throw new Error("retired_links_must_not_read");
+    },
+  });
   const empty = readDreamNightLinks(ctx.state);
   expect(readDreamNightLinks(ctx.state)).toBe(empty);
   expect(dreamNightLinksForAppend(ctx.state) as readonly DreamNightLink[]).toBe(empty);
-  const links: DreamNightLink[] = [{
-    actorId: 1, targetId: 5, day: 1, consecutive: false,
-    actorLife, actorVersion: aliveLifeVersion(actorLife),
-    targetLife, targetVersion: aliveLifeVersion(targetLife),
-  }];
+  const links: DreamNightLink[] = [
+    {
+      actorId: 1,
+      targetId: 5,
+      day: 1,
+      consecutive: false,
+      actorLife,
+      actorVersion: aliveLifeVersion(actorLife),
+      targetLife,
+      targetVersion: aliveLifeVersion(targetLife),
+    },
+  ];
   installDreamNightLinks(ctx.state, links);
   expect(readDreamNightLinks(ctx.state)).toBe(links);
   const frame = new DreamNightFrame(readDreamNightLinks(ctx.state));
   dreamNightLinksForAppend(ctx.state).push({
-    actorId: 1, targetId: 6, day: 1, consecutive: false,
-    actorLife, actorVersion: aliveLifeVersion(actorLife),
-    targetLife: nextLife, targetVersion: aliveLifeVersion(nextLife),
+    actorId: 1,
+    targetId: 6,
+    day: 1,
+    consecutive: false,
+    actorLife,
+    actorVersion: aliveLifeVersion(actorLife),
+    targetLife: nextLife,
+    targetVersion: aliveLifeVersion(nextLife),
   });
   expect(frame.protectedTargets(game.world)).toEqual([5, 6]);
   expect(readDreamNightLinks({ ...ctx.state })).toEqual([]);
@@ -240,11 +266,18 @@ test("owned dream links: same array survives frame capture and does not follow c
 });
 
 test("owned dream links: push lookup failure keeps paid history and night commit without publishing the dream", async () => {
-  const game = fixture(), events: GameEvent[] = [], failure = new Error("dream_push_lookup_rejected");
+  const game = fixture(),
+    events: GameEvent[] = [],
+    failure = new Error("dream_push_lookup_rejected");
   (game.ability(2) as { disabled: boolean }).disabled = true;
-  const ability = game.ability(1), ctx = context(game, events, async () => ({ name: "dream", args: { target_id: 5 } }));
+  const ability = game.ability(1),
+    ctx = context(game, events, async () => ({ name: "dream", args: { target_id: 5 } }));
   const links = dreamNightLinksForAppend(ctx.state);
-  Object.defineProperty(links, "push", { get() { throw failure; } });
+  Object.defineProperty(links, "push", {
+    get() {
+      throw failure;
+    },
+  });
   await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);
   expect(ability.state.history).toEqual([{ day: 1, targetId: 5 }]);
   expect(ability.uses).toBe(1);
@@ -256,16 +289,26 @@ test("owned dream links: push lookup failure keeps paid history and night commit
 });
 
 test("owned dream links: link field failure follows push lookup and preserves the already paid prefix", async () => {
-  const game = fixture(), events: GameEvent[] = [], trace: string[] = [], failure = new Error("dream_link_field_rejected");
+  const game = fixture(),
+    events: GameEvent[] = [],
+    trace: string[] = [],
+    failure = new Error("dream_link_field_rejected");
   (game.ability(2) as { disabled: boolean }).disabled = true;
-  const ability = game.ability(1), ctx = context(game, events, async () => ({ name: "dream", args: { target_id: 5 } }));
-  const links = dreamNightLinksForAppend(ctx.state), push = links.push;
+  const ability = game.ability(1),
+    ctx = context(game, events, async () => ({ name: "dream", args: { target_id: 5 } }));
+  const links = dreamNightLinksForAppend(ctx.state),
+    push = links.push;
   Object.defineProperty(links, "push", {
     get() {
       trace.push("push:get");
       // 到原追加 callee 点才装故障，避免 scope 的早政策读取先抛错，冒成已付条目构造失败。
-      Object.defineProperty(ability.state, "protectionPolicy", { get() { trace.push("policy:get"); throw failure; } });
-      return function(this: DreamNightLink[], ...items: DreamNightLink[]) {
+      Object.defineProperty(ability.state, "protectionPolicy", {
+        get() {
+          trace.push("policy:get");
+          throw failure;
+        },
+      });
+      return function (this: DreamNightLink[], ...items: DreamNightLink[]) {
         trace.push("push:call");
         return push.apply(this, items);
       };

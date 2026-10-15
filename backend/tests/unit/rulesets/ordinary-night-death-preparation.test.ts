@@ -19,19 +19,31 @@ import {
 function fixture(count: number) {
   const world = new World();
   const lives = Array.from({ length: count }, () => {
-    const id = world.createEntity(), life = createAliveComponent();
+    const id = world.createEntity(),
+      life = createAliveComponent();
     world.addComponent(id, COMPONENT.Alive, life);
     return { id, life, version: aliveLifeVersion(life) };
   });
-  return { world, lives, deathLives: new Map(lives.map(({ id, life, version }) => [id, { life, version }])) };
+  return {
+    world,
+    lives,
+    deathLives: new Map(lives.map(({ id, life, version }) => [id, { life, version }])),
+  };
 }
 
 test("狐狸只撤自己的原因；原生命／版本逐点核验，公开夜报先于自爆合并，claim 抛错不发表", () => {
-  const f = fixture(6), events: GameEvent[] = [], calls: string[] = [];
+  const f = fixture(6),
+    events: GameEvent[] = [],
+    calls: string[] = [];
   const claims: NightFoxInspectionClaim[] = [1, 2, 5].map((id) => ({
     target: captureNightLife(f.world, id)!,
-    isTargetCurrent() { calls.push(`target:${id}`); return id === 5; },
-    isCurrent(): never { throw new Error("literal_owner_permission_must_not_read"); },
+    isTargetCurrent() {
+      calls.push(`target:${id}`);
+      return id === 5;
+    },
+    isCurrent(): never {
+      throw new Error("literal_owner_permission_must_not_read");
+    },
   }));
   f.lives[2]!.life.alive = false;
   f.world.addComponent(4, COMPONENT.Alive, createAliveComponent());
@@ -48,24 +60,39 @@ test("狐狸只撤自己的原因；原生命／版本逐点核验，公开夜�
       6: [DeathCause.WolfKill],
     },
   };
-  let damageReads = 0, lifeReads = 0;
+  let damageReads = 0,
+    lifeReads = 0;
   const runtime: OrdinaryNightDeathRuntime = {
     world: f.world,
     night: {
-      get damage() { damageReads++; return damage; },
-      get deathLives() { lifeReads++; return f.deathLives; },
+      get damage() {
+        damageReads++;
+        return damage;
+      },
+      get deathLives() {
+        lifeReads++;
+        return f.deathLives;
+      },
       foxInspections: claims,
     },
     config: {},
     publishNightResolved(deaths) {
-      const event: GameEvent = { timestamp: 1, type: "night_resolved", payload: { deaths: [...deaths()] } };
+      const event: GameEvent = {
+        timestamp: 1,
+        type: "night_resolved",
+        payload: { deaths: [...deaths()] },
+      };
       events.push(event);
       return event;
     },
   };
   const proposal = prepareOrdinaryNightDeaths(runtime, {
     deaths: [2, 1, 7],
-    sources: { 2: [DeathCause.SelfDestruct], 1: [DeathCause.Poison, DeathCause.WhiteWolfBlast], 7: [DeathCause.WhiteWolfBlast] },
+    sources: {
+      2: [DeathCause.SelfDestruct],
+      1: [DeathCause.Poison, DeathCause.WhiteWolfBlast],
+      7: [DeathCause.WhiteWolfBlast],
+    },
   });
   expect(calls).toEqual(["target:1", "target:2", "target:5"]);
   expect([damageReads, lifeReads]).toEqual([8, 6]);
@@ -84,19 +111,35 @@ test("狐狸只撤自己的原因；原生命／版本逐点核验，公开夜�
   expect(proposal.sources[1]).not.toBe(damage.deathSources[1]);
   expect(damage.deaths).toEqual([1, 2, 3, 4, 5, 6]);
   expect(damage.deathSources[1]).toEqual([DeathCause.FoxInspection, DeathCause.Poison]);
-  expect(ordinaryNightDeathPublication(runtime, proposal.nightDeaths, proposal.retainedSources)).toEqual({});
+  expect(
+    ordinaryNightDeathPublication(runtime, proposal.nightDeaths, proposal.retainedSources),
+  ).toEqual({});
   const failure = new Error("literal_fox_target_current_failed");
-  claims[1] = { ...claims[1]!, isTargetCurrent() { throw failure; } };
+  claims[1] = {
+    ...claims[1]!,
+    isTargetCurrent() {
+      throw failure;
+    },
+  };
   let caught: unknown;
-  try { prepareOrdinaryNightDeaths(runtime); } catch (error) { caught = error; }
+  try {
+    prepareOrdinaryNightDeaths(runtime);
+  } catch (error) {
+    caught = error;
+  }
   expect(caught).toBe(failure);
   expect(events).toHaveLength(1);
   expect(f.lives.map(({ life }) => life.alive)).toEqual([true, true, false, true, true, true]);
 });
 
 test("动物只公开实际共同原因的夜死，双生保原名单；发布 callee 先于晚配置，回执失败保事件", () => {
-  const f = fixture(3), trace: string[] = [], events: GameEvent[] = [];
-  const damage = { deaths: [1, 2], deathSources: { 1: [DeathCause.WolfKill], 2: [DeathCause.Poison] } };
+  const f = fixture(3),
+    trace: string[] = [],
+    events: GameEvent[] = [];
+  const damage = {
+    deaths: [1, 2],
+    deathSources: { 1: [DeathCause.WolfKill], 2: [DeathCause.Poison] },
+  };
   const config: OrdinaryNightDeathRuntime["config"] = {
     animalDream: { policy: "awa_animal_dream_v1", eliminationPriority: "awa_wolf_priority_v1" },
   };
@@ -108,7 +151,11 @@ test("动物只公开实际共同原因的夜死，双生保原名单；发布 c
       return (ids: number[]) => {
         trace.push("publish");
         if (failAt === "publish") throw failure;
-        const event: GameEvent = { timestamp: 2, type: "night_resolved", payload: { deaths: [...ids] } };
+        const event: GameEvent = {
+          timestamp: 2,
+          type: "night_resolved",
+          payload: { deaths: [...ids] },
+        };
         events.push(event);
         return event;
       };
@@ -117,16 +164,26 @@ test("动物只公开实际共同原因的夜死，双生保原名单；发布 c
   const runtime: OrdinaryNightDeathRuntime = {
     world: f.world,
     night: { damage, deathLives: f.deathLives },
-    get config() { trace.push("config"); return config; },
+    get config() {
+      trace.push("config");
+      return config;
+    },
     // 与真实经理 sink 同形：方法 callee 先读取，名单 thunk 后执行，不在调用方提前取配置。
-    publishNightResolved(deaths) { return sink.emit(deaths()); },
+    publishNightResolved(deaths) {
+      return sink.emit(deaths());
+    },
   };
   const proposal = prepareOrdinaryNightDeaths(runtime);
   expect(events).toEqual([]);
-  const publication = ordinaryNightDeathPublication(runtime, proposal.nightDeaths, proposal.retainedSources);
+  const publication = ordinaryNightDeathPublication(
+    runtime,
+    proposal.nightDeaths,
+    proposal.retainedSources,
+  );
   const callback = publication.onInitialWaveCommitted;
   if (!callback) throw new Error("literal_initial_publication_missing");
-  const actualIds = [1, 2, 3], actualSources = { 1: [DeathCause.WolfKill], 2: [DeathCause.Exile], 3: [DeathCause.Poison] };
+  const actualIds = [1, 2, 3],
+    actualSources = { 1: [DeathCause.WolfKill], 2: [DeathCause.Exile], 3: [DeathCause.Poison] };
   const receipt = new DeathCommitReceipt(planDeathWave(actualIds, actualSources, "initial"), []);
   const record = receipt.recordPublication;
   Object.defineProperty(receipt, "recordPublication", {
@@ -146,23 +203,35 @@ test("动物只公开实际共同原因的夜死，双生保原名单；发布 c
   failAt = "publish";
   let caught: unknown;
   trace.length = 0;
-  try { callback(actualIds, actualSources, receipt); } catch (error) { caught = error; }
+  try {
+    callback(actualIds, actualSources, receipt);
+  } catch (error) {
+    caught = error;
+  }
   expect(caught).toBe(failure);
   expect(trace).toEqual(["callee", "config", "publish"]);
   expect(events).toHaveLength(1);
   failAt = "receipt";
   caught = undefined;
   trace.length = 0;
-  try { callback(actualIds, actualSources, receipt); } catch (error) { caught = error; }
+  try {
+    callback(actualIds, actualSources, receipt);
+  } catch (error) {
+    caught = error;
+  }
   expect(caught).toBe(failure);
   expect(trace).toEqual(["callee", "config", "publish", "receipt"]);
   expect(events).toHaveLength(2);
   expect(events[1]!.payload).toEqual({ deaths: [1] });
   expect(receipt.publicationLinks()).toHaveLength(1);
-  const fragrant = ordinaryNightDeathPublication({
-    ...runtime,
-    config: { fragrantPairSeer: { policy: "awa_fragrant_pair_seer_v1" } },
-  }, proposal.nightDeaths, proposal.retainedSources).onInitialWaveCommitted;
+  const fragrant = ordinaryNightDeathPublication(
+    {
+      ...runtime,
+      config: { fragrantPairSeer: { policy: "awa_fragrant_pair_seer_v1" } },
+    },
+    proposal.nightDeaths,
+    proposal.retainedSources,
+  ).onInitialWaveCommitted;
   if (!fragrant) throw new Error("literal_fragrant_publication_missing");
   failAt = "none";
   const fragrantReceipt = new DeathCommitReceipt(planDeathWave([], {}, "initial"), []);

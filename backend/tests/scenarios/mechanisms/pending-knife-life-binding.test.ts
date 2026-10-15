@@ -8,7 +8,6 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, WinCondition, COMPONENT, type BoardConfig } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
-
 const config = (deck: Role[]): BoardConfig => ({
   ...sixPlayerMvpConfig,
   boardSize: deck.length,

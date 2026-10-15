@@ -137,10 +137,7 @@ export async function simulateGames(
         ),
       ]),
     );
-    const observed = new ObservedPlayersActionProvider(
-      context.world,
-      strategies,
-    );
+    const observed = new ObservedPlayersActionProvider(context.world, strategies);
     const provider: ActionProvider = {
       async getAction(request) {
         if (context.phaseManager.getSnapshot().gameOver)

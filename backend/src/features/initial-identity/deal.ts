@@ -4,11 +4,7 @@
  * 原 World 对应的 deal owner 持手牌和参与者快照；关闭后保留选牌身份，后继角色替换不重发库存。
  * 投影副本不授 live 选牌权，换牌／状态写保原先后，失败不以修复存储为由重新打开窗口。
  */
-import {
-  captureNightLife,
-  livingNightLife,
-  type NightLifeScope,
-} from "../../domain/night-effects";
+import { captureNightLife, livingNightLife, type NightLifeScope } from "../../domain/night-effects";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, type RoleComponent, type Camp, Role, type World } from "../../domain";
 export interface InitialIdentityCard {

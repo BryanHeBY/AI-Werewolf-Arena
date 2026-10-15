@@ -66,13 +66,8 @@ function setup(
     }),
   ).config;
   const game = bootstrapGame(config, { fixedRoles: roles, locale });
-  const ability = findNightAbility(
-    game.world.getComponent(2, COMPONENT.Role),
-    "potion",
-  )!;
-  game.world
-    .getComponent(3, COMPONENT.StatusMarks)!
-    .add(StatusMark.WolfKillMark);
+  const ability = findNightAbility(game.world.getComponent(2, COMPONENT.Role), "potion")!;
+  game.world.getComponent(3, COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
   const events: GameEvent[] = [];
   const requests: ActionRequest[] = [];
   const act = async (
@@ -221,7 +216,13 @@ for (const locale of ["zh-CN", "en"] as const)
     const game = setup("awa_always_v1", "awa_both_native_experimental_v1", locale);
     const role = game.world.getComponent(2, COMPONENT.Role)!;
     for (const prompt of [
-      captureNativeRolePresentation(WITCH_ROLE_PROFILE.presentation!.id, role, locale, undefined, () => game.world.getComponent(2, COMPONENT.Camp)),
+      captureNativeRolePresentation(
+        WITCH_ROLE_PROFILE.presentation!.id,
+        role,
+        locale,
+        undefined,
+        () => game.world.getComponent(2, COMPONENT.Camp),
+      ),
       getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),
     ]) {
       expect(prompt).toContain(locale === "en" ? "even after heal is spent" : "解药耗尽");

@@ -690,7 +690,8 @@ export async function buildInventory(options: {
     fixtures: { ...metadata, files: fixtureRows },
     sourceHash: {
       ...metadata,
-      owner: "历史实现：backend/src/runtime/simulation/reproduction_context.ts:currentEngineVersion（所选 Git 的历史六根口径，非现行精确指纹）",
+      owner:
+        "历史实现：backend/src/runtime/simulation/reproduction_context.ts:currentEngineVersion（所选 Git 的历史六根口径，非现行精确指纹）",
       algorithm:
         "sha256(path UTF-8 + NUL + bytes + NUL), recursive lexical traversal for each root in declared order",
       roots: sourceRoots,

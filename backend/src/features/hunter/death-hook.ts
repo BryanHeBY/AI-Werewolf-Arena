@@ -22,7 +22,9 @@ export const hunterDeathHook: DeathHook = (world, ids, sources, choose, events, 
       role: Role.Hunter,
       state: getHunterState,
       // 仅实际 Hunter 分支晚取原命令；本 getter 不读 World，不提前捕获审计。
-      get openHunterStock() { return openDemonHunterStockFrame; },
+      get openHunterStock() {
+        return openDemonHunterStockFrame;
+      },
       permits: (sources) => permitsHunterShot(sources),
       policy: (state) => state.deathActionPolicy ?? "awa_qualified_sources_v1",
       poisonEvent: (hunterId) => ({

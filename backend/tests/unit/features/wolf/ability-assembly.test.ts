@@ -21,7 +21,10 @@ import { HIDDEN_WOLF_ROLE_PROFILE } from "../../../../src/features/hidden-wolf/p
 import { WOLF_BEAUTY_ROLE_PROFILE } from "../../../../src/features/wolf-beauty/profile";
 import { GARGOYLE_ROLE_PROFILE } from "../../../../src/features/gargoyle/profile";
 import { WILD_CHILD_ROLE_PROFILE } from "../../../../src/features/wild-child/profile";
-import { SCHOLAR_ROLE_PROFILE, MENTOR_ROLE_PROFILE } from "../../../../src/features/scholar-mentor/profile";
+import {
+  SCHOLAR_ROLE_PROFILE,
+  MENTOR_ROLE_PROFILE,
+} from "../../../../src/features/scholar-mentor/profile";
 
 function request(allowedTools: ActionRequest["allowedTools"]): ActionRequest {
   return {
@@ -48,12 +51,19 @@ test("ordinary wolf registration and derived spreads keep shared references and 
   expect(WOLF_KING_ROLE_PROFILE.runtime.toolSpecs?.slice(0, 3)).toEqual(WOLF_TOOL_SPECS);
   expect(WOLF_KING_ROLE_PROFILE.runtime.toolSpecs?.[0]).toBe(WOLF_TOOL_SPECS[0]);
   expect(HIDDEN_WOLF_ROLE_PROFILE.runtime.canSelfDestruct).toBe(false);
-  expect(HIDDEN_WOLF_ROLE_PROFILE.runtime.toolSpecs?.map((tool) => tool.name)).toEqual(["kill_vote"]);
+  expect(HIDDEN_WOLF_ROLE_PROFILE.runtime.toolSpecs?.map((tool) => tool.name)).toEqual([
+    "kill_vote",
+  ]);
   expect(HIDDEN_WOLF_ROLE_PROFILE.runtime.toolSpecs?.[0]).toBe(WOLF_TOOL_SPECS[1]);
   expect(MENTOR_ROLE_PROFILE.runtime.stageDirectives?.[0]).toBe(WOLF_STAGE_DIRECTIVES[0]);
   expect(MENTOR_ROLE_PROFILE.runtime.nightStages?.slice(-2)).toEqual(WOLF_NIGHT_STAGES);
-  expect(SCHOLAR_ROLE_PROFILE.runtime.toolSpecs?.map((tool) => tool.name)).toEqual(["modify_skill", "bonus_action"]);
-  expect(SCHOLAR_ROLE_PROFILE.runtime.nightStages?.some((stage) => stage.id === "wolf_discussion")).toBe(false);
+  expect(SCHOLAR_ROLE_PROFILE.runtime.toolSpecs?.map((tool) => tool.name)).toEqual([
+    "modify_skill",
+    "bonus_action",
+  ]);
+  expect(
+    SCHOLAR_ROLE_PROFILE.runtime.nightStages?.some((stage) => stage.id === "wolf_discussion"),
+  ).toBe(false);
 });
 
 test("derived mocks read a replaced runtime and method getter at each original call with the same receiver", () => {
@@ -62,7 +72,7 @@ test("derived mocks read a replaced runtime and method getter at each original c
   const replacement: RoleRuntimeContribution = {
     get baselineAction() {
       trace.push("method");
-      return function(this: RoleRuntimeContribution) {
+      return function (this: RoleRuntimeContribution) {
         expect(this).toBe(replacement);
         trace.push("call");
         return { name: "kill_vote" as const, args: { target_id: 9, abstain: false } };
@@ -72,19 +82,45 @@ test("derived mocks read a replaced runtime and method getter at each original c
   // 不把 runtime 替换当反射豁免：这是真实公开可写属性，原派生闭包必须继续晚读它。
   Object.defineProperty(WOLF_ROLE_PROFILE, "runtime", {
     configurable: true,
-    get() { trace.push("runtime"); return replacement; },
+    get() {
+      trace.push("runtime");
+      return replacement;
+    },
   });
   try {
-    for (const profile of [WOLF_BEAUTY_ROLE_PROFILE, GARGOYLE_ROLE_PROFILE, WILD_CHILD_ROLE_PROFILE, MENTOR_ROLE_PROFILE]) {
+    for (const profile of [
+      WOLF_BEAUTY_ROLE_PROFILE,
+      GARGOYLE_ROLE_PROFILE,
+      WILD_CHILD_ROLE_PROFILE,
+      MENTOR_ROLE_PROFILE,
+    ]) {
       trace.length = 0;
       const role = createRoleComponent(profile.metadata.role);
-      const result = profile.runtime.baselineAction!(role, request(["kill_vote"]), () => 2, () => 3, undefined, undefined, () => ({ camp: profile.metadata.camp ?? Camp.Good }));
+      const result = profile.runtime.baselineAction!(
+        role,
+        request(["kill_vote"]),
+        () => 2,
+        () => 3,
+        undefined,
+        undefined,
+        () => ({ camp: profile.metadata.camp ?? Camp.Good }),
+      );
       expect(result).toEqual({ name: "kill_vote", args: { target_id: 9, abstain: false } });
       expect(trace).toEqual(["runtime", "method", "call"]);
     }
     // 同一闭包再调用时再次解析新属性，不缓存首次 runtime 或方法 getter 的结果。
     trace.length = 0;
-    expect(MENTOR_ROLE_PROFILE.runtime.baselineAction!(createRoleComponent(Role.NightMentor), request(["kill_vote"]), () => 2, () => 3, undefined, undefined, () => ({ camp: Camp.Wolf }))).toEqual({ name: "kill_vote", args: { target_id: 9, abstain: false } });
+    expect(
+      MENTOR_ROLE_PROFILE.runtime.baselineAction!(
+        createRoleComponent(Role.NightMentor),
+        request(["kill_vote"]),
+        () => 2,
+        () => 3,
+        undefined,
+        undefined,
+        () => ({ camp: Camp.Wolf }),
+      ),
+    ).toEqual({ name: "kill_vote", args: { target_id: 9, abstain: false } });
     expect(trace).toEqual(["runtime", "method", "call"]);
   } finally {
     Object.defineProperty(WOLF_ROLE_PROFILE, "runtime", original);
@@ -93,14 +129,61 @@ test("derived mocks read a replaced runtime and method getter at each original c
 });
 
 test("ordinary mock keeps chat before knife and never defaults an optional self destruct", () => {
-  const role = createRoleComponent(Role.Wolf), seen: string[] = [], actualCamp = { camp: Camp.Wolf };
+  const role = createRoleComponent(Role.Wolf),
+    seen: string[] = [],
+    actualCamp = { camp: Camp.Wolf };
   const mock = WOLF_ROLE_PROFILE.runtime.baselineAction!;
-  const pick = (camp: "good" | "wolf" | "third_party") => { seen.push(camp); return 6; };
-  const chat = mock(role, request(["kill_vote", "speak_to_wolves"]), () => 2, pick, "en", undefined, () => actualCamp);
+  const pick = (camp: "good" | "wolf" | "third_party") => {
+    seen.push(camp);
+    return 6;
+  };
+  const chat = mock(
+    role,
+    request(["kill_vote", "speak_to_wolves"]),
+    () => 2,
+    pick,
+    "en",
+    undefined,
+    () => actualCamp,
+  );
   expect(chat?.name).toBe("speak_to_wolves");
   expect(seen).toEqual([]);
-  expect(mock(role, request(["kill_vote"]), () => 2, pick, undefined, undefined, () => actualCamp)).toEqual({ name: "kill_vote", args: { target_id: 6, abstain: false } });
+  expect(
+    mock(
+      role,
+      request(["kill_vote"]),
+      () => 2,
+      pick,
+      undefined,
+      undefined,
+      () => actualCamp,
+    ),
+  ).toEqual({ name: "kill_vote", args: { target_id: 6, abstain: false } });
   expect(seen).toEqual(["good"]);
-  expect(mock(role, request(["kill_vote"]), () => 2, () => null, undefined, undefined, () => actualCamp)).toEqual({ name: "kill_vote", args: { target_id: null, abstain: true } });
-  expect(mock(role, request(["self_destruct"]), () => { throw new Error("pick_must_not_run"); }, () => { throw new Error("camp_pick_must_not_run"); }, undefined, undefined, () => actualCamp)).toBeNull();
+  expect(
+    mock(
+      role,
+      request(["kill_vote"]),
+      () => 2,
+      () => null,
+      undefined,
+      undefined,
+      () => actualCamp,
+    ),
+  ).toEqual({ name: "kill_vote", args: { target_id: null, abstain: true } });
+  expect(
+    mock(
+      role,
+      request(["self_destruct"]),
+      () => {
+        throw new Error("pick_must_not_run");
+      },
+      () => {
+        throw new Error("camp_pick_must_not_run");
+      },
+      undefined,
+      undefined,
+      () => actualCamp,
+    ),
+  ).toBeNull();
 });

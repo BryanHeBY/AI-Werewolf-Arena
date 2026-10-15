@@ -19,9 +19,15 @@ export class AnimalBallotLedger {
   readonly #rounds = new Map<1 | 2, readonly AcceptedBallot[]>();
   #finalRound: 1 | 2 | null = null;
 
-  get size(): number { return this.#rounds.size; }
-  get finalRound(): 1 | 2 | null { return this.#finalRound; }
-  round(round: 1 | 2): readonly AcceptedBallot[] | undefined { return this.#rounds.get(round); }
+  get size(): number {
+    return this.#rounds.size;
+  }
+  get finalRound(): 1 | 2 | null {
+    return this.#finalRound;
+  }
+  round(round: 1 | 2): readonly AcceptedBallot[] | undefined {
+    return this.#rounds.get(round);
+  }
 
   /** 仅在最后外部 guard 和全部原体／票权复验成功后调用；保持原数组冻结时点。 */
   accept(round: 1 | 2, accepted: AcceptedBallot[]): void {

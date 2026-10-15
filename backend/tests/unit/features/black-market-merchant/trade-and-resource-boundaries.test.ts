@@ -59,15 +59,16 @@ type Game = ReturnType<typeof fixture>;
 
 const role = (game: Game, id = 3) => game.world.getComponent(id, COMPONENT.Role)!;
 
-const life = (game: Game, id: number) =>
-  game.world.getComponent(id, COMPONENT.Alive)!;
+const life = (game: Game, id: number) => game.world.getComponent(id, COMPONENT.Alive)!;
 
 function context(game: Game, getAction: ActionProvider["getAction"], day = 1): NightStageContext {
   const events: GameEvent[] = [],
     factory = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -320,7 +321,8 @@ for (const change of [
             (ability as { uses: number }).uses = 0;
             (ability as { lastUsedDay: number | null }).lastUsedDay = null;
           }
-          if (change === "source_camp") game.world.getComponent(6, COMPONENT.Camp)!.camp = Camp.Wolf;
+          if (change === "source_camp")
+            game.world.getComponent(6, COMPONENT.Camp)!.camp = Camp.Wolf;
           if (change === "source_life") {
             life(game, 6).alive = false;
             life(game, 6).alive = true;

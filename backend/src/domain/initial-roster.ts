@@ -15,7 +15,10 @@ export function installInitialRoster(world: World): void {
     new Map(
       world.entityIds().map((id) => {
         const role = world.getComponent(id, COMPONENT.Role)!;
-        return [id, Object.freeze({ role: role.role, camp: world.getComponent(id, COMPONENT.Camp)!.camp })];
+        return [
+          id,
+          Object.freeze({ role: role.role, camp: world.getComponent(id, COMPONENT.Camp)!.camp }),
+        ];
       }),
     ),
   );

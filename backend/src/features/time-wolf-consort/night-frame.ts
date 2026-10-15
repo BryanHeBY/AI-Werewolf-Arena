@@ -15,7 +15,12 @@ import {
   type AliveComponent,
 } from "../../domain/components/alive";
 import type { NightLifeScope } from "../../domain/night-effects";
-import { getTimeConsortState, projectTimeConsortState, TIME_CONSORT_ROLE, TIME_CONSORT_STATE_SLOT } from "./state-slot";
+import {
+  getTimeConsortState,
+  projectTimeConsortState,
+  TIME_CONSORT_ROLE,
+  TIME_CONSORT_STATE_SLOT,
+} from "./state-slot";
 
 interface OriginalPlayer {
   abilityAuthority: () => boolean;
@@ -165,7 +170,13 @@ function requireBoard(world: World): Board {
   )
     throw new Error("time_consort_original_state_revoked");
   const actor = b.players.get(b.actorId)!;
-  if (getTimeConsortState(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.state || TIME_CONSORT_STATE_SLOT.checkpoint.identity(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.expectedState)
+  if (
+    getTimeConsortState(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !==
+      b.state ||
+    TIME_CONSORT_STATE_SLOT.checkpoint.identity(actor.role, () =>
+      world.getComponent(actor.id, COMPONENT.Camp),
+    ) !== b.expectedState
+  )
     throw new Error("time_consort_original_state_revoked");
   return b;
 }
@@ -239,7 +250,9 @@ export function installTimeConsortBoard(world: World): void {
   boards.set(world, {
     actorId,
     state,
-    expectedState: TIME_CONSORT_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp)),
+    expectedState: TIME_CONSORT_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role, () =>
+      world.getComponent(actorId, COMPONENT.Camp),
+    ),
     players,
     night: null,
   });
@@ -260,7 +273,9 @@ export function beginTimeConsortNight(world: World, day: number): number | null 
     (b.night && (!b.night.closed || day !== b.night.day + 1))
   )
     throw new Error("time_consort_night_invalid");
-  const previous = projectTimeConsortState(b.players.get(b.actorId)!.role, day, () => world.getComponent(b.actorId, COMPONENT.Camp))!.history.at(-1);
+  const previous = projectTimeConsortState(b.players.get(b.actorId)!.role, day, () =>
+    world.getComponent(b.actorId, COMPONENT.Camp),
+  )!.history.at(-1);
   const targets = new Map(
     [...b.players].filter(
       ([id, p]) => p.life.alive && !(previous?.day === day - 1 && previous.targetId === id),
@@ -305,7 +320,9 @@ export function commitTimeConsortChoice(
   n.targetId = targetId;
   n.committed = true;
   n.revision++;
-  b.expectedState = TIME_CONSORT_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp));
+  b.expectedState = TIME_CONSORT_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role, () =>
+    world.getComponent(actorId, COMPONENT.Camp),
+  );
 }
 export interface TimeConsortReceipt {
   readonly requestedId: number;
@@ -378,7 +395,10 @@ export function resolveTimeConsortTarget(
         // used 已消费；触发 setter 失败时不再重开回执，版本及编码仍在此写入之后。
         TIME_CONSORT_STATE_SLOT.allowedWrites.trigger(() => b.state, day);
         n.revision++;
-        b.expectedState = TIME_CONSORT_STATE_SLOT.checkpoint.identity(b.players.get(b.actorId)!.role, () => world.getComponent(b.actorId, COMPONENT.Camp));
+        b.expectedState = TIME_CONSORT_STATE_SLOT.checkpoint.identity(
+          b.players.get(b.actorId)!.role,
+          () => world.getComponent(b.actorId, COMPONENT.Camp),
+        );
       }
     },
   });

@@ -1,6 +1,8 @@
 /**
  * 提供迷雾／渡鸦真实 wire 可见性、序号与授权的测试断言。调用方提供字面预期和独立状态；这里保留原 DTO／断言关系，不以生产结算制造新预期。
  */
+// 这条导入的原始绑定文本受历史夹具程序合同保护；其余源码仍执行正常格式检查。
+// prettier-ignore
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 export interface MistExpectedWireChoice {
   type: string;

@@ -4,7 +4,15 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Camp, Phase, Role, WinCondition, createVictoryComponent, type ActionRequest } from "../../../../src/domain";
+import {
+  COMPONENT,
+  Camp,
+  Phase,
+  Role,
+  WinCondition,
+  createVictoryComponent,
+  type ActionRequest,
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { ConditionRegistry } from "../../../../src/domain/registries/condition-registry";
 import { WinConditionRegistry } from "../../../../src/engine/victory/condition-registry";

@@ -10,7 +10,11 @@ import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../domain/model";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { DEATH_SHOT_TOOL_SPECS, DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/tool-ports";
+import {
+  DEATH_SHOT_TOOL_SPECS,
+  DEATH_SHOT_REPAIR,
+  validateDeathShot,
+} from "../death-actions/tool-ports";
 import { numberOrNull } from "../../agents/tool-repair/helpers";
 import { canMechanicalKnife } from "./inheritance";
 import { mechanicalDeathHook } from "./death-hook";
@@ -144,7 +148,15 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
         return { name: "mechanical_attack", args: { target_id: byCamp("good") } };
       if (request.allowedTools.includes("shoot"))
         return { name: "shoot", args: { target_id: byCamp("good") } };
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world, currentCamp);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
+        role,
+        request,
+        pick,
+        byCamp,
+        locale,
+        world,
+        currentCamp,
+      );
     },
   },
   presentation: nativeRolePresentation("mechanical_wolf"),

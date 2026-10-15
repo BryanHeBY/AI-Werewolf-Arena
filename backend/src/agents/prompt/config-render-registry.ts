@@ -7,12 +7,7 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { settlesNightBeforeDay } from "../../rulesets/night-death-timing";
 import { renderDeathActionPolicy } from "../../features/death-actions/death-action-policy";
 import { renderInspectionPolicy } from "../../features/role-inspection/policy-ports";
-import {
-  WinCondition,
-  WitchSelfHealRule,
-  Role,
-  KnightDuelWindow,
-} from "../../domain/model";
+import { WinCondition, WitchSelfHealRule, Role, KnightDuelWindow } from "../../domain/model";
 import { roleName, term, text, type Locale } from "@ai-werewolf-arena/game-text";
 
 export interface ConfigRenderRegistry {

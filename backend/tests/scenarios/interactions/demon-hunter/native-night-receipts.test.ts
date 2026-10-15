@@ -3,7 +3,15 @@
  */
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import { COMPONENT, StatusMark, PotionType, deferRequestDelivery, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/domain";
+import {
+  COMPONENT,
+  StatusMark,
+  PotionType,
+  deferRequestDelivery,
+  type ActionRequest,
+  type RoleComponent,
+  type StatusMarksComponent,
+} from "../../../../src/domain";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { demonHunterAuditPlayer } from "../../../../src/features/demon-hunter/authority";

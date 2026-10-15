@@ -35,7 +35,13 @@ export class ThiefSetupWindow {
     events: GameEvent[],
     construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },
   ) {
-    this.window = new shared.InitialIdentitySetupWindow(world, gateway, events, "thief", construction);
+    this.window = new shared.InitialIdentitySetupWindow(
+      world,
+      gateway,
+      events,
+      "thief",
+      construction,
+    );
   }
   execute(...args: Parameters<shared.InitialIdentitySetupWindow["execute"]>): Promise<boolean> {
     return this.window.execute(...args);

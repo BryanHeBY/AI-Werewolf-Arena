@@ -8,10 +8,7 @@ import type { RecordedCheckpoint } from "../../recording/reproduction/format";
 import { animalCheckpointSchema } from "../../recording/reproduction/checkpoint/animal-format";
 import { fragrantCheckpointSchema } from "../../recording/reproduction/checkpoint/fragrant-pair-format";
 import { nobleBodyCheckpointSchema } from "../../recording/reproduction/checkpoint/noble-body-format";
-import {
-  animalAuthoritySnapshot,
-  isAnimalDreamBoard,
-} from "../../features/animal-dream/authority";
+import { animalAuthoritySnapshot, isAnimalDreamBoard } from "../../features/animal-dream/authority";
 import {
   fragrantAuthoritySnapshot,
   isFragrantPairBoard,

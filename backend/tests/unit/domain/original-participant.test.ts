@@ -16,19 +16,38 @@ import {
 } from "../../../src/domain/original-participant";
 
 test("participant keeps getter and Proxy acceptance, original references and a writable snapshot using current Camp value without JSON inspection", () => {
-  const world = new World(), id = world.createEntity(), life = createAliveComponent();
+  const world = new World(),
+    id = world.createEntity(),
+    life = createAliveComponent();
   world.addComponent(id, COMPONENT.Alive, life);
   const reads: string[] = [];
   const state: { cycle?: object } = {};
   state.cycle = state;
   const values = { role: Role.Villager, camp: Camp.Good, state: state as object };
   // 原算法使用普通属性读取；继承 getter 与 Proxy 不被新 owner 改成 descriptor／JSON 拒绝。
-  const role = new Proxy(Object.create({
-    get role() { reads.push("role"); return values.role; },
-    get privateState() { reads.push("state"); return values.state; },
-  }) as RoleComponent, {});
+  const role = new Proxy(
+    Object.create({
+      get role() {
+        reads.push("role");
+        return values.role;
+      },
+      get privateState() {
+        reads.push("state");
+        return values.state;
+      },
+    }) as RoleComponent,
+    {},
+  );
   world.addComponent(id, COMPONENT.Role, role);
-  const camp = new Proxy(Object.create({ get camp() { reads.push("camp"); return values.camp; } }), {});
+  const camp = new Proxy(
+    Object.create({
+      get camp() {
+        reads.push("camp");
+        return values.camp;
+      },
+    }),
+    {},
+  );
   world.addComponent(id, COMPONENT.Camp, camp);
   const original = world.getComponent;
   world.getComponent = new Proxy(original, {
@@ -38,7 +57,14 @@ test("participant keeps getter and Proxy acceptance, original references and a w
     },
   });
   const snapshot = captureOriginalParticipant(world, id)!;
-  expect(reads).toEqual(["AliveComponent", "RoleComponent", "role", "CampComponent", "camp", "state"]);
+  expect(reads).toEqual([
+    "AliveComponent",
+    "RoleComponent",
+    "role",
+    "CampComponent",
+    "camp",
+    "state",
+  ]);
   expect(snapshot.role).toBe(role);
   expect(snapshot.state).toBe(state);
   expect(snapshot.life.life).toBe(life);
@@ -46,7 +72,14 @@ test("participant keeps getter and Proxy acceptance, original references and a w
   expect(Object.getOwnPropertyDescriptor(snapshot, "camp")?.writable).toBe(true);
   reads.length = 0;
   expect(sameOriginalParticipant(world, snapshot)).toBe(true);
-  expect(reads).toEqual(["AliveComponent", "RoleComponent", "role", "CampComponent", "camp", "state"]);
+  expect(reads).toEqual([
+    "AliveComponent",
+    "RoleComponent",
+    "role",
+    "CampComponent",
+    "camp",
+    "state",
+  ]);
   world.addComponent(id, COMPONENT.Camp, createCampComponent(Camp.ThirdParty));
   expect(sameOriginalParticipant(world, snapshot)).toBe(false);
   // 新source按当前值复验；恢复真实Camp后才继续下面独立state变更输入。
@@ -63,18 +96,30 @@ test("participant keeps getter and Proxy acceptance, original references and a w
 });
 
 test("capture retains Role lookup after missing life, original getter errors and life-first recheck short circuit", () => {
-  const world = new World(), id = world.createEntity(), reads: string[] = [];
+  const world = new World(),
+    id = world.createEntity(),
+    reads: string[] = [];
   const error = new Error("literal_original_participant_role_getter");
   let throws = false;
   const state = {};
   const role = {
-    get role() { reads.push("kind"); if (throws) throw error; return Role.Villager; },
-    get privateState() { reads.push("state"); return state; },
+    get role() {
+      reads.push("kind");
+      if (throws) throw error;
+      return Role.Villager;
+    },
+    get privateState() {
+      reads.push("state");
+      return state;
+    },
   };
   world.addComponent(id, COMPONENT.Role, role);
   const original = world.getComponent;
   world.getComponent = new Proxy(original, {
-    apply(target, receiver, args) { reads.push(String(args[1])); return Reflect.apply(target, receiver, args); },
+    apply(target, receiver, args) {
+      reads.push(String(args[1]));
+      return Reflect.apply(target, receiver, args);
+    },
   });
   expect(captureOriginalParticipant(world, id)).toBeNull();
   expect(reads).toEqual(["AliveComponent", "RoleComponent"]);
@@ -83,7 +128,11 @@ test("capture retains Role lookup after missing life, original getter errors and
   throws = true;
   reads.length = 0;
   let caught: unknown;
-  try { captureOriginalParticipant(world, id); } catch (e) { caught = e; }
+  try {
+    captureOriginalParticipant(world, id);
+  } catch (e) {
+    caught = e;
+  }
   expect(caught).toBe(error);
   expect(reads).toEqual(["AliveComponent", "RoleComponent", "kind"]);
   throws = false;

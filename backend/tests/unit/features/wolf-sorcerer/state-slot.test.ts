@@ -18,8 +18,10 @@ import {
 } from "../../../../src/features/wolf-sorcerer/night-frame";
 
 test("状态初始化先读左值容器和原参数，setter失败不补写或提前查询", () => {
-  const trace: string[] = [], failure = new Error("literal_wolf_sorcerer_install_failure");
-  let fail = true, stored: unknown;
+  const trace: string[] = [],
+    failure = new Error("literal_wolf_sorcerer_install_failure");
+  let fail = true,
+    stored: unknown;
   const container = {
     set wolfSorcerer(value: unknown) {
       trace.push("set");
@@ -28,13 +30,21 @@ test("状态初始化先读左值容器和原参数，setter失败不补写或�
     },
   };
   const parameters = {
-    get firstNight(): 1 | 2 { trace.push("firstNight"); return 2; },
+    get firstNight(): 1 | 2 {
+      trace.push("firstNight");
+      return 2;
+    },
   };
-  const install = () => WOLF_SORCERER_STATE_SLOT.install(() => { trace.push("container"); return container; }, parameters);
+  const install = () =>
+    WOLF_SORCERER_STATE_SLOT.install(() => {
+      trace.push("container");
+      return container;
+    }, parameters);
   expect(install).toThrow(failure);
   expect(trace).toEqual(["container", "firstNight", "set"]);
   expect(stored).toBeUndefined();
-  fail = false; trace.length = 0;
+  fail = false;
+  trace.length = 0;
   install();
   expect(trace).toEqual(["container", "firstNight", "set"]);
   expect(stored).toEqual({ policy: "awa_wolf_sorcerer_seats_v1", firstNight: 2, history: [] });
@@ -42,17 +52,19 @@ test("状态初始化先读左值容器和原参数，setter失败不补写或�
 });
 
 test("历史写先查callee再两次读state，原pair引用与可写descriptor保持", () => {
-  const state = WOLF_SORCERER_STATE_SLOT.create(1), pair: [number, number] = [2, 3];
+  const state = WOLF_SORCERER_STATE_SLOT.create(1),
+    pair: [number, number] = [2, 3];
   const descriptor = Object.getOwnPropertyDescriptor(Object, "defineProperty")!;
   const defineProperty = Object.defineProperty;
-  const trace: string[] = [], failure = new Error("literal_wolf_sorcerer_history_callee_failure");
+  const trace: string[] = [],
+    failure = new Error("literal_wolf_sorcerer_history_callee_failure");
   let fail = true;
   defineProperty(Object, "defineProperty", {
     configurable: true,
     get() {
       trace.push("callee");
       if (fail) throw failure;
-      return function(this: unknown, target: object, key: PropertyKey, value: PropertyDescriptor) {
+      return function (this: unknown, target: object, key: PropertyKey, value: PropertyDescriptor) {
         expect(this).toBe(Object);
         trace.push("write");
         return defineProperty(target, key, value);
@@ -60,11 +72,20 @@ test("历史写先查callee再两次读state，原pair引用与可写descriptor�
     },
   });
   try {
-    const append = () => WOLF_SORCERER_STATE_SLOT.allowedWrites.appendHistory(() => { trace.push("state"); return state; }, 1, pair);
+    const append = () =>
+      WOLF_SORCERER_STATE_SLOT.allowedWrites.appendHistory(
+        () => {
+          trace.push("state");
+          return state;
+        },
+        1,
+        pair,
+      );
     expect(append).toThrow(failure);
     expect(trace).toEqual(["callee"]);
     expect(state.history).toEqual([]);
-    fail = false; trace.length = 0;
+    fail = false;
+    trace.length = 0;
     append();
     expect(trace).toEqual(["callee", "state", "state", "write"]);
     expect(state.history).toEqual([{ day: 1, pair: [2, 3] }]);
@@ -77,26 +98,44 @@ test("历史写先查callee再两次读state，原pair引用与可写descriptor�
 });
 
 test("frame在历史之后刷新原身份JSON，编码失败保留历史并撤销旧检查点", () => {
-  const world = new World(), state = WOLF_SORCERER_STATE_SLOT.create(1);
+  const world = new World(),
+    state = WOLF_SORCERER_STATE_SLOT.create(1);
   for (let seat = 1; seat <= 4; seat++) {
-    const id = world.createEntity(), role = createRoleComponent(seat === 1 ? Role.WolfSorcerer : Role.Villager);
+    const id = world.createEntity(),
+      role = createRoleComponent(seat === 1 ? Role.WolfSorcerer : Role.Villager);
     // 测试自己的初始化容器明确可写；不经 reader 或玩家观察取得写权。
     if (seat === 1) (role.privateState as Record<string, unknown>).wolfSorcerer = state;
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, { camp: seat === 1 ? Camp.Wolf : Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
-    world.addComponent(id, COMPONENT.Identity, { id, seat, name: `Player ${seat}`, sessionId: `player_${seat}` });
+    world.addComponent(id, COMPONENT.Identity, {
+      id,
+      seat,
+      name: `Player ${seat}`,
+      sessionId: `player_${seat}`,
+    });
   }
   const actor = world.getComponent(1, COMPONENT.Role)!;
-  expect(WOLF_SORCERER_STATE_SLOT.get(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(state);
-  expect(WOLF_SORCERER_STATE_SLOT.schema(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(state);
-  const view = WOLF_SORCERER_STATE_SLOT.project(actor, () => world.getComponent(1, COMPONENT.Camp))!;
+  expect(WOLF_SORCERER_STATE_SLOT.get(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(
+    state,
+  );
+  expect(WOLF_SORCERER_STATE_SLOT.schema(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(
+    state,
+  );
+  const view = WOLF_SORCERER_STATE_SLOT.project(actor, () =>
+    world.getComponent(1, COMPONENT.Camp),
+  )!;
   expect(view).not.toBe(state);
   expect(view.history).not.toBe(state.history);
-  expect(WOLF_SORCERER_STATE_SLOT.checkpoint.identity(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe('{"policy":"awa_wolf_sorcerer_seats_v1","firstNight":1,"history":[]}');
+  expect(
+    WOLF_SORCERER_STATE_SLOT.checkpoint.identity(actor, () =>
+      world.getComponent(1, COMPONENT.Camp),
+    ),
+  ).toBe('{"policy":"awa_wolf_sorcerer_seats_v1","firstNight":1,"history":[]}');
   installWolfSorcererBoard(world);
   expect(beginWolfSorcererNight(world, 1)).toBe(1);
-  const descriptor = Object.getOwnPropertyDescriptor(JSON, "stringify")!, stringify = JSON.stringify;
+  const descriptor = Object.getOwnPropertyDescriptor(JSON, "stringify")!,
+    stringify = JSON.stringify;
   const failure = new Error("literal_wolf_sorcerer_identity_encoding_failure");
   let calls = 0;
   Object.defineProperty(JSON, "stringify", {
@@ -114,5 +153,7 @@ test("frame在历史之后刷新原身份JSON，编码失败保留历史并撤�
   } finally {
     Object.defineProperty(JSON, "stringify", descriptor);
   }
-  expect(() => resolveWolfSorcererNightTarget(world, 1, 2)).toThrow("wolf_sorcerer_original_state_revoked");
+  expect(() => resolveWolfSorcererNightTarget(world, 1, 2)).toThrow(
+    "wolf_sorcerer_original_state_revoked",
+  );
 });

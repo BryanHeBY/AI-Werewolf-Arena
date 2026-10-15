@@ -9,7 +9,12 @@
  * 规则见 docs/rules/awa-wolf-beauty-v1.md。
  */
 export { getWolfBeautyState, setWolfBeautyState } from "./state";
-export { attemptCharmTrigger, commitCharmDeath, activeCharm, isCharmBindingCurrent } from "./relation";
+export {
+  attemptCharmTrigger,
+  commitCharmDeath,
+  activeCharm,
+  isCharmBindingCurrent,
+} from "./relation";
 export type {
   CharmBinding,
   CharmClaimReceipt,

@@ -68,7 +68,9 @@ for (const history of [
   [{ day: 1, pair: [1, Number.MAX_SAFE_INTEGER] }],
 ])
   test("trickster rejects invalid history " + JSON.stringify(history), () => {
-    expect(getTricksterState(role({ policy: TRICKSTER_POLICY, history }), currentCamp)).toBeUndefined();
+    expect(
+      getTricksterState(role({ policy: TRICKSTER_POLICY, history }), currentCamp),
+    ).toBeUndefined();
   });
 test("trickster rejects accessors and proxies without invoking user code", () => {
   let calls = 0;
@@ -94,7 +96,9 @@ test("trickster rejects accessors and proxies without invoking user code", () =>
       return 1;
     },
   });
-  expect(() => nextTricksterChoice(role(), 1, pair as [number, number], [1, 2], currentCamp)).toThrow();
+  expect(() =>
+    nextTricksterChoice(role(), 1, pair as [number, number], [1, 2], currentCamp),
+  ).toThrow();
   expect(calls).toBe(0);
 });
 test("trickster rejects foreign camp, policy and target", () => {

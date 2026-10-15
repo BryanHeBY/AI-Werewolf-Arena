@@ -47,10 +47,7 @@ import { projectLover } from "../../features/cupid/relation";
 import { projectEclipseState } from "../../features/radiant-eclipse/ports";
 import { RoleComponent } from "../../domain/components/role";
 import { ActionRequest, ActionWindow, EntityId, Role } from "../../domain";
-import {
-  getActionRequestDay,
-  getActionRequestStage,
-} from "../../domain/action-request-context";
+import { getActionRequestDay, getActionRequestStage } from "../../domain/action-request-context";
 import { World } from "../../domain/world";
 import { RoleCatalog, allNightAbilities, abilityStatus } from "../../rulesets/mechanism-api";
 import { getDreamerState } from "../../features/dreamer/ports";
@@ -216,7 +213,11 @@ export function buildPlayerStatusDirective(
     lines.push(
       text(queries.locale(), "ability.identity", {
         role: queries.catalog().label(role.role, queries.locale()),
-        camp: term("camp", queries.world().getComponent(request.actorId, COMPONENT.Camp)!.camp, queries.locale()),
+        camp: term(
+          "camp",
+          queries.world().getComponent(request.actorId, COMPONENT.Camp)!.camp,
+          queries.locale(),
+        ),
       }),
     );
   // 自持能力仍用原实例／日期计算摘要；库存可见不等于本次行动可提交。

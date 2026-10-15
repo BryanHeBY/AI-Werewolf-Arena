@@ -35,8 +35,7 @@ function request(actorId: number): ActionRequest {
 function captureBridge(configs: AcpMcpServerConfig[]): AcpMcpBridgeFactory<AcpTurnRegistry> {
   return {
     serverName: "werewolf-game",
-    serverEntrypoint: () =>
-      path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
+    serverEntrypoint: () => path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
     createControl(registry) {
       const control = new WerewolfMcpControlServer(registry);
       return {

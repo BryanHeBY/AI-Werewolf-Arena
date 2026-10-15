@@ -34,7 +34,10 @@ import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import { createRandom } from "../../../src/domain/random";
 import mistDefinition from "../../../../configs.example/boards/awa_mist_raven_12_v1.json";
 
-function targetWorld(role: RoleComponent = createRoleComponent(Role.Villager, "en"), camp = Camp.Good) {
+function targetWorld(
+  role: RoleComponent = createRoleComponent(Role.Villager, "en"),
+  camp = Camp.Good,
+) {
   const world = new World("en"),
     id = world.createEntity();
   world.addComponent(id, COMPONENT.Role, role);

@@ -4,7 +4,13 @@
  * 原体资格、用药付款和不可复用 proof 归原生控制器／权威，本模块不标死、推进时钟或重验许可。
  * 同步读写顺序与失败前缀保留；已有毒覆盖、守护记录或事件写入不会因后续失败回滚。
  */
-import { DeathCause, Phase, type DeathSources, type EntityId, type GameEvent } from "@ai-werewolf-arena/game-contract";
+import {
+  DeathCause,
+  Phase,
+  type DeathSources,
+  type EntityId,
+  type GameEvent,
+} from "@ai-werewolf-arena/game-contract";
 import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import type { DeliveredDemonNightSources } from "./native-potion-controller";
@@ -62,9 +68,7 @@ export function appendDemonNightDamageSources(
   if (demon.hunt.damage) {
     const { targetId, cause } = demon.hunt.damage;
     const causes = (proposedSources[targetId] ??= []);
-    causes.push(
-      cause === "demon_hunt" ? DeathCause.DemonHunt : DeathCause.DemonHuntBacklash,
-    );
+    causes.push(cause === "demon_hunt" ? DeathCause.DemonHunt : DeathCause.DemonHuntBacklash);
   }
 }
 

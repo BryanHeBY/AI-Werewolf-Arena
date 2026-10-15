@@ -25,9 +25,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
       const random = createRandom("consort-controls:" + scope + ":" + variant),
         game = bootstrapGame(config, { random });
       const ids = (name: Role) =>
-        game.playerIds.filter(
-          (id) => game.world.getComponent(id, COMPONENT.Role)?.role === name,
-        );
+        game.playerIds.filter((id) => game.world.getComponent(id, COMPONENT.Role)?.role === name);
       const consort = ids(Role.TimeWolfConsort)[0]!,
         guard = ids(Role.Guard)[0]!,
         witch = ids(Role.Witch)[0]!,
@@ -100,8 +98,8 @@ for (const scope of ["whole_night", "first_effect"] as const)
         },
       };
       await game.phaseManager.runSingleCycle(provider, 30);
-      const state = getTimeConsortState(
-        game.world.getComponent(consort, COMPONENT.Role), () => game.world.getComponent(consort, COMPONENT.Camp)
+      const state = getTimeConsortState(game.world.getComponent(consort, COMPONENT.Role), () =>
+        game.world.getComponent(consort, COMPONENT.Camp),
       )!;
       const reflected = game.phaseManager
         .getEvents()

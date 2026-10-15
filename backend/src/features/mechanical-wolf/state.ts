@@ -20,7 +20,10 @@ import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-contract"
 import type { RoleComponent } from "../../domain/components/role";
 import type { EntityId } from "../../domain/identity";
 import { copyAbilityData } from "../night-abilities/inventory-ports";
-import { createLearnedNativeGun, armMechanicalNativeGun } from "../death-actions/native-resource-ports";
+import {
+  createLearnedNativeGun,
+  armMechanicalNativeGun,
+} from "../death-actions/native-resource-ports";
 
 export function freshMechanicalState(): MechanicalState {
   return {
@@ -95,7 +98,11 @@ export function canMechanicalMimic(state: MechanicalReadState, day: number): boo
 }
 
 /** 合法等待只关闭本夜学习机会，保留整局一次的学习库存。 */
-export function closeMechanicalMimic(state: MechanicalReadState, day: number, mayCommit?: () => boolean): boolean {
+export function closeMechanicalMimic(
+  state: MechanicalReadState,
+  day: number,
+  mayCommit?: () => boolean,
+): boolean {
   if (!canMechanicalMimic(state, day)) return false;
   if (mayCommit && !mayCommit()) return false;
   (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
@@ -182,7 +189,11 @@ export function mechanicalSkillForNight(
   return state.learned.skill;
 }
 
-export function closeMechanicalSkill(state: MechanicalReadState, day: number, mayCommit?: () => boolean): boolean {
+export function closeMechanicalSkill(
+  state: MechanicalReadState,
+  day: number,
+  mayCommit?: () => boolean,
+): boolean {
   if (!mechanicalSkillForNight(state, day)) return false;
   if (mayCommit && !mayCommit()) return false;
   (state as { skillClosedDay: number | null }).skillClosedDay = day;

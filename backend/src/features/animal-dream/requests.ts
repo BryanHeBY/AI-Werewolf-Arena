@@ -10,10 +10,7 @@ import type { World } from "../../domain/world";
 import { Phase } from "../../domain/identity";
 import type { ActionRequest, ToolCall } from "../../domain/actions";
 import { snapshotPlainData } from "../../domain/plain-data";
-import {
-  bindRequestDeliveryGuard,
-  settleRequestDelivery,
-} from "../../domain/request-delivery";
+import { bindRequestDeliveryGuard, settleRequestDelivery } from "../../domain/request-delivery";
 import {
   captureAnimalRequestEnvelope,
   animalRequestEnvelopeHeader,

@@ -16,28 +16,48 @@ import { refreshAwakenedInheritance } from "../../../src/features/awakened-hidde
 
 // 四个真实公开刷新入口分别执行，不以通用名单实现或模拟角色状态替代它们。
 const inputs = [
-  ["hidden wolf", (world: World, events: GameEvent[]) => refreshHiddenWolfInheritance(world, events, 1)],
+  [
+    "hidden wolf",
+    (world: World, events: GameEvent[]) => refreshHiddenWolfInheritance(world, events, 1),
+  ],
   ["gargoyle", (world: World, events: GameEvent[]) => refreshGargoyleInheritance(world, events, 1)],
-  ["mechanical wolf", (world: World, events: GameEvent[]) => refreshMechanicalInheritance(world, 1, events)],
-  ["awakened hidden wolf", (world: World, events: GameEvent[]) => refreshAwakenedInheritance(world, 1, events)],
+  [
+    "mechanical wolf",
+    (world: World, events: GameEvent[]) => refreshMechanicalInheritance(world, 1, events),
+  ],
+  [
+    "awakened hidden wolf",
+    (world: World, events: GameEvent[]) => refreshAwakenedInheritance(world, 1, events),
+  ],
 ] as const;
 
-for (const [name, refresh] of inputs) test(`${name} inheritance ignores a live Camp-only entity without touching its Camp`, () => {
-  const world = new World(), id = world.createEntity(), events: GameEvent[] = [];
-  let campQueries = 0, campReads = 0;
-  world.addComponent(id, COMPONENT.Alive, createAliveComponent(true));
-  // 真实组件的访问器刻意抛错，证明 Role 缺失的原短路仍发生在新增 Camp 通道之前。
-  const camp: CampComponent = { get camp(): never { campReads++; throw new Error("missing_role_camp_must_not_be_read"); } };
-  world.addComponent(id, COMPONENT.Camp, camp);
-  const original = world.getComponent;
-  Object.defineProperty(world, "getComponent", { value: new Proxy(original, {
-    apply(target, receiver, args) {
-      if (args[1] === COMPONENT.Camp) campQueries++;
-      return Reflect.apply(target, receiver, args);
-    },
-  }) });
-  expect(() => refresh(world, events)).not.toThrow();
-  expect(events).toEqual([]);
-  expect(campQueries).toBe(0);
-  expect(campReads).toBe(0);
-});
+for (const [name, refresh] of inputs)
+  test(`${name} inheritance ignores a live Camp-only entity without touching its Camp`, () => {
+    const world = new World(),
+      id = world.createEntity(),
+      events: GameEvent[] = [];
+    let campQueries = 0,
+      campReads = 0;
+    world.addComponent(id, COMPONENT.Alive, createAliveComponent(true));
+    // 真实组件的访问器刻意抛错，证明 Role 缺失的原短路仍发生在新增 Camp 通道之前。
+    const camp: CampComponent = {
+      get camp(): never {
+        campReads++;
+        throw new Error("missing_role_camp_must_not_be_read");
+      },
+    };
+    world.addComponent(id, COMPONENT.Camp, camp);
+    const original = world.getComponent;
+    Object.defineProperty(world, "getComponent", {
+      value: new Proxy(original, {
+        apply(target, receiver, args) {
+          if (args[1] === COMPONENT.Camp) campQueries++;
+          return Reflect.apply(target, receiver, args);
+        },
+      }),
+    });
+    expect(() => refresh(world, events)).not.toThrow();
+    expect(events).toEqual([]);
+    expect(campQueries).toBe(0);
+    expect(campReads).toBe(0);
+  });

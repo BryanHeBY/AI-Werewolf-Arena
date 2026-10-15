@@ -15,10 +15,7 @@ import {
   getDefaultNightStageRegistry,
 } from "../../../src/rulesets/night-stage-plan";
 import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
-import type {
-  NightStageHandler,
-  NightStageContext,
-} from "../../../src/engine/night/contracts";
+import type { NightStageHandler, NightStageContext } from "../../../src/engine/night/contracts";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { merchantScenario } from "../../support/features/miracle-merchant/builders/scenario";
 import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";

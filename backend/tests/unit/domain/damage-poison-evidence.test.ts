@@ -11,7 +11,9 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { StatusMark, DeathCause } from "../../../src/domain/model";
 import {
-  captureNightLife, originalPoisonIntent, mechanicalNightIntent,
+  captureNightLife,
+  originalPoisonIntent,
+  mechanicalNightIntent,
 } from "../../../src/domain/night-effects";
 import { damagePoisonRoutes } from "../../../src/domain/damage-evidence";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
@@ -25,31 +27,58 @@ function fixture() {
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     world.addComponent(id, COMPONENT.StatusMarks, new StatusMarksComponent());
   }
-  return { world, source: captureNightLife(world, 1)!, target: captureNightLife(world, 2)!, shieldOwner: captureNightLife(world, 3)! };
+  return {
+    world,
+    source: captureNightLife(world, 1)!,
+    target: captureNightLife(world, 2)!,
+    shieldOwner: captureNightLife(world, 3)!,
+  };
 }
 function poison(f: ReturnType<typeof fixture>, target = f.target) {
-  return originalPoisonIntent({ source: f.source, target }, {
-    family: "scholar-mentor", stage: "scholar_mentor_bonus", day: 2,
-    actorLife: f.source, requestedTargetId: target.id, abilityId: "bonus:poison",
-  });
+  return originalPoisonIntent(
+    { source: f.source, target },
+    {
+      family: "scholar-mentor",
+      stage: "scholar_mentor_bonus",
+      day: 2,
+      actorLife: f.source,
+      requestedTargetId: target.id,
+      abilityId: "bonus:poison",
+    },
+  );
 }
 function shield(f: ReturnType<typeof fixture>) {
-  return mechanicalNightIntent("mechanical-shield", {
-    actorId: f.shieldOwner.id, target: f.target, isCurrent: () => true,
-  }, {
-    family: "mechanical", stage: "mechanical_skill", day: 2,
-    actorLife: f.shieldOwner, requestedTargetId: 2, abilityId: "learned:guard",
-  });
+  return mechanicalNightIntent(
+    "mechanical-shield",
+    {
+      actorId: f.shieldOwner.id,
+      target: f.target,
+      isCurrent: () => true,
+    },
+    {
+      family: "mechanical",
+      stage: "mechanical_skill",
+      day: 2,
+      actorLife: f.shieldOwner,
+      requestedTargetId: 2,
+      abilityId: "learned:guard",
+    },
+  );
 }
 
 test("two accepted poisons preserve independent causes and original result fields", () => {
-  const f = fixture(), a = poison(f), b = poison(f);
+  const f = fixture(),
+    a = poison(f),
+    b = poison(f);
   f.world.getComponent(2, COMPONENT.StatusMarks)!.add(StatusMark.PoisonMark);
-  const result = new DamageResolutionSystem().resolve(f.world, { intentNight: 2, poisonClaims: [a, b] });
+  const result = new DamageResolutionSystem().resolve(f.world, {
+    intentNight: 2,
+    poisonClaims: [a, b],
+  });
   expect(result.deaths).toEqual([2]);
   expect(result.deathSources).toEqual({ 2: [DeathCause.Poison] });
   const routes = damagePoisonRoutes(result);
-  expect(routes.map(r => r.origin.causeId)).toEqual([a.origin.causeId, b.origin.causeId]);
+  expect(routes.map((r) => r.origin.causeId)).toEqual([a.origin.causeId, b.origin.causeId]);
   expect(a.origin.causeId).not.toBe(b.origin.causeId);
   expect(routes[0]!.target).toBe(f.target);
   expect(Object.isFrozen(routes)).toBe(true);
@@ -61,7 +90,9 @@ test("dream protection does not turn a folded route into accepted lethal evidenc
   const f = fixture();
   f.world.getComponent(2, COMPONENT.StatusMarks)!.add(StatusMark.PoisonMark);
   const result = new DamageResolutionSystem().resolve(f.world, {
-    intentNight: 2, poisonClaims: [poison(f)], protectedTargets: [2],
+    intentNight: 2,
+    poisonClaims: [poison(f)],
+    protectedTargets: [2],
   });
   expect(result.deaths).toEqual([]);
   expect(result.deathSources).toEqual({});
@@ -69,10 +100,13 @@ test("dream protection does not turn a folded route into accepted lethal evidenc
 });
 
 test("reflected poison reaches the caster without attributing an unmarked direct poison there", () => {
-  const f = fixture(), reflected = poison(f), unmarkedDirect = poison(f, f.source);
+  const f = fixture(),
+    reflected = poison(f),
+    unmarkedDirect = poison(f, f.source);
   f.world.getComponent(2, COMPONENT.StatusMarks)!.add(StatusMark.PoisonMark);
   const result = new DamageResolutionSystem().resolve(f.world, {
-    intentNight: 2, poisonClaims: [reflected, unmarkedDirect],
+    intentNight: 2,
+    poisonClaims: [reflected, unmarkedDirect],
     mechanicalEffects: { shields: [shield(f)], attacks: [], failures: [] },
   });
   expect(result.deaths).toEqual([1]);
@@ -85,9 +119,13 @@ test("reflected poison reaches the caster without attributing an unmarked direct
 });
 
 test("delayed Mist copies carry the same accepted source without new enumerable fields", () => {
-  const f = fixture(), claim = poison(f);
+  const f = fixture(),
+    claim = poison(f);
   f.world.getComponent(2, COMPONENT.StatusMarks)!.add(StatusMark.PoisonMark);
-  const result = new DamageResolutionSystem().resolve(f.world, { intentNight: 2, poisonClaims: [claim] });
+  const result = new DamageResolutionSystem().resolve(f.world, {
+    intentNight: 2,
+    poisonClaims: [claim],
+  });
   const pending = new MistPendingNight(f.world, 2, 2, result, new DreamNightFrame([]));
   pending.claim(() => true);
   const final = pending.prepareFinalDamage(2, () => true);
@@ -101,9 +139,15 @@ test("delayed Mist copies carry the same accepted source without new enumerable 
 
 test("old external result Proxy is not inspected for new metadata", () => {
   let reads = 0;
-  const result = new Proxy({ deaths: [], deathSources: {} }, {
-    get() { reads++; throw new Error("legacy_damage_getter_unused"); },
-  });
+  const result = new Proxy(
+    { deaths: [], deathSources: {} },
+    {
+      get() {
+        reads++;
+        throw new Error("legacy_damage_getter_unused");
+      },
+    },
+  );
   expect(damagePoisonRoutes(result)).toEqual([]);
   expect(reads).toBe(0);
 });

@@ -14,14 +14,24 @@
  */
 import { attachNightUnit } from "../../domain/night-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { prepareNightPipelineLifecycle, type NightLifecycleHandoff } from "../../rulesets/night-lifecycle-plan";
-
+import {
+  prepareNightPipelineLifecycle,
+  type NightLifecycleHandoff,
+} from "../../rulesets/night-lifecycle-plan";
 
 import { assertNightSetupReady, assertNightReadable } from "../../rulesets/night-readability";
 import { RulePlan } from "../../rulesets/rule-plan";
 import { bindNightAbilityActorQuery } from "../../features/night-abilities/actor-query-ports";
-import { isFragrantPairBoard, fragrantAuthoritySnapshot } from "../../features/fragrant-pair-seer/ports";
-import { createNobleNightAbortReceiver, attachNobleNightReceiver, checkpointNobleBodyAuthority, isNobleBodyBoard } from "../../features/noble-secret-body/ports";
+import {
+  isFragrantPairBoard,
+  fragrantAuthoritySnapshot,
+} from "../../features/fragrant-pair-seer/ports";
+import {
+  createNobleNightAbortReceiver,
+  attachNobleNightReceiver,
+  checkpointNobleBodyAuthority,
+  isNobleBodyBoard,
+} from "../../features/noble-secret-body/ports";
 import { animalAuthoritySnapshot } from "../../features/animal-dream/ports";
 import { isRadiantEclipseBoard } from "../../features/radiant-eclipse/ports";
 import { isScholarMentorBoard } from "../../features/scholar-mentor/ports";
@@ -30,9 +40,7 @@ import { assertNightModifierBonusEffects } from "../../rulesets/night-damage-com
 import { isTimeConsortBoard } from "../../features/time-wolf-consort/ports";
 import { isMagicianBoard } from "../../features/magician/ports";
 import { isRedMoonBoard } from "../../features/demon-hunter/ports";
-import {
-  isNightmareBoard,
-} from "../../features/nightmare/ports";
+import { isNightmareBoard } from "../../features/nightmare/ports";
 import {
   isEvilKnightBoard,
   assertEvilKnightRosterCurrent,
@@ -43,9 +51,7 @@ import type { DemonKnifeProtection } from "../../features/demon-hunter/ports";
 import { weddingSetup } from "../../features/ghost-bride/ports";
 import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
-import {
-  StatusMarksComponent,
-} from "../../domain/components/status-marks";
+import { StatusMarksComponent } from "../../domain/components/status-marks";
 import {
   ActionProvider,
   ActionRequest,
@@ -69,10 +75,7 @@ import { World } from "../../domain/world";
 import { ToolGateway } from "../actions/tool-gateway";
 import { NightStageState } from "../../rulesets/mechanism-api";
 import type { NightStageContext } from "../night/contracts";
-import {
-  getDefaultNightStageRegistry,
-  NightStageRegistry,
-} from "../../rulesets/night-stage-plan";
+import { getDefaultNightStageRegistry, NightStageRegistry } from "../../rulesets/night-stage-plan";
 import { getSessionRecorder } from "../../recording/session/context";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { GameActionRequestFactory } from "../actions/action-request-factory";
@@ -163,19 +166,35 @@ export class NightPipeline {
       : prepareNightPipelineLifecycle;
     const lifecycle = prepare(
       {
-        get world() { return pipeline.world; },
-        get events() { return pipeline.events; },
-        get random() { return pipeline.random; },
+        get world() {
+          return pipeline.world;
+        },
+        get events() {
+          return pipeline.events;
+        },
+        get random() {
+          return pipeline.random;
+        },
       },
       config,
       day,
       () => options.lifecycleHandoff,
     );
     config = lifecycle.config;
-    const rulePlan = this.#rulePlan ??= RulePlan.compile(lifecycle.parameters);
+    const rulePlan = (this.#rulePlan ??= RulePlan.compile(lifecycle.parameters));
     const {
-      ownsWedding, ownsDemon, ownsNoble, ownsFragrant, ownsAnimal, ownsRadiant, ownsMist,
-      animalNight, fragrantNight, nobleNight, radiantNight, mistNight,
+      ownsWedding,
+      ownsDemon,
+      ownsNoble,
+      ownsFragrant,
+      ownsAnimal,
+      ownsRadiant,
+      ownsMist,
+      animalNight,
+      fragrantNight,
+      nobleNight,
+      radiantNight,
+      mistNight,
       weddingNight,
     } = lifecycle;
     try {
@@ -262,7 +281,9 @@ export class NightPipeline {
         actionProvider: nativeProvider,
         currentDay: () => day,
         // 只提供晚类读取；机制仍在各自原 new 点使用原 World／events／day 参数。
-        get requestFactory() { return GameActionRequestFactory; },
+        get requestFactory() {
+          return GameActionRequestFactory;
+        },
         makeRequest: (
           actorId: EntityId,
           allowedTools: ActionRequest["allowedTools"],
@@ -293,7 +314,10 @@ export class NightPipeline {
         const stage = entry.handler;
         assertEvilKnightRosterCurrent(this.world);
         if (!isCurrent())
-          return attachNightUnit(attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver), lifecycle.nightUnit);
+          return attachNightUnit(
+            attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver),
+            lifecycle.nightUnit,
+          );
         assertReadable();
         discardStaleNightKnives(knifeAdmission);
         assertNightModifierBonusEffects({ config: () => config, stageContext: () => stageCtx });
@@ -302,17 +326,21 @@ export class NightPipeline {
         assertEvilKnightRosterCurrent(this.world);
         assertReadable();
         if (!isCurrent())
-          return attachNightUnit(attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver), lifecycle.nightUnit);
+          return attachNightUnit(
+            attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver),
+            lifecycle.nightUnit,
+          );
         discardStaleNightKnives(knifeAdmission);
       }
 
       discardStaleNightKnives(knifeAdmission);
-      const { demonSources, demonWolfSourceCurrent, demonKnifeProtection } = prepareNightSourceDelivery({
-        ownsDemon: () => ownsDemon,
-        world: () => this.world,
-        day: () => day,
-        claims: () => stageState,
-      });
+      const { demonSources, demonWolfSourceCurrent, demonKnifeProtection } =
+        prepareNightSourceDelivery({
+          ownsDemon: () => ownsDemon,
+          world: () => this.world,
+          day: () => day,
+          claims: () => stageState,
+        });
       const { dreamFrame, damage } = composeNightDamage({
         ownsRadiant: () => ownsRadiant,
         world: () => this.world,
@@ -389,22 +417,25 @@ export class NightPipeline {
             }),
           );
       lifecycle.finishPipeline();
-      return attachNightUnit(attachNobleNightReceiver(
-        {
-          interrupted: false,
-          summary,
-          damage,
-          dreamFrame,
-          ...(mist ? { mistDelay: mist.delayEligible } : {}),
-          deathLives,
-          retaliationAttacks: stageState.retaliationAttacks,
-          blocksPassiveNightShot: captureEvilKnightNightShotProtection(stageState),
-          inspectionAttacks: stageState.inspectionAttacks,
-          foxInspections: stageState.foxInspections,
-          ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
-        },
-        nobleNight.receiver,
-      ), lifecycle.nightUnit);
+      return attachNightUnit(
+        attachNobleNightReceiver(
+          {
+            interrupted: false,
+            summary,
+            damage,
+            dreamFrame,
+            ...(mist ? { mistDelay: mist.delayEligible } : {}),
+            deathLives,
+            retaliationAttacks: stageState.retaliationAttacks,
+            blocksPassiveNightShot: captureEvilKnightNightShotProtection(stageState),
+            inspectionAttacks: stageState.inspectionAttacks,
+            foxInspections: stageState.foxInspections,
+            ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
+          },
+          nobleNight.receiver,
+        ),
+        lifecycle.nightUnit,
+      );
     } finally {
       lifecycle.abortPipeline();
     }

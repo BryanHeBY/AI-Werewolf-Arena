@@ -12,10 +12,7 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { demonHunterActorId } from "../features/demon-hunter/authority";
 import { types } from "node:util";
 import { DEMON_HUNTER_NIGHT_STAGE } from "../features/demon-hunter/night-stages";
-import {
-  WEDDING_CHAT_STAGE,
-  WEDDING_KNIFE_STAGE,
-} from "../features/ghost-bride/night-stages";
+import { WEDDING_CHAT_STAGE, WEDDING_KNIFE_STAGE } from "../features/ghost-bride/night-stages";
 /** 文件说明：根据板子角色集合构建夜间阶段列表。 */
 import { Role } from "../domain/model";
 import { RoleCatalog } from "./roles/catalog";

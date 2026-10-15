@@ -150,9 +150,9 @@ for (const transport of ["sdk", "acp"] as const)
         await expect(replayReproduction(altered, output)).rejects.toThrow(
           "reproduction_observation_mismatch",
         );
-        const view = readReplayPlayerView(JSON.parse(
-          await readFile(path.join(directory, "players/player_1.json"), "utf8"),
-        ));
+        const view = readReplayPlayerView(
+          JSON.parse(await readFile(path.join(directory, "players/player_1.json"), "utf8")),
+        );
         expect(
           view.timeline.some(
             (entry: any) =>

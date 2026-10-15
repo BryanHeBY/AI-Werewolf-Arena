@@ -3,7 +3,12 @@
  * 输出保留原规范化 document，旧未声明／v1／v2 reader 规则与原文不变；新封装身份不表示可执行授权。
  * 游戏结算与严格来源兼容仍由后端实际执行器负责，本出口不导入 Node、World 或 renderer。
  */
-import { isRecord, assertField, assertSerializedData, ReplayDocumentValidationError } from "./validation";
+import {
+  isRecord,
+  assertField,
+  assertSerializedData,
+  ReplayDocumentValidationError,
+} from "./validation";
 export { ReplayDocumentValidationError } from "./validation";
 import { isLocale, type Locale, type SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 import { unwrapRecordingEnvelope, type RecordingIdentities } from "./archive-envelope";
@@ -224,7 +229,10 @@ export * from "./error-diagnostic";
 export * from "./archive-envelope";
 
 /** 前端 canonical 入口保留声明供真实展示支持检查；旧裸档返回 null，不猜造历史身份。 */
-export function readReplayArchive(value: unknown): { replay: ReplayDocument; identities: RecordingIdentities | null } {
+export function readReplayArchive(value: unknown): {
+  replay: ReplayDocument;
+  identities: RecordingIdentities | null;
+} {
   if (value !== null && typeof value === "object") assertSerializedData(value, "document");
   const archive = unwrapRecordingEnvelope(value, "public_replay");
   return { replay: readReplayDocument(archive.payload), identities: archive.identities };

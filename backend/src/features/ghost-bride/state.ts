@@ -7,7 +7,10 @@
  */
 import { types } from "node:util";
 import { freshGhostBrideState } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import type { GhostBrideState, WeddingPair } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import type {
+  GhostBrideState,
+  WeddingPair,
+} from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import type { RoleInitializationComponent } from "../../rulesets/roles/contracts";
 
 // 同一原数据 reader：返回脱离副本／null，不能据此取得婚礼授权或原槽写权。
@@ -53,7 +56,9 @@ export function captureGhostBrideParticipantData(
 }
 
 /** 原 Proxy 拒绝与 descriptor 捕获先于 World 身份查询；不执行容器 accessor。 */
-export function ghostBridePrivateFields(p: GhostBrideParticipantData): PropertyDescriptorMap | null {
+export function ghostBridePrivateFields(
+  p: GhostBrideParticipantData,
+): PropertyDescriptorMap | null {
   if (types.isProxy(p.state)) return null;
   const fields = Object.getOwnPropertyDescriptors(p.state);
   return fields;
@@ -102,9 +107,7 @@ export function updateGhostBrideExpectedData(
   b: { participants: ReadonlyMap<number, GhostBrideParticipantData>; actorId: number },
   json: (value: unknown) => string | null,
 ): void {
-  b.participants.get(b.actorId)!.expectedPrivateJson = json(
-    b.participants.get(b.actorId)!.state,
-  )!;
+  b.participants.get(b.actorId)!.expectedPrivateJson = json(b.participants.get(b.actorId)!.state)!;
 }
 
 /** 失败审计仅在原身体／身份仍有效时调用；不可编码则保留该参与者最近的安全串。 */

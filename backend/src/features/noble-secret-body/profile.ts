@@ -58,8 +58,9 @@ export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
     ...common.runtime,
     init: (role, ctx) => {
       // 完整安装由既有数据 owner 持有；原 parse callee／receiver 与板子读取留在惰性政策输入内。
-      installNobleState(role, () =>
-        noble.parse(ctx.boardConfig?.nightNoble ?? {}).wolfActionPolicy,
+      installNobleState(
+        role,
+        () => noble.parse(ctx.boardConfig?.nightNoble ?? {}).wolfActionPolicy,
       );
     },
     canSelfDestruct: (role) =>
@@ -126,8 +127,9 @@ export const AWAKENED_IDIOT_ROLE_PROFILE: NativeRoleContributions = {
     canSelfDestruct: false,
     init: (role, ctx) => {
       // owner 读取原左值容器之后才求值此政策，不把配置提前解析成值或另存状态。
-      installSecretBodyState(role, () =>
-        body.parse(ctx.boardConfig?.awakenedIdiot ?? {}).protectionRepeatPolicy,
+      installSecretBodyState(
+        role,
+        () => body.parse(ctx.boardConfig?.awakenedIdiot ?? {}).protectionRepeatPolicy,
       );
     },
     configuration: {

@@ -2,13 +2,7 @@
  * 负责丘比特城市胜利贡献，输入保原情侣记录与存活名单，输出为原关系／阵营决策。
  * 真实当前 Camp 仅在原阵营点读取，历史 pairCamps 仍保捕获含义；不改情侣或标死玩家。
  */
-import {
-  COMPONENT,
-  Camp,
-  type World,
-  type RoleComponent,
-  type WinDecision,
-} from "../../domain";
+import { COMPONENT, Camp, type World, type RoleComponent, type WinDecision } from "../../domain";
 import { victoryDecision } from "../../engine/victory/results";
 import { loversRecord, livingOriginalLovers } from "./relation";
 /** 有限 City 板贡献只在完整死亡链之后判断，不把局部死亡提案当最终名单。 */
@@ -33,7 +27,8 @@ export function cupidCityDecision(world: World): { decision: WinDecision | null 
     const role = world.getComponent(id, COMPONENT.Role);
     if (role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf) wolves++;
     if (
-      role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good &&
+      role &&
+      world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good &&
       !(follows && id === record.actorId && (record.mixed || record.pairCamps[0] === Camp.Wolf))
     )
       good++;

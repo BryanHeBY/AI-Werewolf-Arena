@@ -31,7 +31,11 @@ import {
 } from "../../../../src/agents/observation/event-feed";
 import { AgentEventVisibilityRegistry } from "../../../../src/agents/observation/agent-event-visibility-registry";
 import { snapshotNobleBodyAuthority } from "../../../../src/features/noble-secret-body/authority";
-import { NOBLE_SECRET_BODY_EVENT_TYPES, readNobleSecretBodyFact, NOBLE_SECRET_BODY_POLICY } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
+import {
+  NOBLE_SECRET_BODY_EVENT_TYPES,
+  readNobleSecretBodyFact,
+  NOBLE_SECRET_BODY_POLICY,
+} from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 
 function setup(locale: "zh-CN" | "en") {
   const config = nobleSecretBodyTwelveConfig();

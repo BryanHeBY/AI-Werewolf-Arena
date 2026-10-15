@@ -101,7 +101,10 @@ for (const diskFailure of [false, true])
             file,
             data,
           ) {
-            if (file === "replay.json" && readReplayDocument(data).result?.reason === "runtime_error")
+            if (
+              file === "replay.json" &&
+              readReplayDocument(data).result?.reason === "runtime_error"
+            )
               throw persistence;
             return write.call(this, file, data);
           })
@@ -151,9 +154,9 @@ for (const diskFailure of [false, true])
           const after = await readFile(path.join(directory, "reproduction.json"), "utf8");
           await Bun.sleep(0);
           expect(await readFile(path.join(directory, "reproduction.json"), "utf8")).toBe(after);
-          const publicReplay = readReplayDocument(JSON.parse(
-            await readFile(path.join(directory, "replay.json"), "utf8"),
-          ));
+          const publicReplay = readReplayDocument(
+            JSON.parse(await readFile(path.join(directory, "replay.json"), "utf8")),
+          );
           expect(publicReplay.result.reason).toBe("runtime_error");
         }
       } finally {

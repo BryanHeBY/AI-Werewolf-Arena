@@ -13,53 +13,113 @@ import { installFragrantGameSetup } from "../../../src/rulesets/game-setup";
 
 test("absent fragrant setup reads configuration once without World or events", () => {
   const trace: string[] = [];
-  const config = { get fragrantPairSeer() { trace.push("config"); return undefined; } };
+  const config = {
+    get fragrantPairSeer() {
+      trace.push("config");
+      return undefined;
+    },
+  };
   const result = installFragrantGameSetup(config, {
-    world(): World { throw new Error("unexpected_world_read"); },
-    events(): GameEvent[] { throw new Error("unexpected_events_read"); },
+    world(): World {
+      throw new Error("unexpected_world_read");
+    },
+    events(): GameEvent[] {
+      throw new Error("unexpected_events_read");
+    },
   });
   expect(result).toBeUndefined();
   expect(trace).toEqual(["config"]);
 });
 
 test("second original role query failure preserves first index read before installation", () => {
-  const trace: string[] = [], world = new World(), events: GameEvent[] = [];
+  const trace: string[] = [],
+    world = new World(),
+    events: GameEvent[] = [];
   const failure = new Error("second_role_query_failure");
-  const config = { get fragrantPairSeer() { trace.push("config"); return fragrantPairSeerTwelveConfig.fragrantPairSeer; } };
-  Object.defineProperty(world, "getEntityIdsByRole", { get() {
-    trace.push("role:get");
-    return function (this: World, role: Role): number[] {
-      expect(this).toBe(world); trace.push(`role:call:${role}`);
-      if (role === Role.AwakenedSeer) throw failure;
-      const ids = [1];
-      Object.defineProperty(ids, "0", { get() { trace.push("index:first"); return 1; } });
-      return ids;
-    };
-  } });
+  const config = {
+    get fragrantPairSeer() {
+      trace.push("config");
+      return fragrantPairSeerTwelveConfig.fragrantPairSeer;
+    },
+  };
+  Object.defineProperty(world, "getEntityIdsByRole", {
+    get() {
+      trace.push("role:get");
+      return function (this: World, role: Role): number[] {
+        expect(this).toBe(world);
+        trace.push(`role:call:${role}`);
+        if (role === Role.AwakenedSeer) throw failure;
+        const ids = [1];
+        Object.defineProperty(ids, "0", {
+          get() {
+            trace.push("index:first");
+            return 1;
+          },
+        });
+        return ids;
+      };
+    },
+  });
   let thrown: unknown;
-  try { installFragrantGameSetup(config, {
-    world() { trace.push("world"); return world; },
-    events() { trace.push("events"); return events; },
-  }); } catch (error) { thrown = error; }
+  try {
+    installFragrantGameSetup(config, {
+      world() {
+        trace.push("world");
+        return world;
+      },
+      events() {
+        trace.push("events");
+        return events;
+      },
+    });
+  } catch (error) {
+    thrown = error;
+  }
   expect(thrown).toBe(failure);
-  expect(trace).toEqual(["config", "world", "events", "world", "role:get", "role:call:fragrant_phantom",
-    "index:first", "world", "role:get", "role:call:awakened_seer"]);
+  expect(trace).toEqual([
+    "config",
+    "world",
+    "events",
+    "world",
+    "role:get",
+    "role:call:fragrant_phantom",
+    "index:first",
+    "world",
+    "role:get",
+    "role:call:awakened_seer",
+  ]);
   expect(isFragrantPairBoard(world)).toBe(false);
   expect(events).toEqual([]);
 });
 
 test("original authority rejects foreign event prototype after both argument lookups", () => {
-  const trace: string[] = [], world = new World();
+  const trace: string[] = [],
+    world = new World();
   class ForeignEvents extends Array<GameEvent> {}
   const events = new ForeignEvents();
-  Object.defineProperty(world, "getEntityIdsByRole", { value(role: Role) {
-    trace.push(role); return [role === Role.FragrantPhantom ? 1 : 2];
-  } });
-  Object.defineProperty(world, "entityIds", { value() { throw new Error("unexpected_roster_capture"); } });
-  expect(() => installFragrantGameSetup(fragrantPairSeerTwelveConfig, {
-    world() { trace.push("world"); return world; },
-    events() { trace.push("events"); return events; },
-  })).toThrow("fragrant_initial_events_invalid");
+  Object.defineProperty(world, "getEntityIdsByRole", {
+    value(role: Role) {
+      trace.push(role);
+      return [role === Role.FragrantPhantom ? 1 : 2];
+    },
+  });
+  Object.defineProperty(world, "entityIds", {
+    value() {
+      throw new Error("unexpected_roster_capture");
+    },
+  });
+  expect(() =>
+    installFragrantGameSetup(fragrantPairSeerTwelveConfig, {
+      world() {
+        trace.push("world");
+        return world;
+      },
+      events() {
+        trace.push("events");
+        return events;
+      },
+    }),
+  ).toThrow("fragrant_initial_events_invalid");
   expect(trace).toEqual(["world", "events", "world", "fragrant_phantom", "world", "awakened_seer"]);
   expect(isFragrantPairBoard(world)).toBe(false);
 });

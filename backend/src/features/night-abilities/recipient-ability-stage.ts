@@ -176,7 +176,12 @@ export function recipientAbilityStage(
               )
                 continue;
               const isWerewolf = result.camp === Camp.Wolf;
-              SEER_STATE_SLOT.allowedWrites.recordRecipientSeerInspection(ability, target, isWerewolf, result);
+              SEER_STATE_SLOT.allowedWrites.recordRecipientSeerInspection(
+                ability,
+                target,
+                isWerewolf,
+                result,
+              );
               commitFoxInspection(ctx.world, ctx.state, target, day, () =>
                 scope.isOwnerCurrent(true),
               );

@@ -5,7 +5,13 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type AliveComponent, type RoleComponent } from "../../../src/domain";
+import {
+  COMPONENT,
+  Phase,
+  Role,
+  type AliveComponent,
+  type RoleComponent,
+} from "../../../src/domain";
 import { createRandom, randomDraws } from "../../../src/domain/random";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { ObservedBot } from "../../../src/agents/providers/observed-bot";
@@ -30,10 +36,7 @@ test("hidden opponent identities and private state cannot change a villager obse
   second.world.addComponent(2, COMPONENT.Role, guard);
   second.world.addComponent(3, COMPONENT.Role, wolf);
   (
-    second.world.getComponent(5, COMPONENT.Role)!.privateState as Record<
-      string,
-      unknown
-    >
+    second.world.getComponent(5, COMPONENT.Role)!.privateState as Record<string, unknown>
   ).hiddenTest = "PRIVATE_OPPONENT_STATE";
   // 未发表的状态变化不能被观察适配器提升为公开知识。
   second.world.getComponent(6, COMPONENT.Alive)!.alive = false;
@@ -120,9 +123,7 @@ test("own skill resources are detached and immutable, while teammate knowledge i
   expect(() => {
     observations[0].ownState.guard!.lastTarget = 99;
   }).toThrow();
-  expect(
-    getGuardState(context.world.getComponent(3, COMPONENT.Role)!)?.lastTarget,
-  ).toBeNull();
+  expect(getGuardState(context.world.getComponent(3, COMPONENT.Role)!)?.lastTarget).toBeNull();
   await provider.getAction(
     factory.create({
       actorId: 2,

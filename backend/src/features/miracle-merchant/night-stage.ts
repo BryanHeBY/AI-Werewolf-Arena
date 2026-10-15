@@ -37,7 +37,8 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
       const role = ctx.world.getComponent(actorId, COMPONENT.Role)!,
         state = getMerchantState(role),
         life = captureNightLife(ctx.world, actorId);
-      if (!state || !life || ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good) continue;
+      if (!state || !life || ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good)
+        continue;
       const privateState = role.privateState;
       const ownerCurrent = () =>
         ctx.isCurrent() &&
@@ -48,7 +49,8 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
         getMerchantState(role) === state &&
         livingNightLife(ctx.world, life);
       // 先完成原体／库存的原有序复验，再否决新交易；纯 ownerCurrent 仍供已付反噬使用。
-      const current = () => ownerCurrent() && canMerchantTrade(state, day) && !isRoleExecutionRetired(role);
+      const current = () =>
+        ownerCurrent() && canMerchantTrade(state, day) && !isRoleExecutionRetired(role);
       if (!current()) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
@@ -79,15 +81,20 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
           const provider = ctx.actionProvider,
             getAction = provider.getAction,
             makeRequest = ctx.makeRequest,
-            requestArgs = [actorId, ["bestow_ability"], {
-              stage: "miracle_merchant",
-              requiresAction: false,
-              ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
-            }],
+            requestArgs = [
+              actorId,
+              ["bestow_ability"],
+              {
+                stage: "miracle_merchant",
+                requiresAction: false,
+                ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
+              },
+            ],
             invoke = Reflect.apply.bind(Reflect);
           // 新 Reflect／bind 查找与分配都先完成；末旗后只裸调用已准备 invoker，不再查方法属性。
           if (isRoleExecutionRetired(role)) break;
-          const request = invoke(makeRequest, ctx, requestArgs), actionArgs = [request];
+          const request = invoke(makeRequest, ctx, requestArgs),
+            actionArgs = [request];
           // builder 已完成的请求前缀不回滚；它退休源时不再调用 provider，await 后仍走原 current。
           if (isRoleExecutionRetired(role)) break;
           action = await invoke(getAction, provider, actionArgs);
@@ -148,7 +155,10 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
                 },
                 ctx.events,
               ],
-              grantWorld = grantArgs[0], grantTarget = grantArgs[1], grantInput = grantArgs[2], grantEvents = grantArgs[3];
+              grantWorld = grantArgs[0],
+              grantTarget = grantArgs[1],
+              grantInput = grantArgs[2],
+              grantEvents = grantArgs[3];
             // 原 callee 与全部 World／payload／events 实参已经求值；共同资源 owner 不能替代本阶段捕获源的末拒绝。
             if (isRoleExecutionRetired(role)) break;
             grant(grantWorld, grantTarget, grantInput, grantEvents);
@@ -161,7 +171,10 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
                 { ...base, kind: "guard", state: { lastTarget: null } },
                 ctx.events,
               ],
-              grantWorld = grantArgs[0], grantTarget = grantArgs[1], grantInput = grantArgs[2], grantEvents = grantArgs[3];
+              grantWorld = grantArgs[0],
+              grantTarget = grantArgs[1],
+              grantInput = grantArgs[2],
+              grantEvents = grantArgs[3];
             // 原 callee 与全部 World／payload／events 实参已经求值；共同资源 owner 不能替代本阶段捕获源的末拒绝。
             if (isRoleExecutionRetired(role)) break;
             grant(grantWorld, grantTarget, grantInput, grantEvents);
@@ -185,7 +198,10 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
                 },
                 ctx.events,
               ],
-              grantWorld = grantArgs[0], grantTarget = grantArgs[1], grantInput = grantArgs[2], grantEvents = grantArgs[3];
+              grantWorld = grantArgs[0],
+              grantTarget = grantArgs[1],
+              grantInput = grantArgs[2],
+              grantEvents = grantArgs[3];
             // 原 callee 与全部 World／payload／events 实参已经求值；共同资源 owner 不能替代本阶段捕获源的末拒绝。
             if (isRoleExecutionRetired(role)) break;
             grant(grantWorld, grantTarget, grantInput, grantEvents);

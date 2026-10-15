@@ -381,7 +381,11 @@ for (const [name, affiliations] of [
   test(`initial Victory rejects ${name}`, () => {
     const world = uninstalled();
     // 原畸形成员样本必须原样进入存储；断言仅替代旧 unknown 写入泛型，不补齐或验证它。
-    world.addComponent(3, COMPONENT.Victory, { affiliations } as unknown as import("../../../../src/domain/component-map").ComponentWrite<typeof COMPONENT.Victory>);
+    world.addComponent(3, COMPONENT.Victory, {
+      affiliations,
+    } as unknown as import("../../../../src/domain/component-map").ComponentWrite<
+      typeof COMPONENT.Victory
+    >);
     expect(() => commit(world)).toThrow();
   });
 test("finite noble-body owner rejects empty Victory without changing shared generic membership schema", () => {

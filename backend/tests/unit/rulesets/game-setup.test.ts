@@ -15,10 +15,7 @@ import {
   initialIdentitySetupReady,
 } from "../../../src/features/initial-identity/deal";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import {
-  wildChildBinding,
-  hasActiveWildChild,
-} from "../../../src/features/wild-child/lifecycle";
+import { wildChildBinding, hasActiveWildChild } from "../../../src/features/wild-child/lifecycle";
 import { foxBoard } from "../../support/features/cursed-fox/builders/scenario";
 import { WildChildSetupWindow } from "../../../src/features/wild-child/setup-ports";
 
@@ -260,11 +257,12 @@ test("a yielded original window resumes guards synchronously without an extra co
   }
 });
 
-
 test("an explicit setup constructor getter fails only after opening and retains the original failure closure", async () => {
   const roles = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
   const game = bootstrapGame(foxBoard(roles), { fixedRoles: roles });
-  const events: GameEvent[] = [], trace: string[] = [], failure = new Error("original_constructor_getter_failure");
+  const events: GameEvent[] = [],
+    trace: string[] = [],
+    failure = new Error("original_constructor_getter_failure");
   const window = new WildChildSetupWindow(game.world, new ToolGateway(), events, {
     get requestFactory(): never {
       trace.push("factory");
@@ -274,9 +272,18 @@ test("an explicit setup constructor getter fails only after opening and retains 
   });
   // 保存依赖不读取构造器；原开选择后的读取失败必须进入该窗口自己的 finally。
   expect(trace).toEqual([]);
-  await expect(window.execute(game.boardConfig, {
-    async getAction() { throw new Error("unexpected_provider"); },
-  }, 1, () => true)).rejects.toBe(failure);
+  await expect(
+    window.execute(
+      game.boardConfig,
+      {
+        async getAction() {
+          throw new Error("unexpected_provider");
+        },
+      },
+      1,
+      () => true,
+    ),
+  ).rejects.toBe(failure);
   expect(trace).toEqual(["factory"]);
   expect(wildChildBinding(game.world)?.setup).toBe("failed");
   expect(wildChildBinding(game.world)?.state.remaining).toBe(0);
@@ -288,7 +295,9 @@ test("an explicit setup constructor getter fails only after opening and retains 
 test("an explicit setup constructor keeps original arguments and instance create receiver through a real choice", async () => {
   const roles = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
   const game = bootstrapGame(foxBoard(roles), { fixedRoles: roles });
-  const events: GameEvent[] = [], trace: string[] = [], gateway = new ToolGateway();
+  const events: GameEvent[] = [],
+    trace: string[] = [],
+    gateway = new ToolGateway();
   let instance: GameActionRequestFactory | undefined, created: ActionRequest | undefined;
   class Requests extends GameActionRequestFactory {
     constructor(world: World, actualEvents: readonly GameEvent[], day: number) {
@@ -315,16 +324,23 @@ test("an explicit setup constructor keeps original arguments and instance create
     },
   });
   expect(trace).toEqual([]);
-  expect(await window.execute(game.boardConfig, {
-    async getAction(request) {
-      trace.push("provider");
-      expect(request).toBe(created!);
-      return { name: "choose_wild_model", args: { target_id: 2 } };
-    },
-  }, 1, () => true)).toBe(true);
+  expect(
+    await window.execute(
+      game.boardConfig,
+      {
+        async getAction(request) {
+          trace.push("provider");
+          expect(request).toBe(created!);
+          return { name: "choose_wild_model", args: { target_id: 2 } };
+        },
+      },
+      1,
+      () => true,
+    ),
+  ).toBe(true);
   expect(trace).toEqual(["factory", "new", "create", "provider"]);
   expect(wildChildBinding(game.world)?.setup).toBe("complete");
   expect(wildChildBinding(game.world)?.state.choice).toEqual({ day: 1, targetId: 2 });
   expect(hasActiveWildChild(game.world)).toBe(false);
-  expect(events.map(event => event.type)).toEqual(["wild_child_model_chosen"]);
+  expect(events.map((event) => event.type)).toEqual(["wild_child_model_chosen"]);
 });

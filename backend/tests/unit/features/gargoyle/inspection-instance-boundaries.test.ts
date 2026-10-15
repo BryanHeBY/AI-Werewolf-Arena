@@ -17,10 +17,7 @@ import {
   type GameEvent,
 } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
-import {
-  getGargoyleState,
-  setGargoyleState,
-} from "../../../../src/features/gargoyle/state";
+import { getGargoyleState, setGargoyleState } from "../../../../src/features/gargoyle/state";
 import {
   findNightAbility,
   allNightAbilities,
@@ -42,7 +39,6 @@ import {
   grantNightAbility,
   transferNightAbility,
 } from "../../../../src/features/night-abilities/night-ability-grants";
-
 
 const deck = [Role.Gargoyle, Role.Wolf, Role.Seer, Role.Gravekeeper, Role.Villager, Role.Villager],
   catalog = getDefaultRoleCatalog();
@@ -248,7 +244,9 @@ test("mandatory exhausted invalid responses throw, preserving no false result/co
     "role_inspection_required_action_missing",
   );
   expect(calls).toBe(3);
-  expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
+  expect(
+    canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(false);
   const ability = findNightAbility(role(game, 1), "role_check")!;
   (
     ability.state as unknown as {
@@ -272,7 +270,9 @@ test("mandatory exhausted invalid responses throw, preserving no false result/co
   );
   expect(ability.uses).toBe(0);
   expect(ability.lastUsedDay).toBeNull();
-  expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
+  expect(
+    canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(true);
   expect(events.filter((e) => e.type === "role_inspected")).toEqual([]);
 });
 
@@ -351,8 +351,7 @@ for (const exhaustedOn of [2, 3])
     let calls = 0;
     await ROLE_INSPECTION_STAGE.execute(
       stageContext(game, events, async () => {
-        if (++calls === exhaustedOn)
-          game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
+        if (++calls === exhaustedOn) game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
         return null;
       }),
     );
@@ -361,7 +360,9 @@ for (const exhaustedOn of [2, 3])
     expect(ability.lastUsedDay).toBeNull();
     expect(ability.state.history).toHaveLength(1);
     expect(events).toEqual([]);
-    expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
+    expect(
+      canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+    ).toBe(true);
   });
 
 test("native, gift and copy instances each inspect the same target once with separate history/resources and actor-only reports", async () => {

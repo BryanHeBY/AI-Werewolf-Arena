@@ -105,11 +105,7 @@ test("actual command parse/load failures are bilingual safe JSON without uncaugh
     ["replay-actions.ts", [], "reproduction_cli_usage"],
     ["simulate.ts", ["--count", "0"], "simulation_count_invalid"],
     ["export-replay-bundle.ts", [], "replay_export_usage"],
-    [
-      "run-game-smoke.ts",
-      ["--unknown", "private-token-canary"],
-      "runtime_cli_option_unknown",
-    ],
+    ["run-game-smoke.ts", ["--unknown", "private-token-canary"], "runtime_cli_option_unknown"],
   ] as const)
     for (const locale of ["zh-CN", "en"] as const) {
       const result = await command(file, [...args, "--display-locale", locale]);

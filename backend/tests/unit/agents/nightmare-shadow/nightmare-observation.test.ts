@@ -24,9 +24,7 @@ for (const fear of ["optional", "required_when_legal"] as const)
       config.nightmareShadow!.fearActionPolicy = fear;
       const f = bootstrapGame(config);
       const id = (role: Role) =>
-        f.world
-          .entityIds()
-          .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === role)!;
+        f.world.entityIds().find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === role)!;
       const actor = id(Role.NightmareShadow),
         villager = id(Role.Villager),
         wolf = id(Role.Wolf);

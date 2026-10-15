@@ -48,7 +48,6 @@ const acpProfile: ResolvedAgentRuntimeProfile = {
 };
 
 describe("createPlayerAgentRuntime", () => {
-
   test("selects ACP and owns its workspace lifecycle boundary", async () => {
     const root = await createTestTempDirectory("awa-player-factory-");
     const workspace = path.join(root, "acp-workspaces");

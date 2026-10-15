@@ -8,10 +8,7 @@
 import { COMPONENT } from "../domain/components/names";
 import type { RoleComponent } from "../domain/components/role";
 import type { ActionRequest, EntityId } from "@ai-werewolf-arena/game-contract";
-import {
-  getActionRequestDay,
-  getActionRequestStage,
-} from "../domain/action-request-context";
+import { getActionRequestDay, getActionRequestStage } from "../domain/action-request-context";
 import type { World } from "../domain/world";
 import { getSessionRecorder } from "../recording/session/context";
 import type { BuiltPlayerPrompt, PlayerRoundOutcome } from "../agents/player/contracts";

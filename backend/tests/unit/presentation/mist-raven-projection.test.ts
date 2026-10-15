@@ -4,14 +4,8 @@
 import { expect, test } from "bun:test";
 import { Role, Camp, World, type RoleComponent, type GameEvent } from "../../../src/domain";
 import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
-import {
-  createAlchemistState,
-  createRavenState,
-} from "../../../src/features/mist-raven/state";
-import {
-  projectAlchemist,
-  projectRaven,
-} from "../../../src/features/mist-raven/player-projection";
+import { createAlchemistState, createRavenState } from "../../../src/features/mist-raven/state";
+import { projectAlchemist, projectRaven } from "../../../src/features/mist-raven/player-projection";
 import { AgentEventVisibilityRegistry } from "../../../src/agents/observation/agent-event-visibility-registry";
 import { ScriptEventRenderRegistry } from "../../../src/agents/presentation/event-render-registry";
 import { buildAgentVisibleEvent } from "../../../src/agents/observation/event-feed";

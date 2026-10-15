@@ -4,7 +4,10 @@
  * 原 owner、frame 和 readers 真实执行，native/install/use 只迁向同一实际实例 owner。
  * 不运行完整对局、模型或传输，不替换支持 fixture、规则与原历史矩阵。
  */
-import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
+import {
+  createAliveComponent,
+  createCampComponent,
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Role, Camp, Phase } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";
@@ -155,8 +158,7 @@ for (const field of ["life", "role", "camp", "actorState"] as const)
     const lease = openPairCheckChoice(f.world, 1),
       originalState = (f.role(5).privateState as { readonly pairSeer?: unknown }).pairSeer;
     if (field === "life") f.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
-    if (field === "role")
-      f.world.addComponent(6, COMPONENT.Role, createRoleComponent(Role.Witch));
+    if (field === "role") f.world.addComponent(6, COMPONENT.Role, createRoleComponent(Role.Witch));
     if (field === "camp") f.world.addComponent(6, COMPONENT.Camp, createCampComponent(Camp.Good));
     if (field === "actorState")
       (f.role(5).privateState as Record<string, unknown>).pairSeer = freshPairSeerState();

@@ -17,7 +17,10 @@ import {
   writeFile,
 } from "node:fs/promises";
 import path from "node:path";
-import { engineFingerprintInputs, fingerprintEngine } from "../../src/recording/reproduction/engine-fingerprint";
+import {
+  engineFingerprintInputs,
+  fingerprintEngine,
+} from "../../src/recording/reproduction/engine-fingerprint";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { Camp, createRandom, type Role } from "../../src/domain";
 import { ReproductionTrace } from "../../src/recording/reproduction/trace";
@@ -197,9 +200,12 @@ test("private canary and generated dependency directory never join fingerprint m
 
 /** 读取固定27a构建的真实旧身份；旧目录已退，不在当前树重算历史六根算法。 */
 async function historicalSourceHash(root: string): Promise<string> {
-  const historical = JSON.parse(await readFile(
-    path.join(root, "docs/history/refactor/generated/baseline-source-hash.json"), "utf8",
-  )) as { commit: string; roots: string[]; sourceHash: string };
+  const historical = JSON.parse(
+    await readFile(
+      path.join(root, "docs/history/refactor/generated/baseline-source-hash.json"),
+      "utf8",
+    ),
+  ) as { commit: string; roots: string[]; sourceHash: string };
   expect(historical.commit).toBe("27a97cb66e8f30fceb7cb20130154291559dd14a");
   expect(historical.roots).toEqual([
     "backend/src/core",
@@ -209,7 +215,9 @@ async function historicalSourceHash(root: string): Promise<string> {
     "packages/game-text/src",
     "packages/replay-contract/src",
   ]);
-  expect(historical.sourceHash).toBe("b603ece35929ad44b8dae7caf3738d8e2ca41e9f5ffd3020c3b105d1db55c8e0");
+  expect(historical.sourceHash).toBe(
+    "b603ece35929ad44b8dae7caf3738d8e2ca41e9f5ffd3020c3b105d1db55c8e0",
+  );
   return historical.sourceHash;
 }
 

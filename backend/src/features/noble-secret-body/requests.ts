@@ -9,10 +9,7 @@ import { types } from "node:util";
 import { Phase } from "../../domain/identity";
 import type { ActionRequest, ToolCall } from "../../domain/actions";
 import type { World } from "../../domain/world";
-import {
-  bindRequestDeliveryGuard,
-  settleRequestDelivery,
-} from "../../domain/request-delivery";
+import { bindRequestDeliveryGuard, settleRequestDelivery } from "../../domain/request-delivery";
 import { snapshotPlainData } from "../../domain/plain-data";
 import {
   nobleBodyChoiceActor,

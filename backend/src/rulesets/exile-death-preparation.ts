@@ -29,9 +29,7 @@ export function prepareAnimalExileDeaths(selection: ExileDeathSelection) {
   for (const id of selection.removed) sources[id] = [DeathCause.Exile];
   for (const id of selection.animalRetaliation ?? [])
     sources[id] = [...new Set([...(sources[id] ?? []), DeathCause.PufferRetaliation])];
-  const ids = [
-    ...new Set([...selection.removed, ...(selection.animalRetaliation ?? [])]),
-  ];
+  const ids = [...new Set([...selection.removed, ...(selection.animalRetaliation ?? [])])];
   return { sources, ids };
 }
 
@@ -46,8 +44,8 @@ export function captureAnimalExileFeedback(
   return target !== null &&
     sources[target]?.includes(DeathCause.Exile) &&
     world().getComponent(target, COMPONENT.Alive)?.alive === false
-      ? captureExileFeedback(world(), target, exileDay)
-      : null;
+    ? captureExileFeedback(world(), target, exileDay)
+    : null;
 }
 
 /** 普通板在死亡波前捕获已接受放逐的披露标签；有效目标由经理在原点选定，不再要求已标死。 */
@@ -63,7 +61,9 @@ export function captureOrdinaryExileFeedback(
 }
 
 /** 普通反馈完成之后才构造来源；保持原遍历和重复目标覆盖，不补入摘要中没有移除的目标。 */
-export function prepareOrdinaryExileDeaths(selection: Pick<ExileDeathSelection, "removed">): DeathSources {
+export function prepareOrdinaryExileDeaths(
+  selection: Pick<ExileDeathSelection, "removed">,
+): DeathSources {
   const sources: DeathSources = {};
   for (const removedId of selection.removed) {
     sources[removedId] = [DeathCause.Exile];

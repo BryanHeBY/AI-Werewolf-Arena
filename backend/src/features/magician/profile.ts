@@ -107,7 +107,11 @@ export const MAGICIAN_ROLE_PROFILE: NativeRoleContributions = {
     },
     nightStages: [MAGICIAN_EXCHANGE_STAGE],
     baselineAction: (role, request, _pick, _pickCamp, _locale, world, currentCamp) => {
-      if (!request.allowedTools.includes("swap_targets") || !world || !getMagicianState(role, currentCamp))
+      if (
+        !request.allowedTools.includes("swap_targets") ||
+        !world ||
+        !getMagicianState(role, currentCamp)
+      )
         return null;
       const targets = magicianChoiceTargets(world, request.context.day);
       return targets.length >= 2

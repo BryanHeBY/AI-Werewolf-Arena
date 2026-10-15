@@ -44,6 +44,18 @@ export function initialIdentityChoiceRule(
 
 /** 原保留身份分支只顺序写remaining／choice；不增加kind getter，首setter失败保原部分提交。 */
 export function consumeRetainedInitialIdentityState(state: InitialIdentityState): void {
-  (state as Pick<import("@ai-werewolf-arena/game-contract").ThiefState | import("@ai-werewolf-arena/game-contract").ShapeshifterState, "remaining">).remaining = 0;
-  (state as Pick<import("@ai-werewolf-arena/game-contract").ThiefState | import("@ai-werewolf-arena/game-contract").ShapeshifterState, "choice">).choice = null;
+  (
+    state as Pick<
+      | import("@ai-werewolf-arena/game-contract").ThiefState
+      | import("@ai-werewolf-arena/game-contract").ShapeshifterState,
+      "remaining"
+    >
+  ).remaining = 0;
+  (
+    state as Pick<
+      | import("@ai-werewolf-arena/game-contract").ThiefState
+      | import("@ai-werewolf-arena/game-contract").ShapeshifterState,
+      "choice"
+    >
+  ).choice = null;
 }

@@ -14,11 +14,7 @@ import {
 import type { RoleComponent } from "../../domain/components/role";
 import { Camp } from "../../domain/identity";
 import type { World } from "../../domain/world";
-import {
-  captureNightLife,
-  livingNightLife,
-  type NightLifeScope,
-} from "../../domain/night-effects";
+import { captureNightLife, livingNightLife, type NightLifeScope } from "../../domain/night-effects";
 import { MistCasterAuthority } from "./caster-authority";
 import {
   createAlchemistState,

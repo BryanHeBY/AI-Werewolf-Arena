@@ -18,15 +18,26 @@ import {
 import type { NightStageContext, WolfKnifeTargetScope } from "../engine/night/contracts";
 
 /** 已接受的票只携带原目标身体与生命版本，不是新的付款凭据或 JSON 快照。 */
-export type AcceptedWolfKnifeTarget = Pick<WolfKnifeTargetScope, "targetId" | "life" | "version"> & {
+export type AcceptedWolfKnifeTarget = Pick<
+  WolfKnifeTargetScope,
+  "targetId" | "life" | "version"
+> & {
   actorId: EntityId;
 };
 
 /** 只限制此组合实际使用的字段；调用方传原对象，各 getter 与方法 receiver 保留到原表达式点。 */
 type WolfKnifeRoutingRuntime = Pick<
   NightStageContext,
-  "world" | "state" | "roleCatalog" | "events" | "pickMajorityTarget" | "pickMistKnife" |
-  "currentDay" | "nativeNightEffects" | "nativeNightTargets" | "ensureMarks"
+  | "world"
+  | "state"
+  | "roleCatalog"
+  | "events"
+  | "pickMajorityTarget"
+  | "pickMistKnife"
+  | "currentDay"
+  | "nativeNightEffects"
+  | "nativeNightTargets"
+  | "ensureMarks"
 >;
 
 export function resolveOrdinaryWolfKnife(
@@ -36,8 +47,7 @@ export function resolveOrdinaryWolfKnife(
   explicitPasses: Set<EntityId>,
 ): EntityId | null {
   let wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);
-  let mistRandomScope: import("../domain/night-effects").NightLifeScope | null =
-    null;
+  let mistRandomScope: import("../domain/night-effects").NightLifeScope | null = null;
   // 先查询原板身份，再判断空刀；只有原雾圈可用且全部弃票时才使用一次原随机源。
   if (isMistRavenBoard(ctx.world) && wolfTarget === null) {
     const circle = mistKnifeTargets(ctx.world);

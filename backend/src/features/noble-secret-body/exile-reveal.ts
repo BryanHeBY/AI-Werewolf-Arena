@@ -73,11 +73,16 @@ export function* revealSecretBodyExile(
         const action = yield request;
         if (nobleBodyRequestScope(queries.world, request) !== scope || action?.name !== "speak")
           throw Error("secret_body_reveal_speech_required");
-        const valid = queries.toolGateway.validateAndSanitize(queries.world, receipt.actorId, action, {
-          phase: Phase.Voting,
-          day: queries.day,
-          deferOperation: true,
-        });
+        const valid = queries.toolGateway.validateAndSanitize(
+          queries.world,
+          receipt.actorId,
+          action,
+          {
+            phase: Phase.Voting,
+            day: queries.day,
+            deferOperation: true,
+          },
+        );
         if (
           !valid.ok ||
           !valid.sanitizedCall ||

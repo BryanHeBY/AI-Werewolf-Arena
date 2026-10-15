@@ -21,10 +21,7 @@ import {
   type GameEvent,
   type RuntimeSnapshot,
 } from "../../../../src/domain/model";
-import type {
-  NightIntentOrigin,
-  NightPoisonRoute,
-} from "../../../../src/domain/night-effects";
+import type { NightIntentOrigin, NightPoisonRoute } from "../../../../src/domain/night-effects";
 import { captureNightLife, originalPoisonIntent } from "../../../../src/domain/night-effects";
 import { damagePoisonRoutes } from "../../../../src/domain/damage-evidence";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";

@@ -87,7 +87,8 @@ test("原生创建保配置重复读取、可选政策及同引用安装，不�
 });
 
 test("学习枪每次hook独立捕获、查询晚裸调用，机械和觉醒保各自复验字段", () => {
-  const mechanical = createRoleComponent(Role.MechanicalWolf), mechanicalCamp = { camp: Camp.Wolf };
+  const mechanical = createRoleComponent(Role.MechanicalWolf),
+    mechanicalCamp = { camp: Camp.Wolf };
   const ms = setMechanicalState(mechanical, freshMechanicalState());
   learnMechanicalRole(ms, 3, Role.Hunter, 1);
   advanceMechanicalNight(ms, 2);
@@ -107,8 +108,11 @@ test("学习枪每次hook独立捕获、查询晚裸调用，机械和觉醒保�
   expect(trace).toEqual(["lookup", undefined]);
   (ms as { learned: typeof ms.learned }).learned = { ...ms.learned! };
   expect(reader(mechanical, () => mechanicalCamp)).toBeUndefined();
-  expect(createMechanicalGunReader({ getMechanicalState })(mechanical, () => mechanicalCamp)).toBe(gun as LearnedNativeGun);
-  const awakened = createRoleComponent(Role.AwakenedHiddenWolf), awakenedCamp = { camp: Camp.Wolf };
+  expect(createMechanicalGunReader({ getMechanicalState })(mechanical, () => mechanicalCamp)).toBe(
+    gun as LearnedNativeGun,
+  );
+  const awakened = createRoleComponent(Role.AwakenedHiddenWolf),
+    awakenedCamp = { camp: Camp.Wolf };
   const as = setAwakenedState(awakened, freshAwakenedState());
   learnAwakenedRole(as, 3, Role.Hunter, 1);
   activateAwakenedLearning(as, 1);

@@ -9,10 +9,7 @@
 import type { EntityId, GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../domain/world";
 import { demonHunterActorId } from "../../features/demon-hunter/authority";
-import {
-  canViewAgentEvent,
-  canViewPreparedAgentEvent,
-} from "./agent-event-projection";
+import { canViewAgentEvent, canViewPreparedAgentEvent } from "./agent-event-projection";
 import type { PreparedAgentEvent } from "./agent-event-facts";
 
 type AgentEventVisibilityRule = (world: World, event: GameEvent, actorId: EntityId) => boolean;

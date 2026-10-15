@@ -13,7 +13,10 @@ import { ReproductionTrace } from "../../../../src/recording/reproduction/trace"
 import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { validateMagicianRecord } from "../../../../src/recording/verification/magician/validate";
-import type { RecordedDecision, ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import type {
+  RecordedDecision,
+  ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 
 const records = new Map<string, ReproductionRecord>();
 for (const mapping of ["original", "exchanged"] as const)

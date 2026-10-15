@@ -8,7 +8,11 @@
  * F05a 晚核本次捕获源／目标 Role 的永久退休；新增 sourceRole 输入是复验数据，不授许可或新增换体策略。
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
-import type { AbilitySource, NightAbilityKind, NightAbilityStates } from "@ai-werewolf-arena/game-contract";
+import type {
+  AbilitySource,
+  NightAbilityKind,
+  NightAbilityStates,
+} from "@ai-werewolf-arena/game-contract";
 import { isDeepStrictEqual } from "node:util";
 import { DREAM_PROTECTION_POLICIES } from "../../domain/board";
 import { COMPONENT } from "../../domain/components/names";
@@ -17,7 +21,14 @@ import type { World } from "../../domain/world";
 import type { RoleComponent } from "../../domain/components/role";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
-import { allNightAbilities, copyAbilityData, commitGrantedNightAbility, commitTransferredNightAbility, type NightAbility, type NightAbilityReadView } from "./abilities";
+import {
+  allNightAbilities,
+  copyAbilityData,
+  commitGrantedNightAbility,
+  commitTransferredNightAbility,
+  type NightAbility,
+  type NightAbilityReadView,
+} from "./abilities";
 import { projectNightState } from "../../agents/observation/night-ability-projection";
 import { roleOf } from "./night-ability-change-runtime";
 
@@ -52,7 +63,13 @@ export function grantNightAbility<K extends NightAbilityKind>(
     disabled: false,
   }) as unknown as NightAbility<K>;
   const { role, sourceRole } = validateAbilityInstall(world, actorId, ability);
-  return commitGrantedNightAbility(role, actorId, ability, events, sourceRole) as NightAbilityReadView<K>;
+  return commitGrantedNightAbility(
+    role,
+    actorId,
+    ability,
+    events,
+    sourceRole,
+  ) as NightAbilityReadView<K>;
 }
 
 /** 阵营政策在原值表达式晚读实际 Camp，不复制到 Role；原安装预检捕获目标及原读取点的源 Role；这两个数据引用只供提交复验永久退休，不是许可或新原体策略。 */
@@ -299,5 +316,16 @@ export function transferNightAbility<K extends NightAbilityKind>(
   }) as NightAbility;
   const { role: installationTarget } = validateAbilityInstall(world, toId, received);
   // 预检和复制全通过才交库存写权；F03 的源先退休政策不伪装成旧失败前缀等价。
-  commitTransferredNightAbility(world, source, sourcePrivate, installationTarget, fromId, toId, id, ability, received, events);
+  commitTransferredNightAbility(
+    world,
+    source,
+    sourcePrivate,
+    installationTarget,
+    fromId,
+    toId,
+    id,
+    ability,
+    received,
+    events,
+  );
 }

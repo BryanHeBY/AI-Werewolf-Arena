@@ -33,7 +33,10 @@ export const radiantRoles = [
 export async function radiantFixture(locale: "zh-CN" | "en" = "zh-CN") {
   const raw = JSON.parse(
     await readFile(
-      new URL("../../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json", import.meta.url),
+      new URL(
+        "../../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json",
+        import.meta.url,
+      ),
       "utf8",
     ),
   );

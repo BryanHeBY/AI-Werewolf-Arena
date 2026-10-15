@@ -8,10 +8,7 @@ import { World } from "../../../src/domain/world";
 import { aliveLifeVersion } from "../../../src/domain/components/alive";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { DeathCause, type DeathSources } from "../../../src/domain/deaths";
-import {
-  DreamNightFrame,
-  type DreamNightLink,
-} from "../../../src/features/dreamer/night-frame";
+import { DreamNightFrame, type DreamNightLink } from "../../../src/features/dreamer/night-frame";
 import { MistPendingNight } from "../../../src/features/mist-raven/pending-night";
 import type { GameEvent } from "../../../src/domain/events";
 

@@ -18,7 +18,11 @@ export interface MechanicalInheritanceFact {
 }
 
 /** 只读资格保持保守分支，不创建继承，也不恢复已失效的本夜模式。 */
-export function canMechanicalKnife(role: RoleComponent, world: World | undefined, currentCamp: CurrentCampSource): boolean {
+export function canMechanicalKnife(
+  role: RoleComponent,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
+): boolean {
   const state = getMechanicalState(role);
   if (
     !world ||
@@ -29,12 +33,10 @@ export function canMechanicalKnife(role: RoleComponent, world: World | undefined
     !hasCurrentMechanicalKillMode(world, role)
   )
     return false;
-  const wolves = world
-    .getAliveEntityIds()
-    .filter((id) => {
-      const role = world.getComponent(id, COMPONENT.Role);
-      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
-    });
+  const wolves = world.getAliveEntityIds().filter((id) => {
+    const role = world.getComponent(id, COMPONENT.Role);
+    return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+  });
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 
@@ -44,12 +46,10 @@ export function refreshMechanicalInheritance(
   day: number,
   events?: GameEvent[],
 ): MechanicalInheritanceFact[] {
-  const wolves = world
-    .getAliveEntityIds()
-    .filter((id) => {
-      const role = world.getComponent(id, COMPONENT.Role);
-      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
-    });
+  const wolves = world.getAliveEntityIds().filter((id) => {
+    const role = world.getComponent(id, COMPONENT.Role);
+    return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+  });
   if (wolves.length !== 1) return [];
   const actorId = wolves[0]!,
     role = world.getComponent(actorId, COMPONENT.Role)!;

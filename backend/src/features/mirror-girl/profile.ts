@@ -15,7 +15,11 @@ import { Camp, Role } from "../../domain/model";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import type { RoleComponent } from "../../domain/components/role";
 import { setRoleInspectionState } from "../role-inspection/ports";
-import { allNightAbilities, findNightAbility, retiredNightAbilityIds } from "../night-abilities/inventory-ports";
+import {
+  allNightAbilities,
+  findNightAbility,
+  retiredNightAbilityIds,
+} from "../night-abilities/inventory-ports";
 import { numberOrNull } from "../../agents/tool-repair/helpers";
 import { MIRROR_INSPECTION_STAGE } from "../role-inspection/contribution-ports";
 import {

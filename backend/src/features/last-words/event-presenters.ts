@@ -3,7 +3,10 @@
  * 输出为原本地化文案／system 行。只消费既有事实，不授予遗言、调用模型、扩大事件受众或改写发言。
  */
 import { text } from "@ai-werewolf-arena/game-text";
-import type { ScriptJudgeLineHandlers, ScriptLiveRenderHandlers } from "../../agents/presentation/contracts";
+import type {
+  ScriptJudgeLineHandlers,
+  ScriptLiveRenderHandlers,
+} from "../../agents/presentation/contracts";
 export const LAST_WORDS_SCRIPT_JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
   last_words_granted: (event, locale = "zh-CN") =>
     text(locale, "console.judge.last_granted", { actor: event.payload.playerId }),

@@ -1,10 +1,42 @@
 /**
  * 单元测试：验证鬼新娘授权与只读事实边界。输入为有限板子、精确事实和畸形 descriptor；setup、scope、婚姻库存及隐私的字面断言验证原生所有权。不调用模型或完整对局驱动，不从生产输出重建 oracle。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import {
+  createCampComponent,
+  createAliveComponent,
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import { GHOST_BRIDE_POLICY, GHOST_BRIDE_GOAL, GHOST_BRIDE_ROLE, freshGhostBrideState, readGhostBrideState, readWeddingSetup, readWeddingPair, readWeddingGroup, readWeddingKnifeCapture, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { World, assertRequestDelivery, deferRequestDelivery, Role, Camp, Phase, COMPONENT, ActionWindow, WitchSelfHealRule, WinCondition, DeathCause, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type VictoryComponent, type DeathSources } from "../../../../src/domain";
+import {
+  GHOST_BRIDE_POLICY,
+  GHOST_BRIDE_GOAL,
+  GHOST_BRIDE_ROLE,
+  freshGhostBrideState,
+  readGhostBrideState,
+  readWeddingSetup,
+  readWeddingPair,
+  readWeddingGroup,
+  readWeddingKnifeCapture,
+  readWeddingTool,
+} from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import {
+  World,
+  assertRequestDelivery,
+  deferRequestDelivery,
+  Role,
+  Camp,
+  Phase,
+  COMPONENT,
+  ActionWindow,
+  WitchSelfHealRule,
+  WinCondition,
+  DeathCause,
+  createVictoryComponent,
+  type BoardConfig,
+  type RoleComponent,
+  type AliveComponent,
+  type VictoryComponent,
+  type DeathSources,
+} from "../../../../src/domain";
 import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { assertGhostBridePreset } from "../../../../src/features/ghost-bride/preset";
 import {
@@ -112,8 +144,7 @@ function fixture(groom = 2, witness = 3, install = true) {
 type Fixture = ReturnType<typeof fixture>;
 const role = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.Role)!;
 const life = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.Alive)!;
-const goal = (g: Fixture, id: number) =>
-  g.world.getComponent(id, COMPONENT.Victory)!;
+const goal = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.Victory)!;
 function turn(
   g: Fixture,
   kind: "bridegroom" | "chat" | "witness" | "knife",
@@ -274,7 +305,9 @@ test("native Wolf groom and witness retain originals, immutable pair is never mu
     expect(role(g, i + 1)).toBe(originals[i]!.role);
     expect(life(g, i + 1)).toBe(originals[i]!.life);
     expect(role(g, i + 1).privateState).toBe(originals[i]!.state);
-    expect(g.world.getComponent(i + 1, COMPONENT.Camp)!.camp).toBe(i === 0 ? Camp.ThirdParty : i < 4 ? Camp.Wolf : Camp.Good);
+    expect(g.world.getComponent(i + 1, COMPONENT.Camp)!.camp).toBe(
+      i === 0 ? Camp.ThirdParty : i < 4 ? Camp.Wolf : Camp.Good,
+    );
     expect(goal(g, i + 1).affiliations).toEqual([
       { kind: "faction", faction: i < 3 ? Camp.ThirdParty : i < 4 ? Camp.Wolf : Camp.Good },
     ]);
@@ -340,8 +373,7 @@ const mutations: Record<string, (g: Fixture) => void> = {
     life(g, 3).alive = true;
   },
   newLife: (g) => g.world.addComponent(3, COMPONENT.Alive, createAliveComponent()),
-  newRole: (g) =>
-    g.world.addComponent(3, COMPONENT.Role, createRoleComponent(Role.Wolf)),
+  newRole: (g) => g.world.addComponent(3, COMPONENT.Role, createRoleComponent(Role.Wolf)),
   roleTruth: (g) => (role(g, 3).role = Role.Villager),
   roleCamp: (g) => (g.world.getComponent(3, COMPONENT.Camp)!.camp = Camp.Good),
   state: (g) =>
@@ -792,8 +824,7 @@ for (const mutate of [
     kill(g, 2);
     life(g, 2).alive = true;
   },
-  (g: Fixture) =>
-    g.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf)),
+  (g: Fixture) => g.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf)),
 ])
   test("chat delivery independently revokes original receiver after committed choice", () => {
     const g = fixture();

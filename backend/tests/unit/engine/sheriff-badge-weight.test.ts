@@ -11,10 +11,7 @@ import {
   type GameEvent,
 } from "../../../src/domain";
 import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
-import {
-  assignSheriff,
-  transferOrDestroySheriffBadge,
-} from "../../../src/features/sheriff/badge";
+import { assignSheriff, transferOrDestroySheriffBadge } from "../../../src/features/sheriff/badge";
 import { EventRegistry } from "../../../src/engine/events/event-registry";
 
 test("configured sheriff weight survives normal transfer and idiot reveal", () => {
@@ -28,12 +25,8 @@ test("configured sheriff weight survives normal transfer and idiot reveal", () =
   const transfer = events.find((event) => event.type === "sheriff_badge_transferred")!;
   const next = transfer.payload.toId;
   expect(typeof next).toBe("number");
-  expect(
-    world.getComponent(next as number, COMPONENT.VotingRight)?.weight,
-  ).toBe(2.25);
+  expect(world.getComponent(next as number, COMPONENT.VotingRight)?.weight).toBe(2.25);
   const result = transferOrDestroySheriffBadge(world, next as number, "test", events)!;
   if (result.toId !== null)
-    expect(
-      world.getComponent(result.toId, COMPONENT.VotingRight)?.weight,
-    ).toBe(2.25);
+    expect(world.getComponent(result.toId, COMPONENT.VotingRight)?.weight).toBe(2.25);
 });

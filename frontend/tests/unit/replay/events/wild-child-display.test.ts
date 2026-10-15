@@ -3,7 +3,10 @@
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { readWildChildEventFact, readWildChildPlayerFact } from "@ai-werewolf-arena/game-contract/facts/wild-child";
+import {
+  readWildChildEventFact,
+  readWildChildPlayerFact,
+} from "@ai-werewolf-arena/game-contract/facts/wild-child";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 const fact = (type: string, payload: Record<string, unknown>): ReplayEvent => ({

@@ -9,7 +9,11 @@ import {
   readMistRavenFact,
 } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import { Camp, Phase, Role } from "@ai-werewolf-arena/game-contract";
-import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "../../reproduction/format";
+import type {
+  RecordedDecision,
+  RecordedGameEvent,
+  ReproductionRecord,
+} from "../../reproduction/format";
 import {
   check,
   equal,

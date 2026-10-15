@@ -4,7 +4,10 @@
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
 import { AcpActionProvider } from "../../../../src/agents/acp/acp-action-provider";
-import { NoActionToolLoopClient, ToolLoopClient } from "../../../support/drivers/agents/llm-clients";
+import {
+  NoActionToolLoopClient,
+  ToolLoopClient,
+} from "../../../support/drivers/agents/llm-clients";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -154,8 +157,7 @@ test("default retains automatic first eligible seat with no choice request", asy
 
 test("no eligible successor destroys without opening any dead action", async () => {
   const f = fixture();
-  for (const id of [1, 3, 4, 5, 6])
-    f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
+  for (const id of [1, 3, 4, 5, 6]) f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   await f.resolve(() => {
     throw new Error("unexpected choice");
   });
@@ -180,8 +182,7 @@ for (const change of [
       if (change === "phase") f.state.phase = Phase.Night;
       if (change === "day") f.state.day++;
       if (change === "gameover") f.state.gameOver = true;
-      if (change === "revive")
-        f.world.getComponent(2, COMPONENT.Alive)!.alive = true;
+      if (change === "revive") f.world.getComponent(2, COMPONENT.Alive)!.alive = true;
       if (change === "new-life")
         f.world.addComponent(2, COMPONENT.Alive, createAliveComponent(false));
       if (change === "new-badge") f.world.addComponent(2, COMPONENT.Badge, { ...badge(f, 2) });
@@ -206,8 +207,7 @@ for (const change of ["death", "revival", "voting", "destroyed"] as const)
         life.alive = false;
         if (change === "revival") life.alive = true;
       }
-      if (change === "voting")
-        f.world.getComponent(5, COMPONENT.VotingRight)!.canVote = false;
+      if (change === "voting") f.world.getComponent(5, COMPONENT.VotingRight)!.canVote = false;
       if (change === "destroyed") badge(f, 5).destroyed = true;
       return { name: "choose_badge_successor", args: { target_id: 5 } };
     });

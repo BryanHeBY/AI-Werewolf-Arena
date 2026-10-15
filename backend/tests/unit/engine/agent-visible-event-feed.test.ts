@@ -17,9 +17,7 @@ describe("buildAgentVisibleEventFeed", () => {
     const findRole = (roleName: string) =>
       context.world
         .entityIds()
-        .find(
-          (id) => context.world.getComponent(id, COMPONENT.Role)?.role === roleName,
-        )!;
+        .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === roleName)!;
     const wolfId = findRole("wolf");
     const witchId = findRole("witch");
     const seerId = findRole("seer");
@@ -153,14 +151,10 @@ describe("buildAgentVisibleEventFeed", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const villagerId = context.world
       .entityIds()
-      .find(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "villager",
-      )!;
+      .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === "villager")!;
     const wolfId = context.world
       .entityIds()
-      .find(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "wolf",
-      )!;
+      .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === "wolf")!;
     const publicEvents: GameEvent[] = [
       { timestamp: 1, type: "phase_changed", payload: { day: 1, phase: Phase.Night } },
       { timestamp: 5, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },

@@ -137,7 +137,9 @@ function stageContext(
     factory = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -226,7 +228,9 @@ for (const locale of ["zh-CN", "en"] as const)
       kind: "camp",
       camp: Camp.Wolf,
     });
-    expect(canMechanicalKnife(game.role, game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
+    expect(
+      canMechanicalKnife(game.role, game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+    ).toBe(false);
     const events = game.phaseManager.getEvents();
     expect(events.filter((e) => e.type === "role_inspected").map((e) => e.payload)).toContainEqual({
       actorId: 3,

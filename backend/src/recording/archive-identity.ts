@@ -7,7 +7,10 @@
  * 同名文件的身份声明是显式格式迁移；三种封装的内层仍为 schema 2，manifest 独立使用内联 schema 1。
  * 历史 sourceHash 和用户原文保持，不增加持久化文件。
  */
-import { ACTION_REQUEST_CONTRACT, GAME_PRESENTATION_CONTRACT } from "@ai-werewolf-arena/game-contract";
+import {
+  ACTION_REQUEST_CONTRACT,
+  GAME_PRESENTATION_CONTRACT,
+} from "@ai-werewolf-arena/game-contract";
 import {
   createRecordingEnvelope,
   type RecordingIdentities,
@@ -86,6 +89,9 @@ export function createManifestArchive(manifest: ReplayManifest, identities: Reco
   return createReplayManifest(manifest, identities);
 }
 /** 玩家文件仍以原 inner2 保存所有局部序号／原文，header 不包含私有 seed。 */
-export function createPlayerViewArchive(view: CanonicalReplayPlayerView, identities: RecordingIdentities) {
+export function createPlayerViewArchive(
+  view: CanonicalReplayPlayerView,
+  identities: RecordingIdentities,
+) {
   return createRecordingEnvelope("player_view", view, identities);
 }

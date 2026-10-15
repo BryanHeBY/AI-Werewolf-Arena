@@ -69,9 +69,15 @@ export async function collectDeathShot(
   const resolution = runtime;
   const qualification = captureDeathShotEligibility(
     {
-      get world() { return resolution.world; },
-      get day() { return actions.day; },
-      get demonHunterNativeGunCurrent() { return demonHunterNativeGunCurrent; },
+      get world() {
+        return resolution.world;
+      },
+      get day() {
+        return actions.day;
+      },
+      get demonHunterNativeGunCurrent() {
+        return demonHunterNativeGunCurrent;
+      },
     },
     actorId,
     abilityId,

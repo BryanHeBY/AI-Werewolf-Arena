@@ -9,16 +9,13 @@ import { weddingBadgeSwallowed } from "../ghost-bride/wedding-ports";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
 import { COMPONENT } from "../../domain/components/names";
 import { IdentityComponent } from "../../domain/entities/player";
-import {
-  ActionProvider,
-  EntityId,
-  GameEvent,
-  Phase,
-  TieBreakerStrategy,
-} from "../../domain/model";
+import { ActionProvider, EntityId, GameEvent, Phase, TieBreakerStrategy } from "../../domain/model";
 import { World } from "../../domain/world";
 import { ToolGateway } from "../../engine/actions/tool-gateway";
-import type { ActionRequestFactoryConstructorPort, ActionRequestConstructionPort } from "../../domain/actions";
+import type {
+  ActionRequestFactoryConstructorPort,
+  ActionRequestConstructionPort,
+} from "../../domain/actions";
 import { assignSheriff, findSheriffId } from "./badge";
 import { canBeSheriff, canVote } from "../../engine/participation";
 import type { RoleCatalog } from "../../rulesets/roles/catalog";

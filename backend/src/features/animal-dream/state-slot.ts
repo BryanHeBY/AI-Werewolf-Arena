@@ -114,7 +114,11 @@ export const PUFFER_STATE_SLOT = Object.freeze({
 export const CAT_STATE_SLOT = Object.freeze({
   create: freshWhiteCatState,
   schema: readWhiteCatState,
-  allowedWrites: Object.freeze({ defer: deferWhiteCat, expire: expireWhiteCat, commit: replaceResource }),
+  allowedWrites: Object.freeze({
+    defer: deferWhiteCat,
+    expire: expireWhiteCat,
+    commit: replaceResource,
+  }),
   checkpoint: Object.freeze({
     encode: (state: WhiteCatState): string => JSON.stringify(state),
     decode: (readJson: () => string): WhiteCatState => JSON.parse(readJson()) as WhiteCatState,

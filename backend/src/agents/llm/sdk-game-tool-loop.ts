@@ -6,10 +6,7 @@
  */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall } from "../../domain";
-import {
-  getActionRequestDay,
-  getActionRequestStage,
-} from "../../domain/action-request-context";
+import { getActionRequestDay, getActionRequestStage } from "../../domain/action-request-context";
 import { World } from "../../domain/world";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { AgentBugReportService } from "../reporting/bug-report-service";

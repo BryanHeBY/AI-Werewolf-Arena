@@ -10,24 +10,55 @@ import { assertNightModifierBonusEffects } from "../../../src/rulesets/night-dam
 
 test("未命中增益配置不读取阶段上下文，也不提前拍摄效果状态", () => {
   const trace: string[] = [];
-  const config = { get scholarMentor() { trace.push("policy"); return undefined; } };
+  const config = {
+    get scholarMentor() {
+      trace.push("policy");
+      return undefined;
+    },
+  };
   assertNightModifierBonusEffects({
-    config() { trace.push("config"); return config; },
-    stageContext() { throw new Error("literal_context_must_not_read"); },
+    config() {
+      trace.push("config");
+      return config;
+    },
+    stageContext() {
+      throw new Error("literal_context_must_not_read");
+    },
   });
   expect(trace).toEqual(["config", "policy"]);
 });
 
 test("配置命中后才读取原上下文，名单World首失败不读取效果数组且不替换错误", () => {
-  const trace: string[] = [], failure = new Error("literal_roster_world_failure");
-  const config = { get scholarMentor() { trace.push("policy"); return { policy: "awa_scholar_mentor_twelve_v1" } satisfies NonNullable<ReadonlyBoardConfig["scholarMentor"]>; } };
+  const trace: string[] = [],
+    failure = new Error("literal_roster_world_failure");
+  const config = {
+    get scholarMentor() {
+      trace.push("policy");
+      return { policy: "awa_scholar_mentor_twelve_v1" } satisfies NonNullable<
+        ReadonlyBoardConfig["scholarMentor"]
+      >;
+    },
+  };
   const ctx = {
-    get world(): never { trace.push("world"); throw failure; },
-    get state(): never { throw new Error("literal_state_must_not_read"); },
+    get world(): never {
+      trace.push("world");
+      throw failure;
+    },
+    get state(): never {
+      throw new Error("literal_state_must_not_read");
+    },
   } as unknown as NightStageContext;
-  expect(() => assertNightModifierBonusEffects({
-    config() { trace.push("config"); return config; },
-    stageContext() { trace.push("context"); return ctx; },
-  })).toThrow(failure);
+  expect(() =>
+    assertNightModifierBonusEffects({
+      config() {
+        trace.push("config");
+        return config;
+      },
+      stageContext() {
+        trace.push("context");
+        return ctx;
+      },
+    }),
+  ).toThrow(failure);
   expect(trace).toEqual(["config", "policy", "context", "world"]);
 });

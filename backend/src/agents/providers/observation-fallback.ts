@@ -8,10 +8,7 @@
  */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ActionProvider, ActionRequest, ToolCall } from "../../domain/actions";
-import type {
-  ObservedPlayerStrategy,
-  PlayerObservation,
-} from "../observation/player-observation";
+import type { ObservedPlayerStrategy, PlayerObservation } from "../observation/player-observation";
 import { createObservedBotContext } from "./observed-bot/context";
 import { observedToolHandlers } from "./observed-bot/handlers";
 
@@ -27,12 +24,10 @@ export class ObservationFallbackStrategy implements ObservedPlayerStrategy {
       if (!observation.request.allowedTools.includes(handler.tool)) continue;
       // F01：旧 allowedTools 只是请求名单；失效的自身狼聊／刀资格不能被回退恢复。
       // 两项资格分别判定，拒绝一个工具后仍按原顺序寻找其它已允许的候选。
-      if (
-        handler.tool === "speak_to_wolves" && observation.currentWolfActions.canChat !== true
-      ) continue;
-      if (
-        handler.tool === "kill_vote" && observation.currentWolfActions.canVoteForKill !== true
-      ) continue;
+      if (handler.tool === "speak_to_wolves" && observation.currentWolfActions.canChat !== true)
+        continue;
+      if (handler.tool === "kill_vote" && observation.currentWolfActions.canVoteForKill !== true)
+        continue;
       if (handler.tool === "speak") {
         return {
           name: "speak",

@@ -37,13 +37,15 @@ function sameDefinition(left: SupportedNightDefinition, right: SupportedNightDef
   if (left.roles.length !== right.roles.length) return false;
   return left.roles.every((row, index) => {
     const other = right.roles[index]!;
-    return row.role === other.role &&
+    return (
+      row.role === other.role &&
       row.handlers.length === other.handlers.length &&
       row.handlers.every((handler, ordinal) => handler === other.handlers[ordinal]) &&
       row.night.length === other.night.length &&
       row.night.every((kind, ordinal) => kind === other.night[ordinal]) &&
       row.death.length === other.death.length &&
-      row.death.every((kind, ordinal) => kind === other.death[ordinal]);
+      row.death.every((kind, ordinal) => kind === other.death[ordinal])
+    );
   });
 }
 
@@ -100,8 +102,7 @@ export class RulePlan {
     // 原调用先读取 getPlan 方法，再求值 World 参数；不能在跨 owner 时倒置 getter 前缀。
     const plan = registry.getPlan(this.parameters.board, world());
     if (plan.mode !== "snapshot") {
-      if (registry === this.#standardRegistry)
-        throw new Error("rule_plan_revision_not_supported");
+      if (registry === this.#standardRegistry) throw new Error("rule_plan_revision_not_supported");
       return plan;
     }
     if (plan.definition === null) {
@@ -116,11 +117,26 @@ export class RulePlan {
         if (types.isProxy(handler)) return null;
         const id = Object.getOwnPropertyDescriptor(handler, "id"),
           priority = Object.getOwnPropertyDescriptor(handler, "priority");
-        if (!id || !("value" in id) || typeof id.value !== "string" ||
-          !priority || !("value" in priority) || typeof priority.value !== "number") return null;
-        return Object.freeze({ kind: "data" as const, id: id.value, priority: priority.value, ordinal });
+        if (
+          !id ||
+          !("value" in id) ||
+          typeof id.value !== "string" ||
+          !priority ||
+          !("value" in priority) ||
+          typeof priority.value !== "number"
+        )
+          return null;
+        return Object.freeze({
+          kind: "data" as const,
+          id: id.value,
+          priority: priority.value,
+          ordinal,
+        });
       });
-      this.#metadata = Object.freeze([...plan.metadata, ...reserved.filter((entry) => entry !== null)]);
+      this.#metadata = Object.freeze([
+        ...plan.metadata,
+        ...reserved.filter((entry) => entry !== null),
+      ]);
       return plan;
     }
     if (!sameDefinition(this.#definition, plan.definition))
@@ -129,7 +145,9 @@ export class RulePlan {
     // 不把潜在预约插入执行列表，避免多出原事件、record 或 RNG 操作。
     for (const item of plan.metadata) {
       if (item.kind !== "data") throw new Error("rule_plan_revision_not_supported");
-      const previous = this.#metadata!.find((entry) => entry.kind === "data" && entry.id === item.id);
+      const previous = this.#metadata!.find(
+        (entry) => entry.kind === "data" && entry.id === item.id,
+      );
       if (!previous || previous.kind !== "data" || previous.priority !== item.priority)
         throw new Error("rule_plan_revision_not_supported");
     }

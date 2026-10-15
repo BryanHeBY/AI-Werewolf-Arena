@@ -46,7 +46,9 @@ test("all archived known events remain readable through the common fact reader",
   let count = 0;
   for (const artifact of frontendFixtureArtifacts("god-replay")) {
     const name = artifact.originPath.slice("frontend/tests/fixtures/".length);
-    const raw = readReplayDocument(JSON.parse(readFileSync(frontendFixtureURL(artifact.originPath), "utf8")));
+    const raw = readReplayDocument(
+      JSON.parse(readFileSync(frontendFixtureURL(artifact.originPath), "utf8")),
+    );
     const ids = raw.players.map((player) => player.player_id);
     for (const fact of raw.events) {
       count++;

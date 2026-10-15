@@ -12,11 +12,7 @@ import type {
 import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import { Camp, Role, type EntityId } from "../../domain/model";
-import {
-  captureNightLife,
-  livingNightLife,
-  type NightLifeScope,
-} from "../../domain/night-effects";
+import { captureNightLife, livingNightLife, type NightLifeScope } from "../../domain/night-effects";
 import type { World } from "../../domain/world";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { getMechanicalState } from "./state";

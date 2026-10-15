@@ -18,7 +18,10 @@ import {
   type NightAbilityReadView,
 } from "../../../src/features/night-abilities/abilities";
 import { installNativeAbility } from "../../../src/features/night-abilities/ability-changes";
-import { recordNightAbilityUse, setNightAbilityStartDay } from "../../../src/features/night-abilities/abilities";
+import {
+  recordNightAbilityUse,
+  setNightAbilityStartDay,
+} from "../../../src/features/night-abilities/abilities";
 import {
   createNightAbilityActorQuery,
   type NightAbilityActorQuery,

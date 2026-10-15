@@ -4,7 +4,10 @@
  * 输出与预期为明确原前缀接收及伪造信息流拒绝，保留公开时点；生成记录仅提供输入，不计算预期 World。
  */
 import { expect, test } from "bun:test";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  type ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix";
 const append = (

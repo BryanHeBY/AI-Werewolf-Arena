@@ -47,7 +47,8 @@ export const TRICKSTER_ROLE_PROFILE: NativeRoleContributions = {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     wolfTeam: (role, world, currentCamp) => {
       const ready =
-        !!getTricksterState(role, currentCamp)?.history.length && (!world || tricksterPackReady(world));
+        !!getTricksterState(role, currentCamp)?.history.length &&
+        (!world || tricksterPackReady(world));
       return {
         recognizedByPack: ready,
         recognizes: ready ? "pack" : "none",
@@ -117,7 +118,10 @@ export const TRICKSTER_ROLE_PROFILE: NativeRoleContributions = {
           : { code: RuleError.TricksterTarget };
       },
     },
-    nightStages: [TRICKSTER_EXCHANGE_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
+    nightStages: [
+      TRICKSTER_EXCHANGE_STAGE,
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []),
+    ],
     baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
       if (
         !request.allowedTools.includes("swap_exile_targets") ||

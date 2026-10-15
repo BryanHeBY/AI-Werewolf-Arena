@@ -72,7 +72,9 @@ for (const history of [
   test(
     "order prince: reject malformed or post-consumption history " + JSON.stringify(history),
     () => {
-      expect(getOrderPrinceState(role({ policy: ORDER_PRINCE_POLICY, history }), currentCamp)).toBeUndefined();
+      expect(
+        getOrderPrinceState(role({ policy: ORDER_PRINCE_POLICY, history }), currentCamp),
+      ).toBeUndefined();
     },
   );
 test("order prince: reject invalid current choice without mutation", () => {

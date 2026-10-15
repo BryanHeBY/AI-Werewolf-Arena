@@ -35,7 +35,13 @@ export class ShapeshifterSetupWindow {
     events: GameEvent[],
     construction: { readonly requestFactory: ActionRequestFactoryConstructorPort },
   ) {
-    this.window = new shared.InitialIdentitySetupWindow(world, gateway, events, "shapeshifter", construction);
+    this.window = new shared.InitialIdentitySetupWindow(
+      world,
+      gateway,
+      events,
+      "shapeshifter",
+      construction,
+    );
   }
   execute(...args: Parameters<shared.InitialIdentitySetupWindow["execute"]>): Promise<boolean> {
     return this.window.execute(...args);

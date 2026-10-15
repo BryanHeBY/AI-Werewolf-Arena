@@ -198,7 +198,10 @@ test("opening sole Hidden Wolf inherits once, has only the basic knife and no ch
   expect(getHiddenWolfState(role(game, 1))).toEqual({ hasInheritedKnife: true });
   expect(wolfKnifeHolders(game.world, catalog)).toEqual([1]);
   expect(wolfChatParticipants(game.world, catalog)).toEqual([]);
-  expect(wolfTeamPermissions(role(game, 1), catalog, () => game.world.getComponent(1, COMPONENT.Camp)).canVoteForKill).toBe(false);
+  expect(
+    wolfTeamPermissions(role(game, 1), catalog, () => game.world.getComponent(1, COMPONENT.Camp))
+      .canVoteForKill,
+  ).toBe(false);
   expect(resolveInspection(game.world, 1, "role", catalog)).toEqual({
     kind: "role",
     role: Role.HiddenWolf,

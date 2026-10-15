@@ -14,7 +14,8 @@ import {
 import type { RoleComponent } from "../../../../src/domain/components/role";
 
 test("学者槽初始化先取原左值，再读 caster 和写入；失败不重试", () => {
-  const trace: string[] = [], failure = new Error("test_initial_setter");
+  const trace: string[] = [],
+    failure = new Error("test_initial_setter");
   const data = Object.defineProperty({}, "scholarMentor", {
     set(value) {
       trace.push("set:" + value.caster);
@@ -24,26 +25,43 @@ test("学者槽初始化先取原左值，再读 caster 和写入；失败不重
   let caught: unknown;
   try {
     initializeScholarMentorState(
-      () => { trace.push("left"); return data; },
-      () => { trace.push("caster"); return "night_mentor"; },
+      () => {
+        trace.push("left");
+        return data;
+      },
+      () => {
+        trace.push("caster");
+        return "night_mentor";
+      },
     );
-  } catch (error) { caught = error; }
+  } catch (error) {
+    caught = error;
+  }
   expect(caught).toBe(failure);
   expect(trace).toEqual(["left", "caster", "set:night_mentor"]);
 
   trace.length = 0;
   try {
     initializeScholarMentorState(
-      () => { trace.push("left"); throw failure; },
-      () => { trace.push("caster"); return "day_scholar"; },
+      () => {
+        trace.push("left");
+        throw failure;
+      },
+      () => {
+        trace.push("caster");
+        return "day_scholar";
+      },
     );
-  } catch (error) { caught = error; }
+  } catch (error) {
+    caught = error;
+  }
   expect(caught).toBe(failure);
   expect(trace).toEqual(["left"]);
 });
 
 test("学者槽脱离副本不续原引用；同 JSON 替换资源或历史仍撤销", () => {
-  const raw = createModifierState("day_scholar"), slot = new ScholarMentorStateSlot(raw);
+  const raw = createModifierState("day_scholar"),
+    slot = new ScholarMentorStateSlot(raw);
   expect(slot.matches(raw)).toBe(true);
   const copy = readModifierState(raw)!;
   expect(copy).not.toBe(raw);
@@ -58,15 +76,25 @@ test("学者槽脱离副本不续原引用；同 JSON 替换资源或历史仍�
 });
 
 test("学者槽第二库存赋值失败保第一次付款，不写历史或 expected", () => {
-  const raw = createModifierState("day_scholar"), slot = new ScholarMentorStateSlot(raw);
+  const raw = createModifierState("day_scholar"),
+    slot = new ScholarMentorStateSlot(raw);
   const next = selectModifier(raw, 2, "enhance", 3, [1, 2, 3]);
-  const oldExpected = slot.expected, failure = new Error("test_weaken_setter"), trace: string[] = [];
+  const oldExpected = slot.expected,
+    failure = new Error("test_weaken_setter"),
+    trace: string[] = [];
   Object.defineProperty(raw.remaining, "weaken", {
     get: () => 1,
-    set(value) { trace.push("weaken:" + value); throw failure; },
+    set(value) {
+      trace.push("weaken:" + value);
+      throw failure;
+    },
   });
   let caught: unknown;
-  try { slot.commit(next); } catch (error) { caught = error; }
+  try {
+    slot.commit(next);
+  } catch (error) {
+    caught = error;
+  }
   expect(caught).toBe(failure);
   expect(raw.remaining.enhance).toBe(0);
   expect(trace).toEqual(["weaken:1"]);
@@ -75,15 +103,29 @@ test("学者槽第二库存赋值失败保第一次付款，不写历史或 expe
 });
 
 test("学者槽 JSON 快照失败保历史提交，expected 不更新", () => {
-  const raw = createModifierState("night_mentor"), slot = new ScholarMentorStateSlot(raw);
+  const raw = createModifierState("night_mentor"),
+    slot = new ScholarMentorStateSlot(raw);
   const next = selectModifier(raw, 2, "enhance", 3, [1, 2, 3]);
-  const oldExpected = slot.expected, failure = new Error("test_json_snapshot");
+  const oldExpected = slot.expected,
+    failure = new Error("test_json_snapshot");
   const descriptor = Object.getOwnPropertyDescriptor(JSON, "stringify")!;
-  let caught: unknown, calls = 0;
+  let caught: unknown,
+    calls = 0;
   // 原 JSON callee 在历史 define 完成后才读取；测试恢复全局 descriptor，异常对象不被替换。
-  Object.defineProperty(JSON, "stringify", { configurable: true, get() { calls++; throw failure; } });
-  try { slot.commit(next); } catch (error) { caught = error; }
-  finally { Object.defineProperty(JSON, "stringify", descriptor); }
+  Object.defineProperty(JSON, "stringify", {
+    configurable: true,
+    get() {
+      calls++;
+      throw failure;
+    },
+  });
+  try {
+    slot.commit(next);
+  } catch (error) {
+    caught = error;
+  } finally {
+    Object.defineProperty(JSON, "stringify", descriptor);
+  }
   expect(caught).toBe(failure);
   expect(calls).toBe(1);
   expect(raw.remaining).toEqual({ enhance: 0, weaken: 1 });

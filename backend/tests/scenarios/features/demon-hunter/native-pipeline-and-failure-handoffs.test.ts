@@ -5,7 +5,19 @@
  */
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import { COMPONENT, Camp, Phase, PotionType, WinCondition, DeathCause, StatusMark, type AliveComponent, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/domain";
+import {
+  COMPONENT,
+  Camp,
+  Phase,
+  PotionType,
+  WinCondition,
+  DeathCause,
+  StatusMark,
+  type AliveComponent,
+  type ActionRequest,
+  type RoleComponent,
+  type StatusMarksComponent,
+} from "../../../../src/domain";
 import type { DeathResolution } from "../../../../src/engine/death-resolution";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
@@ -34,10 +46,7 @@ function nightDeaths(f: ReturnType<typeof demonHunterFixture>) {
 }
 
 function history(f: ReturnType<typeof demonHunterFixture>) {
-  return projectDemonHunter(
-    f.world,
-    f.world.getComponent(f.demonId, COMPONENT.Role)!,
-  )!.history;
+  return projectDemonHunter(f.world, f.world.getComponent(f.demonId, COMPONENT.Role)!)!.history;
 }
 
 for (const size of [6, 12] as const)
@@ -53,9 +62,7 @@ for (const size of [6, 12] as const)
         expect(nightDeaths(f)).toEqual([]);
         expect(f.world.getAliveEntityIds()).toHaveLength(size);
         expect(seen.some((r) => r.context.stage === ("demon_hunter" as any))).toBe(false);
-        expect(
-          getWitchState(f.world.getComponent(f.witchId, COMPONENT.Role)!)!.poison,
-        ).toBe(0);
+        expect(getWitchState(f.world.getComponent(f.witchId, COMPONENT.Role)!)!.poison).toBe(0);
         expect(history(f)).toEqual([]);
         expect(f.phaseManager.getSnapshot().day).toBe(2);
       });
@@ -248,7 +255,9 @@ for (const phase of [
           throw new Error("foreign_alive_read");
         },
         renderPrompt: () => "",
-      } as unknown as import("../../../../src/domain/component-map").ComponentWrite<typeof COMPONENT.Alive>);
+      } as unknown as import("../../../../src/domain/component-map").ComponentWrite<
+        typeof COMPONENT.Alive
+      >);
     if (phase === "before_night") revoke();
     const realResolve = f.damage.resolve.bind(f.damage),
       calls = spyOn(f.damage, "resolve").mockImplementation((world, effects) => {
@@ -392,9 +401,7 @@ for (const size of [6, 12] as const)
             10,
           );
           expect(nightDeaths(f)).toEqual(guarded ? [] : [size]);
-          expect(
-            getWitchState(f.world.getComponent(f.witchId, COMPONENT.Role)!)!.heal,
-          ).toBe(0);
+          expect(getWitchState(f.world.getComponent(f.witchId, COMPONENT.Role)!)!.heal).toBe(0);
           expect(history(f)).toEqual([{ day: 2, targetId: null }]);
         } finally {
           calls.mockRestore();
@@ -443,9 +450,7 @@ test("actual selected knife never authorizes a generic WolfKill mark on another 
     {
       getAction: async (request) => {
         if (request.context.stage === "seer")
-          f.world
-            .getComponent(3, COMPONENT.StatusMarks)!
-            .add(StatusMark.WolfKillMark);
+          f.world.getComponent(3, COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
         return demonNightChoice(request, f.witchId, { knife: 6, hunt: null });
       },
     },

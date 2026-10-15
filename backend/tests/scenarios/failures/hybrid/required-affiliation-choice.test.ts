@@ -160,12 +160,11 @@ for (const locale of ["zh-CN", "en"] as const)
             expect(decisions).toBe(3);
             expect(nativeCalls).toBeGreaterThanOrEqual(3);
             expect(fallbacks).toBe(0);
-            expect(
-              getHybridState(game.world.getComponent(1, COMPONENT.Role)!),
-            ).toEqual({ remaining: 1, choice: null });
-            expect(
-              game.world.getComponent(1, COMPONENT.Victory)!.affiliations,
-            ).toEqual([]);
+            expect(getHybridState(game.world.getComponent(1, COMPONENT.Role)!)).toEqual({
+              remaining: 1,
+              choice: null,
+            });
+            expect(game.world.getComponent(1, COMPONENT.Victory)!.affiliations).toEqual([]);
             expect(game.phaseManager.getEvents().some((e) => e.type.startsWith("hybrid_"))).toBe(
               false,
             );
@@ -190,9 +189,11 @@ for (const locale of ["zh-CN", "en"] as const)
               players: [],
             });
           });
-          const view = readReplayPlayerView(JSON.parse(
-            await readFile(path.join(manager.sessionDir, "players/player_1.json"), "utf8"),
-          ));
+          const view = readReplayPlayerView(
+            JSON.parse(
+              await readFile(path.join(manager.sessionDir, "players/player_1.json"), "utf8"),
+            ),
+          );
           expect(view.timeline).toHaveLength(3);
           expect(view.timeline.every((row: any) => row.kind === "turn")).toBe(true);
           const messages = view.timeline.flatMap((row: any) => row.delta_messages);

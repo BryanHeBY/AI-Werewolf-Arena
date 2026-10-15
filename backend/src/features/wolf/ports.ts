@@ -13,10 +13,7 @@ import {
   bindEvilKnightKnifeTargetQuery,
   type EvilKnightKnifeTargetQuery,
 } from "../evil-knight/ports";
-import {
-  bindNightmareKnifeTargetQuery,
-  type NightmareKnifeTargetQuery,
-} from "../nightmare/ports";
+import { bindNightmareKnifeTargetQuery, type NightmareKnifeTargetQuery } from "../nightmare/ports";
 
 /** 名单在 allows 内的原第三步才读取；返回原只读视图，不保存第二份阵容快照。 */
 export interface WolfKnifeRosterQuery {

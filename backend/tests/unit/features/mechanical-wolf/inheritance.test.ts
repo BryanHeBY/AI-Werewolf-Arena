@@ -55,18 +55,27 @@ test("only assembly or actual complete death commit can acquire the sole-true-Wo
     before = JSON.stringify(f.state);
   f.chooseMode(2, "kill");
   expect(refreshMechanicalInheritance(f.world, 1)).toEqual([]);
-  expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
+  expect(
+    canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(false);
   expect(f.state.hasInheritedKnife).toBe(false);
   // 控制器先提交死亡，再调用实际死亡刷新。
   f.others[0]!.alive = false;
-  for (let i = 0; i < 3; i++) expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
+  for (let i = 0; i < 3; i++)
+    expect(
+      canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+    ).toBe(false);
   expect(f.state.hasInheritedKnife).toBe(false);
   expect(refreshMechanicalInheritance(f.world, 2)).toEqual([
     { actorId: f.actor, day: 2, firstKnifeNight: 3 },
   ]);
-  expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
+  expect(
+    canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(false);
   f.chooseMode(3, "kill");
-  expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(true);
+  expect(
+    canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(true);
   expect(refreshMechanicalInheritance(f.world, 3)).toEqual([]);
   expect(JSON.parse(before).hasInheritedKnife).toBe(false);
 });
@@ -85,14 +94,20 @@ test("a fact acquired in an earlier committed proposal survives later death and 
   f.others[0]!.alive = false;
   refreshMechanicalInheritance(f.world, 2);
   f.chooseMode(3, "kill");
-  expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(true);
+  expect(
+    canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(true);
   f.others[0]!.alive = true;
-  expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
+  expect(
+    canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(false);
   expect(refreshMechanicalInheritance(f.world, 7)).toEqual([]);
   f.others[0]!.alive = false;
   expect(f.state.firstKnifeNight).toBe(3);
   f.life.alive = false;
-  expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
+  expect(
+    canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(false);
   expect(f.state.hasInheritedKnife).toBe(true);
 });
 
@@ -101,10 +116,18 @@ test("a lone mechanical at assembly first attacks on night two, with a live chos
   expect(refreshMechanicalInheritance(f.world, 1)).toEqual([
     { actorId: 1, day: 1, firstKnifeNight: 2 },
   ]);
-  expect(canMechanicalKnife(f.role, undefined, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
-  expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
+  expect(
+    canMechanicalKnife(f.role, undefined, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(false);
+  expect(
+    canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(false);
   f.chooseMode(2, "skill");
-  expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(false);
+  expect(
+    canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(false);
   f.chooseMode(3, "kill");
-  expect(canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp))).toBe(true);
+  expect(
+    canMechanicalKnife(f.role, f.world, () => f.world.getComponent(f.actor, COMPONENT.Camp)),
+  ).toBe(true);
 });

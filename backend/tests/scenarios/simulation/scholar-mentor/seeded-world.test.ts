@@ -22,9 +22,7 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(
           game.world
             .entityIds()
-            .filter(
-              (id) => game.world.getComponent(id, COMPONENT.Camp)?.camp === "wolf",
-            ).length,
+            .filter((id) => game.world.getComponent(id, COMPONENT.Camp)?.camp === "wolf").length,
         ).toBe(4);
         const styles = ["active", "conservative", "competitive", "random"] as const;
         const strategies = new Map(
@@ -42,7 +40,9 @@ for (const locale of ["zh-CN", "en"] as const)
         const states = game.world
           .entityIds()
           .map((id) =>
-            scholarMentorStateForRole(game.world.getComponent(id, COMPONENT.Role), () => game.world.getComponent(id, COMPONENT.Camp)),
+            scholarMentorStateForRole(game.world.getComponent(id, COMPONENT.Role), () =>
+              game.world.getComponent(id, COMPONENT.Camp),
+            ),
           )
           .filter(Boolean);
         expect(states.length).toBe(2);

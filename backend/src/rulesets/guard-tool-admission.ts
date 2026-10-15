@@ -13,24 +13,22 @@ import { luckyTargetAllowed } from "../features/night-abilities/night-action-his
 
 /** 原表只由 profile 装配，不冻结或重新绑定其中 callback；准入成功仍须阶段在付款前复验。 */
 export const GUARD_VALIDATION_RULES: ToolRuleMap = {
-      guard: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
-        const ability = activeNightAbility(role, "guard", day ?? 1, abilityId);
-        if (!ability) return { code: RuleError.GuardOnly };
-        if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
-        if (toolCall.name !== "guard") return { code: RuleError.ToolMismatch };
-        // 原削弱查询可抛尚未结算错误；即使准备空守也必须先经过它。
-        if (scholarMentorBlocks(world, day ?? 1, actorId, "guard"))
-          return { code: RuleError.ModifierUnavailable };
-        if (toolCall.args.abstain) return null;
-        // null／重复／存活／幸运参数分别晚读目标，不缓存或把后续失败转为首拒绝。
-        if (toolCall.args.target_id === null) return { code: RuleError.GuardTarget };
-        if (guardTargetRepeated(ability, day ?? 1, toolCall.args.target_id))
-          return { code: RuleError.GuardRepeat };
-        if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.GuardTarget };
-        if (
-          !luckyTargetAllowed(world, actorId, ability, day ?? 1, "guard", toolCall.args.target_id)
-        )
-          return { code: RuleError.LuckyTargetRepeat };
-        return null;
-      },
-    };
+  guard: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
+    const ability = activeNightAbility(role, "guard", day ?? 1, abilityId);
+    if (!ability) return { code: RuleError.GuardOnly };
+    if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
+    if (toolCall.name !== "guard") return { code: RuleError.ToolMismatch };
+    // 原削弱查询可抛尚未结算错误；即使准备空守也必须先经过它。
+    if (scholarMentorBlocks(world, day ?? 1, actorId, "guard"))
+      return { code: RuleError.ModifierUnavailable };
+    if (toolCall.args.abstain) return null;
+    // null／重复／存活／幸运参数分别晚读目标，不缓存或把后续失败转为首拒绝。
+    if (toolCall.args.target_id === null) return { code: RuleError.GuardTarget };
+    if (guardTargetRepeated(ability, day ?? 1, toolCall.args.target_id))
+      return { code: RuleError.GuardRepeat };
+    if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.GuardTarget };
+    if (!luckyTargetAllowed(world, actorId, ability, day ?? 1, "guard", toolCall.args.target_id))
+      return { code: RuleError.LuckyTargetRepeat };
+    return null;
+  },
+};

@@ -107,7 +107,11 @@ for (const kind of ["poison", "hunter", "wolf_king", "black_backlash"] as const)
         });
         const holder = 1,
           role = game.world.getComponent(holder, COMPONENT.Role)!;
-        expect(captureNativeRolePresentation(roles[holder - 1], role, locale, undefined, () => game.world.getComponent(holder, COMPONENT.Camp))).toContain(policy);
+        expect(
+          captureNativeRolePresentation(roles[holder - 1], role, locale, undefined, () =>
+            game.world.getComponent(holder, COMPONENT.Camp),
+          ),
+        ).toContain(policy);
         expect(
           getDefaultConfigRenderRegistry().renderBoardConfigPrompt(normalized, locale),
         ).toContain(policy);

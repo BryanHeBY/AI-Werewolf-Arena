@@ -4,7 +4,10 @@
  * 外层完整夜仍真实运行，嵌套进入应拒绝；实例入口迁移不改变已付资格和生命周期。
  * 不调用模型／网络，也不以新生产输出重写 fixture 或 golden。
  */
-import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
+import {
+  createAliveComponent,
+  createCampComponent,
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
@@ -13,7 +16,6 @@ import { Role, Camp, WitchSelfHealRule } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { type RoleComponent } from "../../../../src/domain/components/role";
 import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
-
 
 import { createVictoryComponent } from "../../../../src/domain/components/victory";
 import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
@@ -108,7 +110,10 @@ class Stages extends NightStageRegistry {
 const config = parseBoardDefinition(
   JSON.parse(
     readFileSync(
-      new URL("../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json", import.meta.url),
+      new URL(
+        "../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json",
+        import.meta.url,
+      ),
       "utf8",
     ),
   ),

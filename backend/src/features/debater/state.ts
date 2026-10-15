@@ -36,7 +36,10 @@ export function projectDebaterState(state: DebaterReadState, committed = false) 
 }
 
 /** 原初始化完整正文：仅槽不存在时安装；政策 getter 或赋值失败照原表达式传播。 */
-export function initializeDebaterState(role: RoleInitializationComponent, ctx: Pick<RoleInitContext, "boardConfig">): void {
+export function initializeDebaterState(
+  role: RoleInitializationComponent,
+  ctx: Pick<RoleInitContext, "boardConfig">,
+): void {
   if (!getDebaterState(role))
     role.privateState.debater = {
       policy: ctx.boardConfig?.debater?.policy ?? "awa_melbourne_2026_speech_gap_v1",
@@ -51,6 +54,9 @@ export function consumeDebaterChallenge(state: DebaterReadState): void {
 }
 
 /** 接收窗口已创建的同一 choice 引用；不复制数据、不设置窗口局部值或提交 accepted 标记。 */
-export function recordDebaterChoice(state: DebaterReadState, choice: DebaterReadState["choice"]): void {
+export function recordDebaterChoice(
+  state: DebaterReadState,
+  choice: DebaterReadState["choice"],
+): void {
   (state as Pick<DebaterState, "choice">).choice = choice;
 }

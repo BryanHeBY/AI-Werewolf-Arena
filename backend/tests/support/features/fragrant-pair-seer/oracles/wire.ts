@@ -2,7 +2,10 @@
  * 持有 Fragrant 独立传输预期：根据原字面状态标记与已解析决策，核对序列化请求前缀、schema 和知识。输入为实际消息、请求前缀、快照或原本地端点及显式预期，输出为原断言和拒绝诊断。各测试沿用独立字面标记与已录前缀；不从生产身份、观察或板子算法生成结果预期。
  */
 import { isDeepStrictEqual as equal } from "node:util";
-import type { RecordedDecision, ReproductionRecord } from "../../../../../src/recording/reproduction/format";
+import type {
+  RecordedDecision,
+  ReproductionRecord,
+} from "../../../../../src/recording/reproduction/format";
 type Tuple = [number, string, Record<string, unknown>];
 export type FragrantWireRun = {
   record: ReproductionRecord;

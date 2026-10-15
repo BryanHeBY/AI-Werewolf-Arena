@@ -3,12 +3,15 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type RoleComponent, type ActionRequest } from "../../../src/domain";
-import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
 import {
-  resolveGameSetup,
-  resolvePlayerProfile,
-} from "../../../src/app/config/resolve-game-setup";
+  COMPONENT,
+  Phase,
+  Role,
+  type RoleComponent,
+  type ActionRequest,
+} from "../../../src/domain";
+import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
+import { resolveGameSetup, resolvePlayerProfile } from "../../../src/app/config/resolve-game-setup";
 import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
 import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
 import type {
@@ -74,11 +77,7 @@ for (const kind of ["llm", "acp"] as const) {
         .entityIds()
         .map((id) => [
           id,
-          resolvePlayerProfile(
-            setup,
-            id,
-            world.getComponent(id, COMPONENT.Role)?.role,
-          ),
+          resolvePlayerProfile(setup, id, world.getComponent(id, COMPONENT.Role)?.role),
         ]),
     );
     expect(profiles.get(3)?.name).toBe("other");

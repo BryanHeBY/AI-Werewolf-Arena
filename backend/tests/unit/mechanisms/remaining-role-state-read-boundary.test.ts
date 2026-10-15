@@ -20,10 +20,7 @@ import { getShapeshifterState } from "../../../src/features/shapeshifter/state-p
 import { getDebaterState } from "../../../src/features/debater/state";
 import { getEvilKnightState } from "../../../src/features/evil-knight/ports";
 import { getNightmareShadowState } from "../../../src/features/nightmare/ports";
-import {
-  getMagicianState,
-  projectMagicianState,
-} from "../../../src/features/magician/state-slot";
+import { getMagicianState, projectMagicianState } from "../../../src/features/magician/state-slot";
 import { getTricksterState } from "../../../src/features/trickster/ports";
 import { getWolfSorcererState } from "../../../src/features/wolf-sorcerer/state-slot";
 import { getTimeConsortState } from "../../../src/features/time-wolf-consort/ports";

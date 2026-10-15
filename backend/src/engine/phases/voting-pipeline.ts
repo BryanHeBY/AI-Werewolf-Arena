@@ -16,7 +16,11 @@ import {
   sealAnimalBallots,
 } from "../../features/animal-dream/ballot-ports";
 import { runAnimalPufferChoice } from "../../features/animal-dream/choice-ports";
-import { prepareMappedExile, resolveMappedExile, mappedExileSummary } from "../../rulesets/mapped-exile-resolution";
+import {
+  prepareMappedExile,
+  resolveMappedExile,
+  mappedExileSummary,
+} from "../../rulesets/mapped-exile-resolution";
 import { recollectOrderPrinceVotes } from "../../rulesets/order-prince-revote";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
 import { COMPONENT } from "../../domain/components/names";
@@ -38,7 +42,10 @@ import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { EventRegistry } from "../events/event-registry";
 import { World } from "../../domain/world";
 import { GameActionRequestFactory } from "../actions/action-request-factory";
-import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../../rulesets/self-destruct-window";
+import {
+  SelfDestructWindow,
+  isSelfDestructWindowEnabled,
+} from "../../rulesets/self-destruct-window";
 import { canBeExiled, canVoteExile } from "../participation";
 
 /**
@@ -176,20 +183,39 @@ export class VotingPipeline {
     // 请求并行执行；Promise.all 保留原投票者顺序，公开票据按该顺序稳定发布。
     const voteResults = await this.collectVotes(voters, requests, actionProvider, options);
     if (options.isCurrent?.() === false)
-      return attachExileUnit({ summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] }, exileUnit);
+      return attachExileUnit(
+        { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] },
+        exileUnit,
+      );
     let { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults, options.day);
     if (animalUnit) recordAnimalBallotRound(this.world, animalUnit, 1, publicVotes);
     const revotePipeline = this;
     const revote = recollectOrderPrinceVotes({
-      get config() { return config; },
-      get world() { return revotePipeline.world; },
-      get requests() { return requests; },
-      get actionProvider() { return actionProvider; },
-      get toolGateway() { return revotePipeline.toolGateway; },
-      get events() { return revotePipeline.events; },
+      get config() {
+        return config;
+      },
+      get world() {
+        return revotePipeline.world;
+      },
+      get requests() {
+        return requests;
+      },
+      get actionProvider() {
+        return actionProvider;
+      },
+      get toolGateway() {
+        return revotePipeline.toolGateway;
+      },
+      get events() {
+        return revotePipeline.events;
+      },
       // 同一局部在原激活点替换，初始选择和后续 PK 继续晚读它；不是第二份 options 快照。
-      get options() { return options; },
-      set options(next) { options = next; },
+      get options() {
+        return options;
+      },
+      set options(next) {
+        options = next;
+      },
       collectVotes(voters: EntityId[]) {
         return revotePipeline.collectVotes(voters, requests, actionProvider, options);
       },
@@ -202,8 +228,7 @@ export class VotingPipeline {
       // 仅在组合交回原 choice／collect Promise 时等待；未配置或未重启没有新的尾 await。
       revoteStep = revote.next(await revoteStep.value);
     }
-    if (revoteStep.value !== undefined)
-      ({ tally, publicVotes } = revoteStep.value);
+    if (revoteStep.value !== undefined) ({ tally, publicVotes } = revoteStep.value);
     const pk = config.voting?.exilePolicy === "awa_one_pk_v1";
     const maximum = Math.max(
       0,
@@ -231,11 +256,14 @@ export class VotingPipeline {
       });
       for (const actorId of tied) {
         if (options.isCurrent?.() === false)
-          return attachExileUnit({
-            summary: { tally: {}, target: null, removed: [] },
-            interrupted: false,
-            removed: [],
-          }, exileUnit);
+          return attachExileUnit(
+            {
+              summary: { tally: {}, target: null, removed: [] },
+              interrupted: false,
+              removed: [],
+            },
+            exileUnit,
+          );
         const life = captureNightLife(this.world, actorId);
         if (!life || !canBeExiled(this.world, actorId)) {
           if (options.strictRequired) throw new Error("order_prince_pk_candidate_stale");
@@ -259,11 +287,14 @@ export class VotingPipeline {
         });
         const action = await actionProvider.getAction(request);
         if (options.isCurrent?.() === false)
-          return attachExileUnit({
-            summary: { tally: {}, target: null, removed: [] },
-            interrupted: false,
-            removed: [],
-          }, exileUnit);
+          return attachExileUnit(
+            {
+              summary: { tally: {}, target: null, removed: [] },
+              interrupted: false,
+              removed: [],
+            },
+            exileUnit,
+          );
         if (
           action?.name !== "speak" ||
           !livingNightLife(this.world, life) ||
@@ -300,11 +331,14 @@ export class VotingPipeline {
         candidates,
       );
       if (options.isCurrent?.() === false)
-        return attachExileUnit({
-          summary: { tally: {}, target: null, removed: [] },
-          interrupted: false,
-          removed: [],
-        }, exileUnit);
+        return attachExileUnit(
+          {
+            summary: { tally: {}, target: null, removed: [] },
+            interrupted: false,
+            removed: [],
+          },
+          exileUnit,
+        );
       ({ tally, publicVotes } = this.recordVotesInSeatOrder(
         results,
         options.day,
@@ -351,39 +385,71 @@ export class VotingPipeline {
         options.day,
         animalUnit,
         // 封存原票之后只提供惰性依赖；河豚在原有效 actor／scope 边界前独立构造，不能复用 requests。
-        { get requestFactory() { return GameActionRequestFactory; } },
+        {
+          get requestFactory() {
+            return GameActionRequestFactory;
+          },
+        },
       );
     }
     if (target === null) {
-      return attachExileUnit({
-        summary: {
-          tally,
-          target: null,
+      return attachExileUnit(
+        {
+          summary: {
+            tally,
+            target: null,
+            removed: [],
+          },
+          interrupted: false,
           removed: [],
+          ...(animalUnit ? { animalUnit, animalRetaliation } : {}),
         },
-        interrupted: false,
-        removed: [],
-        ...(animalUnit ? { animalUnit, animalRetaliation } : {}),
-      }, exileUnit);
+        exileUnit,
+      );
     }
 
     const thisPipeline = this;
     // 原映射先付款／发表，再取有效目标；Noble 仍在两业务块之间，不按 missed 跳过。
-    const { mapped, effectiveTarget } = prepareMappedExile({
-      get enabled() { return config.trickster; },
-      get world() { return thisPipeline.world; },
-      get day() { return options.day; },
-      get events() { return thisPipeline.events; },
-    }, target);
+    const { mapped, effectiveTarget } = prepareMappedExile(
+      {
+        get enabled() {
+          return config.trickster;
+        },
+        get world() {
+          return thisPipeline.world;
+        },
+        get day() {
+          return options.day;
+        },
+        get events() {
+          return thisPipeline.events;
+        },
+      },
+      target,
+    );
     const reveal = revealSecretBodyExile(
       {
-        get enabled() { return config.nobleSecretBody; },
-        get world() { return thisPipeline.world; },
-        get events() { return thisPipeline.events; },
-        get requests() { return requests; },
-        get toolGateway() { return thisPipeline.toolGateway; },
-        get day() { return options.day; },
-        get isCurrent() { return options.isCurrent; },
+        get enabled() {
+          return config.nobleSecretBody;
+        },
+        get world() {
+          return thisPipeline.world;
+        },
+        get events() {
+          return thisPipeline.events;
+        },
+        get requests() {
+          return requests;
+        },
+        get toolGateway() {
+          return thisPipeline.toolGateway;
+        },
+        get day() {
+          return options.day;
+        },
+        get isCurrent() {
+          return options.isCurrent;
+        },
       },
       effectiveTarget,
     );
@@ -397,27 +463,45 @@ export class VotingPipeline {
         // Provider 同步抛错／拒绝时驱动本族关闭；已完成或抛错的生成器不会再次关闭 scope。
         reveal.return(false);
       }
-      return attachExileUnit({ summary: { tally, target, removed: [] }, removed: [], interrupted: false }, exileUnit);
+      return attachExileUnit(
+        { summary: { tally, target, removed: [] }, removed: [], interrupted: false },
+        exileUnit,
+      );
     }
     // Noble 同步完成之后才形成出局提案；原钩子 receiver 与参数读取保持晚读。
-    const removed = resolveMappedExile({
-      get eventRegistry() { return thisPipeline.eventRegistry; },
-      get world() { return thisPipeline.world; },
-      get events() { return thisPipeline.events; },
-      get animalUnit() { return animalUnit; },
-    }, mapped, effectiveTarget);
-
-    return attachExileUnit({
-      summary: {
-        tally,
-        target,
-        ...mappedExileSummary(mapped, effectiveTarget),
-        removed,
+    const removed = resolveMappedExile(
+      {
+        get eventRegistry() {
+          return thisPipeline.eventRegistry;
+        },
+        get world() {
+          return thisPipeline.world;
+        },
+        get events() {
+          return thisPipeline.events;
+        },
+        get animalUnit() {
+          return animalUnit;
+        },
       },
-      interrupted: false,
-      removed,
-      ...(animalUnit ? { animalUnit, animalRetaliation } : {}),
-    }, exileUnit);
+      mapped,
+      effectiveTarget,
+    );
+
+    return attachExileUnit(
+      {
+        summary: {
+          tally,
+          target,
+          ...mappedExileSummary(mapped, effectiveTarget),
+          removed,
+        },
+        interrupted: false,
+        removed,
+        ...(animalUnit ? { animalUnit, animalRetaliation } : {}),
+      },
+      exileUnit,
+    );
   }
 
   private async collectVotes(

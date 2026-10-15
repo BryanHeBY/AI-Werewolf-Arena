@@ -21,7 +21,9 @@ import { resolveSheriffBadge } from "../../../../src/features/sheriff/badge-choi
 import { assignSheriff } from "../../../../src/features/sheriff/badge";
 
 function fixture() {
-  const world = new World(), events: GameEvent[] = [], gateway = new ToolGateway();
+  const world = new World(),
+    events: GameEvent[] = [],
+    gateway = new ToolGateway();
   for (let i = 0; i < 2; i++) {
     const id = world.createEntity();
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
@@ -37,35 +39,131 @@ function fixture() {
 test("disabled election and direction, absent holder and badge return before constructor lookup", async () => {
   const f = fixture();
   let reads = 0;
-  const dependency = { get requestFactory(): never { reads++; throw new Error("literal_unneeded_ctor"); } };
-  const provider = { async getAction(): Promise<null> { throw new Error("literal_unneeded_provider"); } };
-  expect(await electSheriffIfNeeded({ ...f, toolGateway: f.gateway, actionProvider: provider, day: 1, enableSheriff: false, get requestFactory() { return dependency.requestFactory; } })).toBeNull();
-  expect(await chooseSpeakerDirection({ ...f, toolGateway: f.gateway, actionProvider: provider, day: 1, enableSheriff: false, get requestFactory() { return dependency.requestFactory; } })).toBe("clockwise");
-  expect(await chooseSpeakerDirection({ ...f, toolGateway: f.gateway, actionProvider: provider, day: 1, enableSheriff: true, get requestFactory() { return dependency.requestFactory; } })).toBe("clockwise");
-  await resolveSheriffBadge(f.world, 1, "literal", f.events, f.gateway, provider, Phase.Day, 1, () => true, dependency);
+  const dependency = {
+    get requestFactory(): never {
+      reads++;
+      throw new Error("literal_unneeded_ctor");
+    },
+  };
+  const provider = {
+    async getAction(): Promise<null> {
+      throw new Error("literal_unneeded_provider");
+    },
+  };
+  expect(
+    await electSheriffIfNeeded({
+      ...f,
+      toolGateway: f.gateway,
+      actionProvider: provider,
+      day: 1,
+      enableSheriff: false,
+      get requestFactory() {
+        return dependency.requestFactory;
+      },
+    }),
+  ).toBeNull();
+  expect(
+    await chooseSpeakerDirection({
+      ...f,
+      toolGateway: f.gateway,
+      actionProvider: provider,
+      day: 1,
+      enableSheriff: false,
+      get requestFactory() {
+        return dependency.requestFactory;
+      },
+    }),
+  ).toBe("clockwise");
+  expect(
+    await chooseSpeakerDirection({
+      ...f,
+      toolGateway: f.gateway,
+      actionProvider: provider,
+      day: 1,
+      enableSheriff: true,
+      get requestFactory() {
+        return dependency.requestFactory;
+      },
+    }),
+  ).toBe("clockwise");
+  await resolveSheriffBadge(
+    f.world,
+    1,
+    "literal",
+    f.events,
+    f.gateway,
+    provider,
+    Phase.Day,
+    1,
+    () => true,
+    dependency,
+  );
   expect(reads).toBe(0);
   expect(f.events).toEqual([]);
 });
 
 test("election builds after alive collection once, direction constructs its separate original instance", async () => {
-  const f = fixture(), trace: string[] = [], instances: TrackingRequests[] = [], used: TrackingRequests[] = [], days: number[] = [];
+  const f = fixture(),
+    trace: string[] = [],
+    instances: TrackingRequests[] = [],
+    used: TrackingRequests[] = [],
+    days: number[] = [];
   const alive = f.world.getAliveEntityIds;
-  f.world.getAliveEntityIds = function() { trace.push("alive"); return alive.call(this); };
+  f.world.getAliveEntityIds = function () {
+    trace.push("alive");
+    return alive.call(this);
+  };
   class TrackingRequests extends GameActionRequestFactory {
     constructor(world: World, events: readonly GameEvent[], day: number) {
       super(world, events, day);
-      expect(world).toBe(f.world); expect(events).toBe(f.events);
-      instances.push(this); days.push(day); trace.push("new");
+      expect(world).toBe(f.world);
+      expect(events).toBe(f.events);
+      instances.push(this);
+      days.push(day);
+      trace.push("new");
     }
-    override create(input: ActionRequestConstructionInput) { used.push(this); return super.create(input); }
+    override create(input: ActionRequestConstructionInput) {
+      used.push(this);
+      return super.create(input);
+    }
   }
-  const winner = await electSheriffIfNeeded({ world: f.world, events: f.events, toolGateway: f.gateway, day: 1, enableSheriff: true, get requestFactory() { trace.push("election-factory"); return TrackingRequests; }, actionProvider: { async getAction() { return { name: "run_for_sheriff" as const, args: { run: false } }; } } });
+  const winner = await electSheriffIfNeeded({
+    world: f.world,
+    events: f.events,
+    toolGateway: f.gateway,
+    day: 1,
+    enableSheriff: true,
+    get requestFactory() {
+      trace.push("election-factory");
+      return TrackingRequests;
+    },
+    actionProvider: {
+      async getAction() {
+        return { name: "run_for_sheriff" as const, args: { run: false } };
+      },
+    },
+  });
   expect(winner).toBeNull();
   expect(trace.slice(0, 4)).toEqual(["alive", "alive", "election-factory", "new"]);
   expect(instances).toHaveLength(1);
   expect(used).toEqual([instances[0]!, instances[0]!]);
   expect(assignSheriff(f.world, 1)).toBe(true);
-  const direction = await chooseSpeakerDirection({ world: f.world, events: f.events, toolGateway: f.gateway, day: 4, enableSheriff: true, get requestFactory() { trace.push("direction-factory"); return TrackingRequests; }, actionProvider: { async getAction() { return null; } } });
+  const direction = await chooseSpeakerDirection({
+    world: f.world,
+    events: f.events,
+    toolGateway: f.gateway,
+    day: 4,
+    enableSheriff: true,
+    get requestFactory() {
+      trace.push("direction-factory");
+      return TrackingRequests;
+    },
+    actionProvider: {
+      async getAction() {
+        return null;
+      },
+    },
+  });
   expect(direction).toBe("clockwise");
   expect(instances).toHaveLength(2);
   expect(instances[1]).not.toBe(instances[0]);
@@ -74,16 +172,23 @@ test("election builds after alive collection once, direction constructs its sepa
 });
 
 test("badge constructor failure happens after permit opening and finally closes without committing a choice", async () => {
-  const f = fixture(), trace: string[] = [], failure = new Error("literal_badge_ctor_failed");
+  const f = fixture(),
+    trace: string[] = [],
+    failure = new Error("literal_badge_ctor_failed");
   const badge = f.world.getComponent(1, COMPONENT.Badge)!;
-  badge.isSheriff = true; badge.handoffPolicy = "awa_holder_choice_v1";
+  badge.isSheriff = true;
+  badge.handoffPolicy = "awa_holder_choice_v1";
   f.world.getComponent(1, COMPONENT.Alive)!.alive = false;
-  f.events.push({ timestamp: 0, type: "day_speech", payload: { actorId: 2, text: "literal-existing-prefix" } });
+  f.events.push({
+    timestamp: 0,
+    type: "day_speech",
+    payload: { actorId: 2, text: "literal-existing-prefix" },
+  });
   const prefix = [...f.events];
   let permitId: number | undefined;
   const open = f.world.openDeathAction;
   // 调用真实开放方法并保 receiver／参数／原permit；只在测试记录这次身份，不把缺id查询当许可。
-  f.world.openDeathAction = function(...args: Parameters<World["openDeathAction"]>) {
+  f.world.openDeathAction = function (...args: Parameters<World["openDeathAction"]>) {
     trace.push("permit");
     const permit = open.apply(this, args);
     permitId = permit.id;
@@ -92,13 +197,40 @@ test("badge constructor failure happens after permit opening and finally closes 
   class FailingRequests {
     constructor(world: World, events: readonly GameEvent[], day: number) {
       trace.push("new");
-      expect(new.target).toBe(FailingRequests); expect(world).toBe(f.world); expect(events).toBe(f.events); expect(day).toBe(7);
+      expect(new.target).toBe(FailingRequests);
+      expect(world).toBe(f.world);
+      expect(events).toBe(f.events);
+      expect(day).toBe(7);
       expect(world.hasDeathAction(1, "choose_badge_successor", Phase.Day, 7, permitId)).toBe(true);
       throw failure;
     }
-    create(): never { throw new Error("literal_create_unreachable"); }
+    create(): never {
+      throw new Error("literal_create_unreachable");
+    }
   }
-  await expect(resolveSheriffBadge(f.world, 1, "literal", f.events, f.gateway, { async getAction(): Promise<null> { throw new Error("literal_provider_unreachable"); } }, Phase.Day, 7, () => true, { get requestFactory() { trace.push("factory"); return FailingRequests; } })).rejects.toBe(failure);
+  await expect(
+    resolveSheriffBadge(
+      f.world,
+      1,
+      "literal",
+      f.events,
+      f.gateway,
+      {
+        async getAction(): Promise<null> {
+          throw new Error("literal_provider_unreachable");
+        },
+      },
+      Phase.Day,
+      7,
+      () => true,
+      {
+        get requestFactory() {
+          trace.push("factory");
+          return FailingRequests;
+        },
+      },
+    ),
+  ).rejects.toBe(failure);
   expect(trace).toEqual(["permit", "factory", "new"]);
   expect(f.world.hasDeathAction(1, "choose_badge_successor", Phase.Day, 7, permitId)).toBe(false);
   expect(badge).toMatchObject({ isSheriff: true, destroyed: false });

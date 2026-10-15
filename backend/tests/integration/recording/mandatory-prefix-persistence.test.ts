@@ -70,7 +70,9 @@ test("mandatory manifest, public replay and reproduction failures are all awaite
       const index = files.indexOf(file);
       if (
         index !== -1 &&
-        (file !== "reproduction.json" || (unwrapRecordingEnvelope(data, "strict_reproduction").payload as { finalized?: boolean }).finalized)
+        (file !== "reproduction.json" ||
+          (unwrapRecordingEnvelope(data, "strict_reproduction").payload as { finalized?: boolean })
+            .finalized)
       )
         throw errors[index];
       return realWrite.call(this, file, data);
@@ -105,11 +107,13 @@ test("pending decisions cannot produce a finalized recording while the public pa
   const pending = trace.decide(request, { getAction: () => response });
   try {
     await expect(manager.finalize(meta)).rejects.toThrow("reproduction_decisions_pending");
-    const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, "mandatory/replay.json"), "utf8")));
+    const replay = readReplayDocument(
+      JSON.parse(await readFile(path.join(root, "mandatory/replay.json"), "utf8")),
+    );
     expect(replay.result.reason).toBe("runtime_error");
-    const partial = parseReproductionRecord(JSON.parse(
-      await readFile(path.join(root, "mandatory/reproduction.json"), "utf8"),
-    ));
+    const partial = parseReproductionRecord(
+      JSON.parse(await readFile(path.join(root, "mandatory/reproduction.json"), "utf8")),
+    );
     expect(partial.finalized).toBe(false);
   } finally {
     resolve(null);
@@ -142,7 +146,12 @@ test("settling a decision during a slow prefix write cannot schedule a later ove
   let paused = false;
   const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(
     async function (this: ReplayFileStore, file, data) {
-      if (!paused && file === "reproduction.json" && !(unwrapRecordingEnvelope(data, "strict_reproduction").payload as { finalized: boolean }).finalized) {
+      if (
+        !paused &&
+        file === "reproduction.json" &&
+        !(unwrapRecordingEnvelope(data, "strict_reproduction").payload as { finalized: boolean })
+          .finalized
+      ) {
         paused = true;
         notify();
         await blocked;
@@ -177,7 +186,12 @@ test("a failed strict prefix write remains visible even when the final publicati
   let failed = false;
   const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(
     async function (this: ReplayFileStore, file, data) {
-      if (!failed && file === "reproduction.json" && !(unwrapRecordingEnvelope(data, "strict_reproduction").payload as { finalized: boolean }).finalized) {
+      if (
+        !failed &&
+        file === "reproduction.json" &&
+        !(unwrapRecordingEnvelope(data, "strict_reproduction").payload as { finalized: boolean })
+          .finalized
+      ) {
         failed = true;
         throw error;
       }
@@ -188,7 +202,9 @@ test("a failed strict prefix write remains visible even when the final publicati
     await manager.flushNow();
     await expect(manager.finalize(meta)).rejects.toBe(error);
     expect(
-      parseReproductionRecord(JSON.parse(await readFile(path.join(root, "mandatory/reproduction.json"), "utf8"))).finalized,
+      parseReproductionRecord(
+        JSON.parse(await readFile(path.join(root, "mandatory/reproduction.json"), "utf8")),
+      ).finalized,
     ).toBe(true);
   } finally {
     write.mockRestore();

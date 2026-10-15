@@ -164,9 +164,10 @@ test("real intact Body exile reveals alive, speaks once, retains vote and badge;
   expect(events.filter((e) => e.type === "secret_body_revealed")).toHaveLength(1);
   expect(events.filter((e) => e.type === "secret_body_reveal_speech")).toHaveLength(1);
   expect(g.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(true);
-  expect(
-    g.world.getComponent(5, COMPONENT.VotingRight),
-  ).toMatchObject({ weight: 1.5, canVote: true });
+  expect(g.world.getComponent(5, COMPONENT.VotingRight)).toMatchObject({
+    weight: 1.5,
+    canVote: true,
+  });
   expect(g.world.getComponent(5, COMPONENT.Badge)!.isSheriff).toBe(true);
   expect(events.some((e) => e.type === "player_role_revealed" && e.payload.playerId === 5)).toBe(
     false,

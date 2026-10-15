@@ -81,7 +81,15 @@ export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
           ? null
           : { name: "inspect_role", args: { target_id: target } };
       }
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world, currentCamp);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
+        role,
+        request,
+        pick,
+        byCamp,
+        locale,
+        world,
+        currentCamp,
+      );
     },
   },
   presentation: nativeRolePresentation("gargoyle"),

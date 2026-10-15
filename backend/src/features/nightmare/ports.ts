@@ -10,7 +10,12 @@ import { Role } from "../../domain/identity";
 import { COMPONENT } from "../../domain/components/names";
 import type { World } from "../../domain/world";
 import { nightmareFearBlocks } from "./night-frame";
-export { isNightmareBoard, nightmareKnifeBlocked, assertNightmareRosterCurrent, nightmareFearBlocks } from "./night-frame";
+export {
+  isNightmareBoard,
+  nightmareKnifeBlocked,
+  assertNightmareRosterCurrent,
+  nightmareFearBlocks,
+} from "./night-frame";
 import { getNightmareShadowState } from "./state-slot";
 
 export interface NightmareNightEligibility {
@@ -31,8 +36,9 @@ export function bindNightmareKnifeTargetQuery(world: World): NightmareKnifeTarge
   return Object.freeze({
     allows: (targetId: EntityId) =>
       world.getComponent(targetId, COMPONENT.Role)?.role !== Role.NightmareShadow ||
-      getNightmareShadowState(world.getComponent(targetId, COMPONENT.Role), () => world.getComponent(targetId, COMPONENT.Camp))?.wolfActionPolicy ===
-        "standard",
+      getNightmareShadowState(world.getComponent(targetId, COMPONENT.Role), () =>
+        world.getComponent(targetId, COMPONENT.Camp),
+      )?.wolfActionPolicy === "standard",
   });
 }
 

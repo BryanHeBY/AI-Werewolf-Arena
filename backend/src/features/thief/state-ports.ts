@@ -72,7 +72,10 @@ export function readThiefTool(
 import type { RoleInitializationComponent } from "../../rulesets/roles/contracts";
 
 /** 原 LHS 私有容器先于 policy 求值；不缓存 config 或改写已存在的合法槽。 */
-export function initializeThiefState(role: RoleInitializationComponent, policy: () => ThiefState["policy"]): void {
+export function initializeThiefState(
+  role: RoleInitializationComponent,
+  policy: () => ThiefState["policy"],
+): void {
   if (!getThiefState(role))
     role.privateState.thief = {
       policy: policy(),

@@ -3,7 +3,10 @@
  */
 import { expect, test } from "bun:test";
 import { isMagicianPreset } from "../../../src/rulesets";
-import { readMagicianExchangeFact, readMagicianOwnExchangeFact } from "@ai-werewolf-arena/game-contract/facts/magician";
+import {
+  readMagicianExchangeFact,
+  readMagicianOwnExchangeFact,
+} from "@ai-werewolf-arena/game-contract/facts/magician";
 function board(
   firstNight: 1 | 2 = 1,
   deathShotTargetPolicy: "original" | "exchanged" = "original",

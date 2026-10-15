@@ -78,10 +78,7 @@ test("game gateway preflight cannot conceal private role access by moving out of
     "backend/src/game/mechanisms/roles/fox/authority.ts": "export const x=1;",
     "backend/src/game/mechanisms/roles/fox/state.ts": "export interface State {}",
   });
-  expect(rules(privateGraph)).toEqual([
-    "dependency.gateway-feature",
-    "dependency.gateway-feature",
-  ]);
+  expect(rules(privateGraph)).toEqual(["dependency.gateway-feature", "dependency.gateway-feature"]);
   const publicGraph = input({
     "backend/src/game/gateway/preflight.ts":
       "import { x } from '../mechanisms/roles/fox/ports'; type T=import('../mechanisms/roles/fox/contracts').State;",
@@ -614,24 +611,31 @@ test("canonical lifecycle file names retain the terminal contract requirement", 
     "backend/src/adapters/acp/session-lifecycle.ts",
     "backend/src/adapters/acp/session_lifecycle.ts",
   ];
-  const incomplete = "/** 负责共享许可状态，仅允许所属 owner 提交写入。 */\nexport const value = 1;";
+  const incomplete =
+    "/** 负责共享许可状态，仅允许所属 owner 提交写入。 */\nexport const value = 1;";
   const complete = incomplete.replace("提交写入。", "提交写入；关闭与失败后保持终态。");
   for (const file of files) {
-    expect(checkComments(ts, input({ [file]: incomplete })).map((row) => row.rule))
-      .toEqual(["comment.terminal"]);
+    expect(checkComments(ts, input({ [file]: incomplete })).map((row) => row.rule)).toEqual([
+      "comment.terminal",
+    ]);
     expect(checkComments(ts, input({ [file]: complete }))).toEqual([]);
   }
 });
 
 // 使用真实检查器核对自然中文测试职责；层级、预期来源和缺失职责仍分别检查。
 test("中文测试职责说明与英文测试保持同等约束", () => {
-  const review = (head: string) => checkComments(ts, input({
-    "backend/tests/unit/example.test.ts": head + "\nexport const value = 1;",
-  })).map((row) => row.rule);
+  const review = (head: string) =>
+    checkComments(
+      ts,
+      input({
+        "backend/tests/unit/example.test.ts": head + "\nexport const value = 1;",
+      }),
+    ).map((row) => row.rule);
   expect(review("/** 单元测试以字面输入核对公开结果。 */")).toEqual([]);
   expect(review("/** 场景测试通过固定样本执行记录与复现。 */")).toEqual([]);
   expect(review("/** 单元测试接收输入并输出结果。 */")).toEqual(["comment.oracle"]);
   expect(review("/** 单元；输入为字面样本，输出为固定预期。 */")).toEqual([
-    "comment.first-paragraph", "comment.responsibility",
+    "comment.first-paragraph",
+    "comment.responsibility",
   ]);
 });

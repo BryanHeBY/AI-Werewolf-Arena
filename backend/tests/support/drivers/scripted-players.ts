@@ -8,8 +8,8 @@ export interface ScriptStep {
   day: number;
   stage: ActionStage;
   /**
- * 该玩家在指定 day／stage 内的序号，不受其他玩家影响。
- */
+   * 该玩家在指定 day／stage 内的序号，不受其他玩家影响。
+   */
   turn: number;
   action: ToolCall | null;
   assertRequest?: (request: ActionRequest) => void;

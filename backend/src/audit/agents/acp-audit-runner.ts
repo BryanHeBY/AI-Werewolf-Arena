@@ -207,7 +207,8 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
     const bridge: AcpMcpBridgeFactory<AuditToolTurnRegistry> = {
       serverName: "werewolf-audit",
       createControl: (turnRegistry) => new AuditMcpControlServer(turnRegistry),
-      serverEntrypoint: () => path.join(__dirname, "../../adapters/acp", `audit-mcp-server${extension}`),
+      serverEntrypoint: () =>
+        path.join(__dirname, "../../adapters/acp", `audit-mcp-server${extension}`),
     };
     return new AcpProcessClient<AuditToolTurnRegistry>({
       command: profile.provider.command,

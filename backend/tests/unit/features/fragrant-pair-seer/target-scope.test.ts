@@ -1,7 +1,10 @@
 /**
  * 单元测试：验证幽香幻影双人查验的独立 target scope、原生 frame 与 reader。输入为原内存 fixture、回调控制和畸形修改；原字面值、引用和拒绝断言为预期，不运行装配周期、模型或实体传输。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import {
+  createCampComponent,
+  createAliveComponent,
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
@@ -38,8 +41,7 @@ for (const changed of ["life", "role", "camp"] as const)
   test(`same-value second target ${changed} replacement revokes whole pair`, () => {
     const { world, scopes } = targets();
     if (changed === "life") world.addComponent(2, COMPONENT.Alive, createAliveComponent(true));
-    if (changed === "role")
-      world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf));
+    if (changed === "role") world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf));
     if (changed === "camp") world.addComponent(2, COMPONENT.Camp, createCampComponent(Camp.Wolf));
     expect(pairTargetCurrent(world, scopes[0]!)).toBe(true);
     expect(capturedPairContainsWolf(world, scopes)).toBeNull();

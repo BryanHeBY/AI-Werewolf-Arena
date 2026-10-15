@@ -15,10 +15,7 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../src/domain";
-import {
-  assertRequestDelivery,
-  deriveBoundedRequest,
-} from "../../src/domain/request-delivery";
+import { assertRequestDelivery, deriveBoundedRequest } from "../../src/domain/request-delivery";
 import { BaselineBotActionProvider } from "../../src/agents/baseline/privileged";
 import { ObservedPlayersActionProvider } from "../../src/app/observed-players-action-provider";
 import { ObservedBot } from "../../src/agents/providers/observed-bot";

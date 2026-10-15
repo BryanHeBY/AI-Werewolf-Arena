@@ -19,7 +19,13 @@ import {
   type ActionRequest,
   type GameEvent,
 } from "../../domain";
-import { parseReproductionRecord, recordedErrorName, type RecordedDecision, type RecordedGameEvent, type ReproductionRecord } from "../../recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  recordedErrorName,
+  type RecordedDecision,
+  type RecordedGameEvent,
+  type ReproductionRecord,
+} from "../../recording/reproduction/format";
 import { normalizedRequest } from "../../recording/reproduction/trace";
 import { SessionRecordManager } from "../../recording/session/recorder";
 import { runWithSessionRecorder } from "../../recording/session/context";
@@ -208,7 +214,11 @@ export async function readReproductionArchive(file: string) {
     throw new Error("reproduction_json_invalid");
   }
   const archive = unwrapRecordingEnvelope(value, "strict_reproduction");
-  return { record: parseReproductionRecord(archive.payload), identities: archive.identities, input: value };
+  return {
+    record: parseReproductionRecord(archive.payload),
+    identities: archive.identities,
+    input: value,
+  };
 }
 
 /** 旧数据消费 API 只返回 canonical Tape；执行文件需使用 readReproductionArchive 保留声明。 */
@@ -248,7 +258,10 @@ export async function replayReproduction(
     "reproduction_ruleset_incompatible",
   );
   // 语义声明在原精确来源／RNG／规则检查之后验证；不能用手写版本打开旧构建。
-  requireMatch(reproductionIdentitiesMatch(archive.identities, record), "reproduction_contract_identity_incompatible");
+  requireMatch(
+    reproductionIdentitiesMatch(archive.identities, record),
+    "reproduction_contract_identity_incompatible",
+  );
   // 内层 Tape 已通过原严格板子 schema；不要再次用更窄的公开配置重建，
   // 否则会丢失历史可选字段并更改默认值。
   const board = record.metadata.normalizedBoard;

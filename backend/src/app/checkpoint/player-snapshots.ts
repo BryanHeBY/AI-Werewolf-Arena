@@ -75,12 +75,21 @@ export function capturePlayerContributions(
         seat: identity.seat,
         name: identity.name,
         role: (original?.scope.roleId as RoleComponent["role"]) ?? audit?.role ?? role.role,
-        camp: original?.scope.campValue ?? audit?.camp ?? world.getComponent(id, COMPONENT.Camp)!.camp,
+        camp:
+          original?.scope.campValue ?? audit?.camp ?? world.getComponent(id, COMPONENT.Camp)!.camp,
         alive: original
           ? aliveLifeDescriptor(original.scope.life)!.get!.call(original.scope.life)
           : (audit?.alive ?? world.getComponent(id, COMPONENT.Alive)!.alive),
         // 原特殊审计优先级与整容器克隆归数据 owner；这里只在原字段位置传入已求出的引用。
-        privateState: encodeCheckpointPrivateState(world, id, complete, animal, original, role, audit),
+        privateState: encodeCheckpointPrivateState(
+          world,
+          id,
+          complete,
+          animal,
+          original,
+          role,
+          audit,
+        ),
         ...(wallNote ? { wallNote } : {}),
         // 可选组件先判断、再现场读取并克隆；getter／克隆失败仍从原表达式传播，不补空记录。
         ...(world.getComponent(id, COMPONENT.DebatePenalty)

@@ -15,10 +15,7 @@ import { WITCH_NIGHT_STAGES } from "./night-stages";
 import { WITCH_TOOL_SPECS, WITCH_STAGE_DIRECTIVES } from "./tool-specs";
 import { WITCH_VALIDATION_RULES } from "../../rulesets/potion-tool-admission";
 import { z } from "zod";
-import {
-  WITCH_KNIFE_VISIBILITY_POLICIES,
-  WITCH_POTION_POLICIES,
-} from "../../domain/board";
+import { WITCH_KNIFE_VISIBILITY_POLICIES, WITCH_POTION_POLICIES } from "../../domain/board";
 
 const witchParameters = z.strictObject({
   selfHeal: z.enum(WitchSelfHealRule).default(WitchSelfHealRule.Disabled),

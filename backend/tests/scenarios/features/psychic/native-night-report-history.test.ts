@@ -83,12 +83,10 @@ function context(
 
 for (const pass of [false, true])
   test(`${pass}: actual complete NightPipeline rejects same World/day reentry, keeping another World usable`, async () => {
-    const { NightPipeline } =
-        await import("../../../../src/engine/phases/night-pipeline"),
+    const { NightPipeline } = await import("../../../../src/engine/phases/night-pipeline"),
       { DamageResolutionSystem } =
         await import("../../../../src/domain/systems/damage-resolution-system"),
-      { BaselineBotActionProvider } =
-        await import("../../../../src/agents/baseline/privileged");
+      { BaselineBotActionProvider } = await import("../../../../src/agents/baseline/privileged");
     const game = bootstrapGame(board(), { fixedRoles: deck }),
       events: GameEvent[] = [],
       bot = new BaselineBotActionProvider(game.world),

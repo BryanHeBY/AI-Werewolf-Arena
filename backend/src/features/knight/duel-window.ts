@@ -69,7 +69,13 @@ export class KnightDuelWindow {
           role = this.world.getComponent(id, COMPONENT.Role)!;
         return [
           id,
-          { life, version: aliveLifeVersion(life), role, roleId: role?.role, camp: role == null ? undefined : this.world.getComponent(id, COMPONENT.Camp)?.camp },
+          {
+            life,
+            version: aliveLifeVersion(life),
+            role,
+            roleId: role?.role,
+            camp: role == null ? undefined : this.world.getComponent(id, COMPONENT.Camp)?.camp,
+          },
         ] as const;
       }),
     );
@@ -101,7 +107,8 @@ export class KnightDuelWindow {
       aliveLifeVersion(snapshot.life) === snapshot.version &&
       this.world.getComponent(id, COMPONENT.Role) === snapshot.role &&
       snapshot.role?.role === snapshot.roleId &&
-      (snapshot.role == null ? undefined : this.world.getComponent(id, COMPONENT.Camp)?.camp) === snapshot.camp;
+      (snapshot.role == null ? undefined : this.world.getComponent(id, COMPONENT.Camp)?.camp) ===
+        snapshot.camp;
     for (const pick of picks
       .filter((item): item is NonNullable<typeof item> => item !== null)
       .sort((a, b) => a.actorId - b.actorId)) {

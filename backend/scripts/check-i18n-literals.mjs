@@ -181,7 +181,10 @@ export async function scanRepository(publicRoot = repositoryRoot) {
 if (import.meta.main) {
   const found = await scanRepository();
   const exceptions = JSON.parse(
-    await readFile(path.join(repositoryRoot, "tooling/refactor/policies/i18n-source-exceptions.json"), "utf8"),
+    await readFile(
+      path.join(repositoryRoot, "tooling/refactor/policies/i18n-source-exceptions.json"),
+      "utf8",
+    ),
   );
   const problems = verifyLiteralExceptions(found, exceptions);
   if (problems.length) {

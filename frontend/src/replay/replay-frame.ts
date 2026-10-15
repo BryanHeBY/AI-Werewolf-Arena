@@ -1,7 +1,12 @@
 /**
  * 负责从已读复盘和显示选项构建当前帧的纯画面数据。输入为复盘、帧进度与时间／语言设置；输出为原阶段、玩家和结果展示信息。保留原校验和投影顺序，不依赖工作台交互状态，也不写入归档。
  */
-import { readReplayArchive, ReplayDocumentValidationError, type ReplayDocument, type RecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
+import {
+  readReplayArchive,
+  ReplayDocumentValidationError,
+  type ReplayDocument,
+  type RecordingEnvelope,
+} from "@ai-werewolf-arena/replay-contract";
 import { text } from "@ai-werewolf-arena/game-text";
 import { victoryPointLabel, supportsGamePresentation } from "@ai-werewolf-arena/game-presentation";
 import {

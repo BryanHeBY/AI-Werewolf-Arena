@@ -31,3 +31,5 @@
 匿名墙可选处理的独立结算修复已完成，含真实首红、两类严格重放和两个异常前缀回归；见[验收记录](../history/acceptance/wall-optional-completion.md)。最终同输入全量门禁仍待完成。
 
 C47 首轮发现的五组旧场景输入与故障注入点已修正，19 个指定失败声明及测试类型检查通过；见[记录](../history/acceptance/c47-scenario-inputs.md)。
+
+C47 公开格式与夹具归属整理已完成，904 原始回放及 5511 冻结历史字节保持；原程序合同与正式夹具检查通过。见[记录](../history/acceptance/c47-public-format.md)，随后从新固定构建执行最终 42 项验收。

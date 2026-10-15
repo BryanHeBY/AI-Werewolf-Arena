@@ -5,7 +5,11 @@
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { fragrantNames, loadFragrant, fragrantPrivateReplay } from "../../../support/fragrant-replay";
+import {
+  fragrantNames,
+  loadFragrant,
+  fragrantPrivateReplay,
+} from "../../../support/fragrant-replay";
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 import { createReplayRenderInput, buildReplayFrame } from "../../../../src/replay/replay-frame";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";

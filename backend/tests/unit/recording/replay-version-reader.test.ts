@@ -14,7 +14,10 @@ import { createReplayDocument } from "../../../src/recording/session/replay-docu
 async function fixture() {
   return JSON.parse(
     await readFile(
-      path.resolve(process.cwd(), "../packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json"),
+      path.resolve(
+        process.cwd(),
+        "../packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json",
+      ),
       "utf8",
     ),
   );

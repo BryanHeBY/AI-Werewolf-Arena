@@ -25,6 +25,5 @@ export function createBadgeComponent(
     isSheriff,
     destroyed,
     voteWeight: 1.5,
-
   };
 }

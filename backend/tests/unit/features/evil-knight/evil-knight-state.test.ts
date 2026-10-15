@@ -20,14 +20,15 @@ import {
   commitEvilKnightReflection,
   evilKnightNightShotImmune,
 } from "../../../../src/features/evil-knight/reflection";
-import { freshEvilKnightState, getEvilKnightState } from "../../../../src/features/evil-knight/state-slot";
+import {
+  freshEvilKnightState,
+  getEvilKnightState,
+} from "../../../../src/features/evil-knight/state-slot";
 
 function fixture(policy: EvilKnightShotPolicy = "night_shot_immune") {
   const { world } = bootstrapGame(sixPlayerMvpConfig);
   const id = (kind: Role) =>
-    world
-      .entityIds()
-      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === kind)!;
+    world.entityIds().find((id) => world.getComponent(id, COMPONENT.Role)?.role === kind)!;
   const knight = id(Role.Wolf),
     seer = id(Role.Seer),
     witch = id(Role.Witch) ?? id(Role.Villager);
@@ -144,7 +145,9 @@ test("state reading rejects accessor fields without executing them", () => {
       return 1;
     },
   });
-  expect(getEvilKnightState(f.role, () => f.world.getComponent(f.knight, COMPONENT.Camp))).toBeUndefined();
+  expect(
+    getEvilKnightState(f.role, () => f.world.getComponent(f.knight, COMPONENT.Camp)),
+  ).toBeUndefined();
   expect(read).toBe(0);
 });
 for (const marks of [
@@ -211,18 +214,14 @@ for (const shot of ["night_shot_immune", "hunter_shot_bypasses"] as const) {
 test("revoked immunity binding cannot protect a replacement body", () => {
   const f = fixture();
   f.world.addComponent(f.knight, COMPONENT.Alive, createAliveComponent());
-  f.world
-    .getComponent(f.knight, COMPONENT.StatusMarks)!
-    .add(StatusMark.PoisonMark);
+  f.world.getComponent(f.knight, COMPONENT.StatusMarks)!.add(StatusMark.PoisonMark);
   const damage = new DamageResolutionSystem().resolve(f.world, { nightImmunities: [f.binding] });
   expect(damage.deaths).toEqual([f.knight]);
 });
 test("night immunity does not remove retaliation against its caster", () => {
   const f = fixture(),
     effect = f.commit()!;
-  f.world
-    .getComponent(f.knight, COMPONENT.StatusMarks)!
-    .add(StatusMark.PoisonMark);
+  f.world.getComponent(f.knight, COMPONENT.StatusMarks)!.add(StatusMark.PoisonMark);
   const damage = new DamageResolutionSystem().resolve(f.world, {
     nightImmunities: [f.binding],
     retaliationAttacks: [effect],

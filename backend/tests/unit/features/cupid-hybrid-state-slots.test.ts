@@ -5,9 +5,20 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Camp, COMPONENT, Phase, Role, type GameEvent, type ToolCall, type World } from "../../../src/domain";
+import {
+  Camp,
+  COMPONENT,
+  Phase,
+  Role,
+  type GameEvent,
+  type ToolCall,
+  type World,
+} from "../../../src/domain";
 import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
-import type { RoleInitializationComponent, RoleInitContext } from "../../../src/rulesets/roles/contracts";
+import type {
+  RoleInitializationComponent,
+  RoleInitContext,
+} from "../../../src/rulesets/roles/contracts";
 import { installCupidState, getCupidState } from "../../../src/features/cupid/state-slot";
 import { getHybridState } from "../../../src/features/hybrid/state-slot";
 import { CUPID_STAGE } from "../../../src/features/cupid/night-stage";
@@ -29,33 +40,44 @@ function context(game: ReturnType<typeof fixture>, events: GameEvent[], action: 
     events,
     currentDay: () => 1,
     isCurrent: () => true,
-    getAliveByRole: (kind) => game.world.getAliveEntityIds().filter(
-      (id) => game.world.getComponent(id, COMPONENT.Role)?.role === kind,
-    ),
+    getAliveByRole: (kind) =>
+      game.world
+        .getAliveEntityIds()
+        .filter((id) => game.world.getComponent(id, COMPONENT.Role)?.role === kind),
     actionProvider: { getAction: async () => action },
-    makeRequest: (actorId, allowedTools, extras) => factory.create({
-      actorId,
-      phase: Phase.Night,
-      allowedTools,
-      stage: extras.stage,
-      requiresAction: extras.requiresAction ?? true,
-      summary: "Offline",
-      context: extras,
-    }),
+    makeRequest: (actorId, allowedTools, extras) =>
+      factory.create({
+        actorId,
+        phase: Phase.Night,
+        allowedTools,
+        stage: extras.stage,
+        requiresAction: extras.requiresAction ?? true,
+        summary: "Offline",
+        context: extras,
+      }),
   });
 }
 
 test("Cupid init captures the original assignment container before a late policy failure", () => {
-  const trace: string[] = [], error = new Error("late_policy_failure");
+  const trace: string[] = [],
+    error = new Error("late_policy_failure");
   const role = createRoleComponent(Role.Cupid) as RoleInitializationComponent;
   const container = {};
   Object.defineProperty(container, "cupid", {
-    get() { trace.push("slot:get"); return undefined; },
-    set() { trace.push("slot:set"); },
+    get() {
+      trace.push("slot:get");
+      return undefined;
+    },
+    set() {
+      trace.push("slot:set");
+    },
     configurable: true,
   });
   Object.defineProperty(role, "privateState", {
-    get() { trace.push("container"); return container; },
+    get() {
+      trace.push("container");
+      return container;
+    },
     configurable: true,
   });
   const ctx: Pick<RoleInitContext, "boardConfig"> = {
@@ -64,9 +86,12 @@ test("Cupid init captures the original assignment container before a late policy
       return {
         get cupid() {
           trace.push("cupid");
-          return { get policy(): "netease_2017_cupid_follows_lovers_v1" {
-            trace.push("policy"); throw error;
-          } };
+          return {
+            get policy(): "netease_2017_cupid_follows_lovers_v1" {
+              trace.push("policy");
+              throw error;
+            },
+          };
         },
       } as RoleInitContext["boardConfig"];
     },
@@ -77,20 +102,33 @@ test("Cupid init captures the original assignment container before a late policy
 });
 
 test("Cupid choice setter failure preserves the committed relation and debit before membership or facts", async () => {
-  const game = fixture(Role.Cupid), events: GameEvent[] = [], trace: string[] = [];
-  const actor = game.world.getComponent(1, COMPONENT.Role)!, state = getCupidState(actor)!;
-  const victories = game.world.entityIds().map((id) => game.world.getComponent(id, COMPONENT.Victory));
+  const game = fixture(Role.Cupid),
+    events: GameEvent[] = [],
+    trace: string[] = [];
+  const actor = game.world.getComponent(1, COMPONENT.Role)!,
+    state = getCupidState(actor)!;
+  const victories = game.world
+    .entityIds()
+    .map((id) => game.world.getComponent(id, COMPONENT.Victory));
   const error = new Error("choice_write_failure");
   let remaining = 1;
   Object.defineProperty(state, "remaining", {
     get: () => remaining,
-    set(value: number) { remaining = value; trace.push(`remaining:${value}`); },
-    enumerable: true, configurable: true,
+    set(value: number) {
+      remaining = value;
+      trace.push(`remaining:${value}`);
+    },
+    enumerable: true,
+    configurable: true,
   });
   Object.defineProperty(state, "choice", {
     get: () => null,
-    set() { trace.push("choice"); throw error; },
-    enumerable: true, configurable: true,
+    set() {
+      trace.push("choice");
+      throw error;
+    },
+    enumerable: true,
+    configurable: true,
   });
   const add = game.world.addComponent;
   Object.defineProperty(game.world, "addComponent", {
@@ -100,9 +138,14 @@ test("Cupid choice setter failure preserves the committed relation and debit bef
     },
     configurable: true,
   });
-  await expect(CUPID_STAGE.execute(context(game, events, {
-    name: "choose_lovers", args: { first_id: 1, second_id: 3 },
-  }))).rejects.toBe(error);
+  await expect(
+    CUPID_STAGE.execute(
+      context(game, events, {
+        name: "choose_lovers",
+        args: { first_id: 1, second_id: 3 },
+      }),
+    ),
+  ).rejects.toBe(error);
   expect(trace).toEqual([`add:${COMPONENT.Lovers}`, "remaining:0", "choice"]);
   expect(hasCupidNightCommit(game.world, 1)).toBe(true);
   expect(loversRecord(game.world)?.pairIds).toEqual([1, 3]);
@@ -116,19 +159,32 @@ test("Cupid choice setter failure preserves the committed relation and debit bef
 });
 
 test("Hybrid membership install failure preserves both owned writes before the night commit or facts", async () => {
-  const game = fixture(Role.Hybrid), events: GameEvent[] = [], trace: string[] = [];
-  const actor = game.world.getComponent(1, COMPONENT.Role)!, state = getHybridState(actor)!;
-  const originalVictory = game.world.getComponent(1, COMPONENT.Victory), error = new Error("membership_write_failure");
-  let remaining = 1, choice: { day: number; targetId: number } | null = null;
+  const game = fixture(Role.Hybrid),
+    events: GameEvent[] = [],
+    trace: string[] = [];
+  const actor = game.world.getComponent(1, COMPONENT.Role)!,
+    state = getHybridState(actor)!;
+  const originalVictory = game.world.getComponent(1, COMPONENT.Victory),
+    error = new Error("membership_write_failure");
+  let remaining = 1,
+    choice: { day: number; targetId: number } | null = null;
   Object.defineProperty(state, "remaining", {
     get: () => remaining,
-    set(value: number) { remaining = value; trace.push(`remaining:${value}`); },
-    enumerable: true, configurable: true,
+    set(value: number) {
+      remaining = value;
+      trace.push(`remaining:${value}`);
+    },
+    enumerable: true,
+    configurable: true,
   });
   Object.defineProperty(state, "choice", {
     get: () => choice,
-    set(value: { day: number; targetId: number }) { choice = value; trace.push("choice"); },
-    enumerable: true, configurable: true,
+    set(value: { day: number; targetId: number }) {
+      choice = value;
+      trace.push("choice");
+    },
+    enumerable: true,
+    configurable: true,
   });
   Object.defineProperty(game.world, "addComponent", {
     value(id: number, name: string, data: unknown) {
@@ -142,9 +198,14 @@ test("Hybrid membership install failure preserves both owned writes before the n
     },
     configurable: true,
   });
-  await expect(HYBRID_STAGE.execute(context(game, events, {
-    name: "choose_exemplar", args: { target_id: 3 },
-  }))).rejects.toBe(error);
+  await expect(
+    HYBRID_STAGE.execute(
+      context(game, events, {
+        name: "choose_exemplar",
+        args: { target_id: 3 },
+      }),
+    ),
+  ).rejects.toBe(error);
   expect(trace).toEqual(["remaining:0", "choice", `add:1:${COMPONENT.Victory}`]);
   expect(state.remaining).toBe(0);
   expect(state.choice).toEqual({ day: 1, targetId: 3 });

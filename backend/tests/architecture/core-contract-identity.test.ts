@@ -2,7 +2,11 @@
  * 单元／装配测试验证公开身份出口兼容。输入为 core 和共享契约出口；原注册数量及对象身份是字面预期。旧 core 出口必须引用同一枚举对象，包括成员类型，不能重复定义。Catalog 的资料条目不授予引擎执行权限。
  */
 import { expect, test } from "bun:test";
-import { Role as CoreRole, Camp as CoreCamp, type EntityId as CoreEntityId } from "../../src/domain";
+import {
+  Role as CoreRole,
+  Camp as CoreCamp,
+  type EntityId as CoreEntityId,
+} from "../../src/domain";
 import { Role, Camp, ROLE_IDS, type EntityId, type RoleId } from "@ai-werewolf-arena/game-contract";
 import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
 import { getDefaultRoleCatalog } from "../../src/rulesets/mechanism-api";

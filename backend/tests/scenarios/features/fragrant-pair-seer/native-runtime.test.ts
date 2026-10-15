@@ -25,9 +25,7 @@ async function cycle(g: ReturnType<typeof game>, plan: Plan, seen: ActionRequest
 }
 
 function dead(g: ReturnType<typeof game>) {
-  return g.world
-    .entityIds()
-    .filter((id) => !g.world.getComponent(id, COMPONENT.Alive)!.alive);
+  return g.world.entityIds().filter((id) => !g.world.getComponent(id, COMPONENT.Alive)!.alive);
 }
 
 test("literal seed golden uses one reserved draw across three actual nights regardless of unrelated streams", async () => {

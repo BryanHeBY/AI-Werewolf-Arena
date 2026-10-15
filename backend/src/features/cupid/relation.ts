@@ -9,12 +9,7 @@ import { aliveLifeVersion } from "../../domain/components/alive";
 import type { LoversComponent } from "../../domain/components/lovers";
 import type { World } from "../../domain/world";
 import type { NightLifeScope } from "../../domain/night-effects";
-import {
-  DeathCause,
-  type DeathSources,
-  type EntityId,
-  type GameEvent,
-} from "../../domain/model";
+import { DeathCause, type DeathSources, type EntityId, type GameEvent } from "../../domain/model";
 import type { DreamNightEffects } from "../../domain/dream-night-effects";
 
 interface Binding {

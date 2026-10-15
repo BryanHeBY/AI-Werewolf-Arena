@@ -73,7 +73,6 @@ export class StatusMarksComponent {
   values(): StatusMark[] {
     return Array.from(nativeValues.call(storage(this).marks));
   }
-
 }
 export function createStatusMarksComponent(): StatusMarksComponent {
   return new StatusMarksComponent([]);

@@ -8,22 +8,46 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { getOrderPrinceState } from "../../../src/features/order-prince/ports";
-import { recollectOrderPrinceVotes, type OrderPrinceRevoteRuntime } from "../../../src/rulesets/order-prince-revote";
+import {
+  recollectOrderPrinceVotes,
+  type OrderPrinceRevoteRuntime,
+} from "../../../src/rulesets/order-prince-revote";
 import { COMPONENT } from "../../../src/domain/components/names";
-import { Role, WinCondition, type BoardConfig, type GameEvent, type ToolCall } from "@ai-werewolf-arena/game-contract";
+import {
+  Role,
+  WinCondition,
+  type BoardConfig,
+  type GameEvent,
+  type ToolCall,
+} from "@ai-werewolf-arena/game-contract";
 import type { VotingPipelineOptions } from "../../../src/engine/phases/voting-pipeline";
 import type { World } from "../../../src/domain/world";
 import type { ActionProvider, ActionRequestConstructionPort } from "../../../src/domain/actions";
 
 function fixture() {
-  const roles = [Role.Wolf, Role.Wolf, Role.Wolf, Role.Wolf, Role.Villager, Role.Villager,
-    Role.Villager, Role.Villager, Role.Seer, Role.Witch, Role.Hunter, Role.OrderPrince];
+  const roles = [
+    Role.Wolf,
+    Role.Wolf,
+    Role.Wolf,
+    Role.Wolf,
+    Role.Villager,
+    Role.Villager,
+    Role.Villager,
+    Role.Villager,
+    Role.Seer,
+    Role.Witch,
+    Role.Hunter,
+    Role.OrderPrince,
+  ];
   const config: BoardConfig = {
     boardSize: 12,
     winConditions: [WinCondition.SlaughterSide],
     enableSheriff: false,
     hooks: { onDaybreak: false, onPreElection: false, onPreVote: false, onPerSpeechGap: false },
-    roleSetups: [...new Set(roles)].map(role => ({ role, count: roles.filter(r => r === role).length })),
+    roleSetups: [...new Set(roles)].map((role) => ({
+      role,
+      count: roles.filter((r) => r === role).length,
+    })),
     voting: { exilePolicy: "awa_one_pk_v1" },
   };
   const game = bootstrapGame(config, { fixedRoles: roles });
@@ -45,16 +69,37 @@ test("order prince revote: unconfigured branch completes synchronously without l
   const trace: string[] = [];
   const failure = new Error("unexpected_live_query");
   const runtime: OrderPrinceRevoteRuntime<number[]> = {
-    get config() { trace.push("config"); return { roleSetups: [] }; },
-    get world(): World { throw failure; },
-    get requests(): ActionRequestConstructionPort { throw failure; },
-    get actionProvider(): ActionProvider { throw failure; },
-    get toolGateway(): ToolGateway { throw failure; },
-    get events(): GameEvent[] { throw failure; },
-    get options(): VotingPipelineOptions { throw failure; },
-    set options(_next) { throw failure; },
-    collectVotes() { throw failure; },
-    recordVotes() { throw failure; },
+    get config() {
+      trace.push("config");
+      return { roleSetups: [] };
+    },
+    get world(): World {
+      throw failure;
+    },
+    get requests(): ActionRequestConstructionPort {
+      throw failure;
+    },
+    get actionProvider(): ActionProvider {
+      throw failure;
+    },
+    get toolGateway(): ToolGateway {
+      throw failure;
+    },
+    get events(): GameEvent[] {
+      throw failure;
+    },
+    get options(): VotingPipelineOptions {
+      throw failure;
+    },
+    set options(_next) {
+      throw failure;
+    },
+    collectVotes() {
+      throw failure;
+    },
+    recordVotes() {
+      throw failure;
+    },
   };
   expect(recollectOrderPrinceVotes(runtime).next()).toEqual({ done: true, value: undefined });
   expect(trace).toEqual(["config"]);
@@ -66,16 +111,37 @@ test("order prince revote: roster failure retains paid choice and strict replace
   const failure = new Error("roster_read_failed");
   let failWorld = false;
   let options: VotingPipelineOptions = {
-    get day() { trace.push("day"); return 1; },
-    get isCurrent() { trace.push("previousCurrent"); return () => true; },
+    get day() {
+      trace.push("day");
+      return 1;
+    },
+    get isCurrent() {
+      trace.push("previousCurrent");
+      return () => true;
+    },
   };
   const runtime: OrderPrinceRevoteRuntime<number[]> = {
     ...f,
-    get world() { trace.push("world"); if (failWorld) throw failure; return f.world; },
-    get options() { return options; },
-    set options(next) { trace.push("replace"); options = next; },
-    collectVotes() { trace.push("collect"); return Promise.resolve([]); },
-    recordVotes() { trace.push("record"); return { tally: {}, publicVotes: [] }; },
+    get world() {
+      trace.push("world");
+      if (failWorld) throw failure;
+      return f.world;
+    },
+    get options() {
+      return options;
+    },
+    set options(next) {
+      trace.push("replace");
+      options = next;
+    },
+    collectVotes() {
+      trace.push("collect");
+      return Promise.resolve([]);
+    },
+    recordVotes() {
+      trace.push("record");
+      return { tally: {}, publicVotes: [] };
+    },
   };
   const sequence = recollectOrderPrinceVotes(runtime);
   const choice = sequence.next();
@@ -89,10 +155,15 @@ test("order prince revote: roster failure retains paid choice and strict replace
   expect(trace).toEqual(["previousCurrent", "day", "previousCurrent", "replace", "world"]);
   expect(options.strictRequired).toBe(true);
   expect(options.orderPrinceRevote).toBe(true);
-  expect(getOrderPrinceState(f.world.getComponent(12, COMPONENT.Role), () => f.world.getComponent(12, COMPONENT.Camp))?.history)
-    .toEqual([{ day: 1, activate: true }]);
-  expect(f.events.map(event => event.type)).toEqual([
-    "order_prince_choice_committed", "order_prince_revote_started", "day_speech",
+  expect(
+    getOrderPrinceState(f.world.getComponent(12, COMPONENT.Role), () =>
+      f.world.getComponent(12, COMPONENT.Camp),
+    )?.history,
+  ).toEqual([{ day: 1, activate: true }]);
+  expect(f.events.map((event) => event.type)).toEqual([
+    "order_prince_choice_committed",
+    "order_prince_revote_started",
+    "day_speech",
   ]);
 });
 
@@ -103,15 +174,22 @@ test("order prince revote: collection rejection preserves paid prefix without op
   let options: VotingPipelineOptions = { day: 1, isCurrent: () => true };
   const runtime: OrderPrinceRevoteRuntime<number[]> = {
     ...f,
-    get options() { return options; },
-    set options(next) { options = next; },
+    get options() {
+      return options;
+    },
+    set options(next) {
+      options = next;
+    },
     collectVotes(voters) {
       trace.push("collect");
       expect(voters).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
       expect(options.strictRequired).toBe(true);
       return Promise.reject(failure);
     },
-    recordVotes() { trace.push("record"); return { tally: {}, publicVotes: [] }; },
+    recordVotes() {
+      trace.push("record");
+      return { tally: {}, publicVotes: [] };
+    },
   };
   const sequence = recollectOrderPrinceVotes(runtime);
   const choice = sequence.next();
@@ -121,9 +199,14 @@ test("order prince revote: collection rejection preserves paid prefix without op
   if (collected.done) throw new Error("test_collection_missing");
   await expect(collected.value).rejects.toBe(failure);
   expect(trace).toEqual(["collect"]);
-  expect(getOrderPrinceState(f.world.getComponent(12, COMPONENT.Role), () => f.world.getComponent(12, COMPONENT.Camp))?.history)
-    .toEqual([{ day: 1, activate: true }]);
-  expect(f.events.map(event => event.type)).toEqual([
-    "order_prince_choice_committed", "order_prince_revote_started", "day_speech",
+  expect(
+    getOrderPrinceState(f.world.getComponent(12, COMPONENT.Role), () =>
+      f.world.getComponent(12, COMPONENT.Camp),
+    )?.history,
+  ).toEqual([{ day: 1, activate: true }]);
+  expect(f.events.map((event) => event.type)).toEqual([
+    "order_prince_choice_committed",
+    "order_prince_revote_started",
+    "day_speech",
   ]);
 });

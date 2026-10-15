@@ -4,7 +4,11 @@
  */
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { BoardName, BoardOverride, parseBoardOverride } from "../../rulesets/presets/board-config-resolver";
+import {
+  BoardName,
+  BoardOverride,
+  parseBoardOverride,
+} from "../../rulesets/presets/board-config-resolver";
 
 /** @deprecated 仅供迁移和旧程序接口兼容；正常 CLI 使用 loadBoardDefinition，不探测这些回退路径。 */
 export async function loadBoardOverride(

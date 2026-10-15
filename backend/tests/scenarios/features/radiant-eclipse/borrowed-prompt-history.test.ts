@@ -22,9 +22,7 @@ import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
-import {
-  findNightAbility,
-} from "../../../../src/features/night-abilities/abilities";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
 import {
   getDefaultConfigRenderRegistry,
@@ -37,7 +35,10 @@ import { buildAgentVisibleEvent } from "../../../../src/agents/observation/event
 
 const raw = JSON.parse(
   await readFile(
-    new URL("../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json", import.meta.url),
+    new URL(
+      "../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json",
+      import.meta.url,
+    ),
     "utf8",
   ),
 );

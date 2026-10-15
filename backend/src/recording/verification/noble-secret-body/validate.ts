@@ -11,7 +11,11 @@ import {
   readNobleSecretBodyFact,
 } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { Role, Camp, Phase } from "@ai-werewolf-arena/game-contract";
-import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "../../reproduction/format";
+import type {
+  RecordedCheckpoint,
+  RecordedDecision,
+  ReproductionRecord,
+} from "../../reproduction/format";
 import type { RecordedNobleBodyState } from "../../reproduction/checkpoint/noble-body-format";
 import { sanitizeSpeechText } from "../../../utils/speech-text";
 export function nobleRecordCheck(v: unknown): asserts v {

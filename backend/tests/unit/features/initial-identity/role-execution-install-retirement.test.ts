@@ -16,17 +16,41 @@ import { GameActionRequestFactory } from "../../../../src/engine/actions/action-
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 
-const cards = [Role.Thief, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager, Role.Wolf, Role.Seer];
+const cards = [
+  Role.Thief,
+  Role.Wolf,
+  Role.Witch,
+  Role.Hunter,
+  Role.Villager,
+  Role.Villager,
+  Role.Wolf,
+  Role.Seer,
+];
 function fixture() {
   const config = foxBoard([Role.Thief, Role.Wolf, Role.Witch, Role.Hunter, Role.Wolf, Role.Seer]);
   const { world } = bootstrapGame(config, { fixedRoles: cards });
   const events: GameEvent[] = [];
   const window = new ThiefSetupWindow(world, new ToolGateway(), events, {
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
   });
-  return { world, config, events, run: () => window.execute(config, {
-    async getAction() { return { name: "choose_thief_card", args: { slot: 1 } }; },
-  }, 1, () => true) };
+  return {
+    world,
+    config,
+    events,
+    run: () =>
+      window.execute(
+        config,
+        {
+          async getAction() {
+            return { name: "choose_thief_card", args: { slot: 1 } };
+          },
+        },
+        1,
+        () => true,
+      ),
+  };
 }
 function nightScope(world: ReturnType<typeof fixture>["world"], role: RoleComponent) {
   const ability = allNightAbilities(role).find((entry) => entry.kind === "seer_check");
@@ -38,17 +62,20 @@ function nightScope(world: ReturnType<typeof fixture>["world"], role: RoleCompon
 
 for (const failingInstall of ["Role", "Camp", "Victory"] as const) {
   test(`same-camp ${failingInstall} install failure retires only the candidate execution and preserves data`, async () => {
-    const game = fixture(), { world } = game;
+    const game = fixture(),
+      { world } = game;
     const oldRole = world.getComponent(1, COMPONENT.Role)!;
     const oldCamp = world.getComponent(1, COMPONENT.Camp)!;
     const oldVictory = world.getComponent(1, COMPONENT.Victory)!;
     const stock = initialIdentityStock(world)!;
-    const oldHand = stock.hands.get(1)!, chosen = stock.reserve[1]!;
+    const oldHand = stock.hands.get(1)!,
+      chosen = stock.reserve[1]!;
     const error = new Error(`literal_initial_${failingInstall}_install_failure`);
     const original = world.addComponent;
-    const observed: { candidate?: RoleComponent; scope?: ReturnType<typeof nightScope>["scope"] } = {};
+    const observed: { candidate?: RoleComponent; scope?: ReturnType<typeof nightScope>["scope"] } =
+      {};
     const trace: string[] = [];
-    world.addComponent = function(this: typeof world, id: number, key: any, value: any) {
+    world.addComponent = function (this: typeof world, id: number, key: any, value: any) {
       if (id === 1 && key === COMPONENT.Role) observed.candidate = value;
       if (id === 1 && key === COMPONENT[failingInstall]) {
         trace.push(`${failingInstall}:throw`);
@@ -62,8 +89,13 @@ for (const failingInstall of ["Role", "Camp", "Victory"] as const) {
       return result;
     } as typeof world.addComponent;
     let caught: unknown;
-    try { await game.run(); } catch (failure) { caught = failure; }
-    finally { world.addComponent = original; }
+    try {
+      await game.run();
+    } catch (failure) {
+      caught = failure;
+    } finally {
+      world.addComponent = original;
+    }
     const candidate = observed.candidate!;
     expect(caught).toBe(error);
     expect(candidate.role).toBe(Role.Seer);
@@ -81,9 +113,11 @@ for (const failingInstall of ["Role", "Camp", "Victory"] as const) {
       expect(world.getComponent(1, COMPONENT.Role)).toBe(oldRole);
       expect(world.getComponent(1, COMPONENT.Camp)).toBe(oldCamp);
     } else {
-      expect(trace).toEqual(failingInstall === "Camp"
-        ? ["Role:installed", "Camp:throw"]
-        : ["Role:installed", "Camp:installed", "Victory:throw"]);
+      expect(trace).toEqual(
+        failingInstall === "Camp"
+          ? ["Role:installed", "Camp:throw"]
+          : ["Role:installed", "Camp:installed", "Victory:throw"],
+      );
       expect(world.getComponent(1, COMPONENT.Role)).toBe(candidate);
       expect(world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Good);
       if (failingInstall === "Camp") expect(world.getComponent(1, COMPONENT.Camp)).toBe(oldCamp);
@@ -104,15 +138,26 @@ for (const failingInstall of ["Role", "Camp", "Victory"] as const) {
 }
 
 test("a late identity fact failure keeps the completely installed candidate execution", async () => {
-  const game = fixture(), error = new Error("literal_late_identity_fact_failure");
-  Object.defineProperty(game.events, "push", { get() { throw error; } });
+  const game = fixture(),
+    error = new Error("literal_late_identity_fact_failure");
+  Object.defineProperty(game.events, "push", {
+    get() {
+      throw error;
+    },
+  });
   let caught: unknown;
-  try { await game.run(); } catch (failure) { caught = failure; }
+  try {
+    await game.run();
+  } catch (failure) {
+    caught = failure;
+  }
   const role = game.world.getComponent(1, COMPONENT.Role)!;
   expect(caught).toBe(error);
   expect(role.role).toBe(Role.Seer);
   expect(game.world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Good);
-  expect(game.world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([{ kind: "faction", faction: Camp.Good }]);
+  expect(game.world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
+    { kind: "faction", faction: Camp.Good },
+  ]);
   expect(isRoleExecutionRetired(role)).toBe(false);
   const { scope } = nightScope(game.world, role);
   expect(scope.isOwnerCurrent()).toBe(true);

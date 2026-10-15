@@ -11,7 +11,10 @@ import { createRoleComponent } from "../../../../src/domain/components/role";
 import { createVictoryComponent } from "../../../../src/domain/components/victory";
 import { Camp, Role } from "../../../../src/domain/identity";
 import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
-import { initialIdentityDeal, installInitialIdentityDeal } from "../../../../src/features/initial-identity/deal";
+import {
+  initialIdentityDeal,
+  installInitialIdentityDeal,
+} from "../../../../src/features/initial-identity/deal";
 import { publishInitialIdentityDeal } from "../../../../src/features/initial-identity/initial-deal-publication";
 
 function fixture(kind: "thief" | "shapeshifter") {
@@ -22,65 +25,152 @@ function fixture(kind: "thief" | "shapeshifter") {
   world.addComponent(ids[1]!, COMPONENT.Role, createRoleComponent(Role.Villager));
   world.addComponent(ids[1]!, COMPONENT.Camp, { camp: Camp.Good });
   for (const id of ids) world.addComponent(id, COMPONENT.Alive, createAliveComponent());
-  world.addComponent(ids[0]!, COMPONENT.Victory, createVictoryComponent([{ kind: "faction", faction: Camp.Wolf }]));
-  world.addComponent(ids[1]!, COMPONENT.Victory, createVictoryComponent([{ kind: "faction", faction: Camp.Good }]));
-  installInitialIdentityDeal(world, [Role.Wolf, Role.Villager, Role.Villager, Role.Villager], ids, kind);
+  world.addComponent(
+    ids[0]!,
+    COMPONENT.Victory,
+    createVictoryComponent([{ kind: "faction", faction: Camp.Wolf }]),
+  );
+  world.addComponent(
+    ids[1]!,
+    COMPONENT.Victory,
+    createVictoryComponent([{ kind: "faction", faction: Camp.Good }]),
+  );
+  installInitialIdentityDeal(
+    world,
+    [Role.Wolf, Role.Villager, Role.Villager, Role.Villager],
+    ids,
+    kind,
+  );
   return world;
 }
 
 test("no initial deal still queries kind before skipping public fields", () => {
-  const world = new World(), trace: string[] = [];
+  const world = new World(),
+    trace: string[] = [];
   const failure = new Error("literal_second_world_failure");
-  expect(() => publishInitialIdentityDeal({
-    world() { trace.push("world"); if (trace.length === 2) throw failure; return world; },
-    events() { trace.push("events"); return []; },
-    boardSize() { trace.push("board"); return 2; },
-  })).toThrow(failure);
+  expect(() =>
+    publishInitialIdentityDeal({
+      world() {
+        trace.push("world");
+        if (trace.length === 2) throw failure;
+        return world;
+      },
+      events() {
+        trace.push("events");
+        return [];
+      },
+      boardSize() {
+        trace.push("board");
+        return 2;
+      },
+    }),
+  ).toThrow(failure);
   expect(trace).toEqual(["world", "world"]);
 });
 
 test("both initial kinds publish the copied public deck with original push receiver and clock order", () => {
   for (const kind of ["thief", "shapeshifter"] as const) {
-    const world = fixture(kind), events: GameEvent[] = [], trace: string[] = [];
-    Object.defineProperty(events, "push", { configurable: true, get() { trace.push("push"); return Array.prototype.push; } });
+    const world = fixture(kind),
+      events: GameEvent[] = [],
+      trace: string[] = [];
+    Object.defineProperty(events, "push", {
+      configurable: true,
+      get() {
+        trace.push("push");
+        return Array.prototype.push;
+      },
+    });
     const originalNow = Date.now;
-    Date.now = () => { trace.push("clock"); return 7; };
+    Date.now = () => {
+      trace.push("clock");
+      return 7;
+    };
     try {
       publishInitialIdentityDeal({
-        world() { trace.push("world"); return world; },
-        events() { trace.push("events"); return events; },
-        boardSize() { trace.push("board"); return 2; },
+        world() {
+          trace.push("world");
+          return world;
+        },
+        events() {
+          trace.push("events");
+          return events;
+        },
+        boardSize() {
+          trace.push("board");
+          return 2;
+        },
       });
-    } finally { Date.now = originalNow; }
+    } finally {
+      Date.now = originalNow;
+    }
     expect(trace).toEqual(["world", "world", "board", "events", "push", "clock"]);
-    expect(events as unknown).toEqual([{
-      timestamp: 7,
-      type: kind === "shapeshifter" ? "shapeshifter_initial_deal" : "thief_initial_deal",
-      payload: {
-        roles: ["wolf", "villager", "villager", "villager"],
-        boardSize: 2,
-        policy: kind === "shapeshifter" ? "awa_netease_shapeshifter_two_extra_villagers_v1" : "lui_meme_thief_two_extra_villagers_v1",
+    expect(events as unknown).toEqual([
+      {
+        timestamp: 7,
+        type: kind === "shapeshifter" ? "shapeshifter_initial_deal" : "thief_initial_deal",
+        payload: {
+          roles: ["wolf", "villager", "villager", "villager"],
+          boardSize: 2,
+          policy:
+            kind === "shapeshifter"
+              ? "awa_netease_shapeshifter_two_extra_villagers_v1"
+              : "lui_meme_thief_two_extra_villagers_v1",
+        },
       },
-    }]);
+    ]);
     expect(events[0]!.payload).not.toHaveProperty("hands");
-    expect(initialIdentityDeal(world) as unknown).toEqual(["wolf", "villager", "villager", "villager"]);
+    expect(initialIdentityDeal(world) as unknown).toEqual([
+      "wolf",
+      "villager",
+      "villager",
+      "villager",
+    ]);
   }
 });
 
 test("push lookup failure follows board size and precedes clock without changing the initial stock", () => {
-  const world = fixture("thief"), events: GameEvent[] = [], trace: string[] = [];
+  const world = fixture("thief"),
+    events: GameEvent[] = [],
+    trace: string[] = [];
   const failure = new Error("literal_initial_deal_push_failure");
-  Object.defineProperty(events, "push", { configurable: true, get() { trace.push("push"); throw failure; } });
+  Object.defineProperty(events, "push", {
+    configurable: true,
+    get() {
+      trace.push("push");
+      throw failure;
+    },
+  });
   const originalNow = Date.now;
-  Date.now = () => { trace.push("clock"); return 7; };
+  Date.now = () => {
+    trace.push("clock");
+    return 7;
+  };
   try {
-    expect(() => publishInitialIdentityDeal({
-      world() { trace.push("world"); return world; },
-      events() { trace.push("events"); return events; },
-      boardSize() { trace.push("board"); return 2; },
-    })).toThrow(failure);
-  } finally { Date.now = originalNow; }
+    expect(() =>
+      publishInitialIdentityDeal({
+        world() {
+          trace.push("world");
+          return world;
+        },
+        events() {
+          trace.push("events");
+          return events;
+        },
+        boardSize() {
+          trace.push("board");
+          return 2;
+        },
+      }),
+    ).toThrow(failure);
+  } finally {
+    Date.now = originalNow;
+  }
   expect(trace).toEqual(["world", "world", "board", "events", "push"]);
   expect(events).toHaveLength(0);
-  expect(initialIdentityDeal(world) as unknown).toEqual(["wolf", "villager", "villager", "villager"]);
+  expect(initialIdentityDeal(world) as unknown).toEqual([
+    "wolf",
+    "villager",
+    "villager",
+    "villager",
+  ]);
 });

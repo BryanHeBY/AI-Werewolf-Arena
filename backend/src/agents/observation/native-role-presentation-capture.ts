@@ -197,7 +197,8 @@ const capture_night_mentor = (
 const capture_time_wolf_consort = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world: World | undefined, currentCamp: CurrentCampSource,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
 ): string =>
   nativeText(locale, "role.time_wolf_consort.brief") +
   " " +
@@ -211,7 +212,8 @@ const capture_time_wolf_consort = (
 const capture_wolf_sorcerer = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world: World | undefined, currentCamp: CurrentCampSource,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
 ): string =>
   nativeText(locale, "role.wolf_sorcerer.brief") +
   " " +
@@ -228,7 +230,12 @@ const capture_order_prince = (
   world?: World,
 ): string => nativeText(locale, "role.order_prince.brief");
 
-const capture_magician = (role: RoleComponent, locale: Locale = "zh-CN", world: World | undefined, currentCamp: CurrentCampSource): string => {
+const capture_magician = (
+  role: RoleComponent,
+  locale: Locale = "zh-CN",
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
+): string => {
   const state = getMagicianState(role, currentCamp);
   return [
     nativeText(locale, "role.magician.brief"),
@@ -248,7 +255,8 @@ const capture_magician = (role: RoleComponent, locale: Locale = "zh-CN", world: 
 const capture_red_moon_apostle = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world: World | undefined, currentCamp: CurrentCampSource,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
 ): string => {
   const state = getRedMoonState(role, currentCamp);
   return (
@@ -269,7 +277,8 @@ const capture_red_moon_apostle = (
 const capture_nightmare = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world: World | undefined, currentCamp: CurrentCampSource,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
 ): string => {
   const state = getNightmareShadowState(role, currentCamp);
   return [
@@ -292,7 +301,8 @@ const capture_nightmare = (
 const capture_evil_knight = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world: World | undefined, currentCamp: CurrentCampSource,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
 ): string => {
   const state = getEvilKnightState(role, currentCamp);
   return (
@@ -341,7 +351,12 @@ const capture_ghost_bride = (
     ),
   });
 
-const capture_wild_child = (role: RoleComponent, locale: Locale = "zh-CN", world: World | undefined, currentCamp: CurrentCampSource): string =>
+const capture_wild_child = (
+  role: RoleComponent,
+  locale: Locale = "zh-CN",
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
+): string =>
   nativeText(locale, "role.wild_child.state", {
     camp: (() => {
       // 只在此实际显示字段晚查；缺少必需组件不能把初始化元数据伪装成当前阵营。
@@ -538,7 +553,8 @@ const capture_debater = (role: RoleComponent, locale: Locale = "zh-CN", world?: 
 const capture_hidden_wolf = (
   role: RoleComponent,
   locale: Locale = "zh-CN",
-  world: World | undefined, currentCamp: CurrentCampSource,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
 ): string =>
   nativeText(
     locale,
@@ -552,10 +568,18 @@ const capture_hidden_wolf = (
       locale,
       getHiddenWolfState(role)?.hasInheritedKnife === true ? "common.yes" : "common.no",
     ),
-    active: nativeText(locale, canHiddenWolfKnife(role, world, currentCamp) ? "common.yes" : "common.no"),
+    active: nativeText(
+      locale,
+      canHiddenWolfKnife(role, world, currentCamp) ? "common.yes" : "common.no",
+    ),
   });
 
-const capture_gargoyle = (role: RoleComponent, locale: Locale = "zh-CN", world: World | undefined, currentCamp: CurrentCampSource): string => {
+const capture_gargoyle = (
+  role: RoleComponent,
+  locale: Locale = "zh-CN",
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
+): string => {
   const report = getRoleInspectionState(role)?.history.at(-1);
   return (
     nativeText(
@@ -572,7 +596,10 @@ const capture_gargoyle = (role: RoleComponent, locale: Locale = "zh-CN", world: 
         locale,
         getGargoyleState(role)?.hasInheritedKnife === true ? "common.yes" : "common.no",
       ),
-      active: nativeText(locale, canGargoyleKnife(role, world, currentCamp) ? "common.yes" : "common.no"),
+      active: nativeText(
+        locale,
+        canGargoyleKnife(role, world, currentCamp) ? "common.yes" : "common.no",
+      ),
     }) +
     (report
       ? " " +
@@ -792,7 +819,12 @@ const capture_idiot = (_roleComp: RoleComponent, locale: Locale = "zh-CN", world
 /** 这张表只选择具体捕获程序，不读取角色或 World，也不作为角色数据 shape 约束。 */
 const nativeCaptures: Record<
   NativeRolePresentationId,
-  (role: RoleComponent, locale: Locale, world: World | undefined, currentCamp: CurrentCampSource) => string
+  (
+    role: RoleComponent,
+    locale: Locale,
+    world: World | undefined,
+    currentCamp: CurrentCampSource,
+  ) => string
 > = {
   white_cat: capture_white_cat,
   fox_cub: capture_fox_cub,

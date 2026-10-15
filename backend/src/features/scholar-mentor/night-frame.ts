@@ -69,7 +69,6 @@ interface Board {
 }
 const boards = new WeakMap<World, Board>();
 
-
 const missingAbilityField = Symbol("missing_ability_field");
 function boundAbilityData(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value))
@@ -183,9 +182,7 @@ function requireBoard(world: World): Board {
   )
     throw new Error("scholar_mentor_original_state_revoked");
   for (const [id, c] of b.casters) {
-    if (
-      !c.matches(ownData(b.players.get(id)!.privateState, "scholarMentor"))
-    )
+    if (!c.matches(ownData(b.players.get(id)!.privateState, "scholarMentor")))
       throw new Error("scholar_mentor_original_state_revoked");
   }
   return b;
@@ -204,7 +201,8 @@ export function installScholarMentorBoard(world: World): void {
       !life ||
       types.isProxy(life) ||
       version === undefined ||
-      (world.getComponent(id, COMPONENT.Camp)?.camp !== Camp.Wolf && world.getComponent(id, COMPONENT.Camp)?.camp !== Camp.Good)
+      (world.getComponent(id, COMPONENT.Camp)?.camp !== Camp.Wolf &&
+        world.getComponent(id, COMPONENT.Camp)?.camp !== Camp.Good)
     )
       throw new Error("scholar_mentor_original_roster_invalid");
     const expected = aliveLifeDescriptor(life);

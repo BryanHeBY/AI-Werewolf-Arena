@@ -41,7 +41,10 @@ export const SHAPESHIFTER_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     init: (role, ctx) => {
-      initializeShapeshifterState(role, () => ctx.boardConfig?.shapeshifter?.policy ?? SHAPESHIFTER_POLICY);
+      initializeShapeshifterState(
+        role,
+        () => ctx.boardConfig?.shapeshifter?.policy ?? SHAPESHIFTER_POLICY,
+      );
     },
     configuration: {
       schema: parameters,

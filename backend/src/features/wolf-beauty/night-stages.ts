@@ -33,7 +33,13 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
         policy = state?.deathLinkPolicy;
       const canAct = () => !isRoleExecutionRetired(role);
       // 原阵营／槽／本夜库存资格先读取，再拒绝新的未付魅惑；名单本身仍是纯角色数据。
-      if (ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf || !state || state.lastActedDay === day || !canAct()) continue;
+      if (
+        ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf ||
+        !state ||
+        state.lastActedDay === day ||
+        !canAct()
+      )
+        continue;
       const targets = new Map(
         ctx.world
           .getAliveEntityIds()
@@ -50,7 +56,8 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
       const requestActor = actorId;
       const requestTools: Parameters<typeof makeRequest>[1] = ["charm"];
       const requestExtras: Parameters<typeof makeRequest>[2] = {
-        stage: "wolf_beauty", requiresAction: false,
+        stage: "wolf_beauty",
+        requiresAction: false,
       };
       const requestArgs = [requestActor, requestTools, requestExtras];
       const invokeRequest = Reflect.apply.bind(Reflect);
@@ -59,7 +66,11 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
       const actionArgs = [request];
       const invokeAction = Reflect.apply.bind(Reflect);
       if (!canAct()) continue;
-      const action: Awaited<ReturnType<typeof getAction>> = await invokeAction(getAction, provider, actionArgs);
+      const action: Awaited<ReturnType<typeof getAction>> = await invokeAction(
+        getAction,
+        provider,
+        actionArgs,
+      );
       const current = () =>
         ctx.isCurrent() &&
         animalBeautyCharmAllowed(ctx.world, day) &&
@@ -81,7 +92,8 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
           phase: Phase.Night,
           day,
         });
-        if (!current() || !result.ok || result.sanitizedCall?.name !== "charm" || !canAct()) continue;
+        if (!current() || !result.ok || result.sanitizedCall?.name !== "charm" || !canAct())
+          continue;
         targetId = result.sanitizedCall.args.target_id;
       }
       if (targetId !== null) {

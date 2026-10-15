@@ -5,7 +5,13 @@
  * 各容器仍归结算器，具体关系和去重仍归机制；此步不标死、不更新 seen／next、不付款或提交／取消预约。
  * 关系事件或后续查询失败保留已发生前缀；来源阶段只在原逐目标提交点读取，未进入提交时不读当前 phase。
  */
-import { DeathCause, type DeathSources, type EntityId, type GameEvent, type Phase } from "@ai-werewolf-arena/game-contract";
+import {
+  DeathCause,
+  type DeathSources,
+  type EntityId,
+  type GameEvent,
+  type Phase,
+} from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../domain/components/names";
 import type { World } from "../domain/world";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
@@ -48,20 +54,28 @@ export function prepareAdditionalDeathRelations(
   runtime: AdditionalDeathRelationRuntime,
   wave: AdditionalDeathRelationWave,
 ): AdditionalDeathRelationPreparation {
-  const { proposed, proposedSources, nightTargets, allSources, next, seen, nightOrigin, linked, ownsFragrant, resolutionDay, sourcePhase } = wave;
+  const {
+    proposed,
+    proposedSources,
+    nightTargets,
+    allSources,
+    next,
+    seen,
+    nightOrigin,
+    linked,
+    ownsFragrant,
+    resolutionDay,
+    sourcePhase,
+  } = wave;
   // 原夜目标先登记来源，再取同一梦实例的方法；Dream 的独立根名单以原 allSources 编号为界。
   for (const id of nightTargets) nightOrigin.add(id);
   if (runtime.dreams() && nightTargets.length)
-    for (const id of runtime.dreams()!.linkedDeaths(
-      runtime.world(),
-      nightTargets,
-      new Set(Object.keys(allSources).map(Number)),
-    )) {
+    for (const id of runtime
+      .dreams()!
+      .linkedDeaths(runtime.world(), nightTargets, new Set(Object.keys(allSources).map(Number)))) {
       linked.add(id);
       if (!proposed.includes(id)) proposed.push(id);
-      proposedSources[id] = [
-        ...new Set([...(proposedSources[id] ?? []), DeathCause.Dream]),
-      ];
+      proposedSources[id] = [...new Set([...(proposedSources[id] ?? []), DeathCause.Dream])];
       nightOrigin.add(id);
     }
   runtime.wedding().expand(proposed, proposedSources, seen, nightOrigin);
@@ -86,10 +100,7 @@ export function prepareAdditionalDeathRelations(
   const fragrantGun = ownsFragrant
     ? prepareFragrantDeathWave(runtime.world(), resolutionDay, fragrantRoots)
     : null;
-  if (
-    fragrantGun?.addedTargetId !== null &&
-    fragrantGun?.addedTargetId !== undefined
-  ) {
+  if (fragrantGun?.addedTargetId !== null && fragrantGun?.addedTargetId !== undefined) {
     // 原追加目标死因覆盖而非合并；预约尚未付款，commit/cancel仍由结算器原 try/finally 持有。
     proposed.push(fragrantGun.addedTargetId);
     proposedSources[fragrantGun.addedTargetId] = [DeathCause.FragrantLink];
@@ -97,6 +108,6 @@ export function prepareAdditionalDeathRelations(
   return {
     fragrantGun,
     // 调用方已按原序登记 seen／allSources，才在 originPhases.set 的参数点查询；失败不撤销该前缀。
-    originPhase: () => ownsFragrant ? runtime.phase() : sourcePhase,
+    originPhase: () => (ownsFragrant ? runtime.phase() : sourcePhase),
   };
 }

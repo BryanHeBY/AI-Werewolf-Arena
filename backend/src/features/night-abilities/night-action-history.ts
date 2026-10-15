@@ -9,7 +9,10 @@ import type { World } from "../../domain/world";
 import type { RoleComponent } from "../../domain/components/role";
 import { COMPONENT } from "../../domain/components/names";
 import { allNightAbilities, type NightAbilityReadView } from "./abilities";
-import type { NightActionKind, OwnNightAction } from "@ai-werewolf-arena/game-contract/night-ability-views";
+import type {
+  NightActionKind,
+  OwnNightAction,
+} from "@ai-werewolf-arena/game-contract/night-ability-views";
 
 const histories = new WeakMap<World, Map<EntityId, OwnNightAction[]>>();
 

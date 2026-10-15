@@ -39,13 +39,17 @@ interface LastWordsRequestScope {
 }
 
 // 复用唯一请求租约 owner；三个来源字段只 pin 创建时值／引用，不校验深层 JSON 或创建第二死亡许可。
-const lastWordsRequests = RequestLease.window<LastWordsRequestScope>({
-  actorId: (scope) => scope.actorId,
-  phase: (scope) => scope.phase,
-  day: (scope) => scope.day,
-  stage: () => "last_words",
-  current: (scope) => scope.current(),
-}, 130, ["trigger", "death_phase", "death_action_id"]);
+const lastWordsRequests = RequestLease.window<LastWordsRequestScope>(
+  {
+    actorId: (scope) => scope.actorId,
+    phase: (scope) => scope.phase,
+    day: (scope) => scope.day,
+    stage: () => "last_words",
+    current: (scope) => scope.current(),
+  },
+  130,
+  ["trigger", "death_phase", "death_action_id"],
+);
 
 /** 持有同一运行依赖对象；构造本窗口不查询其字段，真正的工厂构造保留在收集入口。 */
 export class LastWordsWindow {
@@ -64,7 +68,11 @@ export class LastWordsWindow {
     wordsContext?: LastWordsGrantContext,
   ): Promise<void> {
     // 构造器先查询，再按原顺序取 World／事件／第一次日期；构造完成后另读本次收集日期。
-    const requests = new this.runtime.requestFactory(this.runtime.world, this.runtime.events, this.runtime.state.day);
+    const requests = new this.runtime.requestFactory(
+      this.runtime.world,
+      this.runtime.events,
+      this.runtime.state.day,
+    );
     const day = this.runtime.state.day;
     for (const deadId of deadIds) {
       // 来源阶段与政策先于当前性和许可；不以授予事件或请求字段代替 World 的原生命绑定。
@@ -129,11 +137,16 @@ export class LastWordsWindow {
         if (action?.name !== "speak") {
           continue;
         }
-        const validated = this.runtime.toolGateway.validateAndSanitize(this.runtime.world, deadId, action, {
-          phase,
-          day: this.runtime.state.day,
-          deathActionId: permit.id,
-        });
+        const validated = this.runtime.toolGateway.validateAndSanitize(
+          this.runtime.world,
+          deadId,
+          action,
+          {
+            phase,
+            day: this.runtime.state.day,
+            deathActionId: permit.id,
+          },
+        );
         if (!validated.ok || !validated.sanitizedCall) {
           continue;
         }
@@ -169,7 +182,11 @@ export class LastWordsWindow {
         } finally {
           // 原 close 仍覆盖正文错误；新增 false 通知只在没有旧错时传播，boolean 同样保 throw undefined。
           if (failed) {
-            try { delivery?.close(); } catch { /* 保留正在传播的正文／许可关闭错误。 */ }
+            try {
+              delivery?.close();
+            } catch {
+              /* 保留正在传播的正文／许可关闭错误。 */
+            }
           } else {
             delivery?.close();
           }

@@ -234,9 +234,7 @@ describe("LlmActionProvider fallback", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const wolfId = context.world
       .entityIds()
-      .find(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "wolf",
-      )!;
+      .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === "wolf")!;
     const client = new NoActionToolLoopClient();
     const provider = new LlmActionProvider(context.world, client as any, {
       privilegedFallbackProvider: new FallbackProvider(null),

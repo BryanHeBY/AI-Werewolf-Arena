@@ -100,7 +100,9 @@ test("trickster cancellation preserves consumed numbers", () => {
   cancelTricksterExchange(f.world, 1);
   finishTricksterNight(f.world, 1);
   expect(resolveTricksterExile(f.world, 1, 2).effectiveId).toBe(2);
-  expect(getTricksterState(f.role, () => f.world.getComponent(1, COMPONENT.Camp))!.history).toEqual([{ day: 1, pair: [2, 6] }]);
+  expect(getTricksterState(f.role, () => f.world.getComponent(1, COMPONENT.Camp))!.history).toEqual(
+    [{ day: 1, pair: [2, 6] }],
+  );
   beginTricksterNight(f.world, 2);
   expect(tricksterChoiceTargets(f.world, 2)).not.toContain(2);
 });
@@ -118,7 +120,9 @@ test("trickster rejects second voluntary pass and permits forced exhausted night
     if (id !== 1) f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   expect(beginTricksterNight(f.world, 3)).toBeNull();
   finishTricksterNight(f.world, 3);
-  expect(getTricksterState(f.role, () => f.world.getComponent(1, COMPONENT.Camp))!.history).toHaveLength(2);
+  expect(
+    getTricksterState(f.role, () => f.world.getComponent(1, COMPONENT.Camp))!.history,
+  ).toHaveLength(2);
 });
 test("trickster unfinished aborted night cannot yield an exile mapping", () => {
   const f = fixture();

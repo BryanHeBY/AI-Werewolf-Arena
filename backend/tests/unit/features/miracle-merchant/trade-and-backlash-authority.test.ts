@@ -37,7 +37,6 @@ import type { NightStageContext } from "../../../../src/engine/night/contracts";
 import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 
-
 const deck = [Role.MiracleMerchant, Role.Wolf, Role.WolfKing, Role.Seer, Role.Witch, Role.Villager];
 
 const board = (roles = deck): BoardConfig => ({
@@ -70,7 +69,9 @@ function context(
   const factory = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -222,12 +223,8 @@ for (const dream of [false, true])
     expect(allNightAbilities(role(game, 2))).toEqual([]);
     expect(getMerchantState(role(game))!.remaining).toBe(0);
     expect(JSON.stringify(getMerchantState(role(game)))).not.toContain("backlash");
-    game.world
-      .getComponent(1, COMPONENT.StatusMarks)!
-      .add(StatusMark.GuardMark);
-    game.world
-      .getComponent(1, COMPONENT.StatusMarks)!
-      .add(StatusMark.HealMark);
+    game.world.getComponent(1, COMPONENT.StatusMarks)!.add(StatusMark.GuardMark);
+    game.world.getComponent(1, COMPONENT.StatusMarks)!.add(StatusMark.HealMark);
     game.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Good;
     game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     const damage = new DamageResolutionSystem().resolve(game.world, {

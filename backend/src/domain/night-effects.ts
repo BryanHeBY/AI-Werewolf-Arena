@@ -39,9 +39,24 @@ export interface NightPoisonClaim {
  * 创建身份不读 World、时钟或 RNG，也不授予行动资格。
  */
 export interface NightIntentOrigin {
-  readonly family: "mechanical" | "awakened" | "witch" | "demon-witch" | "lucky" | "black-market" | "scholar-mentor";
+  readonly family:
+    | "mechanical"
+    | "awakened"
+    | "witch"
+    | "demon-witch"
+    | "lucky"
+    | "black-market"
+    | "scholar-mentor";
   readonly day: number;
-  readonly stage: "mechanical_skill" | "mechanical_attack" | "awakened_skill" | "awakened_attack" | "witch" | "lucky" | "black_market_recipient" | "scholar_mentor_bonus";
+  readonly stage:
+    | "mechanical_skill"
+    | "mechanical_attack"
+    | "awakened_skill"
+    | "awakened_attack"
+    | "witch"
+    | "lucky"
+    | "black_market_recipient"
+    | "scholar_mentor_bonus";
   readonly actorId: EntityId;
   readonly actorLife: NightLifeReadScope;
   /** 原行动目标；反射不改写它，实际反射落点另存 NightPoisonRoute。 */
@@ -56,14 +71,20 @@ export interface NightIntentOrigin {
   /** 每份效果的独立运行时身份；description 只是诊断标签，不能用于去重。 */
   readonly causeId: symbol;
 }
-export type NightMechanicalIntentKind = "mechanical-shield" | "mechanical-attack" | "mechanical-failure";
+export type NightMechanicalIntentKind =
+  "mechanical-shield" | "mechanical-attack" | "mechanical-failure";
 export type NightAwakenedIntentKind = "awakened-shield" | "awakened-attack";
-export type NightIntentKind = NightMechanicalIntentKind | NightAwakenedIntentKind | "original-poison";
-export interface NightMechanicalIntent<K extends NightMechanicalIntentKind = NightMechanicalIntentKind> extends NightMechanicalEffect {
+export type NightIntentKind =
+  NightMechanicalIntentKind | NightAwakenedIntentKind | "original-poison";
+export interface NightMechanicalIntent<
+  K extends NightMechanicalIntentKind = NightMechanicalIntentKind,
+> extends NightMechanicalEffect {
   readonly kind: K;
   readonly origin: NightIntentOrigin;
 }
-export interface NightAwakenedIntent<K extends NightAwakenedIntentKind = NightAwakenedIntentKind> extends NightAwakenedEffect {
+export interface NightAwakenedIntent<
+  K extends NightAwakenedIntentKind = NightAwakenedIntentKind,
+> extends NightAwakenedEffect {
   readonly kind: K;
   readonly origin: NightIntentOrigin;
 }
@@ -71,7 +92,16 @@ export interface NightOriginalPoisonIntent extends NightPoisonClaim {
   readonly kind: "original-poison";
   readonly origin: NightIntentOrigin;
 }
-type OriginInput = Omit<NightIntentOrigin, "actorId" | "effectiveTargetId" | "causeId" | "sourceVersion" | "targetVersion" | "sourceBody" | "targetBody">;
+type OriginInput = Omit<
+  NightIntentOrigin,
+  | "actorId"
+  | "effectiveTargetId"
+  | "causeId"
+  | "sourceVersion"
+  | "targetVersion"
+  | "sourceBody"
+  | "targetBody"
+>;
 
 // 只标记由本 owner 构造的对象身份，不复制 effects、不按 World 存第二份状态。
 // 旧注入对象即使带有同名 getter，也不被当作新 intent 或读取其额外字段。
@@ -84,10 +114,18 @@ function annotateIntent<T extends { readonly target: NightLifeScope }, K extends
 ): T & Readonly<{ kind: K; origin: NightIntentOrigin }> {
   if (ownedIntents.has(effect)) throw new Error("night_effect_intent_already_owned");
   const effectiveTargetId = effect.target.id;
-  const causeId = Symbol(`effect:${origin.day}:${origin.family}:${origin.stage}:${actorId}:${kind}:${origin.abilityId}:${origin.requestedTargetId}:${effectiveTargetId}`);
+  const causeId = Symbol(
+    `effect:${origin.day}:${origin.family}:${origin.stage}:${actorId}:${kind}:${origin.abilityId}:${origin.requestedTargetId}:${effectiveTargetId}`,
+  );
   const captured = Object.freeze({
-    ...origin, actorId, effectiveTargetId, causeId, sourceVersion: origin.actorLife.version, targetVersion: effect.target.version,
-    sourceBody: origin.actorLife.life, targetBody: effect.target.life,
+    ...origin,
+    actorId,
+    effectiveTargetId,
+    causeId,
+    sourceVersion: origin.actorLife.version,
+    targetVersion: effect.target.version,
+    sourceBody: origin.actorLife.life,
+    targetBody: effect.target.life,
   });
   // 只锁定新增协议字段，不冻结原 target/callback；整个 origin 不能被重写绕过原体校验。
   Object.defineProperties(effect, {
@@ -99,18 +137,25 @@ function annotateIntent<T extends { readonly target: NightLifeScope }, K extends
 }
 /** 机械盾、额外刀与重复守失败保持各自类别及原 owner callback。 */
 export function mechanicalNightIntent<K extends NightMechanicalIntentKind>(
-  kind: K, effect: NightMechanicalEffect, origin: OriginInput & { readonly family: "mechanical" },
+  kind: K,
+  effect: NightMechanicalEffect,
+  origin: OriginInput & { readonly family: "mechanical" },
 ): NightMechanicalIntent<K> {
   return annotateIntent(effect, kind, origin, effect.actorId);
 }
 /** 觉醒效果不因已付瓶数或首次死亡而丢失原 callback 的专有规则。 */
 export function awakenedNightIntent<K extends NightAwakenedIntentKind>(
-  kind: K, effect: NightAwakenedEffect, origin: OriginInput & { readonly family: "awakened" },
+  kind: K,
+  effect: NightAwakenedEffect,
+  origin: OriginInput & { readonly family: "awakened" },
 ): NightAwakenedIntent<K> {
   return annotateIntent(effect, kind, origin, effect.actorId);
 }
 /** 原毒与机械返回毒是不同链路；此 factory 只标记原已付毒。 */
-export function originalPoisonIntent(effect: NightPoisonClaim, origin: OriginInput): NightOriginalPoisonIntent {
+export function originalPoisonIntent(
+  effect: NightPoisonClaim,
+  origin: OriginInput,
+): NightOriginalPoisonIntent {
   return annotateIntent(effect, "original-poison", origin, effect.source.id);
 }
 
@@ -120,17 +165,33 @@ export function originalPoisonIntent(effect: NightPoisonClaim, origin: OriginInp
  * 新协议错类别/夜时点属于约束强化；拒绝时不回滚先前已付库存或事实。
  */
 export function nightIntentTarget(
-  effect: { readonly target: NightLifeScope }, expected: NightIntentKind, night?: () => number | undefined,
+  effect: { readonly target: NightLifeScope },
+  expected: NightIntentKind,
+  night?: () => number | undefined,
 ): NightLifeScope {
   if (ownedIntents.has(effect)) {
-    const intent = effect as Readonly<{ kind: NightIntentKind; origin: NightIntentOrigin; target: NightLifeScope }>;
+    const intent = effect as Readonly<{
+      kind: NightIntentKind;
+      origin: NightIntentOrigin;
+      target: NightLifeScope;
+    }>;
     if (intent.kind !== expected) throw new Error("night_effect_intent_kind_mismatch");
     const day = night?.();
-    if (day !== undefined && intent.origin.day !== day) throw new Error("night_effect_intent_night_mismatch");
-    if (!intent.origin.causeId || intent.origin.actorLife.id !== intent.origin.actorId || intent.origin.actorLife.version !== intent.origin.sourceVersion || intent.origin.actorLife.life !== intent.origin.sourceBody)
+    if (day !== undefined && intent.origin.day !== day)
+      throw new Error("night_effect_intent_night_mismatch");
+    if (
+      !intent.origin.causeId ||
+      intent.origin.actorLife.id !== intent.origin.actorId ||
+      intent.origin.actorLife.version !== intent.origin.sourceVersion ||
+      intent.origin.actorLife.life !== intent.origin.sourceBody
+    )
       throw new Error("night_effect_intent_source_mismatch");
     const target = intent.target;
-    if (target.id !== intent.origin.effectiveTargetId || target.version !== intent.origin.targetVersion || target.life !== intent.origin.targetBody)
+    if (
+      target.id !== intent.origin.effectiveTargetId ||
+      target.version !== intent.origin.targetVersion ||
+      target.life !== intent.origin.targetBody
+    )
       throw new Error("night_effect_intent_target_mismatch");
     return target;
   }
@@ -245,21 +306,35 @@ export interface MechanicalDamagePlan {
 }
 /** Wave／单目标结算的运行时输入；这里只读既有折叠结果，不重查资格或库存。 */
 export function nightPoisonRoutes(plan: MechanicalDamagePlan): readonly NightPoisonRoute[] {
-  return ownedDamagePlans.has(plan) ? plan[POISON_ROUTES] ?? NO_POISON_ROUTES : NO_POISON_ROUTES;
+  return ownedDamagePlans.has(plan) ? (plan[POISON_ROUTES] ?? NO_POISON_ROUTES) : NO_POISON_ROUTES;
 }
 /** owned 路由参与毒的接受；旧集合仍含 owned 目标并作 OR 后备，尚未被路由完全替代。 */
 export function nightPoisonRouteTargets(
-  plan: MechanicalDamagePlan, targetId: EntityId, route: NightPoisonRoute["route"],
+  plan: MechanicalDamagePlan,
+  targetId: EntityId,
+  route: NightPoisonRoute["route"],
 ): boolean {
-  return nightPoisonRoutes(plan).some((cause) => cause.route === route && cause.targetId === targetId) ||
-    (route === "direct" ? plan.directPoisonTargets : plan.reflectedPoisonTargets).has(targetId);
+  return (
+    nightPoisonRoutes(plan).some((cause) => cause.route === route && cause.targetId === targetId) ||
+    (route === "direct" ? plan.directPoisonTargets : plan.reflectedPoisonTargets).has(targetId)
+  );
 }
 function recordOwnedPoisonRoute(
-  routes: NightPoisonRoute[], poison: NightPoisonClaim, route: NightPoisonRoute["route"],
-  target: NightLifeScope, targetId: EntityId,
+  routes: NightPoisonRoute[],
+  poison: NightPoisonClaim,
+  route: NightPoisonRoute["route"],
+  target: NightLifeScope,
+  targetId: EntityId,
 ): void {
   if (ownedIntents.has(poison))
-    routes.push(Object.freeze({ route, origin: (poison as NightOriginalPoisonIntent).origin, targetId, target }));
+    routes.push(
+      Object.freeze({
+        route,
+        origin: (poison as NightOriginalPoisonIntent).origin,
+        targetId,
+        target,
+      }),
+    );
 }
 /** 每份原毒只折叠一次；反射毒不再送回盾内，避免递归反射。 */
 export function planMechanicalDamage(
@@ -272,7 +347,10 @@ export function planMechanicalDamage(
   // 有效盾按贡献顺序覆盖同一目标，反射事实使用最终选中盾的行动者。
   const shields = new Map<EntityId, NightMechanicalEffect>();
   for (const shield of effects?.shields ?? []) {
-    if (shield.isCurrent() && livingNightLife(world, nightIntentTarget(shield, "mechanical-shield", intentNight))) {
+    if (
+      shield.isCurrent() &&
+      livingNightLife(world, nightIntentTarget(shield, "mechanical-shield", intentNight))
+    ) {
       shields.set(nightIntentTarget(shield, "mechanical-shield", intentNight).id, shield);
     }
   }
@@ -290,13 +368,15 @@ export function planMechanicalDamage(
       continue;
     const shield = shields.get(nightIntentTarget(poison, "original-poison", intentNight).id);
     if (!shield) {
-      const target = nightIntentTarget(poison, "original-poison", intentNight), targetId = target.id;
+      const target = nightIntentTarget(poison, "original-poison", intentNight),
+        targetId = target.id;
       directPoisonTargets.add(targetId);
       recordOwnedPoisonRoute(poisonRoutes, poison, "direct", target, targetId);
       continue;
     }
     if (livingNightLife(world, nightIntentPoisonSource(poison))) {
-      const target = nightIntentPoisonSource(poison), targetId = target.id;
+      const target = nightIntentPoisonSource(poison),
+        targetId = target.id;
       reflectedPoisonTargets.add(targetId);
       recordOwnedPoisonRoute(poisonRoutes, poison, "reflected", target, targetId);
       reflections.push({
@@ -309,11 +389,17 @@ export function planMechanicalDamage(
   const attacks = new Set<EntityId>();
   const failures = new Set<EntityId>();
   for (const attack of effects?.attacks ?? []) {
-    if (attack.isCurrent() && livingNightLife(world, nightIntentTarget(attack, "mechanical-attack", intentNight)))
+    if (
+      attack.isCurrent() &&
+      livingNightLife(world, nightIntentTarget(attack, "mechanical-attack", intentNight))
+    )
       attacks.add(nightIntentTarget(attack, "mechanical-attack", intentNight).id);
   }
   for (const failure of effects?.failures ?? []) {
-    if (failure.isCurrent() && livingNightLife(world, nightIntentTarget(failure, "mechanical-failure", intentNight)))
+    if (
+      failure.isCurrent() &&
+      livingNightLife(world, nightIntentTarget(failure, "mechanical-failure", intentNight))
+    )
       failures.add(nightIntentTarget(failure, "mechanical-failure", intentNight).id);
   }
   const plan: MechanicalDamagePlan = {

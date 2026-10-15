@@ -101,10 +101,7 @@ for (const change of [
       events,
       async () => {
         if (change === "actor_revive" || change === "target_revive") {
-          const life = game.world.getComponent(
-            change === "actor_revive" ? 2 : 5,
-            COMPONENT.Alive,
-          )!;
+          const life = game.world.getComponent(change === "actor_revive" ? 2 : 5, COMPONENT.Alive)!;
           life.alive = false;
           life.alive = true;
         }
@@ -129,9 +126,7 @@ for (const change of [
     expect(ctx.state.poisonClaims).toEqual([]);
     expect(events).toEqual([]);
     expect(
-      game.world
-        .getComponent(5, COMPONENT.StatusMarks)
-        ?.has(StatusMark.PoisonMark) ?? false,
+      game.world.getComponent(5, COMPONENT.StatusMarks)?.has(StatusMark.PoisonMark) ?? false,
     ).toBe(false);
   });
 test("even a successful gateway cannot put poison on a target life replaced inside validation", async () => {
@@ -174,10 +169,7 @@ for (const change of [
     expect(ctx.state.poisonClaims![0].source.id).toBe(2);
     expect(ctx.state.poisonClaims![0].target.id).toBe(5);
     if (change === "caster_dead" || change === "caster_revive" || change === "target_revive") {
-      const life = game.world.getComponent(
-        change === "target_revive" ? 5 : 2,
-        COMPONENT.Alive,
-      )!;
+      const life = game.world.getComponent(change === "target_revive" ? 5 : 2, COMPONENT.Alive)!;
       life.alive = false;
       if (change !== "caster_dead") life.alive = true;
     }
@@ -304,9 +296,7 @@ for (const change of [
       expect(ctx.state.poisonClaims).toEqual([]);
       expect(events).toEqual([]);
       expect(
-        game.world
-          .getComponent(5, COMPONENT.StatusMarks)
-          ?.has(StatusMark.PoisonMark) ?? false,
+        game.world.getComponent(5, COMPONENT.StatusMarks)?.has(StatusMark.PoisonMark) ?? false,
       ).toBe(false);
     });
   }

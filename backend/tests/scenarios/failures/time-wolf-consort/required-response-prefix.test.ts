@@ -4,7 +4,10 @@
  */
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  type ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 import { type PlannedTurn } from "../../../support/transport/contracts";
 import { timeConsortScenario } from "../../../support/features/time-wolf-consort/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";

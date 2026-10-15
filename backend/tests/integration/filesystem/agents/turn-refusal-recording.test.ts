@@ -14,10 +14,12 @@ import { SessionRecordManager } from "../../../../src/recording/session/recorder
 import path from "path";
 import { promises as fs } from "fs";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { REQUIRED_ACTION_CONSTRAINTS, FallbackProvider } from "../../../support/drivers/agents/llm-clients";
+import {
+  REQUIRED_ACTION_CONSTRAINTS,
+  FallbackProvider,
+} from "../../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider protocol", () => {
-
   test("returns actionable turn-id feedback and accepts a corrected witch action", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const root = await createTestTempDirectory("turn-id-feedback-");
@@ -31,9 +33,7 @@ describe("LlmActionProvider protocol", () => {
     );
     const witchId = context.world
       .entityIds()
-      .find(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "witch",
-      )!;
+      .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === "witch")!;
     const client = {
       chat: async () => "",
       async runToolLoop<T>(_messages: unknown, _tools: unknown, callbacks: any) {

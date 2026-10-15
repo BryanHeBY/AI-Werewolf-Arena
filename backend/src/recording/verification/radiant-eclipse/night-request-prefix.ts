@@ -4,7 +4,11 @@
  * 失败／未完成前置只能结束当前前缀，不能开放后继；此账本不授予 live 许可或付款。
  * 原角色查询、能力副本字段及错误顺序保持，类型和值依赖仍由本族具体叶拥有。
  */
-import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "../../reproduction/format";
+import type {
+  RecordedDecision,
+  RecordedGameEvent,
+  ReproductionRecord,
+} from "../../reproduction/format";
 import { Role, Camp } from "../../../domain/identity";
 import {
   radiantCheck as check,

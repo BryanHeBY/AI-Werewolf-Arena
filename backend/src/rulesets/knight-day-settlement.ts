@@ -4,7 +4,12 @@
  * 只有原提案成立才yield一次，经理在原点await真实死亡；失败不恢复，成功后才复查current、调用经理判胜并读endsDay。
  * 不标死、改阶段或缓存库存，也不添加Promise／许可；后项失败保已付资源和已发表事实。
  */
-import { Phase, type KnightDuelSelection, type KnightDuelCommit, type GameEvent } from "../domain/model";
+import {
+  Phase,
+  type KnightDuelSelection,
+  type KnightDuelCommit,
+  type GameEvent,
+} from "../domain/model";
 import type { World } from "../domain/world";
 import { commitKnightDuel } from "../features/knight/ports";
 

@@ -22,10 +22,7 @@ import {
 } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { CUPID_STAGE } from "../../../../src/features/cupid/night-stage";
-import {
-  getCupidState,
-  projectCupidState,
-} from "../../../../src/features/cupid/ports";
+import { getCupidState, projectCupidState } from "../../../../src/features/cupid/ports";
 import {
   loversRecord,
   projectLover,
@@ -236,7 +233,8 @@ for (const mutation of [
           if (calls++) return null;
           const victory = game.world.getComponent(2, COMPONENT.Victory)!;
           if (mutation === "target_role") role(game, 2).role = Role.Villager;
-          if (mutation === "target_camp") game.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Wolf;
+          if (mutation === "target_camp")
+            game.world.getComponent(2, COMPONENT.Camp)!.camp = Camp.Wolf;
           if (mutation === "target_state")
             (role(game, 2) as { privateState: Readonly<Record<string, unknown>> }).privateState =
               {};

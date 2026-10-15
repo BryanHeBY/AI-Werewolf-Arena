@@ -4,7 +4,10 @@
  * 输出与预期为明确原记录接收、精确拒绝及已付前缀断言，保留真实因果来源；生成录制不成为独立预期状态。
  */
 import { beforeAll, expect, test } from "bun:test";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  type ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 import { recordFragrantLiteral } from "../../../support/features/fragrant-pair-seer/drivers/recording";
 const records: Record<string, ReproductionRecord> = {};
 beforeAll(async () => {

@@ -277,9 +277,7 @@ describe("LlmActionProvider prompts", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const wolfId = context.world
       .entityIds()
-      .find(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "wolf",
-      )!;
+      .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === "wolf")!;
     const provider = new LlmActionProvider(
       context.world,
       new ToolLoopClient("kill_vote", { target_id: null, abstain: true }),
@@ -349,9 +347,7 @@ describe("LlmActionProvider prompts", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const witchId = context.world
       .entityIds()
-      .find(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "witch",
-      )!;
+      .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === "witch")!;
     const witch = context.world.getComponent(witchId, COMPONENT.Role)!;
     (getWitchState(witch)! as { heal: number }).heal = 0;
     const targetId = context.world.entityIds().find((id) => id !== witchId)!;

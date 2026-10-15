@@ -75,8 +75,7 @@ for (const locale of ["zh-CN", "en"] as const)
                 alive.alive = false;
                 alive.alive = true;
               }
-              if (revoke === "role")
-                world.getComponent(1, COMPONENT.Role)!.role = Role.Villager;
+              if (revoke === "role") world.getComponent(1, COMPONENT.Role)!.role = Role.Villager;
               if (revoke === "phase") live = false;
             }
             return { name: "self_destruct", args: { confirm: true, reason: "raw" } };

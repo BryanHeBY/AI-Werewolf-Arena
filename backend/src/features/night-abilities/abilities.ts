@@ -32,8 +32,11 @@ import type {
   NightAbilityMetadata,
   AbilityStatus,
 } from "@ai-werewolf-arena/game-contract/night-ability-views";
-export { projectRoleInspectionState, projectSeerState, projectWitchState } from "../../agents/observation/player-state";
-
+export {
+  projectRoleInspectionState,
+  projectSeerState,
+  projectWitchState,
+} from "../../agents/observation/player-state";
 
 export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy, Role>> = {
   gargoyle: Role.Gargoyle,
@@ -42,7 +45,6 @@ export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy,
   pure_white: Role.PureWhiteGirl,
   wolf_witch: Role.WolfWitch,
 };
-
 
 /** Pair 初始化和玩家投影共享此原纯数据校验；不读实例、World 或授予能力权限。 */
 export function projectPairState(value: unknown): PairSeerState {
@@ -166,7 +168,10 @@ export function activeNightAbility<K extends NightAbilityKind>(
 ): NightAbilityReadView<K> | undefined {
   const ability = findNightAbility(role, kind, id);
   // 原数据查找／status 先完成；永久退休只否决执行，不删除库存或把状态改成 disabled。
-  return ability && abilityStatus(ability, day) === "active" && role && !isRoleExecutionRetired(role)
+  return ability &&
+    abilityStatus(ability, day) === "active" &&
+    role &&
+    !isRoleExecutionRetired(role)
     ? ability
     : undefined;
 }
@@ -290,7 +295,6 @@ export function expireLuckyAbilitiesOnDeath(
   }
 }
 
-
 /** 初始化／学习流程仍在原调用点决定起效日；这里只写原 startsOnDay，不推进业务时钟。 */
 export function setNightAbilityStartDay(ability: NightAbilityReadView, day: number): void {
   (ability as { startsOnDay: number }).startsOnDay = day;
@@ -390,40 +394,52 @@ export function commitTransferredNightAbility(
   if (source === target) throw new Error("ability_transfer_inventory_alias");
   if (roleOf(world, fromId) !== source || roleOf(world, toId) !== target)
     throw new Error("ability_transfer_owner_revoked");
-  const sourcePrivate = transferPrivateState(source), targetPrivate = transferPrivateState(target);
+  const sourcePrivate = transferPrivateState(source),
+    targetPrivate = transferPrivateState(target);
   if (sourcePrivate !== originalPrivateState) throw new Error("ability_transfer_owner_revoked");
   if (sourcePrivate === targetPrivate) throw new Error("ability_transfer_inventory_alias");
-  const sourceStored = transferInventory(sourcePrivate), targetStored = transferInventory(targetPrivate);
+  const sourceStored = transferInventory(sourcePrivate),
+    targetStored = transferInventory(targetPrivate);
   if (sourceStored === targetStored && sourceStored !== undefined)
     throw new Error("ability_transfer_inventory_alias");
   if (utilTypes.isProxy(ability)) throw new Error("ability_transfer_inventory_invalid");
   const sourceEntry = sourceStored && Object.getOwnPropertyDescriptor(sourceStored, id),
     sourceId = Object.getOwnPropertyDescriptor(ability, "id");
   if (
-    !sourceStored || !sourceEntry || !("value" in sourceEntry) || sourceEntry.value !== ability ||
-    !sourceId || !("value" in sourceId) || sourceId.value !== id ||
+    !sourceStored ||
+    !sourceEntry ||
+    !("value" in sourceEntry) ||
+    sourceEntry.value !== ability ||
+    !sourceId ||
+    !("value" in sourceId) ||
+    sourceId.value !== id ||
     Reflect.ownKeys(sourceStored).filter(
       (key) => Object.getOwnPropertyDescriptor(sourceStored, key)!.value === ability,
     ).length !== 1
   )
     throw new Error("ability_transfer_source_slot_invalid");
-  if (targetStored && Reflect.ownKeys(targetStored).some(
-    (key) => Object.getOwnPropertyDescriptor(targetStored, key)!.value === ability,
-  ))
+  if (
+    targetStored &&
+    Reflect.ownKeys(targetStored).some(
+      (key) => Object.getOwnPropertyDescriptor(targetStored, key)!.value === ability,
+    )
+  )
     throw new Error("ability_transfer_inventory_alias");
   // 原政策与完整槽预检之后才否决退休双端；不借数据查询过滤 actor。
   if (isRoleExecutionRetired(source) || isRoleExecutionRetired(target))
     throw new Error("ability_transfer_owner_revoked");
   // 删除按已核对的真实 key，而非凭 Object.values 中的实例 id 猜测槽；失败不进入目标安装。
   delete sourceStored[id];
-  (
-    ((sourcePrivate as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]
-  ).push(id);
+  (((sourcePrivate as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]).push(
+    id,
+  );
   // 源已经删除／登记 ID；期间 getter 导致角色授权退休仍拒目标安装，不补回源。
   if (isRoleExecutionRetired(source) || isRoleExecutionRetired(target))
     throw new Error("ability_transfer_owner_revoked");
   // 空目标库存的创建也在源退休之后；安装或 granted 发布失败不会重装源槽。
-  const stored = targetStored ?? ((targetPrivate as { abilities?: Record<string, NightAbility> }).abilities = {});
+  const stored =
+    targetStored ??
+    ((targetPrivate as { abilities?: Record<string, NightAbility> }).abilities = {});
   if (isRoleExecutionRetired(source) || isRoleExecutionRetired(target))
     throw new Error("ability_transfer_owner_revoked");
   stored[received.id] = received;

@@ -5,7 +5,13 @@
  * World、配置和夜字段仍在原表达式位置读取，发布入口先查经理 callee，再求名单；前项异常停止后项并保已发表前缀。
  * 经理保 nightSettled 首写、真实死亡 await、finish／abort finally、阶段当前性与唯一封盘；本组合没有第二份状态或通用死亡引擎。
  */
-import { DeathCause, Phase, type EntityId, type DeathSources, type GameEvent } from "@ai-werewolf-arena/game-contract";
+import {
+  DeathCause,
+  Phase,
+  type EntityId,
+  type DeathSources,
+  type GameEvent,
+} from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../domain/components/names";
 import { aliveLifeVersion } from "../domain/components/alive";
@@ -91,7 +97,15 @@ export function prepareOrdinaryNightDeaths(
       deathPhases[id] = Phase.Day;
     }
   }
-  return { sourceDamage, originalLives, retainedSources, nightDeaths, sources, deaths, deathPhases };
+  return {
+    sourceDamage,
+    originalLives,
+    retainedSources,
+    nightDeaths,
+    sources,
+    deaths,
+    deathPhases,
+  };
 }
 
 /** 回调只在经理原 DR 参数展开点建立；动物／双生配置在该点选择，动物名单政策在真实发布时再次晚读。 */

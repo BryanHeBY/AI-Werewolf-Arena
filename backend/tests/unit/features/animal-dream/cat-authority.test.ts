@@ -17,7 +17,10 @@ import {
   filterAnimalLethalWave,
   animalAuthoritySnapshot,
 } from "../../../../src/features/animal-dream/authority";
-import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/features/animal-dream/accepted-ballots";
+import {
+  recordAnimalBallotRound,
+  sealAnimalBallots,
+} from "../../../../src/features/animal-dream/accepted-ballots";
 const fixture = (skip = false) => {
   const f = animalRosterFixture(undefined, (world, raw) =>
     installAnimalAuthority(world, {

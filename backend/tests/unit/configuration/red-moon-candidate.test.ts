@@ -22,7 +22,9 @@ for (const policy of ["ends_game", "forbidden"] as const)
     expect(isDemonHunterPreset(config)).toBe(true);
     expect(demonHunterActorId(world)).toBe(11);
     expect(
-      getRedMoonState(world.getComponent(4, COMPONENT.Role), () => world.getComponent(4, COMPONENT.Camp))?.lastWolfBlastPolicy,
+      getRedMoonState(world.getComponent(4, COMPONENT.Role), () =>
+        world.getComponent(4, COMPONENT.Camp),
+      )?.lastWolfBlastPolicy,
     ).toBe(policy);
     expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
     expect(

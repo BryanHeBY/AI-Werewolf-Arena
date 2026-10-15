@@ -9,7 +9,10 @@ import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, WinCondition } from "../../domain/identity";
-import type { NativeRoleContributions, RoleRuntimeContribution } from "../../rulesets/roles/contracts";
+import type {
+  NativeRoleContributions,
+  RoleRuntimeContribution,
+} from "../../rulesets/roles/contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { FRAGRANT_PAIR_POLICY } from "./state";
 import { installFragrantStateSlot } from "./fragrant-state-slot";
@@ -79,7 +82,9 @@ export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
       installFragrantStateSlot(role);
     },
     toolSpecs: [
-      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []).filter((s) => s.name === "kill_vote"),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []).filter(
+        (s) => s.name === "kill_vote",
+      ),
       {
         name: "bind_fragrant_pair",
         parameters: {

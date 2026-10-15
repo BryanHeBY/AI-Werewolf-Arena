@@ -13,7 +13,10 @@ import { getSessionRecorder } from "../../../src/recording/session/context";
 import { resolveGameSetup } from "../../../src/app/config/resolve-game-setup";
 import type { ResolvedGameSetup } from "../../../src/app/config/resolve-game-setup";
 import { runGame } from "../../../src/app/game-runner";
-import { cleanupTestTempDirectories, createTestTempDirectory } from "../../support/drivers/temp-directories";
+import {
+  cleanupTestTempDirectories,
+  createTestTempDirectory,
+} from "../../support/drivers/temp-directories";
 
 const restores: Array<() => void> = [];
 afterEach(async () => {
@@ -53,7 +56,9 @@ async function options(): Promise<{ setup: ResolvedGameSetup }> {
 
 async function replay(root: string) {
   const [session] = await fs.readdir(root);
-  return readReplayDocument(JSON.parse(await fs.readFile(path.join(root, session, "replay.json"), "utf8")));
+  return readReplayDocument(
+    JSON.parse(await fs.readFile(path.join(root, session, "replay.json"), "utf8")),
+  );
 }
 
 test("a failed game seals its partial replay and releases the active recorder", async () => {

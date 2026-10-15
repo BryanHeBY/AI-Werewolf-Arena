@@ -324,7 +324,9 @@ export function installNobleBodyAuthority(world: World, nobleId: number, bodyId:
 function mayBegin(owner: Owner, day: number): boolean {
   return (
     !owner.active &&
-    !owner.stateSlot.nobleState.contracts.some((c) => c.status.kind === "pending" && c.expiresNight < day) &&
+    !owner.stateSlot.nobleState.contracts.some(
+      (c) => c.status.kind === "pending" && c.expiresNight < day,
+    ) &&
     ![...owner.nights.keys()].some((previous) => previous >= day) &&
     [...owner.nights.values()].every(
       (n) => n.status !== "normal" || (n.bodyResolved && n.expiryProcessed),
@@ -360,7 +362,8 @@ export function beginNobleBodyNight(
     status: "open",
     body: { opened: false, committed: false },
     noble: { opened: false, committed: false },
-    requiresBody: playerCurrent(world, owner.body, true) && owner.stateSlot.bodyState.body.kind === "intact",
+    requiresBody:
+      playerCurrent(world, owner.body, true) && owner.stateSlot.bodyState.body.kind === "intact",
     requiresNoble:
       day >= 2 &&
       playerCurrent(world, owner.noble, true) &&
@@ -403,7 +406,9 @@ export function beginNobleBodyNight(
             ? "exile_revealed"
             : "spent",
       publicRevealDay:
-        owner.stateSlot.bodyState.body.kind === "exile_revealed" ? owner.stateSlot.bodyState.body.day : null,
+        owner.stateSlot.bodyState.body.kind === "exile_revealed"
+          ? owner.stateSlot.bodyState.body.day
+          : null,
     });
     notices.push(
       Object.freeze({
@@ -580,7 +585,9 @@ export function closeServantForDeath(
     aliveLifeVersion(binding.target.life) !== binding.target.version + 1
   )
     throw Error("night_noble_death_not_committed");
-  owner.stateSlot.commitNoble(endServant(owner.stateSlot.nobleState, contract.id, day, "target_dead"));
+  owner.stateSlot.commitNoble(
+    endServant(owner.stateSlot.nobleState, contract.id, day, "target_dead"),
+  );
   return Object.freeze({ contractId: contract.id, targetId });
 }
 /** 只有已付且匹配原体的选择能消费一次身体；控制方提供最终有效来源，并把返回回执与实际伤害配对。 */
@@ -605,7 +612,9 @@ export function resolveSecretBodyDamage(world: World, day: number, sources: Secr
       throw Error("secret_body_paid_binding_revoked");
     const plan = planSecretBodyBlock(owner.body.id, night.bodyTarget?.id ?? null, sources);
     if (plan.blocked)
-      owner.stateSlot.commitBody(spendBodyForNight(owner.stateSlot.bodyState, day, owner.body.id, plan.blocked));
+      owner.stateSlot.commitBody(
+        spendBodyForNight(owner.stateSlot.bodyState, day, owner.body.id, plan.blocked),
+      );
     night.bodyResolved = true;
     return plan;
   } catch (error) {
@@ -753,7 +762,8 @@ export function nobleBodyChoiceTargets(
           (kind === "noble"
             ? p.id !== owner.noble.id
             : !(
-                owner.stateSlot.bodyState.protectionRepeatPolicy === "awa_nonconsecutive_nights_v1" &&
+                owner.stateSlot.bodyState.protectionRepeatPolicy ===
+                  "awa_nonconsecutive_nights_v1" &&
                 last?.day === day - 1 &&
                 last.targetId === p.id
               )),

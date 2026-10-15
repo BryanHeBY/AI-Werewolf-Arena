@@ -24,7 +24,6 @@ export {
 } from "./death-gun-lifecycle";
 export { projectDeathGun } from "../../agents/observation/player-state";
 
-
 export function copyDeathGun(): never {
   throw new Error("death_ability_copy_not_supported");
 }

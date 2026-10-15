@@ -6,10 +6,7 @@
  * Agent 与复现记录共用本局板子来源；maxDays 在原元数据读取处捕获，循环复用该值。
  */
 import { deriveBoundedRequest } from "../domain/request-delivery";
-import {
-  animalOriginalAuditIds,
-  animalOriginalAuditPlayer,
-} from "../features/animal-dream/roster";
+import { animalOriginalAuditIds, animalOriginalAuditPlayer } from "../features/animal-dream/roster";
 import { aliveLifeDescriptor } from "../domain/components/alive";
 import { initialPlayerIdentity } from "../domain/initial-roster";
 import { initialIdentityDeal } from "../features/initial-identity/deal";
@@ -457,7 +454,11 @@ function replayPlayers(world: World) {
       role: initialPlayerIdentity(world, id)?.role ?? initial?.[index] ?? role?.role ?? "unknown",
       camp:
         initialPlayerIdentity(world, id)?.camp ??
-        (initial ? (initial[index] === "wolf" ? "wolf" : "good") : ((role && world.getComponent(id, COMPONENT.Camp)?.camp) ?? "unknown")),
+        (initial
+          ? initial[index] === "wolf"
+            ? "wolf"
+            : "good"
+          : ((role && world.getComponent(id, COMPONENT.Camp)?.camp) ?? "unknown")),
       alive: world.getComponent(id, COMPONENT.Alive)?.alive === true,
       name: world.getComponent(id, COMPONENT.Identity)?.name,
     };

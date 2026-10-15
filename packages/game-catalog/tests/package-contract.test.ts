@@ -4,7 +4,18 @@
  */
 import { describe, expect, test } from "bun:test";
 import { ROLE_DEFINITIONS, roleDefinition, roleName } from "@ai-werewolf-arena/game-catalog";
-import { EVENT_IDS, EVENT_PACK_IDS, FACTION_IDS, ITEM_IDS, LOCALES, ROLE_IDS, RuleError, VICTORY_CHECKPOINTS, isLocale, isRoleId } from "@ai-werewolf-arena/game-contract";
+import {
+  EVENT_IDS,
+  EVENT_PACK_IDS,
+  FACTION_IDS,
+  ITEM_IDS,
+  LOCALES,
+  ROLE_IDS,
+  RuleError,
+  VICTORY_CHECKPOINTS,
+  isLocale,
+  isRoleId,
+} from "@ai-werewolf-arena/game-contract";
 
 describe("catalog public package contract", () => {
   test("all 64 IDs are unique while planned metadata stays distinct from delivery", () => {

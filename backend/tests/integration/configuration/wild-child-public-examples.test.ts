@@ -26,8 +26,6 @@ for (const size of [6, 12])
     expect(
       g.world
         .entityIds()
-        .filter(
-          (id) => g.world.getComponent(id, COMPONENT.Role)?.role === Role.WildChild,
-        ),
+        .filter((id) => g.world.getComponent(id, COMPONENT.Role)?.role === Role.WildChild),
     ).toHaveLength(1);
   });

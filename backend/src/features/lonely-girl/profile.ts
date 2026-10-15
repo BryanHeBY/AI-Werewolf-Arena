@@ -10,11 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition } from "../../domain";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
-import {
-  LONELY_GIRL_POLICY,
-  initializeLonelyGirlState,
-  readLonelyGirlTool,
-} from "./state-slot";
+import { LONELY_GIRL_POLICY, initializeLonelyGirlState, readLonelyGirlTool } from "./state-slot";
 import { authorizedLonelyGirl, projectLonelyGirl } from "./lifecycle";
 const parameters = z.strictObject({
   policy: z.literal(LONELY_GIRL_POLICY).default(LONELY_GIRL_POLICY),

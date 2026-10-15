@@ -65,8 +65,7 @@ for (const trigger of [
 ] as const)
   test(`ACP logging close at ${trigger} suppresses late actions and private round writes`, async () => {
     const { AcpActionProvider } = await import("../../../../src/agents/acp/acp-action-provider");
-    const { PlayerRoundRecorder } =
-      await import("../../../../src/app/player-round-recorder");
+    const { PlayerRoundRecorder } = await import("../../../../src/app/player-round-recorder");
     let closing: Promise<void> | undefined,
       creates = 0,
       prompts = 0,

@@ -70,7 +70,7 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
         // 配置已原序 parse；privateState 左值仍先于 mentor 分支与状态工厂，不提前读取或复制。
         initializeScholarMentorState(
           () => role.privateState,
-          () => mentor ? "night_mentor" : "day_scholar",
+          () => (mentor ? "night_mentor" : "day_scholar"),
         );
       },
       configuration: {
@@ -128,7 +128,9 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
       validationRules: {
         ...base?.runtime.validationRules,
         modify_skill: ({ world, role, actorId, day, phase, toolCall }) => {
-          const state = scholarMentorStateForRole(role, () => world.getComponent(actorId, COMPONENT.Camp));
+          const state = scholarMentorStateForRole(role, () =>
+            world.getComponent(actorId, COMPONENT.Camp),
+          );
           if (
             !state ||
             !isScholarMentorBoard(world) ||
@@ -201,7 +203,17 @@ function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleCont
             args: { kind, target_id: target, abstain: target === null },
           };
         }
-        return base?.runtime.baselineAction?.(role, request, pick, pickCamp, locale, world, currentCamp) ?? null;
+        return (
+          base?.runtime.baselineAction?.(
+            role,
+            request,
+            pick,
+            pickCamp,
+            locale,
+            world,
+            currentCamp,
+          ) ?? null
+        );
       },
     },
     presentation: nativeRolePresentation(roleNameId),

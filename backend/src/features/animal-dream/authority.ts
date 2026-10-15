@@ -163,7 +163,13 @@ function beautyState(world: World): { value: object; json: string } | null {
 export function installAnimalAuthority(world: World, config: unknown): void {
   if (owners.has(world)) throw Error("animal_authority_already_installed");
   installAnimalRoster(world, config);
-  const fox = captureResource(world, "fox_cub", "foxCub", FOX_STATE_SLOT.schema, FOX_STATE_SLOT.create()),
+  const fox = captureResource(
+      world,
+      "fox_cub",
+      "foxCub",
+      FOX_STATE_SLOT.schema,
+      FOX_STATE_SLOT.create(),
+    ),
     puffer = captureResource(
       world,
       "pufferfish",
@@ -171,7 +177,13 @@ export function installAnimalAuthority(world: World, config: unknown): void {
       PUFFER_STATE_SLOT.schema,
       PUFFER_STATE_SLOT.create(),
     ),
-    cat = captureResource(world, "white_cat", "whiteCat", CAT_STATE_SLOT.schema, CAT_STATE_SLOT.create());
+    cat = captureResource(
+      world,
+      "white_cat",
+      "whiteCat",
+      CAT_STATE_SLOT.schema,
+      CAT_STATE_SLOT.create(),
+    );
   if (!beautyState(world)) throw Error("animal_initial_resource_invalid");
   owners.set(world, {
     fox,
@@ -328,7 +340,11 @@ export function openAnimalFoxChoice(world: World, day: number, requestToken?: ob
     commit: (targetId: number | null) => {
       if (!foxCurrent(world, owner, night)) throw Error("animal_fox_choice_unavailable");
       const target = targetId === null ? null : animalOriginalPlayer(world, targetId),
-        next = FOX_STATE_SLOT.allowedWrites.choose(FOX_STATE_SLOT.schema(FOX_STATE_SLOT.checkpoint.decode(() => owner.fox.json)), day, targetId),
+        next = FOX_STATE_SLOT.allowedWrites.choose(
+          FOX_STATE_SLOT.schema(FOX_STATE_SLOT.checkpoint.decode(() => owner.fox.json)),
+          day,
+          targetId,
+        ),
         encoded = FOX_STATE_SLOT.checkpoint.encode(next);
       if (targetId !== null && !target) throw Error("animal_fox_target_unavailable");
       if (
@@ -833,7 +849,10 @@ export function commitAnimalPufferKnifeDeath(
     (unit ? scope !== unit.token : typeof scope !== "function")
   )
     throw Error("animal_puffer_knife_death_unavailable");
-  const next = PUFFER_STATE_SLOT.allowedWrites.knifeDeath(PUFFER_STATE_SLOT.schema(PUFFER_STATE_SLOT.checkpoint.decode(() => owner.puffer.json)), day),
+  const next = PUFFER_STATE_SLOT.allowedWrites.knifeDeath(
+      PUFFER_STATE_SLOT.schema(PUFFER_STATE_SLOT.checkpoint.decode(() => owner.puffer.json)),
+      day,
+    ),
     encoded = PUFFER_STATE_SLOT.checkpoint.encode(next);
   checkDeathScope(world, owner, unit ? unit.current : (scope as () => boolean));
   if (animalOriginalPlayer(world, puffer.scope.id, false) !== puffer || puffer.scope.life.alive)

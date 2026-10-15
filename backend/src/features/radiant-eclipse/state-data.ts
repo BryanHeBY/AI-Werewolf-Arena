@@ -8,7 +8,10 @@ import { types } from "node:util";
 
 export const RADIANT_ECLIPSE_POLICY = "awa_radiant_eclipse_v1" as const;
 
-export function record(value: unknown, keys: readonly string[]): Record<string, unknown> | undefined {
+export function record(
+  value: unknown,
+  keys: readonly string[],
+): Record<string, unknown> | undefined {
   if (!value || typeof value !== "object" || types.isProxy(value) || Array.isArray(value)) return;
   const prototype = Object.getPrototypeOf(value);
   if (prototype !== Object.prototype && prototype !== null) return;

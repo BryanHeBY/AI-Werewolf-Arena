@@ -30,13 +30,17 @@ interface BadgeChoiceRequestScope {
 }
 
 // 只 pin 工厂创建时的来源值及候选数组原引用，不重新枚举候选或把数组 JSON 当作许可。
-const badgeRequests = RequestLease.window<BadgeChoiceRequestScope>({
-  actorId: (scope) => scope.actorId,
-  phase: (scope) => scope.phase,
-  day: (scope) => scope.day,
-  stage: () => "sheriff_badge_choice",
-  current: (scope) => scope.current(),
-}, 150, ["trigger", "death_action_id", "badge_candidates", "allow_fallback"]);
+const badgeRequests = RequestLease.window<BadgeChoiceRequestScope>(
+  {
+    actorId: (scope) => scope.actorId,
+    phase: (scope) => scope.phase,
+    day: (scope) => scope.day,
+    stage: () => "sheriff_badge_choice",
+    current: (scope) => scope.current(),
+  },
+  150,
+  ["trigger", "death_action_id", "badge_candidates", "allow_fallback"],
+);
 
 /** 持徽死者只在引擎打开、绑定原生命版本的临时许可内选择；这不是复活后的新生命权限。 */
 export async function resolveSheriffBadge(
@@ -107,7 +111,12 @@ export async function resolveSheriffBadge(
       },
     });
     if (!authorized()) return;
-    const requestScope: BadgeChoiceRequestScope = { actorId: fromId, phase, day, current: authorized };
+    const requestScope: BadgeChoiceRequestScope = {
+      actorId: fromId,
+      phase,
+      day,
+      current: authorized,
+    };
     badgeRequests.bind(requestScope, request);
     delivery = badgeRequests.openDelivery(requestScope, request);
     if (!delivery) return;
@@ -145,8 +154,14 @@ export async function resolveSheriffBadge(
       // 原 callee／五参数先求值，再追加空 catalog 与当前 turn 的完成口；全部新增可执行准备在末交付守卫之前。
       const commit = commitSheriffBadgeChoice;
       const commitArguments: Parameters<typeof commitSheriffBadgeChoice> = [
-        world, fromId, reason, events, target, undefined,
-        () => delivery!.complete(), () => delivery!.current(),
+        world,
+        fromId,
+        reason,
+        events,
+        target,
+        undefined,
+        () => delivery!.complete(),
+        () => delivery!.current(),
       ];
       const invokeCommit = Reflect.apply.bind(Reflect);
       if (!delivery.current()) return;
@@ -165,7 +180,11 @@ export async function resolveSheriffBadge(
     } finally {
       // 原 permit.close 仍覆盖正文错误；新增 false 通知不能盖任何旧错，boolean 同样支持 throw undefined。
       if (failed) {
-        try { delivery?.close(); } catch { /* 保留正文或许可关闭错误。 */ }
+        try {
+          delivery?.close();
+        } catch {
+          /* 保留正文或许可关闭错误。 */
+        }
       } else {
         delivery?.close();
       }

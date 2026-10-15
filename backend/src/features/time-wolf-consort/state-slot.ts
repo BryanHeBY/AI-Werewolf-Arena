@@ -188,7 +188,10 @@ function encodeTimeConsortStateIdentity(
 ): string {
   const view = projectTimeConsortState(role, Number.MAX_SAFE_INTEGER - 1, currentCamp);
   if (!view) throw new Error("time_consort_original_state_revoked");
-  return JSON.stringify({ ...view, triggeredDay: getTimeConsortState(role, currentCamp)!.triggeredDay });
+  return JSON.stringify({
+    ...view,
+    triggeredDay: getTimeConsortState(role, currentCamp)!.triggeredDay,
+  });
 }
 /**
  * 本族唯一槽的方法表。schema/get 使用同一完整原校验，allowedWrites 收走原两项写入，
@@ -202,6 +205,9 @@ export const TIME_CONSORT_STATE_SLOT = Object.freeze({
   project: projectTimeConsortState,
   reflectionTarget: timeConsortReflectionTarget,
   install: installTimeConsortState,
-  allowedWrites: Object.freeze({ appendHistory: appendTimeConsortHistory, trigger: triggerTimeConsortState }),
+  allowedWrites: Object.freeze({
+    appendHistory: appendTimeConsortHistory,
+    trigger: triggerTimeConsortState,
+  }),
   checkpoint: Object.freeze({ identity: encodeTimeConsortStateIdentity }),
 });

@@ -15,11 +15,7 @@ import { WOLF_TOOL_SPECS, WOLF_STAGE_DIRECTIVES } from "../wolf/ability-ports";
 import { WOLF_VALIDATION_RULES } from "../wolf/ability-ports";
 import { WOLF_LLM_REPAIR_PACK } from "../wolf/ability-ports";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import {
-  WILD_CHILD_POLICY,
-  initializeWildChildState,
-  readWildChildTool,
-} from "./state-slot";
+import { WILD_CHILD_POLICY, initializeWildChildState, readWildChildTool } from "./state-slot";
 import {
   authorizedWildChild,
   projectWildChild,
@@ -95,7 +91,15 @@ export const WILD_CHILD_ROLE_PROFILE: NativeRoleContributions = {
             : { code: RuleError.WildChildChoice },
     },
     llmRepair: WOLF_LLM_REPAIR_PACK,
-    baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale, world, currentCamp) =>
+    baselineAction: (
+      role,
+      request,
+      pickAliveNotSelf,
+      pickAliveByCamp,
+      locale,
+      world,
+      currentCamp,
+    ) =>
       request.allowedTools.includes("choose_wild_model")
         ? { name: "choose_wild_model", args: { target_id: pickAliveNotSelf()! } }
         : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(

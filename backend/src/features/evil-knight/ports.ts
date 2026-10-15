@@ -9,7 +9,11 @@
 import { Role, type EntityId } from "../../domain/identity";
 import { COMPONENT } from "../../domain/components/names";
 import type { World } from "../../domain/world";
-export { isEvilKnightBoard, assertEvilKnightNativeActor, assertEvilKnightRosterCurrent } from "./night-frame";
+export {
+  isEvilKnightBoard,
+  assertEvilKnightNativeActor,
+  assertEvilKnightRosterCurrent,
+} from "./night-frame";
 export { commitEvilKnightReflection } from "./reflection";
 /** 运行查询保原 binding／Map 捕获，不公开 Map 或增加库存／生命写权。 */
 export { evilKnightNightBinding, captureEvilKnightNightShotProtection } from "./night-bindings";

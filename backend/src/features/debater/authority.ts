@@ -3,16 +3,8 @@
  * 输出为窗口、提交及处罚查询；参与者捕获／复验归中立数据所有者，不在此复制其政策。
  * 不变量：关闭仅退休同一窗口；原已提交选择不退款，处罚仍在实际查询时按原生命版本失效。
  */
-import {
-  COMPONENT,
-  type World,
-  type DebatePenaltyComponent,
-} from "../../domain";
-import {
-  captureNightLife,
-  livingNightLife,
-  type NightLifeScope,
-} from "../../domain/night-effects";
+import { COMPONENT, type World, type DebatePenaltyComponent } from "../../domain";
+import { captureNightLife, livingNightLife, type NightLifeScope } from "../../domain/night-effects";
 
 import type { OriginalParticipant as DebateParticipant } from "../../domain/original-participant";
 

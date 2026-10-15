@@ -19,7 +19,15 @@ import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, Phase, Role, type ActionRequest, type BoardConfig, type RoleComponent } from "../../../../src/domain";
+import {
+  Camp,
+  COMPONENT,
+  Phase,
+  Role,
+  type ActionRequest,
+  type BoardConfig,
+  type RoleComponent,
+} from "../../../../src/domain";
 import { createRandom } from "../../../../src/domain/random";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
@@ -122,16 +130,22 @@ async function runRecorded(
     if (failures.length === 1) throw failures[0];
     if (failures.length) throw new AggregateError(failures, "scripted_game_failed");
   });
-  const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8")));
+  const replay = readReplayDocument(
+    JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8")),
+  );
   assertReplayDocument(replay);
-  const manifest = readReplayManifest(JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8")));
+  const manifest = readReplayManifest(
+    JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8")),
+  );
   expect(replay.result.winner).toBe(Camp.Good);
   expect(manifest.winner).toBe(Camp.Good);
   expect(
-    (manifest.players as Array<{ role: Role; camp: Camp }>).map((player: { role: Role; camp: Camp }) => ({
-      role: player.role,
-      camp: player.camp,
-    })),
+    (manifest.players as Array<{ role: Role; camp: Camp }>).map(
+      (player: { role: Role; camp: Camp }) => ({
+        role: player.role,
+        camp: player.camp,
+      }),
+    ),
   ).toEqual(fixedRoles.map((role) => ({ role, camp: role === Role.Wolf ? Camp.Wolf : Camp.Good })));
   expect(replay.players.map((player) => ({ role: player.role, camp: player.camp }))).toEqual(
     fixedRoles.map((role) => ({ role, camp: role === Role.Wolf ? Camp.Wolf : Camp.Good })),

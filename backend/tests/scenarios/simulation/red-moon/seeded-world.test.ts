@@ -28,10 +28,7 @@ for (const policy of ["ends_game", "forbidden"] as const)
           const random = createRandom("red-moon-world:" + policy + ":" + locale + ":" + seed);
           const game = bootstrapGame(config, { locale, random });
           const initial = new Map(
-            game.playerIds.map((id) => [
-              id,
-              game.world.getComponent(id, COMPONENT.Role)!,
-            ]),
+            game.playerIds.map((id) => [id, game.world.getComponent(id, COMPONENT.Role)!]),
           );
           const styles = ["active", "conservative", "competitive", "random"] as const;
           const strategies = new Map(
@@ -59,10 +56,14 @@ for (const policy of ["ends_game", "forbidden"] as const)
           }
           const alive = game.world.getAliveEntityIds();
           expect(game.playerIds.filter((id) => !dead.has(id))).toEqual(alive);
-          const wolves = alive.filter((id) => game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Wolf);
+          const wolves = alive.filter(
+            (id) => game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Wolf,
+          );
           const villagers = alive.filter((id) => initial.get(id)!.role === Role.Villager);
           const gods = alive.filter(
-            (id) => game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Good && initial.get(id)!.role !== Role.Villager,
+            (id) =>
+              game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Good &&
+              initial.get(id)!.role !== Role.Villager,
           );
           const winner =
             wolves.length === 0 ? Camp.Good : !villagers.length || !gods.length ? Camp.Wolf : null;

@@ -37,7 +37,10 @@ export interface DemonDelegatedPrivateData {
   noble: unknown;
   body: unknown;
 }
-type PrivateData = Pick<DemonParticipantStateData, "privateState" | "inventoryRefs" | "privateRefs" | "auditPrivateJson" | "delegatedKey">;
+type PrivateData = Pick<
+  DemonParticipantStateData,
+  "privateState" | "inventoryRefs" | "privateRefs" | "auditPrivateJson" | "delegatedKey"
+>;
 type AuditData = Pick<DemonParticipantStateData, "privateState" | "auditPrivateJson">;
 
 /** 原 descriptor 递归先记录父路径再访问子对象；不新增 seen/schema，原捕获方已按原序验证数据。 */
@@ -109,7 +112,10 @@ export function privateAuditCurrent(p: PrivateData, delegatedCurrent: () => bool
   delete expected[p.delegatedKey];
   return JSON.stringify(actual) === JSON.stringify(expected);
 }
-export function committedPrivate(p: PrivateData & { readonly id: number }, readDelegated: () => DemonDelegatedPrivateData): Record<string, unknown> {
+export function committedPrivate(
+  p: PrivateData & { readonly id: number },
+  readDelegated: () => DemonDelegatedPrivateData,
+): Record<string, unknown> {
   const cached = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
   if (p.delegatedKey) {
     const owned = readDelegated();
@@ -136,12 +142,17 @@ export function captureDemonParticipantPrivateData(
   };
 }
 /** 原身份前置检查通过后才比较顶层 descriptor；不与先前 World／Camp 查询合并或提前。 */
-export function demonPrivateRefsCurrent(p: Pick<PrivateData, "privateRefs">, descriptors: PropertyDescriptorMap): boolean {
-  return Object.keys(descriptors).length === p.privateRefs.length &&
+export function demonPrivateRefsCurrent(
+  p: Pick<PrivateData, "privateRefs">,
+  descriptors: PropertyDescriptorMap,
+): boolean {
+  return (
+    Object.keys(descriptors).length === p.privateRefs.length &&
     p.privateRefs.every(
       ([key, value]) =>
         descriptors[key] && "value" in descriptors[key]! && descriptors[key]!.value === value,
-    );
+    )
+  );
 }
 /** 调用方已核原消耗／history 或 frame current；原 JSON 求值后才覆盖最近安全串。 */
 export function refreshDemonParticipantAudit(p: AuditData): void {
@@ -157,8 +168,12 @@ export function captureDemonWitchAuditData(p: AuditData) {
 }
 /** 已置 witchOpened 后进行原同步 reset：先编码模板，再写三个 live 字段、核整容器，最后更新 audit。 */
 export function resetDemonWitchParticipantData(
-  p: AuditData, original: Record<string, unknown>, abilities: Record<string, unknown>,
-  snapshot: Record<string, unknown>, state: Record<string, unknown>, originalState: Record<string, unknown>,
+  p: AuditData,
+  original: Record<string, unknown>,
+  abilities: Record<string, unknown>,
+  snapshot: Record<string, unknown>,
+  state: Record<string, unknown>,
+  originalState: Record<string, unknown>,
 ) {
   const resetState: Record<string, unknown> = {
     ...state,
@@ -179,9 +194,15 @@ export function resetDemonWitchParticipantData(
 }
 /** 原调用方已核 potion/current；先编码／比较完整期望私态，再原成功标记，最后写 audit。 */
 export function commitDemonWitchParticipantData(
-  p: AuditData, original: Record<string, unknown>, abilities: Record<string, unknown>,
-  snapshot: Record<string, unknown>, resetState: Record<string, unknown>, resetAbility: Record<string, unknown>,
-  n: { readonly day: number }, potion: "heal" | "poison" | "none", markCommitted: (json: string) => void,
+  p: AuditData,
+  original: Record<string, unknown>,
+  abilities: Record<string, unknown>,
+  snapshot: Record<string, unknown>,
+  resetState: Record<string, unknown>,
+  resetAbility: Record<string, unknown>,
+  n: { readonly day: number },
+  potion: "heal" | "poison" | "none",
+  markCommitted: (json: string) => void,
 ): boolean {
   const expectedState = { ...resetState };
   if (potion !== "none") {
@@ -220,11 +241,21 @@ export function captureDemonNativeAuditData(p: AuditData | undefined, id: string
  * nativeArrayPush 必须是 authority 原模块位置捕获的函数，不在新模块初始化时重捕获。
  */
 export function commitDemonNativeParticipantData(
-  p: AuditData, original: Record<string, unknown> | null, abilities: Record<string, unknown> | undefined,
-  snapshot: Record<string, unknown>, state: Record<string, unknown>, originalState: object,
-  ability: object, kind: "seer_check" | "guard", id: string, day: number,
-  targetId: number | null, inspection: unknown, readCamp: (id: number) => Camp,
-  nativeArrayPush: typeof Array.prototype.push, markCommitted: () => void,
+  p: AuditData,
+  original: Record<string, unknown> | null,
+  abilities: Record<string, unknown> | undefined,
+  snapshot: Record<string, unknown>,
+  state: Record<string, unknown>,
+  originalState: object,
+  ability: object,
+  kind: "seer_check" | "guard",
+  id: string,
+  day: number,
+  targetId: number | null,
+  inspection: unknown,
+  readCamp: (id: number) => Camp,
+  nativeArrayPush: typeof Array.prototype.push,
+  markCommitted: () => void,
 ): boolean {
   let nextState: Record<string, unknown>;
   if (kind === "seer_check") {
@@ -273,7 +304,10 @@ export function captureDemonHunterAuditData(p: AuditData) {
 }
 /** 原死亡枪资格已复验；真实 canShoot 写后编码，失败保已耗库存及旧审计串。 */
 export function consumeDemonHunterParticipantData(
-  p: AuditData, state: object, original: Record<string, unknown>, hunter: Record<string, unknown>,
+  p: AuditData,
+  state: object,
+  original: Record<string, unknown>,
+  hunter: Record<string, unknown>,
   markCommitted: () => void,
 ): void {
   (state as Record<string, unknown>).canShoot = false;
@@ -288,7 +322,8 @@ export function projectDemonParticipantCheckpoint(
   p: DemonParticipantStateData & { readonly id: number; readonly kind: Role; readonly camp: Camp },
   cp: DemonCheckpointAuditData & { readonly seat: number; readonly name: string },
   marks: ReadonlyArray<readonly [StatusMark, StatusMarkSnapshot | null]>,
-  readAlive: () => boolean, readDelegated: () => DemonDelegatedPrivateData,
+  readAlive: () => boolean,
+  readDelegated: () => DemonDelegatedPrivateData,
 ) {
   return {
     id: p.id,
@@ -329,7 +364,10 @@ export function acceptDemonRedMoonAudit(p: AuditData, expected: string): void {
  * 原 badge预检完成后才准备两份期望数据；翻牌→canVote→weight 后核内容，再依原顺序更新两引用表及双审计串。
  * 失败不补写余字段、不改变生命，也不能拿最近安全串当成可重新付款的库存。
  */
-export function commitDemonIdiotParticipantData(p: PrivateData, cp: DemonCheckpointAuditData): boolean {
+export function commitDemonIdiotParticipantData(
+  p: PrivateData,
+  cp: DemonCheckpointAuditData,
+): boolean {
   const next = { revealed: true };
   const original = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
   const expectedPrivate = JSON.stringify({ ...original, idiot: next });

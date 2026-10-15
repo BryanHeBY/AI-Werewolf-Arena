@@ -71,10 +71,12 @@ for (const required of [false, true])
     });
     expect(fallbacks).toBe(required ? 1 : 0);
     expect(closes).toBe(1);
-    const view = readReplayPlayerView(JSON.parse(
-      await fs.readFile(path.join(root, "optional/players/player_1.json"), "utf8"),
-    ));
+    const view = readReplayPlayerView(
+      JSON.parse(await fs.readFile(path.join(root, "optional/players/player_1.json"), "utf8")),
+    );
     expect(
-      (view.timeline[0] as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry).delta_messages.some((message: any) => message.kind === "fallback"),
+      (
+        view.timeline[0] as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry
+      ).delta_messages.some((message: any) => message.kind === "fallback"),
     ).toBe(required);
   });

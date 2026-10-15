@@ -237,8 +237,6 @@ test("a later hook failure keeps a completed gun death, original error and close
     events.filter((event) => event.type === "hunter_shot").map((event) => event.payload),
   ).toEqual([{ hunterId: 2, targetId: 4 }]);
   expect(world.getComponent(4, COMPONENT.Alive)!.alive).toBe(false);
-  expect(getHunterState(world.getComponent(2, COMPONENT.Role)!)!.canShoot).toBe(
-    false,
-  );
+  expect(getHunterState(world.getComponent(2, COMPONENT.Role)!)!.canShoot).toBe(false);
   expect(afterError).toBe(0);
 });

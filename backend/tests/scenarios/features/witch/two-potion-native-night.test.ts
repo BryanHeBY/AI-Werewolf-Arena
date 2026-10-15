@@ -61,13 +61,8 @@ function setup(
     }),
   ).config;
   const game = bootstrapGame(config, { fixedRoles: roles, locale });
-  const ability = findNightAbility(
-    game.world.getComponent(2, COMPONENT.Role),
-    "potion",
-  )!;
-  game.world
-    .getComponent(3, COMPONENT.StatusMarks)!
-    .add(StatusMark.WolfKillMark);
+  const ability = findNightAbility(game.world.getComponent(2, COMPONENT.Role), "potion")!;
+  game.world.getComponent(3, COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
   const events: GameEvent[] = [];
   const requests: ActionRequest[] = [];
   const act = async (

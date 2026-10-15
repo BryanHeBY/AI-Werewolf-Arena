@@ -1,9 +1,25 @@
 /**
  * 单元测试：验证 World 类型槽与原引用／生命所有权。输入为十一种组件名、原对象和死亡许可修订，字面顺序、对象身份及版本为预期；编译正反例检查统一槽推断与旧任意泛型拒绝，不更改角色规则、传输或序列化句柄。
  */
-import { createAliveComponent, createCampComponent } from "../../../src/agents/observation/component-presentation";
+import {
+  createAliveComponent,
+  createCampComponent,
+} from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { COMPONENT, Camp, Phase, Role, World, aliveLifeVersion, createIdentityComponent, type AliveComponent, type CampComponent, type ComponentMap, type ComponentName, type RoleComponent } from "../../../src/domain";
+import {
+  COMPONENT,
+  Camp,
+  Phase,
+  Role,
+  World,
+  aliveLifeVersion,
+  createIdentityComponent,
+  type AliveComponent,
+  type CampComponent,
+  type ComponentMap,
+  type ComponentName,
+  type RoleComponent,
+} from "../../../src/domain";
 import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 
 function compilerExamples(world: World, actorId: number) {

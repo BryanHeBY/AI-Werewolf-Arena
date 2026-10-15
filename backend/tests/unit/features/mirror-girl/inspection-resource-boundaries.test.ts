@@ -18,10 +18,16 @@ import {
   type RoleComponent,
 } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
-import { findNightAbility, allNightAbilities } from "../../../../src/features/night-abilities/abilities";
+import {
+  findNightAbility,
+  allNightAbilities,
+} from "../../../../src/features/night-abilities/abilities";
 import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
 import { setNightAbilityEnabled } from "../../../../src/features/night-abilities/abilities";
-import { grantNightAbility, transferNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import {
+  grantNightAbility,
+  transferNightAbility,
+} from "../../../../src/features/night-abilities/night-ability-grants";
 import { freshMirrorInspectionState } from "../../../../src/features/mirror-girl/profile";
 import { MIRROR_INSPECTION_STAGE } from "../../../../src/features/role-inspection/contribution-ports";
 import {
@@ -415,8 +421,11 @@ test("fresh Mirror copy/gift reject inherited or private state, while transfer p
     statePolicy: (state) => structuredClone(state),
   });
   getDefaultRoleCatalog().applyRuntime(role(game), {
-      initialCamp: game.world.getComponent(1, COMPONENT.Camp)!,
-      currentCamp: () => game.world.getComponent(1, COMPONENT.Camp), world: game.world, boardConfig: game.config });
+    initialCamp: game.world.getComponent(1, COMPONENT.Camp)!,
+    currentCamp: () => game.world.getComponent(1, COMPONENT.Camp),
+    world: game.world,
+    boardConfig: game.config,
+  });
   expect(allNightAbilities(role(game)).filter((a) => a.source.kind === "native")).toEqual([]);
 });
 
@@ -529,7 +538,9 @@ test("a gifted Mirror instance runs without a Mirror entity and cannot replace n
     }),
   );
   expect(gift.uses).toBe(1);
-  expect(canGargoyleKnife(role(game, 2), game.world, () => game.world.getComponent(2, COMPONENT.Camp))).toBe(false);
+  expect(
+    canGargoyleKnife(role(game, 2), game.world, () => game.world.getComponent(2, COMPONENT.Camp)),
+  ).toBe(false);
   expect(hasRoleInspectionNightCommit(game.world, 1)).toBe(true);
 });
 
@@ -668,10 +679,7 @@ for (const change of ["cancel_null", "actor_revive", "target_revive", "state", "
           return null;
         }
         if (change === "actor_revive" || change === "target_revive") {
-          const life = game.world.getComponent(
-            change === "actor_revive" ? 1 : 2,
-            COMPONENT.Alive,
-          )!;
+          const life = game.world.getComponent(change === "actor_revive" ? 1 : 2, COMPONENT.Alive)!;
           life.alive = false;
           life.alive = true;
         }

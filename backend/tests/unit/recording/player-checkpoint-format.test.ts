@@ -41,10 +41,17 @@ test("player format keeps retained slots and JSON metadata without role filterin
       thief: { policy: "lui_meme_thief_two_extra_villagers_v1", remaining: 0, choice: 1 },
       abilities: {
         "gift:literal": {
-          id: "gift:literal", kind: "seer_check",
+          id: "gift:literal",
+          kind: "seer_check",
           source: { kind: "copy", actorId: 3, abilityId: "native:seer_check" },
-          sourceDisclosed: false, activation: "lucky", startsOnDay: 1,
-          maxUses: 1, uses: 0, lastUsedDay: null, disabled: false, deathExpired: false,
+          sourceDisclosed: false,
+          activation: "lucky",
+          startsOnDay: 1,
+          maxUses: 1,
+          uses: 0,
+          lastUsedDay: null,
+          disabled: false,
+          deathExpired: false,
           state: { lastTarget: null, lastIsWerewolf: null, history: [] },
           extraMetadata: { note: "kept" },
         },
@@ -54,20 +61,33 @@ test("player format keeps retained slots and JSON metadata without role filterin
     wallNote: {
       instanceId: "wall:1:7",
       source: { kind: "wall_event", eventId: "awa_wall_notes_v1", day: 1 },
-      remaining: 1, expired: false,
+      remaining: 1,
+      expired: false,
     },
     debatePenalty: { day: 2, sourceId: 3, lifeVersion: 0 },
     lovers: {
-      actorId: 4, day: 1, policy: "netease_2017_cupid_follows_lovers_v1",
-      pairIds: [2, 3], pairCamps: [Camp.Good, Camp.Wolf], groupId: "cupid_lovers", mixed: true,
+      actorId: 4,
+      day: 1,
+      policy: "netease_2017_cupid_follows_lovers_v1",
+      pairIds: [2, 3],
+      pairCamps: [Camp.Good, Camp.Wolf],
+      groupId: "cupid_lovers",
+      mixed: true,
     },
-    badge: { isSheriff: true, destroyed: false, voteWeight: 1.5, handoffPolicy: "awa_holder_choice_v1" },
+    badge: {
+      isSheriff: true,
+      destroyed: false,
+      voteWeight: 1.5,
+      handoffPolicy: "awa_holder_choice_v1",
+    },
   };
   const result = format.parse(input);
   expect<unknown>(result).toEqual(input);
   expect(result.privateState).not.toBe(input.privateState);
   expect(result.privateState.thief).toEqual({
-    policy: "lui_meme_thief_two_extra_villagers_v1", remaining: 0, choice: 1,
+    policy: "lui_meme_thief_two_extra_villagers_v1",
+    remaining: 0,
+    choice: 1,
   });
   const absent = format.parse(player());
   expect(Object.hasOwn(absent, "wallNote")).toBe(false);
@@ -82,22 +102,41 @@ test("ordinary checkpoint and Trace capture precede the strict JSON rejection at
     locale: "en",
   });
   const role = game.world.getComponent(5, COMPONENT.Role)!,
-    raw = role.privateState as Record<string, unknown>, reads: string[] = [];
+    raw = role.privateState as Record<string, unknown>,
+    reads: string[] = [];
   raw.optional = undefined;
   Object.defineProperty(raw, "legal", {
     enumerable: true,
-    get() { reads.push("private-getter"); return { note: "literal" }; },
+    get() {
+      reads.push("private-getter");
+      return { note: "literal" };
+    },
   });
   const events = game.phaseManager.getEvents(),
-    checkpoint = captureCheckpoint(game.world, game.phaseManager.getSnapshot(), 0, true, events.length);
+    checkpoint = captureCheckpoint(
+      game.world,
+      game.phaseManager.getSnapshot(),
+      0,
+      true,
+      events.length,
+    );
   let changes = 0;
-  const trace = new ReproductionTrace({
-    engine: { id: "awa-engine", sourceHash: "a".repeat(64), lockHash: "b".repeat(64) },
-    random: game.random.metadata,
-    ruleset: RULESET, boardId: "format_boundary", normalizedBoard: game.boardConfig as import("@ai-werewolf-arena/game-contract").BoardConfig,
-    locale: "en", maxDays: 1, dealMode: "fixed",
-    players: checkpoint.players.map(({ id, name, role, camp }) => ({ id, name, role, camp })),
-  }, () => { changes++; });
+  const trace = new ReproductionTrace(
+    {
+      engine: { id: "awa-engine", sourceHash: "a".repeat(64), lockHash: "b".repeat(64) },
+      random: game.random.metadata,
+      ruleset: RULESET,
+      boardId: "format_boundary",
+      normalizedBoard: game.boardConfig as import("@ai-werewolf-arena/game-contract").BoardConfig,
+      locale: "en",
+      maxDays: 1,
+      dealMode: "fixed",
+      players: checkpoint.players.map(({ id, name, role, camp }) => ({ id, name, role, camp })),
+    },
+    () => {
+      changes++;
+    },
+  );
   // 原捕获可保 undefined；不让新格式在 checkpoint 追加之前提前拒绝或改写 live 容器。
   trace.checkpoint(checkpoint, events);
   expect(reads).toEqual(["private-getter"]);
@@ -113,19 +152,30 @@ test("ordinary checkpoint and Trace capture precede the strict JSON rejection at
 
 test("player format retains the independent Lovers and Wall ownership refine errors", () => {
   const lovers = {
-    actorId: 4, day: 1, policy: "netease_2017_cupid_follows_lovers_v1",
-    pairIds: [2, 3], pairCamps: [Camp.Good, Camp.Wolf], groupId: "cupid_lovers", mixed: true,
-  }, wallNote = {
-    instanceId: "wall:1:7",
-    source: { kind: "wall_event", eventId: "awa_wall_notes_v1", day: 1 }, remaining: 1, expired: false,
-  };
+      actorId: 4,
+      day: 1,
+      policy: "netease_2017_cupid_follows_lovers_v1",
+      pairIds: [2, 3],
+      pairCamps: [Camp.Good, Camp.Wolf],
+      groupId: "cupid_lovers",
+      mixed: true,
+    },
+    wallNote = {
+      instanceId: "wall:1:7",
+      source: { kind: "wall_event", eventId: "awa_wall_notes_v1", day: 1 },
+      remaining: 1,
+      expired: false,
+    };
   const badLovers = format.safeParse({ ...player(), lovers: { ...lovers, mixed: false } });
   expect(badLovers.success).toBe(false);
   if (!badLovers.success)
     expect(badLovers.error.issues.map(({ message, path }) => ({ message, path }))).toEqual([
       { message: "reproduction_lovers_invalid", path: ["lovers"] },
     ]);
-  const badWall = format.safeParse({ ...player(), wallNote: { ...wallNote, instanceId: "wall:1:8" } });
+  const badWall = format.safeParse({
+    ...player(),
+    wallNote: { ...wallNote, instanceId: "wall:1:8" },
+  });
   expect(badWall.success).toBe(false);
   if (!badWall.success)
     expect(badWall.error.issues.map(({ message, path }) => ({ message, path }))).toEqual([

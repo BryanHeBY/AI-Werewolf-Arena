@@ -25,14 +25,10 @@ for (const locale of ["zh-CN", "en"] as const)
         f = bootstrapGame(config, { locale });
       const actor = f.world
         .entityIds()
-        .find(
-          (id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.Magician,
-        )!;
+        .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.Magician)!;
       const villager = f.world
         .entityIds()
-        .find(
-          (id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.Villager,
-        )!;
+        .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.Villager)!;
       const seen: PlayerObservation[] = [];
       const provider = new ObservedPlayersActionProvider(
         f.world,
@@ -68,7 +64,9 @@ for (const locale of ["zh-CN", "en"] as const)
       await provider.getAction(request(actor));
       expect(seen[0]!.ownState.magician!.history).toEqual([]);
       expect(seen[1]!.ownState.magician!.history).toEqual([{ day: 1, pair }]);
-      const state = getMagicianState(f.world.getComponent(actor, COMPONENT.Role), () => f.world.getComponent(actor, COMPONENT.Camp))!;
+      const state = getMagicianState(f.world.getComponent(actor, COMPONENT.Role), () =>
+        f.world.getComponent(actor, COMPONENT.Camp),
+      )!;
       expect(seen[1]!.ownState.magician!.history).not.toBe(state.history);
       expect(seen[1]!.ownState.magician!.history[0]!.pair).not.toBe(state.history[0]!.pair);
       expect(Object.isFrozen(seen[1]!.ownState.magician!.history[0]!.pair)).toBe(true);

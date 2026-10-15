@@ -5,8 +5,21 @@ import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
-import { COMPONENT, Camp, Phase, PotionType, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent } from "../../../../src/domain";
-import { ghostBrideBoard, ghostBrideDeck } from "../../../support/features/ghost-bride/builders/scenario";
+import {
+  COMPONENT,
+  Camp,
+  Phase,
+  PotionType,
+  type ActionRequest,
+  type ToolCall,
+  type GameEvent,
+  type RoleComponent,
+  type AliveComponent,
+} from "../../../../src/domain";
+import {
+  ghostBrideBoard,
+  ghostBrideDeck,
+} from "../../../support/features/ghost-bride/builders/scenario";
 import { GhostBrideSetupWindow } from "../../../../src/features/ghost-bride/setup";
 import {
   ghostBrideReady,
@@ -17,8 +30,17 @@ import {
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ActionReception } from "../../../../src/engine/actions/action-reception";
-import { knownWolfTeammates, wolfKnifeHolders } from "../../../../src/features/wolf-team/permissions";
-import { getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry, getDefaultToolSpecRegistry } from "../../../../src/rulesets/mechanism-api";
+import {
+  knownWolfTeammates,
+  wolfKnifeHolders,
+} from "../../../../src/features/wolf-team/permissions";
+import {
+  getDefaultRoleCatalog,
+  getDefaultTargetHintRegistry,
+  getDefaultPhaseStageLocalizationRegistry,
+  getDefaultConfigRenderRegistry,
+  getDefaultToolSpecRegistry,
+} from "../../../../src/rulesets/mechanism-api";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import { resolveInspection } from "../../../../src/engine/inspection";
 
@@ -76,7 +98,11 @@ for (const [groom, witness] of [
       .entityIds()
       .map((id) => g.world.getComponent(id, COMPONENT.Role)!);
     const originalStocks = originalRoles.map((role) => role.privateState);
-    await new GhostBrideSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
+    await new GhostBrideSetupWindow(g.world, new ToolGateway(), g.events, {
+      get requestFactory() {
+        return GameActionRequestFactory;
+      },
+    }).execute(
       g.boardConfig,
       {
         getAction: async (request) => {

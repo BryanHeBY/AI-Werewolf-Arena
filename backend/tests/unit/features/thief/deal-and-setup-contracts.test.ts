@@ -91,12 +91,11 @@ const run = (
   body: (r: ActionRequest) => Promise<ToolCall | null>,
   current = () => true,
 ) =>
-  new ThiefSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
-    g.config,
-    { getAction: body },
-    1,
-    current,
-  );
+  new ThiefSetupWindow(g.world, new ToolGateway(), g.events, {
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
+  }).execute(g.config, { getAction: body }, 1, current);
 
 function policy(g: Fixture, withConfig = true) {
   return new PlayerPromptPolicy(g.world, {
@@ -620,9 +619,7 @@ test("ordinary N-card deal preserves prior seeded RNG path and has no Thief stoc
     [Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager],
     createRandom("legacy-thief-absent").fork("deal"),
   );
-  expect(
-    g.playerIds.map((id) => g.world.getComponent(id, COMPONENT.Role)!.role),
-  ).toEqual(expected);
+  expect(g.playerIds.map((id) => g.world.getComponent(id, COMPONENT.Role)!.role)).toEqual(expected);
   expect(initialThiefDeal(g.world)).toBeUndefined();
   expect(projectThiefSetup(g.world)).toBeUndefined();
 });

@@ -194,9 +194,7 @@ test("gateway refusals have language-neutral codes and never change private reso
   const facts = (game: ReturnType<typeof bootstrapGame>) =>
     game.world.entityIds().map((id) => ({
       id,
-      state: structuredClone(
-        game.world.getComponent(id, COMPONENT.Role)!.privateState,
-      ),
+      state: structuredClone(game.world.getComponent(id, COMPONENT.Role)!.privateState),
       alive: game.world.getComponent(id, COMPONENT.Alive)?.alive,
       vote: {
         canVote: game.world.getComponent(id, COMPONENT.VotingRight)?.canVote,
@@ -238,9 +236,7 @@ test("gateway refusals have language-neutral codes and never change private reso
       { phase: Phase.Night },
     );
     expect(rejected.error).toBe("guard_repeat");
-    expect(
-      getGuardState(game.world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
-    ).toBe(2);
+    expect(getGuardState(game.world.getComponent(5, COMPONENT.Role)!)!.lastTarget).toBe(2);
   }
 });
 

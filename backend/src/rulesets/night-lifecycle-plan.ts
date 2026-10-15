@@ -10,26 +10,14 @@ import { openNightUnit } from "../domain/night-unit";
 import { expireNobleNight } from "../features/noble-secret-body/ports";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
-import {
-  demonNightTerminal,
-  type DemonNightUnit,
-} from "../features/demon-hunter/ports";
-import {
-  weddingNightTerminal,
-  type WeddingNightUnit,
-} from "../features/ghost-bride/ports";
-import {
-  magicianNightTerminal,
-  type MagicianNightUnit,
-} from "../features/magician/ports";
+import { demonNightTerminal, type DemonNightUnit } from "../features/demon-hunter/ports";
+import { weddingNightTerminal, type WeddingNightUnit } from "../features/ghost-bride/ports";
+import { magicianNightTerminal, type MagicianNightUnit } from "../features/magician/ports";
 import {
   wolfSorcererNightTerminal,
   type WolfSorcererNightUnit,
 } from "../features/wolf-sorcerer/ports";
-import {
-  tricksterNightTerminal,
-  type TricksterNightUnit,
-} from "../features/trickster/ports";
+import { tricksterNightTerminal, type TricksterNightUnit } from "../features/trickster/ports";
 import {
   timeConsortNightTerminal,
   type TimeConsortNightUnit,
@@ -38,10 +26,7 @@ import {
   scholarMentorNightTerminal,
   type ScholarMentorNightUnit,
 } from "../features/scholar-mentor/ports";
-import {
-  mistNightTerminal,
-  type MistNightUnit,
-} from "../features/mist-raven/ports";
+import { mistNightTerminal, type MistNightUnit } from "../features/mist-raven/ports";
 import { nobleNightReceiver } from "../features/noble-secret-body/ports";
 import { abortAnimalGame } from "../features/animal-dream/ports";
 
@@ -53,8 +38,14 @@ import { AnimalNightUnit } from "../features/animal-dream/ports";
 import { FragrantNightUnit, FRAGRANT_PAIR_POLICY } from "../features/fragrant-pair-seer/ports";
 import { NobleNightUnit } from "../features/noble-secret-body/ports";
 import { RadiantNightUnit } from "../features/radiant-eclipse/ports";
-import { DemonNightUnit as ConcreteDemonNightUnit, demonHunterActorId } from "../features/demon-hunter/ports";
-import { WeddingNightUnit as ConcreteWeddingNightUnit, weddingSetup } from "../features/ghost-bride/ports";
+import {
+  DemonNightUnit as ConcreteDemonNightUnit,
+  demonHunterActorId,
+} from "../features/demon-hunter/ports";
+import {
+  WeddingNightUnit as ConcreteWeddingNightUnit,
+  weddingSetup,
+} from "../features/ghost-bride/ports";
 import { MagicianNightUnit as ConcreteMagicianNightUnit } from "../features/magician/ports";
 import { WolfSorcererNightUnit as ConcreteWolfSorcererNightUnit } from "../features/wolf-sorcerer/ports";
 import { TricksterNightUnit as ConcreteTricksterNightUnit } from "../features/trickster/ports";
@@ -92,8 +83,7 @@ export class NightManagerLifecycle implements NightLifecycleHandoff {
   private magician: Pick<MagicianNightUnit, "closeNormally" | "abort"> = magicianNightTerminal;
   private sorcerer: Pick<WolfSorcererNightUnit, "closeNormally" | "abort"> =
     wolfSorcererNightTerminal;
-  private trickster: Pick<TricksterNightUnit, "finishNormally" | "abort"> =
-    tricksterNightTerminal;
+  private trickster: Pick<TricksterNightUnit, "finishNormally" | "abort"> = tricksterNightTerminal;
   private time: Pick<TimeConsortNightUnit, "closeNormally" | "abort"> = timeConsortNightTerminal;
   private scholar: Pick<ScholarMentorNightUnit, "closeNormally" | "abort"> =
     scholarMentorNightTerminal;
@@ -149,12 +139,18 @@ export class NightManagerLifecycle implements NightLifecycleHandoff {
 
   /** 原顺序逐角色读取 config／current；前一关闭可能改变后一个资格，不能批量预算或并行。 */
   finishDay(day: number, isCurrent: () => boolean): void {
-    if (this.runtime.config.trickster && isCurrent()) this.trickster.finishNormally(this.runtime.world, day);
-    if (this.runtime.config.wolfSorcerer && isCurrent()) this.sorcerer.closeNormally(this.runtime.world, day);
-    if (this.runtime.config.magician && isCurrent()) this.magician.closeNormally(this.runtime.world, day);
-    if (this.runtime.config.timeConsort && isCurrent()) this.time.closeNormally(this.runtime.world, day);
-    if (this.runtime.config.scholarMentor && isCurrent()) this.scholar.closeNormally(this.runtime.world, day);
-    if (this.runtime.config.mistRaven && isCurrent()) this.mist.closeNormally(this.runtime.world, day);
+    if (this.runtime.config.trickster && isCurrent())
+      this.trickster.finishNormally(this.runtime.world, day);
+    if (this.runtime.config.wolfSorcerer && isCurrent())
+      this.sorcerer.closeNormally(this.runtime.world, day);
+    if (this.runtime.config.magician && isCurrent())
+      this.magician.closeNormally(this.runtime.world, day);
+    if (this.runtime.config.timeConsort && isCurrent())
+      this.time.closeNormally(this.runtime.world, day);
+    if (this.runtime.config.scholarMentor && isCurrent())
+      this.scholar.closeNormally(this.runtime.world, day);
+    if (this.runtime.config.mistRaven && isCurrent())
+      this.mist.closeNormally(this.runtime.world, day);
   }
 
   closeMistNormally(day: number): void {
@@ -201,164 +197,184 @@ export function prepareNightPipelineLifecycle(
   handoff?: () => NightLifecycleHandoff | undefined,
   expectedParameters?: BoardParameters,
 ) {
-    // setup/current 门禁已通过；准备中的早开夜或失败仍属于这次真实尝试。
-    const nightUnit = openNightUnit(day);
-    // 先在原参数位置捕获 World，再绑定参数；身份检查不会增加一次 World getter 读取。
-    let parameterWorld: World;
-    let parameters: BoardParameters;
-    const closeLonelyGirlNight = openLonelyGirlNight(
-      ((parameterWorld = runtime.world),
-      (config = (parameters = bindBoardParameters(parameterWorld, config)).board),
-      (expectedParameters && parameters !== expectedParameters
-        ? (() => { throw new Error("rule_plan_parameter_mismatch"); })()
-        : undefined),
-      parameterWorld),
-      day,
-    );
-    const closeWildChildNight = openWildChildNight(runtime.world, day, runtime.events);
-    const closeThiefNight = openInitialIdentityNight(runtime.world, day);
-    const ownsWedding = weddingSetup(runtime.world) !== null;
-    const ownsDemon = demonHunterActorId(runtime.world) !== null;
-    const magicianNight = new ConcreteMagicianNightUnit({
+  // setup/current 门禁已通过；准备中的早开夜或失败仍属于这次真实尝试。
+  const nightUnit = openNightUnit(day);
+  // 先在原参数位置捕获 World，再绑定参数；身份检查不会增加一次 World getter 读取。
+  let parameterWorld: World;
+  let parameters: BoardParameters;
+  const closeLonelyGirlNight = openLonelyGirlNight(
+    ((parameterWorld = runtime.world),
+    (config = (parameters = bindBoardParameters(parameterWorld, config)).board),
+    expectedParameters && parameters !== expectedParameters
+      ? (() => {
+          throw new Error("rule_plan_parameter_mismatch");
+        })()
+      : undefined,
+    parameterWorld),
+    day,
+  );
+  const closeWildChildNight = openWildChildNight(runtime.world, day, runtime.events);
+  const closeThiefNight = openInitialIdentityNight(runtime.world, day);
+  const ownsWedding = weddingSetup(runtime.world) !== null;
+  const ownsDemon = demonHunterActorId(runtime.world) !== null;
+  const magicianNight = new ConcreteMagicianNightUnit({
+    get world() {
+      return pipeline.world;
+    },
+  });
+  const wolfSorcererNight = new ConcreteWolfSorcererNightUnit(
+    {
       get world() {
         return pipeline.world;
       },
-    });
-    const wolfSorcererNight = new ConcreteWolfSorcererNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-      },
-      magicianNight.cleanupOwnership,
-    );
-    const tricksterNight = new ConcreteTricksterNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-      },
-      magicianNight.cleanupOwnership,
-    );
-    const timeConsortNight = new ConcreteTimeConsortNightUnit({
+    },
+    magicianNight.cleanupOwnership,
+  );
+  const tricksterNight = new ConcreteTricksterNightUnit(
+    {
       get world() {
         return pipeline.world;
       },
-    });
-    const scholarMentorNight = new ConcreteScholarMentorNightUnit({
+    },
+    magicianNight.cleanupOwnership,
+  );
+  const timeConsortNight = new ConcreteTimeConsortNightUnit({
+    get world() {
+      return pipeline.world;
+    },
+  });
+  const scholarMentorNight = new ConcreteScholarMentorNightUnit({
+    get world() {
+      return pipeline.world;
+    },
+  });
+  const ownsNoble = config.nobleSecretBody !== undefined;
+  const ownsFragrant = config.fragrantPairSeer !== undefined;
+  const ownsAnimal = config.animalDream !== undefined;
+  const pipeline = runtime;
+  const animalNight = new AnimalNightUnit(
+    {
       get world() {
         return pipeline.world;
       },
-    });
-    const ownsNoble = config.nobleSecretBody !== undefined;
-    const ownsFragrant = config.fragrantPairSeer !== undefined;
-    const ownsAnimal = config.animalDream !== undefined;
-    const pipeline = runtime;
-    const animalNight = new AnimalNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
+      get events() {
+        return pipeline.events;
       },
-      day,
-    );
-    const fragrantNight = new FragrantNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
-        drawKnowledge() {
-          return randomDraws(pipeline.random.fork("fragrant-known-wolf"));
-        },
-        recordOpening(day, notice) {
-          getSessionRecorder()?.recordRequiredLogicOp({
-            scope: "phase_pipeline",
-            op: "fragrant_night_opened",
-            phase: Phase.Night,
-            status: "ok",
-            output: {
-              policy: FRAGRANT_PAIR_POLICY,
-              day,
-              notice,
-              knowledgeDrawCount: day === 1 ? 1 : 0,
-            },
-          });
-        },
-      },
-      day,
-    );
-    const nobleNight = new NobleNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
-        recordOpening(payload) {
-          getSessionRecorder()?.recordRequiredLogicOp({
-            scope: "phase_pipeline",
-            op: "noble_body_night_opened",
-            phase: Phase.Night,
-            status: "ok",
-            output: payload,
-          });
-        },
-      },
-      day,
-      nightUnit,
-    );
-    const ownsRadiant = config.radiantEclipse !== undefined;
-    const radiantNight = new RadiantNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
-      },
-      day,
-    );
-    const ownsMist = config.mistRaven !== undefined;
-    const mistNight = new ConcreteMistNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
-      },
-      day,
-    );
-    const demonNight = new ConcreteDemonNightUnit({
+    },
+    day,
+  );
+  const fragrantNight = new FragrantNightUnit(
+    {
       get world() {
         return pipeline.world;
       },
-    });
-    const weddingNight = new ConcreteWeddingNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
+      get events() {
+        return pipeline.events;
       },
-      ownsWedding,
-    );
+      drawKnowledge() {
+        return randomDraws(pipeline.random.fork("fragrant-known-wolf"));
+      },
+      recordOpening(day, notice) {
+        getSessionRecorder()?.recordRequiredLogicOp({
+          scope: "phase_pipeline",
+          op: "fragrant_night_opened",
+          phase: Phase.Night,
+          status: "ok",
+          output: {
+            policy: FRAGRANT_PAIR_POLICY,
+            day,
+            notice,
+            knowledgeDrawCount: day === 1 ? 1 : 0,
+          },
+        });
+      },
+    },
+    day,
+  );
+  const nobleNight = new NobleNightUnit(
+    {
+      get world() {
+        return pipeline.world;
+      },
+      get events() {
+        return pipeline.events;
+      },
+      recordOpening(payload) {
+        getSessionRecorder()?.recordRequiredLogicOp({
+          scope: "phase_pipeline",
+          op: "noble_body_night_opened",
+          phase: Phase.Night,
+          status: "ok",
+          output: payload,
+        });
+      },
+    },
+    day,
+    nightUnit,
+  );
+  const ownsRadiant = config.radiantEclipse !== undefined;
+  const radiantNight = new RadiantNightUnit(
+    {
+      get world() {
+        return pipeline.world;
+      },
+      get events() {
+        return pipeline.events;
+      },
+    },
+    day,
+  );
+  const ownsMist = config.mistRaven !== undefined;
+  const mistNight = new ConcreteMistNightUnit(
+    {
+      get world() {
+        return pipeline.world;
+      },
+      get events() {
+        return pipeline.events;
+      },
+    },
+    day,
+  );
+  const demonNight = new ConcreteDemonNightUnit({
+    get world() {
+      return pipeline.world;
+    },
+  });
+  const weddingNight = new ConcreteWeddingNightUnit(
+    {
+      get world() {
+        return pipeline.world;
+      },
+      get events() {
+        return pipeline.events;
+      },
+    },
+    ownsWedding,
+  );
   return {
-    nightUnit, config, parameters, ownsWedding, ownsDemon, ownsNoble, ownsFragrant, ownsAnimal, ownsRadiant, ownsMist,
-    animalNight, fragrantNight, nobleNight, radiantNight, mistNight,
-    demonNight, weddingNight, magicianNight, wolfSorcererNight, tricksterNight,
-    timeConsortNight, scholarMentorNight,
+    nightUnit,
+    config,
+    parameters,
+    ownsWedding,
+    ownsDemon,
+    ownsNoble,
+    ownsFragrant,
+    ownsAnimal,
+    ownsRadiant,
+    ownsMist,
+    animalNight,
+    fragrantNight,
+    nobleNight,
+    radiantNight,
+    mistNight,
+    demonNight,
+    weddingNight,
+    magicianNight,
+    wolfSorcererNight,
+    tricksterNight,
+    timeConsortNight,
+    scholarMentorNight,
     open(isCurrent: () => boolean) {
       if (ownsAnimal) animalNight.open(isCurrent);
       if (ownsFragrant) fragrantNight.open(isCurrent);

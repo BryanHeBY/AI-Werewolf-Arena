@@ -4,7 +4,14 @@
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { RoleComponent } from "../../../src/domain/components/role";
-import { ActionProvider, ActionRequest, Camp, Phase, ToolCall, Role } from "../../../src/domain/model";
+import {
+  ActionProvider,
+  ActionRequest,
+  Camp,
+  Phase,
+  ToolCall,
+  Role,
+} from "../../../src/domain/model";
 import { VotingPipeline } from "../../../src/engine/phases/voting-pipeline";
 import { DayPipeline } from "../../../src/engine/phases/day-pipeline";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
@@ -32,7 +39,10 @@ class WolfOnlyNightProvider implements ActionProvider {
 
     const target = this.world.getAliveEntityIds().find((id) => {
       const targetRole = this.world.getComponent(id, COMPONENT.Role);
-      return id !== request.actorId && (targetRole ? this.world.getComponent(id, COMPONENT.Camp)?.camp : undefined) !== Camp.Wolf;
+      return (
+        id !== request.actorId &&
+        (targetRole ? this.world.getComponent(id, COMPONENT.Camp)?.camp : undefined) !== Camp.Wolf
+      );
     });
 
     return target
@@ -42,7 +52,6 @@ class WolfOnlyNightProvider implements ActionProvider {
 }
 
 describe("PhaseManager", () => {
-
   test("6-player scenario reaches wolf win with wolf-only night kills", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const snapshot = await context.phaseManager.runUntilGameOver(
@@ -216,14 +225,10 @@ describe("PhaseManager", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const hunterId = context.world
       .getAliveEntityIds()
-      .find(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Hunter,
-      )!;
+      .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Hunter)!;
     const wolfIds = context.world
       .getAliveEntityIds()
-      .filter(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf,
-      );
+      .filter((id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf);
     const shootTarget = context.world
       .getAliveEntityIds()
       .find((id) => id !== hunterId && !wolfIds.includes(id))!;

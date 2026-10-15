@@ -6,7 +6,10 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
-import { GHOST_BRIDE_POLICY, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import {
+  GHOST_BRIDE_POLICY,
+  readWeddingTool,
+} from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import {
   Phase,
   type World,

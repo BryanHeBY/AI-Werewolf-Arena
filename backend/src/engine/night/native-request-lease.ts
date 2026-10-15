@@ -19,13 +19,17 @@ export interface NativeNightRequestScope {
 }
 
 // 传播顺序接在现有首夜／遗言窗口之后；这里只 pin 顶层 ability_id 原值，不深复制 context。
-const nativeNightRequests = RequestLease.window<NativeNightRequestScope>({
-  actorId: (scope) => scope.actorId,
-  phase: () => Phase.Night,
-  day: (scope) => scope.day,
-  stage: (scope) => scope.stage,
-  current: (scope) => scope.current(),
-}, 140, ["ability_id"]);
+const nativeNightRequests = RequestLease.window<NativeNightRequestScope>(
+  {
+    actorId: (scope) => scope.actorId,
+    phase: () => Phase.Night,
+    day: (scope) => scope.day,
+    stage: (scope) => scope.stage,
+    current: (scope) => scope.current(),
+  },
+  140,
+  ["ability_id"],
+);
 
 /** 编号初次关联不另查 World／Camp；开窗当前性仍委托原 scope，不建第二许可。 */
 export function openNativeNightRequestDelivery(

@@ -37,7 +37,11 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../../src/app/config/board-definition";
-import { validWallText, readWallTool, readWallEventFact } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
+import {
+  validWallText,
+  readWallTool,
+  readWallEventFact,
+} from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import { wallEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 
@@ -50,8 +54,7 @@ function fixture(deck = roles) {
 
 type Fixture = ReturnType<typeof fixture>;
 
-const note = (g: Fixture, id: number) =>
-  g.world.getComponent(id, COMPONENT.WallNote)!;
+const note = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.WallNote)!;
 
 const role = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.Role)!;
 

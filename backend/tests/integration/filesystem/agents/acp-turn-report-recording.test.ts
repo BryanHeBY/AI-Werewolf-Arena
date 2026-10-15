@@ -85,13 +85,17 @@ describe("AcpActionProvider", () => {
         args: { text: "审计动作已提交。" },
       });
       await recorder.flushNow();
-      const player = readReplayPlayerView(JSON.parse(
-        await fs.readFile(
-          path.join(recordRoot, "session_acp_audit", "players", "player_1.json"),
-          "utf-8",
+      const player = readReplayPlayerView(
+        JSON.parse(
+          await fs.readFile(
+            path.join(recordRoot, "session_acp_audit", "players", "player_1.json"),
+            "utf-8",
+          ),
         ),
-      ));
-      const turn = player.timeline.find((entry: any) => entry.kind === "turn") as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry;
+      );
+      const turn = player.timeline.find(
+        (entry: any) => entry.kind === "turn",
+      ) as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry;
       expect(turn).toBeDefined();
       expect(
         turn.delta_messages.some(

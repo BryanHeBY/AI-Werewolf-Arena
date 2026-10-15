@@ -24,8 +24,15 @@ import {
   type VictoryComponent,
 } from "../../domain";
 import { aliveLifeVersion, type AliveComponent } from "../../domain/components/alive";
-import { freshLonelyGirlState, getLonelyGirlState, LONELY_GIRL_POLICY, lonelyData,
-  consumeLonelyGirlState, cancelLonelyGirlState, projectLonelyGirlData } from "./state-slot";
+import {
+  freshLonelyGirlState,
+  getLonelyGirlState,
+  LONELY_GIRL_POLICY,
+  lonelyData,
+  consumeLonelyGirlState,
+  cancelLonelyGirlState,
+  projectLonelyGirlData,
+} from "./state-slot";
 interface Participant {
   id: number;
   life: AliveComponent;

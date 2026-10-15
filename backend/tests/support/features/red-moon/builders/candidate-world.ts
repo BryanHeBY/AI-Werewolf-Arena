@@ -45,7 +45,13 @@ export function redMoonCandidateWorld(policy: LastWolfBlastPolicy = "ends_game")
     const initialCamp = createCampComponent(catalog.getCamp(kind), world.locale);
     const role = createRoleComponent(kind, world.locale);
     const currentCamp = () => world.getComponent(id, COMPONENT.Camp);
-    catalog.applyRuntime(role, { boardConfig: config, locale: world.locale, world, initialCamp, currentCamp });
+    catalog.applyRuntime(role, {
+      boardConfig: config,
+      locale: world.locale,
+      world,
+      initialCamp,
+      currentCamp,
+    });
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, i + 1, "player-" + id));
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, initialCamp);

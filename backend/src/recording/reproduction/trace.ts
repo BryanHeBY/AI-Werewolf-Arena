@@ -24,13 +24,11 @@ import {
   type ReproductionRecord,
 } from "./format";
 
-
 /** deadline 是本轮运行时条件；归档只复制原请求事实，不替换 provider 收到的原对象。 */
 export function normalizedRequest(request: ActionRequest): Omit<ActionRequest, "deadlineAtMs"> {
   const { deadlineAtMs: _deadline, ...facts } = request;
   return structuredClone(facts);
 }
-
 
 /** 复制 provider 数据时，不触发 getter、Proxy trap 或自定义序列化。 */
 function copyDecisionData(value: unknown, depth = 0): unknown {
@@ -76,7 +74,6 @@ function copyDecisionData(value: unknown, depth = 0): unknown {
   return Array.from({ length }, (_, i) => copy[i]);
 }
 
-
 export class ReproductionTrace {
   // 元数据与七个可变载体共同持有本局因果；事件只在 checkpoint／build 时复制，游标不借用管理器状态。
   private readonly decisions: RecordedDecision[] = [];
@@ -96,7 +93,11 @@ export class ReproductionTrace {
 
   /** 录制协作只复制本实例首次捕获的来源；不重读 caller getter、liveEvents 或返回可写原体。 */
   recordedMetadataIdentity(): Pick<ReproductionMetadata, "engine" | "random" | "ruleset"> {
-    return structuredClone({ engine: this.metadata.engine, random: this.metadata.random, ruleset: this.metadata.ruleset });
+    return structuredClone({
+      engine: this.metadata.engine,
+      random: this.metadata.random,
+      ruleset: this.metadata.ruleset,
+    });
   }
 
   get settlementCount(): number {

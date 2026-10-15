@@ -13,16 +13,35 @@ import type { NightStageState } from "../../../src/engine/night/contracts";
 import { discardStaleNightKnives } from "../../../src/rulesets/night-knife-admission";
 
 function stageState(): NightStageState {
-  return { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [] };
+  return {
+    wolfChatOrder: [],
+    endedWolves: new Set(),
+    wolfVotes: {},
+    wolfTarget: null,
+    seerChecks: [],
+  };
 }
 
 test("普通刀无scope仍晚查婚约条件，false不读取第二组world与day", () => {
-  const trace: string[] = [], world = new World(), state = stageState();
+  const trace: string[] = [],
+    world = new World(),
+    state = stageState();
   discardStaleNightKnives({
-    world: () => { trace.push("world"); return world; },
-    state: () => { trace.push("state"); return state; },
-    ownsWedding: () => { trace.push("ownsWedding"); return false; },
-    day: () => { throw new Error("literal_day_must_not_read"); },
+    world: () => {
+      trace.push("world");
+      return world;
+    },
+    state: () => {
+      trace.push("state");
+      return state;
+    },
+    ownsWedding: () => {
+      trace.push("ownsWedding");
+      return false;
+    },
+    day: () => {
+      throw new Error("literal_day_must_not_read");
+    },
   });
   expect(trace).toEqual(["world", "state", "ownsWedding"]);
   expect(state.wolfTarget).toBeNull();
@@ -30,26 +49,61 @@ test("普通刀无scope仍晚查婚约条件，false不读取第二组world与da
 });
 
 test("普通刀先移原和现场marks再清stage，婚约world失败保留已清前缀", () => {
-  const trace: string[] = [], world = new World(), state = stageState();
-  const targetId = world.createEntity(), life = createAliveComponent();
+  const trace: string[] = [],
+    world = new World(),
+    state = stageState();
+  const targetId = world.createEntity(),
+    life = createAliveComponent();
   class TracedMarks extends StatusMarksComponent {
-    constructor(private readonly label: string) { super([StatusMark.WolfKillMark]); }
-    override remove(mark: StatusMark): void { trace.push(this.label); super.remove(mark); }
+    constructor(private readonly label: string) {
+      super([StatusMark.WolfKillMark]);
+    }
+    override remove(mark: StatusMark): void {
+      trace.push(this.label);
+      super.remove(mark);
+    }
   }
-  const originalMarks = new TracedMarks("originalMarks"), currentMarks = new TracedMarks("currentMarks");
+  const originalMarks = new TracedMarks("originalMarks"),
+    currentMarks = new TracedMarks("currentMarks");
   // 测试的现行实体没有原scope的Alive，走原过期分支；两组真实标记各自保库存。
   world.addComponent(targetId, COMPONENT.StatusMarks, currentMarks);
   state.wolfTarget = targetId;
-  state.wolfTargetScope = { targetId, life, version: aliveLifeVersion(life)!, marks: originalMarks };
+  state.wolfTargetScope = {
+    targetId,
+    life,
+    version: aliveLifeVersion(life)!,
+    marks: originalMarks,
+  };
   const failure = new Error("literal_wedding_world_failure");
   let reads = 0;
-  expect(() => discardStaleNightKnives({
-    world: () => { trace.push(`world:${++reads}`); if (reads === 2) throw failure; return world; },
-    state: () => { trace.push("state"); return state; },
-    ownsWedding: () => { trace.push("ownsWedding"); return true; },
-    day: () => { throw new Error("literal_day_after_world_failure_must_not_read"); },
-  })).toThrow(failure);
-  expect(trace).toEqual(["world:1", "state", "originalMarks", "currentMarks", "ownsWedding", "world:2"]);
+  expect(() =>
+    discardStaleNightKnives({
+      world: () => {
+        trace.push(`world:${++reads}`);
+        if (reads === 2) throw failure;
+        return world;
+      },
+      state: () => {
+        trace.push("state");
+        return state;
+      },
+      ownsWedding: () => {
+        trace.push("ownsWedding");
+        return true;
+      },
+      day: () => {
+        throw new Error("literal_day_after_world_failure_must_not_read");
+      },
+    }),
+  ).toThrow(failure);
+  expect(trace).toEqual([
+    "world:1",
+    "state",
+    "originalMarks",
+    "currentMarks",
+    "ownsWedding",
+    "world:2",
+  ]);
   expect(originalMarks.has(StatusMark.WolfKillMark)).toBe(false);
   expect(currentMarks.has(StatusMark.WolfKillMark)).toBe(false);
   expect(state.wolfTarget).toBeNull();

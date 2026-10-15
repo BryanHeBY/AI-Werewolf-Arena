@@ -20,8 +20,18 @@ test("observation adapter construction does not inspect World or initialize prom
   });
   let reads = 0;
   // 初始化已完成后才安装拒绝读取的探针；断言独立于实际观察输出。
-  Object.defineProperty(world, "entityIds", { value: () => { reads++; throw Error("unexpected_world_read"); } });
-  Object.defineProperty(world, "getComponent", { value: () => { reads++; throw Error("unexpected_world_read"); } });
+  Object.defineProperty(world, "entityIds", {
+    value: () => {
+      reads++;
+      throw Error("unexpected_world_read");
+    },
+  });
+  Object.defineProperty(world, "getComponent", {
+    value: () => {
+      reads++;
+      throw Error("unexpected_world_read");
+    },
+  });
   expect(() => new ObservedPlayersActionProvider(world, new Map())).not.toThrow();
   expect(reads).toBe(0);
 });
@@ -41,7 +51,12 @@ test("missing observed strategy rejects before any World query", async () => {
   });
   const provider = new ObservedPlayersActionProvider(world, new Map());
   let reads = 0;
-  Object.defineProperty(world, "getComponent", { value: () => { reads++; throw Error("unexpected_world_read"); } });
+  Object.defineProperty(world, "getComponent", {
+    value: () => {
+      reads++;
+      throw Error("unexpected_world_read");
+    },
+  });
   await expect(provider.getAction(request)).rejects.toThrow("observed_player_strategy_missing");
   expect(reads).toBe(0);
 });

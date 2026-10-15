@@ -75,7 +75,11 @@ export class DamageResolutionSystem {
 
       // 取消和最终清理分别执行，后续目标查询失败不能回滚前一目标的清理。
       const sources = resolveNightDamageTarget(
-        world, entityId, effects, plan, marks,
+        world,
+        entityId,
+        effects,
+        plan,
+        marks,
         () => {
           marks?.remove(StatusMark.GuardMark);
           marks?.remove(StatusMark.HealMark);
@@ -91,10 +95,13 @@ export class DamageResolutionSystem {
     }
 
     // 同一原结果仅带不可枚举的运行时证据；玩家摘要和归档仍读原纯数据字段。
-    return attachDamagePoisonEvidence({
-      deaths,
-      deathSources,
-      ...(mechanical.reflections.length ? { poisonReflections: mechanical.reflections } : {}),
-    }, acceptedPoison);
+    return attachDamagePoisonEvidence(
+      {
+        deaths,
+        deathSources,
+        ...(mechanical.reflections.length ? { poisonReflections: mechanical.reflections } : {}),
+      },
+      acceptedPoison,
+    );
   }
 }

@@ -53,7 +53,10 @@ export const EVIL_KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
       apply: (config, value) => ({ ...config, evilKnight: parameters.parse(value) }),
       serialize: (config) => parameters.parse(config.evilKnight ?? {}),
     },
-    nightStages: [EVIL_KNIGHT_FRAME_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
+    nightStages: [
+      EVIL_KNIGHT_FRAME_STAGE,
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []),
+    ],
   },
   presentation: nativeRolePresentation("evil_knight"),
 };

@@ -6,10 +6,21 @@
  * 本模块不持第二份关系、不领取牵连、不退款、不标死、不推进阶段；查询异常保留已提交死亡前缀。
  * 规则见 docs/rules/awa-wolf-beauty-v1.md；候选不进入玩家知识或档案，不授予行动权限。
  */
-import { Camp, Role, WinCondition, type EntityId, type VotingSummary, type WinDecision } from "../domain/model";
+import {
+  Camp,
+  Role,
+  WinCondition,
+  type EntityId,
+  type VotingSummary,
+  type WinDecision,
+} from "../domain/model";
 import { COMPONENT } from "../domain/components/names";
 import type { World } from "../domain/world";
-import { activeCharm, isCharmBindingCurrent, type CharmBinding } from "../features/wolf-beauty/ports";
+import {
+  activeCharm,
+  isCharmBindingCurrent,
+  type CharmBinding,
+} from "../features/wolf-beauty/ports";
 import { getDefaultRoleCatalog } from "./roles/role-catalog-assembly";
 import { victoryDecision } from "../engine/victory/results";
 
@@ -38,9 +49,10 @@ export function prepareBeautyExileVictory(
     selection.summary.effectiveTarget === undefined
       ? selection.summary.target
       : selection.summary.effectiveTarget;
-  const candidate = target !== null && selection.removed.includes(target)
-    ? captureBeautyExile(world(), target)
-    : null;
+  const candidate =
+    target !== null && selection.removed.includes(target)
+      ? captureBeautyExile(world(), target)
+      : null;
   return { target, candidate };
 }
 
@@ -58,7 +70,12 @@ function captureBeautyExile(world: World, actorId: EntityId): BeautyExileCandida
   if (
     world
       .getAliveEntityIds()
-      .some((id) => id !== actorId && !!world.getComponent(id, COMPONENT.Role) && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf)
+      .some(
+        (id) =>
+          id !== actorId &&
+          !!world.getComponent(id, COMPONENT.Role) &&
+          world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf,
+      )
   )
     return null;
   const target = world.getComponent(binding.targetId, COMPONENT.Role),
@@ -85,7 +102,8 @@ export function resolveBeautyExileVictory(
   const sideAlive = world.getAliveEntityIds().some((id) => {
     const role = world.getComponent(id, COMPONENT.Role);
     return (
-      role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good &&
+      role &&
+      world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good &&
       getDefaultRoleCatalog().metadata(role.role)?.goodSide === candidate.side
     );
   });

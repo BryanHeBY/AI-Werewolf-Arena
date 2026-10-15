@@ -25,7 +25,10 @@ import {
 } from "../../../src/features/night-abilities/abilities";
 import { recordNightAbilityUse } from "../../../src/features/night-abilities/abilities";
 import { setNightAbilityEnabled } from "../../../src/features/night-abilities/abilities";
-import { grantNightAbility, transferNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import {
+  grantNightAbility,
+  transferNightAbility,
+} from "../../../src/features/night-abilities/night-ability-grants";
 import { getSeerState } from "../../../src/features/seer/ports";
 import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { ActionReception } from "../../../src/engine/actions/action-reception";

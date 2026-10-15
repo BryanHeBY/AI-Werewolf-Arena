@@ -85,7 +85,8 @@ export function getRedMoonState(
   role: RoleComponent | undefined,
   currentCamp: CurrentCampSource,
 ): RedMoonReadState | undefined {
-  if (own(role, "role") !== RED_MOON_ROLE || own(currentCamp(), "camp") !== Camp.Wolf) return undefined;
+  if (own(role, "role") !== RED_MOON_ROLE || own(currentCamp(), "camp") !== Camp.Wolf)
+    return undefined;
   const state = own(own(role, "privateState"), "redMoon");
   return readRedMoonPayload(state);
 }

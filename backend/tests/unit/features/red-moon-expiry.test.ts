@@ -17,8 +17,7 @@ function deferredWorld() {
   beginDemonHunterNight(world, 1, () => true);
   freezeDemonHunt(world);
   closeDemonHunterNight(world);
-  for (const id of [1, 2, 3, 11])
-    world.getComponent(id, COMPONENT.Alive)!.alive = false;
+  for (const id of [1, 2, 3, 11]) world.getComponent(id, COMPONENT.Alive)!.alive = false;
   expect(commitDemonRedMoonTransition(world, 4, "exile", 1)).toBe(true);
   beginDemonHunterNight(world, 2, () => true);
   return world;

@@ -192,12 +192,10 @@ for (const changed of ["role", "life", "owner", "phase", "invalid"] as const)
         }),
       actionProvider: {
         async getAction() {
-          if (changed === "role")
-            world.getComponent(1, COMPONENT.Role)!.role = Role.Villager;
+          if (changed === "role") world.getComponent(1, COMPONENT.Role)!.role = Role.Villager;
           if (changed === "life")
             world.addComponent(1, COMPONENT.Alive, createAliveComponent(true));
-          if (changed === "owner")
-            world.getComponent(2, COMPONENT.Role)!.role = Role.Villager;
+          if (changed === "owner") world.getComponent(2, COMPONENT.Role)!.role = Role.Villager;
           if (changed === "phase") current = false;
           return { name: "check_identity", args: { target_id: changed === "invalid" ? 99 : 1 } };
         },

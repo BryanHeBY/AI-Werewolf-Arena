@@ -5,7 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Phase } from "../../../../src/domain";
-import { mistRecording, type MistRequestObservation } from "../../../support/features/mist-raven/drivers/recording";
+import {
+  mistRecording,
+  type MistRequestObservation,
+} from "../../../support/features/mist-raven/drivers/recording";
 import { type MistRecordVariant } from "../../../support/features/mist-raven/builders/board";
 for (const variant of ["last-villager-pass", "last-villager-heal", "last-god"] as const)
   for (const locale of ["en", "zh-CN"] as const)

@@ -11,7 +11,10 @@ import { PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-contract";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { Camp, Role, WinCondition } from "../../domain/model";
 import { ELIMINATION_PRIORITIES } from "../../domain/board";
-import type { NativeRoleContributions, RoleRuntimeContribution } from "../../rulesets/roles/contracts";
+import type {
+  NativeRoleContributions,
+  RoleRuntimeContribution,
+} from "../../rulesets/roles/contracts";
 import { getRoleInspectionState, setRoleInspectionState } from "../role-inspection/ports";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { PURE_WHITE_INSPECTION_STAGE, WOLF_WITCH_INSPECTION_STAGE } from "./night-stages";
@@ -112,12 +115,18 @@ export const WOLF_WITCH_ROLE_PROFILE: NativeRoleContributions = {
       apply: (config, value) => ({ ...config, wolfWitch: wolfParameters.parse(value) }),
       serialize: (config) => wolfParameters.parse(config.wolfWitch ?? {}),
     },
-    toolSpecs: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []), PURE_WHITE_INSPECTION_TOOL],
+    toolSpecs: [
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
+      PURE_WHITE_INSPECTION_TOOL,
+    ],
     validationRules: {
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       inspect_night_identity: validatePureWhiteInspection,
     },
-    nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), WOLF_WITCH_INSPECTION_STAGE],
+    nightStages: [
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []),
+      WOLF_WITCH_INSPECTION_STAGE,
+    ],
     possibleNightAbilities: ["role_check"],
     baselineAction: (...args) =>
       args[1].allowedTools.includes("inspect_night_identity")

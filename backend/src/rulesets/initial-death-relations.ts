@@ -6,7 +6,13 @@
  * 具体关系授权与已付绑定归各机制；本步不标死、付款、关闭许可、提交／取消回执、清理或确定胜负。
  * 准备回执只在结算器原 commit/cancel/finally 位置消费；运行关系／梦句柄不是 JSON 或玩家许可。
  */
-import { Phase, DeathCause, type DeathSources, type EntityId, type GameEvent } from "@ai-werewolf-arena/game-contract";
+import {
+  Phase,
+  DeathCause,
+  type DeathSources,
+  type EntityId,
+  type GameEvent,
+} from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
 import { expandLoversWave } from "../features/cupid/death-ports";
@@ -14,7 +20,12 @@ import { prepareFragrantDeathWave } from "../features/fragrant-pair-seer/ports";
 
 /** 原具体婚约对象的窄方法视图；保留实例和 expand receiver，不创建第二个关系所有者。 */
 export interface InitialWeddingExpansion {
-  expand(ids: EntityId[], sources: DeathSources, seen: ReadonlySet<EntityId>, nightOrigin: Set<EntityId>): EntityId[];
+  expand(
+    ids: EntityId[],
+    sources: DeathSources,
+    seen: ReadonlySet<EntityId>,
+    nightOrigin: Set<EntityId>,
+  ): EntityId[];
 }
 
 /** 只在原表达式位置读取；装配时不取得 World、事件、日期、梦或具体婚约对象。 */
@@ -75,7 +86,10 @@ export function prepareInitialDeathRelations(
     if (fragrantRootPhase === Phase.Night) nightOrigin.add(id);
   }
   const originPhases = new Map(
-    pending.map((id) => [id, initialPhases[id] ?? (nightOrigin.has(id) ? Phase.Night : runtime.phase())]),
+    pending.map((id) => [
+      id,
+      initialPhases[id] ?? (nightOrigin.has(id) ? Phase.Night : runtime.phase()),
+    ]),
   );
   // Night 婚约私密事实归具体机制；本步只沿原策略选择公开名单，不扩大披露范围。
   const publicLinkedInitial = [

@@ -181,16 +181,22 @@ async function runRecorded(
     if (failures.length === 1) throw failures[0];
     if (failures.length) throw new AggregateError(failures, "scripted_game_failed");
   });
-  const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8")));
+  const replay = readReplayDocument(
+    JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8")),
+  );
   assertReplayDocument(replay);
-  const manifest = readReplayManifest(JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8")));
+  const manifest = readReplayManifest(
+    JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8")),
+  );
   expect(replay.result.winner).toBe(Camp.Good);
   expect(manifest.winner).toBe(Camp.Good);
   expect(
-    (manifest.players as Array<{ role: Role; camp: Camp }>).map((player: { role: Role; camp: Camp }) => ({
-      role: player.role,
-      camp: player.camp,
-    })),
+    (manifest.players as Array<{ role: Role; camp: Camp }>).map(
+      (player: { role: Role; camp: Camp }) => ({
+        role: player.role,
+        camp: player.camp,
+      }),
+    ),
   ).toEqual(fixedRoles.map((role) => ({ role, camp: role === Role.Wolf ? Camp.Wolf : Camp.Good })));
   expect(replay.players.map((player) => ({ role: player.role, camp: player.camp }))).toEqual(
     fixedRoles.map((role) => ({ role, camp: role === Role.Wolf ? Camp.Wolf : Camp.Good })),
@@ -326,15 +332,13 @@ for (const locale of ["zh-CN", "en"] as const)
           ?.request.context.visible_events.filter((event) => event.type === "seer_checked")
           .map((event) => event.payload),
       ).toEqual(checks);
-      expect(
-        getSeerState(game.world.getComponent(2, COMPONENT.Role)!)?.history,
-      ).toEqual([
+      expect(getSeerState(game.world.getComponent(2, COMPONENT.Role)!)?.history).toEqual([
         { targetId: 1, isWerewolf: true, result: { kind: "camp", camp: "wolf" } },
         { targetId: 4, isWerewolf: true, result: { kind: "camp", camp: "wolf" } },
       ]);
-      expect(
-        getGuardState(game.world.getComponent(5, COMPONENT.Role)!)?.lastTarget,
-      ).toBe(blocked ? 6 : null);
+      expect(getGuardState(game.world.getComponent(5, COMPONENT.Role)!)?.lastTarget).toBe(
+        blocked ? 6 : null,
+      );
       expect(
         game.provider.trace
           .filter(({ request }) => request.actorId !== 2)
@@ -427,9 +431,7 @@ for (const locale of ["zh-CN", "en"] as const)
       const witch = getWitchState(game.world.getComponent(6, COMPONENT.Role)!);
       expect(witch?.heal).toBe(0);
       expect(witch?.poison).toBe(0);
-      expect(
-        getHunterState(game.world.getComponent(7, COMPONENT.Role)!)?.canShoot,
-      ).toBe(false);
+      expect(getHunterState(game.world.getComponent(7, COMPONENT.Role)!)?.canShoot).toBe(false);
       expect(
         game.replay.events.filter((event: { type: string }) => event.type === "witch_potion_used"),
       ).toHaveLength(2);
@@ -485,9 +487,7 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(types.indexOf("hunter_shot")).toBeLessThan(types.indexOf("wolf_self_destruct"));
       expect(types.indexOf("wolf_self_destruct")).toBeLessThan(types.indexOf("game_over"));
       if (flipIdiot) {
-        expect(
-          game.world.getComponent(8, COMPONENT.VotingRight)?.canVote,
-        ).toBe(false);
+        expect(game.world.getComponent(8, COMPONENT.VotingRight)?.canVote).toBe(false);
         expect(
           game.replay.events.filter((event: { type: string }) => event.type === "idiot_revealed"),
         ).toHaveLength(1);

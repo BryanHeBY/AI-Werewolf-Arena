@@ -8,11 +8,21 @@ import { Camp, StatusMark, type ComponentPresentationPart } from "@ai-werewolf-a
 import type { BadgeComponent } from "../../../src/domain/components/badge";
 import type { VotingRightComponent } from "../../../src/domain/components/voting-right";
 import { aliveLifeDescriptor, aliveLifeVersion } from "../../../src/domain/components/alive";
-import { StatusMarksComponent, statusMarkSnapshot } from "../../../src/domain/components/status-marks";
 import {
-  createAliveComponent, createBadgeComponent, createCampComponent, createVotingRightComponent,
-  createStatusMarksComponent, renderAlivePrompt, renderBadgePrompt, renderCampPrompt,
-  renderVotingRightPrompt, renderStatusMarksPrompt,
+  StatusMarksComponent,
+  statusMarkSnapshot,
+} from "../../../src/domain/components/status-marks";
+import {
+  createAliveComponent,
+  createBadgeComponent,
+  createCampComponent,
+  createVotingRightComponent,
+  createStatusMarksComponent,
+  renderAlivePrompt,
+  renderBadgePrompt,
+  renderCampPrompt,
+  renderVotingRightPrompt,
+  renderStatusMarksPrompt,
 } from "../../../src/agents/observation/component-presentation";
 import { demonWitchMarksSafe } from "../../../src/features/demon-hunter/ports";
 import { World } from "../../../src/domain/world";
@@ -26,8 +36,10 @@ function rejectsRuntimeData(component: BadgeComponent) {
 void rejectsRuntimeData;
 
 test("component factories retain domain data and life identity while language belongs to display", () => {
-  const alive = createAliveComponent(true, "en"), badge = createBadgeComponent(false, false, "en"),
-    camp = createCampComponent(Camp.Wolf, "en"), vote = createVotingRightComponent(2, true, "en"),
+  const alive = createAliveComponent(true, "en"),
+    badge = createBadgeComponent(false, false, "en"),
+    camp = createCampComponent(Camp.Wolf, "en"),
+    vote = createVotingRightComponent(2, true, "en"),
     marks = createStatusMarksComponent("en");
   expect(Object.keys(alive)).toEqual(["alive"]);
   expect(Object.keys(badge)).toEqual(["isSheriff", "destroyed", "voteWeight"]);
@@ -50,40 +62,69 @@ test("component factories retain domain data and life identity while language be
 test("destroyed badge and denied vote never read unused downstream fields", () => {
   const trace: string[] = [];
   const badge: BadgeComponent = {
-    get destroyed() { trace.push("destroyed"); return true; },
-    get isSheriff(): boolean { throw new Error("unused_sheriff"); },
-    get voteWeight(): number { throw new Error("unused_weight"); },
+    get destroyed() {
+      trace.push("destroyed");
+      return true;
+    },
+    get isSheriff(): boolean {
+      throw new Error("unused_sheriff");
+    },
+    get voteWeight(): number {
+      throw new Error("unused_weight");
+    },
   };
   expect(renderBadgePrompt(badge, "en")).toBe("The sheriff badge has been destroyed.");
   expect(trace).toEqual(["destroyed"]);
   const vote: VotingRightComponent = {
-    get canVote() { trace.push("canVote"); return false; },
-    get weight(): number { throw new Error("unused_weight"); },
+    get canVote() {
+      trace.push("canVote");
+      return false;
+    },
+    get weight(): number {
+      throw new Error("unused_weight");
+    },
   };
   expect(renderVotingRightPrompt(vote, "en")).toBe("You currently have no voting right.");
   expect(trace).toEqual(["destroyed", "canVote"]);
 });
 
 test("badge getter failure precedes language validation with the original identity", () => {
-  const failure = new Error("original_badge_read"), trace: string[] = [];
+  const failure = new Error("original_badge_read"),
+    trace: string[] = [];
   const badge: BadgeComponent = {
-    get destroyed() { trace.push("destroyed"); return false; },
-    get isSheriff() { trace.push("sheriff"); return true; },
-    get voteWeight(): number { trace.push("weight"); throw failure; },
+    get destroyed() {
+      trace.push("destroyed");
+      return false;
+    },
+    get isSheriff() {
+      trace.push("sheriff");
+      return true;
+    },
+    get voteWeight(): number {
+      trace.push("weight");
+      throw failure;
+    },
   };
   expect(() => renderBadgePrompt(badge, "invalid" as "en")).toThrow(failure);
   expect(trace).toEqual(["destroyed", "sheriff", "weight"]);
 });
 
 test("empty marks short circuit values and nonempty marks retain dynamic method receiver", () => {
-  const marks = createStatusMarksComponent("en"), trace: string[] = [];
+  const marks = createStatusMarksComponent("en"),
+    trace: string[] = [];
   const original = marks.values;
-  marks.values = function () { expect(this).toBe(marks); trace.push("values"); return original.call(this); };
+  marks.values = function () {
+    expect(this).toBe(marks);
+    trace.push("values");
+    return original.call(this);
+  };
   expect(renderStatusMarksPrompt(marks)).toBe("You have no status marks.");
   expect(trace).toEqual([]);
   marks.add(StatusMark.GuardMark);
   marks.add(StatusMark.WolfKillMark);
-  expect(renderStatusMarksPrompt(marks)).toBe("Your current status marks: [Guard mark] [Wolf kill mark]");
+  expect(renderStatusMarksPrompt(marks)).toBe(
+    "Your current status marks: [Guard mark] [Wolf kill mark]",
+  );
   expect(trace).toEqual(["values"]);
   expect(statusMarkSnapshot(marks, StatusMark.GuardMark)).toEqual({ revision: 1, present: true });
   expect(renderStatusMarksPrompt(marks, "zh-CN")).toBe("你当前持有状态：[守护印记] [狼刀印记]");
@@ -91,13 +132,22 @@ test("empty marks short circuit values and nonempty marks retain dynamic method 
 
 test("foreign marks refuse before invoking values or validating language", () => {
   let reads = 0;
-  const foreign = { values() { reads++; return []; } } as unknown as StatusMarksComponent;
-  expect(() => renderStatusMarksPrompt(foreign, "invalid" as "en")).toThrow("status_marks_component_invalid");
+  const foreign = {
+    values() {
+      reads++;
+      return [];
+    },
+  } as unknown as StatusMarksComponent;
+  expect(() => renderStatusMarksPrompt(foreign, "invalid" as "en")).toThrow(
+    "status_marks_component_invalid",
+  );
   expect(reads).toBe(0);
 });
 
 test("Demon mark trust retains mutation methods and rejects injected retired display names", () => {
-  const world = new World(), id = world.createEntity(), marks = new StatusMarksComponent();
+  const world = new World(),
+    id = world.createEntity(),
+    marks = new StatusMarksComponent();
   world.addComponent(id, COMPONENT.StatusMarks, marks);
   expect(demonWitchMarksSafe(world, id)).toBe(true);
   Object.defineProperty(marks, "renderPrompt", { value: () => "injected", configurable: true });
@@ -108,10 +158,11 @@ test("Demon mark trust retains mutation methods and rejects injected retired dis
   try {
     Object.defineProperty(StatusMarksComponent.prototype, "has", { ...old, value: () => true });
     expect(demonWitchMarksSafe(world, id)).toBe(false);
-  } finally { Object.defineProperty(StatusMarksComponent.prototype, "has", old); }
+  } finally {
+    Object.defineProperty(StatusMarksComponent.prototype, "has", old);
+  }
   expect(demonWitchMarksSafe(world, id)).toBe(true);
 });
-
 
 test("saved invalid locale is not silently replaced by the display default", () => {
   const camp = createCampComponent(Camp.Good, null as unknown as "en");

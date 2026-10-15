@@ -7,7 +7,10 @@ import { Camp } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 import { radiantFullPlans } from "../../../support/features/radiant-eclipse/oracles/literal-plans";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  type ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 const stored = new Map<string, Promise<ReproductionRecord>>();
 function recording(name: string, locale: "zh-CN" | "en") {
   const plan = radiantFullPlans.find((p) => p.name === name)!,

@@ -6,7 +6,11 @@
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { HIDDEN_CASES, hiddenWolfScenario, type HiddenScenario } from "../../../support/features/hidden-wolf/builders/scenario";
+import {
+  HIDDEN_CASES,
+  hiddenWolfScenario,
+  type HiddenScenario,
+} from "../../../support/features/hidden-wolf/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const facts: Record<
   HiddenScenario,

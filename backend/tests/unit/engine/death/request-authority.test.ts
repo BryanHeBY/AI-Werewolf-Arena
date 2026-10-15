@@ -125,9 +125,7 @@ for (const locale of ["zh-CN", "en"] as const)
         deathActionId: second.id,
       }),
     ).toMatchObject({ ok: false, error: "death_action_unavailable" });
-    expect(getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(
-      true,
-    );
+    expect(getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(true);
     expect(world.getComponent(1, COMPONENT.Alive)!.alive).toBe(true);
     if (locale === "en")
       expect(JSON.stringify(receive.validate(gunRequest(), "shoot", { target_id: 1 }))).not.toMatch(
@@ -222,9 +220,7 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(
         new ActionReception(world).validate(request!, "shoot", { target_id: 1 }),
       ).toMatchObject({ ok: false, error: "death_action_unavailable" });
-      expect(world.getComponent(1, COMPONENT.Alive)!.alive).toBe(
-        outcome !== "shot",
-      );
+      expect(world.getComponent(1, COMPONENT.Alive)!.alive).toBe(outcome !== "shot");
       expect(getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(
         !["shot", "pass"].includes(outcome),
       );
@@ -350,9 +346,7 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(revoked).toBe(true);
         expect(world.activeDeathActionCount).toBe(0);
         expect(world.getComponent(1, COMPONENT.Alive)!.alive).toBe(true);
-        expect(
-          getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot,
-        ).toBe(true);
+        expect(getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(true);
         expect(events.filter((event) => event.type === "hunter_shot")).toEqual([]);
       }
   });

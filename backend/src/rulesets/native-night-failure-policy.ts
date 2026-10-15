@@ -12,10 +12,7 @@ import { isScholarMentorBoard } from "../features/scholar-mentor/ports";
 import { isTimeConsortBoard } from "../features/time-wolf-consort/ports";
 import { isMagicianBoard } from "../features/magician/ports";
 import { isNightmareBoard } from "../features/nightmare/ports";
-import {
-  isEvilKnightBoard,
-  assertEvilKnightNativeActor,
-} from "../features/evil-knight/ports";
+import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../features/evil-knight/ports";
 import { isFragrantPairBoard } from "../features/fragrant-pair-seer/ports";
 import { isNobleBodyBoard } from "../features/noble-secret-body/ports";
 import { isMistRavenBoard } from "../features/mist-raven/ports";

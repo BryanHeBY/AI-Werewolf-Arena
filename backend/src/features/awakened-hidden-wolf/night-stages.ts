@@ -14,7 +14,11 @@ import {
   originalPoisonIntent,
 } from "../../domain/night-effects";
 import type { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
-import { allNightAbilities, findNightAbility, retiredNightAbilityIds } from "../night-abilities/inventory-ports";
+import {
+  allNightAbilities,
+  findNightAbility,
+  retiredNightAbilityIds,
+} from "../night-abilities/inventory-ports";
 import { installNativeAbility } from "../night-abilities/native-installation-ports";
 import { setNightAbilityStartDay } from "../night-abilities/inventory-ports";
 import { canAwakenedKnife } from "./inheritance";
@@ -81,7 +85,14 @@ const mimicStage: NightStageHandler = {
         const roles = new Map(
           [...candidates.keys()].map((id) => {
             const component = ctx.world.getComponent(id, COMPONENT.Role)!;
-            return [id, { component, role: component.role, camp: ctx.world.getComponent(id, COMPONENT.Camp)?.camp }] as const;
+            return [
+              id,
+              {
+                component,
+                role: component.role,
+                camp: ctx.world.getComponent(id, COMPONENT.Camp)?.camp,
+              },
+            ] as const;
           }),
         );
         if (!owner.canAct()) break;
@@ -171,7 +182,8 @@ const skillStage: NightStageHandler = {
         skill = bound?.skill;
       if (!bound || !skill || skill.kind === "wolf") continue;
       const tool: ToolName = skill.kind === "poison" ? "awakened_poison" : "awakened_guard";
-      const current = () => bound.isCurrent() && awakenedSkillForNight(owner.state, day) === skill && owner.canAct();
+      const current = () =>
+        bound.isCurrent() && awakenedSkillForNight(owner.state, day) === skill && owner.canAct();
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
         if (!current()) break;
@@ -281,8 +293,13 @@ const attackStage: NightStageHandler = {
     for (const owner of owners(ctx, day)) {
       const bound = bindAwakenedSkill(owner, day);
       if (bound?.skill.kind !== "wolf") continue;
-      const effectCurrent = () => bound.isCurrent() && canAwakenedKnife(owner.role, ctx.world, () => ctx.world.getComponent(owner.actorId, COMPONENT.Camp));
-      const current = () => effectCurrent() && canAwakenedExtraKnife(owner.state, day) && owner.canAct();
+      const effectCurrent = () =>
+        bound.isCurrent() &&
+        canAwakenedKnife(owner.role, ctx.world, () =>
+          ctx.world.getComponent(owner.actorId, COMPONENT.Camp),
+        );
+      const current = () =>
+        effectCurrent() && canAwakenedExtraKnife(owner.state, day) && owner.canAct();
       if (!current()) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
@@ -350,7 +367,8 @@ const activationStage: NightStageHandler = {
     const day = ctx.currentDay();
     for (const owner of owners(ctx, day)) {
       const learned = owner.state.learned;
-      if (!learned || learned.activationNight !== null || !owner.isCurrent() || !owner.canAct()) continue;
+      if (!learned || learned.activationNight !== null || !owner.isCurrent() || !owner.canAct())
+        continue;
       let abilityId: string | undefined;
       let installedMirror = false;
       if (learned.skill.kind === "inspection") {
@@ -363,12 +381,17 @@ const activationStage: NightStageHandler = {
           throw new Error("awakened_mirror_native_binding_conflict");
         // 原冲突查询先完成；安装新的主动实例前再拒绝退休，不取消已经安装的实例。
         if (!owner.canAct()) continue;
-        const installed = installNativeAbility(owner.role, "role_check", {
-          policy: "mirror",
-          lastTarget: null,
-          lastDay: null,
-          history: [],
-        }, owner.canAct);
+        const installed = installNativeAbility(
+          owner.role,
+          "role_check",
+          {
+            policy: "mirror",
+            lastTarget: null,
+            lastDay: null,
+            history: [],
+          },
+          owner.canAct,
+        );
         if (installed === null) continue;
         installedMirror = true;
         const ability = findNightAbility(owner.role, "role_check")!;
@@ -379,8 +402,12 @@ const activationStage: NightStageHandler = {
         throw new Error("awakened_activation_commit_invalid");
       // 未装实例的退休是正常拒绝；已安装镜像进入原完成前缀，不能取消该次激活。
       if (!installedMirror && !owner.canAct()) continue;
-      const activated = activateAwakenedLearning(owner.state, day, abilityId,
-        installedMirror ? undefined : owner.canAct);
+      const activated = activateAwakenedLearning(
+        owner.state,
+        day,
+        abilityId,
+        installedMirror ? undefined : owner.canAct,
+      );
       if (activated === "retired") continue;
       if (!activated) throw new Error("awakened_activation_commit_invalid");
       recordAwakenedNightCommit(ctx.world, day);

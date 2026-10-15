@@ -3,7 +3,10 @@
  */
 import { types } from "node:util";
 import { isAnimalDreamPreset } from "../../rulesets";
-import { type CatSkippedVotePolicy, type PufferBallotPolicy } from "@ai-werewolf-arena/game-contract";
+import {
+  type CatSkippedVotePolicy,
+  type PufferBallotPolicy,
+} from "@ai-werewolf-arena/game-contract";
 import type { RoleId } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../domain/world";
 import { Camp } from "../../domain/identity";

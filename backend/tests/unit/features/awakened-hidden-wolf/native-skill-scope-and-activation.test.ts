@@ -95,7 +95,9 @@ function context(
     requests = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -368,8 +370,7 @@ test("interruption before 900 preserves learning but later activation uses the l
 
 test("no other living target closes mimic without a request or spending the once opportunity", async () => {
   const game = fixture();
-  for (const id of [2, 3, 4, 5, 6])
-    game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
+  for (const id of [2, 3, 4, 5, 6]) game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   const ctx = context(game, 1, async () => {
     throw new Error("must_not_request");
   });
@@ -399,8 +400,7 @@ test("three invalid mimic actions with living candidates fail explicitly instead
 
 test("last candidate disappearing during the third attempt becomes a legal wait without spending learning", async () => {
   const game = fixture(Role.MirrorGirl);
-  for (const id of [2, 4, 5, 6])
-    game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
+  for (const id of [2, 4, 5, 6]) game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   let requests = 0;
   const ctx = context(game, 1, async () => {
     requests++;
@@ -559,15 +559,21 @@ test("same-night opening cannot replace a revoked original-body knife permission
     throw new Error("must_not_request");
   });
   await stage("awakened_opening").execute(ctx);
-  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
+  expect(
+    canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(true);
   const life = game.world.getComponent(1, COMPONENT.Alive)!;
   life.alive = false;
   life.alive = true;
-  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
+  expect(
+    canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(false);
   await expect(stage("awakened_opening").execute(ctx)).rejects.toThrow(
     "awakened_night_reentry_after_commit",
   );
-  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
+  expect(
+    canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(false);
 });
 
 test("another Wolf revival temporarily removes a current knife without resetting its inheritance or extra stock", async () => {
@@ -580,12 +586,18 @@ test("another Wolf revival temporarily removes a current knife without resetting
     throw new Error("unexpected_request");
   });
   await stage("awakened_opening").execute(ctx);
-  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
+  expect(
+    canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(true);
   other.alive = true;
-  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
+  expect(
+    canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(false);
   other.alive = false;
   refreshAwakenedInheritance(game.world, 9, []);
-  expect(canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
+  expect(
+    canAwakenedKnife(role(game), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(true);
   expect(state(game).firstKnifeNight).toBe(2);
   expect(state(game).learned!.skill).toEqual({ kind: "wolf", extraKnife: "available" });
 });

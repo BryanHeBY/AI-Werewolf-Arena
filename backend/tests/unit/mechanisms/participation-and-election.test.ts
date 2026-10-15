@@ -23,11 +23,7 @@ import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-pol
 import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
 import { EventRegistry } from "../../../src/engine/events/event-registry";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
-import {
-  canBeExiled,
-  canBeSheriff,
-  canVote,
-} from "../../../src/engine/participation";
+import { canBeExiled, canBeSheriff, canVote } from "../../../src/engine/participation";
 import {
   assignSheriff,
   transferOrDestroySheriffBadge,
@@ -114,12 +110,11 @@ for (const locale of ["zh-CN", "en"] as const)
       reason: "idiot_revealed",
     });
     expect(world.getComponent(8, COMPONENT.Alive)!.alive).toBe(true);
-    expect(
-      world.getComponent(8, COMPONENT.VotingRight),
-    ).toMatchObject({ weight: 0, canVote: false });
-    expect(getIdiotState(world.getComponent(8, COMPONENT.Role)!)!.revealed).toBe(
-      true,
-    );
+    expect(world.getComponent(8, COMPONENT.VotingRight)).toMatchObject({
+      weight: 0,
+      canVote: false,
+    });
+    expect(getIdiotState(world.getComponent(8, COMPONENT.Role)!)!.revealed).toBe(true);
     expect([canVote(world, 8), canBeExiled(world, 8), canBeSheriff(world, 8)]).toEqual([
       false,
       false,
@@ -128,9 +123,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(findSheriffId(world)).toBe(1);
     expect(world.getComponent(1, COMPONENT.VotingRight)!.weight).toBe(2.75);
     const before = structuredClone(events),
-      ownBefore = structuredClone(
-        world.getComponent(8, COMPONENT.Role)!.privateState,
-      );
+      ownBefore = structuredClone(world.getComponent(8, COMPONENT.Role)!.privateState);
     expect(registry.onVotedOut(world, 8, events)).toEqual({
       prevented: true,
       removed: [],
@@ -210,7 +203,9 @@ for (const locale of ["zh-CN", "en"] as const)
         events: GameEvent[] = [],
         requests: ActionRequest[] = [];
       const winner = await electSheriffIfNeeded({
-        get requestFactory() { return GameActionRequestFactory; },
+        get requestFactory() {
+          return GameActionRequestFactory;
+        },
         world,
         events,
         day: 1,
@@ -272,7 +267,9 @@ for (const locale of ["zh-CN", "en"] as const)
       world.getComponent(9, COMPONENT.Identity)!.seat = 10;
       world.getComponent(10, COMPONENT.Identity)!.seat = 9;
       const winner = await electSheriffIfNeeded({
-        get requestFactory() { return GameActionRequestFactory; },
+        get requestFactory() {
+          return GameActionRequestFactory;
+        },
         world,
         events,
         day: 1,
@@ -325,9 +322,7 @@ for (const locale of ["zh-CN", "en"] as const)
       ).toBe(false);
       expect(winner).toBe(strategy === "min_id" ? 9 : strategy === "min_seat" ? 10 : null);
       if (winner !== null)
-        expect(world.getComponent(winner, COMPONENT.VotingRight)!.weight).toBe(
-          2.75,
-        );
+        expect(world.getComponent(winner, COMPONENT.VotingRight)!.weight).toBe(2.75);
     }
   });
 
@@ -338,7 +333,9 @@ for (const locale of ["zh-CN", "en"] as const)
       requests: ActionRequest[] = [];
     new EventRegistry().onVotedOut(world, 8, events);
     const winner = await electSheriffIfNeeded({
-        get requestFactory() { return GameActionRequestFactory; },
+      get requestFactory() {
+        return GameActionRequestFactory;
+      },
       world,
       events,
       day: 1,
@@ -357,8 +354,7 @@ for (const locale of ["zh-CN", "en"] as const)
     });
     expect(winner).toBe(9);
     expect(requests.some((input) => input.actorId === 8)).toBe(false);
-    for (const id of [1, 2, 3, 4, 5, 6, 7])
-      world.getComponent(id, COMPONENT.Alive)!.alive = false;
+    for (const id of [1, 2, 3, 4, 5, 6, 7]) world.getComponent(id, COMPONENT.Alive)!.alive = false;
     transferOrDestroySheriffBadge(world, 9, "test", events);
     expect(findSheriffId(world)).toBe(10);
     expect(world.getComponent(8, COMPONENT.Badge)!.isSheriff).toBe(false);
@@ -368,7 +364,9 @@ test("candidate snapshots cannot be changed by one provider; late loss of eligib
   const { world } = fixture("en"),
     events: GameEvent[] = [];
   const winner = await electSheriffIfNeeded({
-        get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     world,
     events,
     day: 1,

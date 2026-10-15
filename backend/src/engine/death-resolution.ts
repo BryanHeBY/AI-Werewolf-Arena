@@ -61,10 +61,7 @@ import { resolveSheriffBadge } from "../features/sheriff/choice-ports";
 import { GameActionRequestFactory } from "./actions/action-request-factory";
 import { EventRegistry } from "./events/event-registry";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
-import {
-  firstDeathGuns,
-  finishDeathGuns,
-} from "../features/death-actions/gift-gun-ports";
+import { firstDeathGuns, finishDeathGuns } from "../features/death-actions/gift-gun-ports";
 
 /** 连续结算死亡波，动作阶段仍由 PhaseManager 推进。 */
 export class DeathResolution {
@@ -91,12 +88,24 @@ export class DeathResolution {
   private readonly lastWordsWindow = (() => {
     const resolution = this;
     return new LastWordsWindow({
-      get requestFactory() { return GameActionRequestFactory; },
-      get world() { return resolution.world; },
-      get events() { return resolution.events; },
-      get state() { return resolution.state; },
-      get toolGateway() { return resolution.toolGateway; },
-      get lastWordsMechanism() { return resolution.lastWordsMechanism; },
+      get requestFactory() {
+        return GameActionRequestFactory;
+      },
+      get world() {
+        return resolution.world;
+      },
+      get events() {
+        return resolution.events;
+      },
+      get state() {
+        return resolution.state;
+      },
+      get toolGateway() {
+        return resolution.toolGateway;
+      },
+      get lastWordsMechanism() {
+        return resolution.lastWordsMechanism;
+      },
     });
   })();
   // 只捕获结算器本身；每次 World、事件和运行状态读取仍发生在原命令表达式处。
@@ -231,9 +240,18 @@ export class DeathResolution {
         ownsFragrant: () => ownsFragrant,
         dreams: () => nightEffects?.dreams,
       },
-      pending, allSources, seen, nightOrigin, initialPhases,
+      pending,
+      allSources,
+      seen,
+      nightOrigin,
+      initialPhases,
     );
-    const initialUnit = openDeathWave("initial", resolutionDay, resolutionPhase, deathExecutionContext(nightEffects));
+    const initialUnit = openDeathWave(
+      "initial",
+      resolutionDay,
+      resolutionPhase,
+      deathExecutionContext(nightEffects),
+    );
     let pendingUnits: readonly DeathWaveUnit[] = [initialUnit];
     let previousCommits: readonly DeathCommitReceipt[] = [];
     let firstBatch = true;
@@ -387,7 +405,9 @@ export class DeathResolution {
             isCurrent,
             {
               // 每次死亡警徽调用只分配依赖视图；实际构造器仍在许可开启后的原 new 点读取。
-              get requestFactory() { return GameActionRequestFactory; },
+              get requestFactory() {
+                return GameActionRequestFactory;
+              },
             },
           );
           if (!isCurrent()) return;
@@ -416,11 +436,21 @@ export class DeathResolution {
                 collectDeathShot(
                   {
                     // 只创建闭包；每次成员读取仍在原选择表达式处，不提前取得 World／规则／状态。
-                    get world() { return resolution.world; },
-                    get events() { return resolution.events; },
-                    get toolGateway() { return resolution.toolGateway; },
-                    get state() { return resolution.state; },
-                    get config() { return resolution.config; },
+                    get world() {
+                      return resolution.world;
+                    },
+                    get events() {
+                      return resolution.events;
+                    },
+                    get toolGateway() {
+                      return resolution.toolGateway;
+                    },
+                    get state() {
+                      return resolution.state;
+                    },
+                    get config() {
+                      return resolution.config;
+                    },
                   },
                   actorId,
                   firstBatch ? (initialPhases[actorId] ?? deathPhase) : deathPhase,
@@ -440,7 +470,12 @@ export class DeathResolution {
                   nightTargets = [...(result.nightEffectTargets ?? [])];
                 preflightDeathWaveData(proposed, proposedSources);
                 preflightDeathWaveData(nightTargets, {});
-                const additionalUnit = openDeathWave("additional", resolutionDay, resolutionPhase, deathExecutionContext(nightEffects));
+                const additionalUnit = openDeathWave(
+                  "additional",
+                  resolutionDay,
+                  resolutionPhase,
+                  deathExecutionContext(nightEffects),
+                );
                 const shots = new Map(
                   (result.pendingShots ?? []).map((shot) => [shot.targetScope.id, shot]),
                 );
@@ -511,7 +546,19 @@ export class DeathResolution {
                     isSettledLife: (id) => this.deathCommitter.isSettledLife(id),
                     phase: () => this.state.phase,
                   },
-                  { proposed, proposedSources, nightTargets, allSources, next, seen, nightOrigin, linked, ownsFragrant, resolutionDay, sourcePhase },
+                  {
+                    proposed,
+                    proposedSources,
+                    nightTargets,
+                    allSources,
+                    next,
+                    seen,
+                    nightOrigin,
+                    linked,
+                    ownsFragrant,
+                    resolutionDay,
+                    sourcePhase,
+                  },
                 );
                 const { fragrantGun } = additionalRelations;
                 let fragrantGunCommitted = false;
@@ -677,6 +724,4 @@ export class DeathResolution {
       finishDeathGuns(gunsToExpire, this.events);
     }
   }
-
-
 }

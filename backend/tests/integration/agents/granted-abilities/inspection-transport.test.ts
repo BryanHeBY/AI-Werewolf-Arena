@@ -240,9 +240,7 @@ for (const locale of ["zh-CN", "en"] as const)
           Role.Villager,
         ],
       });
-      (
-        getWitchState(world.getComponent(6, COMPONENT.Role)!)! as { heal: number }
-      ).heal = 0;
+      (getWitchState(world.getComponent(6, COMPONENT.Role)!)! as { heal: number }).heal = 0;
       const planFile = path.join(root, "plan.json");
       await writeFile(
         planFile,
@@ -386,9 +384,7 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(prompts).toHaveLength(1);
         expect(prompts[0]).toContain(text(locale, "prompt.stage.unknown_wolf_target"));
         expect(prompts[0]).not.toContain(text(locale, "prompt.stage.wolf_target", { target: 10 }));
-        expect(getWitchState(world.getComponent(6, COMPONENT.Role)!)!.poison).toBe(
-          1,
-        );
+        expect(getWitchState(world.getComponent(6, COMPONENT.Role)!)!.poison).toBe(1);
       } finally {
         await runtime.close();
         server?.stop(true);

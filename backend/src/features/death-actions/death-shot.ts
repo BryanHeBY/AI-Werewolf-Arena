@@ -6,7 +6,10 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import type { ToolSpec } from "../../engine/actions/tool-contracts";
 import type { ToolRepairPack } from "../../agents/tool-repair/contracts";
 import { numberOrNull } from "../../agents/tool-repair/helpers";
-import { isAliveTarget, type ValidationRuleContext } from "../../engine/actions/validation-contracts";
+import {
+  isAliveTarget,
+  type ValidationRuleContext,
+} from "../../engine/actions/validation-contracts";
 
 /** 原生工具元数据不绑定特定角色；SDK／MCP 文案与玩家提示由本地化入口提供。 */
 export const DEATH_SHOT_TOOL_SPECS: ToolSpec[] = [

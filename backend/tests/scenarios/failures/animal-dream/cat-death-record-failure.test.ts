@@ -4,7 +4,10 @@
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { animalGame, animalBoard } from "../../../support/features/animal-dream/builders/runtime-game";
+import {
+  animalGame,
+  animalBoard,
+} from "../../../support/features/animal-dream/builders/runtime-game";
 import { animalAction } from "../../../support/features/animal-dream/drivers/actions";
 import { SessionRecordManager } from "../../../../src/recording/session/recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/session/context";
@@ -147,7 +150,9 @@ for (const point of ["deferred", "actually_dead"] as const)
         })),
       });
       expect(
-        parseReproductionRecord(JSON.parse(await readFile(manager.sessionDir + "/reproduction.json", "utf8"))).finalized,
+        parseReproductionRecord(
+          JSON.parse(await readFile(manager.sessionDir + "/reproduction.json", "utf8")),
+        ).finalized,
       ).toBe(true);
     });
   });

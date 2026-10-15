@@ -29,9 +29,7 @@ import type { NightStageContext } from "../../../src/engine/night/contracts";
 function fixture(locale: "zh-CN" | "en") {
   const { world } = bootstrapGame(structuredClone(evilKnightTwelveConfig), { locale });
   const id = (kind: Role) =>
-    world
-      .entityIds()
-      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === kind)!;
+    world.entityIds().find((id) => world.getComponent(id, COMPONENT.Role)?.role === kind)!;
   const knight = id(Role.EvilKnight),
     witch = id(Role.Witch),
     seer = id(Role.Seer);
@@ -56,7 +54,9 @@ function fixture(locale: "zh-CN" | "en") {
     previousExile: null,
     isCurrent: () => true,
     currentDay: () => 1,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     actionProvider: {
       getAction: async (request) =>
         request.actorId === witch
@@ -127,15 +127,16 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(damage.deathSources[victim]).toEqual([DeathCause.EvilKnightReflection]);
       expect(f.ctx.state.retaliationAttacks).toHaveLength(1);
       expect(
-        getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role), () => f.world.getComponent(f.knight, COMPONENT.Camp))!
-          .reflectionRemaining,
+        getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role), () =>
+          f.world.getComponent(f.knight, COMPONENT.Camp),
+        )!.reflectionRemaining,
       ).toBe(0);
-      expect(
-        getSeerState(f.world.getComponent(f.seer, COMPONENT.Role)!)!.lastIsWerewolf,
-      ).toBe(true);
-      expect(
-        getWitchState(f.world.getComponent(f.witch, COMPONENT.Role)!)!.poison,
-      ).toBe(poison ? 0 : 1);
+      expect(getSeerState(f.world.getComponent(f.seer, COMPONENT.Role)!)!.lastIsWerewolf).toBe(
+        true,
+      );
+      expect(getWitchState(f.world.getComponent(f.witch, COMPONENT.Role)!)!.poison).toBe(
+        poison ? 0 : 1,
+      );
       expect(f.ctx.events.filter((e) => e.type === "seer_checked")).toHaveLength(1);
       expect(f.world.getComponent(f.knight, COMPONENT.Alive)!.alive).toBe(true);
       expect(f.world.getComponent(victim, COMPONENT.Alive)!.alive).toBe(true);
@@ -146,8 +147,9 @@ for (const locale of ["zh-CN", "en"] as const) {
     f.choices.inspectKnight = false;
     expect((await f.run()).deaths).toEqual([]);
     expect(
-      getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role), () => f.world.getComponent(f.knight, COMPONENT.Camp))!
-        .reflectionRemaining,
+      getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role), () =>
+        f.world.getComponent(f.knight, COMPONENT.Camp),
+      )!.reflectionRemaining,
     ).toBe(1);
   });
   for (const target of ["witch", "seer"] as const) {

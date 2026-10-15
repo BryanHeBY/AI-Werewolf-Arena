@@ -9,8 +9,14 @@ import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Phase, Role, WinCondition } from "../../domain/identity";
-import type { NativeRoleContributions, RoleRuntimeContribution } from "../../rulesets/roles/contracts";
-import { activeNightAbility, initializeNightAbilityInventory } from "../night-abilities/inventory-ports";
+import type {
+  NativeRoleContributions,
+  RoleRuntimeContribution,
+} from "../../rulesets/roles/contracts";
+import {
+  activeNightAbility,
+  initializeNightAbilityInventory,
+} from "../night-abilities/inventory-ports";
 import { installNativeAbility } from "../night-abilities/native-installation-ports";
 import { setNightAbilityStartDay } from "../night-abilities/inventory-ports";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
@@ -145,7 +151,10 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
     }),
     knownTeammates: (_role, world) => eclipseKnownWolves(world),
     possibleNightAbilities: ["shelter", "dream", "potion", "seer_check"],
-    nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), ECLIPSE_SWALLOW_STAGE],
+    nightStages: [
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []),
+      ECLIPSE_SWALLOW_STAGE,
+    ],
     toolSpecs: [
       ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
       {

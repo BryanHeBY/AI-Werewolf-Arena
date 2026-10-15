@@ -6,7 +6,12 @@
  */
 import { COMPONENT } from "../../domain/components/names";
 import { Camp, Role, type EntityId } from "../../domain/identity";
-import { captureNightLife, livingNightLife, type NightLifeScope, type NightRetaliationAttack } from "../../domain/night-effects";
+import {
+  captureNightLife,
+  livingNightLife,
+  type NightLifeScope,
+  type NightRetaliationAttack,
+} from "../../domain/night-effects";
 import type { World } from "../../domain/world";
 import { EVIL_KNIGHT_STATE_SLOT, getEvilKnightState } from "./state-slot";
 

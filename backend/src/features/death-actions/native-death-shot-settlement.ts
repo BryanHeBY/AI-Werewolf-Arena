@@ -60,7 +60,9 @@ export async function resolveNativeDeathShots(
   for (const actorId of deadIds) {
     if (context?.isCurrent && !context.isCurrent()) break;
     const role = world.getComponent(actorId, COMPONENT.Role);
-    const state = role ? rules.state(role, () => world.getComponent(actorId, COMPONENT.Camp)) : undefined;
+    const state = role
+      ? rules.state(role, () => world.getComponent(actorId, COMPONENT.Camp))
+      : undefined;
     if (
       !role ||
       role.role !== rules.role ||

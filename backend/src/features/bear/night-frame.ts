@@ -60,7 +60,8 @@ function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): bool
   return neighbors.some((id) => {
     const target = world.getComponent(id, COMPONENT.Role);
     return (
-      !!target && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf &&
+      !!target &&
+      world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf &&
       (catalog.runtime(target.role)?.detectableByBear?.(world, target) ?? true)
     );
   });
@@ -103,7 +104,13 @@ export class BearNightFrame {
       state = getBearState(role),
       life = world.getComponent(actorId, COMPONENT.Alive),
       version = life && aliveLifeVersion(life);
-    if (world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good || !state || !life || version === undefined) return null;
+    if (
+      world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good ||
+      !state ||
+      !life ||
+      version === undefined
+    )
+      return null;
     const originals =
         signalPolicy === "netease_dawn_live_v1"
           ? world.getAliveEntityIds().map((id) => captureOriginalPlayer(world, id))

@@ -35,7 +35,11 @@ export function commitFoxInspection(
   ownerCurrent: () => boolean,
 ): void {
   const identity = captureInspectionIdentity(world, target);
-  if (identity.role?.role !== Role.CursedFox || world.getComponent(target.id, COMPONENT.Camp)?.camp !== Camp.ThirdParty) return;
+  if (
+    identity.role?.role !== Role.CursedFox ||
+    world.getComponent(target.id, COMPONENT.Camp)?.camp !== Camp.ThirdParty
+  )
+    return;
   (state.foxInspections ??= []).push({
     target,
     isTargetCurrent: identity.isCurrent,

@@ -30,10 +30,7 @@ import {
 } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { DebaterWindow } from "../../../../src/features/debater/window";
-import {
-  getDebaterState,
-  projectDebaterState,
-} from "../../../../src/features/debater/state";
+import { getDebaterState, projectDebaterState } from "../../../../src/features/debater/state";
 import {
   debateVoteBlocked,
   hasDebateCommit,
@@ -43,11 +40,7 @@ import {
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
-import {
-  canVote,
-  canVoteExile,
-  canBeSheriff,
-} from "../../../../src/engine/participation";
+import { canVote, canVoteExile, canBeSheriff } from "../../../../src/engine/participation";
 import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { createDefaultRoleRegistry } from "../../../../src/rulesets/mechanism-api";
 import { DayPipeline } from "../../../../src/engine/phases/day-pipeline";
@@ -255,8 +248,7 @@ for (const stage of ["debate_challenge", "debate_speech", "debate_ballot"])
           if (change === "actor_stock")
             (getDebaterState(role(g, 1))! as { remaining: 0 | 1 }).remaining =
               stage === "debate_challenge" ? 0 : 1;
-          if (change === "badge")
-            g.world.getComponent(2, COMPONENT.Badge)!.voteWeight = 9;
+          if (change === "badge") g.world.getComponent(2, COMPONENT.Badge)!.voteWeight = 9;
           if (change === "phase") current = false;
         }),
         () => current,
@@ -370,9 +362,7 @@ for (const success of [true, false])
       const own = g.world.getComponent(1, COMPONENT.Badge)!;
       expect(own.voteWeight).toBe(2.25);
       expect(own.handoffPolicy).toBe("awa_holder_choice_v1");
-      expect(g.world.getComponent(1, COMPONENT.VotingRight)!.weight).toBe(
-        2.25,
-      );
+      expect(g.world.getComponent(1, COMPONENT.VotingRight)!.weight).toBe(2.25);
       expect(events.filter((e) => e.type === "sheriff_badge_transferred")).toHaveLength(1);
     }
   });

@@ -1,7 +1,10 @@
 /**
  * 单元测试：验证雾鸦独立 night frame 的原状态／读接口。输入为内存 fixture、受控回调和畸形修改；原引用、字面值及拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import {
+  createCampComponent,
+  createAliveComponent,
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { Camp, Role, WinCondition } from "../../../../src/domain/identity";
@@ -74,7 +77,12 @@ function fixture() {
       (role.privateState as Record<string, unknown>).alchemist = createAlchemistState();
     else if (name === "raven_claw_wolf")
       (role.privateState as Record<string, unknown>).ravenClaw = createRavenState();
-    else getDefaultRoleCatalog().applyRuntime(role, { boardConfig, initialCamp: { camp }, currentCamp: () => world.getComponent(id, COMPONENT.Camp) });
+    else
+      getDefaultRoleCatalog().applyRuntime(role, {
+        boardConfig,
+        initialCamp: { camp },
+        currentCamp: () => world.getComponent(id, COMPONENT.Camp),
+      });
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, createCampComponent(camp));
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
@@ -85,9 +93,9 @@ function fixture() {
     );
   });
   installMistRavenBoard(world);
-  expect(
-    getDreamerState(world.getComponent(3, COMPONENT.Role)!)?.protectionPolicy,
-  ).toBe("netease_2026_night_immunity_v1");
+  expect(getDreamerState(world.getComponent(3, COMPONENT.Role)!)?.protectionPolicy).toBe(
+    "netease_2026_night_immunity_v1",
+  );
   const kill = (id: number) => {
     world.getComponent(id, COMPONENT.Alive)!.alive = false;
   };
@@ -284,12 +292,8 @@ for (const edit of [
     let calls = 0;
     switch (edit) {
       case "caster_state":
-        (
-          world.getComponent(1, COMPONENT.Role)!.privateState as Record<
-            string,
-            unknown
-          >
-        ).alchemist = createAlchemistState();
+        (world.getComponent(1, COMPONENT.Role)!.privateState as Record<string, unknown>).alchemist =
+          createAlchemistState();
         break;
       case "noncaster_role":
         role.role = Role.Wolf;

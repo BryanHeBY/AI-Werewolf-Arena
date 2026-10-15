@@ -41,7 +41,9 @@ export function nightStageContext(
     toolGateway: new ToolGateway(),
     isCurrent: () => true,
     currentDay: () => 1,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     actionProvider: { getAction: unused },
     makeRequest: unused,
     getAliveByRole: unused,

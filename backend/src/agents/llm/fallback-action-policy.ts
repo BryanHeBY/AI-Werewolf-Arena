@@ -7,7 +7,10 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { ActionProvider, ActionRequest, ToolCall } from "../../domain";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { LlmObserver } from "../player/player-observer";
-import { allowsActionFallback, resolveTurnConstraints } from "../../engine/actions/turn-constraints";
+import {
+  allowsActionFallback,
+  resolveTurnConstraints,
+} from "../../engine/actions/turn-constraints";
 import { awaitBeforeDeadline } from "../runtime/turn-deadline";
 
 export type FallbackReason = "runtime_error" | "deadline_skip" | "model_declined_required_action";

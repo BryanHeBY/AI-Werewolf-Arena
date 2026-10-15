@@ -1,9 +1,34 @@
 /**
  * 单元测试验证 authority 的原权限和记录边界。输入为原 fixture、请求及显式故障／特权回调；原字面量、引用身份与错误／状态断言为预期。测试注入保留原请求，领域合法性与付款仍由原被测 owner 执行。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import {
+  createCampComponent,
+  createAliveComponent,
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import { World, Role, Camp, Phase, COMPONENT, WinCondition, ActionWindow, WitchSelfHealRule, PotionType, StatusMark, StatusMarksComponent, createVictoryComponent, assertRequestDelivery, deferRequestDelivery, bindRequestDeliveryGuard, type BoardConfig, type ActionStage, type ToolName, type GameEvent, type RoleComponent, type AliveComponent } from "../../../../src/domain";
+import {
+  World,
+  Role,
+  Camp,
+  Phase,
+  COMPONENT,
+  WinCondition,
+  ActionWindow,
+  WitchSelfHealRule,
+  PotionType,
+  StatusMark,
+  StatusMarksComponent,
+  createVictoryComponent,
+  assertRequestDelivery,
+  deferRequestDelivery,
+  bindRequestDeliveryGuard,
+  type BoardConfig,
+  type ActionStage,
+  type ToolName,
+  type GameEvent,
+  type RoleComponent,
+  type AliveComponent,
+} from "../../../../src/domain";
 import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import {
   installDemonHunter,
@@ -26,10 +51,11 @@ import {
   DEMON_HUNTER_ROLE,
   freshDemonHunterState,
 } from "../../../../src/features/demon-hunter/state-slot";
-import { recordNightAbilityUse, type NightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
-  installNativeAbility,
-} from "../../../../src/features/night-abilities/ability-changes";
+  recordNightAbilityUse,
+  type NightAbility,
+} from "../../../../src/features/night-abilities/abilities";
+import { installNativeAbility } from "../../../../src/features/night-abilities/ability-changes";
 import {
   captureDemonNativePoison,
   commitDemonNativePoison,
@@ -268,11 +294,7 @@ for (const variant of [
     if (variant === "actor_life") f.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
     if (variant === "target_life") f.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
     if (variant === "role")
-      f.world.addComponent(
-        6,
-        COMPONENT.Role,
-        createRoleComponent(DEMON_HUNTER_ROLE as Role),
-      );
+      f.world.addComponent(6, COMPONENT.Role, createRoleComponent(DEMON_HUNTER_ROLE as Role));
     if (variant === "camp") f.world.getComponent(6, COMPONENT.Camp)!.camp = Camp.Wolf;
     if (variant === "state")
       (f.role.privateState as Record<string, unknown>).demonHunter = freshDemonHunterState();
@@ -904,7 +926,9 @@ test("a real long canonical visible history remains authorized without relaxing 
 /** 测试在原 new 点才解析实际类；不改变已有 controllerDependencies 的动态导入或 await 次序。 */
 const requestConstruction = {
   get requestFactory(): import("../../../../src/domain/actions").ActionRequestFactoryConstructorPort {
-    return (require("../../../../src/engine/actions/action-request-factory") as typeof import("../../../../src/engine/actions/action-request-factory")).GameActionRequestFactory;
+    return (
+      require("../../../../src/engine/actions/action-request-factory") as typeof import("../../../../src/engine/actions/action-request-factory")
+    ).GameActionRequestFactory;
   },
 };
 
@@ -1008,7 +1032,7 @@ for (const kind of ["missing", "self", "extra", "getter", "revoked", "throw"] as
     try {
       await expect(
         executeDemonHunterTurn({
-        construction: requestConstruction,
+          construction: requestConstruction,
           world: f.world,
           gateway,
           events: [],
@@ -1218,7 +1242,7 @@ for (const [potion, targetId] of [
       }
       await expect(
         executeDemonWitchTurn({
-        construction: requestConstruction,
+          construction: requestConstruction,
           world: f.world,
           gateway,
           events,
@@ -1257,7 +1281,7 @@ for (const kind of [
     try {
       await expect(
         executeDemonWitchTurn({
-        construction: requestConstruction,
+          construction: requestConstruction,
           world: f.world,
           gateway,
           events,
@@ -1343,7 +1367,7 @@ test("actual original Witch pass → heal → poison: exact cross-night cache an
       f.world.addComponent(3, COMPONENT.StatusMarks, marks);
     }
     const result = await executeDemonWitchTurn({
-        construction: requestConstruction,
+      construction: requestConstruction,
       world: f.world,
       gateway,
       events: [],
@@ -1405,7 +1429,7 @@ test("actual original Witch pass → heal → poison: exact cross-night cache an
   beginDemonHunterNight(f.world, 4, () => true);
   await expect(
     executeDemonWitchTurn({
-        construction: requestConstruction,
+      construction: requestConstruction,
       world: f.world,
       gateway,
       events: [],
@@ -1442,7 +1466,7 @@ for (const kind of [
     if (kind === "unknown_before") marks.add(StatusMark.PoisonMark);
     beginDemonHunterNight(f.world, 1, () => true);
     await executeDemonWitchTurn({
-        construction: requestConstruction,
+      construction: requestConstruction,
       world: f.world,
       gateway,
       events: [],
@@ -1515,7 +1539,7 @@ test("delivered source seal cannot invent, copy, omit or cross Worlds", async ()
     "demon_hunter_native_sources_missing",
   );
   await executeDemonWitchTurn({
-        construction: requestConstruction,
+    construction: requestConstruction,
     world: f.world,
     gateway,
     events: [],
@@ -1563,7 +1587,7 @@ for (const kind of [
     try {
       await expect(
         executeDemonWitchTurn({
-        construction: requestConstruction,
+          construction: requestConstruction,
           world: f.world,
           gateway,
           events: [],
@@ -1580,18 +1604,14 @@ for (const kind of [
                 ).abilities as Record<string, NightAbility<"potion">>
               )["native:potion"]!;
               if (kind === "target_getter")
-                Object.defineProperty(
-                  f.world.getComponent(6, COMPONENT.Alive)!,
-                  "alive",
-                  {
-                    get() {
-                      reads++;
-                      return true;
-                    },
-                    configurable: true,
-                    enumerable: true,
+                Object.defineProperty(f.world.getComponent(6, COMPONENT.Alive)!, "alive", {
+                  get() {
+                    reads++;
+                    return true;
                   },
-                );
+                  configurable: true,
+                  enumerable: true,
+                });
               if (kind === "target_proxy")
                 f.world.addComponent(
                   6,
@@ -1732,7 +1752,7 @@ test("delivered source life wrappers are immutable while actual factory Alive re
       await import("../../../../src/features/demon-hunter/native-potion-controller");
   beginDemonHunterNight(f.world, 1, () => true);
   const result = await executeDemonWitchTurn({
-        construction: requestConstruction,
+    construction: requestConstruction,
     world: f.world,
     gateway,
     events: [],
@@ -1846,7 +1866,7 @@ for (const transport of ["sdk", "acp"] as const)
         beginDemonHunterNight(f.world, 1, () => true);
         try {
           const result = executeDemonWitchTurn({
-        construction: requestConstruction,
+            construction: requestConstruction,
             world: f.world,
             gateway,
             events: [],
@@ -1874,7 +1894,7 @@ test("delivered immunity keeps a new toxin written after ordinary marks consumpt
       await import("../../../../src/features/demon-hunter/native-potion-controller");
   beginDemonHunterNight(f.world, 1, () => true);
   await executeDemonWitchTurn({
-        construction: requestConstruction,
+    construction: requestConstruction,
     world: f.world,
     gateway,
     events: [],

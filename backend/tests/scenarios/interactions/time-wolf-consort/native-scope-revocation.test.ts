@@ -120,8 +120,8 @@ for (const [role, stage, event] of [
               .getEvents()
               .some((e) => e.type === event && e.payload.actorId === actor),
           ).toBe(false);
-          const state = getTimeConsortState(
-            game.world.getComponent(consort, COMPONENT.Role), () => game.world.getComponent(consort, COMPONENT.Camp)
+          const state = getTimeConsortState(game.world.getComponent(consort, COMPONENT.Role), () =>
+            game.world.getComponent(consort, COMPONENT.Camp),
           )!;
           expect(state.history).toHaveLength(timing === "before-stage" ? 0 : 1);
           expect(state.triggeredDay).toBeNull();
@@ -137,9 +137,7 @@ for (const ownerRole of [Role.Villager, Role.TimeWolfConsort] as const)
           random = createRandom("consort-container:" + ownerRole + ":" + mutation);
         const game = bootstrapGame(config, { random });
         const id = (name: Role) =>
-          game.playerIds.find(
-            (id) => game.world.getComponent(id, COMPONENT.Role)?.role === name,
-          )!;
+          game.playerIds.find((id) => game.world.getComponent(id, COMPONENT.Role)?.role === name)!;
         const actor = id(ownerRole),
           guard = id(Role.Guard),
           target = id(Role.Wolf);

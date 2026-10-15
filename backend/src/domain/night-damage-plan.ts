@@ -75,12 +75,26 @@ export function planNightDamage(
 ): NightDamagePlan {
   const awakenedShields = new Set(
     effects.awakenedEffects?.shields
-      .filter((effect) => effect.isCurrent() && livingNightLife(world, nightIntentTarget(effect, "awakened-shield", () => effects.intentNight)))
+      .filter(
+        (effect) =>
+          effect.isCurrent() &&
+          livingNightLife(
+            world,
+            nightIntentTarget(effect, "awakened-shield", () => effects.intentNight),
+          ),
+      )
       .map((effect) => nightIntentTarget(effect, "awakened-shield", () => effects.intentNight).id),
   );
   const awakenedAttacks = new Set(
     effects.awakenedEffects?.attacks
-      .filter((effect) => effect.isCurrent() && livingNightLife(world, nightIntentTarget(effect, "awakened-attack", () => effects.intentNight)))
+      .filter(
+        (effect) =>
+          effect.isCurrent() &&
+          livingNightLife(
+            world,
+            nightIntentTarget(effect, "awakened-attack", () => effects.intentNight),
+          ),
+      )
       .map((effect) => nightIntentTarget(effect, "awakened-attack", () => effects.intentNight).id),
   );
   // 先吸收原毒，避免其进入机械反射；返回毒随后仍按目标保护独立判定。
@@ -91,7 +105,11 @@ export function planNightDamage(
     awakenedShields,
     () => effects.intentNight,
   );
-  const claimedPoisonTargets = new Set(effects.poisonClaims?.map((claim) => nightIntentTarget(claim, "original-poison", () => effects.intentNight).id));
+  const claimedPoisonTargets = new Set(
+    effects.poisonClaims?.map(
+      (claim) => nightIntentTarget(claim, "original-poison", () => effects.intentNight).id,
+    ),
+  );
   const claimedGuardTargets = new Set(effects.guardClaims?.map((claim) => claim.target.id));
   // 守护仍只检查原生命与印记对象身份；不能额外调用 isCurrent 改变既有规则。
   const guarded = new Set(

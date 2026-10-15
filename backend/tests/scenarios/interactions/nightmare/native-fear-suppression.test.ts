@@ -5,12 +5,7 @@ import { getDreamerState } from "../../../../src/features/dreamer/ports";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { nightmareTwelveConfig } from "../../../../src/rulesets/presets/nightmare-twelve";
-import {
-  Role,
-  PotionType,
-  type ActionRequest,
-  type ToolCall,
-} from "../../../../src/domain/model";
+import { Role, PotionType, type ActionRequest, type ToolCall } from "../../../../src/domain/model";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import type { RoleComponent } from "../../../../src/domain/components/role";
 import type { AliveComponent } from "../../../../src/domain/components/alive";
@@ -57,10 +52,9 @@ function provider(
           args: {
             target_id: f.world
               .getAliveEntityIds()
-              .filter(
-                (id) =>
-                  f.world.getComponent(id, COMPONENT.Role)?.role === Role.Villager,
-              )[(r.context.day - 1) % 4]!,
+              .filter((id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.Villager)[
+              (r.context.day - 1) % 4
+            ]!,
           },
         };
       if (r.allowedTools.includes("check_identity"))
@@ -196,9 +190,7 @@ for (const wolfActionPolicy of ["standard", "no_blast_no_self_knife"] as const)
           id: (role: Role) =>
             f.world
               .entityIds()
-              .find(
-                (id) => f.world.getComponent(id, COMPONENT.Role)?.role === role,
-              )!,
+              .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === role)!,
           nightmare: 0,
           hunter: 0,
           seer: 0,

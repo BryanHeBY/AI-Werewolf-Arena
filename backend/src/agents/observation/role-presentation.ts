@@ -15,10 +15,7 @@ import {
 // 唯一展示绑定保存原闭包引用；角色状态仍只在 World 中的原组件。
 const presentations = new WeakMap<RoleComponent, (locale?: Locale) => string>();
 
-export function createRoleComponent(
-  role: Role,
-  locale: Locale = "zh-CN",
-): RoleComponent {
+export function createRoleComponent(role: Role, locale: Locale = "zh-CN"): RoleComponent {
   const component = createDomainRoleComponent(role);
   bindRolePresentation(component, (displayLocale: Locale = locale) =>
     text(displayLocale, "component.role", { role: roleName(component.role, displayLocale) }),

@@ -140,9 +140,7 @@ for (const window of Object.values(ActionWindow))
           if (window !== ActionWindow.OnPreVote) {
             expect(game.world.getAliveEntityIds()).not.toContain(10);
             if (window !== ActionWindow.OnPreElection)
-              expect(game.world.getComponent(5, COMPONENT.Badge)!.isSheriff).toBe(
-                true,
-              );
+              expect(game.world.getComponent(5, COMPONENT.Badge)!.isSheriff).toBe(true);
           }
           expect(game.world.getAliveEntityIds()).toContain(5);
           return { name: "use_snake", args: { target_id: null } };

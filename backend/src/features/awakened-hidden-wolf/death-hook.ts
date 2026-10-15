@@ -11,7 +11,11 @@ import { getAwakenedState } from "./state";
 import { createAwakenedGunReader } from "../death-actions/native-resource-ports";
 
 export const awakenedDeathHook: DeathHook = (world, ids, sources, choose, events, context) => {
-  const readGun = createAwakenedGunReader({ get getAwakenedState() { return getAwakenedState; } });
+  const readGun = createAwakenedGunReader({
+    get getAwakenedState() {
+      return getAwakenedState;
+    },
+  });
   return resolveNativeDeathShots(
     world,
     ids,

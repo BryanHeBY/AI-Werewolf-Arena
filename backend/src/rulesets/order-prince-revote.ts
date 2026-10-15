@@ -5,7 +5,12 @@
  * 严格闭包先复验原身份与生命，再调用原阶段回调；后续 PK 继续消费已替换选项，不复制授权或 actor。
  * 收票、目标生命、票权及开票仍由流水线执行；失败保留已付选择和已发表前缀，不退款、不自动补票。
  */
-import type { EntityId, GameEvent, ReadonlyBoardConfig, VoteRecord } from "@ai-werewolf-arena/game-contract";
+import type {
+  EntityId,
+  GameEvent,
+  ReadonlyBoardConfig,
+  VoteRecord,
+} from "@ai-werewolf-arena/game-contract";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import type { ActionProvider, ActionRequestConstructionPort } from "../domain/actions";
 import type { World } from "../domain/world";
@@ -43,8 +48,14 @@ export interface OrderPrinceRevoteRuntime<Votes> {
 /** 恢复值只对应本次两个原等待点：第一次 boolean，激活后第二次为原 Votes，不驱动其它窗口。 */
 export function* recollectOrderPrinceVotes<Votes>(
   runtime: OrderPrinceRevoteRuntime<Votes>,
-): Generator<Promise<boolean> | Promise<Votes>, OrderPrinceRevoteBallots | undefined, boolean | Votes> {
-  if (runtime.config.roleSetups.some((setup) => setup.role === Role.OrderPrince && setup.count > 0)) {
+): Generator<
+  Promise<boolean> | Promise<Votes>,
+  OrderPrinceRevoteBallots | undefined,
+  boolean | Votes
+> {
+  if (
+    runtime.config.roleSetups.some((setup) => setup.role === Role.OrderPrince && setup.count > 0)
+  ) {
     const restarted = (yield runOrderPrinceChoice(
       runtime.world,
       runtime.requests,

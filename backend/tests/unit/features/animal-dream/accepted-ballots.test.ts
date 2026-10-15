@@ -14,7 +14,10 @@ import {
   animalAuthoritySnapshot,
   animalPufferChoiceActor,
 } from "../../../../src/features/animal-dream/authority";
-import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/features/animal-dream/accepted-ballots";
+import {
+  recordAnimalBallotRound,
+  sealAnimalBallots,
+} from "../../../../src/features/animal-dream/accepted-ballots";
 
 function fixture() {
   const f = animalRosterFixture(undefined, installAnimalAuthority);
@@ -30,8 +33,11 @@ function votes(f: ReturnType<typeof fixture>, selected: Record<number, number> =
 }
 
 test("原票与 PK 候选均在首次 guard 前捕获，回调改输入不改已接受账本", () => {
-  const f = fixture(), raw = votes(f), candidates: number[] = [];
-  let armed = false, calls = 0;
+  const f = fixture(),
+    raw = votes(f),
+    candidates: number[] = [];
+  let armed = false,
+    calls = 0;
   const token = beginAnimalExileUnit(f.world, 1, "exile", () => {
     if (armed) {
       calls++;
@@ -48,7 +54,10 @@ test("原票与 PK 候选均在首次 guard 前捕获，回调改输入不改已
   expect(calls).toBe(2);
   expect(candidates).toEqual([99, 99]);
   expect(animalAuthoritySnapshot(f.world)!.unit!.ballots[0]!.votes[1]).toEqual({
-    actorId: 2, targetId: null, abstain: true, weight: 0,
+    actorId: 2,
+    targetId: null,
+    abstain: true,
+    weight: 0,
   });
   sealAnimalBallots(f.world, token);
   expect(animalPufferChoiceActor(f.world, token)).toBeNull();
@@ -57,7 +66,8 @@ test("原票与 PK 候选均在首次 guard 前捕获，回调改输入不改已
 
 test("末次 guard 更换同形票权对象也撤销原单元，停止发生在账本安装前", () => {
   const f = fixture();
-  let armed = false, calls = 0;
+  let armed = false,
+    calls = 0;
   const token = beginAnimalExileUnit(f.world, 1, "exile", () => {
     if (armed && ++calls === 2) {
       const voting = f.world.getComponent(2, COMPONENT.VotingRight)!;
@@ -66,7 +76,9 @@ test("末次 guard 更换同形票权对象也撤销原单元，停止发生在�
     return true;
   });
   armed = true;
-  expect(() => recordAnimalBallotRound(f.world, token, 1, votes(f, { 2: 12 }))).toThrow("animal_ballot_round_revoked");
+  expect(() => recordAnimalBallotRound(f.world, token, 1, votes(f, { 2: 12 }))).toThrow(
+    "animal_ballot_round_revoked",
+  );
   armed = false;
   const snapshot = animalAuthoritySnapshot(f.world, false)!;
   expect(snapshot.stopped).toBe(true);
@@ -78,12 +90,17 @@ test("末次 guard 更换同形票权对象也撤销原单元，停止发生在�
 });
 
 test("封票先写最终轮次，后续库存 JSON 解码失败保留封票且不建立付款租约", () => {
-  const f = fixture(), token = beginAnimalExileUnit(f.world, 1, "exile", () => true);
+  const f = fixture(),
+    token = beginAnimalExileUnit(f.world, 1, "exile", () => true);
   recordAnimalBallotRound(f.world, token, 1, votes(f, { 2: 12 }));
-  const parse = JSON.parse, failure = new Error("literal_puffer_stock_decode_failure");
+  const parse = JSON.parse,
+    failure = new Error("literal_puffer_stock_decode_failure");
   let calls = 0;
   // 仅同步封票期间截获原解码调用，finally 恢复；不改 live 库存或生产授权规则。
-  JSON.parse = (() => { calls++; throw failure; }) as typeof JSON.parse;
+  JSON.parse = (() => {
+    calls++;
+    throw failure;
+  }) as typeof JSON.parse;
   try {
     expect(() => sealAnimalBallots(f.world, token)).toThrow(failure);
   } finally {

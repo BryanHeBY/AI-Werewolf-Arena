@@ -31,12 +31,14 @@ export class ObservedPlayersActionProvider implements ActionProvider {
     const strategy = this.strategies.get(request.actorId);
     if (!strategy) throw new Error("observed_player_strategy_missing");
     // 回调在原表达式处读取；role／wolfTeammates 方法先查找，再读取请求 actor 参数。
-    return strategy.decide(capturePlayerObservation(request, {
-      world: () => this.world,
-      role: (actorId) => this.role(actorId()),
-      wolfTeammates: (actorId) => this.wolfTeammates(actorId()),
-      catalog: () => this.catalog,
-    }));
+    return strategy.decide(
+      capturePlayerObservation(request, {
+        world: () => this.world,
+        role: (actorId) => this.role(actorId()),
+        wolfTeammates: (actorId) => this.wolfTeammates(actorId()),
+        catalog: () => this.catalog,
+      }),
+    );
   }
 
   private role(actorId: EntityId): RoleComponent | undefined {

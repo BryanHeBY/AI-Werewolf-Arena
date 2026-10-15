@@ -4,16 +4,30 @@
  * 不打开死亡行动或消费资源，不运行整局／模型；库存知情、捕获函数与行动许可分别拥有。
  */
 import { expect, test } from "bun:test";
-import { Camp, Role, Phase, DeathCause, type DeathSources, type HunterState, type GameEvent } from "@ai-werewolf-arena/game-contract";
+import {
+  Camp,
+  Role,
+  Phase,
+  DeathCause,
+  type DeathSources,
+  type HunterState,
+  type GameEvent,
+} from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { createRoleComponent } from "../../../../src/domain/components/role";
 import { createAliveComponent } from "../../../../src/domain/components/alive";
-import { captureDeathShotEligibility, grantDeathGun, armDeathGun } from "../../../../src/features/death-actions/death-abilities";
+import {
+  captureDeathShotEligibility,
+  grantDeathGun,
+  armDeathGun,
+} from "../../../../src/features/death-actions/death-abilities";
 import { demonHunterNativeGunCurrent } from "../../../../src/features/demon-hunter/ports";
 
 function hunter() {
-  const world = new World(), actorId = world.createEntity(), role = createRoleComponent(Role.Hunter);
+  const world = new World(),
+    actorId = world.createEntity(),
+    role = createRoleComponent(Role.Hunter);
   world.addComponent(actorId, COMPONENT.Role, role);
   world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Good });
   world.addComponent(actorId, COMPONENT.Alive, createAliveComponent());
@@ -21,38 +35,95 @@ function hunter() {
 }
 
 test("a missing gifted gun returns before another World, native slot or cause read", () => {
-  const trace: string[] = [], world = new World();
-  const sources: DeathSources = { get 1(): DeathCause[] { throw new Error("cause_must_not_read"); } };
-  const qualification = captureDeathShotEligibility({
-    get world() { trace.push("world"); return world; },
-    get day() { trace.push("day"); return 2; },
-    get demonHunterNativeGunCurrent(): typeof demonHunterNativeGunCurrent { throw new Error("demon_must_not_read"); },
-  }, 1, "gift-gun:missing", sources, Phase.Day, () => { throw new Error("scope_must_not_read"); });
+  const trace: string[] = [],
+    world = new World();
+  const sources: DeathSources = {
+    get 1(): DeathCause[] {
+      throw new Error("cause_must_not_read");
+    },
+  };
+  const qualification = captureDeathShotEligibility(
+    {
+      get world() {
+        trace.push("world");
+        return world;
+      },
+      get day() {
+        trace.push("day");
+        return 2;
+      },
+      get demonHunterNativeGunCurrent(): typeof demonHunterNativeGunCurrent {
+        throw new Error("demon_must_not_read");
+      },
+    },
+    1,
+    "gift-gun:missing",
+    sources,
+    Phase.Day,
+    () => {
+      throw new Error("scope_must_not_read");
+    },
+  );
   expect(qualification).toBeNull();
   expect(trace).toEqual(["world", "day"]);
 });
 
 test("native qualification retains Demon then scope then stock and cause order and rechecks captured policy", () => {
-  const f = hunter(), trace: string[] = [];
-  let demonAllowed = false, canShoot = true;
+  const f = hunter(),
+    trace: string[] = [];
+  let demonAllowed = false,
+    canShoot = true;
   let policy: HunterState["deathActionPolicy"] = "awa_qualified_sources_v1";
   const stock: HunterState = {
-    get canShoot() { trace.push("canShoot"); return canShoot; },
-    get deathActionPolicy() { trace.push("policy"); return policy; },
+    get canShoot() {
+      trace.push("canShoot");
+      return canShoot;
+    },
+    get deathActionPolicy() {
+      trace.push("policy");
+      return policy;
+    },
   };
   Object.defineProperty(f.role.privateState, "hunter", {
-    get() { trace.push("stock"); return stock; },
+    get() {
+      trace.push("stock");
+      return stock;
+    },
   });
   let causes = [DeathCause.Exile];
-  const sources: DeathSources = { get [f.actorId]() { trace.push("causes"); return causes; } };
-  const qualification = captureDeathShotEligibility({
-    get world() { trace.push("world"); return f.world; },
-    get day(): number { throw new Error("native_day_must_not_read"); },
-    get demonHunterNativeGunCurrent() {
-      trace.push("demonCallee");
-      return function(this: unknown) { expect(this).toBeUndefined(); trace.push("demon"); return demonAllowed; };
+  const sources: DeathSources = {
+    get [f.actorId]() {
+      trace.push("causes");
+      return causes;
     },
-  }, f.actorId, undefined, sources, Phase.Day, () => { trace.push("scope"); return true; });
+  };
+  const qualification = captureDeathShotEligibility(
+    {
+      get world() {
+        trace.push("world");
+        return f.world;
+      },
+      get day(): number {
+        throw new Error("native_day_must_not_read");
+      },
+      get demonHunterNativeGunCurrent() {
+        trace.push("demonCallee");
+        return function (this: unknown) {
+          expect(this).toBeUndefined();
+          trace.push("demon");
+          return demonAllowed;
+        };
+      },
+    },
+    f.actorId,
+    undefined,
+    sources,
+    Phase.Day,
+    () => {
+      trace.push("scope");
+      return true;
+    },
+  );
   if (!qualification) throw new Error("native_fixture_missing");
   expect(qualification.nativePolicy).toBe("awa_qualified_sources_v1");
   expect(trace).toEqual(["world", "stock", "policy", "causes"]);
@@ -63,7 +134,16 @@ test("native qualification retains Demon then scope then stock and cause order a
   trace.length = 0;
   expect(qualification.eligible()).toBe(true);
   expect(trace).toEqual([
-    "demonCallee", "world", "demon", "scope", "world", "stock", "policy", "causes", "causes", "canShoot",
+    "demonCallee",
+    "world",
+    "demon",
+    "scope",
+    "world",
+    "stock",
+    "policy",
+    "causes",
+    "causes",
+    "canShoot",
   ]);
   canShoot = false;
   expect(qualification.permissionCurrent()).toBe(true);
@@ -76,26 +156,56 @@ test("native qualification retains Demon then scope then stock and cause order a
   causes = [DeathCause.Exile, DeathCause.Poison];
   trace.length = 0;
   expect(qualification.permissionCurrent()).toBe(false);
-  expect(trace).toEqual(["demonCallee", "world", "demon", "scope", "world", "stock", "policy", "causes"]);
+  expect(trace).toEqual([
+    "demonCallee",
+    "world",
+    "demon",
+    "scope",
+    "world",
+    "stock",
+    "policy",
+    "causes",
+  ]);
 });
 
 test("a Hunter holding a real gift still checks Demon but never captures the native stock or pays", () => {
-  const f = hunter(), fromId = f.world.createEntity(), events: GameEvent[] = [], trace: string[] = [];
+  const f = hunter(),
+    fromId = f.world.createEntity(),
+    events: GameEvent[] = [],
+    trace: string[] = [];
   f.world.addComponent(fromId, COMPONENT.Role, createRoleComponent(Role.Villager));
   f.world.addComponent(fromId, COMPONENT.Camp, { camp: Camp.Good });
   f.world.addComponent(fromId, COMPONENT.Alive, createAliveComponent());
-  Object.defineProperty(f.role.privateState, "hunter", { get() { throw new Error("gift_native_stock_must_not_read"); } });
+  Object.defineProperty(f.role.privateState, "hunter", {
+    get() {
+      throw new Error("gift_native_stock_must_not_read");
+    },
+  });
   const gun = grantDeathGun(f.world, fromId, f.actorId, 2, events);
   armDeathGun(f.world, f.actorId, gun, 2, events);
   f.world.getComponent(f.actorId, COMPONENT.Alive)!.alive = false;
   let allowed = false;
-  const qualification = captureDeathShotEligibility({
-    world: f.world, day: 2,
-    get demonHunterNativeGunCurrent() {
-      trace.push("demonCallee");
-      return () => { trace.push("demon"); return allowed; };
+  const qualification = captureDeathShotEligibility(
+    {
+      world: f.world,
+      day: 2,
+      get demonHunterNativeGunCurrent() {
+        trace.push("demonCallee");
+        return () => {
+          trace.push("demon");
+          return allowed;
+        };
+      },
     },
-  }, f.actorId, gun.id, { [f.actorId]: [DeathCause.Exile] }, Phase.Night, () => { trace.push("scope"); return true; });
+    f.actorId,
+    gun.id,
+    { [f.actorId]: [DeathCause.Exile] },
+    Phase.Night,
+    () => {
+      trace.push("scope");
+      return true;
+    },
+  );
   if (!qualification) throw new Error("gift_fixture_missing");
   expect(qualification.nativePolicy).toBe("awa_qualified_sources_v1");
   expect(qualification.eligible()).toBe(false);
@@ -106,5 +216,5 @@ test("a Hunter holding a real gift still checks Demon but never captures the nat
   expect(trace).toEqual(["demonCallee", "demon", "scope"]);
   expect(gun.remaining).toBe(1);
   expect(gun.deathExpired).toBe(false);
-  expect(events.map(e => e.type)).toEqual(["death_ability_changed", "death_ability_changed"]);
+  expect(events.map((e) => e.type)).toEqual(["death_ability_changed", "death_ability_changed"]);
 });

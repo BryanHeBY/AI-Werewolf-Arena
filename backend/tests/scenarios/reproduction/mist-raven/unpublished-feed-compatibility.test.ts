@@ -7,7 +7,10 @@ import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix"
 import { test, expect } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Phase, createRandom, type ActionRequest, type ToolCall } from "../../../../src/domain";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  type ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 import { ReproductionTrace } from "../../../../src/recording/reproduction/trace";
 import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";

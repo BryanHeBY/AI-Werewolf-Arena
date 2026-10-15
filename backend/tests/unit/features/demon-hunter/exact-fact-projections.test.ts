@@ -2,7 +2,11 @@
  * 单元测试验证猎魔人的全知／玩家事实精确字段与受众、getter 的失败关闭边界。输入为完整／本人字面量和字段变体，只构造投影所需的局部 World；预期为精确接受数据、null 拒绝、合法标签和零 getter 读取，不执行完整夜间或文件录制。
  */
 import { expect, test } from "bun:test";
-import { DEMON_HUNTER_POLICY, readDemonHunterEventFact, readDemonHunterPlayerFact } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
+import {
+  DEMON_HUNTER_POLICY,
+  readDemonHunterEventFact,
+  readDemonHunterPlayerFact,
+} from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { demonHunterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { type GameEvent } from "../../../../src/domain";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";

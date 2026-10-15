@@ -72,7 +72,8 @@ export function recordAnimalBallotRound(
     throw Error("animal_ballot_round_invalid");
   if (
     round === 2 &&
-    JSON.stringify([...candidates].sort((a, b) => a - b)) !== JSON.stringify(unit.ballots.pkCandidates())
+    JSON.stringify([...candidates].sort((a, b) => a - b)) !==
+      JSON.stringify(unit.ballots.pkCandidates())
   )
     throw Error("animal_ballot_round_invalid");
   const expected = eligibleAnimalVoters(world, candidates);
@@ -135,7 +136,8 @@ export function sealAnimalBallots(world: World, token: object): void {
   const { owner, unit } = animalAcceptedBallotUnit(world, token);
   if (unit.value.kind !== "exile" || unit.ballots.finalRound !== null || !unit.ballots.size)
     throw Error("animal_ballot_round_unavailable");
-  if (unit.ballots.size === 1 && unit.ballots.pkCandidates().length) throw Error("animal_ballot_pk_required");
+  if (unit.ballots.size === 1 && unit.ballots.pkCandidates().length)
+    throw Error("animal_ballot_pk_required");
   unit.ballots.seal();
   const policy = animalRosterPolicies(world)!.ballotPolicy,
     selected = unit.ballots.round(policy === "awa_first_ballot_v1" ? 1 : unit.ballots.finalRound!)!;

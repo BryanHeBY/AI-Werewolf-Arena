@@ -4,7 +4,10 @@
  * 实际原生 owner/frame/readers 仍按原顺序执行，use/install 入口只随实际实例 owner 迁移。
  * 不运行完整对局、模型或物理传输，不重建 fixture、矩阵或生产生成的预期。
  */
-import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
+import {
+  createAliveComponent,
+  createCampComponent,
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";

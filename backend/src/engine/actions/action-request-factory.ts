@@ -5,7 +5,10 @@
  * 本工厂不渲染本地化文案、不序列化运行范围，也不据阶段字符串新增角色权限。
  */
 import { bindRulesetActionRequest } from "../../rulesets/action-request-bindings";
-import type { ActionRequestConstructionInput, ActionRequestConstructionPort } from "../../domain/actions";
+import type {
+  ActionRequestConstructionInput,
+  ActionRequestConstructionPort,
+} from "../../domain/actions";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
 import { World } from "../../domain/world";

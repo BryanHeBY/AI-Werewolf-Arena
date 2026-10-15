@@ -51,11 +51,14 @@ test("identical unordered pair cancels both outputs and preserves both histories
     effectiveId: a,
     missed: false,
   });
-  expect(getMagicianState(f.role(f.m), () => f.world.getComponent(f.m, COMPONENT.Camp))!.history[0]!.pair).toEqual([Math.min(a, b), Math.max(a, b)]);
-  expect(getTricksterState(f.role(f.t), () => f.world.getComponent(f.t, COMPONENT.Camp))!.history[0]!.pair).toEqual([
-    Math.min(a, b),
-    Math.max(a, b),
-  ]);
+  expect(
+    getMagicianState(f.role(f.m), () => f.world.getComponent(f.m, COMPONENT.Camp))!.history[0]!
+      .pair,
+  ).toEqual([Math.min(a, b), Math.max(a, b)]);
+  expect(
+    getTricksterState(f.role(f.t), () => f.world.getComponent(f.t, COMPONENT.Camp))!.history[0]!
+      .pair,
+  ).toEqual([Math.min(a, b), Math.max(a, b)]);
   closeMagicianNight(f.world, 1);
   beginMagicianNight(f.world, 2);
   beginTricksterNight(f.world, 2);

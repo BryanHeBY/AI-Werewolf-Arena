@@ -32,5 +32,7 @@ export function attachNightUnit<T extends object>(result: T, unit: NightUnit | u
 }
 /** 外部旧对象即使有同名 getter 或 Proxy，也不触发新增反射读取。 */
 export function nightUnitOf(result: object): NightUnit | undefined {
-  return results.has(result) && !types.isProxy(result) ? (result as NightBound)[NIGHT_UNIT] : undefined;
+  return results.has(result) && !types.isProxy(result)
+    ? (result as NightBound)[NIGHT_UNIT]
+    : undefined;
 }

@@ -9,7 +9,12 @@ import type { ShelterState } from "@ai-werewolf-arena/game-contract";
 import { copyAbilityData, type NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 import type { RoleComponent } from "../../domain/components/role";
-import { createShelterState, readShelterState, selectShelter, projectShelterState } from "./shelter-state";
+import {
+  createShelterState,
+  readShelterState,
+  selectShelter,
+  projectShelterState,
+} from "./shelter-state";
 
 /** 仅初始化安装库存，保留原 JSON 复制和 owned 返回引用，不提前执行 strict reader。 */
 function installShelterState(role: RoleComponent, state: ShelterState) {
@@ -17,7 +22,10 @@ function installShelterState(role: RoleComponent, state: ShelterState) {
 }
 
 /** 保留 assign 查找、状态读取和逐字段写入；next 已由原 caller 完成选择。 */
-function recordShelterSelection(ability: NightAbilityReadView<"shelter">, next: ShelterState): void {
+function recordShelterSelection(
+  ability: NightAbilityReadView<"shelter">,
+  next: ShelterState,
+): void {
   // 原顺序：查 Object.assign → 读原 ability.state → 按 next 字段顺序赋值，绝不替换槽引用。
   Object.assign(ability.state, next);
 }

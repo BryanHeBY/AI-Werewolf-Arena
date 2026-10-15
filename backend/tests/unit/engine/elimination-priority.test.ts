@@ -81,9 +81,7 @@ for (const locale of ["zh-CN", "en"] as const) {
           { locale },
         );
         const members = new Map(
-          world
-            .entityIds()
-            .map((id) => [id, world.getComponent(id, COMPONENT.Role)!]),
+          world.entityIds().map((id) => [id, world.getComponent(id, COMPONENT.Role)!]),
         );
         for (const [id, role] of members) {
           if ((scenario.dead as readonly Role[]).includes(role.role)) {

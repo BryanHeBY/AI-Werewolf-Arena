@@ -56,7 +56,10 @@ export function initializeLonelyGirlState(role: RoleInitializationComponent): vo
 }
 
 /** 两项原资源写先于 lifecycle 的 Victory 安装；后者失败不回滚已消费槽。 */
-export function consumeLonelyGirlState(b: { state: LonelyGirlReadState }, choice: NonNullable<LonelyGirlReadState["choice"]>): void {
+export function consumeLonelyGirlState(
+  b: { state: LonelyGirlReadState },
+  choice: NonNullable<LonelyGirlReadState["choice"]>,
+): void {
   (b.state as Pick<LonelyGirlState, "remaining">).remaining = 0;
   (b.state as Pick<LonelyGirlState, "choice">).choice = choice;
 }
@@ -75,7 +78,10 @@ export function cancelLonelyGirlState(b: { state: LonelyGirlReadState }): void {
 
 /** 投影只消费 lifecycle 的原状态／选择和当前性查询；不复制实际阵营或授予原窗口资格。 */
 export function projectLonelyGirlData(
-  b: { status: "pending" | "active" | "complete" | "failed" | "cancelled"; choice: LonelyGirlReadState["choice"] },
+  b: {
+    status: "pending" | "active" | "complete" | "failed" | "cancelled";
+    choice: LonelyGirlReadState["choice"];
+  },
   pendingOwner: () => boolean,
 ): LonelyGirlReadState {
   return b.status === "complete"

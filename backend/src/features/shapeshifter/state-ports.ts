@@ -55,7 +55,10 @@ export { readShapeshifterChoiceTool as readShapeshifterTool } from "@ai-werewolf
 import type { RoleInitializationComponent } from "../../rulesets/roles/contracts";
 
 /** 原 LHS 私有容器先于 policy 求值；不缓存 config 或改写已存在的合法槽。 */
-export function initializeShapeshifterState(role: RoleInitializationComponent, policy: () => ShapeshifterState["policy"]): void {
+export function initializeShapeshifterState(
+  role: RoleInitializationComponent,
+  policy: () => ShapeshifterState["policy"],
+): void {
   if (!getShapeshifterState(role))
     role.privateState.shapeshifter = {
       policy: policy(),
@@ -65,13 +68,18 @@ export function initializeShapeshifterState(role: RoleInitializationComponent, p
 }
 
 /** 原窗口先复验；此处只有两项数据写，首 setter 失败不会写 choice。 */
-export function consumeShapeshifterState(state: Pick<ShapeshifterReadState, "remaining" | "choice">, choice: 0 | 1 | null): void {
+export function consumeShapeshifterState(
+  state: Pick<ShapeshifterReadState, "remaining" | "choice">,
+  choice: 0 | 1 | null,
+): void {
   (state as Pick<ShapeshifterState, "remaining">).remaining = 0;
   (state as Pick<ShapeshifterState, "choice">).choice = choice;
 }
 
 /** 仅千面人的原 finally 补偿：两 descriptor 都可写才按原次序关闭库存；不新增拒绝或捕获异常。 */
-export function cancelShapeshifterState(original: Pick<ShapeshifterReadState, "remaining" | "choice"> | null | undefined): void {
+export function cancelShapeshifterState(
+  original: Pick<ShapeshifterReadState, "remaining" | "choice"> | null | undefined,
+): void {
   if (
     original &&
     Object.getOwnPropertyDescriptor(original, "remaining")?.writable &&

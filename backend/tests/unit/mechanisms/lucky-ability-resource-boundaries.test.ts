@@ -26,7 +26,10 @@ import {
 } from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { setNightAbilityEnabled } from "../../../src/features/night-abilities/abilities";
-import { grantNightAbility, transferNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import {
+  grantNightAbility,
+  transferNightAbility,
+} from "../../../src/features/night-abilities/night-ability-grants";
 import {
   allNightAbilities,
   abilityStatus,
@@ -95,7 +98,9 @@ function context(
   return {
     world: game.world,
     // 构造端口使用已有 Ctor；原 makeRequest 仍复用上方实例，不额外创建请求工厂。
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
     },
@@ -212,9 +217,7 @@ test("native Witch heal and Lucky poison have independent bottles; Lucky waits t
       },
       events,
     );
-  game.world
-    .getComponent(6, COMPONENT.StatusMarks)!
-    .add(StatusMark.WolfKillMark);
+  game.world.getComponent(6, COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
   const ctx = context(game, 1, events, async () => ({
     name: "use_potion",
     args: { target_id: 6, potion_type: PotionType.Heal },
@@ -466,9 +469,7 @@ test("an already committed ordinary guard protects its original target after cas
     }));
   await ordinary("guard_action").execute(ctx);
   game.world.getComponent(5, COMPONENT.Alive)!.alive = false;
-  game.world
-    .getComponent(6, COMPONENT.StatusMarks)!
-    .add(StatusMark.WolfKillMark);
+  game.world.getComponent(6, COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
   expect(
     new DamageResolutionSystem().resolve(game.world, { guardClaims: ctx.state.guardClaims }),
   ).toEqual({ deaths: [], deathSources: {} });
@@ -479,9 +480,7 @@ test("an already committed ordinary guard protects its original target after cas
     }));
   await ordinary("guard_action").execute(next);
   other.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
-  other.world
-    .getComponent(6, COMPONENT.StatusMarks)!
-    .add(StatusMark.WolfKillMark);
+  other.world.getComponent(6, COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
   expect(
     new DamageResolutionSystem().resolve(other.world, { guardClaims: next.state.guardClaims }),
   ).toEqual({ deaths: [6], deathSources: { 6: [DeathCause.WolfKill] } });

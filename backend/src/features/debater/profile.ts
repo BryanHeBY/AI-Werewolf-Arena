@@ -8,14 +8,7 @@ import { nativeRolePresentation } from "../../rulesets/roles/presentation-contri
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
-import {
-  COMPONENT,
-  Role,
-  Camp,
-  Phase,
-  DEBATER_POLICIES,
-  type RoleComponent,
-} from "../../domain";
+import { COMPONENT, Role, Camp, Phase, DEBATER_POLICIES, type RoleComponent } from "../../domain";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { numberOrNull } from "../../agents/tool-repair/helpers";
 import { getDebaterState, projectDebaterState, initializeDebaterState } from "./state";

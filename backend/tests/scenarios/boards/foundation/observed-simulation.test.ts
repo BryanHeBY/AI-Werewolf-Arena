@@ -45,7 +45,9 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
         expect(report.branches[branch]).toBeGreaterThan(0);
     }
     for (const game of report.games) {
-      const replay = readReplayDocument(JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8")));
+      const replay = readReplayDocument(
+        JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8")),
+      );
       assertReplayDocument(replay);
       expect(replay.result).toEqual({
         winner: game.result!.winner,

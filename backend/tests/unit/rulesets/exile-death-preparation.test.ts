@@ -20,7 +20,10 @@ test("动物死亡提案保重复来源合并和首次席位顺序，普通提�
   const selection = { summary: { target: 2 }, removed: [2, 2], animalRetaliation: [3, 2, 3] };
   expect(prepareAnimalExileDeaths(selection)).toEqual({
     ids: [2, 3],
-    sources: { 2: [DeathCause.Exile, DeathCause.PufferRetaliation], 3: [DeathCause.PufferRetaliation] },
+    sources: {
+      2: [DeathCause.Exile, DeathCause.PufferRetaliation],
+      3: [DeathCause.PufferRetaliation],
+    },
   });
   expect(prepareOrdinaryExileDeaths(selection)).toEqual({ 2: [DeathCause.Exile] });
   expect(selection.removed).toEqual([2, 2]);
@@ -28,34 +31,64 @@ test("动物死亡提案保重复来源合并和首次席位顺序，普通提�
 });
 
 test("普通反馈在标死前捕获，动物反馈只在主目标真正放逐死亡之后捕获", () => {
-  const world = new World(), target = world.createEntity(), life = createAliveComponent();
+  const world = new World(),
+    target = world.createEntity(),
+    life = createAliveComponent();
   world.addComponent(target, COMPONENT.Role, createRoleComponent(Role.Wolf));
   world.addComponent(target, COMPONENT.Camp, { camp: Camp.Wolf });
   world.addComponent(target, COMPONENT.Alive, life);
-  const selection = { summary: { target }, removed: [target] }, reads: string[] = [];
-  const runtime = () => { reads.push("world"); return world; };
-  expect(captureOrdinaryExileFeedback(runtime, selection, target, 4)).toEqual({ exileDay: 4, targetId: target, result: { kind: "camp", camp: Camp.Wolf } });
+  const selection = { summary: { target }, removed: [target] },
+    reads: string[] = [];
+  const runtime = () => {
+    reads.push("world");
+    return world;
+  };
+  expect(captureOrdinaryExileFeedback(runtime, selection, target, 4)).toEqual({
+    exileDay: 4,
+    targetId: target,
+    result: { kind: "camp", camp: Camp.Wolf },
+  });
   expect(reads).toEqual(["world"]);
   reads.length = 0;
-  expect(captureAnimalExileFeedback(runtime, selection, { [target]: [DeathCause.Exile] }, 4)).toBeNull();
+  expect(
+    captureAnimalExileFeedback(runtime, selection, { [target]: [DeathCause.Exile] }, 4),
+  ).toBeNull();
   expect(reads).toEqual(["world"]);
   life.alive = false;
   reads.length = 0;
-  expect(captureAnimalExileFeedback(runtime, selection, { [target]: [DeathCause.PufferRetaliation] }, 4)).toBeNull();
+  expect(
+    captureAnimalExileFeedback(runtime, selection, { [target]: [DeathCause.PufferRetaliation] }, 4),
+  ).toBeNull();
   expect(reads).toEqual([]);
-  expect(captureAnimalExileFeedback(runtime, selection, { [target]: [DeathCause.Exile] }, 4)).toEqual({ exileDay: 4, targetId: target, result: { kind: "camp", camp: Camp.Wolf } });
+  expect(
+    captureAnimalExileFeedback(runtime, selection, { [target]: [DeathCause.Exile] }, 4),
+  ).toEqual({ exileDay: 4, targetId: target, result: { kind: "camp", camp: Camp.Wolf } });
   expect(reads).toEqual(["world", "world"]);
 });
 
 test("空目标不读取名单或世界，动物生命查询失败先于身份捕获且不修改来源", () => {
-  const failure = new Error("literal_alive_read_failure"), reads: string[] = [];
-  const unavailable = () => { throw new Error("literal_world_must_not_read"); };
-  const absent = { get removed(): number[] { throw new Error("literal_removed_must_not_read"); } };
+  const failure = new Error("literal_alive_read_failure"),
+    reads: string[] = [];
+  const unavailable = () => {
+    throw new Error("literal_world_must_not_read");
+  };
+  const absent = {
+    get removed(): number[] {
+      throw new Error("literal_removed_must_not_read");
+    },
+  };
   expect(captureOrdinaryExileFeedback(unavailable, absent, null, 1)).toBeNull();
   expect(captureAnimalExileFeedback(unavailable, { summary: { target: null } }, {}, 1)).toBeNull();
-  const world = { getComponent(_id: number, kind: unknown) { reads.push(String(kind)); throw failure; } } as unknown as World;
+  const world = {
+    getComponent(_id: number, kind: unknown) {
+      reads.push(String(kind));
+      throw failure;
+    },
+  } as unknown as World;
   const sources = { 2: [DeathCause.Exile] };
-  expect(() => captureAnimalExileFeedback(() => world, { summary: { target: 2 } }, sources, 1)).toThrow(failure);
+  expect(() =>
+    captureAnimalExileFeedback(() => world, { summary: { target: 2 } }, sources, 1),
+  ).toThrow(failure);
   expect(reads).toEqual([COMPONENT.Alive]);
   expect(sources).toEqual({ 2: [DeathCause.Exile] });
 });

@@ -14,19 +14,11 @@ import {
 } from "../../domain/night-effects";
 import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
-import {
-  Phase,
-  PotionType,
-  Role,
-  StatusMark,
-  WitchSelfHealRule,
-} from "../../domain/model";
+import { Phase, PotionType, Role, StatusMark, WitchSelfHealRule } from "../../domain/model";
 import { type NightAbilityReadView } from "../night-abilities/inventory-ports";
 import { nativePotionsCanCombine, witchKnifeVisible } from "./policies";
 import { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
-import {
-  getWitchState,
-} from "./ports";
+import { getWitchState } from "./ports";
 import { activeNightAbility, allNightAbilities } from "../night-abilities/inventory-ports";
 import { recordNightAbilityUse } from "../night-abilities/inventory-ports";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night-abilities/history-ports";

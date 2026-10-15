@@ -26,10 +26,7 @@ import {
 import { boardConfigSchema } from "../../../../src/domain/board-schema";
 import { DeathResolution } from "../../../../src/engine/death-resolution";
 import { EventRegistry } from "../../../../src/engine/events/event-registry";
-import {
-  HookRegistry,
-  type DeathHookContext,
-} from "../../../../src/engine/hooks/registry";
+import { HookRegistry, type DeathHookContext } from "../../../../src/engine/hooks/registry";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { getWolfKingState } from "../../../../src/features/wolf-king/ports";
 import {
@@ -144,7 +141,13 @@ for (const locale of ["zh-CN", "en"] as const)
   test(`configured personal and public rules explain the AWA day policy/${locale}`, () => {
     const f = fixture();
     for (const prose of [
-      captureNativeRolePresentation(WOLF_KING_ROLE_PROFILE.presentation!.id, f.king, locale, undefined, () => f.world.getComponent(3, COMPONENT.Camp)),
+      captureNativeRolePresentation(
+        WOLF_KING_ROLE_PROFILE.presentation!.id,
+        f.king,
+        locale,
+        undefined,
+        () => f.world.getComponent(3, COMPONENT.Camp),
+      ),
       getDefaultConfigRenderRegistry().renderBoardConfigPrompt(f.config, locale),
     ]) {
       expect(prose).toContain(
@@ -324,9 +327,7 @@ for (const timing of ["await", "deferred"] as const)
           [
             async (...args) => {
               const [world, , sources] = args;
-              const state = getWolfKingState(
-                world.getComponent(3, COMPONENT.Role)!,
-              )!;
+              const state = getWolfKingState(world.getComponent(3, COMPONENT.Role)!)!;
               mutate = () => {
                 if (field === "policy")
                   (

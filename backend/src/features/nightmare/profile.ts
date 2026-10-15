@@ -46,10 +46,12 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
-    canSelfDestruct: (role, currentCamp) => getNightmareShadowState(role, currentCamp)?.wolfActionPolicy === "standard",
+    canSelfDestruct: (role, currentCamp) =>
+      getNightmareShadowState(role, currentCamp)?.wolfActionPolicy === "standard",
     wolfTeam: (role, world, currentCamp) => {
       const ready =
-        !!getNightmareShadowState(role, currentCamp)?.packReady && (!world || nightmarePackReady(world));
+        !!getNightmareShadowState(role, currentCamp)?.packReady &&
+        (!world || nightmarePackReady(world));
       return {
         recognizedByPack: ready,
         recognizes: ready ? "pack" : "none",
@@ -95,7 +97,9 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
     validationRules: {
       ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       fear: ({ world, role, actorId, day, phase, toolCall }) => {
-        const state = getNightmareShadowState(role, () => world.getComponent(actorId, COMPONENT.Camp));
+        const state = getNightmareShadowState(role, () =>
+          world.getComponent(actorId, COMPONENT.Camp),
+        );
         if (
           !state ||
           !nightmareFearPending(world, actorId, day ?? 0) ||

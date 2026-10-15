@@ -2,7 +2,10 @@
  * 单元测试负责验证贵族／隐秘之躯通知的 reader 与 feed 接受范围。手写合法／不可能 owner 事实及精确拒绝预期保证局部不可能通知不被发表，不调用完整对局或模型。
  */
 import { expect, test } from "bun:test";
-import { readNobleSecretBodyFact, NOBLE_SECRET_BODY_POLICY } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
+import {
+  readNobleSecretBodyFact,
+  NOBLE_SECRET_BODY_POLICY,
+} from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { nobleSecretBodyTwelveConfig } from "../../../src/rulesets/presets/noble-secret-body-twelve";
 import { buildAgentVisibleEvent } from "../../../src/agents/observation/event-feed";

@@ -8,7 +8,11 @@
  * Provider 返回不是领域完成；窗口按机制契约在付款或可选处理落定后 complete，先落终态再通知，晚异常不能二次结算。
  */
 import type { ActionRequest } from "./actions";
-import { bindRequestDeliveryGuard, registerRequestAliasPropagation, settleRequestDelivery } from "./request-delivery";
+import {
+  bindRequestDeliveryGuard,
+  registerRequestAliasPropagation,
+  settleRequestDelivery,
+} from "./request-delivery";
 
 /** 仅晚读原 scope 字段／活跃表；不接受整个请求回调，字段接纳与读取次序在本 owner 中实现。 */
 export interface RequestLeaseScopeQueries<Owner, Scope> {
@@ -31,7 +35,10 @@ export interface RequestLeaseWindowQueries<Scope extends object> {
 }
 
 /** current 仍调用原机制规则；不能据请求字段相同代替原体、生命和库存复验。 */
-export interface RequestLeaseCurrentQueries<Owner, Scope> extends RequestLeaseScopeQueries<Owner, Scope> {
+export interface RequestLeaseCurrentQueries<Owner, Scope> extends RequestLeaseScopeQueries<
+  Owner,
+  Scope
+> {
   current(scope: Scope): boolean;
 }
 
@@ -100,7 +107,10 @@ export interface RequestLeaseTurn {
   close(): void;
 }
 /** pin 只核顶层枚举字段及原值引用；嵌套数据/合法 getter/Proxy 不套新 schema 或深只读政策。 */
-interface FieldPin { keys: string[]; values: unknown[] }
+interface FieldPin {
+  keys: string[];
+  values: unknown[];
+}
 /**
  * 原请求与合法别名共享此运行记录；deadline 为 null 时没有有限共同预算，有效期限别名可保持或缩短预算，不能延长。
  * closed 初始为 true；pin／原期限捕获完成且原期限缺省或为有限未来值时才置 false，捕获抛错或无效原期限仍保持关闭。
@@ -134,10 +144,13 @@ function pinFields(request: ActionRequest): FieldPin {
 }
 function samePinnedFields(request: ActionRequest, pin: FieldPin): boolean {
   const keys = Object.keys(request).filter((key) => key !== "deadlineAtMs");
-  return keys.length === pin.keys.length && keys.every((key) => {
-    const index = pin.keys.indexOf(key);
-    return index !== -1 && Object.is(Reflect.get(request, key), pin.values[index]);
-  });
+  return (
+    keys.length === pin.keys.length &&
+    keys.every((key) => {
+      const index = pin.keys.indexOf(key);
+      return index !== -1 && Object.is(Reflect.get(request, key), pin.values[index]);
+    })
+  );
 }
 
 /**
@@ -153,7 +166,11 @@ export class RequestLease<Owner, Scope, Binding> {
 
   private constructor(
     private readonly order: number,
-    private readonly bindRequest: (owner: Owner, request: ActionRequest, lease: RequestLease<Owner, Scope, Binding>) => void,
+    private readonly bindRequest: (
+      owner: Owner,
+      request: ActionRequest,
+      lease: RequestLease<Owner, Scope, Binding>,
+    ) => void,
     private readonly matches: (owner: Owner, request: ActionRequest, binding: Binding) => boolean,
     private readonly bindingOwner: (binding: Binding) => Owner,
     private readonly bindingScope: (binding: Binding) => Scope,
@@ -181,10 +198,14 @@ export class RequestLease<Owner, Scope, Binding> {
           request.context.day === queries.day(scope) &&
           request.context.stage === queries.stage(scope)
         ) {
-          lease.records.set(request, lease.entry(scope, request, { scope, context: request.context, fields: [] }));
+          lease.records.set(
+            request,
+            lease.entry(scope, request, { scope, context: request.context, fields: [] }),
+          );
           registerRequestAliasPropagation(request, lease.order, lease.propagate);
           const binding = lease.records.get(request)!.turn.binding;
-          for (const key of keys) binding.fields.push({ key, value: Reflect.get(binding.context, key) });
+          for (const key of keys)
+            binding.fields.push({ key, value: Reflect.get(binding.context, key) });
           lease.capture(request);
         }
       },
@@ -194,7 +215,9 @@ export class RequestLease<Owner, Scope, Binding> {
         request.context === binding.context &&
         request.context.day === queries.day(scope) &&
         request.context.stage === queries.stage(scope) &&
-        binding.fields.every(({ key, value }) => Object.is(Reflect.get(request.context, key), value)),
+        binding.fields.every(({ key, value }) =>
+          Object.is(Reflect.get(request.context, key), value),
+        ),
       (binding) => binding.scope,
       (binding) => binding.scope,
       sameIndexedFields,
@@ -218,7 +241,10 @@ export class RequestLease<Owner, Scope, Binding> {
           request.context.day === 1 &&
           request.context.stage === queries.stage(scope)
         ) {
-          lease.records.set(request, lease.entry(owner, request, { scope, context: request.context }));
+          lease.records.set(
+            request,
+            lease.entry(owner, request, { scope, context: request.context }),
+          );
           registerRequestAliasPropagation(request, lease.order, lease.propagate);
           lease.capture(request);
         }
@@ -255,7 +281,10 @@ export class RequestLease<Owner, Scope, Binding> {
           request.actorId === queries.actorId(b) &&
           queries.current(b)
         ) {
-          lease.records.set(request, lease.entry(owner, request, { binding: b, context: request.context }));
+          lease.records.set(
+            request,
+            lease.entry(owner, request, { binding: b, context: request.context }),
+          );
           registerRequestAliasPropagation(request, lease.order, lease.propagate);
           lease.capture(request);
         }
@@ -292,7 +321,10 @@ export class RequestLease<Owner, Scope, Binding> {
           request.context.day === 1 &&
           queries.current(b)
         ) {
-          lease.records.set(request, lease.entry(owner, request, { binding: b, context: request.context }));
+          lease.records.set(
+            request,
+            lease.entry(owner, request, { binding: b, context: request.context }),
+          );
           registerRequestAliasPropagation(request, lease.order, lease.propagate);
           lease.capture(request);
         }
@@ -328,14 +360,17 @@ export class RequestLease<Owner, Scope, Binding> {
           request.context.wall_id === queries.token(a) &&
           request.context.item_instance_id === queries.instanceId(author)
         ) {
-          lease.records.set(request, lease.entry(world, request, {
-            scope: a,
-            world,
-            actorId: request.actorId,
-            instanceId: queries.instanceId(author),
-            context: request.context,
-            author,
-          }));
+          lease.records.set(
+            request,
+            lease.entry(world, request, {
+              scope: a,
+              world,
+              actorId: request.actorId,
+              instanceId: queries.instanceId(author),
+              context: request.context,
+              author,
+            }),
+          );
           registerRequestAliasPropagation(request, lease.order, lease.propagate);
           lease.capture(request);
         }
@@ -363,19 +398,41 @@ export class RequestLease<Owner, Scope, Binding> {
   }
 
   /** 只分配运行记录；原 binding/context 已在参数原位置读出。pin 在 set 与传播登记之后才读取。 */
-  private entry(owner: Owner, original: ActionRequest, binding: Binding): LeaseEntry<Owner, Binding> {
-    return { turn: { owner, original, binding, closed: true, settled: false, opened: false,
-      completion: {}, aliases: new Set(), deadline: null }, retired: false, deadline: undefined };
+  private entry(
+    owner: Owner,
+    original: ActionRequest,
+    binding: Binding,
+  ): LeaseEntry<Owner, Binding> {
+    return {
+      turn: {
+        owner,
+        original,
+        binding,
+        closed: true,
+        settled: false,
+        opened: false,
+        completion: {},
+        aliases: new Set(),
+        deadline: null,
+      },
+      retired: false,
+      deadline: undefined,
+    };
   }
 
   private capture(request: ActionRequest): void {
-    const entry = this.records.get(request)!, turn = entry.turn;
+    const entry = this.records.get(request)!,
+      turn = entry.turn;
     // 捕获期间先保持关闭：新增 keys/getter 抛错保原已写记录／传播前缀，恢复字段也不重开。
     turn.pin = pinFields(request);
     entry.deadline = request.deadlineAtMs;
     turn.originalDeadline = entry.deadline;
     if (entry.deadline === undefined) turn.closed = false;
-    else if (typeof entry.deadline === "number" && Number.isFinite(entry.deadline) && entry.deadline > Date.now()) {
+    else if (
+      typeof entry.deadline === "number" &&
+      Number.isFinite(entry.deadline) &&
+      entry.deadline > Date.now()
+    ) {
       turn.deadline = entry.deadline;
       turn.closed = false;
     }
@@ -388,7 +445,10 @@ export class RequestLease<Owner, Scope, Binding> {
     const turn = entry.turn;
     if (request !== turn.original) {
       try {
-        if (!samePinnedFields(request, turn.pin!) || !Object.is(request.deadlineAtMs, entry.deadline)) {
+        if (
+          !samePinnedFields(request, turn.pin!) ||
+          !Object.is(request.deadlineAtMs, entry.deadline)
+        ) {
           entry.retired = true;
           return;
         }
@@ -399,11 +459,13 @@ export class RequestLease<Owner, Scope, Binding> {
     }
     try {
       // 各协议仍按其声明的 ordered matches 查询 original；共同 context.stage 变坏会关共同 turn。
-      if (!this.matches(owner, turn.original, turn.binding) ||
-          !samePinnedFields(turn.original, turn.pin!) ||
-          !Object.is(turn.original.deadlineAtMs, turn.originalDeadline) ||
-          !this.domainCurrent(owner, turn.binding) ||
-          (turn.deadline !== null && turn.deadline <= Date.now())) {
+      if (
+        !this.matches(owner, turn.original, turn.binding) ||
+        !samePinnedFields(turn.original, turn.pin!) ||
+        !Object.is(turn.original.deadlineAtMs, turn.originalDeadline) ||
+        !this.domainCurrent(owner, turn.binding) ||
+        (turn.deadline !== null && turn.deadline <= Date.now())
+      ) {
         turn.closed = true;
         return;
       }
@@ -421,13 +483,18 @@ export class RequestLease<Owner, Scope, Binding> {
   openDelivery(owner: Owner, request: ActionRequest): RequestLeaseTurn | undefined {
     if (!this.scope(owner, request)) return;
     const turn = this.records.get(request)!.turn;
-    if (!turn.handle) turn.handle = {
-      current: () => this.scope(owner, request) !== undefined,
-      complete: () => this.finish(turn, true),
-      close: () => this.finish(turn, false),
-    };
+    if (!turn.handle)
+      turn.handle = {
+        current: () => this.scope(owner, request) !== undefined,
+        complete: () => this.finish(turn, true),
+        close: () => this.finish(turn, false),
+      };
     if (!turn.opened) {
-      bindRequestDeliveryGuard(turn.original, () => this.scope(owner, turn.original) !== undefined, turn.completion);
+      bindRequestDeliveryGuard(
+        turn.original,
+        () => this.scope(owner, turn.original) !== undefined,
+        turn.completion,
+      );
       turn.opened = true;
       for (const alias of turn.aliases) this.bindDelivery(turn, alias);
     }
@@ -435,7 +502,11 @@ export class RequestLease<Owner, Scope, Binding> {
   }
 
   private bindDelivery(turn: LeaseTurn<Owner, Binding>, request: ActionRequest): void {
-    bindRequestDeliveryGuard(request, () => this.scope(turn.owner, request) !== undefined, turn.completion);
+    bindRequestDeliveryGuard(
+      request,
+      () => this.scope(turn.owner, request) !== undefined,
+      turn.completion,
+    );
   }
 
   /** 处理完成只由真实窗口按机制契约给出；完成不必然表示付款，不重查已由处理改变的 pending scope。先落终态再发一次通知。 */
@@ -450,14 +521,20 @@ export class RequestLease<Owner, Scope, Binding> {
   /** 先核来源，再原 ordered fields，最后有限未来期限；坏目标／其 getter 异常不修改来源预算。 */
   private inherit(source: ActionRequest, target: ActionRequest): void {
     const sourceEntry = this.records.get(source);
-    if (!sourceEntry || !this.scope(sourceEntry.turn.owner, source) || this.records.has(target)) return;
+    if (!sourceEntry || !this.scope(sourceEntry.turn.owner, source) || this.records.has(target))
+      return;
     if (!this.sameFields(source, target)) return;
     const turn = sourceEntry.turn;
     // 原 === 比较通过后仍须核 F02 pin（含 +0/-0 及晚 getter 原值）；非法目标不得先写记录／缩预算。
     if (!samePinnedFields(target, turn.pin!)) return;
     const deadline = target.deadlineAtMs;
-    if (typeof deadline !== "number" || !Number.isFinite(deadline) || deadline <= Date.now() ||
-        (turn.deadline !== null && deadline > turn.deadline)) return;
+    if (
+      typeof deadline !== "number" ||
+      !Number.isFinite(deadline) ||
+      deadline <= Date.now() ||
+      (turn.deadline !== null && deadline > turn.deadline)
+    )
+      return;
     this.records.set(target, { turn, retired: false, deadline });
     turn.deadline = deadline;
     turn.aliases.add(target);

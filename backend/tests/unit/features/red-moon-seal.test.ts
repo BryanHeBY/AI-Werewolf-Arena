@@ -67,7 +67,9 @@ test("Red Moon sealed night runs all good native stages without requests or inve
     isCurrent: () => true,
     previousExile: null,
     currentDay: () => 2,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     actionProvider: {
       async getAction() {
         requests++;

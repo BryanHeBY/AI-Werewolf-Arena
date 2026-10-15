@@ -13,7 +13,10 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../../src/app/config/board-definition";
-import { simulateGames, type SimulationReport } from "../../../../src/app/simulation/simulate-games";
+import {
+  simulateGames,
+  type SimulationReport,
+} from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
@@ -64,9 +67,9 @@ for (const wolf of ["standard", "no_blast_no_self_knife"] as const)
             expect(record.metadata.locale).toBe(locale);
             expect(record.checkpoints.every((c) => c.complete)).toBe(true);
             expect(record.decisions.every((d) => d.outcome.kind === "action")).toBe(true);
-            const replay = readReplayDocument(JSON.parse(
-              await readFile(path.join(game.recordDir, "replay.json"), "utf8"),
-            ));
+            const replay = readReplayDocument(
+              JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8")),
+            );
             assertReplayDocument(replay);
             expect((await replayReproduction(record, replayRoot)).snapshot).toEqual(
               record.checkpoints.at(-1)!.snapshot,

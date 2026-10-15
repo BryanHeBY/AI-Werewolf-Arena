@@ -42,10 +42,7 @@ for (const item of cases)
         })),
       };
       const game = bootstrapGame(board, { fixedRoles: roles });
-      const ability = findNightAbility(
-        game.world.getComponent(1, COMPONENT.Role)!,
-        item.kind,
-      )!;
+      const ability = findNightAbility(game.world.getComponent(1, COMPONENT.Role)!, item.kind)!;
       const state = structuredClone(ability.state),
         events: GameEvent[] = [];
       let day = 1,
@@ -113,10 +110,7 @@ for (const item of cases.filter((item) => item.kind !== "dream"))
       },
       { fixedRoles: roles },
     );
-    const ability = findNightAbility(
-      game.world.getComponent(1, COMPONENT.Role),
-      item.kind,
-    )!;
+    const ability = findNightAbility(game.world.getComponent(1, COMPONENT.Role), item.kind)!;
     const events: GameEvent[] = [];
     let calls = 0;
     const factory = new GameActionRequestFactory(game.world, events, 1);

@@ -91,9 +91,7 @@ for (const [stage, old, changed] of [
                     expect(Number.isSafeInteger(id)).toBe(true);
                     expect(previous).toBeDefined();
                     world.addComponent(id, COMPONENT.Alive, replacement);
-                    expect(world.getComponent(id, COMPONENT.Alive)).toBe(
-                      replacement,
-                    );
+                    expect(world.getComponent(id, COMPONENT.Alive)).toBe(replacement);
                     expect(replacement).not.toBe(previous);
                     expect(replacement.alive).toBe(true);
                     fired++;

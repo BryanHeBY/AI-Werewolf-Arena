@@ -17,10 +17,7 @@ import {
   resolveTimeConsortTarget,
   type TimeConsortReceipt,
 } from "../features/time-wolf-consort/ports";
-import {
-  isScholarMentorBoard,
-  scholarMentorBlocks,
-} from "../features/scholar-mentor/ports";
+import { isScholarMentorBoard, scholarMentorBlocks } from "../features/scholar-mentor/ports";
 
 // readonly／Omit 仅限制此 TypeScript 查询视图；life、scope 与回执仍为原运行对象。
 export type NativeTargetScope = Readonly<Omit<NightLifeScope, "life">> & {

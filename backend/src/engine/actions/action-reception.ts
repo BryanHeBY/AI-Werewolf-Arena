@@ -19,10 +19,7 @@ import {
   demonHunterActorId,
 } from "../../features/demon-hunter/ports";
 import { readDemonHuntTool } from "../../features/demon-hunter/ports";
-import {
-  ghostBrideRequestScope,
-  weddingSetup,
-} from "../../features/ghost-bride/ports";
+import { ghostBrideRequestScope, weddingSetup } from "../../features/ghost-bride/ports";
 import { readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { lonelyGirlRequestScope } from "../../features/lonely-girl/ports";
 import { readLonelyGirlTool } from "../../features/lonely-girl/ports";
@@ -36,12 +33,7 @@ import { z, type ZodType } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
-import {
-  DEATH_SHOT_STAGES,
-  type ActionRequest,
-  type ToolCall,
-  type ToolName,
-} from "../../domain";
+import { DEATH_SHOT_STAGES, type ActionRequest, type ToolCall, type ToolName } from "../../domain";
 import { World } from "../../domain/world";
 import { ActionValidator } from "./action-validator";
 import { ToolGateway } from "./tool-gateway";
@@ -51,10 +43,7 @@ import {
   type ToolCallRepairRegistry,
   type ToolValidationRuleRegistry,
 } from "../../rulesets/mechanism-api";
-import {
-  getDefaultToolSpecRegistry,
-  type ToolSpecRegistry,
-} from "./tool-spec-registry";
+import { getDefaultToolSpecRegistry, type ToolSpecRegistry } from "./tool-spec-registry";
 import { evaluateTurnConstraints, resolveTurnConstraints } from "./turn-constraints";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 

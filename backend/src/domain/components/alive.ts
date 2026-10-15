@@ -29,9 +29,7 @@ export function aliveLifeVersion(component: AliveComponent): number | undefined 
 /**
  * 创建存活状态组件。
  */
-export function createAliveComponent(
-  alive: boolean = true,
-): AliveComponent {
+export function createAliveComponent(alive: boolean = true): AliveComponent {
   const component: AliveComponent = {
     get alive() {
       return alive;
@@ -44,7 +42,6 @@ export function createAliveComponent(
         lifeVersions.set(component, lifeVersions.get(component)! + 1);
       }
     },
-
   };
   originalDescriptors.set(component, Object.getOwnPropertyDescriptor(component, "alive")!);
   lifeVersions.set(component, 0);

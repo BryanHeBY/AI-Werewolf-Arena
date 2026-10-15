@@ -10,9 +10,7 @@ import { originalPoisonIntent, type NightLifeScope } from "../../domain/night-ef
 import type { NightStageHandler } from "../../engine/night/contracts";
 import { resolveInspection } from "../../engine/inspection";
 import { scholarMentorStateForRole } from "./state-slot";
-import {
-  scholarMentorBonusEffectRecordsForAppend,
-} from "./bonus-effect-records";
+import { scholarMentorBonusEffectRecordsForAppend } from "./bonus-effect-records";
 import { assertScholarMentorBonusEffects } from "./bonus-effect-validation";
 import {
   beginScholarMentorNight,
@@ -34,7 +32,9 @@ const choose: NightStageHandler = {
       pending = beginScholarMentorNight(ctx.world, day);
     for (const actorId of ctx.world.entityIds()) {
       const role = ctx.world.getComponent(actorId, COMPONENT.Role),
-        state = scholarMentorStateForRole(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp));
+        state = scholarMentorStateForRole(role, () =>
+          ctx.world.getComponent(actorId, COMPONENT.Camp),
+        );
       if (!state) continue;
       if (!pending.includes(actorId)) {
         const reason =
@@ -159,18 +159,23 @@ function bonus(kind: ModifierBonusKind, priority: number): NightStageHandler {
               marks.add(StatusMark.PoisonMark);
               // source 在原对象字段求值位置读取一次；receipt 的付款和当前性仍归 frame。
               let effectSource: NightLifeScope;
-              (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({
-                source: (effectSource = receipt.source),
-                target: receipt.target,
-                isCurrent: receipt.effectCurrent,
-              }, {
-                family: "scholar-mentor",
-                day,
-                stage: "scholar_mentor_bonus",
-                actorLife: effectSource,
-                requestedTargetId: targetId,
-                abilityId: "bonus:poison",
-              }));
+              (ctx.state.poisonClaims ??= []).push(
+                originalPoisonIntent(
+                  {
+                    source: (effectSource = receipt.source),
+                    target: receipt.target,
+                    isCurrent: receipt.effectCurrent,
+                  },
+                  {
+                    family: "scholar-mentor",
+                    day,
+                    stage: "scholar_mentor_bonus",
+                    actorLife: effectSource,
+                    requestedTargetId: targetId,
+                    abilityId: "bonus:poison",
+                  },
+                ),
+              );
             } else {
               marks.add(StatusMark.WolfKillMark);
               (ctx.state.modifierKnifeTargets ??= []).push(targetId);

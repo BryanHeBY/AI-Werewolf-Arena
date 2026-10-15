@@ -16,9 +16,9 @@ for (const policy of ["original", "exchanged"] as const)
       const replay = readReplayDocument(
         JSON.parse(readFileSync(frontendFixtureURL(base + ".replay.json"), "utf8")),
       );
-      const cp = JSON.parse(
-        readFileSync(frontendFixtureURL(base + ".checkpoint.txt"), "utf8"),
-      ) as { players: Array<{ id: number; role: string; alive: boolean }> };
+      const cp = JSON.parse(readFileSync(frontendFixtureURL(base + ".checkpoint.txt"), "utf8")) as {
+        players: Array<{ id: number; role: string; alive: boolean }>;
+      };
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");
       const exchange = replay.events.find((e) => e.type === "magician_exchange_committed")!;

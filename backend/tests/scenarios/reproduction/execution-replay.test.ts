@@ -43,17 +43,19 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
       expect(replayed.snapshot.result).toEqual(game.result);
       expect(replayed.eventCount).toBe(record.events.length);
       expect(replayed.decisionCount).toBe(record.decisions.length);
-      const manifest = readReplayManifest(JSON.parse(
-        await readFile(path.join(game.recordDir, "manifest.json"), "utf8"),
-      ));
+      const manifest = readReplayManifest(
+        JSON.parse(await readFile(path.join(game.recordDir, "manifest.json"), "utf8")),
+      );
       expect(manifest.files.reproduction).toBe("reproduction.json");
-      const publicReplay = readReplayDocument(JSON.parse(
-        await readFile(path.join(game.recordDir, "replay.json"), "utf8"),
-      ));
+      const publicReplay = readReplayDocument(
+        JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8")),
+      );
       expect(publicReplay.schemaVersion).toBe(2);
       expect(publicReplay.meta.locale).toBe(record.metadata.locale);
       expect((publicReplay as { reproduction?: unknown }).reproduction).toBeUndefined();
-      expect((publicReplay as { metadata?: { engine?: unknown } }).metadata?.engine).toBeUndefined();
+      expect(
+        (publicReplay as { metadata?: { engine?: unknown } }).metadata?.engine,
+      ).toBeUndefined();
     }
   });
 }
@@ -341,7 +343,9 @@ test("a game and checkpoint failure keep both errors and cannot seal an incomple
     const [session] = await readdir(root);
     const record = await readReproduction(path.join(root, session, "reproduction.json"));
     expect(record.finalized).toBe(false);
-    const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8")));
+    const replay = readReplayDocument(
+      JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8")),
+    );
     expect(replay.result.reason).toBe("runtime_error");
   } finally {
     create.mockRestore();
@@ -490,7 +494,9 @@ test("offline reconstruction carries the explicit recorded language into the new
   expect(reconstructed.snapshot.result).toEqual(simulated.games[0].result);
   const dirs = await readdir(output);
   expect(dirs.length).toBe(1);
-  const replay = readReplayDocument(JSON.parse(await readFile(path.join(output, dirs[0], "replay.json"), "utf8")));
+  const replay = readReplayDocument(
+    JSON.parse(await readFile(path.join(output, dirs[0], "replay.json"), "utf8")),
+  );
   expect(replay.schemaVersion).toBe(2);
   expect(replay.meta.locale).toBe(record.metadata.locale);
 });

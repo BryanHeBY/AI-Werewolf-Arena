@@ -6,7 +6,11 @@
  */
 import { radiantNightRequestPrefix } from "./night-request-prefix";
 import { Camp, Phase, Role } from "../../../domain/identity";
-import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "../../reproduction/format";
+import type {
+  RecordedDecision,
+  RecordedGameEvent,
+  ReproductionRecord,
+} from "../../reproduction/format";
 import {
   radiantCheck as check,
   radiantEqual as equal,

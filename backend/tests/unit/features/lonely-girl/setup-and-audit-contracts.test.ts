@@ -1,12 +1,29 @@
 /**
  * 单元测试验证孤独少女准备窗口、必须选择、getter／撤权矩阵和公开板子配置。预期来自字面回执、引用／错误轨迹、阵营账本和 checkpoint 字段。阶段入口只在准备权限未完成时被拒绝，不运行完整夜间或模型。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import {
+  createCampComponent,
+  createAliveComponent,
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import { inheritRequestAlias } from "../../../../src/domain/request-delivery";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, COMPONENT, WinCondition, createVictoryComponent, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent, type VictoryComponent } from "../../../../src/domain";
+import {
+  Role,
+  Camp,
+  Phase,
+  COMPONENT,
+  WinCondition,
+  createVictoryComponent,
+  type BoardConfig,
+  type ActionRequest,
+  type ToolCall,
+  type GameEvent,
+  type RoleComponent,
+  type AliveComponent,
+  type VictoryComponent,
+} from "../../../../src/domain";
 import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { LonelyGirlSetupWindow } from "../../../../src/features/lonely-girl/setup";
@@ -29,7 +46,10 @@ import { GameActionRequestFactory } from "../../../../src/engine/actions/action-
 import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
-import { readLonelyGirlEventFact, readLonelyGirlChoiceTool } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
+import {
+  readLonelyGirlEventFact,
+  readLonelyGirlChoiceTool,
+} from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-presentation";
 import {
   knownWolfTeammates,
@@ -73,12 +93,11 @@ const setup = (
   current = () => true,
   gateway = new ToolGateway(),
 ) =>
-  new LonelyGirlSetupWindow(g.world, gateway, g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
-    g.config,
-    { getAction: body },
-    1,
-    current,
-  );
+  new LonelyGirlSetupWindow(g.world, gateway, g.events, {
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
+  }).execute(g.config, { getAction: body }, 1, current);
 
 const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
@@ -95,8 +114,7 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   },
   {
     name: "actor body",
-    apply: (g) =>
-      g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.LonelyGirl)),
+    apply: (g) => g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.LonelyGirl)),
   },
   {
     name: "actor role value",
@@ -170,8 +188,7 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   },
   {
     name: "target Role",
-    apply: (g) =>
-      g.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf)),
+    apply: (g) => g.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Wolf)),
   },
   {
     name: "target camp value",
@@ -231,9 +248,14 @@ for (const target of [2, 4, 6])
     });
     expect(lonelyGirlReady(g.world)).toBe(true);
     expect(knownWolfTeammates(g.world, 1, getDefaultRoleCatalog())).toEqual([]);
-    expect(wolfTeamPermissions(role(g), getDefaultRoleCatalog(), () => g.world.getComponent(1, COMPONENT.Camp), g.world).canVoteForKill).toBe(
-      false,
-    );
+    expect(
+      wolfTeamPermissions(
+        role(g),
+        getDefaultRoleCatalog(),
+        () => g.world.getComponent(1, COMPONENT.Camp),
+        g.world,
+      ).canVoteForKill,
+    ).toBe(false);
   });
 
 for (const raw of [
@@ -248,7 +270,9 @@ for (const raw of [
 ])
   test(`mandatory invalid choice ${JSON.stringify(raw)} closes no membership/fallback`, async () => {
     const g = fixture();
-    await expect(setup({ ...g, config: g.boardConfig }, async () => raw as ToolCall | null)).rejects.toThrow();
+    await expect(
+      setup({ ...g, config: g.boardConfig }, async () => raw as ToolCall | null),
+    ).rejects.toThrow();
     expect(projectLonelyGirlSetup(g.world)?.status).toBe("failed");
     expect(getLonelyGirlState(role(g))?.remaining).toBe(0);
     expect(victory(g).affiliations).toEqual([]);
@@ -272,10 +296,12 @@ for (const change of changes)
         // 错误身份仍用独立原raw对象明确拒绝；正常调用必须自己提供已绑定的canonical。
         const foreign = fixture();
         let providerCalls = 0;
-        await expect(setup(foreign, async () => {
-          providerCalls++;
-          return choose();
-        })).rejects.toThrow("lonely_girl_setup_unavailable");
+        await expect(
+          setup(foreign, async () => {
+            providerCalls++;
+            return choose();
+          }),
+        ).rejects.toThrow("lonely_girl_setup_unavailable");
         expect(providerCalls).toBe(0);
         expect(foreign.events).toEqual([]);
         expect(getLonelyGirlState(role(foreign))?.remaining).toBe(1);
@@ -294,12 +320,25 @@ for (const change of changes)
         expect(Object.isFrozen(canonical)).toBe(true);
         expect(selected).toBe(true);
         expect(projectLonelyGirlSetup(g.world)?.status).toBe("complete");
-        expect(old).toEqual({ policy: LONELY_GIRL_POLICY, remaining: 0, choice: { day: 1, targetId: 2 } });
+        expect(old).toEqual({
+          policy: LONELY_GIRL_POLICY,
+          remaining: 0,
+          choice: { day: 1, targetId: 2 },
+        });
         expect(lonelyGirlBinding(g.world)?.membership).toBe(Camp.Wolf);
         expect(victory(g).affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);
         expect(g.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Good);
         expect(g.events.map(({ type, payload }) => ({ type, payload }))).toEqual([
-          { type: "lonely_girl_admired_chosen", payload: { policy: LONELY_GIRL_POLICY, actorId: 1, day: 1, targetId: 2, camp: Camp.Wolf } },
+          {
+            type: "lonely_girl_admired_chosen",
+            payload: {
+              policy: LONELY_GIRL_POLICY,
+              actorId: 1,
+              day: 1,
+              targetId: 2,
+              camp: Camp.Wolf,
+            },
+          },
         ]);
       } else {
         expect(selected).toBe(false);
@@ -327,13 +366,17 @@ for (const [id, field] of [
     let reads = 0;
     expect(
       await setup({ ...g, config: g.boardConfig }, async () => {
-        Object.defineProperty(field === "camp" ? g.world.getComponent(id, COMPONENT.Camp)! : role(g, id), field, {
-          get() {
-            reads++;
-            throw new Error("getter_read");
+        Object.defineProperty(
+          field === "camp" ? g.world.getComponent(id, COMPONENT.Camp)! : role(g, id),
+          field,
+          {
+            get() {
+              reads++;
+              throw new Error("getter_read");
+            },
+            configurable: true,
           },
-          configurable: true,
-        });
+        );
         return choose();
       }),
     ).toBe(false);
@@ -747,7 +790,9 @@ for (const status of ["cancelled", "failed"] as const)
         }),
       ).rejects.toThrow("strict_failure");
     const before = captureCheckpoint(g.world, g.phaseManager.getSnapshot(), 0, false, 0);
-    await expect(setup({ ...g, config: g.boardConfig })).rejects.toThrow("lonely_girl_setup_unavailable");
+    await expect(setup({ ...g, config: g.boardConfig })).rejects.toThrow(
+      "lonely_girl_setup_unavailable",
+    );
     expect(projectLonelyGirlSetup(g.world)?.status).toBe(status);
     expect(captureCheckpoint(g.world, g.phaseManager.getSnapshot(), 0, false, 0)).toEqual(before);
     expect(g.events).toEqual([]);

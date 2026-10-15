@@ -3,8 +3,16 @@
  */
 import type { RoleInitializationComponent } from "../../../../src/rulesets/roles/contracts";
 import { expect, test } from "bun:test";
-import { createEclipseState, readEclipseState, selectEclipse } from "../../../../src/features/radiant-eclipse/eclipse-state-slot";
-import { createShelterState, readShelterState, selectShelter } from "../../../../src/features/radiant-eclipse/shelter-state";
+import {
+  createEclipseState,
+  readEclipseState,
+  selectEclipse,
+} from "../../../../src/features/radiant-eclipse/eclipse-state-slot";
+import {
+  createShelterState,
+  readShelterState,
+  selectShelter,
+} from "../../../../src/features/radiant-eclipse/shelter-state";
 import { snapshotBorrowedState } from "../../../../src/features/radiant-eclipse/borrowed-state";
 import { DREAMER_ROLE_PROFILE } from "../../../../src/features/dreamer/profile";
 import { WITCH_ROLE_PROFILE } from "../../../../src/features/witch/profile";
@@ -181,14 +189,18 @@ test("shelter repeat is inherited per ability, not globally from the borrower's 
 test("a real default Dream ability cannot silently gain the finite board's stronger protection", () => {
   const role = createRoleComponent(Role.Dreamer);
   const initialCamp = { camp: Camp.Good };
-  DREAMER_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, { initialCamp, currentCamp: () => initialCamp });
+  DREAMER_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, {
+    initialCamp,
+    currentCamp: () => initialCamp,
+  });
   const original = getDreamerState(role)!;
   expect(original.protectionPolicy).toBeUndefined();
   expect(() => snapshotBorrowedState("dream", original, 2)).toThrow(
     "eclipse_borrow_policy_invalid",
   );
   DREAMER_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, {
-    initialCamp, currentCamp: () => initialCamp,
+    initialCamp,
+    currentCamp: () => initialCamp,
     boardConfig: {
       ...sixPlayerMvpConfig,
       dreamer: { protectionPolicy: "netease_2026_night_immunity_v1" },
@@ -223,7 +235,8 @@ test("all four native potion stocks are copied exactly without historical or lif
       const role = createRoleComponent(Role.Witch);
       const initialCamp = { camp: Camp.Good };
       WITCH_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, {
-        initialCamp, currentCamp: () => initialCamp,
+        initialCamp,
+        currentCamp: () => initialCamp,
         boardConfig: { ...sixPlayerMvpConfig, witch: { canSelfHeal: WitchSelfHealRule.Disabled } },
       });
       const original = getWitchState(role)!;

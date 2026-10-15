@@ -100,9 +100,7 @@ export function mistRecording(
                           sheriffIds: game.world
                             .getAliveEntityIds()
                             .filter(
-                              (id) =>
-                                game.world.getComponent(id, COMPONENT.Badge)
-                                  ?.isSheriff,
+                              (id) => game.world.getComponent(id, COMPONENT.Badge)?.isSheriff,
                             ),
                           gameOver: game.phaseManager.getSnapshot().gameOver,
                           publishedTypes: game.phaseManager.getEvents().map((e) => e.type),

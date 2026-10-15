@@ -10,7 +10,11 @@ import type { WitchState, WitchReadState } from "@ai-werewolf-arena/game-contrac
 
 import type { RoleComponent } from "../../domain/components/role";
 import { WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import {
+  copyAbilityData,
+  findNightAbility,
+  type NightAbilityReadView,
+} from "../night-abilities/inventory-ports";
 import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 
 export function setWitchState(roleComp: RoleComponent, state: WitchState): WitchReadState {
@@ -72,9 +76,11 @@ export function consumeRecipientPoison(
 
 /** 原 JSON callee 先于全部状态字段读取；只迁政策身份字节，不新增 payload snapshot 或失效租约。 */
 function encodePolicyIdentity(ability: NightAbilityReadView<"potion">): string {
-  return JSON.stringify([ability.state.selfHealRule,
+  return JSON.stringify([
+    ability.state.selfHealRule,
     ability.state.knifeVisibility,
-    ability.state.potionPolicy]);
+    ability.state.potionPolicy,
+  ]);
 }
 
 /**

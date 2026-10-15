@@ -30,9 +30,9 @@ test("fixed role fixtures preserve deck counts and never bypass board rules", ()
     fixedRoles,
     random: createRandom("fixed"),
   });
-  expect(
-    world.entityIds().map((id) => world.getComponent(id, COMPONENT.Role)?.role),
-  ).toEqual(fixedRoles);
+  expect(world.entityIds().map((id) => world.getComponent(id, COMPONENT.Role)?.role)).toEqual(
+    fixedRoles,
+  );
   expect(() => bootstrapGame(sixPlayerMvpConfig, { fixedRoles: fixedRoles.slice(1) })).toThrow(
     "fixed_role_deck_mismatch",
   );

@@ -26,7 +26,9 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
     canSelfDestruct: false,
     init: initializeWhiteWolfKingState,
     toolSpecs: [
-      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter(
+        (spec) => spec.name !== "self_destruct",
+      ),
       {
         name: "self_destruct_with_target",
         parameters: {
@@ -96,7 +98,15 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         },
       },
     },
-    baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale, _world, currentCamp) =>
+    baselineAction: (
+      role,
+      request,
+      pickAliveNotSelf,
+      pickAliveByCamp,
+      locale,
+      _world,
+      currentCamp,
+    ) =>
       request.allowedTools.includes("self_destruct_with_target")
         ? null
         : ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(

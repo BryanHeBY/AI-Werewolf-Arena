@@ -160,7 +160,13 @@ function createPlayers(
     const initialCamp = createCampComponent(roleCatalog.getCamp(role), world.locale);
     const roleComp = createRoleComponent(role, world.locale);
     const currentCamp = () => world.getComponent(entityId, COMPONENT.Camp);
-    roleCatalog.applyRuntime(roleComp, { boardConfig: config, locale: world.locale, world, initialCamp, currentCamp });
+    roleCatalog.applyRuntime(roleComp, {
+      boardConfig: config,
+      locale: world.locale,
+      world,
+      initialCamp,
+      currentCamp,
+    });
 
     world.addComponent(
       entityId,
@@ -180,13 +186,23 @@ function createPlayers(
       COMPONENT.Victory,
       createVictoryComponent(
         typeof membership === "function"
-          ? membership(roleComp, { boardConfig: config, locale: world.locale, initialCamp, currentCamp })
-          : (membership ?? [{ kind: "faction", faction: (() => {
-              // 仅默认分支在原字段点晚查；自定义 membership 仍持独立无 World 的上下文。
-              const camp = currentCamp();
-              if (!camp) throw new Error("role_current_camp_missing");
-              return camp.camp;
-            })() }]),
+          ? membership(roleComp, {
+              boardConfig: config,
+              locale: world.locale,
+              initialCamp,
+              currentCamp,
+            })
+          : (membership ?? [
+              {
+                kind: "faction",
+                faction: (() => {
+                  // 仅默认分支在原字段点晚查；自定义 membership 仍持独立无 World 的上下文。
+                  const camp = currentCamp();
+                  if (!camp) throw new Error("role_current_camp_missing");
+                  return camp.camp;
+                })(),
+              },
+            ]),
       ),
     );
     world.addComponent(entityId, COMPONENT.Alive, createAliveComponent(true, world.locale));

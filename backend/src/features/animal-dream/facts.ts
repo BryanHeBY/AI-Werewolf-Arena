@@ -4,7 +4,13 @@
  * 不变量：仅成功发表才能更新知识，覆盖 push 不得冒充提交；God 资源查询和复制视图
  * 不消费库存、推进日志或揭示未提交结果。
  */
-import { readAnimalDreamFact, animalDreamFactAudience, type AnimalDreamEventType, type AnimalDreamPayloadMap, type AnimalBeautyKnowledge } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
+import {
+  readAnimalDreamFact,
+  animalDreamFactAudience,
+  type AnimalDreamEventType,
+  type AnimalDreamPayloadMap,
+  type AnimalBeautyKnowledge,
+} from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../domain/world";
 import { types } from "node:util";

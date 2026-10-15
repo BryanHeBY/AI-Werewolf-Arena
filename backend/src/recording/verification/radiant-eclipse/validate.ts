@@ -11,7 +11,11 @@ import {
   radiantEclipseAudience,
 } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
 import { Camp, Phase, Role } from "@ai-werewolf-arena/game-contract";
-import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "../../reproduction/format";
+import type {
+  RecordedCheckpoint,
+  RecordedDecision,
+  ReproductionRecord,
+} from "../../reproduction/format";
 import { createMistSheriffEvidence } from "../mist-raven/sheriff-evidence";
 import { sanitizeSpeechText } from "../../../utils/speech-text";
 

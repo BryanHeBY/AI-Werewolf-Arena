@@ -47,10 +47,7 @@ describe("sheriff pipeline", () => {
     const sheriffBadge = world.getComponent(sheriffId, COMPONENT.Badge)!;
     sheriffBadge.isSheriff = true;
     sheriffBadge.destroyed = false;
-    const sheriffVoting = world.getComponent(
-      sheriffId,
-      COMPONENT.VotingRight,
-    )!;
+    const sheriffVoting = world.getComponent(sheriffId, COMPONENT.VotingRight)!;
     sheriffVoting.weight = 1.5;
 
     const result = registry.onVotedOut(world, sheriffId, events);

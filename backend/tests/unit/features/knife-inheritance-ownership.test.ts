@@ -10,14 +10,8 @@ import { COMPONENT } from "../../../src/domain/components/names";
 
 import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import { World } from "../../../src/domain/world";
-import {
-  getHiddenWolfState,
-  setHiddenWolfState,
-} from "../../../src/features/hidden-wolf/state";
-import {
-  getGargoyleState,
-  setGargoyleState,
-} from "../../../src/features/gargoyle/state";
+import { getHiddenWolfState, setHiddenWolfState } from "../../../src/features/hidden-wolf/state";
+import { getGargoyleState, setGargoyleState } from "../../../src/features/gargoyle/state";
 import { refreshHiddenWolfInheritance } from "../../../src/features/hidden-wolf/inheritance";
 import { refreshGargoyleInheritance } from "../../../src/features/gargoyle/inheritance";
 function readerPermissions(hidden: HiddenWolfState, gargoyle: GargoyleState) {

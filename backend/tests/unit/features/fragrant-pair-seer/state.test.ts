@@ -12,7 +12,12 @@ import {
   expireFragrantAtNightOpen,
   triggerFragrantPair,
 } from "../../../../src/features/fragrant-pair-seer/fragrant-state-slot";
-import { freshPairSeerState, readPairSeerState, appendPairCheck, normalizePair } from "../../../../src/features/fragrant-pair-seer/state";
+import {
+  freshPairSeerState,
+  readPairSeerState,
+  appendPairCheck,
+  normalizePair,
+} from "../../../../src/features/fragrant-pair-seer/state";
 const ready = () => commitKnownWolf(freshFragrantState(), 10);
 test("pair history is one atomic normalized boolean with no single identity", () => {
   const before = freshPairSeerState(),

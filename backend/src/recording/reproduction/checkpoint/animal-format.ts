@@ -5,7 +5,10 @@
  * 核对；此数据契约不恢复 live owner、支付资源或授予权限。
  */
 import { z } from "zod";
-import { CAT_SKIPPED_VOTE_POLICIES, PUFFER_BALLOT_POLICIES } from "@ai-werewolf-arena/game-contract";
+import {
+  CAT_SKIPPED_VOTE_POLICIES,
+  PUFFER_BALLOT_POLICIES,
+} from "@ai-werewolf-arena/game-contract";
 const id = z.number().int().positive().safe(),
   // 三角色库存保留原 JSON 记录形状；各资源字段的归属与实际付款由独立核验计算。
   stock = z.record(z.string(), z.json());

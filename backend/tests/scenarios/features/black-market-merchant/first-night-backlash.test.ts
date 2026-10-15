@@ -4,7 +4,14 @@
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Role, Phase, DeathCause, WinCondition, type RoleComponent } from "../../../../src/domain";
+import {
+  COMPONENT,
+  Role,
+  Phase,
+  DeathCause,
+  WinCondition,
+  type RoleComponent,
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { LastWordsMechanism } from "../../../../src/features/last-words/last-words-mechanism";
 

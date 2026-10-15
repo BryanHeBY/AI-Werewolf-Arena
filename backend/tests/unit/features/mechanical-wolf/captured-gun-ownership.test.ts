@@ -3,7 +3,15 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Camp, Role, Phase, WinCondition, type BoardConfig, type RoleComponent } from "../../../../src/domain";
+import {
+  COMPONENT,
+  Camp,
+  Role,
+  Phase,
+  WinCondition,
+  type BoardConfig,
+  type RoleComponent,
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { getMechanicalState } from "../../../../src/features/mechanical-wolf/state";
 import { DeathCause } from "../../../../src/domain/deaths";

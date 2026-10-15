@@ -21,7 +21,10 @@ import {
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { foundationTransportPlan } from "../../../support/builders/transport/foundation-plan";
 import { type ActorTransportPlan } from "../../../support/transport/contracts";
-import { assertTransportPrompt, assertTransportEvents } from "../../../support/oracles/transport/observations";
+import {
+  assertTransportPrompt,
+  assertTransportEvents,
+} from "../../../support/oracles/transport/observations";
 import { ActionWindow, Camp, Phase, Role, WinCondition } from "../../../../src/domain";
 
 import { selfDestructTransportPlan } from "../../../support/builders/transport/self-destruct-plan";
@@ -329,7 +332,9 @@ async function runFixture(
             : "day_interrupted",
       },
     });
-    const manifest = readReplayManifest(JSON.parse(await fs.readFile(path.join(directory, "manifest.json"), "utf8")));
+    const manifest = readReplayManifest(
+      JSON.parse(await fs.readFile(path.join(directory, "manifest.json"), "utf8")),
+    );
     expect(manifest.locale).toBe(locale);
     expect(manifest.players.map((row: any) => row.role) as unknown).toEqual(roles);
     expect(manifest.players.map((row: any) => row.name)).toEqual(
@@ -346,7 +351,9 @@ async function runFixture(
     expect(
       manifest.players.filter((row: any) => row.alive).map((row: any) => row.player_id),
     ).toEqual(alive);
-    const replay = readReplayDocument(JSON.parse(await fs.readFile(path.join(directory, "replay.json"), "utf8")));
+    const replay = readReplayDocument(
+      JSON.parse(await fs.readFile(path.join(directory, "replay.json"), "utf8")),
+    );
     assertReplayDocument(replay);
     expect(replay.meta.locale).toBe(locale);
     expect(replay.result.decision).toEqual(result.snapshot.result ?? undefined);
@@ -386,9 +393,11 @@ async function runFixture(
     ).toEqual([]);
     const views = await Promise.all(
       roles.map(async (_, index) =>
-        readReplayPlayerView(JSON.parse(
-          await fs.readFile(path.join(directory, `players/player_${index + 1}.json`), "utf8"),
-        )),
+        readReplayPlayerView(
+          JSON.parse(
+            await fs.readFile(path.join(directory, `players/player_${index + 1}.json`), "utf8"),
+          ),
+        ),
       ),
     );
     for (const view of views) {

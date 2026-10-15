@@ -26,9 +26,7 @@ export const SEER_VALIDATION_RULES: ToolRuleMap = {
     if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.CheckTarget };
     if (!seerTargetAllowed(ability.state, actorId, toolCall.args.target_id))
       return { code: RuleError.SeerTargetPolicy };
-    if (
-      !luckyTargetAllowed(world, actorId, ability, day ?? 1, "check", toolCall.args.target_id)
-    )
+    if (!luckyTargetAllowed(world, actorId, ability, day ?? 1, "check", toolCall.args.target_id))
       return { code: RuleError.LuckyTargetRepeat };
     return null;
   },

@@ -12,7 +12,10 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { StatusMark, DeathCause } from "../../../src/domain/model";
 import {
-  captureNightLife, originalPoisonIntent, mechanicalNightIntent, nightPoisonRoutes,
+  captureNightLife,
+  originalPoisonIntent,
+  mechanicalNightIntent,
+  nightPoisonRoutes,
   planMechanicalDamage,
 } from "../../../src/domain/night-effects";
 import { planNightDamage } from "../../../src/domain/night-damage-plan";
@@ -34,10 +37,19 @@ for (const [family, stage, abilityId] of [
   ["scholar-mentor", "scholar_mentor_bonus", "bonus:poison"],
 ] as const)
   test(`${family} paid poison origin reaches the actual target acceptance branch`, () => {
-    const { world, lives } = fixture(), [source, target] = lives;
-    const claim = originalPoisonIntent({ source: source!, target: target! }, {
-      family, stage, abilityId, day: 2, actorLife: source!, requestedTargetId: target!.id,
-    });
+    const { world, lives } = fixture(),
+      [source, target] = lives;
+    const claim = originalPoisonIntent(
+      { source: source!, target: target! },
+      {
+        family,
+        stage,
+        abilityId,
+        day: 2,
+        actorLife: source!,
+        requestedTargetId: target!.id,
+      },
+    );
     const marks = world.getComponent(target!.id, COMPONENT.StatusMarks)!;
     marks.add(StatusMark.PoisonMark);
     const plan = planNightDamage(world, { intentNight: 2, poisonClaims: [claim] });
@@ -48,23 +60,44 @@ for (const [family, stage, abilityId] of [
     expect(routes[0]!.route).toBe("direct");
     // owned 路由是实际消费端；旧集合仍独立保留对外 legacy 的兼容接口。
     (plan.mechanical.directPoisonTargets as Set<number>).clear();
-    expect(resolveNightDamageTarget(world, target!.id, {}, plan, marks, () => {}))
-      .toEqual([DeathCause.Poison]);
+    expect(resolveNightDamageTarget(world, target!.id, {}, plan, marks, () => {})).toEqual([
+      DeathCause.Poison,
+    ]);
   });
 
 test("reflection carries the original cause to the caster body without changing serialized fold fields", () => {
-  const { world, lives } = fixture(), [owner, source, target] = lives;
-  const shield = mechanicalNightIntent("mechanical-shield", {
-    actorId: owner!.id, target: target!, isCurrent: () => true,
-  }, {
-    family: "mechanical", stage: "mechanical_skill", day: 2,
-    actorLife: owner!, requestedTargetId: target!.id, abilityId: "learned:mechanical",
-  });
-  const claim = originalPoisonIntent({ source: source!, target: target! }, {
-    family: "scholar-mentor", stage: "scholar_mentor_bonus", day: 2,
-    actorLife: source!, requestedTargetId: target!.id, abilityId: "bonus:poison",
-  });
-  const fold = planMechanicalDamage(world, { shields: [shield], attacks: [], failures: [] }, [claim]);
+  const { world, lives } = fixture(),
+    [owner, source, target] = lives;
+  const shield = mechanicalNightIntent(
+    "mechanical-shield",
+    {
+      actorId: owner!.id,
+      target: target!,
+      isCurrent: () => true,
+    },
+    {
+      family: "mechanical",
+      stage: "mechanical_skill",
+      day: 2,
+      actorLife: owner!,
+      requestedTargetId: target!.id,
+      abilityId: "learned:mechanical",
+    },
+  );
+  const claim = originalPoisonIntent(
+    { source: source!, target: target! },
+    {
+      family: "scholar-mentor",
+      stage: "scholar_mentor_bonus",
+      day: 2,
+      actorLife: source!,
+      requestedTargetId: target!.id,
+      abilityId: "bonus:poison",
+    },
+  );
+  const fold = planMechanicalDamage(world, { shields: [shield], attacks: [], failures: [] }, [
+    claim,
+  ]);
   const route = nightPoisonRoutes(fold)[0]!;
   expect(route.origin.causeId).toBe(claim.origin.causeId);
   expect(route.origin.effectiveTargetId).toBe(target!.id);
@@ -74,7 +107,12 @@ test("reflection carries the original cause to the caster body without changing 
   expect(Object.isFrozen(route)).toBe(true);
   expect(Object.isFrozen(nightPoisonRoutes(fold))).toBe(true);
   expect(Object.keys(fold)).toEqual([
-    "shields", "directPoisonTargets", "reflectedPoisonTargets", "attacks", "failures", "reflections",
+    "shields",
+    "directPoisonTargets",
+    "reflectedPoisonTargets",
+    "attacks",
+    "failures",
+    "reflections",
   ]);
   expect(JSON.stringify(fold)).not.toContain("origin");
   expect(fold.reflections).toEqual([
@@ -83,23 +121,29 @@ test("reflection carries the original cause to the caster body without changing 
 });
 
 test("legacy poison keeps the original target path and never becomes a forged causal route", () => {
-  const { world, lives } = fixture(), [source, target] = lives;
+  const { world, lives } = fixture(),
+    [source, target] = lives;
   let metadataReads = 0;
   const legacy = { source: source!, target: target! };
   Object.defineProperty(legacy, "origin", {
-    get() { metadataReads++; throw new Error("legacy_origin_unused"); },
+    get() {
+      metadataReads++;
+      throw new Error("legacy_origin_unused");
+    },
   });
   const marks = world.getComponent(target!.id, COMPONENT.StatusMarks)!;
   marks.add(StatusMark.PoisonMark);
   const plan = planNightDamage(world, { poisonClaims: [legacy] });
   expect(nightPoisonRoutes(plan.mechanical)).toEqual([]);
-  expect(resolveNightDamageTarget(world, target!.id, {}, plan, marks, () => {}))
-    .toEqual([DeathCause.Poison]);
+  expect(resolveNightDamageTarget(world, target!.id, {}, plan, marks, () => {})).toEqual([
+    DeathCause.Poison,
+  ]);
   expect(metadataReads).toBe(0);
 });
 
 test("an external legacy damage-plan Proxy keeps its original collection reads without a new Symbol trap", () => {
-  const { world, lives } = fixture(), [source, target] = lives;
+  const { world, lives } = fixture(),
+    [source, target] = lives;
   const marks = world.getComponent(target!.id, COMPONENT.StatusMarks)!;
   marks.add(StatusMark.PoisonMark);
   const plan = planNightDamage(world, { poisonClaims: [{ source: source!, target: target! }] });
@@ -107,11 +151,22 @@ test("an external legacy damage-plan Proxy keeps its original collection reads w
   const legacyMechanical = { ...plan.mechanical };
   const proxy = new Proxy(legacyMechanical, {
     get(object, key, receiver) {
-      if (typeof key === "symbol") { symbolReads++; throw new Error("legacy_symbol_unused"); }
+      if (typeof key === "symbol") {
+        symbolReads++;
+        throw new Error("legacy_symbol_unused");
+      }
       return Reflect.get(object, key, receiver);
     },
   });
-  expect(resolveNightDamageTarget(world, target!.id, {}, { ...plan, mechanical: proxy }, marks, () => {}))
-    .toEqual([DeathCause.Poison]);
+  expect(
+    resolveNightDamageTarget(
+      world,
+      target!.id,
+      {},
+      { ...plan, mechanical: proxy },
+      marks,
+      () => {},
+    ),
+  ).toEqual([DeathCause.Poison]);
   expect(symbolReads).toBe(0);
 });

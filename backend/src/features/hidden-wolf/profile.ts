@@ -63,7 +63,9 @@ export const HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
       apply: (config, value) => ({ ...config, hiddenWolf: parameters.parse(value) }),
       serialize: (config) => parameters.parse(config.hiddenWolf ?? {}),
     },
-    toolSpecs: ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
+    toolSpecs: ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter(
+      (spec) => spec.name === "kill_vote",
+    ),
   },
   presentation: nativeRolePresentation("hidden_wolf"),
 };

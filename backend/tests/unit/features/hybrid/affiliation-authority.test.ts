@@ -29,10 +29,7 @@ import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-re
 import { ConditionRegistry } from "../../../../src/domain/registries/condition-registry";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { HYBRID_STAGE } from "../../../../src/features/hybrid/night-stage";
-import {
-  getHybridState,
-  projectHybridState,
-} from "../../../../src/features/hybrid/ports";
+import { getHybridState, projectHybridState } from "../../../../src/features/hybrid/ports";
 import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/engine/inspection";
 import {
@@ -197,7 +194,14 @@ for (const locale of ["zh-CN", "en"] as const)
       });
       expect(knownWolfTeammates(game.world, 1, getDefaultRoleCatalog())).toEqual([]);
       expect(knownWolfTeammates(game.world, 2, getDefaultRoleCatalog())).not.toContain(1);
-      expect(wolfTeamPermissions(role(game), getDefaultRoleCatalog(), () => game.world.getComponent(1, COMPONENT.Camp), game.world)).toEqual({
+      expect(
+        wolfTeamPermissions(
+          role(game),
+          getDefaultRoleCatalog(),
+          () => game.world.getComponent(1, COMPONENT.Camp),
+          game.world,
+        ),
+      ).toEqual({
         recognizedByPack: false,
         recognizes: "none",
         canChat: false,
@@ -241,7 +245,8 @@ for (const locale of ["zh-CN", "en"] as const)
       );
       if (locale === "en")
         expect(renderRolePrompt(role(game), locale)).not.toMatch(/[\u4e00-\u9fff]/);
-      game.world.getComponent(target, COMPONENT.Camp)!.camp = faction === "wolf" ? Camp.Good : Camp.Wolf;
+      game.world.getComponent(target, COMPONENT.Camp)!.camp =
+        faction === "wolf" ? Camp.Good : Camp.Wolf;
       game.world.getComponent(target, COMPONENT.Alive)!.alive = false;
       game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
       expect(victory(game).affiliations).toEqual([{ kind: "faction", faction }]);
@@ -305,8 +310,7 @@ for (const invalid of ["pass", "dead", "no_targets"] as const)
     let calls = 0;
     game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     if (invalid === "no_targets")
-      for (const id of [3, 4, 5, 6])
-        game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
+      for (const id of [3, 4, 5, 6]) game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
     await expect(
       HYBRID_STAGE.execute(
         context(game, events, async () => {
@@ -360,7 +364,8 @@ for (const point of ["await", "gateway"] as const)
         if (change === "target_role")
           game.world.addComponent(6, COMPONENT.Role, { ...role(game, 6) });
         if (change === "target_camp")
-          game.world.getComponent(6, COMPONENT.Camp)!.camp = game.world.getComponent(6, COMPONENT.Camp)!.camp === Camp.Good ? Camp.Wolf : Camp.Good;
+          game.world.getComponent(6, COMPONENT.Camp)!.camp =
+            game.world.getComponent(6, COMPONENT.Camp)!.camp === Camp.Good ? Camp.Wolf : Camp.Good;
       };
       const ctx = context(
         game,

@@ -11,7 +11,11 @@ import type { World } from "../../domain/world";
 import { currentAwakenedNight } from "./night-scope";
 import { awakenedKnifeReady, getAwakenedState, recordAwakenedInheritance } from "./state";
 
-export function canAwakenedKnife(role: RoleComponent, world: World | undefined, currentCamp: CurrentCampSource): boolean {
+export function canAwakenedKnife(
+  role: RoleComponent,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
+): boolean {
   const state = getAwakenedState(role),
     night = world && currentAwakenedNight(world, role);
   if (
@@ -23,22 +27,18 @@ export function canAwakenedKnife(role: RoleComponent, world: World | undefined, 
     !awakenedKnifeReady(state, night)
   )
     return false;
-  const wolves = world
-    .getAliveEntityIds()
-    .filter((id) => {
-      const role = world.getComponent(id, COMPONENT.Role);
-      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
-    });
+  const wolves = world.getAliveEntityIds().filter((id) => {
+    const role = world.getComponent(id, COMPONENT.Role);
+    return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+  });
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 /** 仅开局装配和实际死亡提交后刷新持久继承；不把查询或拟议死亡当作提交。 */
 export function refreshAwakenedInheritance(world: World, day: number, events: GameEvent[]): void {
-  const wolves = world
-    .getAliveEntityIds()
-    .filter((id) => {
-      const role = world.getComponent(id, COMPONENT.Role);
-      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
-    });
+  const wolves = world.getAliveEntityIds().filter((id) => {
+    const role = world.getComponent(id, COMPONENT.Role);
+    return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+  });
   if (wolves.length !== 1) return;
   const actorId = wolves[0]!,
     role = world.getComponent(actorId, COMPONENT.Role)!,

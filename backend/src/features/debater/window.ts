@@ -57,7 +57,8 @@ export class DebaterWindow {
         state = getDebaterState(role);
       return (
         id !== targetId &&
-        !!role && this.world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good &&
+        !!role &&
+        this.world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Good &&
         this.world.getAliveEntityIds().includes(id) &&
         state?.remaining === 1 &&
         state.choice === null &&

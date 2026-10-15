@@ -6,7 +6,10 @@ import { snapshotPlainData } from "../../domain/plain-data";
 import { normalizePair } from "./state";
 /** 此日志只保存 owner 授权的已知信息，不保存真实触发凭据。 */
 export type { FragrantKnowledge } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
-import { readFragrantKnownState, type FragrantKnowledge } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
+import {
+  readFragrantKnownState,
+  type FragrantKnowledge,
+} from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 const id = (v: unknown): v is number =>
   typeof v === "number" && Number.isSafeInteger(v) && v > 0 && v < Number.MAX_SAFE_INTEGER - 1;
 export function freshFragrantKnowledge(): FragrantKnowledge {

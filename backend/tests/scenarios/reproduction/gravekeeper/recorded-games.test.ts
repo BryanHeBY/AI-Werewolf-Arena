@@ -7,7 +7,12 @@ import { fixtureNumber } from "../../../support/oracles/fixture-values";
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { GRAVEKEEPER_CASES, gravekeeperScenario, graveFeedback, type GravekeeperScenario } from "../../../support/features/gravekeeper/builders/scenario";
+import {
+  GRAVEKEEPER_CASES,
+  gravekeeperScenario,
+  graveFeedback,
+  type GravekeeperScenario,
+} from "../../../support/features/gravekeeper/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const expected: {
   [K in GravekeeperScenario]: {

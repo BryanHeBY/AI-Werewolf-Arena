@@ -16,15 +16,8 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/app/config/board-definition";
-import {
-  permitsCharm,
-  activeCharm,
-  bindCharm,
-} from "../../../src/features/wolf-beauty/relation";
-import {
-  DREAM_PROTECTION_POLICIES,
-  BEAUTY_DEATH_LINK_POLICIES,
-} from "../../../src/domain/board";
+import { permitsCharm, activeCharm, bindCharm } from "../../../src/features/wolf-beauty/relation";
+import { DREAM_PROTECTION_POLICIES, BEAUTY_DEATH_LINK_POLICIES } from "../../../src/domain/board";
 import { getDreamerState } from "../../../src/features/dreamer/ports";
 import { getWolfBeautyState } from "../../../src/features/wolf-beauty/ports";
 import {
@@ -224,17 +217,15 @@ for (const policy of DREAM_PROTECTION_POLICIES)
       }),
     ).toThrow("ability_transfer_resources_changed");
     expect(
-      allNightAbilities(game.world.getComponent(4, COMPONENT.Role)).find(
-        (a) => a.id === gift.id,
-      ),
+      allNightAbilities(game.world.getComponent(4, COMPONENT.Role)).find((a) => a.id === gift.id),
     ).toBe(gift);
     transferNightAbility(game.world, 4, 5, gift.id, "transfer:dream", events, {
       kind: "dream",
       statePolicy: (s) => structuredClone(s),
     });
-    const received = allNightAbilities(
-      game.world.getComponent(5, COMPONENT.Role),
-    ).find((a) => a.id === "transfer:dream")!;
+    const received = allNightAbilities(game.world.getComponent(5, COMPONENT.Role)).find(
+      (a) => a.id === "transfer:dream",
+    )!;
     expect(received.state).toEqual(gift.state);
     expect(received.uses).toBe(1);
     expect(received.lastUsedDay).toBe(1);

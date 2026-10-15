@@ -59,7 +59,8 @@ export function getTricksterState(
   role: RoleComponent | undefined,
   currentCamp: CurrentCampSource,
 ): TricksterReadState | undefined {
-  if (field(role, "role") !== TRICKSTER_ROLE || field(currentCamp(), "camp") !== Camp.Wolf) return undefined;
+  if (field(role, "role") !== TRICKSTER_ROLE || field(currentCamp(), "camp") !== Camp.Wolf)
+    return undefined;
   const state = field(field(role, "privateState"), "trickster");
   if (!exact(state, ["policy", "history"])) return undefined;
   if (field(state, "policy") !== TRICKSTER_POLICY) return undefined;
@@ -168,10 +169,7 @@ function appendTricksterHistory(state: () => TricksterReadState, choice: Trickst
 }
 
 /** 原 frame 身份编码：先 project／明确拒绝，再查 JSON.stringify，不提供序列化输入授权。 */
-function encodeTricksterStateIdentity(
-  role: RoleComponent,
-  currentCamp: CurrentCampSource,
-): string {
+function encodeTricksterStateIdentity(role: RoleComponent, currentCamp: CurrentCampSource): string {
   const view = projectTricksterState(role, currentCamp);
   if (!view) throw new Error("trickster_original_state_revoked");
   return JSON.stringify(view);

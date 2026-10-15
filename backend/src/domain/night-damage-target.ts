@@ -9,7 +9,14 @@
 import { DeathCause } from "./deaths";
 import { StatusMark, type EntityId } from "./identity";
 import type { StatusMarksComponent } from "./components/status-marks";
-import { livingNightLife, nightPoisonRouteTargets, nightPoisonRoutes, type NightPoisonRoute, type NightEffectQuery, type NightLifeReadScope } from "./night-effects";
+import {
+  livingNightLife,
+  nightPoisonRouteTargets,
+  nightPoisonRoutes,
+  type NightPoisonRoute,
+  type NightEffectQuery,
+  type NightLifeReadScope,
+} from "./night-effects";
 import type { NightDamageEffects, NightDamagePlan } from "./night-damage-plan";
 
 /**
@@ -60,7 +67,8 @@ export function resolveNightDamageTarget(
     marks?.has(StatusMark.WolfKillMark) === true && !effects.wolfImmuneTargets?.includes(entityId);
   const hasDirectPoison =
     marks?.has(StatusMark.PoisonMark) === true &&
-    (!claimedPoisonTargets.has(entityId) || nightPoisonRouteTargets(mechanical, entityId, "direct"));
+    (!claimedPoisonTargets.has(entityId) ||
+      nightPoisonRouteTargets(mechanical, entityId, "direct"));
   const hasPoison = hasDirectPoison || nightPoisonRouteTargets(mechanical, entityId, "reflected");
   // 毒独立于普通守护／解药冲突；不能被同守同救抵消。
   const dreamProtected = effects.protectedTargets?.includes(entityId) === true;

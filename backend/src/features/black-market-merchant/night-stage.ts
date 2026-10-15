@@ -37,7 +37,8 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
       const role = ctx.world.getComponent(actorId, COMPONENT.Role)!,
         state = getBlackMarketState(role),
         life = captureNightLife(ctx.world, actorId);
-      if (!state || !life || ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good) continue;
+      if (!state || !life || ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good)
+        continue;
       const privateState = role.privateState;
       const ownerCurrent = (paid = false) =>
         ctx.isCurrent() &&
@@ -53,7 +54,8 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
             !life.life.alive &&
             aliveLifeVersion(life.life) === life.version + 1));
       // 先完成原体／库存的原有序复验，再否决新交易；纯 ownerCurrent 仍供已付反噬使用。
-      const current = () => ownerCurrent() && canBlackMarketTrade(state, day) && !isRoleExecutionRetired(role);
+      const current = () =>
+        ownerCurrent() && canBlackMarketTrade(state, day) && !isRoleExecutionRetired(role);
       if (!current()) continue;
       const skip = () => {
         // null 或原无目标收尾都只是未付关窗；最后一次候选查询能退休源，故在关闭首写前单独拒绝。
@@ -96,17 +98,22 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
           const provider = ctx.actionProvider,
             getAction = provider.getAction,
             makeRequest = ctx.makeRequest,
-            requestArgs = [actorId, ["black_market_trade"], {
-              stage: "black_market_merchant",
-              requiresAction: false,
-              action_failure_policy: "error",
-              allow_fallback: false,
-              ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
-            }],
+            requestArgs = [
+              actorId,
+              ["black_market_trade"],
+              {
+                stage: "black_market_merchant",
+                requiresAction: false,
+                action_failure_policy: "error",
+                allow_fallback: false,
+                ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
+              },
+            ],
             invoke = Reflect.apply.bind(Reflect);
           // 新 Reflect／bind 查找与分配都先完成；末旗后只裸调用已准备 invoker，不再查方法属性。
           if (isRoleExecutionRetired(role)) break;
-          const request = invoke(makeRequest, ctx, requestArgs), actionArgs = [request];
+          const request = invoke(makeRequest, ctx, requestArgs),
+            actionArgs = [request];
           // builder 已完成的请求前缀不回滚；它退休源时不再调用 provider，await 后仍走原 current。
           if (isRoleExecutionRetired(role)) break;
           action = await invoke(getAction, provider, actionArgs);
@@ -143,14 +150,22 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
         if (!failed) {
           if (skill === "gun") {
             const grant = grantDeathGun,
-              grantArgs: Parameters<typeof grantDeathGun> = [ctx.world, actorId, targetId, day, ctx.events],
-              grantWorld = grantArgs[0], grantActor = grantArgs[1], grantTarget = grantArgs[2],
-              grantDay = grantArgs[3], grantEvents = grantArgs[4];
+              grantArgs: Parameters<typeof grantDeathGun> = [
+                ctx.world,
+                actorId,
+                targetId,
+                day,
+                ctx.events,
+              ],
+              grantWorld = grantArgs[0],
+              grantActor = grantArgs[1],
+              grantTarget = grantArgs[2],
+              grantDay = grantArgs[3],
+              grantEvents = grantArgs[4];
             // 五个原实参含 World／events 的 getter 均先执行；源退休时不让另一 World 的 common 校验代替本旗。
             if (isRoleExecutionRetired(role)) break;
             grant(grantWorld, grantActor, grantTarget, grantDay, grantEvents);
-          }
-          else {
+          } else {
             const base = {
               id: "gift:black-market",
               activation: "black_market" as const,
@@ -167,11 +182,19 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
                   {
                     ...base,
                     kind: "seer_check",
-                    state: { lastTarget: null, lastIsWerewolf: null, lastResult: null, history: [] },
+                    state: {
+                      lastTarget: null,
+                      lastIsWerewolf: null,
+                      lastResult: null,
+                      history: [],
+                    },
                   },
                   ctx.events,
                 ],
-                grantWorld = grantArgs[0], grantTarget = grantArgs[1], grantInput = grantArgs[2], grantEvents = grantArgs[3];
+                grantWorld = grantArgs[0],
+                grantTarget = grantArgs[1],
+                grantInput = grantArgs[2],
+                grantEvents = grantArgs[3];
               // 原 callee 与全部 World／payload／events 实参已经求值；共同资源 owner 不能替代本阶段捕获源的末拒绝。
               if (isRoleExecutionRetired(role)) break;
               grant(grantWorld, grantTarget, grantInput, grantEvents);
@@ -194,7 +217,10 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
                   },
                   ctx.events,
                 ],
-                grantWorld = grantArgs[0], grantTarget = grantArgs[1], grantInput = grantArgs[2], grantEvents = grantArgs[3];
+                grantWorld = grantArgs[0],
+                grantTarget = grantArgs[1],
+                grantInput = grantArgs[2],
+                grantEvents = grantArgs[3];
               // 原 callee 与全部 World／payload／events 实参已经求值；共同资源 owner 不能替代本阶段捕获源的末拒绝。
               if (isRoleExecutionRetired(role)) break;
               grant(grantWorld, grantTarget, grantInput, grantEvents);

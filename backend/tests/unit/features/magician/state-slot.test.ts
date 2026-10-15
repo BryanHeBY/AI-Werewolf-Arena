@@ -18,8 +18,10 @@ import {
 } from "../../../../src/features/magician/night-frame";
 
 test("状态初始化先读左值容器和原参数，setter失败不补写或提前查询", () => {
-  const trace: string[] = [], failure = new Error("literal_magician_install_failure");
-  let fail = true, stored: unknown;
+  const trace: string[] = [],
+    failure = new Error("literal_magician_install_failure");
+  let fail = true,
+    stored: unknown;
   const container = {
     set magician(value: unknown) {
       trace.push("set");
@@ -28,32 +30,50 @@ test("状态初始化先读左值容器和原参数，setter失败不补写或�
     },
   };
   const parameters = {
-    get firstNight(): 1 | 2 { trace.push("firstNight"); return 2; },
-    get deathShotTargetPolicy(): "original" | "exchanged" { trace.push("shot"); return "exchanged"; },
+    get firstNight(): 1 | 2 {
+      trace.push("firstNight");
+      return 2;
+    },
+    get deathShotTargetPolicy(): "original" | "exchanged" {
+      trace.push("shot");
+      return "exchanged";
+    },
   };
-  const install = () => MAGICIAN_STATE_SLOT.install(() => { trace.push("container"); return container; }, parameters);
+  const install = () =>
+    MAGICIAN_STATE_SLOT.install(() => {
+      trace.push("container");
+      return container;
+    }, parameters);
   expect(install).toThrow(failure);
   expect(trace).toEqual(["container", "firstNight", "shot", "set"]);
   expect(stored).toBeUndefined();
-  fail = false; trace.length = 0;
+  fail = false;
+  trace.length = 0;
   install();
   expect(trace).toEqual(["container", "firstNight", "shot", "set"]);
-  expect(stored).toEqual({ policy: "awa_magician_wolf_king_v1", firstNight: 2, deathShotTargetPolicy: "exchanged", history: [] });
+  expect(stored).toEqual({
+    policy: "awa_magician_wolf_king_v1",
+    firstNight: 2,
+    deathShotTargetPolicy: "exchanged",
+    history: [],
+  });
   expect(Object.isFrozen(stored)).toBe(false);
 });
 
 test("历史写先查callee再两次读state，原pair引用与可写descriptor保持", () => {
-  const state = MAGICIAN_STATE_SLOT.create(1), pair: [number, number] = [2, 3];
+  const state = MAGICIAN_STATE_SLOT.create(1),
+    pair: [number, number] = [2, 3];
   const descriptor = Object.getOwnPropertyDescriptor(Object, "defineProperty")!;
   const defineProperty = Object.defineProperty;
-  const trace: string[] = [], failure = new Error("literal_magician_history_callee_failure");
+  const trace: string[] = [],
+    failure = new Error("literal_magician_history_callee_failure");
   let fail = true;
   defineProperty(Object, "defineProperty", {
     configurable: true,
     get() {
       trace.push("callee");
       if (fail) throw failure;
-      return function(this: unknown, target: object, key: PropertyKey, value: PropertyDescriptor) {
+      return function (this: unknown, target: object, key: PropertyKey, value: PropertyDescriptor) {
         expect(this).toBe(Object);
         trace.push("write");
         return defineProperty(target, key, value);
@@ -61,11 +81,20 @@ test("历史写先查callee再两次读state，原pair引用与可写descriptor�
     },
   });
   try {
-    const append = () => MAGICIAN_STATE_SLOT.allowedWrites.appendHistory(() => { trace.push("state"); return state; }, 1, pair);
+    const append = () =>
+      MAGICIAN_STATE_SLOT.allowedWrites.appendHistory(
+        () => {
+          trace.push("state");
+          return state;
+        },
+        1,
+        pair,
+      );
     expect(append).toThrow(failure);
     expect(trace).toEqual(["callee"]);
     expect(state.history).toEqual([]);
-    fail = false; trace.length = 0;
+    fail = false;
+    trace.length = 0;
     append();
     expect(trace).toEqual(["callee", "state", "state", "write"]);
     expect(state.history).toEqual([{ day: 1, pair: [2, 3] }]);
@@ -78,26 +107,40 @@ test("历史写先查callee再两次读state，原pair引用与可写descriptor�
 });
 
 test("frame在历史之后刷新原身份JSON，编码失败保留历史并撤销旧检查点", () => {
-  const world = new World(), state = MAGICIAN_STATE_SLOT.create(1);
+  const world = new World(),
+    state = MAGICIAN_STATE_SLOT.create(1);
   for (let seat = 1; seat <= 4; seat++) {
-    const id = world.createEntity(), role = createRoleComponent(seat === 1 ? Role.Magician : Role.Villager);
+    const id = world.createEntity(),
+      role = createRoleComponent(seat === 1 ? Role.Magician : Role.Villager);
     // 测试自己的初始化容器明确可写；不经 reader 或玩家观察取得写权。
     if (seat === 1) (role.privateState as Record<string, unknown>).magician = state;
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, { camp: Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
-    world.addComponent(id, COMPONENT.Identity, { id, seat, name: `Player ${seat}`, sessionId: `player_${seat}` });
+    world.addComponent(id, COMPONENT.Identity, {
+      id,
+      seat,
+      name: `Player ${seat}`,
+      sessionId: `player_${seat}`,
+    });
   }
   const actor = world.getComponent(1, COMPONENT.Role)!;
   expect(MAGICIAN_STATE_SLOT.get(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(state);
-  expect(MAGICIAN_STATE_SLOT.schema(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(state);
+  expect(MAGICIAN_STATE_SLOT.schema(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(
+    state,
+  );
   const view = MAGICIAN_STATE_SLOT.project(actor, () => world.getComponent(1, COMPONENT.Camp))!;
   expect(view).not.toBe(state);
   expect(view.history).not.toBe(state.history);
-  expect(MAGICIAN_STATE_SLOT.checkpoint.identity(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe('{"policy":"awa_magician_wolf_king_v1","firstNight":1,"deathShotTargetPolicy":"original","history":[]}');
+  expect(
+    MAGICIAN_STATE_SLOT.checkpoint.identity(actor, () => world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(
+    '{"policy":"awa_magician_wolf_king_v1","firstNight":1,"deathShotTargetPolicy":"original","history":[]}',
+  );
   installMagicianBoard(world);
   expect(beginMagicianNight(world, 1)).toBe(1);
-  const descriptor = Object.getOwnPropertyDescriptor(JSON, "stringify")!, stringify = JSON.stringify;
+  const descriptor = Object.getOwnPropertyDescriptor(JSON, "stringify")!,
+    stringify = JSON.stringify;
   const failure = new Error("literal_magician_identity_encoding_failure");
   let calls = 0;
   Object.defineProperty(JSON, "stringify", {

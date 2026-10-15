@@ -150,7 +150,11 @@ test("Incremental Demon record still enforces original checkpoint identity", () 
           role: role.role,
           camp: world.getComponent(id, COMPONENT.Camp)!.camp,
           alive: true,
-          victory: { affiliations: [{ kind: "faction", faction: world.getComponent(id, COMPONENT.Camp)!.camp }] },
+          victory: {
+            affiliations: [
+              { kind: "faction", faction: world.getComponent(id, COMPONENT.Camp)!.camp },
+            ],
+          },
           privateState: structuredClone(role.privateState),
         };
       }),

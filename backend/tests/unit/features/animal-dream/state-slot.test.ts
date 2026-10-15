@@ -5,9 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../../src/domain/components/names";
-import {
-  animalRosterFixture,
-} from "../../../support/features/animal-dream/builders/roster";
+import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
 import {
   installAnimalAuthority,
   beginAnimalNight,
@@ -42,36 +40,64 @@ test("[slot] three contracts retain the original factory and schema bindings; co
   expect(FOX_STATE_SLOT.schema).toBe(readFoxCubState);
   expect(PUFFER_STATE_SLOT.schema).toBe(readPufferfishState);
   expect(CAT_STATE_SLOT.schema).toBe(readWhiteCatState);
-  expect(FOX_STATE_SLOT.create()).toEqual({ policy: "awa_animal_dream_v1", usedNight: null, history: [] });
-  expect(PUFFER_STATE_SLOT.create()).toEqual({
-    policy: "awa_animal_dream_v1", usedDay: null, knifeDeathDay: null, history: [],
+  expect(FOX_STATE_SLOT.create()).toEqual({
+    policy: "awa_animal_dream_v1",
+    usedNight: null,
+    history: [],
   });
-  expect(CAT_STATE_SLOT.create()).toEqual({ policy: "awa_animal_dream_v1", form: { kind: "veiled" } });
+  expect(PUFFER_STATE_SLOT.create()).toEqual({
+    policy: "awa_animal_dream_v1",
+    usedDay: null,
+    knifeDeathDay: null,
+    history: [],
+  });
+  expect(CAT_STATE_SLOT.create()).toEqual({
+    policy: "awa_animal_dream_v1",
+    form: { kind: "veiled" },
+  });
   const raw = FOX_STATE_SLOT.checkpoint.decode(() => '{"policy":"unknown"}');
   expect<unknown>(raw).toEqual({ policy: "unknown" });
   expect(() => FOX_STATE_SLOT.schema(raw)).toThrow();
 });
 
 test("[slot] all three decoders look up JSON.parse before the original JSON getter", () => {
-  const trace: string[] = [], original = Object.getOwnPropertyDescriptor(JSON, "parse")!;
+  const trace: string[] = [],
+    original = Object.getOwnPropertyDescriptor(JSON, "parse")!;
   try {
     // 明确构造 getter，只在同步 codec 调用期间观察查找顺序；随后恢复宿主方法再断言。
     Object.defineProperty(JSON, "parse", {
       configurable: true,
-      get: () => { trace.push("parse-method"); return original.value; },
+      get: () => {
+        trace.push("parse-method");
+        return original.value;
+      },
     });
     for (const slot of [FOX_STATE_SLOT, PUFFER_STATE_SLOT, CAT_STATE_SLOT])
-      slot.checkpoint.decode(() => { trace.push("json-data"); return "{}"; });
+      slot.checkpoint.decode(() => {
+        trace.push("json-data");
+        return "{}";
+      });
   } finally {
     Object.defineProperty(JSON, "parse", original);
   }
-  expect(trace).toEqual(["parse-method", "json-data", "parse-method", "json-data", "parse-method", "json-data"]);
+  expect(trace).toEqual([
+    "parse-method",
+    "json-data",
+    "parse-method",
+    "json-data",
+    "parse-method",
+    "json-data",
+  ]);
 });
 
 test("[slot] real installation captures original states; accepted Fox pass replaces only its live reference", () => {
   const originals: unknown[] = [];
   const f = animalRosterFixture((world) => {
-    for (const [id, key] of [[10, "foxCub"], [12, "pufferfish"], [9, "whiteCat"]] as const)
+    for (const [id, key] of [
+      [10, "foxCub"],
+      [12, "pufferfish"],
+      [9, "whiteCat"],
+    ] as const)
       originals.push(privateData(world.getComponent(id, COMPONENT.Role)!)[key]);
   }, installAnimalAuthority);
   expect(privateData(f.role(10)).foxCub).toBe(originals[0]);
@@ -86,14 +112,20 @@ test("[slot] real installation captures original states; accepted Fox pass repla
   expect(privateData(f.role(9)).whiteCat).toBe(originals[2]);
   expect(originals[0]).toEqual({ policy: "awa_animal_dream_v1", usedNight: null, history: [] });
   const snapshot = animalAuthoritySnapshot(f.world)!;
-  expect(snapshot.fox).toEqual({ policy: "awa_animal_dream_v1", usedNight: null, history: [{ day: 2, targetId: null }] });
+  expect(snapshot.fox).toEqual({
+    policy: "awa_animal_dream_v1",
+    usedNight: null,
+    history: [{ day: 2, targetId: null }],
+  });
   snapshot.fox.history[0]!.targetId = 7;
   expect(animalAuthoritySnapshot(f.world)!.fox.history).toEqual([{ day: 2, targetId: null }]);
 });
 
 test("[slot] an observed replacement or nonwritable slot stops the real owner permanently", () => {
   for (const change of ["reference", "writable"] as const) {
-    const f = fixture(), container = privateData(f.role(10)), original = container.foxCub;
+    const f = fixture(),
+      container = privateData(f.role(10)),
+      original = container.foxCub;
     if (change === "reference") container.foxCub = structuredClone(original);
     else Object.defineProperty(container, "foxCub", { writable: false });
     expect(animalAuthoritySnapshot(f.world)).toBeNull();
@@ -106,12 +138,26 @@ test("[slot] an observed replacement or nonwritable slot stops the real owner pe
 
 test("[slot] failed metadata writes preserve the exact private slot then state then JSON prefix", () => {
   for (const failed of ["state", "json"] as const) {
-    const f = fixture(), slot = captureResource(f.world, "fox_cub", "foxCub", readFoxCubState, freshFoxCubState()),
-      original = slot.state, previousJson = slot.json, failure = Error("literal_slot_write_failure"),
-      next: FoxCubState = { policy: "awa_animal_dream_v1", usedNight: null, history: [{ day: 2, targetId: null }] };
+    const f = fixture(),
+      slot = captureResource(f.world, "fox_cub", "foxCub", readFoxCubState, freshFoxCubState()),
+      original = slot.state,
+      previousJson = slot.json,
+      failure = Error("literal_slot_write_failure"),
+      next: FoxCubState = {
+        policy: "awa_animal_dream_v1",
+        usedNight: null,
+        history: [{ day: 2, targetId: null }],
+      };
     const old = failed === "state" ? original : previousJson;
-    Object.defineProperty(slot, failed, { get: () => old, set: () => { throw failure; } });
-    expect(() => FOX_STATE_SLOT.allowedWrites.commit(slot, next, '{"literal":"already_encoded"}')).toThrow(failure);
+    Object.defineProperty(slot, failed, {
+      get: () => old,
+      set: () => {
+        throw failure;
+      },
+    });
+    expect(() =>
+      FOX_STATE_SLOT.allowedWrites.commit(slot, next, '{"literal":"already_encoded"}'),
+    ).toThrow(failure);
     expect(privateData(f.role(10)).foxCub).toBe(next);
     expect(slot.state).toBe(failed === "state" ? original : next);
     expect(slot.json).toBe(previousJson);

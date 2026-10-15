@@ -38,7 +38,8 @@ export const TRICKSTER_EXCHANGE_STAGE: NightStageHandler = {
       return;
     }
     const role = ctx.world.getComponent(actorId, COMPONENT.Role);
-    if (!getTricksterState(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp))) throw new Error("trickster_actor_invalid");
+    if (!getTricksterState(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp)))
+      throw new Error("trickster_actor_invalid");
     const request = ctx.makeRequest(actorId, ["swap_exile_targets"], {
       stage: "trickster_exchange",
       requiresAction: true,

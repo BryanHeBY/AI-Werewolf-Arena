@@ -8,7 +8,15 @@ import type { NightStageState } from "../../../src/engine/night/contracts";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, Phase, WinCondition, COMPONENT, type BoardConfig, type GameEvent, StatusMark } from "../../../src/domain";
+import {
+  Role,
+  Phase,
+  WinCondition,
+  COMPONENT,
+  type BoardConfig,
+  type GameEvent,
+  StatusMark,
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
@@ -89,9 +97,7 @@ for (const mutation of ["revive", "replace_life"] as const)
       targetId: null,
     });
     expect(
-      game.world
-        .getComponent(5, COMPONENT.StatusMarks)
-        ?.has(StatusMark.WolfKillMark) ?? false,
+      game.world.getComponent(5, COMPONENT.StatusMarks)?.has(StatusMark.WolfKillMark) ?? false,
     ).toBe(false);
   });
 
@@ -139,8 +145,7 @@ for (const mutation of ["revive", "replace_life"] as const)
           context: { day: 1, stage: "wolf_vote", visible_events: [], turn_constraints: {} },
         }),
         getAliveByRole: () => [],
-        ensureMarks: (id) =>
-          game.world.getComponent(id, COMPONENT.StatusMarks)!,
+        ensureMarks: (id) => game.world.getComponent(id, COMPONENT.StatusMarks)!,
         pickMajorityTarget: (votes) => Math.min(...Object.keys(votes).map(Number)),
         shuffleWolves: (ids) => ids,
         state,
@@ -157,9 +162,7 @@ for (const mutation of ["revive", "replace_life"] as const)
       [2, 6],
       [3, 5],
     ]);
-    expect(
-      game.world
-        .getComponent(5, COMPONENT.StatusMarks)!
-        .has(StatusMark.WolfKillMark),
-    ).toBe(true);
+    expect(game.world.getComponent(5, COMPONENT.StatusMarks)!.has(StatusMark.WolfKillMark)).toBe(
+      true,
+    );
   });

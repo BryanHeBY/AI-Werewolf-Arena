@@ -97,7 +97,12 @@ function requireBoard(world: World): Board {
   )
     throw new Error("trickster_original_state_revoked");
   const actor = b.players.get(b.actorId)!;
-  if (getTricksterState(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.state || TRICKSTER_STATE_SLOT.checkpoint.identity(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.expectedState)
+  if (
+    getTricksterState(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.state ||
+    TRICKSTER_STATE_SLOT.checkpoint.identity(actor.role, () =>
+      world.getComponent(actor.id, COMPONENT.Camp),
+    ) !== b.expectedState
+  )
     throw new Error("trickster_original_state_revoked");
   return b;
 }
@@ -170,7 +175,9 @@ export function installTricksterBoard(world: World): void {
   boards.set(world, {
     actorId,
     state,
-    expectedState: TRICKSTER_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp)),
+    expectedState: TRICKSTER_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role, () =>
+      world.getComponent(actorId, COMPONENT.Camp),
+    ),
     players,
     night: null,
   });
@@ -193,7 +200,9 @@ export function beginTricksterNight(world: World, day: number): number | null {
     throw new Error("trickster_night_invalid");
   if (b.night) b.night.closed = true;
   const used = new Set(
-    projectTricksterState(b.players.get(b.actorId)!.role, () => world.getComponent(b.actorId, COMPONENT.Camp))!.history.flatMap((row) => row.pair ?? []),
+    projectTricksterState(b.players.get(b.actorId)!.role, () =>
+      world.getComponent(b.actorId, COMPONENT.Camp),
+    )!.history.flatMap((row) => row.pair ?? []),
   );
   const targets = new Map([...b.players].filter(([id, p]) => p.life.alive && !used.has(id)));
   const eligible = b.players.get(b.actorId)!.life.alive && targets.size >= 2;
@@ -250,7 +259,9 @@ export function commitTricksterExchange(
   );
   const choice = next.history.at(-1)!;
   TRICKSTER_STATE_SLOT.allowedWrites.appendHistory(() => b.state, choice);
-  b.expectedState = TRICKSTER_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp));
+  b.expectedState = TRICKSTER_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role, () =>
+    world.getComponent(actorId, COMPONENT.Camp),
+  );
   n.pair = choice.pair && Object.freeze([choice.pair[0], choice.pair[1]] as [number, number]);
   n.committed = true;
 }

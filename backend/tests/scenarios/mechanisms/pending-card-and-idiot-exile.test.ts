@@ -61,9 +61,7 @@ test("first-day election sees no premature role card for pending night deaths", 
             expect(
               req.context.visible_events?.some((event) => event.type === "player_role_revealed"),
             ).toBe(false);
-            expect(game.world.getComponent(2, COMPONENT.Alive)!.alive).toBe(
-              true,
-            );
+            expect(game.world.getComponent(2, COMPONENT.Alive)!.alive).toBe(true);
             throw stop;
           }
           if (req.allowedTools.includes("speak_to_wolves"))

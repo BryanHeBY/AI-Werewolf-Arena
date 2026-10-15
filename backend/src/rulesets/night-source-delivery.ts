@@ -24,7 +24,10 @@ import type { World } from "../domain/world";
 import type { NightStageState } from "../engine/night/contracts";
 
 /** 同一阶段状态的窄类型视图；数组、刀口和原生命引用不复制成另一个授权 store。 */
-type NightSourceClaims = Pick<NightStageState, "wolfTargetVoters" | "wolfTargetScope" | "guardClaims">;
+type NightSourceClaims = Pick<
+  NightStageState,
+  "wolfTargetVoters" | "wolfTargetScope" | "guardClaims"
+>;
 
 /** 查询在原表达式位置执行；world／day 仍由返回的来源闭包晚读，不在入口批量缓存。 */
 export interface NightSourceDeliveryRuntime {
@@ -42,8 +45,12 @@ export interface NightSourceDelivery {
 }
 
 /** 同步保持原封存前缀；后续 claim／snapshot 失败不撤销已经成功封存的原 token 或贡献。 */
-export function prepareNightSourceDelivery(runtime: NightSourceDeliveryRuntime): NightSourceDelivery {
-  const demonSources = runtime.ownsDemon() ? sealDeliveredDemonWitchSources(runtime.world(), runtime.day()) : undefined;
+export function prepareNightSourceDelivery(
+  runtime: NightSourceDeliveryRuntime,
+): NightSourceDelivery {
+  const demonSources = runtime.ownsDemon()
+    ? sealDeliveredDemonWitchSources(runtime.world(), runtime.day())
+    : undefined;
   const demonWolfActors = [...(runtime.claims().wolfTargetVoters ?? [])];
   const knifeScope = runtime.claims().wolfTargetScope;
   const demonWolfTarget = knifeScope?.targetId;

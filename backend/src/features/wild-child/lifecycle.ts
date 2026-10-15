@@ -12,17 +12,35 @@ import { createCampComponent } from "../../agents/observation/component-presenta
 import type { WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { RequestLease } from "../../domain/request-lease";
-import { COMPONENT, Camp, Role, Phase, createVictoryComponent, type World, type ActionRequest, type RoleComponent, type CampComponent, type VictoryComponent, type GameEvent, type DeathSources } from "../../domain";
-import { aliveLifeVersion } from "../../domain/components/alive";
 import {
-  captureNightLife,
-  livingNightLife,
-  type NightLifeScope,
-} from "../../domain/night-effects";
-import { captureOriginalParticipant as captureDebateParticipant, type OriginalParticipant as DebateParticipant } from "../../domain/original-participant";
-import { getWildChildState, encodeWildChildData as safeJson,
-  commitWildChildState, cancelWildChildState, transformWildChildState, activateWildChildState,
-  projectWildChildData } from "./state-slot";
+  COMPONENT,
+  Camp,
+  Role,
+  Phase,
+  createVictoryComponent,
+  type World,
+  type ActionRequest,
+  type RoleComponent,
+  type CampComponent,
+  type VictoryComponent,
+  type GameEvent,
+  type DeathSources,
+} from "../../domain";
+import { aliveLifeVersion } from "../../domain/components/alive";
+import { captureNightLife, livingNightLife, type NightLifeScope } from "../../domain/night-effects";
+import {
+  captureOriginalParticipant as captureDebateParticipant,
+  type OriginalParticipant as DebateParticipant,
+} from "../../domain/original-participant";
+import {
+  getWildChildState,
+  encodeWildChildData as safeJson,
+  commitWildChildState,
+  cancelWildChildState,
+  transformWildChildState,
+  activateWildChildState,
+  projectWildChildData,
+} from "./state-slot";
 export interface WildChildBinding {
   world: World;
   actorId: number;
@@ -120,11 +138,15 @@ function sameChoiceTarget(world: World, snapshot: DebateParticipant): boolean {
     !livingNightLife(world, snapshot.life) ||
     world.getComponent(snapshot.life.id, COMPONENT.Role) !== snapshot.role ||
     ownData(snapshot.role, "role") !== snapshot.roleId
-  ) return false;
+  )
+    return false;
   // 目标只比较阵营值；当前组件缺失拒绝，同值替换不增加引用撤权，也不调用缺失对象的 descriptor。
   const camp = world.getComponent(snapshot.life.id, COMPONENT.Camp);
-  return !!camp && ownData(camp, "camp") === snapshot.camp &&
-    ownData(snapshot.role, "privateState") === snapshot.state;
+  return (
+    !!camp &&
+    ownData(camp, "camp") === snapshot.camp &&
+    ownData(snapshot.role, "privateState") === snapshot.state
+  );
 }
 function validWildChildIdentity(b: WildChildBinding): boolean {
   return (
@@ -295,9 +317,7 @@ export function resolveWildChildDeathWave(
     !validWildChildOwner(b) ||
     b.state.status !== "chosen" ||
     b.actor.camp !== Camp.Good ||
-    !["status", "eligibleNight"].every(
-      (k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable,
-    )
+    !["status", "eligibleNight"].every((k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable)
   )
     return;
   // 旧 Role.camp descriptor／写入渠道退休；资格通过后、try 前保存同一 Role，catch 不晚读 binding。

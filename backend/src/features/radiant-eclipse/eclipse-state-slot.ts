@@ -6,7 +6,10 @@
  * 字段写入或后续 JSON 失败保留已写前缀及旧编码；World、生命、许可、借用／抑制／付款和夜间关闭仍归 frame。
  * 本地编码只核状态替换／内容变更，不是归档格式、sourceHash 或行动授权；流光伯爵庇护沿独立所有者。
  */
-import type { EclipseState, EclipseSwallowedRole } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
+import type {
+  EclipseState,
+  EclipseSwallowedRole,
+} from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
 import type { RoleComponent } from "../../domain/components/role";
 
 import { types } from "node:util";
@@ -153,7 +156,12 @@ export class EclipseStateBinding {
   }
 
   /** select callee／原状态先取，再在原参数位置查询 goodIds；不提前捕获候选或重建来源生命。 */
-  next(day: number, targetId: unknown, goodIds: () => readonly number[], roleId: unknown): EclipseState {
+  next(
+    day: number,
+    targetId: unknown,
+    goodIds: () => readonly number[],
+    roleId: unknown,
+  ): EclipseState {
     return selectEclipse(this.#state, day, targetId, goodIds(), roleId);
   }
 

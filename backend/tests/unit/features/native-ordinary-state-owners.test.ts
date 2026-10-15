@@ -22,7 +22,11 @@ test("ordinary initializers retain the original container and installation sette
   }> = [
     { key: "knight", initialize: initializeKnightState, expected: { canDuel: true } },
     { key: "idiot", initialize: initializeIdiotState, expected: { revealed: false } },
-    { key: "white_wolf_king", initialize: initializeWhiteWolfKingState, expected: { canDetonate: true } },
+    {
+      key: "white_wolf_king",
+      initialize: initializeWhiteWolfKingState,
+      expected: { canDetonate: true },
+    },
     { key: "bear", initialize: initializeBearState, expected: { history: [] } },
     { key: "gravekeeper", initialize: initializeGravekeeperState, expected: { history: [] } },
   ];

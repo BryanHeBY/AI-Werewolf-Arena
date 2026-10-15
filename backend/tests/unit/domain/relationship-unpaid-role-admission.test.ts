@@ -7,17 +7,33 @@ import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
-  Camp, COMPONENT, KnightDuelWindow, Phase, Role, WinCondition,
-  type ActionRequest, type BoardConfig, type GameEvent, type ToolCall,
+  Camp,
+  COMPONENT,
+  KnightDuelWindow,
+  Phase,
+  Role,
+  WinCondition,
+  type ActionRequest,
+  type BoardConfig,
+  type GameEvent,
+  type ToolCall,
 } from "../../../src/domain";
 import type { World } from "../../../src/domain/world";
 import { captureNightLife } from "../../../src/domain/night-effects";
-import { isRoleExecutionRetired, retireRoleExecution } from "../../../src/domain/role-execution-authority";
+import {
+  isRoleExecutionRetired,
+  retireRoleExecution,
+} from "../../../src/domain/role-execution-authority";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { CUPID_STAGE } from "../../../src/features/cupid/night-stage";
 import { getCupidState } from "../../../src/features/cupid/state-slot";
-import { bindLovers, livingOriginalLovers, loversRecord, projectLover } from "../../../src/features/cupid/relation";
+import {
+  bindLovers,
+  livingOriginalLovers,
+  loversRecord,
+  projectLover,
+} from "../../../src/features/cupid/relation";
 import { HYBRID_STAGE } from "../../../src/features/hybrid/night-stage";
 import { getHybridState } from "../../../src/features/hybrid/state-slot";
 import { WOLF_BEAUTY_CHARM_STAGE } from "../../../src/features/wolf-beauty/night-stages";
@@ -28,9 +44,13 @@ import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp
 import { nightStageContext } from "../../support/builders/night-stage-context";
 
 const families = ["cupid", "hybrid", "wolf_beauty"] as const;
-type Family = typeof families[number];
+type Family = (typeof families)[number];
 const stages = { cupid: CUPID_STAGE, hybrid: HYBRID_STAGE, wolf_beauty: WOLF_BEAUTY_CHARM_STAGE };
-const unavailable = { cupid: RuleError.CupidUnavailable, hybrid: RuleError.HybridUnavailable, wolf_beauty: RuleError.CharmUnavailable };
+const unavailable = {
+  cupid: RuleError.CupidUnavailable,
+  hybrid: RuleError.HybridUnavailable,
+  wolf_beauty: RuleError.CharmUnavailable,
+};
 
 function choice(family: Family): ToolCall {
   if (family === "cupid") return { name: "choose_lovers", args: { first_id: 5, second_id: 6 } };
@@ -39,19 +59,29 @@ function choice(family: Family): ToolCall {
 }
 
 function fixture(family: Family, reply?: (request: ActionRequest) => Promise<ToolCall | null>) {
-  const roles = family === "cupid"
-    ? [Role.Cupid, Role.Hunter, Role.Wolf, Role.Villager, Role.Wolf, Role.Villager]
-    : family === "hybrid"
-      ? [Role.Hybrid, Role.Wolf, Role.HiddenWolf, Role.Seer, Role.Witch, Role.Villager]
-      : [Role.WolfBeauty, Role.Wolf, Role.Witch, Role.Knight, Role.Villager, Role.Villager];
+  const roles =
+    family === "cupid"
+      ? [Role.Cupid, Role.Hunter, Role.Wolf, Role.Villager, Role.Wolf, Role.Villager]
+      : family === "hybrid"
+        ? [Role.Hybrid, Role.Wolf, Role.HiddenWolf, Role.Seer, Role.Witch, Role.Villager]
+        : [Role.WolfBeauty, Role.Wolf, Role.Witch, Role.Knight, Role.Villager, Role.Villager];
   const config: BoardConfig = {
     ...sixPlayerMvpConfig,
     boardSize: 6,
-    roleSetups: [...new Set(roles)].map((role) => ({ role, count: roles.filter((id) => id === role).length })),
-    winConditions: [family === "wolf_beauty" ? WinCondition.SlaughterSide : WinCondition.SlaughterCity],
+    roleSetups: [...new Set(roles)].map((role) => ({
+      role,
+      count: roles.filter((id) => id === role).length,
+    })),
+    winConditions: [
+      family === "wolf_beauty" ? WinCondition.SlaughterSide : WinCondition.SlaughterCity,
+    ],
     selfDestruct: { enabledWindows: [] },
-    ...(family === "cupid" ? { cupid: { policy: "netease_2017_cupid_follows_lovers_v1" as const } } : {}),
-    ...(family === "wolf_beauty" ? { knight: { enabledWindows: [KnightDuelWindow.AfterSpeeches] } } : {}),
+    ...(family === "cupid"
+      ? { cupid: { policy: "netease_2017_cupid_follows_lovers_v1" as const } }
+      : {}),
+    ...(family === "wolf_beauty"
+      ? { knight: { enabledWindows: [KnightDuelWindow.AfterSpeeches] } }
+      : {}),
   };
   const game = bootstrapGame(config, { fixedRoles: roles }),
     events: GameEvent[] = [],
@@ -69,21 +99,33 @@ function fixture(family: Family, reply?: (request: ActionRequest) => Promise<Too
     },
   };
   const ctx = nightStageContext({
-    world: game.world, events, toolGateway: gateway, actionProvider: provider,
+    world: game.world,
+    events,
+    toolGateway: gateway,
+    actionProvider: provider,
     // 只选真实第一个演员；目标仍由真实 World 枚举，不在 builder 中做权限预判。
     getAliveByRole: () => [1],
     makeRequest: function (this: NightStageContext, actorId, allowedTools, extra) {
       if (this.world !== game.world) throw new Error("fixture_request_receiver_changed");
       stats.requests++;
       trace.push("request");
-      return factory.create({ actorId, allowedTools, phase: Phase.Night, stage: extra.stage,
-        requiresAction: extra.requiresAction ?? true, context: extra, summary: "Offline F05d relationship input" });
+      return factory.create({
+        actorId,
+        allowedTools,
+        phase: Phase.Night,
+        stage: extra.stage,
+        requiresAction: extra.requiresAction ?? true,
+        context: extra,
+        summary: "Offline F05d relationship input",
+      });
     },
   });
   return { ...game, family, role, events, stats, trace, ctx, provider, gateway };
 }
 type Fixture = ReturnType<typeof fixture>;
-const run = async (f: Fixture) => { await stages[f.family].execute(f.ctx); };
+const run = async (f: Fixture) => {
+  await stages[f.family].execute(f.ctx);
+};
 
 function unpaid(f: Fixture) {
   if (f.family === "cupid") {
@@ -114,7 +156,9 @@ function paid(f: Fixture) {
   } else if (f.family === "hybrid") {
     expect(getHybridState(f.role)!.remaining).toBe(0);
     expect(getHybridState(f.role)!.choice).toEqual({ day: 1, targetId: 5 });
-    expect(f.world.getComponent(1, COMPONENT.Victory)!.affiliations).toEqual([{ kind: "faction", faction: Camp.Good }]);
+    expect(f.world.getComponent(1, COMPONENT.Victory)!.affiliations).toEqual([
+      { kind: "faction", faction: Camp.Good },
+    ]);
   } else {
     expect(getWolfBeautyState(f.role)!.targetId).toBe(5);
     expect(getWolfBeautyState(f.role)!.lastActedDay).toBe(1);
@@ -134,7 +178,10 @@ test("each retired actor loses unpaid stage/rule admission; fresh actors and ret
   for (const family of families) {
     const f = fixture(family);
     retireRoleExecution(f.role);
-    const result = f.gateway.validateAndSanitize(f.world, 1, choice(family), { phase: Phase.Night, day: 1 });
+    const result = f.gateway.validateAndSanitize(f.world, 1, choice(family), {
+      phase: Phase.Night,
+      day: 1,
+    });
     expect(result.ok).toBe(false);
     if (!result.ok) expect(result.error).toBe(unavailable[family]);
     await run(f);
@@ -153,46 +200,71 @@ test("each retired actor loses unpaid stage/rule admission; fresh actors and ret
 });
 
 test("target capture and original request/provider getters reject before creating or delivering new work", async () => {
-  for (const family of families) for (const point of ["targets", "builder", "provider", "getAction", "request_return"] as const) {
-    const f = fixture(family), makeRequest = f.ctx.makeRequest;
-    if (point === "targets") {
-      const getAlive = f.world.getAliveEntityIds;
-      Object.defineProperty(f.world, "getAliveEntityIds", { value: function (this: World) {
-        const ids = getAlive.call(this);
-        retireRoleExecution(f.role);
-        return ids;
-      } });
+  for (const family of families)
+    for (const point of [
+      "targets",
+      "builder",
+      "provider",
+      "getAction",
+      "request_return",
+    ] as const) {
+      const f = fixture(family),
+        makeRequest = f.ctx.makeRequest;
+      if (point === "targets") {
+        const getAlive = f.world.getAliveEntityIds;
+        Object.defineProperty(f.world, "getAliveEntityIds", {
+          value: function (this: World) {
+            const ids = getAlive.call(this);
+            retireRoleExecution(f.role);
+            return ids;
+          },
+        });
+      }
+      Object.defineProperty(f.ctx, "makeRequest", {
+        get() {
+          if (point === "builder") retireRoleExecution(f.role);
+          return function (this: NightStageContext, ...args: Parameters<typeof makeRequest>) {
+            const request = makeRequest.apply(this, args);
+            if (point === "request_return") retireRoleExecution(f.role);
+            return request;
+          };
+        },
+      });
+      if (point === "provider")
+        Object.defineProperty(f.ctx, "actionProvider", {
+          get() {
+            retireRoleExecution(f.role);
+            return f.provider;
+          },
+        });
+      if (point === "getAction") {
+        const getAction = f.provider.getAction;
+        Object.defineProperty(f.provider, "getAction", {
+          get() {
+            retireRoleExecution(f.role);
+            return getAction;
+          },
+        });
+      }
+      await run(f);
+      expect(f.stats.requests).toBe(
+        point === "request_return" ||
+          (family === "cupid" && (point === "provider" || point === "getAction"))
+          ? 1
+          : 0,
+      );
+      expect(f.stats.providers).toBe(0);
+      unpaid(f);
     }
-    Object.defineProperty(f.ctx, "makeRequest", { get() {
-      if (point === "builder") retireRoleExecution(f.role);
-      return function (this: NightStageContext, ...args: Parameters<typeof makeRequest>) {
-        const request = makeRequest.apply(this, args);
-        if (point === "request_return") retireRoleExecution(f.role);
-        return request;
-      };
-    } });
-    if (point === "provider") Object.defineProperty(f.ctx, "actionProvider", { get() {
-      retireRoleExecution(f.role);
-      return f.provider;
-    } });
-    if (point === "getAction") {
-      const getAction = f.provider.getAction;
-      Object.defineProperty(f.provider, "getAction", { get() {
-        retireRoleExecution(f.role);
-        return getAction;
-      } });
-    }
-    await run(f);
-    expect(f.stats.requests).toBe(point === "request_return" || (family === "cupid" && (point === "provider" || point === "getAction")) ? 1 : 0);
-    expect(f.stats.providers).toBe(0);
-    unpaid(f);
-  }
 });
 
 test("a valid provider reply cannot spend a captured actor retired during await", async () => {
   for (const family of families) {
     let f: Fixture;
-    f = fixture(family, async () => { retireRoleExecution(f.role); return choice(family); });
+    f = fixture(family, async () => {
+      retireRoleExecution(f.role);
+      return choice(family);
+    });
     await run(f);
     expect(f.stats.requests).toBe(1);
     expect(f.stats.providers).toBe(1);
@@ -203,20 +275,25 @@ test("a valid provider reply cannot spend a captured actor retired during await"
 
 test("sanitized target getters after gateway current cannot cross the first unpaid write", async () => {
   for (const family of families) {
-    const f = fixture(family), validate = f.gateway.validateAndSanitize;
-    Object.defineProperty(f.gateway, "validateAndSanitize", { value: function (this: ToolGateway, ...args: Parameters<ToolGateway["validateAndSanitize"]>) {
-      const result = validate.apply(this, args);
-      f.trace.push("gateway");
-      if (result.ok) {
-        const key = family === "cupid" ? "first_id" : "target_id";
-        Object.defineProperty(result.sanitizedCall!.args, key, { get() {
-          f.trace.push("target");
-          retireRoleExecution(f.role);
-          return 5;
-        } });
-      }
-      return result;
-    } });
+    const f = fixture(family),
+      validate = f.gateway.validateAndSanitize;
+    Object.defineProperty(f.gateway, "validateAndSanitize", {
+      value: function (this: ToolGateway, ...args: Parameters<ToolGateway["validateAndSanitize"]>) {
+        const result = validate.apply(this, args);
+        f.trace.push("gateway");
+        if (result.ok) {
+          const key = family === "cupid" ? "first_id" : "target_id";
+          Object.defineProperty(result.sanitizedCall!.args, key, {
+            get() {
+              f.trace.push("target");
+              retireRoleExecution(f.role);
+              return 5;
+            },
+          });
+        }
+        return result;
+      },
+    });
     await run(f);
     expect(f.trace).toEqual(["request", "provider", "gateway", "target"]);
     unpaid(f);
@@ -225,8 +302,15 @@ test("sanitized target getters after gateway current cannot cross the first unpa
 
 test("Wolf Beauty's nullable reply cannot bypass captured retirement without a gateway call", async () => {
   let f: Fixture;
-  f = fixture("wolf_beauty", async () => { retireRoleExecution(f.role); return null; });
-  Object.defineProperty(f.gateway, "validateAndSanitize", { value() { throw new Error("unexpected_nullable_gateway"); } });
+  f = fixture("wolf_beauty", async () => {
+    retireRoleExecution(f.role);
+    return null;
+  });
+  Object.defineProperty(f.gateway, "validateAndSanitize", {
+    value() {
+      throw new Error("unexpected_nullable_gateway");
+    },
+  });
   await run(f);
   expect(f.stats.providers).toBe(1);
   unpaid(f);
@@ -234,51 +318,67 @@ test("Wolf Beauty's nullable reply cannot bypass captured retirement without a g
 
 test("Cupid prepares internal component callee and Reflect before refusal, while getter errors retain the same Error", async () => {
   for (const point of ["callee", "invoke", "throw"] as const) {
-    const f = fixture("cupid"), original = f.world.addComponent,
-      error = new Error("original_lovers_component_getter_failure"), trace: string[] = [],
-      reflectDescriptor = Object.getOwnPropertyDescriptor(Reflect, "apply")!, reflectApply = Reflect.apply;
+    const f = fixture("cupid"),
+      original = f.world.addComponent,
+      error = new Error("original_lovers_component_getter_failure"),
+      trace: string[] = [],
+      reflectDescriptor = Object.getOwnPropertyDescriptor(Reflect, "apply")!,
+      reflectApply = Reflect.apply;
     const install = function (this: World, ...args: Parameters<World["addComponent"]>) {
       trace.push("write");
       return original.apply(this, args);
     };
-    Object.defineProperty(f.world, "addComponent", { get() {
-      trace.push("callee");
-      if (point !== "invoke") retireRoleExecution(f.role);
-      if (point === "throw") throw error;
-      if (point === "invoke") Object.defineProperty(Reflect, "apply", { configurable: true, get() {
-        trace.push("invoke");
-        retireRoleExecution(f.role);
-        return reflectApply;
-      } });
-      return install;
-    } });
+    Object.defineProperty(f.world, "addComponent", {
+      get() {
+        trace.push("callee");
+        if (point !== "invoke") retireRoleExecution(f.role);
+        if (point === "throw") throw error;
+        if (point === "invoke")
+          Object.defineProperty(Reflect, "apply", {
+            configurable: true,
+            get() {
+              trace.push("invoke");
+              retireRoleExecution(f.role);
+              return reflectApply;
+            },
+          });
+        return install;
+      },
+    });
     try {
       if (point === "throw") await expect(run(f)).rejects.toBe(error);
       else await run(f);
-    } finally { Object.defineProperty(Reflect, "apply", reflectDescriptor); }
+    } finally {
+      Object.defineProperty(Reflect, "apply", reflectDescriptor);
+    }
     expect(trace).toEqual(point === "invoke" ? ["callee", "invoke"] : ["callee"]);
     unpaid(f);
   }
 });
 
 test("accepted relations finish after late retirement and retain publication errors without refunds", async () => {
-  for (const family of families) for (const fail of [false, true]) {
-    const f = fixture(family), error = new Error("original_relationship_fact_failure");
-    Object.defineProperty(f.events, "push", { get() {
-      retireRoleExecution(f.role);
-      if (fail) throw error;
-      return Array.prototype.push;
-    } });
-    if (fail) await expect(run(f)).rejects.toBe(error);
-    else await run(f);
-    expect(isRoleExecutionRetired(f.role)).toBe(true);
-    paid(f);
-    expect(f.events.map((event) => event.type)).toEqual(fail ? [] : factTypes[family]);
-  }
+  for (const family of families)
+    for (const fail of [false, true]) {
+      const f = fixture(family),
+        error = new Error("original_relationship_fact_failure");
+      Object.defineProperty(f.events, "push", {
+        get() {
+          retireRoleExecution(f.role);
+          if (fail) throw error;
+          return Array.prototype.push;
+        },
+      });
+      if (fail) await expect(run(f)).rejects.toBe(error);
+      else await run(f);
+      expect(isRoleExecutionRetired(f.role)).toBe(true);
+      paid(f);
+      expect(f.events.map((event) => event.type)).toEqual(fail ? [] : factTypes[family]);
+    }
 });
 
 test("default Lovers data binding remains void and avoids the controlled bind channel even for retired data", () => {
-  const f = fixture("cupid"), original = f.world.addComponent;
+  const f = fixture("cupid"),
+    original = f.world.addComponent;
   retireRoleExecution(f.role);
   let receiverOK = false;
   const install = function (this: World, ...args: Parameters<World["addComponent"]>) {
@@ -287,13 +387,30 @@ test("default Lovers data binding remains void and avoids the controlled bind ch
   };
   Object.defineProperty(f.world, "addComponent", { value: install });
   const reflectDescriptor = Object.getOwnPropertyDescriptor(Reflect, "apply")!;
-  Object.defineProperty(Reflect, "apply", { configurable: true, get() { throw new Error("default_binding_must_not_read_reflect"); } });
-  const record = Object.freeze({ actorId: 1, day: 1 as const, policy: "netease_2017_cupid_follows_lovers_v1" as const,
-    pairIds: Object.freeze([5, 6]) as readonly [number, number], pairCamps: Object.freeze([Camp.Wolf, Camp.Good] as const),
-    groupId: "cupid_lovers" as const, mixed: true });
+  Object.defineProperty(Reflect, "apply", {
+    configurable: true,
+    get() {
+      throw new Error("default_binding_must_not_read_reflect");
+    },
+  });
+  const record = Object.freeze({
+    actorId: 1,
+    day: 1 as const,
+    policy: "netease_2017_cupid_follows_lovers_v1" as const,
+    pairIds: Object.freeze([5, 6]) as readonly [number, number],
+    pairCamps: Object.freeze([Camp.Wolf, Camp.Good] as const),
+    groupId: "cupid_lovers" as const,
+    mixed: true,
+  });
   let output: void;
-  try { output = bindLovers(f.world, record, [captureNightLife(f.world, 5)!, captureNightLife(f.world, 6)!]); }
-  finally { Object.defineProperty(Reflect, "apply", reflectDescriptor); }
+  try {
+    output = bindLovers(f.world, record, [
+      captureNightLife(f.world, 5)!,
+      captureNightLife(f.world, 6)!,
+    ]);
+  } finally {
+    Object.defineProperty(Reflect, "apply", reflectDescriptor);
+  }
   expect(output).toBeUndefined();
   expect(receiverOK).toBe(true);
   expect(loversRecord(f.world)).toBe(record);
@@ -301,21 +418,25 @@ test("default Lovers data binding remains void and avoids the controlled bind ch
   expect(isRoleExecutionRetired(f.role)).toBe(true);
 });
 
-
 test("non-callable provider callee waits for the original builder result and preserves its earlier Error", async () => {
-  for (const family of families) for (const point of ["builder_error", "provider_call"] as const) {
-    const f = fixture(family), makeRequest = f.ctx.makeRequest,
-      error = new Error("original_request_builder_failure");
-    Object.defineProperty(f.provider, "getAction", { value: 17 });
-    if (point === "builder_error") Object.defineProperty(f.ctx, "makeRequest", { value: function (this: NightStageContext, ...args: Parameters<typeof makeRequest>) {
-      makeRequest.apply(this, args);
-      throw error;
-    } });
-    if (point === "builder_error") await expect(run(f)).rejects.toBe(error);
-    else await expect(run(f)).rejects.toBeInstanceOf(TypeError);
-    expect(f.stats.requests).toBe(1);
-    expect(f.stats.providers).toBe(0);
-    expect(f.trace).toEqual(["request"]);
-    unpaid(f);
-  }
+  for (const family of families)
+    for (const point of ["builder_error", "provider_call"] as const) {
+      const f = fixture(family),
+        makeRequest = f.ctx.makeRequest,
+        error = new Error("original_request_builder_failure");
+      Object.defineProperty(f.provider, "getAction", { value: 17 });
+      if (point === "builder_error")
+        Object.defineProperty(f.ctx, "makeRequest", {
+          value: function (this: NightStageContext, ...args: Parameters<typeof makeRequest>) {
+            makeRequest.apply(this, args);
+            throw error;
+          },
+        });
+      if (point === "builder_error") await expect(run(f)).rejects.toBe(error);
+      else await expect(run(f)).rejects.toBeInstanceOf(TypeError);
+      expect(f.stats.requests).toBe(1);
+      expect(f.stats.providers).toBe(0);
+      expect(f.trace).toEqual(["request"]);
+      unpaid(f);
+    }
 });

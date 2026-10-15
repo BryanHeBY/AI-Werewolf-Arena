@@ -13,7 +13,12 @@ import {
 import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import { Phase, StatusMark, type EntityId, type ToolName } from "../../domain/model";
-import { captureNightLife, livingNightLife, mechanicalNightIntent, originalPoisonIntent } from "../../domain/night-effects";
+import {
+  captureNightLife,
+  livingNightLife,
+  mechanicalNightIntent,
+  originalPoisonIntent,
+} from "../../domain/night-effects";
 import type { NightStageContext, NightStageHandler } from "../../engine/night/contracts";
 import { resolveInspection } from "../../engine/inspection";
 import { canMechanicalKnife } from "./inheritance";
@@ -66,7 +71,8 @@ const modeStage: NightStageHandler = {
       if (!canSelectMechanicalMode(owner.state, day) || !owner.canAct()) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
-        if (!owner.isCurrent() || !canSelectMechanicalMode(owner.state, day) || !owner.canAct()) break;
+        if (!owner.isCurrent() || !canSelectMechanicalMode(owner.state, day) || !owner.canAct())
+          break;
         const action = await ctx.actionProvider.getAction(
           ctx.makeRequest(owner.actorId, ["mechanical_mode"], {
             stage: "mechanical_mode",
@@ -74,7 +80,8 @@ const modeStage: NightStageHandler = {
             ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
           }),
         );
-        if (!owner.isCurrent() || !canSelectMechanicalMode(owner.state, day) || !owner.canAct()) break;
+        if (!owner.isCurrent() || !canSelectMechanicalMode(owner.state, day) || !owner.canAct())
+          break;
         let chosenMode: "skill" | "kill" = "skill";
         if (action !== null) {
           if (action.name !== "mechanical_mode") continue;
@@ -82,7 +89,12 @@ const modeStage: NightStageHandler = {
             phase: Phase.Night,
             day,
           });
-          if (!owner.isCurrent() || !valid.ok || valid.sanitizedCall?.name !== "mechanical_mode" || !owner.canAct())
+          if (
+            !owner.isCurrent() ||
+            !valid.ok ||
+            valid.sanitizedCall?.name !== "mechanical_mode" ||
+            !owner.canAct()
+          )
             continue;
           chosenMode = valid.sanitizedCall.args.mode;
         }
@@ -99,7 +111,12 @@ const modeStage: NightStageHandler = {
         completed = true;
         break;
       }
-      if (!completed && owner.isCurrent() && canSelectMechanicalMode(owner.state, day) && owner.canAct())
+      if (
+        !completed &&
+        owner.isCurrent() &&
+        canSelectMechanicalMode(owner.state, day) &&
+        owner.canAct()
+      )
         throw new Error("mechanical_mode_valid_action_missing");
     }
   },
@@ -170,7 +187,8 @@ const mimicStage: NightStageHandler = {
           continue;
         // 候选原体／生命 getter 仍先按原序执行，退休后不写入新的学习数据。
         if (!owner.canAct()) break;
-        if (!learnMechanicalRole(owner.state, targetId, targetRole.role, day, owner.canAct)) continue;
+        if (!learnMechanicalRole(owner.state, targetId, targetRole.role, day, owner.canAct))
+          continue;
         recordMechanicalNightCommit(ctx.world, day);
         ctx.events.push({
           timestamp: Date.now(),
@@ -254,7 +272,8 @@ const skillStage: NightStageHandler = {
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
         if (call.name === "mechanical_inspect" && skill.kind === "inspection" && target) {
           const result = resolveInspection(ctx.world, target.id, "role", ctx.roleCatalog);
-          if (!result || !current() || !livingNightLife(ctx.world, target) || !owner.canAct()) continue;
+          if (!result || !current() || !livingNightLife(ctx.world, target) || !owner.canAct())
+            continue;
           if (!recordMechanicalInspection(skill, day, target, result, owner.canAct)) break;
           ctx.events.push({
             timestamp: Date.now(),
@@ -264,10 +283,19 @@ const skillStage: NightStageHandler = {
         } else if (call.name === "mechanical_poison" && skill.kind === "poison" && target) {
           // 首个 claim 写入之前拒绝晚退休；一旦开始原提交序列，不借墓碑撤销已写前缀。
           if (!owner.canAct()) break;
-          (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({ source: owner.life, target }, {
-            family: "mechanical", day, stage: "mechanical_skill", actorLife: owner.life,
-            requestedTargetId: targetId, abilityId: "learned:mechanical",
-          }));
+          (ctx.state.poisonClaims ??= []).push(
+            originalPoisonIntent(
+              { source: owner.life, target },
+              {
+                family: "mechanical",
+                day,
+                stage: "mechanical_skill",
+                actorLife: owner.life,
+                requestedTargetId: targetId,
+                abilityId: "learned:mechanical",
+              },
+            ),
+          );
           ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
           consumeMechanicalPoison(skill);
           ctx.events.push({
@@ -281,19 +309,43 @@ const skillStage: NightStageHandler = {
           if (!chosen) break;
           const { failed } = chosen;
           if (failed)
-            effects(ctx).failures.push(mechanicalNightIntent("mechanical-failure", {
-              actorId: owner.actorId,
-              target: owner.life,
-              isCurrent: bound.isCurrent,
-            }, { family: "mechanical", day, stage: "mechanical_skill", actorLife: owner.life,
-              requestedTargetId: targetId, abilityId: "learned:mechanical" }));
+            effects(ctx).failures.push(
+              mechanicalNightIntent(
+                "mechanical-failure",
+                {
+                  actorId: owner.actorId,
+                  target: owner.life,
+                  isCurrent: bound.isCurrent,
+                },
+                {
+                  family: "mechanical",
+                  day,
+                  stage: "mechanical_skill",
+                  actorLife: owner.life,
+                  requestedTargetId: targetId,
+                  abilityId: "learned:mechanical",
+                },
+              ),
+            );
           else if (target)
-            effects(ctx).shields.push(mechanicalNightIntent("mechanical-shield", {
-              actorId: owner.actorId,
-              target,
-              isCurrent: bound.isCurrent,
-            }, { family: "mechanical", day, stage: "mechanical_skill", actorLife: owner.life,
-              requestedTargetId: targetId, abilityId: "learned:mechanical" }));
+            effects(ctx).shields.push(
+              mechanicalNightIntent(
+                "mechanical-shield",
+                {
+                  actorId: owner.actorId,
+                  target,
+                  isCurrent: bound.isCurrent,
+                },
+                {
+                  family: "mechanical",
+                  day,
+                  stage: "mechanical_skill",
+                  actorLife: owner.life,
+                  requestedTargetId: targetId,
+                  abilityId: "learned:mechanical",
+                },
+              ),
+            );
           ctx.events.push({
             timestamp: Date.now(),
             type: "mechanical_guard_chosen",
@@ -328,8 +380,11 @@ const attackStage: NightStageHandler = {
         owner.state.mode === mode &&
         mode.day === day &&
         mode.kind === "kill" &&
-        canMechanicalKnife(owner.role, ctx.world, () => ctx.world.getComponent(owner.actorId, COMPONENT.Camp));
-      const current = () => effectCurrent() && canMechanicalExtraKnife(owner.state, day) && owner.canAct();
+        canMechanicalKnife(owner.role, ctx.world, () =>
+          ctx.world.getComponent(owner.actorId, COMPONENT.Camp),
+        );
+      const current = () =>
+        effectCurrent() && canMechanicalExtraKnife(owner.state, day) && owner.canAct();
       if (!current()) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
@@ -360,10 +415,20 @@ const attackStage: NightStageHandler = {
         // 额外刀的目标生命复验完成后才检查未付资格；effectCurrent 保持纯已付谓词。
         if (!owner.canAct()) break;
         if (target)
-          effects(ctx).attacks.push(mechanicalNightIntent("mechanical-attack", { actorId: owner.actorId, target, isCurrent: effectCurrent }, {
-            family: "mechanical", day, stage: "mechanical_attack", actorLife: owner.life,
-            requestedTargetId: targetId, abilityId: "learned:mechanical",
-          }));
+          effects(ctx).attacks.push(
+            mechanicalNightIntent(
+              "mechanical-attack",
+              { actorId: owner.actorId, target, isCurrent: effectCurrent },
+              {
+                family: "mechanical",
+                day,
+                stage: "mechanical_attack",
+                actorLife: owner.life,
+                requestedTargetId: targetId,
+                abilityId: "learned:mechanical",
+              },
+            ),
+          );
         closeMechanicalExtraKnife(skill, target);
         recordMechanicalNightCommit(ctx.world, day);
         ctx.events.push({

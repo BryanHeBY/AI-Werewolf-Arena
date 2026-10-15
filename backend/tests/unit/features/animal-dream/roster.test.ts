@@ -86,7 +86,16 @@ const invalid: Record<string, (w: ReturnType<typeof animalRosterFixture>["world"
   },
   // 错槽别名本身是被测非法样本；类型断言不复制对象或纠正存储内容。
   "Role and Camp alias": (w) => {
-    w.addComponent(10, COMPONENT.Camp, w.getComponent(10, COMPONENT.Role) as unknown as import("../../../../src/domain/component-map").ComponentWrite<typeof COMPONENT.Camp>);
+    w.addComponent(
+      10,
+      COMPONENT.Camp,
+      w.getComponent(
+        10,
+        COMPONENT.Role,
+      ) as unknown as import("../../../../src/domain/component-map").ComponentWrite<
+        typeof COMPONENT.Camp
+      >,
+    );
   },
   "shared private container": (w) => {
     (

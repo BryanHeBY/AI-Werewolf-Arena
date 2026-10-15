@@ -12,10 +12,7 @@ import { COMPONENT } from "../../domain/components/names";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { RequestLease } from "../../domain/request-lease";
 
-import {
-  createVictoryComponent,
-  type VictoryComponent,
-} from "../../domain/components/victory";
+import { createVictoryComponent, type VictoryComponent } from "../../domain/components/victory";
 import { Camp, Phase, Role } from "../../domain/model";
 import { captureNightLife, livingNightLife } from "../../domain/night-effects";
 import type { World } from "../../domain/world";
@@ -28,14 +25,21 @@ export function hasHybridNightCommit(world: World, day: number): boolean {
 }
 
 /** 每个真实请求单独持有本次行动者与日次；领域闭包仍晚查原体，不由 context 重建权限。 */
-interface ChoiceRequestScope { actorId: number; day: number; current(): boolean }
-const requestLease = RequestLease.window<ChoiceRequestScope>({
-  actorId: (scope) => scope.actorId,
-  phase: () => Phase.Night,
-  day: (scope) => scope.day,
-  stage: () => "hybrid",
-  current: (scope) => scope.current(),
-}, 120);
+interface ChoiceRequestScope {
+  actorId: number;
+  day: number;
+  current(): boolean;
+}
+const requestLease = RequestLease.window<ChoiceRequestScope>(
+  {
+    actorId: (scope) => scope.actorId,
+    phase: () => Phase.Night,
+    day: (scope) => scope.day,
+    stage: () => "hybrid",
+    current: (scope) => scope.current(),
+  },
+  120,
+);
 
 export const HYBRID_STAGE: NightStageHandler = {
   id: "hybrid",
@@ -48,7 +52,13 @@ export const HYBRID_STAGE: NightStageHandler = {
       const state = getHybridState(role),
         life = captureNightLife(ctx.world, actorId);
       const victory = ctx.world.getComponent(actorId, COMPONENT.Victory);
-      if (!state || !life || !victory || ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good) continue;
+      if (
+        !state ||
+        !life ||
+        !victory ||
+        ctx.world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good
+      )
+        continue;
       const privateState = role.privateState,
         affiliations = victory.affiliations;
       const current = () =>
@@ -104,8 +114,16 @@ export const HYBRID_STAGE: NightStageHandler = {
         const requestArgs = [requestActor, requestTools, requestExtras];
         const invokeRequest = Reflect.apply.bind(Reflect);
         if (!canAct()) break;
-        const request: ReturnType<typeof makeRequest> = invokeRequest(makeRequest, ctx, requestArgs);
-        const requestScope: ChoiceRequestScope = { actorId, day, current: () => current() && canAct() };
+        const request: ReturnType<typeof makeRequest> = invokeRequest(
+          makeRequest,
+          ctx,
+          requestArgs,
+        );
+        const requestScope: ChoiceRequestScope = {
+          actorId,
+          day,
+          current: () => current() && canAct(),
+        };
         requestLease.bind(requestScope, request);
         const turn = requestLease.openDelivery(requestScope, request);
         let bodyFailed = false;
@@ -114,14 +132,25 @@ export const HYBRID_STAGE: NightStageHandler = {
           const actionArgs = [request];
           const invokeAction = Reflect.apply.bind(Reflect);
           if (!canAct() || !turn.current()) break;
-          const action: Awaited<ReturnType<typeof getAction>> = await invokeAction(getAction, provider, actionArgs);
+          const action: Awaited<ReturnType<typeof getAction>> = await invokeAction(
+            getAction,
+            provider,
+            actionArgs,
+          );
           if (!current() || !canAct() || !turn.current()) break;
           if (action?.name !== "choose_exemplar") continue;
           const valid = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, action, {
             phase: Phase.Night,
             day,
           });
-          if (!current() || !valid.ok || valid.sanitizedCall?.name !== "choose_exemplar" || !canAct() || !turn.current()) continue;
+          if (
+            !current() ||
+            !valid.ok ||
+            valid.sanitizedCall?.name !== "choose_exemplar" ||
+            !canAct() ||
+            !turn.current()
+          )
+            continue;
           const targetId = valid.sanitizedCall.args.target_id,
             target = targets.get(targetId);
           if (
@@ -164,7 +193,11 @@ export const HYBRID_STAGE: NightStageHandler = {
         } finally {
           // 取消、无效回复及部分付款均 false-close；原正文错误优先，新通知错误不遮盖它。
           // complete 已先落终态，事实或通知晚抛后 close 不会二次通知，也不回滚已写前缀。
-          try { turn?.close(); } catch (error) { if (!bodyFailed) throw error; }
+          try {
+            turn?.close();
+          } catch (error) {
+            if (!bodyFailed) throw error;
+          }
         }
       }
       if (!completed && current() && canAct()) throw new Error("hybrid_valid_action_missing");

@@ -69,10 +69,13 @@ function ownMetadataValue(input: object | undefined, key: string): unknown {
 }
 
 /** 只读新时钟 own-data，旧同名 getter／Proxy 不因迁移多执行；身份不授予死亡资格。 */
-export function deathExecutionContext(input: object | undefined): DeathExecutionContext | undefined {
+export function deathExecutionContext(
+  input: object | undefined,
+): DeathExecutionContext | undefined {
   const value = ownMetadataValue(input, "execution");
   if (typeof value !== "object" || value === null || types.isProxy(value)) return undefined;
-  const night = ownMetadataValue(value, "night"), exile = ownMetadataValue(value, "exile");
+  const night = ownMetadataValue(value, "night"),
+    exile = ownMetadataValue(value, "exile");
   const phaseRevision = ownMetadataValue(value, "phaseRevision");
   return Object.freeze({
     ...(isNightUnit(night) ? { night } : {}),

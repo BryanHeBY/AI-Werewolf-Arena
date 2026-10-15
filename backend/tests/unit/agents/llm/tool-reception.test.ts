@@ -72,9 +72,7 @@ describe("LlmActionProvider protocol", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const seerId = context.world
       .entityIds()
-      .find(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "seer",
-      )!;
+      .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === "seer")!;
     const provider = new LlmActionProvider(
       context.world,
       new ToolLoopClient("check_identity", { target_id: 2 }),

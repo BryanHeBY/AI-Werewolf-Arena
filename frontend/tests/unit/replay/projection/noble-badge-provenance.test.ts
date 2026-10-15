@@ -12,14 +12,23 @@ import { createReplayRenderInput, buildReplayFrame } from "../../../../src/repla
 // God 名单只提供公开席位／姓名字段。
 for (const locale of ["en", "zh-CN"] as const) {
   test(`actual villager movie reveals the live Body only after public fact/${locale}`, () => {
-    
     const god = readReplayDocument(
-      JSON.parse(readFileSync(frontendFixtureURL("frontend/tests/fixtures/" + `noble-badge_reveal-${locale}.replay.json`), "utf8")),
+      JSON.parse(
+        readFileSync(
+          frontendFixtureURL(
+            "frontend/tests/fixtures/" + `noble-badge_reveal-${locale}.replay.json`,
+          ),
+          "utf8",
+        ),
+      ),
     );
     const owner = readReplayPlayerView(
       JSON.parse(
         readFileSync(
-          frontendFixtureURL("frontend/tests/fixtures/" + `player-views/noble-badge_reveal-${locale}-villager.player.json`),
+          frontendFixtureURL(
+            "frontend/tests/fixtures/" +
+              `player-views/noble-badge_reveal-${locale}-villager.player.json`,
+          ),
           "utf8",
         ),
       ),

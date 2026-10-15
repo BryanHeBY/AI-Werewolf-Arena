@@ -205,6 +205,8 @@ test("recording and inspection warning language is transient display context, no
     console.warn = previous;
   }
   expect(
-    readReplayManifest(JSON.parse(await fs.readFile(path.join(root, "display/manifest.json"), "utf8"))).locale,
+    readReplayManifest(
+      JSON.parse(await fs.readFile(path.join(root, "display/manifest.json"), "utf8")),
+    ).locale,
   ).toBe("zh-CN");
 });

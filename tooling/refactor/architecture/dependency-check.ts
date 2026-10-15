@@ -51,23 +51,32 @@ const publicFeatureTarget = (file: string, kinds = ["index", "contracts", "ports
   const root = featureRoot(file);
   // 机制根的具名公开端口可按职责分开，避免一个 ports 同时装配查询和重型窗口导致循环。
   // 只认 kebab-case 的根文件 *-ports；嵌套目录、下划线和任意内部实现仍不成为公共入口。
-  const facet = !!root && kinds.includes("ports") &&
-    /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*-ports\.(?:ts|mts|cts)$/.test(file.slice(root.length + 1));
-  return facet || (
+  const facet =
     !!root &&
-    kinds.some(
-      (kind) =>
-        file === `${root}/${kind}.ts` ||
-        file === `${root}/${kind}.mts` ||
-        file === `${root}/${kind}.cts`,
-    )
+    kinds.includes("ports") &&
+    /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*-ports\.(?:ts|mts|cts)$/.test(file.slice(root.length + 1));
+  return (
+    facet ||
+    (!!root &&
+      kinds.some(
+        (kind) =>
+          file === `${root}/${kind}.ts` ||
+          file === `${root}/${kind}.mts` ||
+          file === `${root}/${kind}.cts`,
+      ))
   );
 };
 // 只列由旧 AI 层迁出的真实执行／传输入口；旧 game 的观察、展示和 repair 端口不属于此集合。
 const executionAgentSource = (file: string) =>
-  /^backend\/src\/(?:agents\/(?:acp|llm|player|providers|runtime|reporting)|audit\/agents)\//.test(file) ||
-  /^backend\/src\/agents\/(?:index|game-tool-protocol|visible-event-protocol)\.[cm]?ts$/.test(file) ||
-  /^backend\/src\/app\/(?:agent-exports|audit-agent-exports|audit-agent-factory)\.[cm]?ts$/.test(file);
+  /^backend\/src\/(?:agents\/(?:acp|llm|player|providers|runtime|reporting)|audit\/agents)\//.test(
+    file,
+  ) ||
+  /^backend\/src\/agents\/(?:index|game-tool-protocol|visible-event-protocol)\.[cm]?ts$/.test(
+    file,
+  ) ||
+  /^backend\/src\/app\/(?:agent-exports|audit-agent-exports|audit-agent-factory)\.[cm]?ts$/.test(
+    file,
+  );
 const browserSource = (file: string) => /^(?:frontend\/src\/|packages\/[^/]+\/src\/)/.test(file);
 const domainSource = (file: string) => /^backend\/src\/(?:core|domain)\//.test(file);
 const verifierSource = (file: string) =>
@@ -652,7 +661,9 @@ export function checkDependencies(
         );
       if (
         verifierSource(file.path) &&
-        /^backend\/src\/(?:game|features|engine|ai|agents|adapters|app|runtime|rulesets)\//.test(target)
+        /^backend\/src\/(?:game|features|engine|ai|agents|adapters|app|runtime|rulesets)\//.test(
+          target,
+        )
       )
         add(
           "dependency.verifier-production",

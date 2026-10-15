@@ -46,8 +46,6 @@ export function captureEvilKnightNightShotProtection(
   const bindings = bindingsByNight.get(state);
   return (targetId) => {
     const binding = bindings?.get(targetId);
-    return (
-      !!binding && binding.isCurrent() && binding.state.shotPolicy === "night_shot_immune"
-    );
+    return !!binding && binding.isCurrent() && binding.state.shotPolicy === "night_shot_immune";
   };
 }

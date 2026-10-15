@@ -18,8 +18,10 @@ import {
 } from "../../../../src/features/trickster/night-frame";
 
 test("初始化先取左值容器，setter失败不补写且不冻结原状态", () => {
-  const trace: string[] = [], failure = new Error("literal_trickster_install_failure");
-  let failed = true, stored: unknown;
+  const trace: string[] = [],
+    failure = new Error("literal_trickster_install_failure");
+  let failed = true,
+    stored: unknown;
   const container = {
     set trickster(value: unknown) {
       trace.push("set");
@@ -27,11 +29,16 @@ test("初始化先取左值容器，setter失败不补写且不冻结原状态",
       stored = value;
     },
   };
-  const install = () => TRICKSTER_STATE_SLOT.install(() => { trace.push("container"); return container; });
+  const install = () =>
+    TRICKSTER_STATE_SLOT.install(() => {
+      trace.push("container");
+      return container;
+    });
   expect(install).toThrow(failure);
   expect(trace).toEqual(["container", "set"]);
   expect(stored).toBeUndefined();
-  failed = false; trace.length = 0;
+  failed = false;
+  trace.length = 0;
   install();
   expect(trace).toEqual(["container", "set"]);
   expect(stored).toEqual({ policy: "awa_trickster_exile_v1", history: [] });
@@ -39,18 +46,20 @@ test("初始化先取左值容器，setter失败不补写且不冻结原状态",
 });
 
 test("追加先查callee再两次读state，保choice和pair原引用与descriptor", () => {
-  const state = TRICKSTER_STATE_SLOT.create(), pair: [number, number] = [2, 3];
+  const state = TRICKSTER_STATE_SLOT.create(),
+    pair: [number, number] = [2, 3];
   const choice = { day: 1, pair };
   const descriptor = Object.getOwnPropertyDescriptor(Object, "defineProperty")!;
   const defineProperty = Object.defineProperty;
-  const trace: string[] = [], failure = new Error("literal_trickster_append_callee_failure");
+  const trace: string[] = [],
+    failure = new Error("literal_trickster_append_callee_failure");
   let failed = true;
   defineProperty(Object, "defineProperty", {
     configurable: true,
     get() {
       trace.push("callee");
       if (failed) throw failure;
-      return function(this: unknown, target: object, key: PropertyKey, value: PropertyDescriptor) {
+      return function (this: unknown, target: object, key: PropertyKey, value: PropertyDescriptor) {
         expect(this).toBe(Object);
         trace.push("write");
         return defineProperty(target, key, value);
@@ -58,11 +67,16 @@ test("追加先查callee再两次读state，保choice和pair原引用与descript
     },
   });
   try {
-    const append = () => TRICKSTER_STATE_SLOT.allowedWrites.appendHistory(() => { trace.push("state"); return state; }, choice);
+    const append = () =>
+      TRICKSTER_STATE_SLOT.allowedWrites.appendHistory(() => {
+        trace.push("state");
+        return state;
+      }, choice);
     expect(append).toThrow(failure);
     expect(trace).toEqual(["callee"]);
     expect(state.history).toEqual([]);
-    failed = false; trace.length = 0;
+    failed = false;
+    trace.length = 0;
     append();
     expect(trace).toEqual(["callee", "state", "state", "write"]);
     expect(state.history[0]).toBe(choice);
@@ -75,26 +89,38 @@ test("追加先查callee再两次读state，保choice和pair原引用与descript
 });
 
 test("历史追加后身份编码失败保原history，frame不补finished或续旧检查点", () => {
-  const world = new World(), state = TRICKSTER_STATE_SLOT.create();
+  const world = new World(),
+    state = TRICKSTER_STATE_SLOT.create();
   for (let seat = 1; seat <= 4; seat++) {
-    const id = world.createEntity(), role = createRoleComponent(seat === 1 ? Role.Trickster : Role.Villager);
+    const id = world.createEntity(),
+      role = createRoleComponent(seat === 1 ? Role.Trickster : Role.Villager);
     // 测试自有安装容器明确可写；未从玩家投影或 live reader 推导生产写权。
     if (seat === 1) (role.privateState as Record<string, unknown>).trickster = state;
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, { camp: seat === 1 ? Camp.Wolf : Camp.Good });
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
-    world.addComponent(id, COMPONENT.Identity, { id, seat, name: `Player ${seat}`, sessionId: `player_${seat}` });
+    world.addComponent(id, COMPONENT.Identity, {
+      id,
+      seat,
+      name: `Player ${seat}`,
+      sessionId: `player_${seat}`,
+    });
   }
   const actor = world.getComponent(1, COMPONENT.Role)!;
   expect(TRICKSTER_STATE_SLOT.get(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(state);
-  expect(TRICKSTER_STATE_SLOT.schema(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(state);
+  expect(TRICKSTER_STATE_SLOT.schema(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe(
+    state,
+  );
   const view = TRICKSTER_STATE_SLOT.project(actor, () => world.getComponent(1, COMPONENT.Camp))!;
   expect(view).not.toBe(state);
   expect(view.history).not.toBe(state.history);
-  expect(TRICKSTER_STATE_SLOT.checkpoint.identity(actor, () => world.getComponent(1, COMPONENT.Camp))).toBe('{"policy":"awa_trickster_exile_v1","history":[]}');
+  expect(
+    TRICKSTER_STATE_SLOT.checkpoint.identity(actor, () => world.getComponent(1, COMPONENT.Camp)),
+  ).toBe('{"policy":"awa_trickster_exile_v1","history":[]}');
   installTricksterBoard(world);
   expect(beginTricksterNight(world, 1)).toBe(1);
-  const descriptor = Object.getOwnPropertyDescriptor(JSON, "stringify")!, stringify = JSON.stringify;
+  const descriptor = Object.getOwnPropertyDescriptor(JSON, "stringify")!,
+    stringify = JSON.stringify;
   const failure = new Error("literal_trickster_identity_failure");
   let calls = 0;
   Object.defineProperty(JSON, "stringify", {

@@ -8,8 +8,15 @@
 import { snapshotPlainData } from "../../domain/plain-data";
 import { types } from "node:util";
 import type { RoleComponent } from "../../domain";
-import { DEMON_HUNTER_POLICY, readDemonHunterState as readState, readDemonHuntTool as readTool } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
-import type { DemonHunterState, DemonHuntTool } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
+import {
+  DEMON_HUNTER_POLICY,
+  readDemonHunterState as readState,
+  readDemonHuntTool as readTool,
+} from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
+import type {
+  DemonHunterState,
+  DemonHuntTool,
+} from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 export { DEMON_HUNTER_POLICY };
 export const DEMON_HUNTER_ROLE = "demon_hunter" as const;
 export function ownDemonData(value: unknown, key: string): unknown {
@@ -85,8 +92,13 @@ export function captureDemonHunterStateSlot(state: DemonHunterState): DemonHunte
 }
 
 /** 数据当前性保持原历史引用优先、已校验历史 JSON 后查；原参与者与 World alias 仍由 authority 核对。 */
-export function demonHunterHistoryCurrent(b: DemonHunterStateSlot, state: DemonHunterState): boolean {
-  return ownDemonData(b.state, "history") === b.history && demonJson(state.history) === b.historyJson;
+export function demonHunterHistoryCurrent(
+  b: DemonHunterStateSlot,
+  state: DemonHunterState,
+): boolean {
+  return (
+    ownDemonData(b.state, "history") === b.history && demonJson(state.history) === b.historyJson
+  );
 }
 
 /**

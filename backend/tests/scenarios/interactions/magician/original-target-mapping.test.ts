@@ -25,9 +25,7 @@ function fixture(shot: "original" | "exchanged" = "original") {
     fixedRoles: config.roleSetups.flatMap((r) => Array<Role>(r.count).fill(r.role)),
   });
   const id = (role: Role) =>
-    f.world
-      .entityIds()
-      .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === role)!;
+    f.world.entityIds().find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === role)!;
   const alive = (id: number) => f.world.getComponent(id, COMPONENT.Alive)!.alive;
   return { ...f, config, id, alive };
 }

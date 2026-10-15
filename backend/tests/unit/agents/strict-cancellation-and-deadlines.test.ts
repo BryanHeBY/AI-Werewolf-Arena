@@ -3,7 +3,13 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/domain";
+import {
+  COMPONENT,
+  Phase,
+  Role,
+  type ActionRequest,
+  type RoleComponent,
+} from "../../../src/domain";
 import { getGuardState } from "../../../src/features/guard/ports";
 import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
 import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
@@ -86,9 +92,7 @@ for (const transport of ["sdk", "acp"] as const)
         if (!("error" in result)) throw new Error("expected_cancellation");
         expect(describeError(result.error).code).toBe("request_aborted");
       } else expect(result).toEqual({ value: null });
-      expect(
-        getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
-      ).toBeNull();
+      expect(getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget).toBeNull();
       expect(provider.runtimeState.turns).toBe(0);
       if (transport === "acp") expect(closes).toBe(1);
     });
@@ -144,9 +148,7 @@ for (const transport of ["sdk", "acp"] as const)
     try {
       await expect(provider.getAction(request(true))).rejects.toThrow("action_turn_failed");
       expect(fallbacks).toBe(0);
-      expect(
-        getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
-      ).toBeNull();
+      expect(getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget).toBeNull();
     } finally {
       await provider.close();
     }
@@ -197,9 +199,7 @@ test("strict cancellation does not swallow a real ACP cleanup error", async () =
   expect(contains(closeError)).toBe(true);
   const result = await pending;
   expect("error" in result).toBe(true);
-  expect(
-    getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
-  ).toBeNull();
+  expect(getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget).toBeNull();
 });
 
 for (const strict of [false, true])
@@ -222,9 +222,7 @@ for (const strict of [false, true])
     try {
       if (strict) await expect(provider.getAction(input)).rejects.toThrow("action_turn_failed");
       else expect(await provider.getAction(input)).toBeNull();
-      expect(
-        getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
-      ).toBeNull();
+      expect(getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget).toBeNull();
     } finally {
       await provider.close();
     }
@@ -285,9 +283,7 @@ for (const transport of ["sdk", "acp"] as const)
       };
       try {
         await expect(provider.getAction(input)).rejects.toThrow("action_turn_failed");
-        expect(
-          getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
-        ).toBeNull();
+        expect(getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget).toBeNull();
         expect(
           outcomes.some((outcome) =>
             outcome.retryTrace?.some(

@@ -15,7 +15,10 @@ import {
 } from "../../../../src/rulesets/mechanism-api";
 import { buildAgentVisibleEvent } from "../../../../src/agents/observation/event-feed";
 import { AgentEventVisibilityRegistry } from "../../../../src/agents/observation/agent-event-visibility-registry";
-import { readNobleSecretBodyFact, NOBLE_SECRET_BODY_POLICY } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
+import {
+  readNobleSecretBodyFact,
+  NOBLE_SECRET_BODY_POLICY,
+} from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 
 function setup(locale: "zh-CN" | "en") {
   const config = nobleSecretBodyTwelveConfig();

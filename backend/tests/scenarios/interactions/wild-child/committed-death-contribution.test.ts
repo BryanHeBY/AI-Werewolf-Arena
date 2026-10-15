@@ -24,7 +24,11 @@ test("mandatory committed-wave contributions survive a legacy custom hook regist
     trace: string[] = [],
     gateway = new ToolGateway();
   expect(
-    await new WildChildSetupWindow(world, gateway, events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
+    await new WildChildSetupWindow(world, gateway, events, {
+      get requestFactory() {
+        return GameActionRequestFactory;
+      },
+    }).execute(
       config,
       {
         async getAction() {

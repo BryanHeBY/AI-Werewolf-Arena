@@ -9,7 +9,10 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { assertReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
-import { simulateGames, type SimulationReport } from "../../../../src/app/simulation/simulate-games";
+import {
+  simulateGames,
+  type SimulationReport,
+} from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
@@ -19,7 +22,10 @@ const board = async () =>
   parseBoardDefinition(
     JSON.parse(
       await readFile(
-        new URL("../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json", import.meta.url),
+        new URL(
+          "../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json",
+          import.meta.url,
+        ),
         "utf8",
       ),
     ),
@@ -76,9 +82,9 @@ for (const policy of ["mixed", "conservative"] as const)
         expect(record.metadata.locale).toBe(locale);
         expect(record.checkpoints.every((c) => c.complete)).toBe(true);
         expect(record.decisions.every((d) => d.outcome.kind === "action")).toBe(true);
-        const replay: ReplayDocument = readReplayDocument(JSON.parse(
-          await readFile(path.join(game.recordDir, "replay.json"), "utf8"),
-        ));
+        const replay: ReplayDocument = readReplayDocument(
+          JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8")),
+        );
         assertReplayDocument(replay);
         expect(replay.result.decision).toEqual(game.result ?? undefined);
         expect((await replayReproduction(record, replayRoot)).snapshot).toEqual(

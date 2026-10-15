@@ -71,12 +71,11 @@ const setup = (
   getAction: (r: ActionRequest) => Promise<ToolCall | null> = async () => choose(2),
   isCurrent = () => true,
 ) =>
-  new WildChildSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
-    g.config,
-    { getAction },
-    1,
-    isCurrent,
-  );
+  new WildChildSetupWindow(g.world, new ToolGateway(), g.events, {
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
+  }).execute(g.config, { getAction }, 1, isCurrent);
 
 async function deaths(
   g: Fixture,
@@ -264,10 +263,14 @@ test("active dead Child retains pack knowledge while losing chat/knife; revival 
   await deaths(g, [1]);
   const c = getDefaultRoleCatalog();
   expect(knownWolfTeammates(g.world, 3, c)).toEqual([1, 2]);
-  expect(wolfTeamPermissions(role(g), c, () => g.world.getComponent(1, COMPONENT.Camp), g.world).canChat).toBe(false);
+  expect(
+    wolfTeamPermissions(role(g), c, () => g.world.getComponent(1, COMPONENT.Camp), g.world).canChat,
+  ).toBe(false);
   expect(wolfKnifeHolders(g.world, c)).toEqual([3]);
   g.world.getComponent(1, COMPONENT.Alive)!.alive = true;
-  expect(wolfTeamPermissions(role(g), c, () => g.world.getComponent(1, COMPONENT.Camp), g.world).canChat).toBe(false);
+  expect(
+    wolfTeamPermissions(role(g), c, () => g.world.getComponent(1, COMPONENT.Camp), g.world).canChat,
+  ).toBe(false);
 });
 
 test("private resource accessors revoke death trigger/pack access without executing getters", async () => {
@@ -287,7 +290,14 @@ test("private resource accessors revoke death trigger/pack access without execut
       enumerable: true,
     });
     if (stage === "chosen") await deaths(g, [2]);
-    expect(wolfTeamPermissions(role(g), getDefaultRoleCatalog(), () => g.world.getComponent(1, COMPONENT.Camp), g.world).canChat).toBe(false);
+    expect(
+      wolfTeamPermissions(
+        role(g),
+        getDefaultRoleCatalog(),
+        () => g.world.getComponent(1, COMPONENT.Camp),
+        g.world,
+      ).canChat,
+    ).toBe(false);
     expect(projectWildChild(g.world, role(g))?.status).toBe("closed");
     expect(reads).toBe(0);
   }
@@ -302,7 +312,13 @@ test("current queries never activate an eligible child or backfill old wolf even
     payload: { actorId: 3, text: "old", endChat: false, round: 1 },
   } as never);
   await deaths(g, [2]);
-  for (let i = 0; i < 5; i++) wolfTeamPermissions(role(g), getDefaultRoleCatalog(), () => g.world.getComponent(1, COMPONENT.Camp), g.world);
+  for (let i = 0; i < 5; i++)
+    wolfTeamPermissions(
+      role(g),
+      getDefaultRoleCatalog(),
+      () => g.world.getComponent(1, COMPONENT.Camp),
+      g.world,
+    );
   expect(getWildChildState(role(g))?.status).toBe("transformed");
   openWildChildNight(g.world, 5, g.events)();
   expect(getWildChildState(role(g))?.activeFromNight).toBe(5);

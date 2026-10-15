@@ -350,9 +350,7 @@ for (const locale of ["zh-CN", "en"] as const)
     ).toEqual([{ hunterId: 2, targetId: 3 }]);
     expect(game.world.getComponent(3, COMPONENT.Alive)!.alive).toBe(false);
     for (const id of [2, 3])
-      expect(
-        getHunterState(game.world.getComponent(id, COMPONENT.Role)!)!.canShoot,
-      ).toBe(false);
+      expect(getHunterState(game.world.getComponent(id, COMPONENT.Role)!)!.canShoot).toBe(false);
   });
 
 for (const locale of ["zh-CN", "en"] as const)
@@ -372,8 +370,7 @@ for (const locale of ["zh-CN", "en"] as const)
           if (revoke === "state") setHunterState(originalRole, { canShoot: false });
           if (revoke === "role") originalRole.role = Role.Villager;
           if (revoke === "component") world.addComponent(7, COMPONENT.Role, { ...originalRole });
-          if (revoke === "alive")
-            world.getComponent(7, COMPONENT.Alive)!.alive = true;
+          if (revoke === "alive") world.getComponent(7, COMPONENT.Alive)!.alive = true;
           return { kind: "shot", targetId: 1 };
         },
         events,

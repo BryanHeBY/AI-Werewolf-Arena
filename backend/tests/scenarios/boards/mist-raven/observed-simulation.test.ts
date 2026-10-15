@@ -8,7 +8,10 @@ import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { assertReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { simulateGames, type SimulationReport } from "../../../../src/app/simulation/simulate-games";
+import {
+  simulateGames,
+  type SimulationReport,
+} from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
@@ -69,9 +72,9 @@ for (const policy of ["mixed", "conservative"] as const)
         expect(record.metadata.locale).toBe(locale);
         expect(record.checkpoints.every((c) => c.complete)).toBe(true);
         expect(record.decisions.every((d) => d.outcome.kind === "action")).toBe(true);
-        const replay: ReplayDocument = readReplayDocument(JSON.parse(
-          await readFile(path.join(game.recordDir, "replay.json"), "utf8"),
-        ));
+        const replay: ReplayDocument = readReplayDocument(
+          JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8")),
+        );
         assertReplayDocument(replay);
         expect(replay.result.decision).toEqual(game.result ?? undefined);
         const cp = record.checkpoints.at(-1)!;

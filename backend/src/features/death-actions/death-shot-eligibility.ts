@@ -8,7 +8,13 @@
  * permissionCurrent 保原请求许可正文；赠枪仍依赖 active 执行资格，可能被其守卫拒绝。
  * 真正已消费提案分别保赠枪 capture.isCurrent 与原生 pending 的原当前性，不合并成行动资格。
  */
-import { Role, type EntityId, type DeathSources, type Phase, type DeathActionPolicy } from "@ai-werewolf-arena/game-contract";
+import {
+  Role,
+  type EntityId,
+  type DeathSources,
+  type Phase,
+  type DeathActionPolicy,
+} from "@ai-werewolf-arena/game-contract";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { COMPONENT } from "../../domain/components/names";
 import type { World } from "../../domain/world";
@@ -79,9 +85,7 @@ export function captureDeathShotEligibility(
     return query(runtime.world, actorId);
   };
   const permissionCurrent = () =>
-    (!nativeHunter || demonNativeCurrent()) &&
-    gunCurrent() &&
-    nativeCurrent();
+    (!nativeHunter || demonNativeCurrent()) && gunCurrent() && nativeCurrent();
   const eligible = () =>
     permissionCurrent() &&
     (!role || !isRoleExecutionRetired(role)) &&

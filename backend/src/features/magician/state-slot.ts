@@ -59,7 +59,8 @@ export function getMagicianState(
   role: RoleComponent | undefined,
   currentCamp: CurrentCampSource,
 ): MagicianReadState | undefined {
-  if (field(role, "role") !== MAGICIAN_ROLE || field(currentCamp(), "camp") !== Camp.Good) return undefined;
+  if (field(role, "role") !== MAGICIAN_ROLE || field(currentCamp(), "camp") !== Camp.Good)
+    return undefined;
   const state = field(field(role, "privateState"), "magician");
   if (!exact(state, ["policy", "firstNight", "deathShotTargetPolicy", "history"])) return undefined;
   const firstNight = field(state, "firstNight");
@@ -130,10 +131,7 @@ function installMagicianState(
   privateState: () => Record<string, unknown>,
   value: { firstNight: 1 | 2; deathShotTargetPolicy: "original" | "exchanged" },
 ): void {
-  privateState().magician = createMagicianState(
-    value.firstNight,
-    value.deathShotTargetPolicy,
-  );
+  privateState().magician = createMagicianState(value.firstNight, value.deathShotTargetPolicy);
 }
 
 /** 原准入仍由 frame 完成；先取 defineProperty，再两次晚读原状态，保 index／descriptor 写入顺序。 */
@@ -151,10 +149,7 @@ function appendMagicianHistory(
 }
 
 /** 原 frame 的身份编码，不是严格档案 codec；先 project／拒绝，再找 JSON.stringify 并编码原副本。 */
-function encodeMagicianStateIdentity(
-  role: RoleComponent,
-  currentCamp: CurrentCampSource,
-): string {
+function encodeMagicianStateIdentity(role: RoleComponent, currentCamp: CurrentCampSource): string {
   const view = projectMagicianState(role, currentCamp);
   if (!view) throw new Error("magician_original_state_revoked");
   return JSON.stringify(view);

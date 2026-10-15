@@ -7,7 +7,15 @@ import { createAliveComponent } from "../../../src/agents/observation/component-
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, type GameEvent, type BoardConfig, type ActionProvider } from "../../../src/domain";
+import {
+  COMPONENT,
+  DeathCause,
+  Phase,
+  Role,
+  type GameEvent,
+  type BoardConfig,
+  type ActionProvider,
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   boardDefinitionFromConfig,
@@ -20,7 +28,6 @@ import { EventRegistry } from "../../../src/engine/events/event-registry";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { buildAgentVisibleEventFeed } from "../../../src/agents/observation/event-feed";
 import { getDefaultConfigRenderRegistry } from "../../../src/agents/prompt/config-render-registry";
-
 
 const roles = [Role.Wolf, Role.Hunter, Role.WolfKing, Role.Villager, Role.Villager, Role.Villager];
 

@@ -43,7 +43,12 @@ const request = (context: Partial<ActionRequest["context"]> = {}): ActionRequest
   actorId: 1,
   phase: Phase.Day,
   allowedTools: ["speak"],
-  context: { day: 1, stage: "day_speech", visible_events: [], ...context } as ActionRequest["context"],
+  context: {
+    day: 1,
+    stage: "day_speech",
+    visible_events: [],
+    ...context,
+  } as ActionRequest["context"],
 });
 
 test("candidate hint keeps two original context/getter reads around locale and never reads board policy", () => {

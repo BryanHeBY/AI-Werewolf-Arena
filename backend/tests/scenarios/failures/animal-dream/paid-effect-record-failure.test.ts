@@ -197,7 +197,9 @@ for (const skill of ["fox", "puffer"] as const)
         ).players.map((p) => ({ player_id: p.id, role: p.role, camp: p.camp, alive: p.alive })),
       });
       expect(
-        parseReproductionRecord(JSON.parse(await readFile(manager.sessionDir + "/reproduction.json", "utf8"))).finalized,
+        parseReproductionRecord(
+          JSON.parse(await readFile(manager.sessionDir + "/reproduction.json", "utf8")),
+        ).finalized,
       ).toBe(true);
     });
   });

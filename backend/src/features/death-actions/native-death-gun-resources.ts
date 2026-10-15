@@ -85,11 +85,15 @@ export function armMechanicalNativeGun(learned: MechanicalLearning, day: number)
 /** 觉醒枪仅在原整次激活通过后武装；activationNight／activeFromNight 仍在其后原点更新。 */
 export function armAwakenedNativeGun(learned: AwakenedLearning): void;
 export function armAwakenedNativeGun(learned: AwakenedLearning, mayCommit: () => boolean): boolean;
-export function armAwakenedNativeGun(learned: AwakenedLearning, mayCommit?: () => boolean): boolean | void {
+export function armAwakenedNativeGun(
+  learned: AwakenedLearning,
+  mayCommit?: () => boolean,
+): boolean | void {
   if (learned.skill.kind === "hunter") {
     if (mayCommit) {
       // 原 callee→skill 引用先读取，再在首次 armed 赋值之前拒绝；不额外读取 armed。
-      const arm = armLearnedNativeGun, gun = learned.skill;
+      const arm = armLearnedNativeGun,
+        gun = learned.skill;
       if (!mayCommit()) return false;
       arm(gun);
     } else armLearnedNativeGun(learned.skill);
@@ -115,7 +119,13 @@ export function createMechanicalGunReader(runtime: {
     const state = query(role),
       learning = state?.learned,
       skill = learning?.skill;
-    if (currentCamp()?.camp !== Camp.Wolf || !state || !learning || skill?.kind !== "hunter" || !skill.armed)
+    if (
+      currentCamp()?.camp !== Camp.Wolf ||
+      !state ||
+      !learning ||
+      skill?.kind !== "hunter" ||
+      !skill.armed
+    )
       return undefined;
     const prior = owners.get(role);
     if (prior && (state !== prior.state || learning !== prior.learning || skill !== prior.gun))

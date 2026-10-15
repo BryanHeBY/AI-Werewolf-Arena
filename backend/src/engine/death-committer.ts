@@ -25,14 +25,8 @@ import {
   type DeathSources,
 } from "../domain/model";
 import type { World } from "../domain/world";
-import {
-  isAnimalDreamBoard,
-  commitAnimalPufferKnifeDeath,
-} from "../features/animal-dream/ports";
-import {
-  isNobleBodyBoard,
-  closeServantForDeath,
-} from "../features/noble-secret-body/ports";
+import { isAnimalDreamBoard, commitAnimalPufferKnifeDeath } from "../features/animal-dream/ports";
+import { isNobleBodyBoard, closeServantForDeath } from "../features/noble-secret-body/ports";
 import { appendNobleContractClosure } from "../features/noble-secret-body/ports";
 import { recordWildChildDeathCommit } from "../features/wild-child/ports";
 import { firstDeathGuns } from "../features/death-actions/gift-gun-ports";

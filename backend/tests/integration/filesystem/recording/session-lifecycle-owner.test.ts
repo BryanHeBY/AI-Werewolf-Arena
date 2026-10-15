@@ -54,9 +54,9 @@ test("closing joins the prefix while final files are held and reuses the first f
     manager.recordLogicOp({ scope: "gateway", op: "after_closed", status: "ok" });
     held.resolve();
     await finalization;
-    const manifest = readReplayManifest(JSON.parse(
-      await readFile(path.join(manager.sessionDir, "manifest.json"), "utf8"),
-    ));
+    const manifest = readReplayManifest(
+      JSON.parse(await readFile(path.join(manager.sessionDir, "manifest.json"), "utf8")),
+    );
     const logic = JSON.parse(
       await readFile(path.join(manager.sessionDir, "logic_ops.json"), "utf8"),
     );

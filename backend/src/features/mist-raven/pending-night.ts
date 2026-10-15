@@ -29,10 +29,14 @@ function copyDamage(damage: DamageResolutionResult): DamageResolutionResult {
     ),
   };
   // 使用原复制时点的最终死因过滤证据；疗救或扩展不凭空制造原毒来源。
-  return attachDamagePoisonEvidence(copy, damagePoisonRoutes(damage).filter(
-    (route) => copy.deaths.includes(route.targetId) &&
-      copy.deathSources[route.targetId]?.includes(DeathCause.Poison),
-  ));
+  return attachDamagePoisonEvidence(
+    copy,
+    damagePoisonRoutes(damage).filter(
+      (route) =>
+        copy.deaths.includes(route.targetId) &&
+        copy.deathSources[route.targetId]?.includes(DeathCause.Poison),
+    ),
+  );
 }
 function factoryLife(life: AliveComponent): boolean {
   const original = aliveLifeDescriptor(life);

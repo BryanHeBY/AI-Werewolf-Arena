@@ -7,7 +7,11 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../domain/components/names";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
 import { Camp, Phase, Role } from "../../domain/model";
-import { isAliveTarget, type ToolRule, type ToolRuleMap } from "../../engine/actions/validation-contracts";
+import {
+  isAliveTarget,
+  type ToolRule,
+  type ToolRuleMap,
+} from "../../engine/actions/validation-contracts";
 import { canAwakenedKnife } from "./inheritance";
 import { currentAwakenedNight } from "./night-scope";
 import {
@@ -38,7 +42,10 @@ const validateAwakened: ToolRule = ({ world, actorId, role, phase, day, toolCall
   }
   const skill = awakenedSkillForNight(state, day);
   if (toolCall.name === "awakened_attack") {
-    if (!canAwakenedKnife(role, world, () => world.getComponent(actorId, COMPONENT.Camp)) || !canAwakenedExtraKnife(state, day))
+    if (
+      !canAwakenedKnife(role, world, () => world.getComponent(actorId, COMPONENT.Camp)) ||
+      !canAwakenedExtraKnife(state, day)
+    )
       return { code: RuleError.AwakenedUnavailable };
     return toolCall.args.target_id === null || isAliveTarget(world, toolCall.args.target_id)
       ? null

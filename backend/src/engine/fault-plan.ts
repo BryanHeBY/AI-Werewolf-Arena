@@ -13,7 +13,13 @@ function inputData(value: unknown): unknown {
   return readFaultPlanData(value);
 }
 import { readFaultPlanData } from "../domain/fault-plan";
-import { COMPONENT, aliveLifeVersion, aliveLifeDescriptor, type AliveComponent, type World } from "../domain";
+import {
+  COMPONENT,
+  aliveLifeVersion,
+  aliveLifeDescriptor,
+  type AliveComponent,
+  type World,
+} from "../domain";
 
 const nativePromiseThen = Promise.prototype.then;
 const nativePromiseSpecies = Object.getOwnPropertyDescriptor(Promise, Symbol.species)?.get;

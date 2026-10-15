@@ -48,11 +48,7 @@
   "reason": "可选匿名墙处理完成与纸条付款分开；避免正常完成局的候选被录为Provider错误。",
   "scope": {
     "addedProductionCompletionCallsites": 2,
-    "processedBranches": [
-      "null",
-      "invalid shape",
-      "gateway rejection"
-    ],
+    "processedBranches": ["null", "invalid shape", "gateway rejection"],
     "sharedLeaseAlgorithmChanged": false,
     "requestLeaseCommentsChanged": 2
   },

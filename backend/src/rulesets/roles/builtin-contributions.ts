@@ -4,7 +4,10 @@
  * 角色支持集合仍与既有运行集合一致，顺序不得由名称、文件系统或自动发现重排。
  */
 import type { NativeRoleContributions } from "./contracts";
-import { NIGHT_NOBLE_ROLE_PROFILE, AWAKENED_IDIOT_ROLE_PROFILE } from "../../features/noble-secret-body/profile";
+import {
+  NIGHT_NOBLE_ROLE_PROFILE,
+  AWAKENED_IDIOT_ROLE_PROFILE,
+} from "../../features/noble-secret-body/profile";
 import {
   WHITE_CAT_ROLE_PROFILE,
   FOX_CUB_ROLE_PROFILE,
@@ -25,7 +28,10 @@ import { RED_MOON_ROLE_PROFILE } from "../../features/red-moon/profile";
 import { NIGHTMARE_SHADOW_ROLE_PROFILE } from "../../features/nightmare/profile";
 import { EVIL_KNIGHT_ROLE_PROFILE } from "../../features/evil-knight/profile";
 import { DEMON_HUNTER_ROLE_PROFILE } from "../../features/demon-hunter/profile";
-import { PURE_WHITE_ROLE_PROFILE, WOLF_WITCH_ROLE_PROFILE } from "../../features/pure-white/profile";
+import {
+  PURE_WHITE_ROLE_PROFILE,
+  WOLF_WITCH_ROLE_PROFILE,
+} from "../../features/pure-white/profile";
 import { GHOST_BRIDE_ROLE_PROFILE } from "../../features/ghost-bride/profile";
 import { LONELY_GIRL_ROLE_PROFILE } from "../../features/lonely-girl/profile";
 import { WILD_CHILD_ROLE_PROFILE } from "../../features/wild-child/profile";
@@ -57,7 +63,10 @@ import { AWAKENED_HIDDEN_WOLF_ROLE_PROFILE } from "../../features/awakened-hidde
 import { CURSED_FOX_ROLE_PROFILE } from "../../features/cursed-fox/profile";
 import { DEBATER_ROLE_PROFILE } from "../../features/debater/profile";
 import { CUPID_ROLE_PROFILE } from "../../features/cupid/profile";
-import { RADIANT_COUNT_ROLE_PROFILE, ECLIPSE_MAID_ROLE_PROFILE } from "../../features/radiant-eclipse/profile";
+import {
+  RADIANT_COUNT_ROLE_PROFILE,
+  ECLIPSE_MAID_ROLE_PROFILE,
+} from "../../features/radiant-eclipse/profile";
 
 export const BUILTIN_ROLE_CONTRIBUTIONS: readonly NativeRoleContributions[] = [
   WHITE_CAT_ROLE_PROFILE,

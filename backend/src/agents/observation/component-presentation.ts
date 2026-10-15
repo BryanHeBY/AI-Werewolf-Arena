@@ -6,11 +6,27 @@
  */
 import type { Camp, Locale } from "@ai-werewolf-arena/game-contract";
 import { formatComponentPart } from "@ai-werewolf-arena/game-presentation";
-import { createAliveComponent as createAliveData, type AliveComponent } from "../../domain/components/alive";
-import { createBadgeComponent as createBadgeData, type BadgeComponent } from "../../domain/components/badge";
-import { createCampComponent as createCampData, type CampComponent } from "../../domain/components/camp";
-import { createVotingRightComponent as createVotingData, type VotingRightComponent } from "../../domain/components/voting-right";
-import { createStatusMarksComponent as createMarksData, statusMarksSize, type StatusMarksComponent } from "../../domain/components/status-marks";
+import {
+  createAliveComponent as createAliveData,
+  type AliveComponent,
+} from "../../domain/components/alive";
+import {
+  createBadgeComponent as createBadgeData,
+  type BadgeComponent,
+} from "../../domain/components/badge";
+import {
+  createCampComponent as createCampData,
+  type CampComponent,
+} from "../../domain/components/camp";
+import {
+  createVotingRightComponent as createVotingData,
+  type VotingRightComponent,
+} from "../../domain/components/voting-right";
+import {
+  createStatusMarksComponent as createMarksData,
+  statusMarksSize,
+  type StatusMarksComponent,
+} from "../../domain/components/status-marks";
 
 const displayLocales = new WeakMap<object, Locale>();
 function bindLocale<T extends object>(component: T, locale: Locale): T {
@@ -19,20 +35,33 @@ function bindLocale<T extends object>(component: T, locale: Locale): T {
 }
 function localeOf(component: object, locale: Locale | undefined): Locale {
   return locale === undefined
-    ? (displayLocales.has(component) ? displayLocales.get(component)! : "zh-CN")
+    ? displayLocales.has(component)
+      ? displayLocales.get(component)!
+      : "zh-CN"
     : locale;
 }
 
-export function createAliveComponent(alive: boolean = true, locale: Locale = "zh-CN"): AliveComponent {
+export function createAliveComponent(
+  alive: boolean = true,
+  locale: Locale = "zh-CN",
+): AliveComponent {
   return bindLocale(createAliveData(alive), locale);
 }
-export function createBadgeComponent(isSheriff: boolean = false, destroyed: boolean = false, locale: Locale = "zh-CN"): BadgeComponent {
+export function createBadgeComponent(
+  isSheriff: boolean = false,
+  destroyed: boolean = false,
+  locale: Locale = "zh-CN",
+): BadgeComponent {
   return bindLocale(createBadgeData(isSheriff, destroyed), locale);
 }
 export function createCampComponent(camp: Camp, locale: Locale = "zh-CN"): CampComponent {
   return bindLocale(createCampData(camp), locale);
 }
-export function createVotingRightComponent(weight: number = 1, canVote: boolean = true, locale: Locale = "zh-CN"): VotingRightComponent {
+export function createVotingRightComponent(
+  weight: number = 1,
+  canVote: boolean = true,
+  locale: Locale = "zh-CN",
+): VotingRightComponent {
   return bindLocale(createVotingData(weight, canVote), locale);
 }
 export function createStatusMarksComponent(locale: Locale = "zh-CN"): StatusMarksComponent {
@@ -63,10 +92,14 @@ export function renderStatusMarksPrompt(component: StatusMarksComponent, locale?
   const currentLocale = localeOf(component, locale);
   if (statusMarksSize(component) === 0)
     return formatComponentPart({ kind: "marks-none" }, currentLocale);
-  return formatComponentPart({
-    kind: "marks",
-    marks: component.values()
-      .map((mark) => formatComponentPart({ kind: "mark", mark }, currentLocale))
-      .join(" "),
-  }, currentLocale);
+  return formatComponentPart(
+    {
+      kind: "marks",
+      marks: component
+        .values()
+        .map((mark) => formatComponentPart({ kind: "mark", mark }, currentLocale))
+        .join(" "),
+    },
+    currentLocale,
+  );
 }

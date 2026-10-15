@@ -25,7 +25,11 @@ import {
   type RavenState,
 } from "./state";
 
-import { MistCasterStateSlot, type MistCasterKind as Caster, type MistCasterState as State } from "./state-slot";
+import {
+  MistCasterStateSlot,
+  type MistCasterKind as Caster,
+  type MistCasterState as State,
+} from "./state-slot";
 
 /** 外层夜 owner 提供日次、目标与阶段作用域；本授权只保原参与者／生命，状态写权不反向拥有阶段。 */
 export class MistCasterAuthority {
@@ -95,7 +99,12 @@ export class MistCasterAuthority {
     this.lifeVersion = aliveLifeVersion(life)!;
     // 原字段已赋值后才读取槽并建立绑定；查询 thunk 保持 caster／容器／key 在原调用点晚读。
     this.stateSlot = new MistCasterStateSlot(
-      { caster: () => this.caster, privateState: () => this.privateState, key: () => this.key, assertCurrent: () => this.current() },
+      {
+        caster: () => this.caster,
+        privateState: () => this.privateState,
+        key: () => this.key,
+        assertCurrent: () => this.current(),
+      },
       own(privateState, this.key),
     );
   }
@@ -154,12 +163,16 @@ export class MistCasterAuthority {
   }
   commitMist(targets: number[] | null, livingIds: readonly number[]): AlchemistState {
     if (this.caster !== "alchemist") throw new Error("mist_caster_kind_invalid");
-    this.stateSlot.install(selectMist(this.current() as AlchemistState, this.day, targets, livingIds));
+    this.stateSlot.install(
+      selectMist(this.current() as AlchemistState, this.day, targets, livingIds),
+    );
     return this.current() as AlchemistState;
   }
   commitSnake(target: number | null, legalTargets: readonly number[]): AlchemistState {
     if (this.caster !== "alchemist") throw new Error("mist_caster_kind_invalid");
-    this.stateSlot.install(selectSnake(this.current() as AlchemistState, this.day, target, legalTargets));
+    this.stateSlot.install(
+      selectSnake(this.current() as AlchemistState, this.day, target, legalTargets),
+    );
     return this.current() as AlchemistState;
   }
   commitRavenKnife(target: number | null, livingIds: readonly number[]): RavenState {

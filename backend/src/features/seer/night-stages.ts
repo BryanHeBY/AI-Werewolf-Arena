@@ -89,13 +89,16 @@ const seerCheckStage: NightStageHandler = {
           ctx.nativeNightFailure.scopeStale("seer");
           continue;
         }
-        delivery = openNativeNightRequestDelivery({
-          actorId: seerId,
-          day,
-          stage: "seer",
-          abilityId: requestAbilityId,
-          current: () => scope.isEligible(),
-        }, req);
+        delivery = openNativeNightRequestDelivery(
+          {
+            actorId: seerId,
+            day,
+            stage: "seer",
+            abilityId: requestAbilityId,
+            current: () => scope.isEligible(),
+          },
+          req,
+        );
         if (!delivery) continue;
         // 原 provider 对象／callee／参数及新增 Reflect 准备先求值；末守卫后只裸调用，保 receiver 与非函数调用错误时点。
         const provider = ctx.actionProvider;
@@ -133,7 +136,11 @@ const seerCheckStage: NightStageHandler = {
 
         const targetId = result.sanitizedCall.args.target_id;
         const target = targets.get(targetId);
-        if (!target || !livingNightLife(ctx.world, target) || !identities.get(targetId)?.isCurrent())
+        if (
+          !target ||
+          !livingNightLife(ctx.world, target) ||
+          !identities.get(targetId)?.isCurrent()
+        )
           continue;
         const mapping = ctx.nativeNightTargets.mappedTarget(
           () => day,
@@ -173,12 +180,22 @@ const seerCheckStage: NightStageHandler = {
         // 反射提交是原同步提交前缀的起点；保原 effects/callee/参数先后，并在全部新增可执行准备之后作最后交付核验。
         const effects = ctx.nativeNightEffects;
         const commitReflectedTarget = effects.commitReflectedTarget;
-        const reflectedArguments: [typeof receipt, number, number, "check"] = [receipt, day, seerId, "check"];
+        const reflectedArguments: [typeof receipt, number, number, "check"] = [
+          receipt,
+          day,
+          seerId,
+          "check",
+        ];
         const invokeReflectedTarget = Reflect.apply.bind(Reflect);
         if (!delivery.current()) continue;
         invokeReflectedTarget(commitReflectedTarget, effects, reflectedArguments);
         if (seerState) {
-          SEER_STATE_SLOT.allowedWrites.recordSeerInspection(seerState, targetId, isWerewolf, inspection);
+          SEER_STATE_SLOT.allowedWrites.recordSeerInspection(
+            seerState,
+            targetId,
+            isWerewolf,
+            inspection,
+          );
         }
 
         // 原状态写入后才追加咒狐提案；仍传请求目标的原 life，随后 checks／use／效果与事实的失败不撤回此前前缀。
@@ -214,7 +231,11 @@ const seerCheckStage: NightStageHandler = {
       } finally {
         // 部分写入正常保留；已有正文错误（包括 throw undefined）优先于新增 false 通知错误。
         if (failed) {
-          try { delivery?.close(); } catch { /* 保留正在传播的原正文错误。 */ }
+          try {
+            delivery?.close();
+          } catch {
+            /* 保留正在传播的原正文错误。 */
+          }
         } else {
           delivery?.close();
         }

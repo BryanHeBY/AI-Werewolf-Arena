@@ -8,7 +8,10 @@ import type { ModifierState } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../src/domain";
 
-import { createModifierState, scholarMentorStateForRole } from "../../../../src/features/scholar-mentor/state-slot";
+import {
+  createModifierState,
+  scholarMentorStateForRole,
+} from "../../../../src/features/scholar-mentor/state-slot";
 import {
   installScholarMentorBoard,
   beginScholarMentorNight,
@@ -78,7 +81,12 @@ function fixture() {
       },
     };
   }
-  const camps = new Map(names.map((role, i) => [i + 1, { camp: role === "wolf" || role === "night_mentor" ? Camp.Wolf : Camp.Good }]));
+  const camps = new Map(
+    names.map((role, i) => [
+      i + 1,
+      { camp: role === "wolf" || role === "night_mentor" ? Camp.Wolf : Camp.Good },
+    ]),
+  );
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const identities = new Map(
     [...roles.keys()].map((id) => [
@@ -94,10 +102,10 @@ function fixture() {
         : kind === COMPONENT.Camp
           ? camps.get(id)
           : kind === COMPONENT.Alive
-          ? lives.get(id)
-          : kind === COMPONENT.Identity
-            ? identities.get(id)
-            : undefined,
+            ? lives.get(id)
+            : kind === COMPONENT.Identity
+              ? identities.get(id)
+              : undefined,
   } as unknown as World;
   installScholarMentorBoard(world);
   return { world, states, roles, lives, identities };
@@ -310,8 +318,12 @@ test("Modifier completed close tolerates finally cleanup; interrupted night cann
 test("Modifier role permissions remain private and use the captured night roster", () => {
   const f = fixture();
   expect(scholarMentorRoleCanKnife(f.world, f.roles.get(2)!)).toBe(false);
-  expect(scholarMentorStateForRole(f.roles.get(1), () => f.world.getComponent(1, COMPONENT.Camp))).toBe(f.states.get(1));
-  expect(scholarMentorStateForRole(f.roles.get(6), () => f.world.getComponent(6, COMPONENT.Camp))).toBeUndefined();
+  expect(
+    scholarMentorStateForRole(f.roles.get(1), () => f.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(f.states.get(1));
+  expect(
+    scholarMentorStateForRole(f.roles.get(6), () => f.world.getComponent(6, COMPONENT.Camp)),
+  ).toBeUndefined();
   second(f);
   commitScholarMentorChoice(f.world, 2, 1, "weaken", 6);
   commitScholarMentorChoice(f.world, 2, 2, null, null);

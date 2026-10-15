@@ -3,10 +3,7 @@
  */
 import { createRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { renderRolePrompt } from "../../../src/agents/observation/role-presentation";
-import {
-  WOLF_STAGE_DIRECTIVES,
-  WOLF_TOOL_SPECS,
-} from "../../../src/features/wolf/tool-specs";
+import { WOLF_STAGE_DIRECTIVES, WOLF_TOOL_SPECS } from "../../../src/features/wolf/tool-specs";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -166,9 +163,7 @@ test("all base role identities, rules, private state and stages are bilingual an
         actionSubmissionHint: "submit",
       }),
     ).toContain(expected);
-    expect(getWitchState(english.world.getComponent(5, COMPONENT.Role)!)).toEqual(
-      before,
-    );
+    expect(getWitchState(english.world.getComponent(5, COMPONENT.Role)!)).toEqual(before);
   }
   setSeerState(english.world.getComponent(3, COMPONENT.Role)!, {
     lastTarget: 1,
@@ -228,7 +223,11 @@ test("player original text and explicit injected profile/directive text survive 
     expect(catalog.skillBrief(Role.Wolf, locale)).toBe("原文说明");
     const role = game.world.getComponent(1, COMPONENT.Role)!;
     const initialCamp = game.world.getComponent(1, COMPONENT.Camp)!;
-    catalog.applyRuntime(role, { locale, initialCamp, currentCamp: () => game.world.getComponent(1, COMPONENT.Camp) });
+    catalog.applyRuntime(role, {
+      locale,
+      initialCamp,
+      currentCamp: () => game.world.getComponent(1, COMPONENT.Camp),
+    });
     expect(renderRolePrompt(role, locale)).toBe("原文私有状态");
     const tools = new ToolSpecRegistry([], [{ match: () => true, text: "定制阶段 {actor}" }]);
     expect(tools.getStageDirective(["speak"], locale)).toBe("定制阶段 {actor}");

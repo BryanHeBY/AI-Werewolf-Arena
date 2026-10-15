@@ -30,26 +30,37 @@ function fixture() {
     ...game,
     events,
     hunter: getHunterState(game.world.getComponent(2, COMPONENT.Role)!)!,
-    resolution: new DeathResolution(game.world, events, new ToolGateway(), new EventRegistry(), state),
+    resolution: new DeathResolution(
+      game.world,
+      events,
+      new ToolGateway(),
+      new EventRegistry(),
+      state,
+    ),
   };
 }
 
 test("提供者抛错保留已标死前缀，未消费原生枪并由外层关闭许可", async () => {
   const f = fixture();
   let requests = 0;
-  await expect(f.resolution.resolve(
-    [2], { 2: [DeathCause.Exile] },
-    {
-      async getAction(request) {
-        if (request.allowedTools.includes("shoot")) {
-          requests++;
-          expect(f.world.activeDeathActionCount).toBe(1);
-          throw new Error("selection_provider_failed");
-        }
-        return { name: "speak", args: { text: "Original words" } };
+  await expect(
+    f.resolution.resolve(
+      [2],
+      { 2: [DeathCause.Exile] },
+      {
+        async getAction(request) {
+          if (request.allowedTools.includes("shoot")) {
+            requests++;
+            expect(f.world.activeDeathActionCount).toBe(1);
+            throw new Error("selection_provider_failed");
+          }
+          return { name: "speak", args: { text: "Original words" } };
+        },
       },
-    }, Phase.Voting, Phase.Day,
-  )).rejects.toThrow("selection_provider_failed");
+      Phase.Voting,
+      Phase.Day,
+    ),
+  ).rejects.toThrow("selection_provider_failed");
   expect(requests).toBe(1);
   expect(f.world.getComponent(2, COMPONENT.Alive)!.alive).toBe(false);
   expect(f.hunter.canShoot).toBe(true);
@@ -63,7 +74,8 @@ test("等待后目标生命替换拒绝旧快照，下一请求重新捕获后�
   const replacement = createAliveComponent();
   let requests = 0;
   await f.resolution.resolve(
-    [2], { 2: [DeathCause.Exile] },
+    [2],
+    { 2: [DeathCause.Exile] },
     {
       async getAction(request) {
         if (!request.allowedTools.includes("shoot"))
@@ -79,13 +91,16 @@ test("等待后目标生命替换拒绝旧快照，下一请求重新捕获后�
         }
         return { name: "shoot", args: { target_id: 1 } };
       },
-    }, Phase.Voting, Phase.Day,
+    },
+    Phase.Voting,
+    Phase.Day,
   );
   expect(requests).toBe(2);
   expect(original.alive).toBe(true);
   expect(replacement.alive).toBe(false);
-  expect(f.events.filter((event) => event.type === "hunter_shot").map((event) => event.payload))
-    .toEqual([{ hunterId: 2, targetId: 1 }]);
+  expect(
+    f.events.filter((event) => event.type === "hunter_shot").map((event) => event.payload),
+  ).toEqual([{ hunterId: 2, targetId: 1 }]);
   expect(f.hunter.canShoot).toBe(false);
   expect(f.world.activeDeathActionCount).toBe(0);
 });
@@ -94,7 +109,8 @@ test("等待后射手复活再死亡撤销原窗口，不消费弹药也不追�
   const f = fixture();
   let requests = 0;
   await f.resolution.resolve(
-    [2], { 2: [DeathCause.Exile] },
+    [2],
+    { 2: [DeathCause.Exile] },
     {
       async getAction(request) {
         if (!request.allowedTools.includes("shoot"))
@@ -105,7 +121,9 @@ test("等待后射手复活再死亡撤销原窗口，不消费弹药也不追�
         life.alive = false;
         return { name: "shoot", args: { target_id: 1 } };
       },
-    }, Phase.Voting, Phase.Day,
+    },
+    Phase.Voting,
+    Phase.Day,
   );
   expect(requests).toBe(1);
   expect(f.world.getComponent(1, COMPONENT.Alive)!.alive).toBe(true);

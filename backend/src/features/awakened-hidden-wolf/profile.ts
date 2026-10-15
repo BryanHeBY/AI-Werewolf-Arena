@@ -11,7 +11,11 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../domain/model";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { DEATH_SHOT_TOOL_SPECS, DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/tool-ports";
+import {
+  DEATH_SHOT_TOOL_SPECS,
+  DEATH_SHOT_REPAIR,
+  validateDeathShot,
+} from "../death-actions/tool-ports";
 import {
   ROLE_INSPECTION_TOOL,
   roleInspectionTargets,
@@ -140,7 +144,15 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
       }
       if (request.allowedTools.includes("shoot"))
         return { name: "shoot", args: { target_id: byCamp("good") } };
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world, currentCamp);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
+        role,
+        request,
+        pick,
+        byCamp,
+        locale,
+        world,
+        currentCamp,
+      );
     },
   },
   presentation: nativeRolePresentation("awakened_hidden_wolf"),

@@ -86,11 +86,13 @@ describe("SessionRecordManager", () => {
     await manager.flushNow();
 
     const sessionDir = path.join(root, "session_realtime_1");
-    const replay = readReplayDocument(JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8")));
+    const replay = readReplayDocument(
+      JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8")),
+    );
     const logic = JSON.parse(await fs.readFile(path.join(sessionDir, "logic_ops.json"), "utf-8"));
-    const player1 = readReplayPlayerView(JSON.parse(
-      await fs.readFile(path.join(sessionDir, "players", "player_1.json"), "utf-8"),
-    ));
+    const player1 = readReplayPlayerView(
+      JSON.parse(await fs.readFile(path.join(sessionDir, "players", "player_1.json"), "utf-8")),
+    );
     const reports = JSON.parse(
       await fs.readFile(path.join(sessionDir, "debug_reports.json"), "utf-8"),
     );
@@ -144,9 +146,11 @@ describe("SessionRecordManager", () => {
       });
     }
     await manager.flushNow();
-    const view = readReplayPlayerView(JSON.parse(
-      await fs.readFile(path.join(root, "session_stage_1", "players", "player_1.json"), "utf-8"),
-    ));
+    const view = readReplayPlayerView(
+      JSON.parse(
+        await fs.readFile(path.join(root, "session_stage_1", "players", "player_1.json"), "utf-8"),
+      ),
+    );
     const stages = view.timeline.map((entry: any) => entry.stage);
     expect(stages).toContain("night");
     expect(stages).toContain("night_resolved");
@@ -247,7 +251,9 @@ describe("SessionRecordManager", () => {
     expect(files).toContain("debug_summary.md");
     expect(files).toContain("players");
 
-    const manifest = readReplayManifest(JSON.parse(await fs.readFile(path.join(sessionDir, "manifest.json"), "utf-8")));
+    const manifest = readReplayManifest(
+      JSON.parse(await fs.readFile(path.join(sessionDir, "manifest.json"), "utf-8")),
+    );
     expect(manifest.session_id).toBe("session_test_1");
     expect(manifest.files.replay).toBe("replay.json");
     expect(manifest.files.phase_windows).toBe("phase_windows.json");
@@ -255,7 +261,9 @@ describe("SessionRecordManager", () => {
     expect(manifest.files.debug_reports).toBe("debug_reports.json");
     expect(manifest.files.debug_summary).toBe("debug_summary.md");
 
-    const replay = readReplayDocument(JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8")));
+    const replay = readReplayDocument(
+      JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8")),
+    );
     expect(replay.sessionId).toBe("session_test_1");
     expect(Array.isArray(replay.events)).toBe(true);
     expect(replay.events[0].type).toBe("phase_changed");
@@ -289,21 +297,31 @@ describe("SessionRecordManager", () => {
     expect(Array.isArray(logicOps.ops)).toBe(true);
     expect(logicOps.ops[0].op).toBe("validate_tool_call");
 
-    const player1 = readReplayPlayerView(JSON.parse(
-      await fs.readFile(path.join(sessionDir, "players", "player_1.json"), "utf-8"),
-    ));
+    const player1 = readReplayPlayerView(
+      JSON.parse(await fs.readFile(path.join(sessionDir, "players", "player_1.json"), "utf-8")),
+    );
     expect(player1.initial_prompt).toBeDefined();
     expect(player1.initial_prompt!.phase).toBe("night");
     expect(Array.isArray(player1.initial_prompt!.prompt_user)).toBe(true);
     expect(Array.isArray(player1.timeline)).toBe(true);
     expect(player1.timeline[0].kind).toBe("event");
-    expect((player1.timeline[0] as import("@ai-werewolf-arena/replay-contract").ReplayPlayerEventEntry).event.type).toBe("phase_changed");
+    expect(
+      (player1.timeline[0] as import("@ai-werewolf-arena/replay-contract").ReplayPlayerEventEntry)
+        .event.type,
+    ).toBe("phase_changed");
     expect(player1.timeline[0].stage).toBe("wolf_discussion");
     expect(player1.timeline[1].kind).toBe("turn");
     expect(player1.timeline[1].stage).toBe("wolf_discussion");
-    expect(Array.isArray((player1.timeline[1] as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry).delta_messages)).toBe(true);
     expect(
-      (player1.timeline[1] as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry).delta_messages.some(
+      Array.isArray(
+        (player1.timeline[1] as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry)
+          .delta_messages,
+      ),
+    ).toBe(true);
+    expect(
+      (
+        player1.timeline[1] as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry
+      ).delta_messages.some(
         (item: any) => item.kind === "tool_call" && item.name === "speak_to_wolves",
       ),
     ).toBe(true);

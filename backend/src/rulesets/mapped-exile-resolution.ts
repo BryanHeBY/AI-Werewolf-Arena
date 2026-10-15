@@ -7,7 +7,11 @@
  * missed 与 effectiveId 在原点晚读，公开最终字段在摘要构造位置读取；异常保留已提交事件和钩子前缀。
  * 规则见 docs/rules/awa-trickster-exile-v1.md。
  */
-import type { ReadonlyBoardConfig, EntityId, VotingSummary } from "@ai-werewolf-arena/game-contract";
+import type {
+  ReadonlyBoardConfig,
+  EntityId,
+  VotingSummary,
+} from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
 import type { GameEvent } from "../domain/events";
 import type { VotedOutResult } from "../engine/hooks/registry";

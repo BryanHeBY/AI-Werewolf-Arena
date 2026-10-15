@@ -149,7 +149,9 @@ export class RoleCatalog {
       }
       const presentation = active.contributions.presentation;
       if (presentation.kind === "native")
-        return active.renderNative(presentation.id, roleComp, locale, ctx.world, () => ctx.currentCamp());
+        return active.renderNative(presentation.id, roleComp, locale, ctx.world, () =>
+          ctx.currentCamp(),
+        );
       return presentation.renderPrompt
         ? presentation.renderPrompt(roleComp, locale, ctx.world, () => ctx.currentCamp())
         : text(locale, "role.generic.state", {

@@ -23,7 +23,8 @@ export const NIGHTMARE_FEAR_STAGE: NightStageHandler = {
     const actorId = beginNightmareNight(ctx.world, day);
     if (actorId === null) return;
     const role = ctx.world.getComponent(actorId, COMPONENT.Role);
-    if (!getNightmareShadowState(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp))) throw new Error("nightmare_fear_actor_invalid");
+    if (!getNightmareShadowState(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp)))
+      throw new Error("nightmare_fear_actor_invalid");
     const request = ctx.makeRequest(actorId, ["fear"], {
       stage: "nightmare_fear",
       requiresAction: true,

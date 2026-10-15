@@ -5,7 +5,15 @@
  * 故障、资源或事实写入后的失败保合法前缀，不退款、不重抓来源或吞必需记录。空名单不提前读取 deathLives。
  * 本组合不创建 Promise、标死、换阶段、判胜或关闭外层夜；经理保原 try/finally、初始死亡波 DR 等待与后续到期裁决。
  */
-import { DeathCause, Phase, StatusMark, type EntityId, type DeathSources, type ReadonlyBoardConfig, type GameEvent } from "@ai-werewolf-arena/game-contract";
+import {
+  DeathCause,
+  Phase,
+  StatusMark,
+  type EntityId,
+  type DeathSources,
+  type ReadonlyBoardConfig,
+  type GameEvent,
+} from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
 import { COMPONENT } from "../domain/components/names";
 import { aliveLifeVersion, type AliveComponent } from "../domain/components/alive";
@@ -21,7 +29,10 @@ import {
   committedDemonFaultBoundary,
 } from "../features/demon-hunter/ports";
 import { freezeDeliveredDemonNightSources } from "../features/demon-hunter/native-potion-controller";
-import { appendNobleContractClosure, publishNobleNightDamage } from "../features/noble-secret-body/ports";
+import {
+  appendNobleContractClosure,
+  publishNobleNightDamage,
+} from "../features/noble-secret-body/ports";
 import { weddingKnifeCurrent } from "../features/ghost-bride/ports";
 import { getSessionRecorder } from "../recording/session/context";
 
@@ -88,16 +99,27 @@ export function prepareSpecialNightDamage(
   const guardOverrides: Array<{ targetId: number; guard: boolean }> = [];
   if (demon) {
     const manager = runtime;
-    appendDemonNightDamageSources({
-      get knifeProtection() { return night.demonKnifeProtection; },
-      healMarkPresent(target) {
-        return statusMarkSnapshot(
-          manager.world.getComponent(target(), COMPONENT.StatusMarks),
-          StatusMark.HealMark,
-        )?.present === true;
+    appendDemonNightDamageSources(
+      {
+        get knifeProtection() {
+          return night.demonKnifeProtection;
+        },
+        healMarkPresent(target) {
+          return (
+            statusMarkSnapshot(
+              manager.world.getComponent(target(), COMPONENT.StatusMarks),
+              StatusMark.HealMark,
+            )?.present === true
+          );
+        },
+        wolfSourceCurrent(target) {
+          return night.demonWolfSourceCurrent?.(target());
+        },
       },
-      wolfSourceCurrent(target) { return night.demonWolfSourceCurrent?.(target()); },
-    }, demon, proposedSources, guardOverrides);
+      demon,
+      proposedSources,
+      guardOverrides,
+    );
   }
   if (runtime.config.nobleSecretBody) {
     if (demon?.hunt.servantCleared)
@@ -141,11 +163,9 @@ export function prepareSpecialNightDamage(
             night.retaliationAttacks?.some(
               (attack) => attack.target.id === id && attack.isCurrent(),
             ) === true) &&
-          ((cause !== DeathCause.PureWhiteInspection &&
-            cause !== DeathCause.WolfWitchInspection) ||
+          ((cause !== DeathCause.PureWhiteInspection && cause !== DeathCause.WolfWitchInspection) ||
             night.inspectionAttacks?.some(
-              (attack) =>
-                attack.target.id === id && attack.cause === cause && attack.isCurrent(),
+              (attack) => attack.target.id === id && attack.cause === cause && attack.isCurrent(),
             ) === true),
       ),
     ]),
@@ -154,16 +174,34 @@ export function prepareSpecialNightDamage(
     if (!sources[deaths[i]!]!.length) deaths.splice(i, 1);
   if (runtime.config.nobleSecretBody) {
     const manager = runtime;
-    publishNobleNightDamage({
-      get world() { return manager.world; },
-      get events() { return manager.events; },
-    }, nightDay, sources, deaths);
+    publishNobleNightDamage(
+      {
+        get world() {
+          return manager.world;
+        },
+        get events() {
+          return manager.events;
+        },
+      },
+      nightDay,
+      sources,
+      deaths,
+    );
   }
   if (demon) {
     const manager = runtime;
-    publishDemonNightDamageSources({
-      get events() { return manager.events; },
-    }, demon, nightDay, guardOverrides, deaths, sources);
+    publishDemonNightDamageSources(
+      {
+        get events() {
+          return manager.events;
+        },
+      },
+      demon,
+      nightDay,
+      guardOverrides,
+      deaths,
+      sources,
+    );
   }
   // 先完成原保护、夜仆和事实发布，再捕获活人生命；这里只准备，真实标死与追加波仍归经理的 DR。
   const livingBeforeChain = new Map(

@@ -10,12 +10,7 @@ import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
 import type { CurrentCampSource } from "../../domain/components/camp";
 import { isRoleExecutionRetired } from "../../domain/role-execution-authority";
-import {
-  Camp,
-  type EntityId,
-  type GameEvent,
-  type WolfTeamEventType,
-} from "../../domain/model";
+import { Camp, type EntityId, type GameEvent, type WolfTeamEventType } from "../../domain/model";
 import type { World } from "../../domain/world";
 import type { RoleCatalog } from "../../rulesets/roles/catalog";
 import type { WolfTeamPermissions } from "../../rulesets/roles/contracts";
@@ -40,13 +35,16 @@ export function wolfTeamPermissions(
     return NO_ACCESS;
   const permissions = catalog.runtime(role.role)?.wolfTeam;
   const result =
-    typeof permissions === "function" ? permissions(role, world, currentCamp) : (permissions ?? NO_ACCESS);
-  const current = world &&
+    typeof permissions === "function"
+      ? permissions(role, world, currentCamp)
+      : (permissions ?? NO_ACCESS);
+  const current =
+    world &&
     (nightmareKnifeBlocked(world) ||
       scholarMentorPackBlocked(world) ||
       animalPackKnifeBlocked(world))
-    ? { ...result, canVoteForKill: false }
-    : result;
+      ? { ...result, canVoteForKill: false }
+      : result;
   // 原拒绝单例仍保身份，避免知识查询把它当新权限对象而继续读取。
   if (current === NO_ACCESS) return current;
   // 原资格和阻断查询先行；退休只拒演员执行，recognized／recognizes 仍供原知识查询使用。
@@ -60,13 +58,26 @@ export function knownWolfTeammates(
   actorId: EntityId,
   catalog: RoleCatalog,
 ): EntityId[] {
-  const viewer = wolfTeamPermissions(world.getComponent(actorId, COMPONENT.Role), catalog, () => world.getComponent(actorId, COMPONENT.Camp), world);
+  const viewer = wolfTeamPermissions(
+    world.getComponent(actorId, COMPONENT.Role),
+    catalog,
+    () => world.getComponent(actorId, COMPONENT.Camp),
+    world,
+  );
   if (viewer === NO_ACCESS) return [];
   const role = world.getComponent(actorId, COMPONENT.Role);
-  const snapshot = role && world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Wolf && catalog.runtime(role.role)?.knownTeammates;
+  const snapshot =
+    role &&
+    world.getComponent(actorId, COMPONENT.Camp)?.camp === Camp.Wolf &&
+    catalog.runtime(role.role)?.knownTeammates;
   if (snapshot)
     return [...new Set(snapshot(role!, world))]
-      .filter((id) => id !== actorId && world.getComponent(id, COMPONENT.Role) && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf)
+      .filter(
+        (id) =>
+          id !== actorId &&
+          world.getComponent(id, COMPONENT.Role) &&
+          world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf,
+      )
       .sort((a, b) => a - b);
   if (viewer.recognizes === "none") return [];
   // 身份知识独立于尚未公告的死亡，不能按真实存活状态重写已知队友。
@@ -78,7 +89,12 @@ export function knownWolfTeammates(
       if (!target || world.getComponent(id, COMPONENT.Camp)?.camp !== Camp.Wolf) return false;
       if (viewer.recognizes === "all") return true;
       if (viewer.recognizes === "pack")
-        return wolfTeamPermissions(target, catalog, () => world.getComponent(id, COMPONENT.Camp), world).recognizedByPack;
+        return wolfTeamPermissions(
+          target,
+          catalog,
+          () => world.getComponent(id, COMPONENT.Camp),
+          world,
+        ).recognizedByPack;
       return viewer.recognizes.includes(target.role);
     })
     .sort((a, b) => a - b);
@@ -88,7 +104,13 @@ export function wolfChatParticipants(world: World, catalog: RoleCatalog): Entity
   return world
     .getAliveEntityIds()
     .filter(
-      (id) => wolfTeamPermissions(world.getComponent(id, COMPONENT.Role), catalog, () => world.getComponent(id, COMPONENT.Camp), world).canChat,
+      (id) =>
+        wolfTeamPermissions(
+          world.getComponent(id, COMPONENT.Role),
+          catalog,
+          () => world.getComponent(id, COMPONENT.Camp),
+          world,
+        ).canChat,
     )
     .sort((a, b) => a - b);
 }
@@ -98,7 +120,12 @@ export function wolfKnifeHolders(world: World, catalog: RoleCatalog): EntityId[]
     .getAliveEntityIds()
     .filter(
       (id) =>
-        wolfTeamPermissions(world.getComponent(id, COMPONENT.Role), catalog, () => world.getComponent(id, COMPONENT.Camp), world).canVoteForKill,
+        wolfTeamPermissions(
+          world.getComponent(id, COMPONENT.Role),
+          catalog,
+          () => world.getComponent(id, COMPONENT.Camp),
+          world,
+        ).canVoteForKill,
     )
     .sort((a, b) => a - b);
 }

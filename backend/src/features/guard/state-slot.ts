@@ -10,7 +10,11 @@ import type { GuardState, GuardReadState } from "@ai-werewolf-arena/game-contrac
 import type { RoleComponent } from "../../domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
 
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import {
+  copyAbilityData,
+  findNightAbility,
+  type NightAbilityReadView,
+} from "../night-abilities/inventory-ports";
 import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 
 export function setGuardState(roleComp: RoleComponent, state: GuardState): GuardReadState {

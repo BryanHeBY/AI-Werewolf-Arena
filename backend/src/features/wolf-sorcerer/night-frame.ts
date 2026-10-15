@@ -15,7 +15,12 @@ import {
   type AliveComponent,
 } from "../../domain/components/alive";
 import type { NightLifeScope } from "../../domain/night-effects";
-import { getWolfSorcererState, projectWolfSorcererState, WOLF_SORCERER_ROLE, WOLF_SORCERER_STATE_SLOT } from "./state-slot";
+import {
+  getWolfSorcererState,
+  projectWolfSorcererState,
+  WOLF_SORCERER_ROLE,
+  WOLF_SORCERER_STATE_SLOT,
+} from "./state-slot";
 
 interface OriginalPlayer {
   id: number;
@@ -91,7 +96,13 @@ function requireBoard(world: World): Board {
   )
     throw new Error("wolf_sorcerer_original_state_revoked");
   const actor = b.players.get(b.actorId)!;
-  if (getWolfSorcererState(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.state || WOLF_SORCERER_STATE_SLOT.checkpoint.identity(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !== b.expectedState)
+  if (
+    getWolfSorcererState(actor.role, () => world.getComponent(actor.id, COMPONENT.Camp)) !==
+      b.state ||
+    WOLF_SORCERER_STATE_SLOT.checkpoint.identity(actor.role, () =>
+      world.getComponent(actor.id, COMPONENT.Camp),
+    ) !== b.expectedState
+  )
     throw new Error("wolf_sorcerer_original_state_revoked");
   return b;
 }
@@ -164,7 +175,9 @@ export function installWolfSorcererBoard(world: World): void {
   boards.set(world, {
     actorId,
     state,
-    expectedState: WOLF_SORCERER_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp)),
+    expectedState: WOLF_SORCERER_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role, () =>
+      world.getComponent(actorId, COMPONENT.Camp),
+    ),
     players,
     night: null,
   });
@@ -185,7 +198,9 @@ export function beginWolfSorcererNight(world: World, day: number): number | null
   )
     throw new Error("wolf_sorcerer_night_invalid");
   const used = new Set<number>();
-  for (const choice of projectWolfSorcererState(b.players.get(b.actorId)!.role, () => world.getComponent(b.actorId, COMPONENT.Camp))!.history)
+  for (const choice of projectWolfSorcererState(b.players.get(b.actorId)!.role, () =>
+    world.getComponent(b.actorId, COMPONENT.Camp),
+  )!.history)
     if (choice.pair) {
       used.add(choice.pair[0]);
       used.add(choice.pair[1]);
@@ -242,7 +257,9 @@ export function commitWolfSorcererExchange(
     chosen = a < z ? [a, z] : [z, a];
   }
   WOLF_SORCERER_STATE_SLOT.allowedWrites.appendHistory(() => b.state, day, chosen);
-  b.expectedState = WOLF_SORCERER_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role, () => world.getComponent(actorId, COMPONENT.Camp));
+  b.expectedState = WOLF_SORCERER_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role, () =>
+    world.getComponent(actorId, COMPONENT.Camp),
+  );
   n.pair = chosen && Object.freeze([chosen[0], chosen[1]] as [number, number]);
   n.committed = true;
 }

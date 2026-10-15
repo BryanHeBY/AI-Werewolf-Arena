@@ -4,7 +4,10 @@
  * 只渲染事实，不计票、授徽、校验候选人或改变事件受众。
  */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
-import type { ScriptJudgeLineHandlers, ScriptLiveRenderHandlers } from "../../agents/presentation/contracts";
+import type {
+  ScriptJudgeLineHandlers,
+  ScriptLiveRenderHandlers,
+} from "../../agents/presentation/contracts";
 
 function seats(ids: number[], locale: Locale): string {
   return (

@@ -94,11 +94,9 @@ for (const protection of [
           : { deaths: [], deathSources: {} },
       );
       expect(game.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);
-      expect(
-        game.world
-          .getComponent(5, COMPONENT.StatusMarks)!
-          .has(StatusMark.WolfKillMark),
-      ).toBe(false);
+      expect(game.world.getComponent(5, COMPONENT.StatusMarks)!.has(StatusMark.WolfKillMark)).toBe(
+        false,
+      );
     });
 
 test("base and extra knives retain distinct targets and causal facts", () => {

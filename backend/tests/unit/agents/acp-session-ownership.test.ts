@@ -293,8 +293,7 @@ test("accepted ACP action survives cancellation failure, while final close retai
 });
 
 test("takeAuditTrace closing the provider suppresses private recording of the selected action", async () => {
-  const { PlayerRoundRecorder } =
-    await import("../../../src/app/player-round-recorder");
+  const { PlayerRoundRecorder } = await import("../../../src/app/player-round-recorder");
   const record = spyOn(PlayerRoundRecorder.prototype, "record").mockImplementation(() => {});
   let closing: Promise<void> | undefined;
   const provider = new AcpActionProvider(world(), {

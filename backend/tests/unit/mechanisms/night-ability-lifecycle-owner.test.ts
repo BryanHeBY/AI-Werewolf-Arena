@@ -10,7 +10,10 @@ import { createRoleComponent } from "../../../src/agents/observation/role-presen
 import * as queries from "../../../src/features/night-abilities/abilities";
 import * as prepared from "../../../src/features/night-abilities/ability-changes";
 import { installNativeAbility } from "../../../src/features/night-abilities/ability-changes";
-import { setNightAbilityStartDay, recordNightAbilityUse } from "../../../src/features/night-abilities/abilities";
+import {
+  setNightAbilityStartDay,
+  recordNightAbilityUse,
+} from "../../../src/features/night-abilities/abilities";
 
 function removedQueryWrites() {
   // @ts-expect-error 原生安装已经退出只读查询入口。

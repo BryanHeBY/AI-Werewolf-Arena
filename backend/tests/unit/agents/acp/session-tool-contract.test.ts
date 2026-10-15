@@ -9,7 +9,6 @@ import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-
 import { speakRequest } from "../../../support/builders/agents/acp-requests";
 
 describe("AcpActionProvider", () => {
-
   test("accepts an action only through the MCP bridge bound to its session", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     let cancelled = 0;

@@ -22,7 +22,10 @@ import {
 } from "../../../../src/features/white-wolf-king/state";
 import { SelfDestructWindow } from "../../../../src/rulesets/self-destruct-window";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
-import { createDefaultRoleRegistry, getDefaultRoleCatalog } from "../../../../src/rulesets/mechanism-api";
+import {
+  createDefaultRoleRegistry,
+  getDefaultRoleCatalog,
+} from "../../../../src/rulesets/mechanism-api";
 import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {

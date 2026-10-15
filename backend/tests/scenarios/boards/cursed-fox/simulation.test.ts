@@ -74,10 +74,7 @@ for (const { name, board } of boards)
         expect(events.filter((e) => e.type === "game_over")).toHaveLength(1);
         expect(events.at(-1)!.type).toBe("game_over");
         const roles = new Map(
-          game.playerIds.map((id) => [
-            id,
-            game.world.getComponent(id, COMPONENT.Role)!,
-          ]),
+          game.playerIds.map((id) => [id, game.world.getComponent(id, COMPONENT.Role)!]),
         );
         const alive = game.world.getAliveEntityIds(),
           fox = game.playerIds.find((id) => roles.get(id)!.role === Role.CursedFox)!;
@@ -88,14 +85,20 @@ for (const { name, board } of boards)
             expect(result.outcome.winningPlayerIds).toEqual([fox]);
             expect(alive).toContain(fox);
             expect(
-              alive.every((id) => game.world.getComponent(id, COMPONENT.Camp)!.camp !== Camp.Wolf) ||
-                alive.every((id) => game.world.getComponent(id, COMPONENT.Camp)!.camp !== Camp.Good),
+              alive.every(
+                (id) => game.world.getComponent(id, COMPONENT.Camp)!.camp !== Camp.Wolf,
+              ) ||
+                alive.every(
+                  (id) => game.world.getComponent(id, COMPONENT.Camp)!.camp !== Camp.Good,
+                ),
             ).toBe(true);
           } else {
             expect(result.outcome.primary.kind).toBe("faction");
             expect(alive).not.toContain(fox);
             expect(result.outcome.winningPlayerIds).toEqual(
-              game.playerIds.filter((id) => game.world.getComponent(id, COMPONENT.Camp)!.camp === result.winner),
+              game.playerIds.filter(
+                (id) => game.world.getComponent(id, COMPONENT.Camp)!.camp === result.winner,
+              ),
             );
           }
         } else expect(result.reason).toBe("max_days_reached");

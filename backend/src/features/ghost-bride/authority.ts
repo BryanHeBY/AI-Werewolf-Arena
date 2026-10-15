@@ -12,7 +12,17 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { WeddingActorView } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { registerRequestAliasPropagation } from "../../domain/request-delivery";
 import { types } from "node:util";
-import { GHOST_BRIDE_POLICY, GHOST_BRIDE_ROLE, type GhostBrideState, type WeddingPair, type WeddingGroup, type WeddingSetup, type WeddingKnifeCapture, type WeddingTool, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import {
+  GHOST_BRIDE_POLICY,
+  GHOST_BRIDE_ROLE,
+  type GhostBrideState,
+  type WeddingPair,
+  type WeddingGroup,
+  type WeddingSetup,
+  type WeddingKnifeCapture,
+  type WeddingTool,
+  readWeddingTool,
+} from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import {
   bindRequestDeliveryGuard,
   settleRequestDelivery,
@@ -523,8 +533,15 @@ function currentUnpaidRequestProof(t: Turn): boolean {
 }
 /** 只有尚在等待第二票的共同领域失效才撤旧第一同意；第二请求自己的壳／期限坏不连带撤它。 */
 function revokeRetainedConsentForSharedFailure(t: Turn): void {
-  const b = t.binding, consent = b.consent;
-  if (t.kind === "witness" && b.status === "paired" && b.votes.length === 1 && consent && consent !== t)
+  const b = t.binding,
+    consent = b.consent;
+  if (
+    t.kind === "witness" &&
+    b.status === "paired" &&
+    b.votes.length === 1 &&
+    consent &&
+    consent !== t
+  )
     revokedRequestTurns.add(consent);
 }
 function validTurn(t: Turn): boolean {
@@ -560,7 +577,8 @@ function validConsent(b: Binding, second: Turn): boolean {
   let observingShared = true;
   try {
     // 保原 shared 前段的重复 current／World 读取顺序；这次观察失败不能靠另开第二请求复用旧第一票。
-    if (!(t.binding === b &&
+    if (!(
+      t.binding === b &&
       t.kind === "witness" &&
       t.actorId === b.actorId &&
       t.day === 1 &&
@@ -569,7 +587,8 @@ function validConsent(b: Binding, second: Turn): boolean {
       second.isCurrent() &&
       b.turn === second &&
       expectedTurn(b, second.kind, second.actorId, second.day) &&
-      validBinding(b, true))) {
+      validBinding(b, true)
+    )) {
       revokedRequestTurns.add(t);
       return false;
     }

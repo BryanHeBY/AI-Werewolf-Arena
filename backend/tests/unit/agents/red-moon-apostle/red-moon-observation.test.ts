@@ -20,9 +20,7 @@ for (const policy of ["ends_game", "forbidden"] as const)
         config.redMoon!.lastWolfBlastPolicy = policy;
         const f = bootstrapGame(config, { locale });
         const id = (r: Role) =>
-          f.playerIds.find(
-            (id) => f.world.getComponent(id, COMPONENT.Role)?.role === r,
-          )!;
+          f.playerIds.find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === r)!;
         const actor = id(Role.RedMoonApostle),
           other = id(Role.Villager);
         const seen: PlayerObservation[] = [];
@@ -50,7 +48,9 @@ for (const policy of ["ends_game", "forbidden"] as const)
             requiresAction: true,
             summary: "Vote",
           });
-        const state = getRedMoonState(f.world.getComponent(actor, COMPONENT.Role), () => f.world.getComponent(actor, COMPONENT.Camp))!;
+        const state = getRedMoonState(f.world.getComponent(actor, COMPONENT.Role), () =>
+          f.world.getComponent(actor, COMPONENT.Camp),
+        )!;
         await provider.getAction(request(actor));
         const snapshot = seen[0]!.ownState.redMoon!;
         expect(snapshot).toEqual(state);

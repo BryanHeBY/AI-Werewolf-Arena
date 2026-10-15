@@ -15,10 +15,7 @@ import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import type { RoleProfile } from "../../../src/rulesets/roles/contracts";
-import type {
-  NightStageContext,
-  NightStageHandler,
-} from "../../../src/engine/night/contracts";
+import type { NightStageContext, NightStageHandler } from "../../../src/engine/night/contracts";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
@@ -45,7 +42,9 @@ function context(world = new World("en")): NightStageContext {
     isCurrent: () => true,
     previousExile: null,
     currentDay: () => 1,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     makeRequest: () => {
       throw new Error("unexpected_request");
     },

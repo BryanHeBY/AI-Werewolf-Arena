@@ -16,10 +16,7 @@ import {
   type World,
 } from "../../domain";
 import { COMPONENT, StatusMark } from "../../domain";
-import {
-  StatusMarksComponent,
-  statusMarkSnapshot,
-} from "../../domain/components/status-marks";
+import { StatusMarksComponent, statusMarkSnapshot } from "../../domain/components/status-marks";
 import { demonSnapshot, exactDemonData, ownDemonData } from "./state-slot";
 /** 同一原请求的运行绑定；别名共享可提前的期限，World／上下文和current闭包不是序列化凭证。 */
 interface Turn {
@@ -262,13 +259,15 @@ export function demonWitchMarksSafe(world: World, targetId: number): boolean {
     return false;
   // 原顺序逐个查实例 descriptor 和原型方法身份，首个失败即停止；随后才查实例／原型旧展示名称。
   // 展示属性退出领域，不把旧名称的消失变成修改方法身份的绕过入口。
-  return Object.entries(trustedMarkMethods).every(
-    ([key, method]) =>
-      !Object.getOwnPropertyDescriptor(marks, key) &&
-      Object.getOwnPropertyDescriptor(StatusMarksComponent.prototype, key)?.value === method,
-  ) &&
+  return (
+    Object.entries(trustedMarkMethods).every(
+      ([key, method]) =>
+        !Object.getOwnPropertyDescriptor(marks, key) &&
+        Object.getOwnPropertyDescriptor(StatusMarksComponent.prototype, key)?.value === method,
+    ) &&
     !Object.getOwnPropertyDescriptor(marks, "renderPrompt") &&
-    !Object.getOwnPropertyDescriptor(StatusMarksComponent.prototype, "renderPrompt");
+    !Object.getOwnPropertyDescriptor(StatusMarksComponent.prototype, "renderPrompt")
+  );
 }
 export function demonWitchRequestTargetCurrent(
   world: World,

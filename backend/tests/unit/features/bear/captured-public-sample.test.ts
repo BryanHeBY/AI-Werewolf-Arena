@@ -80,8 +80,7 @@ for (const [kind, expected] of [
             ? [Role.Bear, Role.Witch, Role.Wolf, Role.Hunter, Role.Villager, Role.Villager]
             : deck;
     const game = bootstrapGame(config(fixed), { fixedRoles: fixed });
-    if (kind === "dead_skip")
-      game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
+    if (kind === "dead_skip") game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     if (kind === "seat_order") {
       game.world.getComponent(2, COMPONENT.Identity)!.seat = 4;
       game.world.getComponent(4, COMPONENT.Identity)!.seat = 2;
@@ -156,7 +155,10 @@ for (const mutation of [
     }
     if (mutation === "role_replace") {
       const fresh = createRoleComponent(Role.Bear);
-      getDefaultRoleCatalog().applyRuntime(fresh, { initialCamp: { camp: Camp.Good }, currentCamp: () => game.world.getComponent(1, COMPONENT.Camp) });
+      getDefaultRoleCatalog().applyRuntime(fresh, {
+        initialCamp: { camp: Camp.Good },
+        currentCamp: () => game.world.getComponent(1, COMPONENT.Camp),
+      });
       game.world.addComponent(1, COMPONENT.Role, fresh);
     }
     if (mutation === "state_replace")

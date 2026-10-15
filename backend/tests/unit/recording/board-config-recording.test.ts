@@ -42,7 +42,12 @@ function trace(config: BoardConfig) {
       dealMode: "fixed",
       players: game.playerIds.map((id) => {
         const role = game.world.getComponent(id, COMPONENT.Role)!;
-        return { id, name: String(id), role: role.role, camp: game.world.getComponent(id, COMPONENT.Camp)!.camp };
+        return {
+          id,
+          name: String(id),
+          role: role.role,
+          camp: game.world.getComponent(id, COMPONENT.Camp)!.camp,
+        };
       }),
     },
     () => {},
@@ -79,8 +84,7 @@ for (const rule of Object.values(WitchSelfHealRule))
         (id) => restored.world.getComponent(id, COMPONENT.Role)?.role === Role.Witch,
       )!;
       expect(
-        getWitchState(restored.world.getComponent(witchId, COMPONENT.Role)!)
-          ?.selfHealRule,
+        getWitchState(restored.world.getComponent(witchId, COMPONENT.Role)!)?.selfHealRule,
       ).toBe(rule);
     });
   }

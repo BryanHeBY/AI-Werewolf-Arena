@@ -36,9 +36,7 @@ for (const locale of ["zh-CN", "en"] as const)
           random = createRandom("sm-controls:" + locale + ":" + variant),
           game = bootstrapGame(config, { locale, random });
         const ids = (name: Role) =>
-          game.playerIds.filter(
-            (id) => game.world.getComponent(id, COMPONENT.Role)?.role === name,
-          );
+          game.playerIds.filter((id) => game.world.getComponent(id, COMPONENT.Role)?.role === name);
         const scholar = ids(Role.DayScholar)[0]!,
           mentor = ids(Role.NightMentor)[0]!,
           guard = ids(Role.Guard)[0]!,
@@ -161,7 +159,8 @@ for (const locale of ["zh-CN", "en"] as const)
         const bonus = events.filter((e) => e.type === "modifier_bonus_resolved"),
           conflict = events.filter((e) => e.type === "modifier_conflict_resolved");
         const charge = scholarMentorStateForRole(
-          game.world.getComponent(scholar, COMPONENT.Role), () => game.world.getComponent(scholar, COMPONENT.Camp)
+          game.world.getComponent(scholar, COMPONENT.Role),
+          () => game.world.getComponent(scholar, COMPONENT.Camp),
         )!;
         expect(charge.history).toHaveLength(1);
         expect(charge.history[0]!.day).toBe(2);

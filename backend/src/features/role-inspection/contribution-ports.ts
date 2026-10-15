@@ -6,11 +6,7 @@
  * 本入口不查询 World、付款、追加历史或关闭；普通状态读入口保持独立，文案另走纯政策公开入口。
  */
 export { inspectionConfiguration } from "./policies";
-export {
-  ROLE_INSPECTION_TOOL,
-  validateRoleInspection,
-  roleInspectionTargets,
-} from "./rules";
+export { ROLE_INSPECTION_TOOL, validateRoleInspection, roleInspectionTargets } from "./rules";
 export {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,

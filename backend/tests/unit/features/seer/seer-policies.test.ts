@@ -19,9 +19,7 @@ import {
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { SEER_NIGHT_STAGES } from "../../../../src/features/seer/night-stages";
 import { SEER_ROLE_PROFILE } from "../../../../src/features/seer/profile";
-import {
-  findNightAbility,
-} from "../../../../src/features/night-abilities/abilities";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
 import { getDefaultTargetHintRegistry } from "../../../../src/agents/tool-repair/target-hint-registry";
 import { getDefaultConfigRenderRegistry } from "../../../../src/agents/prompt/config-render-registry";
@@ -47,10 +45,7 @@ function setup(parameters?: BoardConfig["seer"], locale: "zh-CN" | "en" = "en") 
   };
   const resolved = parseBoardDefinition(boardDefinitionFromConfig("seer_policy", config));
   const game = bootstrapGame(resolved.config, { fixedRoles: roles, locale });
-  const ability = findNightAbility(
-    game.world.getComponent(2, COMPONENT.Role),
-    "seer_check",
-  )!;
+  const ability = findNightAbility(game.world.getComponent(2, COMPONENT.Role), "seer_check")!;
   const events: GameEvent[] = [];
   const requests: ActionRequest[] = [];
   const act = async (day: number, target: number | null, mutate?: () => void) => {
@@ -188,7 +183,8 @@ for (const locale of ["zh-CN", "en"] as const)
       SEER_ROLE_PROFILE.presentation!.id,
       game.world.getComponent(2, COMPONENT.Role)!,
       locale,
-      undefined, () => game.world.getComponent(2, COMPONENT.Camp),
+      undefined,
+      () => game.world.getComponent(2, COMPONENT.Camp),
     );
     const board = getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale);
     expect(prompt).toContain(locale === "en" ? "history never resets" : "不重置历史");

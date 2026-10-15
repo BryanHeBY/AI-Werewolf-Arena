@@ -32,7 +32,10 @@ import {
   type RecordedCheckpoint,
 } from "../../../../src/recording/reproduction/format";
 import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
-import { demonHunterBoard, demonHunterDeck } from "../../../support/features/demon-hunter/builders/candidate-world";
+import {
+  demonHunterBoard,
+  demonHunterDeck,
+} from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 let version: ReturnType<typeof currentEngineVersion> | undefined;

@@ -118,9 +118,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       );
       expect(alive(f, f.knight)).toBe(policy === "night_shot_immune");
       expect(alive(f, f.hunter)).toBe(false);
-      expect(
-        getHunterState(f.world.getComponent(f.hunter, COMPONENT.Role)!)!.canShoot,
-      ).toBe(false);
+      expect(getHunterState(f.world.getComponent(f.hunter, COMPONENT.Role)!)!.canShoot).toBe(false);
       expect([...nightDeaths(f)].sort((a, b) => a - b)).toEqual(
         (policy === "night_shot_immune" ? [f.hunter] : [f.hunter, f.knight]).sort((a, b) => a - b),
       );
@@ -152,9 +150,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       10,
     );
     expect(nightDeaths(f)).toEqual([f.seer]);
-    expect(
-      getSeerState(f.world.getComponent(f.seer, COMPONENT.Role)!)!.lastIsWerewolf,
-    ).toBe(true);
+    expect(getSeerState(f.world.getComponent(f.seer, COMPONENT.Role)!)!.lastIsWerewolf).toBe(true);
     expect(
       seen
         .filter((r) => r.context.stage === "sheriff_nomination")
@@ -167,9 +163,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(nightDeaths(f)).toEqual([f.witch]);
     expect(alive(f, f.knight)).toBe(true);
     expect(alive(f, f.seer)).toBe(true);
-    expect(
-      getSeerState(f.world.getComponent(f.seer, COMPONENT.Role)!)!.lastIsWerewolf,
-    ).toBe(true);
+    expect(getSeerState(f.world.getComponent(f.seer, COMPONENT.Role)!)!.lastIsWerewolf).toBe(true);
   });
 }
 test("evil knight cycle rejects reentry and cannot resume an incomplete required night", async () => {

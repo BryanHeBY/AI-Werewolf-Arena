@@ -18,8 +18,14 @@ function dispatchFlags(trace: string[], enabled: readonly string[]): ReadonlyBoa
     roleSetups: [{ role: Role.Villager, count: 1 }],
   };
   for (const key of [
-    "animalDream", "nobleSecretBody", "trickster", "wolfSorcerer", "magician",
-    "timeConsort", "scholarMentor", "mistRaven",
+    "animalDream",
+    "nobleSecretBody",
+    "trickster",
+    "wolfSorcerer",
+    "magician",
+    "timeConsort",
+    "scholarMentor",
+    "mistRaven",
   ])
     Object.defineProperty(board, key, {
       get() {
@@ -52,9 +58,16 @@ test("exchange handoff retains all original units and reads manager World at eac
       },
     });
   const cycle = new NightManagerLifecycle({
-    get world() { trace.push("world"); return current; },
-    get config() { return board; },
-    abortMistPending() { throw Error("unexpected_pending_cleanup"); },
+    get world() {
+      trace.push("world");
+      return current;
+    },
+    get config() {
+      return board;
+    },
+    abortMistPending() {
+      throw Error("unexpected_pending_cleanup");
+    },
   });
   magician.transferToManager(true);
   cycle.receiveExchange(magician, sorcerer, trickster);
@@ -62,25 +75,42 @@ test("exchange handoff retains all original units and reads manager World at eac
   expect(magician.cleanupOwnership.isTransferred()).toBe(true);
   cycle.finishDay(4, () => true);
   expect(trace).toEqual([
-    "config:trickster", "world", "trickster",
-    "config:wolfSorcerer", "world", "sorcerer",
-    "config:magician", "world", "magician",
-    "config:timeConsort", "config:scholarMentor", "config:mistRaven",
+    "config:trickster",
+    "world",
+    "trickster",
+    "config:wolfSorcerer",
+    "world",
+    "sorcerer",
+    "config:magician",
+    "world",
+    "magician",
+    "config:timeConsort",
+    "config:scholarMentor",
+    "config:mistRaven",
   ]);
 });
 
 test("a terminal failure preserves its prefix and does not select later normal receivers", () => {
-  const trace: string[] = [], world = new World("en"),
+  const trace: string[] = [],
+    world = new World("en"),
     magician = new MagicianNightUnit({ world }),
     sorcerer = new WolfSorcererNightUnit({ world }, magician.cleanupOwnership),
     trickster = new TricksterNightUnit({ world }, magician.cleanupOwnership),
     board = dispatchFlags(trace, ["trickster", "wolfSorcerer", "magician"]);
   Object.defineProperty(trickster, "finishNormally", {
-    value() { trace.push("finish"); throw Error("original_finish_failure"); },
+    value() {
+      trace.push("finish");
+      throw Error("original_finish_failure");
+    },
   });
   const cycle = new NightManagerLifecycle({
-    get world() { trace.push("world"); return world; },
-    get config() { return board; },
+    get world() {
+      trace.push("world");
+      return world;
+    },
+    get config() {
+      return board;
+    },
     abortMistPending() {},
   });
   cycle.receiveExchange(magician, sorcerer, trickster);
@@ -89,47 +119,80 @@ test("a terminal failure preserves its prefix and does not select later normal r
 });
 
 test("each configured normal receiver rechecks currentness after earlier terminals", () => {
-  const trace: string[] = [], world = new World("en"),
+  const trace: string[] = [],
+    world = new World("en"),
     magician = new MagicianNightUnit({ world }),
     sorcerer = new WolfSorcererNightUnit({ world }, magician.cleanupOwnership),
     trickster = new TricksterNightUnit({ world }, magician.cleanupOwnership),
     board = dispatchFlags(trace, ["trickster", "wolfSorcerer", "magician"]);
   let current = true;
   Object.defineProperty(trickster, "finishNormally", {
-    value() { trace.push("finish"); current = false; },
+    value() {
+      trace.push("finish");
+      current = false;
+    },
   });
   const cycle = new NightManagerLifecycle({
-    get world() { trace.push("world"); return world; },
-    get config() { return board; },
+    get world() {
+      trace.push("world");
+      return world;
+    },
+    get config() {
+      return board;
+    },
     abortMistPending() {},
   });
   cycle.receiveExchange(magician, sorcerer, trickster);
-  cycle.finishDay(2, () => { trace.push("current"); return current; });
+  cycle.finishDay(2, () => {
+    trace.push("current");
+    return current;
+  });
   expect(trace).toEqual([
-    "config:trickster", "current", "world", "finish",
-    "config:wolfSorcerer", "current", "config:magician", "current",
-    "config:timeConsort", "config:scholarMentor", "config:mistRaven",
+    "config:trickster",
+    "current",
+    "world",
+    "finish",
+    "config:wolfSorcerer",
+    "current",
+    "config:magician",
+    "current",
+    "config:timeConsort",
+    "config:scholarMentor",
+    "config:mistRaven",
   ]);
 });
 
 test("normal close never suppresses repeated inner and outer cleanup on the transferred unit", () => {
-  const trace: string[] = [], original = new World("en"),
-    current = new World("en"), unit = new TimeConsortNightUnit({ world: original }),
+  const trace: string[] = [],
+    original = new World("en"),
+    current = new World("en"),
+    unit = new TimeConsortNightUnit({ world: original }),
     board = dispatchFlags(trace, ["timeConsort"]);
   Object.defineProperty(unit, "closeNormally", {
     value(this: unknown, world: World) {
-      expect(this).toBe(unit); expect(world).toBe(current); trace.push("close");
+      expect(this).toBe(unit);
+      expect(world).toBe(current);
+      trace.push("close");
     },
   });
   Object.defineProperty(unit, "abort", {
     value(this: unknown, world: World) {
-      expect(this).toBe(unit); expect(world).toBe(current); trace.push("abort");
+      expect(this).toBe(unit);
+      expect(world).toBe(current);
+      trace.push("abort");
     },
   });
   const cycle = new NightManagerLifecycle({
-    get world() { trace.push("world"); return current; },
-    get config() { return board; },
-    abortMistPending() { throw Error("unexpected_pending_cleanup"); },
+    get world() {
+      trace.push("world");
+      return current;
+    },
+    get config() {
+      return board;
+    },
+    abortMistPending() {
+      throw Error("unexpected_pending_cleanup");
+    },
   });
   unit.transferToManager(true);
   cycle.receiveTimeConsort(unit);
@@ -137,11 +200,29 @@ test("normal close never suppresses repeated inner and outer cleanup on the tran
   cycle.abortInner();
   cycle.abortCycle(true);
   expect(trace).toEqual([
-    "config:trickster", "config:wolfSorcerer", "config:magician",
-    "config:timeConsort", "world", "close", "config:scholarMentor", "config:mistRaven",
-    "config:mistRaven", "config:trickster", "config:wolfSorcerer", "config:magician",
-    "config:timeConsort", "world", "abort", "config:scholarMentor",
-    "config:animalDream", "config:mistRaven", "config:timeConsort", "world", "abort",
-    "config:scholarMentor", "config:wolfSorcerer", "config:magician",
+    "config:trickster",
+    "config:wolfSorcerer",
+    "config:magician",
+    "config:timeConsort",
+    "world",
+    "close",
+    "config:scholarMentor",
+    "config:mistRaven",
+    "config:mistRaven",
+    "config:trickster",
+    "config:wolfSorcerer",
+    "config:magician",
+    "config:timeConsort",
+    "world",
+    "abort",
+    "config:scholarMentor",
+    "config:animalDream",
+    "config:mistRaven",
+    "config:timeConsort",
+    "world",
+    "abort",
+    "config:scholarMentor",
+    "config:wolfSorcerer",
+    "config:magician",
   ]);
 });

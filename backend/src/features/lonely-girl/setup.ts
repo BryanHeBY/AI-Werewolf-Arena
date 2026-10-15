@@ -40,7 +40,8 @@ export class LonelyGirlSetupWindow {
     if (!b || b.status !== "pending" || config !== b.config || day !== 1)
       throw new Error("lonely_girl_setup_unavailable");
     let status: "failed" | "cancelled" = "failed";
-    let delivery: RequestLeaseTurn | undefined, failed = false;
+    let delivery: RequestLeaseTurn | undefined,
+      failed = false;
     try {
       if (!openLonelyGirlChoice(b, isCurrent)) {
         status = "cancelled";
@@ -106,8 +107,13 @@ export class LonelyGirlSetupWindow {
         throw error;
       } finally {
         // 原 body／cleanup 错误优先；无旧错时新增 false 通知错误正常传播。
-        if (failed) { try { delivery?.close(); } catch { /* 保已在传播的错误。 */ } }
-        else delivery?.close();
+        if (failed) {
+          try {
+            delivery?.close();
+          } catch {
+            /* 保已在传播的错误。 */
+          }
+        } else delivery?.close();
       }
     }
   }

@@ -23,9 +23,7 @@ for (const locale of ["zh-CN", "en"] as const)
       f = bootstrapGame(config, { locale });
     const actor = f.world
       .entityIds()
-      .find(
-        (id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.OrderPrince,
-      )!;
+      .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.OrderPrince)!;
     const other = f.world.entityIds().find((id) => id !== actor)!;
     const seen: PlayerObservation[] = [];
     const provider = new ObservedPlayersActionProvider(
@@ -58,8 +56,8 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(openOrderPrinceChoice(f.world, 1)).toBe(actor);
     commitOrderPrinceChoice(f.world, actor, 1, false);
     await provider.getAction(request(actor));
-    const current = getOrderPrinceState(
-      f.world.getComponent(actor, COMPONENT.Role), () => f.world.getComponent(actor, COMPONENT.Camp)
+    const current = getOrderPrinceState(f.world.getComponent(actor, COMPONENT.Role), () =>
+      f.world.getComponent(actor, COMPONENT.Camp),
     )!;
     expect(seen[0]!.ownState.orderPrince?.history).toEqual([]);
     expect(seen[1]!.ownState.orderPrince?.history).toEqual([{ day: 1, activate: false }]);
@@ -74,9 +72,7 @@ test("Order Prince private receipt requires an exact owner audience", () => {
     f = bootstrapGame(config);
   const actor = f.world
     .entityIds()
-    .find(
-      (id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.OrderPrince,
-    )!;
+    .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.OrderPrince)!;
   const other = f.world.entityIds().find((id) => id !== actor)!;
   const registry = new AgentEventVisibilityRegistry();
   const event: GameEvent = {

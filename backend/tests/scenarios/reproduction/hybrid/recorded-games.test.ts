@@ -6,7 +6,11 @@
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { HYBRID_CASES, hybridScenario, type HybridScenario } from "../../../support/features/hybrid/builders/scenario";
+import {
+  HYBRID_CASES,
+  hybridScenario,
+  type HybridScenario,
+} from "../../../support/features/hybrid/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 
 /**

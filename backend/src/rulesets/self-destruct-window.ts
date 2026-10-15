@@ -10,21 +10,12 @@ import { RED_MOON_ROLE } from "../features/red-moon/ports";
 import { demonRedMoonCanBlast } from "../features/demon-hunter/ports";
 import { canRoleSelfDestruct } from "../features/self-destruct/capability";
 import { getDefaultRoleCatalog } from "./roles/role-catalog-assembly";
-import {
-  weddingMember,
-  weddingSetup,
-  ghostBrideReady,
-} from "../features/ghost-bride/ports";
+import { weddingMember, weddingSetup, ghostBrideReady } from "../features/ghost-bride/ports";
 import { AliveComponent, aliveLifeVersion } from "../domain/components/alive";
 import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
 import { isRoleExecutionRetired } from "../domain/role-execution-authority";
-import {
-  ActionProvider,
-  ActionWindow,
-  Phase,
-  type SelfDestructSelection,
-} from "../domain/model";
+import { ActionProvider, ActionWindow, Phase, type SelfDestructSelection } from "../domain/model";
 import { RoleRegistry } from "../domain/registries/role-registry";
 import { World } from "../domain/world";
 import { ToolGateway } from "../engine/actions/tool-gateway";
@@ -76,7 +67,9 @@ export class SelfDestructWindow {
           tool === "self_destruct" &&
           (String(role.role) === RED_MOON_ROLE
             ? !demonRedMoonCanBlast(this.world, actorId)
-            : !canRoleSelfDestruct(role, getDefaultRoleCatalog(), () => this.world.getComponent(actorId, COMPONENT.Camp)))
+            : !canRoleSelfDestruct(role, getDefaultRoleCatalog(), () =>
+                this.world.getComponent(actorId, COMPONENT.Camp),
+              ))
         )
           return null;
         // 白狼王复验同一库存对象；这里不消费，实际消耗仍归提交函数。

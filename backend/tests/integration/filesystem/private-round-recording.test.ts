@@ -70,9 +70,9 @@ for (const locale of ["zh-CN", "en"] as const)
         players: [],
       });
     });
-    const view = readReplayPlayerView(JSON.parse(
-      await readFile(path.join(root, "private-v2/players/player_1.json"), "utf8"),
-    ));
+    const view = readReplayPlayerView(
+      JSON.parse(await readFile(path.join(root, "private-v2/players/player_1.json"), "utf8")),
+    );
     assertReplayPlayerView(view);
     expect(view.schemaVersion).toBe(2);
     expect(view.locale).toBe(locale);

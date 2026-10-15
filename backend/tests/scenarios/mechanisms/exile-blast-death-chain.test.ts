@@ -3,7 +3,14 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Camp, Phase, Role, WinCondition, type ActionRequest } from "../../../src/domain";
+import {
+  COMPONENT,
+  Camp,
+  Phase,
+  Role,
+  WinCondition,
+  type ActionRequest,
+} from "../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 for (const locale of ["zh-CN", "en"] as const)
@@ -89,9 +96,7 @@ for (const locale of ["zh-CN", "en"] as const)
       [2, 1],
       [1, 3],
     ]);
-    expect(game.world.getComponent(3, COMPONENT.VotingRight)!.weight).toBe(
-      2.25,
-    );
+    expect(game.world.getComponent(3, COMPONENT.VotingRight)!.weight).toBe(2.25);
     expect(
       requests
         .filter((request) => request.context.stage === "last_words")
@@ -142,12 +147,8 @@ for (const locale of ["zh-CN", "en"] as const)
     const first = await game.phaseManager.runSingleCycle(provider);
     expect(first).toMatchObject({ day: 2, phase: Phase.Night, gameOver: false });
     expect(game.world.getAliveEntityIds()).toEqual([2, 3, 4, 5, 6]);
-    expect(game.world.getComponent(2, COMPONENT.Badge)!.isSheriff).toBe(
-      true,
-    );
-    expect(game.world.getComponent(2, COMPONENT.VotingRight)!.weight).toBe(
-      2.25,
-    );
+    expect(game.world.getComponent(2, COMPONENT.Badge)!.isSheriff).toBe(true);
+    expect(game.world.getComponent(2, COMPONENT.VotingRight)!.weight).toBe(2.25);
     const last = await game.phaseManager.runSingleCycle(provider);
     expect(last.result).toEqual({
       winner: Camp.Good,
@@ -161,9 +162,7 @@ for (const locale of ["zh-CN", "en"] as const)
       decidedAt: { day: 2, phase: Phase.Voting, checkpoint: "day_interrupted" },
     });
     expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]);
-    expect(game.world.getComponent(3, COMPONENT.Badge)!.isSheriff).toBe(
-      true,
-    );
+    expect(game.world.getComponent(3, COMPONENT.Badge)!.isSheriff).toBe(true);
     expect(game.world.activeDeathActionCount).toBe(0);
     expect(
       requests.filter(

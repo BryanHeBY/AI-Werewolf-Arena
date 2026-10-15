@@ -24,15 +24,20 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { NightManagerLifecycle } from "../rulesets/night-lifecycle-plan";
 import { prepareGameSetup, installFragrantGameSetup } from "../rulesets/game-setup";
 import { prepareSpecialNightDamage } from "../rulesets/special-night-damage-preparation";
-import { prepareOrdinaryNightDeaths, ordinaryNightDeathPublication } from "../rulesets/ordinary-night-death-preparation";
+import {
+  prepareOrdinaryNightDeaths,
+  ordinaryNightDeathPublication,
+} from "../rulesets/ordinary-night-death-preparation";
 
 import { bindBoardParameters } from "../rulesets/board-parameters";
 import { RulePlan } from "../rulesets/rule-plan";
-import {
-  checkpointNobleBodyAuthority,
-} from "../features/noble-secret-body/ports";
+import { checkpointNobleBodyAuthority } from "../features/noble-secret-body/ports";
 
-import { prepareMistDelayedNight, settleMistDelayedNight, type MistPreparedNightDamage } from "../rulesets/mist-delayed-night-settlement";
+import {
+  prepareMistDelayedNight,
+  settleMistDelayedNight,
+  type MistPreparedNightDamage,
+} from "../rulesets/mist-delayed-night-settlement";
 
 import {
   demonHunterActorId,
@@ -40,9 +45,7 @@ import {
   assertDemonNightReadable,
 } from "../features/demon-hunter/ports";
 import { demonWitchMarksSafe } from "../features/demon-hunter/ports";
-import {
-  weddingSetup,
-} from "../features/ghost-bride/ports";
+import { weddingSetup } from "../features/ghost-bride/ports";
 import { publishInitialIdentityDeal } from "../features/initial-identity/ports";
 import { WallNotesWindow } from "../features/wall-notes/window-ports";
 import { GameActionRequestFactory } from "./actions/action-request-factory";
@@ -84,7 +87,12 @@ import { RoleRegistry } from "../domain/registries/role-registry";
 import { COMPONENT } from "../domain/components/names";
 import { commitSelfDestructSelection } from "../features/self-destruct/selection-ports";
 import { settleKnightDay } from "../rulesets/knight-day-settlement";
-import { prepareAnimalExileDeaths, captureAnimalExileFeedback, captureOrdinaryExileFeedback, prepareOrdinaryExileDeaths } from "../rulesets/exile-death-preparation";
+import {
+  prepareAnimalExileDeaths,
+  captureAnimalExileFeedback,
+  captureOrdinaryExileFeedback,
+  prepareOrdinaryExileDeaths,
+} from "../rulesets/exile-death-preparation";
 import {
   prepareBeautyExileVictory,
   resolveBeautyExileVictory,
@@ -270,8 +278,12 @@ export class PhaseManager {
     // 雾鸦周期登记先行；其余机制通过后才推进原阶段时钟，拒绝不改变时钟。
     const manager = this;
     this.#rulePlan.phaseJumpAdmission({
-      get world() { return manager.world; },
-      get state() { return manager.state; },
+      get world() {
+        return manager.world;
+      },
+      get state() {
+        return manager.state;
+      },
     });
     this.phaseRevision.advance();
     this.setPhase(phase);
@@ -342,8 +354,12 @@ export class PhaseManager {
     // 不收集状态快照：每个原谓词仍在原参数位置读取 World、gameOver 和日期。
     const manager = this;
     this.#rulePlan.cycleAdmission({
-      get world() { return manager.world; },
-      get state() { return manager.state; },
+      get world() {
+        return manager.world;
+      },
+      get state() {
+        return manager.state;
+      },
     });
     if (this.state.gameOver) {
       return this.getSnapshot();
@@ -382,22 +398,30 @@ export class PhaseManager {
       this.state.phase === Phase.Night &&
       !this.state.gameOver &&
       this.phaseRevision.current === nightRevision;
-    const setupSequence = prepareGameSetup({
-      world: () => this.world,
-      toolGateway: () => this.toolGateway,
-      events: () => this.events,
-      config: () => this.config,
-    }, actionProvider, nightDay, nightIsCurrent);
+    const setupSequence = prepareGameSetup(
+      {
+        world: () => this.world,
+        toolGateway: () => this.toolGateway,
+        events: () => this.events,
+        config: () => this.config,
+      },
+      actionProvider,
+      nightDay,
+      nightIsCurrent,
+    );
     let setupStep = setupSequence.next();
     // 只等待原窗口的 execute；四项都已就绪时不让出微任务，阶段当前性也不额外查询。
     while (!setupStep.done) setupStep = setupSequence.next(await setupStep.value);
     if (!setupStep.value) return this.getSnapshot();
     assertDemonOriginalRoster(this.world);
     // 夜前只捕获同一熊 frame；原 World／policy 读取保持晚读，不提前发表或授予许可。
-    const bearFrame = captureDawnKnowledge({
-      world: () => this.world,
-      signalPolicy: () => this.config.bear?.signalPolicy,
-    }, nightDay);
+    const bearFrame = captureDawnKnowledge(
+      {
+        world: () => this.world,
+        signalPolicy: () => this.config.bear?.signalPolicy,
+      },
+      nightDay,
+    );
     const night = await this.nightPipeline.execute(this.config, actionProvider, this.state.day, {
       previousExile: this.previousExile,
       isCurrent: nightIsCurrent,
@@ -413,20 +437,31 @@ export class PhaseManager {
     const ownsEvilKnight = this.config.evilKnight !== undefined;
     if (ownsWedding || ownsDemon || ownsPureWhite || ownsEvilKnight) {
       try {
-        const { deaths, sources, originalLives, sourceDamage, livingBeforeChain } = prepareSpecialNightDamage(
-          {
-            get world() { return manager.world; },
-            get config() { return manager.config; },
-            get events() { return manager.events; },
-            get nightFaultPlan() { return manager.nightFaultPlan; },
-            assertReadable() { manager.assertDemonReadable(); },
-          },
-          night,
-          nightDay,
-          ownsWedding,
-          ownsDemon,
-          lifecycle,
-        );
+        const { deaths, sources, originalLives, sourceDamage, livingBeforeChain } =
+          prepareSpecialNightDamage(
+            {
+              get world() {
+                return manager.world;
+              },
+              get config() {
+                return manager.config;
+              },
+              get events() {
+                return manager.events;
+              },
+              get nightFaultPlan() {
+                return manager.nightFaultPlan;
+              },
+              assertReadable() {
+                manager.assertDemonReadable();
+              },
+            },
+            night,
+            nightDay,
+            ownsWedding,
+            ownsDemon,
+            lifecycle,
+          );
         await this.deathResolution.resolve(
           deaths,
           sources,
@@ -446,13 +481,27 @@ export class PhaseManager {
         );
         this.assertDemonReadable();
         if (!nightIsCurrent()) return this.getSnapshot();
-        const expirySettlement = settleRedMoonExpiry({
-          get world() { return manager.world; },
-          get events() { return manager.events; },
-          get registry() { return manager.conditionRegistry; },
-          get config() { return manager.config; },
-          get checkpoint() { return manager.#rulePlan.checkpoints.nightSettled; },
-        }, ownsDemon, nightDay);
+        const expirySettlement = settleRedMoonExpiry(
+          {
+            get world() {
+              return manager.world;
+            },
+            get events() {
+              return manager.events;
+            },
+            get registry() {
+              return manager.conditionRegistry;
+            },
+            get config() {
+              return manager.config;
+            },
+            get checkpoint() {
+              return manager.#rulePlan.checkpoints.nightSettled;
+            },
+          },
+          ownsDemon,
+          nightDay,
+        );
         const expiryStep = expirySettlement.next();
         let beforeExpiryResult = expiryStep.done ? expiryStep.value : null;
         if (!expiryStep.done) {
@@ -464,7 +513,11 @@ export class PhaseManager {
             Phase.Night,
             Phase.Night,
             {},
-            { nightOriginIds: [expiryActor], isCurrent: nightIsCurrent, execution: { night: nightUnitOf(night), phaseRevision: nightRevision } },
+            {
+              nightOriginIds: [expiryActor],
+              isCurrent: nightIsCurrent,
+              execution: { night: nightUnitOf(night), phaseRevision: nightRevision },
+            },
           );
           this.assertDemonReadable();
           if (!nightIsCurrent()) return this.getSnapshot();
@@ -517,21 +570,44 @@ export class PhaseManager {
     let nightSettled = ownsWedding || ownsDemon || ownsPureWhite || ownsEvilKnight;
     if (night.mistDelay) {
       this.mistPending = prepareMistDelayedNight({
-        get world() { return manager.world; },
-        get cycleDay() { return cycleDay; },
-        get night() { return night; },
+        get world() {
+          return manager.world;
+        },
+        get cycleDay() {
+          return cycleDay;
+        },
+        get night() {
+          return night;
+        },
       });
     }
     const settleMist = async (alreadyClaimed = false, interrupted = false): Promise<boolean> => {
       if (nightSettled) return this.state.gameOver;
-      const settlement = settleMistDelayedNight({
-        get pending() { return manager.mistPending; },
-        get world() { return manager.world; },
-        get events() { return manager.events; },
-        get toolGateway() { return manager.toolGateway; },
-        get lifecycle() { return lifecycle; },
-        get cycleDay() { return cycleDay; },
-      }, actionProvider, dayIsCurrent, alreadyClaimed);
+      const settlement = settleMistDelayedNight(
+        {
+          get pending() {
+            return manager.mistPending;
+          },
+          get world() {
+            return manager.world;
+          },
+          get events() {
+            return manager.events;
+          },
+          get toolGateway() {
+            return manager.toolGateway;
+          },
+          get lifecycle() {
+            return lifecycle;
+          },
+          get cycleDay() {
+            return cycleDay;
+          },
+        },
+        actionProvider,
+        dayIsCurrent,
+        alreadyClaimed,
+      );
       // 两个协议位置固定：第一次只有原蛇 Promise，第二次交原伤害和同一 current 闭包。
       const healed = await (settlement.next().value as Promise<number | null>);
       const { damage, current } = settlement.next(healed).value as MistPreparedNightDamage;
@@ -569,14 +645,29 @@ export class PhaseManager {
       nightSettled = true;
       // 只装配晚读视图；准备抛错仍保上面的完成标志，尚未进入原 DR try/finally。
       const ordinaryNightRuntime = {
-        get world() { return manager.world; },
-        get night() { return night; },
-        get config() { return manager.config; },
+        get world() {
+          return manager.world;
+        },
+        get night() {
+          return night;
+        },
+        get config() {
+          return manager.config;
+        },
         // 名单在原经理方法 callee 之后求值，动物配置和逐原因匹配不能提前读。
-        publishNightResolved(deaths: () => EntityId[]) { return manager.emitNightResolved(deaths()); },
+        publishNightResolved(deaths: () => EntityId[]) {
+          return manager.emitNightResolved(deaths());
+        },
       };
-      const { sourceDamage, originalLives, retainedSources, nightDeaths, sources, deaths, deathPhases } =
-        prepareOrdinaryNightDeaths(ordinaryNightRuntime, blast);
+      const {
+        sourceDamage,
+        originalLives,
+        retainedSources,
+        nightDeaths,
+        sources,
+        deaths,
+        deathPhases,
+      } = prepareOrdinaryNightDeaths(ordinaryNightRuntime, blast);
       try {
         await this.deathResolution.resolve(
           deaths,
@@ -591,7 +682,11 @@ export class PhaseManager {
             isCurrent: dayIsCurrent,
             originalLives,
             poisonRoutes: damagePoisonRoutes(sourceDamage!),
-            execution: { night: nightUnitOf(night), exile: skippedUnit, phaseRevision: dayRevision },
+            execution: {
+              night: nightUnitOf(night),
+              exile: skippedUnit,
+              phaseRevision: dayRevision,
+            },
             ...(animalSkip ? { animalUnit: animalSkip } : {}),
             ...ordinaryNightDeathPublication(ordinaryNightRuntime, nightDeaths, retainedSources),
           },
@@ -602,18 +697,26 @@ export class PhaseManager {
       }
       if (!dayIsCurrent()) return this.state.gameOver;
       if (animalSkip) {
-        completeAndPublishAnimalExileUnit({
-          world: () => this.world,
-          events: () => this.events,
-          day: () => cycleDay,
-        }, () => animalSkip!);
+        completeAndPublishAnimalExileUnit(
+          {
+            world: () => this.world,
+            events: () => this.events,
+            day: () => cycleDay,
+          },
+          () => animalSkip!,
+        );
       }
       // 原死亡波／清理和当前性之后，串行发表熊→Animal 知识→Beauty 通知，再进入原判胜。
-      publishDawnKnowledge(bearFrame, {
-        world: () => this.world,
-        events: () => this.events,
-        animalDream: () => this.config.animalDream,
-      }, cycleDay, dayIsCurrent);
+      publishDawnKnowledge(
+        bearFrame,
+        {
+          world: () => this.world,
+          events: () => this.events,
+          animalDream: () => this.config.animalDream,
+        },
+        cycleDay,
+        dayIsCurrent,
+      );
       return this.checkAndSealResult(
         blast !== undefined
           ? this.#rulePlan.checkpoints.dayInterrupted
@@ -656,7 +759,10 @@ export class PhaseManager {
             Phase.Day,
             Phase.Day,
             {},
-            { isCurrent: dayIsCurrent, execution: { exile: skippedUnit, phaseRevision: dayRevision } },
+            {
+              isCurrent: dayIsCurrent,
+              execution: { exile: skippedUnit, phaseRevision: dayRevision },
+            },
           );
           if (dayIsCurrent()) await settleMist(true, true);
         } else if (!nightSettled) await settleNight(blast, animalSkip, skippedUnit);
@@ -668,14 +774,21 @@ export class PhaseManager {
             Phase.Day,
             Phase.Day,
             {},
-            { isCurrent: dayIsCurrent, execution: { exile: skippedUnit, phaseRevision: dayRevision }, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
+            {
+              isCurrent: dayIsCurrent,
+              execution: { exile: skippedUnit, phaseRevision: dayRevision },
+              ...(animalSkip ? { animalUnit: animalSkip } : {}),
+            },
           );
           if (animalSkip) {
-            completeAndPublishAnimalExileUnit({
-              world: () => this.world,
-              events: () => this.events,
-              day: () => cycleDay,
-            }, () => animalSkip!);
+            completeAndPublishAnimalExileUnit(
+              {
+                world: () => this.world,
+                events: () => this.events,
+                day: () => cycleDay,
+              },
+              () => animalSkip!,
+            );
           }
         }
         return true;
@@ -684,14 +797,29 @@ export class PhaseManager {
         ? { afterSheriffElection: () => settleNight() }
         : {}),
       commitKnightDuel: async (choice) => {
-        const settlement = settleKnightDay({
-          get world() { return manager.world; },
-          get events() { return manager.events; },
-          get isCurrent() { return dayIsCurrent; },
-          get nightSettled() { return nightSettled; },
-          get dayRevision() { return dayRevision; },
-          checkResult() { return manager.checkAndSealResult(manager.#rulePlan.checkpoints.dayInterrupted); },
-        }, choice);
+        const settlement = settleKnightDay(
+          {
+            get world() {
+              return manager.world;
+            },
+            get events() {
+              return manager.events;
+            },
+            get isCurrent() {
+              return dayIsCurrent;
+            },
+            get nightSettled() {
+              return nightSettled;
+            },
+            get dayRevision() {
+              return dayRevision;
+            },
+            checkResult() {
+              return manager.checkAndSealResult(manager.#rulePlan.checkpoints.dayInterrupted);
+            },
+          },
+          choice,
+        );
         const step = settlement.next();
         if (step.done) return step.value;
         // 只交原提案／元数据引用；DR callee在原参数前读取，deaths和sources不在yield时提前消费。
@@ -757,14 +885,21 @@ export class PhaseManager {
           Phase.Voting,
           Phase.Voting,
           {},
-          { isCurrent: votingIsCurrent, execution: { exile: skippedUnit, phaseRevision: votingRevision }, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
+          {
+            isCurrent: votingIsCurrent,
+            execution: { exile: skippedUnit, phaseRevision: votingRevision },
+            ...(animalSkip ? { animalUnit: animalSkip } : {}),
+          },
         );
         if (animalSkip) {
-          completeAndPublishAnimalExileUnit({
-            world: () => this.world,
-            events: () => this.events,
-            day: () => cycleDay,
-          }, () => animalSkip!);
+          completeAndPublishAnimalExileUnit(
+            {
+              world: () => this.world,
+              events: () => this.events,
+              day: () => cycleDay,
+            },
+            () => animalSkip!,
+          );
         }
         return true;
       },
@@ -791,20 +926,37 @@ export class PhaseManager {
         Phase.Voting,
         Phase.Voting,
         {},
-        { isCurrent: votingIsCurrent, animalUnit: votingResult.animalUnit, execution: { exile: exileUnitOf(votingResult), phaseRevision: votingRevision } },
+        {
+          isCurrent: votingIsCurrent,
+          animalUnit: votingResult.animalUnit,
+          execution: { exile: exileUnitOf(votingResult), phaseRevision: votingRevision },
+        },
       );
       if (!votingIsCurrent()) return this.getSnapshot();
-      completeAndPublishAnimalExileUnit({
-        world: () => this.world,
-        events: () => this.events,
-        day: () => cycleDay,
-      }, () => votingResult.animalUnit!);
-      this.previousExile = captureAnimalExileFeedback(() => this.world, votingResult, sources, cycleDay);
+      completeAndPublishAnimalExileUnit(
+        {
+          world: () => this.world,
+          events: () => this.events,
+          day: () => cycleDay,
+        },
+        () => votingResult.animalUnit!,
+      );
+      this.previousExile = captureAnimalExileFeedback(
+        () => this.world,
+        votingResult,
+        sources,
+        cycleDay,
+      );
     } else if (votingResult.removed.length > 0) {
       // 普通放逐在死亡波前捕获末狼／目标侧；动物分支不借此特殊胜利候选。
       const { target, candidate } = prepareBeautyExileVictory(votingResult, () => this.world);
       beautyCandidate = candidate;
-      this.previousExile = captureOrdinaryExileFeedback(() => this.world, votingResult, target, cycleDay);
+      this.previousExile = captureOrdinaryExileFeedback(
+        () => this.world,
+        votingResult,
+        target,
+        cycleDay,
+      );
       const sources = prepareOrdinaryExileDeaths(votingResult);
       await this.deathResolution.resolve(
         votingResult.removed,
@@ -813,7 +965,10 @@ export class PhaseManager {
         Phase.Voting,
         Phase.Voting,
         {},
-        { isCurrent: votingIsCurrent, execution: { exile: exileUnitOf(votingResult), phaseRevision: votingRevision } },
+        {
+          isCurrent: votingIsCurrent,
+          execution: { exile: exileUnitOf(votingResult), phaseRevision: votingRevision },
+        },
       );
     }
     if (!votingIsCurrent()) return this.getSnapshot();
@@ -871,7 +1026,11 @@ export class PhaseManager {
       overrides,
     );
     if (!result) return false;
-    this.sealResult(TERMINAL_VICTORY_POLICY.replaceFactionResult(this.world, result), checkpoint, this.state.phase);
+    this.sealResult(
+      TERMINAL_VICTORY_POLICY.replaceFactionResult(this.world, result),
+      checkpoint,
+      this.state.phase,
+    );
     return true;
   }
 

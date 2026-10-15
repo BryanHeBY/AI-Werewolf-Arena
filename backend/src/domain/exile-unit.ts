@@ -31,5 +31,7 @@ export function attachExileUnit<T extends object>(result: T, unit: ExileUnit): T
 }
 /** 品牌只关联结果身份，未保存另一份世界状态；外来对象不会反射新 Symbol。 */
 export function exileUnitOf(result: object): ExileUnit | undefined {
-  return results.has(result) && !types.isProxy(result) ? (result as ExileBound)[EXILE_UNIT] : undefined;
+  return results.has(result) && !types.isProxy(result)
+    ? (result as ExileBound)[EXILE_UNIT]
+    : undefined;
 }

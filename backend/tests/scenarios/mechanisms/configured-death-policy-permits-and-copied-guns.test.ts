@@ -214,8 +214,6 @@ for (const kind of [Role.MechanicalWolf, Role.AwakenedHiddenWolf] as const)
     expect(
       events.filter((e) => e.type === "mechanical_shot" || e.type === "player_shot"),
     ).toHaveLength(1);
-    expect(
-      getHunterState(game.world.getComponent(2, COMPONENT.Role)!)?.canShoot,
-    ).toBe(true);
+    expect(getHunterState(game.world.getComponent(2, COMPONENT.Role)!)?.canShoot).toBe(true);
     expect(game.world.activeDeathActionCount).toBe(0);
   });

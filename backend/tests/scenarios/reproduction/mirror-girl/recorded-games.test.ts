@@ -6,7 +6,11 @@
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { MIRROR_CASES, mirrorScenario, type MirrorScenario } from "../../../support/features/mirror-girl/builders/scenario";
+import {
+  MIRROR_CASES,
+  mirrorScenario,
+  type MirrorScenario,
+} from "../../../support/features/mirror-girl/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 
 const facts: Record<

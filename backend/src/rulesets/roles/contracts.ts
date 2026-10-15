@@ -71,7 +71,13 @@ export interface RoleRuntimeContribution {
   participation?:
     | { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean }
     | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
-  wolfTeam?: WolfTeamPermissions | ((role: RoleComponent, world: World | undefined, currentCamp: CurrentCampSource) => WolfTeamPermissions);
+  wolfTeam?:
+    | WolfTeamPermissions
+    | ((
+        role: RoleComponent,
+        world: World | undefined,
+        currentCamp: CurrentCampSource,
+      ) => WolfTeamPermissions);
   /** 特定时点获知队友的角色，显式保留其已有知识。 */
   knownTeammates?: (role: RoleComponent, world: World) => readonly number[];
   /** 显式公开自爆资格，独立于阵营及刀权。 */
@@ -124,7 +130,12 @@ export interface RoleContributions {
 
 /** 明确支持的用户 flat 输入；读取与调用仍针对原对象，不经复制或强制规范化。 */
 export interface RoleProfile extends RoleMetadata, RoleRuntimeContribution {
-  renderPrompt?: (roleComp: RoleComponent, locale: Locale | undefined, world: World | undefined, currentCamp: CurrentCampSource) => string;
+  renderPrompt?: (
+    roleComp: RoleComponent,
+    locale: Locale | undefined,
+    world: World | undefined,
+    currentCamp: CurrentCampSource,
+  ) => string;
 }
 
 /** 内建 55 个角色均有原生展示声明，不能被宽化为可缺失原生 ID 的自定义分支。 */

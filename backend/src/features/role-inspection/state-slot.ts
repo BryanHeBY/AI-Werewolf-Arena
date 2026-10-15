@@ -13,7 +13,11 @@ import type {
 import type { RoleComponent } from "../../domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
 import type { InspectionResult } from "@ai-werewolf-arena/game-contract";
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import {
+  copyAbilityData,
+  findNightAbility,
+  type NightAbilityReadView,
+} from "../night-abilities/inventory-ports";
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 

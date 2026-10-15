@@ -81,9 +81,7 @@ for (const rule of Object.values(WitchSelfHealRule))
       const gateway = new ToolGateway();
       const witch = game.world.getComponent(2, COMPONENT.Role)!;
       expect(getWitchState(witch)?.selfHealRule).toBe(rule);
-      game.world
-        .getComponent(2, COMPONENT.StatusMarks)!
-        .add(StatusMark.WolfKillMark);
+      game.world.getComponent(2, COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
       for (const day of [1, 2]) {
         expect(
           gateway.validateAndSanitize(

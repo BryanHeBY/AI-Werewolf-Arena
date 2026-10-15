@@ -435,10 +435,8 @@ for (const locale of ["zh-CN", "en"] as const)
   for (const action of ["speak_to_wolves", "kill_vote"] as const)
     test(`${locale}: SDK and ACP providers use the injected role catalog for prompts, reception and local fallback (${action})`, async () => {
       const { RoleCatalog } = await import("../../../../src/rulesets/roles/catalog");
-      const { LlmActionProvider } =
-        await import("../../../../src/agents/llm/llm-action-provider");
-      const { AcpActionProvider } =
-        await import("../../../../src/agents/acp/acp-action-provider");
+      const { LlmActionProvider } = await import("../../../../src/agents/llm/llm-action-provider");
+      const { AcpActionProvider } = await import("../../../../src/agents/acp/acp-action-provider");
       const { BaselineBotActionProvider } =
         await import("../../../../src/agents/baseline/privileged");
       const catalog = createRoleCatalog({
@@ -653,8 +651,10 @@ for (const locale of ["zh-CN", "en"] as const)
     });
     const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }),
       acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
-    sdk.world.getComponent(5, COMPONENT.Camp)!.camp =
-      acp.world.getComponent(5, COMPONENT.Camp)!.camp = Camp.Wolf;
+    sdk.world.getComponent(5, COMPONENT.Camp)!.camp = acp.world.getComponent(
+      5,
+      COMPONENT.Camp,
+    )!.camp = Camp.Wolf;
     const input: ActionRequest = {
       actorId: 1,
       phase: Phase.Day,
@@ -768,12 +768,9 @@ for (const locale of ["zh-CN", "en"] as const)
     try {
       for (const turn of [1, 2, 3]) {
         // 原机器标记字符串保持原样；断言仅说明领域 enum 类型，不改变实际标记或工具输入。
-    for (const game of [sdk, acp])
+        for (const game of [sdk, acp])
           (
-            game.world.getComponent(5, COMPONENT.Role)!.privateState as Record<
-              string,
-              unknown
-            >
+            game.world.getComponent(5, COMPONENT.Role)!.privateState as Record<string, unknown>
           ).revealed = turn === 2;
         expect(await sdkProvider.getAction(input)).toEqual({
           name: "speak",
@@ -909,12 +906,8 @@ for (const locale of ["zh-CN", "en"] as const)
         args: { target_id: 9, potion_type: PotionType.Heal },
       });
       expect(await pending.action).toEqual(result.action);
-      expect(getWitchState(sdk.world.getComponent(6, COMPONENT.Role)!)!.heal).toBe(
-        1,
-      );
-      expect(getWitchState(acp.world.getComponent(6, COMPONENT.Role)!)!.heal).toBe(
-        1,
-      );
+      expect(getWitchState(sdk.world.getComponent(6, COMPONENT.Role)!)!.heal).toBe(1);
+      expect(getWitchState(acp.world.getComponent(6, COMPONENT.Role)!)!.heal).toBe(1);
       if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
     } finally {
       registry.close();
@@ -928,8 +921,7 @@ for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: actual SDK HTTP and MCP accept explicit empty gun after rejecting an invalid target`, async () => {
     const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }),
       acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
-    for (const game of [sdk, acp])
-      game.world.getComponent(7, COMPONENT.Alive)!.alive = false;
+    for (const game of [sdk, acp]) game.world.getComponent(7, COMPONENT.Alive)!.alive = false;
     const sdkPermit = sdk.world.openDeathAction(7, "shoot", Phase.Day, 1),
       acpPermit = acp.world.openDeathAction(7, "shoot", Phase.Day, 1);
     const input: ActionRequest = {
@@ -1027,12 +1019,8 @@ for (const locale of ["zh-CN", "en"] as const)
       ]);
       expect(result.action).toEqual({ name: "shoot", args: { target_id: null } });
       expect(await pending.action).toEqual(result.action);
-      expect(
-        getHunterState(sdk.world.getComponent(7, COMPONENT.Role)!)!.canShoot,
-      ).toBe(true);
-      expect(
-        getHunterState(acp.world.getComponent(7, COMPONENT.Role)!)!.canShoot,
-      ).toBe(true);
+      expect(getHunterState(sdk.world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(true);
+      expect(getHunterState(acp.world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(true);
       if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
     } finally {
       sdkPermit.close();
@@ -1048,8 +1036,7 @@ for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: actual SDK HTTP and stdio MCP reject a gifted-instance request borrowing a native gun permit`, async () => {
     const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }),
       acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
-    for (const game of [sdk, acp])
-      game.world.getComponent(7, COMPONENT.Alive)!.alive = false;
+    for (const game of [sdk, acp]) game.world.getComponent(7, COMPONENT.Alive)!.alive = false;
     const sdkPermit = sdk.world.openDeathAction(7, "shoot", Phase.Day, 1),
       acpPermit = acp.world.openDeathAction(7, "shoot", Phase.Day, 1);
     const input: ActionRequest = {
@@ -1160,9 +1147,7 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(result.failureCode).toBe("turn_invalid_action_limit");
       expect(await pending.action).toBeNull();
       for (const game of [sdk, acp]) {
-        expect(
-          getHunterState(game.world.getComponent(7, COMPONENT.Role)!)!.canShoot,
-        ).toBe(true);
+        expect(getHunterState(game.world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(true);
         expect(game.world.getAliveEntityIds()).toContain(1);
       }
       if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
@@ -1317,12 +1302,11 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(await pending.action).toBeNull();
         for (const game of [sdk, acp]) {
           expect(game.world.getComponent(8, COMPONENT.Alive)!.alive).toBe(true);
-          expect(
-            game.world.getComponent(8, COMPONENT.VotingRight),
-          ).toMatchObject({ canVote: false, weight: 0 });
-          expect(
-            game.world.getComponent(9, COMPONENT.Badge)!.isSheriff,
-          ).toBe(false);
+          expect(game.world.getComponent(8, COMPONENT.VotingRight)).toMatchObject({
+            canVote: false,
+            weight: 0,
+          });
+          expect(game.world.getComponent(9, COMPONENT.Badge)!.isSheriff).toBe(false);
         }
         if (locale === "en") expect(JSON.stringify(receipt)).not.toMatch(/\p{Script=Han}/u);
       } finally {
@@ -1445,9 +1429,7 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(result.action).toEqual({ name: "choose_badge_successor", args: { target_id: 9 } });
       expect(await pending.action).toEqual(result.action);
       for (const game of [sdk, acp])
-        expect(game.world.getComponent(7, COMPONENT.Badge)?.isSheriff).toBe(
-          true,
-        );
+        expect(game.world.getComponent(7, COMPONENT.Badge)?.isSheriff).toBe(true);
       sdkPermit.close();
       acpPermit.close();
       expect(

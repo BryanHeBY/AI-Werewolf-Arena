@@ -8,13 +8,7 @@
 import type { LastWordsPolicy } from "../../domain/board";
 import { AliveComponent } from "../../domain/components/alive";
 import { COMPONENT } from "../../domain/components/names";
-import {
-  EntityId,
-  GameEvent,
-  Phase,
-  DeathCause,
-  type DeathSources,
-} from "../../domain/model";
+import { EntityId, GameEvent, Phase, DeathCause, type DeathSources } from "../../domain/model";
 import { World } from "../../domain/world";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 export interface LastWordsGrantContext {

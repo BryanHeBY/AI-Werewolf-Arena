@@ -9,7 +9,11 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { hasActiveGhostBride, ghostBrideReady } from "../features/ghost-bride/ports";
 import { hasActiveLonelyGirl, lonelyGirlReady } from "../features/lonely-girl/ports";
 import { hasActiveWildChild, wildChildReady } from "../features/wild-child/ports";
-import { hasActiveInitialIdentitySetup, initialIdentitySetupReady, initialIdentityKind } from "../features/initial-identity/ports";
+import {
+  hasActiveInitialIdentitySetup,
+  initialIdentitySetupReady,
+  initialIdentityKind,
+} from "../features/initial-identity/ports";
 import { animalAuthoritySnapshot } from "../features/animal-dream/ports";
 import { fragrantAuthoritySnapshot } from "../features/fragrant-pair-seer/ports";
 import { assertNobleBodyRosterCurrent } from "../features/noble-secret-body/ports";
@@ -26,11 +30,16 @@ import { assertDemonNightReadable } from "../features/demon-hunter/ports";
 import { demonWitchMarksSafe } from "../features/demon-hunter/ports";
 
 /** 只在原位置读取实际 World；不在创建查询对象时启动任何设置或反射玩家组件。 */
-export interface NightSetupRuntime { world(): World; }
+export interface NightSetupRuntime {
+  world(): World;
+}
 
 /** 归属是本次生命周期已捕获的值，参数仍来自原局部 config；不是可序列化的授权或新库存快照。 */
 export interface NightReadabilityRuntime extends NightSetupRuntime {
-  config(): Pick<ReadonlyBoardConfig, "trickster" | "wolfSorcerer" | "timeConsort" | "scholarMentor" | "magician">;
+  config(): Pick<
+    ReadonlyBoardConfig,
+    "trickster" | "wolfSorcerer" | "timeConsort" | "scholarMentor" | "magician"
+  >;
   ownsAnimal(): boolean;
   ownsFragrant(): boolean;
   ownsNoble(): boolean;
@@ -47,7 +56,9 @@ export function assertNightSetupReady(runtime: NightSetupRuntime): void {
   if (hasActiveWildChild(runtime.world()) || !wildChildReady(runtime.world()))
     throw new Error("wild_child_setup_before_night_required");
   if (hasActiveInitialIdentitySetup(runtime.world()) || !initialIdentitySetupReady(runtime.world()))
-    throw new Error(`${initialIdentityKind(runtime.world()) ?? "thief"}_setup_before_night_required`);
+    throw new Error(
+      `${initialIdentityKind(runtime.world()) ?? "thief"}_setup_before_night_required`,
+    );
 }
 
 /** 每个检查点重新遍历既有权威；关闭与失败清理由流水线及生命周期 owner 负责。 */
@@ -67,6 +78,11 @@ export function assertNightReadable(runtime: NightReadabilityRuntime): void {
   assertEvilKnightRosterCurrent(runtime.world());
   if (!runtime.ownsDemon()) return;
   assertDemonNightReadable(runtime.world());
-  if (!runtime.world().entityIds().every((id) => demonWitchMarksSafe(runtime.world(), id)))
+  if (
+    !runtime
+      .world()
+      .entityIds()
+      .every((id) => demonWitchMarksSafe(runtime.world(), id))
+  )
     throw new Error("demon_hunter_unreadable_marks");
 }

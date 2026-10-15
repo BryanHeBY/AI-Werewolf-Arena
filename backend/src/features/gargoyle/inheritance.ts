@@ -12,7 +12,11 @@ import type { World } from "../../domain/world";
 import { getGargoyleState, recordGargoyleKnifeInheritance } from "./state";
 import { completedGargoyleInspection } from "../role-inspection/night-commit-ports";
 
-export function canGargoyleKnife(role: RoleComponent, world: World | undefined, currentCamp: CurrentCampSource): boolean {
+export function canGargoyleKnife(
+  role: RoleComponent,
+  world: World | undefined,
+  currentCamp: CurrentCampSource,
+): boolean {
   if (
     !world ||
     role.role !== Role.Gargoyle ||
@@ -21,21 +25,17 @@ export function canGargoyleKnife(role: RoleComponent, world: World | undefined, 
     !completedGargoyleInspection(world, role)
   )
     return false;
-  const wolves = world
-    .getAliveEntityIds()
-    .filter((id) => {
-      const role = world.getComponent(id, COMPONENT.Role);
-      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
-    });
+  const wolves = world.getAliveEntityIds().filter((id) => {
+    const role = world.getComponent(id, COMPONENT.Role);
+    return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+  });
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 export function refreshGargoyleInheritance(world: World, events: GameEvent[], day: number): void {
-  const wolves = world
-    .getAliveEntityIds()
-    .filter((id) => {
-      const role = world.getComponent(id, COMPONENT.Role);
-      return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
-    });
+  const wolves = world.getAliveEntityIds().filter((id) => {
+    const role = world.getComponent(id, COMPONENT.Role);
+    return !!role && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.Wolf;
+  });
   if (wolves.length !== 1) return;
   const actorId = wolves[0]!,
     role = world.getComponent(actorId, COMPONENT.Role)!,

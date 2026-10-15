@@ -69,10 +69,7 @@ export function bearHistoryUnpublished(value: unknown, day: number): boolean {
 }
 
 /** 原 frame 已先写事件，此处再向受控 history 写原 report；不回滚首个写入或更新发布租约。 */
-export function recordDawnBearRoar(
-  history: unknown[],
-  report: BearState["history"][number],
-): void {
+export function recordDawnBearRoar(history: unknown[], report: BearState["history"][number]): void {
   Object.defineProperty(history, String(history.length), {
     value: report,
     enumerable: true,

@@ -11,7 +11,10 @@ import type { BearSignalPolicy, ReadonlyBoardConfig } from "@ai-werewolf-arena/g
 import type { GameEvent } from "../domain/events";
 import type { World } from "../domain/world";
 import { BearNightFrame } from "../features/bear/ports";
-import { noteAnimalBearPublication, appendAnimalBeautyNotice } from "../features/animal-dream/ports";
+import {
+  noteAnimalBearPublication,
+  appendAnimalBeautyNotice,
+} from "../features/animal-dream/ports";
 
 /** 每次在原表达式位置取真实引用；方法类型不是许可，不提前缓存 World、数组或配置。 */
 export interface DawnKnowledgeRuntime {
@@ -26,12 +29,7 @@ export function captureDawnKnowledge(
   runtime: Pick<DawnKnowledgeRuntime, "world" | "signalPolicy">,
   day: number,
 ): BearNightFrame | null {
-  return BearNightFrame.capture(
-    runtime.world(),
-    day,
-    undefined,
-    runtime.signalPolicy(),
-  );
+  return BearNightFrame.capture(runtime.world(), day, undefined, runtime.signalPolicy());
 }
 
 /**

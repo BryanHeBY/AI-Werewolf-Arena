@@ -15,7 +15,9 @@ for (const locale of ["en", "zh-CN"] as const)
     const replay = readReplayDocument(
       JSON.parse(
         readFileSync(
-          frontendFixtureURL(`frontend/tests/fixtures/radiant-failed-paid-potion-${locale}.replay.json`),
+          frontendFixtureURL(
+            `frontend/tests/fixtures/radiant-failed-paid-potion-${locale}.replay.json`,
+          ),
           "utf8",
         ),
       ),

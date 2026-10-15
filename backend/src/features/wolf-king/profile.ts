@@ -9,7 +9,11 @@ import { deathActionConfiguration, renderDeathActionPolicy } from "../death-acti
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, permitsDeathShot } from "../../domain/model";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
-import { getWolfKingState, setWolfKingState, createWolfKingState } from "../death-actions/native-resource-ports";
+import {
+  getWolfKingState,
+  setWolfKingState,
+  createWolfKingState,
+} from "../death-actions/native-resource-ports";
 import {
   DEATH_SHOT_TOOL_SPECS,
   DEATH_SHOT_REPAIR,
@@ -43,7 +47,10 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         ),
     },
     llmRepair: {
-      coerce: { ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce, ...DEATH_SHOT_REPAIR.coerce },
+      coerce: {
+        ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce,
+        ...DEATH_SHOT_REPAIR.coerce,
+      },
     },
     deathHook: (world, ids, sources, choose, events, context) =>
       resolveNativeDeathShots(
@@ -65,7 +72,15 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         },
         context,
       ),
-    baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale, _world, currentCamp) =>
+    baselineAction: (
+      role,
+      request,
+      pickAliveNotSelf,
+      pickAliveByCamp,
+      locale,
+      _world,
+      currentCamp,
+    ) =>
       request.allowedTools.includes("shoot")
         ? { name: "shoot", args: { target_id: pickAliveByCamp("good") ?? pickAliveNotSelf() } }
         : ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(

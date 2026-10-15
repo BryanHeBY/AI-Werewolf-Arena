@@ -8,7 +8,11 @@ import type { DreamerState, DreamerReadState } from "@ai-werewolf-arena/game-con
 
 import type { RoleComponent } from "../../domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import {
+  copyAbilityData,
+  findNightAbility,
+  type NightAbilityReadView,
+} from "../night-abilities/inventory-ports";
 import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 
 /** 初始化只复制原 JSON 并提交同一原生库存；连续目标和保护资格不是安装校验。 */

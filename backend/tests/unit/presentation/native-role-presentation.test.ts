@@ -96,7 +96,8 @@ test("custom contribution preserves init receiver and two late renderer getters 
     },
   });
   const context: RoleInitContext = {
-    initialCamp, currentCamp,
+    initialCamp,
+    currentCamp,
     get locale(): Locale {
       trace.push("locale");
       return "en";
@@ -121,7 +122,12 @@ test("native Witch prose keeps native-first stock even when the current action b
     id = world.createEntity();
   world.addComponent(id, COMPONENT.Role, role);
   world.addComponent(id, COMPONENT.Camp, initialCamp);
-  getDefaultRoleCatalog().applyRuntime(role, { world, locale: "en", initialCamp, currentCamp: () => world.getComponent(id, COMPONENT.Camp) });
+  getDefaultRoleCatalog().applyRuntime(role, {
+    world,
+    locale: "en",
+    initialCamp,
+    currentCamp: () => world.getComponent(id, COMPONENT.Camp),
+  });
   grantNightAbility(
     world,
     id,
@@ -159,11 +165,13 @@ test("Guard formatting failure happens before its late private-state read", () =
       throw failure;
     },
   });
-  expect(() => captureNativeRolePresentation("guard", role, "unknown" as Locale, undefined, currentCamp)).toThrow(
-    "i18n_locale_invalid",
-  );
+  expect(() =>
+    captureNativeRolePresentation("guard", role, "unknown" as Locale, undefined, currentCamp),
+  ).toThrow("i18n_locale_invalid");
   expect(reads).toEqual([]);
-  expect(() => captureNativeRolePresentation("guard", role, "en", undefined, currentCamp)).toThrow(failure);
+  expect(() => captureNativeRolePresentation("guard", role, "en", undefined, currentCamp)).toThrow(
+    failure,
+  );
   expect(reads).toEqual(["private"]);
 });
 
@@ -193,7 +201,11 @@ test("native contribution survives copied and inherited profiles without binding
   const original = getDefaultRoleContributions().find((item) => item.metadata.role === Role.Witch)!;
   for (const profile of [{ ...original }, Object.create(original) as RoleContributions]) {
     const role = createRoleComponent(Role.Witch, "en");
-    createRoleCatalog({ contributions: [profile] }).applyRuntime(role, { locale: "en", initialCamp, currentCamp });
+    createRoleCatalog({ contributions: [profile] }).applyRuntime(role, {
+      locale: "en",
+      initialCamp,
+      currentCamp,
+    });
     expect(renderRolePrompt(role)).toBe(
       "Your role is Witch. Antidote:1 Poison:1 AWA native knife disclosure: reveal the wolf target only while heal is usable tonight. AWA native potion policy: at most one potion per night.",
     );
@@ -207,7 +219,11 @@ test("a copied native contribution with an explicitly empty raw renderer keeps g
     presentation: { kind: "custom", renderPrompt: undefined },
   };
   const role = createRoleComponent(Role.Witch, "en");
-  createRoleCatalog({ contributions: [profile] }).applyRuntime(role, { locale: "en", initialCamp, currentCamp });
+  createRoleCatalog({ contributions: [profile] }).applyRuntime(role, {
+    locale: "en",
+    initialCamp,
+    currentCamp,
+  });
   expect(renderRolePrompt(role)).toBe("Your role is Witch. Follow the rules of this board.");
 });
 
@@ -225,7 +241,8 @@ test("native contribution proxy reads its explicit presentation before late Worl
   const role = createRoleComponent(Role.Witch, "en");
   const world = new World("en");
   createRoleCatalog({ contributions: [profile] }).applyRuntime(role, {
-    initialCamp, currentCamp,
+    initialCamp,
+    currentCamp,
     locale: "en",
     get world() {
       trace.push("world");
@@ -264,7 +281,8 @@ for (const mode of ["frozen", "setter"] as const)
       },
     };
     createRoleCatalog([profile]).applyRuntime(role, {
-      initialCamp, currentCamp,
+      initialCamp,
+      currentCamp,
       get locale(): Locale {
         trace.push("locale");
         return "en";

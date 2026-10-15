@@ -5,7 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  type ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 const full: ReproductionRecord = await radiantRecording();
 function prefix(day: number, stage: string, pending: boolean) {
   const r = structuredClone(full),

@@ -4,7 +4,10 @@
  * 这些 handler 不自行依据 _private 过滤输入；上游分派拥有受众，不在展示层组织讨论、计票或消费刀权。
  */
 import { text } from "@ai-werewolf-arena/game-text";
-import type { ScriptLiveRenderHandlers, ScriptChatLineHandlers } from "../../agents/presentation/contracts";
+import type {
+  ScriptLiveRenderHandlers,
+  ScriptChatLineHandlers,
+} from "../../agents/presentation/contracts";
 
 export const WOLF_SCRIPT_CHAT_HANDLERS: ScriptChatLineHandlers = {
   wolf_tactical_order: (event, locale = "zh-CN") =>

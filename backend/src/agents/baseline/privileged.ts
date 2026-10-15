@@ -10,17 +10,16 @@ import { prohibitsLoversVote } from "../../features/cupid/relation";
 import { text } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
-import {
-  ActionProvider,
-  ActionRequest,
-  Camp,
-  EntityId,
-  Phase,
-  Role,
-  ToolCall,
-} from "../../domain";
+import { ActionProvider, ActionRequest, Camp, EntityId, Phase, Role, ToolCall } from "../../domain";
 import { World } from "../../domain/world";
-import { RoleCatalog, getDefaultRoleCatalog, wolfTeamPermissions, allNightAbilities, activeNightAbility, ROLE_INSPECTION_POLICY_ROLES } from "../../rulesets/mechanism-api";
+import {
+  RoleCatalog,
+  getDefaultRoleCatalog,
+  wolfTeamPermissions,
+  allNightAbilities,
+  activeNightAbility,
+  ROLE_INSPECTION_POLICY_ROLES,
+} from "../../rulesets/mechanism-api";
 import { canBeExiled, canBeSheriff, canVote } from "../../engine/participation";
 
 /**
@@ -184,7 +183,12 @@ export class BaselineBotActionProvider implements ActionProvider {
       );
       if (action?.name === "speak_to_wolves" || action?.name === "kill_vote") {
         // 钩子选择之后再按当前身份、生命和夜间权限检查；选择工具并不授予狼聊或刀权。
-        const access = wolfTeamPermissions(role, this.roleCatalog, () => this.world.getComponent(request.actorId, COMPONENT.Camp), this.world);
+        const access = wolfTeamPermissions(
+          role,
+          this.roleCatalog,
+          () => this.world.getComponent(request.actorId, COMPONENT.Camp),
+          this.world,
+        );
         const permitted =
           action.name === "speak_to_wolves" ? access.canChat : access.canVoteForKill;
         if (

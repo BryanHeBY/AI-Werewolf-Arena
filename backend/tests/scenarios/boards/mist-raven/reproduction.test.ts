@@ -6,7 +6,10 @@
 import { expect, test } from "bun:test";
 import { Camp } from "../../../../src/domain";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  type ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 import { validateMistRavenRecord } from "../../../../src/recording/verification/mist-raven/validate";
 for (const variant of ["linked", "saved-dreamer", "protected-heal", "draw"] as const)
   for (const locale of ["en", "zh-CN"] as const)

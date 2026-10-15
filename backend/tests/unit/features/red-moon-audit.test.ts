@@ -42,19 +42,19 @@ test("Red Moon blast audit commits once and seals only the next night after deat
 for (const policy of ["ends_game", "forbidden"] as const)
   test(policy + ": last-wolf blast authority uses the actual live roster", () => {
     const { world } = dayWorld(policy);
-    for (const id of [1, 2, 3])
-      world.getComponent(id, COMPONENT.Alive)!.alive = false;
+    for (const id of [1, 2, 3]) world.getComponent(id, COMPONENT.Alive)!.alive = false;
     expect(commitDemonRedMoonTransition(world, 4, "blast", 1)).toBe(policy === "ends_game");
-    expect(getRedMoonState(world.getComponent(4, COMPONENT.Role), () => world.getComponent(4, COMPONENT.Camp))!.blastDay).toBe(
-      policy === "ends_game" ? 1 : null,
-    );
+    expect(
+      getRedMoonState(world.getComponent(4, COMPONENT.Role), () =>
+        world.getComponent(4, COMPONENT.Camp),
+      )!.blastDay,
+    ).toBe(policy === "ends_game" ? 1 : null);
     expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
   });
 test("Only last-wolf exile can defer; wrong phase and repeated transitions fail closed", () => {
   const { world } = dayWorld();
   expect(commitDemonRedMoonTransition(world, 4, "exile", 1)).toBe(false);
-  for (const id of [1, 2, 3])
-    world.getComponent(id, COMPONENT.Alive)!.alive = false;
+  for (const id of [1, 2, 3]) world.getComponent(id, COMPONENT.Alive)!.alive = false;
   expect(commitDemonRedMoonTransition(world, 4, "exile", 2)).toBe(false);
   expect(commitDemonRedMoonTransition(world, 4, "exile", 1)).toBe(true);
   expect(commitDemonRedMoonTransition(world, 4, "exile", 1)).toBe(false);
@@ -63,7 +63,9 @@ test("Only last-wolf exile can defer; wrong phase and repeated transitions fail 
 });
 test("Raw Red Moon inventory tampering cannot become an audited transition", () => {
   const { world } = dayWorld();
-  const state = getRedMoonState(world.getComponent(4, COMPONENT.Role), () => world.getComponent(4, COMPONENT.Camp))!;
+  const state = getRedMoonState(world.getComponent(4, COMPONENT.Role), () =>
+    world.getComponent(4, COMPONENT.Camp),
+  )!;
   (state as { lastWolfBlastPolicy: "ends_game" | "forbidden" }).lastWolfBlastPolicy = "forbidden";
   expect(commitDemonRedMoonTransition(world, 4, "blast", 1)).toBe(false);
   expect(() => demonHunterCheckpointPlayers(world, true)).toThrow();

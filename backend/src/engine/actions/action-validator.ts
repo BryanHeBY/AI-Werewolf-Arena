@@ -7,14 +7,11 @@ import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { AliveComponent } from "../../domain/components/alive";
 import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
+import { ActionWindow, EntityId, Phase, ToolCall, ToolValidationResult } from "../../domain/model";
 import {
-  ActionWindow,
-  EntityId,
-  Phase,
-  ToolCall,
-  ToolValidationResult,
-} from "../../domain/model";
-import { getDefaultToolValidationRuleRegistry, ToolValidationRuleRegistry } from "../../rulesets/mechanism-api";
+  getDefaultToolValidationRuleRegistry,
+  ToolValidationRuleRegistry,
+} from "../../rulesets/mechanism-api";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
 import { World } from "../../domain/world";
 

@@ -21,6 +21,5 @@ export function createVotingRightComponent(
   return {
     weight,
     canVote,
-
   };
 }

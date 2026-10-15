@@ -11,7 +11,6 @@ import { createDefaultRoleRegistry } from "../../../src/rulesets/mechanism-api";
 import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 
 describe("sheriff pipeline", () => {
-
   test("day pipeline elects sheriff on day 1", async () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [

@@ -57,7 +57,12 @@ function bind(world: World, actorId: number, gun: DeathGun, sourceRole: RoleComp
   const role = world.getComponent(actorId, COMPONENT.Role),
     life = world.getComponent(actorId, COMPONENT.Alive),
     version = life && aliveLifeVersion(life);
-  if (!role || world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good || !life?.alive || version === undefined)
+  if (
+    !role ||
+    world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Good ||
+    !life?.alive ||
+    version === undefined
+  )
     throw new Error("death_ability_owner_invalid");
   // 这是新赠枪绑定入口；只否决退休演员，原体／已付提案复验仍由不含墓碑的 ownerCurrent 执行。
   if (isRoleExecutionRetired(role) || isRoleExecutionRetired(sourceRole))
@@ -377,10 +382,9 @@ export function transferDeathGun(
   // 复制／绑定的原 getter 后才到目标库存写点；退休双端只拒新转移，不否定已消费枪的原体证明。
   if (isRoleExecutionRetired(source!) || isRoleExecutionRetired(target))
     throw new Error("death_ability_transfer_invalid");
-  const targetStored = (
-    ((target.privateState as { deathAbilities?: Record<string, DeathGun> }).deathAbilities ??=
-      {}) as Record<string, DeathGun>
-  );
+  const targetStored = ((
+    target.privateState as { deathAbilities?: Record<string, DeathGun> }
+  ).deathAbilities ??= {}) as Record<string, DeathGun>;
   // 原目标容器已求值；只在实际实例写入前复验，不回滚此前证明或空字典。
   if (isRoleExecutionRetired(source!) || isRoleExecutionRetired(target))
     throw new Error("death_ability_transfer_invalid");

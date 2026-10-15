@@ -44,12 +44,13 @@ function fixture(firstNight: 1 | 2 = 1, shot: "original" | "exchanged" = "exchan
       } as unknown as RoleComponent,
     ],
     ...[3, 4, 5, 6].map(
-      (id) =>
-        [id, { role: "villager", privateState: {} } as RoleComponent] as const,
+      (id) => [id, { role: "villager", privateState: {} } as RoleComponent] as const,
     ),
   ]);
   // 独立实际Camp组件输入；Role只保角色和原privateState，名单历史仍按原时点捕获。
-  const camps = new Map([...roles.keys()].map((id) => [id, { camp: id === 2 ? Camp.Wolf : Camp.Good }]));
+  const camps = new Map(
+    [...roles.keys()].map((id) => [id, { camp: id === 2 ? Camp.Wolf : Camp.Good }]),
+  );
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const identities = new Map(
     [...roles.keys()].map((id) => [
@@ -64,11 +65,11 @@ function fixture(firstNight: 1 | 2 = 1, shot: "original" | "exchanged" = "exchan
         ? camps.get(id)
         : kind === COMPONENT.Role
           ? roles.get(id)
-        : kind === COMPONENT.Alive
-          ? lives.get(id)
-          : kind === COMPONENT.Identity
-            ? identities.get(id)
-            : undefined,
+          : kind === COMPONENT.Alive
+            ? lives.get(id)
+            : kind === COMPONENT.Identity
+              ? identities.get(id)
+              : undefined,
   } as unknown as World;
   installMagicianBoard(world);
   installWolfSorcererBoard(world);
@@ -200,7 +201,9 @@ test("Wolf Sorcerer retains learned pack identities before later exchanges", () 
   });
   f.close(1);
   f.begin(2);
-  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp)).recognizes).toBe("none");
+  expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp)).recognizes).toBe(
+    "none",
+  );
   commitMagicianExchange(f.world, 1, 2, null);
   commitWolfSorcererExchange(f.world, 2, 2, null);
   expect(capability(role, f.world, () => f.world.getComponent(2, COMPONENT.Camp))).toEqual({

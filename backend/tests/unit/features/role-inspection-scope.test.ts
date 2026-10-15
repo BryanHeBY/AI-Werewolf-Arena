@@ -48,10 +48,7 @@ function fixture(kind: Role.Gargoyle | Role.Psychic | Role.MirrorGirl) {
   const game = bootstrapGame(config, { fixedRoles: roles });
   return {
     ...game,
-    ability: findNightAbility(
-      game.world.getComponent(1, COMPONENT.Role)!,
-      "role_check",
-    )!,
+    ability: findNightAbility(game.world.getComponent(1, COMPONENT.Role)!, "role_check")!,
     stage:
       kind === Role.Gargoyle
         ? ROLE_INSPECTION_STAGE
@@ -220,7 +217,9 @@ for (const change of ["id", "source", "private_owner", "activation", "actor_tran
     await game.stage.execute(
       context(game, events, async () => ({ name: "inspect_role", args: { target_id: 3 } })),
     );
-    expect(canGargoyleKnife(role, game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(true);
+    expect(
+      canGargoyleKnife(role, game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+    ).toBe(true);
     expect(game.ability.lastUsedDay).toBe(1);
     const prefix = structuredClone(game.ability.state.history);
     if (change === "id") (game.ability as { id: string }).id = "native:renamed";
@@ -245,7 +244,9 @@ for (const change of ["id", "source", "private_owner", "activation", "actor_tran
       game.world.addComponent(5, COMPONENT.Role, role);
       game.world.addComponent(5, COMPONENT.Alive, ownLife);
     }
-    expect(canGargoyleKnife(role, game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
+    expect(
+      canGargoyleKnife(role, game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+    ).toBe(false);
     expect(game.ability.uses).toBe(1);
     expect(game.ability.state.history).toEqual(prefix);
     expect(events.filter((e) => e.type === "role_inspected")).toHaveLength(1);
@@ -318,7 +319,9 @@ for (const point of ["await", "gateway", "label"] as const)
     expect(gift.lastUsedDay).toBeNull();
     expect(gift.state.history).toEqual([]);
     expect(events).toEqual([]);
-    expect(canGargoyleKnife(role, game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
+    expect(
+      canGargoyleKnife(role, game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+    ).toBe(false);
     expect(hasRoleInspectionNightCommit(game.world, 1)).toBe(false);
   });
 

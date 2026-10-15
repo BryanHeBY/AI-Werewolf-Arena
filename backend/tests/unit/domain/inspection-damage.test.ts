@@ -11,10 +11,7 @@ import type { RoleComponent } from "../../../src/domain/components/role";
 import type { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { DeathCause } from "../../../src/domain/deaths";
 import { Role, StatusMark } from "../../../src/domain/identity";
-import {
-  captureNightLife,
-  type NightInspectionAttack,
-} from "../../../src/domain/night-effects";
+import { captureNightLife, type NightInspectionAttack } from "../../../src/domain/night-effects";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 

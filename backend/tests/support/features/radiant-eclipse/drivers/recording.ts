@@ -49,7 +49,10 @@ export async function radiantRecording(
   const board = parseBoardDefinition(
     JSON.parse(
       await readFile(
-        new URL("../../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json", import.meta.url),
+        new URL(
+          "../../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json",
+          import.meta.url,
+        ),
         "utf8",
       ),
     ),

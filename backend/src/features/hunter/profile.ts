@@ -10,7 +10,11 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：猎人角色 profile。 */
 import { Camp, Role } from "../../domain/model";
 import { NativeRoleContributions } from "../../rulesets/roles/contracts";
-import { getHunterState, setHunterState, createHunterState } from "../death-actions/native-resource-ports";
+import {
+  getHunterState,
+  setHunterState,
+  createHunterState,
+} from "../death-actions/native-resource-ports";
 import { hunterDeathHook } from "./death-hook";
 import { HUNTER_TOOL_SPECS } from "./tool-specs";
 import { DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/tool-ports";

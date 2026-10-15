@@ -8,7 +8,16 @@ import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
-import { ActionWindow, Role, Phase, COMPONENT, type ActionRequest, type ToolCall, type AliveComponent, type RoleComponent } from "../../../../src/domain";
+import {
+  ActionWindow,
+  Role,
+  Phase,
+  COMPONENT,
+  type ActionRequest,
+  type ToolCall,
+  type AliveComponent,
+  type RoleComponent,
+} from "../../../../src/domain";
 import {
   beginMistNight,
   snakeWindowTargets,
@@ -404,10 +413,7 @@ for (const stale of ["target", "voter"] as const)
           if (q.context.stage === "wolf_vote") {
             votes++;
             if (votes === 2)
-              g.world.getComponent(
-                stale === "target" ? 5 : 10,
-                COMPONENT.Alive,
-              )!.alive = false;
+              g.world.getComponent(stale === "target" ? 5 : 10, COMPONENT.Alive)!.alive = false;
             return {
               name: "kill_vote",
               args: {

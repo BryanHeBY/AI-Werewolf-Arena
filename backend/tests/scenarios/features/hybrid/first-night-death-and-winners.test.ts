@@ -4,7 +4,17 @@
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, Phase, Role, WinCondition, type ActionRequest, type BoardConfig, type RoleComponent, type ToolCall } from "../../../../src/domain";
+import {
+  Camp,
+  COMPONENT,
+  Phase,
+  Role,
+  WinCondition,
+  type ActionRequest,
+  type BoardConfig,
+  type RoleComponent,
+  type ToolCall,
+} from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 const deck = [Role.Hybrid, Role.Wolf, Role.HiddenWolf, Role.Seer, Role.Witch, Role.Villager];

@@ -28,10 +28,19 @@ async function prepared() {
   const game = bootstrapGame(foxBoard(roles), { fixedRoles: roles });
   const events: GameEvent[] = [];
   const result = await new WildChildSetupWindow(game.world, new ToolGateway(), events, {
-    get requestFactory() { return GameActionRequestFactory; },
-  }).execute(game.boardConfig, {
-    async getAction() { return { name: "choose_wild_model", args: { target_id: 2 } }; },
-  }, 1, () => true);
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
+  }).execute(
+    game.boardConfig,
+    {
+      async getAction() {
+        return { name: "choose_wild_model", args: { target_id: 2 } };
+      },
+    },
+    1,
+    () => true,
+  );
   if (!result) throw new Error("literal_wild_setup_expected_success");
   const binding = wildChildBinding(game.world)!;
   recordWildChildDeathCommit(game.world, 2);
@@ -43,10 +52,15 @@ const contribute = (g: Awaited<ReturnType<typeof prepared>>) =>
   resolveWildChildDeathWave(g.world, [2], { 2: [DeathCause.Poison] }, 1, Phase.Night, g.events);
 
 test("Camp installation failure keeps its prefix and restoring duplicate fields cannot revive the Wild owner", async () => {
-  const g = await prepared(), b = g.binding;
-  const role = b.actor.role, camp = b.camp, victory = b.victory;
-  const state = structuredClone(b.state), expected = b.expectedState;
-  const error = new Error("literal_wild_camp_install_failure"), writes: string[] = [];
+  const g = await prepared(),
+    b = g.binding;
+  const role = b.actor.role,
+    camp = b.camp,
+    victory = b.victory;
+  const state = structuredClone(b.state),
+    expected = b.expectedState;
+  const error = new Error("literal_wild_camp_install_failure"),
+    writes: string[] = [];
   const original = g.world.addComponent;
   // 仅测试实例拦截原安装点；正常调用保原 receiver，不新增生产 hook 或补偿。
   g.world.addComponent = new Proxy(original, {
@@ -59,7 +73,13 @@ test("Camp installation failure keeps its prefix and restoring duplicate fields 
     },
   });
   let caught: unknown;
-  try { contribute(g); } catch (e) { caught = e; } finally { g.world.addComponent = original; }
+  try {
+    contribute(g);
+  } catch (e) {
+    caught = e;
+  } finally {
+    g.world.addComponent = original;
+  }
   expect(caught).toBe(error);
   expect(writes).toEqual(["Camp:throw"]);
   expect(g.world.getComponent(1, COMPONENT.Role)).toBe(role);
@@ -71,7 +91,10 @@ test("Camp installation failure keeps its prefix and restoring duplicate fields 
   expect(b.state).toEqual(state);
   expect(b.expectedState).toBe(expected);
   expect(b.modelCommitted).toBe(true);
-  expect(g.events.map(e => e.type)).toEqual(["wild_child_model_chosen", "wild_child_model_eliminated"]);
+  expect(g.events.map((e) => e.type)).toEqual([
+    "wild_child_model_chosen",
+    "wild_child_model_eliminated",
+  ]);
   expect(validWildChildOwner(b)).toBe(false);
   camp.camp = Camp.Wolf;
   camp.camp = Camp.Good;
@@ -83,13 +106,20 @@ test("Camp installation failure keeps its prefix and restoring duplicate fields 
   const close = openWildChildNight(g.world, 2, g.events);
   close();
   expect(b.state).toEqual(state);
-  expect(g.events.map(e => e.type)).toEqual(["wild_child_model_chosen", "wild_child_model_eliminated"]);
+  expect(g.events.map((e) => e.type)).toEqual([
+    "wild_child_model_chosen",
+    "wild_child_model_eliminated",
+  ]);
 });
 
 test("Victory installation failure keeps installed Wolf Camp while retiring only the Wild transformation owner", async () => {
-  const g = await prepared(), b = g.binding;
-  const camp = b.camp, victory = b.victory, state = structuredClone(b.state);
-  const error = new Error("literal_wild_victory_install_failure"), writes: string[] = [];
+  const g = await prepared(),
+    b = g.binding;
+  const camp = b.camp,
+    victory = b.victory,
+    state = structuredClone(b.state);
+  const error = new Error("literal_wild_victory_install_failure"),
+    writes: string[] = [];
   const original = g.world.addComponent;
   g.world.addComponent = new Proxy(original, {
     apply(target, receiver, args) {
@@ -102,7 +132,13 @@ test("Victory installation failure keeps installed Wolf Camp while retiring only
     },
   });
   let caught: unknown;
-  try { contribute(g); } catch (e) { caught = e; } finally { g.world.addComponent = original; }
+  try {
+    contribute(g);
+  } catch (e) {
+    caught = e;
+  } finally {
+    g.world.addComponent = original;
+  }
   expect(caught).toBe(error);
   expect(writes).toEqual(["Camp:installed", "Victory:throw"]);
   expect(g.world.getComponent(1, COMPONENT.Camp)).not.toBe(camp);
@@ -120,11 +156,15 @@ test("Victory installation failure keeps installed Wolf Camp while retiring only
   g.world.getComponent(1, COMPONENT.Camp)!.camp = Camp.Good;
   expect(validWildChildOwner(b)).toBe(false);
   expect(projectWildChild(g.world, b.actor.role)?.status).toBe("closed");
-  expect(g.events.map(e => e.type)).toEqual(["wild_child_model_chosen", "wild_child_model_eliminated"]);
+  expect(g.events.map((e) => e.type)).toEqual([
+    "wild_child_model_chosen",
+    "wild_child_model_eliminated",
+  ]);
 });
 
 test("transformed fact publication failure preserves a fully committed owner and following-night pack activation", async () => {
-  const g = await prepared(), b = g.binding;
+  const g = await prepared(),
+    b = g.binding;
   const error = new Error("literal_wild_transformed_fact_failure");
   const original = g.events.push;
   g.events.push = new Proxy(original, {
@@ -134,28 +174,45 @@ test("transformed fact publication failure preserves a fully committed owner and
     },
   });
   let caught: unknown;
-  try { contribute(g); } catch (e) { caught = e; } finally { g.events.push = original; }
+  try {
+    contribute(g);
+  } catch (e) {
+    caught = e;
+  } finally {
+    g.events.push = original;
+  }
   expect(caught).toBe(error);
   expect(g.world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Wolf);
-  expect(g.world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);
+  expect(g.world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
+    { kind: "faction", faction: Camp.Wolf },
+  ]);
   expect(b.state.status).toBe("transformed");
   expect(b.state.eligibleNight).toBe(2);
   expect(b.expectedState).toBe(JSON.stringify(b.state));
   expect(validWildChildOwner(b)).toBe(true);
   expect(projectWildChild(g.world, b.actor.role)?.status).toBe("transformed");
-  expect(g.events.map(e => e.type)).toEqual(["wild_child_model_chosen", "wild_child_model_eliminated"]);
+  expect(g.events.map((e) => e.type)).toEqual([
+    "wild_child_model_chosen",
+    "wild_child_model_eliminated",
+  ]);
   contribute(g);
   const close = openWildChildNight(g.world, 2, g.events);
   close();
   expect(b.state.status).toBe("active");
   expect(wildChildPackKnown(b.actor.role, g.world)).toBe(true);
   expect(wildChildPackActive(b.actor.role, g.world)).toBe(true);
-  expect(g.events.map(e => e.type)).toEqual(["wild_child_model_chosen", "wild_child_model_eliminated", "wild_child_pack_activated"]);
+  expect(g.events.map((e) => e.type)).toEqual([
+    "wild_child_model_chosen",
+    "wild_child_model_eliminated",
+    "wild_child_pack_activated",
+  ]);
 });
 
 test("a frozen public binding does not replace the original Camp error while private failure revocation remains permanent", async () => {
-  const g = await prepared(), b = g.binding;
-  const camp = b.camp, error = new Error("literal_frozen_binding_camp_failure");
+  const g = await prepared(),
+    b = g.binding;
+  const camp = b.camp,
+    error = new Error("literal_frozen_binding_camp_failure");
   expect(validWildChildOwner(b)).toBe(true);
   const original = g.world.addComponent;
   g.world.addComponent = new Proxy(original, {
@@ -169,7 +226,13 @@ test("a frozen public binding does not replace the original Camp error while pri
     },
   });
   let caught: unknown;
-  try { contribute(g); } catch (e) { caught = e; } finally { g.world.addComponent = original; }
+  try {
+    contribute(g);
+  } catch (e) {
+    caught = e;
+  } finally {
+    g.world.addComponent = original;
+  }
   expect(caught).toBe(error);
   expect(Object.isFrozen(b)).toBe(true);
   expect(g.world.getComponent(1, COMPONENT.Camp)).toBe(camp);

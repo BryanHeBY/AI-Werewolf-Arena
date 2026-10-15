@@ -93,7 +93,11 @@ export function* settleMistDelayedNight(
     pending,
     current,
     // 这里只捕获真实类的晚读取；窗口仍在原 roster／开窗之后 new，不提前创建请求或增加 await。
-    { get requestFactory() { return GameActionRequestFactory; } },
+    {
+      get requestFactory() {
+        return GameActionRequestFactory;
+      },
+    },
   );
   const damage = pending.prepareFinalDamage(healed, current);
   safeRecordLogicOp({

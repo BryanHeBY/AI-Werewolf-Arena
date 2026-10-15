@@ -40,7 +40,12 @@ for (const size of [6, 12] as const)
               const role = game.world.getComponent(id, COMPONENT.Role)!;
               return [
                 id,
-                { ref: role, role: role.role, camp: game.world.getComponent(id, COMPONENT.Camp)!.camp, state: role.privateState },
+                {
+                  ref: role,
+                  role: role.role,
+                  camp: game.world.getComponent(id, COMPONENT.Camp)!.camp,
+                  state: role.privateState,
+                },
               ];
             }),
           );

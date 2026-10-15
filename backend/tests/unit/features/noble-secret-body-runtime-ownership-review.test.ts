@@ -126,7 +126,9 @@ for (const kind of ["original-getter", "foreign-state", "foreign-role"] as const
           reads++;
           throw Error("foreign role getter");
         },
-      } as unknown as import("../../../src/domain/component-map").ComponentWrite<typeof COMPONENT.Role>);
+      } as unknown as import("../../../src/domain/component-map").ComponentWrite<
+        typeof COMPONENT.Role
+      >);
     expect(() => demonHunterCheckpointPlayers(g.world, true)).toThrow();
     const cp = demonHunterCheckpointPlayers(g.world, false)!;
     expect(cp.find((p) => p.id === 5)!.privateState.secretBody).toEqual(expected);
@@ -222,12 +224,10 @@ test("Demon installation rejects an existing Noble owner bound to wrong native a
       if (v !== undefined) world.addComponent(id, name, v);
     }
   }
-  (
-    world.getComponent(10, COMPONENT.Role)!.privateState as Record<string, unknown>
-  ).noble = createNobleState();
-  (
-    world.getComponent(6, COMPONENT.Role)!.privateState as Record<string, unknown>
-  ).secretBody = createSecretBodyState();
+  (world.getComponent(10, COMPONENT.Role)!.privateState as Record<string, unknown>).noble =
+    createNobleState();
+  (world.getComponent(6, COMPONENT.Role)!.privateState as Record<string, unknown>).secretBody =
+    createSecretBodyState();
   installNobleBodyAuthority(world, 10, 6);
   expect(() => installDemonHunter(world, source.config)).toThrow();
 });

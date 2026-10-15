@@ -8,12 +8,7 @@
  */
 import { getSessionRecorder } from "../../recording/session/context";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
-import {
-  Phase,
-  type EntityId,
-  type GameEvent,
-  type DeathSources,
-} from "../../domain/model";
+import { Phase, type EntityId, type GameEvent, type DeathSources } from "../../domain/model";
 import type { FragrantWaveReceipt } from "./authority";
 
 /** 窄运行端口不暴露 World、原组件、库存或时钟；各 getter 在原表达式时点才读取。 */

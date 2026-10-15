@@ -23,10 +23,13 @@ export interface TerminalVictoryRuntime {
   config(): ReadonlyBoardConfig;
 }
 
-function resolveConfiguredVictoryConditions(runtime: TerminalVictoryRuntime): readonly WinCondition[] {
+function resolveConfiguredVictoryConditions(
+  runtime: TerminalVictoryRuntime,
+): readonly WinCondition[] {
   if (weddingSetup(runtime.world())) {
     const conditions =
-      runtime.config().winConditions ?? (runtime.config().winCondition ? [runtime.config().winCondition!] : []);
+      runtime.config().winConditions ??
+      (runtime.config().winCondition ? [runtime.config().winCondition!] : []);
     if (conditions.length !== 1 || conditions[0] !== WinCondition.ThreeFactionsElimination)
       throw new Error("ghost_bride_win_condition_invalid");
     return [WinCondition.ThreeFactionsElimination];

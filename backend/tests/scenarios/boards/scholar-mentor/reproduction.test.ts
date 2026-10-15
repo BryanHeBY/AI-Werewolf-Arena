@@ -8,7 +8,10 @@ import { validateScholarMentorRecord } from "../../../../src/recording/verificat
 import { beforeAll, expect, test } from "bun:test";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  type ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 let record: ReproductionRecord;
 beforeAll(async () => {
   record = (await runTransportGame(scholarMentorScenario(), "llm", "en")).record;

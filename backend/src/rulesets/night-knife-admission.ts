@@ -51,5 +51,6 @@ function discardStaleWeddingKnife(world: World, day: number, state: NightStageSt
 /** 固定两个独立步骤的原先后顺序；前步无刀 return 不跳过婚约条件，false 不读取婚约参数。 */
 export function discardStaleNightKnives(runtime: NightKnifeAdmissionRuntime): void {
   discardStaleWolfKnife(runtime.world(), runtime.state());
-  if (runtime.ownsWedding()) discardStaleWeddingKnife(runtime.world(), runtime.day(), runtime.state());
+  if (runtime.ownsWedding())
+    discardStaleWeddingKnife(runtime.world(), runtime.day(), runtime.state());
 }

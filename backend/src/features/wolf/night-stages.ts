@@ -7,7 +7,10 @@
  */
 import { publishNobleNightKnife } from "../noble-secret-body/knife-ports";
 import { isMistRavenBoard } from "../mist-raven/knife-ports";
-import { resolveOrdinaryWolfKnife, type AcceptedWolfKnifeTarget } from "../../rulesets/ordinary-wolf-knife-routing";
+import {
+  resolveOrdinaryWolfKnife,
+  type AcceptedWolfKnifeTarget,
+} from "../../rulesets/ordinary-wolf-knife-routing";
 import { nightmareKnifeBlocked } from "../nightmare/ports";
 import { bindWolfKnifeTargetQuery } from "./ports";
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */

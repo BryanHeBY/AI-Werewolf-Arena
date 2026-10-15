@@ -4,7 +4,11 @@
  * 原生库存和审计仍归猎魔权威。经理持原追加死亡等待、可读性／当前性复验、夜报、封盘与 finally。
  * 只有经理成功完成死亡及复验后才恢复提交；恢复时先核已死，再提交到期、发布事件、记录操作，后项失败保原前缀不退款。
  */
-import type { ReadonlyBoardConfig, VictoryCheckpoint, WinDecision } from "@ai-werewolf-arena/game-contract";
+import type {
+  ReadonlyBoardConfig,
+  VictoryCheckpoint,
+  WinDecision,
+} from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../domain/components/names";
 import { DeathCause, Phase, type EntityId, type GameEvent } from "../domain/model";
 import type { World } from "../domain/world";
@@ -38,7 +42,10 @@ export function* settleRedMoonExpiry(
       ? null
       : runtime.registry.evaluateMany(
           runtime.world,
-          TERMINAL_VICTORY_POLICY.conditions({ world: () => runtime.world, config: () => runtime.config }),
+          TERMINAL_VICTORY_POLICY.conditions({
+            world: () => runtime.world,
+            config: () => runtime.config,
+          }),
           runtime.checkpoint,
         );
   if (expiryActor !== null && !beforeExpiryResult) {

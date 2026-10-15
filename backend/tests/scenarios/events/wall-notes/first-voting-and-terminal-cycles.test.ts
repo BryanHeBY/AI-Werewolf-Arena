@@ -3,7 +3,14 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { ActionWindow, COMPONENT, Role, type GameEvent, type ActionRequest, type ToolCall } from "../../../../src/domain";
+import {
+  ActionWindow,
+  COMPONENT,
+  Role,
+  type GameEvent,
+  type ActionRequest,
+  type ToolCall,
+} from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { hasWallCommit } from "../../../../src/features/wall-notes/authority";
 
@@ -61,9 +68,7 @@ for (const outcome of ["abstain", "tie", "idiot"] as const)
       1,
     );
     if (outcome === "idiot")
-      expect(g.world.getComponent(4, COMPONENT.VotingRight)!.canVote).toBe(
-        false,
-      );
+      expect(g.world.getComponent(4, COMPONENT.VotingRight)!.canVote).toBe(false);
   });
 
 test("first-day terminal exile has no paper grants or requests", async () => {

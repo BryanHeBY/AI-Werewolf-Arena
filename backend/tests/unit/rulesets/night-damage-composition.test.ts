@@ -75,7 +75,11 @@ test("a resolve getter failure occurs after frame creation and before World or d
     },
   };
   // 旧通用 getter 不再是关系输入；不能把其读取日志当作本族登记／Frame 构造的证明。
-  Object.defineProperty(claims, "dreamLinks", { get() { throw new Error("retired_dream_getter_must_not_read"); } });
+  Object.defineProperty(claims, "dreamLinks", {
+    get() {
+      throw new Error("retired_dream_getter_must_not_read");
+    },
+  });
   const solver: Solver = {
     get resolve(): DamageResolutionSystem["resolve"] {
       trace.push("resolve:get");
@@ -96,7 +100,11 @@ test("a modifier field failure retains the resolve lookup then World and day pre
     },
   };
   // 旧通用 getter 不再是关系输入；不能把其读取日志当作本族登记／Frame 构造的证明。
-  Object.defineProperty(claims, "dreamLinks", { get() { throw new Error("retired_dream_getter_must_not_read"); } });
+  Object.defineProperty(claims, "dreamLinks", {
+    get() {
+      throw new Error("retired_dream_getter_must_not_read");
+    },
+  });
   const solver: Solver = {
     get resolve(): DamageResolutionSystem["resolve"] {
       trace.push("resolve:get");

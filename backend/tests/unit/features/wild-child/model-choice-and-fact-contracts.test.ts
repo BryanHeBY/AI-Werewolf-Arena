@@ -1,12 +1,26 @@
 /**
  * 单元测试：验证野孩子榜样选择、生命替换及真实首波／追加死因。输入为原选择与修改，字面回执、引用、getter、错误、事实及状态为预期；有界选择窗口与数据／配置 reader 不执行中央死亡结算、完整阶段或付费模型。
  */
-import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
+import {
+  createAliveComponent,
+  createCampComponent,
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { inheritRequestAlias } from "../../../../src/domain/request-delivery";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, COMPONENT, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest } from "../../../../src/domain";
+import {
+  Role,
+  Camp,
+  COMPONENT,
+  createVictoryComponent,
+  type BoardConfig,
+  type RoleComponent,
+  type AliveComponent,
+  type GameEvent,
+  type ToolCall,
+  type ActionRequest,
+} from "../../../../src/domain";
 import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WildChildSetupWindow } from "../../../../src/features/wild-child/setup";
@@ -53,12 +67,11 @@ const setup = (
   getAction: (r: ActionRequest) => Promise<ToolCall | null> = async () => choose(2),
   isCurrent = () => true,
 ) =>
-  new WildChildSetupWindow(g.world, new ToolGateway(), g.events, { get requestFactory() { return GameActionRequestFactory; } }).execute(
-    g.config,
-    { getAction },
-    1,
-    isCurrent,
-  );
+  new WildChildSetupWindow(g.world, new ToolGateway(), g.events, {
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
+  }).execute(g.config, { getAction }, 1, isCurrent);
 
 const changes: Record<string, (g: Fixture) => void> = {
   actorLife: (g) => {
@@ -73,8 +86,7 @@ const changes: Record<string, (g: Fixture) => void> = {
   actorRole: (g) => {
     role(g).role = Role.Villager;
   },
-  actorRoleRef: (g) =>
-    g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.WildChild)),
+  actorRoleRef: (g) => g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.WildChild)),
   actorState: (g) => {
     (role(g) as { privateState: Readonly<Record<string, unknown>> }).privateState = {
       ...role(g).privateState,
@@ -164,7 +176,9 @@ for (const target of [2, 4])
 for (const target of [1, 0, 7])
   test(`invalid model ${target} closes the required window without fallback`, async () => {
     const g = fixture();
-    await expect(setup({ ...g, config: g.boardConfig }, async () => choose(target))).rejects.toThrow();
+    await expect(
+      setup({ ...g, config: g.boardConfig }, async () => choose(target)),
+    ).rejects.toThrow();
     expect(wildChildReady(g.world)).toBe(false);
     expect(hasActiveWildChild(g.world)).toBe(false);
     expect(g.events).toEqual([]);
@@ -173,7 +187,9 @@ for (const target of [1, 0, 7])
 
 test("null required action and original provider error both release authority and preserve the original failure", async () => {
   const g = fixture();
-  await expect(setup({ ...g, config: g.boardConfig }, async () => null)).rejects.toThrow("wild_child_required_choice_missing");
+  await expect(setup({ ...g, config: g.boardConfig }, async () => null)).rejects.toThrow(
+    "wild_child_required_choice_missing",
+  );
   const h = fixture(),
     err = new TypeError("original");
   Object.freeze(getWildChildState(role(h)));
@@ -203,10 +219,12 @@ for (const [name, mutate] of Object.entries(changes))
         // 独立新 World 明确检验错误配置身份；不能把helper改为默认忽略调用方的config。
         const foreign = fixture();
         let providerCalls = 0;
-        await expect(setup(foreign, async () => {
-          providerCalls++;
-          return choose(2);
-        })).rejects.toThrow("wild_child_setup_unavailable");
+        await expect(
+          setup(foreign, async () => {
+            providerCalls++;
+            return choose(2);
+          }),
+        ).rejects.toThrow("wild_child_setup_unavailable");
         expect(providerCalls).toBe(0);
         expect(foreign.events).toEqual([]);
         expect(getWildChildState(role(foreign))?.remaining).toBe(1);
@@ -298,14 +316,19 @@ for (const field of ["role", "camp", "privateState"] as const)
     let reads = 0;
     expect(
       await setup({ ...g, config: g.boardConfig }, async () => {
-        const value = field === "camp" ? g.world.getComponent(2, COMPONENT.Camp)!.camp : role(g, 2)[field];
-        Object.defineProperty(field === "camp" ? g.world.getComponent(2, COMPONENT.Camp)! : role(g, 2), field, {
-          get() {
-            reads++;
-            return value;
+        const value =
+          field === "camp" ? g.world.getComponent(2, COMPONENT.Camp)!.camp : role(g, 2)[field];
+        Object.defineProperty(
+          field === "camp" ? g.world.getComponent(2, COMPONENT.Camp)! : role(g, 2),
+          field,
+          {
+            get() {
+              reads++;
+              return value;
+            },
+            enumerable: true,
           },
-          enumerable: true,
-        });
+        );
         return choose(2);
       }),
     ).toBe(false);

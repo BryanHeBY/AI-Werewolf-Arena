@@ -29,9 +29,7 @@ import {
 function fixture(day: number, locale: "zh-CN" | "en") {
   const { world } = bootstrapGame(structuredClone(pureWhiteTwelveConfig), { locale });
   const id = (role: Role) =>
-    world
-      .entityIds()
-      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === role)!;
+    world.entityIds().find((id) => world.getComponent(id, COMPONENT.Role)?.role === role)!;
   const pure = id(Role.PureWhiteGirl),
     wolf = id(Role.WolfWitch);
   let calls = 0;
@@ -55,7 +53,9 @@ function fixture(day: number, locale: "zh-CN" | "en") {
     previousExile: null,
     isCurrent: () => true,
     currentDay: () => day,
-    get requestFactory() { return GameActionRequestFactory; },
+    get requestFactory() {
+      return GameActionRequestFactory;
+    },
     actionProvider: {
       getAction: async (r) => {
         calls++;
@@ -106,8 +106,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(f.calls()).toBe(2);
       expect(f.ctx.events.filter((event) => event.type === "role_inspected")).toHaveLength(2);
       expect(
-        getRoleInspectionState(f.world.getComponent(f.pure, COMPONENT.Role)!)
-          ?.history[0]?.result,
+        getRoleInspectionState(f.world.getComponent(f.pure, COMPONENT.Role)!)?.history[0]?.result,
       ).toMatchObject({ kind: "role", role: Role.WolfWitch });
       const damage = new DamageResolutionSystem().resolve(f.world, {
         inspectionAttacks: f.ctx.state.inspectionAttacks,
@@ -135,10 +134,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       }),
     };
     await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
-    const ability = findNightAbility(
-      f.world.getComponent(f.pure, COMPONENT.Role),
-      "role_check",
-    )!;
+    const ability = findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")!;
     expect(ability.lastUsedDay).toBe(2);
     expect(ability.uses).toBe(0);
     expect(ability.state.history).toEqual([]);
@@ -175,10 +171,9 @@ for (const locale of ["zh-CN", "en"] as const) {
     };
     await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
     expect(f.ctx.events).toEqual([]);
-    expect(
-      findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")
-        ?.uses,
-    ).toBe(0);
+    expect(findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")?.uses).toBe(
+      0,
+    );
   });
 }
 
@@ -189,10 +184,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(f.ctx.state.inspectionAttacks ?? []).toEqual([]);
     f.ctx.currentDay = () => 2;
     await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
-    const ability = findNightAbility(
-      f.world.getComponent(f.pure, COMPONENT.Role),
-      "role_check",
-    )!;
+    const ability = findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")!;
     expect(ability.state.history.map((r) => [r.day, r.targetId])).toEqual([
       [1, f.wolf],
       [2, f.wolf],
@@ -218,18 +210,14 @@ for (const locale of ["zh-CN", "en"] as const) {
       "pure_white_inspection_target_stale",
     );
     expect(f.ctx.events).toEqual([]);
-    expect(
-      findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")
-        ?.uses,
-    ).toBe(0);
+    expect(findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")?.uses).toBe(
+      0,
+    );
   });
   test(`late ability revocation cancels damage but retains the paid private report ${locale}`, async () => {
     const f = fixture(2, locale);
     await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
-    const ability = findNightAbility(
-      f.world.getComponent(f.pure, COMPONENT.Role),
-      "role_check",
-    )!;
+    const ability = findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")!;
     (ability as { disabled: boolean }).disabled = true;
     expect(
       new DamageResolutionSystem().resolve(f.world, {
@@ -249,9 +237,8 @@ for (const locale of ["zh-CN", "en"] as const) {
         inspectionAttacks: f.ctx.state.inspectionAttacks,
       }).deaths,
     ).toEqual([]);
-    const report = getRoleInspectionState(
-      f.world.getComponent(f.pure, COMPONENT.Role)!,
-    )!.history[0]!;
+    const report = getRoleInspectionState(f.world.getComponent(f.pure, COMPONENT.Role)!)!
+      .history[0]!;
     expect(report.result).toMatchObject({ kind: "role", role: Role.WolfWitch });
   });
 }

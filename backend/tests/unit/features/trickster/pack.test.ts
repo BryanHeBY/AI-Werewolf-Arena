@@ -16,9 +16,7 @@ test("trickster meets pack only after first personal choice is committed", () =>
     catalog = getDefaultRoleCatalog();
   const actor = f.world
     .entityIds()
-    .find(
-      (id) => f.world.getComponent(id, COMPONENT.Role)!.role === Role.Trickster,
-    )!;
+    .find((id) => f.world.getComponent(id, COMPONENT.Role)!.role === Role.Trickster)!;
   const wolves = f.world
     .entityIds()
     .filter((id) => f.world.getComponent(id, COMPONENT.Role)!.role === Role.Wolf);

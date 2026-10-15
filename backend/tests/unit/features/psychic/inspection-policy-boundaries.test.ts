@@ -19,7 +19,10 @@ import {
 } from "../../../../src/domain";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { getGargoyleState } from "../../../../src/features/gargoyle/ports";
-import { allNightAbilities, findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import {
+  allNightAbilities,
+  findNightAbility,
+} from "../../../../src/features/night-abilities/abilities";
 import {
   grantNightAbility,
   transferNightAbility,
@@ -330,10 +333,7 @@ for (const change of [
         calls++;
         if (change === "clock") current = false;
         if (change === "actor_revive" || change === "target_revive") {
-          const life = game.world.getComponent(
-            change === "actor_revive" ? 1 : 2,
-            COMPONENT.Alive,
-          )!;
+          const life = game.world.getComponent(change === "actor_revive" ? 1 : 2, COMPONENT.Alive)!;
           life.alive = false;
           life.alive = true;
         }
@@ -415,7 +415,9 @@ test("invalid policy is rejected before installing an instance, and gifted Psych
     context(game, events, async () => ({ name: "inspect_role", args: { target_id: 2 } })),
   );
   expect(getGargoyleState(role(game, 1))!.hasInheritedKnife).toBe(true);
-  expect(canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp))).toBe(false);
+  expect(
+    canGargoyleKnife(role(game, 1), game.world, () => game.world.getComponent(1, COMPONENT.Camp)),
+  ).toBe(false);
   expect(roleInspectionPolicy(native.state)).toBe("gargoyle");
 });
 

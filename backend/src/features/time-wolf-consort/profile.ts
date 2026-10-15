@@ -95,9 +95,16 @@ export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
           : { code: RuleError.TimeConsortTarget };
       },
     },
-    nightStages: [TIME_CONSORT_LOCK_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
+    nightStages: [
+      TIME_CONSORT_LOCK_STAGE,
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []),
+    ],
     baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
-      if (!request.allowedTools.includes("lock_time") || !world || !getTimeConsortState(role, currentCamp))
+      if (
+        !request.allowedTools.includes("lock_time") ||
+        !world ||
+        !getTimeConsortState(role, currentCamp)
+      )
         return (
           ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
             role,

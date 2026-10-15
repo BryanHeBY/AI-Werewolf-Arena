@@ -7,7 +7,11 @@
 import { z } from "zod";
 import { snapshotPlainData } from "../../domain/plain-data";
 
-import { ANIMAL_DREAM_POLICY, CAT_SKIPPED_VOTE_POLICIES, type CatSkippedVotePolicy } from "@ai-werewolf-arena/game-contract";
+import {
+  ANIMAL_DREAM_POLICY,
+  CAT_SKIPPED_VOTE_POLICIES,
+  type CatSkippedVotePolicy,
+} from "@ai-werewolf-arena/game-contract";
 export { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";
 const id = z.number().int().positive().safe();
 const night = id;

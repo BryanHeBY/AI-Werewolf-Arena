@@ -6,7 +6,11 @@
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { PSYCHIC_CASES, psychicScenario, type PsychicScenario } from "../../../support/features/psychic/builders/scenario";
+import {
+  PSYCHIC_CASES,
+  psychicScenario,
+  type PsychicScenario,
+} from "../../../support/features/psychic/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const facts: Record<
   PsychicScenario,

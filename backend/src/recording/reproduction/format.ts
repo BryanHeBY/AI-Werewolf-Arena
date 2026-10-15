@@ -78,14 +78,8 @@ import { LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-contract/facts/lonel
 import { boardConfigSchema } from "@ai-werewolf-arena/game-contract";
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
-import {
-  readGameOutcome,
-  readVictoryPoint,
-} from "@ai-werewolf-arena/replay-contract";
-import type {
-  GameOutcome,
-  VictoryPoint,
-} from "@ai-werewolf-arena/game-contract";
+import { readGameOutcome, readVictoryPoint } from "@ai-werewolf-arena/replay-contract";
+import type { GameOutcome, VictoryPoint } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import {
   ACTION_STAGES,

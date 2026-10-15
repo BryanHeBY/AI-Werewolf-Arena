@@ -161,7 +161,8 @@ export function initializeScholarMentorState(
   privateState: () => RoleComponent["privateState"],
   caster: () => ModifierCaster,
 ): void {
-  (privateState() as { scholarMentor?: ModifierState }).scholarMentor = createModifierState(caster());
+  (privateState() as { scholarMentor?: ModifierState }).scholarMentor =
+    createModifierState(caster());
 }
 
 /** raw、资源与历史的原引用不是脱离副本；expected 仅保存原 JSON 内容证据，不代表授权或 JSON schema。 */
@@ -192,7 +193,8 @@ export class ScholarMentorStateSlot {
    * 任一步抛错保已写前缀，不补回库存；frame 在此成功之后才删除 pending 并追加 selection。
    */
   commit(next: ModifierState): void {
-    (this.remaining as Pick<ModifierState["remaining"], "enhance">).enhance = next.remaining.enhance;
+    (this.remaining as Pick<ModifierState["remaining"], "enhance">).enhance =
+      next.remaining.enhance;
     (this.remaining as Pick<ModifierState["remaining"], "weaken">).weaken = next.remaining.weaken;
     Object.defineProperty(this.history, String(this.history.length), {
       value: next.history.at(-1)!,

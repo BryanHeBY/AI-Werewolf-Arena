@@ -10,12 +10,7 @@ import type { WolfBeautyReadState as WolfBeautyState } from "@ai-werewolf-arena/
 import { AliveComponent, aliveLifeVersion } from "../../domain/components/alive";
 import { COMPONENT } from "../../domain/components/names";
 import type { RoleComponent } from "../../domain/components/role";
-import {
-  Role,
-  DeathCause,
-  type DeathSources,
-  type EntityId,
-} from "../../domain/model";
+import { Role, DeathCause, type DeathSources, type EntityId } from "../../domain/model";
 import type { World } from "../../domain/world";
 import { getWolfBeautyState } from "./state";
 

@@ -6,7 +6,11 @@
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { BEAUTY_CASES, wolfBeautyScenario, type BeautyScenario } from "../../../support/features/wolf-beauty/builders/scenario";
+import {
+  BEAUTY_CASES,
+  wolfBeautyScenario,
+  type BeautyScenario,
+} from "../../../support/features/wolf-beauty/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const facts: Record<
   BeautyScenario,

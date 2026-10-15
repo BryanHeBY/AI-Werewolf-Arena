@@ -19,9 +19,7 @@ import {
   recordNightAbilityUse,
 } from "../../../../src/features/night-abilities/abilities";
 import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
-import {
-  installNativeAbility,
-} from "../../../../src/features/night-abilities/ability-changes";
+import { installNativeAbility } from "../../../../src/features/night-abilities/ability-changes";
 import {
   grantNightAbility,
   transferNightAbility,

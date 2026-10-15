@@ -10,9 +10,7 @@ import { COMPONENT } from "../../../../src/domain/components/names";
 import type { RoleComponent } from "../../../../src/domain/components/role";
 import { Camp } from "../../../../src/domain/identity";
 import type { World } from "../../../../src/domain/world";
-import {
-  freshNightmareShadowState,
-} from "../../../../src/features/nightmare/state-slot";
+import { freshNightmareShadowState } from "../../../../src/features/nightmare/state-slot";
 import { nightmareFearTargets } from "../../../../src/features/nightmare/targets";
 import {
   installNightmareBoard,
@@ -38,7 +36,9 @@ function fixture(required = false, constructorLocation?: "own" | "inherited") {
     [4, { role: "hunter", privateState: {} } as RoleComponent],
   ]);
   // 独立实际Camp组件输入；Role只保角色和原privateState，名单历史仍按原时点捕获。
-  const camps = new Map([...roles.keys()].map((id) => [id, { camp: id === 1 || id === 2 ? Camp.Wolf : Camp.Good }]));
+  const camps = new Map(
+    [...roles.keys()].map((id) => [id, { camp: id === 1 || id === 2 ? Camp.Wolf : Camp.Good }]),
+  );
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const world = {
     entityIds: () => [...roles.keys()],
@@ -48,9 +48,9 @@ function fixture(required = false, constructorLocation?: "own" | "inherited") {
         ? camps.get(id)
         : kind === COMPONENT.Role
           ? roles.get(id)
-        : kind === COMPONENT.Alive
-          ? lives.get(id)
-          : undefined,
+          : kind === COMPONENT.Alive
+            ? lives.get(id)
+            : undefined,
   } as unknown as World;
   if (constructorLocation) {
     const owner =

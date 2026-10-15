@@ -36,9 +36,7 @@ for (const variant of [
         random = createRandom("sm-failure:" + variant),
         game = bootstrapGame(config, { random });
       const ids = (name: Role) =>
-        game.playerIds.filter(
-          (id) => game.world.getComponent(id, COMPONENT.Role)?.role === name,
-        );
+        game.playerIds.filter((id) => game.world.getComponent(id, COMPONENT.Role)?.role === name);
       const scholar = ids(Role.DayScholar)[0]!,
         mentor = ids(Role.NightMentor)[0]!,
         seer = ids(Role.Seer)[0]!,
@@ -126,7 +124,8 @@ for (const variant of [
       expect(events.some((e) => e.type === "modifier_bonus_resolved")).toBe(false);
       expect(events.some((e) => e.type === "night_resolved")).toBe(false);
       const state = scholarMentorStateForRole(
-        game.world.getComponent(scholar, COMPONENT.Role), () => game.world.getComponent(scholar, COMPONENT.Camp)
+        game.world.getComponent(scholar, COMPONENT.Role),
+        () => game.world.getComponent(scholar, COMPONENT.Camp),
       )!;
       const choiceInvalid =
         variant === "missing-choice" || variant === "invalid-mode" || variant === "invalid-target";

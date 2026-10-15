@@ -23,6 +23,5 @@ export type CurrentCampSource = () => CampComponent | undefined;
 export function createCampComponent(camp: Camp): CampComponent {
   return {
     camp,
-
   };
 }

@@ -18,7 +18,9 @@ import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 import { eventLabel } from "../../../../src/replay/event-labels";
 import { roleName } from "../../../../src/replay/replay-localization";
 const load = (name: string, suffix: string) =>
-    JSON.parse(readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}${suffix}`), "utf8")),
+    JSON.parse(
+      readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}${suffix}`), "utf8"),
+    ),
   families = ["expiry", "new_and_old_clear", "two_sources", "badge_reveal"] as const,
   dead = (s: ReturnType<typeof buildReplaySnapshot>) =>
     s.players.filter((p) => !p.alive).map((p) => p.playerId);

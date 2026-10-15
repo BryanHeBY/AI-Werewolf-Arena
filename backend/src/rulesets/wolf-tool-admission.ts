@@ -23,7 +23,14 @@ import { COMPONENT } from "../domain/components/names";
 export const WOLF_VALIDATION_RULES: ToolRuleMap = {
   speak_to_wolves: (ctx) => {
     const { world, role, roleCatalog, phase } = ctx;
-    if (!wolfTeamPermissions(role, roleCatalog, () => world.getComponent(ctx.actorId, COMPONENT.Camp), world).canChat) {
+    if (
+      !wolfTeamPermissions(
+        role,
+        roleCatalog,
+        () => world.getComponent(ctx.actorId, COMPONENT.Camp),
+        world,
+      ).canChat
+    ) {
       return { code: RuleError.WolfChatPermission };
     }
     if (phase !== Phase.Night) return { code: RuleError.WolfChatPhase };
@@ -35,7 +42,14 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
       return canSubmitWeddingTool(world, actorId, phase, day ?? 0, ghostBrideScope, toolCall)
         ? null
         : { code: RuleError.GhostBrideUnavailable };
-    if (!wolfTeamPermissions(role, roleCatalog, () => world.getComponent(actorId, COMPONENT.Camp), world).canVoteForKill) {
+    if (
+      !wolfTeamPermissions(
+        role,
+        roleCatalog,
+        () => world.getComponent(actorId, COMPONENT.Camp),
+        world,
+      ).canVoteForKill
+    ) {
       return { code: RuleError.WolfKillPermission };
     }
     if (phase !== Phase.Night) return { code: RuleError.WolfKillPhase };
@@ -55,19 +69,13 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     return null;
   },
   self_destruct: (ctx) => {
-    const {
-    world,
-    role,
-    roleCatalog,
-    phase,
-    actionWindow,
-    allowSelfDestruct,
-    toolCall,
-    } = ctx;
+    const { world, role, roleCatalog, phase, actionWindow, allowSelfDestruct, toolCall } = ctx;
     // 原婚礼成员排除先于角色自爆能力；阶段与窗口关系通过后检查已取出的 allowSelfDestruct，再读工具名／confirm。
     if (weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))
       return { code: RuleError.WolfBlastOnly };
-    if (!canRoleSelfDestruct(role, roleCatalog, () => world.getComponent(ctx.actorId, COMPONENT.Camp))) {
+    if (
+      !canRoleSelfDestruct(role, roleCatalog, () => world.getComponent(ctx.actorId, COMPONENT.Camp))
+    ) {
       return { code: RuleError.WolfBlastOnly };
     }
     if (phase !== Phase.Day && phase !== Phase.Voting) {

@@ -31,7 +31,9 @@ function fixture(scope: ReflectionScope = "whole_night") {
     ]),
   );
   // 独立实际Camp组件输入；Role只保角色和原privateState，名单历史仍按原时点捕获。
-  const camps = new Map([...roles.keys()].map((id) => [id, { camp: id === 1 || id === 6 ? Camp.Wolf : Camp.Good }]));
+  const camps = new Map(
+    [...roles.keys()].map((id) => [id, { camp: id === 1 || id === 6 ? Camp.Wolf : Camp.Good }]),
+  );
   const lives = new Map([...roles.keys()].map((id) => [id, createAliveComponent()]));
   const identities = new Map(
     [...roles.keys()].map((id) => [
@@ -46,11 +48,11 @@ function fixture(scope: ReflectionScope = "whole_night") {
         ? camps.get(id)
         : kind === COMPONENT.Role
           ? roles.get(id)
-        : kind === COMPONENT.Alive
-          ? lives.get(id)
-          : kind === COMPONENT.Identity
-            ? identities.get(id)
-            : undefined,
+          : kind === COMPONENT.Alive
+            ? lives.get(id)
+            : kind === COMPONENT.Identity
+              ? identities.get(id)
+              : undefined,
   } as unknown as World;
   installTimeConsortBoard(world);
   return { world, state, roles, lives, identities };

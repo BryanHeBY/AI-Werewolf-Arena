@@ -49,14 +49,18 @@ test("a later result getter failure preserves the already-transferred sender pre
       toolGateway: new ToolGateway(),
       damageResolutionSystem: new DamageResolutionSystem(),
     });
-  const originalPush = events.push, originalDescriptor = Object.getOwnPropertyDescriptor(events, "push");
-  events.push = function(this: GameEvent[], ...items: GameEvent[]) {
+  const originalPush = events.push,
+    originalDescriptor = Object.getOwnPropertyDescriptor(events, "push");
+  events.push = function (this: GameEvent[], ...items: GameEvent[]) {
     const size = originalPush.apply(this, items);
     // 先保原事实发布，再安装故障；伤害组合的早读取已经完成，return/handoff 尚未发生。
     if (items.some((event) => event.type === "noble_body_native_damage_committed")) {
       if (!capturedState) throw new Error("probe_state_missing");
       Object.defineProperty(capturedState, "inspectionAttacks", {
-        get() { reads++; throw error; },
+        get() {
+          reads++;
+          throw error;
+        },
       });
     }
     return size;

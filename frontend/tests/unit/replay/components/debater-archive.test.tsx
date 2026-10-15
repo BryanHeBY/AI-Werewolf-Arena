@@ -18,7 +18,9 @@ for (const size of [6, 12])
         const document = readReplayDocument(
             JSON.parse(
               readFileSync(
-                frontendFixtureURL(`frontend/tests/fixtures/debater-${size}-${outcome}.replay.json`),
+                frontendFixtureURL(
+                  `frontend/tests/fixtures/debater-${size}-${outcome}.replay.json`,
+                ),
                 "utf8",
               ),
             ),

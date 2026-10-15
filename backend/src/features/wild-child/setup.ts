@@ -40,7 +40,8 @@ export class WildChildSetupWindow {
     if (!b || config !== b.config || day !== 1 || !isCurrent())
       throw new Error("wild_child_setup_unavailable");
     let status: "failed" | "cancelled" = "failed";
-    let delivery: RequestLeaseTurn | undefined, failed = false;
+    let delivery: RequestLeaseTurn | undefined,
+      failed = false;
     try {
       openWildChildChoice(b, isCurrent);
       // 原选择窗口已开后才取构造器，并用本次 World／事件／day 创建实例；失败仍按原 finally 关闭。
@@ -96,8 +97,13 @@ export class WildChildSetupWindow {
         throw error;
       } finally {
         // 原 body／cleanup 错误优先；无旧错时新增 false 通知错误正常传播。
-        if (failed) { try { delivery?.close(); } catch { /* 保已在传播的错误。 */ } }
-        else delivery?.close();
+        if (failed) {
+          try {
+            delivery?.close();
+          } catch {
+            /* 保已在传播的错误。 */
+          }
+        } else delivery?.close();
       }
     }
   }

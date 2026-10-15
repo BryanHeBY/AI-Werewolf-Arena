@@ -15,10 +15,7 @@ import {
   type GameEvent,
   type World,
 } from "../../domain";
-import {
-  StatusMarksComponent,
-  statusMarkSnapshot,
-} from "../../domain/components/status-marks";
+import { StatusMarksComponent, statusMarkSnapshot } from "../../domain/components/status-marks";
 import {
   captureNightLife,
   originalPoisonIntent,

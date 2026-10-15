@@ -4,7 +4,12 @@
  * 组件读取序列及原异常构成独立预期，不以另一个生产快照生成答案。
  * 不推进对局、不写文件或调用模型；特殊权威分支由原有 bounded checkpoint 案例覆盖。
  */
-import { createAliveComponent, createBadgeComponent, createVotingRightComponent, createStatusMarksComponent } from "../../../src/agents/observation/component-presentation";
+import {
+  createAliveComponent,
+  createBadgeComponent,
+  createVotingRightComponent,
+  createStatusMarksComponent,
+} from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 import { auditData } from "../../../src/recording/reproduction/checkpoint/animal-audit";
@@ -12,8 +17,6 @@ import { World } from "../../../src/domain/world";
 import { COMPONENT, type ComponentName } from "../../../src/domain/components/names";
 import { createIdentityComponent } from "../../../src/domain/entities/player";
 import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
-
-
 
 import { createVictoryComponent } from "../../../src/domain/components/victory";
 

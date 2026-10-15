@@ -4,7 +4,13 @@
  * 实际保护付款和唯一原体仍由 authority 拥有，本模块不标死、推进阶段或选择判胜检查点。
  * 先更新来源和名单，再发布事实及必需操作；必需录制失败原样传播，已经付款／写入的前缀不回滚。
  */
-import { DeathCause, Phase, type DeathSources, type EntityId, type GameEvent } from "@ai-werewolf-arena/game-contract";
+import {
+  DeathCause,
+  Phase,
+  type DeathSources,
+  type EntityId,
+  type GameEvent,
+} from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../domain/world";
 import { getSessionRecorder } from "../../recording/session/context";
 import { safeRecordLogicOp } from "../../recording/session/recorder";

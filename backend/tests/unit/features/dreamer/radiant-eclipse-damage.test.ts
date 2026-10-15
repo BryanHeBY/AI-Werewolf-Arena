@@ -16,10 +16,7 @@ import {
   type NightRadiantBacklash,
 } from "../../../../src/domain/night-effects";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import {
-  DreamNightFrame,
-  type DreamNightLink,
-} from "../../../../src/features/dreamer/night-frame";
+import { DreamNightFrame, type DreamNightLink } from "../../../../src/features/dreamer/night-frame";
 import type { GameEvent } from "../../../../src/domain/events";
 import { text } from "@ai-werewolf-arena/game-text";
 
@@ -27,8 +24,7 @@ function bodies() {
   const world = new World();
   for (let index = 0; index < 6; index++)
     world.addComponent(world.createEntity(), COMPONENT.Alive, createAliveComponent());
-  const life = (id: number) =>
-    world.getComponent(id, COMPONENT.Alive)!;
+  const life = (id: number) => world.getComponent(id, COMPONENT.Alive)!;
   const mark = (id: number, ...values: StatusMark[]) =>
     world.addComponent(id, COMPONENT.StatusMarks, new StatusMarksComponent(values));
   const shelter = (id: number, isCurrent = () => true): NightImmunityClaim => ({

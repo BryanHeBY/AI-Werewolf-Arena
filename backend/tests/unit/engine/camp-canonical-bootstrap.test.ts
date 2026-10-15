@@ -9,7 +9,10 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import type { CampComponent } from "../../../src/domain/components/camp";
 import { Camp, Role } from "../../../src/domain/identity";
 import { World } from "../../../src/domain/world";
-import type { RoleInitContext, RoleRuntimeContribution } from "../../../src/rulesets/roles/contracts";
+import type {
+  RoleInitContext,
+  RoleRuntimeContribution,
+} from "../../../src/rulesets/roles/contracts";
 import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
@@ -26,11 +29,16 @@ function withVillagerRuntime(
   const descriptors = keys.map((key) => Object.getOwnPropertyDescriptor(runtime, key));
   try {
     for (const key of keys)
-      Object.defineProperty(runtime, key, { configurable: true, writable: true, value: input[key] });
+      Object.defineProperty(runtime, key, {
+        configurable: true,
+        writable: true,
+        value: input[key],
+      });
     run();
   } finally {
     for (let index = 0; index < keys.length; index++) {
-      const key = keys[index]!, descriptor = descriptors[index];
+      const key = keys[index]!,
+        descriptor = descriptors[index];
       if (descriptor) Object.defineProperty(runtime, key, descriptor);
       else delete runtime[key];
     }
@@ -58,30 +66,36 @@ function withWorldMethods(
 test("custom init installs its same Camp draft and default Victory uses the initialized value", () => {
   const contexts: RoleInitContext[] = [];
   const beforeInstall: Array<CampComponent | undefined> = [];
-  withVillagerRuntime({
-    init(_role, ctx) {
-      contexts.push(ctx);
-      // source 查实际 World，在 draft 安装前不能回退初始化对象。
-      beforeInstall.push(ctx.currentCamp());
-      ctx.initialCamp.camp = Camp.Wolf;
+  withVillagerRuntime(
+    {
+      init(_role, ctx) {
+        contexts.push(ctx);
+        // source 查实际 World，在 draft 安装前不能回退初始化对象。
+        beforeInstall.push(ctx.currentCamp());
+        ctx.initialCamp.camp = Camp.Wolf;
+      },
     },
-  }, () => {
-    const { world } = boot(), ctx = contexts[0]!;
-    expect(beforeInstall).toEqual([undefined, undefined]);
-    expect(contexts).toHaveLength(2);
-    expect(world.getComponent(1, COMPONENT.Camp)).toBe(ctx.initialCamp);
-    expect(ctx.currentCamp()).toBe(ctx.initialCamp);
-    expect(world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Wolf);
-    expect(world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
-      { kind: "faction", faction: "wolf" },
-    ]);
-    expect(world.getComponent(6, COMPONENT.Camp)).toBe(contexts[1]!.initialCamp);
-  });
+    () => {
+      const { world } = boot(),
+        ctx = contexts[0]!;
+      expect(beforeInstall).toEqual([undefined, undefined]);
+      expect(contexts).toHaveLength(2);
+      expect(world.getComponent(1, COMPONENT.Camp)).toBe(ctx.initialCamp);
+      expect(ctx.currentCamp()).toBe(ctx.initialCamp);
+      expect(world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Wolf);
+      expect(world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
+        { kind: "faction", faction: "wolf" },
+      ]);
+      expect(world.getComponent(6, COMPONENT.Camp)).toBe(contexts[1]!.initialCamp);
+    },
+  );
 });
 
 test("default Victory reads the installed Camp after the original Camp installation point", () => {
-  const trace: string[] = [], replacement = { camp: Camp.ThirdParty };
-  const add = World.prototype.addComponent, get = World.prototype.getComponent;
+  const trace: string[] = [],
+    replacement = { camp: Camp.ThirdParty };
+  const add = World.prototype.addComponent,
+    get = World.prototype.getComponent;
   let between = false;
   const install = new Proxy(add, {
     apply(target, world: World, args) {
@@ -104,19 +118,22 @@ test("default Victory reads the installed Camp after the original Camp installat
       return Reflect.apply(target, world, args);
     },
   });
-  withVillagerRuntime({}, () => withWorldMethods(install, query, () => {
-    const { world } = boot();
-    expect(trace).toEqual(["camp-installed", "camp-read", "victory-installed"]);
-    expect(world.getComponent(1, COMPONENT.Camp)).toBe(replacement);
-    expect(world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
-      { kind: "faction", faction: "third_party" },
-    ]);
-  }));
+  withVillagerRuntime({}, () =>
+    withWorldMethods(install, query, () => {
+      const { world } = boot();
+      expect(trace).toEqual(["camp-installed", "camp-read", "victory-installed"]);
+      expect(world.getComponent(1, COMPONENT.Camp)).toBe(replacement);
+      expect(world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
+        { kind: "faction", faction: "third_party" },
+      ]);
+    }),
+  );
 });
 
 test("a missing installed Camp fails only the default Victory branch before its installation", () => {
   const trace: string[] = [];
-  const add = World.prototype.addComponent, get = World.prototype.getComponent;
+  const add = World.prototype.addComponent,
+    get = World.prototype.getComponent;
   let capturedWorld: World | undefined;
   const install = new Proxy(add, {
     apply(target, world: World, args) {
@@ -136,19 +153,25 @@ test("a missing installed Camp fails only the default Victory branch before its 
       return Reflect.apply(target, world, args);
     },
   });
-  withVillagerRuntime({}, () => withWorldMethods(install, query, () => {
-    expect(boot).toThrow("role_current_camp_missing");
-    expect(trace).toEqual(["camp-installed", "camp-read"]);
-    // 默认分支拒绝保 Role 已装、Camp 已被探针移除的前缀，不伪造 Victory 或回滚。
-    expect(capturedWorld!.getComponent(1, COMPONENT.Role)?.role).toBe(Role.Villager);
-    expect(capturedWorld!.getComponent(1, COMPONENT.Victory)).toBeUndefined();
-  }));
+  withVillagerRuntime({}, () =>
+    withWorldMethods(install, query, () => {
+      expect(boot).toThrow("role_current_camp_missing");
+      expect(trace).toEqual(["camp-installed", "camp-read"]);
+      // 默认分支拒绝保 Role 已装、Camp 已被探针移除的前缀，不伪造 Victory 或回滚。
+      expect(capturedWorld!.getComponent(1, COMPONENT.Role)?.role).toBe(Role.Villager);
+      expect(capturedWorld!.getComponent(1, COMPONENT.Victory)).toBeUndefined();
+    }),
+  );
 });
 
 test("custom membership receives an independent worldless context without an extra Camp query", () => {
-  const trace: string[] = [], initContexts: RoleInitContext[] = [], membershipContexts: RoleInitContext[] = [];
-  const add = World.prototype.addComponent, get = World.prototype.getComponent;
-  let between = false, draft: CampComponent | undefined;
+  const trace: string[] = [],
+    initContexts: RoleInitContext[] = [],
+    membershipContexts: RoleInitContext[] = [];
+  const add = World.prototype.addComponent,
+    get = World.prototype.getComponent;
+  let between = false,
+    draft: CampComponent | undefined;
   const install = new Proxy(add, {
     apply(target, world: World, args) {
       const result = Reflect.apply(target, world, args);
@@ -168,30 +191,44 @@ test("custom membership receives an independent worldless context without an ext
   });
   const query = new Proxy(get, {
     apply(target, world: World, args) {
-      if (between && args[0] === 1 && args[1] === COMPONENT.Camp) trace.push("unexpected-camp-read");
+      if (between && args[0] === 1 && args[1] === COMPONENT.Camp)
+        trace.push("unexpected-camp-read");
       return Reflect.apply(target, world, args);
     },
   });
-  withVillagerRuntime({
-    init(_role, ctx) { initContexts.push(ctx); },
-    initialVictoryAffiliations(_role, ctx) {
-      membershipContexts.push(ctx);
-      if (between) trace.push("custom-membership");
-      return [{ kind: "faction", faction: "third_party" }];
+  withVillagerRuntime(
+    {
+      init(_role, ctx) {
+        initContexts.push(ctx);
+      },
+      initialVictoryAffiliations(_role, ctx) {
+        membershipContexts.push(ctx);
+        if (between) trace.push("custom-membership");
+        return [{ kind: "faction", faction: "third_party" }];
+      },
     },
-  }, () => withWorldMethods(install, query, () => {
-    const { world } = boot(), init = initContexts[0]!, membership = membershipContexts[0]!;
-    expect(trace).toEqual(["camp-installed", "custom-membership", "victory-installed"]);
-    expect(membershipContexts).toHaveLength(2);
-    expect(membership).not.toBe(init);
-    expect(Object.keys(membership)).toEqual(["boardConfig", "locale", "initialCamp", "currentCamp"]);
-    expect(membership.world).toBeUndefined();
-    expect(membership.boardConfig).toBe(init.boardConfig);
-    expect(membership.initialCamp).toBe(init.initialCamp);
-    expect(membership.currentCamp).toBe(init.currentCamp);
-    expect(membership.currentCamp()).toBe(world.getComponent(1, COMPONENT.Camp));
-    expect(world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
-      { kind: "faction", faction: "third_party" },
-    ]);
-  }));
+    () =>
+      withWorldMethods(install, query, () => {
+        const { world } = boot(),
+          init = initContexts[0]!,
+          membership = membershipContexts[0]!;
+        expect(trace).toEqual(["camp-installed", "custom-membership", "victory-installed"]);
+        expect(membershipContexts).toHaveLength(2);
+        expect(membership).not.toBe(init);
+        expect(Object.keys(membership)).toEqual([
+          "boardConfig",
+          "locale",
+          "initialCamp",
+          "currentCamp",
+        ]);
+        expect(membership.world).toBeUndefined();
+        expect(membership.boardConfig).toBe(init.boardConfig);
+        expect(membership.initialCamp).toBe(init.initialCamp);
+        expect(membership.currentCamp).toBe(init.currentCamp);
+        expect(membership.currentCamp()).toBe(world.getComponent(1, COMPONENT.Camp));
+        expect(world.getComponent(1, COMPONENT.Victory)?.affiliations).toEqual([
+          { kind: "faction", faction: "third_party" },
+        ]);
+      }),
+  );
 });

@@ -11,7 +11,4 @@ export * from "./player/player-prompt-policy";
 export * from "./reporting";
 
 export { ObservationFallbackStrategy } from "./providers/observation-fallback";
-export type {
-  ObservedPlayerStrategy,
-  PlayerObservation,
-} from "./observation/player-observation";
+export type { ObservedPlayerStrategy, PlayerObservation } from "./observation/player-observation";

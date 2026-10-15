@@ -240,9 +240,7 @@ test("dead actions require trusted engine authorization; role, target, candidate
   gun.context.death_action_id = shotPermit.id;
   const before = getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot;
   expect(receive.validate(gun, "shoot", { target_id: 1 }).ok).toBe(true);
-  expect(getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(
-    before,
-  );
+  expect(getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(before);
   shotPermit.close();
   expect(receive.validate(gun, "shoot", { target_id: 1 })).toMatchObject({
     ok: false,

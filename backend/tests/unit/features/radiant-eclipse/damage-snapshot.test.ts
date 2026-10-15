@@ -9,16 +9,12 @@ import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { aliveLifeVersion } from "../../../../src/domain/components/alive";
 import { captureNightLife, type NightImmunityClaim } from "../../../../src/domain/night-effects";
-import {
-  DreamNightFrame,
-  type DreamNightLink,
-} from "../../../../src/features/dreamer/night-frame";
+import { DreamNightFrame, type DreamNightLink } from "../../../../src/features/dreamer/night-frame";
 function fixture() {
   const world = new World();
   for (let n = 0; n < 5; n++)
     world.addComponent(world.createEntity(), COMPONENT.Alive, createAliveComponent());
-  const body = (n: number) =>
-    world.getComponent(n, COMPONENT.Alive)!;
+  const body = (n: number) => world.getComponent(n, COMPONENT.Alive)!;
   const scope = (n: number) => captureNightLife(world, n)!;
   const link: DreamNightLink = {
     actorId: 2,

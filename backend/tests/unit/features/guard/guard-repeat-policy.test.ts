@@ -16,9 +16,7 @@ import {
 } from "../../../../src/domain";
 import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { GUARD_NIGHT_STAGES } from "../../../../src/features/guard/night-stages";
-import {
-  findNightAbility,
-} from "../../../../src/features/night-abilities/abilities";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
 import { getDefaultTargetHintRegistry } from "../../../../src/agents/tool-repair/target-hint-registry";
 import { getDefaultConfigRenderRegistry } from "../../../../src/agents/prompt/config-render-registry";
@@ -50,10 +48,7 @@ function setup(policy?: GuardRepeatPolicy, locale: "zh-CN" | "en" = "en") {
   };
   const resolved = parseBoardDefinition(boardDefinitionFromConfig("guard_policy", input));
   const game = bootstrapGame(resolved.config, { fixedRoles: roles, locale });
-  const ability = findNightAbility(
-    game.world.getComponent(2, COMPONENT.Role)!,
-    "guard",
-  )!;
+  const ability = findNightAbility(game.world.getComponent(2, COMPONENT.Role)!, "guard")!;
   const events: GameEvent[] = [];
   const act = async (day: number, action: Extract<ToolCall, { name: "guard" }> | null) => {
     const factory = new GameActionRequestFactory(game.world, events, day);
@@ -128,9 +123,9 @@ for (const policy of ["awa_last_action_v1", "netease_consecutive_nights_v1"] as 
       expect(
         getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),
       ).toContain(policy);
-      expect(
-        renderRolePrompt(game.world.getComponent(2, COMPONENT.Role)!, locale),
-      ).toContain(policy);
+      expect(renderRolePrompt(game.world.getComponent(2, COMPONENT.Role)!, locale)).toContain(
+        policy,
+      );
       expect(projectNightAbility(game.ability, 1).state).toEqual(
         policy === "netease_consecutive_nights_v1"
           ? { lastTarget: null, repeatPolicy: policy }

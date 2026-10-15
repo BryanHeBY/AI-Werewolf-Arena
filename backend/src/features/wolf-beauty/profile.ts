@@ -58,7 +58,9 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
     nightStages: [...ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages!, WOLF_BEAUTY_CHARM_STAGE],
     deathHook: wolfBeautyDeathHook,
     toolSpecs: [
-      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter(
+        (spec) => spec.name !== "self_destruct",
+      ),
       {
         name: "charm",
         parameters: {
@@ -131,7 +133,15 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
           },
         };
       }
-      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, undefined, currentCamp);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
+        role,
+        request,
+        pick,
+        byCamp,
+        locale,
+        undefined,
+        currentCamp,
+      );
     },
   },
   presentation: nativeRolePresentation("wolf_beauty"),

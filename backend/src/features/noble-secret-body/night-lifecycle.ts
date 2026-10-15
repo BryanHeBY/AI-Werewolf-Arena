@@ -88,10 +88,17 @@ export function nobleNightReceiver(result: object): NobleNightAbortReceiver {
  * 外部旧对象与旧receiver继续原两参数到期路径，不新增Symbol或方法getter读取。
  */
 export function expireNobleNight(result: object, world: () => World, day: () => number) {
-  if (!ownedResults.has(result) || types.isProxy(result)) return expireServantAtNightEnd(world(), day());
-  const receiver = (result as { readonly [NOBLE_NIGHT_RECEIVER]: NobleNightReceiver })[NOBLE_NIGHT_RECEIVER];
+  if (!ownedResults.has(result) || types.isProxy(result))
+    return expireServantAtNightEnd(world(), day());
+  const receiver = (result as { readonly [NOBLE_NIGHT_RECEIVER]: NobleNightReceiver })[
+    NOBLE_NIGHT_RECEIVER
+  ];
   if (!ownedReceivers.has(receiver)) return expireServantAtNightEnd(world(), day());
-  return (receiver as NobleNightReceiver & { expire(world: () => World, day: () => number): ReturnType<typeof expireServantAtNightEnd> }).expire(world, day);
+  return (
+    receiver as NobleNightReceiver & {
+      expire(world: () => World, day: () => number): ReturnType<typeof expireServantAtNightEnd>;
+    }
+  ).expire(world, day);
 }
 
 export class NobleNightUnit {

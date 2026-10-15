@@ -35,8 +35,7 @@ const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, 
 
 const role = (world: World, id: number) => world.getComponent(id, COMPONENT.Role)!;
 
-const alive = (world: World, id: number) =>
-  world.getComponent(id, COMPONENT.Alive)!;
+const alive = (world: World, id: number) => world.getComponent(id, COMPONENT.Alive)!;
 
 function fixture(locale: "zh-CN" | "en") {
   const game = bootstrapGame(sixPlayerMvpConfig, { locale, fixedRoles });
@@ -200,9 +199,11 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(projected.map((item) => item.type)).toEqual([...types]);
       expect(projected.map((item) => item.seq)).toEqual(types.map((_, index) => index + 1));
       expect(JSON.stringify(projected)).not.toContain('"audience"');
-      const saved = readReplayPlayerView(JSON.parse(
-        await readFile(path.join(record.sessionDir, `players/player_${actor}.json`), "utf8"),
-      ));
+      const saved = readReplayPlayerView(
+        JSON.parse(
+          await readFile(path.join(record.sessionDir, `players/player_${actor}.json`), "utf8"),
+        ),
+      );
       expect(
         saved.timeline.filter((item: any) => item.kind === "event").map((item: any) => item.event),
       ).toEqual(projected);
@@ -216,9 +217,9 @@ for (const locale of ["zh-CN", "en"] as const) {
     } as GameEvent;
     for (const id of world.entityIds())
       expect(buildAgentVisibleEventFeed(world, [missing], id)).toEqual([]);
-    const publicReplay = readReplayDocument(JSON.parse(
-      await readFile(path.join(record.sessionDir, "replay.json"), "utf8"),
-    ));
+    const publicReplay = readReplayDocument(
+      JSON.parse(await readFile(path.join(record.sessionDir, "replay.json"), "utf8")),
+    );
     for (const event of publicReplay.events) {
       expect(event).not.toHaveProperty("audience");
       expect(event.payload).not.toHaveProperty("audience");

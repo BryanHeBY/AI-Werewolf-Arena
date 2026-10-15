@@ -5,7 +5,15 @@
  * 这些声明不授予资源或行动权限，期限、原体复验与提交仍归各实际所有者。
  * 保留原请求附加字段、可选性与可写数组；ActionProvider 是运行接口，不是可序列化数据。
  */
-import type { ToolCall, ToolName, ActionStage, ActionWindow, Phase, MessageRef, GameEvent } from "@ai-werewolf-arena/game-contract";
+import type {
+  ToolCall,
+  ToolName,
+  ActionStage,
+  ActionWindow,
+  Phase,
+  MessageRef,
+  GameEvent,
+} from "@ai-werewolf-arena/game-contract";
 export { TOOL_NAMES, ACTION_STAGES, DEATH_SHOT_STAGES } from "@ai-werewolf-arena/game-contract";
 export type {
   ToolArgMap,

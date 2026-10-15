@@ -6,7 +6,11 @@
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { GARGOYLE_CASES, gargoyleScenario, type GargoyleScenario } from "../../../support/features/gargoyle/builders/scenario";
+import {
+  GARGOYLE_CASES,
+  gargoyleScenario,
+  type GargoyleScenario,
+} from "../../../support/features/gargoyle/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const facts: Record<
   GargoyleScenario,

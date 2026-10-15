@@ -144,25 +144,25 @@ for (const late of [null, { name: "charm", args: { target_id: null } }] as const
       expect(failed).toBe(true);
       const actor = world
         .entityIds()
-        .find(
-          (id) => world.getComponent(id, COMPONENT.Role)?.role === Role.WolfBeauty,
-        )!;
-      expect(
-        getWolfBeautyState(world.getComponent(actor, COMPONENT.Role)!),
-      ).toMatchObject({
+        .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.WolfBeauty)!;
+      expect(getWolfBeautyState(world.getComponent(actor, COMPONENT.Role)!)).toMatchObject({
         lastActedDay: 1,
         history: [{ day: 1, targetId: world.entityIds().find((id) => id !== actor)! }],
       });
       expect(activeCharm(world, actor)).not.toBeNull();
       const [session] = await readdir(root),
-        record = parseReproductionRecord(JSON.parse(await readFile(path.join(root, session, "reproduction.json"), "utf8")));
+        record = parseReproductionRecord(
+          JSON.parse(await readFile(path.join(root, session, "reproduction.json"), "utf8")),
+        );
       expect(
         record.decisions.find(
           (decision: any) =>
             decision.actorId === actor && decision.day === 2 && decision.stage === "wolf_beauty",
         )!.outcome,
       ).toEqual({ kind: "error", code: "decision_failed", name: "AbortError" });
-      const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8")));
+      const replay = readReplayDocument(
+        JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8")),
+      );
       expect(replay.events.filter((event: any) => event.type === "charm_applied")).toHaveLength(1);
       const tape = await readReproduction(path.join(root, session, "reproduction.json"));
       expect(

@@ -9,7 +9,13 @@ import {
   getRedMoonState,
   RED_MOON_ROLE,
 } from "../../../../src/features/red-moon/state-slot";
-import { readRedMoonNextNightFact, readRedMoonExpiryFact, RED_MOON_BLAST_EVENT, RED_MOON_EXILE_EVENT, RED_MOON_EXPIRY_EVENT } from "@ai-werewolf-arena/game-contract/facts/red-moon";
+import {
+  readRedMoonNextNightFact,
+  readRedMoonExpiryFact,
+  RED_MOON_BLAST_EVENT,
+  RED_MOON_EXILE_EVENT,
+  RED_MOON_EXPIRY_EVENT,
+} from "@ai-werewolf-arena/game-contract/facts/red-moon";
 // 测试自持当前 Camp，不经旧 Role 属性或隐藏映射提供阵营。
 const fixtureCamp = { camp: Camp.Wolf };
 const currentCamp = () => fixtureCamp;
@@ -38,7 +44,9 @@ describe("Red Moon finite state", () => {
     expect(
       getRedMoonState(role({ ...freshRedMoonState(), blastDay: 2, exileDay: 2 }), currentCamp),
     ).toBeUndefined();
-    expect(getRedMoonState(role({ ...freshRedMoonState(), expirySettled: true }), currentCamp)).toBeUndefined();
+    expect(
+      getRedMoonState(role({ ...freshRedMoonState(), expirySettled: true }), currentCamp),
+    ).toBeUndefined();
   });
   test("malformed states and wrong authority fail closed", () => {
     for (const field of [
@@ -52,7 +60,9 @@ describe("Red Moon finite state", () => {
       { expirySettled: 1 },
       { extra: true },
     ])
-      expect(getRedMoonState(role({ ...freshRedMoonState(), ...field }), currentCamp)).toBeUndefined();
+      expect(
+        getRedMoonState(role({ ...freshRedMoonState(), ...field }), currentCamp),
+      ).toBeUndefined();
     expect(getRedMoonState(role(), () => ({ camp: Camp.Good }))).toBeUndefined();
   });
   test("accessors and proxies are never evaluated", () => {
@@ -73,7 +83,8 @@ describe("Red Moon finite state", () => {
             reads++;
             throw new Error("proxy");
           },
-        }), currentCamp
+        }),
+        currentCamp,
       ),
     ).toBeUndefined();
     const revoked = Proxy.revocable(freshRedMoonState(), {});

@@ -22,10 +22,7 @@ import {
 } from "../../agents/game-tool-protocol";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { isLocale } from "@ai-werewolf-arena/game-contract";
-import {
-  getActionRequestDay,
-  getActionRequestStage,
-} from "../../domain/action-request-context";
+import { getActionRequestDay, getActionRequestStage } from "../../domain/action-request-context";
 export type {
   GameReportBugInput as McpReportBugParams,
   GameSubmitActionInput as McpSubmitActionParams,

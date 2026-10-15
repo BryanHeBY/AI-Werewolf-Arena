@@ -11,7 +11,11 @@ import { getMechanicalState } from "./state";
 import { createMechanicalGunReader } from "../death-actions/native-resource-ports";
 
 export const mechanicalDeathHook: DeathHook = (world, ids, sources, choose, events, context) => {
-  const readGun = createMechanicalGunReader({ get getMechanicalState() { return getMechanicalState; } });
+  const readGun = createMechanicalGunReader({
+    get getMechanicalState() {
+      return getMechanicalState;
+    },
+  });
   return resolveNativeDeathShots(
     world,
     ids,

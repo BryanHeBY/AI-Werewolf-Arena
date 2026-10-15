@@ -9,10 +9,7 @@ import type { EntityId } from "../../domain/model";
 import { COMPONENT } from "../../domain/components/names";
 import type { World } from "../../domain/world";
 import { abilityStatus, allNightAbilities, type NightAbilityReadView } from "./abilities";
-import {
-  bindNightmareNightEligibility,
-  type NightmareNightEligibility,
-} from "../nightmare/ports";
+import { bindNightmareNightEligibility, type NightmareNightEligibility } from "../nightmare/ports";
 import {
   bindScholarMentorNightEligibility,
   type ScholarMentorNightEligibility,

@@ -9,17 +9,22 @@ import type { RuntimeSnapshot } from "@ai-werewolf-arena/game-contract";
 import { hasRadiantNight } from "../features/radiant-eclipse/ports";
 import { hasDemonNightStarted } from "../features/demon-hunter/ports";
 import {
-  weddingSetup, ghostBrideReady, hasActiveGhostBride, hasGhostBrideNightCommit,
+  weddingSetup,
+  ghostBrideReady,
+  hasActiveGhostBride,
+  hasGhostBrideNightCommit,
 } from "../features/ghost-bride/ports";
 import {
-  lonelyGirlReady, hasActiveLonelyGirl, hasLonelyGirlNightCommit,
+  lonelyGirlReady,
+  hasActiveLonelyGirl,
+  hasLonelyGirlNightCommit,
 } from "../features/lonely-girl/ports";
+import { hasActiveWildChild, hasWildChildNightCommit } from "../features/wild-child/ports";
 import {
-  hasActiveWildChild, hasWildChildNightCommit,
-} from "../features/wild-child/ports";
-import {
-  hasActiveInitialIdentitySetup, hasActiveInitialIdentityNight,
-  hasInitialIdentityNightCommit, initialIdentityKind,
+  hasActiveInitialIdentitySetup,
+  hasActiveInitialIdentityNight,
+  hasInitialIdentityNightCommit,
+  initialIdentityKind,
 } from "../features/initial-identity/ports";
 import { hasActiveWall } from "../features/wall-notes/ports";
 

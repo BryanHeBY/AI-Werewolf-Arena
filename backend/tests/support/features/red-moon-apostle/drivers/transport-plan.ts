@@ -32,9 +32,7 @@ export async function redMoonScenario(
   config.redMoon!.lastWolfBlastPolicy = policy;
   const seed = "red-moon-transport:" + mode + ":" + policy;
   const game = bootstrapGame(config, { random: createRandom(seed) });
-  const roles = game.playerIds.map(
-    (id) => game.world.getComponent(id, COMPONENT.Role)!.role,
-  );
+  const roles = game.playerIds.map((id) => game.world.getComponent(id, COMPONENT.Role)!.role);
   const id = (r: Role) => roles.indexOf(r) + 1;
   const red = id(Role.RedMoonApostle),
     witch = id(Role.Witch),

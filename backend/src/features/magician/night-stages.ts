@@ -24,7 +24,8 @@ export const MAGICIAN_EXCHANGE_STAGE: NightStageHandler = {
       actorId = beginMagicianNight(ctx.world, day);
     if (actorId === null) return;
     const role = ctx.world.getComponent(actorId, COMPONENT.Role);
-    if (!getMagicianState(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp))) throw new Error("magician_actor_invalid");
+    if (!getMagicianState(role, () => ctx.world.getComponent(actorId, COMPONENT.Camp)))
+      throw new Error("magician_actor_invalid");
     const request = ctx.makeRequest(actorId, ["swap_targets"], {
       stage: "magician_exchange",
       requiresAction: true,

@@ -48,7 +48,9 @@ export function* prepareGameSetup(
       initialIdentityKind(runtime.world())!,
       {
         // 装配只交付 getter；共享窗口到原 new 点才读取真实类，不在开局检查时捕获。
-        get requestFactory() { return GameActionRequestFactory; },
+        get requestFactory() {
+          return GameActionRequestFactory;
+        },
       },
     ).execute(runtime.config(), actionProvider, nightDay, nightIsCurrent);
     // false 先短路，不再查询当前性或推进其它设置；窗口的失败关闭仍由自己的 finally 完成。
@@ -59,7 +61,11 @@ export function* prepareGameSetup(
       runtime.world(),
       runtime.toolGateway(),
       runtime.events(),
-      { get requestFactory() { return GameActionRequestFactory; } },
+      {
+        get requestFactory() {
+          return GameActionRequestFactory;
+        },
+      },
     ).execute(runtime.config(), actionProvider, nightDay, nightIsCurrent);
     if (!ready || !nightIsCurrent()) return false;
   }
@@ -68,7 +74,11 @@ export function* prepareGameSetup(
       runtime.world(),
       runtime.toolGateway(),
       runtime.events(),
-      { get requestFactory() { return GameActionRequestFactory; } },
+      {
+        get requestFactory() {
+          return GameActionRequestFactory;
+        },
+      },
     ).execute(runtime.config(), actionProvider, nightDay, nightIsCurrent);
     if (!ready || !nightIsCurrent()) return false;
   }
@@ -77,7 +87,11 @@ export function* prepareGameSetup(
       runtime.world(),
       runtime.toolGateway(),
       runtime.events(),
-      { get requestFactory() { return GameActionRequestFactory; } },
+      {
+        get requestFactory() {
+          return GameActionRequestFactory;
+        },
+      },
     ).execute(runtime.config(), actionProvider, nightDay, nightIsCurrent);
     if (!ready || !nightIsCurrent()) return false;
   }

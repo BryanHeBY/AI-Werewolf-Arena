@@ -16,7 +16,12 @@ import { Camp, Role, Phase } from "../../domain/model";
 import type { NativeRoleContributions } from "../../rulesets/roles/contracts";
 import { isAliveTarget } from "../../engine/actions/validation-contracts";
 import { numberOrNull } from "../../agents/tool-repair/helpers";
-import { canChooseExemplar, getHybridState, projectHybridState, installHybridState } from "./state-slot";
+import {
+  canChooseExemplar,
+  getHybridState,
+  projectHybridState,
+  installHybridState,
+} from "./state-slot";
 import { HYBRID_STAGE } from "./night-stage";
 
 export const HYBRID_ROLE_PROFILE: NativeRoleContributions = {

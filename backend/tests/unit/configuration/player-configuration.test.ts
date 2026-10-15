@@ -86,7 +86,10 @@ test("locale, seed and conflicting legacy player bindings fail explicitly", () =
 test("normalized role defaults expose their source without exposing private prompts", async () => {
   const raw = JSON.parse(
     await readFile(
-      path.resolve(import.meta.dir, "../../../../configs.example/boards/twelve_player_standard.json"),
+      path.resolve(
+        import.meta.dir,
+        "../../../../configs.example/boards/twelve_player_standard.json",
+      ),
       "utf8",
     ),
   );

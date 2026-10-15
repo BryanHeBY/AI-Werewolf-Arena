@@ -7,11 +7,7 @@ import { inspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspecti
 import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
 
 import { z } from "zod";
-import {
-  INSPECTION_POLICIES,
-  type BoardConfig,
-  type InspectionPolicy,
-} from "../../domain/board";
+import { INSPECTION_POLICIES, type BoardConfig, type InspectionPolicy } from "../../domain/board";
 
 import type { RoleProfile } from "../../rulesets/roles/contracts";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";

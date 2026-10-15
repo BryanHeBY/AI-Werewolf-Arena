@@ -7,11 +7,7 @@ import { types } from "node:util";
 import type { World } from "./world";
 import type { RoleComponent } from "./components/role";
 import type { CampComponent } from "./components/camp";
-import {
-  aliveLifeDescriptor,
-  aliveLifeVersion,
-  type AliveComponent,
-} from "./components/alive";
+import { aliveLifeDescriptor, aliveLifeVersion, type AliveComponent } from "./components/alive";
 import { COMPONENT } from "./components/names";
 import { isRoleId, type RoleId } from "@ai-werewolf-arena/game-contract";
 import { Camp } from "./identity";
@@ -44,11 +40,7 @@ export function captureOriginalPlayer(world: World, id: number): OriginalPlayerS
     return null;
   const roleId = own(role, "role"),
     campValue = own(camp, "camp");
-  if (
-    !isRoleId(roleId) ||
-    !Object.values(Camp).includes(campValue as Camp)
-  )
-    return null;
+  if (!isRoleId(roleId) || !Object.values(Camp).includes(campValue as Camp)) return null;
   const scope = Object.freeze({
     id,
     life,

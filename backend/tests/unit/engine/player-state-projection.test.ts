@@ -21,9 +21,7 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
 } from "../../../src/rulesets/mechanism-api";
-import {
-  findNightAbility,
-} from "../../../src/features/night-abilities/abilities";
+import { findNightAbility } from "../../../src/features/night-abilities/abilities";
 import { projectNightAbility } from "../../../src/agents/observation/night-ability-projection";
 import { getBearState } from "../../../src/features/bear/ports";
 import { getDreamerState } from "../../../src/features/dreamer/ports";

@@ -26,7 +26,10 @@ import {
   animalAuthoritySnapshot,
   filterAnimalLethalWave,
 } from "../../../../src/features/animal-dream/authority";
-import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/features/animal-dream/accepted-ballots";
+import {
+  recordAnimalBallotRound,
+  sealAnimalBallots,
+} from "../../../../src/features/animal-dream/accepted-ballots";
 const fixture = (first = false) =>
   animalRosterFixture(undefined, (world, config) =>
     installAnimalAuthority(world, {
@@ -54,9 +57,7 @@ function ballots(
         targetId,
         abstain: targetId === null,
         weight:
-          targetId === null
-            ? 0
-            : f.world.getComponent(actorId, COMPONENT.VotingRight)!.weight,
+          targetId === null ? 0 : f.world.getComponent(actorId, COMPONENT.VotingRight)!.weight,
       };
     });
 }

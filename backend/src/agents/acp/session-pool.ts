@@ -4,11 +4,7 @@
  * 不变量：已登记的关闭任务按会话对象复用；丢弃先撤销复用入口，关闭后不再创建，迟到实例仍进入回收。
  * 协议与进程关闭由 session_lifecycle 执行，本池不负责游戏行动授权。
  */
-import {
-  AcpSession,
-  AcpSessionCreateInput,
-  AcpSessionFactory,
-} from "../../adapters/acp/session";
+import { AcpSession, AcpSessionCreateInput, AcpSessionFactory } from "../../adapters/acp/session";
 import {
   ACP_CLOSE_TIMEOUT_MS,
   AcpInitializationCleanupError,

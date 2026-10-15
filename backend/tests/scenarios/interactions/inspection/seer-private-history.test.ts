@@ -125,8 +125,8 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(getDefaultScriptEventRenderRegistry().toLiveRender(inspection, false, locale)).toEqual(
         [],
       );
-      expect(
-        renderRolePrompt(world.getComponent(3, COMPONENT.Role)!, locale),
-      ).toContain(text(locale, "inspection.latest", { target: 1, result: expectedLabel }));
+      expect(renderRolePrompt(world.getComponent(3, COMPONENT.Role)!, locale)).toContain(
+        text(locale, "inspection.latest", { target: 1, result: expectedLabel }),
+      );
     });
 }

@@ -25,7 +25,10 @@ import {
   openAnimalPufferChoice,
   animalAuthoritySnapshot,
 } from "../../../../src/features/animal-dream/authority";
-import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/features/animal-dream/accepted-ballots";
+import {
+  recordAnimalBallotRound,
+  sealAnimalBallots,
+} from "../../../../src/features/animal-dream/accepted-ballots";
 const fixture = () => animalRosterFixture(undefined, installAnimalAuthority);
 function request(kind: "fox" | "puffer" = "fox", day = 2) {
   const name = kind === "fox" ? "fox_distract" : "puffer_retaliate";

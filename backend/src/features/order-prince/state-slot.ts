@@ -7,7 +7,10 @@
  * 角色阵营渠道已退出；reader／project 以显式晚读 CurrentCampSource 获取实际 Camp，原 raw schema／写者不因此获得许可。
  */
 import type { CurrentCampSource } from "../../domain/components/camp";
-import type { OrderPrinceChoice, OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/order-prince";
+import type {
+  OrderPrinceChoice,
+  OrderPrinceState,
+} from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { types } from "node:util";
 import { Camp, type RoleComponent } from "../../domain";
 
@@ -148,5 +151,8 @@ export const ORDER_PRINCE_STATE_SLOT = Object.freeze({
   next: nextOrderPrinceChoice,
   install: installOrderPrinceState,
   allowedWrites: Object.freeze({ replace: replaceOrderPrinceState }),
-  checkpoint: Object.freeze({ projection: encodeOrderPrinceProjection, next: encodeOrderPrinceNext }),
+  checkpoint: Object.freeze({
+    projection: encodeOrderPrinceProjection,
+    next: encodeOrderPrinceNext,
+  }),
 });

@@ -28,10 +28,7 @@ test("actual badge transfer and destruction survive subsequent failure; mutable 
     badge: { isSheriff: false, destroyed: true },
     vote: { weight: 1 },
   });
-  const badge = f.world.getComponent(
-    5,
-    COMPONENT.Badge,
-  )!;
+  const badge = f.world.getComponent(5, COMPONENT.Badge)!;
   badge.isSheriff = true;
   expect(() =>
     captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 0, true, events.length),

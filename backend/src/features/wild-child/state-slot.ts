@@ -92,7 +92,9 @@ export function commitWildChildState(
 }
 
 /** lifecycle 先关闭原窗口；这里只执行原两字段可写短路及已写内容证据更新。 */
-export function cancelWildChildState(b: Pick<WildChildDataBinding, "state" | "expectedState">): void {
+export function cancelWildChildState(
+  b: Pick<WildChildDataBinding, "state" | "expectedState">,
+): void {
   if (["remaining", "status"].every((k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable)) {
     (b.state as Pick<WildChildState, "remaining">).remaining = 0;
     (b.state as Pick<WildChildState, "status">).status = "closed";
@@ -101,21 +103,30 @@ export function cancelWildChildState(b: Pick<WildChildDataBinding, "state" | "ex
 }
 
 /** 原榜样事实、阵营和 Victory 已经提交后才写转换数据；错误保留那些已发布前缀。 */
-export function transformWildChildState(b: Pick<WildChildDataBinding, "state" | "expectedState">, day: number): void {
+export function transformWildChildState(
+  b: Pick<WildChildDataBinding, "state" | "expectedState">,
+  day: number,
+): void {
   (b.state as Pick<WildChildState, "status">).status = "transformed";
   (b.state as Pick<WildChildState, "eligibleNight">).eligibleNight = day + 1;
   b.expectedState = encodeWildChildData(b.state);
 }
 
 /** 原夜资格与活跃标记先由 lifecycle 处理；编码失败仍按原 invalid 结果继续，不补新的清理。 */
-export function activateWildChildState(b: Pick<WildChildDataBinding, "state" | "expectedState">, day: number): void {
+export function activateWildChildState(
+  b: Pick<WildChildDataBinding, "state" | "expectedState">,
+  day: number,
+): void {
   (b.state as Pick<WildChildState, "status">).status = "active";
   (b.state as Pick<WildChildState, "activeFromNight">).activeFromNight = day;
   b.expectedState = encodeWildChildData(b.state);
 }
 
 /** 先在原点查询 owner；不当前只显示关闭副本，正常状态仍完整克隆原槽。 */
-export function projectWildChildData(b: Pick<WildChildDataBinding, "state">, current: () => boolean): WildChildReadState {
+export function projectWildChildData(
+  b: Pick<WildChildDataBinding, "state">,
+  current: () => boolean,
+): WildChildReadState {
   if (!current()) return { ...freshWildChildState(), remaining: 0, status: "closed" };
   return structuredClone(b.state);
 }

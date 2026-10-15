@@ -6,7 +6,10 @@ import type { VictoryPoint } from "@ai-werewolf-arena/game-contract";
 import { ActionWindow, Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { whiteWolfScenario, type WhiteWolfScenario } from "../../../support/features/white-wolf-king/builders/scenario";
+import {
+  whiteWolfScenario,
+  type WhiteWolfScenario,
+} from "../../../support/features/white-wolf-king/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 
 const cases: Array<[WhiteWolfScenario, ActionWindow]> = Object.values(ActionWindow).map(

@@ -111,7 +111,8 @@ export class AgentBugReportService {
         stage: report.stage,
         actorId: report.actorId,
         actorRole: role?.role ?? "unknown",
-        actorCamp: (role && this.world.getComponent(report.actorId, COMPONENT.Camp)?.camp) ?? "unknown",
+        actorCamp:
+          (role && this.world.getComponent(report.actorId, COMPONENT.Camp)?.camp) ?? "unknown",
         category: report.category,
         severity: report.severity,
         message: report.message,

@@ -12,7 +12,11 @@ import {
   type VictoryComponent,
 } from "../../../../src/domain";
 import { BaselineBotActionProvider } from "../../../../src/agents/baseline/privileged";
-import { CUPID_CASES, cupidScenario, cupidBoard } from "../../../support/features/cupid/builders/scenario";
+import {
+  CUPID_CASES,
+  cupidScenario,
+  cupidBoard,
+} from "../../../support/features/cupid/builders/scenario";
 import { loversRecord } from "../../../../src/features/cupid/relation";
 const boards = [
   ...CUPID_CASES.map((name) => ({ name, board: cupidScenario(name).board.config })),
@@ -79,7 +83,9 @@ for (const { name, board } of boards)
             const actualRoles = alive.map(
               (id) => [id, game.world.getComponent(id, COMPONENT.Role)!] as const,
             );
-            const wolves = actualRoles.filter(([id]) => game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Wolf).length;
+            const wolves = actualRoles.filter(
+              ([id]) => game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Wolf,
+            ).length;
             const good = actualRoles.filter(
               ([id, role]) =>
                 game.world.getComponent(id, COMPONENT.Camp)!.camp === Camp.Good &&

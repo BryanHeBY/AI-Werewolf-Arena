@@ -10,17 +10,17 @@ import { Phase } from "../../../../src/domain/model";
 import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
 import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
 import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
-import { REQUIRED_ACTION_CONSTRAINTS, FallbackProvider } from "../../../support/drivers/agents/llm-clients";
+import {
+  REQUIRED_ACTION_CONSTRAINTS,
+  FallbackProvider,
+} from "../../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider protocol", () => {
-
   test("retries a text-only required-tool response and completes the witch turn", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const witchId = context.world
       .entityIds()
-      .find(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "witch",
-      )!;
+      .find((id) => context.world.getComponent(id, COMPONENT.Role)?.role === "witch")!;
     let requests = 0;
     const server = Bun.serve({
       hostname: "127.0.0.1",

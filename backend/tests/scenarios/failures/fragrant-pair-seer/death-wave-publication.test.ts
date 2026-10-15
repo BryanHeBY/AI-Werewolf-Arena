@@ -49,9 +49,7 @@ for (const path of ["initial", "gun"] as const)
     expect(injections).toBe(1);
     expect(caught).toBe(failure);
     expect(
-      g.world
-        .entityIds()
-        .filter((id) => !g.world.getComponent(id, COMPONENT.Alive)!.alive),
+      g.world.entityIds().filter((id) => !g.world.getComponent(id, COMPONENT.Alive)!.alive),
     ).toEqual(path === "initial" ? [5, 6] : [1, 5, 6, 11]);
     const owned = fragrantAuthoritySnapshot(g.world);
     expect(owned.fragrant.trigger).toEqual({

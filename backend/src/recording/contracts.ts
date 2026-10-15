@@ -12,8 +12,12 @@ import type { RandomMetadata } from "../domain/random";
 export type ReplayActionMode = "tool_call" | "text_action" | "none";
 
 /** manifest 结构由纯归档契约单独维护；领域枚举、判胜与 RNG 类型在本入口保持原收窄。 */
-export type ReplayManifestPlayer = import("@ai-werewolf-arena/replay-contract").ReplayManifestPlayerData;
-export type ReplayManifest = Omit<import("@ai-werewolf-arena/replay-contract").ReplayManifestData, "winner" | "game_result" | "random"> & {
+export type ReplayManifestPlayer =
+  import("@ai-werewolf-arena/replay-contract").ReplayManifestPlayerData;
+export type ReplayManifest = Omit<
+  import("@ai-werewolf-arena/replay-contract").ReplayManifestData,
+  "winner" | "game_result" | "random"
+> & {
   winner: Camp | null;
   game_result?: GameResult;
   random?: RandomMetadata;

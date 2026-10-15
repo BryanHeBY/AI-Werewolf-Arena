@@ -22,7 +22,10 @@ import type { RoleId } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../domain/components/role";
 import type { EntityId } from "../../domain/identity";
 import { copyAbilityData } from "../night-abilities/inventory-ports";
-import { createLearnedNativeGun, armAwakenedNativeGun } from "../death-actions/native-resource-ports";
+import {
+  createLearnedNativeGun,
+  armAwakenedNativeGun,
+} from "../death-actions/native-resource-ports";
 
 const validDay = (day: number) =>
   Number.isSafeInteger(day) && day >= 1 && day < Number.MAX_SAFE_INTEGER;
@@ -82,7 +85,11 @@ export function canAwakenedMimic(state: AwakenedReadState, day: number): boolean
     (state.mimicClosedDay === null || state.mimicClosedDay < day)
   );
 }
-export function closeAwakenedMimic(state: AwakenedReadState, day: number, mayCommit?: () => boolean): boolean {
+export function closeAwakenedMimic(
+  state: AwakenedReadState,
+  day: number,
+  mayCommit?: () => boolean,
+): boolean {
   if (!canAwakenedMimic(state, day)) return false;
   if (mayCommit && !mayCommit()) return false;
   (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
@@ -175,7 +182,11 @@ export function awakenedSkillForNight(
     ? learned.skill
     : undefined;
 }
-export function closeAwakenedSkill(state: AwakenedReadState, night: number, mayCommit?: () => boolean): boolean {
+export function closeAwakenedSkill(
+  state: AwakenedReadState,
+  night: number,
+  mayCommit?: () => boolean,
+): boolean {
   if (!awakenedSkillForNight(state, night)) return false;
   if (mayCommit && !mayCommit()) return false;
   (state as { skillClosedDay: number | null }).skillClosedDay = night;
@@ -241,14 +252,22 @@ export function chooseAwakenedGuard(
   return true;
 }
 /** 合法的无工具等待也按空目标结束本夜守护，打断连续守同一编号的历史。 */
-export function skipAwakenedSkill(state: AwakenedReadState, night: number, mayCommit?: () => boolean): boolean {
+export function skipAwakenedSkill(
+  state: AwakenedReadState,
+  night: number,
+  mayCommit?: () => boolean,
+): boolean {
   const skill = awakenedSkillForNight(state, night);
   if (!skill) return false;
   if (skill.kind === "guard") return chooseAwakenedGuard(state, null, night, mayCommit);
   if (skill.kind === "wolf") return chooseAwakenedAttack(state, null, night, mayCommit);
   return closeAwakenedSkill(state, night, mayCommit);
 }
-export function useAwakenedPoison(state: AwakenedReadState, night: number, mayCommit?: () => boolean): boolean {
+export function useAwakenedPoison(
+  state: AwakenedReadState,
+  night: number,
+  mayCommit?: () => boolean,
+): boolean {
   const skill = awakenedSkillForNight(state, night);
   if (skill?.kind !== "poison" || skill.remaining !== 1) return false;
   // 库存 getter 先完成，未付拒绝在 remaining 首写前；付款后仍完成原关闭字段。

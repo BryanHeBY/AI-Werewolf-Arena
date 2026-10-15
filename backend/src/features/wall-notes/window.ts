@@ -112,7 +112,9 @@ export class WallNotesWindow {
         calls.map(({ author, request, delivery }) =>
           sameWallAuthor(this.world, a, author) && delivery?.current() === true
             ? Promise.resolve().then(() =>
-                sameWallAuthor(this.world, a, author) && delivery?.current() === true ? provider.getAction(request) : null,
+                sameWallAuthor(this.world, a, author) && delivery?.current() === true
+                  ? provider.getAction(request)
+                  : null,
               )
             : Promise.resolve(null),
         ),
@@ -212,11 +214,16 @@ export class WallNotesWindow {
         throw error;
       } finally {
         // 局部关闭全体未完成作者；一人的通知抛错不能让其他 turn 继续开放，也不覆盖原 cleanup 错。
-        let notificationFailed = false, notificationError: unknown;
+        let notificationFailed = false,
+          notificationError: unknown;
         for (const delivery of deliveries) {
-          try { delivery.close(); }
-          catch (error) {
-            if (!notificationFailed) { notificationFailed = true; notificationError = error; }
+          try {
+            delivery.close();
+          } catch (error) {
+            if (!notificationFailed) {
+              notificationFailed = true;
+              notificationError = error;
+            }
           }
         }
         if (!failed && notificationFailed) throw notificationError;

@@ -9,7 +9,10 @@ import { assertReplayPlayerView, readReplayPlayerView } from "@ai-werewolf-arena
 async function legacy() {
   return JSON.parse(
     await readFile(
-      path.resolve(process.cwd(), "../packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json"),
+      path.resolve(
+        process.cwd(),
+        "../packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json",
+      ),
       "utf8",
     ),
   );

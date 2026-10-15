@@ -10,7 +10,8 @@ import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/rep
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 import { buildReplayFrame, createReplayRenderInput } from "../../../../src/replay/replay-frame";
 
-const read = (n: string) => JSON.parse(readFileSync(frontendFixtureURL("frontend/tests/fixtures/" + n), "utf8"));
+const read = (n: string) =>
+  JSON.parse(readFileSync(frontendFixtureURL("frontend/tests/fixtures/" + n), "utf8"));
 const load = (n: string) => readReplayDocument(read(n + ".replay.json"));
 const dead = (s: ReturnType<typeof buildReplaySnapshot>) =>
   s.players.filter((p) => !p.alive).map((p) => p.playerId);
@@ -28,9 +29,9 @@ const privateByActor = new Set([
   "dream_applied",
 ]);
 test("all 112 real owner archives preserve exact private actor and source facts", () => {
-  const files = frontendFixtureArtifacts("player-view").map((file) => file.originPath.slice("frontend/tests/fixtures/player-views/".length)).filter(
-    (n) => n.startsWith("radiant-") && n.endsWith(".player.json"),
-  );
+  const files = frontendFixtureArtifacts("player-view")
+    .map((file) => file.originPath.slice("frontend/tests/fixtures/player-views/".length))
+    .filter((n) => n.startsWith("radiant-") && n.endsWith(".player.json"));
   expect(files).toHaveLength(112);
   for (const name of files) {
     const view = readReplayPlayerView(read("player-views/" + name));

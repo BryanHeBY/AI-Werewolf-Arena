@@ -11,10 +11,7 @@ import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { readReplayArchive, createRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { resolveDefaultRecordRoot } from "../../recording/session/recorder";
 
-async function readReplayBundleArchive(
-  recordRoot: string,
-  sessionId: string,
-) {
+async function readReplayBundleArchive(recordRoot: string, sessionId: string) {
   const filePath = path.join(recordRoot, sessionId, "replay.json");
   let raw: string;
   try {
@@ -36,7 +33,10 @@ async function readReplayBundleArchive(
 }
 
 /** 旧数据 API 返回原规范 document；实际导出还保留新封装声明，不伪装历史裸档。 */
-export async function readReplayBundle(recordRoot: string, sessionId: string): Promise<ReplayDocument> {
+export async function readReplayBundle(
+  recordRoot: string,
+  sessionId: string,
+): Promise<ReplayDocument> {
   return (await readReplayBundleArchive(recordRoot, sessionId)).replay;
 }
 
@@ -58,7 +58,11 @@ export async function exportReplayBundle(options: {
   if (destinationInfo?.dev === sourceInfo.dev && destinationInfo.ino === sourceInfo.ino)
     throw new Error("replay_export_overwrites_source");
   await fs.mkdir(path.dirname(options.outputFile), { recursive: true });
-  await fs.writeFile(options.outputFile, `${JSON.stringify(archive.identities ? createRecordingEnvelope("public_replay", bundle, archive.identities) : bundle, null, 2)}\n`, "utf-8");
+  await fs.writeFile(
+    options.outputFile,
+    `${JSON.stringify(archive.identities ? createRecordingEnvelope("public_replay", bundle, archive.identities) : bundle, null, 2)}\n`,
+    "utf-8",
+  );
   return bundle;
 }
 

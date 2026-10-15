@@ -64,7 +64,9 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-one1"])
       const view = readReplayPlayerView(
           JSON.parse(
             readFileSync(
-              frontendFixtureURL(`frontend/tests/fixtures/player-views/shapeshifter-${name}.player.json`),
+              frontendFixtureURL(
+                `frontend/tests/fixtures/player-views/shapeshifter-${name}.player.json`,
+              ),
               "utf8",
             ),
           ),

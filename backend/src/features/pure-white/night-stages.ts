@@ -51,7 +51,15 @@ async function execute(ctx: NightStageContext, policy: "pure_white" | "wolf_witc
       pureWhiteInspectionTargets(ctx.world, actorId, policy).map((id) => {
         const life = captureNightLife(ctx.world, id);
         const role = ctx.world.getComponent(id, COMPONENT.Role);
-        return [id, { life, role, identity: role?.role, camp: role == null ? undefined : ctx.world.getComponent(id, COMPONENT.Camp)?.camp }] as const;
+        return [
+          id,
+          {
+            life,
+            role,
+            identity: role?.role,
+            camp: role == null ? undefined : ctx.world.getComponent(id, COMPONENT.Camp)?.camp,
+          },
+        ] as const;
       }),
     );
     if (!current()) continue;

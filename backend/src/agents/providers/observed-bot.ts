@@ -3,10 +3,7 @@
  * 只保存此玩家的 RNG，不持有 World 或其他玩家原角色；候选知识不能授予资源写权，实际合法性仍由引擎重检。
  */
 import type { ToolCall, RandomDraws } from "../../domain";
-import type {
-  ObservedPlayerStrategy,
-  PlayerObservation,
-} from "../observation/player-observation";
+import type { ObservedPlayerStrategy, PlayerObservation } from "../observation/player-observation";
 import { createObservedBotContext, type BotStyle } from "./observed-bot/context";
 import { observedToolHandlers } from "./observed-bot/handlers";
 export type { BotStyle } from "./observed-bot/context";

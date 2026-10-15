@@ -96,7 +96,8 @@ test("custom flat input remains its original receiver and queries never eagerly 
     },
   });
   const ctx: RoleInitContext = {
-    initialCamp, currentCamp,
+    initialCamp,
+    currentCamp,
     get locale(): Locale {
       trace.push("locale");
       return "en";
@@ -201,7 +202,8 @@ test("new custom presentation callback keeps its own receiver and late World acc
     [],
   );
   catalog.applyRuntime(role, {
-    initialCamp, currentCamp,
+    initialCamp,
+    currentCamp,
     locale: "en",
     get world() {
       trace.push("world");

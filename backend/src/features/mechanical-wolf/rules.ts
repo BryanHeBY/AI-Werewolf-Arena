@@ -21,7 +21,13 @@ import {
 
 const validateMechanical: ToolRule = ({ world, actorId, role, day, phase, toolCall }) => {
   const state = getMechanicalState(role);
-  if (role.role !== Role.MechanicalWolf || world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf || !state || day === undefined || isRoleExecutionRetired(role))
+  if (
+    role.role !== Role.MechanicalWolf ||
+    world.getComponent(actorId, COMPONENT.Camp)?.camp !== Camp.Wolf ||
+    !state ||
+    day === undefined ||
+    isRoleExecutionRetired(role)
+  )
     return { code: RuleError.MechanicalUnavailable };
   // 这是未付款工具预检；墓碑只拒绝新动作，已付效果和知识读器不用这张规则表。
   if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
@@ -37,7 +43,10 @@ const validateMechanical: ToolRule = ({ world, actorId, role, day, phase, toolCa
       : { code: RuleError.MechanicalTarget };
   }
   if (toolCall.name === "mechanical_attack") {
-    if (!canMechanicalKnife(role, world, () => world.getComponent(actorId, COMPONENT.Camp)) || !canMechanicalExtraKnife(state, day))
+    if (
+      !canMechanicalKnife(role, world, () => world.getComponent(actorId, COMPONENT.Camp)) ||
+      !canMechanicalExtraKnife(state, day)
+    )
       return { code: RuleError.MechanicalUnavailable };
     return toolCall.args.target_id === null || isAliveTarget(world, toolCall.args.target_id)
       ? null

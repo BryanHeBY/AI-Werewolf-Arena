@@ -6,7 +6,11 @@
 import { Camp, DeathCause, Phase } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { BLACK_CASES, blackMarketScenario, type BlackScenario } from "../../../support/features/black-market-merchant/builders/scenario";
+import {
+  BLACK_CASES,
+  blackMarketScenario,
+  type BlackScenario,
+} from "../../../support/features/black-market-merchant/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 
 const facts: Record<

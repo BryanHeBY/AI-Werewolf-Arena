@@ -14,7 +14,10 @@ import {
 } from "../../../../src/features/wolf-team/permissions";
 import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { getDefaultNightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import { findNightAbility, abilityStatus } from "../../../../src/features/night-abilities/abilities";
+import {
+  findNightAbility,
+  abilityStatus,
+} from "../../../../src/features/night-abilities/abilities";
 
 const matrix: Array<{
   name: string;
@@ -207,8 +210,7 @@ for (const [heal, poison] of [
 
 test("night-start last wolf gets one knife together with borrowed skill and never chats", async () => {
   const f = await radiantFixture();
-  for (const id of [10, 11, 12])
-    f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
+  for (const id of [10, 11, 12]) f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   const result = await f.pipeline.execute(
     f.board.config,
     radiantProvider(f.requests, { swallow: 3, knife: 6 }, (r) =>

@@ -118,7 +118,10 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
           : { code: RuleError.WolfSorcererTarget };
       },
     },
-    nightStages: [WOLF_SORCERER_EXCHANGE_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
+    nightStages: [
+      WOLF_SORCERER_EXCHANGE_STAGE,
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []),
+    ],
     baselineAction: (role, request, pick, pickCamp, locale, world, currentCamp) => {
       if (
         !request.allowedTools.includes("swap_night_seats") ||

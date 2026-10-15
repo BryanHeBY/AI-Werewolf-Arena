@@ -27,7 +27,9 @@ for (const name of ["6-good_dead", "6-hunter_chain", "6-wolf_needs_girl", "12-wo
         const view = readReplayPlayerView(
           JSON.parse(
             readFileSync(
-              frontendFixtureURL(`frontend/tests/fixtures/player-views/lonely-girl-${name}.player.json`),
+              frontendFixtureURL(
+                `frontend/tests/fixtures/player-views/lonely-girl-${name}.player.json`,
+              ),
               "utf8",
             ),
           ),

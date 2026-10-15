@@ -60,7 +60,10 @@ export function composeNightDamage(runtime: NightDamageCompositionRuntime): {
     ? sealRadiantNightEffects(runtime.world(), runtime.day())
     : undefined;
   // 保原 constructor callee、claims 与 shelters 参数顺序；读取同数组，不重建已付／原生命绑定。
-  const dreamFrame = new DreamNightFrame(readDreamNightLinks(runtime.claims()), radiantEffects?.shelters);
+  const dreamFrame = new DreamNightFrame(
+    readDreamNightLinks(runtime.claims()),
+    radiantEffects?.shelters,
+  );
   assertNightModifierBonusEffects(runtime);
   const damage = runtime.solver().resolve(runtime.world(), {
     intentNight: runtime.day(),

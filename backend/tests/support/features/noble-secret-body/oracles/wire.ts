@@ -2,7 +2,10 @@
  * 持有绑定严格解析档案的独立 Noble／Body 序列化请求前缀和已发表知识检查。输入为实际消息、请求前缀、快照或原本地端点及显式预期，输出为原断言与拒绝诊断；各层测试沿用独立标记和已录前缀，不从生产身份、观察或板子算法生成结果预期。
  */
 import { isDeepStrictEqual } from "node:util";
-import type { RecordedDecision, ReproductionRecord } from "../../../../../src/recording/reproduction/format";
+import type {
+  RecordedDecision,
+  ReproductionRecord,
+} from "../../../../../src/recording/reproduction/format";
 type Tuple = [number, string, Record<string, unknown>];
 const protocolDescriptions = {
   en: {

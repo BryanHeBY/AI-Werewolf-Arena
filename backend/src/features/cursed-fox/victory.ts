@@ -21,7 +21,10 @@ export function replaceWithFoxVictory(world: World, decision: WinDecision): WinD
     return decision;
   const fox = world.getAliveEntityIds().find((id) => {
     const role = world.getComponent(id, COMPONENT.Role);
-    return role?.role === Role.CursedFox && world.getComponent(id, COMPONENT.Camp)?.camp === Camp.ThirdParty;
+    return (
+      role?.role === Role.CursedFox &&
+      world.getComponent(id, COMPONENT.Camp)?.camp === Camp.ThirdParty
+    );
   });
   return fox === undefined
     ? decision

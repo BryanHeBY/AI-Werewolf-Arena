@@ -4,7 +4,10 @@
  * 字面角色／状态是 fixture 设置而非生产规则 oracle；Pair 别名、容器写入 LHS 时点保持。
  * 实例安装入口迁共享 owner，但不运行 profile、流水线、传输或模型。
  */
-import { createAliveComponent, createCampComponent } from "../../../../../src/agents/observation/component-presentation";
+import {
+  createAliveComponent,
+  createCampComponent,
+} from "../../../../../src/agents/observation/component-presentation";
 import { World } from "../../../../../src/domain/world";
 import { Role, Camp } from "../../../../../src/domain/identity";
 import { COMPONENT } from "../../../../../src/domain/components/names";

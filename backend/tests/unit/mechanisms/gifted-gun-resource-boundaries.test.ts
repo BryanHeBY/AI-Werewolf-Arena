@@ -75,7 +75,7 @@ test("sharing original component references with another World never transfers a
   const other = new World("en");
   for (let i = 1; i <= 6; i++) other.createEntity();
   other.addComponent(2, COMPONENT.Role, role(game));
-    other.addComponent(2, COMPONENT.Camp, { camp: Camp.Good });
+  other.addComponent(2, COMPONENT.Camp, { camp: Camp.Good });
   other.addComponent(2, COMPONENT.Alive, life(game));
   expect(activeDeathGun(other, 2, game.gun.id, 1)).toBeUndefined();
   expect(activeDeathGun(game.world, 2, game.gun.id, 1)).toBe(game.gun);

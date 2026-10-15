@@ -77,7 +77,8 @@ function fixture() {
       initialCamp = createCampComponent(catalog.getCamp(kind)),
       role = createRoleComponent(kind);
     catalog.applyRuntime(role, {
-      initialCamp, currentCamp: () => world.getComponent(id, COMPONENT.Camp),
+      initialCamp,
+      currentCamp: () => world.getComponent(id, COMPONENT.Camp),
       boardConfig: {
         boardSize: 12,
         roleSetups: [...new Set(roles)].map((kind) => ({
@@ -97,9 +98,9 @@ function fixture() {
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, id, `Player ${id}`));
   }
-  expect(
-    getDreamerState(world.getComponent(3, COMPONENT.Role)!)?.protectionPolicy,
-  ).toBe("netease_2026_night_immunity_v1");
+  expect(getDreamerState(world.getComponent(3, COMPONENT.Role)!)?.protectionPolicy).toBe(
+    "netease_2026_night_immunity_v1",
+  );
   installMistRavenBoard(world);
   const rule = (id: number, call: ToolCall, phase = Phase.Night, day = 1) =>
     catalog
@@ -132,16 +133,40 @@ test("original profiles contribute exact defaults and bilingual mechanism meanin
     alchemist = world.getComponent(1, COMPONENT.Role)!,
     raven = world.getComponent(9, COMPONENT.Role)!;
   expect(
-    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.presentation!.id, alchemist, "zh-CN", undefined, () => world.getComponent(1, COMPONENT.Camp)),
+    captureNativeRolePresentation(
+      ALCHEMIST_ROLE_PROFILE.presentation!.id,
+      alchemist,
+      "zh-CN",
+      undefined,
+      () => world.getComponent(1, COMPONENT.Camp),
+    ),
   ).toContain("发言结束");
   expect(
-    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.presentation!.id, alchemist, "en", undefined, () => world.getComponent(1, COMPONENT.Camp)),
+    captureNativeRolePresentation(
+      ALCHEMIST_ROLE_PROFILE.presentation!.id,
+      alchemist,
+      "en",
+      undefined,
+      () => world.getComponent(1, COMPONENT.Camp),
+    ),
   ).toContain("after daytime speeches");
   expect(
-    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.presentation!.id, raven, "zh-CN", undefined, () => world.getComponent(9, COMPONENT.Camp)),
+    captureNativeRolePresentation(
+      RAVEN_CLAW_ROLE_PROFILE.presentation!.id,
+      raven,
+      "zh-CN",
+      undefined,
+      () => world.getComponent(9, COMPONENT.Camp),
+    ),
   ).toContain("不补发");
   expect(
-    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.presentation!.id, raven, "en", undefined, () => world.getComponent(9, COMPONENT.Camp)),
+    captureNativeRolePresentation(
+      RAVEN_CLAW_ROLE_PROFILE.presentation!.id,
+      raven,
+      "en",
+      undefined,
+      () => world.getComponent(9, COMPONENT.Camp),
+    ),
   ).toContain("fewer than three");
 });
 test("pack recognition, sealed exclusion, permanent snapshot and historical audience are separate", () => {

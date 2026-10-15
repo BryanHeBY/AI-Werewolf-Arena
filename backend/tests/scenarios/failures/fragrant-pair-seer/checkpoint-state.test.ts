@@ -22,20 +22,26 @@ for (const alteration of ["pair_forgery", "pair_getter", "phantom_forgery"] as c
                 COMPONENT.Role,
               )!;
               // 只给原容器伪造读写加类型说明；仍逐次读取同一字段，不缓存或重新构造库存。
-              if (alteration === "phantom_forgery") (role.privateState as { fragrant: { knownWolfId: number } }).fragrant.knownWolfId = 2;
+              if (alteration === "phantom_forgery")
+                (role.privateState as { fragrant: { knownWolfId: number } }).fragrant.knownWolfId =
+                  2;
               else if (alteration === "pair_forgery")
                 (role.privateState as { pairSeer: { history: unknown[] } }).pairSeer.history = [
                   { day: 1, targetIds: [1, 9], containsWerewolf: false },
                 ];
               else
-                Object.defineProperty((role.privateState as { pairSeer: { history: unknown[] } }).pairSeer, "history", {
-                  enumerable: true,
-                  configurable: true,
-                  get() {
-                    gets++;
-                    return [{ day: 1, targetIds: [1, 9], containsWerewolf: false }];
+                Object.defineProperty(
+                  (role.privateState as { pairSeer: { history: unknown[] } }).pairSeer,
+                  "history",
+                  {
+                    enumerable: true,
+                    configurable: true,
+                    get() {
+                      gets++;
+                      return [{ day: 1, targetIds: [1, 9], containsWerewolf: false }];
+                    },
                   },
-                });
+                );
               throw error;
             }
             return act(r, { bind: [5, 6] });

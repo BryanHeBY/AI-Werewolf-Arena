@@ -426,9 +426,7 @@ describe("night wolf tactical loop", () => {
     expect(completedNight(result).summary.wolfTarget).toBe(targetId);
     const wolfIds = context.world
       .getAliveEntityIds()
-      .filter(
-        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf,
-      );
+      .filter((id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf);
     for (const wolfId of wolfIds) {
       expect(provider.killVoteAttempts.get(wolfId)).toBe(4);
     }

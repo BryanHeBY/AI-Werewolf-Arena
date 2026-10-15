@@ -6,7 +6,12 @@
  * 不是晚 deathHook 或新的死亡提交器，失败保留榜样事实及原已提交前缀。
  * 玩家知识及请求 scope／工具读取仍使用原函数绑定，不重新捕获榜样或生成死亡授权。
  */
-export { hasActiveWildChild, wildChildReady, hasWildChildNightCommit, openWildChildNight } from "./lifecycle";
+export {
+  hasActiveWildChild,
+  wildChildReady,
+  hasWildChildNightCommit,
+  openWildChildNight,
+} from "./lifecycle";
 
 export { recordWildChildDeathCommit } from "./lifecycle";
 

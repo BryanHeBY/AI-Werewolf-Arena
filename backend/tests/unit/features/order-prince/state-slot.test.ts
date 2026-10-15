@@ -11,34 +11,56 @@ import { COMPONENT } from "../../../../src/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { ORDER_PRINCE_STATE_SLOT as SLOT } from "../../../../src/features/order-prince/state-slot";
-import { openOrderPrinceChoice, commitOrderPrinceChoice, orderPrinceChoicePending } from "../../../../src/features/order-prince/authority";
+import {
+  openOrderPrinceChoice,
+  commitOrderPrinceChoice,
+  orderPrinceChoicePending,
+} from "../../../../src/features/order-prince/authority";
 
 // worldless 数据样本只持显式 Camp 句柄，不建立 Role→World／Camp 回退。
 const fixtureCamp = { camp: Camp.Good };
 const currentCamp = () => fixtureCamp;
 
 test("slot init and replacement keep the container receiver, next identity and throwing setter prefix", () => {
-  const trace: string[] = [], fault = new Error("order_slot_setter_failure");
+  const trace: string[] = [],
+    fault = new Error("order_slot_setter_failure");
   let written: unknown, receiver: unknown;
   const container = Object.defineProperty({}, "orderPrince", {
-    set(this: unknown, value: unknown) { receiver = this; written = value; trace.push("setter"); throw fault; },
+    set(this: unknown, value: unknown) {
+      receiver = this;
+      written = value;
+      trace.push("setter");
+      throw fault;
+    },
   });
   expect(() => SLOT.install(() => (trace.push("container"), container))).toThrow(fault);
   expect(trace).toEqual(["container", "setter"]);
   expect(written).toEqual({ policy: "awa_order_prince_first_ballot_v1", history: [] });
   expect(receiver).toBe(container);
-  const next: OrderPrinceState = { policy: "awa_order_prince_first_ballot_v1", history: [{ day: 1, activate: true }] };
+  const next: OrderPrinceState = {
+    policy: "awa_order_prince_first_ballot_v1",
+    history: [{ day: 1, activate: true }],
+  };
   trace.length = 0;
-  expect(() => SLOT.allowedWrites.replace(() => (trace.push("container"), container), next)).toThrow(fault);
+  expect(() =>
+    SLOT.allowedWrites.replace(() => (trace.push("container"), container), next),
+  ).toThrow(fault);
   expect(trace).toEqual(["container", "setter"]);
   expect(written).toBe(next);
   expect(receiver).toBe(container);
 });
 
 test("projected expected data looks up stringify before the late role read and remains detached", () => {
-  const trace: string[] = [], current = SLOT.create();
-  const role = { role: "order_prince", privateState: { orderPrince: current } } as unknown as RoleComponent;
-  const next: OrderPrinceState = { policy: "awa_order_prince_first_ballot_v1", history: [{ day: 1, activate: false }] };
+  const trace: string[] = [],
+    current = SLOT.create();
+  const role = {
+    role: "order_prince",
+    privateState: { orderPrince: current },
+  } as unknown as RoleComponent;
+  const next: OrderPrinceState = {
+    policy: "awa_order_prince_first_ballot_v1",
+    history: [{ day: 1, activate: false }],
+  };
   const original = Object.getOwnPropertyDescriptor(JSON, "stringify")!;
   let encoded: string, receiver: unknown;
   try {
@@ -47,11 +69,17 @@ test("projected expected data looks up stringify before the late role read and r
       get() {
         trace.push("callee");
         (role.privateState as { orderPrince: OrderPrinceState }).orderPrince = next;
-        return function(this: unknown, value: unknown) { receiver = this; trace.push("call"); return original.value(value); };
+        return function (this: unknown, value: unknown) {
+          receiver = this;
+          trace.push("call");
+          return original.value(value);
+        };
       },
     });
     encoded = SLOT.checkpoint.projection(() => (trace.push("role"), role), currentCamp);
-  } finally { Reflect.defineProperty(JSON, "stringify", original); }
+  } finally {
+    Reflect.defineProperty(JSON, "stringify", original);
+  }
   expect(trace).toEqual(["callee", "role", "call"]);
   expect(receiver).toBe(JSON);
   expect(JSON.parse(encoded)).toEqual(next);
@@ -66,29 +94,68 @@ test("authority preserves the replaced state when expected encoding throws after
     boardSize: 12,
     voting: { exilePolicy: "awa_one_pk_v1" as const },
     winConditions: [WinCondition.SlaughterSide],
-    roleSetups: [{ role: Role.OrderPrince, count: 1 }, { role: Role.Wolf, count: 4 }, { role: Role.Villager, count: 4 }, { role: Role.Seer, count: 1 }, { role: Role.Witch, count: 1 }, { role: Role.Hunter, count: 1 }],
+    roleSetups: [
+      { role: Role.OrderPrince, count: 1 },
+      { role: Role.Wolf, count: 4 },
+      { role: Role.Villager, count: 4 },
+      { role: Role.Seer, count: 1 },
+      { role: Role.Witch, count: 1 },
+      { role: Role.Hunter, count: 1 },
+    ],
   };
-  const { world } = bootstrapGame(config, { fixedRoles: [Role.OrderPrince, Role.Wolf, Role.Wolf, Role.Wolf, Role.Wolf, Role.Villager, Role.Villager, Role.Villager, Role.Villager, Role.Seer, Role.Witch, Role.Hunter] });
+  const { world } = bootstrapGame(config, {
+    fixedRoles: [
+      Role.OrderPrince,
+      Role.Wolf,
+      Role.Wolf,
+      Role.Wolf,
+      Role.Wolf,
+      Role.Villager,
+      Role.Villager,
+      Role.Villager,
+      Role.Villager,
+      Role.Seer,
+      Role.Witch,
+      Role.Hunter,
+    ],
+  });
   expect(openOrderPrinceChoice(world, 1)).toBe(1);
-  const role = world.getComponent(1, COMPONENT.Role)!, oldState = SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))!;
-  const original = JSON.stringify, fault = new Error("order_expected_encoding_failure");
+  const role = world.getComponent(1, COMPONENT.Role)!,
+    oldState = SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))!;
+  const original = JSON.stringify,
+    fault = new Error("order_expected_encoding_failure");
   let passed: unknown, caught: unknown;
   try {
-    JSON.stringify = function(value: unknown): string {
+    JSON.stringify = function (value: unknown): string {
       if (value && typeof value === "object" && !Array.isArray(value)) {
         const state = value as Partial<OrderPrinceState>;
-        if (state.policy === "awa_order_prince_first_ballot_v1" && state.history?.at(-1)?.activate === true) {
+        if (
+          state.policy === "awa_order_prince_first_ballot_v1" &&
+          state.history?.at(-1)?.activate === true
+        ) {
           passed = value;
           throw fault;
         }
       }
       return original(value);
     };
-    try { commitOrderPrinceChoice(world, 1, 1, true); } catch (error) { caught = error; }
-  } finally { JSON.stringify = original; }
+    try {
+      commitOrderPrinceChoice(world, 1, 1, true);
+    } catch (error) {
+      caught = error;
+    }
+  } finally {
+    JSON.stringify = original;
+  }
   expect(caught).toBe(fault);
-  expect(SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))).toBe(passed as OrderPrinceState);
+  expect(SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))).toBe(
+    passed as OrderPrinceState,
+  );
   expect(SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))).not.toBe(oldState);
-  expect(SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))?.history).toEqual([{ day: 1, activate: true }]);
-  expect(() => orderPrinceChoicePending(world, 1, 1)).toThrow("order_prince_original_state_revoked");
+  expect(SLOT.get(role, () => world.getComponent(1, COMPONENT.Camp))?.history).toEqual([
+    { day: 1, activate: true },
+  ]);
+  expect(() => orderPrinceChoicePending(world, 1, 1)).toThrow(
+    "order_prince_original_state_revoked",
+  );
 });

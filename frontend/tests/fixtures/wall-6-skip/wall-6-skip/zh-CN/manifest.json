@@ -137,9 +137,7 @@
       "anchorOriginPath": "frontend/tests/fixtures/wall-6-skip.replay.json",
       "owner": "frontend",
       "kind": "recorded-archive",
-      "files": [
-        "frontend/tests/fixtures/wall-6-skip.replay.json"
-      ],
+      "files": ["frontend/tests/fixtures/wall-6-skip.replay.json"],
       "metadata": {
         "board": {
           "state": "observed",
@@ -299,8 +297,8 @@
       "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
       "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
       "originalBytes": 7318,
-      "currentSha256": "3fc402fe63e4e03041e89c82b102287d43900073274b8b84136cf9de45dd9325",
-      "currentBytes": 7533,
+      "currentSha256": "7c6aaa81dfa5c47ad5067824f4a9bde05d8d08600e5b2fed125f29f4a3781daf",
+      "currentBytes": 7667,
       "programSha256": "8584a8fe074819232521336ff6cb089cb1c96c7e4d800ebd581392324513ba9d",
       "moduleBindingsSha256": "0ac37de3b9f45e877a4cbd0c5bbbf8425fb3fc0dec4a6ddb06db234edc870dd7",
       "kind": "test-support"

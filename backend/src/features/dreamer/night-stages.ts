@@ -5,7 +5,10 @@
  * 本阶段不执行死亡波或刷新已失效目标，也不回滚已付历史。
  */
 import { DREAMER_STATE_SLOT } from "./ports";
-import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant-eclipse/paid-effect-ports";
+import {
+  isRadiantEclipseBoard,
+  captureRadiantPaidEffect,
+} from "../radiant-eclipse/paid-effect-ports";
 import { AliveComponent, aliveLifeVersion } from "../../domain/components/alive";
 import { COMPONENT } from "../../domain/components/names";
 import { Phase } from "../../domain/model";

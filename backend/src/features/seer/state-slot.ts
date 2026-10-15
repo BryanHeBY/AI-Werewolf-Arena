@@ -9,7 +9,11 @@ import type { SeerState, SeerReadState } from "@ai-werewolf-arena/game-contract"
 
 import type { EntityId, InspectionResult } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../domain/components/role";
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import {
+  copyAbilityData,
+  findNightAbility,
+  type NightAbilityReadView,
+} from "../night-abilities/inventory-ports";
 import { commitPreparedNativeAbility } from "../night-abilities/inventory-ports";
 
 /** 安装保留原输入复制与返回 owned 引用；只在初始化入口写原生库存。 */

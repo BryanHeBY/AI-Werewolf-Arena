@@ -48,10 +48,7 @@ for (const size of [6, 12] as const)
       test(`actual fault boundary ${size}/${locale}/${replaced}: committed prefix, one cancellation, no hunt damage`, async () => {
         const input = plan(size, replaced === "actor" ? size : 1),
           f = demonHunterFixture(size, undefined, locale, undefined, input),
-          original = f.world.getComponent(
-            input.steps[0]!.mutation.playerId,
-            COMPONENT.Alive,
-          );
+          original = f.world.getComponent(input.steps[0]!.mutation.playerId, COMPONENT.Alive);
         input.steps[0]!.mutation.playerId = 3; // 构造器保留独立的输入。
         await f.phaseManager.runSingleCycle(provider(f.witchId), 10);
         await f.phaseManager.runSingleCycle(provider(f.witchId, 1, true), 10);

@@ -10,10 +10,7 @@ import type { ActionRequest, ToolCall } from "../../domain/actions";
 import { Phase } from "../../domain/identity";
 import type { World } from "../../domain/world";
 import { snapshotPlainData } from "../../domain/plain-data";
-import {
-  bindRequestDeliveryGuard,
-  settleRequestDelivery,
-} from "../../domain/request-delivery";
+import { bindRequestDeliveryGuard, settleRequestDelivery } from "../../domain/request-delivery";
 import { normalizePair } from "./state";
 import {
   fragrantChoiceActor,

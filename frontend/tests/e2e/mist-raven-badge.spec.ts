@@ -12,7 +12,9 @@ for (const locale of ["en", "zh-CN"] as const)
     const r = readReplayDocument(
       JSON.parse(
         readFileSync(
-          frontendFixtureURL(`frontend/tests/fixtures/mist-manual-blast-badge-chain-${locale}.replay.json`),
+          frontendFixtureURL(
+            `frontend/tests/fixtures/mist-manual-blast-badge-chain-${locale}.replay.json`,
+          ),
           "utf8",
         ),
       ),

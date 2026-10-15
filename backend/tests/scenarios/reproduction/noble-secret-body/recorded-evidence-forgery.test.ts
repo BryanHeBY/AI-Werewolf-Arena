@@ -7,7 +7,10 @@ import { beforeAll, expect, test } from "bun:test";
 import { nobleLiteralPlans } from "../../../support/features/noble-secret-body/builders/literal-plans";
 import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";
 import { Camp, PotionType } from "../../../../src/domain";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import {
+  parseReproductionRecord,
+  type ReproductionRecord,
+} from "../../../../src/recording/reproduction/format";
 
 let complete: ReproductionRecord;
 let earlyFailed: ReproductionRecord;

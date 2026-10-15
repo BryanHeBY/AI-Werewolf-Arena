@@ -157,10 +157,14 @@ for (const locale of ["zh-CN", "en"] as const)
               expect(outputs[kind]).not.toContain("synthetic-private-auth");
               expect(outputs[kind]).not.toContain("synthetic-private-env");
               await record.flushNow();
-              const stored = readReplayPlayerView(JSON.parse(
-                await readFile(path.join(record.sessionDir, "players/player_1.json"), "utf8"),
-              ));
-              const round = stored.timeline.find((item: any) => item.kind === "turn") as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry;
+              const stored = readReplayPlayerView(
+                JSON.parse(
+                  await readFile(path.join(record.sessionDir, "players/player_1.json"), "utf8"),
+                ),
+              );
+              const round = stored.timeline.find(
+                (item: any) => item.kind === "turn",
+              ) as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry;
               expect(round.delta_messages.some((message: any) => message.kind === "prompt")).toBe(
                 true,
               );

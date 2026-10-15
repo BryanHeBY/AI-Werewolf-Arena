@@ -18,7 +18,13 @@ import type {
   ReplayRecordPublicEventInput,
   ReplaySessionMeta,
 } from "../contracts";
-import { currentRecordingIdentities, createPublicReplayArchive, createReproductionArchive, createManifestArchive, createPlayerViewArchive } from "../archive-identity";
+import {
+  currentRecordingIdentities,
+  createPublicReplayArchive,
+  createReproductionArchive,
+  createManifestArchive,
+  createPlayerViewArchive,
+} from "../archive-identity";
 import { createReplayDocument } from "./replay-document";
 import { ReplayFileStore } from "../../adapters/filesystem/session-file-store";
 import { ReplaySessionAggregate } from "./aggregate";
@@ -112,7 +118,9 @@ export class SessionRecordManager {
       liveEvents,
     );
     // 不以来源声明驱动新刷盘；下次原公开发布或最终发布自然携带已捕获身份。
-    this.recordingIdentities = currentRecordingIdentities(this.reproduction.recordedMetadataIdentity());
+    this.recordingIdentities = currentRecordingIdentities(
+      this.reproduction.recordedMetadataIdentity(),
+    );
     return this.reproduction;
   }
 
@@ -194,12 +202,18 @@ export class SessionRecordManager {
       });
     };
     const required = await Promise.allSettled([
-      this.store.writeJsonStrict("manifest.json", createManifestArchive(manifest, this.recordingIdentities)),
+      this.store.writeJsonStrict(
+        "manifest.json",
+        createManifestArchive(manifest, this.recordingIdentities),
+      ),
       this.store.writeJsonStrict("replay.json", replayDocument),
       ...(this.reproduction
         ? [
             Promise.resolve().then(() =>
-              this.store.writeJsonStrict("reproduction.json", createReproductionArchive(reproducible())),
+              this.store.writeJsonStrict(
+                "reproduction.json",
+                createReproductionArchive(reproducible()),
+              ),
             ),
           ]
         : []),
@@ -214,7 +228,10 @@ export class SessionRecordManager {
     const playerViews = this.aggregate.normalizedPlayerViews();
     await Promise.all(
       playerViews.map((view) =>
-        this.store.writeJson(`players/player_${view.player_id}.json`, createPlayerViewArchive(view, this.recordingIdentities)),
+        this.store.writeJson(
+          `players/player_${view.player_id}.json`,
+          createPlayerViewArchive(view, this.recordingIdentities),
+        ),
       ),
     );
 
@@ -237,7 +254,10 @@ export class SessionRecordManager {
 
   private async writeInitialFiles(): Promise<void> {
     const results = await Promise.allSettled([
-      this.store.writeJsonStrict("manifest.json", createManifestArchive(this.aggregate.buildManifest(), this.recordingIdentities)),
+      this.store.writeJsonStrict(
+        "manifest.json",
+        createManifestArchive(this.aggregate.buildManifest(), this.recordingIdentities),
+      ),
       this.store.writeJsonStrict("replay.json", this.buildReplayArchive()),
       this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
       this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
@@ -257,7 +277,10 @@ export class SessionRecordManager {
       // 先消费本次脏位；严格失败登记在账本，后续仍可发布终档并报告此前失败。
       this.dirtyReproduction = false;
       try {
-        await this.store.writeJsonStrict("reproduction.json", createReproductionArchive(this.reproduction.build()));
+        await this.store.writeJsonStrict(
+          "reproduction.json",
+          createReproductionArchive(this.reproduction.build()),
+        );
       } catch (error) {
         this.mandatoryFlushFailures.push(error);
         this.reproduction.noteFailure("recording", error);
@@ -289,13 +312,20 @@ export class SessionRecordManager {
       await Promise.all(
         playerIds.map(async (playerId) => {
           const view = this.aggregate.normalizedPlayerView(playerId);
-          if (view) await this.store.writeJson(`players/player_${playerId}.json`, createPlayerViewArchive(view, this.recordingIdentities));
+          if (view)
+            await this.store.writeJson(
+              `players/player_${playerId}.json`,
+              createPlayerViewArchive(view, this.recordingIdentities),
+            );
         }),
       );
       await Promise.all([
         this.store.writeJson(
           "manifest.json",
-          createManifestArchive(this.aggregate.buildManifest(this.lifecycle.finalMetadata ?? undefined), this.recordingIdentities),
+          createManifestArchive(
+            this.aggregate.buildManifest(this.lifecycle.finalMetadata ?? undefined),
+            this.recordingIdentities,
+          ),
         ),
         this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       ]);
@@ -303,10 +333,13 @@ export class SessionRecordManager {
   }
 
   private buildReplayArchive(meta?: ReplayFinalizeMeta) {
-    return createPublicReplayArchive(createReplayDocument({
-      manifest: this.aggregate.buildManifest(meta),
-      events: this.aggregate.publicTimelinePayload().events,
-    }), this.recordingIdentities);
+    return createPublicReplayArchive(
+      createReplayDocument({
+        manifest: this.aggregate.buildManifest(meta),
+        events: this.aggregate.publicTimelinePayload().events,
+      }),
+      this.recordingIdentities,
+    );
   }
 }
 

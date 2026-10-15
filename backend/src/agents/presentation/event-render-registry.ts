@@ -3,7 +3,10 @@
  */
 import { nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-presentation";
-import { animalDreamFactAudience, type AnimalDreamEventType } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
+import {
+  animalDreamFactAudience,
+  type AnimalDreamEventType,
+} from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import { animalDreamEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { fragrantPairVisibility } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { fragrantPairEventLabel } from "@ai-werewolf-arena/game-presentation";

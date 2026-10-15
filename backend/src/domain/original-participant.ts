@@ -23,7 +23,13 @@ export function captureOriginalParticipant(world: World, id: number): OriginalPa
   const life = captureNightLife(world, id),
     role = world.getComponent(id, COMPONENT.Role);
   return life && role
-    ? { life, role, roleId: role.role, camp: world.getComponent(id, COMPONENT.Camp)?.camp, state: role.privateState }
+    ? {
+        life,
+        role,
+        roleId: role.role,
+        camp: world.getComponent(id, COMPONENT.Camp)?.camp,
+        state: role.privateState,
+      }
     : null;
 }
 /** 生命／版本先短路，再核同 Role 引用及原三个字段；不新增 descriptor、Camp 引用或状态内容检查。 */

@@ -3,7 +3,10 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { inheritRequestAlias } from "../../domain/request-delivery";
-import { allowsActionFallback, resolveTurnConstraints } from "../../engine/actions/turn-constraints";
+import {
+  allowsActionFallback,
+  resolveTurnConstraints,
+} from "../../engine/actions/turn-constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../utils/error-diagnostic";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
@@ -19,11 +22,7 @@ import {
   type RoleCatalog,
 } from "../../rulesets/mechanism-api";
 import { safeRecordLogicOp } from "../../recording/session/recorder";
-import {
-  AcpSession,
-  AcpSessionAuditTrace,
-  AcpSessionFactory,
-} from "../../adapters/acp/session";
+import { AcpSession, AcpSessionAuditTrace, AcpSessionFactory } from "../../adapters/acp/session";
 import {
   awaitBeforeDeadline,
   awaitWithAbort,

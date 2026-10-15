@@ -87,7 +87,9 @@ describe("nightmare shadow private state", () => {
   test("reject wrong role or camp", () => {
     const r = role(freshNightmareShadowState());
     expect(getNightmareShadowState(r, () => ({ camp: Camp.Good }))).toBeUndefined();
-    expect(getNightmareShadowState({ ...r, role: "wolf" } as RoleComponent, currentCamp)).toBeUndefined();
+    expect(
+      getNightmareShadowState({ ...r, role: "wolf" } as RoleComponent, currentCamp),
+    ).toBeUndefined();
   });
 });
 

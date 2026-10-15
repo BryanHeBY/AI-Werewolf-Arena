@@ -32,7 +32,10 @@ const cases = [
 for (const [id, preset] of cases) {
   test(`${preset}: config check and bootstrap reject the same unsupported combination`, async () => {
     const raw: BoardDefinition = JSON.parse(
-      readFileSync(new URL(`../../../../configs.example/boards/${id}.json`, import.meta.url), "utf8"),
+      readFileSync(
+        new URL(`../../../../configs.example/boards/${id}.json`, import.meta.url),
+        "utf8",
+      ),
     );
     const config = parseBoardDefinition(raw).config;
     expect(() => bootstrapGame(config)).not.toThrow();

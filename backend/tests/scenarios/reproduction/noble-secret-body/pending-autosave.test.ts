@@ -116,9 +116,7 @@ for (const target of ["secret_body", "night_noble", "awakened_idiot_reveal_speec
                         type: "secret_body_revealed",
                         payload: { policy: "awa_noble_secret_body_v1", actorId: 5, day: 1 },
                       });
-                      expect(
-                        g.world.getComponent(5, COMPONENT.Alive)!.alive,
-                      ).toBe(true);
+                      expect(g.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(true);
                     }
                     await writeFile(root + "/pending-direct.json", JSON.stringify(prefix, null, 2));
                     // 让真实 provider 保持 pending，超过录制器 100ms 的防抖间隔；

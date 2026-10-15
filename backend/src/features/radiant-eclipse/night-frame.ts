@@ -21,7 +21,11 @@ import {
   type NightImmunityClaim,
   type NightRadiantBacklash,
 } from "../../domain/night-effects";
-import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "../night-abilities/inventory-ports";
+import {
+  allNightAbilities,
+  abilityStatus,
+  type NightAbilityReadView,
+} from "../night-abilities/inventory-ports";
 import { retireBorrowedNightAbility } from "../night-abilities/inventory-ports";
 import { grantNightAbility } from "../night-abilities/grant-ports";
 import { openEclipseSuppression } from "./suppression";

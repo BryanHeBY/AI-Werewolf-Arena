@@ -14,7 +14,11 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { isFragrantPairSeerPreset } from "../board-support";
 import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from "../../reproduction/format";
+import type {
+  ReproductionRecord,
+  RecordedDecision,
+  RecordedCheckpoint,
+} from "../../reproduction/format";
 import type { RecordedFragrantState } from "../../reproduction/checkpoint/fragrant-pair-format";
 
 function check(v: unknown): asserts v {

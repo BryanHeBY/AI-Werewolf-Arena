@@ -14,7 +14,10 @@ import type { NightStageState, NightStageContext } from "../../../../src/engine/
 import type { NightPipelineResult } from "../../../../src/engine/phases/night-pipeline";
 import { captureEvilKnight } from "../../../../src/features/evil-knight/reflection";
 import { freshEvilKnightState } from "../../../../src/features/evil-knight/state-slot";
-import { installEvilKnightBoard, EVIL_KNIGHT_FRAME_STAGE } from "../../../../src/features/evil-knight/night-frame";
+import {
+  installEvilKnightBoard,
+  EVIL_KNIGHT_FRAME_STAGE,
+} from "../../../../src/features/evil-knight/night-frame";
 import {
   hasEvilKnightNightBindings,
   installEvilKnightNightBindings,
@@ -23,10 +26,19 @@ import {
 } from "../../../../src/features/evil-knight/night-bindings";
 
 function state(): NightStageState {
-  return { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [] };
+  return {
+    wolfChatOrder: [],
+    endedWolves: new Set(),
+    wolfVotes: {},
+    wolfTarget: null,
+    seerChecks: [],
+  };
 }
 function fixture() {
-  const world = new World(), actorId = world.createEntity(), role = createRoleComponent(Role.EvilKnight), life = createAliveComponent();
+  const world = new World(),
+    actorId = world.createEntity(),
+    role = createRoleComponent(Role.EvilKnight),
+    life = createAliveComponent();
   (role.privateState as Record<string, unknown>).evilKnight = freshEvilKnightState();
   world.addComponent(actorId, COMPONENT.Role, role);
   world.addComponent(actorId, COMPONENT.Camp, { camp: Camp.Wolf });
@@ -37,8 +49,14 @@ function fixture() {
 }
 
 test("same original Map and binding are retained, while old properties and cloned state do not inject", () => {
-  const s = state(), f = fixture(), map = new Map([[f.actorId, f.binding]]);
-  Object.defineProperty(s, "evilKnightBindings", { get() { throw new Error("retired_slot_must_not_read"); } });
+  const s = state(),
+    f = fixture(),
+    map = new Map([[f.actorId, f.binding]]);
+  Object.defineProperty(s, "evilKnightBindings", {
+    get() {
+      throw new Error("retired_slot_must_not_read");
+    },
+  });
   expect(hasEvilKnightNightBindings(s)).toBe(false);
   expect(evilKnightNightBinding(s, f.actorId)).toBeNull();
   installEvilKnightNightBindings(s, map);
@@ -63,21 +81,43 @@ test("same original Map and binding are retained, while old properties and clone
 });
 
 test("captured shot query reads Map then isCurrent then policy with original receivers", () => {
-  const f = fixture(), s = state(), trace: string[] = [];
-  let current = false, policy = "night_shot_immune" as "night_shot_immune" | "hunter_shot_bypasses";
+  const f = fixture(),
+    s = state(),
+    trace: string[] = [];
+  let current = false,
+    policy = "night_shot_immune" as "night_shot_immune" | "hunter_shot_bypasses";
   const record: typeof f.binding = {
     target: f.binding.target,
-    get state() { trace.push("state"); return { ...f.binding.state, get shotPolicy() { trace.push("policy"); return policy; } }; },
-    isCurrent() { expect(this).toBe(record); trace.push("current"); return current; },
+    get state() {
+      trace.push("state");
+      return {
+        ...f.binding.state,
+        get shotPolicy() {
+          trace.push("policy");
+          return policy;
+        },
+      };
+    },
+    isCurrent() {
+      expect(this).toBe(record);
+      trace.push("current");
+      return current;
+    },
   };
-  const map = new Map([[f.actorId, record]]), get = map.get;
-  map.get = function(id) { expect(this).toBe(map); trace.push("get"); return get.call(this, id); };
+  const map = new Map([[f.actorId, record]]),
+    get = map.get;
+  map.get = function (id) {
+    expect(this).toBe(map);
+    trace.push("get");
+    return get.call(this, id);
+  };
   installEvilKnightNightBindings(s, map);
   const query = captureEvilKnightNightShotProtection(s);
   expect(trace).toEqual([]);
   expect(query(f.actorId)).toBe(false);
   expect(trace).toEqual(["get", "current"]);
-  current = true; trace.length = 0;
+  current = true;
+  trace.length = 0;
   expect(query(f.actorId)).toBe(true);
   expect(trace).toEqual(["get", "current", "state", "policy"]);
   policy = "hunter_shot_bypasses";
@@ -91,10 +131,24 @@ test("captured shot query reads Map then isCurrent then policy with original rec
 });
 
 test("frame keeps three state reads and installed bindings when immune-array assignment throws", async () => {
-  const f = fixture(), s = state(), error = new Error("immune_assignment_rejected");
-  let reads = 0, assigned: unknown;
-  Object.defineProperty(s, "nightImmunities", { set(value) { assigned = value; throw error; } });
-  const ctx = { world: f.world, get state() { reads++; return s; } } as unknown as NightStageContext;
+  const f = fixture(),
+    s = state(),
+    error = new Error("immune_assignment_rejected");
+  let reads = 0,
+    assigned: unknown;
+  Object.defineProperty(s, "nightImmunities", {
+    set(value) {
+      assigned = value;
+      throw error;
+    },
+  });
+  const ctx = {
+    world: f.world,
+    get state() {
+      reads++;
+      return s;
+    },
+  } as unknown as NightStageContext;
   await expect(EVIL_KNIGHT_FRAME_STAGE.execute(ctx)).rejects.toBe(error);
   expect(reads).toBe(3);
   expect(hasEvilKnightNightBindings(s)).toBe(true);

@@ -2,7 +2,12 @@
  * 不发真实模型请求的 LLM 测试驱动将调用方行动脚本交给原 client 回调；输入为字面输出、工具参数及调用方消息断言，输出保留原回调轨迹、捕获消息和重试／错误状态。固定协议断言仍为字面值，调用方拥有玩法预期及录制；导入时不发 SDK 请求，不运行网络、模型或游戏。
  */
 import { expect } from "bun:test";
-import { PotionType, type ActionProvider, type ActionRequest, type ToolCall } from "../../../../src/domain";
+import {
+  PotionType,
+  type ActionProvider,
+  type ActionRequest,
+  type ToolCall,
+} from "../../../../src/domain";
 
 export const REQUIRED_ACTION_CONSTRAINTS = {
   min_valid_actions: 1,

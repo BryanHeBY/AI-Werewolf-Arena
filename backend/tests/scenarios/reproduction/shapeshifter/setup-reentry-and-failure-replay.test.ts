@@ -17,7 +17,17 @@ import { createTestTempDirectory } from "../../../support/drivers/temp-directori
 import { expect, spyOn, test } from "bun:test";
 import { shapeshifterScenario } from "../../../support/features/shapeshifter/builders/scenario";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Phase, COMPONENT, PotionType, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall, type GameEvent } from "../../../../src/domain";
+import {
+  Role,
+  Phase,
+  COMPONENT,
+  PotionType,
+  type BoardConfig,
+  type RoleComponent,
+  type ActionRequest,
+  type ToolCall,
+  type GameEvent,
+} from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 
 const deal = [

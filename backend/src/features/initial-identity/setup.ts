@@ -6,12 +6,23 @@
  * 请求记录及别名传播归独立公共实例；观察原请求或领域失配永久关该 turn；别名自身失配独立退役，期限只能缩短。
  */
 import { createCampComponent } from "../../agents/observation/component-presentation";
-import type {
-  ReadonlyBoardConfig,
-} from "@ai-werewolf-arena/game-contract";
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { RequestLease, type RequestLeaseTurn } from "../../domain/request-lease";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
-import { COMPONENT, Camp, Phase, Role, createVictoryComponent, type ActionProvider, type ActionRequest, type CampComponent, type GameEvent, type RoleComponent, type VictoryComponent, type World } from "../../domain";
+import {
+  COMPONENT,
+  Camp,
+  Phase,
+  Role,
+  createVictoryComponent,
+  type ActionProvider,
+  type ActionRequest,
+  type CampComponent,
+  type GameEvent,
+  type RoleComponent,
+  type VictoryComponent,
+  type World,
+} from "../../domain";
 import { retireRoleExecution } from "../../domain/role-execution-authority";
 import { createRoleComponent } from "../../agents/observation/role-presentation";
 import type { ActionRequestFactoryConstructorPort } from "../../domain/actions";
@@ -224,7 +235,8 @@ export class InitialIdentitySetupWindow {
       throw new Error(`${this.kind}_setup_unavailable`);
     const deal = openInitialIdentitySetup(this.world);
     let status: "complete" | "cancelled" | "failed" = "failed";
-    let delivery: RequestLeaseTurn | undefined, failed = false;
+    let delivery: RequestLeaseTurn | undefined,
+      failed = false;
     try {
       if (!pendingInitialIdentityDealValid(this.world)) {
         status = "cancelled";
@@ -357,9 +369,7 @@ export class InitialIdentitySetupWindow {
       const newCamp = chosen
         ? createCampComponent(catalog.getCamp(chosen.role), this.world.locale)
         : null;
-      const newRole = chosen
-        ? createRoleComponent(chosen.role, this.world.locale)
-        : null;
+      const newRole = chosen ? createRoleComponent(chosen.role, this.world.locale) : null;
       const currentCamp = () => this.world.getComponent(actorId, COMPONENT.Camp);
       if (newRole)
         catalog.applyRuntime(newRole, {
@@ -404,12 +414,14 @@ export class InitialIdentitySetupWindow {
         actorId,
         day: 1 as const,
         role: newRole?.role ?? initialIdentityRole(this.kind),
-        camp: newRole ? (() => {
-          // 完整安装／关闭已成功；晚字段读取失败保完成前缀，不落候选安装的退休 catch。
-          const camp = currentCamp();
-          if (!camp) throw new Error("role_current_camp_missing");
-          return camp.camp;
-        })() : Camp.Good,
+        camp: newRole
+          ? (() => {
+              // 完整安装／关闭已成功；晚字段读取失败保完成前缀，不落候选安装的退休 catch。
+              const camp = currentCamp();
+              if (!camp) throw new Error("role_current_camp_missing");
+              return camp.camp;
+            })()
+          : Camp.Good,
       };
       this.events.push(
         this.kind === "shapeshifter"
@@ -434,26 +446,31 @@ export class InitialIdentitySetupWindow {
       throw error;
     } finally {
       try {
-      if (this.kind === "shapeshifter" && status !== "complete") {
-        const original =
-          scopes.get(this.world)?.state ??
-          this.world
-            .entityIds()
-            .map((id) =>
-              getInitialIdentityState(this.world.getComponent(id, COMPONENT.Role), this.kind),
-            )
-            .find(Boolean);
-        cancelShapeshifterState(original);
-      }
-      scopes.delete(this.world);
-      closeInitialIdentitySetup(this.world, status);
+        if (this.kind === "shapeshifter" && status !== "complete") {
+          const original =
+            scopes.get(this.world)?.state ??
+            this.world
+              .entityIds()
+              .map((id) =>
+                getInitialIdentityState(this.world.getComponent(id, COMPONENT.Role), this.kind),
+              )
+              .find(Boolean);
+          cancelShapeshifterState(original);
+        }
+        scopes.delete(this.world);
+        closeInitialIdentitySetup(this.world, status);
       } catch (error) {
         // 原 finally 的清理错误仍按旧 JS 优先于 body 错误；新 false 通知不得覆盖它。
         failed = true;
         throw error;
       } finally {
-        if (failed) { try { delivery?.close(); } catch { /* 已有原错误时只完成关闭，保该错误。 */ } }
-        else delivery?.close();
+        if (failed) {
+          try {
+            delivery?.close();
+          } catch {
+            /* 已有原错误时只完成关闭，保该错误。 */
+          }
+        } else delivery?.close();
       }
     }
   }
