@@ -14,10 +14,10 @@ import {
   WinCondition,
   type RoleComponent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { getWhiteWolfKingState } from "../../../../src/game/mechanisms/roles/white_wolf_king/ports";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { getWhiteWolfKingState } from "../../../../src/features/white-wolf-king/ports";
+import { getHunterState } from "../../../../src/features/hunter/ports";
 
 const deck = [Role.WhiteWolfKing, Role.Wolf, Role.Seer, Role.Hunter, Role.Villager, Role.Villager];
 

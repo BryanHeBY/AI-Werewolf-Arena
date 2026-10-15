@@ -7,7 +7,7 @@
  * result is regenerated from production role, observation or board algorithms.
  */
 import { expect } from "bun:test";
-import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
+import type { ReproductionRecord } from "../../../../../src/recording/reproduction/format";
 export function assertRadiantTransportGolden(record: ReproductionRecord, name: string) {
   const ability = (cycle: number, actor: number, id: string) => {
     const player = record.checkpoints

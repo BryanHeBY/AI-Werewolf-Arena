@@ -6,8 +6,8 @@
  */
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";
-import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { loadBoardDefinition } from "../../../src/app/config/load-board-definition";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import path from "node:path";
 for (const id of ["six_player_white_wolf_king", "twelve_player_white_wolf_king"] as const)
   test(`${id}: public board activates only the real White Wolf King profile and declared parameters`, async () => {

@@ -7,13 +7,13 @@ import { expect, test } from "bun:test";
 import { Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { ToolCall } from "../../../src/domain/actions";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { openNightUnit, nightUnitOf } from "../../../src/domain/night-unit";
-import { NobleNightUnit, attachNobleNightReceiver, expireNobleNight } from "../../../src/game/mechanisms/roles/noble_secret_body/ports";
-import { expireServantAtNightEnd, openSecretBodyChoice, openServantChoice, snapshotNobleBodyAuthority } from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
+import { NobleNightUnit, attachNobleNightReceiver, expireNobleNight } from "../../../src/features/noble-secret-body/ports";
+import { expireServantAtNightEnd, openSecretBodyChoice, openServantChoice, snapshotNobleBodyAuthority } from "../../../src/features/noble-secret-body/authority";
 import { nobleBodyAuthorityFixture } from "../../support/features/noble-secret-body/drivers/authority";
 
 async function executeNight() {

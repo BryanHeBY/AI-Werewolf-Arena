@@ -10,11 +10,11 @@ import {
   projectTricksterState,
   nextTricksterChoice,
   TRICKSTER_POLICY,
-} from "../../../../src/game/mechanisms/roles/trickster/state-slot";
+} from "../../../../src/features/trickster/state-slot";
 import {
   matchingExchangePairs,
   mapTricksterExileTarget,
-} from "../../../../src/game/mechanisms/roles/trickster/exile_mapping";
+} from "../../../../src/features/trickster/exile-mapping";
 // 测试自持当前 Camp，不经旧 Role 属性或隐藏映射提供阵营。
 const fixtureCamp = { camp: Camp.Wolf };
 const currentCamp = () => fixtureCamp;

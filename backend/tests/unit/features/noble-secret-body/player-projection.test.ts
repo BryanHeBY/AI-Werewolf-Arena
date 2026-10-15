@@ -20,7 +20,7 @@ import {
   consumeSecretBodyExile,
   getNobleBodyPlayerState,
   snapshotNobleBodyAuthority,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/features/noble-secret-body/authority";
 
 function bodyDay(spend: boolean, cause: "wolf_kill" | "servant_expiry" = "wolf_kill") {
   const f = nobleBodyAuthorityFixture();

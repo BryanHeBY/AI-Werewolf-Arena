@@ -4,7 +4,7 @@
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
-import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../src/features/night-abilities/night-ability-actors";
 import { expect, test } from "bun:test";
 import { COMPONENT, type AliveComponent, type RoleComponent } from "../../../src/domain";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
@@ -21,13 +21,13 @@ import {
   openDemonNativeNightFrame,
   freezeDemonHunt,
   demonHunterCheckpointPlayers,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { DEMON_HUNTER_NIGHT_STAGE } from "../../../src/game/mechanisms/roles/demon_hunter/night_stages";
-import { SEER_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/seer/night_stages";
-import { WITCH_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/witch/night_stages";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
+} from "../../../src/features/demon-hunter/authority";
+import { DEMON_HUNTER_NIGHT_STAGE } from "../../../src/features/demon-hunter/night-stages";
+import { SEER_NIGHT_STAGES } from "../../../src/features/seer/night-stages";
+import { WITCH_NIGHT_STAGES } from "../../../src/features/witch/night-stages";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import type { NightStageContext } from "../../../src/engine/night/contracts";
 function sealedWorld() {
   const fixture = redMoonCandidateWorld();
   beginDemonHunterNight(fixture.world, 1, () => true);

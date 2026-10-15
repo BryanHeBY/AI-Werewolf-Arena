@@ -9,10 +9,10 @@ import { COMPONENT } from "../../../../src/domain/components/names";
 import { createRoleComponent } from "../../../../src/domain/components/role";
 import { Camp, Role } from "../../../../src/domain/identity";
 import { captureNightLife } from "../../../../src/domain/night-effects";
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { EVIL_KNIGHT_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/evil_knight/profile";
-import { EVIL_KNIGHT_STATE_SLOT } from "../../../../src/game/mechanisms/roles/evil_knight/state-slot";
-import { captureEvilKnight, commitEvilKnightReflection } from "../../../../src/game/mechanisms/roles/evil_knight/reflection";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { EVIL_KNIGHT_ROLE_PROFILE } from "../../../../src/features/evil-knight/profile";
+import { EVIL_KNIGHT_STATE_SLOT } from "../../../../src/features/evil-knight/state-slot";
+import { captureEvilKnight, commitEvilKnightReflection } from "../../../../src/features/evil-knight/reflection";
 
 test("evil knight initialization evaluates the original left side before parsing policy", () => {
   const trace: string[] = [];

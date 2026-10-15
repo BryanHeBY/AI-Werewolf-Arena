@@ -2,7 +2,7 @@
  * 单元测试验证通灵师重复查验政策、只读预检、可选关闭及复制资源隐私。输入保留原 locale／变化／gateway／旧政策矩阵、有界直接查验与原缓存 catalog 引用；精确角色／历史／库存、取消及外来原生刀拒绝是预期，不运行完整夜晚、PhaseManager 或模型。
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -17,27 +17,27 @@ import {
   type GameEvent,
   type ActionRequest,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getGargoyleState } from "../../../../src/game/mechanisms/roles/gargoyle/ports";
-import { allNightAbilities, findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getGargoyleState } from "../../../../src/features/gargoyle/ports";
+import { allNightAbilities, findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
   grantNightAbility,
   transferNightAbility,
-} from "../../../../src/game/mechanisms/roles/night-ability-grants";
+} from "../../../../src/features/night-abilities/night-ability-grants";
 import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,
-} from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
-import { hasRoleInspectionNightCommit } from "../../../../src/game/mechanisms/roles/role_inspection/night_scope";
-import { canGargoyleKnife } from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
+} from "../../../../src/features/role-inspection/contribution-ports";
+import { hasRoleInspectionNightCommit } from "../../../../src/features/role-inspection/night-scope";
+import { canGargoyleKnife } from "../../../../src/features/gargoyle/inheritance";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
 
 const deck = [Role.Psychic, Role.Wolf, Role.Witch, Role.Guard, Role.Villager, Role.Villager],
   catalog = getDefaultRoleCatalog();

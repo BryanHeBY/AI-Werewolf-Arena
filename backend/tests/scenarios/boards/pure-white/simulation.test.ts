@@ -9,14 +9,14 @@ import path from "node:path";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { pureWhiteTwelveConfig } from "../../../../src/runtime/scenarios/pure_white_twelve";
+} from "../../../../src/app/config/board-definition";
+import { pureWhiteTwelveConfig } from "../../../../src/rulesets/presets/pure-white-twelve";
 import { WitchSelfHealRule } from "../../../../src/domain";
-import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
+import { simulateGames } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 for (const priority of ["awa_wolf_priority_v1", "awa_good_priority_v1"] as const)
   for (const selfHeal of [WitchSelfHealRule.Disabled, WitchSelfHealRule.FirstNightOnly])

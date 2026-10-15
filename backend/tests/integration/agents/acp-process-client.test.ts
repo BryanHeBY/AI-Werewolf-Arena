@@ -5,13 +5,13 @@
  * Child liveness and literal error/timing bounds are independent oracles;
  * synthetic children never connect to a billed model or read authentication.
  */
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { describe, expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
-import { AcpProcessClient } from "../../../src/ai/integrations/acp/acp_process_client";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
+import { AcpProcessClient } from "../../../src/adapters/acp/acp-process-client";
+import { AcpTurnRegistry } from "../../../src/adapters/acp/acp-turn-registry";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 describe("AcpProcessClient initialization deadlines", () => {

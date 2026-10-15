@@ -2,15 +2,15 @@
  * Unit tests check explicit victory result reader/cloning consistency and malformed terminal display. Inputs are literal decisions, getter mutations and legacy JSON; literal rejection, unknown labels and preserved detached fields are the oracle. No filesystem record or full game is created.
  */
 import { expect, test } from "bun:test";
-import { ReplaySessionAggregate } from "../../../src/recording/session_aggregate";
-import { createReplayDocument } from "../../../src/recording/replay_document";
+import { ReplaySessionAggregate } from "../../../src/recording/session/aggregate";
+import { createReplayDocument } from "../../../src/recording/session/replay-document";
 import {
   readReplayDocument,
   readVictoryResult,
   readVictoryPoint,
 } from "@ai-werewolf-arena/replay-contract";
 import { Camp, Phase, type GameResult } from "../../../src/domain";
-import { getDefaultScriptEventRenderRegistry } from "../../../src/game";
+import { getDefaultScriptEventRenderRegistry } from "../../../src/engine/game-api";
 
 const players = [1, 2, 3, 4, 5, 6].map((id) => ({
   player_id: id,

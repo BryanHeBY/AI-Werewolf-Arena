@@ -7,8 +7,8 @@
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { loadBoardDefinition } from "../../../src/app/config/load-board-definition";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 for (const id of ["six_player_wolf_beauty", "twelve_player_wolf_beauty"] as const)
   test(`${id}: public Beauty/Knight board accepts the named death policies and rejects arbitrary variants`, async () => {
     const board = await loadBoardDefinition(

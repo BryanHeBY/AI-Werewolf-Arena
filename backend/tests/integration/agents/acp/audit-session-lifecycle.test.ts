@@ -7,10 +7,10 @@
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { AcpAuditAgentExecutor } from "../../../../src/ai/audit/acp_audit_runner";
-import type { AuditToolContext } from "../../../../src/ai/audit/audit_tool_protocol";
-import type { AcpSession } from "../../../../src/ai/integrations/acp/session";
-import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
+import { AcpAuditAgentExecutor } from "../../../../src/audit/agents/acp-audit-runner";
+import type { AuditToolContext } from "../../../../src/audit/agents/audit-tool-protocol";
+import type { AcpSession } from "../../../../src/adapters/acp/session";
+import type { ResolvedAgentRuntimeProfile } from "../../../../src/app/config/contracts";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const profile: ResolvedAgentRuntimeProfile = {

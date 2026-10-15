@@ -13,13 +13,13 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../../../src/domain";
-import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
-import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";
-import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { AcpActionProvider } from "../../../../src/agents/acp/acp-action-provider";
+import { WerewolfMcpControlServer } from "../../../../src/adapters/acp/werewolf-mcp-control";
+import { gameToolProtocol } from "../../../../src/agents/game-tool-protocol";
+import { getGuardState } from "../../../../src/features/guard/ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager];
@@ -68,7 +68,7 @@ for (const locale of ["zh-CN", "en"] as const)
           async createSession(input) {
             control = new WerewolfMcpControlServer(input.registry);
             const config = await control.start(process.execPath, [
-              path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+              path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
             ]);
             control.bindSession("strict-wire");
             client = new Client({ name: "strict-wire", version: "1.0.0" });

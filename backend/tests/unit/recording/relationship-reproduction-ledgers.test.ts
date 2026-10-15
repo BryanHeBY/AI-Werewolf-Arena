@@ -7,10 +7,10 @@
 import { expect, test } from "bun:test";
 import { Camp, Phase, Role, WinCondition, type BoardConfig, type ToolCall } from "@ai-werewolf-arena/game-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { parseReproductionRecord, type RecordedCheckpoint, type RecordedDecision, type ReproductionRecord } from "../../../src/recording/reproduction";
-import { validateCupidRecord } from "../../../src/verification/reproduction/cupid";
-import { validateHybridRecord } from "../../../src/verification/reproduction/hybrid";
-import { verifyReproductionMechanisms } from "../../../src/verification/reproduction/assembly";
+import { parseReproductionRecord, type RecordedCheckpoint, type RecordedDecision, type ReproductionRecord } from "../../../src/recording/reproduction/format";
+import { validateCupidRecord } from "../../../src/recording/verification/cupid/validate";
+import { validateHybridRecord } from "../../../src/recording/verification/hybrid/validate";
+import { verifyReproductionMechanisms } from "../../../src/recording/verification/assembly";
 
 type Family = "cupid" | "hybrid";
 const netease = "netease_2017_cupid_follows_lovers_v1" as const;

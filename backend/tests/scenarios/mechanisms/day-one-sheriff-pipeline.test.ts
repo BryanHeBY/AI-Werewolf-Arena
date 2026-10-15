@@ -5,10 +5,10 @@
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ActionProvider, ActionRequest, ToolCall, Phase } from "../../../src/domain/model";
-import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+import { DayPipeline } from "../../../src/engine/phases/day-pipeline";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { createDefaultRoleRegistry } from "../../../src/rulesets/mechanism-api";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 
 describe("sheriff pipeline", () => {
 

@@ -4,14 +4,14 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, Phase, WinCondition, type BoardConfig, type RoleComponent } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getMechanicalState } from "../../../../src/game/mechanisms/roles/mechanical_wolf/state";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getMechanicalState } from "../../../../src/features/mechanical-wolf/state";
 import { DeathCause } from "../../../../src/domain/deaths";
-import { mechanicalDeathHook } from "../../../../src/game/mechanisms/roles/mechanical_wolf/death_hook";
+import { mechanicalDeathHook } from "../../../../src/features/mechanical-wolf/death-hook";
 import {
   advanceMechanicalNight,
   learnMechanicalRole,
-} from "../../../../src/game/mechanisms/roles/mechanical_wolf/state";
+} from "../../../../src/features/mechanical-wolf/state";
 
 const deck = [Role.MechanicalWolf, Role.Wolf, Role.Psychic, Role.Witch, Role.Guard, Role.Villager];
 

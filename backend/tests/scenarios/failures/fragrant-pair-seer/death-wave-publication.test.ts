@@ -8,9 +8,9 @@ import { type FragrantRuntimePlan } from "../../../support/features/fragrant-pai
 import {
   fragrantAuthoritySnapshot,
   prepareFragrantDeathWave,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
-import type { SessionRecordManager } from "../../../../src/recording/session_recorder";
+} from "../../../../src/features/fragrant-pair-seer/authority";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
+import type { SessionRecordManager } from "../../../../src/recording/session/recorder";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import type { AliveComponent } from "../../../../src/domain/components/alive";
 for (const path of ["initial", "gun"] as const)

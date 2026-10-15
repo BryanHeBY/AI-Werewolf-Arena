@@ -7,7 +7,7 @@
  * result is regenerated from production role, observation or board algorithms.
  */
 import { isDeepStrictEqual as equal } from "node:util";
-import type { RecordedDecision, ReproductionRecord } from "../../../../../src/recording/reproduction";
+import type { RecordedDecision, ReproductionRecord } from "../../../../../src/recording/reproduction/format";
 type Tuple = [number, string, Record<string, unknown>];
 export type FragrantWireRun = {
   record: ReproductionRecord;

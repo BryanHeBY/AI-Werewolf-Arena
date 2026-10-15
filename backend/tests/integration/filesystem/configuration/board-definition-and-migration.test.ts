@@ -7,13 +7,13 @@ import { ActionWindow } from "../../../../src/domain/identity";
 import { expect, test } from "bun:test";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
-import { convertLegacyBoard } from "../../../../src/runtime/config/migrate_board";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { describeResolvedSetup } from "../../../../src/runtime/config/describe_setup";
-import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
-import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
-import { migrateBoards, migrateBoardSource } from "../../../../src/runtime/cli/migrate_configs";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
+import { convertLegacyBoard } from "../../../../src/app/config/migrate-board";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { describeResolvedSetup } from "../../../../src/app/config/describe-setup";
+import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
+import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
+import { migrateBoards, migrateBoardSource } from "../../../../src/app/cli/migrate-configs";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 async function definition() {

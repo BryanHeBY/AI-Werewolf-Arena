@@ -10,17 +10,17 @@ import { COMPONENT } from "../../../../src/domain/components/names";
 import { createRoleComponent } from "../../../../src/domain/components/role";
 import { createAliveComponent } from "../../../../src/domain/components/alive";
 import { captureNightLife } from "../../../../src/domain/night-effects";
-import type { NightStageState, NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import type { NightPipelineResult } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { captureEvilKnight } from "../../../../src/game/mechanisms/roles/evil_knight/reflection";
-import { freshEvilKnightState } from "../../../../src/game/mechanisms/roles/evil_knight/state-slot";
-import { installEvilKnightBoard, EVIL_KNIGHT_FRAME_STAGE } from "../../../../src/game/mechanisms/roles/evil_knight/night_frame";
+import type { NightStageState, NightStageContext } from "../../../../src/engine/night/contracts";
+import type { NightPipelineResult } from "../../../../src/engine/phases/night-pipeline";
+import { captureEvilKnight } from "../../../../src/features/evil-knight/reflection";
+import { freshEvilKnightState } from "../../../../src/features/evil-knight/state-slot";
+import { installEvilKnightBoard, EVIL_KNIGHT_FRAME_STAGE } from "../../../../src/features/evil-knight/night-frame";
 import {
   hasEvilKnightNightBindings,
   installEvilKnightNightBindings,
   evilKnightNightBinding,
   captureEvilKnightNightShotProtection,
-} from "../../../../src/game/mechanisms/roles/evil_knight/night-bindings";
+} from "../../../../src/features/evil-knight/night-bindings";
 
 function state(): NightStageState {
   return { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [] };

@@ -9,17 +9,17 @@ import type {
 } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import type { WeddingActorView } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import type { Camp } from "@ai-werewolf-arena/game-contract";
-import type { PlayerObservation } from "../../../src/game/observation/player-observation";
-import type { projectOrderPrinceState } from "../../../src/game/mechanisms/roles/order_prince/ports";
-import type { weddingActorView } from "../../../src/game/mechanisms/roles/ghost_bride/authority";
+import type { PlayerObservation } from "../../../src/agents/observation/player-observation";
+import type { projectOrderPrinceState } from "../../../src/features/order-prince/ports";
+import type { weddingActorView } from "../../../src/features/ghost-bride/authority";
 import type {
   // @ts-expect-error 原 Choice 类型已退出，runtime 函数仍保留。
   OrderPrinceChoice as RetiredChoice,
   // @ts-expect-error 原 State 类型已退出，不保旧叶 type 桥。
   OrderPrinceState as RetiredOrder,
-} from "../../../src/game/mechanisms/roles/order_prince/state-slot";
+} from "../../../src/features/order-prince/state-slot";
 // @ts-expect-error 婚礼数据类型归公共事实 owner，不保旧 authority 类型桥。
-import type { WeddingActorView as RetiredWedding } from "../../../src/game/mechanisms/roles/ghost_bride/authority";
+import type { WeddingActorView as RetiredWedding } from "../../../src/features/ghost-bride/authority";
 export type RetiredLeafChecks = [RetiredChoice, RetiredOrder, RetiredWedding];
 
 interface OriginalChoice {

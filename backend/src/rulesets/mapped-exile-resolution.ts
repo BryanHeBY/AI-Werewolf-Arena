@@ -10,8 +10,8 @@
 import type { ReadonlyBoardConfig, EntityId, VotingSummary } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
 import type { GameEvent } from "../domain/events";
-import type { VotedOutResult } from "../game/mechanisms/hooks/hook_registry";
-import { resolveTricksterExile } from "../game/mechanisms/roles/trickster/ports";
+import type { VotedOutResult } from "../engine/hooks/registry";
+import { resolveTricksterExile } from "../features/trickster/ports";
 
 /** 原可写运行输出，不设新品牌或冻结；事件 payload 与后续查询必须仍指向同一对象。 */
 export type MappedExile = ReturnType<typeof resolveTricksterExile>;

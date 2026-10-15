@@ -5,18 +5,18 @@
  * 逐项查完才读取下一项，黑市交易与黑市受赠者保持原短路；失败不执行后续判断或新增清理策略。
  */
 import type { World } from "../domain/world";
-import { hasFoxInspectionNightCommit } from "../game/mechanisms/roles/cursed_fox/inspection_effect";
-import { hasDreamNightCommit } from "../game/mechanisms/roles/dreamer/night_frame";
-import { hasRoleInspectionNightCommit } from "../game/mechanisms/roles/role_inspection/night_scope";
-import { hasMechanicalNightCommit } from "../game/mechanisms/roles/mechanical_wolf/night_scope";
-import { hasBlackMarketNightCommit } from "../game/mechanisms/roles/black_market_merchant/night_stage";
-import { hasRecipientNightCommit } from "../game/mechanisms/roles/recipient_ability_stage";
-import { hasLuckyNightCommit } from "../game/mechanisms/roles/miracle_merchant/lucky_stage";
-import { hasMerchantNightCommit } from "../game/mechanisms/roles/miracle_merchant/night_stage";
-import { hasCupidNightCommit } from "../game/mechanisms/roles/cupid/relation";
-import { hasHybridNightCommit } from "../game/mechanisms/roles/hybrid/night_stage";
-import { hasAwakenedNightCommit } from "../game/mechanisms/roles/awakened_hidden_wolf/night_scope";
-import { hasDeathAbilityActivationCommit } from "../game/mechanisms/roles/death_ability_activation";
+import { hasFoxInspectionNightCommit } from "../features/cursed-fox/inspection-effect";
+import { hasDreamNightCommit } from "../features/dreamer/night-frame";
+import { hasRoleInspectionNightCommit } from "../features/role-inspection/night-scope";
+import { hasMechanicalNightCommit } from "../features/mechanical-wolf/night-scope";
+import { hasBlackMarketNightCommit } from "../features/black-market-merchant/night-stage";
+import { hasRecipientNightCommit } from "../features/night-abilities/recipient-ability-stage";
+import { hasLuckyNightCommit } from "../features/miracle-merchant/lucky-stage";
+import { hasMerchantNightCommit } from "../features/miracle-merchant/night-stage";
+import { hasCupidNightCommit } from "../features/cupid/relation";
+import { hasHybridNightCommit } from "../features/hybrid/night-stage";
+import { hasAwakenedNightCommit } from "../features/awakened-hidden-wolf/night-scope";
+import { hasDeathAbilityActivationCommit } from "../features/death-actions/death-ability-activation";
 
 /** 每个参数只在原谓词调用点读取；组合不提前收齐证据或替换机制自己的状态判断。 */
 export interface NightCommitAdmissionRuntime {

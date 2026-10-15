@@ -1,0 +1,29 @@
+{
+  "baseCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+  "scope": "仅所有权目录 route-only 实际快照，尚未启动非模块适配与类型或集成门禁",
+  "attempts": [
+    {
+      "toolCell": "3f4df6",
+      "exitCode": 1,
+      "reason": "Git ls-tree 全仓路径输出超过 child_process 默认 maxBuffer；读取原程序和程序核验前退出。",
+      "rawBytes": 2210017,
+      "rawSHA256": "822cdfdfb1ca870a72607b01688ce91fe9e5297a8a025cf2ab3fa90b6451236c",
+      "rawGzip": "owned-source-layout-mechanical-proof-first-output.txt.gz",
+      "script": "owned-source-layout-mechanical-proof-first.cjs"
+    },
+    {
+      "launchCell": "e571ad",
+      "sessionId": 21533,
+      "terminalCell": "68ea9e",
+      "exitCode": 0,
+      "change": "只将 git ls-tree 的 maxBuffer 显式增至32MiB，数据源和断言未弱化。",
+      "raw": "owned-source-layout-mechanical-proof-output.txt",
+      "script": "owned-source-layout-mechanical-proof.cjs",
+      "report": "owned-source-layout-mechanical-proof.json"
+    }
+  ],
+  "limits": [
+    "尚不声明 CLI、包出口、子进程、fixture 路径或检查器可用；这些适配在后续显式差量处理。",
+    "模块语法树证明不代替类型、运行时生命周期、真实通信和最终固定输入全量验收。"
+  ]
+}

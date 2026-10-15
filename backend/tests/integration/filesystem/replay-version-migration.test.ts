@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import { readFile, writeFile, mkdir, link, symlink } from "node:fs/promises";
 import path from "node:path";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { exportReplayBundle } from "../../../src/replay/export_replay_bundle";
+import { exportReplayBundle } from "../../../src/app/cli/export-replay-bundle";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 async function fixture() {

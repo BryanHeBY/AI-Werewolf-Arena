@@ -12,18 +12,18 @@ import {
   type ActionRequest,
   type ToolCall,
 } from "../../../../src/domain";
-import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/rulesets/presets/noble-secret-body-twelve";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
-import { replayReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
-import { buildAgentVisibleEvent } from "../../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/app/simulation/reproduction-context";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
+import { replayReproduction } from "../../../../src/app/simulation/replay-reproduction";
+import { buildAgentVisibleEvent } from "../../../../src/agents/observation/event-feed";
 
 for (const target of ["secret_body", "night_noble", "awakened_idiot_reveal_speech"])
   test(`real pending ${target}: live archive autosave, owner feed and finalized exact Tape`, async () => {

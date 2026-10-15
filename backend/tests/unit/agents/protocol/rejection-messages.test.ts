@@ -20,15 +20,15 @@ import {
   type AliveComponent,
   type VotingRightComponent,
 } from "../../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionValidator } from "../../../../src/game/gateway/action_validator";
-import { ToolValidationRuleRegistry } from "../../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { ActionValidator } from "../../../../src/engine/actions/action-validator";
+import { ToolValidationRuleRegistry } from "../../../../src/engine/actions/tool-validation-rule-registry";
+import { getGuardState } from "../../../../src/features/guard/ports";
+import { getHunterState } from "../../../../src/features/hunter/ports";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
 
 const twelveRoles = [
   Role.Wolf,

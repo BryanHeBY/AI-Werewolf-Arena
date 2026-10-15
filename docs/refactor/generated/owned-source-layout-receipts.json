@@ -1,0 +1,97 @@
+{
+  "baseCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+  "routeApply": {
+    "cell": "4fe206",
+    "exitCode": 0
+  },
+  "mechanicalProof": "owned-source-layout-mechanical-receipts.json",
+  "operationalApply": {
+    "cell": "204bc9",
+    "exitCode": 0,
+    "files": 37,
+    "edits": 83
+  },
+  "metadataFirst": {
+    "cell": "cde145",
+    "exitCode": 1,
+    "raw": "owned-source-layout-metadata-first-output.txt",
+    "reason": "两更早公共包退桥未在sourceAsset准入登记；原stored摘要未改，任何current元数据尚未写。"
+  },
+  "diagnostic": {
+    "cell": "0b816b",
+    "exitCode": 0,
+    "result": "historical-prepared.tar.gz 内 diagnostic-results.json",
+    "limits": "只逆2精确历史specifier的诊断，非授权一般包映射或产品加载。"
+  },
+  "historicalApply": {
+    "cell": "8a21e1",
+    "exitCode": 0,
+    "files": 2,
+    "exactEdits": 11
+  },
+  "metadataSuccessor": {
+    "cell": "9e4db9",
+    "exitCode": 0,
+    "files": 6,
+    "sourceAssets": 5,
+    "literalTimePayloads": 8,
+    "originProgramBindingsRetained": true
+  },
+  "firstAffectedTypes": {
+    "launchCell": "c64a01",
+    "sessionId": 7329,
+    "terminalCell": "5d7f8d",
+    "result": "owned-source-layout-types-results.json",
+    "input": "owned-source-layout-types-input.json",
+    "outcome": "8中7通过；frontend仅2旧isLocale import诊断，未改产品输入或恢复旧桥。"
+  },
+  "frontendRepair": {
+    "cell": "a66778",
+    "exitCode": 0,
+    "files": 2,
+    "inverseWholeOutputs": 4
+  },
+  "frontendOnlyTypesSuccessor": {
+    "launchCell": "c50685",
+    "sessionId": 80612,
+    "terminalCell": "92d8e8",
+    "exitCode": 0
+  },
+  "newRiskOnly": {
+    "launchCell": "1f9aa7",
+    "sessionId": 22940,
+    "terminalCell": "8fc7b2",
+    "exitCode": 0,
+    "pass": 6,
+    "filteredOut": 3,
+    "expectCalls": 34,
+    "raw": "owned-source-layout-new-risk-output.txt"
+  },
+  "toolingOnlyTypesSuccessor": {
+    "launchCell": "c06dca",
+    "sessionId": 36053,
+    "terminalCell": "27d3fa",
+    "exitCode": 0,
+    "raw": "owned-source-layout-tooling-successor-types-output.txt"
+  },
+  "headPrecision": {
+    "cell": "1ae26f",
+    "exitCode": 0,
+    "onlyChangedAfterSourceReady": [
+      "backend/tests/architecture/identity-import-initialization.test.ts"
+    ],
+    "wholeRawOutputsSame": 2,
+    "finding": "静态发现新中文首头漏明架构测试层级，首头检查前补准；不编造测试红。"
+  },
+  "onlyNewHeadShape": {
+    "cell": "0b9de4",
+    "exitCode": 0,
+    "files": 1,
+    "failures": 0
+  },
+  "limits": [
+    "从未重复6新risk或1475机械证明。",
+    "8受影响类型为阶段性首跑＋仅失败/变更根后继，不冒最终同输入14项目C47。",
+    "尚未跑产品对局、网络模型、完整integration/browser/render或最终全门禁。"
+  ]
+}

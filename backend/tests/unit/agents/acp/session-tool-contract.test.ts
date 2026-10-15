@@ -3,9 +3,9 @@
  */
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
-import { AcpSession, AcpSessionFactory } from "../../../../src/ai/integrations/acp/session";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { AcpActionProvider } from "../../../../src/agents/acp/acp-action-provider";
+import { AcpSession, AcpSessionFactory } from "../../../../src/adapters/acp/session";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { speakRequest } from "../../../support/builders/agents/acp-requests";
 
 describe("AcpActionProvider", () => {

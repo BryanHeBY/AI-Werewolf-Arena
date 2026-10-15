@@ -4,7 +4,7 @@
 import { expect, spyOn, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { Phase, type ActionRequest } from "../../../../src/domain";
 
 const request: ActionRequest = {
@@ -20,7 +20,7 @@ const request: ActionRequest = {
 };
 
 test("ACP trace is independent of payload flags and retains safe display diagnostics", async () => {
-  const { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
+  const { AcpActionProvider } = await import("../../../../src/agents/acp/acp-action-provider");
   const game = bootstrapGame(sixPlayerMvpConfig, { locale: "en" }),
     lines: string[] = [];
   const log = spyOn(console, "log").mockImplementation((...values) => {
@@ -64,7 +64,7 @@ for (const trigger of [
   "request_transport_fail",
 ] as const)
   test(`ACP logging close at ${trigger} suppresses late actions and private round writes`, async () => {
-    const { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
+    const { AcpActionProvider } = await import("../../../../src/agents/acp/acp-action-provider");
     const { PlayerRoundRecorder } =
       await import("../../../../src/app/player-round-recorder");
     let closing: Promise<void> | undefined,

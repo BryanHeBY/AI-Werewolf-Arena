@@ -9,7 +9,7 @@ import {
   createWolfSorcererState,
   getWolfSorcererState,
   projectWolfSorcererState,
-} from "../../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";
+} from "../../../../src/features/wolf-sorcerer/state-slot";
 function make(firstNight: 1 | 2 = 2) {
   const state = createWolfSorcererState(firstNight);
   const role = {

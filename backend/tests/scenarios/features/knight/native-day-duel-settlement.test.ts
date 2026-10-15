@@ -13,8 +13,8 @@ import {
   COMPONENT,
   type RoleComponent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getKnightState } from "../../../../src/game/mechanisms/roles/knight/ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getKnightState } from "../../../../src/features/knight/ports";
 
 const deck = [Role.Knight, Role.Wolf, Role.WolfKing, Role.Hunter, Role.Villager, Role.Villager];
 

@@ -3,23 +3,23 @@
  * 日数／政策／修改／语言表和受控直接死亡结算；精确字段默认值、翻牌／授予顺序、原生命身份
  * 和无迟到权限断言保持原样，不运行 PhaseManager 周期或加载公开文件。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, DeathCause, Phase, Role, type GameEvent, type BoardConfig, type ActionProvider } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { boardConfigSchema } from "../../../src/domain/board-schema";
-import { LastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
+import { LastWordsMechanism } from "../../../src/features/last-words/last-words-mechanism";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { buildAgentVisibleEventFeed } from "../../../src/agents/observation/event-feed";
+import { getDefaultConfigRenderRegistry } from "../../../src/agents/prompt/config-render-registry";
 
 
 const roles = [Role.Wolf, Role.Hunter, Role.WolfKing, Role.Villager, Role.Villager, Role.Villager];

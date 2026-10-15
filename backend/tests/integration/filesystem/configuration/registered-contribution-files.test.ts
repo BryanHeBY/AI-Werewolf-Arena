@@ -5,14 +5,14 @@ import { expect, test } from "bun:test";
 import { readdir, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { Role } from "../../../../src/domain";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { convertLegacyBoard } from "../../../../src/runtime/config/migrate_board";
-import { checkConfig } from "../../../../src/runtime/cli/check_config";
+} from "../../../../src/app/config/board-definition";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { convertLegacyBoard } from "../../../../src/app/config/migrate-board";
+import { checkConfig } from "../../../../src/app/cli/check-config";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 test("all public example boards round-trip through every registered contribution, including empty schemas", async () => {

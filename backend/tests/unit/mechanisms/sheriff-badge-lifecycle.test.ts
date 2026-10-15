@@ -8,10 +8,10 @@ import { BadgeComponent } from "../../../src/domain/components/badge";
 import { VotingRightComponent } from "../../../src/domain/components/voting-right";
 import { RoleComponent } from "../../../src/domain/components/role";
 import { DeathCause, Phase } from "../../../src/domain/model";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 
 describe("sheriff pipeline", () => {
   test("no initial sheriff before election", () => {

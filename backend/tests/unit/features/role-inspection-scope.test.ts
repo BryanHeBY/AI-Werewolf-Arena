@@ -12,27 +12,27 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { findNightAbility } from "../../../src/features/night-abilities/abilities";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
 import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,
   MIRROR_INSPECTION_STAGE,
-} from "../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
-import { hasRoleInspectionNightCommit } from "../../../src/game/mechanisms/roles/role_inspection/night_scope";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
+} from "../../../src/features/role-inspection/contribution-ports";
+import { hasRoleInspectionNightCommit } from "../../../src/features/role-inspection/night-scope";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import type { NightStageContext } from "../../../src/engine/night/contracts";
 import {
   canGargoyleKnife,
   refreshGargoyleInheritance,
-} from "../../../src/game/mechanisms/roles/gargoyle/inheritance";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
+} from "../../../src/features/gargoyle/inheritance";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
 
 function fixture(kind: Role.Gargoyle | Role.Psychic | Role.MirrorGirl) {
   const roles = [kind, Role.Wolf, Role.Seer, Role.Witch, Role.Villager, Role.Villager],
@@ -199,7 +199,7 @@ test("Gargoyle final report rechecks unique history after an inspection-label ca
         }
       : profile,
   );
-  const { RoleCatalog } = await import("../../../src/game/mechanisms/roles/catalog");
+  const { RoleCatalog } = await import("../../../src/rulesets/roles/catalog");
   ctx.roleCatalog = createRoleCatalog({ contributions: profiles });
   await game.stage.execute(ctx);
   expect(calls).toBe(2);
@@ -294,7 +294,7 @@ for (const point of ["await", "gateway", "label"] as const)
       };
     }
     if (point === "label") {
-      const { RoleCatalog } = await import("../../../src/game/mechanisms/roles/catalog");
+      const { RoleCatalog } = await import("../../../src/rulesets/roles/catalog");
       ctx.roleCatalog = createRoleCatalog({
         contributions: getDefaultRoleContributions().map((profile) =>
           profile.metadata.role === Role.Seer

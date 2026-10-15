@@ -7,12 +7,12 @@ import { expect, test } from "bun:test";
 import { Camp, Phase, Role, type ActionRequest } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { projectRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
-import { projectNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/ports";
-import { projectEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/ports";
-import { capturePlayerObservation } from "../../../src/game/observation/player-observation-projector";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
+import { projectRedMoonState } from "../../../src/features/red-moon/state-slot";
+import { projectNightmareShadowState } from "../../../src/features/nightmare/ports";
+import { projectEvilKnightState } from "../../../src/features/evil-knight/ports";
+import { capturePlayerObservation } from "../../../src/agents/observation/player-observation-projector";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 
 // 无World的投影fixture独立持有当前Camp；同值组件引用不是额外身份门槛。
 const projectionCamp = { camp: Camp.Wolf };

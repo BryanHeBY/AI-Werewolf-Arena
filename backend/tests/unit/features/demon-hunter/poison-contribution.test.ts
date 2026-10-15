@@ -3,7 +3,7 @@
  * 修改；原字面预期、身份快照及拒绝断言是预期，不在迁移中重新生成。仅调用原生内存
  * owner／frame／reader，测试自有 mock／组件不运行完整对局、模型或真实传输，support／fixture 字节及政策状态不变。
  */
-import { createStatusMarksComponent } from "../../../../src/game/observation/component-presentation";
+import { createStatusMarksComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World, COMPONENT, StatusMark } from "../../../../src/domain";
 import {
@@ -14,7 +14,7 @@ import {
   openNativePoisonContribution,
   commitNativePoisonContribution,
   sealNativePoisonContribution,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/poison_contribution";
+} from "../../../../src/features/demon-hunter/poison-contribution";
 function fixture(initial: StatusMark[] = []) {
   const world = new World(),
     id = world.createEntity(),

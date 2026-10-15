@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
 import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";
-import { findNightAbility, abilityStatus } from "../../../../src/game/mechanisms/roles/abilities";
+import { findNightAbility, abilityStatus } from "../../../../src/features/night-abilities/abilities";
 
 for (const stage of [
   "eclipse_swallow",

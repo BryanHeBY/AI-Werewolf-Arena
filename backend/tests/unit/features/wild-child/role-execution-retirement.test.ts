@@ -13,22 +13,22 @@ import { createAliveComponent } from "../../../../src/domain/components/alive";
 import { createRoleComponent } from "../../../../src/domain/components/role";
 import { captureNightLife } from "../../../../src/domain/night-effects";
 import { isRoleExecutionRetired, retireRoleExecution } from "../../../../src/domain/role-execution-authority";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { findNightAbility, recordNightAbilityUse } from "../../../../src/game/mechanisms/roles/abilities";
-import { captureDeathShotEligibility } from "../../../../src/game/mechanisms/roles/death-shot-eligibility";
-import { commitFoxInspection } from "../../../../src/game/mechanisms/roles/cursed_fox/inspection_effect";
-import { getHunterState, setHunterState } from "../../../../src/game/mechanisms/roles/native-death-gun-resources";
-import { resolveNativeDeathShots, type NativeDeathShotRules } from "../../../../src/game/mechanisms/roles/native-death-shot-settlement";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { captureNightAbilityScope } from "../../../../src/features/night-abilities/ability-scope";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { findNightAbility, recordNightAbilityUse } from "../../../../src/features/night-abilities/abilities";
+import { captureDeathShotEligibility } from "../../../../src/features/death-actions/death-shot-eligibility";
+import { commitFoxInspection } from "../../../../src/features/cursed-fox/inspection-effect";
+import { getHunterState, setHunterState } from "../../../../src/features/death-actions/native-death-gun-resources";
+import { resolveNativeDeathShots, type NativeDeathShotRules } from "../../../../src/features/death-actions/native-death-shot-settlement";
 import {
   recordWildChildDeathCommit,
   resolveWildChildDeathWave,
   validWildChildOwner,
   wildChildBinding,
-} from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
-import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
+} from "../../../../src/features/wild-child/lifecycle";
+import { WildChildSetupWindow } from "../../../../src/features/wild-child/setup";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 

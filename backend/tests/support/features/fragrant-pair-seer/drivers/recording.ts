@@ -7,16 +7,16 @@
 import { fragrantLiteralPlans } from "../builders/literal-plans";
 import { readFile } from "node:fs/promises";
 import { rm } from "node:fs/promises";
-import { SessionRecordManager } from "../../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../../src/recording/recording_context";
-import { beginGameReproduction } from "../../../../../src/runtime/simulation/reproduction_context";
-import { captureCheckpoint } from "../../../../../src/runtime/simulation/reproduction_context";
-import { currentEngineVersion } from "../../../../../src/runtime/simulation/reproduction_context";
-import { parseReproductionRecord } from "../../../../../src/recording/reproduction";
-import { replayReproduction } from "../../../../../src/runtime/simulation/replay_reproduction";
+import { SessionRecordManager } from "../../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../../src/recording/session/context";
+import { beginGameReproduction } from "../../../../../src/app/simulation/reproduction-context";
+import { captureCheckpoint } from "../../../../../src/app/simulation/reproduction-context";
+import { currentEngineVersion } from "../../../../../src/app/simulation/reproduction-context";
+import { parseReproductionRecord } from "../../../../../src/recording/reproduction/format";
+import { replayReproduction } from "../../../../../src/app/simulation/replay-reproduction";
 import { fragrantRuntimeGame } from "../builders/runtime-game";
 import { fragrantRuntimeAction } from "./actions";
-import { fragrantPairSeerTwelveConfig } from "../../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
+import { fragrantPairSeerTwelveConfig } from "../../../../../src/rulesets/presets/fragrant-pair-seer-twelve";
 import { createTestTempDirectory } from "../../../drivers/temp-directories";
 
 export async function recordFragrantLiteral(

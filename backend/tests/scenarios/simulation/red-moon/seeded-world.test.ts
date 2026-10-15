@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
+import { redMoonTwelveConfig } from "../../../../src/rulesets/presets/red-moon-twelve";
 import {
   COMPONENT,
   Camp,
@@ -12,7 +12,7 @@ import {
   randomDraws,
   type RoleComponent,
 } from "../../../../src/domain";
-import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 for (const policy of ["ends_game", "forbidden"] as const)
   for (const locale of ["zh-CN", "en"] as const)

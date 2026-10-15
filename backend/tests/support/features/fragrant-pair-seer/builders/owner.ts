@@ -4,26 +4,26 @@
  * 字面角色／状态是 fixture 设置而非生产规则 oracle；Pair 别名、容器写入 LHS 时点保持。
  * 实例安装入口迁共享 owner，但不运行 profile、流水线、传输或模型。
  */
-import { createAliveComponent, createCampComponent } from "../../../../../src/game/observation/component-presentation";
+import { createAliveComponent, createCampComponent } from "../../../../../src/agents/observation/component-presentation";
 import { World } from "../../../../../src/domain/world";
 import { Role, Camp } from "../../../../../src/domain/identity";
 import { COMPONENT } from "../../../../../src/domain/components/names";
 import { type AliveComponent } from "../../../../../src/domain/components/alive";
 import { type RoleComponent } from "../../../../../src/domain/components/role";
-import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../../src/agents/observation/role-presentation";
 
 import { createIdentityComponent } from "../../../../../src/domain/entities/player";
 import { createVictoryComponent } from "../../../../../src/domain/components/victory";
 import type { GameEvent } from "../../../../../src/domain/events";
-import { freshFragrantState } from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot";
-import { freshPairSeerState } from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
-import { installNativeAbility } from "../../../../../src/game/mechanisms/roles/ability_changes";
+import { freshFragrantState } from "../../../../../src/features/fragrant-pair-seer/fragrant-state-slot";
+import { freshPairSeerState } from "../../../../../src/features/fragrant-pair-seer/state";
+import { installNativeAbility } from "../../../../../src/features/night-abilities/ability-changes";
 import {
   installFragrantPairAuthority,
   beginFragrantNight,
   openFragrantBindChoice,
   openPairCheckChoice,
-} from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+} from "../../../../../src/features/fragrant-pair-seer/authority";
 /** 构造固定角色 roster 与原生双验资源供 authority 单元测试使用；不初始化 profile、判断板子支持或运行流水线、传输和复现。 */
 export function fragrantPairOwnerFixture(
   beforeInstall?: (role: RoleComponent, world: World) => void,

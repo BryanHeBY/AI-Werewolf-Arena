@@ -5,7 +5,7 @@ import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Camp, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 const deck = [Role.MiracleMerchant, Role.Wolf, Role.WolfKing, Role.Seer, Role.Witch, Role.Villager];
 

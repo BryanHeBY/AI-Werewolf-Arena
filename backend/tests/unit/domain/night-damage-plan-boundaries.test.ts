@@ -4,7 +4,7 @@
  * 取消命令的部分失败还需保留第一项已提交移除；不从生产输出推导预期。
  * 本模块不调用模型、传输或完整对局驱动。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";

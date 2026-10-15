@@ -12,7 +12,7 @@ import {
   readErrorDiagnostic,
   readReplayPlayerView,
 } from "@ai-werewolf-arena/replay-contract";
-import { describeError, formatErrorDiagnostic } from "../../../src/utils/error_diagnostic";
+import { describeError, formatErrorDiagnostic } from "../../../src/utils/error-diagnostic";
 
 const secret = "synthetic-auth-response-canary";
 const quota = () =>
@@ -207,7 +207,7 @@ test("shared private diagnostic is a strict optional extension and legacy error 
 });
 
 test("audit input accepts only validated diagnostic facts and omits legacy raw exceptions or poisoned metadata", async () => {
-  const { buildAuditTasks } = await import("../../../src/audit/payload_builder");
+  const { buildAuditTasks } = await import("../../../src/audit/payload-builder");
   for (const locale of ["zh-CN", "en"] as const) {
     const input = {
       locale,

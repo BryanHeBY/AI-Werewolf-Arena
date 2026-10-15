@@ -4,7 +4,7 @@
 import type { MechanicalSkill } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { Camp, Role } from "../../../../src/domain/model";
 import {
   advanceMechanicalNight,
@@ -22,7 +22,7 @@ import {
   recordMechanicalInheritance,
   selectMechanicalMode,
   setMechanicalState,
-} from "../../../../src/game/mechanisms/roles/mechanical_wolf/state";
+} from "../../../../src/features/mechanical-wolf/state";
 
 test("native mechanical owners deep-copy resources/history and contain serializable facts only", () => {
   const template = freshMechanicalState();

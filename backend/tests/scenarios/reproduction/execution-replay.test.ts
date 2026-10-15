@@ -9,19 +9,19 @@ import { Role, WitchSelfHealRule } from "../../../src/domain";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
-import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";
-import { simulateGames } from "../../../src/runtime/simulation/simulate_games";
+import { loadBoardDefinition } from "../../../src/app/config/load-board-definition";
+import { simulateGames } from "../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../src/runtime/simulation/replay_reproduction";
-import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../../src/runtime/game_runner";
-import * as factory from "../../../src/runtime/player_agent_factory";
-import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
+} from "../../../src/app/simulation/replay-reproduction";
+import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../src/app/config/resolve-game-setup";
+import { runGame } from "../../../src/app/game-runner";
+import * as factory from "../../../src/app/player-agent-factory";
+import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
+import { ObservedBot } from "../../../src/agents/providers/observed-bot";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const fixtures = path.resolve(import.meta.dir, "../../../../configs.example");
@@ -549,8 +549,8 @@ for (const repeatPolicy of ["awa_last_action_v1", "netease_consecutive_nights_v1
 for (const campInspection of ["awa_inheritance_v1", "netease_2020_good_v1"] as const) {
   test(`${campInspection}: named Hidden Wolf camp policy is recorded and reproduces every request and checkpoint`, async () => {
     const { boardDefinitionFromConfig, parseBoardDefinition } =
-      await import("../../../src/runtime/config/board_definition");
-    const { sixPlayerMvpConfig } = await import("../../../src/runtime/scenarios/six_player_mvp");
+      await import("../../../src/app/config/board-definition");
+    const { sixPlayerMvpConfig } = await import("../../../src/rulesets/presets/six-player-mvp");
     const root = await createTestTempDirectory("awa-hidden-policy-record-");
     const output = await createTestTempDirectory("awa-hidden-policy-replay-");
     const roles = [

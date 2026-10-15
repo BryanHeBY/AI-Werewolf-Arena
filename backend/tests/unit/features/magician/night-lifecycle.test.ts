@@ -9,19 +9,19 @@ import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../src/domain/world";
 import rawBoard from "../../../../../configs.example/boards/awa_magician_12_n1_exchanged_v1.json";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   MagicianNightUnit,
   magicianNightTerminal,
   type MagicianNightCleanupOwnership,
-} from "../../../../src/game/mechanisms/roles/magician/ports";
-import { WolfSorcererNightUnit } from "../../../../src/game/mechanisms/roles/wolf_sorcerer/ports";
-import { TricksterNightUnit } from "../../../../src/game/mechanisms/roles/trickster/ports";
+} from "../../../../src/features/magician/ports";
+import { WolfSorcererNightUnit } from "../../../../src/features/wolf-sorcerer/ports";
+import { TricksterNightUnit } from "../../../../src/features/trickster/ports";
 import {
   beginMagicianNight,
   commitMagicianExchange,
-} from "../../../../src/game/mechanisms/roles/magician/night_frame";
+} from "../../../../src/features/magician/night-frame";
 
 function ownershipIsReadOnly(view: MagicianNightCleanupOwnership) {
   // @ts-expect-error A valid boolean callback still cannot replace the readonly query.

@@ -3,7 +3,7 @@
  * 修改；原字面预期、身份快照及拒绝断言是预期，不在迁移中重新生成。仅调用原生内存
  * owner／frame／reader，测试自有 mock／组件不运行完整对局、模型或真实传输，support／fixture 字节及政策状态不变。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";
@@ -21,7 +21,7 @@ import {
   consumeSecretBodyExile,
   getNobleBodyPlayerState,
   snapshotNobleBodyAuthority,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/features/noble-secret-body/authority";
 // Read-only R/A/T cases preserved with their original inputs.
 const dto = (f: ReturnType<typeof nobleBodyAuthorityFixture>, id: number, p = Phase.Day) =>
   getNobleBodyPlayerState(f.world, id, p);

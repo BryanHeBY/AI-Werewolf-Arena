@@ -3,24 +3,24 @@
  */
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import { COMPONENT, Camp, Phase, PotionType, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent } from "../../../../src/domain";
 import { ghostBrideBoard, ghostBrideDeck } from "../../../support/features/ghost-bride/builders/scenario";
-import { GhostBrideSetupWindow } from "../../../../src/game/mechanisms/roles/ghost_bride/setup";
+import { GhostBrideSetupWindow } from "../../../../src/features/ghost-bride/setup";
 import {
   ghostBrideReady,
   hasActiveGhostBride,
   weddingGroup,
   weddingSetup,
-} from "../../../../src/game/mechanisms/roles/ghost_bride/authority";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { knownWolfTeammates, wolfKnifeHolders } from "../../../../src/game/mechanisms/roles/wolf_team";
-import { getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry, getDefaultToolSpecRegistry } from "../../../../src/game/mechanisms";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
+} from "../../../../src/features/ghost-bride/authority";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { knownWolfTeammates, wolfKnifeHolders } from "../../../../src/features/wolf-team/permissions";
+import { getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry, getDefaultToolSpecRegistry } from "../../../../src/rulesets/mechanism-api";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { resolveInspection } from "../../../../src/engine/inspection";
 
 function fixture(locale: "zh-CN" | "en" = "zh-CN") {
   const config = ghostBrideBoard();

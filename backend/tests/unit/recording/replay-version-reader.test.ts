@@ -13,7 +13,7 @@ import {
   readReplayDocument,
   ReplayDocumentValidationError,
 } from "@ai-werewolf-arena/replay-contract";
-import { createReplayDocument } from "../../../src/recording/replay_document";
+import { createReplayDocument } from "../../../src/recording/session/replay-document";
 
 async function fixture() {
   return JSON.parse(

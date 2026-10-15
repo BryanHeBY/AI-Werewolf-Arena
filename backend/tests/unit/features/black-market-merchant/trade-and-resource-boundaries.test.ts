@@ -3,11 +3,11 @@
  * 技能／变化／转移矩阵、有界夜上下文和显式伤害操作；精确独立库存、等待／反噬／隐私及零 getter
  * 断言保持原样，不运行完整 PhaseManager 周期或记录对局。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
-import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../../src/features/night-abilities/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -23,21 +23,21 @@ import {
   type GameEvent,
 } from "../../../../src/domain";
 import { type AliveComponent } from "../../../../src/domain/components/alive";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getBlackMarketState } from "../../../../src/game/mechanisms/roles/black_market_merchant/state";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getBlackMarketState } from "../../../../src/features/black-market-merchant/state";
 import {
   BLACK_MARKET_TRADE_STAGE,
   BLACK_MARKET_RECIPIENT_STAGE,
-} from "../../../../src/game/mechanisms/roles/black_market_merchant/night_stage";
-import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
-import { transferNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/features/black-market-merchant/night-stage";
+import { allNightAbilities } from "../../../../src/features/night-abilities/abilities";
+import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
+import { transferNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 
 const deck = [Role.Wolf, Role.Wolf, Role.BlackMarketMerchant, Role.Seer, Role.Witch, Role.Villager];
 

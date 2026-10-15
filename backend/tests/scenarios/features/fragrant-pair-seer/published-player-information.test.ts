@@ -4,22 +4,22 @@
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/domain/identity";
 import { Role } from "../../../../src/domain/identity";
-import { ActionValidator } from "../../../../src/game/gateway/action_validator";
+import { ActionValidator } from "../../../../src/engine/actions/action-validator";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import type { AliveComponent } from "../../../../src/domain/components/alive";
 import type { ActionRequest } from "../../../../src/domain/actions";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultScriptEventRenderRegistry,
-} from "../../../../src/game/mechanisms";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import { fragrantPairSeerTwelveConfig } from "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
+} from "../../../../src/rulesets/mechanism-api";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { fragrantAuthoritySnapshot } from "../../../../src/features/fragrant-pair-seer/authority";
+import { fragrantPairSeerTwelveConfig } from "../../../../src/rulesets/presets/fragrant-pair-seer-twelve";
 import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction } from "../../../support/features/fragrant-pair-seer/drivers/actions";
 import { text } from "@ai-werewolf-arena/game-text";

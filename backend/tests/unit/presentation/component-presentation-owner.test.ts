@@ -13,8 +13,8 @@ import {
   createAliveComponent, createBadgeComponent, createCampComponent, createVotingRightComponent,
   createStatusMarksComponent, renderAlivePrompt, renderBadgePrompt, renderCampPrompt,
   renderVotingRightPrompt, renderStatusMarksPrompt,
-} from "../../../src/game/observation/component-presentation";
-import { demonWitchMarksSafe } from "../../../src/game/mechanisms/roles/demon_hunter/ports";
+} from "../../../src/agents/observation/component-presentation";
+import { demonWitchMarksSafe } from "../../../src/features/demon-hunter/ports";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 

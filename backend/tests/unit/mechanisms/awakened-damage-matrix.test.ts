@@ -3,7 +3,7 @@
  * 基础／变化表、有界生命声明和直接伤害结算；手写死亡／死因／反射、印记清理及枪／遗言权限
  * 保持原样，不运行完整夜、模型或记录文件。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -23,8 +23,8 @@ import {
   type NightMechanicalEffect,
 } from "../../../src/domain/night-effects";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { LastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { LastWordsMechanism } from "../../../src/features/last-words/last-words-mechanism";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 const roles = [Role.Wolf, Role.Witch, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 

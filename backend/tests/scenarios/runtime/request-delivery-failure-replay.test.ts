@@ -7,16 +7,16 @@
 import { expect, test, spyOn } from "bun:test";
 import path from "node:path";
 import { readdir } from "node:fs/promises";
-import * as factory from "../../../src/runtime/player_agent_factory";
+import * as factory from "../../../src/app/player-agent-factory";
 import { bindRequestDeliveryGuard } from "../../../src/domain";
-import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
-import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";
-import { runGame } from "../../../src/runtime/game_runner";
+import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../src/app/config/resolve-game-setup";
+import { loadBoardDefinition } from "../../../src/app/config/load-board-definition";
+import { runGame } from "../../../src/app/game-runner";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../src/runtime/simulation/replay_reproduction";
+} from "../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 test("revoked delivery on a real engine request records an error and reproduces the exact partial cycle without a replay clock", async () => {

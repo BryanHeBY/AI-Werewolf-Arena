@@ -8,12 +8,12 @@ import { join } from "node:path";
 import { expect, test } from "bun:test";
 import { Phase, DeathCause, createRandom, type ActionRequest } from "../../../../src/domain";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
+import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
+import { ReproductionTrace } from "../../../../src/recording/reproduction/trace";
 import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import { validateMagicianRecord } from "../../../../src/verification/reproduction/magician/validate";
-import type { RecordedDecision, ReproductionRecord } from "../../../../src/recording/reproduction";
+import { validateMagicianRecord } from "../../../../src/recording/verification/magician/validate";
+import type { RecordedDecision, ReproductionRecord } from "../../../../src/recording/reproduction/format";
 
 const records = new Map<string, ReproductionRecord>();
 for (const mapping of ["original", "exchanged"] as const)

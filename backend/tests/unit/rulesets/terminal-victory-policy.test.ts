@@ -9,11 +9,11 @@ import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { createVictoryComponent } from "../../../src/domain/components/victory";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ghostBrideBoard, ghostBrideDeck } from "../../support/features/ghost-bride/builders/scenario";
 import { foxBoard } from "../../support/features/cursed-fox/builders/scenario";
-import { replaceWithFoxVictory } from "../../../src/game/mechanisms/roles/cursed_fox/victory";
+import { replaceWithFoxVictory } from "../../../src/features/cursed-fox/victory";
 import { TERMINAL_VICTORY_POLICY } from "../../../src/rulesets/terminal-victory-policy";
 
 const faction: WinDecision & { outcome: Extract<WinDecision["outcome"], { kind: "victory" }> } = {

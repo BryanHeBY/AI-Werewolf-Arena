@@ -4,9 +4,9 @@
  * 不调用模型或物理传输，保留原自保资格、可选已知队友和失败输入。
  */
 import { expect, test } from "bun:test";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import type { BotStyle } from "../../../src/ai/agents/providers/observed_bot";
-import type { PlayerObservation } from "../../../src/game/observation/player-observation";
+import { ObservedBot } from "../../../src/agents/providers/observed-bot";
+import type { BotStyle } from "../../../src/agents/providers/observed-bot";
+import type { PlayerObservation } from "../../../src/agents/observation/player-observation";
 import { Phase } from "../../../src/domain";
 
 function dto(

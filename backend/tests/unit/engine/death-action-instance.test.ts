@@ -1,16 +1,16 @@
 /**
  * 单元测试用字面原生／赠予能力实例与畸形 ID 验证死亡行动许可。明确许可与拒绝断言检查接收和应用不能借用另一枪实例；预期保留原字面或冻结 fixture，不运行模型或完整游戏驱动。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/domain";
 
-import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
+import { ActionTurn } from "../../../src/agents/player/action-turn";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { getHunterState } from "../../../src/features/hunter/ports";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 function fixture(locale: "zh-CN" | "en" = "en") {
   const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager];

@@ -1,0 +1,15 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tooling/refactor/fixture-source-relocations.test.ts:
+(pass) production fixture type relocation retains named type-only imports and full type declarations [24.03ms]
+(pass) production fixture type relocation rejects value loading and undeclared production paths [351.26ms]
+(pass) production fixture type relocation refuses Git symlink mode and a current declaration symlink [522.08ms]
+(pass) historical fixture package retirement normalizes only the two exact named import forms [2.99ms]
+(pass) historical fixture package retirement retains path binding mode alias and body rejection [2.59ms]
+(pass) historical fixture package retirement requires the original export chain and complete dependency declarations [48.04ms]
+
+ 6 pass
+ 3 filtered out
+ 0 fail
+ 34 expect() calls
+Ran 6 tests across 1 file. [1297.00ms]

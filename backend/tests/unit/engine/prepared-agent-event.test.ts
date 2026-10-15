@@ -13,22 +13,22 @@ import {
   Camp,
 } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
-import { AgentEventVisibilityRegistry } from "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
+import { AgentEventVisibilityRegistry } from "../../../src/agents/observation/agent-event-visibility-registry";
 import {
   prepareInertAgentEvent,
   type InertAgentEvent,
   type AgentEventFactReader,
   type PreparedAgentEvent,
-} from "../../../src/game/observation/agent-event-facts";
+} from "../../../src/agents/observation/agent-event-facts";
 import {
   canViewPreparedAgentEvent,
   projectPreparedAgentEvent,
-} from "../../../src/game/observation/agent-event-projection";
-import { projectAbilitySource } from "../../../src/game/observation/night-ability-projection";
+} from "../../../src/agents/observation/agent-event-projection";
+import { projectAbilitySource } from "../../../src/agents/observation/night-ability-projection";
 import {
   buildAgentVisibleEvent,
   buildAgentVisibleEventFeed,
-} from "../../../src/game/engine/agent_visible_event_feed";
+} from "../../../src/agents/observation/event-feed";
 
 const queries = {
   demonHunterActorId() {

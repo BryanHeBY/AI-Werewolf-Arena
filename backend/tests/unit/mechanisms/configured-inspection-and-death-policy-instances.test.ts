@@ -1,7 +1,7 @@
 /**
  * 单元测试：验证配置的查验／死亡政策在有界阶段、hook、校验、提示与投影中的实际使用。输入为角色／政策／语言矩阵和原 live 槽修改；手写许可、库存／历史计数和错误为预期。死亡链在场景中，此处不运行完整阶段或模型。
  */
-import { rolePresentationRenderer } from "../../../src/game/observation/role-presentation";
+import { rolePresentationRenderer } from "../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -17,36 +17,36 @@ import {
   type DeathActionPolicy,
   type InspectionPolicy,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { boardConfigSchema } from "../../../src/domain/board-schema";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import {
   findNightAbility,
-} from "../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../src/game/observation/night-ability-projection";
+} from "../../../src/features/night-abilities/abilities";
+import { projectNightAbility } from "../../../src/agents/observation/night-ability-projection";
 import {
   grantNightAbility,
   transferNightAbility,
-} from "../../../src/game/mechanisms/roles/night-ability-grants";
+} from "../../../src/features/night-abilities/night-ability-grants";
 import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,
   MIRROR_INSPECTION_STAGE,
-} from "../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
-import { roleInspectionTargets } from "../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
-import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
-import { getWolfKingState } from "../../../src/game/mechanisms/roles/wolf_king/ports";
-import { hunterDeathHook } from "../../../src/game/mechanisms/roles/hunter/death_hook";
-import { WOLF_KING_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf_king/profile";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { getDefaultTargetHintRegistry } from "../../../src/game/mechanisms/llm/target_hint_registry";
-import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
+} from "../../../src/features/role-inspection/contribution-ports";
+import { roleInspectionTargets } from "../../../src/features/role-inspection/contribution-ports";
+import { getHunterState } from "../../../src/features/hunter/ports";
+import { getWolfKingState } from "../../../src/features/wolf-king/ports";
+import { hunterDeathHook } from "../../../src/features/hunter/death-hook";
+import { WOLF_KING_ROLE_PROFILE } from "../../../src/features/wolf-king/profile";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { getDefaultTargetHintRegistry } from "../../../src/agents/tool-repair/target-hint-registry";
+import { getDefaultConfigRenderRegistry } from "../../../src/agents/prompt/config-render-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { ObservedBot } from "../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../src/app/observed-players-action-provider";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 
@@ -507,7 +507,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
 
 test("optional Gargoyle pass completes only its native current-policy knife gate", async () => {
   const { canGargoyleKnife, refreshGargoyleInheritance } =
-    await import("../../../src/game/mechanisms/roles/gargoyle/inheritance");
+    await import("../../../src/features/gargoyle/inheritance");
   const game = fixture(Role.Gargoyle, { inspectionPolicy: "awa_unique_optional_v1" }),
     role = game.world.getComponent(1, COMPONENT.Role)!,
     ability = findNightAbility(role, "role_check")!,

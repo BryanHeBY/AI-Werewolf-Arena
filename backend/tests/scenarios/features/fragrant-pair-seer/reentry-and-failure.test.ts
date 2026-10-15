@@ -3,11 +3,11 @@
  * 脚本角色动作、嵌套周期尝试与演员替换矩阵；精确错误身份、中止夜晚／知识状态、外层阶段／
  * 事件流不变是因果预期，不重新生成结果。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";
-import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+import { fragrantAuthoritySnapshot } from "../../../../src/features/fragrant-pair-seer/authority";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { type AliveComponent } from "../../../../src/domain/components/alive";
 

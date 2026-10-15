@@ -5,10 +5,10 @@ import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { type RoleComponent } from "../../../src/domain/components/role";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import type { RoleInitializationComponent } from "../../../src/game/mechanisms/roles/contracts";
-import { projectEclipseState } from "../../../src/game/mechanisms/roles/radiant_eclipse/ports";
-import { retiredNightAbilityIds } from "../../../src/game/mechanisms/roles/abilities";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
+import type { RoleInitializationComponent } from "../../../src/rulesets/roles/contracts";
+import { projectEclipseState } from "../../../src/features/radiant-eclipse/ports";
+import { retiredNightAbilityIds } from "../../../src/features/night-abilities/abilities";
 
 function deniedCoreAccess(role: RoleComponent, init: RoleInitializationComponent) {
   // @ts-expect-error The core cannot name a feature's private field.

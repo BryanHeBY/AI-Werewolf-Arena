@@ -5,8 +5,8 @@ import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Role, Phase, DeathCause, WinCondition, type RoleComponent } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { LastWordsMechanism } from "../../../../src/game/mechanisms/last_words/last_words_mechanism";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { LastWordsMechanism } from "../../../../src/features/last-words/last-words-mechanism";
 
 const deck = [Role.Wolf, Role.Wolf, Role.BlackMarketMerchant, Role.Seer, Role.Witch, Role.Villager];
 

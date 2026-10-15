@@ -9,13 +9,13 @@ import path from "node:path";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../../../src/runtime/config/board_definition";
-import { fragrantPairSeerTwelveConfig } from "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
-import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
+} from "../../../../src/app/config/board-definition";
+import { fragrantPairSeerTwelveConfig } from "../../../../src/rulesets/presets/fragrant-pair-seer-twelve";
+import { simulateGames } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 for (const locale of ["zh-CN", "en"] as const)
   test(`Fragrant limited observations 20 fixed seeds ${locale}`, async () => {

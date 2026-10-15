@@ -4,17 +4,17 @@
 import { expect, test } from "bun:test";
 import { isEvilKnightPreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { evilKnightTwelveConfig } from "../../../src/runtime/scenarios/evil_knight_twelve";
+import { evilKnightTwelveConfig } from "../../../src/rulesets/presets/evil-knight-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { Role, WinCondition, WitchSelfHealRule } from "../../../src/domain/identity";
 import type { BoardConfig } from "../../../src/domain/board";
 import { boardConfigSchema } from "../../../src/domain/board-schema";
 import { COMPONENT } from "../../../src/domain/components/names";
 import type { RoleComponent } from "../../../src/domain/components/role";
-import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/ports";
+import { getEvilKnightState } from "../../../src/features/evil-knight/ports";
 for (const shotPolicy of ["night_shot_immune", "hunter_shot_bypasses"] as const) {
   for (const selfHeal of [WitchSelfHealRule.Disabled, WitchSelfHealRule.FirstNightOnly]) {
     test(`evil knight strict board roundtrip ${shotPolicy}/${selfHeal}`, () => {

@@ -13,12 +13,12 @@ import { createBadgeComponent } from "../../../../src/domain/components/badge";
 import { createVotingRightComponent } from "../../../../src/domain/components/voting-right";
 import { createIdentityComponent } from "../../../../src/domain/entities/player";
 import type { ActionRequestConstructionInput } from "../../../../src/domain/actions";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { electSheriffIfNeeded } from "../../../../src/game/mechanisms/sheriff/election";
-import { chooseSpeakerDirection } from "../../../../src/game/mechanisms/sheriff/speaking_order";
-import { resolveSheriffBadge } from "../../../../src/game/mechanisms/sheriff/badge_choice";
-import { assignSheriff } from "../../../../src/game/mechanisms/sheriff/badge";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { electSheriffIfNeeded } from "../../../../src/features/sheriff/election";
+import { chooseSpeakerDirection } from "../../../../src/features/sheriff/speaking-order";
+import { resolveSheriffBadge } from "../../../../src/features/sheriff/badge-choice";
+import { assignSheriff } from "../../../../src/features/sheriff/badge";
 
 function fixture() {
   const world = new World(), events: GameEvent[] = [], gateway = new ToolGateway();

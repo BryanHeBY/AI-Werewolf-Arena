@@ -14,15 +14,15 @@ import {
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { createAliveComponent } from "../../../../src/domain/components/alive";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import type { DreamNightEffects } from "../../../../src/domain/dream-night-effects";
 import {
   createWolfBeautyDeathContribution,
   attemptCharmTrigger,
   commitCharmDeath,
   setWolfBeautyState,
-} from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
-import { bindCharm, activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
+} from "../../../../src/features/wolf-beauty/ports";
+import { bindCharm, activeCharm } from "../../../../src/features/wolf-beauty/relation";
 
 function fixture() {
   const world = new World("en"),

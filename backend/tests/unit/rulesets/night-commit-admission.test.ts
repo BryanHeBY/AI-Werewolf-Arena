@@ -9,26 +9,26 @@ import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { captureNightLife } from "../../../src/domain/night-effects";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import { assertNightCommitAdmission } from "../../../src/rulesets/night-commit-admission";
-import { commitFoxInspection } from "../../../src/game/mechanisms/roles/cursed_fox/inspection_effect";
+import { commitFoxInspection } from "../../../src/features/cursed-fox/inspection-effect";
 import {
   markDreamNightCommitted,
   hasDreamNightCommit,
-} from "../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { recordMechanicalNightCommit } from "../../../src/game/mechanisms/roles/mechanical_wolf/night_scope";
-import { recordRecipientNightCommit } from "../../../src/game/mechanisms/roles/recipient_ability_stage";
+} from "../../../src/features/dreamer/night-frame";
+import { recordMechanicalNightCommit } from "../../../src/features/mechanical-wolf/night-scope";
+import { recordRecipientNightCommit } from "../../../src/features/night-abilities/recipient-ability-stage";
 import {
   recordLuckyNightCommit,
   hasLuckyNightCommit,
-} from "../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage";
-import { BLACK_MARKET_TRADE_STAGE } from "../../../src/game/mechanisms/roles/black_market_merchant/night_stage";
+} from "../../../src/features/miracle-merchant/lucky-stage";
+import { BLACK_MARKET_TRADE_STAGE } from "../../../src/features/black-market-merchant/night-stage";
 import {
   freshBlackMarketState,
   setBlackMarketState,
   getBlackMarketState,
-} from "../../../src/game/mechanisms/roles/black_market_merchant/state";
-import type { NightStageState } from "../../../src/game/mechanisms/stages/night/contracts";
+} from "../../../src/features/black-market-merchant/state";
+import type { NightStageState } from "../../../src/engine/night/contracts";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 
 test("an uncommitted night reads World then day at every one of the twelve original predicate sites", () => {

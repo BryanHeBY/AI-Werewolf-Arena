@@ -4,13 +4,13 @@
  * Output and oracle: Explicit display-versus-game locale assertions cover both executions; dictionary contents and archived metadata are not changed.
  */
 import { expect, spyOn, test } from "bun:test";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { simulateGames } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import path from "node:path";
 

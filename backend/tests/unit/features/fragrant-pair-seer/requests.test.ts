@@ -19,8 +19,8 @@ import {
   canSubmitFragrantPairChoice,
   commitFragrantPairChoice,
   closeFragrantPairRequest,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/requests";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+} from "../../../../src/features/fragrant-pair-seer/requests";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 function fixture(kind: "bind" | "pair" = "pair", nightHook?: () => boolean) {
   const f = fragrantPairOwnerFixture(undefined, nightHook);
   f.open();

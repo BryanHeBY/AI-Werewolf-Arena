@@ -5,7 +5,7 @@ import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-ni
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
 import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
-import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../../src/features/night-abilities/night-ability-actors";
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -24,23 +24,23 @@ import {
 import { type AliveComponent } from "../../../../src/domain/components/alive";
 import { captureNightLife } from "../../../../src/domain/night-effects";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import {
   canAwakenedKnife,
   refreshAwakenedInheritance,
-} from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/inheritance";
-import { AWAKENED_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/night_stages";
-import { captureAwakenedOwner } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/night_scope";
+} from "../../../../src/features/awakened-hidden-wolf/inheritance";
+import { AWAKENED_NIGHT_STAGES } from "../../../../src/features/awakened-hidden-wolf/night-stages";
+import { captureAwakenedOwner } from "../../../../src/features/awakened-hidden-wolf/night-scope";
 import {
   activateAwakenedLearning,
   getAwakenedState,
   learnAwakenedRole,
-} from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/features/awakened-hidden-wolf/state";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 const fixture = (targetRole = Role.Hunter) => {
   const roles = [

@@ -14,19 +14,19 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/state";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { knownWolfTeammates, getDefaultRoleCatalog } from "../../../../src/game/mechanisms";
-import { WOLF_BEAUTY_CHARM_STAGE } from "../../../../src/game/mechanisms/roles/wolf_beauty/night_stages";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getWolfBeautyState } from "../../../../src/features/wolf-beauty/state";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { knownWolfTeammates, getDefaultRoleCatalog } from "../../../../src/rulesets/mechanism-api";
+import { WOLF_BEAUTY_CHARM_STAGE } from "../../../../src/features/wolf-beauty/night-stages";
 import {
   activeCharm,
   bindCharm,
   permitsCharm,
-} from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
+} from "../../../../src/features/wolf-beauty/relation";
 import { DeathCause, type GameEvent } from "../../../../src/domain";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 
 const deck = [Role.WolfBeauty, Role.Wolf, Role.Witch, Role.Knight, Role.Villager, Role.Villager];
 

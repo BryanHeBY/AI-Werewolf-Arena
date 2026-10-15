@@ -4,7 +4,7 @@
  * 这里模拟已验证端口的结果，不赋予伪造 unit 实际权威权限，也不运行 World、模型或完整对局。
  */
 import { expect, test } from "bun:test";
-import { AnimalDeathWavePreparation } from "../../../../src/game/mechanisms/roles/animal_dream/death-wave";
+import { AnimalDeathWavePreparation } from "../../../../src/features/animal-dream/death-wave";
 import { Phase, DeathCause, type DeathSources } from "../../../../src/domain/model";
 
 type Ports = ConstructorParameters<typeof AnimalDeathWavePreparation>[4];

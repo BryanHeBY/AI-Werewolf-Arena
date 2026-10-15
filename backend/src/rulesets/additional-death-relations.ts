@@ -9,8 +9,8 @@ import { DeathCause, type DeathSources, type EntityId, type GameEvent, type Phas
 import { COMPONENT } from "../domain/components/names";
 import type { World } from "../domain/world";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
-import { expandLoversWave } from "../game/mechanisms/roles/cupid/death-ports";
-import { prepareFragrantDeathWave } from "../game/mechanisms/roles/fragrant_pair_seer/ports";
+import { expandLoversWave } from "../features/cupid/death-ports";
+import { prepareFragrantDeathWave } from "../features/fragrant-pair-seer/ports";
 import type { InitialWeddingExpansion } from "./initial-death-relations";
 
 /** 只捕获结算器查询；调用时才取 World、事件、婚约实例和同一梦效果，不缓存状态或重建生命权威。 */

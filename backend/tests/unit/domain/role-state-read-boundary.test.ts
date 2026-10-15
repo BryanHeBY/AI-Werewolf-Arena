@@ -13,15 +13,15 @@ import type {
   BearReadState,
   HiddenWolfReadState,
 } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
+import { getHunterState, setHunterState } from "../../../src/features/hunter/ports";
 import {
   freshMechanicalState,
   getMechanicalState,
   setMechanicalState,
   recordMechanicalInspection,
-} from "../../../src/game/mechanisms/roles/mechanical_wolf/state";
-import { recordMerchantTrade } from "../../../src/game/mechanisms/roles/miracle_merchant/state";
+} from "../../../src/features/mechanical-wolf/state";
+import { recordMerchantTrade } from "../../../src/features/miracle-merchant/state";
 
 function ordinaryReadersCannotWrite(
   hunter: HunterReadState,

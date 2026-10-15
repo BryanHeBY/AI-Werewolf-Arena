@@ -14,30 +14,30 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   allNightAbilities,
   activeNightAbility,
   abilityStatus,
-} from "../../../src/game/mechanisms/roles/abilities";
-import { setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
-import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+} from "../../../src/features/night-abilities/abilities";
+import { setNightAbilityEnabled } from "../../../src/features/night-abilities/abilities";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import { getSeerState } from "../../../src/features/seer/ports";
+import { getWitchState } from "../../../src/features/witch/ports";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionValidator } from "../../../src/game/gateway/action_validator";
-import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { ActionValidator } from "../../../src/engine/actions/action-validator";
+import { ToolValidationRuleRegistry } from "../../../src/engine/actions/tool-validation-rule-registry";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
+import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 

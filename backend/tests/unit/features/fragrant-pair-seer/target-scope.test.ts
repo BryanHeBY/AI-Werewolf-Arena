@@ -1,10 +1,10 @@
 /**
  * 单元测试：验证幽香幻影双人查验的独立 target scope、原生 frame 与 reader。输入为原内存 fixture、回调控制和畸形修改；原字面值、引用和拒绝断言为预期，不运行装配周期、模型或实体传输。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 
 import { type AliveComponent } from "../../../../src/domain/components/alive";
 import { COMPONENT } from "../../../../src/domain/components/names";
@@ -13,7 +13,7 @@ import {
   capturePairTarget,
   capturedPairContainsWolf,
   pairTargetCurrent,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/target_scope";
+} from "../../../../src/features/fragrant-pair-seer/target-scope";
 function targets() {
   const world = new World();
   for (const camp of [Camp.Good, Camp.Wolf]) {

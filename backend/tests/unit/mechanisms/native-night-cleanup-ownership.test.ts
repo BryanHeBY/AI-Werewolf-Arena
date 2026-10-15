@@ -9,14 +9,14 @@ import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { World, Phase, type GameEvent } from "../../../src/domain";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { DemonNightUnit, demonNightTerminal } from "../../../src/game/mechanisms/roles/demon_hunter/ports";
-import { WeddingNightUnit, weddingNightTerminal } from "../../../src/game/mechanisms/roles/ghost_bride/ports";
+import { DemonNightUnit, demonNightTerminal } from "../../../src/features/demon-hunter/ports";
+import { WeddingNightUnit, weddingNightTerminal } from "../../../src/features/ghost-bride/ports";
 import {
   authorizedDemonHunter,
   bindDemonHunterRequest,
   type DemonHunterRequest,
   openDemonHunterTurn,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
+} from "../../../src/features/demon-hunter/authority";
 import {
   beginWeddingSetup,
   bindGhostBrideRequest,
@@ -27,7 +27,7 @@ import {
   ghostBrideReady,
   authorizedWeddingTurn,
   weddingNightCapture,
-} from "../../../src/game/mechanisms/roles/ghost_bride/authority";
+} from "../../../src/features/ghost-bride/authority";
 import { demonHunterFixture } from "../../support/features/demon-hunter/builders/candidate-world";
 import { ghostBrideBoard, ghostBrideDeck } from "../../support/features/ghost-bride/builders/scenario";
 

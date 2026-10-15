@@ -14,14 +14,14 @@ import {
   attemptCharmTrigger,
   commitCharmDeath,
   createWolfBeautyDeathContribution,
-} from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
-import { bindCharm, activeCharm } from "../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { wolfBeautyDeathHook } from "../../../src/game/mechanisms/roles/wolf_beauty/death_hook";
-import { HookRegistry } from "../../../src/game/mechanisms/hooks/hook_registry";
-import type { DeathHook } from "../../../src/game/mechanisms/hooks/hook_registry";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+} from "../../../src/features/wolf-beauty/ports";
+import { bindCharm, activeCharm } from "../../../src/features/wolf-beauty/relation";
+import { wolfBeautyDeathHook } from "../../../src/features/wolf-beauty/death-hook";
+import { HookRegistry } from "../../../src/engine/hooks/registry";
+import type { DeathHook } from "../../../src/engine/hooks/registry";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 
 function fixture(hooks: (f: { world: World; actor: number; target: number }) => DeathHook[]) {
   const world = new World("en"),

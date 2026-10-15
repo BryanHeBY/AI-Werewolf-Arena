@@ -2,14 +2,14 @@
  * 单元测试验证 acp-session-ownership 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, test, spyOn } from "bun:test";
-import { AcpSessionPool } from "../../../src/ai/agents/acp/session_pool";
-import { closeAcpSession } from "../../../src/ai/integrations/acp/session_lifecycle";
-import { TurnDeadlineElapsed } from "../../../src/ai/runtime/turn_deadline";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import type { AcpSession, AcpSessionCreateInput } from "../../../src/ai/integrations/acp/session";
+import { AcpSessionPool } from "../../../src/agents/acp/session-pool";
+import { closeAcpSession } from "../../../src/adapters/acp/session-lifecycle";
+import { TurnDeadlineElapsed } from "../../../src/agents/runtime/turn-deadline";
+import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
+import { AcpTurnRegistry } from "../../../src/adapters/acp/acp-turn-registry";
+import type { AcpSession, AcpSessionCreateInput } from "../../../src/adapters/acp/session";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { Phase, type ActionRequest, type ToolCall } from "../../../src/domain";
 
 function request(): ActionRequest {

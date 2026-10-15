@@ -2,11 +2,11 @@
  * 单元测试验证 acp-action-provider-lifecycle 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { AcpSessionFactory } from "../../../src/ai/integrations/acp/session";
+import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
+import { AcpSessionFactory } from "../../../src/adapters/acp/session";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ActionRequest, Phase } from "../../../src/domain/model";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 function request(deadlineAtMs: number): ActionRequest {
   return {

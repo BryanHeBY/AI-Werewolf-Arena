@@ -7,12 +7,12 @@ import { readFileSync } from "node:fs";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../../../src/runtime/config/board_definition";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
+} from "../../../../src/app/config/board-definition";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { fragrantPairSeerTwelveConfig as config } from "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
+import { fragrantPairSeerTwelveConfig as config } from "../../../../src/rulesets/presets/fragrant-pair-seer-twelve";
 import { isFragrantPairSeerPreset } from "../../../../src/rulesets";
 import { Role, Camp } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";

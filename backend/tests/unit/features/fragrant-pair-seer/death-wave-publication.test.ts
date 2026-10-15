@@ -4,11 +4,11 @@
  * 结构化 receipt 在此只检查构造与路由，不冒充真正权威发行的披露权限；本测试不运行 World、阶段、模型或文件记录。
  */
 import { expect, test } from "bun:test";
-import { FragrantDeathWavePublication } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/death-wave";
-import type { FragrantWaveReceipt } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+import { FragrantDeathWavePublication } from "../../../../src/features/fragrant-pair-seer/death-wave";
+import type { FragrantWaveReceipt } from "../../../../src/features/fragrant-pair-seer/authority";
 import { Phase, DeathCause, type GameEvent } from "../../../../src/domain/model";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
-import type { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
+import type { SessionRecordManager } from "../../../../src/recording/session/recorder";
 
 const receipt: FragrantWaveReceipt = { day: 1, rootId: 9, addedTargetId: 10, pairIds: [9, 10] };
 function fixture(events: GameEvent[] = []) {

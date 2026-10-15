@@ -3,20 +3,20 @@
  * 手写 owner 字段、单受众及不可变断言检查既有授权边界，不用生产运行生成新预期。
  * 不调用模型或完整对局；本批只迁观察类型进口，原输入、顺序和断言保持。
  */
-import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
+import { AgentEventVisibilityRegistry } from "../../../../src/agents/observation/agent-event-visibility-registry";
 import type { GameEvent } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent } from "../../../../src/domain";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
-import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
-import { orderPrinceTwelveConfig } from "../../../../src/runtime/scenarios/order_prince_twelve";
+import type { PlayerObservation } from "../../../../src/agents/observation/player-observation";
+import { orderPrinceTwelveConfig } from "../../../../src/rulesets/presets/order-prince-twelve";
 import {
   openOrderPrinceChoice,
   commitOrderPrinceChoice,
-} from "../../../../src/game/mechanisms/roles/order_prince/authority";
-import { getOrderPrinceState } from "../../../../src/game/mechanisms/roles/order_prince/ports";
+} from "../../../../src/features/order-prince/authority";
+import { getOrderPrinceState } from "../../../../src/features/order-prince/ports";
 for (const locale of ["zh-CN", "en"] as const)
   test("Order Prince private observation is frozen and detached/" + locale, async () => {
     const config = structuredClone(orderPrinceTwelveConfig),

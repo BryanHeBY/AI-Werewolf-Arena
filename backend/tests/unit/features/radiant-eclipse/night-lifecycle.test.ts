@@ -8,11 +8,11 @@
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import rawBoard from "../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role } from "../../../../src/domain/identity";
-import { RadiantNightUnit } from "../../../../src/game/mechanisms/roles/radiant_eclipse/ports";
-import { beginRadiantNight } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
+import { RadiantNightUnit } from "../../../../src/features/radiant-eclipse/ports";
+import { beginRadiantNight } from "../../../../src/features/radiant-eclipse/night-frame";
 
 function closeStatus(event: GameEvent | undefined) {
   return event?.type === "eclipse_lease_closed" ? event.payload.status : undefined;

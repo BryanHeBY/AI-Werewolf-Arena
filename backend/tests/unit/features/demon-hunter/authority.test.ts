@@ -1,10 +1,10 @@
 /**
  * 单元测试验证 authority 的原权限和记录边界。输入为原 fixture、请求及显式故障／特权回调；原字面量、引用身份与错误／状态断言为预期。测试注入保留原请求，领域合法性与付款仍由原被测 owner 执行。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import { World, Role, Camp, Phase, COMPONENT, WinCondition, ActionWindow, WitchSelfHealRule, PotionType, StatusMark, StatusMarksComponent, createVictoryComponent, assertRequestDelivery, deferRequestDelivery, bindRequestDeliveryGuard, type BoardConfig, type ActionStage, type ToolName, type GameEvent, type RoleComponent, type AliveComponent } from "../../../../src/domain";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import {
   installDemonHunter,
   beginDemonHunterNight,
@@ -21,22 +21,22 @@ import {
   projectDemonHunter,
   demonHunterAuditPlayer,
   type DemonHunterRequest,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
+} from "../../../../src/features/demon-hunter/authority";
 import {
   DEMON_HUNTER_ROLE,
   freshDemonHunterState,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
-import { recordNightAbilityUse, type NightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+} from "../../../../src/features/demon-hunter/state-slot";
+import { recordNightAbilityUse, type NightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
   installNativeAbility,
-} from "../../../../src/game/mechanisms/roles/ability_changes";
+} from "../../../../src/features/night-abilities/ability-changes";
 import {
   captureDemonNativePoison,
   commitDemonNativePoison,
   freezeDemonNativePoison,
   freezeDemonNightSources,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/native_poison";
-import { NightFaultPlan } from "../../../../src/game/engine/fault_plan";
+} from "../../../../src/features/demon-hunter/native-poison";
+import { NightFaultPlan } from "../../../../src/engine/fault-plan";
 function fixture(locale: "zh-CN" | "en" = "zh-CN") {
   const world = new World(locale),
     roles = [Role.Wolf, Role.Wolf, Role.Villager, Role.Seer, Role.Witch, DEMON_HUNTER_ROLE as Role];
@@ -854,7 +854,7 @@ test("the actual factory canonical required request binds without an invented re
   // The production bootstrap is the established initialization entry for the factory's role dependencies.
   await import("../../../../src/app/bootstrap");
   const { GameActionRequestFactory } =
-    await import("../../../../src/game/engine/action_request_factory");
+    await import("../../../../src/engine/actions/action-request-factory");
   const f = fixture();
   beginDemonHunterNight(f.world, 2, () => true);
   const scope = openDemonHunterTurn(f.world);
@@ -877,7 +877,7 @@ test("the actual factory canonical required request binds without an invented re
 test("a real long canonical visible history remains authorized without relaxing state or tool data limits", async () => {
   await import("../../../../src/app/bootstrap");
   const { GameActionRequestFactory } =
-    await import("../../../../src/game/engine/action_request_factory");
+    await import("../../../../src/engine/actions/action-request-factory");
   const f = fixture();
   beginDemonHunterNight(f.world, 2, () => true);
   const scope = openDemonHunterTurn(f.world);
@@ -904,7 +904,7 @@ test("a real long canonical visible history remains authorized without relaxing 
 /** 测试在原 new 点才解析实际类；不改变已有 controllerDependencies 的动态导入或 await 次序。 */
 const requestConstruction = {
   get requestFactory(): import("../../../../src/domain/actions").ActionRequestFactoryConstructorPort {
-    return (require("../../../../src/game/engine/action_request_factory") as typeof import("../../../../src/game/engine/action_request_factory")).GameActionRequestFactory;
+    return (require("../../../../src/engine/actions/action-request-factory") as typeof import("../../../../src/engine/actions/action-request-factory")).GameActionRequestFactory;
   },
 };
 
@@ -918,12 +918,12 @@ async function controllerDependencies() {
     { executeDemonHunterTurn },
     recorder,
   ] = await Promise.all([
-    import("../../../../src/game/gateway/tool_gateway"),
-    import("../../../../src/game/gateway/action_validator"),
-    import("../../../../src/game/mechanisms/validation/tool_validation_rule_registry"),
-    import("../../../../src/game/mechanisms/roles/demon_hunter/validation_rules"),
-    import("../../../../src/game/mechanisms/roles/demon_hunter/controller"),
-    import("../../../../src/recording/session_recorder"),
+    import("../../../../src/engine/actions/tool-gateway"),
+    import("../../../../src/engine/actions/action-validator"),
+    import("../../../../src/engine/actions/tool-validation-rule-registry"),
+    import("../../../../src/features/demon-hunter/validation-rules"),
+    import("../../../../src/features/demon-hunter/controller"),
+    import("../../../../src/recording/session/recorder"),
   ]);
   return {
     executeDemonHunterTurn,
@@ -1061,10 +1061,10 @@ for (const mode of ["original", "clone", "copied", "string", "extra", "getter", 
       { ToolValidationRuleRegistry },
       { DEMON_HUNTER_TOOL_RULE },
     ] = await Promise.all([
-      import("../../../../src/game/gateway/action-reception"),
-      import("../../../../src/game/mechanisms/registries/tool_spec_registry"),
-      import("../../../../src/game/mechanisms/validation/tool_validation_rule_registry"),
-      import("../../../../src/game/mechanisms/roles/demon_hunter/validation_rules"),
+      import("../../../../src/engine/actions/action-reception"),
+      import("../../../../src/engine/actions/tool-spec-registry"),
+      import("../../../../src/engine/actions/tool-validation-rule-registry"),
+      import("../../../../src/features/demon-hunter/validation-rules"),
     ]);
     const f = fixture(),
       { request, scope } = turn(f);
@@ -1136,10 +1136,10 @@ for (const mode of ["original", "clone", "copied", "string", "extra", "getter", 
 async function nativeControllerDependencies() {
   await controllerDependencies();
   const [{ executeDemonWitchTurn }, { ToolGateway }, requests, recorder] = await Promise.all([
-    import("../../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller"),
-    import("../../../../src/game/gateway/tool_gateway"),
-    import("../../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests"),
-    import("../../../../src/recording/session_recorder"),
+    import("../../../../src/features/demon-hunter/native-potion-controller"),
+    import("../../../../src/engine/actions/tool-gateway"),
+    import("../../../../src/features/demon-hunter/native-potion-requests"),
+    import("../../../../src/recording/session/recorder"),
   ]);
   return { executeDemonWitchTurn, gateway: new ToolGateway(), requests, recorder };
 }
@@ -1436,7 +1436,7 @@ for (const kind of [
     const f = fixture(),
       { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
       { sealDeliveredDemonWitchSources, freezeDeliveredDemonNightSources } =
-        await import("../../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
+        await import("../../../../src/features/demon-hunter/native-potion-controller");
     const marks = new StatusMarksComponent();
     f.world.addComponent(6, COMPONENT.StatusMarks, marks);
     if (kind === "unknown_before") marks.add(StatusMark.PoisonMark);
@@ -1508,7 +1508,7 @@ test("delivered source seal cannot invent, copy, omit or cross Worlds", async ()
     other = fixture(),
     { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
     { sealDeliveredDemonWitchSources, freezeDeliveredDemonNightSources } =
-      await import("../../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
+      await import("../../../../src/features/demon-hunter/native-potion-controller");
   beginDemonHunterNight(f.world, 1, () => true);
   beginDemonHunterNight(other.world, 1, () => true);
   expect(() => sealDeliveredDemonWitchSources(f.world, 1)).toThrow(
@@ -1552,7 +1552,7 @@ for (const kind of [
   test(`actual Witch precommit ${kind}: preflight and controller refuse before first native write`, async () => {
     const f = fixture(),
       { executeDemonWitchTurn, gateway, recorder } = await nativeControllerDependencies(),
-      { ActionReception } = await import("../../../../src/game/gateway/action-reception"),
+      { ActionReception } = await import("../../../../src/engine/actions/action-reception"),
       receipts: boolean[] = [],
       before = demonHunterAuditPlayer(f.world, 5),
       spy = spyOn(recorder, "safeRecordLogicOp").mockImplementation(() => {});
@@ -1652,7 +1652,7 @@ for (const field of ["phase", "actorId", "allowedTools", "context", "deadlineAtM
   test(`actual Witch clone invalidates with original ${field} edit`, async () => {
     const f = fixture(),
       { executeDemonWitchTurn, gateway, requests } = await nativeControllerDependencies(),
-      { ActionReception } = await import("../../../../src/game/gateway/action-reception"),
+      { ActionReception } = await import("../../../../src/engine/actions/action-reception"),
       receipts: boolean[] = [];
     beginDemonHunterNight(f.world, 1, () => true);
     await expect(
@@ -1729,7 +1729,7 @@ test("delivered source life wrappers are immutable while actual factory Alive re
   const f = fixture(),
     { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
     { sealDeliveredDemonWitchSources, freezeDeliveredDemonNightSources } =
-      await import("../../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
+      await import("../../../../src/features/demon-hunter/native-potion-controller");
   beginDemonHunterNight(f.world, 1, () => true);
   const result = await executeDemonWitchTurn({
         construction: requestConstruction,
@@ -1759,8 +1759,8 @@ for (const transport of ["sdk", "acp"] as const)
       test(`actual ${transport} provider path/${locale}/${outcome}: Witch commit owns receipt and strict failures never fallback`, async () => {
         const f = fixture(locale),
           { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
-          { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider"),
-          { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
+          { LlmActionProvider } = await import("../../../../src/agents/llm/llm-action-provider"),
+          { AcpActionProvider } = await import("../../../../src/agents/acp/acp-action-provider");
         let fallbackCalls = 0,
           submits = 0;
         const privilegedFallbackProvider = {
@@ -1769,14 +1769,14 @@ for (const transport of ["sdk", "acp"] as const)
             return null;
           },
         };
-        const client: import("../../../../src/ai/integrations/llm/transport").ChatModelClient = {
+        const client: import("../../../../src/adapters/llm/transport").ChatModelClient = {
           async chat() {
             throw new Error("unexpected_chat");
           },
           async runToolLoop<T>(
-            _messages: import("../../../../src/ai/integrations/llm/transport").ChatMessage[],
-            _tools: import("../../../../src/ai/integrations/llm/transport").ToolSchema[],
-            callbacks: import("../../../../src/ai/integrations/llm/transport").ToolLoopCallbacks<T>,
+            _messages: import("../../../../src/adapters/llm/transport").ChatMessage[],
+            _tools: import("../../../../src/adapters/llm/transport").ToolSchema[],
+            callbacks: import("../../../../src/adapters/llm/transport").ToolLoopCallbacks<T>,
           ) {
             if (outcome !== "missing")
               for (let i = 0; i < (outcome === "valid" ? 1 : 3); i++) {
@@ -1871,7 +1871,7 @@ test("delivered immunity keeps a new toxin written after ordinary marks consumpt
   const f = fixture(),
     { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
     { sealDeliveredDemonWitchSources, freezeDeliveredDemonNightSources } =
-      await import("../../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
+      await import("../../../../src/features/demon-hunter/native-potion-controller");
   beginDemonHunterNight(f.world, 1, () => true);
   await executeDemonWitchTurn({
         construction: requestConstruction,

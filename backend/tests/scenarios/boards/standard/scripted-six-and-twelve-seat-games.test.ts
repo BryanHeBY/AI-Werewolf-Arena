@@ -6,15 +6,15 @@ import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/rep
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { ActionWindow } from "../../../../src/domain";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { PlayerPromptSession } from "../../../../src/ai/agents/llm/player_prompt_session";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { PlayerPromptSession } from "../../../../src/agents/llm/player-prompt-session";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 import { expect, test } from "bun:test";
 import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import path from "node:path";
@@ -34,15 +34,15 @@ import {
   type VotingRightComponent,
 } from "../../../../src/domain";
 import { createRandom } from "../../../../src/domain/random";
-import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { getGuardState } from "../../../../src/features/guard/ports";
+import { getHunterState } from "../../../../src/features/hunter/ports";
+import { getSeerState } from "../../../../src/features/seer/ports";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import type { ReplayPlayerView } from "../../../../src/recording/contracts";
 import { StrictScriptedPlayers, type ScriptStep } from "../../../support/drivers/scripted-players";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";

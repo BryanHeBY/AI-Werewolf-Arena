@@ -5,13 +5,13 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { getOrderPrinceState } from "../../../src/game/mechanisms/roles/order_prince/ports";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { getOrderPrinceState } from "../../../src/features/order-prince/ports";
 import { recollectOrderPrinceVotes, type OrderPrinceRevoteRuntime } from "../../../src/rulesets/order-prince-revote";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { Role, WinCondition, type BoardConfig, type GameEvent, type ToolCall } from "@ai-werewolf-arena/game-contract";
-import type { VotingPipelineOptions } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
+import type { VotingPipelineOptions } from "../../../src/engine/phases/voting-pipeline";
 import type { World } from "../../../src/domain/world";
 import type { ActionProvider, ActionRequestConstructionPort } from "../../../src/domain/actions";
 

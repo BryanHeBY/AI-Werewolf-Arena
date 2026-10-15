@@ -3,15 +3,15 @@
  * 六／十二人名单、受守护影响的救／毒／猎选择及外来组件替换；手写死因、付款前缀、零 getter
  * 读取与终结顺序是预期，不调用模型或改来源 fixture 来生成结果。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import { COMPONENT, Camp, Phase, PotionType, WinCondition, DeathCause, StatusMark, type AliveComponent, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/domain";
-import type { DeathResolution } from "../../../../src/game/engine/death_resolution";
+import type { DeathResolution } from "../../../../src/engine/death-resolution";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { type DemonNightChoices } from "../../../support/features/demon-hunter/contracts";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { projectDemonHunter } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { projectDemonHunter } from "../../../../src/features/demon-hunter/authority";
 
 function provider(
   f: ReturnType<typeof demonHunterFixture>,
@@ -429,7 +429,7 @@ test("actual Night→PM microtask handoff rejects external getter before read an
     expect(reads).toBe(0);
     expect(history(f)).toEqual([{ day: 2, targetId: 1 }]);
     const { demonHunterFreezeDay } =
-      await import("../../../../src/game/mechanisms/roles/demon_hunter/authority");
+      await import("../../../../src/features/demon-hunter/authority");
     expect(() => demonHunterFreezeDay(f.world)).toThrow("demon_hunter_freeze_unavailable");
   } finally {
     calls.mockRestore();
@@ -460,7 +460,7 @@ test("direct actual NightPipeline reentry cannot close the already waiting origi
   await f.phaseManager.runSingleCycle(provider(f), 10);
   const pipeline = (
     f.phaseManager as unknown as {
-      nightPipeline: import("../../../../src/game/engine/phase_pipeline/night_pipeline").NightPipeline;
+      nightPipeline: import("../../../../src/engine/phases/night-pipeline").NightPipeline;
     }
   ).nightPipeline;
   const { assertRequestDelivery } = await import("../../../../src/domain");
@@ -547,7 +547,7 @@ test("actual pure-data Heal refund cannot renew the consumed source or protect t
   );
   expect(nightDeaths(f)).toEqual([6]);
   const { demonHunterAuditPlayer } =
-    await import("../../../../src/game/mechanisms/roles/demon_hunter/authority");
+    await import("../../../../src/features/demon-hunter/authority");
   expect((demonHunterAuditPlayer(f.world, 5)!.abilities as any)["native:potion"].state.heal).toBe(
     0,
   );
@@ -623,7 +623,7 @@ test("actual completed death-chain handoff rejects microtask getter before publi
     expect(f.phaseManager.getEvents().filter((e) => e.type === "night_resolved")).toHaveLength(1);
     expect(f.phaseManager.getSnapshot().gameOver).toBe(false);
     const { demonHunterFreezeDay } =
-      await import("../../../../src/game/mechanisms/roles/demon_hunter/authority");
+      await import("../../../../src/features/demon-hunter/authority");
     expect(() => demonHunterFreezeDay(f.world)).toThrow("demon_hunter_freeze_unavailable");
   } finally {
     calls.mockRestore();

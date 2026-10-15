@@ -4,7 +4,7 @@
  * 数据绑定不是借用／付款权威；不模拟完整 frame 或从第二份生产结果推导 oracle，不运行对局或模型。
  */
 import { expect, test } from "bun:test";
-import { EclipseStateBinding, createEclipseState, readEclipseState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";
+import { EclipseStateBinding, createEclipseState, readEclipseState } from "../../../../src/features/radiant-eclipse/eclipse-state-slot";
 
 test("同raw身份与归一化编码分别检查，不把复制历史或descriptor变化当第二库存", () => {
   const raw = createEclipseState();

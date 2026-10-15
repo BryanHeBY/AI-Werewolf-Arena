@@ -6,7 +6,7 @@
  */
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { isTricksterPreset } from "./trickster";
-import { isTimeConsortPreset } from "./time-consort";
+import { isTimeConsortPreset } from "./time-wolf-consort";
 const policy = "awa_order_prince_first_ballot_v1";
 const deck: Readonly<Record<string, number>> = {
   wolf: 4,

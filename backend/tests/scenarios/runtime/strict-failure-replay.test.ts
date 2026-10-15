@@ -5,17 +5,17 @@ import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile, readdir } from "node:fs/promises";
-import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../../src/runtime/game_runner";
+import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../src/app/config/resolve-game-setup";
+import { runGame } from "../../../src/app/game-runner";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../src/runtime/simulation/replay_reproduction";
-import * as factory from "../../../src/runtime/player_agent_factory";
-import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
+} from "../../../src/app/simulation/replay-reproduction";
+import * as factory from "../../../src/app/player-agent-factory";
+import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
+import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
+import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
 import { awakenedScenario } from "../../support/features/awakened-hidden-wolf/builders/scenario";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 

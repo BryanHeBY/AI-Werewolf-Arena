@@ -4,7 +4,7 @@
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
-import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../../src/features/night-abilities/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -16,16 +16,16 @@ import {
   type RoleComponent,
 } from "../../../../src/domain";
 import { AliveComponent, aliveLifeVersion } from "../../../../src/domain/components/alive";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { transferNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
-import { hasDreamNightCommit, DreamNightFrame, type DreamNightLink } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { readDreamNightLinks, installDreamNightLinks, dreamNightLinksForAppend } from "../../../../src/game/mechanisms/roles/dreamer/night-links";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import { transferNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { DREAMER_NIGHT_STAGE } from "../../../../src/features/dreamer/night-stages";
+import { hasDreamNightCommit, DreamNightFrame, type DreamNightLink } from "../../../../src/features/dreamer/night-frame";
+import { readDreamNightLinks, installDreamNightLinks, dreamNightLinksForAppend } from "../../../../src/features/dreamer/night-links";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
 
 function fixture() {
   const roles = [Role.Dreamer, Role.Dreamer, Role.Wolf, Role.Hunter, Role.Villager, Role.Villager];

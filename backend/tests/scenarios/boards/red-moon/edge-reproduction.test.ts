@@ -14,23 +14,23 @@ import {
   type ActionRequest,
   type ToolCall,
 } from "../../../../src/domain";
-import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { redMoonTwelveConfig } from "../../../../src/rulesets/presets/red-moon-twelve";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
+} from "../../../../src/app/simulation/reproduction-context";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import {
   parseReproductionRecord,
   type RecordedCheckpoint,
-} from "../../../../src/recording/reproduction";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+} from "../../../../src/recording/reproduction/format";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 let version: ReturnType<typeof currentEngineVersion> | undefined;

@@ -13,7 +13,7 @@ async function command(file: string, args: string[]) {
   const child = Bun.spawn(
     [
       Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun",
-      path.resolve(import.meta.dir, `../../../src/runtime/cli/${file}`),
+      path.resolve(import.meta.dir, `../../../src/app/cli/${file}`),
       ...args,
     ],
     { stdout: "pipe", stderr: "pipe" },
@@ -68,7 +68,7 @@ async function configFixture(locale: Locale) {
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: actual config CLI displays structured prompt fallback and keeps private values out`, async () => {
     const root = await configFixture(locale);
-    const result = await command("check_config.ts", ["--configs-dir", root]);
+    const result = await command("check-config.ts", ["--configs-dir", root]);
     expect(result.code).toBe(0);
     const report = JSON.parse(result.stdout);
     expect(report.context.locale).toBe(locale);
@@ -85,7 +85,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(result.stdout).not.toContain("credential-canary");
     expect(result.stdout).not.toContain("private-persona-canary");
     const opposite = locale === "en" ? "zh-CN" : "en";
-    const displayed = await command("check_config.ts", [
+    const displayed = await command("check-config.ts", [
       "--configs-dir",
       root,
       "--display-locale",
@@ -101,14 +101,14 @@ for (const locale of ["zh-CN", "en"] as const)
 
 test("actual command parse/load failures are bilingual safe JSON without uncaught stacks", async () => {
   for (const [file, args, expected] of [
-    ["run_game.ts", ["--unknown", "private-token-canary"], "runtime_cli_option_unknown"],
-    ["check_config.ts", ["--unknown", "private-token-canary"], "config_check_usage"],
-    ["migrate_configs.ts", ["--unknown", "private-token-canary"], "config_migration_usage"],
-    ["replay_actions.ts", [], "reproduction_cli_usage"],
+    ["run-game.ts", ["--unknown", "private-token-canary"], "runtime_cli_option_unknown"],
+    ["check-config.ts", ["--unknown", "private-token-canary"], "config_check_usage"],
+    ["migrate-configs.ts", ["--unknown", "private-token-canary"], "config_migration_usage"],
+    ["replay-actions.ts", [], "reproduction_cli_usage"],
     ["simulate.ts", ["--count", "0"], "simulation_count_invalid"],
-    ["../../replay/export_replay_bundle.ts", [], "replay_export_usage"],
+    ["export-replay-bundle.ts", [], "replay_export_usage"],
     [
-      "../../run-game-smoke.ts",
+      "run-game-smoke.ts",
       ["--unknown", "private-token-canary"],
       "runtime_cli_option_unknown",
     ],

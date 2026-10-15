@@ -9,8 +9,8 @@ import { readFileSync } from "node:fs";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../../src/runtime/config/board_definition";
-import { tricksterTwelveConfig } from "../../../src/runtime/scenarios/trickster_twelve";
+} from "../../../src/app/config/board-definition";
+import { tricksterTwelveConfig } from "../../../src/rulesets/presets/trickster-twelve";
 test("Public Trickster preset matches the validated twelve-player scenario", () => {
   const raw = JSON.parse(
     readFileSync(

@@ -5,7 +5,7 @@
  */
 import { WinCondition } from "../../../src/domain/identity";
 import { expect, test } from "bun:test";
-import { convertLegacyBoard } from "../../../src/runtime/config/migrate_board";
+import { convertLegacyBoard } from "../../../src/app/config/migrate-board";
 
 test("legacy empty win arrays materialize the conditions the engine actually used", () => {
   const fallback = convertLegacyBoard({ winConditions: [] }, "twelve_player_standard");

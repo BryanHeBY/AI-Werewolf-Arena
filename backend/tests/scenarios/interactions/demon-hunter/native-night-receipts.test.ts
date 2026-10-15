@@ -1,13 +1,13 @@
 /**
  * 场景测试验证 native-night-receipts 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import { COMPONENT, StatusMark, PotionType, deferRequestDelivery, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/domain";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { inheritDemonWitchDeadlineRequest } from "../../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests";
+import { demonHunterAuditPlayer } from "../../../../src/features/demon-hunter/authority";
+import { inheritDemonWitchDeadlineRequest } from "../../../../src/features/demon-hunter/native-potion-requests";
 const audit = (f: ReturnType<typeof demonHunterFixture>, id: number) =>
   demonHunterAuditPlayer(f.world, id)!;
 for (const name of ["guard", "check_identity"] as const)
@@ -44,7 +44,7 @@ for (const name of ["guard", "check_identity"] as const)
               const clone = { ...r, deadlineAtMs: Date.now() + 1000 };
               if (variant === "clone") inheritDemonWitchDeadlineRequest(r, clone);
               const { ActionReception } =
-                await import("../../../../src/game/gateway/action-reception");
+                await import("../../../../src/engine/actions/action-reception");
               const reception = new ActionReception(f.world);
               const result = reception.validate(
                 clone,
@@ -173,8 +173,8 @@ for (const transport of ["sdk", "acp"] as const)
           const f = demonHunterFixture(12, undefined, locale),
             id = name === "guard" ? 11 : 8;
           const { LlmActionProvider } =
-              await import("../../../../src/ai/agents/llm/llm_action_provider"),
-            { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
+              await import("../../../../src/agents/llm/llm-action-provider"),
+            { AcpActionProvider } = await import("../../../../src/agents/acp/acp-action-provider");
           let fallbackCalls = 0,
             submits = 0;
           const privilegedFallbackProvider = {
@@ -187,14 +187,14 @@ for (const transport of ["sdk", "acp"] as const)
             name === "guard"
               ? { target_id: outcome === "valid" ? 12 : "12", abstain: false }
               : { target_id: outcome === "valid" ? 1 : "1" };
-          const client: import("../../../../src/ai/integrations/llm/transport").ChatModelClient = {
+          const client: import("../../../../src/adapters/llm/transport").ChatModelClient = {
             async chat() {
               throw new Error("unexpected_chat");
             },
             async runToolLoop<T>(
-              _messages: import("../../../../src/ai/integrations/llm/transport").ChatMessage[],
-              _tools: import("../../../../src/ai/integrations/llm/transport").ToolSchema[],
-              callbacks: import("../../../../src/ai/integrations/llm/transport").ToolLoopCallbacks<T>,
+              _messages: import("../../../../src/adapters/llm/transport").ChatMessage[],
+              _tools: import("../../../../src/adapters/llm/transport").ToolSchema[],
+              callbacks: import("../../../../src/adapters/llm/transport").ToolLoopCallbacks<T>,
             ) {
               if (outcome !== "missing")
                 for (let i = 0; i < (outcome === "valid" ? 1 : 3); i++) {

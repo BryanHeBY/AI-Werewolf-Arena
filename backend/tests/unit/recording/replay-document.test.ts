@@ -6,7 +6,7 @@
  * driver.
  */
 import { expect, test } from "bun:test";
-import { createReplayDocument } from "../../../src/recording/replay_document";
+import { createReplayDocument } from "../../../src/recording/session/replay-document";
 import { ReplayManifest } from "../../../src/recording/contracts";
 
 function manifest(players: ReplayManifest["players"] = []): ReplayManifest {

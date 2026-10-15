@@ -4,7 +4,7 @@
  * Output and oracle: Explicit original prefix acceptance and forged-feed rejection retain disclosure timing; generated records supply test input without computing an expected World.
  */
 import { expect, test } from "bun:test";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix";
 const append = (

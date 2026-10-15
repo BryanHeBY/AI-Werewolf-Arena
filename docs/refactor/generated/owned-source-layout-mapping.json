@@ -1,0 +1,2716 @@
+{
+  "stage": "proposal only, no source capture/application",
+  "sourcePlans": [
+    {
+      "path": "/tmp/awa-c41-c42-route-plan.json",
+      "sha256": "c391bf4c280b277df6325294d50b3cc20825f683a968729ddc91d486982c440c"
+    },
+    {
+      "path": "/tmp/awa-game-recording-verification-layout-map.json",
+      "sha256": "0642ae586badf4238979ddfd1514db448fb71c4073626b36f782d9684f1ce14a"
+    }
+  ],
+  "mapping": [
+    {
+      "from": "backend/src/ai/agents/acp/acp_action_provider.ts",
+      "to": "backend/src/agents/acp/acp-action-provider.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/acp/session_pool.ts",
+      "to": "backend/src/agents/acp/session-pool.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/game_tool_protocol.ts",
+      "to": "backend/src/agents/game-tool-protocol.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/index.ts",
+      "to": "backend/src/agents/index.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/llm/fallback_action_policy.ts",
+      "to": "backend/src/agents/llm/fallback-action-policy.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/llm/llm_action_provider.ts",
+      "to": "backend/src/agents/llm/llm-action-provider.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+      "to": "backend/src/agents/llm/llm-turn-orchestrator.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/llm/player_prompt_session.ts",
+      "to": "backend/src/agents/llm/player-prompt-session.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/llm/sdk_game_tool_loop.ts",
+      "to": "backend/src/agents/llm/sdk-game-tool-loop.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/player/action-turn.ts",
+      "to": "backend/src/agents/player/action-turn.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/player/contracts.ts",
+      "to": "backend/src/agents/player/contracts.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/player/player_observer.ts",
+      "to": "backend/src/agents/player/player-observer.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/player/player_prompt_policy.ts",
+      "to": "backend/src/agents/player/player-prompt-policy.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/player/prompt_templates.ts",
+      "to": "backend/src/agents/player/prompt-templates.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/player/turn_constraints.ts",
+      "to": "backend/src/agents/player/turn-constraints.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/action_providers.ts",
+      "to": "backend/src/agents/providers/action-providers.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observation-fallback.ts",
+      "to": "backend/src/agents/providers/observation-fallback.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot.ts",
+      "to": "backend/src/agents/providers/observed-bot.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/context.ts",
+      "to": "backend/src/agents/providers/observed-bot/context.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/copied.ts",
+      "to": "backend/src/agents/providers/observed-bot/copied.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/fragrant_pair_seer.ts",
+      "to": "backend/src/agents/providers/observed-bot/fragrant-pair-seer.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/granted.ts",
+      "to": "backend/src/agents/providers/observed-bot/granted.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/handlers.ts",
+      "to": "backend/src/agents/providers/observed-bot/handlers.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
+      "to": "backend/src/agents/providers/observed-bot/mist-raven.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/native.ts",
+      "to": "backend/src/agents/providers/observed-bot/native.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/noble_secret_body.ts",
+      "to": "backend/src/agents/providers/observed-bot/noble-secret-body.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/public.ts",
+      "to": "backend/src/agents/providers/observed-bot/public.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/radiant_eclipse.ts",
+      "to": "backend/src/agents/providers/observed-bot/radiant-eclipse.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/wedding.ts",
+      "to": "backend/src/agents/providers/observed-bot/wedding.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/providers/observed_bot/wolf.ts",
+      "to": "backend/src/agents/providers/observed-bot/wolf.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/reporting/bug_report_service.ts",
+      "to": "backend/src/agents/reporting/bug-report-service.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/reporting/index.ts",
+      "to": "backend/src/agents/reporting/index.ts"
+    },
+    {
+      "from": "backend/src/ai/agents/visible_event_protocol.ts",
+      "to": "backend/src/agents/visible-event-protocol.ts"
+    },
+    {
+      "from": "backend/src/ai/audit/acp_audit_runner.ts",
+      "to": "backend/src/audit/agents/acp-audit-runner.ts"
+    },
+    {
+      "from": "backend/src/ai/audit/audit_mcp_control.ts",
+      "to": "backend/src/adapters/acp/audit-mcp-control.ts"
+    },
+    {
+      "from": "backend/src/ai/audit/audit_mcp_server.ts",
+      "to": "backend/src/adapters/acp/audit-mcp-server.ts"
+    },
+    {
+      "from": "backend/src/ai/audit/audit_tool_protocol.ts",
+      "to": "backend/src/audit/agents/audit-tool-protocol.ts"
+    },
+    {
+      "from": "backend/src/ai/audit/contracts.ts",
+      "to": "backend/src/audit/agents/contracts.ts"
+    },
+    {
+      "from": "backend/src/ai/audit/executor_factory.ts",
+      "to": "backend/src/app/audit-agent-factory.ts"
+    },
+    {
+      "from": "backend/src/ai/audit/index.ts",
+      "to": "backend/src/app/audit-agent-exports.ts"
+    },
+    {
+      "from": "backend/src/ai/audit/prompts.ts",
+      "to": "backend/src/audit/agents/prompts.ts"
+    },
+    {
+      "from": "backend/src/ai/audit/sdk_audit_runner.ts",
+      "to": "backend/src/audit/agents/sdk-audit-runner.ts"
+    },
+    {
+      "from": "backend/src/ai/index.ts",
+      "to": "backend/src/app/agent-exports.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+      "to": "backend/src/adapters/acp/acp-mcp-bridge.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/acp_process_client.ts",
+      "to": "backend/src/adapters/acp/acp-process-client.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/acp_session_config.ts",
+      "to": "backend/src/adapters/acp/acp-session-config.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+      "to": "backend/src/adapters/acp/acp-turn-registry.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/index.ts",
+      "to": "backend/src/adapters/acp/index.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/loopback_mcp_control_server.ts",
+      "to": "backend/src/adapters/acp/loopback-mcp-control-server.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/session.ts",
+      "to": "backend/src/adapters/acp/session.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+      "to": "backend/src/adapters/acp/session-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/task_locale.ts",
+      "to": "backend/src/adapters/acp/task-locale.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+      "to": "backend/src/adapters/acp/werewolf-mcp-control.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts",
+      "to": "backend/src/adapters/acp/werewolf-mcp-server.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/index.ts",
+      "to": "backend/src/adapters/index.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+      "to": "backend/src/adapters/llm/ai-sdk-client.ts"
+    },
+    {
+      "from": "backend/src/ai/integrations/llm/transport.ts",
+      "to": "backend/src/adapters/llm/transport.ts"
+    },
+    {
+      "from": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "to": "backend/src/agents/runtime/agent-turn-executor.ts"
+    },
+    {
+      "from": "backend/src/ai/runtime/index.ts",
+      "to": "backend/src/agents/runtime/index.ts"
+    },
+    {
+      "from": "backend/src/ai/runtime/request_scheduler.ts",
+      "to": "backend/src/agents/runtime/request-scheduler.ts"
+    },
+    {
+      "from": "backend/src/ai/runtime/turn_deadline.ts",
+      "to": "backend/src/agents/runtime/turn-deadline.ts"
+    },
+    {
+      "from": "backend/src/audit/debug_summary_generator.ts",
+      "to": "backend/src/audit/debug-summary-generator.ts"
+    },
+    {
+      "from": "backend/src/audit/deterministic_checks.ts",
+      "to": "backend/src/audit/deterministic-checks.ts"
+    },
+    {
+      "from": "backend/src/audit/evidence_policy.ts",
+      "to": "backend/src/audit/evidence-policy.ts"
+    },
+    {
+      "from": "backend/src/audit/fallback_summary_renderer.ts",
+      "to": "backend/src/audit/fallback-summary-renderer.ts"
+    },
+    {
+      "from": "backend/src/audit/payload_builder.ts",
+      "to": "backend/src/audit/payload-builder.ts"
+    },
+    {
+      "from": "backend/src/audit/summary_format.ts",
+      "to": "backend/src/audit/summary-format.ts"
+    },
+    {
+      "from": "backend/src/audit/summary_renderer.ts",
+      "to": "backend/src/audit/summary-renderer.ts"
+    },
+    {
+      "from": "backend/src/audit/task_runner.ts",
+      "to": "backend/src/audit/task-runner.ts"
+    },
+    {
+      "from": "backend/src/game/drivers/privileged-baseline.ts",
+      "to": "backend/src/agents/baseline/privileged.ts"
+    },
+    {
+      "from": "backend/src/game/engine/action_request_factory.ts",
+      "to": "backend/src/engine/actions/action-request-factory.ts"
+    },
+    {
+      "from": "backend/src/game/engine/agent_visible_event_feed.ts",
+      "to": "backend/src/agents/observation/event-feed.ts"
+    },
+    {
+      "from": "backend/src/game/engine/daytime-interruption-contracts.ts",
+      "to": "backend/src/engine/daytime-interruption-contracts.ts"
+    },
+    {
+      "from": "backend/src/game/engine/death-committer.ts",
+      "to": "backend/src/engine/death-committer.ts"
+    },
+    {
+      "from": "backend/src/game/engine/death-wave.ts",
+      "to": "backend/src/engine/death-wave.ts"
+    },
+    {
+      "from": "backend/src/game/engine/death_resolution.ts",
+      "to": "backend/src/engine/death-resolution.ts"
+    },
+    {
+      "from": "backend/src/game/engine/event_registry.ts",
+      "to": "backend/src/engine/events/event-registry.ts"
+    },
+    {
+      "from": "backend/src/game/engine/fault_plan.ts",
+      "to": "backend/src/engine/fault-plan.ts"
+    },
+    {
+      "from": "backend/src/game/engine/hooks/on_daybreak.ts",
+      "to": "backend/src/engine/hooks/on-daybreak.ts"
+    },
+    {
+      "from": "backend/src/game/engine/hooks/on_per_speech_gap.ts",
+      "to": "backend/src/engine/hooks/on-per-speech-gap.ts"
+    },
+    {
+      "from": "backend/src/game/engine/hooks/on_pre_election.ts",
+      "to": "backend/src/engine/hooks/on-pre-election.ts"
+    },
+    {
+      "from": "backend/src/game/engine/hooks/on_pre_vote.ts",
+      "to": "backend/src/engine/hooks/on-pre-vote.ts"
+    },
+    {
+      "from": "backend/src/game/engine/index.ts",
+      "to": "backend/src/engine/index.ts"
+    },
+    {
+      "from": "backend/src/game/engine/phase-revision.ts",
+      "to": "backend/src/engine/phase-revision.ts"
+    },
+    {
+      "from": "backend/src/game/engine/phase_manager.ts",
+      "to": "backend/src/engine/phase-manager.ts"
+    },
+    {
+      "from": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "to": "backend/src/engine/phases/day-pipeline.ts"
+    },
+    {
+      "from": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "to": "backend/src/engine/phases/night-pipeline.ts"
+    },
+    {
+      "from": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "to": "backend/src/engine/phases/voting-pipeline.ts"
+    },
+    {
+      "from": "backend/src/game/engine/turn_constraints_context.ts",
+      "to": "backend/src/engine/actions/turn-constraints-context.ts"
+    },
+    {
+      "from": "backend/src/game/gateway/action-reception.ts",
+      "to": "backend/src/engine/actions/action-reception.ts"
+    },
+    {
+      "from": "backend/src/game/gateway/action_validator.ts",
+      "to": "backend/src/engine/actions/action-validator.ts"
+    },
+    {
+      "from": "backend/src/game/gateway/index.ts",
+      "to": "backend/src/engine/actions/index.ts"
+    },
+    {
+      "from": "backend/src/game/gateway/tool_gateway.ts",
+      "to": "backend/src/engine/actions/tool-gateway.ts"
+    },
+    {
+      "from": "backend/src/game/gateway/turn-constraints.ts",
+      "to": "backend/src/engine/actions/turn-constraints.ts"
+    },
+    {
+      "from": "backend/src/game/index.ts",
+      "to": "backend/src/engine/game-api.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts",
+      "to": "backend/src/agents/observation/agent-event-visibility-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/broadcast/visibility_registry.ts",
+      "to": "backend/src/agents/observation/visibility-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/common/llm_repair.ts",
+      "to": "backend/src/agents/tool-repair/common-repair.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/common/participation.ts",
+      "to": "backend/src/engine/participation.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/common/tool_specs.ts",
+      "to": "backend/src/engine/actions/common-tool-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "to": "backend/src/engine/actions/common-validation-rules.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/config/contracts.ts",
+      "to": "backend/src/rulesets/configuration/contracts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+      "to": "backend/src/rulesets/configuration/normalizer-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/contracts.ts",
+      "to": "backend/src/engine/actions/tool-contracts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "to": "backend/src/features/wall-notes/authority.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/events/wall_notes/ports.ts",
+      "to": "backend/src/features/wall-notes/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/events/wall_notes/window.ts",
+      "to": "backend/src/features/wall-notes/window.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/hooks/death-wave-contribution.ts",
+      "to": "backend/src/engine/death-wave-contribution.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+      "to": "backend/src/engine/hooks/registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/index.ts",
+      "to": "backend/src/rulesets/mechanism-api.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/last_words/event_presenters.ts",
+      "to": "backend/src/features/last-words/event-presenters.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+      "to": "backend/src/features/last-words/last-words-mechanism.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/last_words/window.ts",
+      "to": "backend/src/features/last-words/window.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/llm/contracts.ts",
+      "to": "backend/src/agents/tool-repair/contracts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/llm/helpers.ts",
+      "to": "backend/src/agents/tool-repair/helpers.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "to": "backend/src/agents/tool-repair/target-hint-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/llm/tool_call_repair_registry.ts",
+      "to": "backend/src/agents/tool-repair/tool-call-repair-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/night_death_timing.ts",
+      "to": "backend/src/rulesets/night-death-timing.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+      "to": "backend/src/agents/prompt/config-render-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/registries/tool_spec_registry.ts",
+      "to": "backend/src/engine/actions/tool-spec-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/registries/win_condition_registry.ts",
+      "to": "backend/src/engine/victory/condition-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/abilities.ts",
+      "to": "backend/src/features/night-abilities/abilities.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "to": "backend/src/features/night-abilities/ability-changes.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "to": "backend/src/features/night-abilities/ability-scope.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/accepted-ballots.ts",
+      "to": "backend/src/features/animal-dream/accepted-ballots.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+      "to": "backend/src/features/animal-dream/authority.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/ballot-ledger.ts",
+      "to": "backend/src/features/animal-dream/ballot-ledger.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/ballot-ports.ts",
+      "to": "backend/src/features/animal-dream/ballot-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/beauty-fact-ports.ts",
+      "to": "backend/src/features/animal-dream/beauty-fact-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/beauty-query-ports.ts",
+      "to": "backend/src/features/animal-dream/beauty-query-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/choice-ports.ts",
+      "to": "backend/src/features/animal-dream/choice-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/death-wave.ts",
+      "to": "backend/src/features/animal-dream/death-wave.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+      "to": "backend/src/features/animal-dream/facts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/night-lifecycle.ts",
+      "to": "backend/src/features/animal-dream/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/night_stages.ts",
+      "to": "backend/src/features/animal-dream/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+      "to": "backend/src/features/animal-dream/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/profile.ts",
+      "to": "backend/src/features/animal-dream/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/puffer_window.ts",
+      "to": "backend/src/features/animal-dream/puffer-window.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/request_envelope.ts",
+      "to": "backend/src/features/animal-dream/request-envelope.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/requests.ts",
+      "to": "backend/src/features/animal-dream/requests.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/roster.ts",
+      "to": "backend/src/features/animal-dream/roster.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/state-slot.ts",
+      "to": "backend/src/features/animal-dream/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/state.ts",
+      "to": "backend/src/features/animal-dream/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/unit-completion-publication.ts",
+      "to": "backend/src/features/animal-dream/unit-completion-publication.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/death_hook.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/death-hook.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/inheritance.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/mirror-scope-ports.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/mirror-scope-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/night-scope.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/ports.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/rules.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/tool_names.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/tool-names.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/tool_specs.ts",
+      "to": "backend/src/features/awakened-hidden-wolf/tool-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "to": "backend/src/features/bear/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "to": "backend/src/features/bear/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "to": "backend/src/features/bear/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "to": "backend/src/features/bear/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "to": "backend/src/features/black-market-merchant/night-stage.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/black_market_merchant/ports.ts",
+      "to": "backend/src/features/black-market-merchant/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+      "to": "backend/src/features/black-market-merchant/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+      "to": "backend/src/features/black-market-merchant/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/builtin-contributions.ts",
+      "to": "backend/src/rulesets/roles/builtin-contributions.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/catalog.ts",
+      "to": "backend/src/rulesets/roles/catalog.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/contracts.ts",
+      "to": "backend/src/rulesets/roles/contracts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cupid/death-ports.ts",
+      "to": "backend/src/features/cupid/death-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "to": "backend/src/features/cupid/night-stage.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cupid/ports.ts",
+      "to": "backend/src/features/cupid/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "to": "backend/src/features/cupid/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+      "to": "backend/src/features/cupid/relation.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "to": "backend/src/features/cupid/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cupid/victory.ts",
+      "to": "backend/src/features/cupid/victory.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cursed_fox/inspection-ports.ts",
+      "to": "backend/src/features/cursed-fox/inspection-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+      "to": "backend/src/features/cursed-fox/inspection-effect.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cursed_fox/profile.ts",
+      "to": "backend/src/features/cursed-fox/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cursed_fox/victory-ports.ts",
+      "to": "backend/src/features/cursed-fox/victory-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/cursed_fox/victory.ts",
+      "to": "backend/src/features/cursed-fox/victory.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "to": "backend/src/features/death-actions/death-gun-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "to": "backend/src/features/death-actions/death-shot-eligibility.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/death_abilities.ts",
+      "to": "backend/src/features/death-actions/death-abilities.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/death_ability_activation.ts",
+      "to": "backend/src/features/death-actions/death-ability-activation.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/death_action_policy.ts",
+      "to": "backend/src/features/death-actions/death-action-policy.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/death_shot.ts",
+      "to": "backend/src/features/death-actions/death-shot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "to": "backend/src/features/debater/authority.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/ports.ts",
+      "to": "backend/src/features/debater/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "to": "backend/src/features/debater/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "to": "backend/src/features/debater/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "to": "backend/src/features/debater/window.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "to": "backend/src/features/demon-hunter/authority.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+      "to": "backend/src/features/demon-hunter/controller.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "to": "backend/src/features/demon-hunter/guard-contribution.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/heal_contribution.ts",
+      "to": "backend/src/features/demon-hunter/heal-contribution.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/native-gun-ports.ts",
+      "to": "backend/src/features/demon-hunter/native-gun-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+      "to": "backend/src/features/demon-hunter/native-night-controller.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+      "to": "backend/src/features/demon-hunter/native-poison.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "to": "backend/src/features/demon-hunter/native-potion-controller.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "to": "backend/src/features/demon-hunter/native-potion-requests.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+      "to": "backend/src/features/demon-hunter/night-damage-contribution.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/night-lifecycle.ts",
+      "to": "backend/src/features/demon-hunter/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts",
+      "to": "backend/src/features/demon-hunter/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/participant-state-data.ts",
+      "to": "backend/src/features/demon-hunter/participant-state-data.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/poison_contribution.ts",
+      "to": "backend/src/features/demon-hunter/poison-contribution.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "to": "backend/src/features/demon-hunter/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/preset.ts",
+      "to": "backend/src/features/demon-hunter/preset.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/profile.ts",
+      "to": "backend/src/features/demon-hunter/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
+      "to": "backend/src/features/demon-hunter/red-moon-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/reveal-ports.ts",
+      "to": "backend/src/features/demon-hunter/reveal-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/state-slot.ts",
+      "to": "backend/src/features/demon-hunter/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/validation_rules.ts",
+      "to": "backend/src/features/demon-hunter/validation-rules.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/dreamer/night-links.ts",
+      "to": "backend/src/features/dreamer/night-links.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/dreamer/night-ports.ts",
+      "to": "backend/src/features/dreamer/night-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "to": "backend/src/features/dreamer/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "to": "backend/src/features/dreamer/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+      "to": "backend/src/features/dreamer/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+      "to": "backend/src/features/dreamer/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+      "to": "backend/src/features/dreamer/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/evil_knight/night-bindings.ts",
+      "to": "backend/src/features/evil-knight/night-bindings.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+      "to": "backend/src/features/evil-knight/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+      "to": "backend/src/features/evil-knight/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+      "to": "backend/src/features/evil-knight/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/evil_knight/reflection.ts",
+      "to": "backend/src/features/evil-knight/reflection.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/evil_knight/state-slot.ts",
+      "to": "backend/src/features/evil-knight/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+      "to": "backend/src/features/fragrant-pair-seer/authority.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts",
+      "to": "backend/src/features/fragrant-pair-seer/death-wave.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot.ts",
+      "to": "backend/src/features/fragrant-pair-seer/fragrant-state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/knowledge.ts",
+      "to": "backend/src/features/fragrant-pair-seer/knowledge.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/night-lifecycle.ts",
+      "to": "backend/src/features/fragrant-pair-seer/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/night_stages.ts",
+      "to": "backend/src/features/fragrant-pair-seer/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/owned-state-data.ts",
+      "to": "backend/src/features/fragrant-pair-seer/owned-state-data.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "to": "backend/src/features/fragrant-pair-seer/pair-state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+      "to": "backend/src/features/fragrant-pair-seer/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+      "to": "backend/src/features/fragrant-pair-seer/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/requests.ts",
+      "to": "backend/src/features/fragrant-pair-seer/requests.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/setup-ports.ts",
+      "to": "backend/src/features/fragrant-pair-seer/setup-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "to": "backend/src/features/fragrant-pair-seer/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/target_scope.ts",
+      "to": "backend/src/features/fragrant-pair-seer/target-scope.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+      "to": "backend/src/features/gargoyle/inheritance.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/gargoyle/ports.ts",
+      "to": "backend/src/features/gargoyle/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "to": "backend/src/features/gargoyle/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/gargoyle/state.ts",
+      "to": "backend/src/features/gargoyle/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "to": "backend/src/features/ghost-bride/authority.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/death-wave-publication.ts",
+      "to": "backend/src/features/ghost-bride/death-wave-publication.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/night-lifecycle.ts",
+      "to": "backend/src/features/ghost-bride/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "to": "backend/src/features/ghost-bride/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "to": "backend/src/features/ghost-bride/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/preset.ts",
+      "to": "backend/src/features/ghost-bride/preset.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+      "to": "backend/src/features/ghost-bride/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "to": "backend/src/features/ghost-bride/setup.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/state.ts",
+      "to": "backend/src/features/ghost-bride/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+      "to": "backend/src/features/death-actions/gift-gun-death-hook.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "to": "backend/src/features/gravekeeper/feedback.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+      "to": "backend/src/features/gravekeeper/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+      "to": "backend/src/features/gravekeeper/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "to": "backend/src/features/gravekeeper/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/guard/event_presenters.ts",
+      "to": "backend/src/features/guard/event-presenters.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+      "to": "backend/src/features/guard/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/guard/phase_stage_localization.ts",
+      "to": "backend/src/features/guard/phase-stage-localization.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/guard/ports.ts",
+      "to": "backend/src/features/guard/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/guard/profile.ts",
+      "to": "backend/src/features/guard/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+      "to": "backend/src/features/guard/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/guard/tool_specs.ts",
+      "to": "backend/src/features/guard/tool-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+      "to": "backend/src/features/hidden-wolf/inheritance.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hidden_wolf/ports.ts",
+      "to": "backend/src/features/hidden-wolf/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hidden_wolf/profile.ts",
+      "to": "backend/src/features/hidden-wolf/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hidden_wolf/state.ts",
+      "to": "backend/src/features/hidden-wolf/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hunter/death_hook.ts",
+      "to": "backend/src/features/hunter/death-hook.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hunter/event_presenters.ts",
+      "to": "backend/src/features/hunter/event-presenters.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hunter/phase_stage_localization.ts",
+      "to": "backend/src/features/hunter/phase-stage-localization.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hunter/ports.ts",
+      "to": "backend/src/features/hunter/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hunter/profile.ts",
+      "to": "backend/src/features/hunter/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hunter/tool_specs.ts",
+      "to": "backend/src/features/hunter/tool-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "to": "backend/src/features/hybrid/night-stage.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hybrid/ports.ts",
+      "to": "backend/src/features/hybrid/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "to": "backend/src/features/hybrid/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/hybrid/state-slot.ts",
+      "to": "backend/src/features/hybrid/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/idiot/event_presenters.ts",
+      "to": "backend/src/features/idiot/event-presenters.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+      "to": "backend/src/features/idiot/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "to": "backend/src/features/idiot/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "to": "backend/src/features/idiot/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "to": "backend/src/features/initial-identity/choice.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts",
+      "to": "backend/src/features/initial-identity/data-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/initial_identity/deal-ports.ts",
+      "to": "backend/src/features/initial-identity/deal-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "to": "backend/src/features/initial-identity/deal.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/initial_identity/initial-deal-publication.ts",
+      "to": "backend/src/features/initial-identity/initial-deal-publication.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "to": "backend/src/features/initial-identity/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "to": "backend/src/features/initial-identity/setup.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/inspection.ts",
+      "to": "backend/src/engine/inspection.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "to": "backend/src/features/knight/commit.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "to": "backend/src/features/knight/duel-window.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "to": "backend/src/features/knight/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "to": "backend/src/features/knight/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "to": "backend/src/features/knight/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "to": "backend/src/features/lonely-girl/lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "to": "backend/src/features/lonely-girl/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+      "to": "backend/src/features/lonely-girl/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "to": "backend/src/features/lonely-girl/setup.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "to": "backend/src/features/lonely-girl/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/magician/exchange-ports.ts",
+      "to": "backend/src/features/magician/exchange-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/magician/night-lifecycle.ts",
+      "to": "backend/src/features/magician/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "to": "backend/src/features/magician/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "to": "backend/src/features/magician/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "to": "backend/src/features/magician/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "to": "backend/src/features/magician/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+      "to": "backend/src/features/magician/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/death_hook.ts",
+      "to": "backend/src/features/mechanical-wolf/death-hook.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts",
+      "to": "backend/src/features/mechanical-wolf/inheritance.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "to": "backend/src/features/mechanical-wolf/night-scope.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "to": "backend/src/features/mechanical-wolf/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/ports.ts",
+      "to": "backend/src/features/mechanical-wolf/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/profile.ts",
+      "to": "backend/src/features/mechanical-wolf/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "to": "backend/src/features/mechanical-wolf/rules.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+      "to": "backend/src/features/mechanical-wolf/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/tool_names.ts",
+      "to": "backend/src/features/mechanical-wolf/tool-names.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mechanical_wolf/tool_specs.ts",
+      "to": "backend/src/features/mechanical-wolf/tool-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts",
+      "to": "backend/src/features/miracle-merchant/lucky-stage.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "to": "backend/src/features/miracle-merchant/night-stage.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/miracle_merchant/ports.ts",
+      "to": "backend/src/features/miracle-merchant/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+      "to": "backend/src/features/miracle-merchant/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+      "to": "backend/src/features/miracle-merchant/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mirror_girl/native-inspection.ts",
+      "to": "backend/src/features/mirror-girl/native-inspection.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mirror_girl/ports.ts",
+      "to": "backend/src/features/mirror-girl/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "to": "backend/src/features/mirror-girl/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "to": "backend/src/features/mist-raven/caster-authority.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/choice-ports.ts",
+      "to": "backend/src/features/mist-raven/choice-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+      "to": "backend/src/features/mist-raven/knife-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/night-lifecycle.ts",
+      "to": "backend/src/features/mist-raven/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "to": "backend/src/features/mist-raven/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+      "to": "backend/src/features/mist-raven/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+      "to": "backend/src/features/mist-raven/pending-night.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "to": "backend/src/features/mist-raven/player-projection.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+      "to": "backend/src/features/mist-raven/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+      "to": "backend/src/features/mist-raven/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "to": "backend/src/features/mist-raven/snake-window.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/state-slot.ts",
+      "to": "backend/src/features/mist-raven/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "to": "backend/src/features/mist-raven/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/native-death-gun-resources.ts",
+      "to": "backend/src/features/death-actions/native-death-gun-resources.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/native-death-shot-settlement.ts",
+      "to": "backend/src/features/death-actions/native-death-shot-settlement.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/night-ability-actors.ts",
+      "to": "backend/src/features/night-abilities/night-ability-actors.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+      "to": "backend/src/features/night-abilities/night-ability-change-runtime.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "to": "backend/src/features/night-abilities/night-ability-grants.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "to": "backend/src/features/night-abilities/night-action-history.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "to": "backend/src/features/nightmare/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+      "to": "backend/src/features/nightmare/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "to": "backend/src/features/nightmare/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+      "to": "backend/src/features/nightmare/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+      "to": "backend/src/features/nightmare/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+      "to": "backend/src/features/nightmare/targets.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "to": "backend/src/features/noble-secret-body/authority.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+      "to": "backend/src/features/noble-secret-body/damage.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/exile-ports.ts",
+      "to": "backend/src/features/noble-secret-body/exile-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/exile-reveal.ts",
+      "to": "backend/src/features/noble-secret-body/exile-reveal.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "to": "backend/src/features/noble-secret-body/facts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/hunt-ports.ts",
+      "to": "backend/src/features/noble-secret-body/hunt-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/knife-ports.ts",
+      "to": "backend/src/features/noble-secret-body/knife-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+      "to": "backend/src/features/noble-secret-body/night-damage-publication.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/night-knife-publication.ts",
+      "to": "backend/src/features/noble-secret-body/night-knife-publication.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/night-lifecycle.ts",
+      "to": "backend/src/features/noble-secret-body/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/night_stages.ts",
+      "to": "backend/src/features/noble-secret-body/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "to": "backend/src/features/noble-secret-body/player-projection.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+      "to": "backend/src/features/noble-secret-body/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+      "to": "backend/src/features/noble-secret-body/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/requests.ts",
+      "to": "backend/src/features/noble-secret-body/requests.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "to": "backend/src/features/noble-secret-body/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "to": "backend/src/features/order-prince/authority.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/order_prince/ports.ts",
+      "to": "backend/src/features/order-prince/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+      "to": "backend/src/features/order-prince/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+      "to": "backend/src/features/order-prince/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts",
+      "to": "backend/src/features/order-prince/voting-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/order_prince/voting_window.ts",
+      "to": "backend/src/features/order-prince/voting-window.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/original_player_scope.ts",
+      "to": "backend/src/domain/original-player-scope.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/permissions.ts",
+      "to": "backend/src/rulesets/roles/permissions.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/player-state-data.ts",
+      "to": "backend/src/agents/observation/player-state-data.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/player_state.ts",
+      "to": "backend/src/agents/observation/player-state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/presentation-contribution.ts",
+      "to": "backend/src/rulesets/roles/presentation-contribution.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+      "to": "backend/src/features/psychic/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "to": "backend/src/features/pure-white/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/pure_white/profile.ts",
+      "to": "backend/src/features/pure-white/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "to": "backend/src/features/pure-white/rules.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+      "to": "backend/src/features/radiant-eclipse/borrowed-state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot.ts",
+      "to": "backend/src/features/radiant-eclipse/eclipse-state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/night-lifecycle.ts",
+      "to": "backend/src/features/radiant-eclipse/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "to": "backend/src/features/radiant-eclipse/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+      "to": "backend/src/features/radiant-eclipse/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/paid-effect-ports.ts",
+      "to": "backend/src/features/radiant-eclipse/paid-effect-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+      "to": "backend/src/features/radiant-eclipse/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "to": "backend/src/features/radiant-eclipse/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "to": "backend/src/features/radiant-eclipse/shelter-state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+      "to": "backend/src/features/radiant-eclipse/shelter-state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+      "to": "backend/src/features/radiant-eclipse/state-data.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "to": "backend/src/features/radiant-eclipse/suppression.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+      "to": "backend/src/features/night-abilities/recipient-ability-stage.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+      "to": "backend/src/features/red-moon/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "to": "backend/src/features/red-moon/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+      "to": "backend/src/features/red-moon/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "to": "backend/src/features/red-moon/voted-out-hook.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+      "to": "backend/src/rulesets/roles/role-catalog-assembly.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role_inspection/contribution-ports.ts",
+      "to": "backend/src/features/role-inspection/contribution-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role_inspection/night-commit-ports.ts",
+      "to": "backend/src/features/role-inspection/night-commit-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "to": "backend/src/features/role-inspection/night-scope.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "to": "backend/src/features/role-inspection/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "to": "backend/src/features/role-inspection/policies.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role_inspection/policy-ports.ts",
+      "to": "backend/src/features/role-inspection/policy-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "to": "backend/src/features/role-inspection/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "to": "backend/src/features/role-inspection/rules.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "to": "backend/src/features/role-inspection/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-records.ts",
+      "to": "backend/src/features/scholar-mentor/bonus-effect-records.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-validation.ts",
+      "to": "backend/src/features/scholar-mentor/bonus-effect-validation.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/night-lifecycle.ts",
+      "to": "backend/src/features/scholar-mentor/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "to": "backend/src/features/scholar-mentor/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "to": "backend/src/features/scholar-mentor/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+      "to": "backend/src/features/scholar-mentor/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/profile.ts",
+      "to": "backend/src/features/scholar-mentor/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/rules.ts",
+      "to": "backend/src/features/scholar-mentor/rules.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/state-slot.ts",
+      "to": "backend/src/features/scholar-mentor/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/seer/event_presenters.ts",
+      "to": "backend/src/features/seer/event-presenters.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "to": "backend/src/features/seer/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/seer/phase_stage_localization.ts",
+      "to": "backend/src/features/seer/phase-stage-localization.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/seer/ports.ts",
+      "to": "backend/src/features/seer/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/seer/profile.ts",
+      "to": "backend/src/features/seer/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+      "to": "backend/src/features/seer/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/seer/tool_specs.ts",
+      "to": "backend/src/features/seer/tool-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "to": "backend/src/features/self-destruct/capability.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "to": "backend/src/features/shapeshifter/deal.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+      "to": "backend/src/features/shapeshifter/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+      "to": "backend/src/features/shapeshifter/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "to": "backend/src/features/shapeshifter/setup.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "to": "backend/src/features/shapeshifter/state-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "to": "backend/src/features/thief/deal.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/thief/ports.ts",
+      "to": "backend/src/features/thief/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/thief/profile.ts",
+      "to": "backend/src/features/thief/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "to": "backend/src/features/thief/setup.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "to": "backend/src/features/thief/state-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/time_wolf_consort/effects.ts",
+      "to": "backend/src/features/time-wolf-consort/effects.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/time_wolf_consort/night-lifecycle.ts",
+      "to": "backend/src/features/time-wolf-consort/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "to": "backend/src/features/time-wolf-consort/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "to": "backend/src/features/time-wolf-consort/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+      "to": "backend/src/features/time-wolf-consort/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "to": "backend/src/features/time-wolf-consort/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "to": "backend/src/features/time-wolf-consort/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/trickster/exchange-ports.ts",
+      "to": "backend/src/features/trickster/exchange-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts",
+      "to": "backend/src/features/trickster/exile-mapping.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/trickster/night-lifecycle.ts",
+      "to": "backend/src/features/trickster/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/trickster/night_frame.ts",
+      "to": "backend/src/features/trickster/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "to": "backend/src/features/trickster/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+      "to": "backend/src/features/trickster/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/trickster/profile.ts",
+      "to": "backend/src/features/trickster/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/trickster/state-slot.ts",
+      "to": "backend/src/features/trickster/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/villager/profile.ts",
+      "to": "backend/src/features/villager/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "to": "backend/src/features/white-wolf-king/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "to": "backend/src/features/white-wolf-king/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "to": "backend/src/features/white-wolf-king/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "to": "backend/src/features/wild-child/lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "to": "backend/src/features/wild-child/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "to": "backend/src/features/wild-child/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wild_child/setup-ports.ts",
+      "to": "backend/src/features/wild-child/setup-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "to": "backend/src/features/wild-child/setup.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "to": "backend/src/features/wild-child/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/config_normalizer.ts",
+      "to": "backend/src/features/witch/config-normalizer.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/event_presenters.ts",
+      "to": "backend/src/features/witch/event-presenters.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/llm_repair.ts",
+      "to": "backend/src/features/witch/llm-repair.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "to": "backend/src/features/witch/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/phase_stage_localization.ts",
+      "to": "backend/src/features/witch/phase-stage-localization.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/policies.ts",
+      "to": "backend/src/features/witch/policies.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "to": "backend/src/features/witch/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "to": "backend/src/features/witch/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+      "to": "backend/src/features/witch/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/tool_specs.ts",
+      "to": "backend/src/features/witch/tool-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+      "to": "backend/src/features/wolf/ability-assembly.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+      "to": "backend/src/features/wolf/ability-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf/event_presenters.ts",
+      "to": "backend/src/features/wolf/event-presenters.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf/llm_repair.ts",
+      "to": "backend/src/features/wolf/llm-repair.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "to": "backend/src/features/wolf/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf/phase_stage_localization.ts",
+      "to": "backend/src/features/wolf/phase-stage-localization.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+      "to": "backend/src/features/wolf/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf/profile.ts",
+      "to": "backend/src/features/wolf/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf/tool_specs.ts",
+      "to": "backend/src/features/wolf/tool-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_beauty/charm-ports.ts",
+      "to": "backend/src/features/wolf-beauty/charm-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+      "to": "backend/src/features/wolf-beauty/death-wave-publication.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+      "to": "backend/src/features/wolf-beauty/death-hook.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "to": "backend/src/features/wolf-beauty/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "to": "backend/src/features/wolf-beauty/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "to": "backend/src/features/wolf-beauty/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "to": "backend/src/features/wolf-beauty/relation.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "to": "backend/src/features/wolf-beauty/state.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_king/ports.ts",
+      "to": "backend/src/features/wolf-king/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+      "to": "backend/src/features/wolf-king/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_sorcerer/exchange-ports.ts",
+      "to": "backend/src/features/wolf-sorcerer/exchange-ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+      "to": "backend/src/features/wolf-sorcerer/night-lifecycle.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "to": "backend/src/features/wolf-sorcerer/night-frame.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_stages.ts",
+      "to": "backend/src/features/wolf-sorcerer/night-stages.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+      "to": "backend/src/features/wolf-sorcerer/ports.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+      "to": "backend/src/features/wolf-sorcerer/profile.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_sorcerer/seat_mapping.ts",
+      "to": "backend/src/features/wolf-sorcerer/seat-mapping.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+      "to": "backend/src/features/wolf-sorcerer/state-slot.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "to": "backend/src/features/wolf-team/permissions.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/script/contracts.ts",
+      "to": "backend/src/agents/presentation/contracts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/script/event_render_registry.ts",
+      "to": "backend/src/agents/presentation/event-render-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "to": "backend/src/features/self-destruct/commit.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/self_destruct/config_normalizer.ts",
+      "to": "backend/src/features/self-destruct/config-normalizer.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/shared/phase_stage_localization_registry.ts",
+      "to": "backend/src/agents/presentation/phase-stage-localization-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/shared/text_localization_registry.ts",
+      "to": "backend/src/agents/presentation/text-localization-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/badge.ts",
+      "to": "backend/src/features/sheriff/badge.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "to": "backend/src/features/sheriff/badge-choice.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/config_normalizer.ts",
+      "to": "backend/src/features/sheriff/config-normalizer.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/election.ts",
+      "to": "backend/src/features/sheriff/election.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/event_presenters.ts",
+      "to": "backend/src/features/sheriff/event-presenters.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/llm_repair.ts",
+      "to": "backend/src/features/sheriff/llm-repair.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/phase_stage_localization.ts",
+      "to": "backend/src/features/sheriff/phase-stage-localization.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+      "to": "backend/src/features/sheriff/speaking-order.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/tool_specs.ts",
+      "to": "backend/src/features/sheriff/tool-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/sheriff/validation_rules.ts",
+      "to": "backend/src/features/sheriff/validation-rules.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "to": "backend/src/engine/night/contracts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/stages/night/native-request-lease.ts",
+      "to": "backend/src/engine/night/native-request-lease.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/validation/contracts.ts",
+      "to": "backend/src/engine/actions/validation-contracts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+      "to": "backend/src/engine/actions/tool-validation-rule-registry.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/win_conditions/contracts.ts",
+      "to": "backend/src/engine/victory/contracts.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/win_conditions/default_specs.ts",
+      "to": "backend/src/rulesets/victory/default-specs.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/win_conditions/results.ts",
+      "to": "backend/src/engine/victory/results.ts"
+    },
+    {
+      "from": "backend/src/game/mechanisms/win_conditions/validated-victory.ts",
+      "to": "backend/src/engine/victory/validated-victory.ts"
+    },
+    {
+      "from": "backend/src/game/observation/agent-event-facts.ts",
+      "to": "backend/src/agents/observation/agent-event-facts.ts"
+    },
+    {
+      "from": "backend/src/game/observation/agent-event-projection.ts",
+      "to": "backend/src/agents/observation/agent-event-projection.ts"
+    },
+    {
+      "from": "backend/src/game/observation/component-presentation.ts",
+      "to": "backend/src/agents/observation/component-presentation.ts"
+    },
+    {
+      "from": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "to": "backend/src/agents/observation/native-role-presentation-capture.ts"
+    },
+    {
+      "from": "backend/src/game/observation/night-ability-projection.ts",
+      "to": "backend/src/agents/observation/night-ability-projection.ts"
+    },
+    {
+      "from": "backend/src/game/observation/player-initial-public-counts.ts",
+      "to": "backend/src/agents/observation/player-initial-public-counts.ts"
+    },
+    {
+      "from": "backend/src/game/observation/player-observation-projector.ts",
+      "to": "backend/src/agents/observation/player-observation-projector.ts"
+    },
+    {
+      "from": "backend/src/game/observation/player-observation.ts",
+      "to": "backend/src/agents/observation/player-observation.ts"
+    },
+    {
+      "from": "backend/src/game/observation/player-prompt-directives.ts",
+      "to": "backend/src/agents/observation/player-prompt-directives.ts"
+    },
+    {
+      "from": "backend/src/game/observation/role-presentation.ts",
+      "to": "backend/src/agents/observation/role-presentation.ts"
+    },
+    {
+      "from": "backend/src/recording/archive_identity.ts",
+      "to": "backend/src/recording/archive-identity.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/animal-audit.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/animal-audit.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/animal-format.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/animal-format.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/authority-snapshots.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/authority-snapshots.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/contributions.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/contributions.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/fragrant-pair-format.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/fragrant-pair-format.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/identity-setups.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/identity-setups.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/noble-body-format.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/noble-body-format.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/player-format.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/player-format.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/player-snapshots.ts"
+    },
+    {
+      "from": "backend/src/recording/checkpoint/private-state-codec.ts",
+      "to": "backend/src/recording/reproduction/checkpoint/private-state-codec.ts"
+    },
+    {
+      "from": "backend/src/recording/engine-fingerprint.ts",
+      "to": "backend/src/recording/reproduction/engine-fingerprint.ts"
+    },
+    {
+      "from": "backend/src/recording/file_store.ts",
+      "to": "backend/src/adapters/filesystem/session-file-store.ts"
+    },
+    {
+      "from": "backend/src/recording/recording_context.ts",
+      "to": "backend/src/recording/session/context.ts"
+    },
+    {
+      "from": "backend/src/recording/replay_document.ts",
+      "to": "backend/src/recording/session/replay-document.ts"
+    },
+    {
+      "from": "backend/src/recording/reproduction-trace.ts",
+      "to": "backend/src/recording/reproduction/trace.ts"
+    },
+    {
+      "from": "backend/src/recording/reproduction.ts",
+      "to": "backend/src/recording/reproduction/format.ts"
+    },
+    {
+      "from": "backend/src/recording/session-recording-lifecycle.ts",
+      "to": "backend/src/recording/session/lifecycle.ts"
+    },
+    {
+      "from": "backend/src/recording/session_aggregate.ts",
+      "to": "backend/src/recording/session/aggregate.ts"
+    },
+    {
+      "from": "backend/src/recording/session_recorder.ts",
+      "to": "backend/src/recording/session/recorder.ts"
+    },
+    {
+      "from": "backend/src/replay/export_replay_bundle.ts",
+      "to": "backend/src/app/cli/export-replay-bundle.ts"
+    },
+    {
+      "from": "backend/src/rulesets/support/time-consort.ts",
+      "to": "backend/src/rulesets/support/time-wolf-consort.ts"
+    },
+    {
+      "from": "backend/src/run-game-smoke.ts",
+      "to": "backend/src/app/cli/run-game-smoke.ts"
+    },
+    {
+      "from": "backend/src/runtime/cli/check_config.ts",
+      "to": "backend/src/app/cli/check-config.ts"
+    },
+    {
+      "from": "backend/src/runtime/cli/config_directory.ts",
+      "to": "backend/src/app/cli/config-directory.ts"
+    },
+    {
+      "from": "backend/src/runtime/cli/display.ts",
+      "to": "backend/src/app/cli/display.ts"
+    },
+    {
+      "from": "backend/src/runtime/cli/error_codes.ts",
+      "to": "backend/src/app/cli/error-codes.ts"
+    },
+    {
+      "from": "backend/src/runtime/cli/migrate_configs.ts",
+      "to": "backend/src/app/cli/migrate-configs.ts"
+    },
+    {
+      "from": "backend/src/runtime/cli/replay_actions.ts",
+      "to": "backend/src/app/cli/replay-actions.ts"
+    },
+    {
+      "from": "backend/src/runtime/cli/run_game.ts",
+      "to": "backend/src/app/cli/run-game.ts"
+    },
+    {
+      "from": "backend/src/runtime/cli/simulate.ts",
+      "to": "backend/src/app/cli/simulate.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/board_definition.ts",
+      "to": "backend/src/app/config/board-definition.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/contracts.ts",
+      "to": "backend/src/app/config/contracts.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/describe_setup.ts",
+      "to": "backend/src/app/config/describe-setup.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/error_codes.ts",
+      "to": "backend/src/app/config/error-codes.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/load_board_definition.ts",
+      "to": "backend/src/app/config/load-board-definition.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/load_board_override.ts",
+      "to": "backend/src/app/config/load-board-override.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/load_config.ts",
+      "to": "backend/src/app/config/load-config.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/migrate_board.ts",
+      "to": "backend/src/app/config/migrate-board.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/parse_config.ts",
+      "to": "backend/src/app/config/parse-config.ts"
+    },
+    {
+      "from": "backend/src/runtime/config/resolve_game_setup.ts",
+      "to": "backend/src/app/config/resolve-game-setup.ts"
+    },
+    {
+      "from": "backend/src/runtime/console_presenter.ts",
+      "to": "backend/src/adapters/console/console-presenter.ts"
+    },
+    {
+      "from": "backend/src/runtime/game_event_recorder.ts",
+      "to": "backend/src/app/game-event-recorder.ts"
+    },
+    {
+      "from": "backend/src/runtime/game_runner.ts",
+      "to": "backend/src/app/game-runner.ts"
+    },
+    {
+      "from": "backend/src/runtime/player_agent_factory.ts",
+      "to": "backend/src/app/player-agent-factory.ts"
+    },
+    {
+      "from": "backend/src/runtime/run_mock_game.ts",
+      "to": "backend/src/app/run-mock-game.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/animal_dream_twelve.ts",
+      "to": "backend/src/rulesets/presets/animal-dream-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/board_config_resolver.ts",
+      "to": "backend/src/rulesets/presets/board-config-resolver.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/evil_knight_twelve.ts",
+      "to": "backend/src/rulesets/presets/evil-knight-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+      "to": "backend/src/rulesets/presets/fragrant-pair-seer-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/index.ts",
+      "to": "backend/src/rulesets/presets/index.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/magician_twelve.ts",
+      "to": "backend/src/rulesets/presets/magician-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/nightmare_twelve.ts",
+      "to": "backend/src/rulesets/presets/nightmare-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+      "to": "backend/src/rulesets/presets/noble-secret-body-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/order_prince_twelve.ts",
+      "to": "backend/src/rulesets/presets/order-prince-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/pure_white_twelve.ts",
+      "to": "backend/src/rulesets/presets/pure-white-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/red_moon_twelve.ts",
+      "to": "backend/src/rulesets/presets/red-moon-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+      "to": "backend/src/rulesets/presets/scholar-mentor-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/six_player_mvp.ts",
+      "to": "backend/src/rulesets/presets/six-player-mvp.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+      "to": "backend/src/rulesets/presets/time-wolf-consort-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/trickster_twelve.ts",
+      "to": "backend/src/rulesets/presets/trickster-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+      "to": "backend/src/rulesets/presets/twelve-player-standard.ts"
+    },
+    {
+      "from": "backend/src/runtime/scenarios/wolf_sorcerer_twelve.ts",
+      "to": "backend/src/rulesets/presets/wolf-sorcerer-twelve.ts"
+    },
+    {
+      "from": "backend/src/runtime/simulation/replay_reproduction.ts",
+      "to": "backend/src/app/simulation/replay-reproduction.ts"
+    },
+    {
+      "from": "backend/src/runtime/simulation/reproduction_context.ts",
+      "to": "backend/src/app/simulation/reproduction-context.ts"
+    },
+    {
+      "from": "backend/src/runtime/simulation/simulate_games.ts",
+      "to": "backend/src/app/simulation/simulate-games.ts"
+    },
+    {
+      "from": "backend/src/utils/error_diagnostic.ts",
+      "to": "backend/src/utils/error-diagnostic.ts"
+    },
+    {
+      "from": "backend/src/utils/speech_text.ts",
+      "to": "backend/src/utils/speech-text.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/animal-dream-preset.ts",
+      "to": "backend/src/recording/verification/animal-dream/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/demon-hunter-preset.ts",
+      "to": "backend/src/recording/verification/demon-hunter/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/evil-knight-preset.ts",
+      "to": "backend/src/recording/verification/evil-knight/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+      "to": "backend/src/recording/verification/fragrant-pair-seer/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/ghost-bride-preset.ts",
+      "to": "backend/src/recording/verification/ghost-bride/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/index.ts",
+      "to": "backend/src/recording/verification/board-support.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/magician-preset.ts",
+      "to": "backend/src/recording/verification/magician/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/mist-raven-preset.ts",
+      "to": "backend/src/recording/verification/mist-raven/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/nightmare-preset.ts",
+      "to": "backend/src/recording/verification/nightmare/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/noble-secret-body-preset.ts",
+      "to": "backend/src/recording/verification/noble-secret-body/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/order-prince-preset.ts",
+      "to": "backend/src/recording/verification/order-prince/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/pure-white-preset.ts",
+      "to": "backend/src/recording/verification/pure-white/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/radiant-eclipse-preset.ts",
+      "to": "backend/src/recording/verification/radiant-eclipse/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/red-moon-preset.ts",
+      "to": "backend/src/recording/verification/red-moon/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+      "to": "backend/src/recording/verification/scholar-mentor/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/time-consort-preset.ts",
+      "to": "backend/src/recording/verification/time-wolf-consort/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/trickster-preset.ts",
+      "to": "backend/src/recording/verification/trickster/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+      "to": "backend/src/recording/verification/wolf-sorcerer/preset.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/animal-dream/feed-evidence.ts",
+      "to": "backend/src/recording/verification/animal-dream/feed-evidence.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/animal-dream/validate.ts",
+      "to": "backend/src/recording/verification/animal-dream/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/assembly.ts",
+      "to": "backend/src/recording/verification/assembly.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/cupid.ts",
+      "to": "backend/src/recording/verification/cupid/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/death-history.ts",
+      "to": "backend/src/recording/verification/death-history/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/demon-hunter/native-stocks.ts",
+      "to": "backend/src/recording/verification/demon-hunter/native-stocks.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/demon-hunter/validate.ts",
+      "to": "backend/src/recording/verification/demon-hunter/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/fragrant-pair-seer/feed-evidence.ts",
+      "to": "backend/src/recording/verification/fragrant-pair-seer/feed-evidence.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+      "to": "backend/src/recording/verification/fragrant-pair-seer/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/ghost-bride/validate.ts",
+      "to": "backend/src/recording/verification/ghost-bride/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/hybrid.ts",
+      "to": "backend/src/recording/verification/hybrid/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/initial-identity.ts",
+      "to": "backend/src/recording/verification/initial-identity/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/lonely-girl.ts",
+      "to": "backend/src/recording/verification/lonely-girl/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "to": "backend/src/recording/verification/magician/action-evidence.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/magician/validate.ts",
+      "to": "backend/src/recording/verification/magician/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/mist-raven/feed-evidence.ts",
+      "to": "backend/src/recording/verification/mist-raven/feed-evidence.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/mist-raven/requests.ts",
+      "to": "backend/src/recording/verification/mist-raven/requests.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+      "to": "backend/src/recording/verification/mist-raven/sheriff-evidence.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/mist-raven/validate.ts",
+      "to": "backend/src/recording/verification/mist-raven/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "to": "backend/src/recording/verification/noble-secret-body/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "to": "backend/src/recording/verification/order-prince/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/radiant-eclipse/night-request-prefix.ts",
+      "to": "backend/src/recording/verification/radiant-eclipse/night-request-prefix.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "to": "backend/src/recording/verification/radiant-eclipse/requests.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/radiant-eclipse/validate.ts",
+      "to": "backend/src/recording/verification/radiant-eclipse/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/red-moon/validate.ts",
+      "to": "backend/src/recording/verification/red-moon/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "to": "backend/src/recording/verification/scholar-mentor/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "to": "backend/src/recording/verification/time-wolf-consort/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/trickster/validate.ts",
+      "to": "backend/src/recording/verification/trickster/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/wild-child.ts",
+      "to": "backend/src/recording/verification/wild-child/validate.ts"
+    },
+    {
+      "from": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "to": "backend/src/recording/verification/wolf-sorcerer/validate.ts"
+    },
+    {
+      "from": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/time-wolf-consort/reproduction.test.ts"
+    },
+    {
+      "from": "backend/tests/scenarios/boards/time-consort/transport-game.test.ts",
+      "to": "backend/tests/scenarios/boards/time-wolf-consort/transport-game.test.ts"
+    },
+    {
+      "from": "backend/tests/scenarios/failures/time-consort/required-response-prefix.test.ts",
+      "to": "backend/tests/scenarios/failures/time-wolf-consort/required-response-prefix.test.ts"
+    },
+    {
+      "from": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+      "to": "backend/tests/scenarios/interactions/time-wolf-consort/native-scope-revocation.test.ts"
+    },
+    {
+      "from": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+      "to": "backend/tests/scenarios/interactions/time-wolf-consort/reflection-cycle-controls.test.ts"
+    },
+    {
+      "from": "backend/tests/unit/configuration/time-consort-public-preset.test.ts",
+      "to": "backend/tests/unit/configuration/time-wolf-consort-public-preset.test.ts"
+    },
+    {
+      "from": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+      "to": "backend/tests/unit/contracts/time-wolf-consort-player-dto.types.ts"
+    },
+    {
+      "from": "backend/tests/unit/features/time-consort/frame.test.ts",
+      "to": "backend/tests/unit/features/time-wolf-consort/frame.test.ts"
+    },
+    {
+      "from": "backend/tests/unit/features/time-consort/state-slot.test.ts",
+      "to": "backend/tests/unit/features/time-wolf-consort/state-slot.test.ts"
+    },
+    {
+      "from": "backend/tests/unit/features/time-consort/state.test.ts",
+      "to": "backend/tests/unit/features/time-wolf-consort/state.test.ts"
+    },
+    {
+      "from": "frontend/tests/e2e/time-consort.spec.ts",
+      "to": "frontend/tests/e2e/time-wolf-consort.spec.ts"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/en/checkpoint.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/en/checkpoint.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/en/god.replay.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/en/god.replay.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/en/manifest.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/en/manifest.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/zh-CN/checkpoint.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/zh-CN/checkpoint.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/zh-CN/god.replay.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/zh-CN/god.replay.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/zh-CN/manifest.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/zh-CN/manifest.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/en/checkpoint.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/en/checkpoint.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/en/god.replay.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/en/god.replay.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/en/manifest.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/en/manifest.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/zh-CN/checkpoint.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/zh-CN/checkpoint.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/zh-CN/god.replay.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/zh-CN/god.replay.json"
+    },
+    {
+      "from": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/zh-CN/manifest.json",
+      "to": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/zh-CN/manifest.json"
+    },
+    {
+      "from": "frontend/tests/unit/replay/events/time-consort.test.ts",
+      "to": "frontend/tests/unit/replay/events/time-wolf-consort.test.ts"
+    },
+    {
+      "from": "packages/game-contract/src/facts/time-consort.ts",
+      "to": "packages/game-contract/src/facts/time-wolf-consort.ts"
+    },
+    {
+      "from": "packages/game-contract/tests/facts/time-consort.test.ts",
+      "to": "packages/game-contract/tests/facts/time-wolf-consort.test.ts"
+    }
+  ],
+  "decisions": [
+    "RoleCatalog完整4源连同权限与presentation贡献归rulesets/roles；原真实依赖不靠目录名豁免。",
+    "Time组织slug=time-wolf-consort；公开Role/boardId/字段/RNG等机器ID不改。",
+    "源码Time preset仍带twelve清晰后缀，不与公开JSON加载ID混用。",
+    "普通TS残余文件名统一kebab，原utils两既有叶只改文件名，不增utils巨包。",
+    "公开复盘导出完整用例迁app/cli，原同步/异步函数不拆，不改输入输出。",
+    "真实既有smoke薄入口也迁app/cli，命令key和release:check调用保留；原源6025 blob661fab85/361bytes，非缺失脚本。"
+  ],
+  "limits": [
+    "所有原稿与本次实际Git在Q2/Q3提交后再捕；旧计划SHA不是当前源恒定声明。",
+    "12个Time JSON/manifest数据移动需要独立whole-byte搬移；4个派生manifest只改currentPath，origin/identity保。",
+    "所有script/sidecar/template/fixture/module-relocation/package-export/边界/trace布局需显式接线，不能只改AST literal import。"
+  ]
+}

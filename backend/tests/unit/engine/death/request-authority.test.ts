@@ -1,7 +1,7 @@
 /**
  * 单元测试验证有界死亡许可在接收和清理间绑定原 actor、工具、时钟及 generation。输入为新内存 World、字面死亡请求，以及注入错误、复活、阶段变化和微任务撤权；预期保留明确许可错误、枪／死亡计数及隐藏 generation 观察相等，不执行完整对局或 provider 传输。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -13,22 +13,22 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { ActionTurn } from "../../../../src/agents/player/action-turn";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { getHunterState } from "../../../../src/features/hunter/ports";
 
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultToolSpecRegistry,
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 
 const roles = [
   Role.Wolf,

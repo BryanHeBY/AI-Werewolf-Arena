@@ -3,7 +3,7 @@
  * 规则集先查询猎魔板子的原生审计，原生库存提交仍归猎魔权威；普通分支按翻牌、票权、警徽、事件原序写入。
  * 本模块不标死、推进阶段或授予租约；已写前缀遇后续错误不回滚，重复翻牌不恢复票权。
  */
-import { commitDemonIdiotReveal, demonIdiotRevealed } from "../game/mechanisms/roles/demon_hunter/reveal-ports";
+import { commitDemonIdiotReveal, demonIdiotRevealed } from "../features/demon-hunter/reveal-ports";
 import { AliveComponent } from "../domain/components/alive";
 import { BadgeComponent } from "../domain/components/badge";
 import { COMPONENT } from "../domain/components/names";
@@ -11,9 +11,9 @@ import { RoleComponent } from "../domain/components/role";
 import { VotingRightComponent } from "../domain/components/voting-right";
 import { EntityId, GameEvent, Role } from "../domain/model";
 import { World } from "../domain/world";
-import { VotedOutResult } from "../game/mechanisms/hooks/hook_registry";
-import { transferOrDestroySheriffBadge } from "../game/mechanisms/sheriff/badge";
-import { getIdiotState, setIdiotState } from "../game/mechanisms/roles/idiot/ports";
+import { VotedOutResult } from "../engine/hooks/registry";
+import { transferOrDestroySheriffBadge } from "../features/sheriff/badge";
+import { getIdiotState, setIdiotState } from "../features/idiot/ports";
 
 /** 同步决定本次放逐是否免死；原生命、阶段与后续死亡提交仍归引擎。 */
 export function idiotVotedOutHook(

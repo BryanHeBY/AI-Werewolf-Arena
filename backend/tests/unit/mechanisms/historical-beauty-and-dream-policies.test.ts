@@ -11,35 +11,35 @@ import {
   type BoardConfig,
   type RoleComponent,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import {
   permitsCharm,
   activeCharm,
   bindCharm,
-} from "../../../src/game/mechanisms/roles/wolf_beauty/relation";
+} from "../../../src/features/wolf-beauty/relation";
 import {
   DREAM_PROTECTION_POLICIES,
   BEAUTY_DEATH_LINK_POLICIES,
 } from "../../../src/domain/board";
-import { getDreamerState } from "../../../src/game/mechanisms/roles/dreamer/ports";
-import { getWolfBeautyState } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
+import { getDreamerState } from "../../../src/features/dreamer/ports";
+import { getWolfBeautyState } from "../../../src/features/wolf-beauty/ports";
 import {
   projectDreamerState,
   projectWolfBeautyState,
-} from "../../../src/game/mechanisms/roles/player_state";
+} from "../../../src/agents/observation/player-state";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { captureNightLife } from "../../../src/domain/night-effects";
-import { DreamNightFrame } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { captureNightAbilityScope } from "../../../src/game/mechanisms/roles/ability_scope";
-import { allNightAbilities } from "../../../src/game/mechanisms/roles/abilities";
+import { DreamNightFrame } from "../../../src/features/dreamer/night-frame";
+import { captureNightAbilityScope } from "../../../src/features/night-abilities/ability-scope";
+import { allNightAbilities } from "../../../src/features/night-abilities/abilities";
 import {
   grantNightAbility,
   transferNightAbility,
-} from "../../../src/game/mechanisms/roles/night-ability-grants";
+} from "../../../src/features/night-abilities/night-ability-grants";
 
 function config(roles: Role[]): BoardConfig {
   return {

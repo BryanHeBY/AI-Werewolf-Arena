@@ -1,8 +1,8 @@
 /**
  * 单元测试验证熊按原生命／座位采样只公布公开布尔值，并保持新鲜度和玩家历史边界。输入为原相邻位置、生命／阵营、语言及修改矩阵；有界 capture／publish／projection 的吼声、历史、隐私和原样本断言为预期，不运行完整夜或模型。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -16,27 +16,27 @@ import {
   type ActionRequest,
   type GameEvent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { BearNightFrame } from "../../../../src/game/mechanisms/roles/bear/night_frame";
-import { getBearState } from "../../../../src/game/mechanisms/roles/bear/state";
-import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { BearNightFrame } from "../../../../src/features/bear/night-frame";
+import { getBearState } from "../../../../src/features/bear/state";
+import { RoleCatalog } from "../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
 
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import type { IdentityComponent } from "../../../../src/domain/entities/player";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import {
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
+} from "../../../../src/rulesets/mechanism-api";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
 
 const deck = [Role.Bear, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 

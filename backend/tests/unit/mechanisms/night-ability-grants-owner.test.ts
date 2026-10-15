@@ -10,9 +10,9 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { createRoleComponent } from "../../../src/domain/components/role";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import type { GameEvent } from "../../../src/domain/events";
-import { allNightAbilities, activeNightAbility, findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import * as metadataCommands from "../../../src/game/mechanisms/roles/ability_changes";
+import { allNightAbilities, activeNightAbility, findNightAbility } from "../../../src/features/night-abilities/abilities";
+import { grantNightAbility, transferNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import * as metadataCommands from "../../../src/features/night-abilities/ability-changes";
 
 function retiredGrantExports() {
   // @ts-expect-error 授予实际算法已退出 metadata 命令叶，无转发桥。

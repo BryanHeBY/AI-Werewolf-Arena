@@ -1,22 +1,22 @@
 /**
  * 单元测试：验证原生双人查验槽的实际 owner。输入为手写双人历史、受控 privateState accessor 与不可写字段；字面归档形状、同引用和写前快照为预期。原角色／能力 factory 只造输入，不由生产命令生成预期；租约与完整对局留在外部。
  */
-import type { RoleInitializationComponent } from "../../../../src/game/mechanisms/roles/contracts";
+import type { RoleInitializationComponent } from "../../../../src/rulesets/roles/contracts";
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import {
   findNightAbility,
   type NightAbility,
-} from "../../../../src/game/mechanisms/roles/abilities";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../../src/features/night-abilities/abilities";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import {
   installPairStateSlot,
   commitPairStateSlot,
   type PairStateSlot,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot";
+} from "../../../../src/features/fragrant-pair-seer/pair-state-slot";
 
 function fixture() {
   const role = createRoleComponent(Role.AwakenedSeer, "en");

@@ -7,8 +7,8 @@
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
 import { expect, test } from "bun:test";
-import { BoardConfigurationError } from "../../../src/runtime/config/board_definition";
-import { configDiagnostic } from "../../../src/runtime/config/error_codes";
+import { BoardConfigurationError } from "../../../src/app/config/board-definition";
+import { configDiagnostic } from "../../../src/app/config/error-codes";
 for (const preset of ["mist_raven", "radiant_eclipse"] as const) {
   test(`${preset}: finite preset error keeps its machine code and safe field path`, () => {
     const code = `board_config_${preset}_preset_invalid`;

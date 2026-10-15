@@ -30,7 +30,7 @@ import type {
 import type {
   NightAbility,
   NightAbilityReadView,
-} from "../../../src/game/mechanisms/roles/abilities";
+} from "../../../src/features/night-abilities/abilities";
 
 // 旧类型取自固定 Git 的完整声明；保全部字段与修饰符，不能用新 Metadata 生成旧预期。
 type BeforeNightAbilityUnion = {
@@ -205,23 +205,23 @@ function publicDataKeepsOriginalBoundaries(
 
 // 公共类型改由 package 具名出口唯一拥有；旧叶和三层既有聚合出口都不保留类型桥。
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
-import type { AbilityStatus as LeafAbilityStatus } from "../../../src/game/mechanisms/roles/abilities";
+import type { AbilityStatus as LeafAbilityStatus } from "../../../src/features/night-abilities/abilities";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
-import type { PlayerNightAbilityStates as LeafPlayerNightAbilityStates } from "../../../src/game/mechanisms/roles/abilities";
+import type { PlayerNightAbilityStates as LeafPlayerNightAbilityStates } from "../../../src/features/night-abilities/abilities";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
-import type { PlayerNightAbility as LeafPlayerNightAbility } from "../../../src/game/mechanisms/roles/abilities";
+import type { PlayerNightAbility as LeafPlayerNightAbility } from "../../../src/features/night-abilities/abilities";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
-import type { AbilityStatus as MechanismsAbilityStatus } from "../../../src/game/mechanisms";
+import type { AbilityStatus as MechanismsAbilityStatus } from "../../../src/rulesets/mechanism-api";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
-import type { PlayerNightAbilityStates as MechanismsPlayerNightAbilityStates } from "../../../src/game/mechanisms";
+import type { PlayerNightAbilityStates as MechanismsPlayerNightAbilityStates } from "../../../src/rulesets/mechanism-api";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
-import type { PlayerNightAbility as MechanismsPlayerNightAbility } from "../../../src/game/mechanisms";
+import type { PlayerNightAbility as MechanismsPlayerNightAbility } from "../../../src/rulesets/mechanism-api";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
-import type { AbilityStatus as GameAbilityStatus } from "../../../src/game";
+import type { AbilityStatus as GameAbilityStatus } from "../../../src/engine/game-api";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
-import type { PlayerNightAbilityStates as GamePlayerNightAbilityStates } from "../../../src/game";
+import type { PlayerNightAbilityStates as GamePlayerNightAbilityStates } from "../../../src/engine/game-api";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
-import type { PlayerNightAbility as GamePlayerNightAbility } from "../../../src/game";
+import type { PlayerNightAbility as GamePlayerNightAbility } from "../../../src/engine/game-api";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
 import type { AbilityStatus as BackendAbilityStatus } from "../../../src";
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
@@ -229,9 +229,9 @@ import type { PlayerNightAbilityStates as BackendPlayerNightAbilityStates } from
 // @ts-expect-error 旧公开类型出口已退休，不从后端聚合类型反导共享包。
 import type { PlayerNightAbility as BackendPlayerNightAbility } from "../../../src";
 // @ts-expect-error 账本只保留运行函数，不保留数据类型兼容出口。
-import type { NightActionKind as LedgerNightActionKind } from "../../../src/game/mechanisms/roles/night_action_history";
+import type { NightActionKind as LedgerNightActionKind } from "../../../src/features/night-abilities/night-action-history";
 // @ts-expect-error 账本只保留运行函数，不保留数据类型兼容出口。
-import type { OwnNightAction as LedgerOwnNightAction } from "../../../src/game/mechanisms/roles/night_action_history";
+import type { OwnNightAction as LedgerOwnNightAction } from "../../../src/features/night-abilities/night-action-history";
 type RetiredTypes = [
   LeafAbilityStatus,
   LeafPlayerNightAbilityStates,

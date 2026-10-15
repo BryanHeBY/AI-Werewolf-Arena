@@ -3,7 +3,7 @@
  * 输入保留原狼刀／库存／顺序／撤销／语言矩阵，只调用有界原生阶段 helper；手写请求、
  * 药瓶／使用计数和配置提示／DTO 边界是预期，不运行完整 NightPipeline 或 recorder。
  */
-import { captureNativeRolePresentation } from "../../../../src/game/observation/native-role-presentation-capture";
+import { captureNativeRolePresentation } from "../../../../src/agents/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -19,20 +19,20 @@ import {
   type ToolCall,
   type StatusMarksComponent,
 } from "../../../../src/domain";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { WITCH_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/witch/night_stages";
-import { WITCH_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/witch/profile";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { WITCH_NIGHT_STAGES } from "../../../../src/features/witch/night-stages";
+import { WITCH_ROLE_PROFILE } from "../../../../src/features/witch/profile";
 import {
   abilityStatus,
   findNightAbility,
-} from "../../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
-import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";
+} from "../../../../src/features/night-abilities/abilities";
+import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
+import { getDefaultConfigRenderRegistry } from "../../../../src/agents/prompt/config-render-registry";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/app/config/board-definition";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 
 const potionOrders: Array<Array<PotionType.Heal | PotionType.Poison>> = [

@@ -7,7 +7,7 @@
  */
 import { auditSummaryFixture } from "../../support/builders/audit-summary";
 import { describe, expect, test } from "bun:test";
-import { AuditEvidencePolicy } from "../../../src/audit/evidence_policy";
+import { AuditEvidencePolicy } from "../../../src/audit/evidence-policy";
 
 describe("AuditEvidencePolicy", () => {
   test("deduplicates and orders findings before rejecting unsupported evidence", () => {

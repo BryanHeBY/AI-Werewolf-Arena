@@ -6,7 +6,7 @@
  */
 import { Role } from "../../../../../src/domain/identity";
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
-import { fragrantPairSeerTwelveConfig } from "../../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
+import { fragrantPairSeerTwelveConfig } from "../../../../../src/rulesets/presets/fragrant-pair-seer-twelve";
 import { createRandom } from "../../../../../src/domain/random";
 import type { RandomSource } from "../../../../../src/domain/random";
 

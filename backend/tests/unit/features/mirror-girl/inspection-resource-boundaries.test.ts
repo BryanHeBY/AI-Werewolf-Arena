@@ -2,7 +2,7 @@
  * 单元测试验证镜女直接查验的身份、唯一目标知识与独立复制／赠予／转移资源。输入为原语言、变化点矩阵及局部角色／生命修改；报告、计数、隐私、关闭和已提交前缀重入拒绝为预期，不执行完整 NightPipeline 或 PhaseManager 周期。
  */
 import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -17,40 +17,40 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { findNightAbility, allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
-import { setNightAbilityEnabled } from "../../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility, transferNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { freshMirrorInspectionState } from "../../../../src/game/mechanisms/roles/mirror_girl/profile";
-import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { findNightAbility, allNightAbilities } from "../../../../src/features/night-abilities/abilities";
+import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
+import { setNightAbilityEnabled } from "../../../../src/features/night-abilities/abilities";
+import { grantNightAbility, transferNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { freshMirrorInspectionState } from "../../../../src/features/mirror-girl/profile";
+import { MIRROR_INSPECTION_STAGE } from "../../../../src/features/role-inspection/contribution-ports";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { resolveInspection } from "../../../../src/engine/inspection";
 import {
   canGargoyleKnife,
   refreshGargoyleInheritance,
-} from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
-import { refreshHiddenWolfInheritance } from "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
+} from "../../../../src/features/gargoyle/inheritance";
+import { refreshHiddenWolfInheritance } from "../../../../src/features/hidden-wolf/inheritance";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { BaselineBotActionProvider } from "../../../../src/agents/baseline/privileged";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../../src/game/mechanisms";
-import { hasRoleInspectionNightCommit } from "../../../../src/game/mechanisms/roles/role_inspection/night_scope";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+} from "../../../../src/rulesets/mechanism-api";
+import { hasRoleInspectionNightCommit } from "../../../../src/features/role-inspection/night-scope";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 
 const deck = [Role.MirrorGirl, Role.Wolf, Role.HiddenWolf, Role.Witch, Role.Guard, Role.Villager];
@@ -535,7 +535,7 @@ test("a gifted Mirror instance runs without a Mirror entity and cannot replace n
 
 test("actual role-check capabilities collect all policy handlers even when an injected role catalog omits a Gargoyle profile", async () => {
   const game = fixture(),
-    { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
+    { RoleCatalog } = await import("../../../../src/rulesets/roles/catalog");
   const minimal = createRoleCatalog({
     contributions: getDefaultRoleContributions().filter(
       (entry) => entry.metadata.role === Role.Wolf || entry.metadata.role === Role.Villager,
@@ -622,7 +622,7 @@ for (const point of ["gateway", "label"] as const)
       };
     }
     if (point === "label") {
-      const { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
+      const { RoleCatalog } = await import("../../../../src/rulesets/roles/catalog");
       ctx.roleCatalog = createRoleCatalog({
         contributions: getDefaultRoleContributions().map((profile) =>
           profile.metadata.role === Role.Wolf

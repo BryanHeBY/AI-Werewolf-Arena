@@ -3,7 +3,7 @@
  * 修改；原字面预期、身份快照及拒绝断言是预期，不在迁移中重新生成。仅调用原生内存
  * owner／frame／reader，测试自有 mock／组件不运行完整对局、模型或真实传输，support／fixture 字节及政策状态不变。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../../src/domain/components/names";
 
@@ -12,8 +12,8 @@ import { Camp } from "../../../../src/domain/identity";
 import type { World } from "../../../../src/domain/world";
 import {
   freshNightmareShadowState,
-} from "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";
-import { nightmareFearTargets } from "../../../../src/game/mechanisms/roles/nightmare_shadow/targets";
+} from "../../../../src/features/nightmare/state-slot";
+import { nightmareFearTargets } from "../../../../src/features/nightmare/targets";
 import {
   installNightmareBoard,
   beginNightmareNight,
@@ -22,7 +22,7 @@ import {
   nightmareKnifeBlocked,
   nightmarePackReady,
   assertNightmareRosterCurrent,
-} from "../../../../src/game/mechanisms/roles/nightmare_shadow/night_frame";
+} from "../../../../src/features/nightmare/night-frame";
 function fixture(required = false, constructorLocation?: "own" | "inherited") {
   const state = freshNightmareShadowState(required ? "required_when_legal" : "optional");
   const roles = new Map<number, RoleComponent>([

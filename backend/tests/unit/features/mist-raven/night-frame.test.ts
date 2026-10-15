@@ -1,24 +1,24 @@
 /**
  * 单元测试：验证雾鸦独立 night frame 的原状态／读接口。输入为内存 fixture、受控回调和畸形修改；原引用、字面值及拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { Camp, Role, WinCondition } from "../../../../src/domain/identity";
 import type { BoardConfig } from "../../../../src/domain/board";
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
+import { getDreamerState } from "../../../../src/features/dreamer/ports";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { type RoleComponent } from "../../../../src/domain/components/role";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 
 import { type AliveComponent } from "../../../../src/domain/components/alive";
 import { createIdentityComponent } from "../../../../src/domain/entities/player";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import {
   createAlchemistState,
   createRavenState,
   type AlchemistState,
-} from "../../../../src/game/mechanisms/roles/mist_raven/state";
+} from "../../../../src/features/mist-raven/state";
 import {
   installMistRavenBoard,
   beginMistNight,
@@ -37,7 +37,7 @@ import {
   openSnakeWindow,
   snakeWindowTargets,
   commitSnakeChoice,
-} from "../../../../src/game/mechanisms/roles/mist_raven/night_frame";
+} from "../../../../src/features/mist-raven/night-frame";
 function fixture() {
   const world = new World();
   const roles = [

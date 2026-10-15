@@ -12,26 +12,26 @@ import {
   type ActionRequest,
   type ActionProvider,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
+} from "../../../../src/app/config/board-definition";
 import { COMPONENT, type RoleComponent } from "../../../../src/domain";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { roleInspectionTargets } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import { roleInspectionTargets } from "../../../../src/features/role-inspection/contribution-ports";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+} from "../../../../src/app/simulation/reproduction-context";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 for (const inspectionPolicy of [

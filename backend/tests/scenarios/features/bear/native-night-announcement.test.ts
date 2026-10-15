@@ -15,8 +15,8 @@ import {
   type ActionRequest,
   type ToolCall,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getBearState } from "../../../../src/game/mechanisms/roles/bear/ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getBearState } from "../../../../src/features/bear/ports";
 
 const deck = [Role.Bear, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 

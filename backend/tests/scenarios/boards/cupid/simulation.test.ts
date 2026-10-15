@@ -11,9 +11,9 @@ import {
   type RoleComponent,
   type VictoryComponent,
 } from "../../../../src/domain";
-import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
+import { BaselineBotActionProvider } from "../../../../src/agents/baseline/privileged";
 import { CUPID_CASES, cupidScenario, cupidBoard } from "../../../support/features/cupid/builders/scenario";
-import { loversRecord } from "../../../../src/game/mechanisms/roles/cupid/relation";
+import { loversRecord } from "../../../../src/features/cupid/relation";
 const boards = [
   ...CUPID_CASES.map((name) => ({ name, board: cupidScenario(name).board.config })),
   ...(["netease_2017_cupid_follows_lovers_v1", "lui_meme_lovers_only_v1"] as const).map(

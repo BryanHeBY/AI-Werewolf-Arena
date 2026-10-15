@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { LONELY_GIRL_POLICY } from "../../../src/game/mechanisms/roles/lonely_girl/state-slot";
-import { projectLonelyGirlSetup } from "../../../src/game/mechanisms/roles/lonely_girl/lifecycle";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { LONELY_GIRL_POLICY } from "../../../src/features/lonely-girl/state-slot";
+import { projectLonelyGirlSetup } from "../../../src/features/lonely-girl/lifecycle";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 
 for (const size of [6, 12])
   test(`public ${size}-seat sample parses and initializes the exact normal-N setup`, async () => {

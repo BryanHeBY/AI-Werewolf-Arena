@@ -1,12 +1,12 @@
 /**
  * 单元测试验证混血儿直接归属阶段、中立目标接收与同步选择所有权。输入为语言／目标／变化矩阵和局部夜间上下文；预期为阵营、身份、胜利、隐私与陈旧选择断言，已提交前缀的重入在阶段运行前被拒绝，不执行完整周期。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
-import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../../src/features/night-abilities/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -27,35 +27,35 @@ import type { VictoryComponent } from "../../../../src/domain/components/victory
 import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { ConditionRegistry } from "../../../../src/domain/registries/condition-registry";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { HYBRID_STAGE } from "../../../../src/game/mechanisms/roles/hybrid/night_stage";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { HYBRID_STAGE } from "../../../../src/features/hybrid/night-stage";
 import {
   getHybridState,
   projectHybridState,
-} from "../../../../src/game/mechanisms/roles/hybrid/ports";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
+} from "../../../../src/features/hybrid/ports";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { resolveInspection } from "../../../../src/engine/inspection";
 import {
   knownWolfTeammates,
   wolfTeamPermissions,
   wolfChatParticipants,
   wolfKnifeHolders,
-} from "../../../../src/game/mechanisms/roles/wolf_team";
+} from "../../../../src/features/wolf-team/permissions";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../../src/game/mechanisms";
-import { WinConditionRegistry } from "../../../../src/game/mechanisms/registries/win_condition_registry";
-import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms/script/event_render_registry";
+} from "../../../../src/rulesets/mechanism-api";
+import { WinConditionRegistry } from "../../../../src/engine/victory/condition-registry";
+import { getDefaultScriptEventRenderRegistry } from "../../../../src/agents/presentation/event-render-registry";
 import { text } from "@ai-werewolf-arena/game-text";
 import { hybridEventLabel } from "@ai-werewolf-arena/game-presentation";
 

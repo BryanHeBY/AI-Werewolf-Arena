@@ -15,7 +15,7 @@ import {
   chooseBodyTarget,
   readSecretBodyState,
   spendBodyForNight,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/state";
+} from "../../../../src/features/noble-secret-body/state";
 import { expect, test } from "bun:test";
 
 const living = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];

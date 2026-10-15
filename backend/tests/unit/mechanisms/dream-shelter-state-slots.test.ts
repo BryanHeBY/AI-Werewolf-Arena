@@ -5,14 +5,14 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, type DreamerState, type ShelterState } from "@ai-werewolf-arena/game-contract";
-import { DREAMER_STATE_SLOT as dream } from "../../../src/game/mechanisms/roles/dreamer/ports";
-import { SHELTER_STATE_SLOT as shelter } from "../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot";
-import { createShelterState, readShelterState, selectShelter } from "../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
-import { projectNightState } from "../../../src/game/observation/night-ability-projection";
-import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { DREAMER_STATE_SLOT as dream } from "../../../src/features/dreamer/ports";
+import { SHELTER_STATE_SLOT as shelter } from "../../../src/features/radiant-eclipse/shelter-state-slot";
+import { createShelterState, readShelterState, selectShelter } from "../../../src/features/radiant-eclipse/shelter-state";
+import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../../../src/features/night-abilities/abilities";
+import { projectNightState } from "../../../src/agents/observation/night-ability-projection";
+import { installNativeAbility } from "../../../src/features/night-abilities/ability-changes";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 

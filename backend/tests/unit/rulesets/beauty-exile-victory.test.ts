@@ -12,8 +12,8 @@ import { createAliveComponent } from "../../../src/domain/components/alive";
 import { createVictoryComponent } from "../../../src/domain/components/victory";
 import { Camp, Role, DeathCause, WinCondition, type WinDecision } from "../../../src/domain/model";
 import { ConditionRegistry } from "../../../src/domain/registries/condition-registry";
-import { bindCharm } from "../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { activeCharm, attemptCharmTrigger, commitCharmDeath, setWolfBeautyState, type CharmClaimReceipt } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
+import { bindCharm } from "../../../src/features/wolf-beauty/relation";
+import { activeCharm, attemptCharmTrigger, commitCharmDeath, setWolfBeautyState, type CharmClaimReceipt } from "../../../src/features/wolf-beauty/ports";
 import { prepareBeautyExileVictory, resolveBeautyExileVictory, beautyExileVictoryOverrides } from "../../../src/rulesets/beauty-exile-victory";
 
 function fixture() {

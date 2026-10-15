@@ -4,9 +4,9 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Role, type GameEvent, type RoleComponent } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import { getSeerState } from "../../../src/features/seer/ports";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 
@@ -17,12 +17,12 @@ const role = (world: ReturnType<typeof fixture>["world"], id: number) =>
   world.getComponent(id, COMPONENT.Role)!;
 
 test("explicit undefined optional fields normalize into a serializable CP/Tape without weakening strict JSON parsing", async () => {
-  const { SessionRecordManager } = await import("../../../src/recording/session_recorder");
+  const { SessionRecordManager } = await import("../../../src/recording/session/recorder");
   const { beginGameReproduction, currentEngineVersion } =
-    await import("../../../src/runtime/simulation/reproduction_context");
-  const { parseReproductionRecord } = await import("../../../src/recording/reproduction");
+    await import("../../../src/app/simulation/reproduction-context");
+  const { parseReproductionRecord } = await import("../../../src/recording/reproduction/format");
   const { createTestTempDirectory } = await import("../../support/drivers/temp-directories");
-  const { setSeerState } = await import("../../../src/game/mechanisms/roles/seer/ports");
+  const { setSeerState } = await import("../../../src/features/seer/ports");
   const context = fixture(),
     events: GameEvent[] = [];
   setSeerState(role(context.world, 3), {

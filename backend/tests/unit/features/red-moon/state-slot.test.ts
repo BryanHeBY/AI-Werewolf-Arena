@@ -10,14 +10,14 @@ import type { RoleComponent } from "../../../../src/domain/components/role";
 import type {
   RoleInitContext,
   RoleInitializationComponent,
-} from "../../../../src/game/mechanisms/roles/contracts";
-import { RED_MOON_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/red_moon_apostle/profile";
+} from "../../../../src/rulesets/roles/contracts";
+import { RED_MOON_ROLE_PROFILE } from "../../../../src/features/red-moon/profile";
 import {
   RED_MOON_STATE_SLOT,
   readRedMoonShadow,
   encodeRedMoonShadow,
   writeRedMoonTransition,
-} from "../../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
+} from "../../../../src/features/red-moon/state-slot";
 
 const literalState = (): RedMoonState => ({
   policy: "awa_red_moon_demon_v1",

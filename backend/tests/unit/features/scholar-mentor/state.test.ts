@@ -14,8 +14,8 @@ import {
   createModifierState,
   readModifierState,
   selectModifier,
-} from "../../../../src/game/mechanisms/roles/scholar_mentor/state-slot";
-import { resolveModifiers } from "../../../../src/game/mechanisms/roles/scholar_mentor/rules";
+} from "../../../../src/features/scholar-mentor/state-slot";
+import { resolveModifiers } from "../../../../src/features/scholar-mentor/rules";
 const roster: ModifierPlayer[] = [
   { id: 1, role: "day_scholar", camp: "good", alive: true },
   { id: 2, role: "night_mentor", camp: "wolf", alive: true },

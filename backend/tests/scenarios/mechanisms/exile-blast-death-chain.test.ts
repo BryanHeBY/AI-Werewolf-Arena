@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Camp, Phase, Role, WinCondition, type ActionRequest } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: real exile settles words, badge, gun, the shot sheriff's badge and then victory`, async () => {

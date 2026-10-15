@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "../../../src/domain";
-import { getDefaultScriptEventRenderRegistry } from "../../../src/game";
+import { getDefaultScriptEventRenderRegistry } from "../../../src/engine/game-api";
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: neutral gun text and replay stage do not assert a native Hunter role`, () => {

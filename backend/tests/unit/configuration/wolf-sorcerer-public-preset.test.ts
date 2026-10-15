@@ -10,8 +10,8 @@ import { readFileSync } from "node:fs";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../../src/runtime/config/board_definition";
-import { wolfSorcererTwelveConfig } from "../../../src/runtime/scenarios/wolf_sorcerer_twelve";
+} from "../../../src/app/config/board-definition";
+import { wolfSorcererTwelveConfig } from "../../../src/rulesets/presets/wolf-sorcerer-twelve";
 test("Public Wolf Sorcerer preset matches the validated twelve-player scenario", () => {
   const raw = JSON.parse(
     readFileSync(

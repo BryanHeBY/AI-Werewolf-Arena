@@ -12,7 +12,7 @@ import {
   appendAnimalFact,
   animalFoxKnowledge,
   animalBeautyKnowledge,
-} from "../../../../src/game/mechanisms/roles/animal_dream/facts";
+} from "../../../../src/features/animal-dream/facts";
 import type { GameEvent } from "../../../../src/domain";
 const foxPayload = { policy: "awa_animal_dream_v1", day: 2, actorId: 10, targetId: 1 } as const;
 for (const kind of ["frozen", "sealed", "nonextensible", "fixed-length", "plain-object"] as const)

@@ -4,29 +4,29 @@
  * 原 owner、frame 和 readers 真实执行，native/install/use 只迁向同一实际实例 owner。
  * 不运行完整对局、模型或传输，不替换支持 fixture、规则与原历史矩阵。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { Role, Camp } from "../../../../src/domain/identity";
 
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import type { GameEvent } from "../../../../src/domain/events";
-import { freshPairSeerState } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
+import { freshPairSeerState } from "../../../../src/features/fragrant-pair-seer/state";
 import {
   findNightAbility,
   abilityStatus,
   recordNightAbilityUse,
-} from "../../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
+} from "../../../../src/features/night-abilities/abilities";
+import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
 import {
   installNativeAbility,
-} from "../../../../src/game/mechanisms/roles/ability_changes";
+} from "../../../../src/features/night-abilities/ability-changes";
 import {
   grantNightAbility,
   transferNightAbility,
-} from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";
+} from "../../../../src/features/night-abilities/night-ability-grants";
+import { captureNightAbilityScope } from "../../../../src/features/night-abilities/ability-scope";
 function fixture() {
   const world = new World(),
     role = createRoleComponent(Role.AwakenedSeer),

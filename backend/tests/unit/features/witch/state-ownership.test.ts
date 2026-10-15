@@ -5,16 +5,16 @@ import type { WitchState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Role, Camp, WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
   resetWitchNightState,
   refreshWitchSelfHeal,
   consumeWitchHeal,
   consumeWitchPoison,
   consumeRecipientPoison,
-} from "../../../../src/game/mechanisms/roles/witch/ports";
-import { setWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
+} from "../../../../src/features/witch/ports";
+import { setWitchState } from "../../../../src/features/witch/ports";
 
 function state(rule = WitchSelfHealRule.FirstNightOnly): WitchState {
   return {

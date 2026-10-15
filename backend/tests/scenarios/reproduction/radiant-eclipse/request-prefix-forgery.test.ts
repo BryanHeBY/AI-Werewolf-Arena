@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
 const full: ReproductionRecord = await radiantRecording();
 function clone() {
   return structuredClone(full);

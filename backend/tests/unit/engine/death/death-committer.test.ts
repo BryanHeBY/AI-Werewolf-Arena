@@ -3,12 +3,12 @@
  * 字面玩家序号及注入的枪列表或继承异常；独立手写的事件数量、生命身份和已结算断言
  * 作为预期，不由另一场对局生成。本测试不推进阶段，不请求遗言、警徽、模型或完整游戏。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { DeathCommitter } from "../../../../src/game/engine/death-committer";
+import { DeathCommitter } from "../../../../src/engine/death-committer";
 import { World } from "../../../../src/domain/world";
 
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import {
   Camp,
@@ -17,7 +17,7 @@ import {
   type GameEvent,
   type RuntimeSnapshot,
 } from "../../../../src/domain/model";
-import type { firstDeathGuns } from "../../../../src/game/mechanisms/roles/death_abilities";
+import type { firstDeathGuns } from "../../../../src/features/death-actions/death-abilities";
 
 function fixture() {
   const world = new World("en"),

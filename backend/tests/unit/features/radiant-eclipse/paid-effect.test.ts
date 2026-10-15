@@ -4,13 +4,13 @@
  * 实际原生 owner/frame/readers 仍按原顺序执行，use/install 入口只随实际实例 owner 迁移。
  * 不运行完整对局、模型或物理传输，不重建 fixture、矩阵或生产生成的预期。
  */
-import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { type RoleComponent } from "../../../../src/domain/components/role";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 
 
 import { createVictoryComponent } from "../../../../src/domain/components/victory";
@@ -18,10 +18,10 @@ import {
   findNightAbility,
   abilityStatus,
   type NightAbility,
-} from "../../../../src/game/mechanisms/roles/abilities";
-import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
-import { createEclipseState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";
-import { createShelterState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
+} from "../../../../src/features/night-abilities/abilities";
+import { installNativeAbility } from "../../../../src/features/night-abilities/ability-changes";
+import { createEclipseState } from "../../../../src/features/radiant-eclipse/eclipse-state-slot";
+import { createShelterState } from "../../../../src/features/radiant-eclipse/shelter-state";
 import {
   installRadiantEclipseBoard,
   beginRadiantNight,
@@ -31,7 +31,7 @@ import {
   closeRadiantNight,
   commitRadiantShelter,
   sealRadiantNightEffects,
-} from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
+} from "../../../../src/features/radiant-eclipse/night-frame";
 import type { GameEvent } from "../../../../src/domain/events";
 function fixture() {
   const world = new World();

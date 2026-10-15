@@ -15,15 +15,15 @@ import {
   type ToolCall,
 } from "../../../../src/domain";
 import type { AliveComponent } from "../../../../src/domain/components/alive";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
+} from "../../../../src/app/config/board-definition";
 
 function fixture(locale: "zh-CN" | "en" = "en", choice = true, idiot = false) {
   const roles = [

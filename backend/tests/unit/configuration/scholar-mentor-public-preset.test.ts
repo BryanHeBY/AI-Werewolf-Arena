@@ -8,12 +8,12 @@
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { isScholarMentorPreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { scholarMentorTwelveConfig } from "../../../src/runtime/scenarios/scholar_mentor_twelve";
+import { scholarMentorTwelveConfig } from "../../../src/rulesets/presets/scholar-mentor-twelve";
 import { Role, type BoardConfig } from "../../../src/domain";
 const publicDefinition = JSON.parse(
   readFileSync(

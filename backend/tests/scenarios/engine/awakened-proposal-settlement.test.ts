@@ -8,11 +8,11 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { DeathCause, Role, StatusMark, type BoardConfig } from "../../../src/domain";
 import { captureNightLife, type NightAwakenedEffect } from "../../../src/domain/night-effects";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
-import type { NightStageHandler } from "../../../src/game/mechanisms/stages/night/contracts";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import type { NightStageHandler } from "../../../src/engine/night/contracts";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 const roles = [Role.Wolf, Role.Witch, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 

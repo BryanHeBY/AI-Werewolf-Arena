@@ -7,8 +7,8 @@ import { fileURLToPath } from "node:url";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
-import { configDiagnostic, CONFIG_ERROR_CODES } from "../../../src/runtime/config/error_codes";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
+import { configDiagnostic, CONFIG_ERROR_CODES } from "../../../src/app/config/error-codes";
 
 const root = fileURLToPath(new URL("../../../../configs.example/boards", import.meta.url));
 

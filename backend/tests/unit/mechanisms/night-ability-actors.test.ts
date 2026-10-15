@@ -1,14 +1,14 @@
 /**
  * 单元测试：验证窄夜间资格端口及 eager 演员枚举。输入为字面 live 实例、记录读端口与可替换 World getter 的原上下文；完整 filter 顺序、失败前缀、引用和零绑定读取为预期，不运行完整对局或模型，也不生成 oracle。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import type { NightAbility } from "../../../src/game/mechanisms/roles/abilities";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
+import type { NightAbility } from "../../../src/features/night-abilities/abilities";
 import {
   bindNightAbilityActorQuery,
   createNightAbilityActorQuery,
@@ -16,12 +16,12 @@ import {
   type NightActorEligibilityQuery,
   type NightAbilityActorQuery,
   type NightAbilityRosterPort,
-} from "../../../src/game/mechanisms/roles/night-ability-actors";
-import { bindNightmareNightEligibility } from "../../../src/game/mechanisms/roles/nightmare_shadow/ports";
-import { bindScholarMentorNightEligibility } from "../../../src/game/mechanisms/roles/scholar_mentor/ports";
-import { SEER_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/seer/night_stages";
-import { GUARD_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/guard/night_stages";
-import { WITCH_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/witch/night_stages";
+} from "../../../src/features/night-abilities/night-ability-actors";
+import { bindNightmareNightEligibility } from "../../../src/features/nightmare/ports";
+import { bindScholarMentorNightEligibility } from "../../../src/features/scholar-mentor/ports";
+import { SEER_NIGHT_STAGES } from "../../../src/features/seer/night-stages";
+import { GUARD_NIGHT_STAGES } from "../../../src/features/guard/night-stages";
+import { WITCH_NIGHT_STAGES } from "../../../src/features/witch/night-stages";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 
 const ability = (id: string): NightAbility<"seer_check"> => ({

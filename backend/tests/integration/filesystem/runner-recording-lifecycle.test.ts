@@ -7,12 +7,12 @@ import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { afterEach, expect, spyOn, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { PhaseManager } from "../../../src/game/engine/phase_manager";
-import { ReplayFileStore } from "../../../src/recording/file_store";
-import { getSessionRecorder } from "../../../src/recording/recording_context";
-import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
-import type { ResolvedGameSetup } from "../../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../../src/runtime/game_runner";
+import { PhaseManager } from "../../../src/engine/phase-manager";
+import { ReplayFileStore } from "../../../src/adapters/filesystem/session-file-store";
+import { getSessionRecorder } from "../../../src/recording/session/context";
+import { resolveGameSetup } from "../../../src/app/config/resolve-game-setup";
+import type { ResolvedGameSetup } from "../../../src/app/config/resolve-game-setup";
+import { runGame } from "../../../src/app/game-runner";
 import { cleanupTestTempDirectories, createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const restores: Array<() => void> = [];

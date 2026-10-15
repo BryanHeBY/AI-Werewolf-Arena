@@ -4,10 +4,10 @@
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { SdkGameToolLoop } from "../../../../src/ai/agents/llm/sdk_game_tool_loop";
-import { PlayerPromptSession } from "../../../../src/ai/agents/llm/player_prompt_session";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { LlmObserver } from "../../../../src/ai/agents/player/player_observer";
+import { SdkGameToolLoop } from "../../../../src/agents/llm/sdk-game-tool-loop";
+import { PlayerPromptSession } from "../../../../src/agents/llm/player-prompt-session";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { LlmObserver } from "../../../../src/agents/player/player-observer";
 import {
   getDefaultToolCallRepairRegistry,
   getDefaultToolSpecRegistry,
@@ -15,8 +15,8 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
+} from "../../../../src/rulesets/mechanism-api";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
 import {
   COMPONENT,
   Phase,
@@ -24,12 +24,12 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../../../src/domain";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
+import { getWitchState } from "../../../../src/features/witch/ports";
 import type {
   ChatModelClient,
   ToolLoopCallbacks,
   ToolLoopStepTrace,
-} from "../../../../src/ai/integrations/llm/transport";
+} from "../../../../src/adapters/llm/transport";
 
 const roles = [
   Role.Wolf,

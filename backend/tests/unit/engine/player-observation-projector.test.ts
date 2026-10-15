@@ -3,7 +3,7 @@
  * 输入为内存 World、手写请求、未公开死亡和带访问器的旧 policy；预期来自独立字段与调用前缀，
  * 不用生产投影生成 oracle，不执行模型或完整对局。捕获不调用角色原文／人设，不授予行动写权限。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Camp, Phase, Role, type ActionRequest } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
@@ -11,22 +11,22 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import {
   bindRolePresentation,
   createRoleComponent,
-} from "../../../src/game/observation/role-presentation";
+} from "../../../src/agents/observation/role-presentation";
 
 import { createIdentityComponent } from "../../../src/domain/entities/player";
-import { capturePlayerObservation } from "../../../src/game/observation/player-observation-projector";
+import { capturePlayerObservation } from "../../../src/agents/observation/player-observation-projector";
 import {
   freezeObservation,
   type PlayerObservation,
-} from "../../../src/game/observation/player-observation";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../src/agents/observation/player-observation";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 
 function fixture() {
   const world = new World();

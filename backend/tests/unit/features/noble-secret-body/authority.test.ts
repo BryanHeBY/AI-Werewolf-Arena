@@ -1,11 +1,11 @@
 /**
  * 单元测试：验证夜贵族独立 authority 与原 owner／frame／reader。输入为内存 fixture、受控回调和畸形修改；原字面值、身份快照和拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../../src/domain/components/names";
 
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { Role, Camp } from "../../../../src/domain/identity";
 import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
 import {
@@ -19,7 +19,7 @@ import {
   closeNobleBodyNight,
   snapshotNobleBodyAuthority,
   consumeSecretBodyExile,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/features/noble-secret-body/authority";
 
 test("original contract survives normal noble death, occupies N3, expires once before damage", () => {
   const f = nobleBodyAuthorityFixture();

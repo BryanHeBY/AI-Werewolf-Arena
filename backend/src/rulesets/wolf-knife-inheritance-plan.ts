@@ -7,10 +7,10 @@
  */
 import { Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
-import { refreshHiddenWolfInheritance } from "../game/mechanisms/roles/hidden_wolf/ports";
-import { refreshGargoyleInheritance } from "../game/mechanisms/roles/gargoyle/ports";
-import { refreshMechanicalInheritance } from "../game/mechanisms/roles/mechanical_wolf/ports";
-import { refreshAwakenedInheritance } from "../game/mechanisms/roles/awakened_hidden_wolf/ports";
+import { refreshHiddenWolfInheritance } from "../features/hidden-wolf/ports";
+import { refreshGargoyleInheritance } from "../features/gargoyle/ports";
+import { refreshMechanicalInheritance } from "../features/mechanical-wolf/ports";
+import { refreshAwakenedInheritance } from "../features/awakened-hidden-wolf/ports";
 
 /** 只有检查点调用方提供现场读取；贡献对象本身不保存 World、演员或生命版本。 */
 export interface WolfKnifeInheritanceRuntime {

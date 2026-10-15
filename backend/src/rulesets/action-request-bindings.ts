@@ -7,11 +7,11 @@
 import type { ActionStage } from "@ai-werewolf-arena/game-contract";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
 import type { World } from "../domain/world";
-import { bindGhostBrideRequest } from "../game/mechanisms/roles/ghost_bride/authority";
-import { bindLonelyGirlRequest } from "../game/mechanisms/roles/lonely_girl/lifecycle";
-import { bindWildChildRequest } from "../game/mechanisms/roles/wild_child/lifecycle";
-import { bindInitialIdentityRequest } from "../game/mechanisms/roles/initial_identity/setup";
-import { bindWallRequest } from "../game/mechanisms/events/wall_notes/authority";
+import { bindGhostBrideRequest } from "../features/ghost-bride/authority";
+import { bindLonelyGirlRequest } from "../features/lonely-girl/lifecycle";
+import { bindWildChildRequest } from "../features/wild-child/lifecycle";
+import { bindInitialIdentityRequest } from "../features/initial-identity/setup";
+import { bindWallRequest } from "../features/wall-notes/authority";
 
 /** 查询保原表达式位置；工厂使用自己的输入与 World，阶段不能从请求快照反推。 */
 export interface ActionRequestBindingQueries {

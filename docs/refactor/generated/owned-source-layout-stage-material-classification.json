@@ -1,0 +1,28 @@
+{
+  "toolCell": "c02dee",
+  "exitCode": 1,
+  "beforeGitAdd": true,
+  "indexEmptyVerified": true,
+  "reportedAssertion": "('docs/refactor/generated/owned-source-layout-historical-peer-prepared-review.json', 'approval absent')",
+  "reason": "通用stager把归档的准备态审查按文件名当成当前整批批准；这是材料命名误用，未执行Git add，不是产品/类型/测试或自动权限拒绝。",
+  "correction": "仅将两个准备态材料改为prepared.json，原bytes保留；原首次formal approvals压缩保全，重新聚合实际artifact路径和正式签名，不改source/checks。",
+  "renames": [
+    {
+      "from": "docs/refactor/generated/owned-source-layout-historical-peer-prepared-review.json",
+      "to": "docs/refactor/generated/owned-source-layout-historical-peer-prepared.json",
+      "bytesPreserved": true
+    },
+    {
+      "from": "docs/refactor/generated/owned-source-layout-operational-peer-prepared-review.json",
+      "to": "docs/refactor/generated/owned-source-layout-operational-peer-prepared.json",
+      "bytesPreserved": true
+    }
+  ],
+  "productChecksRepeated": 0,
+  "preparationReaderCorrection": {
+    "toolCell": "428d78",
+    "reason": "再次聚合时实际已存在的两个formal review被纯metadata白名单误报，源scope已写且后随Root reader通过；已仅补这两exact review路径，不拓宽任何源/控制/批准匹配。",
+    "sourceWrites": 0,
+    "gitWrites": 0
+  }
+}

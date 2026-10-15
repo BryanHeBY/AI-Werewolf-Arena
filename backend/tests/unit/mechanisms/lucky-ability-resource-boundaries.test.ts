@@ -3,11 +3,11 @@
  * 直接阶段／死亡操作、字面名单／行动和受控 owner／生命变化；精确独立药瓶、库存／历史、
  * 防护和可选提示断言不变，不运行完整 NightPipeline 或 PhaseManager 周期。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
-import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../src/features/night-abilities/night-ability-actors";
 import { PotionType } from "../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -24,37 +24,37 @@ import {
   type RoleComponent,
   type BoardConfig,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { setNightAbilityEnabled } from "../../../src/features/night-abilities/abilities";
+import { grantNightAbility, transferNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
 import {
   allNightAbilities,
   abilityStatus,
   findNightAbility,
-} from "../../../src/game/mechanisms/roles/abilities";
+} from "../../../src/features/night-abilities/abilities";
 import {
   ownNightActions,
   luckyTargetAllowed,
   recordOwnNightAction,
-} from "../../../src/game/mechanisms/roles/night_action_history";
-import { LUCKY_ABILITY_STAGE } from "../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage";
+} from "../../../src/features/night-abilities/night-action-history";
+import { LUCKY_ABILITY_STAGE } from "../../../src/features/miracle-merchant/lucky-stage";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import type { NightStageContext } from "../../../src/engine/night/contracts";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 
 const deck = [Role.Wolf, Role.WolfKing, Role.Seer, Role.Witch, Role.Guard, Role.Villager];
 

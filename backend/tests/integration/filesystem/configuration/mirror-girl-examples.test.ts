@@ -7,8 +7,8 @@ import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
 
 for (const id of ["six_player_mirror_girl", "twelve_player_mirror_girl"])
   test(`${id}: finite examples load without arbitrary policies and direct bootstrap applies the same count/combination rules`, async () => {

@@ -1,9 +1,9 @@
 /**
  * 单元测试：验证赤月自爆审计的白天权威与最后狼人政策。输入为原日期和名单；单次提交、后续夜晚封印及名单断言为独立预期，保留原 fixture 与审计状态。
  */
-import { assignSheriff } from "../../../src/game/mechanisms/sheriff/badge";
+import { assignSheriff } from "../../../src/features/sheriff/badge";
 import type { BadgeComponent } from "../../../src/domain";
-import { freezeDemonHunt } from "../../../src/game/mechanisms/roles/demon_hunter/authority";
+import { freezeDemonHunt } from "../../../src/features/demon-hunter/authority";
 import { expect, test } from "bun:test";
 import {
   COMPONENT,
@@ -18,8 +18,8 @@ import {
   commitDemonRedMoonTransition,
   demonRedMoonNightSealed,
   demonHunterCheckpointPlayers,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
+} from "../../../src/features/demon-hunter/authority";
+import { getRedMoonState } from "../../../src/features/red-moon/state-slot";
 import { idiotVotedOutHook } from "../../../src/rulesets/idiot-exile-outcome";
 function dayWorld(policy: "ends_game" | "forbidden" = "ends_game") {
   const fixture = redMoonCandidateWorld(policy);

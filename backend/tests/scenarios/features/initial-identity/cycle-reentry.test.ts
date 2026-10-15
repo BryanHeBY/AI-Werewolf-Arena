@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import * as shared from "../../../../src/game/mechanisms/roles/initial_identity/deal";
+import * as shared from "../../../../src/features/initial-identity/deal";
 
 const roles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager];
 

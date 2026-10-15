@@ -5,9 +5,9 @@
  * reset a cycle or add a final Guard check that the original stage did not have.
  */
 import { expect, test } from "bun:test";
-import type { NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
-import { seerTargetAllowed } from "../../../src/game/mechanisms/roles/seer/ports";
-import { guardTargetRepeated } from "../../../src/game/mechanisms/roles/guard/ports";
+import type { NightAbilityReadView } from "../../../src/features/night-abilities/abilities";
+import { seerTargetAllowed } from "../../../src/features/seer/ports";
+import { guardTargetRepeated } from "../../../src/features/guard/ports";
 function readerPermissions(
   state: Parameters<typeof seerTargetAllowed>[0],
   ability: NightAbilityReadView<"guard">,

@@ -8,13 +8,13 @@
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
-import { NobleNightUnit } from "../../../../src/game/mechanisms/roles/noble_secret_body/ports";
+import { NobleNightUnit } from "../../../../src/features/noble-secret-body/ports";
 import {
   checkpointNobleBodyAuthority,
   openSecretBodyChoice,
   expireServantAtNightEnd,
   resolveSecretBodyDamage,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/features/noble-secret-body/authority";
 
 function fixture(failure?: "events" | "record") {
   const base = nobleBodyAuthorityFixture(),

@@ -6,26 +6,26 @@
  */
 import { Role } from "../domain/identity";
 import type { NightLifeScope } from "../domain/night-effects";
-import type { NightStageContext } from "../game/mechanisms/stages/night/contracts";
-import type { NightAbilityReadView } from "../game/mechanisms/roles/abilities";
+import type { NightStageContext } from "../engine/night/contracts";
+import type { NightAbilityReadView } from "../features/night-abilities/abilities";
 import {
   isScholarMentorBoard,
   recordScholarMentorNativeTarget,
   scholarMentorKnifeEligible,
-} from "../game/mechanisms/roles/scholar_mentor/ports";
+} from "../features/scholar-mentor/ports";
 import {
   isEvilKnightBoard,
   commitEvilKnightReflection,
   evilKnightNightBinding,
-} from "../game/mechanisms/roles/evil_knight/ports";
+} from "../features/evil-knight/ports";
 import {
   commitTimeConsortEffect,
   type TimeConsortReceipt,
-} from "../game/mechanisms/roles/time_wolf_consort/ports";
+} from "../features/time-wolf-consort/ports";
 import {
   loadDemonNativeNightController,
   loadDemonNativePotionController,
-} from "../game/mechanisms/roles/demon_hunter/ports";
+} from "../features/demon-hunter/ports";
 import type { NativeReflectedTarget } from "./native-night-target-policy";
 
 export interface NativeNightEffects {

@@ -2,7 +2,7 @@
  * 场景测试验证真实动物梦境阶段／死亡单元、白猫到期及狐狸／河豚／狼美人交互。输入为固定
  * 原名单、字面选择和外来原生命替换；手写死亡／警徽／库存顺序及拒绝是预期，不调用模型或生成替代 fixture。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { animalInternalConfig } from "../../../support/features/animal-dream/builders/roster";
@@ -19,11 +19,11 @@ import {
   type AliveComponent,
 } from "../../../../src/domain";
 
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { aliveLifeVersion } from "../../../../src/domain/components/alive";
-import { animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
-import { activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
+import { animalAuthoritySnapshot } from "../../../../src/features/animal-dream/authority";
+import { getWolfBeautyState } from "../../../../src/features/wolf-beauty/ports";
+import { activeCharm } from "../../../../src/features/wolf-beauty/relation";
 
 const fixed = [
   Role.WolfBeauty,

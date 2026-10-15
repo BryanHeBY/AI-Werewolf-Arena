@@ -1,17 +1,17 @@
 /**
  * 单元测试：验证角色容器读契约与显式自定义初始化。输入为字面角色、扩展记录和上下文 getter；原容器 descriptor、回调 this 与 trace 为预期。展示属性离开 domain 是明确 API 退出，其他记录仍可由具体 owner 写；编译负例不执行。
  */
-import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { renderRolePrompt } from "../../../src/game/observation/role-presentation";
+import { createRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
+import { renderRolePrompt } from "../../../src/agents/observation/role-presentation";
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { type RoleComponent } from "../../../src/domain/components/role";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import { World } from "../../../src/domain/world";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import type { RoleProfile, RoleInitContext } from "../../../src/game/mechanisms/roles/contracts";
-import { setHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
+import type { RoleProfile, RoleInitContext } from "../../../src/rulesets/roles/contracts";
+import { setHunterState } from "../../../src/features/hunter/ports";
 
 function ordinaryReaderCannotWrite(role: RoleComponent) {
   // @ts-expect-error 即使记录值合法，也不能替换只读私有容器。

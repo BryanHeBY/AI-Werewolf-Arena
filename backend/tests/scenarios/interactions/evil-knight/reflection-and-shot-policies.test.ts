@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { evilKnightTwelveConfig } from "../../../../src/runtime/scenarios/evil_knight_twelve";
+import { evilKnightTwelveConfig } from "../../../../src/rulesets/presets/evil-knight-twelve";
 import {
   Camp,
   Role,
@@ -15,8 +15,8 @@ import {
 import { COMPONENT } from "../../../../src/domain/components/names";
 import type { RoleComponent } from "../../../../src/domain/components/role";
 import type { AliveComponent } from "../../../../src/domain/components/alive";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
+import { getHunterState } from "../../../../src/features/hunter/ports";
+import { getSeerState } from "../../../../src/features/seer/ports";
 function fixture(
   locale: "zh-CN" | "en",
   shotPolicy: "night_shot_immune" | "hunter_shot_bypasses" = "night_shot_immune",

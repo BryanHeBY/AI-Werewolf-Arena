@@ -8,11 +8,11 @@
 import { expect, test } from "bun:test";
 import { isNightmarePreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { nightmareTwelveConfig } from "../../../src/runtime/scenarios/nightmare_twelve";
+import { nightmareTwelveConfig } from "../../../src/rulesets/presets/nightmare-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { Role, WinCondition, WitchSelfHealRule } from "../../../src/domain/identity";
 import type { BoardConfig } from "../../../src/domain/board";
 import { boardConfigSchema } from "../../../src/domain/board-schema";

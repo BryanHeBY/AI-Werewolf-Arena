@@ -3,20 +3,20 @@
  * 手写 owner 字段、冻结历史和描述符预期检查脱离状态，不调用模型或完整对局。
  * 观察类型迁移保原输入与 oracle，不把访问器或他人状态猜成已知事实。
  */
-import { getNightmareShadowState } from "../../../../src/game/mechanisms/roles/nightmare_shadow/ports";
+import { getNightmareShadowState } from "../../../../src/features/nightmare/ports";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent } from "../../../../src/domain";
 import { createRandom, randomDraws } from "../../../../src/domain/random";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
-import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
-import { nightmareTwelveConfig } from "../../../../src/runtime/scenarios/nightmare_twelve";
+import type { PlayerObservation } from "../../../../src/agents/observation/player-observation";
+import { nightmareTwelveConfig } from "../../../../src/rulesets/presets/nightmare-twelve";
 import {
   beginNightmareNight,
   commitNightmareFear,
-} from "../../../../src/game/mechanisms/roles/nightmare_shadow/night_frame";
+} from "../../../../src/features/nightmare/night-frame";
 for (const fear of ["optional", "required_when_legal"] as const)
   for (const constructorLocation of ["own", "inherited"] as const)
     test(`nightmare first-fear observation is private, detached, and satisfies ${fear} with ${constructorLocation} constructor`, async () => {

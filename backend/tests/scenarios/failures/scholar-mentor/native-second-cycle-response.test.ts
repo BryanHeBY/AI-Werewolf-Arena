@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { scholarMentorTwelveConfig } from "../../../../src/runtime/scenarios/scholar_mentor_twelve";
+import { scholarMentorTwelveConfig } from "../../../../src/rulesets/presets/scholar-mentor-twelve";
 import {
   COMPONENT,
   Role,
@@ -14,9 +14,9 @@ import {
   type ActionRequest,
   type ToolCall,
 } from "../../../../src/domain";
-import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
-import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";
+import { scholarMentorStateForRole } from "../../../../src/features/scholar-mentor/ports";
 for (const variant of [
   "missing-wolf-chat",
   "invalid-wolf-chat",

@@ -8,12 +8,12 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Camp, COMPONENT, Role, type GameEvent, type ToolCall } from "../../../src/domain";
 import { createRoleComponent } from "../../../src/domain/components/role";
-import type { RoleInitializationComponent, RoleInitContext } from "../../../src/game/mechanisms/roles/contracts";
-import { getDebaterState, initializeDebaterState } from "../../../src/game/mechanisms/roles/debater/state";
-import { hasActiveDebate, hasDebateCommit } from "../../../src/game/mechanisms/roles/debater/authority";
-import { DebaterWindow } from "../../../src/game/mechanisms/roles/debater/window";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import type { RoleInitializationComponent, RoleInitContext } from "../../../src/rulesets/roles/contracts";
+import { getDebaterState, initializeDebaterState } from "../../../src/features/debater/state";
+import { hasActiveDebate, hasDebateCommit } from "../../../src/features/debater/authority";
+import { DebaterWindow } from "../../../src/features/debater/window";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { foxBoard } from "../../support/features/cursed-fox/builders/scenario";
 
 test("Debater init evaluates its assignment container before a late policy failure", () => {

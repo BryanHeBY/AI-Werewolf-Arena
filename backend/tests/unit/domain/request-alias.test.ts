@@ -19,12 +19,12 @@ import { nobleBodyAuthorityFixture } from "../../support/features/noble-secret-b
 import {
   beginNobleBodyNight,
   nobleBodyChoiceTargets,
-} from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../src/features/noble-secret-body/authority";
 import {
   closeNobleBodyRequest,
   nobleBodyRequestScope,
   openNobleBodyRequest,
-} from "../../../src/game/mechanisms/roles/noble_secret_body/requests";
+} from "../../../src/features/noble-secret-body/requests";
 
 function request(): ActionRequest {
   return {

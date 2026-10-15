@@ -5,7 +5,7 @@
  * immutable-fixture oracle; these module assertions invoke no model or complete-game
  * driver.
  */
-import { buildTurnConstraintContext } from "../../../src/game/engine/turn_constraints_context";
+import { buildTurnConstraintContext } from "../../../src/engine/actions/turn-constraints-context";
 
 describe("turn constraint context", () => {
   test("optional self-destruct window can end without self_destruct", () => {

@@ -6,7 +6,7 @@
  * transport/recording setup is local and no billed model session is started.
  */
 import { describe, expect, test } from "bun:test";
-import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
+import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
 
 describe("AiSdkClient with the installed AI SDK", () => {
   test("sends chat messages through an OpenAI-compatible provider", async () => {

@@ -6,17 +6,17 @@
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import { Role, Phase, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { ActionProvider } from "../../../src/domain/actions";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { aliveLifeVersion } from "../../../src/domain/components/alive";
-import { DreamNightFrame } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { beginMistNight, commitMistChoice, handOffMistNight, closeMistNight, abortMistNight } from "../../../src/game/mechanisms/roles/mist_raven/night_frame";
-import { readAlchemistState } from "../../../src/game/mechanisms/roles/mist_raven/state";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { DreamNightFrame } from "../../../src/features/dreamer/night-frame";
+import { beginMistNight, commitMistChoice, handOffMistNight, closeMistNight, abortMistNight } from "../../../src/features/mist-raven/night-frame";
+import { readAlchemistState } from "../../../src/features/mist-raven/state";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { prepareMistDelayedNight, settleMistDelayedNight, type MistPreparedNightDamage } from "../../../src/rulesets/mist-delayed-night-settlement";
 
 const board = parseBoardDefinition(JSON.parse(readFileSync(new URL("../../../../configs.example/boards/awa_mist_raven_12_v1.json", import.meta.url), "utf8"))).config;

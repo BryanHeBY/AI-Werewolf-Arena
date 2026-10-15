@@ -14,8 +14,8 @@ import type {
   DamageResolutionSystem,
   DamageResolutionResult,
 } from "../../../src/domain/systems/damage-resolution-system";
-import { DreamNightFrame, type DreamNightLink } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { installDreamNightLinks } from "../../../src/game/mechanisms/roles/dreamer/night-links";
+import { DreamNightFrame, type DreamNightLink } from "../../../src/features/dreamer/night-frame";
+import { installDreamNightLinks } from "../../../src/features/dreamer/night-links";
 import {
   composeNightDamage,
   type NightDamageCompositionRuntime,

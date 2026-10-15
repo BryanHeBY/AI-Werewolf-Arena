@@ -7,8 +7,8 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Camp, COMPONENT, DeathCause, Phase, Role, type GameEvent } from "../../../../src/domain";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import {
   openWildChildNight,
   projectWildChild,
@@ -18,8 +18,8 @@ import {
   wildChildBinding,
   wildChildPackActive,
   wildChildPackKnown,
-} from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
-import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
+} from "../../../../src/features/wild-child/lifecycle";
+import { WildChildSetupWindow } from "../../../../src/features/wild-child/setup";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 
 /** 真实 setup 使用已绑定的 canonical 配置；榜样首死保原 Alive 对象／版本，不伪造生命周期绑定。 */

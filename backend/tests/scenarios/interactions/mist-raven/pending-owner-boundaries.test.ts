@@ -3,16 +3,16 @@
  * 公开板子字节、受控当前性／重入／生命／目标修改及真实阶段周期回复；原错误、库存、关闭窗口
  * 和未发表／排队死亡前缀验证所有者顺序，来源板子与行动矩阵保持原样。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import { ActionWindow, Role, Phase, COMPONENT, type ActionRequest, type ToolCall, type AliveComponent, type RoleComponent } from "../../../../src/domain";
 import {
   beginMistNight,
   snakeWindowTargets,
-} from "../../../../src/game/mechanisms/roles/mist_raven/night_frame";
+} from "../../../../src/features/mist-raven/night-frame";
 async function setup() {
   const raw = JSON.parse(
     await readFile(

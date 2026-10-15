@@ -7,12 +7,12 @@ import { expect, test } from "bun:test";
 import path from "node:path";
 import { Role, type BoardConfig } from "../../../src/domain";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../../src/runtime/config/board_definition";
-import { configDiagnostic } from "../../../src/runtime/config/error_codes";
+} from "../../../src/app/config/board-definition";
+import { configDiagnostic } from "../../../src/app/config/error-codes";
 
 for (const unsupported of [
   Role.MiracleMerchant,

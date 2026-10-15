@@ -12,18 +12,18 @@ import type { ActionRequestFactoryConstructorPort } from "../../../src/domain/ac
 import { RequestLease } from "../../../src/domain/request-lease";
 import { assertRequestDelivery, deferRequestDelivery, inheritRequestAlias } from "../../../src/domain/request-delivery";
 import { foxBoard } from "../../support/features/cursed-fox/builders/scenario";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { InitialIdentitySetupWindow, initialIdentityRequestScope } from "../../../src/game/mechanisms/roles/initial_identity/setup";
-import { WildChildSetupWindow } from "../../../src/game/mechanisms/roles/wild_child/setup";
-import { wildChildRequestScope } from "../../../src/game/mechanisms/roles/wild_child/lifecycle";
-import { LonelyGirlSetupWindow } from "../../../src/game/mechanisms/roles/lonely_girl/setup";
-import { lonelyGirlRequestScope } from "../../../src/game/mechanisms/roles/lonely_girl/lifecycle";
-import { WallNotesWindow } from "../../../src/game/mechanisms/events/wall_notes/window";
-import { wallRequestScope } from "../../../src/game/mechanisms/events/wall_notes/authority";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
-import type { ReproductionMetadata } from "../../../src/recording/reproduction";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { InitialIdentitySetupWindow, initialIdentityRequestScope } from "../../../src/features/initial-identity/setup";
+import { WildChildSetupWindow } from "../../../src/features/wild-child/setup";
+import { wildChildRequestScope } from "../../../src/features/wild-child/lifecycle";
+import { LonelyGirlSetupWindow } from "../../../src/features/lonely-girl/setup";
+import { lonelyGirlRequestScope } from "../../../src/features/lonely-girl/lifecycle";
+import { WallNotesWindow } from "../../../src/features/wall-notes/window";
+import { wallRequestScope } from "../../../src/features/wall-notes/authority";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
+import type { ReproductionMetadata } from "../../../src/recording/reproduction/format";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 
 type Kind = "initial" | "wild" | "lonely" | "wall";
 function fixture(kind: Kind) {

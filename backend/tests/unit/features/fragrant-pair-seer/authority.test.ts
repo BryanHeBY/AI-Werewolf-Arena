@@ -4,19 +4,19 @@
  * 原 owner、frame 和 readers 真实执行，native/install/use 只迁向同一实际实例 owner。
  * 不运行完整对局、模型或传输，不替换支持 fixture、规则与原历史矩阵。
  */
-import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Role, Camp, Phase } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { type AliveComponent } from "../../../../src/domain/components/alive";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 
 import { createIdentityComponent } from "../../../../src/domain/entities/player";
 import { createVictoryComponent } from "../../../../src/domain/components/victory";
 import type { GameEvent } from "../../../../src/domain/events";
-import { freshPairSeerState } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { freshPairSeerState } from "../../../../src/features/fragrant-pair-seer/state";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import { installNativeAbility } from "../../../../src/features/night-abilities/ability-changes";
 import {
   beginFragrantNight,
   openFragrantBindChoice,
@@ -29,7 +29,7 @@ import {
   cancelFragrantDeathWave,
   commitFragrantDeathWave,
   publishFragrantDeathWave,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+} from "../../../../src/features/fragrant-pair-seer/authority";
 
 import { fragrantPairOwnerFixture as fixture } from "../../../support/features/fragrant-pair-seer/builders/owner";
 

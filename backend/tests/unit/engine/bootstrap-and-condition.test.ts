@@ -6,9 +6,9 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { AliveComponent } from "../../../src/domain/components/alive";
 import { RoleComponent } from "../../../src/domain/components/role";
 import { Camp, WinCondition } from "../../../src/domain/model";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { ConditionRegistry } from "../../../src/domain/registries/condition-registry";
-import { getDefaultWinConditionRegistry } from "../../../src/game/mechanisms/registries/win_condition_registry";
+import { getDefaultWinConditionRegistry } from "../../../src/engine/victory/condition-registry";
 
 describe("PhaseManager", () => {
   test("bootstrap should emit god_private_game_info as initial event", async () => {

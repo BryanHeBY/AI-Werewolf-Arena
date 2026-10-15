@@ -8,12 +8,12 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Camp, Role, COMPONENT, type RoleComponent, type GameEvent } from "../../../../src/domain";
 import { isRoleExecutionRetired } from "../../../../src/domain/role-execution-authority";
-import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
-import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";
-import { ThiefSetupWindow } from "../../../../src/game/mechanisms/roles/thief/setup";
-import { initialIdentityStock } from "../../../../src/game/mechanisms/roles/initial_identity/deal";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { allNightAbilities } from "../../../../src/features/night-abilities/abilities";
+import { captureNightAbilityScope } from "../../../../src/features/night-abilities/ability-scope";
+import { ThiefSetupWindow } from "../../../../src/features/thief/setup";
+import { initialIdentityStock } from "../../../../src/features/initial-identity/deal";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 
 const cards = [Role.Thief, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager, Role.Wolf, Role.Seer];

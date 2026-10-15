@@ -16,22 +16,22 @@ import type {
   PlayerRavenState,
 } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import type { BoardConfig } from "@ai-werewolf-arena/game-contract/boards";
-import type { MIST_RAVEN_POLICY } from "../../../src/game/mechanisms/roles/mist_raven/state";
+import type { MIST_RAVEN_POLICY } from "../../../src/features/mist-raven/state";
 
 // @ts-expect-error 玩家纯结构已归公共事实契约，旧运行投影叶不再转发。
-import type { NoblePlayerState as RetiredNoble } from "../../../src/game/mechanisms/roles/noble_secret_body/player_projection";
+import type { NoblePlayerState as RetiredNoble } from "../../../src/features/noble-secret-body/player-projection";
 // @ts-expect-error 玩家纯结构已归公共事实契约，旧运行投影叶不再转发。
-import type { SecretBodyPlayerState as RetiredBody } from "../../../src/game/mechanisms/roles/noble_secret_body/player_projection";
+import type { SecretBodyPlayerState as RetiredBody } from "../../../src/features/noble-secret-body/player-projection";
 // @ts-expect-error 通知纯结构已归公共事实契约，旧运行投影叶不再转发。
-import type { NobleBodyNightNotice as RetiredNotice } from "../../../src/game/mechanisms/roles/noble_secret_body/player_projection";
+import type { NobleBodyNightNotice as RetiredNotice } from "../../../src/features/noble-secret-body/player-projection";
 // @ts-expect-error 既有知识类型退出旧转发入口，直接消费其原公共所有者。
-import type { NobleKnowledge as RetiredNobleKnowledge } from "../../../src/game/mechanisms/roles/noble_secret_body/player_projection";
+import type { NobleKnowledge as RetiredNobleKnowledge } from "../../../src/features/noble-secret-body/player-projection";
 // @ts-expect-error 既有知识类型退出旧转发入口，直接消费其原公共所有者。
-import type { SecretBodyKnowledge as RetiredBodyKnowledge } from "../../../src/game/mechanisms/roles/noble_secret_body/player_projection";
+import type { SecretBodyKnowledge as RetiredBodyKnowledge } from "../../../src/features/noble-secret-body/player-projection";
 // @ts-expect-error 玩家纯结构已归公共事实契约，旧运行投影叶不再转发。
-import type { PlayerAlchemistState as RetiredAlchemist } from "../../../src/game/mechanisms/roles/mist_raven/player_projection";
+import type { PlayerAlchemistState as RetiredAlchemist } from "../../../src/features/mist-raven/player-projection";
 // @ts-expect-error 玩家纯结构已归公共事实契约，旧运行投影叶不再转发。
-import type { PlayerRavenState as RetiredRaven } from "../../../src/game/mechanisms/roles/mist_raven/player_projection";
+import type { PlayerRavenState as RetiredRaven } from "../../../src/features/mist-raven/player-projection";
 
 type OriginalBody = Readonly<SecretBodyKnowledge & { awaitingNightReport: boolean }>;
 type OriginalNoble = Readonly<NobleKnowledge & { awaitingNightReport: boolean }>;

@@ -5,11 +5,11 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { RoleComponent } from "../../../../src/domain/components/role";
 import { Phase, PotionType, Role } from "../../../../src/domain/model";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { getGuardState } from "../../../../src/features/guard/ports";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
 
 describe("ToolGateway validation", () => {
   test("guard cannot protect same target in consecutive nights", () => {

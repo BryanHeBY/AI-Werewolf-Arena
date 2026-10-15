@@ -4,17 +4,17 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, createRandom } from "../../../../src/domain";
-import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/rulesets/presets/noble-secret-body-twelve";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../../src/game/mechanisms";
-import { buildAgentVisibleEvent } from "../../../../src/game/engine/agent_visible_event_feed";
-import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
+} from "../../../../src/rulesets/mechanism-api";
+import { buildAgentVisibleEvent } from "../../../../src/agents/observation/event-feed";
+import { AgentEventVisibilityRegistry } from "../../../../src/agents/observation/agent-event-visibility-registry";
 import { readNobleSecretBodyFact, NOBLE_SECRET_BODY_POLICY } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 
 function setup(locale: "zh-CN" | "en") {

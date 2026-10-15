@@ -5,7 +5,7 @@ import { readReplayManifest } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { Camp, Phase, type GameResult } from "../../../src/domain";
 import {
@@ -13,8 +13,8 @@ import {
   outcomeWinnersLabel,
   victoryPointLabel,
 } from "@ai-werewolf-arena/game-presentation";
-import { getDefaultScriptEventRenderRegistry } from "../../../src/game";
-import { auditSummaryHeader } from "../../../src/audit/summary_format";
+import { getDefaultScriptEventRenderRegistry } from "../../../src/engine/game-api";
+import { auditSummaryHeader } from "../../../src/audit/summary-format";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const players = [1, 2, 3, 4, 5, 6].map((id) => ({

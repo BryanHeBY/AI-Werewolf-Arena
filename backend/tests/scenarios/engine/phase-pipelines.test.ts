@@ -5,13 +5,13 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { RoleComponent } from "../../../src/domain/components/role";
 import { ActionProvider, ActionRequest, Camp, Phase, ToolCall, Role } from "../../../src/domain/model";
-import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
-import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
+import { VotingPipeline } from "../../../src/engine/phases/voting-pipeline";
+import { DayPipeline } from "../../../src/engine/phases/day-pipeline";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
+import { createDefaultRoleRegistry } from "../../../src/rulesets/mechanism-api";
 
 class WolfOnlyNightProvider implements ActionProvider {
   constructor(private readonly world: ReturnType<typeof bootstrapGame>["world"]) {}

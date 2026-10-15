@@ -6,16 +6,16 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent, type GameEvent } from "../../../../src/domain";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
-import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
-import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
-import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
+import type { PlayerObservation } from "../../../../src/agents/observation/player-observation";
+import { AgentEventVisibilityRegistry } from "../../../../src/agents/observation/agent-event-visibility-registry";
+import { magicianTwelveConfig } from "../../../../src/rulesets/presets/magician-twelve";
 import {
   beginMagicianNight,
   commitMagicianExchange,
-} from "../../../../src/game/mechanisms/roles/magician/night_frame";
-import { getMagicianState } from "../../../../src/game/mechanisms/roles/magician/state-slot";
+} from "../../../../src/features/magician/night-frame";
+import { getMagicianState } from "../../../../src/features/magician/state-slot";
 for (const locale of ["zh-CN", "en"] as const)
   test(
     "Magician observation owns detached frozen history and never exposes another actor's mapping/" +

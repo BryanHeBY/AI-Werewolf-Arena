@@ -3,7 +3,7 @@
  * World、字面死因与注入目标／演员替换、复活或时钟变化；手写存活数组、枪消费量和无公开事件
  * 区分未付款与合法已消费前缀，不运行第二个 World 来生成预期存活结果。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -15,16 +15,16 @@ import {
   type GameEvent,
   type BoardConfig,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import type { DeathHookResult } from "../../../../src/game/mechanisms/hooks/hook_registry";
-import { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";
-import { hunterDeathHook } from "../../../../src/game/mechanisms/roles/hunter/death_hook";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import type { DeathHookResult } from "../../../../src/engine/hooks/registry";
+import { HookRegistry } from "../../../../src/engine/hooks/registry";
+import { hunterDeathHook } from "../../../../src/features/hunter/death-hook";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 
 import { captureNightLife } from "../../../../src/domain/night-effects";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { getHunterState } from "../../../../src/features/hunter/ports";
 const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager],
   config: BoardConfig = {
     ...sixPlayerMvpConfig,

@@ -14,7 +14,7 @@ import {
 import {
   createTricksterState,
   getTricksterState,
-} from "../../../../src/game/mechanisms/roles/trickster/state-slot";
+} from "../../../../src/features/trickster/state-slot";
 import {
   installTricksterBoard,
   beginTricksterNight,
@@ -26,7 +26,7 @@ import {
   finishTricksterNight,
   resolveTricksterExile,
   abortTricksterNight,
-} from "../../../../src/game/mechanisms/roles/trickster/night_frame";
+} from "../../../../src/features/trickster/night-frame";
 function fixture() {
   const fixedRoles = [
     ...Array.from({ length: 4 }, () => Role.Wolf),

@@ -5,11 +5,11 @@
  */
 import { expect, test } from "bun:test";
 import { Role, type AbilitySource } from "@ai-werewolf-arena/game-contract";
-import type { NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
+import type { NightAbilityReadView } from "../../../src/features/night-abilities/abilities";
 import {
   projectAbilitySource,
   projectNightAbility,
-} from "../../../src/game/observation/night-ability-projection";
+} from "../../../src/agents/observation/night-ability-projection";
 
 for (const scenario of [
   { kind: "native", disclosed: false, reads: ["kind"], expected: { kind: "native" } },
@@ -174,7 +174,7 @@ import type {
   projectNightState as OldLeafState,
   // @ts-expect-error 旧公开观察函数已退休，不能通过类型导入保留桥。
   projectNightAbility as OldLeafAbility,
-} from "../../../src/game/mechanisms/roles/abilities";
+} from "../../../src/features/night-abilities/abilities";
 import type {
   // @ts-expect-error 旧公开观察函数已退休，不能通过类型导入保留桥。
   projectAbilitySource as OldMechanismsSource,
@@ -182,7 +182,7 @@ import type {
   projectNightState as OldMechanismsState,
   // @ts-expect-error 旧公开观察函数已退休，不能通过类型导入保留桥。
   projectNightAbility as OldMechanismsAbility,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 import type {
   // @ts-expect-error 旧公开观察函数已退休，不能通过类型导入保留桥。
   projectAbilitySource as OldGameSource,
@@ -190,7 +190,7 @@ import type {
   projectNightState as OldGameState,
   // @ts-expect-error 旧公开观察函数已退休，不能通过类型导入保留桥。
   projectNightAbility as OldGameAbility,
-} from "../../../src/game";
+} from "../../../src/engine/game-api";
 import type {
   // @ts-expect-error 旧公开观察函数已退休，不能通过类型导入保留桥。
   projectAbilitySource as OldBackendSource,

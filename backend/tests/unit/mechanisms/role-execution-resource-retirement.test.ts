@@ -10,9 +10,9 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { createRoleComponent } from "../../../src/domain/components/role";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { retireRoleExecution, isRoleExecutionRetired } from "../../../src/domain/role-execution-authority";
-import { allNightAbilities, findNightAbility, activeNightAbility, abilityStatus, type NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import { allDeathGuns, findDeathGun, grantDeathGun, armDeathGun, activeDeathGun, deathGunOwnerCurrent, captureDeathGun, firstDeathGuns, finishDeathGuns, transferDeathGun, consumeDeathGunShot, setDeathGunEnabled } from "../../../src/game/mechanisms/roles/death-gun-lifecycle";
+import { allNightAbilities, findNightAbility, activeNightAbility, abilityStatus, type NightAbilityReadView } from "../../../src/features/night-abilities/abilities";
+import { grantNightAbility, transferNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import { allDeathGuns, findDeathGun, grantDeathGun, armDeathGun, activeDeathGun, deathGunOwnerCurrent, captureDeathGun, firstDeathGuns, finishDeathGuns, transferDeathGun, consumeDeathGunShot, setDeathGunEnabled } from "../../../src/features/death-actions/death-gun-lifecycle";
 
 function fixture() {
   const world = new World(), ids = [world.createEntity(), world.createEntity(), world.createEntity()];

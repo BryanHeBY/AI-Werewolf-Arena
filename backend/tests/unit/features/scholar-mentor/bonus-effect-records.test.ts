@@ -8,14 +8,14 @@ import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { createAliveComponent, aliveLifeVersion } from "../../../../src/domain/components/alive";
 import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
-import type { NightStageState, NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import type { ModifierBonusKind, ModifierBonusReceipt } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
-import { assertScholarMentorBonusEffects } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";
+import type { NightStageState, NightStageContext } from "../../../../src/engine/night/contracts";
+import type { ModifierBonusKind, ModifierBonusReceipt } from "../../../../src/features/scholar-mentor/night-frame";
+import { assertScholarMentorBonusEffects } from "../../../../src/features/scholar-mentor/ports";
 import {
   readScholarMentorBonusEffectRecords,
   scholarMentorBonusEffectRecordsForAppend,
   type ScholarMentorBonusEffectRecord,
-} from "../../../../src/game/mechanisms/roles/scholar_mentor/bonus-effect-records";
+} from "../../../../src/features/scholar-mentor/bonus-effect-records";
 
 function state(): NightStageState {
   return { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [] };

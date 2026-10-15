@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase, type ActionRequest } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../../src/domain/components/role";
-import type { RoleRuntimeContribution } from "../../../../src/game/mechanisms/roles/contracts";
-import { WOLF_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/wolf/profile";
+import type { RoleRuntimeContribution } from "../../../../src/rulesets/roles/contracts";
+import { WOLF_ROLE_PROFILE } from "../../../../src/features/wolf/profile";
 import {
   ORDINARY_WOLF_CONTRIBUTIONS,
   WOLF_NIGHT_STAGES,
@@ -15,13 +15,13 @@ import {
   WOLF_STAGE_DIRECTIVES,
   WOLF_VALIDATION_RULES,
   WOLF_LLM_REPAIR_PACK,
-} from "../../../../src/game/mechanisms/roles/wolf/ability-ports";
-import { WOLF_KING_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/wolf_king/profile";
-import { HIDDEN_WOLF_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/hidden_wolf/profile";
-import { WOLF_BEAUTY_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/wolf_beauty/profile";
-import { GARGOYLE_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/gargoyle/profile";
-import { WILD_CHILD_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/wild_child/profile";
-import { SCHOLAR_ROLE_PROFILE, MENTOR_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/scholar_mentor/profile";
+} from "../../../../src/features/wolf/ability-ports";
+import { WOLF_KING_ROLE_PROFILE } from "../../../../src/features/wolf-king/profile";
+import { HIDDEN_WOLF_ROLE_PROFILE } from "../../../../src/features/hidden-wolf/profile";
+import { WOLF_BEAUTY_ROLE_PROFILE } from "../../../../src/features/wolf-beauty/profile";
+import { GARGOYLE_ROLE_PROFILE } from "../../../../src/features/gargoyle/profile";
+import { WILD_CHILD_ROLE_PROFILE } from "../../../../src/features/wild-child/profile";
+import { SCHOLAR_ROLE_PROFILE, MENTOR_ROLE_PROFILE } from "../../../../src/features/scholar-mentor/profile";
 
 function request(allowedTools: ActionRequest["allowedTools"]): ActionRequest {
   return {

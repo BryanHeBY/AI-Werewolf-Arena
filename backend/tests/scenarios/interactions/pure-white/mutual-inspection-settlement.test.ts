@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { pureWhiteTwelveConfig } from "../../../../src/runtime/scenarios/pure_white_twelve";
+import { pureWhiteTwelveConfig } from "../../../../src/rulesets/presets/pure-white-twelve";
 import {
   Camp,
   Role,
@@ -15,7 +15,7 @@ import {
 import { COMPONENT } from "../../../../src/domain/components/names";
 import type { RoleComponent } from "../../../../src/domain/components/role";
 import type { AliveComponent } from "../../../../src/domain/components/alive";
-import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
+import { getRoleInspectionState } from "../../../../src/features/role-inspection/ports";
 
 function fixture(
   locale: "zh-CN" | "en",

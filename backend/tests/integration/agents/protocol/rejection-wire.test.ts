@@ -4,13 +4,13 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, PotionType, Role, type RoleComponent } from "../../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
+import { WerewolfMcpControlServer } from "../../../../src/adapters/acp/werewolf-mcp-control";
 
 const twelveRoles = [
   Role.Wolf,

@@ -6,7 +6,7 @@
 import { expect, spyOn, test } from "bun:test";
 import * as facts from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import type { RoleInitializationComponent } from "../../../../src/game/mechanisms/roles/contracts";
+import type { RoleInitializationComponent } from "../../../../src/rulesets/roles/contracts";
 import {
   acceptGhostBrideParticipantAudit,
   consumeGhostBrideChoice,
@@ -14,7 +14,7 @@ import {
   refreshGhostBrideParticipantAudit,
   updateGhostBrideExpectedData,
   type GhostBrideParticipantData,
-} from "../../../../src/game/mechanisms/roles/ghost_bride/state";
+} from "../../../../src/features/ghost-bride/state";
 
 test("initialization reads the private-state left side before creating and storing native data", () => {
   const trace: string[] = [];

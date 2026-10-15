@@ -4,7 +4,7 @@
  * 类别、夜时点、原体、因果 ID 和单次反射，错误保持原标记及已付前缀。
  * 旧注入额外 getter 不读取，新 owned intent 的约束属于明确强化；不跑完整对局或模型。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";

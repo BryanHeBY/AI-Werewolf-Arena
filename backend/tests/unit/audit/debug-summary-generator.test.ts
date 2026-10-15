@@ -5,7 +5,7 @@
  * immutable-fixture oracle; these module assertions invoke no model or complete-game
  * driver.
  */
-import { buildDebugSummaryMarkdown } from "../../../src/audit/debug_summary_generator";
+import { buildDebugSummaryMarkdown } from "../../../src/audit/debug-summary-generator";
 import { ReplayManifest, ReplayPlayerView } from "../../../src/recording/contracts";
 
 describe("debug summary metadata checks", () => {

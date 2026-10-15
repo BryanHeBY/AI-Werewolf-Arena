@@ -7,18 +7,18 @@ import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile, readdir } from "node:fs/promises";
-import * as factory from "../../../../src/runtime/player_agent_factory";
-import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { runGame } from "../../../../src/runtime/game_runner";
-import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
+import * as factory from "../../../../src/app/player-agent-factory";
+import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { runGame } from "../../../../src/app/game-runner";
+import { BaselineBotActionProvider } from "../../../../src/agents/baseline/privileged";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
-import { ReplayFileStore } from "../../../../src/recording/file_store";
-import { getSessionRecorder } from "../../../../src/recording/recording_context";
+} from "../../../../src/app/simulation/replay-reproduction";
+import { ReplayFileStore } from "../../../../src/adapters/filesystem/session-file-store";
+import { getSessionRecorder } from "../../../../src/recording/session/context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 for (const diskFailure of [false, true])

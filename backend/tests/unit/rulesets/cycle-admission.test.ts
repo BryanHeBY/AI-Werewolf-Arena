@@ -14,7 +14,7 @@ import {
   installInitialIdentityDeal,
   openInitialIdentitySetup,
   hasActiveInitialIdentitySetup,
-} from "../../../src/game/mechanisms/roles/initial_identity/deal";
+} from "../../../src/features/initial-identity/deal";
 
 test("terminal cycle admission skips every day read but retains unconditional windows in order", () => {
   const world = new World(), trace: string[] = [];

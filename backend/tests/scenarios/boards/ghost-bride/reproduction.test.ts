@@ -14,19 +14,19 @@ import {
   type ToolCall,
   type RoleComponent,
 } from "../../../../src/domain";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+} from "../../../../src/app/simulation/reproduction-context";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import {
   ghostBrideBoard,
   ghostBrideDeck,

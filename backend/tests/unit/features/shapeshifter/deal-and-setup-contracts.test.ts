@@ -24,7 +24,7 @@ import {
   ShapeshifterSetupWindow,
   projectShapeshifterChoices,
   shapeshifterRequestScope,
-} from "../../../../src/game/mechanisms/roles/shapeshifter/setup";
+} from "../../../../src/features/shapeshifter/setup";
 import {
   shapeshifterDeal,
   shapeshifterSetupStatus,
@@ -32,32 +32,32 @@ import {
   hasActiveShapeshifterSetup,
   projectShapeshifterSetup,
   initialShapeshifterDeal,
-} from "../../../../src/game/mechanisms/roles/shapeshifter/deal";
+} from "../../../../src/features/shapeshifter/deal";
 import {
   readShapeshifterTool,
   getShapeshifterState,
-} from "../../../../src/game/mechanisms/roles/shapeshifter/state-ports";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { knownWolfTeammates } from "../../../../src/game/mechanisms/roles/wolf_team";
+} from "../../../../src/features/shapeshifter/state-ports";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { knownWolfTeammates } from "../../../../src/features/wolf-team/permissions";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
-import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
+} from "../../../../src/rulesets/mechanism-api";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { getHunterState } from "../../../../src/features/hunter/ports";
+import { getGuardState } from "../../../../src/features/guard/ports";
+import { getSeerState } from "../../../../src/features/seer/ports";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/app/config/board-definition";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 
 const original = [Role.Shapeshifter, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
 

@@ -8,17 +8,17 @@
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import rawBoard from "../../../../../configs.example/boards/awa_wolf_sorcerer_12_v1.json";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { MagicianNightUnit } from "../../../../src/game/mechanisms/roles/magician/ports";
+import { MagicianNightUnit } from "../../../../src/features/magician/ports";
 import {
   WolfSorcererNightUnit,
   wolfSorcererNightTerminal,
-} from "../../../../src/game/mechanisms/roles/wolf_sorcerer/ports";
+} from "../../../../src/features/wolf-sorcerer/ports";
 import {
   beginWolfSorcererNight,
   commitWolfSorcererExchange,
-} from "../../../../src/game/mechanisms/roles/wolf_sorcerer/night_frame";
+} from "../../../../src/features/wolf-sorcerer/night-frame";
 
 function fixture() {
   const board = parseBoardDefinition(rawBoard),

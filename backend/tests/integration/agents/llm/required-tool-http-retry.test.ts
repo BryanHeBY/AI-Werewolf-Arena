@@ -7,9 +7,9 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { RoleComponent } from "../../../../src/domain/components/role";
 import { Phase } from "../../../../src/domain/model";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
 import { REQUIRED_ACTION_CONSTRAINTS, FallbackProvider } from "../../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider protocol", () => {

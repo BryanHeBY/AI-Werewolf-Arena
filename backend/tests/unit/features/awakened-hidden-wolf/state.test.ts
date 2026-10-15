@@ -4,7 +4,7 @@
 import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { Camp, Role } from "../../../../src/domain";
 import {
   activateAwakenedLearning,
@@ -25,7 +25,7 @@ import {
   setAwakenedState,
   skipAwakenedSkill,
   useAwakenedPoison,
-} from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
+} from "../../../../src/features/awakened-hidden-wolf/state";
 
 const initialSkills = {
   villager: { kind: "villager" },

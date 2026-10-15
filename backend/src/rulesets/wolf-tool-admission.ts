@@ -5,18 +5,18 @@
  * 同一可写规则表保留 callback 引用；派生展开与晚读取仍发生在原 profile／Registry 调用点。
  * 准入不执行工具、付款、开启窗口或授予租约；候选允许结果不能代替真正提交时的权限复验。
  */
-import { canRoleSelfDestruct } from "../game/mechanisms/roles/self_destruct_capability";
-import { bindWolfKnifeTargetQuery } from "../game/mechanisms/roles/wolf/ports";
+import { canRoleSelfDestruct } from "../features/self-destruct/capability";
+import { bindWolfKnifeTargetQuery } from "../features/wolf/ports";
 import {
   weddingMember,
   weddingSetup,
   ghostBrideReady,
   canSubmitWeddingTool,
-} from "../game/mechanisms/roles/ghost_bride/ports";
+} from "../features/ghost-bride/ports";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { ActionWindow, Phase } from "../domain/model";
-import type { ToolRuleMap } from "../game/mechanisms/validation/contracts";
-import { wolfTeamPermissions } from "../game/mechanisms/roles/wolf_team";
+import type { ToolRuleMap } from "../engine/actions/validation-contracts";
+import { wolfTeamPermissions } from "../features/wolf-team/permissions";
 import { COMPONENT } from "../domain/components/names";
 
 /** 三工具保原首失败顺序；actorId仅在原Camp读取点的source内取得，常量能力不新增查询。 */

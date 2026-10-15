@@ -11,7 +11,7 @@
     "exactBytesFiles": 904,
     "mechanicalSourceFiles": 3,
     "originalBytes": 48294509,
-    "currentBytes": 48295551
+    "currentBytes": 48295537
   },
   "policy": "The public table covers904 byte-identical JSON archives and3 mechanically equivalent source fixtures. Immutable original identities/digests are separate from current paths/digests. Source programs include import binding identity and preserve RPC/action matrices; helpers are independently recorded source assets. No archive, game rule, prompt or action content is regenerated; acceptance stays pending-review.",
   "files": [
@@ -68,8 +68,8 @@
           "reason": "No schemaVersion is serialized; legacy status does not identify a build."
         }
       },
-      "currentSha256": "d7205d1801e9bc6114bcdb29e4c445910e17ab2ee0228c49d90ccb68b5f2f491",
-      "currentBytes": 3996
+      "currentSha256": "a5973351d4db4bd3934e806f4fd66f5ad5f3fcee0e247389ab8895fb0a822b7f",
+      "currentBytes": 3989
     },
     {
       "originPath": "backend/tests/fixtures/acp_game_agent.ts",
@@ -124,8 +124,8 @@
           "reason": "No schemaVersion is serialized; legacy status does not identify a build."
         }
       },
-      "currentSha256": "d1f513adbc6e404b0621b865aa6a2652c471077d8d1da8c4a9f6f91a6f9e8ed8",
-      "currentBytes": 9067
+      "currentSha256": "0e0116798fc4a139bce86ffd5677522ea65fc5381ad2d7c69b9115106af5adeb",
+      "currentBytes": 9060
     },
     {
       "originPath": "backend/tests/fixtures/acp_ownership_agent.ts",
@@ -92587,7 +92587,7 @@
     },
     {
       "originPath": "frontend/tests/fixtures/time-consort-first_effect-en.checkpoint.txt",
-      "currentPath": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/en/checkpoint.json",
+      "currentPath": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/en/checkpoint.json",
       "sha256": "9c4c6edb5660fc223468127fc82001af91443f0f772ed25aa67274f6847d9a23",
       "bytes": 10182,
       "owner": "frontend",
@@ -92726,7 +92726,7 @@
     },
     {
       "originPath": "frontend/tests/fixtures/time-consort-first_effect-en.replay.json",
-      "currentPath": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/en/god.replay.json",
+      "currentPath": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/en/god.replay.json",
       "sha256": "481bf04d7ba937cf69fe21e6d1376cb0cdd9f5c5429a1bd49000402754d00fcf",
       "bytes": 43734,
       "owner": "frontend",
@@ -92871,7 +92871,7 @@
     },
     {
       "originPath": "frontend/tests/fixtures/time-consort-first_effect-zh-CN.checkpoint.txt",
-      "currentPath": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/zh-CN/checkpoint.json",
+      "currentPath": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/zh-CN/checkpoint.json",
       "sha256": "9c4c6edb5660fc223468127fc82001af91443f0f772ed25aa67274f6847d9a23",
       "bytes": 10182,
       "owner": "frontend",
@@ -93010,7 +93010,7 @@
     },
     {
       "originPath": "frontend/tests/fixtures/time-consort-first_effect-zh-CN.replay.json",
-      "currentPath": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/zh-CN/god.replay.json",
+      "currentPath": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/zh-CN/god.replay.json",
       "sha256": "48dab58c6fc9e1016ee5e4560da7b2aafd7169196827abe8c8b8caccf1166f2a",
       "bytes": 43737,
       "owner": "frontend",
@@ -93155,7 +93155,7 @@
     },
     {
       "originPath": "frontend/tests/fixtures/time-consort-whole_night-en.checkpoint.txt",
-      "currentPath": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/en/checkpoint.json",
+      "currentPath": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/en/checkpoint.json",
       "sha256": "18476394395244ab084a5a030598719f01de956ce8b0930d5c4f0d6301a18bb5",
       "bytes": 10498,
       "owner": "frontend",
@@ -93294,7 +93294,7 @@
     },
     {
       "originPath": "frontend/tests/fixtures/time-consort-whole_night-en.replay.json",
-      "currentPath": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/en/god.replay.json",
+      "currentPath": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/en/god.replay.json",
       "sha256": "4acc61c2183960d2cbabab9cf159739a093f96581a68f94f51676fd31da5e084",
       "bytes": 51922,
       "owner": "frontend",
@@ -93439,7 +93439,7 @@
     },
     {
       "originPath": "frontend/tests/fixtures/time-consort-whole_night-zh-CN.checkpoint.txt",
-      "currentPath": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/zh-CN/checkpoint.json",
+      "currentPath": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/zh-CN/checkpoint.json",
       "sha256": "18476394395244ab084a5a030598719f01de956ce8b0930d5c4f0d6301a18bb5",
       "bytes": 10498,
       "owner": "frontend",
@@ -93578,7 +93578,7 @@
     },
     {
       "originPath": "frontend/tests/fixtures/time-consort-whole_night-zh-CN.replay.json",
-      "currentPath": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/zh-CN/god.replay.json",
+      "currentPath": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/zh-CN/god.replay.json",
       "sha256": "b0d3012338b61b470c51d748633e3c61824b25a79886e9c2999b23a1389f7cfb",
       "bytes": 51925,
       "owner": "frontend",
@@ -161927,8 +161927,8 @@
       "originCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
       "originalSha256": "44892c9e47855499c1fb0079de9262e2a13c13e3ca0defcf400bba099e6f5066",
       "originalBytes": 3649,
-      "currentSha256": "d7205d1801e9bc6114bcdb29e4c445910e17ab2ee0228c49d90ccb68b5f2f491",
-      "currentBytes": 3996,
+      "currentSha256": "a5973351d4db4bd3934e806f4fd66f5ad5f3fcee0e247389ab8895fb0a822b7f",
+      "currentBytes": 3989,
       "programSha256": "ef7e3837948bf180ceeb1269b03b635e08c2c523ce11be085bd03e4b85a565b0",
       "moduleBindingsSha256": "5d7a02f2c3bfbf27cc3c4b4897f1ac914bd0522662e7c1658933efd47408a0f1",
       "kind": "adapter-script",
@@ -161943,6 +161943,17 @@
               "declarationSha256": "ce9e4cbbfa11981b3c920b5897331d7e387c4f66f36ed20b2106365eaeb785d1"
             }
           ]
+        },
+        {
+          "originPath": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+          "currentPath": "backend/src/adapters/acp/acp-mcp-bridge.ts",
+          "originCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+          "bindings": [
+            {
+              "name": "AcpMcpServerConfig",
+              "declarationSha256": "a0e2a19be982ec6e3bc674761dacbfc4f832e887e8782f9b6716784130a248a7"
+            }
+          ]
         }
       ]
     },
@@ -161952,8 +161963,8 @@
       "originCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
       "originalSha256": "5aa52aedeb66c67e4222a9fc2b36c572a837b067caacde4fa0fb2e90011be250",
       "originalBytes": 8705,
-      "currentSha256": "d1f513adbc6e404b0621b865aa6a2652c471077d8d1da8c4a9f6f91a6f9e8ed8",
-      "currentBytes": 9067,
+      "currentSha256": "0e0116798fc4a139bce86ffd5677522ea65fc5381ad2d7c69b9115106af5adeb",
+      "currentBytes": 9060,
       "programSha256": "1bdee4de853e33700098b5a2740968c1419ac060e23bca1bd44496dc2480cc6e",
       "moduleBindingsSha256": "a2d4fa1bb4643055dd799772193df22ac386237b59dd3cb777fda85c9901eb10",
       "kind": "adapter-script",
@@ -161998,6 +162009,17 @@
               "declarationSha256": "ce9e4cbbfa11981b3c920b5897331d7e387c4f66f36ed20b2106365eaeb785d1"
             }
           ]
+        },
+        {
+          "originPath": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+          "currentPath": "backend/src/adapters/acp/acp-mcp-bridge.ts",
+          "originCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+          "bindings": [
+            {
+              "name": "AcpMcpServerConfig",
+              "declarationSha256": "a0e2a19be982ec6e3bc674761dacbfc4f832e887e8782f9b6716784130a248a7"
+            }
+          ]
         }
       ]
     },
@@ -162019,8 +162041,8 @@
       "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
       "originalSha256": "94b0a770d66434ff7ed0e2b662e4cbe615542c0ee12769ca2efc5ed3dc9a0928",
       "originalBytes": 811,
-      "currentSha256": "0dcf1764ed975f4dba71f037bb96632b74e3f90b16f0a0c981b0daf916c63ab1",
-      "currentBytes": 1154,
+      "currentSha256": "783f468aee2839c9351c59218f3be8858f7ac3f9575c07ea89954178636a7e2c",
+      "currentBytes": 1037,
       "programSha256": "507a479dd2a872a501474a2bfd51e4d171363c3a3c174e8873f76bd0089bfa70",
       "moduleBindingsSha256": "32b415306130f31a5b5fb54705bddd6184eee7cf63cd9da9edcd2ae974423343",
       "kind": "test-support"
@@ -162031,8 +162053,8 @@
       "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
       "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
       "originalBytes": 7318,
-      "currentSha256": "c42ff8470c11486792ba21ad70140b8a109a23d35e311b66cf934a9181fcbe02",
-      "currentBytes": 7676,
+      "currentSha256": "3fc402fe63e4e03041e89c82b102287d43900073274b8b84136cf9de45dd9325",
+      "currentBytes": 7533,
       "programSha256": "8584a8fe074819232521336ff6cb089cb1c96c7e4d800ebd581392324513ba9d",
       "moduleBindingsSha256": "0ac37de3b9f45e877a4cbd0c5bbbf8425fb3fc0dec4a6ddb06db234edc870dd7",
       "kind": "test-support"
@@ -163392,25 +163414,25 @@
       ]
     },
     {
-      "path": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/en/manifest.json",
+      "path": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/en/manifest.json",
       "suiteIds": [
         "fixture:frontend/tests/fixtures/time-consort-first_effect-en.replay.json"
       ]
     },
     {
-      "path": "frontend/tests/fixtures/time-consort-transport-first-effect/time-consort-first-effect/zh-CN/manifest.json",
+      "path": "frontend/tests/fixtures/time-wolf-consort-transport-first-effect/time-wolf-consort-first-effect/zh-CN/manifest.json",
       "suiteIds": [
         "fixture:frontend/tests/fixtures/time-consort-first_effect-zh-CN.replay.json"
       ]
     },
     {
-      "path": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/en/manifest.json",
+      "path": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/en/manifest.json",
       "suiteIds": [
         "fixture:frontend/tests/fixtures/time-consort-whole_night-en.replay.json"
       ]
     },
     {
-      "path": "frontend/tests/fixtures/time-consort-transport-whole-night/time-consort-whole-night/zh-CN/manifest.json",
+      "path": "frontend/tests/fixtures/time-wolf-consort-transport-whole-night/time-wolf-consort-whole-night/zh-CN/manifest.json",
       "suiteIds": [
         "fixture:frontend/tests/fixtures/time-consort-whole_night-zh-CN.replay.json"
       ]

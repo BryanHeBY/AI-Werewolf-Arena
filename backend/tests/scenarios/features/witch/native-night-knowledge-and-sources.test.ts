@@ -14,25 +14,25 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { getHunterState } from "../../../../src/features/hunter/ports";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { hunterDeathHook } from "../../../../src/game/mechanisms/roles/hunter/death_hook";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
+import { BaselineBotActionProvider } from "../../../../src/agents/baseline/privileged";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { hunterDeathHook } from "../../../../src/features/hunter/death-hook";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 import { text } from "@ai-werewolf-arena/game-text";
 
 const roles12 = [

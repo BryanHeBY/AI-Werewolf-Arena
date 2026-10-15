@@ -6,21 +6,21 @@
 import { expect, test, spyOn } from "bun:test";
 import { Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import type { ActionRequestConstructionInput, ActionRequest } from "../../../src/domain/actions";
 import { prepareGameSetup, type GameSetupRuntime } from "../../../src/rulesets/game-setup";
 import {
   installInitialIdentityDeal,
   initialIdentitySetupReady,
-} from "../../../src/game/mechanisms/roles/initial_identity/deal";
+} from "../../../src/features/initial-identity/deal";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   wildChildBinding,
   hasActiveWildChild,
-} from "../../../src/game/mechanisms/roles/wild_child/lifecycle";
+} from "../../../src/features/wild-child/lifecycle";
 import { foxBoard } from "../../support/features/cursed-fox/builders/scenario";
-import { WildChildSetupWindow } from "../../../src/game/mechanisms/roles/wild_child/setup-ports";
+import { WildChildSetupWindow } from "../../../src/features/wild-child/setup-ports";
 
 /** 测试调用方只消费组合交还的原窗口 Promise，完成值本身不再构成等待。 */
 async function finishSetup(...args: Parameters<typeof prepareGameSetup>): Promise<boolean> {

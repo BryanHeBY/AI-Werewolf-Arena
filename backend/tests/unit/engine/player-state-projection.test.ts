@@ -2,7 +2,7 @@
  * 单元测试：验证玩家状态投影的分离白名单及所选能力。输入为原私有历史与恶意字段；精确字段和能力相等断言拒绝未知数据／getter 进入 owner DTO，不复制运行句柄。
  */
 import { expect, test } from "bun:test";
-import { projectBearState } from "../../../src/game/mechanisms/roles/bear/ports";
+import { projectBearState } from "../../../src/features/bear/ports";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   COMPONENT,
@@ -12,28 +12,28 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 import {
   findNightAbility,
-} from "../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../src/game/observation/night-ability-projection";
-import { getBearState } from "../../../src/game/mechanisms/roles/bear/ports";
-import { getDreamerState } from "../../../src/game/mechanisms/roles/dreamer/ports";
-import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
-import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
-import { getIdiotState } from "../../../src/game/mechanisms/roles/idiot/ports";
-import { getKnightState } from "../../../src/game/mechanisms/roles/knight/ports";
-import { getWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/ports";
-import { getWolfBeautyState } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
-import { getWolfKingState } from "../../../src/game/mechanisms/roles/wolf_king/ports";
+} from "../../../src/features/night-abilities/abilities";
+import { projectNightAbility } from "../../../src/agents/observation/night-ability-projection";
+import { getBearState } from "../../../src/features/bear/ports";
+import { getDreamerState } from "../../../src/features/dreamer/ports";
+import { getGuardState } from "../../../src/features/guard/ports";
+import { getHunterState } from "../../../src/features/hunter/ports";
+import { getIdiotState } from "../../../src/features/idiot/ports";
+import { getKnightState } from "../../../src/features/knight/ports";
+import { getWhiteWolfKingState } from "../../../src/features/white-wolf-king/ports";
+import { getWolfBeautyState } from "../../../src/features/wolf-beauty/ports";
+import { getWolfKingState } from "../../../src/features/wolf-king/ports";
 import {
   projectDreamerState,
   projectGuardState,
@@ -42,7 +42,7 @@ import {
   projectSeerState,
   projectWitchState,
   projectWolfBeautyState,
-} from "../../../src/game/mechanisms/roles/player_state";
+} from "../../../src/agents/observation/player-state";
 
 const cases = [
   [Role.Guard, "guard"],

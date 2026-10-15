@@ -8,9 +8,9 @@ import { PotionType } from "../../../../../src/domain";
 import { Role } from "../../../../../src/domain";
 import { WinCondition } from "../../../../../src/domain";
 import type { BoardConfig } from "../../../../../src/domain";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
-import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
-import { sixPlayerMvpConfig } from "../../../../../src/runtime/scenarios/six_player_mvp";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
+import { boardDefinitionFromConfig } from "../../../../../src/app/config/board-definition";
+import { sixPlayerMvpConfig } from "../../../../../src/rulesets/presets/six-player-mvp";
 import type { PlannedTurn } from "../../../transport/contracts";
 import type { TransportGameScenario } from "../../../transport/contracts";
 

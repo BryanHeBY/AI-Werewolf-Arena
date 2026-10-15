@@ -9,10 +9,10 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import type { CampComponent } from "../../../src/domain/components/camp";
 import type { GameEvent } from "../../../src/domain/events";
-import { refreshHiddenWolfInheritance } from "../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
-import { refreshGargoyleInheritance } from "../../../src/game/mechanisms/roles/gargoyle/inheritance";
-import { refreshMechanicalInheritance } from "../../../src/game/mechanisms/roles/mechanical_wolf/inheritance";
-import { refreshAwakenedInheritance } from "../../../src/game/mechanisms/roles/awakened_hidden_wolf/inheritance";
+import { refreshHiddenWolfInheritance } from "../../../src/features/hidden-wolf/inheritance";
+import { refreshGargoyleInheritance } from "../../../src/features/gargoyle/inheritance";
+import { refreshMechanicalInheritance } from "../../../src/features/mechanical-wolf/inheritance";
+import { refreshAwakenedInheritance } from "../../../src/features/awakened-hidden-wolf/inheritance";
 
 // 四个真实公开刷新入口分别执行，不以通用名单实现或模拟角色状态替代它们。
 const inputs = [

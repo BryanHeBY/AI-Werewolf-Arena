@@ -5,7 +5,7 @@ import { expect, test } from "bun:test";
 import { Role as CoreRole, Camp as CoreCamp, type EntityId as CoreEntityId } from "../../src/domain";
 import { Role, Camp, ROLE_IDS, type EntityId, type RoleId } from "@ai-werewolf-arena/game-contract";
 import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
-import { getDefaultRoleCatalog } from "../../src/game/mechanisms";
+import { getDefaultRoleCatalog } from "../../src/rulesets/mechanism-api";
 
 // Compile-time compatibility of re-exported enum member and unbranded ID types.
 const sourceMember: CoreRole.DayScholar = Role.DayScholar;

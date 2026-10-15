@@ -3,7 +3,7 @@
  * 角色／变化／阶段矩阵、局部生命／角色／状态替换及受控直接查验；精确声明、免疫／防护／死因
  * 和过期选择断言保持原样，不运行完整夜或 PhaseManager 周期。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -20,7 +20,7 @@ import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
+} from "../../../../src/app/config/board-definition";
 import { captureNightLife } from "../../../../src/domain/night-effects";
 
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
@@ -28,20 +28,20 @@ import { StatusMarksComponent } from "../../../../src/domain/components/status-m
 import {
   captureInspectionIdentity,
   commitFoxInspection,
-} from "../../../../src/game/mechanisms/roles/cursed_fox/inspection_effect";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+} from "../../../../src/features/cursed-fox/inspection-effect";
+import { resolveInspection } from "../../../../src/engine/inspection";
+import { RoleCatalog } from "../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { permitsDeathShot } from "../../../../src/domain/deaths";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
-import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/night_stages";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { LUCKY_ABILITY_STAGE } from "../../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage";
+import { SEER_NIGHT_STAGES } from "../../../../src/features/seer/night-stages";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { LUCKY_ABILITY_STAGE } from "../../../../src/features/miracle-merchant/lucky-stage";
 import type { GameEvent, AliveComponent } from "../../../../src/domain";
 
 const deck = [Role.CursedFox, Role.Seer, Role.Wolf, Role.Witch, Role.Guard, Role.Villager];

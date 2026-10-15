@@ -7,7 +7,7 @@
  */
 import { types } from "node:util";
 import type { ToolName } from "@ai-werewolf-arena/game-contract";
-import type { ToolSpec } from "../game/mechanisms/contracts";
+import type { ToolSpec } from "../engine/actions/tool-contracts";
 
 export const TOOL_SCHEMA_CONFLICT = "tool_schema_conflict";
 

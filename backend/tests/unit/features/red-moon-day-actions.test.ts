@@ -10,9 +10,9 @@ import {
   closeDemonHunterNight,
   demonHunterCheckpointPlayers,
   demonRedMoonCanBlast,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { commitSelfDestructSelection } from "../../../src/game/mechanisms/self_destruct/commit";
-import { redMoonVotedOutHook } from "../../../src/game/mechanisms/roles/red_moon_apostle/voted_out_hook";
+} from "../../../src/features/demon-hunter/authority";
+import { commitSelfDestructSelection } from "../../../src/features/self-destruct/commit";
+import { redMoonVotedOutHook } from "../../../src/features/red-moon/voted-out-hook";
 function dayWorld(policy: "ends_game" | "forbidden" = "ends_game") {
   const fixture = redMoonCandidateWorld(policy);
   beginDemonHunterNight(fixture.world, 1, () => true);

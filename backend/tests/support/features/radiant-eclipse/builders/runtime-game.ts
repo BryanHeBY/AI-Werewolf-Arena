@@ -3,17 +3,17 @@
  */
 import { Role } from "../../../../../src/domain";
 import { readFile } from "node:fs/promises";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
 import { COMPONENT } from "../../../../../src/domain";
 import { createRandom } from "../../../../../src/domain";
 import type { RoleComponent } from "../../../../../src/domain";
 import type { ActionRequest } from "../../../../../src/domain";
 import type { GameEvent } from "../../../../../src/domain";
-import { NightPipeline } from "../../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../../../src/game/gateway/tool_gateway";
+import { NightPipeline } from "../../../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../../src/domain/systems/damage-resolution-system";
-import { allNightAbilities } from "../../../../../src/game/mechanisms/roles/abilities";
+import { allNightAbilities } from "../../../../../src/features/night-abilities/abilities";
 
 export const radiantRoles = [
   Role.EclipseMaid,

@@ -1,7 +1,7 @@
 /**
  * 单元测试验证赠枪原 World 授权、独立原生／gift 库存及有界死亡／转移／迟到回复。输入保留 locale／原生／死因／变化矩阵、明确生命 scope 和直接 hook／死亡结算；精确请求新鲜性、消费／到期库存、来源私有事实及陈旧 owner 拒绝是预期，不运行完整夜晚或原生文件记录器。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -15,7 +15,7 @@ import {
   type RoleComponent,
 } from "../../../src/domain";
 import { type AliveComponent } from "../../../src/domain/components/alive";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   allDeathGuns,
   grantDeathGun,
@@ -25,16 +25,16 @@ import {
   transferDeathGun,
   setDeathGunEnabled,
   copyDeathGun,
-} from "../../../src/game/mechanisms/roles/death_abilities";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
+} from "../../../src/features/death-actions/death-abilities";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
+import { getHunterState } from "../../../src/features/hunter/ports";
+import { buildAgentVisibleEventFeed } from "../../../src/agents/observation/event-feed";
 import { World } from "../../../src/domain/world";
-import { HookRegistry } from "../../../src/game/mechanisms/hooks/hook_registry";
-import { giftGunDeathHook } from "../../../src/game/mechanisms/roles/gift_gun_death_hook";
+import { HookRegistry } from "../../../src/engine/hooks/registry";
+import { giftGunDeathHook } from "../../../src/features/death-actions/gift-gun-death-hook";
 import { captureNightLife } from "../../../src/domain/night-effects";
 
 const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager];

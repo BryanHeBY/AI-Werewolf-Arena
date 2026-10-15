@@ -13,7 +13,7 @@ import {
   randomDraws,
   type RoleComponent,
 } from "../../../../src/domain";
-import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { demonHunterBoard } from "../../../support/features/demon-hunter/builders/candidate-world";
 for (const size of [6, 12] as const)

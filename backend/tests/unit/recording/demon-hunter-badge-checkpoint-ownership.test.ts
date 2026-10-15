@@ -4,11 +4,11 @@
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../src/domain";
 import { demonHunterFixture } from "../../support/features/demon-hunter/builders/candidate-world";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 
 test("actual badge transfer and destruction survive subsequent failure; mutable fake badge stays out", async () => {
   const { assignSheriff, commitSheriffBadgeChoice } =
-    await import("../../../src/game/mechanisms/sheriff/badge");
+    await import("../../../src/features/sheriff/badge");
   const f = demonHunterFixture(12),
     events: import("../../../src/domain").GameEvent[] = [];
   expect(assignSheriff(f.world, 4, f.config)).toBe(true);

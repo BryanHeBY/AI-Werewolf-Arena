@@ -9,15 +9,15 @@ import os from "node:os";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom } from "../../../src/domain/random";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { type ReproductionMetadata } from "../../../src/recording/reproduction";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
+import { type ReproductionMetadata } from "../../../src/recording/reproduction/format";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
 import {
   beginGameReproduction,
   currentEngineVersion,
-} from "../../../src/runtime/simulation/reproduction_context";
-import { replayReproduction } from "../../../src/runtime/simulation/replay_reproduction";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../src/app/simulation/reproduction-context";
+import { replayReproduction } from "../../../src/app/simulation/replay-reproduction";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 test("actual writer and strict zero-cycle reader share owned board data without an archive revision field", async () => {
   const input = structuredClone(sixPlayerMvpConfig);

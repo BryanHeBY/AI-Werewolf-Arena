@@ -11,38 +11,38 @@ import {
   createCampComponent,
   createStatusMarksComponent,
   createVotingRightComponent,
-} from "../game/observation/component-presentation";
-import { installNobleBodyAuthority } from "../game/mechanisms/roles/noble_secret_body/authority";
-import { installAnimalAuthority } from "../game/mechanisms/roles/animal_dream/authority";
+} from "../agents/observation/component-presentation";
+import { installNobleBodyAuthority } from "../features/noble-secret-body/authority";
+import { installAnimalAuthority } from "../features/animal-dream/authority";
 import { buildSupportedRoleDeck } from "../rulesets/supported-role-deck";
 import { BoardParameters, bindBoardParameters } from "../rulesets/board-parameters";
 import type { RulePlan } from "../rulesets/rule-plan";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { installRadiantEclipseBoard } from "../game/mechanisms/roles/radiant_eclipse/night_frame";
-import { installMistRavenBoard } from "../game/mechanisms/roles/mist_raven/night_frame";
-import { installScholarMentorBoard } from "../game/mechanisms/roles/scholar_mentor/night_frame";
-import { installTimeConsortBoard } from "../game/mechanisms/roles/time_wolf_consort/night_frame";
-import { installWolfSorcererBoard } from "../game/mechanisms/roles/wolf_sorcerer/night_frame";
-import { installTricksterBoard } from "../game/mechanisms/roles/trickster/night_frame";
-import { installOrderPrinceBoard } from "../game/mechanisms/roles/order_prince/authority";
-import { installMagicianBoard } from "../game/mechanisms/roles/magician/night_frame";
-import { installNightmareBoard } from "../game/mechanisms/roles/nightmare_shadow/night_frame";
-import { installEvilKnightBoard } from "../game/mechanisms/roles/evil_knight/night_frame";
-import { installDemonHunter } from "../game/mechanisms/roles/demon_hunter/authority";
-import { WinConditionRegistry as PureWhiteWinRegistry } from "../game/mechanisms/registries/win_condition_registry";
-import { createEliminationWinConditionSpecs } from "../game/mechanisms/win_conditions/default_specs";
-import { installGhostBride } from "../game/mechanisms/roles/ghost_bride/authority";
-import { installLonelyGirl } from "../game/mechanisms/roles/lonely_girl/lifecycle";
-import { installWildChild } from "../game/mechanisms/roles/wild_child/lifecycle";
+import { installRadiantEclipseBoard } from "../features/radiant-eclipse/night-frame";
+import { installMistRavenBoard } from "../features/mist-raven/night-frame";
+import { installScholarMentorBoard } from "../features/scholar-mentor/night-frame";
+import { installTimeConsortBoard } from "../features/time-wolf-consort/night-frame";
+import { installWolfSorcererBoard } from "../features/wolf-sorcerer/night-frame";
+import { installTricksterBoard } from "../features/trickster/night-frame";
+import { installOrderPrinceBoard } from "../features/order-prince/authority";
+import { installMagicianBoard } from "../features/magician/night-frame";
+import { installNightmareBoard } from "../features/nightmare/night-frame";
+import { installEvilKnightBoard } from "../features/evil-knight/night-frame";
+import { installDemonHunter } from "../features/demon-hunter/authority";
+import { WinConditionRegistry as PureWhiteWinRegistry } from "../engine/victory/condition-registry";
+import { createEliminationWinConditionSpecs } from "../rulesets/victory/default-specs";
+import { installGhostBride } from "../features/ghost-bride/authority";
+import { installLonelyGirl } from "../features/lonely-girl/lifecycle";
+import { installWildChild } from "../features/wild-child/lifecycle";
 import { installInitialRoster } from "../domain/initial-roster";
-import { installShapeshifterDeal } from "../game/mechanisms/roles/shapeshifter/deal";
-import { installThiefDeal } from "../game/mechanisms/roles/thief/deal";
-import { supportsWallRoles } from "../game/mechanisms/events/wall_notes/authority";
+import { installShapeshifterDeal } from "../features/shapeshifter/deal";
+import { installThiefDeal } from "../features/thief/deal";
+import { supportsWallRoles } from "../features/wall-notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 
 import { COMPONENT } from "../domain/components/names";
 import type { RoleComponent } from "../domain/components/role";
-import { createRoleComponent } from "../game/observation/role-presentation";
+import { createRoleComponent } from "../agents/observation/role-presentation";
 
 import { createVictoryComponent } from "../domain/components/victory";
 import { createIdentityComponent } from "../domain/entities/player";
@@ -52,12 +52,12 @@ import {
   getDefaultRoleCatalog,
   assignInitialSheriff,
   createDefaultRoleRegistry,
-} from "../game/mechanisms";
+} from "../rulesets/mechanism-api";
 import { ConditionRegistry } from "../domain/registries/condition-registry";
 import { DamageResolutionSystem } from "../domain/systems/damage-resolution-system";
 import { World } from "../domain/world";
-import { PhaseManager } from "../game/engine/phase_manager";
-import { ToolGateway } from "../game/gateway/tool_gateway";
+import { PhaseManager } from "../engine/phase-manager";
+import { ToolGateway } from "../engine/actions/tool-gateway";
 import { createRandom, shuffled, type RandomSource } from "../domain/random";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 

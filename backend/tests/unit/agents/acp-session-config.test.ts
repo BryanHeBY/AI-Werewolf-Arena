@@ -8,7 +8,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import * as acp from "@agentclientprotocol/sdk";
-import { applyAcpSessionConfigOptions } from "../../../src/ai/integrations/acp/acp_session_config";
+import { applyAcpSessionConfigOptions } from "../../../src/adapters/acp/acp-session-config";
 
 function option(currentValue: boolean) {
   return {

@@ -12,7 +12,7 @@ import { boardConfigSchema } from "../../../src/domain/board-schema";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 const config: any = {
   boardSize: 12,
   enableSheriff: true,

@@ -11,14 +11,14 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { createRoleComponent } from "../../../src/domain/components/role";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { SEER_VALIDATION_RULES } from "../../../src/rulesets/seer-tool-admission";
-import { SEER_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/seer/profile";
-import { setSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
-import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import { recordOwnNightAction } from "../../../src/game/mechanisms/roles/night_action_history";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import type { ToolRule, ValidationRuleContext } from "../../../src/game/mechanisms/validation/contracts";
+import { SEER_ROLE_PROFILE } from "../../../src/features/seer/profile";
+import { setSeerState } from "../../../src/features/seer/ports";
+import { findNightAbility } from "../../../src/features/night-abilities/abilities";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import { recordOwnNightAction } from "../../../src/features/night-abilities/night-action-history";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
+import { ToolValidationRuleRegistry } from "../../../src/engine/actions/tool-validation-rule-registry";
+import type { ToolRule, ValidationRuleContext } from "../../../src/engine/actions/validation-contracts";
 
 function fixture() {
   const world = new World();

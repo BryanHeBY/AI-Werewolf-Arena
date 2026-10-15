@@ -1,0 +1,298 @@
+{
+  "kind": "independent TMP operational candidate source/design review; not execution approval or a product gate",
+  "decision": "approved_as_bounded_candidate",
+  "inputBindings": {
+    "ready.json": "a04cbec1533189c37a2d048e4cde01f3c6eb30274b172cb8eaee8061d8330fd0",
+    "operations.json": "07200f6e9e59a78e28f7ba424618aa7419f8120ef0921f7d249f93b22fb775bc",
+    "before.json": "13058fe4b7889e4a9c6fc6cade6478a82edff440087e13e1eb553d9af8609993",
+    "README.md": "ef7ea3fad1df51cc405289c0e140f783c7479ae3a284088909308a7406c84710",
+    "apply.cjs": "3bdf8c8bae283e78d9459fffa1e0e35d145e92ef3abbfe33ceb4f4ede6fd16ab",
+    "fixture-metadata.cjs": "af71374f597f80412680c3dbebef23a01ba61dd03933b0abd3758dd5a956a188"
+  },
+  "actualBase": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+  "sourceCount": 37,
+  "orderedEdits": 83,
+  "issues": [],
+  "sources": [
+    {
+      "from": "backend/src/ai/integrations/acp/acp_process_client.ts",
+      "to": "backend/src/adapters/acp/acp-process-client.ts",
+      "actualGitSHA256": "c9007ebda1219a62d8d2c95091130d2bf9c223d3d13134e800def70a8dac3fda",
+      "candidateSHA256": "67fab7c0c79fe0b0f35cc1510f9ba7c2bbcd22f22c296cff16d0c7acaea5fc22",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/src/ai/audit/acp_audit_runner.ts",
+      "to": "backend/src/audit/agents/acp-audit-runner.ts",
+      "actualGitSHA256": "26bba92c1050001b2028879575af6b9f6f7d1e7744dcae19a50b4fdcb3aba07a",
+      "candidateSHA256": "be1a0857e480ce26749dabacda90dc8d5bda29586cd4ece1e6e2d03682814585",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/package.json",
+      "to": "backend/package.json",
+      "actualGitSHA256": "3e5a263be4ad1b78812a83f61fca7596e152b536f00c6be2537f4266fa406e03",
+      "candidateSHA256": "e0f065a18fc22f3a959b1787df5128ba430c063a7a0f799d01c2a373daea534f",
+      "orderedEdits": 11
+    },
+    {
+      "from": "tooling/refactor/trace-game.ts",
+      "to": "tooling/refactor/trace-game.ts",
+      "actualGitSHA256": "dae21e621ad6d72b7df8e99464aa813da5fa2f34a9044aa29e15b65987fb38d9",
+      "candidateSHA256": "45a2da870bb06722b928313cf2325356767a227a28f5c46cbc29fcaece1b3826",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/architecture/identity-import-initialization.test.ts",
+      "to": "backend/tests/architecture/identity-import-initialization.test.ts",
+      "actualGitSHA256": "f4661b1376ae372c41e1bb44d3f8f81d70a7ea7752d2dafe59f51ebd4a7e9ce4",
+      "candidateSHA256": "61fb79d2dd3ae4bf5b600e058e9d0f1e9ce1155d7428c7e00553fc9d3c2309bc",
+      "orderedEdits": 6
+    },
+    {
+      "from": "frontend/tests/architecture/stage-coverage.test.ts",
+      "to": "frontend/tests/architecture/stage-coverage.test.ts",
+      "actualGitSHA256": "890d5964cc9a26652e720cd310599c7ee8521499156387bce3b1f5c73575910d",
+      "candidateSHA256": "e409a22cb3cdbe4df75733e592ffacf286379b17155dc5e2667859d7b17b127d",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/agents/acp/game-control-mcp.test.ts",
+      "to": "backend/tests/integration/agents/acp/game-control-mcp.test.ts",
+      "actualGitSHA256": "8b55675b692bbb7977308810047375f8ca01c2f0a781909a2805809b3e2d00cf",
+      "candidateSHA256": "abcfadd38357a7bdb4c4e588fc38a06a303ec7de8eb87bc10bd12fe9550d0941",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/agents/acp/process-session-ownership.test.ts",
+      "to": "backend/tests/integration/agents/acp/process-session-ownership.test.ts",
+      "actualGitSHA256": "574de599d821ec888e2ac0de39a08d5676a85eb2f5a16de6479a055127e2752f",
+      "candidateSHA256": "a2fbc0412bd3b42d80be4011be32f8ae0b5b0b4e4925171a2f755291c1ab94ca",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/agents/acp/strict-wire-schema.test.ts",
+      "to": "backend/tests/integration/agents/acp/strict-wire-schema.test.ts",
+      "actualGitSHA256": "60bbdcf1476cb39f27c7a932537eac0f5a6c8a0f785175f09a522ae5161013e0",
+      "candidateSHA256": "c7231082664f4d42e7df84d1d5dd58b97e8fadd5b42d7032770a2fe5d7fa4b35",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/agents/animal-dream/late-submission-mcp.test.ts",
+      "to": "backend/tests/integration/agents/animal-dream/late-submission-mcp.test.ts",
+      "actualGitSHA256": "3a19b6aec2dc72b7e38ecac8e168d76c521592551eee21ac335bee2cc7388138",
+      "candidateSHA256": "215a76035938f7003ea237805d3629186270d4d62c3b1322252e02c95a9874e0",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/agents/audit/tool-mcp-contract.test.ts",
+      "to": "backend/tests/integration/agents/audit/tool-mcp-contract.test.ts",
+      "actualGitSHA256": "25c7ad7d09eef090b6ce228ee997444f6f0f1f95737dc4f1e78bcf38cbc51e3c",
+      "candidateSHA256": "efc868788c7f519ce481701a4bf1a708077d1e683a87e1dc30d382d42aa41d1a",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/agents/fragrant-pair-seer/late-submission-mcp.test.ts",
+      "to": "backend/tests/integration/agents/fragrant-pair-seer/late-submission-mcp.test.ts",
+      "actualGitSHA256": "09a3278e3f4b6178d590913f4b7e873aa081955ccd9b2010fb5c7ebfaedfde9d",
+      "candidateSHA256": "9d3a678554988ce3364069d972f580fc5dbc16252393d5aac80a4d63b68885e2",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/agents/mist-raven/late-submission-mcp.test.ts",
+      "to": "backend/tests/integration/agents/mist-raven/late-submission-mcp.test.ts",
+      "actualGitSHA256": "8f1aa70b95d60392e947a813d154af90c02c50d9762fa44d1f1a481e7cacdd7d",
+      "candidateSHA256": "367606021b491fe8e260b0cc0a8ec258b8799013d0bd8a087a3cb1290bdff4ac",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/agents/protocol/action-reception-sdk-mcp-parity.test.ts",
+      "to": "backend/tests/integration/agents/protocol/action-reception-sdk-mcp-parity.test.ts",
+      "actualGitSHA256": "2b9572954758e5213877b2d871782d63f640b34597db2b6cd420e5ca4eb74b7d",
+      "candidateSHA256": "b96d596d8d41e6630fdaed153797397fa8368528b631c209e1daf9a9884fcc60",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/agents/protocol/bilingual-sdk-mcp.test.ts",
+      "to": "backend/tests/integration/agents/protocol/bilingual-sdk-mcp.test.ts",
+      "actualGitSHA256": "58a160c137d98f06b43338ef9151fd203682d2687ede94a972e47a9ffa4d1d65",
+      "candidateSHA256": "44d35ae06b7ba0e41544d50f6da9fc1b330dc4d90e7968366c1b8d670cea6f07",
+      "orderedEdits": 2
+    },
+    {
+      "from": "backend/tests/integration/agents/radiant-eclipse/late-submission-mcp.test.ts",
+      "to": "backend/tests/integration/agents/radiant-eclipse/late-submission-mcp.test.ts",
+      "actualGitSHA256": "41423ee80d92900d591b51eff6fed83dffaebeb4d2edc45788b8a56269af88ee",
+      "candidateSHA256": "89a3398b4b00aa8990015cb6002e16b1eaff29da6bff29abe44cc581782fae10",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/unit/configuration/cli-config-directory.test.ts",
+      "to": "backend/tests/unit/configuration/cli-config-directory.test.ts",
+      "actualGitSHA256": "e258089218c47860ebaaf807c5b8dcd20ab87791db4bc4d67b104d1dd4c1125a",
+      "candidateSHA256": "300f09694da908da5aa4d15913c2161fcf360b5624fdbf2a38f64480366c2835",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/cli/provider-load-errors.test.ts",
+      "to": "backend/tests/integration/cli/provider-load-errors.test.ts",
+      "actualGitSHA256": "1ed91d1a73642ab150df822ddb4ba8bd81d5ffdcc9cb3396fb8b5fb34c07eb7f",
+      "candidateSHA256": "b79a43f55531cb061d82c4e485a9497d6740235648ed56ed9e295729f97a8506",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/cli/config-publication-failures.test.ts",
+      "to": "backend/tests/integration/cli/config-publication-failures.test.ts",
+      "actualGitSHA256": "77df61155ae80b3d465ce90bc1c19cffe5b8ec05770e52f7ca8d6f88da71da51",
+      "candidateSHA256": "7b67fe84cebf952dbecf20d22f1c9b50253efbccbfaf0315c886f1ed30d34ca5",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/integration/cli/bilingual-commands.test.ts",
+      "to": "backend/tests/integration/cli/bilingual-commands.test.ts",
+      "actualGitSHA256": "3677800d0147918511b8ce7fe7d314eef056107ed56472f337341e30fce816f4",
+      "candidateSHA256": "e48fef64f01a9bd70b692400780fd273145dcf23ddc75657f2ee61b670b079ce",
+      "orderedEdits": 7
+    },
+    {
+      "from": "packages/game-contract/package.json",
+      "to": "packages/game-contract/package.json",
+      "actualGitSHA256": "b2112b4b8493b3e2ed18a4b4a22c6876213bb87eb35b51b26471d789e29f6857",
+      "candidateSHA256": "31bee631fdffe9ab62425ab217d4061f28d0f09a57a1dcb0db8b904e31a0d597",
+      "orderedEdits": 4
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "to": "backend/src/features/time-wolf-consort/state-slot.ts",
+      "actualGitSHA256": "398bd831d300dd83d92306a15a23a472a9ecdcf6262cceb3074d168add2c8bfb",
+      "candidateSHA256": "d77a2ef5fa1598c382a6d2b959f19614186c5335fa871cc5645e8fd30d4bbef1",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/src/game/observation/agent-event-facts.ts",
+      "to": "backend/src/agents/observation/agent-event-facts.ts",
+      "actualGitSHA256": "be326c37b9cac0477049ecb91b5a966c92199eae110e39b7aea27f80308b5c41",
+      "candidateSHA256": "0cba233779cda9cb097aeca386fa471d28d9557ec44c86692989633960abf22a",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/src/game/observation/player-observation.ts",
+      "to": "backend/src/agents/observation/player-observation.ts",
+      "actualGitSHA256": "b9b1eefbbcdf75a9132dc21f39c8409acd0034f15399f0ab26f92a246b45a6a9",
+      "candidateSHA256": "bf5c6e3ceef3cdaed683770b4913f282418e7db91c229bc4c0c1e5764f91c10f",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/src/recording/reproduction.ts",
+      "to": "backend/src/recording/reproduction/format.ts",
+      "actualGitSHA256": "dba9170fd97299596d9872b0ba3fa84e08e7aaf9230cafd09d906d97b09c7881",
+      "candidateSHA256": "b05e3f5c8c15aa5e7422e7c0f997f7a2560400b103b1aa5558d20b140623f03a",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "to": "backend/src/recording/verification/time-wolf-consort/validate.ts",
+      "actualGitSHA256": "d97d54989d682a2502a2f57177d67d89c8116679f84c330f445e9f538678f942",
+      "candidateSHA256": "8548b169bf560555cd09d50b40876b5d694adb91276204311a50952a10e94f17",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/support/oracles/transport/observations.ts",
+      "to": "backend/tests/support/oracles/transport/observations.ts",
+      "actualGitSHA256": "f5d09061e935b37631ad9deb25e1ae368a2c01353e4749fc72c326d4b4c6786b",
+      "candidateSHA256": "2086a26f536dec9c44e14a042ea2b701b83ef6dc3c30e97f10b589f27e488e6a",
+      "orderedEdits": 1
+    },
+    {
+      "from": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+      "to": "backend/tests/unit/contracts/time-wolf-consort-player-dto.types.ts",
+      "actualGitSHA256": "f51e99b6861ea94904d119aeb29dd939499aca0340f476b315489f3dfa22e21b",
+      "candidateSHA256": "8a60899a1117d9b9025f06fe20267dfe34565b1351b76031e8703978b3b58b9b",
+      "orderedEdits": 1
+    },
+    {
+      "from": "frontend/src/replay/replay-event-reader.ts",
+      "to": "frontend/src/replay/replay-event-reader.ts",
+      "actualGitSHA256": "ea1689ef8b41ec5486df1db00a2d4bf427b374a446a86b22fd19a627775655cb",
+      "candidateSHA256": "ffc4fcc733ed3bd6690046fb85d3f26ec6ec23fabe3f60b6ff478d0b4705a12b",
+      "orderedEdits": 1
+    },
+    {
+      "from": "frontend/tests/unit/replay/events/time-consort.test.ts",
+      "to": "frontend/tests/unit/replay/events/time-wolf-consort.test.ts",
+      "actualGitSHA256": "edc4301e3b2ebe2db8c795791bdb199ab5ea0c6392cdb5f45fcdd0fcd9d9c4cb",
+      "candidateSHA256": "eed7a5fd7e7e5b2e388c1b65683ae02508a170112157fa7b55a57fe8b818ea32",
+      "orderedEdits": 1
+    },
+    {
+      "from": "packages/game-contract/tests/facts/time-consort.test.ts",
+      "to": "packages/game-contract/tests/facts/time-wolf-consort.test.ts",
+      "actualGitSHA256": "4a009e9dc49457c7f76f422034141b45f0f9c24fad45b7f29c8df858f86c191b",
+      "candidateSHA256": "15d9d92875465f1012634d625d097e467440810e1520e5243ecc951baa64e066",
+      "orderedEdits": 1
+    },
+    {
+      "from": "packages/game-presentation/src/events/night-mechanisms.ts",
+      "to": "packages/game-presentation/src/events/night-mechanisms.ts",
+      "actualGitSHA256": "0a7ba9f8a030faddda67f07659440b8ce1794f99b0a15e0196208d0d3a09c0d4",
+      "candidateSHA256": "0ca8697391fb74bf13e8ecf9d8c33b098a3ae1d8f45ad47577b898c57b857cb6",
+      "orderedEdits": 1
+    },
+    {
+      "from": "packages/game-contract/src/index.ts",
+      "to": "packages/game-contract/src/index.ts",
+      "actualGitSHA256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce",
+      "candidateSHA256": "ee6da19b0163e02ca513faab4b7107c247871ef24838c711f5233dc9f6b7502a",
+      "orderedEdits": 1
+    },
+    {
+      "from": "tooling/refactor/fixture-manifest.ts",
+      "to": "tooling/refactor/fixture-manifest.ts",
+      "actualGitSHA256": "605b5faf76f236d3fb133082ea77fed1e49755c3479180263f230381c527eb49",
+      "candidateSHA256": "90b3434b6d43aad21687779155a05c937a23e5c289753eb41c4c96f83b5cd7d8",
+      "orderedEdits": 14
+    },
+    {
+      "from": "backend/scripts/import_boundaries.cjs",
+      "to": "backend/scripts/import_boundaries.cjs",
+      "actualGitSHA256": "5d7d4cd03fc2f33757917381edfb842870f0509dd088fdd38b6620d1cd2041d1",
+      "candidateSHA256": "11e86f541866957e76636954ee93a807e2ed93d1973d6da53d2a7614ca21d609",
+      "orderedEdits": 2
+    },
+    {
+      "from": "tooling/refactor/architecture/dependency-check.ts",
+      "to": "tooling/refactor/architecture/dependency-check.ts",
+      "actualGitSHA256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb",
+      "candidateSHA256": "10ba7cf9cd731870188c012d25f57264535cbf77655370e8da24a785afb65476",
+      "orderedEdits": 6
+    },
+    {
+      "from": "tooling/refactor/fixture-source-relocations.test.ts",
+      "to": "tooling/refactor/fixture-source-relocations.test.ts",
+      "actualGitSHA256": "9c9c9b7f99b383fbd7ec87e87f827aec9a797bae507654e322d776383f3bd48c",
+      "candidateSHA256": "ba58ded6b5ca4641dea4a7fa6c8b2257ba0bf702d5761868b90b9724ee1a6b5b",
+      "orderedEdits": 3
+    }
+  ],
+  "semanticReview": [
+    "Read complete apply/metadata scripts, all83 edits, actual full type-relocation reader/parse/declaration/safeFile/generate paths and3 new bounded risk declarations without execution.",
+    "The production relocation allow-list is one exact old/current MCP bridge pair and one exported symbol; current use must be named type-only. Full interface/type-alias printer matches original; value/namespace/dynamic/class/undeclared/path escape cases do not gain a new permission.",
+    "Current allowed production input is registered only after manifest parse; existing support/source-asset whitelist retained; old type Git mode100644/current per-segment symlink/regular-file rejection read in actual branches.",
+    "Read Trace original/domain/owned profiles and their finite union membership rejection; new presence queries are an explicit tool acceptance/timing change. Fixed Date.now still precedes actual product loads.",
+    "Read game/audit sidecar callback contexts: .ts/.js selection and original serverEntrypoint receiver/call point retained, only exact physical path changes.",
+    "Package scripts keep actual smoke and release chain/arguments. Public Time old subpath is intentionally retired rather than aliased; machine Role/field/event/RNG/text/origin identity is not renamed.",
+    "Read import-boundary/dependency policy functions. The exact Session recorder→FileStore edge is retained, not a generic adapters exemption. Recording/checkpoint4file16 existing feature edges remain reported pending Root separate5owner move.",
+    "Read metadata updater: source original hashes and complete program/moduleBindings compare against original values before current fields are updated;8 Time payload bytes and4 derived paths are bounded, original metadata/suites/policy preserved."
+  ],
+  "integrationNotes": [
+    "Do not copy whole candidate files: their ordinary imports are the6025 originals. Apply only declared snippets after the Root mechanical afterSHA matches.",
+    "Language candidate inventory ID4 overlaps the initial-identity import-test head replaced here. Root must keep/reconcile the operational head and register that candidate as covered rather than blindly apply the old-English anchor later.",
+    "The later app/checkpoint5owner move is separately authorized and must not mutate the already recorded672 mechanical proof or be described as a debt exemption."
+  ],
+  "limits": [
+    "No application script, metadata updater, TypeScript, test, runtime, checker, gate, proof or network executed by reviewer. Read/hash reconstruction is only candidate/source integrity.",
+    "No independent proof of1475 mechanical programs or a guarantee of all dynamic/nonliteral consumers.",
+    "New3 tests have only been read, not claimed green. Actual application/metadata/tests and combined source validation remain Root-owned.",
+    "Filesystem I/O application is not a transaction: script prepares all anchors before writes, but real write failure may leave an already-written prefix."
+  ]
+}

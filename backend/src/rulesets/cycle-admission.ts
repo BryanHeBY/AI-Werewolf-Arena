@@ -6,22 +6,22 @@
  */
 import type { World } from "../domain/world";
 import type { RuntimeSnapshot } from "@ai-werewolf-arena/game-contract";
-import { hasRadiantNight } from "../game/mechanisms/roles/radiant_eclipse/ports";
-import { hasDemonNightStarted } from "../game/mechanisms/roles/demon_hunter/ports";
+import { hasRadiantNight } from "../features/radiant-eclipse/ports";
+import { hasDemonNightStarted } from "../features/demon-hunter/ports";
 import {
   weddingSetup, ghostBrideReady, hasActiveGhostBride, hasGhostBrideNightCommit,
-} from "../game/mechanisms/roles/ghost_bride/ports";
+} from "../features/ghost-bride/ports";
 import {
   lonelyGirlReady, hasActiveLonelyGirl, hasLonelyGirlNightCommit,
-} from "../game/mechanisms/roles/lonely_girl/ports";
+} from "../features/lonely-girl/ports";
 import {
   hasActiveWildChild, hasWildChildNightCommit,
-} from "../game/mechanisms/roles/wild_child/ports";
+} from "../features/wild-child/ports";
 import {
   hasActiveInitialIdentitySetup, hasActiveInitialIdentityNight,
   hasInitialIdentityNightCommit, initialIdentityKind,
-} from "../game/mechanisms/roles/initial_identity/ports";
-import { hasActiveWall } from "../game/mechanisms/events/wall_notes/ports";
+} from "../features/initial-identity/ports";
+import { hasActiveWall } from "../features/wall-notes/ports";
 
 /** 运行查询端口；readonly 约束字段赋值，不是数据快照或运行时授权屏障。 */
 export interface CycleAdmissionRuntime {

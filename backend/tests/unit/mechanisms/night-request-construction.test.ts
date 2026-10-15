@@ -7,17 +7,17 @@ import { expect, test } from "bun:test";
 import { Phase, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { demonHunterFixture } from "../../support/features/demon-hunter/builders/candidate-world";
 import { ghostBrideBoard, ghostBrideDeck } from "../../support/features/ghost-bride/builders/scenario";
 import { nightStageContext } from "../../support/builders/night-stage-context";
-import { executeDemonHunterTurn } from "../../../src/game/mechanisms/roles/demon_hunter/controller";
-import { executeDemonWitchTurn } from "../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller";
-import { executeDemonNativeNight } from "../../../src/game/mechanisms/roles/demon_hunter/native_night_controller";
-import { beginDemonHunterNight, closeDemonHunterNight, bindDemonHunterRequest, demonHunterRequestScope, openDemonWitchTurnFrame } from "../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { executeWeddingTurn } from "../../../src/game/mechanisms/roles/ghost_bride/setup";
-import { beginWeddingSetup, openWeddingTurn, closeWeddingTurn, closeWeddingSetup } from "../../../src/game/mechanisms/roles/ghost_bride/authority";
+import { executeDemonHunterTurn } from "../../../src/features/demon-hunter/controller";
+import { executeDemonWitchTurn } from "../../../src/features/demon-hunter/native-potion-controller";
+import { executeDemonNativeNight } from "../../../src/features/demon-hunter/native-night-controller";
+import { beginDemonHunterNight, closeDemonHunterNight, bindDemonHunterRequest, demonHunterRequestScope, openDemonWitchTurnFrame } from "../../../src/features/demon-hunter/authority";
+import { executeWeddingTurn } from "../../../src/features/ghost-bride/setup";
+import { beginWeddingSetup, openWeddingTurn, closeWeddingTurn, closeWeddingSetup } from "../../../src/features/ghost-bride/authority";
 const noProvider = { async getAction(): Promise<never> { throw new Error("literal_unexpected_provider"); } };
 
 test("猎魔和婚礼构造getter失败仍关闭try内原许可而不补交选择", async () => {

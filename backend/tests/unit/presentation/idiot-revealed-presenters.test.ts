@@ -7,7 +7,7 @@
 import {
   getDefaultAgentEventVisibilityRegistry,
   getDefaultScriptEventRenderRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 import { GameEvent } from "../../../src/domain/model";
 import { World } from "../../../src/domain/world";
 

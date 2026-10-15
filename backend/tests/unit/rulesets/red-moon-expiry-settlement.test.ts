@@ -8,14 +8,14 @@ import { Camp, type GameEvent, type WinDecision } from "../../../src/domain/mode
 import { COMPONENT } from "../../../src/domain/components/names";
 import { World } from "../../../src/domain/world";
 import { ConditionRegistry } from "../../../src/domain/registries/condition-registry";
-import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/ports";
+import { getRedMoonState } from "../../../src/features/red-moon/ports";
 import {
   beginDemonHunterNight,
   closeDemonHunterNight,
   freezeDemonHunt,
   commitDemonRedMoonTransition,
   demonHunterCheckpointPlayers,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
+} from "../../../src/features/demon-hunter/authority";
 import { settleRedMoonExpiry, type RedMoonExpiryRuntime } from "../../../src/rulesets/red-moon-expiry-settlement";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 

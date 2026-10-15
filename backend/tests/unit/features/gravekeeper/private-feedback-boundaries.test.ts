@@ -1,7 +1,7 @@
 /**
  * 单元测试：验证守墓人私密反馈字段及前次放逐的直接交付，不泄漏待结算或精确角色。输入为语言矩阵、字面畸形反馈与直接阶段上下文；原 null／接受、零 accessor 读及资格／历史为预期，不运行完整夜或 PhaseManager 周期。
  */
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -16,12 +16,12 @@ import {
   type BoardConfig,
   type ActionRequest,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { GRAVEKEEPER_FEEDBACK_STAGE } from "../../../../src/game/mechanisms/roles/gravekeeper/feedback";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { GRAVEKEEPER_FEEDBACK_STAGE } from "../../../../src/features/gravekeeper/feedback";
 import {
   getGravekeeperState,
   setGravekeeperState,
-} from "../../../../src/game/mechanisms/roles/gravekeeper/state";
+} from "../../../../src/features/gravekeeper/state";
 import { readGravekeeperReport, readGravekeeperFeedback } from "@ai-werewolf-arena/replay-contract";
 import {
   getDefaultRoleCatalog,
@@ -29,9 +29,9 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms/script/event_render_registry";
+} from "../../../../src/rulesets/mechanism-api";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { getDefaultScriptEventRenderRegistry } from "../../../../src/agents/presentation/event-render-registry";
 
 const deck = [Role.Wolf, Role.Wolf, Role.Gravekeeper, Role.Seer, Role.Villager, Role.Villager];
 

@@ -11,12 +11,12 @@ import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { createRoleComponent } from "../../../src/domain/components/role";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import { WOLF_VALIDATION_RULES } from "../../../src/rulesets/wolf-tool-admission";
-import { WOLF_VALIDATION_RULES as publicRules, ORDINARY_WOLF_CONTRIBUTIONS } from "../../../src/game/mechanisms/roles/wolf/ability-ports";
-import { WOLF_BEAUTY_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf_beauty/profile";
-import { WILD_CHILD_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wild_child/profile";
-import type { ValidationRuleContext } from "../../../src/game/mechanisms/validation/contracts";
+import { WOLF_VALIDATION_RULES as publicRules, ORDINARY_WOLF_CONTRIBUTIONS } from "../../../src/features/wolf/ability-ports";
+import { WOLF_BEAUTY_ROLE_PROFILE } from "../../../src/features/wolf-beauty/profile";
+import { WILD_CHILD_ROLE_PROFILE } from "../../../src/features/wild-child/profile";
+import type { ValidationRuleContext } from "../../../src/engine/actions/validation-contracts";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ghostBrideBoard, ghostBrideDeck } from "../../support/features/ghost-bride/builders/scenario";
 

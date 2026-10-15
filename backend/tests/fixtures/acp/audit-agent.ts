@@ -8,7 +8,7 @@ import { createInterface } from "node:readline";
 import { writeFile } from "node:fs/promises";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import type { AcpMcpServerConfig } from "../../../src/ai/integrations/acp/acp_mcp_bridge";
+import type { AcpMcpServerConfig } from "../../../src/adapters/acp/acp-mcp-bridge";
 
 const trace: Record<string, unknown> = { agentPid: process.pid, prompts: [] };
 let client: Client | undefined;

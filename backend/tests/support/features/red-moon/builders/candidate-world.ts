@@ -7,25 +7,25 @@ import {
   createCampComponent,
   createStatusMarksComponent,
   createVotingRightComponent,
-} from "../../../../../src/game/observation/component-presentation";
+} from "../../../../../src/agents/observation/component-presentation";
 import type { LastWolfBlastPolicy } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../../src/domain/world";
 import { Role } from "../../../../../src/domain/identity";
 import { COMPONENT } from "../../../../../src/domain/components/names";
-import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../../src/agents/observation/role-presentation";
 
 import { createVictoryComponent } from "../../../../../src/domain/components/victory";
 import { createIdentityComponent } from "../../../../../src/domain/entities/player";
 import { installInitialRoster } from "../../../../../src/domain/initial-roster";
-import { RoleCatalog } from "../../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { RED_MOON_ROLE_PROFILE } from "../../../../../src/game/mechanisms/roles/red_moon_apostle/profile";
-import { installDemonHunter } from "../../../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { redMoonTwelveConfig } from "../../../../../src/runtime/scenarios/red_moon_twelve";
+} from "../../../../../src/rulesets/roles/role-catalog-assembly";
+import { RED_MOON_ROLE_PROFILE } from "../../../../../src/features/red-moon/profile";
+import { installDemonHunter } from "../../../../../src/features/demon-hunter/authority";
+import { redMoonTwelveConfig } from "../../../../../src/rulesets/presets/red-moon-twelve";
 
 export function redMoonCandidateWorld(policy: LastWolfBlastPolicy = "ends_game") {
   const world = new World();

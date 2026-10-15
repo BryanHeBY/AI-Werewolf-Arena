@@ -14,16 +14,16 @@ import {
   type DeathActionPolicy,
   type InspectionPolicy,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
-import { getWolfKingState } from "../../../src/game/mechanisms/roles/wolf_king/ports";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+} from "../../../src/app/config/board-definition";
+import { getHunterState } from "../../../src/features/hunter/ports";
+import { getWolfKingState } from "../../../src/features/wolf-king/ports";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 
 const keys = {
   [Role.Gargoyle]: "gargoyle",
@@ -122,7 +122,7 @@ for (const kind of [Role.Hunter, Role.WolfKing] as const)
 
 test("strict native Hunter policy does not restrict an independently gifted gun on the same holder", async () => {
   const { grantDeathGun, armDeathGun } =
-    await import("../../../src/game/mechanisms/roles/death_abilities");
+    await import("../../../src/features/death-actions/death-abilities");
   const game = fixture(Role.Hunter, { deathActionPolicy: "awa_knife_or_exile_v1" }),
     events: GameEvent[] = [];
   const gun = grantDeathGun(game.world, 3, 1, 1, events);
@@ -179,12 +179,12 @@ for (const kind of [Role.MechanicalWolf, Role.AwakenedHiddenWolf] as const)
       role = game.world.getComponent(1, COMPONENT.Role)!,
       events: GameEvent[] = [];
     if (kind === Role.MechanicalWolf) {
-      const m = await import("../../../src/game/mechanisms/roles/mechanical_wolf/state");
+      const m = await import("../../../src/features/mechanical-wolf/state");
       const state = m.getMechanicalState(role)!;
       expect(m.learnMechanicalRole(state, 2, "hunter", 1)).toBe(true);
       m.advanceMechanicalNight(state, 2);
     } else {
-      const m = await import("../../../src/game/mechanisms/roles/awakened_hidden_wolf/state");
+      const m = await import("../../../src/features/awakened-hidden-wolf/state");
       const state = m.getAwakenedState(role)!;
       expect(m.learnAwakenedRole(state, 2, "hunter", 1)).toBe(true);
       expect(m.activateAwakenedLearning(state, 1)).toBe(true);

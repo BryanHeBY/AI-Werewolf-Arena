@@ -1,7 +1,7 @@
 /**
  * 单元测试：验证注册／计划角色区分、重复／缺失 profile 拒绝与恶灵骑士工具声明。输入为字面角色 ID 和注入 profile；精确支持集合、原查找错误和具名工具为预期，不加载规则卡文件、对局或模型。
  */
-import { renderRolePrompt } from "../../../src/game/observation/role-presentation";
+import { renderRolePrompt } from "../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { ROLE_DEFINITIONS, roleName } from "@ai-werewolf-arena/game-catalog";
 import { ROLE_IDS, isRoleId } from "@ai-werewolf-arena/game-contract";
@@ -10,10 +10,10 @@ import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import { Camp } from "../../../src/domain/identity";
-import { createDefaultRoleRegistry } from "../../../src/game/mechanisms/roles/permissions";
+import { createDefaultRoleRegistry } from "../../../src/rulesets/roles/permissions";
 
 test("shared catalog distinguishes planned definitions from registered roles", () => {
   expect(ROLE_DEFINITIONS).toHaveLength(64);

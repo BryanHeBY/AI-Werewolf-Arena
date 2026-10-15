@@ -7,8 +7,8 @@
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { loadBoardDefinition } from "../../../src/app/config/load-board-definition";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 for (const id of ["six_player_gargoyle", "twelve_player_gargoyle"] as const)
   test(`${id}: public Gargoyle board allows one native role and only the frozen pack variant`, async () => {

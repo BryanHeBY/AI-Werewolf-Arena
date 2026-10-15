@@ -11,9 +11,9 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   parseBoardDefinition,
   type BoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { configDiagnostic } from "../../../src/runtime/config/error_codes";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../src/app/config/board-definition";
+import { configDiagnostic } from "../../../src/app/config/error-codes";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
 import { Phase, Role, type ActionRequest } from "../../../src/domain";
 import {
   getDefaultConfigRenderRegistry,
@@ -21,7 +21,7 @@ import {
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 const folder = new URL("../../../../configs.example/boards/", import.meta.url);
 function raw(id: string): BoardDefinition {
   return JSON.parse(readFileSync(new URL(id + ".json", folder), "utf8"));

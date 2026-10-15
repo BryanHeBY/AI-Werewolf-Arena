@@ -1,12 +1,12 @@
 /**
  * 场景验证机械狼的学习、模式、库存及原身体撤权。每个用例至少完成一次真实 PhaseManager 夜；原资源回执、引用／getter／错误轨迹和事实为预期，不拆去前置夜后假称单元测试。受控 provider 保留原引擎时序，不生成新 golden。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
-import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../../src/features/night-abilities/night-ability-actors";
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -21,25 +21,25 @@ import {
   type ToolCall,
   type ActionRequest,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import {
   getMechanicalState,
   projectMechanicalState,
-} from "../../../../src/game/mechanisms/roles/mechanical_wolf/state";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { canMechanicalKnife } from "../../../../src/game/mechanisms/roles/mechanical_wolf/inheritance";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+} from "../../../../src/features/mechanical-wolf/state";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { resolveInspection } from "../../../../src/engine/inspection";
+import { canMechanicalKnife } from "../../../../src/features/mechanical-wolf/inheritance";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { MECHANICAL_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/mechanical_wolf/night_stages";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { MECHANICAL_NIGHT_STAGES } from "../../../../src/features/mechanical-wolf/night-stages";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
 
 import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { DeathCause } from "../../../../src/domain/deaths";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
 
 const deck = [Role.MechanicalWolf, Role.Wolf, Role.Psychic, Role.Witch, Role.Guard, Role.Villager];
 

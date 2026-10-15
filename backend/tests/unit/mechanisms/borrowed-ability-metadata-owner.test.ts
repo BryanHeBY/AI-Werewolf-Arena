@@ -8,11 +8,11 @@ import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import type { GameEvent } from "../../../src/domain/events";
-import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { retireBorrowedNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
+import { installNativeAbility } from "../../../src/features/night-abilities/ability-changes";
+import { retireBorrowedNightAbility } from "../../../src/features/night-abilities/abilities";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
 
 function instance() {
   const world = new World(),

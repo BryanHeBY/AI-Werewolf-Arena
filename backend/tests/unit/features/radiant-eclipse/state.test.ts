@@ -1,18 +1,18 @@
 /**
  * 单元测试：验证辉夜状态的独立契约与原 owner／frame／reader。输入为内存 fixture、受控回调和畸形修改；原字段、身份快照和拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
-import type { RoleInitializationComponent } from "../../../../src/game/mechanisms/roles/contracts";
+import type { RoleInitializationComponent } from "../../../../src/rulesets/roles/contracts";
 import { expect, test } from "bun:test";
-import { createEclipseState, readEclipseState, selectEclipse } from "../../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";
-import { createShelterState, readShelterState, selectShelter } from "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
-import { snapshotBorrowedState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/borrowed_state";
-import { DREAMER_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/dreamer/profile";
-import { WITCH_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/witch/profile";
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createEclipseState, readEclipseState, selectEclipse } from "../../../../src/features/radiant-eclipse/eclipse-state-slot";
+import { createShelterState, readShelterState, selectShelter } from "../../../../src/features/radiant-eclipse/shelter-state";
+import { snapshotBorrowedState } from "../../../../src/features/radiant-eclipse/borrowed-state";
+import { DREAMER_ROLE_PROFILE } from "../../../../src/features/dreamer/profile";
+import { WITCH_ROLE_PROFILE } from "../../../../src/features/witch/profile";
+import { getDreamerState } from "../../../../src/features/dreamer/ports";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { Camp, Role, WitchSelfHealRule } from "../../../../src/domain/identity";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 test("shelter starts at N2, cannot self or repeat across consecutive actual nights; a pass breaks repeat", () => {
   let state = createShelterState();

@@ -9,9 +9,9 @@ import type { OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/or
 import { Camp, Role, WinCondition, type RoleComponent } from "../../../../src/domain";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { ORDER_PRINCE_STATE_SLOT as SLOT } from "../../../../src/game/mechanisms/roles/order_prince/state-slot";
-import { openOrderPrinceChoice, commitOrderPrinceChoice, orderPrinceChoicePending } from "../../../../src/game/mechanisms/roles/order_prince/authority";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { ORDER_PRINCE_STATE_SLOT as SLOT } from "../../../../src/features/order-prince/state-slot";
+import { openOrderPrinceChoice, commitOrderPrinceChoice, orderPrinceChoicePending } from "../../../../src/features/order-prince/authority";
 
 // worldless 数据样本只持显式 Camp 句柄，不建立 Role→World／Camp 回退。
 const fixtureCamp = { camp: Camp.Good };

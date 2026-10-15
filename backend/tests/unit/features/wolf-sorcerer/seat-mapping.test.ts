@@ -10,7 +10,7 @@ import { expect, test } from "bun:test";
 import {
   resolveOrderedSeatTarget,
   type SeatExchangePair,
-} from "../../../../src/game/mechanisms/roles/wolf_sorcerer/seat_mapping";
+} from "../../../../src/features/wolf-sorcerer/seat-mapping";
 test("Wolf Sorcerer ordered seat composition matches physical occupant swaps exhaustively", () => {
   const ids = [1, 2, 3, 4, 5],
     pairs: Array<SeatExchangePair | null> = [null];

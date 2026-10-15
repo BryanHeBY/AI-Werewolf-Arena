@@ -12,9 +12,9 @@ import { createRandom } from "../../../../../src/domain";
 import { shuffled } from "../../../../../src/domain";
 import type { ActionStage } from "../../../../../src/domain";
 import type { ToolCall } from "../../../../../src/domain";
-import { scholarMentorTwelveConfig } from "../../../../../src/runtime/scenarios/scholar_mentor_twelve";
-import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
+import { scholarMentorTwelveConfig } from "../../../../../src/rulesets/presets/scholar-mentor-twelve";
+import { boardDefinitionFromConfig } from "../../../../../src/app/config/board-definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
 import type { PlannedTurn } from "../../../transport/contracts";
 import type { TransportGameScenario } from "../../../transport/contracts";
 

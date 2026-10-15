@@ -8,11 +8,11 @@ import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { assertReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { simulateGames, type SimulationReport } from "../../../../src/runtime/simulation/simulate_games";
+import { simulateGames, type SimulationReport } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { mistBoard } from "../../../support/features/mist-raven/builders/board";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 

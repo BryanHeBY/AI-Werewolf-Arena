@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 async function checkpointedFailure(): Promise<any> {
   const r = await radiantRecording({ failureStage: "seer" });
   r.finalized = false;

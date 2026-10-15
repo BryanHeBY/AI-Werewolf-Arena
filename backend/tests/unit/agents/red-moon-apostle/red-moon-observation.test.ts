@@ -6,11 +6,11 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent } from "../../../../src/domain";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
-import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
-import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
-import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
+import type { PlayerObservation } from "../../../../src/agents/observation/player-observation";
+import { redMoonTwelveConfig } from "../../../../src/rulesets/presets/red-moon-twelve";
+import { getRedMoonState } from "../../../../src/features/red-moon/state-slot";
 for (const policy of ["ends_game", "forbidden"] as const)
   for (const locale of ["zh-CN", "en"] as const)
     test(

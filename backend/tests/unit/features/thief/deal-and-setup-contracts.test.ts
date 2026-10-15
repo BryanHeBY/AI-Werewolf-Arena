@@ -24,7 +24,7 @@ import {
   ThiefSetupWindow,
   projectThiefChoices,
   thiefRequestScope,
-} from "../../../../src/game/mechanisms/roles/thief/setup";
+} from "../../../../src/features/thief/setup";
 import {
   thiefDeal,
   thiefSetupStatus,
@@ -32,29 +32,29 @@ import {
   hasActiveThiefSetup,
   projectThiefSetup,
   initialThiefDeal,
-} from "../../../../src/game/mechanisms/roles/thief/deal";
-import { readThiefTool, getThiefState } from "../../../../src/game/mechanisms/roles/thief/state-ports";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { knownWolfTeammates } from "../../../../src/game/mechanisms/roles/wolf_team";
+} from "../../../../src/features/thief/deal";
+import { readThiefTool, getThiefState } from "../../../../src/features/thief/state-ports";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { knownWolfTeammates } from "../../../../src/features/wolf-team/permissions";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
-import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
+} from "../../../../src/rulesets/mechanism-api";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { getHunterState } from "../../../../src/features/hunter/ports";
+import { getGuardState } from "../../../../src/features/guard/ports";
+import { getSeerState } from "../../../../src/features/seer/ports";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/app/config/board-definition";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 
 const original = [Role.Thief, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
 

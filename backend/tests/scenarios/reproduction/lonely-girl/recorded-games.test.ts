@@ -8,8 +8,8 @@ import { promises as fs } from "node:fs";
 import { Role, Camp, type GameEvent } from "../../../../src/domain";
 import { LONELY_GIRL_CASES, lonelyGirlScenario } from "../../../support/features/lonely-girl/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
-import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
+import { ReproductionTrace } from "../../../../src/recording/reproduction/trace";
 for (const size of [6, 12] as const)
   for (const kind of LONELY_GIRL_CASES.filter(
     (k) => size === 6 || ["good_alive", "wolf_alive", "wolf_win"].includes(k),

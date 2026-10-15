@@ -1,33 +1,33 @@
 /**
  * 单元测试：验证野孩子榜样选择、生命替换及真实首波／追加死因。输入为原选择与修改，字面回执、引用、getter、错误、事实及状态为预期；有界选择窗口与数据／配置 reader 不执行中央死亡结算、完整阶段或付费模型。
  */
-import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { inheritRequestAlias } from "../../../../src/domain/request-delivery";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Camp, COMPONENT, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest } from "../../../../src/domain";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
+import { WildChildSetupWindow } from "../../../../src/features/wild-child/setup";
 import {
   getWildChildState,
   readWildChildTool,
-} from "../../../../src/game/mechanisms/roles/wild_child/state-slot";
+} from "../../../../src/features/wild-child/state-slot";
 import {
   wildChildBinding,
   wildChildRequestScope,
   hasActiveWildChild,
   wildChildReady,
-} from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/features/wild-child/lifecycle";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import { readWildChildEventFact } from "@ai-werewolf-arena/game-contract/facts/wild-child";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
+} from "../../../../src/app/config/board-definition";
 
 const deck = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
 

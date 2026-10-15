@@ -7,7 +7,7 @@ import { createInterface } from "node:readline";
 import { readFile, writeFile } from "node:fs/promises";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import type { AcpMcpServerConfig } from "../../../src/ai/integrations/acp/acp_mcp_bridge";
+import type { AcpMcpServerConfig } from "../../../src/adapters/acp/acp-mcp-bridge";
 import type { ActorTransportPlan } from "../../support/transport/contracts";
 import {
   assertSubmitActionWireSchema,

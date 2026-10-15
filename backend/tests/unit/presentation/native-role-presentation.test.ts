@@ -15,22 +15,22 @@ import type { Locale } from "@ai-werewolf-arena/game-contract";
 import {
   createRoleComponent,
   renderRolePrompt,
-} from "../../../src/game/observation/role-presentation";
-import { captureNativeRolePresentation } from "../../../src/game/observation/native-role-presentation-capture";
+} from "../../../src/agents/observation/role-presentation";
+import { captureNativeRolePresentation } from "../../../src/agents/observation/native-role-presentation-capture";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
 import type {
   RoleProfile,
   RoleInitContext,
   RoleContributions,
-} from "../../../src/game/mechanisms/roles/contracts";
+} from "../../../src/rulesets/roles/contracts";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import { getWitchState } from "../../../src/features/witch/ports";
 import type { RoleComponent } from "../../../src/domain/components/role";
 
 // worldless贡献持有自己的Camp，World参数仅在原展示点读取，不回退目录或索引Role。

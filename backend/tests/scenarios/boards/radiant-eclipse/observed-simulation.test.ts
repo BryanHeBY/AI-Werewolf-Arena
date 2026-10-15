@@ -8,12 +8,12 @@ import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { assertReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
-import { simulateGames, type SimulationReport } from "../../../../src/runtime/simulation/simulate_games";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
+import { simulateGames, type SimulationReport } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 const board = async () =>
   parseBoardDefinition(

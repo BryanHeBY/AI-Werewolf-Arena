@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 
 for (const transport of ["llm", "acp"] as const)
   for (const locale of ["zh-CN", "en"] as const)

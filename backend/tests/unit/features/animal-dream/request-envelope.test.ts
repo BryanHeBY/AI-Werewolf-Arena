@@ -5,15 +5,15 @@
  */
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
-import { bindCharm, activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
+import { bindCharm, activeCharm } from "../../../../src/features/wolf-beauty/relation";
+import { getWolfBeautyState } from "../../../../src/features/wolf-beauty/ports";
 import {
   captureAnimalRequestEnvelope,
   animalRequestEnvelopeCurrent,
   animalRequestEnvelopeHeader,
   inheritAnimalRequestEnvelope,
   revokeAnimalRequestEnvelope,
-} from "../../../../src/game/mechanisms/roles/animal_dream/request_envelope";
+} from "../../../../src/features/animal-dream/request-envelope";
 import {
   installAnimalAuthority,
   beginAnimalNight,
@@ -24,8 +24,8 @@ import {
   createAnimalPufferRequest,
   openAnimalPufferChoice,
   animalAuthoritySnapshot,
-} from "../../../../src/game/mechanisms/roles/animal_dream/authority";
-import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots";
+} from "../../../../src/features/animal-dream/authority";
+import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/features/animal-dream/accepted-ballots";
 const fixture = () => animalRosterFixture(undefined, installAnimalAuthority);
 function request(kind: "fox" | "puffer" = "fox", day = 2) {
   const name = kind === "fox" ? "fox_distract" : "puffer_retaliate";

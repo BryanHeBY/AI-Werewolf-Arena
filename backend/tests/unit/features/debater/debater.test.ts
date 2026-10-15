@@ -1,15 +1,15 @@
 /**
  * 单元测试验证杠精的存活投票分母、阈值、翻牌、拒绝与原生库存。输入为有限板子、显式票和受控请求 scope；预期为字面量或不变 fixture，不请求模型或完整对局。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { rolePresentationRenderer } from "../../../../src/game/observation/role-presentation";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { rolePresentationRenderer } from "../../../../src/agents/observation/role-presentation";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -29,37 +29,37 @@ import {
   type ToolCall,
 } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import { DebaterWindow } from "../../../../src/game/mechanisms/roles/debater/window";
+import { DebaterWindow } from "../../../../src/features/debater/window";
 import {
   getDebaterState,
   projectDebaterState,
-} from "../../../../src/game/mechanisms/roles/debater/state";
+} from "../../../../src/features/debater/state";
 import {
   debateVoteBlocked,
   hasDebateCommit,
   blockDebateVote,
   debateAuthority,
-} from "../../../../src/game/mechanisms/roles/debater/authority";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/features/debater/authority";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import {
   canVote,
   canVoteExile,
   canBeSheriff,
-} from "../../../../src/game/mechanisms/common/participation";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { createDefaultRoleRegistry } from "../../../../src/game/mechanisms";
-import { DayPipeline } from "../../../../src/game/engine/phase_pipeline/day_pipeline";
-import { VotingPipeline } from "../../../../src/game/engine/phase_pipeline/voting_pipeline";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
+} from "../../../../src/engine/participation";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { createDefaultRoleRegistry } from "../../../../src/rulesets/mechanism-api";
+import { DayPipeline } from "../../../../src/engine/phases/day-pipeline";
+import { VotingPipeline } from "../../../../src/engine/phases/voting-pipeline";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { DefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
-import { setIdiotState } from "../../../../src/game/mechanisms/roles/idiot/ports";
-import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+} from "../../../../src/app/config/board-definition";
+import { DefaultTargetHintRegistry } from "../../../../src/agents/tool-repair/target-hint-registry";
+import { setIdiotState } from "../../../../src/features/idiot/ports";
+import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
 import { text } from "@ai-werewolf-arena/game-text";
 import { readDebateEventFact } from "@ai-werewolf-arena/game-contract/facts/debate";
 import { debateEventLabel } from "@ai-werewolf-arena/game-presentation";

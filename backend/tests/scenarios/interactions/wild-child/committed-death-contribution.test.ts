@@ -8,14 +8,14 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { Role, Camp, Phase, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../src/domain/components/names";
-import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
-import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state-slot";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import type { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";
-import { DreamNightFrame } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { WildChildSetupWindow } from "../../../../src/features/wild-child/setup";
+import { getWildChildState } from "../../../../src/features/wild-child/state-slot";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import type { HookRegistry } from "../../../../src/engine/hooks/registry";
+import { DreamNightFrame } from "../../../../src/features/dreamer/night-frame";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 
 test("mandatory committed-wave contributions survive a legacy custom hook registry before dream and last words", async () => {
   const roles = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter],

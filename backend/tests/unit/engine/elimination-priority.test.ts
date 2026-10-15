@@ -8,15 +8,15 @@ import type { AliveComponent } from "../../../src/domain/components/alive";
 import type { RoleComponent } from "../../../src/domain/components/role";
 import { Camp, Role, WinCondition } from "../../../src/domain/identity";
 import { ELIMINATION_PRIORITIES, type EliminationPriority } from "../../../src/domain/board";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   createEliminationWinConditionSpecs,
   DEFAULT_WIN_CONDITION_SPECS,
-} from "../../../src/game/mechanisms/win_conditions/default_specs";
+} from "../../../src/rulesets/victory/default-specs";
 import {
   WinConditionRegistry,
   getDefaultWinConditionRegistry,
-} from "../../../src/game/mechanisms/registries/win_condition_registry";
+} from "../../../src/engine/victory/condition-registry";
 
 const cases = [
   { name: "no goal", dead: [], side: [null, null], city: [null, null] },

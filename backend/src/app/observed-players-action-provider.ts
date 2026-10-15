@@ -10,11 +10,11 @@ import type { ActionProvider } from "../domain/actions";
 import { COMPONENT } from "../domain/components/names";
 import type { RoleComponent } from "../domain/components/role";
 import type { World } from "../domain/world";
-import type { ObservedPlayerStrategy } from "../game/observation/player-observation";
-import { capturePlayerObservation } from "../game/observation/player-observation-projector";
-import type { RoleCatalog } from "../game/mechanisms/roles/catalog";
-import { getDefaultRoleCatalog } from "../game/mechanisms/roles/role-catalog-assembly";
-import { knownWolfTeammates } from "../game/mechanisms/roles/wolf_team";
+import type { ObservedPlayerStrategy } from "../agents/observation/player-observation";
+import { capturePlayerObservation } from "../agents/observation/player-observation-projector";
+import type { RoleCatalog } from "../rulesets/roles/catalog";
+import { getDefaultRoleCatalog } from "../rulesets/roles/role-catalog-assembly";
+import { knownWolfTeammates } from "../features/wolf-team/permissions";
 
 /** 原体只归应用捕获适配器，受限策略只得到游戏观察 owner 的脱离 DTO。 */
 export class ObservedPlayersActionProvider implements ActionProvider {

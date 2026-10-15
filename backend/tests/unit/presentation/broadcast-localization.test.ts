@@ -6,7 +6,7 @@
  */
 import { Camp, Phase, PotionType } from "../../../src/domain/identity";
 import { fixtureResult } from "../../support/builders/recording/result";
-import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms";
+import { getDefaultScriptEventRenderRegistry } from "../../../src/rulesets/mechanism-api";
 import { GameEvent } from "../../../src/domain/model";
 
 describe("broadcast localization", () => {

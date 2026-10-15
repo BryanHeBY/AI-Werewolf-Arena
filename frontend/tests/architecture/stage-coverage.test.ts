@@ -88,7 +88,7 @@ function eventTypes() {
 }
 function currentStageIds(): string[] {
   const registry = variable(
-    "backend/src/game/mechanisms/script/event_render_registry.ts",
+    "backend/src/agents/presentation/event-render-registry.ts",
     "REPLAY_STAGE_HANDLERS",
   );
   if (!registry.initializer || !ts.isObjectLiteralExpression(registry.initializer))

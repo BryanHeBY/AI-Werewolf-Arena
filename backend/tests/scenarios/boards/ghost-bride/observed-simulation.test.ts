@@ -11,12 +11,12 @@ import { ghostBrideBoard } from "../../../support/features/ghost-bride/builders/
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
+} from "../../../../src/app/config/board-definition";
+import { simulateGames } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: one hundred restricted Ghost Bride robots each record and pass strict Tape`, async () => {

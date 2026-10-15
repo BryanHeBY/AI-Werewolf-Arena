@@ -13,7 +13,7 @@ import {
   Role,
   ToolCall,
 } from "../../../../src/domain/model";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
 
 class DeterministicFlowProvider implements ActionProvider {
   private readonly firstNightKillTargetId: number | null;

@@ -6,10 +6,10 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ObservedPlayersActionProvider } from "../../../src/app/observed-players-action-provider";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { createRandom } from "../../../src/domain/random";
 import { Phase, Role } from "@ai-werewolf-arena/game-contract";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 const fixedRoles = [Role.Villager, Role.Wolf, Role.Guard, Role.Wolf, Role.Seer, Role.Villager];
 

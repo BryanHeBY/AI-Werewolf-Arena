@@ -8,13 +8,13 @@ import {
   Camp, Role, WitchSelfHealRule,
   type SeerState, type GuardState, type WitchState,
 } from "@ai-werewolf-arena/game-contract";
-import { SEER_STATE_SLOT as seer } from "../../../src/game/mechanisms/roles/seer/ports";
-import { GUARD_STATE_SLOT as guard } from "../../../src/game/mechanisms/roles/guard/ports";
-import { WITCH_STATE_SLOT as witch } from "../../../src/game/mechanisms/roles/witch/ports";
-import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
-import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { SEER_STATE_SLOT as seer } from "../../../src/features/seer/ports";
+import { GUARD_STATE_SLOT as guard } from "../../../src/features/guard/ports";
+import { WITCH_STATE_SLOT as witch } from "../../../src/features/witch/ports";
+import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../../../src/features/night-abilities/abilities";
+import { installNativeAbility } from "../../../src/features/night-abilities/ability-changes";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 

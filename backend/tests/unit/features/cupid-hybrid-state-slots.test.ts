@@ -6,14 +6,14 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Camp, COMPONENT, Phase, Role, type GameEvent, type ToolCall, type World } from "../../../src/domain";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import type { RoleInitializationComponent, RoleInitContext } from "../../../src/game/mechanisms/roles/contracts";
-import { installCupidState, getCupidState } from "../../../src/game/mechanisms/roles/cupid/state-slot";
-import { getHybridState } from "../../../src/game/mechanisms/roles/hybrid/state-slot";
-import { CUPID_STAGE } from "../../../src/game/mechanisms/roles/cupid/night_stage";
-import { HYBRID_STAGE, hasHybridNightCommit } from "../../../src/game/mechanisms/roles/hybrid/night_stage";
-import { hasCupidNightCommit, loversRecord } from "../../../src/game/mechanisms/roles/cupid/relation";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
+import type { RoleInitializationComponent, RoleInitContext } from "../../../src/rulesets/roles/contracts";
+import { installCupidState, getCupidState } from "../../../src/features/cupid/state-slot";
+import { getHybridState } from "../../../src/features/hybrid/state-slot";
+import { CUPID_STAGE } from "../../../src/features/cupid/night-stage";
+import { HYBRID_STAGE, hasHybridNightCommit } from "../../../src/features/hybrid/night-stage";
+import { hasCupidNightCommit, loversRecord } from "../../../src/features/cupid/relation";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 import { foxBoard } from "../../support/features/cursed-fox/builders/scenario";
 

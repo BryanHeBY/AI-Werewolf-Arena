@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { wolfSorcererScenario } from "../../../support/features/wolf-sorcerer/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { type PlannedTurn } from "../../../support/transport/contracts";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { Role } from "../../../../src/domain";
 for (const night of [2, 3])
   for (const failure of ["missing", "late", "invalid"] as const)

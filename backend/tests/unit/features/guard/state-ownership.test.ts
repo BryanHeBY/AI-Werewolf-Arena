@@ -5,14 +5,14 @@ import type { GuardState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
   getGuardState,
   recordGuardTarget,
   recordRecipientGuardTarget,
-} from "../../../../src/game/mechanisms/roles/guard/ports";
-import { setGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
+} from "../../../../src/features/guard/ports";
+import { setGuardState } from "../../../../src/features/guard/ports";
 function readerPermission(state: GuardState) {
   // @ts-expect-error The last-target field belongs to the Guard payload owner.
   state.lastTarget = 3;

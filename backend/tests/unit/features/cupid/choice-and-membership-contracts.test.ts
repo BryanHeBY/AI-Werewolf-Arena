@@ -1,8 +1,8 @@
 /**
  * 单元测试验证丘比特的有限政策、恋人选择、生命替换及死因。输入为原选择阶段、票／PK 门槛和惰性归档投影；字面回执、引用与错误轨迹构成预期，不运行中央死亡波或完整周期。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -21,32 +21,32 @@ import {
   type RuntimeSnapshot,
 } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
+import { CUPID_STAGE } from "../../../../src/features/cupid/night-stage";
 import {
   getCupidState,
   projectCupidState,
-} from "../../../../src/game/mechanisms/roles/cupid/ports";
+} from "../../../../src/features/cupid/ports";
 import {
   loversRecord,
   projectLover,
   hasCupidNightCommit,
-} from "../../../../src/game/mechanisms/roles/cupid/relation";
-import { cupidCityDecision } from "../../../../src/game/mechanisms/roles/cupid/victory";
+} from "../../../../src/features/cupid/relation";
+import { cupidCityDecision } from "../../../../src/features/cupid/victory";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../../src/app/config/board-definition";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import {
   knownWolfTeammates,
   wolfKnifeHolders,
-} from "../../../../src/game/mechanisms/roles/wolf_team";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+} from "../../../../src/features/wolf-team/permissions";
+import { resolveInspection } from "../../../../src/engine/inspection";
+import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
 import { text } from "@ai-werewolf-arena/game-text";
 import { readCupidEventFact } from "@ai-werewolf-arena/game-contract/facts/cupid";
 import { cupidEventLabel } from "@ai-werewolf-arena/game-presentation";
@@ -404,7 +404,7 @@ for (const replacement of [false, true])
   });
 
 test("restricted-observation final gun with no living targets deliberately passes instead of failing the required turn", async () => {
-  const { ObservedBot } = await import("../../../../src/ai/agents/providers/observed_bot");
+  const { ObservedBot } = await import("../../../../src/agents/providers/observed-bot");
   const game = fixture(),
     request = new GameActionRequestFactory(game.world, [], 1).create({
       actorId: 2,

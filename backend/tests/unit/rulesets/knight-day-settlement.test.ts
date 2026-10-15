@@ -9,7 +9,7 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { World } from "../../../src/domain/world";
 import { createRoleComponent } from "../../../src/domain/components/role";
 import { createAliveComponent } from "../../../src/domain/components/alive";
-import { setKnightState } from "../../../src/game/mechanisms/roles/knight/state";
+import { setKnightState } from "../../../src/features/knight/state";
 import { settleKnightDay, type KnightDaySettlementRuntime } from "../../../src/rulesets/knight-day-settlement";
 
 function fixture() {

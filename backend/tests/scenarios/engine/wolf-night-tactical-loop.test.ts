@@ -17,11 +17,11 @@ import {
   WinCondition,
 } from "../../../src/domain/model";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+import { buildAgentVisibleEventFeed } from "../../../src/agents/observation/event-feed";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { getSeerState } from "../../../src/features/seer/ports";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 
 class TacticalOrderProvider implements ActionProvider {
   public discussionOrder: number[] = [];

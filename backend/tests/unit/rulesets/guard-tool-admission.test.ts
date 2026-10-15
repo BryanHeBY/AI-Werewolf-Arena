@@ -10,16 +10,16 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { createRoleComponent } from "../../../src/domain/components/role";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { GUARD_VALIDATION_RULES } from "../../../src/rulesets/guard-tool-admission";
-import { GUARD_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/guard/profile";
-import { setGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
-import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import { recordOwnNightAction } from "../../../src/game/mechanisms/roles/night_action_history";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import type { ValidationRuleContext } from "../../../src/game/mechanisms/validation/contracts";
+import { GUARD_ROLE_PROFILE } from "../../../src/features/guard/profile";
+import { setGuardState } from "../../../src/features/guard/ports";
+import { findNightAbility } from "../../../src/features/night-abilities/abilities";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import { recordOwnNightAction } from "../../../src/features/night-abilities/night-action-history";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
+import type { ValidationRuleContext } from "../../../src/engine/actions/validation-contracts";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
-import { beginScholarMentorNight, settleScholarMentorChoices, closeScholarMentorNight, commitScholarMentorChoice } from "../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
+import { beginScholarMentorNight, settleScholarMentorChoices, closeScholarMentorNight, commitScholarMentorChoice } from "../../../src/features/scholar-mentor/night-frame";
 
 function fixture() {
   const world = new World();

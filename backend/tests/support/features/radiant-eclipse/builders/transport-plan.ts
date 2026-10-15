@@ -15,7 +15,7 @@ import { createRandom } from "../../../../../src/domain";
 import { shuffled } from "../../../../../src/domain";
 import type { ActionStage } from "../../../../../src/domain";
 import type { ToolCall } from "../../../../../src/domain";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
 import { radiantRoles } from "./runtime-game";
 import { radiantFullPlans } from "../oracles/literal-plans";
 import type { RadiantFullPlanName } from "../oracles/literal-plans";

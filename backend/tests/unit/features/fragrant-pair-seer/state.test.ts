@@ -11,8 +11,8 @@ import {
   chooseFragrantPair,
   expireFragrantAtNightOpen,
   triggerFragrantPair,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/fragrant-state-slot";
-import { freshPairSeerState, readPairSeerState, appendPairCheck, normalizePair } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
+} from "../../../../src/features/fragrant-pair-seer/fragrant-state-slot";
+import { freshPairSeerState, readPairSeerState, appendPairCheck, normalizePair } from "../../../../src/features/fragrant-pair-seer/state";
 const ready = () => commitKnownWolf(freshFragrantState(), 10);
 test("pair history is one atomic normalized boolean with no single identity", () => {
   const before = freshPairSeerState(),

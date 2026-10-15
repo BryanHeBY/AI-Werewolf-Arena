@@ -12,8 +12,8 @@ import {
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/domain";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
+import { WerewolfMcpControlServer } from "../../../../src/adapters/acp/werewolf-mcp-control";
 import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
 import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";
 import { radiantManualAction } from "../../../support/features/radiant-eclipse/drivers/manual-actions";
@@ -81,7 +81,7 @@ for (const boundary of [
       let cycle: Promise<void> | undefined;
       try {
         const config = await control.start(process.execPath, [
-          path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+          path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
         ]);
         control.bindSession("retained");
         transport = new StdioClientTransport({

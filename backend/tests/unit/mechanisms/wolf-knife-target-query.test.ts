@@ -1,36 +1,36 @@
 /**
  * 单元测试：验证普通狼公开目标贡献和固定 live 查询顺序。输入为字面限制、记录 Role 读取、畸形候选及有限雾鸦板子；独立布尔／trace 预期验证短路失败前缀、重复读与零绑定查询，不运行模型、完整对局或生成规则 oracle。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Camp, Role, type EntityId } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
 import { COMPONENT, type ComponentName } from "../../../src/domain/components/names";
 import { type RoleComponent } from "../../../src/domain/components/role";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 
-import { createNobleState } from "../../../src/game/mechanisms/roles/noble_secret_body/state";
-import { freshNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";
+import { createNobleState } from "../../../src/features/noble-secret-body/state";
+import { freshNightmareShadowState } from "../../../src/features/nightmare/state-slot";
 import {
   bindWolfKnifeTargetQuery,
   createWolfKnifeTargetQuery,
   type WolfKnifeTargetQuery,
   type WolfKnifeRosterQuery,
-} from "../../../src/game/mechanisms/roles/wolf/ports";
+} from "../../../src/features/wolf/ports";
 import {
   bindMistKnifeTargetQuery,
   type MistKnifeTargetQuery,
-} from "../../../src/game/mechanisms/roles/mist_raven/ports";
-import { bindNobleKnifeTargetQuery } from "../../../src/game/mechanisms/roles/noble_secret_body/ports";
-import { bindEvilKnightKnifeTargetQuery } from "../../../src/game/mechanisms/roles/evil_knight/ports";
-import { bindNightmareKnifeTargetQuery } from "../../../src/game/mechanisms/roles/nightmare_shadow/ports";
+} from "../../../src/features/mist-raven/ports";
+import { bindNobleKnifeTargetQuery } from "../../../src/features/noble-secret-body/ports";
+import { bindEvilKnightKnifeTargetQuery } from "../../../src/features/evil-knight/ports";
+import { bindNightmareKnifeTargetQuery } from "../../../src/features/nightmare/ports";
 import {
   beginMistNight,
   commitMistChoice,
   abortMistNight,
-} from "../../../src/game/mechanisms/roles/mist_raven/night_frame";
+} from "../../../src/features/mist-raven/night-frame";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import { createRandom } from "../../../src/domain/random";
 import mistDefinition from "../../../../configs.example/boards/awa_mist_raven_12_v1.json";
 

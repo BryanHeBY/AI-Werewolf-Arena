@@ -6,7 +6,7 @@
  */
 import { Phase, type KnightDuelSelection, type KnightDuelCommit, type GameEvent } from "../domain/model";
 import type { World } from "../domain/world";
-import { commitKnightDuel } from "../game/mechanisms/roles/knight/ports";
+import { commitKnightDuel } from "../features/knight/ports";
 
 /** 原回调和成员在实际位置才读取；只声明所需接口，不把只读类型当运行权限隔离。 */
 export interface KnightDaySettlementRuntime {

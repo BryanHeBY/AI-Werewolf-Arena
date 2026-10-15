@@ -6,24 +6,24 @@
  */
 import type { World } from "../domain/world";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { hasActiveGhostBride, ghostBrideReady } from "../game/mechanisms/roles/ghost_bride/ports";
-import { hasActiveLonelyGirl, lonelyGirlReady } from "../game/mechanisms/roles/lonely_girl/ports";
-import { hasActiveWildChild, wildChildReady } from "../game/mechanisms/roles/wild_child/ports";
-import { hasActiveInitialIdentitySetup, initialIdentitySetupReady, initialIdentityKind } from "../game/mechanisms/roles/initial_identity/ports";
-import { animalAuthoritySnapshot } from "../game/mechanisms/roles/animal_dream/ports";
-import { fragrantAuthoritySnapshot } from "../game/mechanisms/roles/fragrant_pair_seer/ports";
-import { assertNobleBodyRosterCurrent } from "../game/mechanisms/roles/noble_secret_body/ports";
-import { assertRadiantRosterCurrent } from "../game/mechanisms/roles/radiant_eclipse/ports";
-import { assertMistRosterCurrent } from "../game/mechanisms/roles/mist_raven/ports";
-import { assertTricksterRosterCurrent } from "../game/mechanisms/roles/trickster/ports";
-import { assertWolfSorcererRosterCurrent } from "../game/mechanisms/roles/wolf_sorcerer/ports";
-import { assertTimeConsortRosterCurrent } from "../game/mechanisms/roles/time_wolf_consort/ports";
-import { assertScholarMentorRosterCurrent } from "../game/mechanisms/roles/scholar_mentor/ports";
-import { assertMagicianRosterCurrent } from "../game/mechanisms/roles/magician/ports";
-import { assertNightmareRosterCurrent } from "../game/mechanisms/roles/nightmare_shadow/ports";
-import { assertEvilKnightRosterCurrent } from "../game/mechanisms/roles/evil_knight/ports";
-import { assertDemonNightReadable } from "../game/mechanisms/roles/demon_hunter/ports";
-import { demonWitchMarksSafe } from "../game/mechanisms/roles/demon_hunter/ports";
+import { hasActiveGhostBride, ghostBrideReady } from "../features/ghost-bride/ports";
+import { hasActiveLonelyGirl, lonelyGirlReady } from "../features/lonely-girl/ports";
+import { hasActiveWildChild, wildChildReady } from "../features/wild-child/ports";
+import { hasActiveInitialIdentitySetup, initialIdentitySetupReady, initialIdentityKind } from "../features/initial-identity/ports";
+import { animalAuthoritySnapshot } from "../features/animal-dream/ports";
+import { fragrantAuthoritySnapshot } from "../features/fragrant-pair-seer/ports";
+import { assertNobleBodyRosterCurrent } from "../features/noble-secret-body/ports";
+import { assertRadiantRosterCurrent } from "../features/radiant-eclipse/ports";
+import { assertMistRosterCurrent } from "../features/mist-raven/ports";
+import { assertTricksterRosterCurrent } from "../features/trickster/ports";
+import { assertWolfSorcererRosterCurrent } from "../features/wolf-sorcerer/ports";
+import { assertTimeConsortRosterCurrent } from "../features/time-wolf-consort/ports";
+import { assertScholarMentorRosterCurrent } from "../features/scholar-mentor/ports";
+import { assertMagicianRosterCurrent } from "../features/magician/ports";
+import { assertNightmareRosterCurrent } from "../features/nightmare/ports";
+import { assertEvilKnightRosterCurrent } from "../features/evil-knight/ports";
+import { assertDemonNightReadable } from "../features/demon-hunter/ports";
+import { demonWitchMarksSafe } from "../features/demon-hunter/ports";
 
 /** 只在原位置读取实际 World；不在创建查询对象时启动任何设置或反射玩家组件。 */
 export interface NightSetupRuntime { world(): World; }

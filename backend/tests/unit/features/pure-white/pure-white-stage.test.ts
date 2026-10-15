@@ -4,10 +4,10 @@
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
-import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../../src/features/night-abilities/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { pureWhiteTwelveConfig } from "../../../../src/runtime/scenarios/pure_white_twelve";
+import { pureWhiteTwelveConfig } from "../../../../src/rulesets/presets/pure-white-twelve";
 import { Role, Phase, type ToolCall } from "../../../../src/domain/model";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import type { RoleComponent } from "../../../../src/domain/components/role";
@@ -15,16 +15,16 @@ import type { AliveComponent } from "../../../../src/domain/components/alive";
 import type { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { DeathCause } from "../../../../src/domain/deaths";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { getRoleInspectionState } from "../../../../src/features/role-inspection/ports";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
 import {
   PURE_WHITE_INSPECTION_STAGE,
   WOLF_WITCH_INSPECTION_STAGE,
-} from "../../../../src/game/mechanisms/roles/pure_white/night_stages";
+} from "../../../../src/features/pure-white/night-stages";
 
 function fixture(day: number, locale: "zh-CN" | "en") {
   const { world } = bootstrapGame(structuredClone(pureWhiteTwelveConfig), { locale });

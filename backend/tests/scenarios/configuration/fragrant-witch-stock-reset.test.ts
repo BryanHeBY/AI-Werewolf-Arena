@@ -7,9 +7,9 @@ import { recordFragrantLiteral } from "../../support/features/fragrant-pair-seer
 import { test, expect } from "bun:test";
 import { fragrantRuntimeGame as game } from "../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction as act } from "../../support/features/fragrant-pair-seer/drivers/actions";
-import { parseReproductionRecord } from "../../../src/recording/reproduction";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
+import { parseReproductionRecord } from "../../../src/recording/reproduction/format";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 
 for (const dead of [false, true])
   test(`${dead ? "dead" : "alive"} witch N2 flags follow original living-only reset`, async () => {

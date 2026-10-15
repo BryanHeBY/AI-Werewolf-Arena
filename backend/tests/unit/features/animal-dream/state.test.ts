@@ -18,7 +18,7 @@ import {
   expireWhiteCat,
   readWhiteCatState,
   readFoxCubState,
-} from "../../../../src/game/mechanisms/roles/animal_dream/state";
+} from "../../../../src/features/animal-dream/state";
 
 test("Fox starts N2; a deliberate pass keeps its one payment available", () => {
   const fresh = freshFoxCubState();

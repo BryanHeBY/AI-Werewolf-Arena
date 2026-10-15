@@ -15,8 +15,8 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { roleName } from "@ai-werewolf-arena/game-text";
 import { term } from "@ai-werewolf-arena/game-text";
 import { foxBoard } from "../../cursed-fox/builders/scenario";
-import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
+import { boardDefinitionFromConfig } from "../../../../../src/app/config/board-definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
 import type { PlannedTurn } from "../../../transport/contracts";
 import type { TransportGameScenario } from "../../../transport/contracts";
 

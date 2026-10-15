@@ -11,10 +11,10 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { captureNightLife } from "../../../src/domain/night-effects";
 import type { DreamNightEffects } from "../../../src/domain/dream-night-effects";
-import { bindLovers } from "../../../src/game/mechanisms/roles/cupid/relation";
+import { bindLovers } from "../../../src/features/cupid/relation";
 import { prepareAdditionalDeathRelations, type AdditionalDeathRelationRuntime, type AdditionalDeathRelationWave } from "../../../src/rulesets/additional-death-relations";
 import { fragrantPairOwnerFixture } from "../../support/features/fragrant-pair-seer/builders/owner";
-import { closeFragrantNight, cancelFragrantDeathWave, prepareFragrantDeathWave, fragrantAuthoritySnapshot } from "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+import { closeFragrantNight, cancelFragrantDeathWave, prepareFragrantDeathWave, fragrantAuthoritySnapshot } from "../../../src/features/fragrant-pair-seer/authority";
 
 function wave(): AdditionalDeathRelationWave {
   return { proposed: [1], proposedSources: { 1: [DeathCause.Shot] }, nightTargets: [1], allSources: { 1: [DeathCause.WolfKill] }, next: new Set(), seen: new Set(), nightOrigin: new Set(), linked: new Set(), ownsFragrant: false, resolutionDay: 1, sourcePhase: Phase.Night };

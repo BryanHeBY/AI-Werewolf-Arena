@@ -11,7 +11,7 @@ import { animalGame } from "../../../support/features/animal-dream/builders/runt
 import {
   AnimalNightUnit,
   animalAuthoritySnapshot,
-} from "../../../../src/game/mechanisms/roles/animal_dream/ports";
+} from "../../../../src/features/animal-dream/ports";
 function fixture(sealed = false) {
   const game = animalGame("en"),
     events: GameEvent[] = [],

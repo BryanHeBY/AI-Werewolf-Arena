@@ -14,11 +14,11 @@ import {
   type RoleComponent,
   type StatusMarksComponent,
 } from "../../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { ActionTurn } from "../../../../src/agents/player/action-turn";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 
 const roles12 = [

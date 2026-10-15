@@ -4,10 +4,10 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Phase, Role, type ActionRequest } from "../../../src/domain";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
+import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../src/recording/session/context";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager];

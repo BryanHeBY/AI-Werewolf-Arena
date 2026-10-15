@@ -9,8 +9,8 @@ import {
   AUDIT_TOOL_SPECS,
   AuditSubmission,
   AuditToolTurnRegistry,
-} from "../../../../src/ai/audit/audit_tool_protocol";
-import { SdkAuditAgentExecutor } from "../../../../src/ai/audit/sdk_audit_runner";
+} from "../../../../src/audit/agents/audit-tool-protocol";
+import { SdkAuditAgentExecutor } from "../../../../src/audit/agents/sdk-audit-runner";
 
 describe("AuditToolTurnRegistry", () => {
   test("isolates sessions, enforces modes, and owns finding source", async () => {

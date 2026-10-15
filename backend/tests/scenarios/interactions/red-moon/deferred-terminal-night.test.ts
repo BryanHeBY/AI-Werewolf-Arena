@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
+import { redMoonTwelveConfig } from "../../../../src/rulesets/presets/red-moon-twelve";
 import {
   COMPONENT,
   Camp,
@@ -13,7 +13,7 @@ import {
   type RoleComponent,
 } from "../../../../src/domain";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
+import { getRedMoonState } from "../../../../src/features/red-moon/state-slot";
 function game(policy: "ends_game" | "forbidden" = "ends_game") {
   const config = structuredClone(redMoonTwelveConfig);
   config.redMoon!.lastWolfBlastPolicy = policy;

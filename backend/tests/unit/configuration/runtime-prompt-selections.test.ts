@@ -7,8 +7,8 @@ import { expect, test } from "bun:test";
 import {
   resolveAgentProfileByName,
   resolveGameSetup,
-} from "../../../src/runtime/config/resolve_game_setup";
-import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
+} from "../../../src/app/config/resolve-game-setup";
+import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
 
 for (const kind of ["llm", "acp"] as const) {
   test(`${kind} preserves agent prompts and supports role/seat prompt overrides`, () => {

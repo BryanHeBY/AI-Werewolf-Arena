@@ -4,9 +4,9 @@
 import {
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
 
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -23,12 +23,12 @@ import {
   type BoardConfig,
   type ActionRequest,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import {
   captureExileFeedback,
   GRAVEKEEPER_FEEDBACK_STAGE,
-} from "../../../../src/game/mechanisms/roles/gravekeeper/feedback";
-import { getGravekeeperState } from "../../../../src/game/mechanisms/roles/gravekeeper/ports";
+} from "../../../../src/features/gravekeeper/feedback";
+import { getGravekeeperState } from "../../../../src/features/gravekeeper/ports";
 import {
   RoleCatalog,
   getDefaultRoleCatalog,
@@ -36,15 +36,15 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms/script/event_render_registry";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { getDefaultScriptEventRenderRegistry } from "../../../../src/agents/presentation/event-render-registry";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
 
 const deck = [Role.Wolf, Role.Wolf, Role.Gravekeeper, Role.Seer, Role.Villager, Role.Villager];
 

@@ -7,13 +7,13 @@
 import { expect, test } from "bun:test";
 import { Role } from "../../../../src/domain/identity";
 import { createRoleComponent } from "../../../../src/domain/components/role";
-import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { installNativeAbility } from "../../../../src/features/night-abilities/ability-changes";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
   captureDemonParticipantPrivateData, captureDemonNativeAuditData,
   commitDemonNativeParticipantData, committedPrivate, originalInventory,
   commitDemonIdiotParticipantData, type DemonParticipantStateData,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/participant-state-data";
+} from "../../../../src/features/demon-hunter/participant-state-data";
 
 function participant(role: ReturnType<typeof createRoleComponent>, id = 1, delegatedKey: DemonParticipantStateData["delegatedKey"] = null) {
   const auditPrivateJson = JSON.stringify(role.privateState);

@@ -4,7 +4,7 @@
 import {
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
 
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -16,25 +16,25 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
+import { ActionTurn } from "../../../src/agents/player/action-turn";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
+import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import {
   canBeExiled,
   canBeSheriff,
   canVote,
-} from "../../../src/game/mechanisms/common/participation";
+} from "../../../src/engine/participation";
 import {
   assignSheriff,
   transferOrDestroySheriffBadge,
   findSheriffId,
-} from "../../../src/game/mechanisms/sheriff/badge";
-import { electSheriffIfNeeded } from "../../../src/game/mechanisms/sheriff/election";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+} from "../../../src/features/sheriff/badge";
+import { electSheriffIfNeeded } from "../../../src/features/sheriff/election";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import {
   RoleCatalog,
   getDefaultRoleCatalog,
@@ -42,10 +42,10 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../src/game/mechanisms";
-import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { getIdiotState } from "../../../src/game/mechanisms/roles/idiot/ports";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
+} from "../../../src/rulesets/mechanism-api";
+import { ToolValidationRuleRegistry } from "../../../src/engine/actions/tool-validation-rule-registry";
+import { getIdiotState } from "../../../src/features/idiot/ports";
+import { DeathResolution } from "../../../src/engine/death-resolution";
 import { DeathCause } from "../../../src/domain/deaths";
 
 const roles = [

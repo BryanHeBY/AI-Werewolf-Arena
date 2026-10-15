@@ -7,8 +7,8 @@
 import { Role } from "../../../src/domain";
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { loadBoardDefinition } from "../../../src/app/config/load-board-definition";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 for (const id of ["six_player_bear", "twelve_player_bear"] as const)
   test(`${id}: public Bear board enforces a single native Bear and only frozen empty parameters`, async () => {

@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { RetryError } from "ai";
-import { createAcpConsoleLogger } from "../../../src/runtime/console_presenter";
-import { ReplayFileStore } from "../../../src/recording/file_store";
-import { describeError } from "../../../src/utils/error_diagnostic";
+import { createAcpConsoleLogger } from "../../../src/adapters/console/console-presenter";
+import { ReplayFileStore } from "../../../src/adapters/filesystem/session-file-store";
+import { describeError } from "../../../src/utils/error-diagnostic";
 
 const secret = "synthetic-private-transport-canary";
 

@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
 import { assertNightSetupReady, assertNightReadable, type NightReadabilityRuntime } from "../../../src/rulesets/night-readability";
-import { installInitialIdentityDeal, openInitialIdentitySetup, hasActiveInitialIdentitySetup } from "../../../src/game/mechanisms/roles/initial_identity/deal";
+import { installInitialIdentityDeal, openInitialIdentitySetup, hasActiveInitialIdentitySetup } from "../../../src/features/initial-identity/deal";
 
 function runtime(world: World, trace: string[]): NightReadabilityRuntime {
   const config = {};

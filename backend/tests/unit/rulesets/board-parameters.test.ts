@@ -7,18 +7,18 @@ import { expect, test } from "bun:test";
 import { Role, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { BoardParameters, bindBoardParameters } from "../../../src/rulesets/board-parameters";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
-import type { NightStageHandler } from "../../../src/game/mechanisms/stages/night/contracts";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import type { NightStageHandler } from "../../../src/engine/night/contracts";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { createRandom } from "../../../src/domain/random";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { type ReproductionMetadata } from "../../../src/recording/reproduction";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
-import { beginGameReproduction } from "../../../src/runtime/simulation/reproduction_context";
-import { fragrantPairSeerTwelveConfig } from "../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
+import { type ReproductionMetadata } from "../../../src/recording/reproduction/format";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
+import { beginGameReproduction } from "../../../src/app/simulation/reproduction-context";
+import { fragrantPairSeerTwelveConfig } from "../../../src/rulesets/presets/fragrant-pair-seer-twelve";
 
 /** Compile-only: the execution view exposes no nested board mutation. */
 function readonlyViewTypes(board: ReadonlyBoardConfig) {

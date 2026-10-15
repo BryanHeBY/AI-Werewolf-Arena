@@ -12,9 +12,9 @@ import {
   type ActionRequest,
   type ToolCall,
 } from "../../../../src/domain/index";
-import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/rulesets/presets/noble-secret-body-twelve";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { snapshotNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+import { snapshotNobleBodyAuthority } from "../../../../src/features/noble-secret-body/authority";
 const game = () => {
   const c = nobleSecretBodyTwelveConfig();
   return bootstrapGame(c, {
@@ -67,9 +67,9 @@ async function cycles(plans: Plan[]) {
   return { g, seen };
 }
 
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
-import { checkpointNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
+import { checkpointNobleBodyAuthority } from "../../../../src/features/noble-secret-body/authority";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import { writeFileSync } from "node:fs";
 
 test("actual delivered hunt clear has required God op before subsequent FINAL-source failure", async () => {

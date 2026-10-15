@@ -14,16 +14,16 @@ import {
   type GameEvent,
   type ToolCall,
 } from "../../../src/domain/model";
-import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
-import { electSheriffIfNeeded } from "../../../src/game/mechanisms/sheriff/election";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { VotingPipeline } from "../../../src/engine/phases/voting-pipeline";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { createDefaultRoleRegistry } from "../../../src/rulesets/mechanism-api";
+import { electSheriffIfNeeded } from "../../../src/features/sheriff/election";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Villager, Role.Villager, Role.Villager];
 function fixture(pk = true) {

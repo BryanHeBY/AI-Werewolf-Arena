@@ -11,22 +11,22 @@ import {
   animalBoard,
 } from "../../../support/features/animal-dream/builders/runtime-game";
 import { animalAction } from "../../../support/features/animal-dream/drivers/actions";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
-import { animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+} from "../../../../src/app/simulation/reproduction-context";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
+import { animalAuthoritySnapshot } from "../../../../src/features/animal-dream/authority";
 import {
   animalFoxKnowledge,
   animalPufferKnowledge,
-} from "../../../../src/game/mechanisms/roles/animal_dream/facts";
+} from "../../../../src/features/animal-dream/facts";
 import { COMPONENT, type ActionRequest, type ToolCall } from "../../../../src/domain";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
+import { getWolfBeautyState } from "../../../../src/features/wolf-beauty/ports";
 
 for (const skill of ["fox", "puffer"] as const)
   test(`R actual PM+Trace ${skill}: settlement recording failure preserves paid resource without publication`, async () => {

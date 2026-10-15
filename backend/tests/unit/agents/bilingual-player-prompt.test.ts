@@ -1,12 +1,12 @@
 /**
  * 单元测试验证 bilingual-player-prompt 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
-import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { renderRolePrompt } from "../../../src/game/observation/role-presentation";
+import { createRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
+import { renderRolePrompt } from "../../../src/agents/observation/role-presentation";
 import {
   WOLF_STAGE_DIRECTIVES,
   WOLF_TOOL_SPECS,
-} from "../../../src/game/mechanisms/roles/wolf/tool_specs";
+} from "../../../src/features/wolf/tool-specs";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -20,12 +20,12 @@ import {
   type ToolName,
   type ActionStage,
 } from "../../../src/domain";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { buildConstraintRetryPrompt } from "../../../src/ai/agents/player/prompt_templates";
-import { evaluateTurnConstraints } from "../../../src/game/gateway/turn-constraints";
-import { renderTurnConstraintSystemRule } from "../../../src/ai/agents/player/turn_constraints";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
+import { PlayerPromptSession } from "../../../src/agents/llm/player-prompt-session";
+import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
+import { buildConstraintRetryPrompt } from "../../../src/agents/player/prompt-templates";
+import { evaluateTurnConstraints } from "../../../src/engine/actions/turn-constraints";
+import { renderTurnConstraintSystemRule } from "../../../src/agents/player/turn-constraints";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
@@ -34,9 +34,9 @@ import {
   getDefaultToolSpecRegistry,
   RoleCatalog,
   ToolSpecRegistry,
-} from "../../../src/game/mechanisms";
-import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
-import { setSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
+} from "../../../src/rulesets/mechanism-api";
+import { getWitchState } from "../../../src/features/witch/ports";
+import { setSeerState } from "../../../src/features/seer/ports";
 import { COMPONENT } from "../../../src/domain/components/names";
 import type { RoleComponent } from "../../../src/domain/components/role";
 import type { Locale } from "@ai-werewolf-arena/game-text";

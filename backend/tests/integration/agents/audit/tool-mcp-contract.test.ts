@@ -5,8 +5,8 @@
  * original describe prefix. No external audit model is invoked.
  */
 import { describe, expect, test } from "bun:test";
-import { AuditToolTurnRegistry } from "../../../../src/ai/audit/audit_tool_protocol";
-import { AuditMcpControlServer } from "../../../../src/ai/audit/audit_mcp_control";
+import { AuditToolTurnRegistry } from "../../../../src/audit/agents/audit-tool-protocol";
+import { AuditMcpControlServer } from "../../../../src/adapters/acp/audit-mcp-control";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import * as path from "node:path";
@@ -32,7 +32,7 @@ describe("Audit ACP MCP bridge", () => {
       await client.connect(
         new StdioClientTransport({
           command: process.execPath,
-          args: [path.resolve(process.cwd(), "src/ai/audit/audit_mcp_server.ts")],
+          args: [path.resolve(process.cwd(), "src/adapters/acp/audit-mcp-server.ts")],
           env: Object.fromEntries(
             Object.entries({ ...process.env, ...env }).filter(
               (entry): entry is [string, string] => entry[1] !== undefined,

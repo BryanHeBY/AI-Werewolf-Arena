@@ -7,8 +7,8 @@
  */
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { AgentBugReportService } from "../../../src/ai/agents/reporting/bug_report_service";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { AgentBugReportService } from "../../../src/agents/reporting/bug-report-service";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 describe("AgentBugReportService", () => {
   test("shares validation, scope dedupe, message dedupe, and daily limits", () => {

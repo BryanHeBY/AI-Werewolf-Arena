@@ -9,13 +9,13 @@ import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { createAliveComponent } from "../../../../src/domain/components/alive";
 import { createRoleComponent } from "../../../../src/domain/components/role";
-import { WOLF_SORCERER_STATE_SLOT } from "../../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";
+import { WOLF_SORCERER_STATE_SLOT } from "../../../../src/features/wolf-sorcerer/state-slot";
 import {
   installWolfSorcererBoard,
   beginWolfSorcererNight,
   commitWolfSorcererExchange,
   resolveWolfSorcererNightTarget,
-} from "../../../../src/game/mechanisms/roles/wolf_sorcerer/night_frame";
+} from "../../../../src/features/wolf-sorcerer/night-frame";
 
 test("状态初始化先读左值容器和原参数，setter失败不补写或提前查询", () => {
   const trace: string[] = [], failure = new Error("literal_wolf_sorcerer_install_failure");

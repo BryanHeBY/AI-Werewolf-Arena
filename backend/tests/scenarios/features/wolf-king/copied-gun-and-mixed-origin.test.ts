@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { DeathCause, Phase, Role, PotionType, ActionWindow, WinCondition, Camp, createRandom, type BoardConfig } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 const policy = "awa_day_deaths_v1" as const;
 

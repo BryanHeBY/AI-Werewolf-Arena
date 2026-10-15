@@ -5,7 +5,7 @@
  */
 import { promises as fs } from "fs";
 import path from "path";
-import { exportReplayBundle } from "../../../src/replay/export_replay_bundle";
+import { exportReplayBundle } from "../../../src/app/cli/export-replay-bundle";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 test("exports one offline replay bundle from a recorded session", async () => {

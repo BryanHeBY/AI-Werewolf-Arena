@@ -17,18 +17,18 @@ import {
   type RoleComponent,
   type World,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { wolfTeamEvent } from "../../../src/game/mechanisms/roles/wolf_team";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { AgentEventVisibilityRegistry } from "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
+import { wolfTeamEvent } from "../../../src/features/wolf-team/permissions";
+import { buildAgentVisibleEventFeed } from "../../../src/agents/observation/event-feed";
+import { AgentEventVisibilityRegistry } from "../../../src/agents/observation/agent-event-visibility-registry";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
+import { GameEventRecorder } from "../../../src/app/game-event-recorder";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];

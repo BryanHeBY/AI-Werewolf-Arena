@@ -7,9 +7,9 @@ import { describe, expect, test } from "bun:test";
 import { tmpdir } from "node:os";
 import * as path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createPlayerAgentRuntime } from "../../../src/runtime/player_agent_factory";
-import { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/contracts";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { createPlayerAgentRuntime } from "../../../src/app/player-agent-factory";
+import { ResolvedAgentRuntimeProfile } from "../../../src/app/config/contracts";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 function baseOptions(profilesByActor: Map<number, ResolvedAgentRuntimeProfile>, root: string) {
   const context = bootstrapGame(sixPlayerMvpConfig);
@@ -46,7 +46,7 @@ describe("createPlayerAgentRuntime", () => {
 });
 
 test("ACP providers accept the same strict positive concurrency field as SDK providers", async () => {
-  const { parseRuntimeConfig } = await import("../../../src/runtime/config/parse_config");
+  const { parseRuntimeConfig } = await import("../../../src/app/config/parse-config");
   const input = (limit: unknown) => ({
     providers: {
       default: "acp",

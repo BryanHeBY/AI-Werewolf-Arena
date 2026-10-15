@@ -4,10 +4,10 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, COMPONENT, type ActionRequest, type ToolCall } from "../../../../src/domain";
-import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/rulesets/presets/noble-secret-body-twelve";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { checkpointNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { checkpointNobleBodyAuthority } from "../../../../src/features/noble-secret-body/authority";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 
 test("required death-op failure must not split actual death from closing its original servant contract", async () => {
   const c = nobleSecretBodyTwelveConfig();

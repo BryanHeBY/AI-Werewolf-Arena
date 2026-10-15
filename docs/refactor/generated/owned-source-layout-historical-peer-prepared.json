@@ -1,0 +1,253 @@
+{
+  "decision": "approved_as_bounded_candidate",
+  "scope": "TMP historical two sourceAsset bare-package normalization and fixed public declaration evidence; not execution approval/results",
+  "ready": {
+    "path": "/tmp/awa-owned-layout-fixture-history-repair/ready.json",
+    "sha256": "c93f0d179537bc7ea328b3c21bf46410bb3cf3e14e6bf930e43815dd98b57bcf"
+  },
+  "sourceEdits": {
+    "path": "/tmp/awa-owned-layout-fixture-history-repair/source-edits.json",
+    "sha256": "7eb9acee961561c5ac52996435808b739820006eefa67fae9f2c0589cfe64044"
+  },
+  "orderedSources": [
+    {
+      "path": "tooling/refactor/fixture-manifest.ts",
+      "beforeSha256": "90b3434b6d43aad21687779155a05c937a23e5c289753eb41c4c96f83b5cd7d8",
+      "afterSha256": "8798670e36625f6f510c3a9d77b22474491d80b4dc3587996f13ac0d13d3d6d9",
+      "exactEdits": 9,
+      "completeReconstructionAndCandidateMatch": true,
+      "beforeEqualsFrozenOperationalCandidate": true
+    },
+    {
+      "path": "tooling/refactor/fixture-source-relocations.test.ts",
+      "beforeSha256": "ba58ded6b5ca4641dea4a7fa6c8b2257ba0bf702d5761868b90b9724ee1a6b5b",
+      "afterSha256": "c1461fb0253442863c7807a0d54944236128c7b66cb089ae9ff1f2c8a9eb57a1",
+      "exactEdits": 2,
+      "completeReconstructionAndCandidateMatch": true,
+      "beforeEqualsFrozenOperationalCandidate": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "fe761fd31147d173ff670433b75b89964cf3bf02352ca2d8d97a7926d8cf6f47",
+      "bytes": 4115,
+      "matchesReady": true
+    },
+    {
+      "path": "apply.cjs",
+      "sha256": "6c31a9330d3ee2ed783da1643d5451dd4a3335f1dff544181cd2d922583af46d",
+      "bytes": 2025,
+      "matchesReady": true
+    },
+    {
+      "path": "candidates/tooling/refactor/fixture-manifest.ts",
+      "sha256": "8798670e36625f6f510c3a9d77b22474491d80b4dc3587996f13ac0d13d3d6d9",
+      "bytes": 75572,
+      "matchesReady": true
+    },
+    {
+      "path": "candidates/tooling/refactor/fixture-source-relocations.test.ts",
+      "sha256": "c1461fb0253442863c7807a0d54944236128c7b66cb089ae9ff1f2c8a9eb57a1",
+      "bytes": 17820,
+      "matchesReady": true
+    },
+    {
+      "path": "diagnostic-output.txt",
+      "sha256": "765808e00bd3dff00dea2d5e0abd464c33ad858f25b4ae0c267309e03a2f9496",
+      "bytes": 1037,
+      "matchesReady": true
+    },
+    {
+      "path": "diagnostic-results.json",
+      "sha256": "7bbcde040eaec9668a5f29979808b66f2d546841d4bf4c60e9bbeb3bdd77266c",
+      "bytes": 118732,
+      "matchesReady": true
+    },
+    {
+      "path": "diagnostic.cjs",
+      "sha256": "2154a538355200da372df39a7d98ccb34b6c484745740fe545cd922d541eb156",
+      "bytes": 7723,
+      "matchesReady": true
+    },
+    {
+      "path": "first-prepared-ready.json",
+      "sha256": "deb94dfcf4742e3d34031c1cb5e409e92120965f784f1d3bfcd7cc00753be4e1",
+      "bytes": 3398,
+      "matchesReady": true
+    },
+    {
+      "path": "first-prepared-source-edits.json",
+      "sha256": "dc480c9c0c2b4d58008db9deb4498313a5aef94842ab6475d14e3f86cf51577d",
+      "bytes": 194768,
+      "matchesReady": true
+    },
+    {
+      "path": "fixture-metadata-successor.cjs",
+      "sha256": "3e1f1e6a3062f2de42019006b9bb780846bf44b9f271e1838a76b56b51a395a9",
+      "bytes": 11867,
+      "matchesReady": true
+    },
+    {
+      "path": "metadata-successor-before.cjs",
+      "sha256": "af71374f597f80412680c3dbebef23a01ba61dd03933b0abd3758dd5a956a188",
+      "bytes": 10022,
+      "matchesReady": true
+    },
+    {
+      "path": "metadata-successor-edits.json",
+      "sha256": "8dbbe3ecbc5f12912571f54f9e0b68d76ff68f1eeb61e64e5eab275309c3ce83",
+      "bytes": 556,
+      "matchesReady": true
+    },
+    {
+      "path": "pair-guard-prepared-ready.json",
+      "sha256": "6004844985bf87d8aa2901e910980d590074a84b1a0f4685c4fad69d80d4366f",
+      "bytes": 3811,
+      "matchesReady": true
+    },
+    {
+      "path": "pair-guard-prepared-source-edits.json",
+      "sha256": "98821e0ad68af09e53398c2e039ea582ee04d39cbfa42c7dc302af87ad5aa74d",
+      "bytes": 197037,
+      "matchesReady": true
+    },
+    {
+      "path": "prepare-patch.py",
+      "sha256": "f97975515a394141bf4d7ae96d6cc4ca2de0e57411a017db933a533fcd8898f2",
+      "bytes": 14399,
+      "matchesReady": true
+    },
+    {
+      "path": "prepare-tests-and-metadata.py",
+      "sha256": "95db8db62420591e48e29c8acab2a316053c1a85095b90b522319f08e2c59c69",
+      "bytes": 10854,
+      "matchesReady": true
+    },
+    {
+      "path": "proposal.md",
+      "sha256": "018a6cff98de69f28baab9e8da2b67143c037b76b2b3eb359d9afcb20230aa2b",
+      "bytes": 4123,
+      "matchesReady": true
+    },
+    {
+      "path": "source-edits.json",
+      "sha256": "7eb9acee961561c5ac52996435808b739820006eefa67fae9f2c0589cfe64044",
+      "bytes": 198611,
+      "matchesReady": true
+    }
+  ],
+  "originalPublicEvidence": {
+    "commit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+    "files": [
+      {
+        "path": "packages/game-catalog/package.json",
+        "sha256": "16342de5ea7d455ae237281d16d2b6a530a643f10ce98068e3f6e66a9033d9ee",
+        "bytes": 479,
+        "lsTree": "100644 blob f02b68f945d9c5521232463ab209482cfc0a26de\tpackages/game-catalog/package.json"
+      },
+      {
+        "path": "packages/game-catalog/src/index.ts",
+        "sha256": "49cc4d85b38100637b3b0b2ec603acfdfa271d42bf18372842dec8dbc7935900",
+        "bytes": 18182,
+        "lsTree": "100644 blob 250992ea5b0dee49c3e56988d37ea87572522ea5\tpackages/game-catalog/src/index.ts"
+      },
+      {
+        "path": "packages/game-contract/package.json",
+        "sha256": "13c932c9d79a1ab790449b73fed007738ac4b8786fbbf7e532c09454a88277a8",
+        "bytes": 4546,
+        "lsTree": "100644 blob 8bf669f8666a91684c52334b42c9d5c24db2ee65\tpackages/game-contract/package.json"
+      },
+      {
+        "path": "packages/game-contract/src/facts/mist-raven.ts",
+        "sha256": "67bb73d42e138fc706d0ea0253aedddf0535111dc873806ea346968cd08b4297",
+        "bytes": 3801,
+        "lsTree": "100644 blob 84b14b7da1e9ec37877c13d5e9845f590a200dd5\tpackages/game-contract/src/facts/mist-raven.ts"
+      },
+      {
+        "path": "packages/game-contract/src/index.ts",
+        "sha256": "7a6e95c1d01d157e84454e53338335e02dc79670b2466c6960fdc82272ffc2a7",
+        "bytes": 2570,
+        "lsTree": "100644 blob 8dd842c6755f33476faa8c344f49df0e7ce6d7d3\tpackages/game-contract/src/index.ts"
+      },
+      {
+        "path": "packages/game-contract/src/inert-event-data.ts",
+        "sha256": "3cb9bd646e70f044a656c0aaf15993a004ce87aa3f7674298d95b997d53c81c9",
+        "bytes": 2122,
+        "lsTree": "100644 blob 28afbc2bcb71059738acb97a728160288ca9b627\tpackages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "path": "packages/game-contract/src/locale.ts",
+        "sha256": "229c906c9c8bb165a8521f3a6ae2a37350cbd7d6fde5f8e79f1f7b69c87e69f5",
+        "bytes": 490,
+        "lsTree": "100644 blob ee6ff9ad35bddbc54d1e622ebc1cbdf5e98bca69\tpackages/game-contract/src/locale.ts"
+      },
+      {
+        "path": "packages/game-text/package.json",
+        "sha256": "6577e3aa999cf90b91cdb4c28fa99cea1a605c5e64ca40fe3e6c6f84b718da64",
+        "bytes": 530,
+        "lsTree": "100644 blob 116924ce5a1e4f6008311f3f7bd554f85f3a9fc1\tpackages/game-text/package.json"
+      },
+      {
+        "path": "packages/game-text/src/index.ts",
+        "sha256": "5ff696dd267cff08ae159db8c0638c7521ba6927d11a99c2826465cd20894522",
+        "bytes": 42209,
+        "lsTree": "100644 blob e754d9029e832a1a6c8d4bb1cac53f0b24ab9737\tpackages/game-text/src/index.ts"
+      },
+      {
+        "path": "packages/game-text/src/mist-raven.ts",
+        "sha256": "3b86790298f01a751ab040caddd0739519a26d66465d2191ba2ecdba03a0a11a",
+        "bytes": 556,
+        "lsTree": "100644 blob 76df9738a71508ae7d7ec1f672af19bc0991b676\tpackages/game-text/src/mist-raven.ts"
+      }
+    ]
+  },
+  "currentPublicEvidence": [
+    {
+      "path": "packages/game-contract/package.json",
+      "sha256": "31bee631fdffe9ab62425ab217d4061f28d0f09a57a1dcb0db8b904e31a0d597",
+      "bytes": 4988,
+      "regularNonSymlink": true
+    },
+    {
+      "path": "packages/game-contract/src/index.ts",
+      "sha256": "ee6da19b0163e02ca513faab4b7107c247871ef24838c711f5233dc9f6b7502a",
+      "bytes": 5477,
+      "regularNonSymlink": true
+    },
+    {
+      "path": "packages/game-contract/src/locale.ts",
+      "sha256": "a13a37e23b0eebd040d3cadd985a1d3ca5a0a80629992d1dfefc860cec1756e9",
+      "bytes": 517,
+      "regularNonSymlink": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "sha256": "3ba35152b2b078fcaf3204998c9508e039677b9230317d5faa3cdda6b1461aae",
+      "bytes": 4506,
+      "regularNonSymlink": true
+    },
+    {
+      "path": "packages/game-contract/src/inert-event-data.ts",
+      "sha256": "68de25bbf514a55dd7d6aaa57fb502190c6f0be1345bbc4babc62b69b456e0bb",
+      "bytes": 2435,
+      "regularNonSymlink": true
+    }
+  ],
+  "semanticRead": [
+    "Complete 11 exact edits across two tool programs, all 3 new tests, parser/normalizer/generator call chain, full new evidence function, metadata successor and apply script read.",
+    "Exact current+origin pair is enforced by parser; sourceProgramContract also requires actual mappings pair; fixed442 identity is independently required by evidence and generator. Static filename-only pairing finding is closed before execution.",
+    "Only Locale type binding and two Mist named value bindings normalize. Alias/body/wire program remain in original stored hashes. Other module forms and imports cannot inherit this exception.",
+    "Original package exports and actual current GC endpoints are checked, 10 complete declarations include id and copyEventData; three leaves compare all value statements. No complete heavy-vs-light cold initialization equivalence claimed.",
+    "Current public read registration is 5 exact files after parsed matching asset; original100644/current lstat checks remain. Per-asset public evidence follows moduleRelocations so existing MCP mode/symlink rejection remains prior.",
+    "Metadata successor retains original program and moduleBindings digests, verifies fixed public evidence before current metadata writes; original historical source/origin/suite/policy fields remain immutable.",
+    "Two-source apply stages all anchors before writes and gates after37 beforeSHAs; does not copy stale whole candidate imports into arbitrary stages. Writes are sequential, not transactional."
+  ],
+  "manualFindings": [],
+  "integrityErrors": [],
+  "limits": [
+    "No repository writes, apply, AST/emit checker, tests/types/gates, production loading, network or metadata migration were executed by reviewer. Only source read, Git blob read and byte/precise-text reconstruction were performed.",
+    "Three new declarations and Root subsequent metadata/application remain unexecuted in this reviewed snapshot. This is not a green execution receipt.",
+    "Original37/672 history is preserved; this is an explicit limited fixture admission policy successor, not retroactive mechanical proof or arbitrary external package/JS reflection guarantee."
+  ]
+}

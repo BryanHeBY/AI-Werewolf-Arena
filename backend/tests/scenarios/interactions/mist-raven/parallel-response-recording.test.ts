@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, ActionWindow } from "../../../../src/domain";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
-import type { ReproductionRecord } from "../../../../src/recording/reproduction";
+import type { ReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix";
 for (const variant of [
   "blast-parallel",

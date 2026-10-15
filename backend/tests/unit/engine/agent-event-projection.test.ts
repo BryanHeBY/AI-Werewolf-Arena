@@ -7,20 +7,20 @@
 import { expect, test } from "bun:test";
 import { Phase, Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
-import { AgentEventVisibilityRegistry } from "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
+import { AgentEventVisibilityRegistry } from "../../../src/agents/observation/agent-event-visibility-registry";
 import {
   buildAgentVisibleEvent,
   buildAgentVisibleEventFeed,
-} from "../../../src/game/engine/agent_visible_event_feed";
+} from "../../../src/agents/observation/event-feed";
 import {
   canViewAgentEvent,
   projectPreparedAgentEvent,
-} from "../../../src/game/observation/agent-event-projection";
+} from "../../../src/agents/observation/agent-event-projection";
 import {
   prepareInertAgentEvent,
   type InertAgentEvent,
-} from "../../../src/game/observation/agent-event-facts";
-import { projectAbilitySource } from "../../../src/game/observation/night-ability-projection";
+} from "../../../src/agents/observation/agent-event-facts";
+import { projectAbilitySource } from "../../../src/agents/observation/night-ability-projection";
 
 test("boolean visibility keeps its historical Mist audience mode while the feed rejects duplicate recipients", () => {
   const world = new World();

@@ -3,18 +3,18 @@
  * 夜阶段上下文和受控第二投票者回调；精确收集票／目标身份结果保持原断言，不运行完整
  * NightPipeline、PhaseManager 周期或模型。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
-import type { NightStageState } from "../../../src/game/mechanisms/stages/night/contracts";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
+import type { NightStageState } from "../../../src/engine/night/contracts";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, Phase, WinCondition, COMPONENT, type BoardConfig, type GameEvent, StatusMark } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { WOLF_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/wolf/night_stages";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { WOLF_NIGHT_STAGES } from "../../../src/features/wolf/night-stages";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 
 const config = (deck: Role[]): BoardConfig => ({
   ...sixPlayerMvpConfig,

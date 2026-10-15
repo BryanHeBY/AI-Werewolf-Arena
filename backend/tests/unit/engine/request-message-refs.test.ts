@@ -4,19 +4,19 @@
 import type { MessageRef } from "@ai-werewolf-arena/game-text";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { Phase } from "../../../src/domain";
-import { resolveTurnConstraints } from "../../../src/game/gateway/turn-constraints";
-import { renderTurnConstraintUserHint } from "../../../src/ai/agents/player/turn_constraints";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+import { resolveTurnConstraints } from "../../../src/engine/actions/turn-constraints";
+import { renderTurnConstraintUserHint } from "../../../src/agents/player/turn-constraints";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 
 function setup(locale: "zh-CN" | "en") {
   const game = bootstrapGame(sixPlayerMvpConfig, { locale });

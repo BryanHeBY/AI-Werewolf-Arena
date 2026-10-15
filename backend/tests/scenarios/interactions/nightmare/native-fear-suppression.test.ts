@@ -1,10 +1,10 @@
 /**
  * 交互场景测试：验证梦魇恐惧抑制原生请求，不扩展库存或改变后续死亡时点。输入为原语言／目标／政策矩阵及多夜恐惧、跳过、狼刀、梦和猎人回复；请求缺席、连续目标、库存／历史及昼夜枪规则为字面预期，不用 World 推导预期。
  */
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
+import { getDreamerState } from "../../../../src/features/dreamer/ports";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { nightmareTwelveConfig } from "../../../../src/runtime/scenarios/nightmare_twelve";
+import { nightmareTwelveConfig } from "../../../../src/rulesets/presets/nightmare-twelve";
 import {
   Role,
   PotionType,

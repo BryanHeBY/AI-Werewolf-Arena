@@ -7,12 +7,12 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { DeathCause, Phase, Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { getHunterState } from "../../../src/features/hunter/ports";
 
 function fixture() {
   const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager];

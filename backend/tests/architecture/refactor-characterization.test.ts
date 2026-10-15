@@ -19,20 +19,20 @@ import {
   assertRequestDelivery,
   deriveBoundedRequest,
 } from "../../src/domain/request-delivery";
-import { BaselineBotActionProvider } from "../../src/game/drivers/privileged-baseline";
+import { BaselineBotActionProvider } from "../../src/agents/baseline/privileged";
 import { ObservedPlayersActionProvider } from "../../src/app/observed-players-action-provider";
-import { ObservedBot } from "../../src/ai/agents/providers/observed_bot";
-import type { PlayerObservation } from "../../src/game/observation/player-observation";
-import { LlmObserver } from "../../src/ai/agents/player/player_observer";
-import { FallbackActionPolicy } from "../../src/ai/agents/llm/fallback_action_policy";
-import { AcpTurnRegistry } from "../../src/ai/integrations/acp/acp_turn_registry";
-import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
+import { ObservedBot } from "../../src/agents/providers/observed-bot";
+import type { PlayerObservation } from "../../src/agents/observation/player-observation";
+import { LlmObserver } from "../../src/agents/player/player-observer";
+import { FallbackActionPolicy } from "../../src/agents/llm/fallback-action-policy";
+import { AcpTurnRegistry } from "../../src/adapters/acp/acp-turn-registry";
+import { sixPlayerMvpConfig } from "../../src/rulesets/presets/six-player-mvp";
 import { nobleBodyAuthorityFixture } from "../support/features/noble-secret-body/drivers/authority";
 import {
   beginNobleBodyNight,
   nobleBodyChoiceTargets,
   snapshotNobleBodyAuthority,
-} from "../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../src/features/noble-secret-body/authority";
 import {
   canSubmitNobleBodyChoice,
   closeNobleBodyRequest,
@@ -40,12 +40,12 @@ import {
   inheritNobleBodyDeadlineRequest,
   nobleBodyRequestScope,
   openNobleBodyRequest,
-} from "../../src/game/mechanisms/roles/noble_secret_body/requests";
+} from "../../src/features/noble-secret-body/requests";
 import {
   animalRequestEnvelopeCurrent,
   captureAnimalRequestEnvelope,
   inheritAnimalRequestEnvelope,
-} from "../../src/game/mechanisms/roles/animal_dream/request_envelope";
+} from "../../src/features/animal-dream/request-envelope";
 import { animalRosterFixture } from "../support/features/animal-dream/builders/roster";
 
 function wolfRequest(): ActionRequest {

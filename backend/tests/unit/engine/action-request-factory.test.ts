@@ -11,8 +11,8 @@ import {
   getActionRequestStage,
 } from "../../../src/domain/action-request-context";
 import { Phase } from "../../../src/domain/model";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 describe("GameActionRequestFactory", () => {
   test("owns canonical day, stage, visibility and constraint fields", () => {

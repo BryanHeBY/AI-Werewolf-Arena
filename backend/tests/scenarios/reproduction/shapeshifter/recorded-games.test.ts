@@ -8,7 +8,7 @@ import { promises as fs } from "node:fs";
 import { Camp, Role } from "../../../../src/domain";
 import { SHAPESHIFTER_CASES, shapeshifterScenario } from "../../../support/features/shapeshifter/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 for (const size of [6, 12] as const)
   for (const kind of SHAPESHIFTER_CASES.filter(
     (k) => size === 6 || ["both0", "one1", "seer", "hunter", "bottom"].includes(k),

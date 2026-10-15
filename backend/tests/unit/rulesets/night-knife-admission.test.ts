@@ -9,7 +9,7 @@ import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent, aliveLifeVersion } from "../../../src/domain/components/alive";
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
-import type { NightStageState } from "../../../src/game/mechanisms/stages/night/contracts";
+import type { NightStageState } from "../../../src/engine/night/contracts";
 import { discardStaleNightKnives } from "../../../src/rulesets/night-knife-admission";
 
 function stageState(): NightStageState {

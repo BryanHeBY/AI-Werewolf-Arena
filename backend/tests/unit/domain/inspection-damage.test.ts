@@ -2,7 +2,7 @@
  * 单元测试用字面带来源死亡声明与已撤销权限验证查验伤害。精确独立死因、免疫与当前生命断言
  * 验证伤害结算，不重新解释普通守护／救药。输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
@@ -16,7 +16,7 @@ import {
   type NightInspectionAttack,
 } from "../../../src/domain/night-effects";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 function fixture(cause: NightInspectionAttack["cause"]) {
   const { world } = bootstrapGame(sixPlayerMvpConfig);

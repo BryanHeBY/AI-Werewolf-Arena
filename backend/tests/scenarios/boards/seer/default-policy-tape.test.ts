@@ -12,24 +12,24 @@ import {
   type ActionRequest,
   type ActionProvider,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { SEER_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/seer/profile";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+} from "../../../../src/app/config/board-definition";
+import { SEER_ROLE_PROFILE } from "../../../../src/features/seer/profile";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+} from "../../../../src/app/simulation/reproduction-context";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 import baselineRequest from "../../../support/seer_baseline_request.json";

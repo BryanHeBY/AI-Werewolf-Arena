@@ -1,9 +1,9 @@
 /**
  * 场景测试验证 badge-death-handoff-and-revocation 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import { AcpActionProvider } from "../../../../src/agents/acp/acp-action-provider";
 import { NoActionToolLoopClient, ToolLoopClient } from "../../../support/drivers/agents/llm-clients";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -22,13 +22,13 @@ import type { BadgeComponent } from "../../../../src/domain/components/badge";
 import type { AliveComponent } from "../../../../src/domain/components/alive";
 import type { VotingRightComponent } from "../../../../src/domain/components/voting-right";
 
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { ActionTurn } from "../../../../src/agents/player/action-turn";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { getDefaultConfigRenderRegistry } from "../../../../src/rulesets/mechanism-api";
 
 function fixture(locale: "zh-CN" | "en" = "en", choice = true, idiot = false) {
   const roles = [

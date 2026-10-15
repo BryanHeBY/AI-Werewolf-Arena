@@ -18,16 +18,16 @@ import type { DeathShotSelection } from "../domain/deaths";
 import type { World } from "../domain/world";
 import { COMPONENT } from "../domain/components/names";
 import { captureNightLife, livingNightLife } from "../domain/night-effects";
-import type { ToolGateway } from "../game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../game/engine/action_request_factory";
-import { captureDeathShotEligibility } from "../game/mechanisms/roles/death_abilities";
+import type { ToolGateway } from "../engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../engine/actions/action-request-factory";
+import { captureDeathShotEligibility } from "../features/death-actions/death-abilities";
 import {
   assertMagicianRosterCurrent,
   isMagicianBoard,
   resolveMagicianNightTarget,
-} from "../game/mechanisms/roles/magician/ports";
-import { nightmareFearBlocks } from "../game/mechanisms/roles/nightmare_shadow/ports";
-import { demonHunterNativeGunCurrent } from "../game/mechanisms/roles/demon_hunter/ports";
+} from "../features/magician/ports";
+import { nightmareFearBlocks } from "../features/nightmare/ports";
+import { demonHunterNativeGunCurrent } from "../features/demon-hunter/ports";
 
 /** 延迟读取原结算器；类型只声明所需成员，不是进程隔离或额外的运行权限屏障。 */
 export interface DeathShotSelectionRuntime {

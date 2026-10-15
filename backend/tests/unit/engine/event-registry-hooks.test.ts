@@ -6,8 +6,8 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import { AliveComponent } from "../../../src/domain/components/alive";
 import { RoleComponent } from "../../../src/domain/components/role";
 import { Role, DeathCause, Phase } from "../../../src/domain/model";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 
 describe("EventRegistry hooks", () => {
   test("idiot voted out survives and loses voting right", () => {

@@ -9,10 +9,10 @@ import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Phase, type ActionRequest } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
-import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { createPlayerAgentRuntime } from "../../../../src/app/player-agent-factory";
+import type { ResolvedAgentRuntimeProfile } from "../../../../src/app/config/contracts";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { type ActorTransportPlan } from "../../../support/transport/contracts";
 for (const locale of ["zh-CN", "en"] as const)

@@ -1,14 +1,14 @@
 /**
  * 场景测试验证曜蚀借用能力的原提示历史。输入保留 locale／借用类别矩阵及内存 SDK／ACP 回合接收器；字面回执、引用／getter／错误轨迹、事实和状态是原预期。原 helper 实际推进完整 NightPipeline，并连接 ActionTurn／ACP 和玩家 feed；这些控制适配器不启动 HTTP／stdio，受控 provider 不调用模型，生产输出不生成新 golden。
  */
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { ActionTurn } from "../../../../src/agents/player/action-turn";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import {
   Role,
   Phase,
@@ -18,22 +18,22 @@ import {
   type RoleComponent,
   type GameEvent,
 } from "../../../../src/domain";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   findNightAbility,
-} from "../../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
+} from "../../../../src/features/night-abilities/abilities";
+import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../../src/game/mechanisms";
-import { buildAgentVisibleEvent } from "../../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/rulesets/mechanism-api";
+import { buildAgentVisibleEvent } from "../../../../src/agents/observation/event-feed";
 
 const raw = JSON.parse(
   await readFile(

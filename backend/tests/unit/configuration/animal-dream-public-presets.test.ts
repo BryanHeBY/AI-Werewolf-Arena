@@ -8,7 +8,7 @@ import { Role, type BoardConfig } from "../../../src/domain";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { WinCondition } from "../../../src/domain/model";
 
 const fixed = [

@@ -5,11 +5,11 @@ import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { Phase, type ActionRequest } from "../../../../src/domain";
 

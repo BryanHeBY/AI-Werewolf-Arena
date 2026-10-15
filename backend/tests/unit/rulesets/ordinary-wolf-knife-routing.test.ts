@@ -6,15 +6,15 @@
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import { World } from "../../../src/domain/world";
 import { Role, StatusMark } from "../../../src/domain/model";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent, aliveLifeVersion } from "../../../src/domain/components/alive";
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
-import type { NightStageContext, WolfKnifeTargetScope } from "../../../src/game/mechanisms/stages/night/contracts";
-import { beginMistNight, commitMistChoice } from "../../../src/game/mechanisms/roles/mist_raven/night_frame";
-import { readAlchemistState } from "../../../src/game/mechanisms/roles/mist_raven/state";
+import type { NightStageContext, WolfKnifeTargetScope } from "../../../src/engine/night/contracts";
+import { beginMistNight, commitMistChoice } from "../../../src/features/mist-raven/night-frame";
+import { readAlchemistState } from "../../../src/features/mist-raven/state";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 import { resolveOrdinaryWolfKnife, type AcceptedWolfKnifeTarget } from "../../../src/rulesets/ordinary-wolf-knife-routing";
 

@@ -4,27 +4,27 @@
  * 外层完整夜仍真实运行，嵌套进入应拒绝；实例入口迁移不改变已付资格和生命周期。
  * 不调用模型／网络，也不以新生产输出重写 fixture 或 golden。
  */
-import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { type RoleComponent } from "../../../../src/domain/components/role";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 
 
 import { createVictoryComponent } from "../../../../src/domain/components/victory";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
-import { createEclipseState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";
-import { createShelterState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
-import { installRadiantEclipseBoard } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import { installNativeAbility } from "../../../../src/features/night-abilities/ability-changes";
+import { createEclipseState } from "../../../../src/features/radiant-eclipse/eclipse-state-slot";
+import { createShelterState } from "../../../../src/features/radiant-eclipse/shelter-state";
+import { installRadiantEclipseBoard } from "../../../../src/features/radiant-eclipse/night-frame";
 import type { GameEvent } from "../../../../src/domain/events";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import { ECLIPSE_SWALLOW_STAGE } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_stages";
-import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ECLIPSE_SWALLOW_STAGE } from "../../../../src/features/radiant-eclipse/night-stages";
+import { DREAMER_NIGHT_STAGE } from "../../../../src/features/dreamer/night-stages";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import type { ActionProvider, BoardConfig } from "../../../../src/domain/model";
 

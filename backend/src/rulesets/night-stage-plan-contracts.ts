@@ -4,7 +4,7 @@
  * handler 仍是可变执行对象，execute 在实际调用点读取；这些内部契约不是归档 DTO。
  * 声明闭包和阶段预约不授予 actor、World、库存、原体或 lease 权限。
  */
-import type { NightStageHandler } from "../game/mechanisms/stages/night/contracts";
+import type { NightStageHandler } from "../engine/night/contracts";
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
 /** 仅普通默认贡献数据可参与固定定义；原 handler 引用保留晚执行权限。 */

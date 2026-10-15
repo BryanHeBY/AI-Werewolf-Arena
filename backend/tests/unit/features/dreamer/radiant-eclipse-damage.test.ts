@@ -2,7 +2,7 @@
  * 单元测试用提交的状态印记及明确庇护／反噬声明验证日辉月蚀伤害。手写死因过滤与原守护／救药
  * 断言验证结算，输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
@@ -19,7 +19,7 @@ import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-re
 import {
   DreamNightFrame,
   type DreamNightLink,
-} from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
+} from "../../../../src/features/dreamer/night-frame";
 import type { GameEvent } from "../../../../src/domain/events";
 import { text } from "@ai-werewolf-arena/game-text";
 

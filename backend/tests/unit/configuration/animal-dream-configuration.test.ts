@@ -7,12 +7,12 @@
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";
+import { loadBoardDefinition } from "../../../src/app/config/load-board-definition";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { configDiagnostic } from "../../../src/runtime/config/error_codes";
+} from "../../../src/app/config/board-definition";
+import { configDiagnostic } from "../../../src/app/config/error-codes";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 for (const skip of ["wait", "skip"])
   for (const ballot of ["first", "final"])

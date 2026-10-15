@@ -8,13 +8,13 @@
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
-import { FragrantNightUnit } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/ports";
+import { FragrantNightUnit } from "../../../../src/features/fragrant-pair-seer/ports";
 import {
   fragrantAuthoritySnapshot,
   closeFragrantNight,
   openFragrantBindChoice,
   openPairCheckChoice,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+} from "../../../../src/features/fragrant-pair-seer/authority";
 
 function fixture(failure?: Error) {
   const game = fragrantRuntimeGame("en"),

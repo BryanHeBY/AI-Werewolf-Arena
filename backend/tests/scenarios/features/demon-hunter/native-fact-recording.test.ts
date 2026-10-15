@@ -3,17 +3,17 @@
  * 药瓶／狩猎计划、伤害 spy 恢复与真实临时记录 scope；手写来源、audience／sequence 与记录
  * 输出是预期，完整因果周期属于场景覆盖，不被称为传输集成。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import { DEMON_HUNTER_POLICY, DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { COMPONENT, PotionType, type ActionRequest, type RoleComponent, type GameEvent } from "../../../../src/domain";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { getDefaultScriptEventRenderRegistry } from "../../../../src/rulesets/mechanism-api";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const chosen = { policy: DEMON_HUNTER_POLICY, actorId: 6, day: 2, targetId: 1 },

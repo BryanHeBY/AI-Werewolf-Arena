@@ -4,7 +4,7 @@
 import {
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
 
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
@@ -14,13 +14,13 @@ import { readFile } from "node:fs/promises";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
-import { SdkGameToolLoop } from "../../../../src/ai/agents/llm/sdk_game_tool_loop";
-import { PlayerPromptSession } from "../../../../src/ai/agents/llm/player_prompt_session";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { LlmObserver } from "../../../../src/ai/agents/player/player_observer";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
+import { WerewolfMcpControlServer } from "../../../../src/adapters/acp/werewolf-mcp-control";
+import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
+import { SdkGameToolLoop } from "../../../../src/agents/llm/sdk-game-tool-loop";
+import { PlayerPromptSession } from "../../../../src/agents/llm/player-prompt-session";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { LlmObserver } from "../../../../src/agents/player/player-observer";
 import {
   getDefaultToolCallRepairRegistry,
   getDefaultToolSpecRegistry,
@@ -28,8 +28,8 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
-import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
+} from "../../../../src/rulesets/mechanism-api";
+import { twelvePlayerStandardConfig } from "../../../../src/rulesets/presets/twelve-player-standard";
 import {
   COMPONENT,
   Camp,
@@ -39,12 +39,12 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../../../src/domain";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import type { ToolLoopStepTrace } from "../../../../src/ai/integrations/llm/transport";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { getHunterState } from "../../../../src/features/hunter/ports";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import type { ToolLoopStepTrace } from "../../../../src/adapters/llm/transport";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const roles = [
@@ -205,7 +205,7 @@ for (const locale of ["zh-CN", "en"] as const)
       control = new WerewolfMcpControlServer(registry);
     const client = new Client({ name: "reception-test", version: "1.0.0" });
     const config = await control.start(process.execPath, [
-      path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+      path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
     ]);
     control.bindSession("same-session");
     const pending = registry.openTurn(request, "same-session");
@@ -330,7 +330,7 @@ for (const locale of ["zh-CN", "en"] as const)
       control = new WerewolfMcpControlServer(registry);
     const client = new Client({ name: "wolf-permission-test", version: "1.0.0" });
     const config = await control.start(process.execPath, [
-      path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+      path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
     ]);
     control.bindSession("wolf-permissions");
     const cases = [
@@ -434,13 +434,13 @@ for (const locale of ["zh-CN", "en"] as const)
 for (const locale of ["zh-CN", "en"] as const)
   for (const action of ["speak_to_wolves", "kill_vote"] as const)
     test(`${locale}: SDK and ACP providers use the injected role catalog for prompts, reception and local fallback (${action})`, async () => {
-      const { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
+      const { RoleCatalog } = await import("../../../../src/rulesets/roles/catalog");
       const { LlmActionProvider } =
-        await import("../../../../src/ai/agents/llm/llm_action_provider");
+        await import("../../../../src/agents/llm/llm-action-provider");
       const { AcpActionProvider } =
-        await import("../../../../src/ai/agents/acp/acp_action_provider");
+        await import("../../../../src/agents/acp/acp-action-provider");
       const { BaselineBotActionProvider } =
-        await import("../../../../src/game/drivers/privileged-baseline");
+        await import("../../../../src/agents/baseline/privileged");
       const catalog = createRoleCatalog({
         contributions: getDefaultRoleContributions().map((profile) =>
           profile.metadata.role !== Role.Wolf
@@ -533,7 +533,7 @@ for (const locale of ["zh-CN", "en"] as const)
             acpInitialPrompt = sessionInput.initialPrompt ?? "";
             control = new WerewolfMcpControlServer(sessionInput.registry);
             const config = await control.start(process.execPath, [
-              path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+              path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
             ]);
             control.bindSession("catalog-session");
             client = new Client({ name: "catalog-test", version: "1.0.0" });
@@ -629,9 +629,9 @@ for (const locale of ["zh-CN", "en"] as const)
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: reused SDK and ACP sessions receive updated authorized teammate knowledge every turn`, async () => {
-    const { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
-    const { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider");
-    const { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
+    const { RoleCatalog } = await import("../../../../src/rulesets/roles/catalog");
+    const { LlmActionProvider } = await import("../../../../src/agents/llm/llm-action-provider");
+    const { AcpActionProvider } = await import("../../../../src/agents/acp/acp-action-provider");
     const catalog = createRoleCatalog({
       contributions: getDefaultRoleContributions().map((profile) =>
         profile.metadata.role !== Role.Seer
@@ -728,7 +728,7 @@ for (const locale of ["zh-CN", "en"] as const)
           creations++;
           control = new WerewolfMcpControlServer(sessionInput.registry);
           const config = await control.start(process.execPath, [
-            path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+            path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
           ]);
           control.bindSession("knowledge-session");
           client = new Client({ name: "knowledge-test", version: "1.0.0" });
@@ -864,7 +864,7 @@ for (const locale of ["zh-CN", "en"] as const)
       control = new WerewolfMcpControlServer(registry),
       client = new Client({ name: "heal-target", version: "1.0.0" });
     const config = await control.start(process.execPath, [
-      path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+      path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
     ]);
     control.bindSession("heal-target");
     const pending = registry.openTurn(request, "heal-target");
@@ -986,7 +986,7 @@ for (const locale of ["zh-CN", "en"] as const)
       client = new Client({ name: "empty-gun", version: "1.0.0" });
     try {
       const config = await control.start(process.execPath, [
-        path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+        path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
       ]);
       control.bindSession("empty-gun");
       const pending = registry.openTurn(input, "empty-gun");
@@ -1113,7 +1113,7 @@ for (const locale of ["zh-CN", "en"] as const)
     let transport: StdioClientTransport | undefined;
     try {
       const config = await control.start(process.execPath, [
-        path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+        path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
       ]);
       control.bindSession("wrong-gun-instance");
       const acpInput = structuredClone(input);
@@ -1196,7 +1196,7 @@ for (const locale of ["zh-CN", "en"] as const)
     "candidate_vote",
   ] as const)
     test(`${locale}: actual SDK HTTP and MCP share public participation refusals (${scenario})`, async () => {
-      const { EventRegistry } = await import("../../../../src/game/engine/event_registry");
+      const { EventRegistry } = await import("../../../../src/engine/events/event-registry");
       const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }),
         acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
       for (const game of [sdk, acp]) new EventRegistry().onVotedOut(game.world, 8, []);
@@ -1281,7 +1281,7 @@ for (const locale of ["zh-CN", "en"] as const)
         client = new Client({ name: "public-participation", version: "1.0.0" });
       try {
         const config = await control.start(process.execPath, [
-          path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+          path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
         ]);
         control.bindSession("public-participation");
         const pending = registry.openTurn(input, "public-participation");
@@ -1399,7 +1399,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const control = new WerewolfMcpControlServer(registry);
     const client = new Client({ name: "badge-reception", version: "1.0.0" });
     const controlConfig = await control.start(process.execPath, [
-      path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+      path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
     ]);
     control.bindSession("badge-session");
     const pending = registry.openTurn(

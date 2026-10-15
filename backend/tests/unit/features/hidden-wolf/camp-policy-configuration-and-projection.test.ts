@@ -1,12 +1,12 @@
 /**
  * 单元测试：验证隐狼具名阵营政策、提示与玩家状态投影。输入为原政策／语言矩阵及畸形参数；归一化字段、字面提示片段和外来状态缺省为预期。继承及骑士交互在场景测试中，此处不运行完整阶段。
  */
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import {
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -18,15 +18,15 @@ import {
   type HiddenWolfCampInspectionPolicy,
   type RoleComponent,
 } from "../../../../src/domain";
-import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/state";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";
+import { getHiddenWolfState } from "../../../../src/features/hidden-wolf/state";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { getDefaultConfigRenderRegistry } from "../../../../src/agents/prompt/config-render-registry";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/app/config/board-definition";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 const roles = [Role.HiddenWolf, Role.Wolf, Role.Seer, Role.Knight, Role.Villager, Role.Villager];
 

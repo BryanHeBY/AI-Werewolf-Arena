@@ -8,9 +8,9 @@ import { test, expect } from "bun:test";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { fragrantPairSeerTwelveConfig as config } from "../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
+import { fragrantPairSeerTwelveConfig as config } from "../../../src/rulesets/presets/fragrant-pair-seer-twelve";
 import { isFragrantPairSeerPreset } from "../../../src/rulesets";
 
 const root = path.resolve(import.meta.dir, "../../../.."),

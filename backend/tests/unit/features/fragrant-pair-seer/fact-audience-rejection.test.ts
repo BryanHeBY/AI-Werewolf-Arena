@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/domain/identity";
 import type { GameEvent } from "../../../../src/domain/events";
-import { getDefaultAgentEventVisibilityRegistry } from "../../../../src/game/mechanisms";
-import { buildAgentVisibleEvent } from "../../../../src/game/engine/agent_visible_event_feed";
+import { getDefaultAgentEventVisibilityRegistry } from "../../../../src/rulesets/mechanism-api";
+import { buildAgentVisibleEvent } from "../../../../src/agents/observation/event-feed";
 import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 
 test("God trigger cannot become an actor event by a forged audience, and owner fields reject extras", () => {

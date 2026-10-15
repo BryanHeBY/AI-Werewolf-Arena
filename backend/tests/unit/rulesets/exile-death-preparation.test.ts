@@ -8,7 +8,7 @@ import { Camp, DeathCause, Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import {
   prepareAnimalExileDeaths,
   captureAnimalExileFeedback,

@@ -2,7 +2,7 @@
  * 负责开发复盘入口的文件定位与 Vite 子进程装配。输入为文件／会话目录路径和显示语言参数，输出已解析路径或子进程退出码。
  * 文件存在性校验不等于归档内容校验；CLI 只把路径传给开发服务器，不改源文件或复制其内容到配置。
  */
-import { isLocale } from "@ai-werewolf-arena/game-catalog";
+import { isLocale } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { replayCommandFailure } from "./cli_error";
 import { existsSync, statSync } from "node:fs";

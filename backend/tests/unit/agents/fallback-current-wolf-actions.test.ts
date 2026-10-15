@@ -8,13 +8,13 @@ import { Camp, Phase, Role, type ActionRequest, type ToolName } from "@ai-werewo
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createRandom, type RandomSource } from "../../../src/domain/random";
-import { createRoleCatalog, getDefaultRoleContributions } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { getDefaultConfigRenderRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultTargetHintRegistry, getDefaultToolSpecRegistry } from "../../../src/game/mechanisms";
-import { capturePlayerObservation } from "../../../src/game/observation/player-observation-projector";
-import { freezeObservation, type PlayerObservation } from "../../../src/game/observation/player-observation";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { ObservationFallbackStrategy } from "../../../src/ai/agents/providers/observation-fallback";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { createRoleCatalog, getDefaultRoleContributions } from "../../../src/rulesets/roles/role-catalog-assembly";
+import { getDefaultConfigRenderRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultTargetHintRegistry, getDefaultToolSpecRegistry } from "../../../src/rulesets/mechanism-api";
+import { capturePlayerObservation } from "../../../src/agents/observation/player-observation-projector";
+import { freezeObservation, type PlayerObservation } from "../../../src/agents/observation/player-observation";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
+import { ObservationFallbackStrategy } from "../../../src/agents/providers/observation-fallback";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 function request(allowedTools: ToolName[]): ActionRequest {
   return {

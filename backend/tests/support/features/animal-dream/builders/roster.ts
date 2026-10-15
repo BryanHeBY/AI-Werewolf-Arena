@@ -1,12 +1,12 @@
 /**
  * 构造动物梦境测试的原 World、角色对象与初始座位。输入为原配置、组件和调用方字段，输出为显式 fixture 值；玩家身份和手写断言由测试提供。这里只造输入，不运行阶段、完整对局、传输、归档或规则验证器。
  */
-import { createAliveComponent, createCampComponent, createVotingRightComponent } from "../../../../../src/game/observation/component-presentation";
+import { createAliveComponent, createCampComponent, createVotingRightComponent } from "../../../../../src/agents/observation/component-presentation";
 import { World } from "../../../../../src/domain/world";
 import { Role, Camp } from "../../../../../src/domain/identity";
 import { COMPONENT } from "../../../../../src/domain/components/names";
 import { type RoleComponent } from "../../../../../src/domain/components/role";
-import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../../src/agents/observation/role-presentation";
 import { type AliveComponent } from "../../../../../src/domain/components/alive";
 
 
@@ -16,10 +16,10 @@ import {
   freshFoxCubState,
   freshPufferfishState,
   freshWhiteCatState,
-} from "../../../../../src/game/mechanisms/roles/animal_dream/state";
-import { installAnimalRoster } from "../../../../../src/game/mechanisms/roles/animal_dream/roster";
-import { setWolfBeautyState } from "../../../../../src/game/mechanisms/roles/wolf_beauty/ports";
-import { setBearState } from "../../../../../src/game/mechanisms/roles/bear/ports";
+} from "../../../../../src/features/animal-dream/state";
+import { installAnimalRoster } from "../../../../../src/features/animal-dream/roster";
+import { setWolfBeautyState } from "../../../../../src/features/wolf-beauty/ports";
+import { setBearState } from "../../../../../src/features/bear/ports";
 
 export const animalInternalConfig = () => ({
   boardSize: 12,

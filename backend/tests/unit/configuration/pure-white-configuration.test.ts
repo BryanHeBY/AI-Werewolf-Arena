@@ -8,11 +8,11 @@
 import { expect, test } from "bun:test";
 import { isPureWhitePreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { pureWhiteTwelveConfig } from "../../../src/runtime/scenarios/pure_white_twelve";
+import { pureWhiteTwelveConfig } from "../../../src/rulesets/presets/pure-white-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { Role, WinCondition, WitchSelfHealRule } from "../../../src/domain/model";
 import type { BoardConfig } from "../../../src/domain/board";
 for (const priority of ["awa_wolf_priority_v1", "awa_good_priority_v1"] as const) {

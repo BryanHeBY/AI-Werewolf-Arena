@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import { Role } from "../../../src/domain";
 import { ghostBrideBoard } from "../../support/features/ghost-bride/builders/scenario";
-import { getDefaultWinConditionRegistry, NightStageRegistry } from "../../../src/game/mechanisms";
+import { getDefaultWinConditionRegistry, NightStageRegistry } from "../../../src/rulesets/mechanism-api";
 
 test("stage registry uses local Guard/chat priority without mutating ordinary stage descriptors", () => {
   const config = ghostBrideBoard(),

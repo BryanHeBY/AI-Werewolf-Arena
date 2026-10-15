@@ -4,16 +4,16 @@
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { promises as fs } from "node:fs";
-import * as runtimeFactory from "../../../../src/runtime/player_agent_factory";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
-import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../../../src/runtime/game_runner";
+import * as runtimeFactory from "../../../../src/app/player-agent-factory";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import { AcpActionProvider } from "../../../../src/agents/acp/acp-action-provider";
+import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
+import { runGame } from "../../../../src/app/game-runner";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { ghostBrideScenario } from "../../../support/features/ghost-bride/builders/scenario";
 for (const transport of ["sdk", "acp"] as const)

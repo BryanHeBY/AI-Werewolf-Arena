@@ -8,12 +8,12 @@ import { expect, test } from "bun:test";
 import { z } from "zod";
 import { Camp, Role, COMPONENT } from "../../../src/domain";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
-import { createRecordedPlayerSchema } from "../../../src/recording/checkpoint/player-format";
-import type { RecordedPlayerState } from "../../../src/recording/reproduction";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
+import { createRecordedPlayerSchema } from "../../../src/recording/reproduction/checkpoint/player-format";
+import type { RecordedPlayerState } from "../../../src/recording/reproduction/format";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 const format = createRecordedPlayerSchema(
   z.number().int().positive().max(Number.MAX_SAFE_INTEGER),

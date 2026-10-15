@@ -5,7 +5,7 @@
  */
 import { beforeAll, expect, test } from "bun:test";
 import { recordAnimalLiteral } from "../../../support/features/animal-dream/drivers/recording";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 let source: any, pk: any;
 beforeAll(async () => {
   source = (await recordAnimalLiteral("fox_beauty", "en")).record;

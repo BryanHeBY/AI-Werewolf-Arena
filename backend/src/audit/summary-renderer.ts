@@ -1,0 +1,118 @@
+/**
+ * 负责把已合并／过滤的审计证据与原报告渲染为摘要。输入为会话清单、发现及允许序号，输出原模型摘要或确定模板 Markdown。
+ * 模型重试与回退保原政策；展示不重新判胜或写角色库存，审计证据归证据策略、持久化归录制。
+ */
+import { auditHeadings, text, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { auditInline, auditReportStats, auditSummaryHeader } from "./summary-format";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
+import type { AuditAgentExecutor } from "./agents/contracts";
+import { AuditAgentFinding } from "./payload-builder";
+import { AuditEvidencePolicy, MergedAuditFindings } from "./evidence-policy";
+import { ReplayDebugReport, ReplayManifest } from "../recording/contracts";
+
+export class AuditSummaryRenderer {
+  constructor(
+    private readonly executor: AuditAgentExecutor,
+    private readonly evidencePolicy: AuditEvidencePolicy,
+    private readonly timeoutMs: number,
+    private readonly locale: Locale = "zh-CN",
+  ) {}
+
+  async render(
+    manifest: ReplayManifest,
+    reports: ReplayDebugReport[],
+    merged: MergedAuditFindings,
+    allowedSequences: Set<number>,
+  ): Promise<string> {
+    const generated = await this.renderWithAgent(manifest, reports, merged, allowedSequences);
+    return generated ?? this.renderDeterministically(manifest, reports, merged);
+  }
+
+  private async renderWithAgent(
+    manifest: ReplayManifest,
+    reports: ReplayDebugReport[],
+    merged: MergedAuditFindings,
+    allowed: Set<number>,
+  ): Promise<string | null> {
+    try {
+      const result = await this.executor.runTurn(
+        {
+          mode: "summarize",
+          locale: this.locale,
+          taskName: "agent_summary",
+          source: "merged_findings",
+          payload: {
+            session: {
+              session_id: manifest.session_id,
+              board: manifest.board,
+              winner: manifest.winner ?? "none",
+              ...(manifest.game_result ? { decision: structuredClone(manifest.game_result) } : {}),
+              finish_reason: manifest.finish_reason,
+              started_at: manifest.started_at,
+              ended_at: manifest.ended_at,
+            },
+            report_stats: auditReportStats(reports),
+            findings: merged.findings,
+            pipeline: {
+              failed_agents: merged.failedAgents,
+              missing_info: merged.missingInfo,
+            },
+          },
+        },
+        { timeoutMs: this.timeoutMs },
+      );
+      const markdown = result?.kind === "summary" ? result.markdown.trim() : "";
+      const visible = new Set(
+        merged.findings
+          .flatMap((finding) => finding.evidence)
+          .filter((sequence) => allowed.has(sequence)),
+      );
+      return markdown && this.evidencePolicy.validatesMarkdown(markdown, visible, this.locale)
+        ? markdown
+        : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private renderDeterministically(
+    manifest: ReplayManifest,
+    reports: ReplayDebugReport[],
+    merged: MergedAuditFindings,
+  ): string {
+    const headings = auditHeadings(this.locale);
+    const lines = auditSummaryHeader(manifest, reports, this.locale);
+    if (!merged.findings.length) lines.push(`- ${text(this.locale, "common.none")}`);
+    else for (const finding of merged.findings) lines.push(this.findingLine(finding));
+    lines.push("");
+    if (merged.findings.length) {
+      lines.push(`## ${headings.todo}`);
+      merged.findings.forEach((finding, index) => {
+        lines.push(
+          `- [ ] [P${index + 1}] ${text(this.locale, "audit.todo", { category: text(this.locale, `audit.category.${finding.category}` as MessageKey), message: auditInline(finding.message) })}`,
+        );
+      });
+    } else {
+      lines.push(`## ${headings.conclusion}`, `- ${text(this.locale, "audit.conclusion")}`);
+    }
+    lines.push("", `## ${headings.pipeline}`);
+    lines.push(`- ${text(this.locale, "audit.field.agents_total")}: ${merged.totalAgents}`);
+    lines.push(
+      `- ${text(this.locale, "audit.field.agents_failed")}: ${merged.failedAgents.length}`,
+    );
+    if (merged.failedAgents.length)
+      lines.push(
+        `- ${text(this.locale, "audit.field.failed_list")}: ${auditInline(merged.failedAgents.join(", "))}`,
+      );
+    if (merged.missingInfo.length) {
+      lines.push(`- ${text(this.locale, "audit.field.missing")}:`);
+      for (const note of merged.missingInfo) lines.push(`- ${auditInline(note)}`);
+    }
+    return lines.join("\n");
+  }
+
+  private findingLine(finding: AuditAgentFinding): string {
+    const evidence = finding.evidence.length ? ` evidence=${finding.evidence.join(",")}` : "";
+    return `- [${finding.severity.toUpperCase()}][${auditInline(finding.category)}] ${auditInline(finding.message)}${evidence} (source=${auditInline(finding.source)})`;
+  }
+}

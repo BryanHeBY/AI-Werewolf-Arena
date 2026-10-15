@@ -7,10 +7,10 @@
  */
 import { expect } from "bun:test";
 import type { ActorTransportPlan, TransportGameScenario } from "../../transport/contracts";
-import type { GameRunDependencies } from "../../../../src/runtime/game_runner";
+import type { GameRunDependencies } from "../../../../src/app/game-runner";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayManifest } from "../../../../src/recording/contracts";
-import type { ReproductionRecord } from "../../../../src/recording/reproduction";
+import type { ReproductionRecord } from "../../../../src/recording/reproduction/format";
 import type { MistWireState } from "../../features/mist-raven/oracles/transport";
 import { assertTransportIdentity, assertTransportEvents } from "./observations";
 type Deadline = Parameters<NonNullable<GameRunDependencies["selectRequestDeadline"]>>[0] & { deadlineAtMs: number };

@@ -14,24 +14,24 @@ import {
   type RoleComponent,
   type GameEvent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
 import {
   getWhiteWolfKingState,
   setWhiteWolfKingState,
-} from "../../../../src/game/mechanisms/roles/white_wolf_king/state";
+} from "../../../../src/features/white-wolf-king/state";
 import { SelfDestructWindow } from "../../../../src/rulesets/self-destruct-window";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { createDefaultRoleRegistry, getDefaultRoleCatalog } from "../../../../src/game/mechanisms";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { createDefaultRoleRegistry, getDefaultRoleCatalog } from "../../../../src/rulesets/mechanism-api";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-} from "../../../../src/game/mechanisms";
-import { commitSelfDestructSelection } from "../../../../src/game/mechanisms/self_destruct/commit";
+} from "../../../../src/rulesets/mechanism-api";
+import { commitSelfDestructSelection } from "../../../../src/features/self-destruct/commit";
 
 const deck = [Role.WhiteWolfKing, Role.Wolf, Role.Seer, Role.Hunter, Role.Villager, Role.Villager];
 

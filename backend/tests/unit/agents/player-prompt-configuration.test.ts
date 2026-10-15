@@ -4,20 +4,20 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent, type ActionRequest } from "../../../src/domain";
-import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
+import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
 import {
   resolveGameSetup,
   resolvePlayerProfile,
-} from "../../../src/runtime/config/resolve_game_setup";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
+} from "../../../src/app/config/resolve-game-setup";
+import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
+import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
 import type {
   ChatMessage,
   ChatModelClient,
   ToolLoopCallbacks,
   ToolSchema,
-} from "../../../src/ai/integrations/llm/transport";
-import type { AcpSessionFactory } from "../../../src/ai/integrations/acp/session";
+} from "../../../src/adapters/llm/transport";
+import type { AcpSessionFactory } from "../../../src/adapters/acp/session";
 
 for (const kind of ["llm", "acp"] as const) {
   test(`${kind}: seat and role configuration reaches actual identity and personality prompts`, async () => {

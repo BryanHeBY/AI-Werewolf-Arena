@@ -11,8 +11,8 @@ import {
   publishDemonNightDamageSources,
   type DemonKnifeProtection,
   type DemonNightDamageQueries,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/ports";
-import type { DeliveredDemonNightSources } from "../../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller";
+} from "../../../../src/features/demon-hunter/ports";
+import type { DeliveredDemonNightSources } from "../../../../src/features/demon-hunter/native-potion-controller";
 
 function delivered(): Readonly<DeliveredDemonNightSources> {
   return {

@@ -10,13 +10,13 @@ import { createRoleComponent } from "../../../src/domain/components/role";
 import { createVotingRightComponent } from "../../../src/domain/components/voting-right";
 import { Camp, Role, type GameEvent } from "../../../src/domain/model";
 import { World } from "../../../src/domain/world";
-import { setIdiotState, getIdiotState } from "../../../src/game/mechanisms/roles/idiot/state";
+import { setIdiotState, getIdiotState } from "../../../src/features/idiot/state";
 import {
   beginDemonHunterNight,
   freezeDemonHunt,
   closeDemonHunterNight,
   demonHunterCheckpointPlayers,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
+} from "../../../src/features/demon-hunter/authority";
 import { idiotVotedOutHook } from "../../../src/rulesets/idiot-exile-outcome";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 

@@ -3,7 +3,7 @@
  * Input: Original transport plans, late responses and copied original-record gun-stock forgery.
  * Output and oracle: Explicit exchange/night counts, unconsumed failed gun stock and deterministic forgery rejection retain the played prefix; expected records are not regenerated.
  */
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { expect, test } from "bun:test";
 import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";

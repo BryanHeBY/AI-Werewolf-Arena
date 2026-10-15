@@ -4,12 +4,12 @@
  */
 import type { Locale } from "@ai-werewolf-arena/game-contract";
 /** 模型辅助的复盘审计编排，游戏结算仍归引擎。 */
-import { createAuditAgentExecutor } from "../ai/audit/executor_factory";
-import type { ResolvedAuditConfig } from "../runtime/config/contracts";
-import { AuditEvidencePolicy } from "./evidence_policy";
-import { buildAuditTasks } from "./payload_builder";
-import { AuditSummaryRenderer } from "./summary_renderer";
-import { AuditTaskRunner } from "./task_runner";
+import { createAuditAgentExecutor } from "../app/audit-agent-factory";
+import type { ResolvedAuditConfig } from "../app/config/contracts";
+import { AuditEvidencePolicy } from "./evidence-policy";
+import { buildAuditTasks } from "./payload-builder";
+import { AuditSummaryRenderer } from "./summary-renderer";
+import { AuditTaskRunner } from "./task-runner";
 import {
   ReplayDebugReport,
   ReplayLogicOp,

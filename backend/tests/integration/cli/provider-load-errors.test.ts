@@ -11,7 +11,7 @@ import { createTestTempDirectory } from "../../support/drivers/temp-directories"
 const secret = "synthetic-private-transport-canary";
 
 test("game CLI rejects invalid provider configuration without exposing JSON or a second uncaught exception", async () => {
-  const { configDiagnostic } = await import("../../../src/runtime/cli/check_config");
+  const { configDiagnostic } = await import("../../../src/app/cli/check-config");
   let reads = 0;
   const foreign = Object.defineProperty(new Error(), "message", {
     get() {
@@ -21,7 +21,7 @@ test("game CLI rejects invalid provider configuration without exposing JSON or a
   });
   expect(configDiagnostic(foreign)).toEqual({ code: "config_check_failed" });
   expect(reads).toBe(0);
-  const { BoardConfigurationError } = await import("../../../src/runtime/config/board_definition");
+  const { BoardConfigurationError } = await import("../../../src/app/config/board-definition");
   const typed = Object.defineProperty(
     new BoardConfigurationError("board_config_invalid_field", "roles.witch"),
     "fieldPath",
@@ -49,7 +49,7 @@ test("game CLI rejects invalid provider configuration without exposing JSON or a
   const root = await createTestTempDirectory("awa-diagnostic-cli-");
   await fs.mkdir(path.join(root, "runtime"));
   await fs.writeFile(path.join(root, "runtime/providers.json"), `{"key":"${secret}",INVALID}`);
-  const command = path.resolve(import.meta.dir, "../../../src/runtime/cli/run_game.ts");
+  const command = path.resolve(import.meta.dir, "../../../src/app/cli/run-game.ts");
   const child = Bun.spawn(
     [Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun", command, "--configs-dir", root],
     { stdout: "pipe", stderr: "pipe" },

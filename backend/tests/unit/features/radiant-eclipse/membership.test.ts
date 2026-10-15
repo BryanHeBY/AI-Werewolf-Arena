@@ -4,19 +4,19 @@
  * 实际原生 owner/frame/readers 仍按原顺序执行，use/install 入口只随实际实例 owner 迁移。
  * 不运行完整对局、模型或物理传输，不重建 fixture、矩阵或生产生成的预期。
  */
-import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent, createCampComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/domain/identity";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { type AliveComponent } from "../../../../src/domain/components/alive";
 
 import { createIdentityComponent } from "../../../../src/domain/entities/player";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
-import { createEclipseState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/eclipse-state-slot";
-import { createShelterState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import { installNativeAbility } from "../../../../src/features/night-abilities/ability-changes";
+import { createEclipseState } from "../../../../src/features/radiant-eclipse/eclipse-state-slot";
+import { createShelterState } from "../../../../src/features/radiant-eclipse/shelter-state";
 import {
   installRadiantEclipseBoard,
   beginRadiantNight,
@@ -24,7 +24,7 @@ import {
   commitEclipseChoice,
   captureRadiantTurn,
   closeRadiantNight,
-} from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
+} from "../../../../src/features/radiant-eclipse/night-frame";
 function fixture() {
   const world = new World(),
     roles = [
@@ -91,8 +91,8 @@ function fixture() {
   return { world, components, borrowed, native };
 }
 
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { shelterTargets } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { shelterTargets } from "../../../../src/features/radiant-eclipse/night-frame";
 test("only captured native Count or exact current borrowed Maid instance can receive a shelter turn", () => {
   const f = fixture(),
     native = findNightAbility(f.components[1], "shelter")!;

@@ -2,7 +2,7 @@
  * 单元测试用明确根、连线、救药及穿透声明验证雾鸦待处理夜晚。手写死因集合与原前缀断言
  * 验证选择性来源移除，输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/domain/world";
 import { aliveLifeVersion } from "../../../src/domain/components/alive";
@@ -11,8 +11,8 @@ import { DeathCause, type DeathSources } from "../../../src/domain/deaths";
 import {
   DreamNightFrame,
   type DreamNightLink,
-} from "../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { MistPendingNight } from "../../../src/game/mechanisms/roles/mist_raven/pending_night";
+} from "../../../src/features/dreamer/night-frame";
+import { MistPendingNight } from "../../../src/features/mist-raven/pending-night";
 import type { GameEvent } from "../../../src/domain/events";
 
 function setup(day = 1, consecutive = false) {

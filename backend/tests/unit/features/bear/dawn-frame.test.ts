@@ -6,17 +6,17 @@
 import {
   createAliveComponent,
   createCampComponent,
-} from "../../../../src/game/observation/component-presentation";
+} from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
-import { BearNightFrame } from "../../../../src/game/mechanisms/roles/bear/night_frame";
-import { getBearState } from "../../../../src/game/mechanisms/roles/bear/state";
-import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { BearNightFrame } from "../../../../src/features/bear/night-frame";
+import { getBearState } from "../../../../src/features/bear/state";
+import { RoleCatalog } from "../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
 import { COMPONENT } from "../../../../src/domain/components/names";
 
 import { Camp, Role, type GameEvent } from "../../../../src/domain/model";

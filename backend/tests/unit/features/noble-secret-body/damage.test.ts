@@ -11,7 +11,7 @@ import {
   planSecretBodyBlock,
   type SecretBodyCause,
   type SecretBodySources,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/damage";
+} from "../../../../src/features/noble-secret-body/damage";
 const cases: Array<{
   name: string;
   target: number | null;

@@ -11,11 +11,11 @@ import {
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/domain";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
+import { WerewolfMcpControlServer } from "../../../../src/adapters/acp/werewolf-mcp-control";
 import { animalGame } from "../../../support/features/animal-dream/builders/runtime-game";
 import { animalAction } from "../../../support/features/animal-dream/drivers/actions";
-import { inheritAnimalDeadlineRequest } from "../../../../src/game/mechanisms/roles/animal_dream/requests";
+import { inheritAnimalDeadlineRequest } from "../../../../src/features/animal-dream/requests";
 import { fixtureObject } from "../../../support/oracles/fixture-values";
 
 // The retained client/control belong to this adversarial test, not a provider session.
@@ -52,7 +52,7 @@ for (const boundary of [
       let cycle: Promise<void> | undefined;
       try {
         const config = await control.start(process.execPath, [
-          path.resolve(import.meta.dir, "../../../../src/ai/integrations/acp/werewolf_mcp_server.ts"),
+          path.resolve(import.meta.dir, "../../../../src/adapters/acp/werewolf-mcp-server.ts"),
         ]);
         control.bindSession("retained");
         transport = new StdioClientTransport({

@@ -11,14 +11,14 @@ import { createRoleComponent } from "../../../src/domain/components/role";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { WITCH_VALIDATION_RULES } from "../../../src/rulesets/potion-tool-admission";
-import { WITCH_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/witch/profile";
-import { setWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
-import { findNightAbility, type NightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import type { ToolRule, ValidationRuleContext } from "../../../src/game/mechanisms/validation/contracts";
-import { createMagicianState } from "../../../src/game/mechanisms/roles/magician/state-slot";
-import { installMagicianBoard, beginMagicianNight, commitMagicianExchange } from "../../../src/game/mechanisms/roles/magician/night_frame";
+import { WITCH_ROLE_PROFILE } from "../../../src/features/witch/profile";
+import { setWitchState } from "../../../src/features/witch/ports";
+import { findNightAbility, type NightAbility } from "../../../src/features/night-abilities/abilities";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
+import { ToolValidationRuleRegistry } from "../../../src/engine/actions/tool-validation-rule-registry";
+import type { ToolRule, ValidationRuleContext } from "../../../src/engine/actions/validation-contracts";
+import { createMagicianState } from "../../../src/features/magician/state-slot";
+import { installMagicianBoard, beginMagicianNight, commitMagicianExchange } from "../../../src/features/magician/night-frame";
 
 function fixture(actorRole: Role = Role.Villager) {
   const world = new World(), roles = [actorRole, Role.Magician, Role.Villager];

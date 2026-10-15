@@ -87,7 +87,7 @@ export interface FixtureSourceAsset {
   kind: "adapter-script" | "test-support";
   moduleRelocations?: FixtureSourceModuleRelocation[];
 }
-/** 已审查的 support 归属迁移所移动的精确导入声明；每个绑定保留独立声明摘要。 */
+/** 已审查的精确导入归属迁移；support 保原绑定规则，显式生产白名单仅容许 type-only 接口／类型别名。 */
 export interface FixtureSourceModuleRelocation {
   originPath: string;
   currentPath: string;
@@ -153,6 +153,139 @@ function publicSupportSourcePath(value: unknown): value is string {
     !value.split("/").some((part) => !part || part === "." || part === ".." || privateSegment(part))
   );
 }
+// 只有这次实际迁移的公开类型叶可被 fixture 声明证明读取；不是 backend/src 通配白名单。
+const productionTypeRelocations = [{
+  originPath: "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+  currentPath: "backend/src/adapters/acp/acp-mcp-bridge.ts",
+  bindings: ["AcpMcpServerConfig"],
+}] as const;
+function productionTypeRelocation(originPath: unknown, currentPath: unknown) {
+  return productionTypeRelocations.find((entry) =>
+    entry.originPath === originPath && entry.currentPath === currentPath);
+}
+function permittedSourceRelocation(originPath: unknown, currentPath: unknown): boolean {
+  return (publicSupportSourcePath(originPath) && publicSupportSourcePath(currentPath)) ||
+    productionTypeRelocation(originPath, currentPath) !== undefined;
+}
+
+// 两次已提交公共包退桥的历史输入，仅这两个 sourceAsset／specifier／具名模式可逆回原摘要。
+const historicalSourcePackages = [
+  {
+    originPath: "backend/tests/support/audit_summary_fixture.ts",
+    currentPath: "backend/tests/support/builders/audit-summary.ts",
+    originalSpecifier: "@ai-werewolf-arena/game-catalog",
+    currentSpecifier: "@ai-werewolf-arena/game-contract",
+    names: ["Locale"], typeOnly: true,
+    originalFiles: ["packages/game-catalog/package.json", "packages/game-catalog/src/index.ts", "packages/game-contract/package.json", "packages/game-contract/src/index.ts", "packages/game-contract/src/locale.ts"],
+    currentFiles: ["packages/game-contract/package.json", "packages/game-contract/src/index.ts", "packages/game-contract/src/locale.ts"],
+  },
+  {
+    originPath: "backend/tests/support/mist_raven_transport_oracle.ts",
+    currentPath: "backend/tests/support/features/mist-raven/oracles/transport.ts",
+    originalSpecifier: "@ai-werewolf-arena/game-text",
+    currentSpecifier: "@ai-werewolf-arena/game-contract/facts/mist-raven",
+    names: ["MIST_RAVEN_EVENT_TYPES", "readMistRavenFact"], typeOnly: false,
+    originalFiles: ["packages/game-text/package.json", "packages/game-text/src/index.ts", "packages/game-text/src/mist-raven.ts", "packages/game-contract/package.json", "packages/game-contract/src/facts/mist-raven.ts", "packages/game-contract/src/inert-event-data.ts"],
+    currentFiles: ["packages/game-contract/package.json", "packages/game-contract/src/facts/mist-raven.ts", "packages/game-contract/src/inert-event-data.ts"],
+  },
+] as const;
+const historicalSourceCommit = "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc";
+
+/**
+ * 核对两个固定历史 sourceAsset 的公共包退桥证据；输入是调用方从固定 Git／精确公开文件读取的文本。
+ * 只接受原公共 reexport 链到同一 GC 叶，完整声明和明确局部依赖逐项相同；不执行契约或推导玩法，
+ * 不承诺旧聚合包与新叶的完整初始化图等价。返回完整打印声明供调用方摘要；原程序／绑定摘要不得更新。
+ */
+export function sourcePackageRelocationEvidence(
+  ts: typeof import("typescript"),
+  asset: Pick<FixtureSourceAsset, "originPath" | "currentPath" | "originCommit">,
+  originalFiles: readonly { path: string; text: string }[],
+  currentFiles: readonly { path: string; text: string }[],
+): Array<{ path: string; name: string; statement: string }> {
+  const route = historicalSourcePackages.find((entry) => entry.currentPath === asset.currentPath);
+  if (!route) return [];
+  if (asset.originPath !== route.originPath) fail("historical_package_origin_identity");
+  if (asset.originCommit !== historicalSourceCommit) fail("historical_package_origin_commit");
+  const original = new Map(originalFiles.map((entry) => [entry.path, entry.text]));
+  const current = new Map(currentFiles.map((entry) => [entry.path, entry.text]));
+  const read = (files: Map<string, string>, filename: string) => {
+    const value = files.get(filename);
+    if (value === undefined) fail("historical_package_evidence_missing");
+    return value;
+  };
+  const ast = (files: Map<string, string>, filename: string) =>
+    ts.createSourceFile(filename, read(files, filename), ts.ScriptTarget.Latest, true);
+  const packageExport = (files: Map<string, string>, filename: string, key: string, target: string) => {
+    const value: unknown = JSON.parse(read(files, filename));
+    if (!record(value) || value.name !== `@ai-werewolf-arena/${filename.split("/")[1]}` || !record(value.exports) || value.exports[key] !== target)
+      fail("historical_package_export_endpoint");
+  };
+  const namedExport = (files: Map<string, string>, filename: string, specifier: string, names: readonly string[], typeOnly: boolean) => {
+    const matches = ast(files, filename).statements.filter((node) => ts.isExportDeclaration(node) && node.moduleSpecifier &&
+      ts.isStringLiteralLike(node.moduleSpecifier) && node.moduleSpecifier.text === specifier &&
+      node.isTypeOnly === typeOnly && node.exportClause && ts.isNamedExports(node.exportClause) &&
+      names.every((name) => node.exportClause && ts.isNamedExports(node.exportClause) &&
+        node.exportClause.elements.some((entry) => entry.name.text === name && (entry.propertyName?.text ?? entry.name.text) === name)));
+    if (matches.length !== 1) fail("historical_package_reexport_endpoint");
+  };
+  const declarations: Array<{ path: string; name: string; statement: string }> = [];
+  const compare = (filename: string, names: readonly string[], imported = false) => {
+    const a = ast(original, filename), b = ast(current, filename);
+    const print = ts.createPrinter({ removeComments: true, newLine: ts.NewLineKind.LineFeed });
+    for (const name of names) {
+      const select = (source: import("typescript").SourceFile) => {
+        const found = source.statements.filter((node) =>
+          ((ts.isFunctionDeclaration(node) || ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node)) && node.name?.text === name) ||
+          (ts.isVariableStatement(node) && node.declarationList.declarations.some((entry) => ts.isIdentifier(entry.name) && entry.name.text === name)));
+        if (found.length !== 1) fail("historical_package_declaration_missing");
+        return print.printNode(ts.EmitHint.Unspecified, found[0]!, source);
+      };
+      const before = select(a), after = select(b);
+      if (before !== after) fail("historical_package_complete_declaration_drift");
+      declarations.push({ path: filename, name, statement: before });
+    }
+    // 明确三叶的全部运行语句也须相同，避免新增 value import／顶层绑定遮蔽原函数的词法依赖。
+    // 仅接口、type alias 和显式type-only import/export可独立新增；它们不解释运行算法等价。
+    const values = (source: import("typescript").SourceFile) => source.statements.filter((node) =>
+      !ts.isInterfaceDeclaration(node) && !ts.isTypeAliasDeclaration(node) &&
+      !(ts.isImportDeclaration(node) && node.importClause?.isTypeOnly) &&
+      !(ts.isExportDeclaration(node) && node.isTypeOnly)).map((node) => print.printNode(ts.EmitHint.Unspecified, node, source));
+    if (JSON.stringify(values(a)) !== JSON.stringify(values(b))) fail("historical_package_value_program_drift");
+    // Locale 与 copyEventData 的实际依赖叶无 import；新增依赖不得借正文摘要相同偷偷扩张。
+    if (!imported && (a.statements.some(ts.isImportDeclaration) || b.statements.some(ts.isImportDeclaration)))
+      fail("historical_package_leaf_dependency_drift");
+  };
+  packageExport(original, "packages/game-contract/package.json", ".", "./src/index.ts");
+  packageExport(current, "packages/game-contract/package.json", ".", "./src/index.ts");
+  if (route.typeOnly) {
+    packageExport(original, "packages/game-catalog/package.json", ".", "./src/index.ts");
+    namedExport(original, "packages/game-catalog/src/index.ts", "@ai-werewolf-arena/game-contract", ["Locale"], true);
+    namedExport(original, "packages/game-contract/src/index.ts", "./locale", ["Locale"], true);
+    namedExport(current, "packages/game-contract/src/index.ts", "./locale", ["Locale"], true);
+    compare("packages/game-contract/src/locale.ts", ["LOCALES", "Locale"]);
+  } else {
+    packageExport(original, "packages/game-text/package.json", ".", "./src/index.ts");
+    const stars = ast(original, "packages/game-text/src/index.ts").statements.filter((node) => ts.isExportDeclaration(node) &&
+      !node.isTypeOnly && !node.exportClause && node.moduleSpecifier && ts.isStringLiteralLike(node.moduleSpecifier) && node.moduleSpecifier.text === "./mist-raven");
+    if (stars.length !== 1) fail("historical_package_star_endpoint");
+    namedExport(original, "packages/game-text/src/mist-raven.ts", "@ai-werewolf-arena/game-contract/facts/mist-raven", route.names, false);
+    for (const files of [original, current]) {
+      packageExport(files, "packages/game-contract/package.json", "./facts/mist-raven", "./src/facts/mist-raven.ts");
+      const matches = ast(files, "packages/game-contract/src/facts/mist-raven.ts").statements.filter((node) => ts.isImportDeclaration(node) &&
+        ts.isStringLiteralLike(node.moduleSpecifier) && node.moduleSpecifier.text === "../inert-event-data" &&
+        node.importClause && !node.importClause.isTypeOnly && !node.importClause.name && node.importClause.namedBindings &&
+        ts.isNamedImports(node.importClause.namedBindings) && node.importClause.namedBindings.elements.length === 1 &&
+        node.importClause.namedBindings.elements[0]!.name.text === "copyEventData" && !node.importClause.namedBindings.elements[0]!.isTypeOnly &&
+        (node.importClause.namedBindings.elements[0]!.propertyName?.text ?? "copyEventData") === "copyEventData");
+      if (matches.length !== 1) fail("historical_package_dependency_endpoint");
+    }
+    // id 也是 ids 的原依赖；新增 DTO／BoardConfig type 不在这两个旧值的声明依赖闭包内。
+    compare("packages/game-contract/src/facts/mist-raven.ts", ["MIST_RAVEN_EVENT_TYPES", "readMistRavenFact", "MistRavenEventType", "MistRavenFact", "id", "ids", "exact"], true);
+    compare("packages/game-contract/src/inert-event-data.ts", ["copyEventData"]);
+  }
+  return declarations;
+}
+
 function sourceAssetPath(value: unknown): value is string {
   return publicSupportSourcePath(value) || (publicFixturePath(value) && /\.ts$/.test(value));
 }
@@ -400,8 +533,9 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
         if (!record(relocation)) fail("source_module_relocation");
         strictKeys(relocation, ["originPath", "currentPath", "originCommit", "bindings"], "source_module_relocation");
         if (
-          !publicSupportSourcePath(relocation.originPath) ||
-          !publicSupportSourcePath(relocation.currentPath) ||
+          typeof relocation.originPath !== "string" ||
+          typeof relocation.currentPath !== "string" ||
+          !permittedSourceRelocation(relocation.originPath, relocation.currentPath) ||
           typeof relocation.originCommit !== "string" ||
           !/^[a-f0-9]{40}$/.test(relocation.originCommit) ||
           relocationTargets.has(relocation.currentPath) ||
@@ -418,8 +552,15 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
           ) fail("source_module_binding_identity");
           names.add(binding.name);
         }
+        const typeRoute = productionTypeRelocation(relocation.originPath, relocation.currentPath);
+        if (typeRoute && JSON.stringify([...names].sort()) !== JSON.stringify([...typeRoute.bindings].sort()))
+          fail("source_module_relocation_type_binding_not_registered");
       }
     }
+    // 当前这两已退休公共包的资产不能换另一个origin绕开固定Git证据。
+    const historicalRoute = historicalSourcePackages.find((route) => route.currentPath === entry.currentPath);
+    if (historicalRoute && (entry.originPath !== historicalRoute.originPath || entry.originCommit !== historicalSourceCommit))
+      fail("historical_package_origin_identity");
     sourceOrigins.add(entry.originPath);
     sourceTargets.add(entry.currentPath);
     const artifact = artifacts.get(entry.originPath);
@@ -1128,6 +1269,10 @@ export function sourceProgramContract(
   const relocated = new Map(relocations.map((entry) => [entry.currentPath, entry]));
   // 具名导入迁移须精确匹配登记绑定，并且每项只使用一次；不能借路径映射吞掉漏接或新增导入。
   const observedRelocations = new Set<string>();
+  const packageRoute = current ? historicalSourcePackages.find((entry) => entry.currentPath === filename) : undefined;
+  if (packageRoute && !mappings.some((asset) => asset.originPath === packageRoute.originPath && asset.currentPath === packageRoute.currentPath))
+    fail("historical_package_asset_pair");
+  let observedPackageRoute = false;
   const ast = ts.createSourceFile(filename, text, ts.ScriptTarget.Latest, true);
   const changes: { start: number; end: number; replacement: string }[] = [];
   const imports: string[] = [];
@@ -1163,6 +1308,11 @@ export function sourceProgramContract(
             if (!ts.isImportDeclaration(node) || !node.importClause || node.importClause.name ||
               !node.importClause.namedBindings || !ts.isNamedImports(node.importClause.namedBindings))
               fail("source_module_relocation_requires_named_import");
+            // 生产声明只供擦除的类型导入；值导入、namespace、动态加载不能借摘要登记进入此入口。
+            if (productionTypeRelocation(relocation.originPath, relocation.currentPath) &&
+              !node.importClause.isTypeOnly &&
+              !node.importClause.namedBindings.elements.every((entry) => entry.isTypeOnly))
+              fail("source_module_relocation_requires_type_only_import");
             const names = node.importClause.namedBindings.elements.map((entry) =>
               (entry.propertyName ?? entry.name).text).sort();
             const expected = relocation.bindings.map((entry) => entry.name).sort();
@@ -1174,6 +1324,20 @@ export function sourceProgramContract(
           }
           identity = inverse.get(identity) ?? identity;
         }
+      }
+      if (packageRoute && identity === packageRoute.currentSpecifier) {
+        if (!ts.isImportDeclaration(node) || !node.importClause || node.importClause.name ||
+          !node.importClause.namedBindings || !ts.isNamedImports(node.importClause.namedBindings))
+          fail("historical_package_requires_named_import");
+        const elements = node.importClause.namedBindings.elements;
+        if (!!node.importClause.isTypeOnly !== packageRoute.typeOnly || elements.some((entry) => entry.isTypeOnly))
+          fail("historical_package_import_mode");
+        const names = elements.map((entry) => (entry.propertyName ?? entry.name).text).sort();
+        if (JSON.stringify(names) !== JSON.stringify([...packageRoute.names].sort()))
+          fail("historical_package_import_binding");
+        if (observedPackageRoute) fail("historical_package_duplicate_import");
+        observedPackageRoute = true;
+        identity = packageRoute.originalSpecifier;
       }
       changes.push({
         start: literal.getStart(ast),
@@ -1187,6 +1351,7 @@ export function sourceProgramContract(
   visit(ast);
   if (current && observedRelocations.size !== relocations.length)
     fail("source_module_relocation_unused");
+  if (packageRoute && !observedPackageRoute) fail("historical_package_import_missing");
   let normalized = text;
   for (const change of changes.sort((a, b) => b.start - a.start))
     normalized =
@@ -1200,7 +1365,7 @@ export function sourceProgramContract(
 
 /** 输出完整具名导出声明的规范语法，移除格式／注释，不执行源码。 */
 export function sourceDeclarationContract(
-  ts: typeof import("typescript"), text: string, filename: string, name: string,
+  ts: typeof import("typescript"), text: string, filename: string, name: string, typeOnly = false,
 ): string {
   const ast = ts.createSourceFile(filename, text, ts.ScriptTarget.Latest, true);
   const nodes = ast.statements.filter((node) => {
@@ -1211,6 +1376,8 @@ export function sourceDeclarationContract(
   });
   if (nodes.length !== 1) fail("source_module_declaration_identity");
   const declaration = nodes[0]!;
+  if (typeOnly && !ts.isInterfaceDeclaration(declaration) && !ts.isTypeAliasDeclaration(declaration))
+    fail("source_module_relocation_requires_type_declaration");
   const modifiers = ts.canHaveModifiers(declaration) ? ts.getModifiers(declaration) : undefined;
   if (!modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword) ||
     modifiers.some((modifier) => modifier.kind === ts.SyntaxKind.DefaultKeyword))
@@ -1283,12 +1450,17 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
   if (root !== requestedRoot) fail("repository_resolution_changed");
   const digest = (bytes: Uint8Array | string) =>
     crypto.createHash("sha256").update(bytes).digest("hex");
+  // 只在 parse 清单完成后登记显式生产类型目标；仍逐层 lstat 拒绝符号链接与非普通文件。
+  const registeredTypeInputs = new Set<string>();
+  const registeredContractInputs = new Set<string>();
   async function safeFile(relative: string) {
     if (
       relative !== inventoryPath &&
       relative !== fixtureManifestPath &&
       !publicFixturePath(relative) &&
-      !publicSupportSourcePath(relative)
+      !publicSupportSourcePath(relative) &&
+      !registeredTypeInputs.has(relative) &&
+      !registeredContractInputs.has(relative)
     )
       fail("private_path_rejected");
     const parts = relative.split("/");
@@ -1366,6 +1538,14 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
     offset = end + size + 2;
   }
   const layout = parseFixtureManifest((await safeFile(fixtureManifestPath)).toString("utf8"));
+  for (const asset of layout.sourceAssets)
+    for (const relocation of asset.moduleRelocations ?? [])
+      if (productionTypeRelocation(relocation.originPath, relocation.currentPath))
+        registeredTypeInputs.add(relocation.currentPath);
+  for (const asset of layout.sourceAssets) {
+    const route = historicalSourcePackages.find((entry) => entry.originPath === asset.originPath && entry.currentPath === asset.currentPath);
+    if (route) for (const filename of route.currentFiles) registeredContractInputs.add(filename);
+  }
   if (
     layout.files.length !== rows.length ||
     rows.some(
@@ -1404,16 +1584,42 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
     )
       fail("source_asset_byte_identity");
     for (const relocation of asset.moduleRelocations ?? []) {
+      const typeOnly = productionTypeRelocation(relocation.originPath, relocation.currentPath) !== undefined;
+      // 新生产类型的旧侧也必须是固定 Git 普通源码，不能把 symlink blob 当声明文本。
+      if (typeOnly) {
+        const entry = childProcess.execFileSync("git", ["ls-tree", relocation.originCommit, "--", relocation.originPath], {
+          cwd: root, encoding: "utf8", maxBuffer: 1024 * 1024,
+        }).trim();
+        const match = /^100644 blob [a-f0-9]{40}\t(.+)$/.exec(entry);
+        if (!match || match[1] !== relocation.originPath) fail("source_module_relocation_git_file_required");
+      }
       const previous = childProcess.execFileSync("git", ["show", `${relocation.originCommit}:${relocation.originPath}`], {
         cwd: root, maxBuffer: 4 * 1024 * 1024,
       }).toString("utf8");
       const moved = (await safeFile(relocation.currentPath)).toString("utf8");
       for (const binding of relocation.bindings) {
-        const before = digest(sourceDeclarationContract(ts, previous, relocation.originPath, binding.name));
-        const after = digest(sourceDeclarationContract(ts, moved, relocation.currentPath, binding.name));
+        const before = digest(sourceDeclarationContract(ts, previous, relocation.originPath, binding.name, typeOnly));
+        const after = digest(sourceDeclarationContract(ts, moved, relocation.currentPath, binding.name, typeOnly));
         if (before !== binding.declarationSha256 || after !== before)
           fail("source_module_relocation_declaration_drift");
       }
+    }
+    const packageRoute = historicalSourcePackages.find((entry) => entry.originPath === asset.originPath && entry.currentPath === asset.currentPath);
+    if (packageRoute) {
+      if (asset.originCommit !== historicalSourceCommit) fail("historical_package_origin_commit");
+      const originalFiles: { path: string; text: string }[] = [], currentFiles: { path: string; text: string }[] = [];
+      for (const filename of packageRoute.originalFiles) {
+        const entry = childProcess.execFileSync("git", ["ls-tree", historicalSourceCommit, "--", filename], {
+          cwd: root, encoding: "utf8", maxBuffer: 1024 * 1024,
+        }).trim();
+        const match = /^100644 blob [a-f0-9]{40}\t(.+)$/.exec(entry);
+        if (!match || match[1] !== filename) fail("historical_package_git_file_required");
+        originalFiles.push({ path: filename, text: childProcess.execFileSync("git", ["show", `${historicalSourceCommit}:${filename}`], {
+          cwd: root, encoding: "utf8", maxBuffer: 4 * 1024 * 1024,
+        }) });
+      }
+      for (const filename of packageRoute.currentFiles) currentFiles.push({ path: filename, text: (await safeFile(filename)).toString("utf8") });
+      sourcePackageRelocationEvidence(ts, asset, originalFiles, currentFiles);
     }
     const before = program(Buffer.from(original).toString("utf8"), asset.originPath, false),
       after = program(current.toString("utf8"), asset.currentPath, true, asset.moduleRelocations);

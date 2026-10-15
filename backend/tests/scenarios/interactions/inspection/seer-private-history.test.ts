@@ -1,29 +1,29 @@
 /**
  * 交互场景验证真实夜间流水线只发布预言家已获许可的阵营标签与脱离私有历史。输入为两语／阵营矩阵、角色 fixture 和确定性狼刀、守护、查验响应；预期为手写字段和私有信息隔离。展示预期仍使用既有 text helper，不能称为独立文案 golden。
  */
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { completedNight } from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/domain";
-import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { getSeerState } from "../../../../src/features/seer/ports";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionValidator } from "../../../../src/game/gateway/action_validator";
-import { ToolValidationRuleRegistry } from "../../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms/script/event_render_registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { ActionValidator } from "../../../../src/engine/actions/action-validator";
+import { ToolValidationRuleRegistry } from "../../../../src/engine/actions/tool-validation-rule-registry";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getDefaultScriptEventRenderRegistry } from "../../../../src/agents/presentation/event-render-registry";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 for (const locale of ["zh-CN", "en"] as const) {

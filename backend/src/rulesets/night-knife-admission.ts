@@ -5,13 +5,13 @@
  * 中途失败保原已写前缀，不补新刀、付款、回滚或关闭。运行 thunks 和 scope 引用不是 JSON、快照或行动许可。
  * 本组合不增加 await、current 检查或清理守卫；原投票、目标查询和婚约权威仍拥有各自政策与资源。
  */
-import { bindWolfKnifeTargetQuery } from "../game/mechanisms/roles/wolf/ports";
-import { weddingKnifeCurrent } from "../game/mechanisms/roles/ghost_bride/ports";
+import { bindWolfKnifeTargetQuery } from "../features/wolf/ports";
+import { weddingKnifeCurrent } from "../features/ghost-bride/ports";
 import { aliveLifeVersion } from "../domain/components/alive";
 import { COMPONENT } from "../domain/components/names";
 import { StatusMark } from "../domain/model";
 import type { World } from "../domain/world";
-import type { NightStageState } from "../game/mechanisms/stages/night/contracts";
+import type { NightStageState } from "../engine/night/contracts";
 
 /** 仅持有原表达式的延迟读取，不能序列化、预读或将阶段声明当作提交许可。 */
 export interface NightKnifeAdmissionRuntime {

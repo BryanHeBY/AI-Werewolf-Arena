@@ -8,16 +8,16 @@ import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/rulesets/presets/noble-secret-body-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { simulateGames, type SimulationReport } from "../../../../src/runtime/simulation/simulate_games";
+} from "../../../../src/app/config/board-definition";
+import { simulateGames, type SimulationReport } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 const languages = new Map<string, SimulationReport>(),
   summary = (r: SimulationReport) => r.games.map(({ recordDir: _, ...g }) => g);

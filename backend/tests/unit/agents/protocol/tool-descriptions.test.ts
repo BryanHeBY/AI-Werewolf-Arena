@@ -4,15 +4,15 @@
  * Output and oracle: Exact names/schema/constraint equality and invalid-locale rejection remain the original assertions; no shared request, listener or subprocess is created.
  */
 import { expect, test } from "bun:test";
-import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";
+import { gameToolProtocol } from "../../../../src/agents/game-tool-protocol";
 import {
   auditToolProtocol,
   AuditToolTurnRegistry,
-} from "../../../../src/ai/audit/audit_tool_protocol";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { taskLocale } from "../../../../src/ai/integrations/acp/task_locale";
+} from "../../../../src/audit/agents/audit-tool-protocol";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
+import { taskLocale } from "../../../../src/adapters/acp/task-locale";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 
 function withoutDescriptions(value: unknown): unknown {

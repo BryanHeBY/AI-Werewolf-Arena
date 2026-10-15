@@ -3,7 +3,7 @@
  * 输入保留原语言／政策／行动矩阵；手写因果结果和篡改拒绝是预期，原 replay 与 World 对照
  * 仍保留，但不能把该对照称为独立完整对局验证。
  */
-import { captureNativeRolePresentation } from "../../../src/game/observation/native-role-presentation-capture";
+import { captureNativeRolePresentation } from "../../../src/agents/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -19,34 +19,34 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
+} from "../../../src/app/config/board-definition";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
+} from "../../../src/app/simulation/reproduction-context";
+import { GameEventRecorder } from "../../../src/app/game-event-recorder";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../src/runtime/simulation/replay_reproduction";
+} from "../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
-import { getDreamerState } from "../../../src/game/mechanisms/roles/dreamer/ports";
-import { getWolfBeautyState } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
+import { getDreamerState } from "../../../src/features/dreamer/ports";
+import { getWolfBeautyState } from "../../../src/features/wolf-beauty/ports";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultRoleCatalog,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 import {
   projectDreamerState,
   projectWolfBeautyState,
-} from "../../../src/game/mechanisms/roles/player_state";
+} from "../../../src/agents/observation/player-state";
 
 function config(roles: Role[]): BoardConfig {
   return {

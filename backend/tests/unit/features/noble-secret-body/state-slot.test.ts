@@ -14,12 +14,12 @@ import {
   chooseServant,
   chooseBodyTarget,
   type SecretBodyState,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/state";
+} from "../../../../src/features/noble-secret-body/state";
 import {
   beginNobleBodyNight,
   openSecretBodyChoice,
   checkpointNobleBodyAuthority,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/features/noble-secret-body/authority";
 import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
 
 const living = [1, 2, 3, 4, 5, 6];

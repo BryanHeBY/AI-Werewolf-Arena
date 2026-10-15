@@ -10,12 +10,12 @@ import {
   type VotingRightComponent,
   type GameEvent,
 } from "../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 import {
   assignSheriff,
   transferOrDestroySheriffBadge,
-} from "../../../src/game/mechanisms/sheriff/badge";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
+} from "../../../src/features/sheriff/badge";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
 
 test("configured sheriff weight survives normal transfer and idiot reveal", () => {
   const { world } = bootstrapGame(twelvePlayerStandardConfig);

@@ -8,24 +8,24 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom } from "../../../src/domain/random";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { createReproductionArchive } from "../../../src/recording/archive_identity";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
-import { currentRecordingIdentities } from "../../../src/recording/archive_identity";
-import { parseReproductionRecord } from "../../../src/recording/reproduction";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
+import { createReproductionArchive } from "../../../src/recording/archive-identity";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
+import { currentRecordingIdentities } from "../../../src/recording/archive-identity";
+import { parseReproductionRecord } from "../../../src/recording/reproduction/format";
 import {
   beginGameReproduction,
   currentEngineVersion,
   captureCheckpoint,
-} from "../../../src/runtime/simulation/reproduction_context";
+} from "../../../src/app/simulation/reproduction-context";
 import {
   readReproductionArchive,
   replayReproduction,
-} from "../../../src/runtime/simulation/replay_reproduction";
-import { main as replayCli } from "../../../src/runtime/cli/replay_actions";
-import { exportReplayBundle } from "../../../src/replay/export_replay_bundle";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
+} from "../../../src/app/simulation/replay-reproduction";
+import { main as replayCli } from "../../../src/app/cli/replay-actions";
+import { exportReplayBundle } from "../../../src/app/cli/export-replay-bundle";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { GameEventRecorder } from "../../../src/app/game-event-recorder";
 import { Phase } from "@ai-werewolf-arena/game-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";

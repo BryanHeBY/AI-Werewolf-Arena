@@ -4,7 +4,7 @@
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/domain";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
 import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";
 

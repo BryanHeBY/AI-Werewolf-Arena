@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { orderPrinceScenario } from "../../../support/features/order-prince/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { type PlannedTurn } from "../../../support/transport/contracts";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 for (const boundary of [
   "order_prince_choice",
   "order_prince_speech",

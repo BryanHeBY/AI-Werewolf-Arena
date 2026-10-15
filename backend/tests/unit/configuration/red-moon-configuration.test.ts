@@ -8,11 +8,11 @@
 import { expect, test } from "bun:test";
 import { isRedMoonPreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { redMoonTwelveConfig } from "../../../src/runtime/scenarios/red_moon_twelve";
+import { redMoonTwelveConfig } from "../../../src/rulesets/presets/red-moon-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { Role, WinCondition, WitchSelfHealRule } from "../../../src/domain/identity";
 import type { BoardConfig } from "../../../src/domain/board";
 import { boardConfigSchema } from "../../../src/domain/board-schema";

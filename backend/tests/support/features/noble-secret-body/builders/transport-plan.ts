@@ -12,9 +12,9 @@ import { createRandom } from "../../../../../src/domain";
 import { shuffled } from "../../../../../src/domain";
 import type { ActionStage } from "../../../../../src/domain";
 import type { ToolCall } from "../../../../../src/domain";
-import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
-import { nobleSecretBodyTwelveConfig } from "../../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { boardDefinitionFromConfig } from "../../../../../src/app/config/board-definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
+import { nobleSecretBodyTwelveConfig } from "../../../../../src/rulesets/presets/noble-secret-body-twelve";
 import type { PlannedTurn } from "../../../transport/contracts";
 import type { TransportGameScenario } from "../../../transport/contracts";
 

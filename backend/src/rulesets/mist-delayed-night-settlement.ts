@@ -14,13 +14,13 @@ import { COMPONENT } from "../domain/components/names";
 import type { DamageResolutionResult } from "../domain/systems/damage-resolution-system";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
 import { Phase } from "@ai-werewolf-arena/game-contract";
-import type { ToolGateway } from "../game/gateway/tool_gateway";
+import type { ToolGateway } from "../engine/actions/tool-gateway";
 import type { NightManagerLifecycle } from "./night-lifecycle-plan";
-import { assertMistRosterCurrent } from "../game/mechanisms/roles/mist_raven/ports";
-import { MistPendingNight } from "../game/mechanisms/roles/mist_raven/pending_night";
-import { decideSnake } from "../game/mechanisms/roles/mist_raven/choice-ports";
-import { GameActionRequestFactory } from "../game/engine/action_request_factory";
-import { safeRecordLogicOp } from "../recording/session_recorder";
+import { assertMistRosterCurrent } from "../features/mist-raven/ports";
+import { MistPendingNight } from "../features/mist-raven/pending-night";
+import { decideSnake } from "../features/mist-raven/choice-ports";
+import { GameActionRequestFactory } from "../engine/actions/action-request-factory";
+import { safeRecordLogicOp } from "../recording/session/recorder";
 
 /** 只读取已交接的同一夜结果；原生命、梦句柄和伤害仍按各自所有者的既有规则处理。 */
 export interface MistDelayedNightInput {

@@ -9,9 +9,9 @@
 import { Camp, Role, WinCondition, type EntityId, type VotingSummary, type WinDecision } from "../domain/model";
 import { COMPONENT } from "../domain/components/names";
 import type { World } from "../domain/world";
-import { activeCharm, isCharmBindingCurrent, type CharmBinding } from "../game/mechanisms/roles/wolf_beauty/ports";
-import { getDefaultRoleCatalog } from "../game/mechanisms/roles/role-catalog-assembly";
-import { victoryDecision } from "../game/mechanisms/win_conditions/results";
+import { activeCharm, isCharmBindingCurrent, type CharmBinding } from "../features/wolf-beauty/ports";
+import { getDefaultRoleCatalog } from "./roles/role-catalog-assembly";
+import { victoryDecision } from "../engine/victory/results";
 
 /** 仅读原结果字段；readonly 不冻结原数组，也不证明目标已经死亡或取得死亡许可。 */
 export interface BeautyExileSelection {

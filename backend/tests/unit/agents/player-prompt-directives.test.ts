@@ -17,19 +17,19 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import {
   createRoleComponent,
   bindRolePresentation,
-} from "../../../src/game/observation/role-presentation";
+} from "../../../src/agents/observation/role-presentation";
 import {
   buildPlayerStageContextHint,
   buildPlayerStatusDirective,
   resolvePlayerPromptAbility,
   playerPromptRoleSkillBrief,
-} from "../../../src/game/observation/player-prompt-directives";
-import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
+} from "../../../src/agents/observation/player-prompt-directives";
+import { installNativeAbility } from "../../../src/features/night-abilities/ability-changes";
+import { findNightAbility } from "../../../src/features/night-abilities/abilities";
 import {
   PlayerPromptPolicy,
   type PlayerPromptPolicyOptions,
-} from "../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
@@ -37,7 +37,7 @@ import {
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
   type RoleCatalog,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 
 const request = (context: Partial<ActionRequest["context"]> = {}): ActionRequest => ({
   actorId: 1,

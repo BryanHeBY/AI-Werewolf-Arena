@@ -18,17 +18,17 @@ import { bootstrapGame } from "../../../../../src/app/bootstrap";
 import { createRandom } from "../../../../../src/domain";
 import { radiantRoles } from "../builders/runtime-game";
 import { radiantProvider } from "./actions";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
-import { SessionRecordManager } from "../../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../../src/recording/recording_context";
-import { parseReproductionRecord } from "../../../../../src/recording/reproduction";
-import type { RecordedCheckpoint } from "../../../../../src/recording/reproduction";
-import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
-import { beginGameReproduction } from "../../../../../src/runtime/simulation/reproduction_context";
-import { captureCheckpoint } from "../../../../../src/runtime/simulation/reproduction_context";
-import { currentEngineVersion } from "../../../../../src/runtime/simulation/reproduction_context";
-import { replayReproduction } from "../../../../../src/runtime/simulation/replay_reproduction";
-import { GameEventRecorder } from "../../../../../src/runtime/game_event_recorder";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
+import { SessionRecordManager } from "../../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../../src/recording/session/context";
+import { parseReproductionRecord } from "../../../../../src/recording/reproduction/format";
+import type { RecordedCheckpoint } from "../../../../../src/recording/reproduction/format";
+import type { ReproductionRecord } from "../../../../../src/recording/reproduction/format";
+import { beginGameReproduction } from "../../../../../src/app/simulation/reproduction-context";
+import { captureCheckpoint } from "../../../../../src/app/simulation/reproduction-context";
+import { currentEngineVersion } from "../../../../../src/app/simulation/reproduction-context";
+import { replayReproduction } from "../../../../../src/app/simulation/replay-reproduction";
+import { GameEventRecorder } from "../../../../../src/app/game-event-recorder";
 import { createTestTempDirectory } from "../../../drivers/temp-directories";
 
 export interface RadiantRecordingOptions {

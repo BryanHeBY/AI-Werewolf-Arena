@@ -3,14 +3,14 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { tricksterTwelveConfig } from "../../../../src/runtime/scenarios/trickster_twelve";
-import { knownWolfTeammates } from "../../../../src/game/mechanisms/roles/wolf_team";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms";
+import { tricksterTwelveConfig } from "../../../../src/rulesets/presets/trickster-twelve";
+import { knownWolfTeammates } from "../../../../src/features/wolf-team/permissions";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/mechanism-api";
 import { Role, COMPONENT, type RoleComponent } from "../../../../src/domain";
 import {
   beginTricksterNight,
   commitTricksterExchange,
-} from "../../../../src/game/mechanisms/roles/trickster/night_frame";
+} from "../../../../src/features/trickster/night-frame";
 test("trickster meets pack only after first personal choice is committed", () => {
   const f = bootstrapGame(structuredClone(tricksterTwelveConfig)),
     catalog = getDefaultRoleCatalog();

@@ -8,9 +8,9 @@ import { promises as fs } from "node:fs";
 import * as path from "node:path";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
-import { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { createPlayerAgentRuntime } from "../../../../src/app/player-agent-factory";
+import { ResolvedAgentRuntimeProfile } from "../../../../src/app/config/contracts";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 function baseOptions(profilesByActor: Map<number, ResolvedAgentRuntimeProfile>, root: string) {
   const context = bootstrapGame(sixPlayerMvpConfig);
@@ -90,8 +90,8 @@ describe("createPlayerAgentRuntime", () => {
 });
 
 test("mixed close preserves SDK and ACP cleanup errors without skipping another owner", async () => {
-  const { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider");
-  const { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
+  const { LlmActionProvider } = await import("../../../../src/agents/llm/llm-action-provider");
+  const { AcpActionProvider } = await import("../../../../src/agents/acp/acp-action-provider");
   const sdkError = new Error("sdk-close"),
     acpError = new Error("acp-close");
   const sdk = spyOn(LlmActionProvider.prototype, "close").mockRejectedValue(sdkError);
@@ -121,7 +121,7 @@ test("mixed close preserves SDK and ACP cleanup errors without skipping another 
 });
 
 test("factory snapshots caller bindings and provider budgets for the lifetime of this game", async () => {
-  const { AiSdkClient } = await import("../../../../src/ai/integrations/llm/ai_sdk_client");
+  const { AiSdkClient } = await import("../../../../src/adapters/llm/ai-sdk-client");
   let ready!: () => void,
     release!: () => void,
     started = 0;
@@ -202,7 +202,7 @@ test("factory snapshots caller bindings and provider budgets for the lifetime of
 });
 
 test("same provider name requires one consistent configuration, and partial initialization preserves both errors", async () => {
-  const { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider");
+  const { LlmActionProvider } = await import("../../../../src/agents/llm/llm-action-provider");
   const { promises: files } = await import("node:fs");
   const root = await createTestTempDirectory("awa-partial-runtime-");
   await expect(

@@ -10,19 +10,19 @@
 import type { GameEvent, ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { ActionProvider } from "../domain/actions";
 import type { World } from "../domain/world";
-import type { ToolGateway } from "../game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../game/engine/action_request_factory";
+import type { ToolGateway } from "../engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../engine/actions/action-request-factory";
 import { Role } from "../domain/identity";
-import { installFragrantPairAuthority } from "../game/mechanisms/roles/fragrant_pair_seer/setup-ports";
+import { installFragrantPairAuthority } from "../features/fragrant-pair-seer/setup-ports";
 import {
   InitialIdentitySetupWindow,
   initialIdentitySetupReady,
   initialIdentityKind,
-} from "../game/mechanisms/roles/initial_identity/ports";
-import { wildChildReady } from "../game/mechanisms/roles/wild_child/ports";
-import { WildChildSetupWindow } from "../game/mechanisms/roles/wild_child/setup-ports";
-import { LonelyGirlSetupWindow, lonelyGirlReady } from "../game/mechanisms/roles/lonely_girl/ports";
-import { GhostBrideSetupWindow, ghostBrideReady } from "../game/mechanisms/roles/ghost_bride/ports";
+} from "../features/initial-identity/ports";
+import { wildChildReady } from "../features/wild-child/ports";
+import { WildChildSetupWindow } from "../features/wild-child/setup-ports";
+import { LonelyGirlSetupWindow, lonelyGirlReady } from "../features/lonely-girl/ports";
+import { GhostBrideSetupWindow, ghostBrideReady } from "../features/ghost-bride/ports";
 
 /** 查询只读取原调用点；事件数组与板子引用交给窗口，不产生新授权或状态镜像。 */
 export interface GameSetupRuntime {

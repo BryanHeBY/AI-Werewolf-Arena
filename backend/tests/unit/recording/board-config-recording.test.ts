@@ -13,16 +13,16 @@ import {
   type BoardConfig,
 } from "../../../src/domain";
 import type { RoleComponent } from "../../../src/domain/components/role";
-import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
+import { getWitchState } from "../../../src/features/witch/ports";
 import { boardConfigSchema } from "../../../src/domain/board-schema";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { parseReproductionRecord } from "../../../src/recording/reproduction";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../src/app/config/board-definition";
+import { parseReproductionRecord } from "../../../src/recording/reproduction/format";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 const roles = [Role.Wolf, Role.Witch, Role.Knight, Role.Villager, Role.Villager, Role.Villager];
 function trace(config: BoardConfig) {

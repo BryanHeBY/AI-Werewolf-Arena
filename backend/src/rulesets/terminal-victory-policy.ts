@@ -13,9 +13,9 @@ import {
   type WinDecision,
 } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
-import { weddingSetup, weddingAssignment } from "../game/mechanisms/roles/ghost_bride/ports";
-import { replaceWithFoxVictory } from "../game/mechanisms/roles/cursed_fox/victory-ports";
-import { validateVictoryDecision } from "../game/mechanisms/win_conditions/validated-victory";
+import { weddingSetup, weddingAssignment } from "../features/ghost-bride/ports";
+import { replaceWithFoxVictory } from "../features/cursed-fox/victory-ports";
+import { validateVictoryDecision } from "../engine/victory/validated-victory";
 
 /** 查询只捕获调用方；每个原读取位置才取配置／世界，不持有第二份执行配置或生命状态。 */
 export interface TerminalVictoryRuntime {

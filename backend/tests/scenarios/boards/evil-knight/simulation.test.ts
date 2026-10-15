@@ -9,14 +9,14 @@ import path from "node:path";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { evilKnightTwelveConfig } from "../../../../src/runtime/scenarios/evil_knight_twelve";
+} from "../../../../src/app/config/board-definition";
+import { evilKnightTwelveConfig } from "../../../../src/rulesets/presets/evil-knight-twelve";
 import { WitchSelfHealRule } from "../../../../src/domain";
-import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
+import { simulateGames } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 for (const shotPolicy of ["night_shot_immune", "hunter_shot_bypasses"] as const)
   for (const selfHeal of [WitchSelfHealRule.Disabled, WitchSelfHealRule.FirstNightOnly])

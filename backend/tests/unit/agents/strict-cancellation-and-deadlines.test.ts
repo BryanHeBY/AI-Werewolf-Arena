@@ -4,11 +4,11 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/domain";
-import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { describeError } from "../../../src/utils/error_diagnostic";
+import { getGuardState } from "../../../src/features/guard/ports";
+import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
+import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { describeError } from "../../../src/utils/error-diagnostic";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager];
 

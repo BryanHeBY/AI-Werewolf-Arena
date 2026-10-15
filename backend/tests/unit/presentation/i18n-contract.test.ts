@@ -15,8 +15,8 @@ import {
   type MessageKey,
 } from "@ai-werewolf-arena/game-text";
 import { ACTION_STAGES, Camp, Phase, PotionType, Role, WinCondition } from "../../../src/domain";
-import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { WOLF_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf/profile";
+import { createRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
+import { WOLF_ROLE_PROFILE } from "../../../src/features/wolf/profile";
 
 test("shared Chinese/English keys and placeholders are complete and immutable", () => {
   validateDictionaries();

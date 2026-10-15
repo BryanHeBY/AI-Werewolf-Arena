@@ -7,11 +7,11 @@
 import { expect, test } from "bun:test";
 import { isMagicianPreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { magicianTwelveConfig } from "../../../src/runtime/scenarios/magician_twelve";
+import { magicianTwelveConfig } from "../../../src/rulesets/presets/magician-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { boardConfigSchema } from "../../../src/domain/board-schema";
 for (const firstNight of [1, 2] as const)
   for (const shot of ["original", "exchanged"] as const)

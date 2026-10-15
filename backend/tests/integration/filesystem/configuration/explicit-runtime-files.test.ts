@@ -6,10 +6,10 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { loadBoardOverride } from "../../../../src/runtime/config/load_board_override";
-import { loadRuntimeConfig } from "../../../../src/runtime/config/load_config";
-import { resolveAgentProfileByName } from "../../../../src/runtime/config/resolve_game_setup";
-import { resolveBoardConfig } from "../../../../src/runtime/scenarios/board_config_resolver";
+import { loadBoardOverride } from "../../../../src/app/config/load-board-override";
+import { loadRuntimeConfig } from "../../../../src/app/config/load-config";
+import { resolveAgentProfileByName } from "../../../../src/app/config/resolve-game-setup";
+import { resolveBoardConfig } from "../../../../src/rulesets/presets/board-config-resolver";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 async function writeRuntimeFiles(

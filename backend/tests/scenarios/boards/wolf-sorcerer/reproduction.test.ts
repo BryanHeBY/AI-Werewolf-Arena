@@ -4,29 +4,29 @@
  * 输出以手写因果／资源／终局结果及缺失或重映射查验证据的严格拒绝作为独立预期。
  * 不调用计费模型，不改写 fixture 或 Tape 的预期字节。
  */
-import { validateWolfSorcererRecord } from "../../../../src/verification/reproduction/wolf-sorcerer/validate";
+import { validateWolfSorcererRecord } from "../../../../src/recording/verification/wolf-sorcerer/validate";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { createRandom, type ActionRequest, type ToolCall } from "../../../../src/domain";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
-import { replayReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/reproduction-context";
+import { replayReproduction } from "../../../../src/app/simulation/replay-reproduction";
 import {
   parseReproductionRecord,
   type ReproductionRecord,
   type RecordedCheckpoint,
-} from "../../../../src/recording/reproduction";
+} from "../../../../src/recording/reproduction/format";
 
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { wolfSorcererTwelveConfig } from "../../../../src/runtime/scenarios/wolf_sorcerer_twelve";
-import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { wolfSorcererTwelveConfig } from "../../../../src/rulesets/presets/wolf-sorcerer-twelve";
+import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { randomDraws } from "../../../../src/domain";
 const records = new Map<string, Promise<ReproductionRecord>>();

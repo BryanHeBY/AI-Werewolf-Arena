@@ -4,10 +4,10 @@
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Phase } from "../../../src/domain/model";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
 import { ActionRequest } from "../../../src/domain/model";
-import { ScopedRequestScheduler } from "../../../src/ai/runtime/request_scheduler";
+import { ScopedRequestScheduler } from "../../../src/agents/runtime/request-scheduler";
 
 const request = { actorId: 1, phase: "day" } as ActionRequest;
 

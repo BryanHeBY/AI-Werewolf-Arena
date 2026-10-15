@@ -5,8 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
-import { installAnimalAuthority } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
-import { AnimalDeathWavePreparation } from "../../../../src/game/mechanisms/roles/animal_dream/ports";
+import { installAnimalAuthority } from "../../../../src/features/animal-dream/authority";
+import { AnimalDeathWavePreparation } from "../../../../src/features/animal-dream/ports";
 import { World } from "../../../../src/domain/world";
 import { Phase, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
 

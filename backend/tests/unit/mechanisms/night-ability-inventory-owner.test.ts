@@ -7,15 +7,15 @@
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../src/domain/components/role";
-import type { RoleInitializationComponent } from "../../../src/game/mechanisms/roles/contracts";
+import type { RoleInitializationComponent } from "../../../src/rulesets/roles/contracts";
 import {
   commitPreparedNativeAbility,
   findNightAbility,
   type NightAbility,
-} from "../../../src/game/mechanisms/roles/abilities";
-import { ECLIPSE_MAID_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/radiant_eclipse/profile";
-import * as legacyMetadata from "../../../src/game/mechanisms/roles/ability_changes";
-import * as publicMechanisms from "../../../src/game/mechanisms";
+} from "../../../src/features/night-abilities/abilities";
+import { ECLIPSE_MAID_ROLE_PROFILE } from "../../../src/features/radiant-eclipse/profile";
+import * as legacyMetadata from "../../../src/features/night-abilities/ability-changes";
+import * as publicMechanisms from "../../../src/rulesets/mechanism-api";
 
 function retiredMetadataAndInternalRootExports() {
   // @ts-expect-error 通用 metadata 完整实现已归共同库存 owner，旧准备叶无转发。

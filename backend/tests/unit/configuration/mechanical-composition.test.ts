@@ -9,10 +9,10 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { Role, type BoardConfig } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { configDiagnostic } from "../../../src/runtime/config/error_codes";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { configDiagnostic } from "../../../src/app/config/error-codes";
 
 for (const unsupported of Object.values(Role).filter(
   (role) =>

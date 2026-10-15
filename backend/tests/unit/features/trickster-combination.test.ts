@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { tricksterTwelveConfig } from "../../../src/runtime/scenarios/trickster_twelve";
+import { tricksterTwelveConfig } from "../../../src/rulesets/presets/trickster-twelve";
 import { Role, COMPONENT, type RoleComponent } from "../../../src/domain";
 import { isTricksterPreset } from "../../../src/rulesets";
 import {
@@ -13,16 +13,16 @@ import {
   cancelTricksterExchange,
   resolveTricksterExile,
   tricksterChoiceTargets,
-} from "../../../src/game/mechanisms/roles/trickster/night_frame";
+} from "../../../src/features/trickster/night-frame";
 import {
   beginMagicianNight,
   commitMagicianExchange,
   cancelMagicianExchangeIfMatching,
   resolveMagicianNightTarget,
   closeMagicianNight,
-} from "../../../src/game/mechanisms/roles/magician/night_frame";
-import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/ports";
-import { getMagicianState } from "../../../src/game/mechanisms/roles/magician/state-slot";
+} from "../../../src/features/magician/night-frame";
+import { getTricksterState } from "../../../src/features/trickster/ports";
+import { getMagicianState } from "../../../src/features/magician/state-slot";
 function fixture() {
   const g = bootstrapGame(structuredClone(tricksterTwelveConfig));
   const role = (id: number) => g.world.getComponent(id, COMPONENT.Role)!;

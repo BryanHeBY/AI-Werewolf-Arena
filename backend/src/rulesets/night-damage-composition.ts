@@ -10,11 +10,11 @@ import { Role, type EntityId, type ReadonlyBoardConfig } from "@ai-werewolf-aren
 import type { World } from "../domain/world";
 import type { DreamNightEffects } from "../domain/dream-night-effects";
 import type { DamageResolutionSystem } from "../domain/systems/damage-resolution-system";
-import type { NightStageContext, NightStageState } from "../game/mechanisms/stages/night/contracts";
-import { DreamNightFrame } from "../game/mechanisms/roles/dreamer/night_frame";
-import { readDreamNightLinks } from "../game/mechanisms/roles/dreamer/night-ports";
-import { sealRadiantNightEffects } from "../game/mechanisms/roles/radiant_eclipse/ports";
-import { assertScholarMentorBonusEffects } from "../game/mechanisms/roles/scholar_mentor/ports";
+import type { NightStageContext, NightStageState } from "../engine/night/contracts";
+import { DreamNightFrame } from "../features/dreamer/night-frame";
+import { readDreamNightLinks } from "../features/dreamer/night-ports";
+import { sealRadiantNightEffects } from "../features/radiant-eclipse/ports";
+import { assertScholarMentorBonusEffects } from "../features/scholar-mentor/ports";
 
 /** 只声明这一组合实际读取的原字段；这是同一阶段状态的类型视图，不创建或冻结副本。 */
 type NightDamageClaims = Pick<

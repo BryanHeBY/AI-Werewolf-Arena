@@ -9,8 +9,8 @@ import type { RandomSource } from "../../../src/domain/random";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { supportsWallRoles } from "../../../src/game/mechanisms/events/wall_notes/authority";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
+import { supportsWallRoles } from "../../../src/features/wall-notes/authority";
 import {
   buildSupportedRoleDeck,
   type SupportedRoleDeckCatalog,

@@ -8,8 +8,8 @@ import { expect, test } from "bun:test";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "../../../src/domain/events";
 import { animalRosterFixture } from "../../support/features/animal-dream/builders/roster";
-import { BearNightFrame, getBearState } from "../../../src/game/mechanisms/roles/bear/ports";
-import { animalBearKnowledge } from "../../../src/game/mechanisms/roles/animal_dream/ports";
+import { BearNightFrame, getBearState } from "../../../src/features/bear/ports";
+import { animalBearKnowledge } from "../../../src/features/animal-dream/ports";
 import { captureDawnKnowledge, publishDawnKnowledge } from "../../../src/rulesets/dawn-knowledge-publication";
 
 const animal: NonNullable<ReadonlyBoardConfig["animalDream"]> = { policy: "awa_animal_dream_v1", eliminationPriority: "awa_wolf_priority_v1" };

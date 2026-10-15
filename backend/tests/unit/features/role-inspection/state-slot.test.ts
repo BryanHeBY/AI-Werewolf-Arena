@@ -5,13 +5,13 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, type RoleInspectionState, type RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
-import { ROLE_INSPECTION_STATE_SLOT as slot } from "../../../../src/game/mechanisms/roles/role_inspection/state-slot";
-import { findNightAbility, type NightAbilityReadView } from "../../../../src/game/mechanisms/roles/abilities";
-import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { ROLE_INSPECTION_STATE_SLOT as slot } from "../../../../src/features/role-inspection/state-slot";
+import { findNightAbility, type NightAbilityReadView } from "../../../../src/features/night-abilities/abilities";
+import { installNativeAbility } from "../../../../src/features/night-abilities/ability-changes";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { captureNightAbilityScope } from "../../../../src/features/night-abilities/ability-scope";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 

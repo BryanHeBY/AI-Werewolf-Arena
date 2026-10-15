@@ -11,9 +11,9 @@ import { createRoleComponent } from "../../../src/domain/components/role";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { createIdentityComponent } from "../../../src/domain/entities/player";
 import { Role, Camp, type GameEvent } from "../../../src/domain/model";
-import { createTricksterState } from "../../../src/game/mechanisms/roles/trickster/state-slot";
-import { installTricksterBoard, beginTricksterNight, commitTricksterExchange, finishTricksterNight } from "../../../src/game/mechanisms/roles/trickster/night_frame";
-import { resolveTricksterExile } from "../../../src/game/mechanisms/roles/trickster/ports";
+import { createTricksterState } from "../../../src/features/trickster/state-slot";
+import { installTricksterBoard, beginTricksterNight, commitTricksterExchange, finishTricksterNight } from "../../../src/features/trickster/night-frame";
+import { resolveTricksterExile } from "../../../src/features/trickster/ports";
 import { prepareMappedExile, resolveMappedExile, mappedExileSummary } from "../../../src/rulesets/mapped-exile-resolution";
 
 function fixture() {

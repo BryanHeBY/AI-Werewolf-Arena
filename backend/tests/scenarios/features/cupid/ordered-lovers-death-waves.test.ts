@@ -3,30 +3,30 @@
  * 错误轨迹、事实与状态是预期；真实 DeathResolution 处理初始／追加死亡波、角色 hook、遗言、
  * 枪、梦境／魅惑交互与取消。引擎顺序保持真实，模型由受控 provider 代替，不从生产输出新建 golden。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, DeathCause, Phase, Role, type RoleComponent, type AliveComponent, type GameEvent, type ActionRequest, type ToolCall, type RuntimeSnapshot } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
+import { CUPID_STAGE } from "../../../../src/features/cupid/night-stage";
 import {
   loversRecord,
   projectLover,
   livingOriginalLovers,
-} from "../../../../src/game/mechanisms/roles/cupid/relation";
-import { cupidCityDecision } from "../../../../src/game/mechanisms/roles/cupid/victory";
+} from "../../../../src/features/cupid/relation";
+import { cupidCityDecision } from "../../../../src/features/cupid/victory";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { DreamNightFrame } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { DreamNightFrame } from "../../../../src/features/dreamer/night-frame";
 import { aliveLifeVersion } from "../../../../src/domain/components/alive";
 import {
   permitsCharm,
   bindCharm,
-} from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
+} from "../../../../src/features/wolf-beauty/relation";
+import { getWolfBeautyState } from "../../../../src/features/wolf-beauty/ports";
 
 const deck = [Role.Cupid, Role.Hunter, Role.Wolf, Role.Villager, Role.Wolf, Role.Villager];
 

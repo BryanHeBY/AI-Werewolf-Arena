@@ -10,24 +10,24 @@ import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role, WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
 import { type RoleComponent } from "../../../src/domain/components/role";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import {
   activeNightAbility,
   allNightAbilities,
   findNightAbility,
   type NightAbilityReadView,
-} from "../../../src/game/mechanisms/roles/abilities";
-import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { recordNightAbilityUse, setNightAbilityStartDay } from "../../../src/game/mechanisms/roles/abilities";
+} from "../../../src/features/night-abilities/abilities";
+import { installNativeAbility } from "../../../src/features/night-abilities/ability-changes";
+import { recordNightAbilityUse, setNightAbilityStartDay } from "../../../src/features/night-abilities/abilities";
 import {
   createNightAbilityActorQuery,
   type NightAbilityActorQuery,
-} from "../../../src/game/mechanisms/roles/night-ability-actors";
-import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
+} from "../../../src/features/night-abilities/night-ability-actors";
+import { getWitchState } from "../../../src/features/witch/ports";
 import {
   getRoleInspectionState,
   recordAbilityRoleInspection,
-} from "../../../src/game/mechanisms/roles/role_inspection/ports";
+} from "../../../src/features/role-inspection/ports";
 
 function rejectedLiveWrites(
   role: RoleComponent,

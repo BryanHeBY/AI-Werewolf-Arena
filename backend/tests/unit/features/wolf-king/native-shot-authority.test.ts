@@ -15,7 +15,7 @@ import {
   type GameEvent,
   type ActionRequest,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import {
   getDefaultRoleCatalog,
   knownWolfTeammates,
@@ -23,18 +23,18 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 import {
   getWolfKingState,
   setWolfKingState,
-} from "../../../../src/game/mechanisms/roles/native-death-gun-resources";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
+} from "../../../../src/features/death-actions/native-death-gun-resources";
+import { getHunterState } from "../../../../src/features/hunter/ports";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { AgentEventVisibilityRegistry } from "../../../../src/agents/observation/agent-event-visibility-registry";
 
 const config = {
   ...sixPlayerMvpConfig,

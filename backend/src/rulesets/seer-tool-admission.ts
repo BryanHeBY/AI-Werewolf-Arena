@@ -4,12 +4,12 @@
  * 状态仍归实际技能库存和历史 owner；受赠／复制／转移实例不因角色标签被重新裁决。
  * 保留参数、目标 getter 与短路失败的原顺序，真实效果提交仍由阶段重新核对生命与 scope。
  */
-import { scholarMentorBlocks } from "../game/mechanisms/roles/scholar_mentor/ports";
-import { seerTargetAllowed } from "../game/mechanisms/roles/seer/ports";
+import { scholarMentorBlocks } from "../features/scholar-mentor/ports";
+import { seerTargetAllowed } from "../features/seer/ports";
 import { Phase, RuleError } from "@ai-werewolf-arena/game-contract";
-import { type ToolRuleMap, isAliveTarget } from "../game/mechanisms/validation/contracts";
-import { activeNightAbility } from "../game/mechanisms/roles/abilities";
-import { luckyTargetAllowed } from "../game/mechanisms/roles/night_action_history";
+import { type ToolRuleMap, isAliveTarget } from "../engine/actions/validation-contracts";
+import { activeNightAbility } from "../features/night-abilities/abilities";
+import { luckyTargetAllowed } from "../features/night-abilities/night-action-history";
 
 /** 同一可写表交给 profile；当前角色晚读 callback，全局回退仍保留 Registry 构造时的原捕获。 */
 export const SEER_VALIDATION_RULES: ToolRuleMap = {

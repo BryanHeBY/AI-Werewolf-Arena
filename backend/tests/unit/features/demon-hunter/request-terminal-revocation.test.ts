@@ -12,21 +12,21 @@ import {
   type ActionProvider, type ActionRequest, type BoardConfig, type GameEvent, type ToolCall,
 } from "../../../../src/domain";
 import { createRandom } from "../../../../src/domain/random";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
   beginDemonHunterNight, closeDemonHunterNight, demonHunterRequestScope,
   demonHunterAuditPlayer, freezeDemonHunt,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { getDemonHunterState } from "../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
-import { executeDemonHunterTurn } from "../../../../src/game/mechanisms/roles/demon_hunter/controller";
+} from "../../../../src/features/demon-hunter/authority";
+import { getDemonHunterState } from "../../../../src/features/demon-hunter/state-slot";
+import { executeDemonHunterTurn } from "../../../../src/features/demon-hunter/controller";
 import {
   executeDemonWitchTurn, sealDeliveredDemonWitchSources, freezeDeliveredDemonNightSources,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller";
-import { executeDemonNativeNight } from "../../../../src/game/mechanisms/roles/demon_hunter/native_night_controller";
-import { demonWitchRequestCurrent } from "../../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests";
-import type { NightStageContext, NightStageState } from "../../../../src/game/mechanisms/stages/night/contracts";
+} from "../../../../src/features/demon-hunter/native-potion-controller";
+import { executeDemonNativeNight } from "../../../../src/features/demon-hunter/native-night-controller";
+import { demonWitchRequestCurrent } from "../../../../src/features/demon-hunter/native-potion-requests";
+import type { NightStageContext, NightStageState } from "../../../../src/engine/night/contracts";
 
 type Family = "hunt" | "potion";
 function fixture(label: string, twelve = false) {

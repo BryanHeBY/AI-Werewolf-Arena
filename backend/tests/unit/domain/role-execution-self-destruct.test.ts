@@ -15,10 +15,10 @@ import {
 } from "../../../src/domain/model";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { retireRoleExecution } from "../../../src/domain/role-execution-authority";
-import { canRoleSelfDestruct } from "../../../src/game/mechanisms/roles/self_destruct_capability";
-import { knownWolfTeammates, wolfTeamPermissions } from "../../../src/game/mechanisms/roles/wolf_team";
-import { commitSelfDestructSelection } from "../../../src/game/mechanisms/self_destruct/commit";
-import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/ports";
+import { canRoleSelfDestruct } from "../../../src/features/self-destruct/capability";
+import { knownWolfTeammates, wolfTeamPermissions } from "../../../src/features/wolf-team/permissions";
+import { commitSelfDestructSelection } from "../../../src/features/self-destruct/commit";
+import { getRedMoonState } from "../../../src/features/red-moon/ports";
 import {
   beginDemonHunterNight,
   freezeDemonHunt,
@@ -26,13 +26,13 @@ import {
   demonRedMoonCanBlast,
   demonHunterAuditPlayer,
   demonHunterCheckpointPlayers,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { getWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/ports";
-import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+} from "../../../src/features/demon-hunter/authority";
+import { getWhiteWolfKingState } from "../../../src/features/white-wolf-king/ports";
+import { createDefaultRoleRegistry } from "../../../src/rulesets/mechanism-api";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { SelfDestructWindow } from "../../../src/rulesets/self-destruct-window";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 
 test("retirement rejects ordinary and Red Moon execution while keeping wolf knowledge and original data", () => {

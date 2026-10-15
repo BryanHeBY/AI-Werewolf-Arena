@@ -14,7 +14,7 @@ import {
 } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../domain/components/names";
 import type { World } from "../domain/world";
-import { captureExileFeedback } from "../game/mechanisms/roles/gravekeeper/ports";
+import { captureExileFeedback } from "../features/gravekeeper/ports";
 
 /** 只读原结果字段，不复制票表或冻结数组；提案容器不是死亡提交凭据或行动授权。 */
 export interface ExileDeathSelection {

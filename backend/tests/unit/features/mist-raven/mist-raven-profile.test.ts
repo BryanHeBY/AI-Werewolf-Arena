@@ -4,8 +4,8 @@
 import {
   createAliveComponent,
   createCampComponent,
-} from "../../../../src/game/observation/component-presentation";
-import { captureNativeRolePresentation } from "../../../../src/game/observation/native-role-presentation-capture";
+} from "../../../../src/agents/observation/component-presentation";
+import { captureNativeRolePresentation } from "../../../../src/agents/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import {
   World,
@@ -18,18 +18,18 @@ import {
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/domain";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
-import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
+import { getDreamerState } from "../../../../src/features/dreamer/ports";
+import { RoleCatalog } from "../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
 import {
   ALCHEMIST_ROLE_PROFILE,
   RAVEN_CLAW_ROLE_PROFILE,
-} from "../../../../src/game/mechanisms/roles/mist_raven/profile";
+} from "../../../../src/features/mist-raven/profile";
 import {
   installMistRavenBoard,
   beginMistNight,
@@ -39,13 +39,13 @@ import {
   commitSnakeChoice,
   closeMistNight,
   ravenAwakened,
-} from "../../../../src/game/mechanisms/roles/mist_raven/night_frame";
+} from "../../../../src/features/mist-raven/night-frame";
 import {
   knownWolfTeammates,
   wolfChatParticipants,
   wolfKnifeHolders,
   wolfTeamEvent,
-} from "../../../../src/game/mechanisms/roles/wolf_team";
+} from "../../../../src/features/wolf-team/permissions";
 
 function fixture() {
   const catalog = createRoleCatalog({

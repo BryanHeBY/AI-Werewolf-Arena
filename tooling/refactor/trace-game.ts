@@ -31,7 +31,18 @@ export const originalLayout: BuildLayout = {
 /** 新构建只改变实际领域入口，旧构建的路径声明保留，分别在各自构建中创建运行对象。 */
 const domainLayout: BuildLayout = { ...originalLayout, core: "backend/src/domain/index.ts" };
 
-/** 只识别两种已声明布局；双入口或缺少入口一律拒绝，避免把两套模块实例混进同次比较。 */
+/** 完整职责目录只声明七个实际入口；原始与领域中间构建各保原路径，不让旧构建加载新树模块。 */
+const ownedLayout: BuildLayout = {
+  bootstrap: "backend/src/app/bootstrap.ts",
+  core: "backend/src/domain/index.ts",
+  recorder: "backend/src/recording/session/recorder.ts",
+  recordingContext: "backend/src/recording/session/context.ts",
+  reproductionContext: "backend/src/app/simulation/reproduction-context.ts",
+  reproduction: "backend/src/recording/reproduction/format.ts",
+  replay: "backend/src/app/simulation/replay-reproduction.ts",
+};
+
+/** 只识别三个完整声明；任一 profile 外的旧／新入口残留也拒绝，避免同构建混载两套运行对象。 */
 async function selectBuildLayout(root: string): Promise<BuildLayout> {
   const exists = async (relative: string) => {
     try {
@@ -43,9 +54,17 @@ async function selectBuildLayout(root: string): Promise<BuildLayout> {
       throw error;
     }
   };
-  const oldEntry = await exists(originalLayout.core), domainEntry = await exists(domainLayout.core);
-  if (oldEntry === domainEntry) throw Error("differential_build_layout_ambiguous");
-  return oldEntry ? originalLayout : domainLayout;
+  // 只探测显式有限入口；不搜索任意替代目录，也不导入产品来判断布局。
+  const profiles = [originalLayout, domainLayout, ownedLayout];
+  const paths = [...new Set(profiles.flatMap((profile) => Object.values(profile)))];
+  const presence = new Map<string, boolean>();
+  for (const relative of paths) presence.set(relative, await exists(relative));
+  const matches = profiles.filter((profile) => {
+    const members = new Set(Object.values(profile));
+    return paths.every((relative) => presence.get(relative) === members.has(relative));
+  });
+  if (matches.length !== 1) throw Error("differential_build_layout_ambiguous");
+  return matches[0]!;
 }
 export interface TraceScenario {
   id: string;

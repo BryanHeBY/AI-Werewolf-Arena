@@ -4,22 +4,22 @@
  * spy 和磁盘入口解包实际新封装后查看原字段，不改预期、restore／finally 顺序，不执行完整对局。
  */
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { parseReproductionRecord } from "../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../src/recording/reproduction/format";
 import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom, Phase, type ActionRequest } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { ReplayFileStore } from "../../../src/recording/file_store";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
+import { ReplayFileStore } from "../../../src/adapters/filesystem/session-file-store";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
+} from "../../../src/app/simulation/reproduction-context";
+import { GameEventRecorder } from "../../../src/app/game-event-recorder";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 async function fixture() {

@@ -5,7 +5,7 @@
  * these module assertions invoke no model or complete-game driver.
  */
 import { expect, test } from "bun:test";
-import { sanitizeSpeechText } from "../../../src/utils/speech_text";
+import { sanitizeSpeechText } from "../../../src/utils/speech-text";
 test("speech cleaning is shared, repeatable and limited to reserved leading labels", () => {
   expect(sanitizeSpeechText(" [Judge]  Restart this ballot. ")).toBe("Restart this ballot.");
   expect(sanitizeSpeechText(" [系统] [God]  发言 ")).toBe("发言");

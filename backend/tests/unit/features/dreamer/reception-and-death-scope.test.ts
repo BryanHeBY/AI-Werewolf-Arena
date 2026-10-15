@@ -12,25 +12,25 @@ import {
   type RoleComponent,
   type ActionRequest,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getDreamerState } from "../../../../src/features/dreamer/ports";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { sixPlayerMvpConfig as plainBoard } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { ActionValidator } from "../../../../src/game/gateway/action_validator";
-import { ToolValidationRuleRegistry } from "../../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { DreamNightFrame } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
+} from "../../../../src/rulesets/mechanism-api";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { sixPlayerMvpConfig as plainBoard } from "../../../../src/rulesets/presets/six-player-mvp";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { ActionValidator } from "../../../../src/engine/actions/action-validator";
+import { ToolValidationRuleRegistry } from "../../../../src/engine/actions/tool-validation-rule-registry";
+import { DreamNightFrame } from "../../../../src/features/dreamer/night-frame";
 import { DeathCause, type GameEvent, type RuntimeSnapshot } from "../../../../src/domain";
 
 const deck = [Role.Dreamer, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];

@@ -41,7 +41,43 @@ const boundaries = [
       "replay",
     ],
   },
-  { layer: "recording", forbidden: ["app", "ai", "runtime", "game", "audit", "replay"] },
+  // 以下承接新物理 owner；旧 synthetic 表项原样保留，迁目录不能让 AI 执行／传输获得反向依赖许可。
+  {
+    layer: "engine",
+    forbidden: [
+      "app", "ai", "runtime", "server", "infra", "audit", "replay", "adapters", "rulesets/presets",
+      "agents/acp", "agents/llm", "agents/player", "agents/providers", "agents/runtime", "agents/reporting",
+      "agents/index", "agents/game-tool-protocol", "agents/visible-event-protocol",
+    ],
+  },
+  {
+    layer: "rulesets/presets",
+    forbidden: [
+      "app", "ai", "engine", "runtime", "server", "infra", "recording", "audit", "replay", "adapters",
+      "agents/acp", "agents/llm", "agents/player", "agents/providers", "agents/runtime", "agents/reporting",
+      "agents/index", "agents/game-tool-protocol", "agents/visible-event-protocol",
+    ],
+  },
+  {
+    layer: "features",
+    forbidden: [
+      "app", "ai", "runtime", "server", "infra", "audit", "replay", "adapters",
+      "agents/acp", "agents/llm", "agents/player", "agents/providers", "agents/runtime", "agents/reporting",
+      "agents/index", "agents/game-tool-protocol", "agents/visible-event-protocol",
+    ],
+  },
+  {
+    layer: "rulesets",
+    forbidden: [
+      "app", "ai", "runtime", "server", "infra", "audit", "replay", "adapters",
+      "agents/acp", "agents/llm", "agents/player", "agents/providers", "agents/runtime", "agents/reporting",
+      "agents/index", "agents/game-tool-protocol", "agents/visible-event-protocol",
+    ],
+  },
+  {
+    layer: "recording",
+    forbidden: ["app", "ai", "runtime", "game", "audit", "replay", "engine", "features", "rulesets", "agents", "adapters"],
+  },
 ];
 
 /** @param {string} file @param {string} directory */
@@ -62,6 +98,9 @@ function importBoundaryViolation(rootDir, filePath, specifier) {
     .replace(/\\/g, "/")
     .replace(/\.(?:[cm]?ts|[cm]?js)$/, "");
   if (within(target, boundary.layer)) return null;
+  // Session recorder 的原 FileStore 是单一持久化端口；不扩大为整个 adapters 或网络／AI 许可。
+  if (source === "recording/session/recorder.ts" && target === "adapters/filesystem/session-file-store")
+    return null;
   const forbidden = boundary.forbidden.find((layer) => within(target, layer));
   return forbidden
     ? `${boundary.layer} imports forbidden layer "${forbidden}" via "${specifier}"`

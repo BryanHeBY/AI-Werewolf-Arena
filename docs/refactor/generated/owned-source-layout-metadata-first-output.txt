@@ -1,0 +1,2 @@
+Error: original_program_or_module_binding_changed:backend/tests/support/audit_summary_fixture.ts
+    at <anonymous> (/tmp/awa-owned-layout-operational-adaptations/fixture-metadata.cjs:77:10)

@@ -2,13 +2,13 @@
  * 单元测试：验证玩家模型无关配置。输入为字面昵称、人设、语言、种子和旧绑定；规范化资料与歧义拒绝采用精确预期，不执行模型或完整对局。
  */
 import { expect, test } from "bun:test";
-import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
-import { describeResolvedSetup } from "../../../src/runtime/config/describe_setup";
+import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../src/app/config/resolve-game-setup";
+import { describeResolvedSetup } from "../../../src/app/config/describe-setup";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, type IdentityComponent } from "../../../src/domain";
 import { readFile } from "node:fs/promises";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 import path from "node:path";
 
 const input = {

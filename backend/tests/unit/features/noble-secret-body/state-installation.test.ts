@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role } from "../../../../src/domain/identity";
-import type { RoleInitializationComponent, RoleInitContext } from "../../../../src/game/mechanisms/roles/contracts";
-import { NIGHT_NOBLE_ROLE_PROFILE, AWAKENED_IDIOT_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/noble_secret_body/profile";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import type { RoleInitializationComponent, RoleInitContext } from "../../../../src/rulesets/roles/contracts";
+import { NIGHT_NOBLE_ROLE_PROFILE, AWAKENED_IDIOT_ROLE_PROFILE } from "../../../../src/features/noble-secret-body/profile";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 const cases = [
   { profile: NIGHT_NOBLE_ROLE_PROFILE, role: Role.NightNoble, slot: "noble", configuration: "nightNoble", policy: "wolfActionPolicy", selected: "no_blast_no_self_knife" },

@@ -10,27 +10,27 @@ import {
   type MagicianState,
   type ModifierState,
 } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import type { RoleInitializationComponent } from "../../../src/game/mechanisms/roles/contracts";
-import { getCupidState } from "../../../src/game/mechanisms/roles/cupid/ports";
-import { getHybridState } from "../../../src/game/mechanisms/roles/hybrid/ports";
-import { getWildChildState } from "../../../src/game/mechanisms/roles/wild_child/ports";
-import { getThiefState } from "../../../src/game/mechanisms/roles/thief/state-ports";
-import { getShapeshifterState } from "../../../src/game/mechanisms/roles/shapeshifter/state-ports";
-import { getDebaterState } from "../../../src/game/mechanisms/roles/debater/state";
-import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/ports";
-import { getNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/ports";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
+import type { RoleInitializationComponent } from "../../../src/rulesets/roles/contracts";
+import { getCupidState } from "../../../src/features/cupid/ports";
+import { getHybridState } from "../../../src/features/hybrid/ports";
+import { getWildChildState } from "../../../src/features/wild-child/ports";
+import { getThiefState } from "../../../src/features/thief/state-ports";
+import { getShapeshifterState } from "../../../src/features/shapeshifter/state-ports";
+import { getDebaterState } from "../../../src/features/debater/state";
+import { getEvilKnightState } from "../../../src/features/evil-knight/ports";
+import { getNightmareShadowState } from "../../../src/features/nightmare/ports";
 import {
   getMagicianState,
   projectMagicianState,
-} from "../../../src/game/mechanisms/roles/magician/state-slot";
-import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/ports";
-import { getWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";
-import { getTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/ports";
-import { scholarMentorStateForRole } from "../../../src/game/mechanisms/roles/scholar_mentor/ports";
-import { readModifierState } from "../../../src/game/mechanisms/roles/scholar_mentor/ports";
-import { getLonelyGirlState } from "../../../src/game/mechanisms/roles/lonely_girl/ports";
-import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
+} from "../../../src/features/magician/state-slot";
+import { getTricksterState } from "../../../src/features/trickster/ports";
+import { getWolfSorcererState } from "../../../src/features/wolf-sorcerer/state-slot";
+import { getTimeConsortState } from "../../../src/features/time-wolf-consort/ports";
+import { scholarMentorStateForRole } from "../../../src/features/scholar-mentor/ports";
+import { readModifierState } from "../../../src/features/scholar-mentor/ports";
+import { getLonelyGirlState } from "../../../src/features/lonely-girl/ports";
+import { getRedMoonState } from "../../../src/features/red-moon/state-slot";
 
 function forbiddenLiveWrites(
   cupid: NonNullable<ReturnType<typeof getCupidState>>,

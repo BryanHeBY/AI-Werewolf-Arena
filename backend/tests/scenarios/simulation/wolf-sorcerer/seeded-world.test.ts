@@ -2,13 +2,13 @@
  * 模拟场景测试：负责执行狼术师原种子的首夜、枪目标及语言政策实际 World。输入保留原矩阵；历史下限、正选择次数及非超时终局检查资格时点，不替代归档 golden 或声称新增独立规则覆盖。
  */
 import type { RoleComponent } from "../../../../src/domain/components/role";
-import { getWolfSorcererState } from "../../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";
+import { getWolfSorcererState } from "../../../../src/features/wolf-sorcerer/state-slot";
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { wolfSorcererTwelveConfig } from "../../../../src/runtime/scenarios/wolf_sorcerer_twelve";
+import { wolfSorcererTwelveConfig } from "../../../../src/rulesets/presets/wolf-sorcerer-twelve";
 import { createRandom, randomDraws } from "../../../../src/domain";
-import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 for (const firstNight of [1, 2] as const)
   for (const shot of ["original", "exchanged"] as const)

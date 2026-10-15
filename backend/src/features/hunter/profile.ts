@@ -1,0 +1,52 @@
+/**
+ * 负责 猎人 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
+ */
+import { nativeRolePresentation } from "../../rulesets/roles/presentation-contribution";
+import { deathActionConfiguration, renderDeathActionPolicy } from "../death-actions/death-action-policy";
+import { roleName, text } from "@ai-werewolf-arena/game-text";
+/** 文件说明：猎人角色 profile。 */
+import { Camp, Role } from "../../domain/model";
+import { NativeRoleContributions } from "../../rulesets/roles/contracts";
+import { getHunterState, setHunterState, createHunterState } from "../death-actions/native-death-gun-resources";
+import { hunterDeathHook } from "./death-hook";
+import { HUNTER_TOOL_SPECS } from "./tool-specs";
+import { DEATH_SHOT_REPAIR, validateDeathShot } from "../death-actions/death-shot";
+
+/** 猎人角色配置。 */
+export const HUNTER_ROLE_PROFILE: NativeRoleContributions = {
+  metadata: {
+    role: Role.Hunter,
+    camp: Camp.Good,
+    label: roleName("hunter"),
+    skillBrief: text("zh-CN", "role.hunter.brief"),
+    goodSide: "god",
+  },
+  runtime: {
+    configuration: deathActionConfiguration("hunter"),
+    init: (roleComp, ctx) => {
+      // 保原安装 callee／角色参数先于配置读取；状态由资源 owner 创建并同引用安装。
+      setHunterState(roleComp, createHunterState(ctx));
+    },
+    toolSpecs: HUNTER_TOOL_SPECS,
+    validationRules: {
+      shoot: (ctx) =>
+        validateDeathShot(
+          ctx,
+          ctx.role.role === Role.Hunter && getHunterState(ctx.role)?.canShoot === true,
+        ),
+    },
+    llmRepair: DEATH_SHOT_REPAIR,
+    deathHook: hunterDeathHook,
+    baselineAction: (_roleComp, request, pickAliveNotSelf) => {
+      if (!request.allowedTools.includes("shoot")) {
+        return null;
+      }
+      const target = pickAliveNotSelf();
+      return { name: "shoot", args: { target_id: target } };
+    },
+  },
+  presentation: nativeRolePresentation("hunter"),
+};

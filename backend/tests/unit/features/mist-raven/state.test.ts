@@ -16,7 +16,7 @@ import {
   readRavenState,
   unsealRaven,
   selectRavenKnife,
-} from "../../../../src/game/mechanisms/roles/mist_raven/state";
+} from "../../../../src/features/mist-raven/state";
 
 test("independent mist and snake stocks can be spent for the same night without mutating the input", () => {
   const initial = createAlchemistState(),

@@ -8,7 +8,7 @@ import { promises as fs } from "node:fs";
 import { Camp, Role } from "../../../../src/domain";
 import { WILD_CHILD_CASES, wildChildScenario } from "../../../support/features/wild-child/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 for (const size of [6, 12] as const)
   for (const kind of WILD_CHILD_CASES.filter(
     (k) => size === 6 || ["wolf_exile", "good_knife", "hunter_chain"].includes(k),

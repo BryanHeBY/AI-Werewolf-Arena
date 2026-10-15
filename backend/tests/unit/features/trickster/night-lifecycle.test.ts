@@ -8,18 +8,18 @@
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import rawBoard from "../../../../../configs.example/boards/awa_trickster_12_v1.json";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { MagicianNightUnit } from "../../../../src/game/mechanisms/roles/magician/ports";
+import { MagicianNightUnit } from "../../../../src/features/magician/ports";
 import {
   TricksterNightUnit,
   tricksterNightTerminal,
-} from "../../../../src/game/mechanisms/roles/trickster/ports";
+} from "../../../../src/features/trickster/ports";
 import {
   beginTricksterNight,
   commitTricksterExchange,
   resolveTricksterExile,
-} from "../../../../src/game/mechanisms/roles/trickster/night_frame";
+} from "../../../../src/features/trickster/night-frame";
 
 function fixture() {
   const board = parseBoardDefinition(rawBoard),

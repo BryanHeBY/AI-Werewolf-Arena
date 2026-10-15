@@ -3,8 +3,8 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
 import { Phase, type ActionRequest } from "../../../src/domain";
 
 function request(actorId: number, deadlineAtMs?: number): ActionRequest {

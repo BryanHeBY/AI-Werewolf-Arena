@@ -8,9 +8,9 @@ import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { Camp, Phase, Role, type ActionRequest, type ToolCall } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom } from "../../../src/domain/random";
-import { ReproductionTrace, normalizedRequest } from "../../../src/recording/reproduction-trace";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
+import { ReproductionTrace, normalizedRequest } from "../../../src/recording/reproduction/trace";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 const action: ToolCall = { name: "kill_vote", args: { target_id: 3, abstain: false } };
 function fixture(onChange: () => void = () => {}) {
   const deck = sixPlayerMvpConfig.roleSetups.flatMap(({ role, count }) => Array<Role>(count).fill(role));

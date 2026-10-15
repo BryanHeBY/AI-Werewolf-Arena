@@ -10,8 +10,8 @@
 import type { BearSignalPolicy, ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { GameEvent } from "../domain/events";
 import type { World } from "../domain/world";
-import { BearNightFrame } from "../game/mechanisms/roles/bear/ports";
-import { noteAnimalBearPublication, appendAnimalBeautyNotice } from "../game/mechanisms/roles/animal_dream/ports";
+import { BearNightFrame } from "../features/bear/ports";
+import { noteAnimalBearPublication, appendAnimalBeautyNotice } from "../features/animal-dream/ports";
 
 /** 每次在原表达式位置取真实引用；方法类型不是许可，不提前缓存 World、数组或配置。 */
 export interface DawnKnowledgeRuntime {

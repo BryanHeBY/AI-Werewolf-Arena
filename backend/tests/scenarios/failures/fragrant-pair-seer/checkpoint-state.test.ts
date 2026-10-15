@@ -4,7 +4,7 @@
 import { test, expect } from "bun:test";
 import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";
-import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
 import { COMPONENT } from "../../../../src/domain/components/names";
 for (const alteration of ["pair_forgery", "pair_getter", "phantom_forgery"] as const)
   test(`failure CP canonical God state and original player stock agree after ${alteration}`, async () => {

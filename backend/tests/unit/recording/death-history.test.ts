@@ -6,8 +6,8 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, DeathCause, Phase, Role, WinCondition, type HunterDeathActionPolicy, type ToolCall } from "@ai-werewolf-arena/game-contract";
-import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "../../../src/recording/reproduction";
-import { validateDeathHistoryRecord } from "../../../src/verification/reproduction/death-history";
+import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "../../../src/recording/reproduction/format";
+import { validateDeathHistoryRecord } from "../../../src/recording/verification/death-history/validate";
 
 const error = "reproduction_death_history_invalid";
 function literal(): ReproductionRecord {

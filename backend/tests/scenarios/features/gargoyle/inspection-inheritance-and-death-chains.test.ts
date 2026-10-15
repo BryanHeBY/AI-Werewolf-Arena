@@ -18,32 +18,32 @@ import {
   type ActionRequest,
   type GameEvent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import {
   getGargoyleState,
   setGargoyleState,
-} from "../../../../src/game/mechanisms/roles/gargoyle/ports";
-import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
-import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/ports";
-import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { canGargoyleKnife } from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
-import { ROLE_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
+} from "../../../../src/features/gargoyle/ports";
+import { getRoleInspectionState } from "../../../../src/features/role-inspection/ports";
+import { getHiddenWolfState } from "../../../../src/features/hidden-wolf/ports";
+import { getSeerState } from "../../../../src/features/seer/ports";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import { canGargoyleKnife } from "../../../../src/features/gargoyle/inheritance";
+import { ROLE_INSPECTION_STAGE } from "../../../../src/features/role-inspection/contribution-ports";
 import {
   knownWolfTeammates,
   wolfKnifeHolders,
-} from "../../../../src/game/mechanisms/roles/wolf_team";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/features/wolf-team/permissions";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import {
   grantNightAbility,
   transferNightAbility,
-} from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
+} from "../../../../src/features/night-abilities/night-ability-grants";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
 
 const deck = [Role.Gargoyle, Role.Wolf, Role.Seer, Role.Gravekeeper, Role.Villager, Role.Villager],
   catalog = getDefaultRoleCatalog();

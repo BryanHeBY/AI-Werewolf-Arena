@@ -7,18 +7,18 @@ import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { createRandom, PotionType, type ActionRequest, type ToolCall } from "../../../../src/domain";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
-import { replayReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
-import { parseReproductionRecord, type ReproductionRecord, type RecordedCheckpoint } from "../../../../src/recording/reproduction";
-import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
-import { validateMagicianRecord } from "../../../../src/verification/reproduction/magician/validate";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+} from "../../../../src/app/simulation/reproduction-context";
+import { replayReproduction } from "../../../../src/app/simulation/replay-reproduction";
+import { parseReproductionRecord, type ReproductionRecord, type RecordedCheckpoint } from "../../../../src/recording/reproduction/format";
+import { ReproductionTrace } from "../../../../src/recording/reproduction/trace";
+import { validateMagicianRecord } from "../../../../src/recording/verification/magician/validate";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
 const records = new Map<string, Promise<ReproductionRecord>>();

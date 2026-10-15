@@ -4,11 +4,11 @@
  * 拒绝与独立原生增益账本。beforeAll 录制归 transport driver，伪造副本不替换原记录、
  * 重生 golden 或把生产执行结果当作独立规则预期。
  */
-import { validateScholarMentorRecord } from "../../../../src/verification/reproduction/scholar-mentor/validate";
+import { validateScholarMentorRecord } from "../../../../src/recording/verification/scholar-mentor/validate";
 import { beforeAll, expect, test } from "bun:test";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
 let record: ReproductionRecord;
 beforeAll(async () => {
   record = (await runTransportGame(scholarMentorScenario(), "llm", "en")).record;

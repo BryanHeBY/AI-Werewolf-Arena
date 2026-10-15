@@ -16,8 +16,8 @@ import {
   closeAnimalExileUnit,
   filterAnimalLethalWave,
   animalAuthoritySnapshot,
-} from "../../../../src/game/mechanisms/roles/animal_dream/authority";
-import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/game/mechanisms/roles/animal_dream/accepted-ballots";
+} from "../../../../src/features/animal-dream/authority";
+import { recordAnimalBallotRound, sealAnimalBallots } from "../../../../src/features/animal-dream/accepted-ballots";
 const fixture = (skip = false) => {
   const f = animalRosterFixture(undefined, (world, raw) =>
     installAnimalAuthority(world, {

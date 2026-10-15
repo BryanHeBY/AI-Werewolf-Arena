@@ -14,13 +14,13 @@ import {
   closeAnimalNight,
   openAnimalFoxChoice,
   animalAuthoritySnapshot,
-} from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+} from "../../../../src/features/animal-dream/authority";
 import {
   FOX_STATE_SLOT,
   PUFFER_STATE_SLOT,
   CAT_STATE_SLOT,
   captureResource,
-} from "../../../../src/game/mechanisms/roles/animal_dream/state-slot";
+} from "../../../../src/features/animal-dream/state-slot";
 import {
   freshFoxCubState,
   freshPufferfishState,
@@ -29,7 +29,7 @@ import {
   readPufferfishState,
   readWhiteCatState,
   type FoxCubState,
-} from "../../../../src/game/mechanisms/roles/animal_dream/state";
+} from "../../../../src/features/animal-dream/state";
 import type { RoleComponent } from "../../../../src/domain/components/role";
 
 const privateData = (role: RoleComponent) => role.privateState as Record<string, unknown>;

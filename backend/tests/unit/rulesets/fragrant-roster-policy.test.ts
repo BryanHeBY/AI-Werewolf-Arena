@@ -4,7 +4,7 @@
  * Output and oracle: Exact accepted base and rejected variants remain unchanged; no World, cycle, filesystem or model is created.
  */
 import { expect, test } from "bun:test";
-import { fragrantPairSeerTwelveConfig } from "../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
+import { fragrantPairSeerTwelveConfig } from "../../../src/rulesets/presets/fragrant-pair-seer-twelve";
 import { isFragrantPairSeerPreset } from "../../../src/rulesets";
 
 test("finite preset accepts only its native roster and fixed source policies", () => {

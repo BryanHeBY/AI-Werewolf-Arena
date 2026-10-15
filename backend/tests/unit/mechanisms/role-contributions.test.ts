@@ -6,20 +6,20 @@
 import { expect, test } from "bun:test";
 import { Camp, Role, WinCondition } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import {
   createRoleCatalog,
   getDefaultRoleContributions,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
 import type {
   RoleContributions,
   RoleProfile,
   RoleInitContext,
-} from "../../../src/game/mechanisms/roles/contracts";
+} from "../../../src/rulesets/roles/contracts";
 import {
   createRoleComponent,
   renderRolePrompt,
-} from "../../../src/game/observation/role-presentation";
+} from "../../../src/agents/observation/role-presentation";
 import { World } from "../../../src/domain/world";
 
 // 编译约束限定各 facet 的消费权限，不执行这些反例。

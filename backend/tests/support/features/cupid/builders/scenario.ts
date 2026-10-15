@@ -13,8 +13,8 @@ import { shuffled } from "../../../../../src/domain";
 import { PotionType } from "../../../../../src/domain";
 import type { ToolCall } from "../../../../../src/domain";
 import type { ActionStage } from "../../../../../src/domain";
-import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
+import { boardDefinitionFromConfig } from "../../../../../src/app/config/board-definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
 import type { PlannedTurn } from "../../../transport/contracts";
 import type { TransportGameScenario } from "../../../transport/contracts";
 

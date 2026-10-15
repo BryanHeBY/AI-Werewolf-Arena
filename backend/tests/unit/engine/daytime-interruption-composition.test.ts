@@ -7,18 +7,18 @@ import { expect, test } from "bun:test";
 import { World } from "../../../src/domain/world";
 import { RoleRegistry } from "../../../src/domain/registries/role-registry";
 import type { GameEvent } from "../../../src/domain/model";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { SelfDestructWindow } from "../../../src/rulesets/self-destruct-window";
-import { KnightDuelWindow } from "../../../src/game/mechanisms/roles/knight/ports";
-import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
-import { DebaterWindow } from "../../../src/game/mechanisms/roles/debater/window";
+import { KnightDuelWindow } from "../../../src/features/knight/ports";
+import { DayPipeline } from "../../../src/engine/phases/day-pipeline";
+import { DebaterWindow } from "../../../src/features/debater/window";
 import {
   closeDebate,
   openDebate,
   type DebateAuthority,
-} from "../../../src/game/mechanisms/roles/debater/authority";
+} from "../../../src/features/debater/authority";
 import { createDaytimeInterruptionComposition } from "../../../src/rulesets/daytime-interruption-composition";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 test("constructs original windows in W/R/G, W/G, W/G/E order without snapshotting", () => {
   const trace: string[] = [],

@@ -6,26 +6,26 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Role, WinCondition, type RoleComponent } from "../../../../src/domain";
 import type { VictoryComponent } from "../../../../src/domain/components/victory";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getHybridState } from "../../../../src/game/mechanisms/roles/hybrid/ports";
-import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
-import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getHybridState } from "../../../../src/features/hybrid/ports";
+import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import { AcpActionProvider } from "../../../../src/agents/acp/acp-action-provider";
+import { BaselineBotActionProvider } from "../../../../src/agents/baseline/privileged";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
+} from "../../../../src/app/simulation/reproduction-context";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const transport of ["sdk", "acp"] as const)

@@ -4,13 +4,13 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { ActionWindow, COMPONENT, Phase, Role, type GameEvent } from "../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 import { SelfDestructWindow } from "../../../src/rulesets/self-destruct-window";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
-import { convertLegacyBoard } from "../../../src/runtime/config/migrate_board";
-import { resolveBoardConfig } from "../../../src/runtime/scenarios/board_config_resolver";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { createDefaultRoleRegistry } from "../../../src/rulesets/mechanism-api";
+import { convertLegacyBoard } from "../../../src/app/config/migrate-board";
+import { resolveBoardConfig } from "../../../src/rulesets/presets/board-config-resolver";
 
 test("new overrides preserve explicit empty windows while legacy conversion preserves historically effective defaults and ignores unsupported declarations", () => {
   expect(

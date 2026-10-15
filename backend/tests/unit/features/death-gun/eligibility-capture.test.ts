@@ -9,8 +9,8 @@ import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { createRoleComponent } from "../../../../src/domain/components/role";
 import { createAliveComponent } from "../../../../src/domain/components/alive";
-import { captureDeathShotEligibility, grantDeathGun, armDeathGun } from "../../../../src/game/mechanisms/roles/death_abilities";
-import { demonHunterNativeGunCurrent } from "../../../../src/game/mechanisms/roles/demon_hunter/ports";
+import { captureDeathShotEligibility, grantDeathGun, armDeathGun } from "../../../../src/features/death-actions/death-abilities";
+import { demonHunterNativeGunCurrent } from "../../../../src/features/demon-hunter/ports";
 
 function hunter() {
   const world = new World(), actorId = world.createEntity(), role = createRoleComponent(Role.Hunter);

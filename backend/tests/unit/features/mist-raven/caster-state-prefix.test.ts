@@ -8,17 +8,17 @@ import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { createIdentityComponent } from "../../../../src/domain/entities/player";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import {
   createAliveComponent,
   createCampComponent,
-} from "../../../../src/game/observation/component-presentation";
+} from "../../../../src/agents/observation/component-presentation";
 import {
   createAlchemistState,
   createRavenState,
   type AlchemistState,
-} from "../../../../src/game/mechanisms/roles/mist_raven/state";
-import { MistCasterAuthority } from "../../../../src/game/mechanisms/roles/mist_raven/caster_authority";
+} from "../../../../src/features/mist-raven/state";
+import { MistCasterAuthority } from "../../../../src/features/mist-raven/caster-authority";
 
 function participant(caster: "alchemist" | "raven_claw_wolf" = "alchemist") {
   const world = new World(),

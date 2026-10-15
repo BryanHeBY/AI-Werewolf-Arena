@@ -3,12 +3,12 @@
  * 修改；原字面预期、身份快照及拒绝断言是预期，不在迁移中重新生成。仅调用原生内存
  * owner／frame／reader，测试自有 mock／组件不运行完整对局、模型或真实传输，support／fixture 字节及政策状态不变。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import type { ModifierState } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../src/domain";
 
-import { createModifierState, scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/state-slot";
+import { createModifierState, scholarMentorStateForRole } from "../../../../src/features/scholar-mentor/state-slot";
 import {
   installScholarMentorBoard,
   beginScholarMentorNight,
@@ -28,7 +28,7 @@ import {
   assertScholarMentorRosterCurrent,
   scholarMentorRoleCanKnife,
   scholarMentorPackBlocked,
-} from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
+} from "../../../../src/features/scholar-mentor/night-frame";
 function fixture() {
   const names = [
     "day_scholar",

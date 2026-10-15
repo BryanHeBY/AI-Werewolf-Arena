@@ -7,17 +7,17 @@ import { expect, test } from "bun:test";
 import { Role, Phase, ActionWindow, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { ActionRequest, ToolCall } from "../../../src/domain/actions";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { VotingPipeline } from "../../../src/engine/phases/voting-pipeline";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { createDefaultRoleRegistry } from "../../../src/rulesets/mechanism-api";
 import { openExileUnit, exileUnitOf } from "../../../src/domain/exile-unit";
 import { openNightUnit } from "../../../src/domain/night-unit";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { deathExecutionContext, type DeathCommitReceipt } from "../../../src/game/engine/death-wave";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { deathExecutionContext, type DeathCommitReceipt } from "../../../src/engine/death-wave";
 import { animalRosterFixture } from "../../support/features/animal-dream/builders/roster";
-import { installAnimalAuthority, beginAnimalNight, closeAnimalNight, openAnimalFoxChoice, beginAnimalExileUnit, prepareAnimalCatExpiry, closeAnimalExileUnit, animalAuthoritySnapshot } from "../../../src/game/mechanisms/roles/animal_dream/authority";
+import { installAnimalAuthority, beginAnimalNight, closeAnimalNight, openAnimalFoxChoice, beginAnimalExileUnit, prepareAnimalCatExpiry, closeAnimalExileUnit, animalAuthoritySnapshot } from "../../../src/features/animal-dream/authority";
 
 function fixture(preVote = false) {
   const config = { ...sixPlayerMvpConfig, hooks: { ...sixPlayerMvpConfig.hooks, onPreVote: preVote }, voting: { exilePolicy: "awa_one_pk_v1" as const }, selfDestruct: { enabledWindows: preVote ? [ActionWindow.OnPreVote] : [] } };

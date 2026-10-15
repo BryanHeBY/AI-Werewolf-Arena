@@ -8,8 +8,8 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { migrateBoardSource, migrateBoards } from "../../../../src/runtime/cli/migrate_configs";
-import { MIGRATION_WARNING_CODES } from "../../../../src/runtime/config/migrate_board";
+import { migrateBoardSource, migrateBoards } from "../../../../src/app/cli/migrate-configs";
+import { MIGRATION_WARNING_CODES } from "../../../../src/app/config/migrate-board";
 
 test("all migration warning keys are bilingual and valid preview/apply reports are built before publication", async () => {
   for (const locale of ["zh-CN", "en"] as const) {
@@ -71,8 +71,8 @@ test("all migration warning keys are bilingual and valid preview/apply reports a
 });
 
 test("bilingual party example resolves every named seat without missing-language fallback", async () => {
-  const { parseRuntimeConfig } = await import("../../../../src/runtime/config/parse_config");
-  const { resolveGameSetup } = await import("../../../../src/runtime/config/resolve_game_setup");
+  const { parseRuntimeConfig } = await import("../../../../src/app/config/parse-config");
+  const { resolveGameSetup } = await import("../../../../src/app/config/resolve-game-setup");
   const game = JSON.parse(
     await fs.readFile(
       path.resolve(process.cwd(), "../configs.example/games/twelve_player_fun.json"),

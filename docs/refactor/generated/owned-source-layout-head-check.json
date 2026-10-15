@@ -1,0 +1,9 @@
+{
+  "files": [
+    "backend/tests/architecture/identity-import-initialization.test.ts"
+  ],
+  "failures": [],
+  "limits": [
+    "一处本批实际改动的中文头，非全仓门禁。"
+  ]
+}

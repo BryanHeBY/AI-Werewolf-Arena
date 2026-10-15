@@ -6,15 +6,15 @@ import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { AcpProcessClient } from "../../../../src/ai/integrations/acp/acp_process_client";
-import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
-import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { AcpProcessClient } from "../../../../src/adapters/acp/acp-process-client";
+import { AcpActionProvider } from "../../../../src/agents/acp/acp-action-provider";
+import { WerewolfMcpControlServer } from "../../../../src/adapters/acp/werewolf-mcp-control";
 import type {
   AcpMcpBridgeFactory,
   AcpMcpServerConfig,
-} from "../../../../src/ai/integrations/acp/acp_mcp_bridge";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+} from "../../../../src/adapters/acp/acp-mcp-bridge";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
 import { Phase, type ActionRequest } from "../../../../src/domain";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
@@ -36,7 +36,7 @@ function captureBridge(configs: AcpMcpServerConfig[]): AcpMcpBridgeFactory<AcpTu
   return {
     serverName: "werewolf-game",
     serverEntrypoint: () =>
-      path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+      path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
     createControl(registry) {
       const control = new WerewolfMcpControlServer(registry);
       return {
@@ -174,7 +174,7 @@ test("graceful close of a non-cooperative ACP prompt escalates to process-group 
 });
 
 test("separate ACP providers progress independently under their own limits", async () => {
-  const { createPlayerAgentRuntime } = await import("../../../../src/runtime/player_agent_factory");
+  const { createPlayerAgentRuntime } = await import("../../../../src/app/player-agent-factory");
   const root = await createTestTempDirectory("awa-acp-independent-"),
     game = bootstrapGame(sixPlayerMvpConfig, { locale: "en" });
   let ready!: () => void;

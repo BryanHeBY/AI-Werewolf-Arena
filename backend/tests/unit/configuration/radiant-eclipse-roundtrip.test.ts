@@ -10,8 +10,8 @@ import { readFile } from "node:fs/promises";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../../src/runtime/config/board_definition";
-import { configDiagnostic } from "../../../src/runtime/config/error_codes";
+} from "../../../src/app/config/board-definition";
+import { configDiagnostic } from "../../../src/app/config/error-codes";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { getDefaultNightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { isRadiantEclipsePreset } from "../../../src/rulesets";

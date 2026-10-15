@@ -13,8 +13,8 @@ import {
   getActionRequestStage,
 } from "../domain/action-request-context";
 import type { World } from "../domain/world";
-import { getSessionRecorder } from "../recording/recording_context";
-import type { BuiltPlayerPrompt, PlayerRoundOutcome } from "../ai/agents/player/contracts";
+import { getSessionRecorder } from "../recording/session/context";
+import type { BuiltPlayerPrompt, PlayerRoundOutcome } from "../agents/player/contracts";
 
 /** 唯一拥有本适配实例的玩家计数；记录失败保留已递增前缀，不另建第二份计数账本。 */
 export class PlayerRoundRecorder {

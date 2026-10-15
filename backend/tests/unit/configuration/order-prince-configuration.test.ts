@@ -7,11 +7,11 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { orderPrinceTwelveConfig } from "../../../src/runtime/scenarios/order_prince_twelve";
+import { orderPrinceTwelveConfig } from "../../../src/rulesets/presets/order-prince-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { boardConfigSchema } from "../../../src/domain/board-schema";
 test("Order Prince public board roundtrip", async () => {
   const config = structuredClone(orderPrinceTwelveConfig);

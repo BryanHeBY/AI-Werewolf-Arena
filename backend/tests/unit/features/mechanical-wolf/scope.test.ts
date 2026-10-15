@@ -1,10 +1,10 @@
 /**
  * 单元测试：验证机械狼的独立 scope 与原 owner／frame／reader。输入为内存 fixture、受控回调与畸形修改；原引用、字面值和拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { Camp, Role } from "../../../../src/domain/model";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { World } from "../../../../src/domain/world";
@@ -13,14 +13,14 @@ import {
   captureMechanicalOwner,
   hasCurrentMechanicalKillMode,
   recordMechanicalModeScope,
-} from "../../../../src/game/mechanisms/roles/mechanical_wolf/night_scope";
+} from "../../../../src/features/mechanical-wolf/night-scope";
 import {
   closeMechanicalSkill,
   freshMechanicalState,
   learnMechanicalRole,
   selectMechanicalMode,
   setMechanicalState,
-} from "../../../../src/game/mechanisms/roles/mechanical_wolf/state";
+} from "../../../../src/features/mechanical-wolf/state";
 
 function fixture(mode: "skill" | "kill" = "skill") {
   // An isolated World exercises scope controls separately from full lifecycle scenarios.

@@ -6,15 +6,15 @@
 import { expect, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom } from "../../../src/domain/random";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   beginGameReproduction,
   currentEngineVersion,
   captureCheckpoint,
-} from "../../../src/runtime/simulation/reproduction_context";
+} from "../../../src/app/simulation/reproduction-context";
 import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 

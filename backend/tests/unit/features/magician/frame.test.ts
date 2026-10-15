@@ -3,11 +3,11 @@
  * 修改；原字面预期、身份快照及拒绝断言是预期，不在迁移中重新生成。仅调用原生内存
  * owner／frame／reader，测试自有 mock／组件不运行完整对局、模型或真实传输，support／fixture 字节及政策状态不变。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type World, type RoleComponent } from "../../../../src/domain";
 
-import { createMagicianState } from "../../../../src/game/mechanisms/roles/magician/state-slot";
+import { createMagicianState } from "../../../../src/features/magician/state-slot";
 import {
   installMagicianBoard,
   abortMagicianNight,
@@ -16,7 +16,7 @@ import {
   commitMagicianExchange,
   magicianChoiceTargets,
   resolveMagicianNightTarget,
-} from "../../../../src/game/mechanisms/roles/magician/night_frame";
+} from "../../../../src/features/magician/night-frame";
 function fixture(
   firstNight: 1 | 2 = 1,
   shot: "original" | "exchanged" = "original",

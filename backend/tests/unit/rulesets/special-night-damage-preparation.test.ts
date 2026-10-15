@@ -8,10 +8,10 @@ import { DeathCause, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-co
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent, aliveLifeVersion } from "../../../src/domain/components/alive";
-import type { NightPipelineResult } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import type { AppliedFault, FaultDecisionBoundary } from "../../../src/game/engine/fault_plan";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import type { SessionRecordManager } from "../../../src/recording/session_recorder";
+import type { NightPipelineResult } from "../../../src/engine/phases/night-pipeline";
+import type { AppliedFault, FaultDecisionBoundary } from "../../../src/engine/fault-plan";
+import { runWithSessionRecorder } from "../../../src/recording/session/context";
+import type { SessionRecordManager } from "../../../src/recording/session/recorder";
 import { prepareSpecialNightDamage, type SpecialNightDamageRuntime } from "../../../src/rulesets/special-night-damage-preparation";
 
 type Night = Extract<NightPipelineResult, { interrupted: false }>;

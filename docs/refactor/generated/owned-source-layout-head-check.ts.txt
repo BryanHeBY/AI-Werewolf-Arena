@@ -1,0 +1,11 @@
+/** 只检查本批新改的架构测试职责头；不运行测试或产品，不把形状门禁冒内容独立审查。 */
+import { readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { compiler } from "/home/hby/dev/AI-Werewolf-Arena/tooling/refactor/architecture/contracts";
+import { checkComments } from "/home/hby/dev/AI-Werewolf-Arena/tooling/refactor/architecture/comment-check";
+const path = "backend/tests/architecture/identity-import-initialization.test.ts";
+const text = readFileSync(path, "utf8");
+const failures = checkComments(compiler(process.cwd()), { files: [{ path, text, sha256: createHash("sha256").update(text).digest("hex") }], documentationPaths: [] });
+writeFileSync("docs/refactor/generated/owned-source-layout-head-check.json", JSON.stringify({ files: [path], failures, limits: ["一处本批实际改动的中文头，非全仓门禁。"] }, null, 2) + "\n");
+console.log(JSON.stringify({ files: 1, failures: failures.length }));
+if (failures.length) process.exitCode = 1;

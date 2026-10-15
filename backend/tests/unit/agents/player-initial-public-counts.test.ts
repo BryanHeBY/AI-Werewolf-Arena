@@ -8,20 +8,20 @@ import { Camp, Role, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-co
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { installInitialIdentityDeal } from "../../../src/game/mechanisms/roles/initial_identity/deal";
-import { collectPlayerInitialPublicCounts } from "../../../src/game/observation/player-initial-public-counts";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
+import { installInitialIdentityDeal } from "../../../src/features/initial-identity/deal";
+import { collectPlayerInitialPublicCounts } from "../../../src/agents/observation/player-initial-public-counts";
 import {
   PlayerPromptPolicy,
   type PlayerPromptPolicyOptions,
-} from "../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 
 const board: ReadonlyBoardConfig = {
   boardSize: 2,

@@ -8,15 +8,15 @@ import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
-import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
+import { allNightAbilities } from "../../../../src/features/night-abilities/abilities";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
-import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
-import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
+import { BaselineBotActionProvider } from "../../../../src/agents/baseline/privileged";
+import { createPlayerAgentRuntime } from "../../../../src/app/player-agent-factory";
+import type { ResolvedAgentRuntimeProfile } from "../../../../src/app/config/contracts";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 for (const locale of ["zh-CN", "en"] as const)
@@ -215,10 +215,10 @@ for (const locale of ["zh-CN", "en"] as const)
 for (const locale of ["zh-CN", "en"] as const)
   for (const kind of ["llm", "acp"] as const)
     test(`${locale}/${kind}: the actual Witch agent receives an unknown current knife after its antidote is exhausted`, async () => {
-      const { getWitchState } = await import("../../../../src/game/mechanisms/roles/witch/ports");
+      const { getWitchState } = await import("../../../../src/features/witch/ports");
       const { text } = await import("@ai-werewolf-arena/game-text");
       const { twelvePlayerStandardConfig } =
-        await import("../../../../src/runtime/scenarios/twelve_player_standard");
+        await import("../../../../src/rulesets/presets/twelve-player-standard");
       const root = await createTestTempDirectory("awa-exhausted-transport-"),
         events: GameEvent[] = [],
         prompts: string[] = [];

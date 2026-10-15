@@ -5,14 +5,14 @@
  * expected outcomes, and no billed model or production state writer is introduced.
  */
 import { readFile } from "node:fs/promises";
-import { SessionRecordManager } from "../../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../../src/recording/recording_context";
-import { beginGameReproduction } from "../../../../../src/runtime/simulation/reproduction_context";
-import { captureCheckpoint } from "../../../../../src/runtime/simulation/reproduction_context";
-import { currentEngineVersion } from "../../../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../../../src/runtime/game_event_recorder";
-import { parseReproductionRecord } from "../../../../../src/recording/reproduction";
-import { replayReproduction } from "../../../../../src/runtime/simulation/replay_reproduction";
+import { SessionRecordManager } from "../../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../../src/recording/session/context";
+import { beginGameReproduction } from "../../../../../src/app/simulation/reproduction-context";
+import { captureCheckpoint } from "../../../../../src/app/simulation/reproduction-context";
+import { currentEngineVersion } from "../../../../../src/app/simulation/reproduction-context";
+import { GameEventRecorder } from "../../../../../src/app/game-event-recorder";
+import { parseReproductionRecord } from "../../../../../src/recording/reproduction/format";
+import { replayReproduction } from "../../../../../src/app/simulation/replay-reproduction";
 import { animalGame } from "../builders/runtime-game";
 import { animalBoard } from "../builders/runtime-game";
 import { animalAction } from "./actions";

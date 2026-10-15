@@ -6,8 +6,8 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { RoleComponent } from "../../../../src/domain/components/role";
 import { Phase } from "../../../../src/domain/model";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
 import {
   REQUIRED_ACTION_CONSTRAINTS,
   ToolLoopClient,

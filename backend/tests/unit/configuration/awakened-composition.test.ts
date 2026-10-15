@@ -9,8 +9,8 @@ import { Role, type BoardConfig } from "../../../src/domain";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../src/app/config/board-definition";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 for (const extra of [
   Role.Seer,

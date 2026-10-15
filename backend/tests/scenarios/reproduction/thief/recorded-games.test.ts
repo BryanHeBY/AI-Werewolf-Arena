@@ -8,7 +8,7 @@ import { promises as fs } from "node:fs";
 import { Camp, Role } from "../../../../src/domain";
 import { THIEF_CASES, thiefScenario } from "../../../support/features/thief/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 for (const size of [6, 12] as const)
   for (const kind of THIEF_CASES.filter(
     (k) => size === 6 || ["both0", "keep", "seer", "hunter"].includes(k),

@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import {
   ActionWindow,
   Role,

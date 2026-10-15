@@ -7,7 +7,7 @@
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
 import { expect, test } from "bun:test";
-import { planSecretBodyBlock } from "../../../../src/game/mechanisms/roles/noble_secret_body/damage";
+import { planSecretBodyBlock } from "../../../../src/features/noble-secret-body/damage";
 const invalid = (source: unknown) =>
   expect(() => planSecretBodyBlock(5, 6, source as any)).toThrow("secret_body_sources_invalid");
 test("whole source proxies reject before any trap", () => {

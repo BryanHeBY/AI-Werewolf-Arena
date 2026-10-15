@@ -6,17 +6,17 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Camp, COMPONENT, Role, PotionType, type RoleComponent } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/night_stages";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { SEER_NIGHT_STAGES } from "../../../../src/features/seer/night-stages";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { BaselineBotActionProvider } from "../../../../src/agents/baseline/privileged";
 
 const deck = [Role.CursedFox, Role.Seer, Role.Wolf, Role.Witch, Role.Guard, Role.Villager];
 

@@ -4,14 +4,14 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Phase, Role, WinCondition, createVictoryComponent, type ActionRequest } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { ConditionRegistry } from "../../../../src/domain/registries/condition-registry";
-import { WinConditionRegistry } from "../../../../src/game/mechanisms/registries/win_condition_registry";
-import { victoryDecision } from "../../../../src/game/mechanisms/win_conditions/results";
-import { PhaseManager } from "../../../../src/game/engine/phase_manager";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { WinConditionRegistry } from "../../../../src/engine/victory/condition-registry";
+import { victoryDecision } from "../../../../src/engine/victory/results";
+import { PhaseManager } from "../../../../src/engine/phase-manager";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { createDefaultRoleRegistry } from "../../../../src/game/mechanisms";
+import { createDefaultRoleRegistry } from "../../../../src/rulesets/mechanism-api";
 
 const deck = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 

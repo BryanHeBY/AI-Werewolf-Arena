@@ -7,11 +7,11 @@
  */
 import { expect, test } from "bun:test";
 import { isNobleSecretBodyPreset, isDemonHunterPreset } from "../../../src/rulesets";
-import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../src/rulesets/presets/noble-secret-body-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { boardConfigSchema } from "../../../src/domain/board-schema";
 import { Role, WitchSelfHealRule, type BoardConfig } from "../../../src/domain";

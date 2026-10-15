@@ -7,21 +7,21 @@ import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom, Phase, Role, type ActionRequest } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
+} from "../../../src/app/simulation/reproduction-context";
+import { GameEventRecorder } from "../../../src/app/game-event-recorder";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
-import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
+import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
+import { runWithSessionRecorder } from "../../../src/recording/session/context";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../src/runtime/simulation/replay_reproduction";
+} from "../../../src/app/simulation/replay-reproduction";
 
 test("a fixed deal with an injected named root stream reproduces in its declared mode", async () => {
   const root = await createTestTempDirectory("awa-fixed-record-");

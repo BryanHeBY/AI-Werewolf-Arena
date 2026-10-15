@@ -12,20 +12,20 @@ import {
   type HiddenWolfCampInspectionPolicy,
   type RoleComponent,
 } from "../../../../src/domain";
-import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/ports";
-import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { getHiddenWolfState } from "../../../../src/features/hidden-wolf/ports";
+import { getSeerState } from "../../../../src/features/seer/ports";
+import { resolveInspection } from "../../../../src/engine/inspection";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
 import {
   knownWolfTeammates,
   wolfChatParticipants,
   wolfKnifeHolders,
-} from "../../../../src/game/mechanisms/roles/wolf_team";
+} from "../../../../src/features/wolf-team/permissions";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/app/config/board-definition";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 const roles = [Role.HiddenWolf, Role.Wolf, Role.Seer, Role.Knight, Role.Villager, Role.Villager];
 

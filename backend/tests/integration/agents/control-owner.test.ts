@@ -8,7 +8,7 @@
 import { expect, test } from "bun:test";
 import { createServer, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
-import { LoopbackMcpControlServer } from "../../../src/ai/integrations/acp/loopback_mcp_control_server";
+import { LoopbackMcpControlServer } from "../../../src/adapters/acp/loopback-mcp-control-server";
 import { assertControlOwnerClosed } from "../../support/drivers/transport/control-owner";
 
 function control() {

@@ -4,14 +4,14 @@
  * 只调用原 reader／projection，不运行整局、模型或物理传输；旧样本／标题与状态政策保持；当前Camp改用显式夹具来源，新增一条独立输入风险。
  */
 import { expect, test } from "bun:test";
-import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";
+import { scholarMentorStateForRole } from "../../../../src/features/scholar-mentor/ports";
 import type { CampComponent } from "../../../../src/domain/components/camp";
 import { Camp, type Role, type RoleComponent } from "../../../../src/domain";
 import {
   createMagicianState,
   getMagicianState,
   projectMagicianState,
-} from "../../../../src/game/mechanisms/roles/magician/state-slot";
+} from "../../../../src/features/magician/state-slot";
 function fixture(firstNight: 1 | 2 = 1) {
   const state = createMagicianState(firstNight);
   const role = {

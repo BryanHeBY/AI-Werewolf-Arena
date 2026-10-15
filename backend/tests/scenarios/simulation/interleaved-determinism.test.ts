@@ -5,9 +5,9 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom } from "../../../src/domain/random";
-import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 
 for (const [board, config] of [
   ["six", sixPlayerMvpConfig],

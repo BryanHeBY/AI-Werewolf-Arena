@@ -4,19 +4,19 @@
  * Output and independent oracle: Actual fear ordering, natural terminal checkpoints and exact strict replay.
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { nightmareTwelveConfig } from "../../../../src/runtime/scenarios/nightmare_twelve";
+import { nightmareTwelveConfig } from "../../../../src/rulesets/presets/nightmare-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
+} from "../../../../src/app/config/board-definition";
+import { simulateGames } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 for (const fear of ["optional", "required_when_legal"] as const)
   for (const wolf of ["standard", "no_blast_no_self_knife"] as const)

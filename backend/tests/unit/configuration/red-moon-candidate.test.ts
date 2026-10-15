@@ -8,12 +8,12 @@ import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
+import { getRedMoonState } from "../../../src/features/red-moon/state-slot";
 import {
   demonHunterActorId,
   demonHunterCheckpointPlayers,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
+} from "../../../src/features/demon-hunter/authority";
 for (const policy of ["ends_game", "forbidden"] as const)
   test(policy + ": finite roster installs with matching runtime profile", () => {
     const { world, config, ids } = redMoonCandidateWorld(policy);

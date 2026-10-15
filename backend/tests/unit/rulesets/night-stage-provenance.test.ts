@@ -5,20 +5,20 @@
  * prefix expectations verify one-pass collection without extra handler getters.
  * No model, complete-game driver, fixture rewrite or compiler-generated oracle runs.
  */
-import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { createRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import type { RoleProfile } from "../../../src/game/mechanisms/roles/contracts";
-import type { NightStageHandler } from "../../../src/game/mechanisms/stages/night/contracts";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
+import type { RoleProfile } from "../../../src/rulesets/roles/contracts";
+import type { NightStageHandler } from "../../../src/engine/night/contracts";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { applyGhostBrideStageRegistration } from "../../../src/rulesets/night-stage-registration";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { createRandom } from "../../../src/domain/random";
 

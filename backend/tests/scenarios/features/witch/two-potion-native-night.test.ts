@@ -17,17 +17,17 @@ import {
   type ToolCall,
   type StatusMarksComponent,
 } from "../../../../src/domain";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { WITCH_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/witch/night_stages";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { WITCH_NIGHT_STAGES } from "../../../../src/features/witch/night-stages";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+} from "../../../../src/app/config/board-definition";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 
 const potionOrders: Array<Array<PotionType.Heal | PotionType.Poison>> = [

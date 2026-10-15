@@ -6,12 +6,12 @@
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../src/domain/components/role";
-import { initializeKnightState } from "../../../src/game/mechanisms/roles/knight/state";
-import { initializeIdiotState } from "../../../src/game/mechanisms/roles/idiot/state";
-import { initializeWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/state";
-import { initializeBearState, getBearState } from "../../../src/game/mechanisms/roles/bear/state";
-import { initializeGravekeeperState } from "../../../src/game/mechanisms/roles/gravekeeper/state";
-import { BearNightFrame } from "../../../src/game/mechanisms/roles/bear/night_frame";
+import { initializeKnightState } from "../../../src/features/knight/state";
+import { initializeIdiotState } from "../../../src/features/idiot/state";
+import { initializeWhiteWolfKingState } from "../../../src/features/white-wolf-king/state";
+import { initializeBearState, getBearState } from "../../../src/features/bear/state";
+import { initializeGravekeeperState } from "../../../src/features/gravekeeper/state";
+import { BearNightFrame } from "../../../src/features/bear/night-frame";
 import { animalRosterFixture } from "../../support/features/animal-dream/builders/roster";
 
 test("ordinary initializers retain the original container and installation setter failure", () => {

@@ -8,7 +8,7 @@ import type { ActionStage } from "../../../src/domain";
 import type { ToolCall } from "../../../src/domain";
 import type { Role } from "../../../src/domain";
 import type { MistWireExpectations } from "../features/mist-raven/oracles/transport";
-import type { ResolvedBoardDefinition } from "../../../src/runtime/config/board_definition";
+import type { ResolvedBoardDefinition } from "../../../src/app/config/board-definition";
 
 export interface PlannedTurn {
   radiantBorrow?: { id: string; state: Record<string, unknown> };

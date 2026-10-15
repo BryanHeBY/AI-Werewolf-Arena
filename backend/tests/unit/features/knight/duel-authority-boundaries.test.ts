@@ -15,22 +15,22 @@ import {
   type GameEvent,
   type ActionRequest,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getKnightState, setKnightState } from "../../../../src/game/mechanisms/roles/knight/state";
-import { commitKnightDuel } from "../../../../src/game/mechanisms/roles/knight/commit";
-import { KnightDuelWindow as DuelCollector } from "../../../../src/game/mechanisms/roles/knight/ports";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getKnightState, setKnightState } from "../../../../src/features/knight/state";
+import { commitKnightDuel } from "../../../../src/features/knight/commit";
+import { KnightDuelWindow as DuelCollector } from "../../../../src/features/knight/ports";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { RoleCatalog } from "../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { setIdiotState } from "../../../../src/game/mechanisms/roles/idiot/ports";
-import { DefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { resolveInspection } from "../../../../src/engine/inspection";
+import { setIdiotState } from "../../../../src/features/idiot/ports";
+import { DefaultTargetHintRegistry } from "../../../../src/agents/tool-repair/target-hint-registry";
 
 const deck = [Role.Knight, Role.Wolf, Role.WolfKing, Role.Hunter, Role.Villager, Role.Villager];
 

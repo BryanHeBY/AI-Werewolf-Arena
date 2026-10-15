@@ -1,17 +1,17 @@
 /**
  * 负责测试中构造内存夜间上下文和提取已完成摘要。输入为明确 World／Provider 覆盖；输出保留 typed 阶段端口和原 World getter 时点，未配置依赖直接抛错。本 builder 不拥有规则预期、不改 fixture、不运行完整对局。
  */
-import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../src/features/night-abilities/night-ability-actors";
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
 import { COMPONENT, type World } from "../../../src/domain";
 import { StatusMarksComponent } from "../../../src/domain/components/status-marks";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import type { NightPipelineResult } from "../../../src/game/engine/phase_pipeline/night_pipeline";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
+import type { NightStageContext } from "../../../src/engine/night/contracts";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import type { NightPipelineResult } from "../../../src/engine/phases/night-pipeline";
 
 const unused = (): never => {
   throw new Error("unused_night_stage_fixture_dependency");

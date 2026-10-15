@@ -4,9 +4,9 @@
 import { expect, test } from "bun:test";
 import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../../src/domain";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { scholarMentorTwelveConfig } from "../../../../src/runtime/scenarios/scholar_mentor_twelve";
-import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/ports";
-import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { scholarMentorTwelveConfig } from "../../../../src/rulesets/presets/scholar-mentor-twelve";
+import { scholarMentorStateForRole } from "../../../../src/features/scholar-mentor/ports";
+import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { isScholarMentorPreset } from "../../../../src/rulesets";
 for (const locale of ["zh-CN", "en"] as const)

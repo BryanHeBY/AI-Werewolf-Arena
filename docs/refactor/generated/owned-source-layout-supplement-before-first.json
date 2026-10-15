@@ -1,0 +1,54 @@
+{
+  "reason": "在原1494固定Git来源之外，补首类型发现2CLI、ACP派生current清单和有限历史包准入的3纯契约数据owner；不重建原before。",
+  "baseCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+  "source": [
+    {
+      "path": "frontend/scripts/render-replay.ts",
+      "gitCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+      "gitBlob": "ac1ec15df2b62b7294aed3bd5123c9d7cc4161cb",
+      "mode": "100644",
+      "sha256": "8a958c7a5ae2a11558cd5b73f29be6eb234208f7188e86cc6d550548dedfca7b",
+      "bytes": 6028
+    },
+    {
+      "path": "frontend/scripts/replay-dev.ts",
+      "gitCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+      "gitBlob": "882c988aa83c20490afd708bb9270166d7f430a3",
+      "mode": "100644",
+      "sha256": "a7f94de98672be987d7803a5002d5591eed566afa0d5dc924ba1138f06d64460",
+      "bytes": 2318
+    },
+    {
+      "path": "backend/tests/fixtures/acp/manifest.json",
+      "gitCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+      "gitBlob": "6906342dd21d671b35e7205a4e793980f9bfd5ce",
+      "mode": "100644",
+      "sha256": "830596197a0f493429b00006f60d595f208fcf75bdddd4f08affb965555fb51e",
+      "bytes": 22428
+    },
+    {
+      "path": "packages/game-contract/src/locale.ts",
+      "gitCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+      "gitBlob": "1d97d4f07177751d9ed4f6585e29f6535bf10f10",
+      "mode": "100644",
+      "sha256": "a13a37e23b0eebd040d3cadd985a1d3ca5a0a80629992d1dfefc860cec1756e9",
+      "bytes": 517
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "gitCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+      "gitBlob": "a4813d8151a73b97c4ab65f10a7649d324f6f040",
+      "mode": "100644",
+      "sha256": "3ba35152b2b078fcaf3204998c9508e039677b9230317d5faa3cdda6b1461aae",
+      "bytes": 4506
+    },
+    {
+      "path": "packages/game-contract/src/inert-event-data.ts",
+      "gitCommit": "6025b64bca6d57c1d0965fdecf5328a8b897ef4c",
+      "gitBlob": "a40adbf9f2f90f86fad90a91d48ad3d5cb820aa6",
+      "mode": "100644",
+      "sha256": "68de25bbf514a55dd7d6aaa57fb502190c6f0be1345bbc4babc62b69b456e0bb",
+      "bytes": 2435
+    }
+  ]
+}

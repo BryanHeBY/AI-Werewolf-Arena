@@ -8,11 +8,11 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { DeathCause, Phase, Role, type ActionRequest, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../../../src/domain/model";
 import { assertRequestDelivery, deferRequestDelivery, deriveBoundedRequest } from "../../../src/domain/request-delivery";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { getDefaultLastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";
-import { LastWordsWindow } from "../../../src/game/mechanisms/last_words/window";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { getDefaultLastWordsMechanism } from "../../../src/features/last-words/last-words-mechanism";
+import { LastWordsWindow } from "../../../src/features/last-words/window";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 function fixture(trace: string[] = [], close?: () => void) {
   const game = bootstrapGame(sixPlayerMvpConfig, {

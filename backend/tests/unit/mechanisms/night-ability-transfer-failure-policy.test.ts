@@ -14,8 +14,8 @@ import type { GameEvent } from "../../../src/domain/events";
 import {
   allNightAbilities, activeNightAbility, findNightAbility,
   type NightAbilityReadView,
-} from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
+} from "../../../src/features/night-abilities/abilities";
+import { grantNightAbility, transferNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
 
 function fixture() {
   const world = new World(), origin = world.createEntity(), from = world.createEntity(), to = world.createEntity();

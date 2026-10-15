@@ -3,9 +3,9 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
+import { ActionTurn } from "../../../src/agents/player/action-turn";
+import { AcpTurnRegistry } from "../../../src/adapters/acp/acp-turn-registry";
 import {
   COMPONENT,
   Phase,
@@ -15,13 +15,13 @@ import {
   type AliveComponent,
   type RoleComponent,
 } from "../../../src/domain";
-import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
-import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
-import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { ToolSpecRegistry, getDefaultToolSpecRegistry } from "../../../src/game/mechanisms";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { getGuardState } from "../../../src/features/guard/ports";
+import { getHunterState } from "../../../src/features/hunter/ports";
+import { getWitchState } from "../../../src/features/witch/ports";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { ToolSpecRegistry, getDefaultToolSpecRegistry } from "../../../src/rulesets/mechanism-api";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 
 const roles = [
   Role.Wolf,

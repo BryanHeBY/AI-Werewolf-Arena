@@ -4,15 +4,15 @@
  */
 import { expect, test } from "bun:test";
 import type { Locale } from "@ai-werewolf-arena/game-contract";
-import { buildDebugSummaryMarkdown } from "../../../src/audit/debug_summary_generator";
-import { AuditSummaryRenderer } from "../../../src/audit/summary_renderer";
-import { AuditEvidencePolicy } from "../../../src/audit/evidence_policy";
+import { buildDebugSummaryMarkdown } from "../../../src/audit/debug-summary-generator";
+import { AuditSummaryRenderer } from "../../../src/audit/summary-renderer";
+import { AuditEvidencePolicy } from "../../../src/audit/evidence-policy";
 import {
   collectObservations,
   filterActionableReports,
   scanEventsForPotentialIssues,
   scanPlayerTimelineMetadataIssues,
-} from "../../../src/audit/deterministic_checks";
+} from "../../../src/audit/deterministic-checks";
 import type { BuildDebugSummaryInput } from "../../../src/audit/contracts";
 import type {
   ReplayDebugReport,

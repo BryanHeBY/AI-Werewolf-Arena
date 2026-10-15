@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import { renderMessage } from "@ai-werewolf-arena/game-text";
-import { collectObservations } from "../../../src/audit/deterministic_checks";
+import { collectObservations } from "../../../src/audit/deterministic-checks";
 import type { BuildDebugSummaryInput } from "../../../src/audit/contracts";
 
 for (const locale of ["zh-CN", "en"] as const)

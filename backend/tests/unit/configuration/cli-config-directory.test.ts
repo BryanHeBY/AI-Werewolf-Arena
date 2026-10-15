@@ -8,12 +8,12 @@
 import { expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
-import { resolveCliConfigDirectory } from "../../../src/runtime/cli/config_directory";
-import { parseRunGameArgs } from "../../../src/runtime/cli/run_game";
+import { resolveCliConfigDirectory } from "../../../src/app/cli/config-directory";
+import { parseRunGameArgs } from "../../../src/app/cli/run-game";
 
 test("the default config directory is the project directory from root and backend cwd", () => {
   const root = path.resolve(__dirname, "../../../..");
-  const helper = path.join(root, "backend/src/runtime/cli/config_directory.ts");
+  const helper = path.join(root, "backend/src/app/cli/config-directory.ts");
   for (const cwd of [root, path.join(root, "backend")]) {
     const child = spawnSync(
       process.execPath,

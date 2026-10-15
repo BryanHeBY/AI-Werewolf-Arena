@@ -8,14 +8,14 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
-import type { ChatModelClient } from "../../../../src/ai/integrations/llm/transport";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import { AcpActionProvider } from "../../../../src/agents/acp/acp-action-provider";
+import type { ChatModelClient } from "../../../../src/adapters/llm/transport";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { ReplayFileStore } from "../../../../src/recording/file_store";
+import { ReplayFileStore } from "../../../../src/adapters/filesystem/session-file-store";
 import { Phase, Role, type ActionRequest } from "../../../../src/domain";
 
 const secret = "synthetic-private-transport-canary";
@@ -159,7 +159,7 @@ for (const locale of ["zh-CN", "en"] as const)
     });
 
 test("recording and inspection warning language is transient display context, not game metadata", async () => {
-  const { AuditTaskRunner } = await import("../../../../src/audit/task_runner");
+  const { AuditTaskRunner } = await import("../../../../src/audit/task-runner");
   const root = await createTestTempDirectory("awa-diagnostic-display-");
   const manager = await SessionRecordManager.create(
     {

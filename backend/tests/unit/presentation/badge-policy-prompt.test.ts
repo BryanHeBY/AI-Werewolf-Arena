@@ -6,8 +6,8 @@
  * driver.
  */
 import { expect, test } from "bun:test";
-import { DefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { DefaultConfigRenderRegistry } from "../../../src/agents/prompt/config-render-registry";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 for (const locale of ["en", "zh-CN"] as const)
   for (const choice of [false, true])
     test(`one accurate badge rule ${locale}/${choice ? "holder" : "automatic"}`, () => {

@@ -11,7 +11,7 @@ import {
   getOrderPrinceState,
   nextOrderPrinceChoice,
   projectOrderPrinceState,
-} from "../../../../src/game/mechanisms/roles/order_prince/state-slot";
+} from "../../../../src/features/order-prince/state-slot";
 
 // 测试自持当前 Camp，不经旧 Role 属性或隐藏映射提供阵营。
 const fixtureCamp = { camp: Camp.Good };

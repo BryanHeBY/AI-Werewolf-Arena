@@ -8,23 +8,23 @@
 import { expect, test } from "bun:test";
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
 import {
   freshPairSeerState,
   readPairSeerState,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
+} from "../../../../src/features/fragrant-pair-seer/state";
 import {
   PAIR_STATE_SLOT_CONTRACT,
   installPairStateSlot,
   commitPairStateSlot,
   type PairStateSlot,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot";
+} from "../../../../src/features/fragrant-pair-seer/pair-state-slot";
 import {
   openPairCheckChoice,
   fragrantAuthoritySnapshot,
   fragrantCheckpointPrivateState,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+} from "../../../../src/features/fragrant-pair-seer/authority";
 import { fragrantPairOwnerFixture } from "../../../support/features/fragrant-pair-seer/builders/owner";
 
 test("Pair contribution uses the original schema, factory and sole append writer", () => {

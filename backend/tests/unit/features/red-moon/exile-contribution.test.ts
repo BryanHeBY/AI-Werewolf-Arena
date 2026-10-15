@@ -11,9 +11,9 @@ import {
   closeDemonHunterNight,
   freezeDemonHunt,
   demonHunterCheckpointPlayers,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { redMoonVotedOutHook } from "../../../../src/game/mechanisms/roles/red_moon_apostle/voted_out_hook";
-import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/ports";
+} from "../../../../src/features/demon-hunter/authority";
+import { redMoonVotedOutHook } from "../../../../src/features/red-moon/voted-out-hook";
+import { getRedMoonState } from "../../../../src/features/red-moon/ports";
 import { redMoonCandidateWorld } from "../../../support/features/red-moon/builders/candidate-world";
 
 function closedLastWolf() {

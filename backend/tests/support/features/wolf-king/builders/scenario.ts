@@ -9,13 +9,13 @@ import { withPromptOracle } from "../oracles/prompt-plan";
 import { ActionWindow } from "../../../../../src/domain";
 import { Role } from "../../../../../src/domain";
 import { WinCondition } from "../../../../../src/domain";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
 import { foundationTransportPlan } from "../../../builders/transport/foundation-plan";
 import type { PlannedTurn } from "../../../transport/contracts";
 import type { TransportGameScenario } from "../../../transport/contracts";
-import { sixPlayerMvpConfig } from "../../../../../src/runtime/scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../../../../../src/runtime/scenarios/twelve_player_standard";
-import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
+import { sixPlayerMvpConfig } from "../../../../../src/rulesets/presets/six-player-mvp";
+import { twelvePlayerStandardConfig } from "../../../../../src/rulesets/presets/twelve-player-standard";
+import { boardDefinitionFromConfig } from "../../../../../src/app/config/board-definition";
 
 export type WolfKingScenario =
   "exile_chain" | PotionType.Poison | "twelve" | "blast" | "shot_chain";

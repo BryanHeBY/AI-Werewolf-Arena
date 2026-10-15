@@ -12,9 +12,9 @@ import { createRandom } from "../../../../../src/domain";
 import { shuffled } from "../../../../../src/domain";
 import type { ActionStage } from "../../../../../src/domain";
 import type { ToolCall } from "../../../../../src/domain";
-import { orderPrinceTwelveConfig } from "../../../../../src/runtime/scenarios/order_prince_twelve";
-import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
+import { orderPrinceTwelveConfig } from "../../../../../src/rulesets/presets/order-prince-twelve";
+import { boardDefinitionFromConfig } from "../../../../../src/app/config/board-definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
 import type { PlannedTurn } from "../../../transport/contracts";
 import type { TransportGameScenario } from "../../../transport/contracts";
 

@@ -6,11 +6,11 @@
 import { expect, test } from "bun:test";
 import { Phase, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../src/domain/world";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
-import type { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
+import type { SessionRecordManager } from "../../../../src/recording/session/recorder";
 import type { ReplayRecordLogicOpInput } from "../../../../src/recording/contracts";
 import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
-import { publishNobleNightKnife, type NobleNightKnifePublicationRuntime } from "../../../../src/game/mechanisms/roles/noble_secret_body/knife-ports";
+import { publishNobleNightKnife, type NobleNightKnifePublicationRuntime } from "../../../../src/features/noble-secret-body/knife-ports";
 
 type NobleKnifeEvent = Extract<GameEvent, { type: "noble_body_knife_committed" }>;
 

@@ -19,9 +19,9 @@ import {
   createAnimalFoxRequest,
   animalFoxEffect,
   animalAuthoritySnapshot,
-} from "../../../../src/game/mechanisms/roles/animal_dream/authority";
-import { activeCharm, bindCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
+} from "../../../../src/features/animal-dream/authority";
+import { activeCharm, bindCharm } from "../../../../src/features/wolf-beauty/relation";
+import { getWolfBeautyState } from "../../../../src/features/wolf-beauty/ports";
 const fixture = () => animalRosterFixture(undefined, installAnimalAuthority);
 const secondNight = (f: ReturnType<typeof fixture>, current: () => boolean = () => true) => {
   beginAnimalNight(f.world, 1, () => true);

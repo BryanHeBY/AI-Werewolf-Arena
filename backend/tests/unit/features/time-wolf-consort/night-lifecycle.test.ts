@@ -8,16 +8,16 @@
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import rawBoard from "../../../../../configs.example/boards/awa_time_consort_12_v1.json";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   TimeConsortNightUnit,
   timeConsortNightTerminal,
-} from "../../../../src/game/mechanisms/roles/time_wolf_consort/night-lifecycle";
+} from "../../../../src/features/time-wolf-consort/night-lifecycle";
 import {
   beginTimeConsortNight,
   commitTimeConsortChoice,
-} from "../../../../src/game/mechanisms/roles/time_wolf_consort/night_frame";
+} from "../../../../src/features/time-wolf-consort/night-frame";
 
 function fixture() {
   const board = parseBoardDefinition(rawBoard),

@@ -5,13 +5,13 @@ import type { SeerReadState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { getSeerState as publicRead } from "../../../../src/game/mechanisms/roles/seer/ports";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
+import { getSeerState as publicRead } from "../../../../src/features/seer/ports";
 import {
   getSeerState,
   setSeerState,
   recordSeerInspection,
-} from "../../../../src/game/mechanisms/roles/seer/ports";
+} from "../../../../src/features/seer/ports";
 
 function rejectedWrites(state: SeerReadState): void {
   // @ts-expect-error A read view grants no scalar write.

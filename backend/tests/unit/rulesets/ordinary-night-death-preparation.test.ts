@@ -9,7 +9,7 @@ import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent, aliveLifeVersion } from "../../../src/domain/components/alive";
 import { captureNightLife, type NightFoxInspectionClaim } from "../../../src/domain/night-effects";
-import { DeathCommitReceipt, planDeathWave } from "../../../src/game/engine/death-wave";
+import { DeathCommitReceipt, planDeathWave } from "../../../src/engine/death-wave";
 import {
   prepareOrdinaryNightDeaths,
   ordinaryNightDeathPublication,

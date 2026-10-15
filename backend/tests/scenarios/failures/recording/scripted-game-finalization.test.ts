@@ -5,15 +5,15 @@ import { mapPlayerArchive } from "../../../support/drivers/recording/player-arch
 import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { PlayerPromptSession } from "../../../../src/ai/agents/llm/player_prompt_session";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
+import { PlayerPromptSession } from "../../../../src/agents/llm/player-prompt-session";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 import { expect, spyOn, test } from "bun:test";
 import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import path from "node:path";
@@ -21,10 +21,10 @@ import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Camp, COMPONENT, Phase, Role, type ActionRequest, type BoardConfig, type RoleComponent } from "../../../../src/domain";
 import { createRandom } from "../../../../src/domain/random";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import type { ReplayPlayerView } from "../../../../src/recording/contracts";
 import { StrictScriptedPlayers, type ScriptStep } from "../../../support/drivers/scripted-players";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";

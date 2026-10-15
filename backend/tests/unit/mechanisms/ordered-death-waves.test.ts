@@ -12,12 +12,12 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { HookRegistry } from "../../../src/game/mechanisms/hooks/hook_registry";
-import { LastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { HookRegistry } from "../../../src/engine/hooks/registry";
+import { LastWordsMechanism } from "../../../src/features/last-words/last-words-mechanism";
 
 const scene = (locale: "zh-CN" | "en") =>
   bootstrapGame(
@@ -190,8 +190,8 @@ test("multiple hooks retain compound causes without aliasing their returned sour
 });
 
 test("a later hook failure keeps a completed gun death, original error and closed action windows", async () => {
-  const { hunterDeathHook } = await import("../../../src/game/mechanisms/roles/hunter/death_hook");
-  const { getHunterState } = await import("../../../src/game/mechanisms/roles/hunter/ports");
+  const { hunterDeathHook } = await import("../../../src/features/hunter/death-hook");
+  const { getHunterState } = await import("../../../src/features/hunter/ports");
   const { world } = scene("en"),
     events: GameEvent[] = [],
     error = new Error("synthetic-later-hook-error");

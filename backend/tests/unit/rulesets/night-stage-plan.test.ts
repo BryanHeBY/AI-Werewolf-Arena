@@ -3,24 +3,24 @@
  * 顺序、原 receiver 与零 getter／trap 次数是独立预期；小型真实上下文验证编译后的 actor 查询。
  * 原生成员约束与不透明来源的失败前缀分别登记；查询仍在原 World 读取点绑定，不调用模型或编译器生成预期。
  */
-import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { createRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
-import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../src/features/night-abilities/night-ability-actors";
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import type { RoleProfile } from "../../../src/game/mechanisms/roles/contracts";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import type { RoleProfile } from "../../../src/rulesets/roles/contracts";
 import type {
   NightStageContext,
   NightStageHandler,
-} from "../../../src/game/mechanisms/stages/night/contracts";
+} from "../../../src/engine/night/contracts";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 const config = { ...sixPlayerMvpConfig, roleSetups: [] };
 function context(world = new World("en")): NightStageContext {

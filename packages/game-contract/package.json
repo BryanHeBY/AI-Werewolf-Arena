@@ -7,7 +7,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./facts/scholar-mentor": "./src/facts/scholar-mentor.ts",
-    "./facts/time-consort": "./src/facts/time-consort.ts",
+    "./facts/time-wolf-consort": "./src/facts/time-wolf-consort.ts",
     "./facts/wolf-sorcerer": "./src/facts/wolf-sorcerer.ts",
     "./facts/trickster": "./src/facts/trickster.ts",
     "./facts/order-prince": "./src/facts/order-prince.ts",
@@ -59,8 +59,8 @@
       "facts/scholar-mentor": [
         "src/facts/scholar-mentor.ts"
       ],
-      "facts/time-consort": [
-        "src/facts/time-consort.ts"
+      "facts/time-wolf-consort": [
+        "src/facts/time-wolf-consort.ts"
       ],
       "facts/wolf-sorcerer": [
         "src/facts/wolf-sorcerer.ts"

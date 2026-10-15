@@ -5,11 +5,11 @@
  */
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { auditSummaryFixture } from "../../../support/builders/audit-summary";
-import { buildDebugSummaryMarkdown } from "../../../../src/audit/debug_summary_generator";
+import { buildDebugSummaryMarkdown } from "../../../../src/audit/debug-summary-generator";
 import { expect, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
-import { AcpAuditAgentExecutor } from "../../../../src/ai/audit/acp_audit_runner";
+import { AcpAuditAgentExecutor } from "../../../../src/audit/agents/acp-audit-runner";
 import type { ReplayManifest } from "../../../../src/recording/contracts";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 

@@ -12,8 +12,8 @@ import {
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/domain";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
+import { WerewolfMcpControlServer } from "../../../../src/adapters/acp/werewolf-mcp-control";
 import { MIST_ROLES, mistBoard } from "../../../support/features/mist-raven/builders/board";
 import { fixtureObject } from "../../../support/oracles/fixture-values";
 
@@ -36,7 +36,7 @@ for (const stage of ["alchemist_mist", "alchemist_snake", "raven_knife"] as cons
       let cycle: Promise<void> | undefined;
       try {
         const config = await control.start(process.execPath, [
-          path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+          path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts"),
         ]);
         control.bindSession("retained");
         transport = new StdioClientTransport({

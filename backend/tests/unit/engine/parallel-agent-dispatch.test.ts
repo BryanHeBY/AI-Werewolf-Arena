@@ -13,12 +13,12 @@ import {
   Phase,
   ToolCall,
 } from "../../../src/domain/model";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
-import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { DayPipeline } from "../../../src/engine/phases/day-pipeline";
+import { VotingPipeline } from "../../../src/engine/phases/voting-pipeline";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { createDefaultRoleRegistry } from "../../../src/rulesets/mechanism-api";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));

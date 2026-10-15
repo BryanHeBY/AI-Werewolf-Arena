@@ -12,12 +12,12 @@ import {
   type ToolCall,
 } from "../../../../src/domain";
 import type { AliveComponent } from "../../../../src/domain/components/alive";
-import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
+import { magicianTwelveConfig } from "../../../../src/rulesets/presets/magician-twelve";
+import { getWitchState } from "../../../../src/features/witch/ports";
 import {
   isMagicianBoard,
   resolveMagicianNightTarget,
-} from "../../../../src/game/mechanisms/roles/magician/night_frame";
+} from "../../../../src/features/magician/night-frame";
 function fixture(shot: "original" | "exchanged" = "original") {
   const config = structuredClone(magicianTwelveConfig);
   config.magician!.deathShotTargetPolicy = shot;

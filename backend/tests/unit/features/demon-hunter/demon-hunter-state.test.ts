@@ -8,8 +8,8 @@ import {
   freshDemonHunterState,
   readDemonHunterState,
   readDemonHuntTool,
-} from "../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
-import { isDemonHunterPreset } from "../../../../src/game/mechanisms/roles/demon_hunter/preset";
+} from "../../../../src/features/demon-hunter/state-slot";
+import { isDemonHunterPreset } from "../../../../src/features/demon-hunter/preset";
 function board(size: 6 | 12, goal: "slaughter_city" | "slaughter_side") {
   const deck =
     size === 6

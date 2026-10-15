@@ -9,20 +9,20 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { Camp, Phase, Role } from "../../../src/domain/identity";
 import type { ActionRequest } from "../../../src/domain/actions";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { ObservationFallbackStrategy } from "../../../src/ai/agents/providers/observation-fallback";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import type { PlayerObservation } from "../../../src/game/observation/player-observation";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
+import { AcpActionProvider } from "../../../src/agents/acp/acp-action-provider";
+import { ObservationFallbackStrategy } from "../../../src/agents/providers/observation-fallback";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
+import type { PlayerObservation } from "../../../src/agents/observation/player-observation";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-} from "../../../src/game/mechanisms";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../src/rulesets/mechanism-api";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { NoActionToolLoopClient } from "../../support/drivers/agents/llm-clients";
 
 const roles = [Role.Wolf, Role.HiddenWolf, Role.Villager, Role.Villager, Role.Seer, Role.Guard];

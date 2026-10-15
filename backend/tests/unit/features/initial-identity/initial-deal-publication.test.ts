@@ -10,9 +10,9 @@ import { COMPONENT } from "../../../../src/domain/components/names";
 import { createRoleComponent } from "../../../../src/domain/components/role";
 import { createVictoryComponent } from "../../../../src/domain/components/victory";
 import { Camp, Role } from "../../../../src/domain/identity";
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { initialIdentityDeal, installInitialIdentityDeal } from "../../../../src/game/mechanisms/roles/initial_identity/deal";
-import { publishInitialIdentityDeal } from "../../../../src/game/mechanisms/roles/initial_identity/initial-deal-publication";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { initialIdentityDeal, installInitialIdentityDeal } from "../../../../src/features/initial-identity/deal";
+import { publishInitialIdentityDeal } from "../../../../src/features/initial-identity/initial-deal-publication";
 
 function fixture(kind: "thief" | "shapeshifter") {
   const world = new World();

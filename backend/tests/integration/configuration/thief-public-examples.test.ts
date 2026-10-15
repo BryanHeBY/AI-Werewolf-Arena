@@ -10,8 +10,8 @@ import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom } from "../../../src/domain";
-import { initialThiefDeal } from "../../../src/game/mechanisms/roles/thief/deal";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { initialThiefDeal } from "../../../src/features/thief/deal";
+import { parseBoardDefinition } from "../../../src/app/config/board-definition";
 
 test("public six/twelve Thief examples roundtrip N role parameters and execute actual N+2 initialization", async () => {
   for (const size of [6, 12]) {

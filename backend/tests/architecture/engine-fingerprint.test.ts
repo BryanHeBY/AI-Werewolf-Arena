@@ -9,7 +9,7 @@ import { expect, test } from "bun:test";
 import { createHash } from "node:crypto";
 import { mkdtemp, mkdir, writeFile, rm, symlink } from "node:fs/promises";
 import path from "node:path";
-import { engineFingerprintInputs, fingerprintEngine } from "../../src/recording/engine-fingerprint";
+import { engineFingerprintInputs, fingerprintEngine } from "../../src/recording/reproduction/engine-fingerprint";
 
 async function fixture() {
   const root = await mkdtemp("/tmp/awa-engine-fingerprint-unit-");

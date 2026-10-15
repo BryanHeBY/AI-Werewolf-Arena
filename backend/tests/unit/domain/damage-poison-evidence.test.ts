@@ -3,7 +3,7 @@
  * 输入为内存 World、字面原体、独立毒及盾；预期死因与目标由手写常量给出。
  * 验证保护抑制、同目标直接／反射区别、legacy Proxy 和原序列化形状，不运行整局或模型。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
@@ -15,8 +15,8 @@ import {
 } from "../../../src/domain/night-effects";
 import { damagePoisonRoutes } from "../../../src/domain/damage-evidence";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { MistPendingNight } from "../../../src/game/mechanisms/roles/mist_raven/pending_night";
-import { DreamNightFrame } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
+import { MistPendingNight } from "../../../src/features/mist-raven/pending-night";
+import { DreamNightFrame } from "../../../src/features/dreamer/night-frame";
 
 function fixture() {
   const world = new World();

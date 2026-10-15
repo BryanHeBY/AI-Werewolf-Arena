@@ -12,9 +12,9 @@ import {
   type ActionRequest,
   type ToolCall,
 } from "../../../../src/domain/index";
-import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/rulesets/presets/noble-secret-body-twelve";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { snapshotNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+import { snapshotNobleBodyAuthority } from "../../../../src/features/noble-secret-body/authority";
 const game = () => {
   const c = nobleSecretBodyTwelveConfig();
   return bootstrapGame(c, {

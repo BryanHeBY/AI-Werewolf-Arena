@@ -3,7 +3,7 @@
  * 错误轨迹、事实与状态是预期；真实中央死亡结算及完整 PhaseManager 周期驱动转阵营、实际
  * 死亡波和下一夜狼群激活。模型受控，不从生产输出新建 golden。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -22,29 +22,29 @@ import {
   type VictoryComponent,
 } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
-import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state-slot";
+import { WildChildSetupWindow } from "../../../../src/features/wild-child/setup";
+import { getWildChildState } from "../../../../src/features/wild-child/state-slot";
 import {
   openWildChildNight,
   projectWildChild,
-} from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+} from "../../../../src/features/wild-child/lifecycle";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import {
   getDefaultRoleCatalog,
   getDefaultWinConditionRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 import {
   knownWolfTeammates,
   wolfKnifeHolders,
   wolfTeamPermissions,
   wolfTeamEvent,
-} from "../../../../src/game/mechanisms/roles/wolf_team";
+} from "../../../../src/features/wolf-team/permissions";
 import { ConditionRegistry } from "../../../../src/domain/registries/condition-registry";
 import { WinCondition } from "../../../../src/domain";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import { readWildChildEventFact } from "@ai-werewolf-arena/game-contract/facts/wild-child";
 
 const deck = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];

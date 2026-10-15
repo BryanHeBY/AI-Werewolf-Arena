@@ -14,15 +14,15 @@ import {
   type RoleComponent,
   type DeathSources,
 } from "../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
-import { hunterDeathHook } from "../../../src/game/mechanisms/roles/hunter/death_hook";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { getHunterState, setHunterState } from "../../../src/features/hunter/ports";
+import { hunterDeathHook } from "../../../src/features/hunter/death-hook";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
+import { ActionTurn } from "../../../src/agents/player/action-turn";
 
 const roles = [
   Role.Wolf,

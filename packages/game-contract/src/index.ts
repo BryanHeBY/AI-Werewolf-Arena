@@ -34,7 +34,7 @@ export type { MessageRef } from "./message-refs";
 
 export * from "./facts/scholar-mentor";
 
-export * from "./facts/time-consort";
+export * from "./facts/time-wolf-consort";
 
 export * from "./facts/wolf-sorcerer";
 

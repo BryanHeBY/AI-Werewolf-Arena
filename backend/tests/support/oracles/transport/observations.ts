@@ -16,8 +16,8 @@ import { radiantEclipseAudience } from "@ai-werewolf-arena/game-contract/facts/r
 import { readModifierChoiceFact } from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
 import { readModifierSkipFact } from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
 import { readModifierBonusFact } from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
-import { readTimeConsortChoiceFact } from "@ai-werewolf-arena/game-contract/facts/time-consort";
-import { readTimeConsortSkipFact } from "@ai-werewolf-arena/game-contract/facts/time-consort";
+import { readTimeConsortChoiceFact } from "@ai-werewolf-arena/game-contract/facts/time-wolf-consort";
+import { readTimeConsortSkipFact } from "@ai-werewolf-arena/game-contract/facts/time-wolf-consort";
 import { readWolfSorcererExchangeFact } from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
 import { readWolfSorcererSkipFact } from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
 import { readNightmareOwnFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";

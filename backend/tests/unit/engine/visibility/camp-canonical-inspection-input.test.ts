@@ -8,9 +8,9 @@ import { COMPONENT } from "../../../../src/domain/components/names";
 import type { CampComponent } from "../../../../src/domain/components/camp";
 import { Camp, Role } from "../../../../src/domain/identity";
 import { World } from "../../../../src/domain/world";
-import type { RoleProfile } from "../../../../src/game/mechanisms/roles/contracts";
-import { createRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
+import type { RoleProfile } from "../../../../src/rulesets/roles/contracts";
+import { createRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { resolveInspection } from "../../../../src/engine/inspection";
 
 /** 资料刻意声明 Wolf，当前 Camp 必须独立装入 World；getter 是原普通读取宽度的真实输入。 */
 function fixture(labels: RoleProfile["inspectionLabels"], trace: string[]) {

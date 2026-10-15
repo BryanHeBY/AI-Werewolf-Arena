@@ -12,8 +12,8 @@ import {
   ActionWindow,
   type RoleComponent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getWolfKingState } from "../../../../src/game/mechanisms/roles/wolf_king/ports";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getWolfKingState } from "../../../../src/features/wolf-king/ports";
 
 const config = {
   ...sixPlayerMvpConfig,

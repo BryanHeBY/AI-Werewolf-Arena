@@ -8,16 +8,16 @@
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import rawBoard from "../../../../../configs.example/boards/awa_scholar_mentor_12_v1.json";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   ScholarMentorNightUnit,
   scholarMentorNightTerminal,
-} from "../../../../src/game/mechanisms/roles/scholar_mentor/night-lifecycle";
+} from "../../../../src/features/scholar-mentor/night-lifecycle";
 import {
   beginScholarMentorNight,
   settleScholarMentorChoices,
-} from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
+} from "../../../../src/features/scholar-mentor/night-frame";
 
 function fixture() {
   const board = parseBoardDefinition(rawBoard),

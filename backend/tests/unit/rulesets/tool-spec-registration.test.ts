@@ -2,11 +2,11 @@
  * 单元测试用字面 schema／文案与 descriptor／Proxy 探针验证重复工具注册。手写预期区分兼容的末引用选择、明确数据 schema 冲突及旧 opaque 模式；内存 ActionReception 检查原首用读取、缓存和抛错，不写 World、联系模型、重建 fixture 或驱动对局。
  */
 import { expect, test } from "bun:test";
-import { ActionReception } from "../../../src/game/gateway/action-reception";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
 import { World } from "../../../src/domain/world";
 import { Phase, type ActionRequest, type ToolName } from "@ai-werewolf-arena/game-contract";
-import type { ToolSpec } from "../../../src/game/mechanisms/contracts";
-import { ToolSpecRegistry } from "../../../src/game/mechanisms/registries/tool_spec_registry";
+import type { ToolSpec } from "../../../src/engine/actions/tool-contracts";
+import { ToolSpecRegistry } from "../../../src/engine/actions/tool-spec-registry";
 import { registerToolSpecs } from "../../../src/rulesets/tool-spec-registration";
 
 const parameters = () => ({

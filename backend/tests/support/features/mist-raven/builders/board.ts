@@ -7,7 +7,7 @@
  */
 import { Role } from "../../../../../src/domain";
 import { readFile } from "node:fs/promises";
-import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../../src/app/config/board-definition";
 
 export const MIST_ROLES = [
   Role.Alchemist,

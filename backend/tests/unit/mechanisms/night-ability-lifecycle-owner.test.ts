@@ -6,11 +6,11 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, type PairSeerState } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import * as queries from "../../../src/game/mechanisms/roles/abilities";
-import * as prepared from "../../../src/game/mechanisms/roles/ability_changes";
-import { installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { setNightAbilityStartDay, recordNightAbilityUse } from "../../../src/game/mechanisms/roles/abilities";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
+import * as queries from "../../../src/features/night-abilities/abilities";
+import * as prepared from "../../../src/features/night-abilities/ability-changes";
+import { installNativeAbility } from "../../../src/features/night-abilities/ability-changes";
+import { setNightAbilityStartDay, recordNightAbilityUse } from "../../../src/features/night-abilities/abilities";
 
 function removedQueryWrites() {
   // @ts-expect-error 原生安装已经退出只读查询入口。

@@ -3,7 +3,7 @@
  * 错误轨迹、事实与状态是预期；真实中央死亡结算或完整 PhaseManager 周期提交继承及后续枪、
  * 梦境、熊、魅惑、胜利效果。四个原启发式单元已用真实中央波；模型受控，不从生产输出新建 golden。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { PotionType } from "../../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -20,21 +20,21 @@ import {
   type ActionRequest,
   type GameEvent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/ports";
-import { getBearState } from "../../../../src/game/mechanisms/roles/bear/ports";
-import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
-import { canHiddenWolfKnife } from "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getHiddenWolfState } from "../../../../src/features/hidden-wolf/ports";
+import { getBearState } from "../../../../src/features/bear/ports";
+import { getSeerState } from "../../../../src/features/seer/ports";
+import { canHiddenWolfKnife } from "../../../../src/features/hidden-wolf/inheritance";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { resolveInspection } from "../../../../src/engine/inspection";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 
-import { captureExileFeedback } from "../../../../src/game/mechanisms/roles/gravekeeper/feedback";
-import { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";
-import { grantNightAbility } from "../../../../src/game/mechanisms/roles/night-ability-grants";
+import { captureExileFeedback } from "../../../../src/features/gravekeeper/feedback";
+import { HookRegistry } from "../../../../src/engine/hooks/registry";
+import { grantNightAbility } from "../../../../src/features/night-abilities/night-ability-grants";
 
 const deck = [Role.HiddenWolf, Role.Wolf, Role.Seer, Role.Bear, Role.Villager, Role.Villager];
 

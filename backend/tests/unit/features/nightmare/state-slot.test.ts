@@ -9,14 +9,14 @@ import { COMPONENT } from "../../../../src/domain/components/names";
 import type { RoleComponent } from "../../../../src/domain/components/role";
 import { Camp } from "../../../../src/domain/identity";
 import type { World } from "../../../../src/domain/world";
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { NIGHTMARE_SHADOW_STATE_SLOT } from "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { NIGHTMARE_SHADOW_STATE_SLOT } from "../../../../src/features/nightmare/state-slot";
 import {
   installNightmareBoard,
   beginNightmareNight,
   commitNightmareFear,
   assertNightmareRosterCurrent,
-} from "../../../../src/game/mechanisms/roles/nightmare_shadow/night_frame";
+} from "../../../../src/features/nightmare/night-frame";
 
 function fixture() {
   const state = NIGHTMARE_SHADOW_STATE_SLOT.create();

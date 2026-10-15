@@ -7,19 +7,19 @@ import { expect, test } from "bun:test";
 import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";
+import { gameToolProtocol } from "../../../../src/agents/game-tool-protocol";
 import {
   auditToolProtocol,
   AuditToolTurnRegistry,
-} from "../../../../src/ai/audit/audit_tool_protocol";
-import { AuditMcpControlServer } from "../../../../src/ai/audit/audit_mcp_control";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { SdkAuditAgentExecutor } from "../../../../src/ai/audit/sdk_audit_runner";
+} from "../../../../src/audit/agents/audit-tool-protocol";
+import { AuditMcpControlServer } from "../../../../src/adapters/acp/audit-mcp-control";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
+import { WerewolfMcpControlServer } from "../../../../src/adapters/acp/werewolf-mcp-control";
+import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import { SdkAuditAgentExecutor } from "../../../../src/audit/agents/sdk-audit-runner";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { Phase, type ActionRequest } from "../../../../src/domain";
 import { errorMessage } from "@ai-werewolf-arena/game-text";
 
@@ -49,8 +49,8 @@ test("real game/audit MCP subprocesses preserve simultaneous task locales and au
             : new AuditMcpControlServer(auditRegistry);
         const entrypoint =
           kind === "game"
-            ? "src/ai/integrations/acp/werewolf_mcp_server.ts"
-            : "src/ai/audit/audit_mcp_server.ts";
+            ? "src/adapters/acp/werewolf-mcp-server.ts"
+            : "src/adapters/acp/audit-mcp-server.ts";
         const config = await control.start(process.execPath, [
           path.resolve(process.cwd(), entrypoint),
         ]);

@@ -7,7 +7,7 @@
  */
 import { test, expect } from "bun:test";
 import { World, type GameEvent } from "../../../src/domain";
-import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
+import { buildAgentVisibleEvent } from "../../../src/agents/observation/event-feed";
 const canary = "PRIVATE_OTHER_PLAYER_STATE_CANARY";
 const cases: Array<[string, Record<string, unknown>, number, number[], Record<string, unknown>?]> =
   [

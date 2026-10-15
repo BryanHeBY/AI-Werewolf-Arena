@@ -6,24 +6,24 @@
  */
 import type { World } from "../domain/world";
 import { Role } from "../domain/identity";
-import type { NightAbilityReadView } from "../game/mechanisms/roles/abilities";
-import { isRadiantEclipseBoard } from "../game/mechanisms/roles/radiant_eclipse/ports";
-import { isScholarMentorBoard } from "../game/mechanisms/roles/scholar_mentor/ports";
-import { isTimeConsortBoard } from "../game/mechanisms/roles/time_wolf_consort/ports";
-import { isMagicianBoard } from "../game/mechanisms/roles/magician/ports";
-import { isNightmareBoard } from "../game/mechanisms/roles/nightmare_shadow/ports";
+import type { NightAbilityReadView } from "../features/night-abilities/abilities";
+import { isRadiantEclipseBoard } from "../features/radiant-eclipse/ports";
+import { isScholarMentorBoard } from "../features/scholar-mentor/ports";
+import { isTimeConsortBoard } from "../features/time-wolf-consort/ports";
+import { isMagicianBoard } from "../features/magician/ports";
+import { isNightmareBoard } from "../features/nightmare/ports";
 import {
   isEvilKnightBoard,
   assertEvilKnightNativeActor,
-} from "../game/mechanisms/roles/evil_knight/ports";
-import { isFragrantPairBoard } from "../game/mechanisms/roles/fragrant_pair_seer/ports";
-import { isNobleBodyBoard } from "../game/mechanisms/roles/noble_secret_body/ports";
-import { isMistRavenBoard } from "../game/mechanisms/roles/mist_raven/ports";
+} from "../features/evil-knight/ports";
+import { isFragrantPairBoard } from "../features/fragrant-pair-seer/ports";
+import { isNobleBodyBoard } from "../features/noble-secret-body/ports";
+import { isMistRavenBoard } from "../features/mist-raven/ports";
 import {
   isRedMoonBoard,
   demonHunterActorId,
   demonWitchRequiredThisNight,
-} from "../game/mechanisms/roles/demon_hunter/ports";
+} from "../features/demon-hunter/ports";
 
 export type NativeNightAction = "seer" | "guard" | "witch";
 

@@ -7,12 +7,12 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type AliveComponent, type RoleComponent } from "../../../src/domain";
 import { createRandom, randomDraws } from "../../../src/domain/random";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { ObservedBot } from "../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../src/app/observed-players-action-provider";
-import type { PlayerObservation } from "../../../src/game/observation/player-observation";
-import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import type { PlayerObservation } from "../../../src/agents/observation/player-observation";
+import { getGuardState } from "../../../src/features/guard/ports";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 const fixedRoles = [Role.Villager, Role.Wolf, Role.Guard, Role.Wolf, Role.Seer, Role.Villager];
 

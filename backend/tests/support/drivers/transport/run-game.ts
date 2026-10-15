@@ -5,7 +5,7 @@
  */
 import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { assertSdkTransportEnvelope, assertRuntimeClosure, assertArchiveDecisionEnvelope, assertFailedCheckpoint, assertFailedAcpTrace, assertFailureTiming, assertCompletedAcpTrace, assertPlannedDecisionTape } from "../../oracles/transport/outcomes";
 import type { TransportGameScenario } from "../../transport/contracts";
 import { acpAdapterEntry } from "../../fixtures/manifest";
@@ -17,12 +17,12 @@ import { authenticatedSyntheticModelFetch } from "../agents/synthetic-model-fetc
 import { syntheticModelToken } from "../agents/synthetic-model-fetch";
 import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
-import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../../../src/runtime/game_runner";
-import type { GameRunDependencies } from "../../../../src/runtime/game_runner";
-import { readReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
-import { replayReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
+import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
+import { runGame } from "../../../../src/app/game-runner";
+import type { GameRunDependencies } from "../../../../src/app/game-runner";
+import { readReproduction } from "../../../../src/app/simulation/replay-reproduction";
+import { replayReproduction } from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../temp-directories";
 import type { ActorTransportPlan } from "../../transport/contracts";
 import { assertSubmitActionWireSchema } from "../../features/mist-raven/oracles/transport";

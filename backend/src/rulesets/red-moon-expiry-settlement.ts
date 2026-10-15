@@ -9,9 +9,9 @@ import { COMPONENT } from "../domain/components/names";
 import { DeathCause, Phase, type EntityId, type GameEvent } from "../domain/model";
 import type { World } from "../domain/world";
 import type { ConditionRegistry } from "../domain/registries/condition-registry";
-import { demonRedMoonExpiry, commitDemonRedMoonTransition } from "../game/mechanisms/roles/demon_hunter/ports";
+import { demonRedMoonExpiry, commitDemonRedMoonTransition } from "../features/demon-hunter/ports";
 import { TERMINAL_VICTORY_POLICY } from "./terminal-victory-policy";
-import { safeRecordLogicOp } from "../recording/session_recorder";
+import { safeRecordLogicOp } from "../recording/session/recorder";
 
 /** 视图只声明晚读成员，保持原引用；不是冻结数据或额外的授权屏障。 */
 export interface RedMoonExpiryRuntime {

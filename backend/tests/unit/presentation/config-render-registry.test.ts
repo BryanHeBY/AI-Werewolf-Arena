@@ -4,9 +4,9 @@
  * and expected outcomes remain the original literal or immutable-fixture oracle; these
  * module assertions invoke no model or complete-game driver.
  */
-import { DefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
+import { DefaultConfigRenderRegistry } from "../../../src/agents/prompt/config-render-registry";
 import { ActionWindow, BoardConfig, WinCondition } from "../../../src/domain/model";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 describe("ConfigRenderRegistry", () => {
   test("renders rule summary with win condition and core mechanism toggles", () => {

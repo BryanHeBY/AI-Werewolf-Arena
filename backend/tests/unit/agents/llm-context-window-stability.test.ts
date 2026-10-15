@@ -7,9 +7,9 @@
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
+import { LlmActionProvider } from "../../../src/agents/llm/llm-action-provider";
 import { Phase } from "../../../src/domain/model";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 class RepeatSpeakToolLoopClient {
   public lastMessages: Array<{ role: string; content: string }> = [];

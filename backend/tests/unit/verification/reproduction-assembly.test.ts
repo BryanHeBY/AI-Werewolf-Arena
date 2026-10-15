@@ -5,12 +5,12 @@
  * 不创建文件、不跑模型，不用生产结算生成预期，也不重新生成现有 golden。
  */
 import { expect, test } from "bun:test";
-import { verifyReproductionMechanisms } from "../../../src/verification/reproduction/assembly";
+import { verifyReproductionMechanisms } from "../../../src/recording/verification/assembly";
 import {
   parseReproductionRecord,
   type ReproductionRecord,
   type ReproductionMetadata,
-} from "../../../src/recording/reproduction";
+} from "../../../src/recording/reproduction/format";
 import { Role, Camp, Phase, WinCondition } from "@ai-werewolf-arena/game-contract";
 
 function archive(): ReproductionRecord {

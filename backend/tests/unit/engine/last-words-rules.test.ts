@@ -5,8 +5,8 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { AliveComponent } from "../../../src/domain/components/alive";
 import { Phase, DeathCause } from "../../../src/domain/model";
-import { LastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+import { LastWordsMechanism } from "../../../src/features/last-words/last-words-mechanism";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
 
 describe("last words rules", () => {
   test("only first night deaths can receive last words", () => {

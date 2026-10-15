@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { FRAGRANT_PAIR_POLICY, readPairCheckFact, readFragrantKnownState, readFragrantPairFact, type FragrantKnowledge, type FragrantPairPayloadMap } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
-import { readFragrantKnowledge } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/knowledge";
+import { readFragrantKnowledge } from "../../../../src/features/fragrant-pair-seer/knowledge";
 const known: FragrantKnowledge = {
   knownWolfId: 3,
   lastOpenedNight: 1,

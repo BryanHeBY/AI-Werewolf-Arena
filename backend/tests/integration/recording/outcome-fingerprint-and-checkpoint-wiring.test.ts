@@ -6,9 +6,9 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Camp, Phase, Role, WinCondition, createVictoryComponent } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { victoryDecision } from "../../../src/game/mechanisms/win_conditions/results";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { victoryDecision } from "../../../src/engine/victory/results";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 
 const deck = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 
@@ -23,7 +23,7 @@ test("an executed shared result decoder change invalidates the engine fingerprin
     path = await import("node:path");
   const { createTestTempDirectory } = await import("../../support/drivers/temp-directories");
   const { currentEngineVersion } =
-    await import("../../../src/runtime/simulation/reproduction_context");
+    await import("../../../src/app/simulation/reproduction-context");
   const root = await createTestTempDirectory("awa-fingerprint-");
   for (const directory of [
     "backend/src/core",
@@ -45,9 +45,9 @@ test("an executed shared result decoder change invalidates the engine fingerprin
 });
 
 test("empty membership is explicit and serializable; invalid declarations fail at installation rather than final persistence", async () => {
-  const { ReproductionTrace } = await import("../../../src/recording/reproduction-trace");
+  const { ReproductionTrace } = await import("../../../src/recording/reproduction/trace");
   const { currentEngineVersion } =
-    await import("../../../src/runtime/simulation/reproduction_context");
+    await import("../../../src/app/simulation/reproduction-context");
   const { world } = fixture("en");
   world.addComponent(5, COMPONENT.Victory, createVictoryComponent([]));
   expect(

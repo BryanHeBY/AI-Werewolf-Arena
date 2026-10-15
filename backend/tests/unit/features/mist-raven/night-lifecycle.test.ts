@@ -9,13 +9,13 @@ import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import rawBoard from "../../../../../configs.example/boards/awa_mist_raven_12_v1.json";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT } from "../../../../src/domain";
 import {
   MistNightUnit,
   mistNightTerminal,
-} from "../../../../src/game/mechanisms/roles/mist_raven/night-lifecycle";
+} from "../../../../src/features/mist-raven/night-lifecycle";
 import {
   beginMistNight,
   commitMistChoice,
@@ -24,7 +24,7 @@ import {
   commitSnakeChoice,
   ravenAwakened,
   ravenKnownTeammates,
-} from "../../../../src/game/mechanisms/roles/mist_raven/night_frame";
+} from "../../../../src/features/mist-raven/night-frame";
 
 function fixture() {
   const board = parseBoardDefinition(rawBoard),

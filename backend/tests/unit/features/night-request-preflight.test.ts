@@ -4,13 +4,13 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent, type GameEvent } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { SEER_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/seer/night_stages";
-import { GUARD_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/guard/night_stages";
-import { DREAMER_NIGHT_STAGE } from "../../../src/game/mechanisms/roles/dreamer/night_stages";
-import { WITCH_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/witch/night_stages";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { findNightAbility } from "../../../src/features/night-abilities/abilities";
+import { SEER_NIGHT_STAGES } from "../../../src/features/seer/night-stages";
+import { GUARD_NIGHT_STAGES } from "../../../src/features/guard/night-stages";
+import { DREAMER_NIGHT_STAGE } from "../../../src/features/dreamer/night-stages";
+import { WITCH_NIGHT_STAGES } from "../../../src/features/witch/night-stages";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 
 const cases = [

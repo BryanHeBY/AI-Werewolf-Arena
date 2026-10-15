@@ -3,9 +3,9 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
-import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { LlmActionProvider } from "../../../../src/agents/llm/llm-action-provider";
+import { AiSdkClient } from "../../../../src/adapters/llm/ai-sdk-client";
 import { Phase, type ActionRequest } from "../../../../src/domain";
 
 function request(actorId: number, deadlineAtMs?: number): ActionRequest {

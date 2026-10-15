@@ -4,13 +4,13 @@
  * 静态坏 proposal 必须在本 proposal 的角色事实前拒绝；先前合法死亡不回滚。
  * 不推进完整对局、不访问模型或归档文件；只读负例不执行，也不授予运行时死亡权限。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { aliveLifeVersion } from "../../../../src/domain/components/alive";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import type { ComponentName } from "../../../../src/domain/components/names";
-import type { DeathHookResult } from "../../../../src/game/mechanisms/hooks/hook_registry";
+import type { DeathHookResult } from "../../../../src/engine/hooks/registry";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import {
   Camp,
@@ -30,17 +30,17 @@ import { damagePoisonRoutes } from "../../../../src/domain/damage-evidence";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { StatusMark } from "@ai-werewolf-arena/game-contract";
-import { DeathCommitter } from "../../../../src/game/engine/death-committer";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
+import { DeathCommitter } from "../../../../src/engine/death-committer";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
 import {
   DeathCommitReceipt,
   openDeathWave,
   planDeathWave,
   preflightDeathWaveData,
-} from "../../../../src/game/engine/death-wave";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";
+} from "../../../../src/engine/death-wave";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { HookRegistry } from "../../../../src/engine/hooks/registry";
 
 function fixture() {
   const world = new World("en"),

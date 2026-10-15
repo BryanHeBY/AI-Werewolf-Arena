@@ -15,15 +15,15 @@ import {
   type RoleComponent,
   type ActionRequest,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { getWolfKingState } from "../../../../src/game/mechanisms/roles/wolf_king/ports";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getDreamerState } from "../../../../src/features/dreamer/ports";
+import { getHunterState } from "../../../../src/features/hunter/ports";
+import { getWolfKingState } from "../../../../src/features/wolf-king/ports";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 
 const deck = [Role.Dreamer, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 

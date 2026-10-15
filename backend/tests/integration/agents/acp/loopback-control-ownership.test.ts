@@ -6,7 +6,7 @@
  * billed model session is started.
  */
 import { expect, test } from "bun:test";
-import { LoopbackMcpControlServer } from "../../../../src/ai/integrations/acp/loopback_mcp_control_server";
+import { LoopbackMcpControlServer } from "../../../../src/adapters/acp/loopback-mcp-control-server";
 function control() {
   return new LoopbackMcpControlServer({
     serverName: "synthetic",

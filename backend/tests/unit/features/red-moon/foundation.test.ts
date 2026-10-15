@@ -8,7 +8,7 @@ import {
   freshRedMoonState,
   getRedMoonState,
   RED_MOON_ROLE,
-} from "../../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
+} from "../../../../src/features/red-moon/state-slot";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact, RED_MOON_BLAST_EVENT, RED_MOON_EXILE_EVENT, RED_MOON_EXPIRY_EVENT } from "@ai-werewolf-arena/game-contract/facts/red-moon";
 // 测试自持当前 Camp，不经旧 Role 属性或隐藏映射提供阵营。
 const fixtureCamp = { camp: Camp.Wolf };

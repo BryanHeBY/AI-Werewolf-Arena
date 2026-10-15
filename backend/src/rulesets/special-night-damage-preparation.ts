@@ -11,19 +11,19 @@ import { COMPONENT } from "../domain/components/names";
 import { aliveLifeVersion, type AliveComponent } from "../domain/components/alive";
 import { statusMarkSnapshot } from "../domain/components/status-marks";
 import type { DamageResolutionResult } from "../domain/systems/damage-resolution-system";
-import type { DeathOriginalLife } from "../game/engine/death-wave";
-import type { NightPipelineResult } from "../game/engine/phase_pipeline/night_pipeline";
-import type { NightFaultPlan } from "../game/engine/fault_plan";
+import type { DeathOriginalLife } from "../engine/death-wave";
+import type { NightPipelineResult } from "../engine/phases/night-pipeline";
+import type { NightFaultPlan } from "../engine/fault-plan";
 import type { NightManagerLifecycle } from "./night-lifecycle-plan";
 import {
   appendDemonNightDamageSources,
   publishDemonNightDamageSources,
   committedDemonFaultBoundary,
-} from "../game/mechanisms/roles/demon_hunter/ports";
-import { freezeDeliveredDemonNightSources } from "../game/mechanisms/roles/demon_hunter/native_potion_controller";
-import { appendNobleContractClosure, publishNobleNightDamage } from "../game/mechanisms/roles/noble_secret_body/ports";
-import { weddingKnifeCurrent } from "../game/mechanisms/roles/ghost_bride/ports";
-import { getSessionRecorder } from "../recording/recording_context";
+} from "../features/demon-hunter/ports";
+import { freezeDeliveredDemonNightSources } from "../features/demon-hunter/native-potion-controller";
+import { appendNobleContractClosure, publishNobleNightDamage } from "../features/noble-secret-body/ports";
+import { weddingKnifeCurrent } from "../features/ghost-bride/ports";
+import { getSessionRecorder } from "../recording/session/context";
 
 /** getter 只闭包经理原对象；在每个原表达式才读字段。assertReadable 仍晚查经理原 private 方法与 receiver。 */
 export interface SpecialNightDamageRuntime {

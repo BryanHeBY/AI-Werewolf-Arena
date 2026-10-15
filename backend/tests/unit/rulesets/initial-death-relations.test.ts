@@ -9,10 +9,10 @@ import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { captureNightLife } from "../../../src/domain/night-effects";
-import { bindLovers } from "../../../src/game/mechanisms/roles/cupid/relation";
+import { bindLovers } from "../../../src/features/cupid/relation";
 import { prepareInitialDeathRelations, type InitialDeathRelationRuntime, type InitialWeddingExpansion } from "../../../src/rulesets/initial-death-relations";
 import { fragrantPairOwnerFixture } from "../../support/features/fragrant-pair-seer/builders/owner";
-import { closeFragrantNight, cancelFragrantDeathWave, prepareFragrantDeathWave, fragrantAuthoritySnapshot } from "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+import { closeFragrantNight, cancelFragrantDeathWave, prepareFragrantDeathWave, fragrantAuthoritySnapshot } from "../../../src/features/fragrant-pair-seer/authority";
 
 function input() {
   return { pending: [1], sources: { 1: [DeathCause.WolfKill] } as DeathSources, seen: new Set([1]), nightOrigin: new Set<number>(), phases: {} as Record<number, Phase> };

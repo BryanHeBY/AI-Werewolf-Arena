@@ -5,12 +5,12 @@
  */
 import { expect, test } from "bun:test";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
-import { type ReproductionMetadata } from "../../../src/recording/reproduction";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
+import { type ReproductionMetadata } from "../../../src/recording/reproduction/format";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
 import {
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../src/runtime/simulation/reproduction_context";
+} from "../../../src/app/simulation/reproduction-context";
 import { radiantFixture } from "../../support/features/radiant-eclipse/builders/runtime-game";
 async function fixture() {
   const f = await radiantFixture();

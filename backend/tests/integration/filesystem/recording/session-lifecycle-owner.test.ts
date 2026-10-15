@@ -7,8 +7,8 @@ import { readReplayManifest } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { ReplayFileStore } from "../../../../src/recording/file_store";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { ReplayFileStore } from "../../../../src/adapters/filesystem/session-file-store";
 import type { ReplayFinalizeMeta } from "../../../../src/recording/contracts";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 

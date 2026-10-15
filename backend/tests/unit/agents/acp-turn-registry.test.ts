@@ -8,8 +8,8 @@
  */
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { AcpTurnRegistry } from "../../../src/adapters/acp/acp-turn-registry";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { speakRequest } from "../../support/builders/agents/acp-requests";
 
 describe("AcpTurnRegistry", () => {

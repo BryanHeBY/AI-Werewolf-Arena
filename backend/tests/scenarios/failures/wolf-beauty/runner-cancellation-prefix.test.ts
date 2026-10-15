@@ -2,21 +2,21 @@
  * 故障场景测试：验证 held 回复期间录制失败，runner 取消仍保留已付款狼美人魅惑。输入为原工厂／录制注入及晚到或 null 回复；关系、没有消费式跳过及部分复盘相等为字面预期，不把取消改成花资源行动。
  */
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { PotionType } from "../../../../src/domain/identity";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
-import * as factory from "../../../../src/runtime/player_agent_factory";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
-import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
+import * as factory from "../../../../src/app/player-agent-factory";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
+import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { runGame } from "../../../../src/runtime/game_runner";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/app/config/board-definition";
+import { runGame } from "../../../../src/app/game-runner";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import {
   COMPONENT,
   Role,
@@ -24,13 +24,13 @@ import {
   type World,
   type RoleComponent,
 } from "../../../../src/domain";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
-import { activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
+import { getWolfBeautyState } from "../../../../src/features/wolf-beauty/ports";
+import { activeCharm } from "../../../../src/features/wolf-beauty/relation";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 
 for (const late of [null, { name: "charm", args: { target_id: null } }] as const)
   test(`runner recording failure during Charm never converts cancellation into a consuming skip (${late ? "late action" : "null"})`, async () => {

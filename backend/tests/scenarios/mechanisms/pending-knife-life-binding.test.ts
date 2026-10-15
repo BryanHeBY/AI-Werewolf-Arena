@@ -2,11 +2,11 @@
  * 狼刀场景验证后续预言家或警长请求不能让持有中的伤害杀死已替换目标生命。输入为原替换／
  * 复活矩阵及夜／日移交的真实请求；手写目标存活及公开死亡集合是因果预期，演员／RNG／fixture 不变。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, WinCondition, COMPONENT, type BoardConfig } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 
 const config = (deck: Role[]): BoardConfig => ({

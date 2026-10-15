@@ -6,11 +6,11 @@
  * driver.
  */
 import { fixtureResult } from "../../support/builders/recording/result";
-import { TextLocalizationRegistry } from "../../../src/game/mechanisms/shared/text_localization_registry";
+import { TextLocalizationRegistry } from "../../../src/agents/presentation/text-localization-registry";
 import { expect, test } from "bun:test";
 import { Camp, Phase, PotionType, ActionWindow, type GameEvent } from "../../../src/domain";
-import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms";
-import { presentStreamEvents, toChatLines } from "../../../src/runtime/console_presenter";
+import { getDefaultScriptEventRenderRegistry } from "../../../src/rulesets/mechanism-api";
+import { presentStreamEvents, toChatLines } from "../../../src/adapters/console/console-presenter";
 import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
 
 const event = <K extends GameEvent["type"]>(

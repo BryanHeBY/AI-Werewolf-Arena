@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-presentation";
-import { ScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
+import { ScriptEventRenderRegistry } from "../../../src/agents/presentation/event-render-registry";
 const policy = "awa_noble_secret_body_v1";
 const fixtures = [
   { type: "noble_body_knife_committed", payload: { policy, actorId: 1, day: 2, targetId: 6 } },

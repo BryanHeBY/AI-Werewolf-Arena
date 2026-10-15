@@ -7,7 +7,7 @@
  * result is regenerated from production role, observation or board algorithms.
  */
 import { expect } from "bun:test";
-import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
+import type { ReproductionRecord } from "../../../../../src/recording/reproduction/format";
 import { type nobleTransportScenario } from "../builders/transport-plan";
 type Scenario = ReturnType<typeof nobleTransportScenario>;
 type BodySpend = [

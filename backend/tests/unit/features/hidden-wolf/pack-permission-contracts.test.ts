@@ -1,7 +1,7 @@
 /**
  * 单元测试验证隐狼方向性知识、生命／许可变化和有序死亡提议。单个狼聊阶段、只读交付／查验／提示及继承查询检查独立权利；原回执、引用、getter、错误、事实和状态为预期，不运行完整阶段或付费模型。
  */
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -16,33 +16,33 @@ import {
   type ActionRequest,
   type GameEvent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/state";
-import { refreshHiddenWolfInheritance } from "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getHiddenWolfState } from "../../../../src/features/hidden-wolf/state";
+import { refreshHiddenWolfInheritance } from "../../../../src/features/hidden-wolf/inheritance";
 import {
   knownWolfTeammates,
   wolfChatParticipants,
   wolfKnifeHolders,
   wolfTeamPermissions,
-} from "../../../../src/game/mechanisms/roles/wolf_team";
-import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+} from "../../../../src/features/wolf-team/permissions";
+import { RoleCatalog } from "../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { resolveInspection } from "../../../../src/engine/inspection";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../../src/game/mechanisms";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { WOLF_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/wolf/night_stages";
+} from "../../../../src/rulesets/mechanism-api";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { WOLF_NIGHT_STAGES } from "../../../../src/features/wolf/night-stages";
 
 const deck = [Role.HiddenWolf, Role.Wolf, Role.Seer, Role.Bear, Role.Villager, Role.Villager];
 

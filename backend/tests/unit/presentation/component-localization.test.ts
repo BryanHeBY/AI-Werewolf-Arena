@@ -1,12 +1,12 @@
 /**
  * 单元测试：验证内存组件公开提示 API 的默认语言和独立展示语言。输入为原组件、显式语言与局部状态修改；精确角色／状态／政策文案是原字面预期。所有组件展示通过游戏侧绑定，领域保持原数据；不调用模型或完整对局驱动。
  */
-import { renderAlivePrompt, renderCampPrompt, renderBadgePrompt, renderVotingRightPrompt, renderStatusMarksPrompt } from "../../../src/game/observation/component-presentation";
-import { renderRolePrompt } from "../../../src/game/observation/role-presentation";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
+import { renderAlivePrompt, renderCampPrompt, renderBadgePrompt, renderVotingRightPrompt, renderStatusMarksPrompt } from "../../../src/agents/observation/component-presentation";
+import { renderRolePrompt } from "../../../src/agents/observation/role-presentation";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   Camp,
   COMPONENT,

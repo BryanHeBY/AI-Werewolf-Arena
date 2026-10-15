@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import type { GameEvent } from "../../../../src/domain/events";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
-import { completeAndPublishAnimalExileUnit } from "../../../../src/game/mechanisms/roles/animal_dream/ports";
+import { completeAndPublishAnimalExileUnit } from "../../../../src/features/animal-dream/ports";
 import {
   installAnimalAuthority,
   beginAnimalNight,
@@ -14,7 +14,7 @@ import {
   beginAnimalExileUnit,
   prepareAnimalCatExpiry,
   animalAuthoritySnapshot,
-} from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+} from "../../../../src/features/animal-dream/authority";
 
 function fixture(prepare = true) {
   const f = animalRosterFixture(undefined, installAnimalAuthority);

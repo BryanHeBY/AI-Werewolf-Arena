@@ -7,19 +7,19 @@ import {
   createStatusMarksComponent,
   createVotingRightComponent,
   createBadgeComponent,
-} from "../../../../../src/game/observation/component-presentation";
+} from "../../../../../src/agents/observation/component-presentation";
 import "../../../../../src/app/bootstrap";
 import { Role } from "../../../../../src/domain";
-import { DEMON_HUNTER_ROLE } from "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
+import { DEMON_HUNTER_ROLE } from "../../../../../src/features/demon-hunter/state-slot";
 import { WinCondition } from "../../../../../src/domain";
 import { ActionWindow } from "../../../../../src/domain";
 import { WitchSelfHealRule } from "../../../../../src/domain";
 import type { BoardConfig } from "../../../../../src/domain";
-import { DEMON_HUNTER_POLICY } from "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
+import { DEMON_HUNTER_POLICY } from "../../../../../src/features/demon-hunter/state-slot";
 import { World } from "../../../../../src/domain";
 import { Camp } from "../../../../../src/domain";
 import { COMPONENT } from "../../../../../src/domain";
-import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../../src/agents/observation/role-presentation";
 
 import { createVictoryComponent } from "../../../../../src/domain";
 
@@ -29,21 +29,21 @@ import { createIdentityComponent } from "../../../../../src/domain/entities/play
 import { installInitialRoster } from "../../../../../src/domain/initial-roster";
 import { ConditionRegistry } from "../../../../../src/domain/registries/condition-registry";
 import { DamageResolutionSystem } from "../../../../../src/domain/systems/damage-resolution-system";
-import { PhaseManager } from "../../../../../src/game/engine/phase_manager";
-import { ToolGateway } from "../../../../../src/game/gateway/tool_gateway";
-import { ActionValidator } from "../../../../../src/game/gateway/action_validator";
-import { RoleCatalog } from "../../../../../src/game/mechanisms/roles/catalog";
+import { PhaseManager } from "../../../../../src/engine/phase-manager";
+import { ToolGateway } from "../../../../../src/engine/actions/tool-gateway";
+import { ActionValidator } from "../../../../../src/engine/actions/action-validator";
+import { RoleCatalog } from "../../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { createDefaultRoleRegistry } from "../../../../../src/game/mechanisms/roles/permissions";
-import { getDefaultWinConditionRegistry } from "../../../../../src/game/mechanisms";
-import { ToolValidationRuleRegistry } from "../../../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { installDemonHunter } from "../../../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { freshDemonHunterState } from "../../../../../src/game/mechanisms/roles/demon_hunter/state-slot";
-import { DEMON_HUNTER_TOOL_RULE } from "../../../../../src/game/mechanisms/roles/demon_hunter/validation_rules";
+} from "../../../../../src/rulesets/roles/role-catalog-assembly";
+import { createDefaultRoleRegistry } from "../../../../../src/rulesets/roles/permissions";
+import { getDefaultWinConditionRegistry } from "../../../../../src/rulesets/mechanism-api";
+import { ToolValidationRuleRegistry } from "../../../../../src/engine/actions/tool-validation-rule-registry";
+import { installDemonHunter } from "../../../../../src/features/demon-hunter/authority";
+import { freshDemonHunterState } from "../../../../../src/features/demon-hunter/state-slot";
+import { DEMON_HUNTER_TOOL_RULE } from "../../../../../src/features/demon-hunter/validation-rules";
 
 export function demonHunterDeck(size: 6 | 12): Role[] {
   return size === 6

@@ -8,10 +8,10 @@ import {
   prepareFragrantDeathWave,
   cancelFragrantDeathWave,
   fragrantAuthoritySnapshot,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+} from "../../../../src/features/fragrant-pair-seer/authority";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { Phase } from "../../../../src/domain/identity";
 import { DeathCause } from "../../../../src/domain/deaths";
 import { COMPONENT } from "../../../../src/domain/components/names";

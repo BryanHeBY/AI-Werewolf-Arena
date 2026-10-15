@@ -4,15 +4,15 @@
  * 读取同一实例和当前 settled frame，不因角色标签限定受赠／复制／转移能力，不建立库存快照。
  * 参数、短路及 getter 失败顺序保持；预检通过不替代实际提交时的原体、生命和来源复验。
  */
-import { scholarMentorBlocks } from "../game/mechanisms/roles/scholar_mentor/ports";
-import { isMagicianBoard, resolveMagicianNightTarget } from "../game/mechanisms/roles/magician/ports";
-import { nativePotionsCanCombine } from "../game/mechanisms/roles/witch/ports";
+import { scholarMentorBlocks } from "../features/scholar-mentor/ports";
+import { isMagicianBoard, resolveMagicianNightTarget } from "../features/magician/ports";
+import { nativePotionsCanCombine } from "../features/witch/ports";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { PotionType, Phase, WitchSelfHealRule, StatusMark } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../domain/components/names";
-import { type ToolRuleMap, isAliveTarget } from "../game/mechanisms/validation/contracts";
-import { activeNightAbility } from "../game/mechanisms/roles/abilities";
-import { luckyTargetAllowed } from "../game/mechanisms/roles/night_action_history";
+import { type ToolRuleMap, isAliveTarget } from "../engine/actions/validation-contracts";
+import { activeNightAbility } from "../features/night-abilities/abilities";
+import { luckyTargetAllowed } from "../features/night-abilities/night-action-history";
 
 /** 保留原可写规则表；Catalog 仍晚读当前 callback，不把准入冻结为登记时的授权快照。 */
 export const WITCH_VALIDATION_RULES: ToolRuleMap = {

@@ -9,31 +9,31 @@
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { demonHunterActorId } from "../game/mechanisms/roles/demon_hunter/authority";
+import { demonHunterActorId } from "../features/demon-hunter/authority";
 import { types } from "node:util";
-import { DEMON_HUNTER_NIGHT_STAGE } from "../game/mechanisms/roles/demon_hunter/night_stages";
+import { DEMON_HUNTER_NIGHT_STAGE } from "../features/demon-hunter/night-stages";
 import {
   WEDDING_CHAT_STAGE,
   WEDDING_KNIFE_STAGE,
-} from "../game/mechanisms/roles/ghost_bride/night_stages";
+} from "../features/ghost-bride/night-stages";
 /** 文件说明：根据板子角色集合构建夜间阶段列表。 */
 import { Role } from "../domain/model";
-import { RoleCatalog } from "../game/mechanisms/roles/catalog";
-import { getDefaultRoleCatalog } from "../game/mechanisms/roles/role-catalog-assembly";
-import { NightStageHandler } from "../game/mechanisms/stages/night/contracts";
+import { RoleCatalog } from "./roles/catalog";
+import { getDefaultRoleCatalog } from "./roles/role-catalog-assembly";
+import { NightStageHandler } from "../engine/night/contracts";
 import type { World } from "../domain/world";
 import { COMPONENT } from "../domain/components/names";
-import { allNightAbilities } from "../game/mechanisms/roles/abilities";
+import { allNightAbilities } from "../features/night-abilities/abilities";
 
 import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,
   MIRROR_INSPECTION_STAGE,
-} from "../game/mechanisms/roles/role_inspection/contribution-ports";
-import { BLACK_MARKET_RECIPIENT_STAGE } from "../game/mechanisms/roles/black_market_merchant/night_stage";
-import { LUCKY_ABILITY_STAGE } from "../game/mechanisms/roles/miracle_merchant/lucky_stage";
-import { allDeathGuns } from "../game/mechanisms/roles/death_abilities";
-import { DEATH_ABILITY_ACTIVATION_STAGE } from "../game/mechanisms/roles/death_ability_activation";
+} from "../features/role-inspection/contribution-ports";
+import { BLACK_MARKET_RECIPIENT_STAGE } from "../features/black-market-merchant/night-stage";
+import { LUCKY_ABILITY_STAGE } from "../features/miracle-merchant/lucky-stage";
+import { allDeathGuns } from "../features/death-actions/death-abilities";
+import { DEATH_ABILITY_ACTIVATION_STAGE } from "../features/death-actions/death-ability-activation";
 import { registerNightStages, applyGhostBrideStageRegistration } from "./night-stage-registration";
 
 const abilityRole: Record<NightAbilityKind, Role> = {

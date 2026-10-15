@@ -6,10 +6,10 @@
 import { expect, test } from "bun:test";
 import { Camp, Role } from "../../../src/domain/identity";
 import { createAliveComponent } from "../../../src/domain/components/alive";
-import { THIEF_POLICY, initializeThiefState } from "../../../src/game/mechanisms/roles/thief/state-ports";
-import { SHAPESHIFTER_POLICY, cancelShapeshifterState } from "../../../src/game/mechanisms/roles/shapeshifter/state-ports";
-import { freshWildChildState, commitWildChildState } from "../../../src/game/mechanisms/roles/wild_child/state-slot";
-import { freshLonelyGirlState, cancelLonelyGirlState } from "../../../src/game/mechanisms/roles/lonely_girl/state-slot";
+import { THIEF_POLICY, initializeThiefState } from "../../../src/features/thief/state-ports";
+import { SHAPESHIFTER_POLICY, cancelShapeshifterState } from "../../../src/features/shapeshifter/state-ports";
+import { freshWildChildState, commitWildChildState } from "../../../src/features/wild-child/state-slot";
+import { freshLonelyGirlState, cancelLonelyGirlState } from "../../../src/features/lonely-girl/state-slot";
 import type { WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import type { NightLifeScope } from "../../../src/domain/night-effects";
 

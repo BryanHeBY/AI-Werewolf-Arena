@@ -7,8 +7,8 @@ import { expect, test } from "bun:test";
 import { World } from "../../../src/domain/world";
 import { Role } from "../../../src/domain/identity";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
-import { fragrantPairSeerTwelveConfig } from "../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
-import { isFragrantPairBoard } from "../../../src/game/mechanisms/roles/fragrant_pair_seer/ports";
+import { fragrantPairSeerTwelveConfig } from "../../../src/rulesets/presets/fragrant-pair-seer-twelve";
+import { isFragrantPairBoard } from "../../../src/features/fragrant-pair-seer/ports";
 import { installFragrantGameSetup } from "../../../src/rulesets/game-setup";
 
 test("absent fragrant setup reads configuration once without World or events", () => {

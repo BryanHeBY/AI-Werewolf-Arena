@@ -11,17 +11,17 @@ import { Camp, COMPONENT, DeathCause, Phase, Role, createRandom,
 } from "../../../src/domain";
 import { assertRequestDelivery, deriveBoundedRequest } from "../../../src/domain/request-delivery";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
-import { ownNightActions } from "../../../src/game/mechanisms/roles/night_action_history";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { DeathResolution } from "../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../src/engine/events/event-registry";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { findNightAbility } from "../../../src/features/night-abilities/abilities";
+import { getSeerState } from "../../../src/features/seer/ports";
+import { ownNightActions } from "../../../src/features/night-abilities/night-action-history";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 
 type Family = "seer" | "badge";

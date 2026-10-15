@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { createRandom, Camp, COMPONENT, Role, type RoleComponent } from "../../../../src/domain";
-import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
+import { BaselineBotActionProvider } from "../../../../src/agents/baseline/privileged";
 import {
   FOX_CASES,
   foxScenario,
@@ -13,7 +13,7 @@ import {
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
+} from "../../../../src/app/config/board-definition";
 const boards = [
   ...FOX_CASES.map((name) => ({ name, board: foxScenario(name).board.config })),
   {

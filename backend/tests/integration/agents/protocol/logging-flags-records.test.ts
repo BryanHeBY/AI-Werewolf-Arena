@@ -10,13 +10,13 @@ import path from "node:path";
 import { readFile } from "node:fs/promises";
 import { text } from "@ai-werewolf-arena/game-text";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
-import { createAcpConsoleLogger } from "../../../../src/runtime/console_presenter";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { createPlayerAgentRuntime } from "../../../../src/app/player-agent-factory";
+import { createAcpConsoleLogger } from "../../../../src/adapters/console/console-presenter";
 import { Phase, type ActionRequest } from "../../../../src/domain";
-import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import type { ResolvedAgentRuntimeProfile } from "../../../../src/app/config/contracts";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const request: ActionRequest = {

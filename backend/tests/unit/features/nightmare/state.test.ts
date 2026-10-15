@@ -9,7 +9,7 @@ import { Camp } from "../../../../src/domain/identity";
 import {
   freshNightmareShadowState,
   getNightmareShadowState,
-} from "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";
+} from "../../../../src/features/nightmare/state-slot";
 // 测试自持当前 Camp，不经旧 Role 属性或隐藏映射提供阵营。
 const fixtureCamp = { camp: Camp.Wolf };
 const currentCamp = () => fixtureCamp;

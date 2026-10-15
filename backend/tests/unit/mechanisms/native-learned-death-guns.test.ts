@@ -11,7 +11,7 @@ import { createAliveComponent } from "../../../src/domain/components/alive";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { DeathCause } from "../../../src/domain/deaths";
 import { World } from "../../../src/domain/world";
-import type { RoleInitContext } from "../../../src/game/mechanisms/roles/contracts";
+import type { RoleInitContext } from "../../../src/rulesets/roles/contracts";
 import {
   createHunterState,
   createWolfKingState,
@@ -22,22 +22,22 @@ import {
   createAwakenedGunReader,
   captureNativeGunStock,
   type LearnedNativeGun,
-} from "../../../src/game/mechanisms/roles/native-death-gun-resources";
-import { resolveNativeDeathShots } from "../../../src/game/mechanisms/roles/native-death-shot-settlement";
+} from "../../../src/features/death-actions/native-death-gun-resources";
+import { resolveNativeDeathShots } from "../../../src/features/death-actions/native-death-shot-settlement";
 import {
   freshMechanicalState,
   setMechanicalState,
   getMechanicalState,
   learnMechanicalRole,
   advanceMechanicalNight,
-} from "../../../src/game/mechanisms/roles/mechanical_wolf/state";
+} from "../../../src/features/mechanical-wolf/state";
 import {
   freshAwakenedState,
   setAwakenedState,
   getAwakenedState,
   learnAwakenedRole,
   activateAwakenedLearning,
-} from "../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
+} from "../../../src/features/awakened-hidden-wolf/state";
 
 function shotWorld() {
   const world = new World("en"),

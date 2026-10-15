@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { Role } from "../../../../src/domain";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { type PlannedTurn } from "../../../support/transport/contracts";
 import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";

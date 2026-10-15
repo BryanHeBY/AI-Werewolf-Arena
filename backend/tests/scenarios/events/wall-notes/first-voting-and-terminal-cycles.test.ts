@@ -5,7 +5,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { ActionWindow, COMPONENT, Role, type GameEvent, type ActionRequest, type ToolCall } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import { hasWallCommit } from "../../../../src/game/mechanisms/events/wall_notes/authority";
+import { hasWallCommit } from "../../../../src/features/wall-notes/authority";
 
 const roles = [Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 

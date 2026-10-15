@@ -1,7 +1,7 @@
 /**
  * 单元测试：验证守卫配置的重复目标语义。输入为相邻夜、前次合法行动和明确空守；原字面历史与拒绝断言区分政策。只调用有界机制与提示，不运行模型或完整对局驱动。
  */
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -14,19 +14,19 @@ import {
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/domain";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { GUARD_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/guard/night_stages";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { GUARD_NIGHT_STAGES } from "../../../../src/features/guard/night-stages";
 import {
   findNightAbility,
-} from "../../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
-import { getDefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
-import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";
+} from "../../../../src/features/night-abilities/abilities";
+import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
+import { getDefaultTargetHintRegistry } from "../../../../src/agents/tool-repair/target-hint-registry";
+import { getDefaultConfigRenderRegistry } from "../../../../src/agents/prompt/config-render-registry";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/app/config/board-definition";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 
 const roles = [Role.Wolf, Role.Guard, Role.Seer, Role.Villager, Role.Villager, Role.Villager];

@@ -6,10 +6,10 @@
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
-import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
+import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
 import { KnightDuelWindow } from "../../../../src/domain";
 
 for (const [id, size] of [

@@ -2,11 +2,11 @@
  * 单元测试用字面毒素／反射声明与当前躯体验证机械伤害。精确原来源、合并死亡及单次处理断言
  * 验证非递归护盾结算。输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, COMPONENT, StatusMark, DeathCause, type BoardConfig } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   captureNightLife,
   planMechanicalDamage,

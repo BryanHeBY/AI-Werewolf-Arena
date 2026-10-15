@@ -7,10 +7,10 @@ import { Phase } from "../../../src/domain";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import type { GameEvent } from "../../../src/domain/model";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { presentStreamEvents } from "../../../src/runtime/console_presenter";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
+import { presentStreamEvents } from "../../../src/adapters/console/console-presenter";
+import { GameEventRecorder } from "../../../src/app/game-event-recorder";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 test("terminal presentation failure does not replay already recorded events", async () => {

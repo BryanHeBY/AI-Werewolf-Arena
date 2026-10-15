@@ -11,9 +11,9 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   parseBoardDefinition,
   type BoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { configDiagnostic } from "../../../src/runtime/config/error_codes";
-import { checkConfig } from "../../../src/runtime/cli/check_config";
+} from "../../../src/app/config/board-definition";
+import { configDiagnostic } from "../../../src/app/config/error-codes";
+import { checkConfig } from "../../../src/app/cli/check-config";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const cases = [

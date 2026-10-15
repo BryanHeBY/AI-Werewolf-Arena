@@ -7,7 +7,7 @@ import { Camp, Phase } from "../../../../src/domain/identity";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import type { AliveComponent } from "../../../../src/domain/components/alive";
 import type { ActionRequest } from "../../../../src/domain/actions";
-import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+import { fragrantAuthoritySnapshot } from "../../../../src/features/fragrant-pair-seer/authority";
 import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";
 import { type FragrantRuntimePlan as Plan } from "../../../support/features/fragrant-pair-seer/contracts";

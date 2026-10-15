@@ -6,7 +6,7 @@
  * driver.
  */
 import { describe, expect, test } from "bun:test";
-import { createAcpConsoleLogger } from "../../../src/runtime/console_presenter";
+import { createAcpConsoleLogger } from "../../../src/adapters/console/console-presenter";
 
 function chunk(kind: "thought" | "message", text: string, messageId?: string) {
   return { sessionUpdate: `agent_${kind}_chunk`, content: { type: "text", text }, messageId };

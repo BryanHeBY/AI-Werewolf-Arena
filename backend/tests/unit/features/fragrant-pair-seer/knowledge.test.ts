@@ -14,7 +14,7 @@ import {
   knowFragrantNightOpen,
   knowFragrantChoice,
   knowFragrantPublishedDeaths,
-} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/knowledge";
+} from "../../../../src/features/fragrant-pair-seer/knowledge";
 const start = () => knowFragrantWolf(knowFragrantNightOpen(freshFragrantKnowledge(), 1), 10);
 test("only published relation-member deaths reveal consumption, with no root or count DTO", () => {
   const a = knowFragrantChoice(start(), 1, [6, 7]);

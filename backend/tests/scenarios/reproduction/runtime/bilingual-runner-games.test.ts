@@ -10,14 +10,14 @@ import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { assertReplayDocument, assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
-import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { runGame } from "../../../../src/runtime/game_runner";
+import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { runGame } from "../../../../src/app/game-runner";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { foundationTransportPlan } from "../../../support/builders/transport/foundation-plan";
 import { type ActorTransportPlan } from "../../../support/transport/contracts";
@@ -25,7 +25,7 @@ import { assertTransportPrompt, assertTransportEvents } from "../../../support/o
 import { ActionWindow, Camp, Phase, Role, WinCondition } from "../../../../src/domain";
 
 import { selfDestructTransportPlan } from "../../../support/builders/transport/self-destruct-plan";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 
 const roles6 = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager] as const;
 const roles12 = [

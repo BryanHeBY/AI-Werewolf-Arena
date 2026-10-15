@@ -6,15 +6,15 @@
  * commit 返回 false 只跳过该选择；读取、Provider 或提交失败沿原异常传播，不补提交或回滚已写前缀。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { RED_MOON_ROLE } from "../game/mechanisms/roles/red_moon_apostle/ports";
-import { demonRedMoonCanBlast } from "../game/mechanisms/roles/demon_hunter/ports";
-import { canRoleSelfDestruct } from "../game/mechanisms/roles/self_destruct_capability";
-import { getDefaultRoleCatalog } from "../game/mechanisms/roles/role-catalog-assembly";
+import { RED_MOON_ROLE } from "../features/red-moon/ports";
+import { demonRedMoonCanBlast } from "../features/demon-hunter/ports";
+import { canRoleSelfDestruct } from "../features/self-destruct/capability";
+import { getDefaultRoleCatalog } from "./roles/role-catalog-assembly";
 import {
   weddingMember,
   weddingSetup,
   ghostBrideReady,
-} from "../game/mechanisms/roles/ghost_bride/ports";
+} from "../features/ghost-bride/ports";
 import { AliveComponent, aliveLifeVersion } from "../domain/components/alive";
 import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
@@ -27,9 +27,9 @@ import {
 } from "../domain/model";
 import { RoleRegistry } from "../domain/registries/role-registry";
 import { World } from "../domain/world";
-import { ToolGateway } from "../game/gateway/tool_gateway";
+import { ToolGateway } from "../engine/actions/tool-gateway";
 import type { ActionRequestConstructionPort } from "../domain/actions";
-import { getWhiteWolfKingState } from "../game/mechanisms/roles/white_wolf_king/ports";
+import { getWhiteWolfKingState } from "../features/white-wolf-king/ports";
 
 /** 并发收集选项，按编号升序复验并尝试提交；回调明确返回 false 时跳过该选项，返回首个未被拒绝的选择。 */
 export class SelfDestructWindow {

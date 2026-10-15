@@ -7,9 +7,9 @@ import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix"
 import { test, expect } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Phase, createRandom, type ActionRequest, type ToolCall } from "../../../../src/domain";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
-import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
-import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
+import { ReproductionTrace } from "../../../../src/recording/reproduction/trace";
+import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import { mistBoard, MIST_ROLES } from "../../../support/features/mist-raven/builders/board";
 import { mistAction } from "../../../support/features/mist-raven/drivers/actions";

@@ -6,14 +6,14 @@
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { loadBoardDefinition } from "../../../src/runtime/config/load_board_definition";
+import { loadBoardDefinition } from "../../../src/app/config/load-board-definition";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, type BoardConfig } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 for (const id of ["six_player_black_market_merchant", "twelve_player_black_market_merchant"])
   test(`${id}: public AWA board composes exactly one strict Black and the declared roles`, async () => {
     const board = await loadBoardDefinition(

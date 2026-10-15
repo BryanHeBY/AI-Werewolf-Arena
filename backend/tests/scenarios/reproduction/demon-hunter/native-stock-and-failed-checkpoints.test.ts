@@ -3,14 +3,14 @@
  * 替换躯体和受控迟到失败；字面资源前缀、原名单与元数据撤销是预期。checkpoint 证据保留，
  * 不能把生产投影称为新的独立结果算法。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import { COMPONENT, PotionType, type ActionRequest, type RoleComponent } from "../../../../src/domain";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { demonHunterAuditPlayer } from "../../../../src/features/demon-hunter/authority";
+import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
+import { getHunterState } from "../../../../src/features/hunter/ports";
 
 function stock(f: ReturnType<typeof demonHunterFixture>, id: number, key: string) {
   return (
@@ -369,7 +369,7 @@ test("actual sheriff election survives later day speech failure in CP", async ()
 });
 
 test("optional badge accessor differs from absence: CP and next actual Night reject with zero reads", async () => {
-  const { assignSheriff } = await import("../../../../src/game/mechanisms/sheriff/badge");
+  const { assignSheriff } = await import("../../../../src/features/sheriff/badge");
   const f = demonHunterFixture(12);
   let reads = 0;
   expect(assignSheriff(f.world, 4, f.config)).toBe(true);

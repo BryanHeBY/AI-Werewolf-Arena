@@ -6,18 +6,18 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/rulesets/presets/noble-secret-body-twelve";
 import { Role } from "../../../../src/domain/identity";
 import type { BoardConfig } from "../../../../src/domain/board";
 import type { World } from "../../../../src/domain/world";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import { checkpointNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { checkpointNobleBodyAuthority } from "../../../../src/features/noble-secret-body/authority";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
 
 test("a later result getter failure preserves the already-transferred sender prefix", async () => {
   const config = nobleSecretBodyTwelveConfig(),

@@ -7,19 +7,19 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { nobleSecretBodyTwelveConfig } from "../../../src/rulesets/presets/noble-secret-body-twelve";
 import { Role } from "../../../src/domain/identity";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
-import { checkpointNobleBodyAuthority } from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
+import { checkpointNobleBodyAuthority } from "../../../src/features/noble-secret-body/authority";
 import {
   attachNobleNightReceiver,
   createNobleNightAbortReceiver,
   nobleNightReceiver,
-} from "../../../src/game/mechanisms/roles/noble_secret_body/ports";
+} from "../../../src/features/noble-secret-body/ports";
 
 test("hidden receiver retains result identity and stays outside ordinary serialized data", () => {
   const receiver = createNobleNightAbortReceiver(),

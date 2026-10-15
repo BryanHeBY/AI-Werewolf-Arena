@@ -3,9 +3,9 @@
  */
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../src/rulesets/presets/noble-secret-body-twelve";
 import { COMPONENT, Phase, Role, type RoleComponent, World } from "../../../src/domain";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import {
   beginNobleBodyNight,
   openSecretBodyChoice,
@@ -16,16 +16,16 @@ import {
   checkpointNobleBodyAuthority,
   installNobleBodyAuthority,
   nobleBodyChoiceTargets,
-} from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../src/features/noble-secret-body/authority";
 import {
   createNobleState,
   createSecretBodyState,
-} from "../../../src/game/mechanisms/roles/noble_secret_body/state";
+} from "../../../src/features/noble-secret-body/state";
 import {
   installDemonHunter,
   demonHunterCheckpointPlayers,
   demonHunterAuditPlayer,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
+} from "../../../src/features/demon-hunter/authority";
 import {
   openNobleBodyRequest,
   openNobleBodyRevealRequest,
@@ -34,7 +34,7 @@ import {
   nobleBodyRequestScope,
   inheritNobleBodyDeadlineRequest,
   closeNobleBodyRequest,
-} from "../../../src/game/mechanisms/roles/noble_secret_body/requests";
+} from "../../../src/features/noble-secret-body/requests";
 function game() {
   const config = nobleSecretBodyTwelveConfig();
   return {

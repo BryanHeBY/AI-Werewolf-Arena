@@ -6,9 +6,9 @@
 import { expect, test, spyOn } from "bun:test";
 import * as fs from "node:fs/promises";
 import path from "node:path";
-import { migrateBoardSource, migrateBoards } from "../../../src/runtime/cli/migrate_configs";
-import { BoardConfigurationError } from "../../../src/runtime/config/board_definition";
-import { configDiagnostic } from "../../../src/runtime/cli/check_config";
+import { migrateBoardSource, migrateBoards } from "../../../src/app/cli/migrate-configs";
+import { BoardConfigurationError } from "../../../src/app/config/board-definition";
+import { configDiagnostic } from "../../../src/app/cli/check-config";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 test("exclusive migration preserves a competing target created after the initial check", async () => {
@@ -109,7 +109,7 @@ test("configuration CLI preserves safe locations and never prints raw provider J
     path.join(root, "runtime/providers.json"),
     '{"key":"PRIVATE_SECRET_FRAGMENT",INVALID}',
   );
-  const command = path.resolve(import.meta.dir, "../../../src/runtime/cli/check_config.ts");
+  const command = path.resolve(import.meta.dir, "../../../src/app/cli/check-config.ts");
   const run = async (args: string[]) => {
     const process = Bun.spawn([Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun", command, ...args], {
       stdout: "pipe",

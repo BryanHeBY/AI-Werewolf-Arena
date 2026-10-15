@@ -2,20 +2,20 @@
  * 单元测试用有序双施法者选择及首夜知识政策验证狼术师 frame。字面组合目标、循环处理和
  * withheld 知识断言是预期，输入及字面／不可变 fixture 保持原样，不运行模型或完整对局。
  */
-import { createAliveComponent } from "../../../src/game/observation/component-presentation";
-import { WOLF_SORCERER_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf_sorcerer/profile";
+import { createAliveComponent } from "../../../src/agents/observation/component-presentation";
+import { WOLF_SORCERER_ROLE_PROFILE } from "../../../src/features/wolf-sorcerer/profile";
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type World, type RoleComponent } from "../../../src/domain";
 
-import { createMagicianState } from "../../../src/game/mechanisms/roles/magician/state-slot";
-import { createWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state-slot";
+import { createMagicianState } from "../../../src/features/magician/state-slot";
+import { createWolfSorcererState } from "../../../src/features/wolf-sorcerer/state-slot";
 import {
   installMagicianBoard,
   beginMagicianNight,
   commitMagicianExchange,
   closeMagicianNight,
   resolveMagicianNightTarget,
-} from "../../../src/game/mechanisms/roles/magician/night_frame";
+} from "../../../src/features/magician/night-frame";
 import {
   installWolfSorcererBoard,
   beginWolfSorcererNight,
@@ -24,7 +24,7 @@ import {
   wolfSorcererChoiceTargets,
   wolfSorcererPackReady,
   abortWolfSorcererNight,
-} from "../../../src/game/mechanisms/roles/wolf_sorcerer/night_frame";
+} from "../../../src/features/wolf-sorcerer/night-frame";
 function fixture(firstNight: 1 | 2 = 1, shot: "original" | "exchanged" = "exchanged") {
   const mage = createMagicianState(firstNight, shot),
     wolf = createWolfSorcererState(firstNight);

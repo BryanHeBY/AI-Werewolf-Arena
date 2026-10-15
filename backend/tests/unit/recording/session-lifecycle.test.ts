@@ -4,7 +4,7 @@
  * 不使用文件、World 或生产归档生成预期，也不通过等待真实游戏检验生命周期。
  */
 import { expect, test } from "bun:test";
-import { SessionRecordingLifecycle } from "../../../src/recording/session-recording-lifecycle";
+import { SessionRecordingLifecycle } from "../../../src/recording/session/lifecycle";
 import type { DebugSummaryInput, ReplayFinalizeMeta } from "../../../src/recording/contracts";
 
 const meta: ReplayFinalizeMeta = {

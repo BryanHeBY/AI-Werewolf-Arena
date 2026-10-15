@@ -4,8 +4,8 @@
 import { expect, test } from "bun:test";
 import { readNobleSecretBodyFact, NOBLE_SECRET_BODY_POLICY } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
+import { nobleSecretBodyTwelveConfig } from "../../../src/rulesets/presets/noble-secret-body-twelve";
+import { buildAgentVisibleEvent } from "../../../src/agents/observation/event-feed";
 const noble = {
   policy: NOBLE_SECRET_BODY_POLICY,
   actorId: 1,

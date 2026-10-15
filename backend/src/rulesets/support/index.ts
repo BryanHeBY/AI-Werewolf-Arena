@@ -17,6 +17,6 @@ export { isPureWhitePreset } from "./pure-white";
 export { isRadiantEclipsePreset } from "./radiant-eclipse";
 export { isRedMoonPreset } from "./red-moon";
 export { isScholarMentorPreset } from "./scholar-mentor";
-export { isTimeConsortPreset } from "./time-consort";
+export { isTimeConsortPreset } from "./time-wolf-consort";
 export { isTricksterPreset } from "./trickster";
 export { isWolfSorcererPreset } from "./wolf-sorcerer";

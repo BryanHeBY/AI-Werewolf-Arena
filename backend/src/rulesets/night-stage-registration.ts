@@ -4,7 +4,7 @@
  * 同一已观察 ID 只允许原 handler 同引用共享，不读取 priority／execute 做额外等价推断。
  * 婚约替换按原四步顺序执行；克隆引用在原参数位置捕获，set 成功后才加入变更记录。
  */
-import type { NightStageHandler } from "../game/mechanisms/stages/night/contracts";
+import type { NightStageHandler } from "../engine/night/contracts";
 import type { GhostStageRegistrationChange } from "./night-stage-plan-contracts";
 
 export const NIGHT_STAGE_SHARING = Object.freeze({

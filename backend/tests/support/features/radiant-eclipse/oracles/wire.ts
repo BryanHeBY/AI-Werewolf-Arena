@@ -6,7 +6,7 @@
  * independent literal markers and recorded prefixes as the oracle. No expected
  * result is regenerated from production role, observation or board algorithms.
  */
-import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
+import type { ReproductionRecord } from "../../../../../src/recording/reproduction/format";
 type Tuple = [number, string, Record<string, unknown>];
 /** Compare actual serialized transport events to the independent, strictly validated ledger's
  * request prefix. A final archive alone cannot prove what was sent during an earlier turn. */

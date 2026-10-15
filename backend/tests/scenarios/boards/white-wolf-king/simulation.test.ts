@@ -5,12 +5,12 @@
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
 import { expect, test } from "bun:test";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { simulateGames } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import path from "node:path";
 for (const id of ["six_player_white_wolf_king", "twelve_player_white_wolf_king"] as const)

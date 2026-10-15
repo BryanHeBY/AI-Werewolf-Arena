@@ -1,9 +1,9 @@
 /**
  * 单元测试验证纸条窗口、原纸张／Unicode／随机／请求矩阵及首投票／终态边界。预期来自字面回执、原引用和 getter／错误轨迹。仅尝试被拒绝的阶段重入，记录器 flush 使用内存惰性 manager，不运行完整游戏或文件持久化。
  */
-import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
+import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
 import { expect, test } from "bun:test";
 import { inheritRequestAlias } from "../../../../src/domain/request-delivery";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -20,7 +20,7 @@ import {
   type RoleComponent,
 } from "../../../../src/domain";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import { WallNotesWindow } from "../../../../src/game/mechanisms/events/wall_notes/window";
+import { WallNotesWindow } from "../../../../src/features/wall-notes/window";
 import {
   hasWallCommit,
   hasActiveWall,
@@ -30,16 +30,16 @@ import {
   closeWall,
   authorizedWallAuthor,
   wallRequestScope,
-} from "../../../../src/game/mechanisms/events/wall_notes/authority";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+} from "../../../../src/features/wall-notes/authority";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
+} from "../../../../src/app/config/board-definition";
 import { validWallText, readWallTool, readWallEventFact } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import { wallEventLabel } from "@ai-werewolf-arena/game-presentation";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 
 const roles = [Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 

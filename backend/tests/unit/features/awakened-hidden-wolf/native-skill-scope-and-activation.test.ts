@@ -3,12 +3,12 @@
  * getter／错误轨迹、事实和状态是预期；有界具体阶段／请求／reader／死亡 hook 检查激活、库存
  * 及原 scope 撤销，不运行完整流水线、PhaseManager 周期或计费模型，保留局部窗口和拒绝探针。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
 import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
-import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../../src/features/night-abilities/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -24,30 +24,30 @@ import {
   type ToolCall,
 } from "../../../../src/domain";
 import { type AliveComponent } from "../../../../src/domain/components/alive";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import {
   allNightAbilities,
   findNightAbility,
-} from "../../../../src/game/mechanisms/roles/abilities";
-import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+} from "../../../../src/features/night-abilities/abilities";
+import { resolveInspection } from "../../../../src/engine/inspection";
+import { RoleCatalog } from "../../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
-import { awakenedDeathHook } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/death_hook";
+} from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { MIRROR_INSPECTION_STAGE } from "../../../../src/features/role-inspection/contribution-ports";
+import { awakenedDeathHook } from "../../../../src/features/awakened-hidden-wolf/death-hook";
 import {
   canAwakenedKnife,
   refreshAwakenedInheritance,
-} from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/inheritance";
-import { AWAKENED_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/night_stages";
-import { currentAwakenedNight } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/night_scope";
+} from "../../../../src/features/awakened-hidden-wolf/inheritance";
+import { AWAKENED_NIGHT_STAGES } from "../../../../src/features/awakened-hidden-wolf/night-stages";
+import { currentAwakenedNight } from "../../../../src/features/awakened-hidden-wolf/night-scope";
 import {
   activateAwakenedLearning,
   canAwakenedMimic,
@@ -55,8 +55,8 @@ import {
   getAwakenedState,
   learnAwakenedRole,
   setAwakenedState,
-} from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/features/awakened-hidden-wolf/state";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 
 const fixture = (targetRole = Role.Hunter) => {
   const roles = [

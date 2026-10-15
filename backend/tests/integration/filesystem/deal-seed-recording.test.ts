@@ -10,11 +10,11 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom, RANDOM_ALGORITHM, RANDOM_STREAM_POLICY } from "../../../src/domain";
-import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
-import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../../src/runtime/game_runner";
-import * as factory from "../../../src/runtime/player_agent_factory";
+import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
+import { parseRuntimeConfig } from "../../../src/app/config/parse-config";
+import { resolveGameSetup } from "../../../src/app/config/resolve-game-setup";
+import { runGame } from "../../../src/app/game-runner";
+import * as factory from "../../../src/app/player-agent-factory";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 for (const seed of ["recorded-seed", undefined]) {

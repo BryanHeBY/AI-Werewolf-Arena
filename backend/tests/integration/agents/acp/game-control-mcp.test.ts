@@ -10,9 +10,9 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import * as path from "node:path";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
+import { WerewolfMcpControlServer } from "../../../../src/adapters/acp/werewolf-mcp-control";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { speakRequest } from "../../../support/builders/agents/acp-requests";
 
 describe("WerewolfMcpControlServer", () => {
@@ -37,7 +37,7 @@ describe("WerewolfMcpControlServer", () => {
       const mcpClient = new Client({ name: "werewolf-mcp-test", version: "1.0.0" });
       const transport = new StdioClientTransport({
         command: process.execPath,
-        args: [path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts")],
+        args: [path.resolve(process.cwd(), "src/adapters/acp/werewolf-mcp-server.ts")],
         env: Object.fromEntries(
           Object.entries({ ...process.env, ...env }).filter(
             (entry): entry is [string, string] => entry[1] !== undefined,

@@ -19,16 +19,16 @@ import {
 import type { RoleComponent } from "../../../src/domain/components/role";
 import type { StatusMarksComponent } from "../../../src/domain/components/status-marks";
 import { boardConfigSchema } from "../../../src/domain/board-schema";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { KnightDuelWindow as DuelExecutor } from "../../../src/game/mechanisms/roles/knight/ports";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
+import { KnightDuelWindow as DuelExecutor } from "../../../src/features/knight/ports";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { getDefaultConfigRenderRegistry } from "../../../src/agents/prompt/config-render-registry";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
+import { getWitchState } from "../../../src/features/witch/ports";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 
 const roleIds = [Role.Wolf, Role.Witch, Role.Knight, Role.Villager, Role.Villager, Role.Villager];
 

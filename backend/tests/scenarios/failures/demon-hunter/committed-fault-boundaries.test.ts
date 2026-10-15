@@ -12,10 +12,10 @@ import {
 import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { getWitchState } from "../../../../src/features/witch/ports";
+import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 function plan(actorId: number, playerId = actorId, day = 2) {
   return {

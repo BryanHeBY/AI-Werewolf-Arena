@@ -6,7 +6,7 @@
  * tests never run a model, invent a role permission or generate a golden from a compiler.
  */
 import { expect, test } from "bun:test";
-import type { NightStageHandler } from "../../../src/game/mechanisms/stages/night/contracts";
+import type { NightStageHandler } from "../../../src/engine/night/contracts";
 import {
   registerNightStages,
   applyGhostBrideStageRegistration,

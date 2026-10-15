@@ -9,14 +9,14 @@ import type {
   DemonHunterState,
   DemonHuntTool,
 } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
-import type { PlayerObservation } from "../../../src/game/observation/player-observation";
+import type { PlayerObservation } from "../../../src/agents/observation/player-observation";
 
 // @ts-expect-error 旧声明出口退休，不由运行状态叶继续转发纯数据。
-import type { DemonHunterChoice as RetiredChoice } from "../../../src/game/mechanisms/roles/demon_hunter/state-slot";
+import type { DemonHunterChoice as RetiredChoice } from "../../../src/features/demon-hunter/state-slot";
 // @ts-expect-error 重复结构退出后端叶，共享事实契约成为唯一 owner。
-import type { DemonHunterState as RetiredState } from "../../../src/game/mechanisms/roles/demon_hunter/state-slot";
+import type { DemonHunterState as RetiredState } from "../../../src/features/demon-hunter/state-slot";
 // @ts-expect-error 重复工具结构退出后端叶，运行 reader 仍保留原出口。
-import type { DemonHuntTool as RetiredTool } from "../../../src/game/mechanisms/roles/demon_hunter/state-slot";
+import type { DemonHuntTool as RetiredTool } from "../../../src/features/demon-hunter/state-slot";
 
 interface OriginalChoice {
   day: number;

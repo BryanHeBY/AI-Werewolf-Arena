@@ -11,7 +11,7 @@ import {
   commitDemonRedMoonTransition,
   demonRedMoonExpiry,
   demonHunterCheckpointPlayers,
-} from "../../../src/game/mechanisms/roles/demon_hunter/authority";
+} from "../../../src/features/demon-hunter/authority";
 function deferredWorld() {
   const { world } = redMoonCandidateWorld();
   beginDemonHunterNight(world, 1, () => true);

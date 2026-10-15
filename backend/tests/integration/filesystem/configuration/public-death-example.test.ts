@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { Role, WinCondition } from "../../../../src/domain";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 
 const newWords = "netease_2017_day_and_first_night_v1" as const;
 

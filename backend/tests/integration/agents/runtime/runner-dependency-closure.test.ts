@@ -6,10 +6,10 @@
 import { expect, test } from "bun:test";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { runGame, type GameRunDependencies } from "../../../../src/runtime/game_runner";
-import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
-import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
-import { readReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
+import { runGame, type GameRunDependencies } from "../../../../src/app/game-runner";
+import { resolveGameSetup } from "../../../../src/app/config/resolve-game-setup";
+import { parseRuntimeConfig } from "../../../../src/app/config/parse-config";
+import { readReproduction } from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 async function setup(maxRuntimeMs: number) {

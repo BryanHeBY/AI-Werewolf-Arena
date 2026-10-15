@@ -1,11 +1,11 @@
 /**
  * 单元测试：验证雾鸦施法者的独立权限契约与原 owner／frame／reader。输入为内存 fixture、受控回调和畸形修改；原引用、字面值及拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { Camp, type Role } from "../../../../src/domain/identity";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 
 
 import { createIdentityComponent } from "../../../../src/domain/entities/player";
@@ -13,8 +13,8 @@ import { COMPONENT } from "../../../../src/domain/components/names";
 import {
   createAlchemistState,
   createRavenState,
-} from "../../../../src/game/mechanisms/roles/mist_raven/state";
-import { MistCasterAuthority } from "../../../../src/game/mechanisms/roles/mist_raven/caster_authority";
+} from "../../../../src/features/mist-raven/state";
+import { MistCasterAuthority } from "../../../../src/features/mist-raven/caster-authority";
 function fixture(caster: "alchemist" | "raven_claw_wolf" = "alchemist", day = 1) {
   const world = new World(),
     id = world.createEntity(),

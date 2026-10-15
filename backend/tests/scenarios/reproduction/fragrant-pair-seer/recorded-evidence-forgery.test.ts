@@ -4,7 +4,7 @@
  * Output and oracle: Explicit original acceptance, exact rejection and paid-prefix assertions retain the actual causal source; generated recordings do not become independent expected state.
  */
 import { beforeAll, expect, test } from "bun:test";
-import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction/format";
 import { recordFragrantLiteral } from "../../../support/features/fragrant-pair-seer/drivers/recording";
 const records: Record<string, ReproductionRecord> = {};
 beforeAll(async () => {

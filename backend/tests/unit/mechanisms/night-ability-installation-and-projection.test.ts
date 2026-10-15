@@ -17,26 +17,26 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import {
   allNightAbilities,
   activeNightAbility,
   abilityStatus,
-} from "../../../src/game/mechanisms/roles/abilities";
-import { recordNightAbilityUse } from "../../../src/game/mechanisms/roles/abilities";
-import { setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility, transferNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
-import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../src/features/night-abilities/abilities";
+import { recordNightAbilityUse } from "../../../src/features/night-abilities/abilities";
+import { setNightAbilityEnabled } from "../../../src/features/night-abilities/abilities";
+import { grantNightAbility, transferNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
+import { getSeerState } from "../../../src/features/seer/ports";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
+import { buildAgentVisibleEventFeed } from "../../../src/agents/observation/event-feed";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 
@@ -261,8 +261,8 @@ test("direct transfer provenance cannot clone or refresh a used source instance 
 
 test("native installation and replacement detach repeated templates and return the actual owned state", async () => {
   const [{ setSeerState }, { setWitchState }] = await Promise.all([
-    import("../../../src/game/mechanisms/roles/seer/ports"),
-    import("../../../src/game/mechanisms/roles/witch/ports"),
+    import("../../../src/features/seer/ports"),
+    import("../../../src/features/witch/ports"),
   ]);
   const { world } = fixture(),
     template = freshSeer();
@@ -319,7 +319,7 @@ test("transfer requires an explicit knowledge policy and preserves generic count
 });
 
 test("sparse or undefined state arrays reject before native replacement or grant writes", async () => {
-  const { setSeerState } = await import("../../../src/game/mechanisms/roles/seer/ports");
+  const { setSeerState } = await import("../../../src/features/seer/ports");
   const { world } = fixture(),
     events: GameEvent[] = [],
     before = structuredClone(role(world, 3).privateState);

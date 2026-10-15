@@ -8,10 +8,10 @@ import { DeathCause, Phase, type DeathSources, type GameEvent } from "@ai-werewo
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { GhostBrideSetupWindow } from "../../../../src/game/mechanisms/roles/ghost_bride/setup";
-import { WeddingDeathWavePublication } from "../../../../src/game/mechanisms/roles/ghost_bride/ports";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { GhostBrideSetupWindow } from "../../../../src/features/ghost-bride/setup";
+import { WeddingDeathWavePublication } from "../../../../src/features/ghost-bride/ports";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
 import { ghostBrideBoard, ghostBrideDeck } from "../../../support/features/ghost-bride/builders/scenario";
 
 async function marriedWorld() {

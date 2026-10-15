@@ -7,15 +7,15 @@
 import { EntityId, Phase, StatusMark } from "../domain/model";
 import { COMPONENT } from "../domain/components/names";
 import { aliveLifeVersion } from "../domain/components/alive";
-import { safeRecordLogicOp } from "../recording/session_recorder";
-import { wolfTeamEvent } from "../game/mechanisms/roles/wolf_team";
-import { bindWolfKnifeTargetQuery } from "../game/mechanisms/roles/wolf/ports";
+import { safeRecordLogicOp } from "../recording/session/recorder";
+import { wolfTeamEvent } from "../features/wolf-team/permissions";
+import { bindWolfKnifeTargetQuery } from "../features/wolf/ports";
 import {
   isMistRavenBoard,
   mistKnifeTargets,
   originalMistTarget,
-} from "../game/mechanisms/roles/mist_raven/knife-ports";
-import type { NightStageContext, WolfKnifeTargetScope } from "../game/mechanisms/stages/night/contracts";
+} from "../features/mist-raven/knife-ports";
+import type { NightStageContext, WolfKnifeTargetScope } from "../engine/night/contracts";
 
 /** 已接受的票只携带原目标身体与生命版本，不是新的付款凭据或 JSON 快照。 */
 export type AcceptedWolfKnifeTarget = Pick<WolfKnifeTargetScope, "targetId" | "life" | "version"> & {

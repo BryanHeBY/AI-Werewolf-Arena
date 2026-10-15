@@ -1,12 +1,12 @@
 /**
  * 单元测试：验证奇迹商人直接交易创建一个不透明幸运实例，拒绝变化的 owner／target 权限。输入为语言、技能、梦境与撤权矩阵；有界阶段和伤害的库存、顺序、真实阵营、反噬及隐私断言保持，不运行完整夜或录制器。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
-import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNightAbilityActorQuery } from "../../../../src/features/night-abilities/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -21,19 +21,19 @@ import {
   type RoleComponent,
   type GameEvent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import {
   getMerchantState,
   projectMerchantState,
-} from "../../../../src/game/mechanisms/roles/miracle_merchant/state";
-import { MIRACLE_MERCHANT_STAGE } from "../../../../src/game/mechanisms/roles/miracle_merchant/night_stage";
-import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
+} from "../../../../src/features/miracle-merchant/state";
+import { MIRACLE_MERCHANT_STAGE } from "../../../../src/features/miracle-merchant/night-stage";
+import { allNightAbilities } from "../../../../src/features/night-abilities/abilities";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
 import { StatusMarksComponent } from "../../../../src/domain/components/status-marks";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
 

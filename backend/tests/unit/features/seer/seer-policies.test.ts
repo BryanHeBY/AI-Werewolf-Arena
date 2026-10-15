@@ -3,7 +3,7 @@
  * DTO 和库存断言验证配置语义；输入及字面／不可变 fixture 预期保持原样，不运行模型
  * 或完整对局驱动。
  */
-import { captureNativeRolePresentation } from "../../../../src/game/observation/native-role-presentation-capture";
+import { captureNativeRolePresentation } from "../../../../src/agents/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -16,23 +16,23 @@ import {
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/domain";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/night_stages";
-import { SEER_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/seer/profile";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { SEER_NIGHT_STAGES } from "../../../../src/features/seer/night-stages";
+import { SEER_ROLE_PROFILE } from "../../../../src/features/seer/profile";
 import {
   findNightAbility,
-} from "../../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
-import { getDefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
-import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";
+} from "../../../../src/features/night-abilities/abilities";
+import { projectNightAbility } from "../../../../src/agents/observation/night-ability-projection";
+import { getDefaultTargetHintRegistry } from "../../../../src/agents/tool-repair/target-hint-registry";
+import { getDefaultConfigRenderRegistry } from "../../../../src/agents/prompt/config-render-registry";
 import { boardConfigSchema } from "../../../../src/domain/board-schema";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/app/config/board-definition";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
-import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Guard, Role.Villager, Role.Villager];

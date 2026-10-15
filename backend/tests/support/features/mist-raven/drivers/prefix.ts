@@ -3,14 +3,14 @@
  * 输出为原驱动回调、轨迹、缓存与清理；具体传输、复盘或脚本行动保持原生命周期。
  * 手写 oracle 持有预期结果，不引入计费模型或生产状态写入器。
  */
-import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
+import type { ReproductionRecord } from "../../../../../src/recording/reproduction/format";
 import { expect } from "bun:test";
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
 import { createRandom } from "../../../../../src/domain";
 import type { ActionRequest } from "../../../../../src/domain";
 import type { ToolCall } from "../../../../../src/domain";
-import { ReproductionTrace } from "../../../../../src/recording/reproduction-trace";
-import { captureCheckpoint } from "../../../../../src/runtime/simulation/reproduction_context";
+import { ReproductionTrace } from "../../../../../src/recording/reproduction/trace";
+import { captureCheckpoint } from "../../../../../src/app/simulation/reproduction-context";
 import { mistRecording } from "./recording";
 import { mistBoard } from "../builders/board";
 import { mistAction } from "./actions";

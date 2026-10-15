@@ -9,13 +9,13 @@ import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { createAliveComponent } from "../../../../src/domain/components/alive";
 import { createRoleComponent } from "../../../../src/domain/components/role";
-import { MAGICIAN_STATE_SLOT } from "../../../../src/game/mechanisms/roles/magician/state-slot";
+import { MAGICIAN_STATE_SLOT } from "../../../../src/features/magician/state-slot";
 import {
   installMagicianBoard,
   beginMagicianNight,
   commitMagicianExchange,
   resolveMagicianNightTarget,
-} from "../../../../src/game/mechanisms/roles/magician/night_frame";
+} from "../../../../src/features/magician/night-frame";
 
 test("状态初始化先读左值容器和原参数，setter失败不补写或提前查询", () => {
   const trace: string[] = [], failure = new Error("literal_magician_install_failure");

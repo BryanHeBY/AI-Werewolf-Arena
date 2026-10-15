@@ -5,7 +5,7 @@
  * these module assertions invoke no model or complete-game driver.
  */
 import { expect, test } from "bun:test";
-import { recordedErrorName } from "../../../src/recording/reproduction";
+import { recordedErrorName } from "../../../src/recording/reproduction/format";
 
 test("recorded error names preserve the existing six machine names with controlled native reads", () => {
   for (const [error, name] of [

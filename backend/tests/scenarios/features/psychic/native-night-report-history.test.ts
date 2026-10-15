@@ -16,16 +16,16 @@ import {
   type GameEvent,
   type ActionRequest,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { PSYCHIC_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/contribution-ports";
-import { hasRoleInspectionNightCommit } from "../../../../src/game/mechanisms/roles/role_inspection/night_scope";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { getRoleInspectionState } from "../../../../src/features/role-inspection/ports";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import { PSYCHIC_INSPECTION_STAGE } from "../../../../src/features/role-inspection/contribution-ports";
+import { hasRoleInspectionNightCommit } from "../../../../src/features/role-inspection/night-scope";
+import { getDefaultRoleCatalog } from "../../../../src/rulesets/roles/role-catalog-assembly";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
+import type { NightStageContext } from "../../../../src/engine/night/contracts";
 
 const deck = [Role.Psychic, Role.Wolf, Role.Witch, Role.Guard, Role.Villager, Role.Villager],
   catalog = getDefaultRoleCatalog();
@@ -84,11 +84,11 @@ function context(
 for (const pass of [false, true])
   test(`${pass}: actual complete NightPipeline rejects same World/day reentry, keeping another World usable`, async () => {
     const { NightPipeline } =
-        await import("../../../../src/game/engine/phase_pipeline/night_pipeline"),
+        await import("../../../../src/engine/phases/night-pipeline"),
       { DamageResolutionSystem } =
         await import("../../../../src/domain/systems/damage-resolution-system"),
       { BaselineBotActionProvider } =
-        await import("../../../../src/game/drivers/privileged-baseline");
+        await import("../../../../src/agents/baseline/privileged");
     const game = bootstrapGame(board(), { fixedRoles: deck }),
       events: GameEvent[] = [],
       bot = new BaselineBotActionProvider(game.world),

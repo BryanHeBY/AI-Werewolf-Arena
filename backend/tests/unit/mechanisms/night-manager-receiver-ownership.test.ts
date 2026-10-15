@@ -8,10 +8,10 @@ import { expect, test } from "bun:test";
 import { Role, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/domain/world";
 import { NightManagerLifecycle } from "../../../src/rulesets/night-lifecycle-plan";
-import { MagicianNightUnit } from "../../../src/game/mechanisms/roles/magician/ports";
-import { WolfSorcererNightUnit } from "../../../src/game/mechanisms/roles/wolf_sorcerer/ports";
-import { TricksterNightUnit } from "../../../src/game/mechanisms/roles/trickster/ports";
-import { TimeConsortNightUnit } from "../../../src/game/mechanisms/roles/time_wolf_consort/ports";
+import { MagicianNightUnit } from "../../../src/features/magician/ports";
+import { WolfSorcererNightUnit } from "../../../src/features/wolf-sorcerer/ports";
+import { TricksterNightUnit } from "../../../src/features/trickster/ports";
+import { TimeConsortNightUnit } from "../../../src/features/time-wolf-consort/ports";
 
 function dispatchFlags(trace: string[], enabled: readonly string[]): ReadonlyBoardConfig {
   const board: ReadonlyBoardConfig = {

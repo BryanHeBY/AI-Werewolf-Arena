@@ -1,7 +1,7 @@
 /**
  * 场景验证夜贵族已消耗／完整与待结算／已清除历史的合法白天信息及错误。输入为原语言、资源历史、脚本动作矩阵和 God 事实 audience 探针；字面隐藏库存、状态、相等样本和越权拒绝保持，不改 profile 或 golden。
  */
-import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
+import { renderRolePrompt } from "../../../../src/agents/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -12,25 +12,25 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../../../src/domain";
-import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/rulesets/presets/noble-secret-body-twelve";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
-import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { PlayerPromptPolicy } from "../../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../../src/game/mechanisms";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";
-import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+} from "../../../../src/rulesets/mechanism-api";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { gameToolProtocol } from "../../../../src/agents/game-tool-protocol";
+import { AcpTurnRegistry } from "../../../../src/adapters/acp/acp-turn-registry";
 import {
   buildAgentVisibleEvent,
   buildAgentVisibleEventFeed,
-} from "../../../../src/game/engine/agent_visible_event_feed";
-import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
-import { snapshotNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/agents/observation/event-feed";
+import { AgentEventVisibilityRegistry } from "../../../../src/agents/observation/agent-event-visibility-registry";
+import { snapshotNobleBodyAuthority } from "../../../../src/features/noble-secret-body/authority";
 import { NOBLE_SECRET_BODY_EVENT_TYPES, readNobleSecretBodyFact, NOBLE_SECRET_BODY_POLICY } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 
 function setup(locale: "zh-CN" | "en") {

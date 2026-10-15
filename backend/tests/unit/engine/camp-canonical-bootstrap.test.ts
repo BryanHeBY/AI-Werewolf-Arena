@@ -9,9 +9,9 @@ import { COMPONENT } from "../../../src/domain/components/names";
 import type { CampComponent } from "../../../src/domain/components/camp";
 import { Camp, Role } from "../../../src/domain/identity";
 import { World } from "../../../src/domain/world";
-import type { RoleInitContext, RoleRuntimeContribution } from "../../../src/game/mechanisms/roles/contracts";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import type { RoleInitContext, RoleRuntimeContribution } from "../../../src/rulesets/roles/contracts";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 const cards = [Role.Villager, Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager];
 const boot = () => bootstrapGame(sixPlayerMvpConfig, { fixedRoles: cards });

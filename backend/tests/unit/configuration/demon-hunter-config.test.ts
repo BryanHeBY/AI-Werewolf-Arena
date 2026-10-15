@@ -6,10 +6,10 @@ import { readFile } from "node:fs/promises";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../src/app/config/board-definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, WinCondition } from "../../../src/domain";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import { demonHunterDeck } from "../../support/features/demon-hunter/builders/candidate-world";
 const read = async (size: number, goal: string) =>
   JSON.parse(

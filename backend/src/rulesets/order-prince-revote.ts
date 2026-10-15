@@ -9,13 +9,13 @@ import type { EntityId, GameEvent, ReadonlyBoardConfig, VoteRecord } from "@ai-w
 import { Role } from "@ai-werewolf-arena/game-contract";
 import type { ActionProvider, ActionRequestConstructionPort } from "../domain/actions";
 import type { World } from "../domain/world";
-import type { ToolGateway } from "../game/gateway/tool_gateway";
-import type { VotingPipelineOptions } from "../game/engine/phase_pipeline/voting_pipeline";
-import { canVoteExile } from "../game/mechanisms/common/participation";
+import type { ToolGateway } from "../engine/actions/tool-gateway";
+import type { VotingPipelineOptions } from "../engine/phases/voting-pipeline";
+import { canVoteExile } from "../engine/participation";
 import {
   assertOrderPrinceOriginalCurrent,
   runOrderPrinceChoice,
-} from "../game/mechanisms/roles/order_prince/voting-ports";
+} from "../features/order-prince/voting-ports";
 
 /** 原开票结果引用；此知识不是下一票的许可，也不携带流水线内部原生命句柄。 */
 export interface OrderPrinceRevoteBallots {

@@ -13,12 +13,12 @@ import { StatusMarksComponent, statusMarkSnapshot } from "../../../src/domain/co
 import { captureNightLife, type NightGuardClaim } from "../../../src/domain/night-effects";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 import { demonHunterFixture } from "../../support/features/demon-hunter/builders/candidate-world";
-import { beginDemonHunterNight, closeDemonHunterNight } from "../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { openNativeGuardContribution, commitNativeGuardContribution, sealNativeGuardContribution } from "../../../src/game/mechanisms/roles/demon_hunter/guard_contribution";
-import { sealDeliveredDemonWitchSources } from "../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller";
+import { beginDemonHunterNight, closeDemonHunterNight } from "../../../src/features/demon-hunter/authority";
+import { openNativeGuardContribution, commitNativeGuardContribution, sealNativeGuardContribution } from "../../../src/features/demon-hunter/guard-contribution";
+import { sealDeliveredDemonWitchSources } from "../../../src/features/demon-hunter/native-potion-controller";
 import { prepareNightSourceDelivery, type NightSourceDeliveryRuntime } from "../../../src/rulesets/night-source-delivery";
 import { composeNightDamage } from "../../../src/rulesets/night-damage-composition";
-import type { NightStageState } from "../../../src/game/mechanisms/stages/night/contracts";
+import type { NightStageState } from "../../../src/engine/night/contracts";
 
 type Claims = ReturnType<NightSourceDeliveryRuntime["claims"]>;
 function pendingNight() {

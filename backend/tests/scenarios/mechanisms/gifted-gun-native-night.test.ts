@@ -12,23 +12,23 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { allDeathGuns, grantDeathGun } from "../../../src/game/mechanisms/roles/death_abilities";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { allDeathGuns, grantDeathGun } from "../../../src/features/death-actions/death-abilities";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
+import { SessionRecordManager } from "../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../src/recording/session/context";
+import { GameEventRecorder } from "../../../src/app/game-event-recorder";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 
 const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
@@ -227,7 +227,7 @@ test("a declared death capability collects final activation before a gift is pro
                     id: "controlled_gift",
                     priority: 230,
                     async execute(
-                      ctx: import("../../../src/game/mechanisms/stages/night/contracts").NightStageContext,
+                      ctx: import("../../../src/engine/night/contracts").NightStageContext,
                     ) {
                       grantDeathGun(ctx.world, 3, 5, ctx.currentDay(), ctx.events);
                     },

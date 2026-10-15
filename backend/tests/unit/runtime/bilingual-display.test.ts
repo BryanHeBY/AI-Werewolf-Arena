@@ -5,12 +5,12 @@
  */
 import { expect, test } from "bun:test";
 import { type Locale } from "@ai-werewolf-arena/game-text";
-import { cliFailure, takeDisplayArguments } from "../../../src/runtime/cli/display";
-import { LlmObserver } from "../../../src/ai/agents/player/player_observer";
-import { createAcpConsoleLogger } from "../../../src/runtime/console_presenter";
-import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
+import { cliFailure, takeDisplayArguments } from "../../../src/app/cli/display";
+import { LlmObserver } from "../../../src/agents/player/player-observer";
+import { createAcpConsoleLogger } from "../../../src/adapters/console/console-presenter";
+import { BaselineBotActionProvider } from "../../../src/agents/baseline/privileged";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { Phase, Role, type ActionRequest } from "../../../src/domain";
 
 const speech = "Original 原话 {role} <b>quoted</b>";

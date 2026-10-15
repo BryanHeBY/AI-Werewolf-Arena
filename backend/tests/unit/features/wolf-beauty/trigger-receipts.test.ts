@@ -4,11 +4,11 @@
  * 输出以领取旗标、独立事件、引用与错误前缀验收。被梦阻断仍付款，同波首次死亡有效，复活无效。
  * 规则依据 docs/rules/awa-wolf-beauty-v1.md；不执行完整对局、模型或网络，预期不从生产生成。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 
 import { Camp, Role, Phase, DeathCause, type GameEvent } from "../../../../src/domain/model";
 import {
@@ -19,13 +19,13 @@ import {
   type CharmBinding,
   type CharmClaimReceipt,
   type CharmBlockedReceipt,
-} from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
-import { activeCharm, bindCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { wolfBeautyDeathHook } from "../../../../src/game/mechanisms/roles/wolf_beauty/death_hook";
-import { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+} from "../../../../src/features/wolf-beauty/ports";
+import { activeCharm, bindCharm } from "../../../../src/features/wolf-beauty/relation";
+import { wolfBeautyDeathHook } from "../../../../src/features/wolf-beauty/death-hook";
+import { HookRegistry } from "../../../../src/engine/hooks/registry";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
 
 function fixture(
   policy: "awa_exile_poison_v1" | "heroes_s7_2017_exile_hunter_v1" = "awa_exile_poison_v1",

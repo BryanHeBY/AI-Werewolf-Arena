@@ -4,8 +4,8 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Camp, DeathCause, Phase, Role, WinCondition } from "../../../src/domain";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { twelvePlayerStandardConfig } from "../../../src/rulesets/presets/twelve-player-standard";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 
 const roles = [
   Role.Wolf,

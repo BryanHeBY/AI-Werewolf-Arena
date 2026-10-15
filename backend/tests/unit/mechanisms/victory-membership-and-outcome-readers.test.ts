@@ -4,11 +4,11 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Camp, Phase, Role, WinCondition, createVictoryComponent, type RoleComponent } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { ConditionRegistry } from "../../../src/domain/registries/condition-registry";
-import { WinConditionRegistry } from "../../../src/game/mechanisms/registries/win_condition_registry";
-import { victoryDecision } from "../../../src/game/mechanisms/win_conditions/results";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
+import { WinConditionRegistry } from "../../../src/engine/victory/condition-registry";
+import { victoryDecision } from "../../../src/engine/victory/results";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 import { readGameOutcome, readVictoryPoint } from "@ai-werewolf-arena/replay-contract";
 
 const deck = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];

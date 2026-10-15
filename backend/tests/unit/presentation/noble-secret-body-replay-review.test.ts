@@ -4,7 +4,7 @@
  * 原手写字段与字面显示预期独立于生产结算，不运行模型或完整对局驱动器。
  */
 import { expect, test } from "bun:test";
-import { ScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
+import { ScriptEventRenderRegistry } from "../../../src/agents/presentation/event-render-registry";
 import { NOBLE_SECRET_BODY_POLICY as policy } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 const row = (type: string, payload: any, phase = "night", day = payload.day, seq = 1) => ({
   seq,

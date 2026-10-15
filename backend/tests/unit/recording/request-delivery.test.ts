@@ -5,9 +5,9 @@
 import { expect, test } from "bun:test";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
+import { ReproductionTrace } from "../../../src/recording/reproduction/trace";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { captureCheckpoint } from "../../../src/app/simulation/reproduction-context";
 import {
   bindRequestDeliveryGuard,
   settleRequestDelivery,

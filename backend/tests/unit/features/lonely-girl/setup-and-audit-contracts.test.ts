@@ -1,19 +1,19 @@
 /**
  * 单元测试验证孤独少女准备窗口、必须选择、getter／撤权矩阵和公开板子配置。预期来自字面回执、引用／错误轨迹、阵营账本和 checkpoint 字段。阶段入口只在准备权限未完成时被拒绝，不运行完整夜间或模型。
  */
-import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createCampComponent, createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import { inheritRequestAlias } from "../../../../src/domain/request-delivery";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Camp, Phase, COMPONENT, WinCondition, createVictoryComponent, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent, type VictoryComponent } from "../../../../src/domain";
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
-import { LonelyGirlSetupWindow } from "../../../../src/game/mechanisms/roles/lonely_girl/setup";
+import { LonelyGirlSetupWindow } from "../../../../src/features/lonely-girl/setup";
 import {
   getLonelyGirlState,
   LONELY_GIRL_POLICY,
-} from "../../../../src/game/mechanisms/roles/lonely_girl/state-slot";
+} from "../../../../src/features/lonely-girl/state-slot";
 import {
   lonelyGirlBinding,
   lonelyGirlReady,
@@ -22,29 +22,29 @@ import {
   projectLonelyGirlSetup,
   lonelyGirlRequestScope,
   openLonelyGirlNight,
-} from "../../../../src/game/mechanisms/roles/lonely_girl/lifecycle";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+} from "../../../../src/features/lonely-girl/lifecycle";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../../src/engine/actions/action-reception";
+import { GameActionRequestFactory } from "../../../../src/engine/actions/action-request-factory";
+import { NightPipeline } from "../../../../src/engine/phases/night-pipeline";
 import { DamageResolutionSystem } from "../../../../src/domain/systems/damage-resolution-system";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 import { readLonelyGirlEventFact, readLonelyGirlChoiceTool } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-presentation";
 import {
   knownWolfTeammates,
   wolfTeamPermissions,
-} from "../../../../src/game/mechanisms/roles/wolf_team";
+} from "../../../../src/features/wolf-team/permissions";
 import {
   getDefaultRoleCatalog,
   getDefaultWinConditionRegistry,
-} from "../../../../src/game/mechanisms";
+} from "../../../../src/rulesets/mechanism-api";
 import { ConditionRegistry } from "../../../../src/domain/registries/condition-registry";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+} from "../../../../src/app/config/board-definition";
+import { captureCheckpoint } from "../../../../src/app/simulation/reproduction-context";
 
 const deck = [Role.LonelyGirl, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Villager];
 

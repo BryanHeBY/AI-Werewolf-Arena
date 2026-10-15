@@ -7,12 +7,12 @@
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
 import type { RoleRegistry } from "../domain/registries/role-registry";
-import type { ToolGateway } from "../game/gateway/tool_gateway";
-import type { DaytimeInterruptionComposition } from "../game/engine/daytime-interruption-contracts";
+import type { ToolGateway } from "../engine/actions/tool-gateway";
+import type { DaytimeInterruptionComposition } from "../engine/daytime-interruption-contracts";
 import { SelfDestructWindow } from "./self-destruct-window";
-import { KnightDuelWindow } from "../game/mechanisms/roles/knight/ports";
-import { DebaterWindow } from "../game/mechanisms/roles/debater/window";
-import { hasActiveDebate } from "../game/mechanisms/roles/debater/authority";
+import { KnightDuelWindow } from "../features/knight/ports";
+import { DebaterWindow } from "../features/debater/window";
+import { hasActiveDebate } from "../features/debater/authority";
 
 /** 延迟读取保留每次原调用点；窗口捕获构造时引用，重入检查则读取执行时的 World。 */
 export interface DaytimeInterruptionRuntime {

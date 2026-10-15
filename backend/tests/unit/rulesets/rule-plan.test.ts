@@ -14,14 +14,14 @@ import {
   NightStageRegistry,
   getDefaultNightStageRegistry,
 } from "../../../src/rulesets/night-stage-plan";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+import { getDefaultRoleCatalog } from "../../../src/rulesets/roles/role-catalog-assembly";
 import type {
   NightStageHandler,
   NightStageContext,
-} from "../../../src/game/mechanisms/stages/night/contracts";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../src/engine/night/contracts";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
 import { merchantScenario } from "../../support/features/miracle-merchant/builders/scenario";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/night-ability-grants";
+import { grantNightAbility } from "../../../src/features/night-abilities/night-ability-grants";
 
 test("bootstrap and manager expose one RulePlan and the original parameter owner", () => {
   const game = bootstrapGame(sixPlayerMvpConfig, {

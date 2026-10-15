@@ -13,14 +13,14 @@ import {
   type ToolCall,
   type RoleComponent,
 } from "../../../../src/domain";
-import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/rulesets/presets/noble-secret-body-twelve";
 import { isNobleSecretBodyPreset } from "../../../../src/rulesets";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import {
   snapshotNobleBodyAuthority,
   getNobleBodyPlayerState,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
-import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/features/noble-secret-body/authority";
+import { buildAgentVisibleEventFeed } from "../../../../src/agents/observation/event-feed";
 function game(
   wolf: "standard" | "no_blast_no_self_knife" = "standard",
   body: "awa_nonconsecutive_nights_v1" | "awa_repeat_v1" = "awa_nonconsecutive_nights_v1",

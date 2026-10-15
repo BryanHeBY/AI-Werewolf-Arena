@@ -7,13 +7,13 @@ import { promises as fs } from "fs";
 import path from "path";
 import { Camp, Phase } from "../../../src/domain/model";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
-import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { buildAgentVisibleEvent } from "../../../src/agents/observation/event-feed";
+import { getDefaultScriptEventRenderRegistry } from "../../../src/agents/presentation/event-render-registry";
 import { COMPONENT } from "../../../src/domain/components/names";
-import { SessionRecordManager, safeRecordLogicOp } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { buildDebugSummaryMarkdown } from "../../../src/audit/debug_summary_generator";
+import { SessionRecordManager, safeRecordLogicOp } from "../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../src/recording/session/context";
+import { buildDebugSummaryMarkdown } from "../../../src/audit/debug-summary-generator";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 async function finalizeManager(

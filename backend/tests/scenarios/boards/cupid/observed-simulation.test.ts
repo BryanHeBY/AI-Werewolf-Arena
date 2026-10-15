@@ -12,12 +12,12 @@ import { cupidBoard, CUPID_CASES, cupidScenario } from "../../../support/feature
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
-import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
+} from "../../../../src/app/config/board-definition";
+import { simulateGames } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 const boards = [
   ...CUPID_CASES.map((name) => ({ name, board: cupidScenario(name).board })),

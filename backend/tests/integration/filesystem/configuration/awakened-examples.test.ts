@@ -7,8 +7,8 @@ import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { parseBoardDefinition } from "../../../../src/app/config/board-definition";
 
 for (const size of ["six", "twelve"] as const)
   test(`${size}: example Awakened configuration loads strict role parameters and the declared composition`, async () => {

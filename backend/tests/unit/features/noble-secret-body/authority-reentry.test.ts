@@ -17,7 +17,7 @@ import {
   snapshotNobleBodyAuthority,
   consumeSecretBodyExile,
   closeServantForDeath,
-} from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/features/noble-secret-body/authority";
 // Independent A/R counterexamples, preserved after the owner boundary repairs.
 test("controller validation cannot recursively seize begin ownership", () => {
   const f = nobleBodyAuthorityFixture();

@@ -32,7 +32,7 @@ import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,
   readTimeConsortReflectionFact,
-} from "@ai-werewolf-arena/game-contract/facts/time-consort";
+} from "@ai-werewolf-arena/game-contract/facts/time-wolf-consort";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,

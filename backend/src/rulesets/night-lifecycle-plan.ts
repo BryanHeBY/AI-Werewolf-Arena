@@ -7,63 +7,63 @@
  * 不返还已付库存、不推进阶段、不序列化运行时 receiver。
  */
 import { openNightUnit } from "../domain/night-unit";
-import { expireNobleNight } from "../game/mechanisms/roles/noble_secret_body/ports";
+import { expireNobleNight } from "../features/noble-secret-body/ports";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../domain/world";
 import {
   demonNightTerminal,
   type DemonNightUnit,
-} from "../game/mechanisms/roles/demon_hunter/ports";
+} from "../features/demon-hunter/ports";
 import {
   weddingNightTerminal,
   type WeddingNightUnit,
-} from "../game/mechanisms/roles/ghost_bride/ports";
+} from "../features/ghost-bride/ports";
 import {
   magicianNightTerminal,
   type MagicianNightUnit,
-} from "../game/mechanisms/roles/magician/ports";
+} from "../features/magician/ports";
 import {
   wolfSorcererNightTerminal,
   type WolfSorcererNightUnit,
-} from "../game/mechanisms/roles/wolf_sorcerer/ports";
+} from "../features/wolf-sorcerer/ports";
 import {
   tricksterNightTerminal,
   type TricksterNightUnit,
-} from "../game/mechanisms/roles/trickster/ports";
+} from "../features/trickster/ports";
 import {
   timeConsortNightTerminal,
   type TimeConsortNightUnit,
-} from "../game/mechanisms/roles/time_wolf_consort/ports";
+} from "../features/time-wolf-consort/ports";
 import {
   scholarMentorNightTerminal,
   type ScholarMentorNightUnit,
-} from "../game/mechanisms/roles/scholar_mentor/ports";
+} from "../features/scholar-mentor/ports";
 import {
   mistNightTerminal,
   type MistNightUnit,
-} from "../game/mechanisms/roles/mist_raven/ports";
-import { nobleNightReceiver } from "../game/mechanisms/roles/noble_secret_body/ports";
-import { abortAnimalGame } from "../game/mechanisms/roles/animal_dream/ports";
+} from "../features/mist-raven/ports";
+import { nobleNightReceiver } from "../features/noble-secret-body/ports";
+import { abortAnimalGame } from "../features/animal-dream/ports";
 
 import { bindBoardParameters, type BoardParameters } from "./board-parameters";
 import { Phase } from "@ai-werewolf-arena/game-contract";
-import { getSessionRecorder } from "../recording/recording_context";
+import { getSessionRecorder } from "../recording/session/context";
 import { randomDraws, type RandomSource } from "../domain/random";
-import { AnimalNightUnit } from "../game/mechanisms/roles/animal_dream/ports";
-import { FragrantNightUnit, FRAGRANT_PAIR_POLICY } from "../game/mechanisms/roles/fragrant_pair_seer/ports";
-import { NobleNightUnit } from "../game/mechanisms/roles/noble_secret_body/ports";
-import { RadiantNightUnit } from "../game/mechanisms/roles/radiant_eclipse/ports";
-import { DemonNightUnit as ConcreteDemonNightUnit, demonHunterActorId } from "../game/mechanisms/roles/demon_hunter/ports";
-import { WeddingNightUnit as ConcreteWeddingNightUnit, weddingSetup } from "../game/mechanisms/roles/ghost_bride/ports";
-import { MagicianNightUnit as ConcreteMagicianNightUnit } from "../game/mechanisms/roles/magician/ports";
-import { WolfSorcererNightUnit as ConcreteWolfSorcererNightUnit } from "../game/mechanisms/roles/wolf_sorcerer/ports";
-import { TricksterNightUnit as ConcreteTricksterNightUnit } from "../game/mechanisms/roles/trickster/ports";
-import { TimeConsortNightUnit as ConcreteTimeConsortNightUnit } from "../game/mechanisms/roles/time_wolf_consort/ports";
-import { ScholarMentorNightUnit as ConcreteScholarMentorNightUnit } from "../game/mechanisms/roles/scholar_mentor/ports";
-import { MistNightUnit as ConcreteMistNightUnit } from "../game/mechanisms/roles/mist_raven/ports";
-import { openLonelyGirlNight } from "../game/mechanisms/roles/lonely_girl/ports";
-import { openWildChildNight } from "../game/mechanisms/roles/wild_child/ports";
-import { openInitialIdentityNight } from "../game/mechanisms/roles/initial_identity/ports";
+import { AnimalNightUnit } from "../features/animal-dream/ports";
+import { FragrantNightUnit, FRAGRANT_PAIR_POLICY } from "../features/fragrant-pair-seer/ports";
+import { NobleNightUnit } from "../features/noble-secret-body/ports";
+import { RadiantNightUnit } from "../features/radiant-eclipse/ports";
+import { DemonNightUnit as ConcreteDemonNightUnit, demonHunterActorId } from "../features/demon-hunter/ports";
+import { WeddingNightUnit as ConcreteWeddingNightUnit, weddingSetup } from "../features/ghost-bride/ports";
+import { MagicianNightUnit as ConcreteMagicianNightUnit } from "../features/magician/ports";
+import { WolfSorcererNightUnit as ConcreteWolfSorcererNightUnit } from "../features/wolf-sorcerer/ports";
+import { TricksterNightUnit as ConcreteTricksterNightUnit } from "../features/trickster/ports";
+import { TimeConsortNightUnit as ConcreteTimeConsortNightUnit } from "../features/time-wolf-consort/ports";
+import { ScholarMentorNightUnit as ConcreteScholarMentorNightUnit } from "../features/scholar-mentor/ports";
+import { MistNightUnit as ConcreteMistNightUnit } from "../features/mist-raven/ports";
+import { openLonelyGirlNight } from "../features/lonely-girl/ports";
+import { openWildChildNight } from "../features/wild-child/ports";
+import { openInitialIdentityNight } from "../features/initial-identity/ports";
 
 export interface NightManagerLifecycleRuntime {
   readonly world: World;

@@ -3,7 +3,7 @@
  * 输入保留原政策／来源／死因／语言／时点矩阵及直接 hook／死亡结算调用；手写开枪资格、
  * 受保护目标、赠予枪及只读来源拒绝是预期，不运行完整 PhaseManager 周期或记录流程。
  */
-import { captureNativeRolePresentation } from "../../../../src/game/observation/native-role-presentation-capture";
+import { captureNativeRolePresentation } from "../../../../src/agents/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -17,28 +17,28 @@ import {
   type RoleComponent,
   type GameEvent,
 } from "../../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
+import { magicianTwelveConfig } from "../../../../src/rulesets/presets/magician-twelve";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../../src/runtime/config/board_definition";
+} from "../../../../src/app/config/board-definition";
 import { boardConfigSchema } from "../../../../src/domain/board-schema";
-import { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../../src/game/engine/event_registry";
+import { DeathResolution } from "../../../../src/engine/death-resolution";
+import { EventRegistry } from "../../../../src/engine/events/event-registry";
 import {
   HookRegistry,
   type DeathHookContext,
-} from "../../../../src/game/mechanisms/hooks/hook_registry";
-import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { getWolfKingState } from "../../../../src/game/mechanisms/roles/wolf_king/ports";
+} from "../../../../src/engine/hooks/registry";
+import { ToolGateway } from "../../../../src/engine/actions/tool-gateway";
+import { getWolfKingState } from "../../../../src/features/wolf-king/ports";
 import {
   projectHunterState,
   projectWolfKingState,
-} from "../../../../src/game/mechanisms/roles/player_state";
-import { WOLF_KING_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/wolf_king/profile";
-import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";
-import { grantDeathGun, armDeathGun } from "../../../../src/game/mechanisms/roles/death_abilities";
+} from "../../../../src/agents/observation/player-state";
+import { WOLF_KING_ROLE_PROFILE } from "../../../../src/features/wolf-king/profile";
+import { getDefaultConfigRenderRegistry } from "../../../../src/agents/prompt/config-render-registry";
+import { grantDeathGun, armDeathGun } from "../../../../src/features/death-actions/death-abilities";
 
 const policy = "awa_day_deaths_v1" as const;
 

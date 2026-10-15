@@ -7,12 +7,12 @@
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { writeFile } from "node:fs/promises";
-import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
-import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
+import { loadBoardDefinition } from "../../../../src/app/config/load-board-definition";
+import { simulateGames } from "../../../../src/app/simulation/simulate-games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/replay-reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 for (const id of ["six_player_black_market_merchant", "twelve_player_black_market_merchant"])
   test(`${id}: twenty observed games finish naturally and preserve Black resources under strict Tape`, async () => {

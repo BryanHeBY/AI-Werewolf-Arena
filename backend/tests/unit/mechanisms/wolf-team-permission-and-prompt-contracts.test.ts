@@ -14,29 +14,29 @@ import {
   type ToolCall,
   type World,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
 import {
   knownWolfTeammates,
   wolfChatParticipants,
   wolfKnifeHolders,
-} from "../../../src/game/mechanisms/roles/wolf_team";
-import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { ActionValidator } from "../../../src/game/gateway/action_validator";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../src/features/wolf-team/permissions";
+import { ToolValidationRuleRegistry } from "../../../src/engine/actions/tool-validation-rule-registry";
+import { ActionValidator } from "../../../src/engine/actions/action-validator";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { ActionReception } from "../../../src/engine/actions/action-reception";
+import { PlayerPromptPolicy } from "../../../src/agents/player/player-prompt-policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../src/rulesets/mechanism-api";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 
@@ -241,8 +241,8 @@ for (const locale of ["zh-CN", "en"] as const)
 for (const locale of ["zh-CN", "en"] as const)
   for (const tool of ["speak_to_wolves", "kill_vote"] as const)
     test(`${locale}: default SDK/ACP fallback cannot regain revoked wolf permission (${tool})`, async () => {
-      const { LlmActionProvider } = await import("../../../src/ai/agents/llm/llm_action_provider");
-      const { AcpActionProvider } = await import("../../../src/ai/agents/acp/acp_action_provider");
+      const { LlmActionProvider } = await import("../../../src/agents/llm/llm-action-provider");
+      const { AcpActionProvider } = await import("../../../src/agents/acp/acp-action-provider");
       const { world } = fixture(locale);
       const catalog = createRoleCatalog({
         contributions: getDefaultRoleContributions().map((profile) =>

@@ -8,27 +8,27 @@ import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { createRandom, type ActionRequest, type ToolCall } from "../../../../src/domain";
-import { SessionRecordManager } from "../../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { SessionRecordManager } from "../../../../src/recording/session/recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/session/context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../../src/runtime/simulation/reproduction_context";
-import { replayReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/app/simulation/reproduction-context";
+import { replayReproduction } from "../../../../src/app/simulation/replay-reproduction";
 import {
   parseReproductionRecord,
   type ReproductionRecord,
   type RecordedCheckpoint,
-} from "../../../../src/recording/reproduction";
+} from "../../../../src/recording/reproduction/format";
 
-import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+import { GameEventRecorder } from "../../../../src/app/game-event-recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { tricksterTwelveConfig } from "../../../../src/runtime/scenarios/trickster_twelve";
-import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { tricksterTwelveConfig } from "../../../../src/rulesets/presets/trickster-twelve";
+import { ObservedBot } from "../../../../src/agents/providers/observed-bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { randomDraws } from "../../../../src/domain";
-import { validateTricksterRecord } from "../../../../src/verification/reproduction/trickster/validate";
+import { validateTricksterRecord } from "../../../../src/recording/verification/trickster/validate";
 const records = new Map<string, Promise<ReproductionRecord>>();
 let version: ReturnType<typeof currentEngineVersion> | undefined;
 function recording(locale: "en" | "zh-CN", cancel: boolean, seed = 0): Promise<ReproductionRecord> {

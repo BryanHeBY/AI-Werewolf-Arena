@@ -13,18 +13,18 @@ import {
   type RoleComponent,
   type World,
 } from "../../../src/domain";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { RoleCatalog } from "../../../src/rulesets/roles/catalog";
 import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
   createRoleCatalog,
-} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { ActionValidator } from "../../../src/game/gateway/action_validator";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
+} from "../../../src/rulesets/roles/role-catalog-assembly";
+import { ToolValidationRuleRegistry } from "../../../src/engine/actions/tool-validation-rule-registry";
+import { ActionValidator } from "../../../src/engine/actions/action-validator";
+import { ToolGateway } from "../../../src/engine/actions/tool-gateway";
+import { buildAgentVisibleEventFeed } from "../../../src/agents/observation/event-feed";
+import { NightPipeline } from "../../../src/engine/phases/night-pipeline";
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { DamageResolutionSystem } from "../../../src/domain/systems/damage-resolution-system";
 

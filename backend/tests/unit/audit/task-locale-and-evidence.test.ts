@@ -5,15 +5,15 @@
  */
 import { auditSummaryFixture } from "../../support/builders/audit-summary";
 import { expect, test } from "bun:test";
-import { auditSystemPrompt, auditTurnPrompt } from "../../../src/ai/audit/prompts";
-import { AuditTaskRunner } from "../../../src/audit/task_runner";
-import { AuditSummaryRenderer } from "../../../src/audit/summary_renderer";
-import { AuditEvidencePolicy } from "../../../src/audit/evidence_policy";
-import { buildAuditTasks } from "../../../src/audit/payload_builder";
+import { auditSystemPrompt, auditTurnPrompt } from "../../../src/audit/agents/prompts";
+import { AuditTaskRunner } from "../../../src/audit/task-runner";
+import { AuditSummaryRenderer } from "../../../src/audit/summary-renderer";
+import { AuditEvidencePolicy } from "../../../src/audit/evidence-policy";
+import { buildAuditTasks } from "../../../src/audit/payload-builder";
 import {
   AuditToolTurnRegistry,
   type AuditToolContext,
-} from "../../../src/ai/audit/audit_tool_protocol";
+} from "../../../src/audit/agents/audit-tool-protocol";
 import type { DebugSummaryPipelineInput } from "../../../src/audit/pipeline";
 import type { ReplayManifest } from "../../../src/recording/contracts";
 

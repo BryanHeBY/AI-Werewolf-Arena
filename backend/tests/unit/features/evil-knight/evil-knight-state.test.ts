@@ -2,11 +2,11 @@
  * 单元测试用已接受查验死因与明确反击政策验证恶灵骑士的独立库存。字面单次反射、免疫及
  * 序列化历史是预期，输入及字面／不可变 fixture 保持原样，不运行模型或完整对局。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import type { EvilKnightShotPolicy } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "../../../../src/rulesets/presets/six-player-mvp";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { type AliveComponent } from "../../../../src/domain/components/alive";
 import type { RoleComponent } from "../../../../src/domain/components/role";
@@ -19,8 +19,8 @@ import {
   captureEvilKnight,
   commitEvilKnightReflection,
   evilKnightNightShotImmune,
-} from "../../../../src/game/mechanisms/roles/evil_knight/reflection";
-import { freshEvilKnightState, getEvilKnightState } from "../../../../src/game/mechanisms/roles/evil_knight/state-slot";
+} from "../../../../src/features/evil-knight/reflection";
+import { freshEvilKnightState, getEvilKnightState } from "../../../../src/features/evil-knight/state-slot";
 
 function fixture(policy: EvilKnightShotPolicy = "night_shot_immune") {
   const { world } = bootstrapGame(sixPlayerMvpConfig);

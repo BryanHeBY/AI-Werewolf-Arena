@@ -9,13 +9,13 @@ import { World } from "../../../../src/domain/world";
 import { COMPONENT } from "../../../../src/domain/components/names";
 import { createAliveComponent } from "../../../../src/domain/components/alive";
 import { createRoleComponent } from "../../../../src/domain/components/role";
-import { TRICKSTER_STATE_SLOT } from "../../../../src/game/mechanisms/roles/trickster/state-slot";
+import { TRICKSTER_STATE_SLOT } from "../../../../src/features/trickster/state-slot";
 import {
   installTricksterBoard,
   beginTricksterNight,
   commitTricksterExchange,
   finishTricksterNight,
-} from "../../../../src/game/mechanisms/roles/trickster/night_frame";
+} from "../../../../src/features/trickster/night-frame";
 
 test("初始化先取左值容器，setter失败不补写且不冻结原状态", () => {
   const trace: string[] = [], failure = new Error("literal_trickster_install_failure");

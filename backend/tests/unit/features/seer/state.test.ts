@@ -1,27 +1,27 @@
 /**
  * 单元测试：验证预言家状态 owner 的原角色／能力构造。输入为手写查验数据、重复安装模板及抛错历史方法；原字段、同引用及读取日志为预期，不使用模型、对局驱动、归档 fixture 或生产生成期望。
  */
-import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
+import { createAliveComponent } from "../../../../src/agents/observation/component-presentation";
 import type { SeerState, SeerReadState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Camp, Role, type InspectionResult } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../src/domain/components/names";
 
-import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../src/agents/observation/role-presentation";
 import { World } from "../../../../src/domain/world";
-import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { captureNightAbilityScope } from "../../../../src/game/mechanisms/roles/ability_scope";
+import { findNightAbility } from "../../../../src/features/night-abilities/abilities";
+import { captureNightAbilityScope } from "../../../../src/features/night-abilities/ability-scope";
 import {
   getSeerState,
   setSeerState,
   recordSeerInspection,
   recordRecipientSeerInspection,
-} from "../../../../src/game/mechanisms/roles/seer/ports";
+} from "../../../../src/features/seer/ports";
 import {
   getSeerState as legacyGetSeerState,
   setSeerState as legacySetSeerState,
-} from "../../../../src/game/mechanisms/roles/seer/ports";
+} from "../../../../src/features/seer/ports";
 
 const emptyState = (): SeerState => ({ lastTarget: null, lastIsWerewolf: null, history: [] });
 

@@ -1,11 +1,11 @@
 /**
  * 负责驱动夜贵族子系统的原 World fixture、有界夜选择、伤害和关闭。输入为脚本步骤、回调与资源请求，输出为原受控轨迹、句柄及边界响应。测试保留字面行动和失败预期；不运行完整对局或传输，也不引入付费模型。
  */
-import { createAliveComponent, createCampComponent } from "../../../../../src/game/observation/component-presentation";
+import { createAliveComponent, createCampComponent } from "../../../../../src/agents/observation/component-presentation";
 import { World } from "../../../../../src/domain/world";
 import { COMPONENT } from "../../../../../src/domain/components/names";
 import { Role, Camp } from "../../../../../src/domain/identity";
-import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../../../src/agents/observation/role-presentation";
 import { type AliveComponent } from "../../../../../src/domain/components/alive";
 
 import { createVictoryComponent } from "../../../../../src/domain/components/victory";
@@ -13,7 +13,7 @@ import { createIdentityComponent } from "../../../../../src/domain/entities/play
 import {
   createNobleState,
   createSecretBodyState,
-} from "../../../../../src/game/mechanisms/roles/noble_secret_body/state";
+} from "../../../../../src/features/noble-secret-body/state";
 import {
   installNobleBodyAuthority,
   beginNobleBodyNight,
@@ -22,7 +22,7 @@ import {
   expireServantAtNightEnd,
   resolveSecretBodyDamage,
   closeNobleBodyNight,
-} from "../../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../../src/features/noble-secret-body/authority";
 /** 显式子系统夹具：既有替身身份验证原对象所有权与实际 Camp 槽；不注册额外角色或冒整局规则验收。 */
 export function nobleBodyAuthorityFixture() {
   const world = new World(),

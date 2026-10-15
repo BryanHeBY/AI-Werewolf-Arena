@@ -10,16 +10,16 @@ import {
   type GameEvent, type ToolCall,
 } from "../../../src/domain";
 import { retireRoleExecution, isRoleExecutionRetired } from "../../../src/domain/role-execution-authority";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { sixPlayerMvpConfig } from "../../../src/rulesets/presets/six-player-mvp";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { nightStageContext } from "../../support/builders/night-stage-context";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
-import { MIRACLE_MERCHANT_STAGE, hasMerchantNightCommit } from "../../../src/game/mechanisms/roles/miracle_merchant/night_stage";
-import { BLACK_MARKET_TRADE_STAGE, hasBlackMarketNightCommit } from "../../../src/game/mechanisms/roles/black_market_merchant/night_stage";
-import { getMerchantState } from "../../../src/game/mechanisms/roles/miracle_merchant/state";
-import { getBlackMarketState } from "../../../src/game/mechanisms/roles/black_market_merchant/state";
-import { allNightAbilities } from "../../../src/game/mechanisms/roles/abilities";
-import { allDeathGuns } from "../../../src/game/mechanisms/roles/death_abilities";
+import type { NightStageContext } from "../../../src/engine/night/contracts";
+import { MIRACLE_MERCHANT_STAGE, hasMerchantNightCommit } from "../../../src/features/miracle-merchant/night-stage";
+import { BLACK_MARKET_TRADE_STAGE, hasBlackMarketNightCommit } from "../../../src/features/black-market-merchant/night-stage";
+import { getMerchantState } from "../../../src/features/miracle-merchant/state";
+import { getBlackMarketState } from "../../../src/features/black-market-merchant/state";
+import { allNightAbilities } from "../../../src/features/night-abilities/abilities";
+import { allDeathGuns } from "../../../src/features/death-actions/death-abilities";
 
 type Family = "miracle" | "black";
 const kind = (family: Family) => family === "miracle" ? Role.MiracleMerchant : Role.BlackMarketMerchant;

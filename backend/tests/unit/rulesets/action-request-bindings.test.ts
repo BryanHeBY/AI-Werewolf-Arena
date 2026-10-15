@@ -9,19 +9,19 @@ import { World } from "../../../src/domain/world";
 import { COMPONENT } from "../../../src/domain/components/names";
 import { createAliveComponent } from "../../../src/domain/components/alive";
 import { deriveBoundedRequest } from "../../../src/domain/request-delivery";
-import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { createRoleComponent } from "../../../src/agents/observation/role-presentation";
+import { GameActionRequestFactory } from "../../../src/engine/actions/action-request-factory";
 import { bindRulesetActionRequest } from "../../../src/rulesets/action-request-bindings";
-import { initialIdentityRequestScope } from "../../../src/game/mechanisms/roles/initial_identity/setup";
-import { lonelyGirlRequestScope } from "../../../src/game/mechanisms/roles/lonely_girl/lifecycle";
-import { wildChildRequestScope } from "../../../src/game/mechanisms/roles/wild_child/lifecycle";
-import { ghostBrideRequestScope } from "../../../src/game/mechanisms/roles/ghost_bride/authority";
+import { initialIdentityRequestScope } from "../../../src/features/initial-identity/setup";
+import { lonelyGirlRequestScope } from "../../../src/features/lonely-girl/lifecycle";
+import { wildChildRequestScope } from "../../../src/features/wild-child/lifecycle";
+import { ghostBrideRequestScope } from "../../../src/features/ghost-bride/authority";
 import {
   openWall,
   grantWallNote,
   closeWall,
   wallRequestScope,
-} from "../../../src/game/mechanisms/events/wall_notes/authority";
+} from "../../../src/features/wall-notes/authority";
 
 type FactoryInput = Parameters<GameActionRequestFactory["create"]>[0];
 
